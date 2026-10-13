@@ -1,0 +1,1302 @@
+{
+  "scope": "Independent R06 bounded definition/serializer/profile/case conservation and meaningful docnegative/restored only. Not future runtime enforcement or F-MUT/wholeC0 acceptance",
+  "passed": 250,
+  "failed": 0,
+  "results": [
+    {
+      "id": "13-boundary-manifests",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "canonical-digest:normal-admit-positive-original:profileDigest",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "canonical-digest:normal-admit-positive-original:policyDigest",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "canonical-digest:normal-admit-positive-original:generationDigest",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "canonical-digest:normal-admit-positive-original:sourceDigest",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "complete-policy-projection:normal-admit-positive-original",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "own-schema-bytes:normal-admit-positive-original",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "safe-current-envelope-profile:normal-admit-positive-original",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "canonical-digest:normal-admit-negative-original:profileDigest",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "canonical-digest:normal-admit-negative-original:policyDigest",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "canonical-digest:normal-admit-negative-original:generationDigest",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "canonical-digest:normal-admit-negative-original:sourceDigest",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "complete-policy-projection:normal-admit-negative-original",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "own-schema-bytes:normal-admit-negative-original",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "safe-current-envelope-profile:normal-admit-negative-original",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "canonical-digest:normal-admitAndRead-positive-original:profileDigest",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "canonical-digest:normal-admitAndRead-positive-original:policyDigest",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "canonical-digest:normal-admitAndRead-positive-original:generationDigest",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "canonical-digest:normal-admitAndRead-positive-original:sourceDigest",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "complete-policy-projection:normal-admitAndRead-positive-original",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "own-schema-bytes:normal-admitAndRead-positive-original",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "safe-current-envelope-profile:normal-admitAndRead-positive-original",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "canonical-digest:normal-admitAndRead-negative-original:profileDigest",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "canonical-digest:normal-admitAndRead-negative-original:policyDigest",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "canonical-digest:normal-admitAndRead-negative-original:generationDigest",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "canonical-digest:normal-admitAndRead-negative-original:sourceDigest",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "complete-policy-projection:normal-admitAndRead-negative-original",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "own-schema-bytes:normal-admitAndRead-negative-original",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "safe-current-envelope-profile:normal-admitAndRead-negative-original",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "canonical-digest:duplicate-positive-original:profileDigest",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "canonical-digest:duplicate-positive-original:policyDigest",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "canonical-digest:duplicate-positive-original:generationDigest",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "canonical-digest:duplicate-positive-original:sourceDigest",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "complete-policy-projection:duplicate-positive-original",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "own-schema-bytes:duplicate-positive-original",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "safe-current-envelope-profile:duplicate-positive-original",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "canonical-digest:quarantine-positive-original:profileDigest",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "canonical-digest:quarantine-positive-original:policyDigest",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "canonical-digest:quarantine-positive-original:generationDigest",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "canonical-digest:quarantine-positive-original:sourceDigest",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "complete-policy-projection:quarantine-positive-original",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "own-schema-bytes:quarantine-positive-original",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "safe-current-envelope-profile:quarantine-positive-original",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "canonical-digest:quarantine-negative-original:profileDigest",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "canonical-digest:quarantine-negative-original:policyDigest",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "canonical-digest:quarantine-negative-original:generationDigest",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "canonical-digest:quarantine-negative-original:sourceDigest",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "complete-policy-projection:quarantine-negative-original",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "own-schema-bytes:quarantine-negative-original",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "safe-current-envelope-profile:quarantine-negative-original",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "canonical-digest:overflow-positive-original:profileDigest",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "canonical-digest:overflow-positive-original:policyDigest",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "canonical-digest:overflow-positive-original:generationDigest",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "canonical-digest:overflow-positive-original:sourceDigest",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "complete-policy-projection:overflow-positive-original",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "own-schema-bytes:overflow-positive-original",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "safe-current-envelope-profile:overflow-positive-original",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "canonical-digest:recordGap-positive-original:profileDigest",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "canonical-digest:recordGap-positive-original:policyDigest",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "canonical-digest:recordGap-positive-original:generationDigest",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "canonical-digest:recordGap-positive-original:sourceDigest",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "complete-policy-projection:recordGap-positive-original",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "own-schema-bytes:recordGap-positive-original",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "safe-current-envelope-profile:recordGap-positive-original",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "canonical-digest:recordGap-negative-original:profileDigest",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "canonical-digest:recordGap-negative-original:policyDigest",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "canonical-digest:recordGap-negative-original:generationDigest",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "canonical-digest:recordGap-negative-original:sourceDigest",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "complete-policy-projection:recordGap-negative-original",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "own-schema-bytes:recordGap-negative-original",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "safe-current-envelope-profile:recordGap-negative-original",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "canonical-digest:gap-restoration-unproved-positive-original:profileDigest",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "canonical-digest:gap-restoration-unproved-positive-original:policyDigest",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "canonical-digest:gap-restoration-unproved-positive-original:generationDigest",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "canonical-digest:gap-restoration-unproved-positive-original:sourceDigest",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "complete-policy-projection:gap-restoration-unproved-positive-original",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "own-schema-bytes:gap-restoration-unproved-positive-original",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "safe-current-envelope-profile:gap-restoration-unproved-positive-original",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "canonical-digest:oversized-history-positive-original:profileDigest",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "canonical-digest:oversized-history-positive-original:policyDigest",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "canonical-digest:oversized-history-positive-original:generationDigest",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "canonical-digest:oversized-history-positive-original:sourceDigest",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "complete-policy-projection:oversized-history-positive-original",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "own-schema-bytes:oversized-history-positive-original",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "safe-current-envelope-profile:oversized-history-positive-original",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "canonical-digest:counter-overflow-positive-original:profileDigest",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "canonical-digest:counter-overflow-positive-original:policyDigest",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "canonical-digest:counter-overflow-positive-original:generationDigest",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "canonical-digest:counter-overflow-positive-original:sourceDigest",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "complete-policy-projection:counter-overflow-positive-original",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "own-schema-bytes:counter-overflow-positive-original",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "safe-current-envelope-profile:counter-overflow-positive-original",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "snapshot-identity:docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/normal-admit-positive-prior.json",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "snapshot-real-canonical-equivalence:docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/normal-admit-positive-prior.json",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "positive-original-quota:normal-admit",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "positive-explicit-binding:normal-admit",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "snapshot-identity:docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/manifests/normal-admit-positive-original.json",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "snapshot-real-canonical-equivalence:docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/manifests/normal-admit-positive-original.json",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "manifest-exactref:normal-admit",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "snapshot-identity:docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/normal-admit-positive-candidate.json",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "snapshot-real-canonical-equivalence:docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/normal-admit-positive-candidate.json",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "same-original-header:normal-admit",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "candidate-wholecap:normal-admit",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "whole-state-oracle1934:normal-admit",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "ordinary-same-boundary-equality:normal-admit",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "ACK-not-byteoracle:normal-admit",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "snapshot-identity:docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/normal-admit-negative-prior.json",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "snapshot-real-canonical-equivalence:docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/normal-admit-negative-prior.json",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "snapshot-identity:docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/normal-admit-negative-attempted-candidate.json",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "snapshot-real-canonical-equivalence:docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/normal-admit-negative-attempted-candidate.json",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "negative-captured-ownquotalifecycle:normal-admit",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "negative-independent-original-binding:normal-admit",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "negative-same-data-shape:normal-admit",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "negative-validprior-with-ordinary-headroom:normal-admit",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "negative-candidate-onebyte-overheadroom:normal-admit",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "snapshot-identity:docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/normal-admitAndRead-positive-prior.json",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "snapshot-real-canonical-equivalence:docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/normal-admitAndRead-positive-prior.json",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "positive-original-quota:normal-admitAndRead",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "positive-explicit-binding:normal-admitAndRead",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "snapshot-identity:docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/manifests/normal-admitAndRead-positive-original.json",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "snapshot-real-canonical-equivalence:docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/manifests/normal-admitAndRead-positive-original.json",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "manifest-exactref:normal-admitAndRead",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "snapshot-identity:docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/normal-admitAndRead-positive-candidate.json",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "snapshot-real-canonical-equivalence:docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/normal-admitAndRead-positive-candidate.json",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "same-original-header:normal-admitAndRead",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "candidate-wholecap:normal-admitAndRead",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "whole-state-oracle1934:normal-admitAndRead",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "ordinary-same-boundary-equality:normal-admitAndRead",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "ACK-not-byteoracle:normal-admitAndRead",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "snapshot-identity:docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/normal-admitAndRead-negative-prior.json",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "snapshot-real-canonical-equivalence:docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/normal-admitAndRead-negative-prior.json",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "snapshot-identity:docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/normal-admitAndRead-negative-attempted-candidate.json",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "snapshot-real-canonical-equivalence:docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/normal-admitAndRead-negative-attempted-candidate.json",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "negative-captured-ownquotalifecycle:normal-admitAndRead",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "negative-independent-original-binding:normal-admitAndRead",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "negative-same-data-shape:normal-admitAndRead",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "negative-validprior-with-ordinary-headroom:normal-admitAndRead",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "negative-candidate-onebyte-overheadroom:normal-admitAndRead",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "snapshot-identity:docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/duplicate-positive-prior.json",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "snapshot-real-canonical-equivalence:docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/duplicate-positive-prior.json",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "positive-original-quota:duplicate",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "positive-explicit-binding:duplicate",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "snapshot-identity:docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/manifests/duplicate-positive-original.json",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "snapshot-real-canonical-equivalence:docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/manifests/duplicate-positive-original.json",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "manifest-exactref:duplicate",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "snapshot-identity:docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/duplicate-positive-candidate.json",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "snapshot-real-canonical-equivalence:docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/duplicate-positive-candidate.json",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "same-original-header:duplicate",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "candidate-wholecap:duplicate",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "snapshot-identity:docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/quarantine-positive-prior.json",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "snapshot-real-canonical-equivalence:docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/quarantine-positive-prior.json",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "positive-original-quota:quarantine",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "positive-explicit-binding:quarantine",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "snapshot-identity:docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/manifests/quarantine-positive-original.json",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "snapshot-real-canonical-equivalence:docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/manifests/quarantine-positive-original.json",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "manifest-exactref:quarantine",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "snapshot-identity:docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/quarantine-positive-candidate.json",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "snapshot-real-canonical-equivalence:docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/quarantine-positive-candidate.json",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "same-original-header:quarantine",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "candidate-wholecap:quarantine",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "snapshot-identity:docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/quarantine-negative-prior.json",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "snapshot-real-canonical-equivalence:docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/quarantine-negative-prior.json",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "snapshot-identity:docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/quarantine-negative-attempted-candidate.json",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "snapshot-real-canonical-equivalence:docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/quarantine-negative-attempted-candidate.json",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "negative-captured-ownquotalifecycle:quarantine",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "negative-independent-original-binding:quarantine",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "negative-same-data-shape:quarantine",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "negative-validprior-with-ordinary-headroom:quarantine",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "negative-candidate-onebyte-overheadroom:quarantine",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "snapshot-identity:docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/quarantine-negative-overflow-candidate.json",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "snapshot-real-canonical-equivalence:docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/quarantine-negative-overflow-candidate.json",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "quarantine-negative-actual-overflow-not-unconditionalFULL",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "snapshot-identity:docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/overflow-positive-prior.json",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "snapshot-real-canonical-equivalence:docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/overflow-positive-prior.json",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "positive-original-quota:overflow",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "positive-explicit-binding:overflow",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "snapshot-identity:docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/manifests/overflow-positive-original.json",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "snapshot-real-canonical-equivalence:docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/manifests/overflow-positive-original.json",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "manifest-exactref:overflow",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "snapshot-identity:docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/overflow-positive-candidate.json",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "snapshot-real-canonical-equivalence:docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/overflow-positive-candidate.json",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "same-original-header:overflow",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "candidate-wholecap:overflow",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "extra-source-negative-identity:overflow:negativePrior",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "snapshot-identity:docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/recordGap-positive-prior.json",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "snapshot-real-canonical-equivalence:docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/recordGap-positive-prior.json",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "positive-original-quota:recordGap",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "positive-explicit-binding:recordGap",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "snapshot-identity:docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/manifests/recordGap-positive-original.json",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "snapshot-real-canonical-equivalence:docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/manifests/recordGap-positive-original.json",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "manifest-exactref:recordGap",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "snapshot-identity:docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/recordGap-positive-candidate.json",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "snapshot-real-canonical-equivalence:docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/recordGap-positive-candidate.json",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "same-original-header:recordGap",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "candidate-wholecap:recordGap",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "snapshot-identity:docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/recordGap-negative-prior.json",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "snapshot-real-canonical-equivalence:docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/recordGap-negative-prior.json",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "snapshot-identity:docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/recordGap-negative-attempted-candidate.json",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "snapshot-real-canonical-equivalence:docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/recordGap-negative-attempted-candidate.json",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "negative-captured-ownquotalifecycle:recordGap",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "negative-independent-original-binding:recordGap",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "negative-same-data-shape:recordGap",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "negative-validprior-with-ordinary-headroom:recordGap",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "negative-candidate-onebyte-overheadroom:recordGap",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "snapshot-identity:docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/gap-restoration-unproved-positive-prior.json",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "snapshot-real-canonical-equivalence:docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/gap-restoration-unproved-positive-prior.json",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "positive-original-quota:gap-restoration-unproved",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "positive-explicit-binding:gap-restoration-unproved",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "snapshot-identity:docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/manifests/gap-restoration-unproved-positive-original.json",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "snapshot-real-canonical-equivalence:docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/manifests/gap-restoration-unproved-positive-original.json",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "manifest-exactref:gap-restoration-unproved",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "snapshot-identity:docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/gap-restoration-unproved-positive-candidate.json",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "snapshot-real-canonical-equivalence:docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/gap-restoration-unproved-positive-candidate.json",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "same-original-header:gap-restoration-unproved",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "candidate-wholecap:gap-restoration-unproved",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "snapshot-identity:docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/oversized-history-positive-prior.json",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "snapshot-real-canonical-equivalence:docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/oversized-history-positive-prior.json",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "positive-original-quota:oversized-history",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "positive-explicit-binding:oversized-history",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "snapshot-identity:docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/manifests/oversized-history-positive-original.json",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "snapshot-real-canonical-equivalence:docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/manifests/oversized-history-positive-original.json",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "manifest-exactref:oversized-history",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "extra-source-negative-identity:oversized-history:tamperedSnapshot",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "snapshot-identity:docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/counter-overflow-positive-prior.json",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "snapshot-real-canonical-equivalence:docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/counter-overflow-positive-prior.json",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "positive-original-quota:counter-overflow",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "positive-explicit-binding:counter-overflow",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "snapshot-identity:docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/manifests/counter-overflow-positive-original.json",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "snapshot-real-canonical-equivalence:docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/manifests/counter-overflow-positive-original.json",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "manifest-exactref:counter-overflow",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "snapshot-identity:docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/normal-admit-positive-prior.json",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "snapshot-real-canonical-equivalence:docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/normal-admit-positive-prior.json",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "meaningful-globalA-negative",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "restored-boundary-positive",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "meaningful-originalquota-drift-negative",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "snapshot-identity:docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/normal-admit-negative-prior.json",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "snapshot-real-canonical-equivalence:docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/normal-admit-negative-prior.json",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "meaningful-negativeoriginal-rebind-positiveheader",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "restored-negativeoriginal-positive",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "snapshot-identity:docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/normal-admit-positive-candidate.json",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "snapshot-real-canonical-equivalence:docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/normal-admit-positive-candidate.json",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "historical1940-negative",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "restored1934-positive",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "all22-caseids-and-requirements-conserved",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "all22futureNOTRUN",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "case-contract-exactmirror",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "historical-globalcatalog-labelled",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "all-frozen-inputs-no-drift",
+      "passed": true,
+      "details": {
+        "count": 328,
+        "drift": []
+      }
+    },
+    {
+      "id": "all247-preserved-no-drift",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "Runtime4-published-no-drift",
+      "passed": true,
+      "details": null
+    }
+  ],
+  "boundaryLedger": [
+    {
+      "case": "normal-admit",
+      "positiveGeneration": "sha256:b3060de0f407e8102a348b3bdf55562fd97f4fe631f17f816946ebff1ca7ee1a",
+      "negativeGeneration": "sha256:423d525bd877ca152cdbcd11bf5f8433862a5156f6813451fbe8deba8caf3135",
+      "positiveCap": 10126,
+      "negativeCap": 10125,
+      "negativePriorBytes": 707,
+      "attemptedCandidateBytes": 1934,
+      "negativeCapture": "fresh originalnegative selected beforeprep; not rebindingretainedpositive"
+    },
+    {
+      "case": "normal-admitAndRead",
+      "positiveGeneration": "sha256:4a0e5730e8ac912bbb0bae6fa599a105329759fa21034f651fe937c16900596b",
+      "negativeGeneration": "sha256:b2af614cacece5fbe802e62bbb1ebe11128e0da792729874933ceec00dda47b8",
+      "positiveCap": 10126,
+      "negativeCap": 10125,
+      "negativePriorBytes": 707,
+      "attemptedCandidateBytes": 1934,
+      "negativeCapture": "fresh originalnegative selected beforeprep; not rebindingretainedpositive"
+    },
+    {
+      "case": "quarantine",
+      "positiveGeneration": "sha256:4d66dbf49607fa392a3688a4e9e44fa0be65c1975e138af4c7d89e1c1c7916fd",
+      "negativeGeneration": "sha256:4f4be28a8a558c221420b658df4cc2c06e2a64e56801de2ec11fb3f5c5833c94",
+      "positiveCap": 11267,
+      "negativeCap": 11266,
+      "negativePriorBytes": 1934,
+      "attemptedCandidateBytes": 3075,
+      "negativeCapture": "fresh originalnegative selected beforeprep; not rebindingretainedpositive"
+    },
+    {
+      "case": "recordGap",
+      "positiveGeneration": "sha256:c618c16d38ce442b8ec4601ff7394722e180440931ec6b62431db9b94a41bd40",
+      "negativeGeneration": "sha256:abe3861fb28390233a55d236222168f533f2eade976f62b95a5963ed92b16682",
+      "positiveCap": 10385,
+      "negativeCap": 10384,
+      "negativePriorBytes": 1934,
+      "attemptedCandidateBytes": 2193,
+      "negativeCapture": "fresh originalnegative selected beforeprep; not rebindingretainedpositive"
+    }
+  ]
+}

@@ -1,0 +1,650 @@
+{
+  "scope": "Source-based proposed business-cardinality definition, not runtime acceptance or user-approved behavior change",
+  "sources": [
+    {
+      "path": "skills/prism/server/agent-routes.ts",
+      "sha256": "55c4c77fc4ff7b981287c433c126d9754dffd3df1de464ec0d83bb0294caec17"
+    },
+    {
+      "path": "skills/prism/server/agent-prompt.mjs",
+      "sha256": "3bcd6b4b2bb25d82c9ec767a03fd08ea1c17420eca3ce1742410359ed2d1aea9"
+    },
+    {
+      "path": "skills/prism/server/preference-prompt.mjs",
+      "sha256": "0a607949b4ae13bd5636cc02798e63bbcb8aae9f7b944f3bea9ea47a8f40e145"
+    },
+    {
+      "path": "skills/prism/openclaw-plugin/index.mjs",
+      "sha256": "97a30daa0a042f2cd9416746caffe9207828dd9a587e3a6c3e8de481f5d0640e"
+    },
+    {
+      "path": "skills/prism/storage/index.ts",
+      "sha256": "e5105909e5f1abf1eb2178270dd63d1b8e2aa337177dcb620b6ae43199a3a199"
+    },
+    {
+      "path": "skills/prism/directions/index.ts",
+      "sha256": "8f787b1ec48c8a0b876f754260d2702ae1c65bc8f2a031b897a989bcb8b973eb"
+    },
+    {
+      "path": "skills/prism/studio/design-round-client.ts",
+      "sha256": "0a37517165fad75fd049dafc9a3519cbd8a7c0f2351c6adaeaab4c4fc2281f46"
+    },
+    {
+      "path": "skills/prism/studio/app.tsx",
+      "sha256": "5ee08fa855120dfb53f44aa8a5aa48979674d3f4a0ba8c13c2f4717d2663c092"
+    },
+    {
+      "path": "skills/prism/control/agent-jobs.ts",
+      "sha256": "ff62ef04432ebb67c700c4a25103a0477096f588c2cc3f34f3fab0b776860334"
+    },
+    {
+      "path": "skills/prism/control/design-generations.ts",
+      "sha256": "cd32799fdb1eacbaf40c968b101badcfbedc0f8ce9b12ab045e82ae2e632cbfd"
+    },
+    {
+      "path": "skills/prism/engine/worker-envelope.ts",
+      "sha256": "56ddb558742228e8c828b98b83916dcdcd1c46f355f2061bfc0c4bdac0290941"
+    },
+    {
+      "path": "skills/prism/config/native-worker.ts",
+      "sha256": "c2a0722a4a938830529d5f60ff5fb4533984a0f8e38c37c693be79c0674141a6"
+    },
+    {
+      "path": "charts/prism/templates/workloads.yaml",
+      "sha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20"
+    },
+    {
+      "path": "contracts/prism/v1/fixtures/minimal-web.json",
+      "sha256": "716e4beaf38dc49be48fdca6da5c2f0ca53e55692a3f1cbb7200879247e049e5"
+    },
+    {
+      "path": "skills/prism/openclaw-plugin/index.test.mjs",
+      "sha256": "0c5f68f6ca9cbbbdec820d619392a3b489a1302dedd309cf0eff67e566923114"
+    },
+    {
+      "path": "skills/prism/tests/directions.test.mts",
+      "sha256": "29f1b9e783bea0b0a3cee331c021dfe039e9a9262461d27e4513feedf1bde7d6"
+    }
+  ],
+  "current": {
+    "count": 3,
+    "copies": [
+      {
+        "source": "skills/prism/server/agent-routes.ts",
+        "reason": "HTTP count and uniqueness3 guards"
+      },
+      {
+        "source": "skills/prism/server/agent-prompt.mjs",
+        "reason": "agent instructions exactthree"
+      },
+      {
+        "source": "skills/prism/openclaw-plugin/index.mjs",
+        "reason": "advertised minItems=maxItems3"
+      },
+      {
+        "source": "skills/prism/storage/index.ts",
+        "reason": "repository count and unique keys3 before transaction"
+      },
+      {
+        "source": "skills/prism/studio/design-round-client.ts",
+        "reason": "client pending completion length3"
+      },
+      {
+        "source": "skills/prism/studio/app.tsx",
+        "reason": "reject-all/new-round UI length3 gate"
+      }
+    ],
+    "diversity": "Separate pairwise score3 threshold and3/2/1feature weights, not count aliases",
+    "routeCorrection": "Actual POST /v1/agent/design-sets; source question called it /v1/design-rounds but no such route here"
+  },
+  "classification": {
+    "count": "operator-owned business workflow policy with generated tool/prompt/service/UI projections, not an immutable protocol invariant solely because copies are3",
+    "owner": "existing prism-control component author",
+    "targetField": "selected profile settings.designPolicy.count",
+    "proposedDomain": {
+      "type": "integer",
+      "enum": [
+        2,
+        3
+      ],
+      "justification": "Two is the minimal pairwise comparison count; it reduces work versus current3 and current diversity helper/repository iteration are cardinality-generic except explicit3guards. Maximum3 preserves existing workload cap. Current API/tool still reject2; enum is a new proposed domain, not current support or approved reduction.",
+      "originalScopePreserved": "All legacy/current A three-design obligations remain exact; B two-design cases are additional explicitly count2-bound tasks, never a partial completion of an accepted three-design task. Independent A6/business-domain review pending."
+    }
+  },
+  "profiles": {
+    "A": {
+      "completeSixOwnerDocuments": {
+        "prism-worker.config.json": {
+          "schemaVersion": "swarm-component.v1",
+          "owner": "prism-worker",
+          "settings": {
+            "ingress": {
+              "port": 8080,
+              "maximumActiveRequests": 16,
+              "maximumProbeRequests": 4,
+              "maximumConnections": 128,
+              "requestTimeoutMs": 120000,
+              "shutdownTimeoutMs": 120000,
+              "maximumInputBytes": 16777216
+            },
+            "supervisor": {
+              "uid": 1000,
+              "gid": 1000,
+              "maximumOwnershipRecords": 65536,
+              "maximumOwnershipBytes": 67108864,
+              "maximumOutputBytes": 33554432,
+              "maximumJournalBytes": 68719476736,
+              "pollIntervalMs": 20,
+              "drainTimeoutMs": 10000,
+              "closeTimeoutMs": 105000
+            }
+          }
+        },
+        "worker-core.config.json": {
+          "schemaVersion": "swarm-component.v1",
+          "owner": "worker-core",
+          "settings": {
+            "localRuntime": {
+              "drainTimeoutMs": 300000,
+              "cancellationTimeoutMs": 30000,
+              "replayLimit": 65536
+            }
+          }
+        },
+        "prism-studio.config.json": {
+          "schemaVersion": "swarm-component.v1",
+          "owner": "prism-studio",
+          "settings": {
+            "port": 8080,
+            "controlTimeoutMs": 30000,
+            "controlUrl": "http://prism-control:8080"
+          }
+        },
+        "buster-engine.config.json": {
+          "schemaVersion": "swarm-component.v1",
+          "owner": "buster-engine",
+          "settings": {
+            "preparation": {
+              "resourcePolicy": {
+                "cpuTimeMs": 120000,
+                "memoryBytes": 8589934592,
+                "tasks": 64
+              },
+              "timeoutMs": 300000,
+              "cleanupTimeoutMs": 10000,
+              "maximumActivePreparations": 2,
+              "maximumPendingAdmissions": 16,
+              "maximumRequestBytes": 100663296,
+              "maximumArchiveBytes": 67108864,
+              "maximumExtractedBytes": 536870912,
+              "maximumHeaderBytes": 3145728,
+              "maximumSourceBytes": 1073741824,
+              "maximumMetadataBytes": 67108864,
+              "maximumRecords": 10000,
+              "maximumOwnershipBytes": 16777216,
+              "maximumJournalBytes": 268435456,
+              "maximumInputBytes": 65536,
+              "maximumOutputBytes": 8388608,
+              "maximumResultBytes": 4194304,
+              "pollIntervalMs": 25,
+              "drainTimeoutMs": 5000,
+              "closeTimeoutMs": 10000,
+              "tarTimeoutMs": 120000,
+              "maximumArchiveEntries": 200000,
+              "maximumListingLineBytes": 1048576,
+              "maximumTarStderrBytes": 65536,
+              "maximumSourceEntries": 400014,
+              "sourceEntryReservationBytes": 256,
+              "maximumOpenFiles": 64
+            },
+            "admission": {
+              "maximumActiveJobs": 2,
+              "maximumQueuedJobs": 8,
+              "maximumConcurrentAttempts": 64
+            },
+            "dependencyReadiness": {
+              "maximumExecutionMs": 1000,
+              "maximumOutputBytes": 65536
+            },
+            "execution": {
+              "provider": {
+                "cleanupTimeoutMs": 30000,
+                "maximumResultBytes": 16777216,
+                "claimGraceMs": 60000,
+                "queueTimeoutMs": 60000,
+                "workerResultWrapperBytes": 4096,
+                "maximumProtocolBytes": 16777216,
+                "terminationGraceMs": 500,
+                "terminationTimeoutMs": 1000,
+                "capabilityDrainTimeoutMs": 1000,
+                "minimumHeapMiB": 16,
+                "heapFraction": 0.7,
+                "maximumPendingCapabilities": 32,
+                "minimumOpenFiles": 64,
+                "artifactFileDescriptorReserve": 32
+              },
+              "reports": {
+                "maximumAggregateResultBytes": 16777216,
+                "maximumSourceBytes": 67108864,
+                "maximumCases": 5000,
+                "maximumFindings": 5000,
+                "maximumCaseFindings": 100,
+                "maximumTimeoutMs": 300000,
+                "memoryBytes": 536870912,
+                "minimumCpuTimeMs": 1000,
+                "maximumOpenFiles": 64,
+                "minimumOpenFiles": 16,
+                "minimumHeapMiB": 16,
+                "heapFraction": 0.7,
+                "runtimeMemoryReserveBytes": 67108864
+              },
+              "observation": {
+                "resourceSampleIntervalMs": 10,
+                "processSampleIntervalMs": 50
+              },
+              "stores": {
+                "attempts": {
+                  "maximumEvidenceObjects": 10000,
+                  "maximumEvidenceBytes": 10737418240,
+                  "maximumEvidenceObjectBytes": 1073741824,
+                  "maximumResults": 10000,
+                  "maximumClosures": 10000,
+                  "maximumMetadataBytes": 268435456,
+                  "maximumPendingEvidenceAgeMs": 3600000
+                },
+                "admission": {
+                  "maximumIngressBytes": 16777216,
+                  "maximumRecords": 10000,
+                  "maximumBytes": 268435456,
+                  "maximumQuarantineRecords": 1000,
+                  "maximumQuarantineBytes": 67108864
+                }
+              },
+              "processInput": {
+                "cleanupTimeoutMs": 1500,
+                "terminationGraceMs": 250,
+                "acknowledgementPollMs": 10
+              }
+            },
+            "clusterInvokers": {
+              "shared": {
+                "kubectlExecutable": "/usr/local/bin/kubectl",
+                "leaseApiGroup": "kubeclaw.forgestack.ai",
+                "leaseApiVersion": "v1alpha1"
+              },
+              "kubernetesFixture": {
+                "allowedNamespacePrefixes": [
+                  "test"
+                ],
+                "registryRepositoryPrefixes": [
+                  "kubeclaw"
+                ],
+                "allowedSecretReferences": [],
+                "allowedStorageClasses": [],
+                "allowDefaultStorageClass": true,
+                "runnerServiceAccount": "agent-buster",
+                "credentialReaderServiceAccount": "agent-nova",
+                "maximumManifestBytes": 1048576,
+                "maximumResources": 64,
+                "maximumPersistentVolumeClaimBytes": 10737418240,
+                "maximumPersistentVolumeTotalBytes": 21474836480,
+                "maximumRetentionSeconds": 604800,
+                "maximumExecutionMs": 900000,
+                "pollIntervalMs": 1000,
+                "shortCommandTimeoutMs": 15000,
+                "commandOutputManifestMultiplier": 2,
+                "diagnosticCodeUnits": 4096,
+                "manifest": {
+                  "maximumNodes": 100000,
+                  "maximumDepth": 64,
+                  "maximumAliases": 1000,
+                  "maximumFlattenVisits": 100000,
+                  "maximumFlattenPending": 100000
+                }
+              },
+              "tailscaleExposure": {
+                "allowedNamespacePrefixes": [
+                  "test"
+                ],
+                "allowedHostSuffixes": [
+                  ".ts.net"
+                ],
+                "maximumExecutionMs": 900000,
+                "pollIntervalMs": 1000,
+                "shortCommandTimeoutMs": 15000,
+                "maximumCommandOutputBytes": 1048576
+              },
+              "runtimeSecurity": {
+                "allowedNamespacePrefixes": [
+                  "test"
+                ],
+                "maximumExecutionMs": 300000,
+                "maximumOutputBytes": 16777216,
+                "pollIntervalMs": 1000,
+                "maximumObservationAgeMs": 10000,
+                "maximumFutureSkewMs": 5000,
+                "diagnosticCodeUnits": 1024,
+                "executableSearchPath": [
+                  "/usr/local/bin",
+                  "/usr/bin",
+                  "/bin"
+                ]
+              }
+            }
+          }
+        },
+        "prism-control.config.json": {
+          "schemaVersion": "swarm-component.v1",
+          "owner": "prism-control",
+          "settings": {
+            "pipelinePreferenceSubject": null,
+            "artifactRoot": "/var/lib/prism/artifacts",
+            "studioPublicUrl": "https://prism-studio",
+            "port": 8080,
+            "dispatchTimeoutMs": 900000,
+            "designPolicy": {
+              "count": 3
+            }
+          }
+        },
+        "prism-execution.config.json": {
+          "schemaVersion": "swarm-component.v1",
+          "owner": "prism-execution",
+          "settings": {
+            "resourcePolicy": {
+              "cpuTimeMs": 60000,
+              "memoryBytes": 8589934592,
+              "tasks": 2048
+            },
+            "maximumResultBytes": 67108864
+          }
+        }
+      },
+      "proposedOnly": true,
+      "currentLoaderWouldRejectNewField": true,
+      "supportedToolDomain": [
+        2,
+        3
+      ],
+      "selectedRoundCount": 3
+    },
+    "B": {
+      "completeSixOwnerDocuments": {
+        "prism-worker.config.json": {
+          "schemaVersion": "swarm-component.v1",
+          "owner": "prism-worker",
+          "settings": {
+            "ingress": {
+              "port": 8080,
+              "maximumActiveRequests": 16,
+              "maximumProbeRequests": 4,
+              "maximumConnections": 128,
+              "requestTimeoutMs": 120000,
+              "shutdownTimeoutMs": 120000,
+              "maximumInputBytes": 16777216
+            },
+            "supervisor": {
+              "uid": 1000,
+              "gid": 1000,
+              "maximumOwnershipRecords": 65536,
+              "maximumOwnershipBytes": 67108864,
+              "maximumOutputBytes": 33554432,
+              "maximumJournalBytes": 68719476736,
+              "pollIntervalMs": 20,
+              "drainTimeoutMs": 10000,
+              "closeTimeoutMs": 105000
+            }
+          }
+        },
+        "worker-core.config.json": {
+          "schemaVersion": "swarm-component.v1",
+          "owner": "worker-core",
+          "settings": {
+            "localRuntime": {
+              "drainTimeoutMs": 300000,
+              "cancellationTimeoutMs": 30000,
+              "replayLimit": 65536
+            }
+          }
+        },
+        "prism-studio.config.json": {
+          "schemaVersion": "swarm-component.v1",
+          "owner": "prism-studio",
+          "settings": {
+            "port": 8080,
+            "controlTimeoutMs": 30000,
+            "controlUrl": "http://prism-control:8080"
+          }
+        },
+        "buster-engine.config.json": {
+          "schemaVersion": "swarm-component.v1",
+          "owner": "buster-engine",
+          "settings": {
+            "preparation": {
+              "resourcePolicy": {
+                "cpuTimeMs": 120000,
+                "memoryBytes": 8589934592,
+                "tasks": 64
+              },
+              "timeoutMs": 300000,
+              "cleanupTimeoutMs": 10000,
+              "maximumActivePreparations": 2,
+              "maximumPendingAdmissions": 16,
+              "maximumRequestBytes": 100663296,
+              "maximumArchiveBytes": 67108864,
+              "maximumExtractedBytes": 536870912,
+              "maximumHeaderBytes": 3145728,
+              "maximumSourceBytes": 1073741824,
+              "maximumMetadataBytes": 67108864,
+              "maximumRecords": 10000,
+              "maximumOwnershipBytes": 16777216,
+              "maximumJournalBytes": 268435456,
+              "maximumInputBytes": 65536,
+              "maximumOutputBytes": 8388608,
+              "maximumResultBytes": 4194304,
+              "pollIntervalMs": 25,
+              "drainTimeoutMs": 5000,
+              "closeTimeoutMs": 10000,
+              "tarTimeoutMs": 120000,
+              "maximumArchiveEntries": 200000,
+              "maximumListingLineBytes": 1048576,
+              "maximumTarStderrBytes": 65536,
+              "maximumSourceEntries": 400014,
+              "sourceEntryReservationBytes": 256,
+              "maximumOpenFiles": 64
+            },
+            "admission": {
+              "maximumActiveJobs": 2,
+              "maximumQueuedJobs": 8,
+              "maximumConcurrentAttempts": 64
+            },
+            "dependencyReadiness": {
+              "maximumExecutionMs": 1000,
+              "maximumOutputBytes": 65536
+            },
+            "execution": {
+              "provider": {
+                "cleanupTimeoutMs": 30000,
+                "maximumResultBytes": 16777216,
+                "claimGraceMs": 60000,
+                "queueTimeoutMs": 60000,
+                "workerResultWrapperBytes": 4096,
+                "maximumProtocolBytes": 16777216,
+                "terminationGraceMs": 500,
+                "terminationTimeoutMs": 1000,
+                "capabilityDrainTimeoutMs": 1000,
+                "minimumHeapMiB": 16,
+                "heapFraction": 0.7,
+                "maximumPendingCapabilities": 32,
+                "minimumOpenFiles": 64,
+                "artifactFileDescriptorReserve": 32
+              },
+              "reports": {
+                "maximumAggregateResultBytes": 16777216,
+                "maximumSourceBytes": 67108864,
+                "maximumCases": 5000,
+                "maximumFindings": 5000,
+                "maximumCaseFindings": 100,
+                "maximumTimeoutMs": 300000,
+                "memoryBytes": 536870912,
+                "minimumCpuTimeMs": 1000,
+                "maximumOpenFiles": 64,
+                "minimumOpenFiles": 16,
+                "minimumHeapMiB": 16,
+                "heapFraction": 0.7,
+                "runtimeMemoryReserveBytes": 67108864
+              },
+              "observation": {
+                "resourceSampleIntervalMs": 10,
+                "processSampleIntervalMs": 50
+              },
+              "stores": {
+                "attempts": {
+                  "maximumEvidenceObjects": 10000,
+                  "maximumEvidenceBytes": 10737418240,
+                  "maximumEvidenceObjectBytes": 1073741824,
+                  "maximumResults": 10000,
+                  "maximumClosures": 10000,
+                  "maximumMetadataBytes": 268435456,
+                  "maximumPendingEvidenceAgeMs": 3600000
+                },
+                "admission": {
+                  "maximumIngressBytes": 16777216,
+                  "maximumRecords": 10000,
+                  "maximumBytes": 268435456,
+                  "maximumQuarantineRecords": 1000,
+                  "maximumQuarantineBytes": 67108864
+                }
+              },
+              "processInput": {
+                "cleanupTimeoutMs": 1500,
+                "terminationGraceMs": 250,
+                "acknowledgementPollMs": 10
+              }
+            },
+            "clusterInvokers": {
+              "shared": {
+                "kubectlExecutable": "/usr/local/bin/kubectl",
+                "leaseApiGroup": "kubeclaw.forgestack.ai",
+                "leaseApiVersion": "v1alpha1"
+              },
+              "kubernetesFixture": {
+                "allowedNamespacePrefixes": [
+                  "test"
+                ],
+                "registryRepositoryPrefixes": [
+                  "kubeclaw"
+                ],
+                "allowedSecretReferences": [],
+                "allowedStorageClasses": [],
+                "allowDefaultStorageClass": true,
+                "runnerServiceAccount": "agent-buster",
+                "credentialReaderServiceAccount": "agent-nova",
+                "maximumManifestBytes": 1048576,
+                "maximumResources": 64,
+                "maximumPersistentVolumeClaimBytes": 10737418240,
+                "maximumPersistentVolumeTotalBytes": 21474836480,
+                "maximumRetentionSeconds": 604800,
+                "maximumExecutionMs": 900000,
+                "pollIntervalMs": 1000,
+                "shortCommandTimeoutMs": 15000,
+                "commandOutputManifestMultiplier": 2,
+                "diagnosticCodeUnits": 4096,
+                "manifest": {
+                  "maximumNodes": 100000,
+                  "maximumDepth": 64,
+                  "maximumAliases": 1000,
+                  "maximumFlattenVisits": 100000,
+                  "maximumFlattenPending": 100000
+                }
+              },
+              "tailscaleExposure": {
+                "allowedNamespacePrefixes": [
+                  "test"
+                ],
+                "allowedHostSuffixes": [
+                  ".ts.net"
+                ],
+                "maximumExecutionMs": 900000,
+                "pollIntervalMs": 1000,
+                "shortCommandTimeoutMs": 15000,
+                "maximumCommandOutputBytes": 1048576
+              },
+              "runtimeSecurity": {
+                "allowedNamespacePrefixes": [
+                  "test"
+                ],
+                "maximumExecutionMs": 300000,
+                "maximumOutputBytes": 16777216,
+                "pollIntervalMs": 1000,
+                "maximumObservationAgeMs": 10000,
+                "maximumFutureSkewMs": 5000,
+                "diagnosticCodeUnits": 1024,
+                "executableSearchPath": [
+                  "/usr/local/bin",
+                  "/usr/bin",
+                  "/bin"
+                ]
+              }
+            }
+          }
+        },
+        "prism-control.config.json": {
+          "schemaVersion": "swarm-component.v1",
+          "owner": "prism-control",
+          "settings": {
+            "pipelinePreferenceSubject": null,
+            "artifactRoot": "/var/lib/prism/artifacts",
+            "studioPublicUrl": "https://prism-studio",
+            "port": 8080,
+            "dispatchTimeoutMs": 900000,
+            "designPolicy": {
+              "count": 2
+            }
+          }
+        },
+        "prism-execution.config.json": {
+          "schemaVersion": "swarm-component.v1",
+          "owner": "prism-execution",
+          "settings": {
+            "resourcePolicy": {
+              "cpuTimeMs": 60000,
+              "memoryBytes": 8589934592,
+              "tasks": 2048
+            },
+            "maximumResultBytes": 67108864
+          }
+        }
+      },
+      "proposedOnly": true,
+      "currentLoaderWouldRejectNewField": true,
+      "supportedToolDomain": [
+        2,
+        3
+      ],
+      "selectedRoundCount": 2
+    }
+  },
+  "activation": {
+    "selectedCount": "First captured atomically in design_round.request.designBinding and first startDigest inside startDesignRound; later job/prompt/result/client copy exact originalbinding. See firstRoundBindingContract; no current/latest lookup after acceptance.",
+    "toolSchema": "R captured supported domain2..3 generated from same schema; request/body count must equal persisted job selectedCount at real handler. Existing exact3-only old registration cannot execute selected2: fail compatibility before external action. No SDK codec field repurposed as selection.",
+    "prompt": "Original accepted job count drives exact numeric instruction and generated template, no ambient latest count",
+    "apiRepository": "Validate job/fence/round association and original bound count before any new document transaction; uniqueness equals selectedCount, not stale3",
+    "client": "Persist original expectedCount/generation in PendingRound response; completion/reject-all use that original round boundcount, not current global policy",
+    "recovery": "Publish B never changes startedA count/profile/tool compatibility, originalclaim/deadline/budget, uncertain effect or result replay. Missing legacy closure fails NeedsNova/reconciliation before new effects; do not infer3 from latest/default. Completed historical directions are data, not config fallback. Fixed EvalA stays3."
+  },
+  "remaining": "Exact future closed-generation projection/schema/SDK/service/DB/UI implementation, complete delivery and real agent/model/lease evidence not-run; source proposal requires fresh independent semantic review.",
+  "firstRoundBindingContract": {
+    "path": "docs/review/evidence/config-acceptance/author/prism-handoff-target-contracts-20261013.json",
+    "profiles": [
+      "A",
+      "B"
+    ],
+    "normativeDefinition": {
+      "path": "docs/review/evidence/config-acceptance/author/PRISM-HANDOFF-TARGET-20261013.md",
+      "sha256": "ca84be429d093bdcffd19cec0ee9f233e719cc6363ad09659b900aef5dbc142f"
+    },
+    "firstDurableBoundary": "startDesignRound transaction before agent admission",
+    "reviewStatus": "PPRISM001 correction awaiting independent recheck"
+  }
+}

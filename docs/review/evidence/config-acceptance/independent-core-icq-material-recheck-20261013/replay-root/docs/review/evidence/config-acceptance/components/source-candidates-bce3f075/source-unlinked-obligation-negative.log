@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/check-source-freeze.py", line 14, in <module>
+    if c['status']=='uncovered-source-obligation':check('Exact named gap ratherthan genericbucket '+c['id'],c.get('sourceQuestionId') in questions)
+                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/check-source-freeze.py", line 3, in check
+    def check(name,condition):assert condition,name;checks.append(name)
+                              ^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Exact named gap ratherthan genericbucket SRC-855939e7c7117675

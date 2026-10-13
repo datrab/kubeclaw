@@ -1,0 +1,50 @@
+{
+  "command": "node docs/review/evidence/config-acceptance/independent-core-source-question-bce3f075-20261013/outbox-positive-witness.mjs",
+  "node": "v24.21.0",
+  "identities": {
+    "tests/verification/contracts/check-pipeline-observability-durable-delivery.mts": "188a4d3396b7b3055cf867a0d5fcc813c2b9d4311d9290ca722b17cf070411ec",
+    "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts": "5624aa2b5f980a373ab30fdf012dee1346418ac3b2537244475f2a496d3766a0",
+    "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/independent-core-source-question-bce3f075-20261013/outbox-positive-witness.mjs": "aaefe34b26b82bb718f3c6c22235143ff17a1d54013a3e8184ca212f6b7e55ac",
+    "package-lock.json": "c7b124ab4de93c983eebfd13f859cd328b7e7a823fe7dc662f9b6e0cf0ed736b"
+  },
+  "exactUnsignedRecord": {
+    "schemaVersion": "producer-record.v1",
+    "recordId": "record:1",
+    "producer": {
+      "producerId": "worker:1",
+      "bootId": "boot:1",
+      "producerType": "buster"
+    },
+    "sequence": 1,
+    "recordType": "attempt.started",
+    "occurredAt": "2026-08-09T12:00:00Z",
+    "correlation": {
+      "pipelineRunId": "run:1",
+      "moduleId": "api",
+      "gateId": "final",
+      "attemptId": "attempt:1",
+      "claimId": "claim:1",
+      "claimGeneration": 1,
+      "traceId": "trace:1",
+      "parentEventId": null
+    },
+    "payload": {
+      "state": "started"
+    }
+  },
+  "recordBytes": 517,
+  "wholeOutboxBytes": 1223,
+  "results": [
+    {
+      "maximumBytes": 1024,
+      "result": "rejected",
+      "error": "OBSERVABILITY_OUTBOX_FULL"
+    },
+    {
+      "maximumBytes": 2048,
+      "result": "admitted",
+      "stateBytes": 1223
+    }
+  ],
+  "scope": "Genuine current public append reader/cap guard with existing contract fixture. 1024 cannot admit THIS positive; does not prove every smaller valid record impossible or satisfy future four bounded-read methods."
+}

@@ -8,6 +8,7 @@ import hashlib
 import json
 import pathlib
 import subprocess
+from observation_references import ObservationReferences
 
 root = pathlib.Path.cwd()
 base = root / 'docs/review/evidence/config-acceptance'
@@ -182,20 +183,177 @@ resolved_correction_gaps.append({
     'previousGapId':'GAP-INDEPENDENT-CORE-RECHECK',
     'findingIds':['ICD-001','ICD-002','ICD-003','ICD-004','RCORE-001','RCORE-002'],
     'reviewDisposition':bounded_review})
+# Source/question packages are explicit supplemental definitions, not silently
+# dropped because their vocabulary differs from legacy row fragments. Keep
+# their exact native specifications; do not manufacture a runtime result or
+# flatten a multi-caller question into an unjustified single setting row.
+supplemental_packages = []
+core_receipt_path = base/'components/icq-corrections-20261013/stable-material-correction-receipt.json'
+if core_receipt_path.exists():
+    core_receipt = load(core_receipt_path)
+    for name, expected in core_receipt['freeze'].items():
+        if digest(root/name) != expected:
+            raise ValueError(f'CORE_SUPPLEMENTAL_INPUT_DRIFT:{name}')
+    active_receipt_path = core_receipt_path
+    active_files = dict(core_receipt['activeFiles'])
+    input_identities = dict(core_receipt['freeze'])
+    baseline_path = base/'components/question-closure-bce3f075/question-case-specs.json'
+    baseline_cases = load(baseline_path)['activeCases']
+    baseline_requirements = {case['id']:case['requirements'] for case in baseline_cases}
+    supersession_history = []
+    bounded_material_reviews = []
+    boundary_receipt_path = base/'components/icq-r06-boundaries-20261013/stable-material-correction-receipt.json'
+    if boundary_receipt_path.exists():
+        boundary_receipt = load(boundary_receipt_path)
+        preserved = load(boundary_receipt_path.parent/'preserved-input-identities.json')['inputs']
+        for identities in [preserved, boundary_receipt['freeze']]:
+            for name, expected in identities.items():
+                if digest(root/name) != expected:
+                    raise ValueError(f'CORE_BOUNDARY_SUPERSESSION_INPUT_DRIFT:{name}')
+                if name in input_identities and input_identities[name] != expected:
+                    raise ValueError(f'CORE_BOUNDARY_SUPERSESSION_IDENTITY_CONFLICT:{name}')
+                input_identities[name] = expected
+        input_identities[str(core_receipt_path.relative_to(root))] = digest(core_receipt_path)
+        supersession_history.append({
+            'receipt':str(core_receipt_path.relative_to(root)),
+            'receiptSha256':digest(core_receipt_path),
+            'activeFilesAtThatCheckpoint':core_receipt['activeFiles'],
+            'disposition':'Historical ICQ01–05 material definitions retained; ICQ06 byte/boundary specifications superseded, not overwritten.',
+            'independentFindingIds':['ICQ-R06-01','ICQ-R06-02']})
+        active_receipt_path = boundary_receipt_path
+        active_files['cases'] = boundary_receipt['caseEntry']
+        active_files['boundaryDefinitions'] = boundary_receipt['definitionEntry']
+        active_files['caseInputContracts'] = str((boundary_receipt_path.parent/'case-input-contracts.json').relative_to(root))
+        active_files['boundaryCorrectionLedger'] = boundary_receipt['ledger']
+        r06_review_path = base/'independent-core-r06-recheck-20261013/independent-r06-review.json'
+        if r06_review_path.exists():
+            r06_review = load(r06_review_path)
+            if r06_review.get('noGlobalC0Acceptance') is not True:
+                raise ValueError('CORE_R06_REVIEW_SCOPE_AMBIGUOUS')
+            dispositions = r06_review.get('dispositions',[])
+            if len(dispositions) != 2 or {item.get('id') for item in dispositions} != {'ICQ-R06-01','ICQ-R06-02'} or any(item.get('disposition') != 'resolved-bounded-material-definition' for item in dispositions):
+                raise ValueError('CORE_R06_NAMED_FINDINGS_NOT_RESOLVED')
+            if digest(r06_review_path) != '2253cfa1cfc01715dbee947e8f21f7ec42a7294596d1d10a72f279835917f8ab':
+                raise ValueError('CORE_R06_REPORT_REVISION_REQUIRES_REVIEW')
+            review_freeze_path = r06_review_path.parent/'frozen-input-receipt.json'
+            if digest(review_freeze_path) != '26eba8c881cee9a2d20faaee39b3a5179a9a4a4cb9545d9ee28410b0b77692cc':
+                raise ValueError('CORE_R06_REVIEW_FREEZE_DRIFT')
+            reviewed_inputs = load(review_freeze_path)['inputs']
+            for name, expected in input_identities.items():
+                if name not in reviewed_inputs or reviewed_inputs[name]['sha256'] != expected:
+                    raise ValueError(f'CORE_R06_STALE_REVIEW_INPUT:{name}')
+            if reviewed_inputs.get(str(boundary_receipt_path.relative_to(root)),{}).get('sha256') != digest(boundary_receipt_path):
+                raise ValueError('CORE_R06_STALE_REVIEW_RECEIPT')
+            input_identities[str(review_freeze_path.relative_to(root))] = digest(review_freeze_path)
+            input_identities[str(r06_review_path.relative_to(root))] = digest(r06_review_path)
+            bounded_material_reviews.append({
+                'report':str(r06_review_path.relative_to(root)),
+                'reportSha256':digest(r06_review_path),
+                'dispositions':r06_review['dispositions'],
+                'limits':r06_review['remainingOutsideNamedReview'],
+                'wholeC0Acceptance':False})
+    active_cases = load(root/active_files['cases'])['activeCases']
+    if load(root/active_files['caseInputContracts'])['activeCases'] != active_cases:
+        raise ValueError('CORE_SUPPLEMENTAL_ACTIVE_CASE_INPUT_CONFLICT')
+    active_by_id = {case['id']:case for case in active_cases}
+    if len(active_by_id) != len(active_cases):
+        raise ValueError('CORE_SUPPLEMENTAL_DUPLICATE_ACTIVE_CASE')
+    for cid, required in baseline_requirements.items():
+        if cid not in active_by_id or not set(required).issubset(active_by_id[cid].get('requirements',[])):
+            raise ValueError(f'CORE_SUPPLEMENTAL_BASELINE_REQUIREMENT_LOSS:{cid}')
+    supplemental_packages.append({
+        'id':'CORE-ICQ-DEFINITION-CORRECTIONS-20261013',
+        'receipt':str(active_receipt_path.relative_to(root)),
+        'receiptSha256':digest(active_receipt_path),
+        'inputIdentities':input_identities,
+        'activeFiles':active_files,
+        'supersessionHistory':supersession_history,
+        'boundedMaterialReviews':bounded_material_reviews,
+        'questions':load(root/core_receipt['activeFiles']['definitions'])['questions'],
+        'caseSpecifications':active_cases,
+        'caseRequirementBaseline':{'path':str(baseline_path.relative_to(root)),
+            'sha256':digest(baseline_path),'requirementsByCaseId':baseline_requirements},
+        'independentReview':'Named R06 contradictions independently resolved at bounded material definition scope; canonical field/consumer and global closure remain open.' if bounded_material_reviews else 'pending exact corrected material recheck; no author acceptance',
+        'reviewerConfirmation':None,
+        'limits':'Supplemental native definitions are not root field/consumer closure; real per-field links and whole C0 review remain required.'})
+bounded_reviews = [bounded_review]
+nova_disposition_path = base/'author/nova-carrier-01-bounded-disposition-20261013.json'
+if nova_disposition_path.exists():
+    nova_disposition = load(nova_disposition_path)
+    for entry in nova_disposition['verifiedInputIdentities']:
+        if digest(root/entry['path']) != entry['sha256']:
+            raise ValueError(f"NOVA_BOUNDED_REVIEW_INPUT_DRIFT:{entry['path']}")
+    if nova_disposition['globalC0Accepted'] or nova_disposition['rowOrRuntimeAcceptanceInferred']:
+        raise ValueError('NOVA_BOUNDED_REVIEW_SCOPE_AMBIGUOUS')
+    bounded_reviews.append({**nova_disposition,
+        'dispositionPath':str(nova_disposition_path.relative_to(root)),
+        'dispositionSha256':digest(nova_disposition_path)})
+native_case_packages = []
+native_case_references = []
+runtime_case_path = base/'runtime/case-proposals.json'
+if runtime_case_path.exists():
+    native_cases = load(runtime_case_path)
+    native_ids = [case['id'] for case in native_cases]
+    if len(set(native_ids)) != len(native_ids):
+        raise ValueError('RUNTIME_NATIVE_DUPLICATE_CASE_ID')
+    native_sha = digest(runtime_case_path)
+    reference_validator = ObservationReferences(root)
+    reference_validator.resolve(native_cases)
+    definitions['F-EVAL'] = 'Native Runtime fixed-generation Eval obligation; maps to D20 and F-BIND, not separate implementation approval'
+    mapping = []
+    for native in native_cases:
+        cid = native['id']
+        link = {'nativeCaseId':cid,'canonicalCaseId':cid if cid in cases else None,
+                'settingIds':native.get('settings',[]),
+                'requirementIds':native.get('requirements',[]),
+                'mappingReview':None}
+        mapping.append(link)
+        if cid in cases:
+            canonical = cases[cid]
+            canonical['requirementIds'] = sorted(set(canonical['requirementIds'] + link['requirementIds']))
+            canonical.setdefault('nativeSpecificationReferences',[]).append({
+                'packageId':'RUNTIME-NATIVE-CASE-SPECIFICATIONS',
+                'sourcePath':str(runtime_case_path.relative_to(root)),
+                'sourceSha256':native_sha,'nativeCaseId':cid,
+                'limits':'Native specification retained separately; canonical field coverage/result/reviewer status not inferred.'})
+    native_case_packages.append({
+        'id':'RUNTIME-NATIVE-CASE-SPECIFICATIONS',
+        'sourcePath':str(runtime_case_path.relative_to(root)), 'sourceSha256':native_sha,
+        'caseSpecifications':native_cases, 'canonicalCaseMapping':mapping,
+        'observationReferenceIntegrity':reference_validator.summary(),
+        'reviewerConfirmation':None,
+        'limits':'Exact native vocabulary and author evidence preserved; unlinked IDs remain unresolved, no semantic/runtime or canonical field acceptance inferred.'})
+    native_case_references.append({
+        'id':'RUNTIME-NATIVE-CASE-SPECIFICATIONS',
+        'sourcePath':str(runtime_case_path.relative_to(root)), 'sourceSha256':native_sha,
+        'nativeCaseCount':len(native_cases),
+        'unlinkedNativeCaseCount':sum(link['canonicalCaseId'] is None for link in mapping),
+        'matrixLocation':'nativeCasePackages', 'reviewerConfirmation':None})
 inventory = {'schemaVersion':1,'status':'in-progress-not-C0-accepted','identity':identity,
              'inputFragments':inputs,'rows':rows,'sources':list(sources.values()),'gaps':gaps,
-             'boundedReviewDispositions':[bounded_review],
+             'boundedReviewDispositions':bounded_reviews,
              'resolvedCorrectionGaps':resolved_correction_gaps,
+             'supplementalDefinitionPackages':supplemental_packages,
+             'nativeCasePackageReferences':native_case_references,
              'candidateLedger':'docs/review/evidence/config-acceptance/author/candidate-ledger.json',
+             'coordinateCandidateLedgers':['docs/review/evidence/config-acceptance/author/infra-coordinate-extension-20261013.json'],
              'sourceBoundary':'docs/review/evidence/config-acceptance/author/source-boundary.json'}
 matrix = {'schemaVersion':1,'status':'in-progress-not-approval-ready','identity':identity,
           'requirements':[{'id':k,'description':v,'source':'docs/review/remediation/independent-config-c0-core-domain-a07de567.md' if k.startswith('ICD-') else 'docs/review/remediation/independent-config-c0-9452d355.md' if k.startswith('IC0-') else 'docs/review/remediation/OPENCLAW-CONFIG-GOAL.md' if k.startswith(('C0-','F-')) else 'docs/review/remediation/acceptance-20260920.md' if k.startswith(('A','F')) else 'docs/review/remediation/decisions.md'} for k,v in definitions.items()],
-          'cases':list(cases.values()),'acceptance':{k:'not-run' for k in ['C0-A','C0-B','C0-C','C0-D','C0-E']},
+          'cases':list(cases.values()),'nativeCasePackages':native_case_packages,
+          'acceptance':{k:'not-run' for k in ['C0-A','C0-B','C0-C','C0-D','C0-E']},
           'implementationAuthorization':None,
           'historicalEvidence':'docs/review/evidence/cloud-config-assessment-20261012/verification.json',
           'limits':['Generated case placeholders do not satisfy exact per-consumer specifications.',
                     'No source-traced author row is independent acceptance.',
                     'Implementation runtime cases remain not-run before approval.']}
+references = ObservationReferences(root)
+# Validate immutable nested observations but keep references in the published
+# matrix. Expanding repeated data would undo the reversible normalization.
+references.resolve(matrix['cases'])
+for package in native_case_packages:
+    references.resolve(package['caseSpecifications'])
+matrix['immutableObservationReferences'] = references.summary()
 for p, data in [(remediation/'config-semantic-inventory.json',inventory),(remediation/'config-acceptance-matrix.json',matrix)]:
     p.write_text(json.dumps(data,indent=2)+'\n')
 print(json.dumps({'rows':len(rows),'caseIds':len(cases),'gaps':len(gaps),'accepted':False}))

@@ -1,0 +1,3142 @@
+{"path": "docs/review/evidence/config-acceptance/author/PRISM-HANDOFF-TARGET-20261013.md", "sha256": "ca84be429d093bdcffd19cec0ee9f233e719cc6363ad09659b900aef5dbc142f"}
+1: # Proposed Prism handoff contracts — PPRISM001/003
+2: 
+3: Definition proposal only. These additions are not current API/schema support,
+4: implementation authorization, installed-image proof or global C0 acceptance.
+5: The pre-correction rows/cases and independent report remain preserved. The
+6: machine-readable companion carries complete bounded A/B inputs and future cases.
+7: 
+8: ## First durable design-round boundary
+9: 
+10: Both dispatch and Studio currently commit `startDesignRound` before admission of
+11: the agent job. Capture the selected policy **inside that first transaction**, not
+12: only in the later job request. The existing `design_round.request` stores the
+13: following proposed immutable `designBinding` object alongside its original
+14: request; no independently editable registry is introduced:
+15: 
+16: | Field | Exact proposed meaning |
+17: |---|---|
+18: | `schemaVersion` | Literal `prism-design-binding.v1`; serializer identity, not an operator selector |
+19: | `count` | Integer 2 or 3, selected from the sole Control component profile |
+20: | `controlConfigDigest` | SHA-256 of canonical complete selected Control definition |
+21: | `controlConfigRef` | Digest-addressed retained definition bytes; never `latest` |
+22: | `intentDigest` | Digest of the original typed task-cardinality constraint record and its instruction references |
+23: | `architectureDigest`, `architectureRevision` | Exact original active architecture identity/revision |
+24: | `projectInstructionDigest` | Original project-instruction snapshot digest |
+25: | `bindingDigest` | SHA-256 of canonical object excluding only `bindingDigest` |
+26: 
+27: Canonical encoding is the existing WorkerCore canonical JSON convention, UTF-8,
+28: SHA-256, with no digesting of secret values. Exact generated field/schema identities
+29: are part of the proposed serializer and require authorized implementation later.
+30: Store the full binding in the round request; the digest-addressed configuration
+31: reference is redundant verifiable provenance, not a second author. Add this
+32: binding to `DesignRoundStart` before its start digest is computed. Canonicalize the
+33: new start input consistently rather than relying on construction-property order;
+34: retain original historical start-digest encoding and never rewrite historical keys.
+35: 
+36: Resolve an existing `(project,startKey)` before applying a newly published profile:
+37: same original request and binding returns the retained round; an explicitly
+38: different proposed binding/count under that same key rejects before job creation.
+39: A retry which supplies only the unchanged request/key retrieves original A even
+40: when current selection is B. This lookup does not fill a missing original binding
+41: from B or infer a historical count from today's defaults.
+42: 
+43: ### Explicit eligibility (not preference inference)
+44: 
+45: All existing/legacy/free-form request shapes remain three-design intent. They are
+46: **not eligible for B2**, even if the newly selected Control profile says 2. B2 is
+47: limited to a separately submitted new task with a typed `exactCount:2` constraint,
+48: matching architecture and project-instruction constraint snapshots from their
+49: original authorized task authors. Those new task instructions must be generated
+50: from the same typed constraint; arbitrary free-form cardinality overrides are not
+51: allowed in that B2 input form. Missing constraint, an original exact-three
+52: constraint, an instruction/architecture digest mismatch, or disagreement among
+53: the two original constraints rejects B2 at round admission. A profile never edits
+54: or shortens an existing task's instruction. Non-cardinality free-form content may
+55: remain, but cannot supply a conflicting count override. This restrictive new B2
+56: task form and its business validity remain proposed/unapproved, not a claimed
+57: automatic interpretation of arbitrary narrative instructions.
+58: 
+59: ### Later projections and recovery
+60: 
+61: `admitDesignAgent` loads the committed round under its original generation and
+62: copies that exact binding into the immutable job request before hashing/enqueue.
+63: The job cannot manufacture or choose another binding. Prompt text, task tool
+64: description and result-count expectation derive from that retained binding. R's
+65: captured tool capability advertises supported counts; it does not author the task
+66: count. An exact-three old registration rejects a bound-two job before external
+67: action, regardless of a newly published component definition.
+68: 
+69: The result handler verifies job/fence/project/generation plus the round and job
+70: binding digests before result/document effects. Repository uniqueness and complete
+71: document count equal the original count; material-diversity policy stays separate.
+72: Round receipts include `generationId`, `bindingDigest`, `expectedCount`. Pending
+73: client state stores all three. **Every** `completeRound`, initial document-load,
+74: polling, reject-all and removal path uses this original identity/count; A3 with
+75: only one or two documents stays pending and does not remove its stored key.
+76: Mixed-generation results or digest disagreement fail without key removal.
+77: Generated UI/tool text uses the same original count, not an ambient profile.
+78: 
+79: Crash after round commit but before job transaction: retain the round, reload its
+80: binding and create at most one original-generation job using existing admission
+81: idempotency. Crash/uncertainty after external dispatch follows existing job/fence
+82: reconciliation, never dispatches again merely to adopt B. A pre-ledger round
+83: already having a committed result remains completed with **no new external
+84: action**; absent count/provenance cannot authorize another action. Missing original
+85: binding for incomplete historical work requires explicit reconciliation, not a
+86: synthetic three/two value. No new deadline, grant or budget is derived from B.
+87: 
+88: ## Native provenance: separate OCI from engine bytes
+89: 
+90: The current engine profile carries a projected OCI digest, and current dedicated
+91: host validation does not authenticate installed engine bytes. Preserve that exact
+92: historical interpretation. Do not relabel historical OCI content as code-tree
+93: content or add another editable digest author.
+94: 
+95: Propose a strict generated `prism-native-provenance.v1` record attached atomically
+96: to the existing `engine_operation` original attempt reservation. It is generated
+97: from delivered artifacts and the selected complete component configuration, not
+98: authored by a task or an SDK codec. The record has these distinct identities:
+99: 
+100: | Field group | Producer / verifier |
+101: |---|---|
+102: | `role` | Exact `prism-worker`; trusted delivery role manifest, not request self-report |
+103: | `oci` | Selected image manifest digest, optional index digest, exact OS/architecture/variant; sole `versions.json`/Delivery selected-image projection |
+104: | `code` | Exact source commit, package manifest digest, engine file-tree digest, dependency lockfile digest; delivery packaging over enumerated files with canonical paths/hashes |
+105: | `runtime` | Actual Node executable, native launcher and trusted verifier-bootstrap digests; generated installation manifest, never task-provided executable identity |
+106: | `installationManifestDigest` | Digest of the retained immutable manifest joining role, OCI, code and platform; generated delivery output, not a second index |
+107: | `config` | Owner `prism-worker`, selected generation, immutable reference and canonical complete-config digest; existing sole component author |
+108: | `profileDigest` | Exact accepted WorkerProfileV3 digest, preserving current OCI meaning in its `engine.contentDigest` |
+109: | `capabilityContractDigest`, `grantedCapabilities` | Digest of the delivered capability declaration and canonical duplicate-free grant set from original authorized acceptance; not a new secret/permission author |
+110: | `provenanceDigest` | Canonical SHA-256 of all prior fields, excluding this digest only |
+111: 
+112: Digest fields use `sha256:` plus 64 lowercase hex; source commit is exact 40 hex;
+113: references must be immutable digest-addressed artifacts. Platform and contract
+114: enum support must come from the selected delivered role manifest, not arbitrary
+115: task strings. No secret bytes are in this tuple. Fixture A/B values in the
+116: companion are **synthetic definition specimens**, not observed OCI or grants.
+117: 
+118: At original `reserveNativePrismOperation` insertion, verify request and retained
+119: tuple together, and atomically store envelope plus provenance before dispatch.
+120: Same key/request returns the original envelope/tuple; a caller presenting an
+121: incompatible changed tuple must not replace it. Existing result replay validates
+122: original bound result/tuple and hydrates only, with zero execution. Legacy completed
+123: results retain their existing no-new-effect behavior; missing original provenance
+124: for pending/uncertain work blocks execution and requires reconciliation.
+125: 
+126: Before fresh **and recovered** native execution, the trusted supervisor verifies
+127: the retained installation manifest, original grant subset and tuple compatibility
+128: against the actual prepared runtime instance. The prelaunch gate is **before exec
+129: of the unverified Node/host entrypoint and before every engine/dependency module
+130: import or initializer**, not merely before `prepare`. The current host's static
+131: imports occur before `main` and are not evidence of such a gate. Trusted supervisor
+132: and verifier-bootstrap bytes have their own retained installation identities and
+133: cannot be loaded from a request-authored path. An installation manifest enumerates
+134: the host entrypoint, complete transitive engine/runtime package files, Node
+135: executable, native launcher and bootstrap; paths, file kind/mode, bytes or symlink
+136: target and dependency lock identity are bound. Missing entries reject.
+137: 
+138: The provider must pin this verified runtime as an immutable read-only instance
+139: for the entire accepted attempt, including recovery and cleanup. Maintenance
+140: cannot replace files underneath a retained A attempt. A hash followed by exec of
+141: a mutable path is insufficient: inability to obtain the immutable instance/pin
+142: rejects before exec. Engine loading happens only from that pinned instance, with
+143: the captured closed child environment and no ambient module-loader overrides.
+144: Input envelope/self-reported receipt or an environment digest cannot supply this
+145: evidence. Actual OCI manifest/platform verification belongs to the image/delivery
+146: provider; a file-tree hash cannot prove OCI identity. These real observations are
+147: required before new input materialization as specified below and before any engine
+148: execution/output-artifact effect. No installed A instance may execute bound B,
+149: or vice versa. Existing admitted input bytes are accounted separately; rejection
+150: does not pretend they never existed.
+151: 
+152: Recovery may use retained compatible A runtime or report reconciliation needed;
+153: it must never substitute current B/config/grants, mint synthetic development
+154: identity or extend original claim/deadline/budget. Nonproduction fixtures are
+155: explicitly tagged fixture prerequisites and cannot satisfy production or fixed
+156: Eval. Fixed Eval requires the full recorded original tuple and real fixture grant
+157: and installed-runtime evidence. Provider/verifier implementation and those physical
+158: prerequisites remain future C3/C5 work, not proof supplied by this document.
+159: 
+160: ## Native input materialization is a real, separately bound effect — PPRISM005
+161: 
+162: Current `runNativePrismOperation` calls `artifacts.put` **before** reservation.
+163: `ContentAddressedArtifactStore.put` writes and syncs a temporary file even if the
+164: final content-addressed file already exists. Thus current same-key/result replay
+165: does not demonstrate zero input writes. Keep this source fact distinct from the
+166: proposed order:
+167: 
+168: 1. Take an owned immutable copy of serialized input bytes; purely compute SHA-256,
+169:    byte length and planned `artifact:sha256:<hex>` identity. This matches the
+170:    existing store's identity algorithm without calling `put`, creating directories
+171:    or writing temporary bytes. Preserve the exact bytes, not a later reserialization.
+172: 2. Under the existing original-operation transaction/key lock, validate the
+173:    request, original tuple and original authorized store/quota grant. Reserve the
+174:    envelope, provenance and an `inputSpool` descriptor atomically **before writes**.
+175:    The descriptor contains the planned artifact ID/digest/size, original store and
+176:    quota/grant references, reservation ID and materialization state. The quota
+177:    authority is the original registered store admission/physical-capacity grant,
+178:    not a new task-authorable config index. Missing genuine quota/grant definition
+179:    blocks admission; it is not inferred from corpus-upload, envelope-input or
+180:    output-evidence limits, which are different consumers.
+181: 3. Existing terminal result: validate/replay original result and hydrate only;
+182:    do not call `put`, reserve new input capacity or generate a fresh attempt. An
+183:    existing original pending attempt retains its original spool/reservation.
+184:    Explicit conflicting input digest/tuple rejects before writes. An uncertain
+185:    external outcome cannot trigger materialization of replacement input under B.
+186: 4. Obtain the trusted original-role OCI/code/immutable-runtime verification above
+187:    before the **first new** materialization or unverified engine import. Failure
+188:    causes zero new spool/output bytes and zero engine execution. Previously
+189:    admitted A input remains accounted; it is not silently removed to make a
+190:    rejection counter appear zero.
+191: 5. Materialize only the exact reserved bytes into the original selected store.
+192:    Account logical input bytes, temporary physical allocations and shared final
+193:    objects separately under the genuine store grant. A hash match is not a free
+194:    write: pending-file writes and metadata/physical capacity must also be reserved.
+195:    Aggregate store capacity and metadata rules belong to that store's independent
+196:    admission definition; no numerical capacity is invented here. Failure to obtain
+197:    sufficient original capacity rejects before writes. Atomic shared-object
+198:    ownership/reference accounting prevents one attempt's cleanup deleting another's
+199:    input. Verified already-durable original input may be reused without calling the
+200:    current write-first `put` path; that requires future implementation.
+201: 6. Verify final bytes/durability/identity and durably mark `inputSpool` ready before
+202:    dispatch; the accepted envelope's artifact reference must equal this ready
+203:    descriptor. A crash between reservation and readiness resumes only original
+204:    A materialization or releases its original reservation with explicit cleanup.
+205:    A crash after readiness reuses the verified A input; no B serialization/config
+206:    is substituted. A crash after dispatch follows the original uncertainty/fence
+207:    rules, not an unconditional input rewrite or second engine action.
+208: 7. Terminal cleanup/release uses original ownership, reservations, limits and
+209:    retained references. Interrupted cleanup retains accounting and reports it;
+210:    only confirmed removal/unlink/reference release changes the corresponding
+211:    charge. Original required input/result retention remains unchanged by B.
+212: 
+213: Accounting descriptors and physical store/provider fixtures are required future
+214: prerequisites, not present production features. The current store has no complete
+215: quota/reservation contract of this shape. That separate global C0 store-policy
+216: definition remains open; this proposed order does not assert it has been supplied.
+217: Future oracles distinguish **input-spool effects** from engine/output effects and
+218: record pre-existing bytes, new writes and original reservation transitions, never
+219: collapse these into a misleading universal zero-artifact-write claim.
+{"path": "docs/review/evidence/config-acceptance/author/prism-temporal-before-20261013/PRISM-HANDOFF-TARGET-20261013.md", "sha256": "192c7940230809b6e7219dddbb7bc7d2626868194c42c929d89ceebf0f0b5320"}
+1: # Proposed Prism handoff contracts — PPRISM001/003
+2: 
+3: Definition proposal only. These additions are not current API/schema support,
+4: implementation authorization, installed-image proof or global C0 acceptance.
+5: The pre-correction rows/cases and independent report remain preserved. The
+6: machine-readable companion carries complete bounded A/B inputs and future cases.
+7: 
+8: ## First durable design-round boundary
+9: 
+10: Both dispatch and Studio currently commit `startDesignRound` before admission of
+11: the agent job. Capture the selected policy **inside that first transaction**, not
+12: only in the later job request. The existing `design_round.request` stores the
+13: following proposed immutable `designBinding` object alongside its original
+14: request; no independently editable registry is introduced:
+15: 
+16: | Field | Exact proposed meaning |
+17: |---|---|
+18: | `schemaVersion` | Literal `prism-design-binding.v1`; serializer identity, not an operator selector |
+19: | `count` | Integer 2 or 3, selected from the sole Control component profile |
+20: | `controlConfigDigest` | SHA-256 of canonical complete selected Control definition |
+21: | `controlConfigRef` | Digest-addressed retained definition bytes; never `latest` |
+22: | `intentDigest` | Digest of the original typed task-cardinality constraint record and its instruction references |
+23: | `architectureDigest`, `architectureRevision` | Exact original active architecture identity/revision |
+24: | `projectInstructionDigest` | Original project-instruction snapshot digest |
+25: | `bindingDigest` | SHA-256 of canonical object excluding only `bindingDigest` |
+26: 
+27: Canonical encoding is the existing WorkerCore canonical JSON convention, UTF-8,
+28: SHA-256, with no digesting of secret values. Exact generated field/schema identities
+29: are part of the proposed serializer and require authorized implementation later.
+30: Store the full binding in the round request; the digest-addressed configuration
+31: reference is redundant verifiable provenance, not a second author. Add this
+32: binding to `DesignRoundStart` before its start digest is computed. Canonicalize the
+33: new start input consistently rather than relying on construction-property order;
+34: retain original historical start-digest encoding and never rewrite historical keys.
+35: 
+36: Resolve an existing `(project,startKey)` before applying a newly published profile:
+37: same original request and binding returns the retained round; an explicitly
+38: different proposed binding/count under that same key rejects before job creation.
+39: A retry which supplies only the unchanged request/key retrieves original A even
+40: when current selection is B. This lookup does not fill a missing original binding
+41: from B or infer a historical count from today's defaults.
+42: 
+43: ### Explicit eligibility (not preference inference)
+44: 
+45: All existing/legacy/free-form request shapes remain three-design intent. They are
+46: **not eligible for B2**, even if the newly selected Control profile says 2. B2 is
+47: limited to a separately submitted new task with a typed `exactCount:2` constraint,
+48: matching architecture and project-instruction constraint snapshots from their
+49: original authorized task authors. Those new task instructions must be generated
+50: from the same typed constraint; arbitrary free-form cardinality overrides are not
+51: allowed in that B2 input form. Missing constraint, an original exact-three
+52: constraint, an instruction/architecture digest mismatch, or disagreement among
+53: the two original constraints rejects B2 at round admission. A profile never edits
+54: or shortens an existing task's instruction. Non-cardinality free-form content may
+55: remain, but cannot supply a conflicting count override. This restrictive new B2
+56: task form and its business validity remain proposed/unapproved, not a claimed
+57: automatic interpretation of arbitrary narrative instructions.
+58: 
+59: ### Later projections and recovery
+60: 
+61: `admitDesignAgent` loads the committed round under its original generation and
+62: copies that exact binding into the immutable job request before hashing/enqueue.
+63: The job cannot manufacture or choose another binding. Prompt text, task tool
+64: description and result-count expectation derive from that retained binding. R's
+65: captured tool capability advertises supported counts; it does not author the task
+66: count. An exact-three old registration rejects a bound-two job before external
+67: action, regardless of a newly published component definition.
+68: 
+69: The result handler verifies job/fence/project/generation plus the round and job
+70: binding digests before result/document effects. Repository uniqueness and complete
+71: document count equal the original count; material-diversity policy stays separate.
+72: Round receipts include `generationId`, `bindingDigest`, `expectedCount`. Pending
+73: client state stores all three. **Every** `completeRound`, initial document-load,
+74: polling, reject-all and removal path uses this original identity/count; A3 with
+75: only one or two documents stays pending and does not remove its stored key.
+76: Mixed-generation results or digest disagreement fail without key removal.
+77: Generated UI/tool text uses the same original count, not an ambient profile.
+78: 
+79: Crash after round commit but before job transaction: retain the round, reload its
+80: binding and create at most one original-generation job using existing admission
+81: idempotency. Crash/uncertainty after external dispatch follows existing job/fence
+82: reconciliation, never dispatches again merely to adopt B. A pre-ledger round
+83: already having a committed result remains completed with **no new external
+84: action**; absent count/provenance cannot authorize another action. Missing original
+85: binding for incomplete historical work requires explicit reconciliation, not a
+86: synthetic three/two value. No new deadline, grant or budget is derived from B.
+87: 
+88: ## Native provenance: separate OCI from engine bytes
+89: 
+90: The current engine profile carries a projected OCI digest, and current dedicated
+91: host validation does not authenticate installed engine bytes. Preserve that exact
+92: historical interpretation. Do not relabel historical OCI content as code-tree
+93: content or add another editable digest author.
+94: 
+95: Propose a strict generated `prism-native-provenance.v1` record attached atomically
+96: to the existing `engine_operation` original attempt reservation. It is generated
+97: from delivered artifacts and the selected complete component configuration, not
+98: authored by a task or an SDK codec. The record has these distinct identities:
+99: 
+100: | Field group | Producer / verifier |
+101: |---|---|
+102: | `role` | Exact `prism-worker`; trusted delivery role manifest, not request self-report |
+103: | `oci` | Selected image manifest digest, optional index digest, exact OS/architecture/variant; sole `versions.json`/Delivery selected-image projection |
+104: | `code` | Exact source commit, package manifest digest, engine file-tree digest, dependency lockfile digest; delivery packaging over enumerated files with canonical paths/hashes |
+105: | `installationManifestDigest` | Digest of the retained immutable manifest joining role, OCI, code and platform; generated delivery output, not a second index |
+106: | `config` | Owner `prism-worker`, selected generation, immutable reference and canonical complete-config digest; existing sole component author |
+107: | `profileDigest` | Exact accepted WorkerProfileV3 digest, preserving current OCI meaning in its `engine.contentDigest` |
+108: | `capabilityContractDigest`, `grantedCapabilities` | Digest of the delivered capability declaration and canonical duplicate-free grant set from original authorized acceptance; not a new secret/permission author |
+109: | `provenanceDigest` | Canonical SHA-256 of all prior fields, excluding this digest only |
+110: 
+111: Digest fields use `sha256:` plus 64 lowercase hex; source commit is exact 40 hex;
+112: references must be immutable digest-addressed artifacts. Platform and contract
+113: enum support must come from the selected delivered role manifest, not arbitrary
+114: task strings. No secret bytes are in this tuple. Fixture A/B values in the
+115: companion are **synthetic definition specimens**, not observed OCI or grants.
+116: 
+117: At original `reserveNativePrismOperation` insertion, verify request and retained
+118: tuple together, and atomically store envelope plus provenance before dispatch.
+119: Same key/request returns the original envelope/tuple; a caller presenting an
+120: incompatible changed tuple must not replace it. Existing result replay validates
+121: original bound result/tuple and hydrates only, with zero execution. Legacy completed
+122: results retain their existing no-new-effect behavior; missing original provenance
+123: for pending/uncertain work blocks execution and requires reconciliation.
+124: 
+125: Before fresh **and recovered** native execution, the trusted supervisor verifies
+126: the retained installation manifest, original grant subset and tuple compatibility
+127: against the actual prepared runtime instance. Before dedicated host engine prepare,
+128: a trusted installed-byte verifier enumerates the selected package files and hashes
+129: them against that retained manifest. Input envelope/self-reported receipt or an
+130: environment digest cannot supply this evidence. Actual OCI manifest/platform
+131: verification belongs to the image/delivery provider; a file-tree hash cannot prove
+132: OCI identity. Absence of either real observation rejects before preparation or any
+133: engine/artifact effect. No installed A instance may execute bound B, or vice versa.
+134: 
+135: Recovery may use retained compatible A runtime or report reconciliation needed;
+136: it must never substitute current B/config/grants, mint synthetic development
+137: identity or extend original claim/deadline/budget. Nonproduction fixtures are
+138: explicitly tagged fixture prerequisites and cannot satisfy production or fixed
+139: Eval. Fixed Eval requires the full recorded original tuple and real fixture grant
+140: and installed-runtime evidence. Provider/verifier implementation and those physical
+141: prerequisites remain future C3/C5 work, not proof supplied by this document.
+{"path": "skills/prism/control/design-generations.ts", "sha256": "cd32799fdb1eacbaf40c968b101badcfbedc0f8ce9b12ab045e82ae2e632cbfd"}
+1: import { createHash } from 'node:crypto';
+2: import { isDeepStrictEqual } from 'node:util';
+3: import { inTransaction, type Database, type Queryable } from '../storage/index.ts';
+4: import { createPreferenceGeneration } from './preference-snapshot.ts';
+5: 
+6: export type DesignRoundStart = {
+7:   projectId: string; subjectId: string | null; startKey: string;
+8:   architectureDigest: string; architectureRevision: number;
+9:   parentRoundId?: string; documentId?: string; expectedRevision?: number;
+10: };
+11: type ActiveRequest = {id: string; architecture_digest: string; architecture_revision: number | string; current_round_id: string | null; request: Record<string,unknown>};
+12: const hash = (value: unknown) => createHash('sha256').update(JSON.stringify(value)).digest('hex');
+13: 
+14: async function sourceRevision(db: Queryable, input: DesignRoundStart, active: ActiveRequest) {
+15:   if (!active.current_round_id && !input.documentId) return null;
+16:   if (!input.documentId || !Number.isSafeInteger(input.expectedRevision) || (input.parentRoundId ?? null) !== active.current_round_id) throw new Error('design round parent and document revision are required');
+17:   const row = await db.query<{id: string}>("SELECT r.id FROM prism.design_document d JOIN prism.design_revision r ON r.id=d.current_revision_id WHERE d.id=$1 AND d.design_request_id=$2 AND d.design_round_id IS NOT DISTINCT FROM $3::uuid AND r.revision=$4 FOR SHARE OF d", [input.documentId,active.id,active.current_round_id,input.expectedRevision]);
+18:   if (!row.rows[0]) throw new Error('design round parent document has changed');
+19:   return row.rows[0].id;
+20: }
+21: 
+22: export async function startDesignRound(db: Database, input: DesignRoundStart) {
+23:   if (!input.startKey || input.startKey.length > 240) throw new Error('design round idempotency key is required');
+24:   return inTransaction(db, async connection => {
+25:     const project = await connection.query<{id: string}>("SELECT id FROM prism.project WHERE external_id=$1 FOR UPDATE",[input.projectId]);
+26:     if (!project.rows[0]) throw new Error('design round project is not available');
+27:     const projectId = project.rows[0].id; const startDigest = hash(input);
+28:     const prior = await connection.query<{id: string; start_digest: string; request: Record<string,unknown>; snapshot: unknown; snapshot_digest: string;result:unknown}>("SELECT r.id,r.start_digest,r.request,g.snapshot,g.snapshot_digest,r.result FROM prism.design_round r JOIN prism.design_request d ON d.id=r.design_request_id JOIN prism.preference_generation g ON g.id=r.id WHERE r.project_id=$1 AND r.start_key=$2",[projectId,input.startKey]);
+29:     if (prior.rows[0]) {
+30:       if (prior.rows[0].start_digest !== startDigest) throw new Error('design round start key conflicts with recorded request');
+31:       return {generationId:prior.rows[0].id,snapshotDigest:prior.rows[0].snapshot_digest,snapshot:prior.rows[0].snapshot,request:prior.rows[0].request,result:prior.rows[0].result};
+32:     }
+33:     const rows = await connection.query<ActiveRequest>("SELECT id,architecture_digest,architecture_revision,current_round_id,request FROM prism.design_request WHERE project_id=$1 AND status='active' ORDER BY architecture_revision DESC LIMIT 1",[projectId]);
+34:     const active = rows.rows[0];
+35:     if (!active || active.architecture_digest !== input.architectureDigest || Number(active.architecture_revision) !== input.architectureRevision) throw new Error('design round active architecture has changed');
+36:     if ((input.parentRoundId ?? null) !== active.current_round_id) throw new Error('design round parent has changed');
+37:     const revisionId = await sourceRevision(connection,input,active);
+38:     const feedback = await connection.query<{content: unknown}>("SELECT e.content FROM prism.preference_event e WHERE e.project_id=$1 AND e.consent_scope='project' AND e.content->'target'->>'directionId' IN (SELECT dir.id::text FROM prism.direction dir JOIN prism.design_document d ON d.id=dir.source_document_id WHERE d.design_request_id=$2 AND d.design_round_id IS NOT DISTINCT FROM $3::uuid) ORDER BY e.occurred_at,e.wire_event_id",[projectId,active.id,active.current_round_id]);
+39:     const snapshot = await createPreferenceGeneration(connection,input.subjectId,input.projectId,Date.now(),{operation:'design-set',designRequestId:active.id,architectureDigest:active.architecture_digest,architectureRevision:Number(active.architecture_revision),parentRoundId:active.current_round_id,sourceDocumentId:input.documentId ?? null,sourceRevisionId:revisionId,feedback:feedback.rows.map(row=>row.content)});
+40:     await connection.query("INSERT INTO prism.design_round(id,project_id,design_request_id,architecture_digest,architecture_revision,parent_round_id,source_document_id,source_revision_id,start_key,start_digest,feedback,request) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11::jsonb,$12::jsonb)",[snapshot.generationId,projectId,active.id,active.architecture_digest,active.architecture_revision,active.current_round_id,input.documentId ?? null,revisionId,input.startKey,startDigest,JSON.stringify(feedback.rows.map(row=>row.content)),JSON.stringify(active.request)]);
+41:     await connection.query("UPDATE prism.design_request SET current_round_id=$2 WHERE id=$1",[active.id,snapshot.generationId]);
+42:     return {...snapshot,request:active.request};
+43:   });
+44: }
+45: 
+46: export async function boundDesignRound(connection: Queryable, projectId: string, generationId: string, resultDigest: string) {
+47:   const row = await connection.query<{id:string; design_request_id:string; result_digest:string|null; result:unknown; current_round_id:string|null; status:string; architecture_digest:string; active_digest:string; architecture_revision:number; active_revision:number;source_document_id:string|null;source_revision_id:string|null}>("SELECT r.*,d.current_round_id,d.status,d.architecture_digest AS active_digest,d.architecture_revision AS active_revision FROM prism.design_round r JOIN prism.design_request d ON d.id=r.design_request_id WHERE r.id=$1 AND r.project_id=$2",[generationId,projectId]);
+48:   const round = row.rows[0];
+49:   if (!round) throw new Error('design generation does not belong to project');
+50:   if (round.result_digest) {
+51:     if (round.result_digest !== resultDigest) throw new Error('design generation result conflicts with committed content');
+52:     return {requestId:round.design_request_id,replay:round.result};
+53:   }
+54:   if (round.status !== 'active' || round.current_round_id !== generationId || round.architecture_digest !== round.active_digest || Number(round.architecture_revision) !== Number(round.active_revision)) throw new Error('stale design generation');
+55:   if (round.source_document_id) {
+56:     const source = await connection.query("SELECT id FROM prism.design_document WHERE id=$1 AND current_revision_id=$2 FOR SHARE",[round.source_document_id,round.source_revision_id]);
+57:     if (!source.rows.length) throw new Error('design generation parent document changed before result');
+58:   }
+59:   return {requestId:round.design_request_id,replay:null};
+60: }
+61: 
+62: 
+63: export function assertSameArchitectureRequest(previous: Record<string, unknown>, current: Record<string, unknown>) {
+64:   const source = (request: Record<string, unknown>) => Object.fromEntries(Object.entries(request).filter(([key]) => key !== 'approvalId'));
+65:   if (!isDeepStrictEqual(source(previous),source(current))) throw new Error('architecture request content conflicts with recorded revision');
+66: }
+67: 
+68: 
+69: export async function approvedRoundBaseline(db: Queryable, projectId: string, approvalId: string) {
+70:   return db.query<{bundle_digest:string;bundle_artifact_id:string}>("SELECT b.bundle_digest,b.bundle_artifact_id FROM prism.baseline b JOIN prism.approval a ON a.id=b.approval_id JOIN prism.design_revision rev ON rev.id=a.design_revision_id JOIN prism.design_document d ON d.id=rev.document_id JOIN prism.design_request r ON r.id=d.design_request_id AND r.project_id=b.project_id AND r.status='active' AND d.design_round_id IS NOT DISTINCT FROM r.current_round_id WHERE b.project_id=$1 AND b.approval_id=$2 AND a.architecture_digest=r.architecture_digest",[projectId,approvalId]);
+71: }
+72: 
+73: 
+74: export function assertArchitectureTransition(previous: {architecture_revision:number|string;architecture_digest:string;request:Record<string,unknown>}, current: Record<string,unknown> & {architecture:{revision:number;contentDigest:string};approvalId?:string}) {
+75:   const revision=Number(previous.architecture_revision);
+76:   if(!Number.isSafeInteger(revision) || revision<1)throw new Error('stored architecture revision is invalid');
+77:   if(current.architecture.revision<revision)throw new Error('stale architecture revision');
+78:   if(current.architecture.revision===revision){
+79:     if(current.architecture.contentDigest!==previous.architecture_digest)throw new Error('architecture revision digest conflict');
+80:     assertSameArchitectureRequest(previous.request,current);
+81:   }
+82:   if(current.approvalId && current.architecture.contentDigest!==previous.architecture_digest)throw new Error('approval cannot activate a different architecture');
+83: }
+{"path": "skills/prism/control/agent-admission.ts", "sha256": "e54b1502044c54a674dffe22895b1530fdf415e292a984569f90ecafe07f99b5"}
+1: import { sha256Digest } from '@kubeclaw/worker-core';
+2: import { inTransaction, type Database } from '../storage/index.ts';
+3: import { createPreferenceGeneration } from './preference-snapshot.ts';
+4: import { agentJob, insertAgentJob, enqueueAgentJob, type AgentJob } from './agent-jobs.ts';
+5: 
+6: export async function admitDesignAgent(db:Database,namespace:string,projectId:string,preferences:{generationId:string;result?:unknown}) {
+7:   if(preferences.result){
+8:     const existing=await db.query('SELECT id FROM prism.agent_job WHERE id=$1',[preferences.generationId]);
+9:     // A pre-ledger committed round is already durable; it does not authorize a new external action.
+10:     return existing.rows[0] ? agentReceipt(await agentJob(db,preferences.generationId)) : {status:'completed',...preferences};
+11:   }
+12:   return agentReceipt(await enqueueAgentJob(db,namespace,projectId,'design-set',{projectId,preferences}));
+13: }
+14: 
+15: export function agentReceipt(job:AgentJob) {
+16:   if(job.state==='superseded')throw new Error(`Prism agent job ${job.id} was superseded before its external action started; submit an explicit request for the current source`);
+17:   if(job.state==='needs_nova' || (job.state==='accepted' && job.blocked_by))throw new Error(`NeedsNova: Prism agent job ${job.id} has an unresolved external outcome or blocked session (${String(job.blocked_by ?? job.id)}): ${JSON.stringify(job.outcome)}; it will not be replayed`);
+18:   return {status:job.state,generationId:job.id,jobId:job.id,
+19:     sessionKey:job.session_key,requestDigest:job.request_digest,
+20:     snapshotDigest:(job.request.preferences as {snapshotDigest:string}).snapshotDigest,
+21:     result:job.result,outcome:job.outcome};
+22: }
+23: 
+24: export async function startAgentRevision(db:Database,namespace:string,subjectId:string,startKey:string,input:{projectId:string;documentId:string;expectedRevision:number;instruction:string;document:unknown}) {
+25:   if(!startKey || startKey.length>240)throw new Error('agent revision idempotency key is required');
+26:   return inTransaction(db,async connection=>{
+27:     const project=await connection.query<{id:string}>("SELECT id FROM prism.project WHERE external_id=$1 FOR UPDATE",[input.projectId]);
+28:     if(!project.rows[0])throw new Error('agent revision project not found');
+29:     const requestDigest=sha256Digest({subjectId,input});
+30:     const key=JSON.stringify([subjectId,startKey]);
+31:     const prior=await connection.query<{job_id:string;request_digest:string}>('SELECT * FROM prism.agent_revision_start WHERE project_id=$1 AND start_key=$2',[project.rows[0].id,key]);
+32:     if(prior.rows[0]){
+33:       if(prior.rows[0].request_digest!==requestDigest)throw new Error('agent revision start key conflicts with recorded request');
+34:       return agentJob(connection,prior.rows[0].job_id);
+35:     }
+36:     const current=await connection.query("SELECT d.id FROM prism.design_document d JOIN prism.design_revision r ON r.id=d.current_revision_id WHERE d.id=$1 AND d.project_id=$2 AND r.revision=$3 FOR SHARE OF d",[input.documentId,project.rows[0].id,input.expectedRevision]);
+37:     if(!current.rows[0])throw new Error('agent revision source has changed');
+38:     const preferences=await createPreferenceGeneration(connection,subjectId,input.projectId,Date.now(),{operation:'revise',documentId:input.documentId,expectedRevision:input.expectedRevision});
+39:     const job=await insertAgentJob(connection,namespace,input.projectId,'revise',{...input,preferences});
+40:     await connection.query('INSERT INTO prism.agent_revision_start(project_id,start_key,request_digest,job_id) VALUES($1,$2,$3,$4)',[project.rows[0].id,key,requestDigest,job.id]);
+41:     return job;
+42:   });
+43: }
+{"path": "skills/prism/control/agent-jobs.ts", "sha256": "ff62ef04432ebb67c700c4a25103a0477096f588c2cc3f34f3fab0b776860334"}
+1: import { checkWorkerResourceResultBinding,type WorkerAttemptEnvelopeV2,type WorkerAttemptResultV2 } from '@kubeclaw/pipeline-worker-core-contract';
+2: import { agentAttempt } from '../server/agent-attempt.ts';
+3: import { randomUUID } from 'node:crypto';
+4: import { sha256Digest } from '@kubeclaw/worker-core';
+5: import { inTransaction, type Database, type Queryable } from '../storage/index.ts';
+6: import { agentSessionKey } from '../server/agent-session.ts';
+7: 
+8: export type AgentJob = Record<string,unknown> & {
+9:   id:string; project_id:string; operation:'design-set'|'revise'; session_key:string;
+10:   request_digest:string; request:Record<string,unknown>; state:'accepted'|'running'|'completed'|'needs_nova'|'superseded';
+11:   attempt_envelope:WorkerAttemptEnvelopeV2|null; fence:string|null; result:unknown; result_digest:string|null;
+12: };
+13: export type AgentCompletion = {jobId:string; fence:string; payload:unknown};
+14: 
+15: /** Called only by authenticated Control admission paths, never from project-authored bridge input. */
+16: export async function enqueueAgentJob(db: Database, namespace:string, projectId:string, operation:AgentJob['operation'], input:Record<string,unknown> & {preferences:{generationId:string}}) {
+17:   return inTransaction(db,connection=>insertAgentJob(connection,namespace,projectId,operation,input));
+18: }
+19: 
+20: export async function insertAgentJob(connection:Queryable,namespace:string,projectId:string,operation:AgentJob['operation'],input:Record<string,unknown> & {preferences:{generationId:string}}) {
+21:     const generation=await connection.query<{project_id:string}>("SELECT g.project_id FROM prism.preference_generation g JOIN prism.project p ON p.id=g.project_id WHERE g.id=$1 AND p.external_id=$2 FOR SHARE OF g",[input.preferences.generationId,projectId]);
+22:     if(!generation.rows[0])throw new Error('agent job generation does not belong to project');
+23:     input={...input,preferences:Object.fromEntries(Object.entries(input.preferences).filter(([key])=>key!=='result')) as {generationId:string}};
+24:     const requestDigest=sha256Digest({operation,input});
+25:     await connection.query("INSERT INTO prism.agent_job(id,project_id,operation,session_namespace,session_key,request_digest,request) VALUES($1,$2,$3,$4,$5,$6,$7::jsonb) ON CONFLICT(id) DO NOTHING",[input.preferences.generationId,generation.rows[0].project_id,operation,namespace,agentSessionKey(namespace,projectId),requestDigest,JSON.stringify(input)]);
+26:     const job=await agentJob(connection,input.preferences.generationId);
+27:     if(job.request_digest!==requestDigest)throw new Error('agent job generation conflicts with recorded request');
+28:     return job;
+29: }
+30: 
+31: export async function agentJob(db:Queryable,id:string):Promise<AgentJob> {
+32:   await db.query("UPDATE prism.agent_job SET state='needs_nova',outcome=jsonb_build_object('reason','external agent outcome unresolved after claim expiry'),updated_at=clock_timestamp() WHERE state='running' AND expires_at<=clock_timestamp() AND session_key=(SELECT session_key FROM prism.agent_job WHERE id=$1)",[id]);
+33:   const row=await db.query<AgentJob>("SELECT j.*,(SELECT blocked.id FROM prism.agent_job blocked WHERE blocked.session_key=j.session_key AND blocked.state='needs_nova' ORDER BY blocked.created_at,blocked.id LIMIT 1) AS blocked_by FROM prism.agent_job j WHERE j.id=$1",[id]);
+34:   if(!row.rows[0])throw new Error('persisted Prism agent job not found');
+35:   return row.rows[0];
+36: }
+37: 
+38: /** Only accepted work can cross the external-action boundary. Running work is never requeued. */
+39: export async function claimAgentJob(db:Database,runnerId:string) {
+40:   if(!runnerId || runnerId.length>160)throw new Error('agent runner identity is required');
+41:   return inTransaction(db,async connection=>{
+42:     await connection.query("SELECT pg_advisory_xact_lock(hashtextextended('prism-agent-admission',0))");
+43:     await connection.query("UPDATE prism.agent_job SET state='needs_nova',outcome=jsonb_build_object('reason','external agent outcome unresolved after claim expiry'),updated_at=clock_timestamp() WHERE state='running' AND expires_at<=clock_timestamp()");
+44:     await connection.query("UPDATE prism.agent_job j SET state='superseded',outcome=jsonb_build_object('reason','source changed before external action started'),updated_at=clock_timestamp() WHERE j.state='accepted' AND ((j.operation='design-set' AND NOT EXISTS (SELECT 1 FROM prism.design_round round JOIN prism.design_request request ON request.id=round.design_request_id WHERE round.id=j.id AND request.status='active' AND request.current_round_id=round.id)) OR (j.operation='revise' AND NOT EXISTS (SELECT 1 FROM prism.design_document document JOIN prism.design_revision revision ON revision.id=document.current_revision_id WHERE document.id::text=j.request->>'documentId' AND revision.revision::text=j.request->>'expectedRevision'))) ");
+45:     const rows=await connection.query<AgentJob>("SELECT j.* FROM prism.agent_job j WHERE j.state='accepted' AND NOT EXISTS (SELECT 1 FROM prism.agent_job active WHERE active.session_key=j.session_key AND active.state IN ('running','needs_nova')) ORDER BY j.created_at,j.id LIMIT 1 FOR UPDATE OF j");
+46:     if(!rows.rows[0])return null;
+47:     const source=rows.rows[0];const fence=randomUUID();
+48:     const deadline=await connection.query<{expires_at:Date|string}>("SELECT clock_timestamp()+interval '16 minutes' AS expires_at");
+49:     const expiresAt=deadline.rows[0]!.expires_at;
+50:     const envelope=await agentAttempt({...source,fence,expires_at:expiresAt},runnerId);
+51:     const claimed=await connection.query<AgentJob>("UPDATE prism.agent_job SET state='running',fence=$2,runner_id=$3,expires_at=$4,attempt_envelope=$5::jsonb,updated_at=clock_timestamp() WHERE id=$1 AND state='accepted' RETURNING *",[source.id,fence,runnerId,expiresAt,JSON.stringify(envelope)]);
+52:     return claimed.rows[0]!;
+53:   });
+54: }
+55: 
+56: export async function finishAgentRun(db:Database,id:string,fence:string,outcome:Record<string,unknown>) {
+57:   return inTransaction(db,async connection=>{
+58:     const rows=await connection.query<AgentJob>('SELECT * FROM prism.agent_job WHERE id=$1 FOR UPDATE',[id]);
+59:     const job=rows.rows[0];
+60:     if(!job || job.fence!==fence)throw new Error('agent job fence conflict');
+61:     validateAgentOutcome(job,outcome);
+62:     if(job.state==='completed' || job.state==='needs_nova')return job;
+63:     const completed=outcome.schemaVersion==='worker-attempt-result.v2' && outcome.state==='completed' && job.result!==null;
+64:     await connection.query("UPDATE prism.agent_job SET state=$2,outcome=$3::jsonb,updated_at=clock_timestamp() WHERE id=$1",[id,completed?'completed':'needs_nova',JSON.stringify(outcome)]);
+65:     return agentJob(connection,id);
+66:   });
+67: }
+68: 
+69: /** Peer authentication never replaces binding the received receipt to Control's accepted policy. */
+70: function validateAgentOutcome(job:AgentJob,outcome:Record<string,unknown>) {
+71:   if(!job.attempt_envelope)throw new Error('agent accepted attempt envelope is missing');
+72:   const accepted=job.attempt_envelope;
+73:   if(accepted.attemptId!==job.fence || accepted.claim.claimId!==job.fence || accepted.executionId!==job.id)throw new Error('agent persisted attempt identity conflict');
+74:   if(outcome.schemaVersion==='worker-attempt-result.v2'){
+75:     const checked=checkWorkerResourceResultBinding(accepted,outcome as unknown as WorkerAttemptResultV2);
+76:     if(!checked.ok)throw new Error(`agent outcome binding failed: ${checked.errors.join('; ')}`);
+77:     return;
+78:   }
+79:   if(outcome.state==='errored' && typeof outcome.error==='string' && outcome.error.length>0
+80:     && Object.keys(outcome).every(key=>key==='state' || key==='error'))return;
+81:   throw new Error('agent outcome requires a bound V2 receipt; startup diagnostics may only report errored');
+82: }
+83: 
+84: /** Hold this row lock through the actual document transaction, including its durable result receipt. */
+85: export async function lockAgentResult(db:Queryable,identity:AgentCompletion,generationId:string) {
+86:   if(identity.jobId!==generationId || !identity.fence)throw new Error('agent result job identity is required');
+87:   const rows=await db.query<AgentJob & {live:boolean}>('SELECT *,expires_at>clock_timestamp() AS live FROM prism.agent_job WHERE id=$1 FOR UPDATE',[identity.jobId]);
+88:   const job=rows.rows[0];
+89:   if(!job || job.fence!==identity.fence)throw new Error('agent result fence conflict');
+90:   if(job.result_digest){
+91:     if(job.result_digest!==sha256Digest(identity.payload))throw new Error('agent result conflicts with committed payload');
+92:     return job.result;
+93:   }
+94:   if(job.state!=='running'||!job.live)throw new Error('agent action is unresolved; NeedsNova reconciliation is required');
+95:   return null;
+96: }
+97: 
+98: export async function recordAgentResult(db:Queryable,identity:AgentCompletion,result:unknown) {
+99:   await db.query('UPDATE prism.agent_job SET result_digest=$2,result=$3::jsonb,updated_at=clock_timestamp() WHERE id=$1',[identity.jobId,sha256Digest(identity.payload),JSON.stringify(result)]);
+100: }
+{"path": "skills/prism/server/dispatch-route.ts", "sha256": "407b0befbe8cbf6009f2cef6fe80ab10a2213258d4be5bddc578f24abdb47382"}
+1: import { validatePrism } from "@kubeclaw/prism-contracts-v1";
+2: import { authorizeProxiedSpiffePeer } from "@kubeclaw/worker-core";
+3: import { createHmac, randomUUID, timingSafeEqual } from "node:crypto";
+4: import { type IncomingMessage, type ServerResponse } from "node:http";
+5: import { admitDesignAgent } from "../control/agent-admission.ts";
+6: import {
+7:   approvedRoundBaseline,
+8:   assertArchitectureTransition,
+9:   startDesignRound,
+10: } from "../control/design-generations.ts";
+11: import { authorizePipelinePreferenceSubject } from "../control/pipeline-preference-subject.ts";
+12: import { inTransaction } from "../storage/index.ts";
+13: 
+14: import type { ControlContext } from "./control-context.ts";
+15: import { json } from "./control-http.ts";
+16: type RouteContext = Pick<ControlContext, "config" | "pool" | "artifacts">;
+17: 
+18: export async function dispatchRoute(
+19:   context: RouteContext,
+20:   request: IncomingMessage,
+21:   response: ServerResponse,
+22:   url: URL,
+23: ): Promise<boolean> {
+24:   if (url.pathname === "/v1/dispatch" && request.method === "POST") {
+25:     await dispatchDesign(context, request, response);
+26:     return true;
+27:   }
+28:   return false;
+29: }
+30: async function dispatchDesign(
+31:   context: RouteContext,
+32:   request: IncomingMessage,
+33:   response: ServerResponse,
+34: ) {
+35:   const controlConfig = context.config;
+36:   const { pool, artifacts } = context;
+37:   const { trustedControlSpiffeId } = context.config;
+38: 
+39:   const { raw, key } = await authenticateDispatch(context.config, request);
+40:   const payload = JSON.parse(raw.toString("utf8")) as DispatchPayload;
+41:   const preferenceSubjectId = authorizePipelinePreferenceSubject(
+42:     payload.preferenceSubjectId,
+43:     controlConfig.pipelinePreferenceSubject,
+44:   );
+45:   const designRequest = validatePrism<DesignRequest>(
+46:     "designRequest",
+47:     payload.request,
+48:   );
+49:   const projectKey = designRequest.projectId;
+50:   const project = await persistDesignRequest(pool, designRequest);
+51:   if (!designRequest.approvalId) {
+52:     const preferences = await startDesignRound(pool, {
+53:       projectId: projectKey,
+54:       subjectId: preferenceSubjectId,
+55:       startKey: `dispatch:${key}`,
+56:       architectureDigest: designRequest.architecture.contentDigest,
+57:       architectureRevision: designRequest.architecture.revision,
+58:     });
+59:     const agent = await admitDesignAgent(
+60:       pool,
+61:       `${trustedControlSpiffeId}/prism/main/v2`,
+62:       projectKey,
+63:       preferences,
+64:     );
+65:     return json(response, 202, {
+66:       result: { status: "waiting", projectId: project.rows[0]!.id },
+67:       preferences,
+68:       agent,
+69:     });
+70:   }
+71:   const baseline = await approvedRoundBaseline(
+72:     pool,
+73:     project.rows[0]!.id,
+74:     designRequest.approvalId,
+75:   );
+76:   if (!baseline.rows[0]) throw new Error("approved Prism baseline not found");
+77:   return json(response, 200, {
+78:     result: {
+79:       bundleDigest: baseline.rows[0].bundle_digest,
+80:       artifactId: baseline.rows[0].bundle_artifact_id,
+81:       archiveBase64: Buffer.from(
+82:         await artifacts.get(baseline.rows[0].bundle_artifact_id),
+83:       ).toString("base64"),
+84:     },
+85:   });
+86: }
+87: 
+88: async function authenticateDispatch(
+89:   config: ControlContext["config"],
+90:   request: IncomingMessage,
+91: ) {
+92:   const {
+93:     spiffeEnabled,
+94:     dispatchSecret,
+95:     trustedNovaSpiffeId,
+96:     trustedPrismAgentSpiffeId,
+97:     trustedTestRunnerSpiffeId,
+98:   } = config;
+99:   if (spiffeEnabled) {
+100:     try {
+101:       authorizeProxiedSpiffePeer(
+102:         request.headers,
+103:         request.socket.remoteAddress,
+104:         new Set(
+105:           [
+106:             trustedNovaSpiffeId,
+107:             trustedPrismAgentSpiffeId,
+108:             trustedTestRunnerSpiffeId,
+109:           ].filter(Boolean),
+110:         ),
+111:       );
+112:     } catch {
+113:       throw new Error("invalid dispatch identity");
+114:     }
+115:   }
+116:   if (
+117:     !(request.headers["content-type"] ?? "")
+118:       .toString()
+119:       .toLowerCase()
+120:       .startsWith("application/json")
+121:   )
+122:     throw new Error("application/json is required");
+123:   const chunks: Buffer[] = [];
+124:   let size = 0;
+125:   for await (const chunk of request) {
+126:     size += chunk.length;
+127:     if (size > 2_000_000) throw new Error("request too large");
+128:     chunks.push(chunk);
+129:   }
+130:   const raw = Buffer.concat(chunks);
+131:   const key = String(request.headers["idempotency-key"] ?? "");
+132:   if (!key) throw new Error("invalid dispatch idempotency key");
+133:   if (!spiffeEnabled) {
+134:     const supplied = String(
+135:       request.headers["x-kubeclaw-signature"] ?? "",
+136:     ).replace(/^v1=/, "");
+137:     const expected = createHmac("sha256", dispatchSecret)
+138:       .update(`${key}.${raw.toString("utf8")}`)
+139:       .digest();
+140:     const actual = Buffer.from(supplied, "hex");
+141:     if (actual.length !== expected.length || !timingSafeEqual(actual, expected))
+142:       throw new Error("invalid dispatch signature");
+143:   }
+144:   return { raw, key };
+145: }
+146: 
+147: type DesignRequest = {
+148:   schema: "prism.design-request.v1";
+149:   projectId: string;
+150:   architecture: { artifactId: string; contentDigest: string; revision: number };
+151:   architectureContent: Record<string, unknown>;
+152:   approvalId?: string;
+153: };
+154: async function persistDesignRequest(
+155:   pool: ControlContext["pool"],
+156:   designRequest: DesignRequest,
+157: ) {
+158:   const projectKey = designRequest.projectId;
+159:   const project = await pool.query<{ id: string }>(
+160:     "INSERT INTO prism.project(id,external_id,name) VALUES($1,$2,$3) ON CONFLICT(external_id) DO UPDATE SET updated_at=now() RETURNING id",
+161:     [randomUUID(), projectKey, projectKey],
+162:   );
+163:   await inTransaction(pool, async (requestClient) => {
+164:     await requestClient.query(
+165:       "SELECT id FROM prism.project WHERE id=$1 FOR UPDATE",
+166:       [project.rows[0]!.id],
+167:     );
+168:     const active = await requestClient.query<{
+169:       architecture_digest: string;
+170:       architecture_revision: number | string;
+171:       request: Record<string, unknown>;
+172:     }>(
+173:       "SELECT architecture_digest,architecture_revision,request FROM prism.design_request WHERE project_id=$1 AND status='active' ORDER BY architecture_revision DESC LIMIT 1",
+174:       [project.rows[0]!.id],
+175:     );
+176:     if (active.rows[0])
+177:       assertArchitectureTransition(active.rows[0], designRequest);
+178:     await requestClient.query(
+179:       "UPDATE prism.design_request SET status='superseded' WHERE project_id=$1 AND architecture_revision<$2 AND status='active'",
+180:       [project.rows[0]!.id, designRequest.architecture.revision],
+181:     );
+182:     await requestClient.query(
+183:       "INSERT INTO prism.design_request(id,project_id,architecture_artifact_id,architecture_digest,architecture_revision,request,status) VALUES($1,$2,$3,$4,$5,$6::jsonb,'active') ON CONFLICT(project_id,architecture_revision) DO UPDATE SET architecture_artifact_id=excluded.architecture_artifact_id,architecture_digest=excluded.architecture_digest,request=excluded.request,status='active'",
+184:       [
+185:         randomUUID(),
+186:         project.rows[0]!.id,
+187:         designRequest.architecture.artifactId,
+188:         designRequest.architecture.contentDigest,
+189:         designRequest.architecture.revision,
+190:         JSON.stringify(designRequest),
+191:       ],
+192:     );
+193:   });
+194:   return project;
+195: }
+196: 
+197: interface DispatchPayload {
+198:   preferenceSubjectId?: string;
+199:   request?: {
+200:     projectId?: string;
+201:     approvalId?: string;
+202:     schema?: string;
+203:     architecture?: { artifactId?: string; contentDigest?: string };
+204:     architectureContent?: unknown;
+205:   };
+206: }
+{"path": "skills/prism/server/direction-routes.ts", "sha256": "91e731766e8da39e82ce264dba3f9d904fdf77b211e480a3f56365aeef166812"}
+1: import { type IncomingMessage, type ServerResponse } from "node:http";
+2: import { admitDesignAgent, agentReceipt } from "../control/agent-admission.ts";
+3: import { agentJob } from "../control/agent-jobs.ts";
+4: import { startDesignRound } from "../control/design-generations.ts";
+5: import {
+6:   decideDirection,
+7:   directionIdempotencyKey,
+8: } from "../control/direction-decisions.ts";
+9: 
+10: import type { AuthenticatedControlContext } from "./control-context.ts";
+11: import { body, json, userKey } from "./control-http.ts";
+12: type RouteContext = Pick<
+13:   AuthenticatedControlContext,
+14:   "pool" | "actor" | "config"
+15: >;
+16: 
+17: export async function directionRoutes(
+18:   context: RouteContext,
+19:   request: IncomingMessage,
+20:   response: ServerResponse,
+21:   url: URL,
+22: ): Promise<boolean> {
+23:   const directions = /^\/v1\/projects\/([0-9a-f-]+)\/directions$/.exec(
+24:     url.pathname,
+25:   );
+26:   if (directions && request.method === "GET") {
+27:     await listDirections(context, response, directions);
+28:     return true;
+29:   }
+30:   if (directions && request.method === "POST") {
+31:     await startDirectionRound(context, request, response, directions);
+32:     return true;
+33:   }
+34:   const directionFeedback = /^\/v1\/directions\/([0-9a-f-]+)\/feedback$/.exec(
+35:     url.pathname,
+36:   );
+37:   if (directionFeedback && request.method === "POST") {
+38:     await recordDirectionFeedback(
+39:       context,
+40:       request,
+41:       response,
+42:       directionFeedback,
+43:     );
+44:     return true;
+45:   }
+46:   const selectDirection = /^\/v1\/directions\/([0-9a-f-]+)\/select$/.exec(
+47:     url.pathname,
+48:   );
+49:   if (selectDirection && request.method === "POST") {
+50:     await selectDesignDirection(context, request, response, selectDirection);
+51:     return true;
+52:   }
+53:   return false;
+54: }
+55: async function listDirections(
+56:   context: RouteContext,
+57:   response: ServerResponse,
+58:   directions: RegExpExecArray,
+59: ) {
+60:   const { pool } = context;
+61: 
+62:   const activeJob = await pool.query<{ id: string }>(
+63:     "SELECT j.id FROM prism.agent_job j JOIN prism.design_request r ON r.current_round_id=j.id WHERE r.project_id=$1 AND r.status='active'",
+64:     [directions[1]],
+65:   );
+66:   if (activeJob.rows[0])
+67:     agentReceipt(await agentJob(pool, activeJob.rows[0].id));
+68:   const result = await pool.query(
+69:     "SELECT d.id,doc.design_round_id AS generation_id,d.source_document_id,d.direction_key,d.title,d.summary,d.proposal,d.state,d.content_digest,d.evidence FROM prism.direction d JOIN prism.design_document doc ON doc.id=d.source_document_id JOIN prism.design_request r ON r.id=doc.design_request_id AND r.status='active' AND doc.design_round_id IS NOT DISTINCT FROM r.current_round_id WHERE d.project_id=$1 ORDER BY d.created_at,d.id",
+70:     [directions[1]],
+71:   );
+72:   return json(response, 200, { items: result.rows });
+73: }
+74: async function startDirectionRound(
+75:   context: RouteContext,
+76:   request: IncomingMessage,
+77:   response: ServerResponse,
+78:   directions: RegExpExecArray,
+79: ) {
+80:   const { pool, actor } = context;
+81:   const { trustedControlSpiffeId } = context.config;
+82: 
+83:   const input = (await body(request)) as {
+84:     documentId?: string;
+85:     expectedRevision?: number;
+86:     parentRoundId?: string;
+87:     idempotencyKey?: string;
+88:   };
+89:   if (
+90:     !input.documentId ||
+91:     !Number.isSafeInteger(input.expectedRevision) ||
+92:     !input.idempotencyKey
+93:   )
+94:     throw new Error(
+95:       "documentId, expectedRevision and idempotencyKey are required",
+96:     );
+97:   const project = await pool.query<{ external_id: string }>(
+98:     "SELECT external_id FROM prism.project WHERE id=$1",
+99:     [directions[1]],
+100:   );
+101:   const requestResult = await pool.query<{
+102:     request: Record<string, unknown>;
+103:     architecture_digest: string;
+104:     architecture_revision: number;
+105:   }>(
+106:     "SELECT request,architecture_digest,architecture_revision FROM prism.design_request WHERE project_id=$1 AND status='active' ORDER BY created_at DESC LIMIT 1",
+107:     [directions[1]],
+108:   );
+109:   if (!project.rows[0] || !requestResult.rows[0])
+110:     throw new Error("active Prism project not found");
+111:   const preferences = await startDesignRound(pool, {
+112:     projectId: project.rows[0].external_id,
+113:     subjectId: userKey(actor.user),
+114:     startKey: `studio:${userKey(actor.user)}:${input.idempotencyKey}`,
+115:     architectureDigest: requestResult.rows[0].architecture_digest,
+116:     architectureRevision: Number(requestResult.rows[0].architecture_revision),
+117:     parentRoundId: input.parentRoundId,
+118:     documentId: input.documentId,
+119:     expectedRevision: input.expectedRevision,
+120:   });
+121:   return json(
+122:     response,
+123:     202,
+124:     await admitDesignAgent(
+125:       pool,
+126:       `${trustedControlSpiffeId}/prism/main/v2`,
+127:       project.rows[0].external_id,
+128:       preferences,
+129:     ),
+130:   );
+131: }
+132: async function recordDirectionFeedback(
+133:   context: RouteContext,
+134:   request: IncomingMessage,
+135:   response: ServerResponse,
+136:   directionFeedback: RegExpExecArray,
+137: ) {
+138:   const { pool, actor } = context;
+139: 
+140:   const input = (await body(request)) as {
+141:     action?: "rejected" | "liked" | "disliked" | "preserved";
+142:     trait?: string;
+143:   };
+144:   if (
+145:     !input.action ||
+146:     !["rejected", "liked", "disliked", "preserved"].includes(input.action)
+147:   )
+148:     throw new Error("supported direction feedback action is required");
+149:   const result = await decideDirection(
+150:     pool,
+151:     userKey(actor.user),
+152:     directionFeedback[1]!,
+153:     directionIdempotencyKey(request.headers["idempotency-key"]),
+154:     {
+155:       action: input.action,
+156:       ...(input.trait === undefined ? {} : { trait: input.trait }),
+157:     },
+158:   );
+159:   return json(response, 201, result);
+160: }
+161: async function selectDesignDirection(
+162:   context: RouteContext,
+163:   request: IncomingMessage,
+164:   response: ServerResponse,
+165:   selectDirection: RegExpExecArray,
+166: ) {
+167:   const { pool, actor } = context;
+168: 
+169:   const input = (await body(request)) as { documentId?: string };
+170:   if (!input.documentId) throw new Error("documentId is required");
+171:   const result = await decideDirection(
+172:     pool,
+173:     userKey(actor.user),
+174:     selectDirection[1]!,
+175:     directionIdempotencyKey(request.headers["idempotency-key"]),
+176:     { action: "selected", documentId: input.documentId },
+177:   );
+178:   return json(response, 200, result);
+179: }
+{"path": "skills/prism/server/agent-routes.ts", "sha256": "55c4c77fc4ff7b981287c433c126d9754dffd3df1de464ec0d83bb0294caec17"}
+1: import {
+2:   validatePrism,
+3:   type PrismDocument,
+4: } from "@kubeclaw/prism-contracts-v1";
+5: import { authorizeProxiedSpiffePeer } from "@kubeclaw/worker-core";
+6: import { type IncomingMessage, type ServerResponse } from "node:http";
+7: import { requirePreferenceGeneration } from "../control/preference-snapshot.ts";
+8: import { assertMaterialDirectionDiversity } from "../directions/index.ts";
+9: import { handleAgentJobs } from "./agent-job-routes.ts";
+10: 
+11: import type { ControlContext } from "./control-context.ts";
+12: import { body, json } from "./control-http.ts";
+13: type RouteContext = Pick<ControlContext, "config" | "pool" | "repository">;
+14: 
+15: export async function agentRoutes(
+16:   context: RouteContext,
+17:   request: IncomingMessage,
+18:   response: ServerResponse,
+19:   url: URL,
+20: ): Promise<boolean> {
+21:   const { pool } = context;
+22:   const { spiffeEnabled, trustedPrismAgentSpiffeId } = context.config;
+23: 
+24:   if (
+25:     await handleAgentJobs(request, response, url, {
+26:       db: pool,
+27:       spiffeEnabled,
+28:       trustedAgentId: trustedPrismAgentSpiffeId,
+29:       readBody: body,
+30:     })
+31:   )
+32:     return true;
+33:   if (url.pathname === "/v1/agent/design-sets" && request.method === "POST") {
+34:     await createAgentDesignSet(context, request, response);
+35:     return true;
+36:   }
+37:   if (url.pathname === "/v1/agent/revisions" && request.method === "POST") {
+38:     await reviseAgentDocument(context, request, response);
+39:     return true;
+40:   }
+41:   return false;
+42: }
+43: async function createAgentDesignSet(
+44:   context: RouteContext,
+45:   request: IncomingMessage,
+46:   response: ServerResponse,
+47: ) {
+48:   const { pool, repository } = context;
+49:   const { spiffeEnabled, trustedPrismAgentSpiffeId, studioPublicUrl } =
+50:     context.config;
+51: 
+52:   if (!spiffeEnabled)
+53:     throw new Error("Prism agent tools require SPIFFE worker trust");
+54:   authorizeProxiedSpiffePeer(
+55:     request.headers,
+56:     request.socket.remoteAddress,
+57:     new Set([trustedPrismAgentSpiffeId]),
+58:   );
+59:   const input = (await body(request)) as DesignSetInput;
+60:   if (!input.projectId || input.designs?.length !== 3)
+61:     throw new Error("exactly three Prism designs are required");
+62:   if (new Set(input.designs.map((item) => item.key)).size !== 3)
+63:     throw new Error("Prism direction keys must be unique");
+64:   const generation = await requirePreferenceGeneration(
+65:     pool,
+66:     input.generationId,
+67:     input.projectId,
+68:     { operation: "design-set" },
+69:   );
+70:   const documents = input.designs.map((item) =>
+71:     validatePrism<PrismDocument>("designDocument", item.document),
+72:   );
+73:   assertMaterialDirectionDiversity(documents);
+74:   const designs = input.designs.map((item, index) => {
+75:     if (!item.key || !item.title || !item.summary)
+76:       throw new Error("each Prism design requires key, title, and summary");
+77:     return {
+78:       key: item.key,
+79:       title: item.title,
+80:       summary: item.summary,
+81:       document: documents[index]!,
+82:       evidence: { ...item.evidence, ...generation },
+83:     };
+84:   });
+85:   const result = await repository.createDirectionSet(
+86:     input.projectId,
+87:     input.generationId!,
+88:     designs,
+89:     { jobId: input.jobId, fence: input.fence, payload: input },
+90:   );
+91:   return json(response, result.status === "created" ? 201 : 200, {
+92:     ...result,
+93:     studioUrl: `${studioPublicUrl}?project=${result.projectId}&document=${result.documentId}`,
+94:   });
+95: }
+96: async function reviseAgentDocument(
+97:   context: RouteContext,
+98:   request: IncomingMessage,
+99:   response: ServerResponse,
+100: ) {
+101:   const { pool, repository } = context;
+102:   const { spiffeEnabled, trustedPrismAgentSpiffeId } = context.config;
+103: 
+104:   if (!spiffeEnabled)
+105:     throw new Error("Prism agent tools require SPIFFE worker trust");
+106:   authorizeProxiedSpiffePeer(
+107:     request.headers,
+108:     request.socket.remoteAddress,
+109:     new Set([trustedPrismAgentSpiffeId]),
+110:   );
+111:   const input = (await body(request)) as AgentRevisionInput;
+112:   if (
+113:     !input.projectId ||
+114:     !input.documentId ||
+115:     !input.instruction ||
+116:     !Number.isSafeInteger(input.expectedRevision)
+117:   )
+118:     throw new Error("complete Prism revision input is required");
+119:   const owner = await pool.query<{ external_id: string }>(
+120:     "SELECT p.external_id FROM prism.design_document d JOIN prism.project p ON p.id=d.project_id WHERE d.id=$1",
+121:     [input.documentId],
+122:   );
+123:   if (owner.rows[0]?.external_id !== input.projectId)
+124:     throw new Error("document does not belong to the Prism project");
+125:   const generation = await requirePreferenceGeneration(
+126:     pool,
+127:     input.generationId,
+128:     input.projectId,
+129:     {
+130:       operation: "revise",
+131:       documentId: input.documentId,
+132:       expectedRevision: input.expectedRevision,
+133:     },
+134:   );
+135:   const current = await repository.revision(
+136:     input.documentId,
+137:     input.expectedRevision!,
+138:   );
+139:   const document = validatePrism<PrismDocument>(
+140:     "designDocument",
+141:     input.document,
+142:   );
+143:   if (document.meta.revision !== input.expectedRevision! + 1)
+144:     throw new Error(
+145:       "Prism agent must increment the document revision exactly once",
+146:     );
+147:   const updated = await repository.replace(
+148:     input.documentId,
+149:     current.id,
+150:     document,
+151:     { type: "agent.revision", instruction: input.instruction, ...generation },
+152:     "agent:prism",
+153:     { jobId: input.jobId, fence: input.fence, payload: input },
+154:   );
+155:   return json(response, 200, { status: "updated", document: updated });
+156: }
+157: 
+158: interface DesignSetInput {
+159:   projectId?: string;
+160:   generationId?: string;
+161:   jobId: string;
+162:   fence: string;
+163:   designs?: Array<{
+164:     key?: string;
+165:     title?: string;
+166:     summary?: string;
+167:     document?: PrismDocument;
+168:     evidence?: Record<string, unknown>;
+169:   }>;
+170: }
+171: interface AgentRevisionInput {
+172:   jobId: string;
+173:   fence: string;
+174:   generationId?: string;
+175:   projectId?: string;
+176:   documentId?: string;
+177:   expectedRevision?: number;
+178:   instruction?: string;
+179:   document?: PrismDocument;
+180: }
+{"path": "skills/prism/storage/index.ts", "sha256": "e5105909e5f1abf1eb2178270dd63d1b8e2aa337177dcb620b6ae43199a3a199"}
+1: import { lockAgentResult, recordAgentResult, type AgentCompletion } from '../control/agent-jobs.ts';
+2: import { boundDesignRound } from "../control/design-generations.ts";
+3: import { createHash, randomUUID } from "node:crypto";
+4: import {
+5:   readFile,
+6:   readdir,
+7: } from "node:fs/promises";
+8: import type { PrismDocument } from "@kubeclaw/prism-contracts-v1";
+9: import { applyOperation, type PrismOperation } from "../domain/index.ts";
+10: 
+11: export type Queryable = {
+12:   query<T extends Record<string, unknown> = Record<string, unknown>>(
+13:     sql: string,
+14:     params?: unknown[],
+15:   ): Promise<{ rows: T[] }>;
+16:   exec?(sql: string): Promise<unknown>;
+17: };
+18: const digest = (value: string | Uint8Array): string =>
+19:   `sha256:${createHash("sha256").update(value).digest("hex")}`;
+20: 
+21: export async function migrate(
+22:   db: Queryable & { connect?: () => Promise<Queryable & { release(): void }> },
+23:   options: { infrastructure?: "embedded" | "preprovisioned" } = {},
+24: ): Promise<void> {
+25:   const root = new URL("./migrations/", import.meta.url);
+26:   const files = (await readdir(root))
+27:     .filter((name) => /^\d{3}_[a-z0-9_]+\.sql$/u.test(name))
+28:     .sort();
+29:   const connection = db.connect ? await db.connect() : db;
+30:   try {
+31:     await connection.query("BEGIN");
+32:     try {
+33:       await connection.query(
+34:         "SELECT pg_advisory_xact_lock(hashtextextended('prism-schema-migrations',0))",
+35:       );
+36:       if (options.infrastructure === "preprovisioned") {
+37:         const schema = await connection.query(
+38:           "SELECT n.nspname FROM pg_namespace n JOIN pg_roles r ON r.oid=n.nspowner WHERE n.nspname='prism' AND r.rolname=current_user",
+39:         );
+40:         if (!schema.rows[0]) {
+41:           throw new Error("Prism schema bootstrap is missing or prism_migrator is not its owner");
+42:         }
+43:       } else {
+44:         await connection.query("CREATE EXTENSION IF NOT EXISTS vector");
+45:         await connection.query("DO $$ BEGIN IF NOT EXISTS (SELECT FROM pg_roles WHERE rolname = 'prism_migrator') THEN CREATE ROLE prism_migrator; END IF; IF NOT EXISTS (SELECT FROM pg_roles WHERE rolname = 'prism_runtime') THEN CREATE ROLE prism_runtime; END IF; IF NOT EXISTS (SELECT FROM pg_roles WHERE rolname = 'prism_readonly') THEN CREATE ROLE prism_readonly; END IF; END $$");
+46:         await connection.query("CREATE SCHEMA IF NOT EXISTS prism");
+47:       }
+48:       await connection.query(
+49:         "CREATE TABLE IF NOT EXISTS prism.schema_migration(name text PRIMARY KEY,applied_at timestamptz NOT NULL DEFAULT now())",
+50:       );
+51:       for (const name of files) {
+52:         const sql = await readFile(new URL(name, root), "utf8");
+53:         const applied = await connection.query(
+54:           "SELECT name FROM prism.schema_migration WHERE name=$1",
+55:           [name],
+56:         );
+57:         if (!applied.rows[0]) {
+58:           if (connection.exec) await connection.exec(sql);
+59:           else await connection.query(sql);
+60:           await connection.query(
+61:             "INSERT INTO prism.schema_migration(name) VALUES($1)",
+62:             [name],
+63:           );
+64:         }
+65:       }
+66:       await connection.query("COMMIT");
+67:     } catch (error) {
+68:       await connection.query("ROLLBACK");
+69:       throw error;
+70:     }
+71:   } finally {
+72:     if ("release" in connection && typeof connection.release === "function")
+73:       connection.release();
+74:   }
+75: }
+76: 
+77: export { ContentAddressedArtifactStore } from "./artifacts.ts";
+78: 
+79: export type Database = Queryable & { connect?: () => Promise<Queryable & { release(): void }> };
+80: 
+81: export async function inTransaction<T>(db: Database, execute: (connection: Queryable) => Promise<T>): Promise<T> {
+82:   const connection = db.connect ? await db.connect() : db;
+83:   try {
+84:     await connection.query("BEGIN");
+85:     try {
+86:       const result = await execute(connection);
+87:       await connection.query("COMMIT");
+88:       return result;
+89:     } catch (error) {
+90:       await connection.query("ROLLBACK");
+91:       throw error;
+92:     }
+93:   } finally {
+94:     if ("release" in connection && typeof connection.release === "function") connection.release();
+95:   }
+96: }
+97: 
+98: async function insertDocument(connection: Queryable, projectId: string, key: string, document: PrismDocument, user: string, designRequestId?: string): Promise<string> {
+99:     const documentId = randomUUID();
+100:     const revisionId = randomUUID();
+101:     const content = JSON.stringify(document);
+102:     const contentDigest = digest(content);
+103:       await connection.query("SELECT id FROM prism.project WHERE id=$1 FOR SHARE",[projectId]);
+104:       if(designRequestId){const active=await connection.query("SELECT id FROM prism.design_request WHERE id=$1 AND project_id=$2 AND status='active'",[designRequestId,projectId]);if(!active.rows[0])throw new Error("active Prism design request changed before document creation");}
+105:       await connection.query(
+106:         "INSERT INTO prism.design_document(id,project_id,document_key,design_request_id) VALUES($1,$2,$3,$4)",
+107:         [documentId, projectId, key, designRequestId ?? null],
+108:       );
+109:       await connection.query(
+110:         "INSERT INTO prism.design_revision(id,document_id,revision,schema_id,content,content_digest,created_by) VALUES($1,$2,$3,$4,$5::jsonb,$6,$7)",
+111:         [
+112:           revisionId,
+113:           documentId,
+114:           document.meta.revision,
+115:           document.meta.schema,
+116:           content,
+117:           contentDigest,
+118:           user,
+119:         ],
+120:       );
+121:       await connection.query(
+122:         "UPDATE prism.design_document SET current_revision_id=$1 WHERE id=$2",
+123:         [revisionId, documentId],
+124:       );
+125:     return documentId;
+126: }
+127: 
+128: export class RevisionRepository {
+129:   private readonly db: Database;
+130:   constructor(db: Database) {
+131:     this.db = db;
+132:   }
+133:   async createProject(externalId: string, name: string): Promise<string> {
+134:     const id = randomUUID();
+135:     await this.db.query(
+136:       "INSERT INTO prism.project(id,external_id,name) VALUES($1,$2,$3)",
+137:       [id, externalId, name],
+138:     );
+139:     return id;
+140:   }
+141:   async createDocument(
+142:     projectId: string,
+143:     key: string,
+144:     document: PrismDocument,
+145:     user: string,
+146:     designRequestId?: string,
+147:   ): Promise<string> {
+148:     return inTransaction(this.db, connection => insertDocument(connection, projectId, key, document, user, designRequestId));
+149:   }
+150: 
+151:   async createDirectionSet(projectKey: string, generationId: string, designs: readonly { key: string; title: string; summary: string; document: PrismDocument; evidence?: Record<string, unknown> }[], agent?:AgentCompletion) {
+152:     if (designs.length !== 3 || new Set(designs.map(item => item.key)).size !== 3
+153:       || designs.some(item => !item.key || !item.title || !item.summary || item.document.meta.projectId !== projectKey)) throw new Error("invalid Prism design set");
+154:     return inTransaction(this.db, async connection => {
+155:       const project = await connection.query<{ id: string }>("SELECT id FROM prism.project WHERE external_id=$1 FOR UPDATE", [projectKey]);
+156:       if (!project.rows[0]) throw new Error("active Prism project not found");
+157:       const projectId = project.rows[0].id;
+158:       if(agent){const replay=await lockAgentResult(connection,agent,generationId);if(replay)return replay as {status:string;projectId:string;documentId:string;directions:Array<{directionId:string;documentId:string;key:string}>};}
+159:       const resultDigest = digest(JSON.stringify(designs));
+160:       const bound = await boundDesignRound(connection,projectId,generationId,resultDigest);
+161:       if (bound.replay) return bound.replay as {status: string; projectId: string; documentId: string; directions: Array<{directionId:string;documentId:string;key:string}>};
+162:       const requestId = bound.requestId;
+163:       const directions = [];
+164:       for (const item of designs) {
+165:         const documentId = await insertDocument(connection, projectId, `direction-${generationId}-${item.key}`, item.document, 'agent:prism', requestId);
+166:         await connection.query("UPDATE prism.design_document SET design_round_id=$2 WHERE id=$1",[documentId,generationId]);
+167:         const current = await new RevisionRepository(connection).current(documentId);
+168:         const directionId = randomUUID();
+169:         const content = JSON.stringify(item.document);
+170:         await connection.query("INSERT INTO prism.direction(id,project_id,source_document_id,source_revision_id,direction_key,title,summary,proposal,content_digest,state,evidence) VALUES($1,$2,$3,$4,$5,$6,$7,$8::jsonb,$9,'proposed',$10::jsonb)",
+171:           [directionId, projectId, documentId, current.id, item.key, item.title, item.summary, content, digest(content), JSON.stringify(item.evidence ?? {})]);
+172:         directions.push({ directionId, documentId, key: item.key });
+173:       }
+174:       const result = { status: 'created', generationId, projectId, documentId: directions[0]!.documentId, directions };
+175:       await connection.query("UPDATE prism.design_round SET result_digest=$2,result=$3::jsonb WHERE id=$1",[generationId,resultDigest,JSON.stringify(result)]);
+176:       if(agent)await recordAgentResult(connection,agent,result);
+177:       return result;
+178:     });
+179:   }
+180:   async current(
+181:     documentId: string,
+182:   ): Promise<{ id: string; document: PrismDocument }> {
+183:     const result = await this.db.query<{ id: string; content: PrismDocument }>(
+184:       "SELECT r.id,r.content FROM prism.design_document d JOIN prism.design_revision r ON r.id=d.current_revision_id WHERE d.id=$1",
+185:       [documentId],
+186:     );
+187:     if (!result.rows[0]) throw new Error("document not found");
+188:     return { id: result.rows[0].id, document: result.rows[0].content };
+189:   }
+190:   async revision(
+191:     documentId: string,
+192:     revision: number,
+193:   ): Promise<{ id: string; document: PrismDocument }> {
+194:     const result = await this.db.query<{ id: string; content: PrismDocument }>(
+195:       "SELECT id,content FROM prism.design_revision WHERE document_id=$1 AND revision=$2",
+196:       [documentId, revision],
+197:     );
+198:     if (!result.rows[0]) throw new Error("design revision not found");
+199:     return { id: result.rows[0].id, document: result.rows[0].content };
+200:   }
+201:   async includesOperation(
+202:     documentId: string,
+203:     idempotencyKey: string,
+204:   ): Promise<boolean> {
+205:     const result = await this.db.query(
+206:       "SELECT id FROM prism.design_revision WHERE document_id=$1 AND operation->>'idempotencyKey'=$2 LIMIT 1",
+207:       [documentId, idempotencyKey],
+208:     );
+209:     return Boolean(result.rows[0]);
+210:   }
+211:   async history(
+212:     documentId: string,
+213:   ): Promise<
+214:     Array<{
+215:       id: string;
+216:       revision: number;
+217:       createdAt: string;
+218:       createdBy: string;
+219:       operation: Record<string, unknown> | null;
+220:     }>
+221:   > {
+222:     const result = await this.db.query<{
+223:       id: string;
+224:       revision: number;
+225:       created_at: string;
+226:       created_by: string;
+227:       operation: Record<string, unknown> | null;
+228:     }>(
+229:       "SELECT id,revision,created_at::text,created_by,operation FROM prism.design_revision WHERE document_id=$1 ORDER BY created_at DESC,id DESC",
+230:       [documentId],
+231:     );
+232:     return result.rows.map((row) => ({
+233:       id: row.id,
+234:       revision: row.revision,
+235:       createdAt: row.created_at,
+236:       createdBy: row.created_by,
+237:       operation: row.operation,
+238:     }));
+239:   }
+240:   async restore(
+241:     documentId: string,
+242:     revisionId: string,
+243:     user: string,
+244:   ): Promise<PrismDocument> {
+245:     const source = await this.db.query<{ content: PrismDocument }>(
+246:       "SELECT content FROM prism.design_revision WHERE id=$1 AND document_id=$2",
+247:       [revisionId, documentId],
+248:     );
+249:     if (!source.rows[0]) throw new Error("revision not found");
+250:     const current = await this.current(documentId);
+251:     const next = structuredClone(source.rows[0].content);
+252:     next.meta.revision = current.document.meta.revision + 1;
+253:     next.meta.updatedAt = new Date().toISOString();
+254:     return this.replace(
+255:       documentId,
+256:       current.id,
+257:       next,
+258:       { type: "revision.restored", sourceRevisionId: revisionId },
+259:       user,
+260:     );
+261:   }
+262:   async apply(
+263:     documentId: string,
+264:     operation: PrismOperation,
+265:     user: string,
+266:   ): Promise<PrismDocument> {
+267:     return inTransaction(this.db, async (connection) => {
+268:       const current = await new RevisionRepository(connection).current(documentId);
+269:       const next = applyOperation(current.document, operation);
+270:       const id = randomUUID();
+271:       const content = JSON.stringify(next);
+272:       await connection.query(
+273:         "INSERT INTO prism.design_revision(id,document_id,revision,schema_id,content,content_digest,parent_revision_id,operation,created_by) VALUES($1,$2,$3,$4,$5::jsonb,$6,$7,$8::jsonb,$9)",
+274:         [
+275:           id,
+276:           documentId,
+277:           next.meta.revision,
+278:           next.meta.schema,
+279:           content,
+280:           digest(content),
+281:           current.id,
+282:           JSON.stringify(operation),
+283:           user,
+284:         ],
+285:       );
+286:       const updated = await connection.query(
+287:         "UPDATE prism.design_document SET current_revision_id=$1 WHERE id=$2 AND current_revision_id=$3 RETURNING id",
+288:         [id, documentId, current.id],
+289:       );
+290:       if (!updated.rows[0]) throw new Error("revision conflict");
+291:       return next;
+292:     });
+293:   }
+294:   async replace(
+295:     documentId: string,
+296:     expectedRevisionId: string,
+297:     document: PrismDocument,
+298:     operation: Record<string, unknown>,
+299:     user: string,
+300:     agent?:AgentCompletion,
+301:   ): Promise<PrismDocument> {
+302:     return inTransaction(this.db, async (connection) => {
+303:       if(agent){const replay=await lockAgentResult(connection,agent,String(operation.generationId));if(replay)return replay as PrismDocument;}
+304:       const current = await new RevisionRepository(connection).current(documentId);
+305:       if (current.id !== expectedRevisionId)
+306:         throw new Error("revision conflict");
+307:       const id = randomUUID();
+308:       const content = JSON.stringify(document);
+309:       await connection.query(
+310:         "INSERT INTO prism.design_revision(id,document_id,revision,schema_id,content,content_digest,parent_revision_id,operation,created_by) VALUES($1,$2,$3,$4,$5::jsonb,$6,$7,$8::jsonb,$9)",
+311:         [
+312:           id,
+313:           documentId,
+314:           document.meta.revision,
+315:           document.meta.schema,
+316:           content,
+317:           digest(content),
+318:           current.id,
+319:           JSON.stringify(operation),
+320:           user,
+321:         ],
+322:       );
+323:       const updated = await connection.query(
+324:         "UPDATE prism.design_document SET current_revision_id=$1 WHERE id=$2 AND current_revision_id=$3 RETURNING id",
+325:         [id, documentId, current.id],
+326:       );
+327:       if (!updated.rows[0]) throw new Error("revision conflict");
+328:       if(agent)await recordAgentResult(connection,agent,document);
+329:       return document;
+330:     });
+331:   }
+332: }
+{"path": "skills/prism/studio/design-round-client.ts", "sha256": "0a37517165fad75fd049dafc9a3519cbd8a7c0f2351c6adaeaab4c4fc2281f46"}
+1: import {roundResponse,responseObject} from "./round-response.ts";
+2: import type {PrismDocument} from '@kubeclaw/prism-contracts-v1';
+3: export type StudioDirection={id:string;generation_id?:string;source_document_id?:string;title:string;summary:string;state:string;evidence?:{thesis?:string;tradeoffs?:string[];references?:Array<{id?:string;summary?:string}>}};
+4: export type PendingRound={documentId:string;expectedRevision:number;parentRoundId?:string;idempotencyKey:string;generationId?:string};
+5: export type RoundClient={projectId:string;userId:string;csrf:string;origin:string;storage:Pick<Storage,'getItem'|'setItem'|'removeItem'>};
+6: const key=(client:RoundClient)=>`prism-round:${client.userId}:${client.projectId}`;
+7: const route=(client:RoundClient,path:string)=>new URL(path,client.origin);
+8: export function savedRound(client:RoundClient):PendingRound|null {
+9:  const raw=client.storage.getItem(key(client));if(!raw)return null;
+10:  const value=JSON.parse(raw) as PendingRound;
+11:  if(!value.documentId || !Number.isSafeInteger(value.expectedRevision) || !value.idempotencyKey)throw new Error('Stored round request is invalid; it was retained for inspection');
+12:  return value;
+13: }
+14: export function saveRound(client:RoundClient,pending:PendingRound){client.storage.setItem(key(client),JSON.stringify(pending));}
+15: export function pendingRound(client:RoundClient,source:Omit<PendingRound,'idempotencyKey'|'generationId'>):PendingRound {
+16:  const pending=savedRound(client) ?? {...source,idempotencyKey:crypto.randomUUID()};saveRound(client,pending);return pending;
+17: }
+18: export async function submitRound(client:RoundClient,pending:PendingRound) {
+19:  const response=await fetch(route(client,`/v1/projects/${encodeURIComponent(client.projectId)}/directions`),{method:'POST',headers:{'content-type':'application/json','x-prism-csrf':client.csrf},body:JSON.stringify(pending)});
+20:  const receipt=await roundResponse<{generationId:string}>(response,`Submit design round for project ${client.projectId}`,value=>responseObject(value)&&typeof value.generationId==='string'&&value.generationId.length>0,'a nonempty generationId');
+21:  if(pending.generationId && pending.generationId!==receipt.generationId)throw new Error('Round identity changed unexpectedly');
+22:  const accepted={...pending,generationId:receipt.generationId};saveRound(client,accepted);return accepted;
+23: }
+24: export async function currentDirections(client:RoundClient) {
+25:  const response=await fetch(route(client,`/v1/projects/${encodeURIComponent(client.projectId)}/directions`));
+26:  return (await roundResponse<{items:StudioDirection[]}>(response,`Load design directions for project ${client.projectId}`,value=>responseObject(value)&&Array.isArray(value.items)&&value.items.every(item=>responseObject(item)&&typeof item.id==='string'&&typeof item.state==='string'),'an items array of direction objects with id and state')).items;
+27: }
+28: export async function loadRoundDocument(client:RoundClient,directions:StudioDirection[],currentId?:string) {
+29:  const documentId=directions.find(item=>item.source_document_id===currentId)?.source_document_id ?? directions[0]?.source_document_id;
+30:  if(!documentId)throw new Error('Round document identity is missing');
+31:  const response=await fetch(route(client,`/v1/documents/${encodeURIComponent(documentId)}`));
+32:  const value=await roundResponse<{document:PrismDocument}>(response,`Load design document ${documentId}`,value=>responseObject(value)&&responseObject(value.document)&&responseObject(value.document.meta),'a document object with metadata');
+33:  return {directions,documentId,document:value.document};
+34: }
+35: export function completeRound(client:RoundClient,directions:StudioDirection[]) {
+36:  const pending=savedRound(client);
+37:  if(!pending || !directions.length || !directions.every(item=>item.generation_id===pending.generationId))return false;
+38:  client.storage.removeItem(key(client));return true;
+39: }
+40: export async function waitForRound(client:RoundClient,pending:PendingRound,attempts=30) {
+41:  for(let attempt=0;attempt<attempts;attempt++){
+42:   const directions=await currentDirections(client);
+43:   if(directions.length && directions[0]?.generation_id!==pending.generationId)throw new Error('Pending round was superseded; the request key is retained');
+44:   if(directions.length===3 && directions.every(item=>item.generation_id===pending.generationId)){
+45:    const loaded=await loadRoundDocument(client,directions);completeRound(client,directions);return loaded;
+46:   }
+47:   if(attempt+1<attempts)await new Promise(resolve=>setTimeout(resolve,2000));
+48:  }
+49:  return null;
+50: }
+{"path": "skills/prism/studio/app.tsx", "sha256": "5ee08fa855120dfb53f44aa8a5aa48979674d3f4a0ba8c13c2f4717d2663c092"}
+1: import {savedRevision,pendingRevision,submitRevision,waitForRevision,type RevisionClient} from './agent-revision-client.ts';
+2: import { savedRound, pendingRound, submitRound, currentDirections, loadRoundDocument, completeRound, waitForRound, type RoundClient, type StudioDirection } from "./design-round-client.ts";
+3: import React, { useEffect, useMemo, useRef, useState } from "react";
+4: import { createRoot } from "react-dom/client";
+5: import { Puck } from "@puckeditor/core";
+6: import "@puckeditor/core/puck.css";
+7: import "./studio.css";
+8: import type { PrismDocument, PrismNode } from "@kubeclaw/prism-contracts-v1";
+9: import {
+10:   applyOperation,
+11:   type PrismOperation,
+12:   type Viewport,
+13: } from "../domain/index.ts";
+14: import { puckChangeToOperation } from "./puck-adapter.ts";
+15: import { project } from "./projection.ts";
+16: import { loadPreviewAssets, type PreviewAssets } from "./preview-assets.ts";
+17: import { previewDocument } from "./preview.ts";
+18: import { config } from "./puck-config.tsx";
+19: import { studioFlows, previewActionTarget, previewSelection } from "./flows.ts";
+20: 
+21: 
+22: function App() {
+23:   const [document, setDocument] = useState<PrismDocument | null>(null);
+24:   const flows = useMemo(() => document ? studioFlows(document) : [], [document]);
+25:   const [previewAssets, setPreviewAssets] = useState<{ document: PrismDocument; assets: PreviewAssets } | null>(null);
+26:   const [previewAssetError, setPreviewAssetError] = useState<string | null>(null);
+27:   useEffect(() => {
+28:     if (!document) return;
+29:     const controller = new AbortController();
+30:     setPreviewAssets(null); setPreviewAssetError(null);
+31:     void loadPreviewAssets(document, controller.signal).then(
+32:       (assets) => { if (!controller.signal.aborted) setPreviewAssets({ document, assets }); },
+33:       (error: unknown) => { if (!controller.signal.aborted) setPreviewAssetError(error instanceof Error ? error.message : String(error)); },
+34:     );
+35:     return () => controller.abort();
+36:   }, [document]);
+37:   const [csrf, setCsrf] = useState("");
+38:   const [userId, setUserId] = useState("");
+39:   const [failure, setFailure] = useState("");
+40:   const [approvalMessage, setApprovalMessage] = useState("");
+41:   const [quality, setQuality] = useState<{
+42:     status: string;
+43:     findings: Array<{
+44:       id: string;
+45:       level: string;
+46:       message: string;
+47:       target?: string;
+48:     }>;
+49:   } | null>(null);
+50:   const [acceptedWarnings, setAcceptedWarnings] = useState<string[]>([]);
+51:   const [viewport, setViewport] = useState<Viewport>("wide");
+52:   const [viewId, setViewId] = useState("home");
+53:   const [viewState, setViewState] = useState("default");
+54:   const [instruction, setInstruction] = useState("");
+55:   const [working, setWorking] = useState(false);
+56:   const [revisionPending,setRevisionPending]=useState(false);
+57:   const [learned, setLearned] = useState<Record<string, unknown>>({});
+58:   const [preferenceEvents, setPreferenceEvents] = useState<
+59:     Array<{ eventId: string; action: string; retractsEventId?: string }>
+60:   >([]);
+61:   const [directions,setDirections]=useState<StudioDirection[]>([]);
+62:   const [roundMessage,setRoundMessage]=useState("");
+63:   const [roundBusy,setRoundBusy]=useState(false);
+64:   const [roundPending,setRoundPending]=useState(false);
+65:   const [brief,setBrief]=useState<Record<string,unknown>|null>(null);
+66:   const [projects,setProjects]=useState<Array<{id:string;external_id:string;name:string;document_id:string|null;direction_count:number}>>([]);
+67:   const [revisions, setRevisions] = useState<
+68:     Array<{ id: string; revision: number; createdAt: string }>
+69:   >([]);
+70:   const [panel, setPanel] = useState<"navigate" | "insert" | "prism" | null>(
+71:     null,
+72:   );
+73:   const [mode, setMode] = useState<"edit" | "preview">("edit");
+74:   const previewRef=useRef<HTMLIFrameElement>(null);
+75:   const [selectedNodeId,setSelectedNodeId]=useState<string|null>(null);
+76:   const selectedNode=useMemo(()=>{if(!document||!selectedNodeId)return undefined;const visit=(node:PrismNode):PrismNode|undefined=>node.id===selectedNodeId?node:node.children?.map(visit).find(Boolean);return visit(document.views[viewId]?.root as PrismNode);},[document,selectedNodeId,viewId]);
+77:   useEffect(()=>{
+78:     const root=document?.views[viewId]?.root as PrismNode|undefined;
+79:     if(!root){setSelectedNodeId(null);return;}
+80:     const firstEditable=(node:PrismNode):PrismNode=>node.children?.map(firstEditable)[0]??node;
+81:     setSelectedNodeId((current)=>{
+82:       const contains=(node:PrismNode):boolean=>node.id===current||Boolean(node.children?.some(contains));
+83:       return current&&contains(root)?current:firstEditable(root).id;
+84:     });
+85:   },[document,viewId]);
+86:   useEffect(() => {
+87:     const receive = (event: MessageEvent<unknown>) => {
+88:       if (event.source !== previewRef.current?.contentWindow) return;
+89:       const selection = previewSelection(event.data);
+90:       if (selection) setSelectedNodeId(selection);
+91:       const target = previewActionTarget(flows, { view: viewId, state: viewState }, event.data);
+92:       if (target) { setViewId(target.view); setViewState(target.state); }
+93:     };
+94:     addEventListener("message", receive);
+95:     return () => removeEventListener("message", receive);
+96:   }, [flows, viewId, viewState]);
+97:   useEffect(() => {
+98:     if (import.meta.env.DEV) {
+99:       void import("./dev-fixture.ts").then(({ developmentDocument }) =>
+100:         setDocument(developmentDocument),
+101:       );
+102:       return;
+103:     }
+104:     void (async () => {
+105:       const session = await fetch("/v1/session", { method: "POST" });
+106:       if (!session.ok) throw new Error("Prism session could not start");
+107:       const sessionData = (await session.json()) as {
+108:         csrf: string;
+109:         userId: string;
+110:       };
+111:       setCsrf(sessionData.csrf);
+112:       setUserId(sessionData.userId);
+113:       const id = new URLSearchParams(location.search).get("document");
+114:       if (!id) {
+115:         const projectsResponse=await fetch("/v1/projects");
+116:         if(projectsResponse.ok)setProjects(((await projectsResponse.json()) as {items:Array<{id:string;external_id:string;name:string;document_id:string|null;direction_count:number}>}).items);
+117:         return;
+118:       }
+119:       const loaded = await fetch(`/v1/documents/${encodeURIComponent(id)}`);
+120:       if (!loaded.ok) throw new Error("Design document could not load");
+121:       setDocument(
+122:         ((await loaded.json()) as { document: PrismDocument }).document,
+123:       );
+124:       const revisionClient:RevisionClient={documentId:id,userId:sessionData.userId,csrf:sessionData.csrf,origin:location.origin,storage:sessionStorage};
+125:       const revision=savedRevision(revisionClient);
+126:       if(revision){setRevisionPending(true);setInstruction(revision.input.instruction);setFailure("An existing Prism revision request is retained. Reconcile it before proposing another change.");}
+127:       const projectId = new URLSearchParams(location.search).get("project");
+128:       if (projectId) {
+129:         const client:RoundClient={projectId,userId:sessionData.userId,csrf:sessionData.csrf,origin:location.origin,storage:sessionStorage};
+130:         const pending=savedRound(client);
+131:         if(pending){setRoundPending(true);setRoundMessage("Reconnecting to the same design round…");await submitRound(client,pending);}
+132:         const briefResponse=await fetch(`/v1/projects/${encodeURIComponent(projectId)}/brief`);
+133:         if(briefResponse.ok)setBrief(((await briefResponse.json()) as {request?:Record<string,unknown>}).request??null);
+134:         for(let attempt=0;attempt<300;attempt++){
+135:           const items=await currentDirections(client);
+136:           if(items.length){
+137:             const loadedRound=await loadRoundDocument(client,items,id);setDirections(items);setDocument(loadedRound.document);
+138:             const currentQuery=new URLSearchParams(location.search);currentQuery.set("document",loadedRound.documentId);history.replaceState(null,"",`?${currentQuery.toString()}`);
+139:             const completed=completeRound(client,items);setRoundPending(Boolean(savedRound(client)));
+140:             setRoundMessage(completed ? "New design round ready." : pending ? "Current round loaded; the previous request remains available for retry." : "");
+141:             break;
+142:           }
+143:           await new Promise(resolve=>setTimeout(resolve,2000));
+144:         }
+145:       }
+146:     })().catch((error) =>
+147:       setFailure(error instanceof Error ? error.message : String(error)),
+148:     );
+149:   }, []);
+150:   useEffect(() => {
+151:     if (document && !document.views[viewId])
+152:       setViewId(Object.keys(document.views)[0] ?? "home");
+153:   }, [document, viewId]);
+154:   const data = useMemo(
+155:     () =>
+156:       document
+157:         ? project(document, viewId)
+158:         : { root: { props: {} }, content: [] },
+159:     [document, viewId],
+160:   );
+161:   const commit = async (operation: PrismOperation) => {
+162:     if (!document) return;
+163:     if (import.meta.env.DEV) {
+164:       setDocument(applyOperation(document, operation));
+165:       setQuality(null);
+166:       setAcceptedWarnings([]);
+167:       return;
+168:     }
+169:     const id = new URLSearchParams(location.search).get("document");
+170:     if (!id) throw new Error("Document ID is missing");
+171:     const saved = await fetch(
+172:       `/v1/documents/${encodeURIComponent(id)}/operations`,
+173:       {
+174:         method: "POST",
+175:         headers: { "content-type": "application/json", "x-prism-csrf": csrf },
+176:         body: JSON.stringify(operation),
+177:       },
+178:     );
+179:     const payload = (await saved.json()) as PrismDocument & { error?: string };
+180:     if (!saved.ok) throw new Error(payload.error ?? "Design update failed");
+181:     setDocument(payload);
+182:     setQuality(null);
+183:     setAcceptedWarnings([]);
+184:   };
+185:   const propose = async () => {
+186:     if (!document || (!instruction.trim() && !revisionPending)) return;
+187:     const id = new URLSearchParams(location.search).get("document");
+188:     if (!id) throw new Error("Document ID is missing");
+189:     const client:RevisionClient={documentId:id,userId,csrf,origin:location.origin,storage:sessionStorage};
+190:     const pending=pendingRevision(client,document,instruction.trim());setRevisionPending(true);
+191:     setWorking(true);
+192:     try {
+193:       const accepted=await submitRevision(client,pending);
+194:       const next=await waitForRevision(client,accepted);
+195:       setDocument(next);setRevisionPending(false);setQuality(null);setAcceptedWarnings([]);setInstruction("");
+196:     } finally {setWorking(false);}
+197:   };
+198:   const loadLearned = async () => {
+199:     const projectId = document?.meta.projectId;
+200:     if (!projectId) return;
+201:     const response = await fetch(
+202:       `/v1/preferences?project=${encodeURIComponent(projectId)}`,
+203:     );
+204:     if (response.ok) {
+205:       const value = (await response.json()) as {
+206:         learned: Record<string, unknown>;
+207:         events: Array<{
+208:           eventId: string;
+209:           action: string;
+210:           retractsEventId?: string;
+211:         }>;
+212:       };
+213:       setLearned(value.learned);
+214:       setPreferenceEvents(value.events);
+215:     }
+216:   };
+217:   const loadRevisions = async () => {
+218:     const id = new URLSearchParams(location.search).get("document");
+219:     if (!id) return;
+220:     const response = await fetch(
+221:       `/v1/documents/${encodeURIComponent(id)}/revisions`,
+222:     );
+223:     if (response.ok)
+224:       setRevisions(
+225:         (
+226:           (await response.json()) as {
+227:             items: Array<{ id: string; revision: number; createdAt: string }>;
+228:           }
+229:         ).items,
+230:       );
+231:   };
+232:   const restoreRevision = async (revisionId: string) => {
+233:     const id = new URLSearchParams(location.search).get("document");
+234:     if (!id) return;
+235:     const response = await fetch(
+236:       `/v1/documents/${encodeURIComponent(id)}/revisions/${encodeURIComponent(revisionId)}/restore`,
+237:       {
+238:         method: "POST",
+239:         headers: { "content-type": "application/json", "x-prism-csrf": csrf },
+240:         body: "{}",
+241:       },
+242:     );
+243:     const value = (await response.json()) as PrismDocument & { error?: string };
+244:     if (!response.ok) throw new Error(value.error ?? "Revision restore failed");
+245:     setDocument(value);
+246:     setQuality(null);
+247:     setAcceptedWarnings([]);
+248:     await loadRevisions();
+249:   };
+250:   const retractPreference = async (eventId: string) => {
+251:     if (!document || !userId) return;
+252:     const event = {
+253:       schema: "prism.preference-event.v1",
+254:       eventId: `event-${crypto.randomUUID()}`,
+255:       userId,
+256:       projectId: document.meta.projectId,
+257:       action: "retracted",
+258:       target: { eventId },
+259:       traits: [],
+260:       context: { surface: "studio" },
+261:       source: "explicit",
+262:       learningScope: "project",
+263:       retractsEventId: eventId,
+264:       occurredAt: new Date().toISOString(),
+265:     };
+266:     const response = await fetch("/v1/preferences", {
+267:       method: "POST",
+268:       headers: { "content-type": "application/json", "x-prism-csrf": csrf },
+269:       body: JSON.stringify(event),
+270:     });
+271:     if (!response.ok) {
+272:       const value = (await response.json()) as { error?: string };
+273:       throw new Error(value.error ?? "Preference retraction failed");
+274:     }
+275:     await loadLearned();
+276:   };
+277:   const pendingDirectionKeys = useRef(new Map<string, string>());
+278:   const directionRequest = (route: string, payload: object) => {
+279:     const body = JSON.stringify(payload);
+280:     const identity = JSON.stringify([route, body]);
+281:     const key = pendingDirectionKeys.current.get(identity) ?? crypto.randomUUID();
+282:     pendingDirectionKeys.current.set(identity, key);
+283:     return { identity, options: { method: "POST", headers: { "content-type": "application/json", "x-prism-csrf": csrf, "Idempotency-Key": key }, body } };
+284:   };
+285:   const selectDirection = async (directionId: string) => {
+286:     const documentId = new URLSearchParams(location.search).get("document");
+287:     if (!documentId) throw new Error("Document ID is missing");
+288:     const route = `/v1/directions/${encodeURIComponent(directionId)}/select`;
+289:     const mutation = directionRequest(route, {documentId});
+290:     const response = await fetch(route, mutation.options);
+291:     const result = (await response.json()) as {
+292:       document?: PrismDocument;
+293:       documentId?: string;
+294:       error?: string;
+295:     };
+296:     if (!response.ok || !result.document)
+297:       throw new Error(result.error ?? "Direction selection failed");
+298:     pendingDirectionKeys.current.delete(mutation.identity);
+299:     setDocument(result.document);
+300:     if(result.documentId){
+301:       const query=new URLSearchParams(location.search);query.set("document",result.documentId);
+302:       history.replaceState(null,"",`?${query.toString()}`);
+303:     }
+304:     setQuality(null);
+305:     setAcceptedWarnings([]);
+306:     setDirections((items) =>
+307:       items.map((item) => ({
+308:         ...item,
+309:         state: item.id === directionId ? "selected" : "rejected",
+310:       })),
+311:     );
+312:   };
+313:   const recordDirectionFeedback = async (
+314:     directionId: string,
+315:     action: "rejected" | "liked" | "disliked" | "preserved",
+316:   ) => {
+317:     const route = `/v1/directions/${encodeURIComponent(directionId)}/feedback`;
+318:     const mutation = directionRequest(route, {action});
+319:     const response = await fetch(route, mutation.options);
+320:     const result = (await response.json()) as { error?: string; eventId?: string; state?: string };
+321:     if (!response.ok || !result.eventId || result.state !== (action === "rejected" ? "rejected" : "recorded"))
+322:       throw new Error(result.error ?? "Direction feedback failed");
+323:     pendingDirectionKeys.current.delete(mutation.identity);
+324:     if (action === "rejected")
+325:       setDirections((items) =>
+326:         items.map((item) =>
+327:           item.id === directionId ? { ...item, state: "rejected" } : item,
+328:         ),
+329:       );
+330:     await loadLearned();
+331:   };
+332:   const requestNewRound = async () => {
+333:     const query=new URLSearchParams(location.search);
+334:     const projectId=query.get("project");const documentId=query.get("document");
+335:     if (!projectId || !documentId || !document) throw new Error("Current design identity is missing");
+336:     const client:RoundClient={projectId,userId,csrf,origin:location.origin,storage:sessionStorage};
+337:     const pending=pendingRound(client,{documentId,expectedRevision:document.meta.revision,parentRoundId:directions[0]?.generation_id});
+338:     setRoundPending(true);setRoundBusy(true);setRoundMessage("Requesting the design round…");
+339:     try {
+340:       const accepted=await submitRound(client,pending);
+341:       setRoundMessage("Design round pending. Checking for the three proposals…");
+342:       const ready=await waitForRound(client,accepted);
+343:       if(!ready){setRoundMessage("Still pending. Retry the same round to reconnect without creating another request.");return;}
+344:       setDirections(ready.directions);setDocument(ready.document);setQuality(null);setAcceptedWarnings([]);setApprovalMessage("");setRoundPending(false);setRoundMessage("New design round ready.");
+345:       query.set("document",ready.documentId);history.replaceState(null,"",`?${query.toString()}`);
+346:     } catch(error) {
+347:       setRoundMessage(`Round pending or conflicted: ${error instanceof Error ? error.message : String(error)} The request key is retained; retry does not create a new round.`);
+348:     } finally {setRoundBusy(false);}
+349:   };
+350:   const approve = async () => {
+351:     if (!document) return;
+352:     const query = new URLSearchParams(location.search);
+353:     const projectId = query.get("project");
+354:     const documentId = query.get("document");
+355:     if (!projectId || !documentId)
+356:       throw new Error("Project identity is missing");
+357:     const report = quality ?? (await evaluateDesign());
+358:     if (report.status === "blocked")
+359:       throw new Error("Resolve all blocking design findings before approval");
+360:     const warnings = report.findings
+361:       .filter((finding) => finding.level === "review")
+362:       .map((finding) => finding.id);
+363:     if (warnings.some((id) => !acceptedWarnings.includes(id)))
+364:       throw new Error("Review and accept each design warning before approval");
+365:     const bytes = new TextEncoder().encode(JSON.stringify(document));
+366:     const hash = Array.from(
+367:       new Uint8Array(await crypto.subtle.digest("SHA-256", bytes)),
+368:     )
+369:       .map((value) => value.toString(16).padStart(2, "0"))
+370:       .join("");
+371:     const approval = await fetch("/v1/approvals", {
+372:       method: "POST",
+373:       headers: { "content-type": "application/json", "x-prism-csrf": csrf },
+374:       body: JSON.stringify({
+375:         projectId,
+376:         documentId,
+377:         designDigest: `sha256:${hash}`,
+378:         acceptedWarningIds: acceptedWarnings,
+379:       }),
+380:     });
+381:     const approvalBody = (await approval.json()) as {
+382:       id?: string;
+383:       error?: string;
+384:     };
+385:     if (!approval.ok || !approvalBody.id)
+386:       throw new Error(approvalBody.error ?? "Approval failed");
+387:     const baseline = await fetch("/v1/baselines", {
+388:       method: "POST",
+389:       headers: { "content-type": "application/json", "x-prism-csrf": csrf },
+390:       body: JSON.stringify({
+391:         projectId,
+392:         documentId,
+393:         approvalId: approvalBody.id,
+394:       }),
+395:     });
+396:     const baselineBody = (await baseline.json()) as {
+397:       bundleDigest?: string;
+398:       error?: string;
+399:     };
+400:     if (!baseline.ok || !baselineBody.bundleDigest)
+401:       throw new Error(baselineBody.error ?? "Baseline publication failed");
+402:     setApprovalMessage(
+403:       `Published ${baselineBody.bundleDigest}. Approval ID: ${approvalBody.id}`,
+404:     );
+405:   };
+406:   const evaluateDesign = async () => {
+407:     if (!document) throw new Error("Design is not loaded");
+408:     const documentId = new URLSearchParams(location.search).get("document");
+409:     if (!documentId) throw new Error("Document ID is missing");
+410:     const response = await fetch(
+411:       `/v1/documents/${encodeURIComponent(documentId)}/engine`,
+412:       {
+413:         method: "POST",
+414:         headers: { "content-type": "application/json", "x-prism-csrf": csrf },
+415:         body: JSON.stringify({
+416:           operation: "evaluate",
+417:           baseRevision: document.meta.revision,
+418:           idempotencyKey: `studio-evaluate-${document.meta.documentId}-${document.meta.revision}`,
+419:           input: {},
+420:         }),
+421:       },
+422:     );
+423:     const body = (await response.json()) as {
+424:       specialistResult?: {
+425:         values?: {
+426:           status: string;
+427:           findings: Array<{
+428:             id: string;
+429:             level: string;
+430:             message: string;
+431:             target?: string;
+432:           }>;
+433:         };
+434:       };
+435:       error?: string;
+436:     };
+437:     if (!response.ok || !body.specialistResult?.values)
+438:       throw new Error(body.error ?? "Design evaluation failed");
+439:     setQuality(body.specialistResult.values);
+440:     setAcceptedWarnings([]);
+441:     return body.specialistResult.values;
+442:   };
+443:   const updateTitle = () => {
+444:     if (!document) return;
+445:     const current = document;
+446:     const title = selectedNode;
+447:     if (!title) return;
+448:     void commit({
+449:       type: "node.props.set",
+450:       baseRevision: current.meta.revision,
+451:       nodeId: title.id,
+452:       props: {
+453:         ...(title.type==="button"
+454:           ? {label:String(title.props?.label??"Action")==="Action"?"Continue":"Action"}
+455:           : {content:String(title.props?.content??"")==="Services"?"Deployments":"Services"}),
+456:       },
+457:     }).catch((error) => setFailure(String(error)));
+458:   };
+459:   const insert = () => {
+460:     if (!document) return;
+461:     const current = document;
+462:     void commit({
+463:       type: "node.insert",
+464:       baseRevision: current.meta.revision,
+465:       parentId: current.views[viewId]?.root.id ?? `${viewId}-root`,
+466:       index: current.views[viewId]?.root.children?.length ?? 0,
+467:       node: {
+468:         id: `action-${current.meta.revision}`,
+469:         type: "button",
+470:         props: {
+471:           label: "Inspect",
+472:           variant: "primary",
+473:           action: "preview-action",
+474:         },
+475:       },
+476:     }).catch((error) => setFailure(String(error)));
+477:   };
+478:   const move = () => {
+479:     if (!document) return;
+480:     const current = document;
+481:     const last = current.views[viewId]?.root.children?.at(-1);
+482:     if (!last) return;
+483:     void commit({
+484:       type: "node.move",
+485:       baseRevision: current.meta.revision,
+486:       nodeId: last.id,
+487:       parentId: current.views[viewId]?.root.id ?? `${viewId}-root`,
+488:       index: 0,
+489:     }).catch((error) => setFailure(String(error)));
+490:   };
+491:   if (failure)
+492:     return (
+493:       <main className="studio">
+494:         <section className="start-panel">
+495:           <h1>Prism cannot open</h1>
+496:           <p>{failure}</p>
+497:         </section>
+498:       </main>
+499:     );
+500:   if (!document)
+501:     return (
+502:       <main className="studio">
+503:         <section className="start-panel">
+504:           <h1>Prism Studio</h1>
+505:           {projects.length === 0 ? (
+506:             <>
+507:               <p>No design requests yet.</p>
+508:               <p>Projects appear here after Nova sends an architecture to Prism.</p>
+509:             </>
+510:           ) : (
+511:             <section aria-label="Prism projects">
+512:               <h2>Projects from Nova</h2>
+513:               {projects.map((project) => (
+514:                 <article key={project.id}>
+515:                   <strong>{project.name}</strong>
+516:                   {project.document_id ? (
+517:                     <>
+518:                       <p>{project.direction_count} design directions</p>
+519:                       <a href={`?project=${encodeURIComponent(project.id)}&document=${encodeURIComponent(project.document_id)}`}>Open designs</a>
+520:                     </>
+521:                   ) : (
+522:                     <p>Design generation pending.</p>
+523:                   )}
+524:                 </article>
+525:               ))}
+526:             </section>
+527:           )}
+528:           <button onClick={() => location.reload()}>Refresh</button>
+529:         </section>
+530:       </main>
+531:     );
+532:   return (
+533:     <main className="studio">
+534:       <header>
+535:         <div className="brand">
+536:           <span className="mark">P</span>
+537:           <strong>Prism</strong>
+538:           <span className="quiet">{document.meta.title}</span>
+539:         </div>
+540:         <div className="top-actions">
+541:           <span data-testid="revision">Revision {document.meta.revision}</span>
+542:           <select
+543:             aria-label="Viewport"
+544:             value={viewport}
+545:             onChange={(event) => setViewport(event.target.value as Viewport)}
+546:           >
+547:             <option value="compact">Compact</option>
+548:             <option value="regular">Regular</option>
+549:             <option value="wide">Wide</option>
+550:           </select>
+551:           <button onClick={() => setMode(mode === "edit" ? "preview" : "edit")}>
+552:             {mode === "edit" ? "Preview" : "Edit"}
+553:           </button>
+554:           <button
+555:             onClick={() =>
+556:               void evaluateDesign().catch((error) => setFailure(String(error)))
+557:             }
+558:           >
+559:             Check design
+560:           </button>
+561:           <button
+562:             className="approve"
+563:             onClick={() =>
+564:               void approve().catch((error) => setFailure(String(error)))
+565:             }
+566:           >
+567:             Approve
+568:           </button>
+569:         </div>
+570:       </header>
+571:       {approvalMessage && (
+572:         <p role="status" className="approval-status">
+573:           {approvalMessage}
+574:         </p>
+575:       )}
+576:       {brief&&<section aria-label="Design brief" className="brief"><h2>Brief</h2><p>Prism imported the approved Nova architecture and uses it as the design boundary.</p><dl>{Object.entries((brief.architectureContent&&typeof brief.architectureContent==="object"?brief.architectureContent:brief) as Record<string,unknown>).slice(0,12).map(([key,value])=><React.Fragment key={key}><dt>{key}</dt><dd>{typeof value==="string"?value:JSON.stringify(value)}</dd></React.Fragment>)}</dl></section>}
+577:       {quality && (
+578:         <section aria-label="Design quality">
+579:           <h2>Design quality: {quality.status}</h2>
+580:           {quality.findings.length === 0 ? (
+581:             <p>No findings.</p>
+582:           ) : (
+583:             quality.findings.map((finding) => (
+584:               <label key={finding.id}>
+585:                 <input
+586:                   type="checkbox"
+587:                   disabled={finding.level !== "review"}
+588:                   checked={
+589:                     finding.level === "review" &&
+590:                     acceptedWarnings.includes(finding.id)
+591:                   }
+592:                   onChange={(event) =>
+593:                     setAcceptedWarnings((current) =>
+594:                       event.target.checked
+595:                         ? [...current, finding.id]
+596:                         : current.filter((id) => id !== finding.id),
+597:                     )
+598:                   }
+599:                 />
+600:                 <strong>{finding.level}</strong> {finding.message}
+601:                 {finding.target ? ` (${finding.target})` : ""}
+602:               </label>
+603:             ))
+604:           )}
+605:         </section>
+606:       )}
+607:       <aside className="navigator">
+608:         <p className="eyebrow">Experience</p>
+609:         {roundMessage && <p role="status">{roundMessage}</p>}
+610:         {(roundPending || (directions.length===3 && directions.every(direction=>direction.state==="rejected"))) && <button disabled={roundBusy} onClick={()=>void requestNewRound().catch(error=>setRoundMessage(String(error)))}>{roundBusy ? "Waiting for new round…" : roundPending ? "Retry the same design round" : "Request new design round"}</button>}
+611:         {directions.length > 0 && (
+612:           <>
+613:             <h2>Directions</h2>
+614: 
+615:             {directions.map((direction) => (
+616:               <article key={direction.id} className="direction">
+617:                 <strong>{direction.title}</strong>
+618:                 <p>{direction.summary}</p>
+619:                 {direction.evidence?.tradeoffs?.length?<><small>Trade-offs</small><ul>{direction.evidence.tradeoffs.map((item)=><li key={item}>{item}</li>)}</ul></>:null}
+620:                 {direction.evidence?.references?.length?<p className="quiet">Grounded in {direction.evidence.references.length} approved corpus references.</p>:<p className="quiet">No approved corpus reference matched this brief.</p>}
+621:                 <button
+622:                   disabled={direction.state === "selected"}
+623:                   onClick={() =>
+624:                     void selectDirection(direction.id).catch((error) =>
+625:                       setFailure(String(error)),
+626:                     )
+627:                   }
+628:                 >
+629:                   {direction.state === "selected" ? "Selected" : "Choose"}
+630:                 </button>
+631:                 <button disabled={direction.state !== "proposed"} onClick={()=>void recordDirectionFeedback(direction.id,"rejected").catch((error)=>setFailure(String(error)))}>Reject</button>
+632:                 <button onClick={()=>void recordDirectionFeedback(direction.id,"liked").catch((error)=>setFailure(String(error)))}>More like this</button>
+633:                 <button onClick={()=>void recordDirectionFeedback(direction.id,"disliked").catch((error)=>setFailure(String(error)))}>Less like this</button>
+634:                 <button onClick={()=>void recordDirectionFeedback(direction.id,"preserved").catch((error)=>setFailure(String(error)))}>Keep this detail</button>
+635:               </article>
+636:             ))}
+637:           </>
+638:         )}
+639:         <h2>Screens</h2>
+640:         {Object.entries(document.views).map(([id, view]) => (
+641:           <div key={id}>
+642:             <button
+643:               className={`nav-item ${id === viewId ? "active" : ""}`}
+644:               onClick={() => {
+645:                 setViewId(id);
+646:                 setViewState(view.initialState ?? "default");
+647:               }}
+648:             >
+649:               {view.title}
+650:               <span>{Object.keys(view.states).length} states</span>
+651:             </button>
+652:             {id === viewId && (
+653:               <select
+654:                 aria-label="View state"
+655:                 value={viewState}
+656:                 onChange={(event) => setViewState(event.target.value)}
+657:               >
+658:                 {Object.keys(view.states).map((state) => (
+659:                   <option key={state}>{state}</option>
+660:                 ))}
+661:               </select>
+662:             )}
+663:           </div>
+664:         ))}
+665:         <h2>Flows</h2>
+666:         {flows.map((flow) => (
+667:           <button
+668:             key={flow.id}
+669:             className="nav-item"
+670:             onClick={() => {
+671:               setViewId(flow.start.view);
+672:               setViewState(flow.start.state);
+673:             }}
+674:           >
+675:             {flow.title}
+676:             <span>
+677:               {flow.transitions.length}{" "}
+678:               steps
+679:             </span>
+680:           </button>
+681:         ))}
+682:       </aside>
+683:       <section className="workspace">
+684:         <div className="workspace-label">
+685:           <span>{viewport}</span>
+686:           <span>{mode}</span>
+687:         </div>
+688:         <div className={`device device-${viewport}`}>
+689:           {mode === "edit" ? (
+690:             <Puck
+691:               config={config}
+692:               data={data}
+693:               onChange={(next) => {
+694:                 const operation = puckChangeToOperation(document, next, viewId);
+695:                 if (operation)
+696:                   void commit(operation).catch((error) =>
+697:                     setFailure(String(error)),
+698:                   );
+699:               }}
+700:               onPublish={() => undefined}
+701:               viewports={[
+702:                 {
+703:                   width:
+704:                     viewport === "compact"
+705:                       ? 390
+706:                       : viewport === "regular"
+707:                         ? 768
+708:                         : 1280,
+709:                   height: "auto",
+710:                   label: viewport,
+711:                 },
+712:               ]}
+713:               permissions={{
+714:                 drag: true,
+715:                 duplicate: true,
+716:                 delete: true,
+717:                 edit: true,
+718:                 insert: true,
+719:               }}
+720:             />
+721:           ) : (
+722:             <>
+723:             {previewAssetError && <p role="alert">Preview asset failed: {previewAssetError}</p>}
+724:             <iframe
+725:               ref={previewRef}
+726:               className="plain-preview"
+727:               title="Isolated prototype preview"
+728:               sandbox="allow-scripts"
+729:               srcDoc={previewDocument(document, viewId, viewState, viewport, previewAssets?.document === document ? previewAssets.assets : {})}
+730:             />
+731:             </>
+732:           )}
+733:         </div>
+734:       </section>
+735:       <aside className="inspector">
+736:         <p className="eyebrow">Selected element</p>
+737:         <h2>
+738:           {selectedNode?`${selectedNode.type} · ${selectedNode.id}`:"No selection"}
+739:         </h2>
+740:         <p className="quiet">
+741:           {selectedNode?"Edit this typed Design Document node.":"Select an element in Preview mode."}
+742:         </p>
+743:         <label>
+744:           Content
+745:           <input
+746:             value={String(
+747:               selectedNode?.props?.content??selectedNode?.props?.label??"",
+748:             )}
+749:             readOnly
+750:           />
+751:         </label>
+752:         <button
+753:           onClick={updateTitle}
+754:           disabled={!selectedNode}
+755:         >
+756:           Edit text
+757:         </button>
+758:         <button onClick={insert}>Insert action</button>
+759:         <button
+760:           onClick={move}
+761:           disabled={(document.views[viewId]?.root.children?.length ?? 0) < 2}
+762:         >
+763:           Move last to top
+764:         </button>
+765:         <hr />
+766:         <p className="eyebrow">Ask Prism</p>
+767:         <textarea
+768:           value={instruction}
+769:           onChange={(event) => setInstruction(event.target.value)}
+770:           placeholder="Describe the change you want…"
+771:         />
+772:         <button
+773:           className="primary"
+774:           disabled={working || (!instruction.trim() && !revisionPending)}
+775:           onClick={() =>
+776:             void propose().catch((error) => setFailure(String(error)))
+777:           }
+778:         >
+779:           {working ? "Working…" : revisionPending ? "Reconcile existing change" : "Propose change"}
+780:         </button>
+781:         <button onClick={() => void loadLearned()}>What Prism learned</button>
+782:         {Object.entries(learned).map(([key, value]) => (
+783:           <details key={key}>
+784:             <summary>{key}</summary>
+785:             <pre>{JSON.stringify(value, null, 2)}</pre>
+786:           </details>
+787:         ))}
+788:         {preferenceEvents
+789:           .filter(
+790:             (event) =>
+791:               event.action !== "retracted" &&
+792:               !preferenceEvents.some(
+793:                 (candidate) => candidate.retractsEventId === event.eventId,
+794:               ),
+795:           )
+796:           .map((event) => (
+797:             <button
+798:               key={event.eventId}
+799:               onClick={() =>
+800:                 void retractPreference(event.eventId).catch((error) =>
+801:                   setFailure(String(error)),
+802:                 )
+803:               }
+804:             >
+805:               Forget {event.action}
+806:             </button>
+807:           ))}
+808:         <button onClick={() => void loadRevisions()}>Revision history</button>
+809:         {revisions.map((revision, index) => (
+810:           <div key={revision.id} className="revision-entry">
+811:             <span>Revision {revision.revision}</span>
+812:             <button
+813:               disabled={index === 0}
+814:               onClick={() =>
+815:                 void restoreRevision(revision.id).catch((error) =>
+816:                   setFailure(String(error)),
+817:                 )
+818:               }
+819:             >
+820:               {index === 1 ? "Undo" : "Restore"}
+821:             </button>
+822:           </div>
+823:         ))}
+824:       </aside>
+825:       <nav className="mobile-nav">
+826:         <button
+827:           onClick={() => setPanel(panel === "navigate" ? null : "navigate")}
+828:         >
+829:           Navigate
+830:         </button>
+831:         <button onClick={() => setPanel(panel === "insert" ? null : "insert")}>
+832:           Insert
+833:         </button>
+834:         <button onClick={() => setPanel(panel === "prism" ? null : "prism")}>
+835:           Prism
+836:         </button>
+837:       </nav>
+838:       {panel && (
+839:         <section className="sheet">
+840:           <button className="sheet-close" onClick={() => setPanel(null)}>
+841:             Close
+842:           </button>
+843:           <h2>
+844:             {panel === "navigate"
+845:               ? "Screens and flows"
+846:               : panel === "insert"
+847:                 ? "Insert component"
+848:                 : "Ask Prism"}
+849:           </h2>
+850:           {panel === "insert" && (
+851:             <button onClick={insert}>Insert action</button>
+852:           )}
+853:           {panel === "navigate" &&
+854:             Object.entries(document.views).map(([id, view]) => (
+855:               <button
+856:                 key={id}
+857:                 onClick={() => {
+858:                   setViewId(id);
+859:                   setPanel(null);
+860:                 }}
+861:               >
+862:                 {view.title}
+863:               </button>
+864:             ))}
+865:           {panel === "prism" && (
+866:             <>
+867:               <textarea
+868:                 aria-label="Prism instruction"
+869:                 value={instruction}
+870:                 onChange={(event) => setInstruction(event.target.value)}
+871:                 placeholder="Describe the change you want…"
+872:               />
+873:               <button
+874:                 className="primary"
+875:                 disabled={working || (!instruction.trim() && !revisionPending)}
+876:                 onClick={() =>
+877:                   void propose().catch((error) => setFailure(String(error)))
+878:                 }
+879:               >
+880:                 {revisionPending ? "Reconcile existing change" : "Propose change"}
+881:               </button>
+882:             </>
+883:           )}
+884:         </section>
+885:       )}
+886:     </main>
+887:   );
+888: }
+889: createRoot(document.getElementById("root")!).render(<App />);
+{"path": "skills/prism/control/native-operation-store.ts", "sha256": "da764d081570b56a5579652033f4cbc0e2623ced3d1b62e0dc8945978f1e77a9"}
+1: import { validateWorkerResourceContractV3, type WorkerAttemptEnvelopeV3 } from '@kubeclaw/pipeline-worker-core-contract';
+2: import { canonicalJson } from '@kubeclaw/worker-core';
+3: import { inTransaction, type Database, type Queryable } from '../storage/index.ts';
+4: import { prismRequestDigest } from '../engine/worker-envelope.ts';
+5: import { acceptedCachedResult, boundWorkerResult, type PrismWorkerResult, type StoredWorkerResult } from './worker-results.ts';
+6: 
+7: type Row = Record<string, unknown> & { request_digest: string | null; attempt_id: string;
+8:   operation: string; attempt: WorkerAttemptEnvelopeV3 | null; result: StoredWorkerResult | null };
+9: 
+10: function requestIdentity(attempt: WorkerAttemptEnvelopeV3): string {
+11:   validateWorkerResourceContractV3('workerAttemptEnvelope', attempt);
+12:   const input = attempt.inputs.find(item => item.name === attempt.operation.values.inputName);
+13:   if (!input || input.kind !== 'artifact') throw new Error('PRISM_NATIVE_OPERATION_INPUT_REQUIRED');
+14:   return prismRequestDigest(attempt.operation, input.artifact.contentDigest);
+15: }
+16: 
+17: async function lock(connection: Queryable, key: string): Promise<void> {
+18:   await connection.query('SELECT pg_advisory_xact_lock(hashtextextended($1,0))', [key]);
+19: }
+20: 
+21: async function read(connection: Queryable, key: string): Promise<Row | undefined> {
+22:   return (await connection.query<Row>('SELECT request_digest,attempt_id,operation,attempt,result FROM prism.engine_operation WHERE idempotency_key=$1', [key])).rows[0];
+23: }
+24: 
+25: /** A committed original envelope survives Control death before, during or after dispatch. */
+26: export async function reserveNativePrismOperation(database: Database, key: string,
+27:   proposed: WorkerAttemptEnvelopeV3): Promise<{ attempt: WorkerAttemptEnvelopeV3; result: StoredWorkerResult | null }> {
+28:   const attempt = structuredClone(proposed); const requestDigest = requestIdentity(attempt);
+29:   return inTransaction(database, async connection => {
+30:     await lock(connection, key);
+31:     const previous = await read(connection, key);
+32:     if (previous) {
+33:       if (previous.request_digest !== requestDigest) throw new Error('PRISM_OPERATION_IDEMPOTENCY_CONFLICT');
+34:       if (previous.result && !previous.attempt) return { attempt, result: acceptedCachedResult(previous.result, requestDigest, previous.attempt_id) };
+35:       if (!previous.attempt) throw new Error('PRISM_NATIVE_LEGACY_PENDING_RECONCILIATION_REQUIRED');
+36:       if (requestIdentity(previous.attempt) !== requestDigest || previous.attempt.executionId !== previous.attempt_id
+37:         || previous.operation !== String(previous.attempt.operation.values.operation)) throw new Error('PRISM_NATIVE_OPERATION_BINDING_INVALID');
+38:       if (previous.result && canonicalJson(previous.result.attempt) !== canonicalJson(previous.attempt)) throw new Error('PRISM_NATIVE_OPERATION_BINDING_INVALID');
+39:       return { attempt: previous.attempt, result: previous.result ? acceptedCachedResult(previous.result, requestDigest, previous.attempt_id) : null };
+40:     }
+41:     await connection.query('INSERT INTO prism.engine_operation(idempotency_key,attempt_id,operation,request_digest,attempt) VALUES($1,$2,$3,$4,$5::jsonb)',
+42:       [key, attempt.executionId, String(attempt.operation.values.operation), requestDigest, JSON.stringify(attempt)]);
+43:     return { attempt, result: null };
+44:   });
+45: }
+46: 
+47: /** Preserve a bound terminal receipt before hydration; failed hydration cannot cause another execution. */
+48: export async function recordNativePrismResult(database: Database, key: string,
+49:   attempt: WorkerAttemptEnvelopeV3, raw: unknown): Promise<PrismWorkerResult> {
+50:   const captured = structuredClone(attempt); const result = boundWorkerResult(captured, raw);
+51:   const stored = structuredClone({ attempt: captured, workerResult: result });
+52:   return inTransaction(database, async connection => {
+53:     await lock(connection, key);
+54:     const current = await read(connection, key);
+55:     if (!current?.attempt || canonicalJson(current.attempt) !== canonicalJson(captured)) throw new Error('PRISM_NATIVE_OPERATION_BINDING_INVALID');
+56:     if (current.result) {
+57:       if (canonicalJson(current.result) !== canonicalJson(stored)) throw new Error('PRISM_NATIVE_OPERATION_RESULT_CONFLICT');
+58:       return current.result.workerResult;
+59:     }
+60:     await connection.query('UPDATE prism.engine_operation SET result=$2::jsonb WHERE idempotency_key=$1', [key, JSON.stringify(stored)]);
+61:     return stored.workerResult;
+62:   });
+63: }
+64: 
+65: export async function completeNativePrismOperation(database: Database, key: string, executionId: string): Promise<void> {
+66:   const changed = await database.query("UPDATE prism.engine_operation SET completed_at=COALESCE(completed_at,now()) WHERE idempotency_key=$1 AND attempt_id=$2 AND result->'workerResult'->>'state'='completed' RETURNING idempotency_key", [key, executionId]);
+67:   if (changed.rows.length !== 1) throw new Error('PRISM_NATIVE_OPERATION_COMPLETION_CONFLICT');
+68: }
+{"path": "skills/prism/control/native-operation.ts", "sha256": "1c394e56baaddf1a338f4194e26391333a490f53278e12aeda70a1924a4486ac"}
+1: import { requestWorkerResult } from './worker-operation-transport.ts';
+2: import type { ContentAddressedArtifactStore, Database } from '../storage/index.ts';
+3: import { prismNativeAttempt } from '../engine/worker-envelope.ts';
+4: import type { EngineOperation } from '../engine/index.ts';
+5: import type { loadControlServerConfig } from '../server/control-config.ts';
+6: import { WorkerArtifactClient } from '../server/worker-artifacts.ts';
+7: import { hydrateWorkerResult } from './worker-evidence.ts';
+8: import { reserveNativePrismOperation, recordNativePrismResult, completeNativePrismOperation } from './native-operation-store.ts';
+9: 
+10: type Config = ReturnType<typeof loadControlServerConfig>;
+11: 
+12: export async function runNativePrismOperation(database: Database, artifacts: ContentAddressedArtifactStore,
+13:   config: Config, operation: EngineOperation, input: Record<string, unknown>, key: string): Promise<Record<string, unknown>> {
+14:   const stored = await artifacts.put(Buffer.from(JSON.stringify(input)));
+15:   const proposed = prismNativeAttempt(operation, { artifactId: stored.artifactId, type: 'prism-engine-input', mediaType: 'application/json',
+16:     contentDigest: stored.digest, sizeBytes: stored.sizeBytes,
+17:     storageUrl: new URL(`/v1/internal/artifacts/${stored.digest}`, config.controlInternalUrl).toString() }, key, config.nativeResourcePolicy);
+18:   const reserved = await reserveNativePrismOperation(database, key, proposed);
+19:   const client = new WorkerArtifactClient(config.controlInternalUrl, config.workerSecret, config.spiffeEnabled);
+20:   if (reserved.result) {
+21:     const hydrated = await hydrateWorkerResult(reserved.result.attempt, reserved.result.workerResult, client);
+22:     await completeNativePrismOperation(database, key, reserved.result.attempt.executionId);
+23:     return hydrated.values;
+24:   }
+25:   const received = await requestWorkerResult(config, reserved.attempt);
+26:   const result = await recordNativePrismResult(database, key, reserved.attempt, received);
+27:   const hydrated = await hydrateWorkerResult(reserved.attempt, result, client);
+28:   await completeNativePrismOperation(database, key, reserved.attempt.executionId);
+29:   return hydrated.values;
+30: }
+31: 
+{"path": "skills/prism/server/native-worker-execution.ts", "sha256": "d87eb7d05cdc40f3eb353dba63236fa8c20a02adf1b70512c81944bb7cb71a56"}
+1: import { prismAttemptResourceLimits } from '../config/resource-policy.ts';
+2: import { fileURLToPath } from 'node:url';
+3: import path from 'node:path';
+4: import { executeNativeWorkerAttempt, NativeAttemptJournal, recoverNativeWorkerAttempts, type NativeWorkerOwnership } from '@kubeclaw/worker-core';
+5: import { validateWorkerResourceContractV3, type WorkerAttemptEnvelopeV3 } from '@kubeclaw/pipeline-worker-core-contract';
+6: import { prismNativeWorkerProfile } from '../engine/worker-envelope.ts';
+7: import type { nativePrismSupervisorConfig } from '../config/native-worker.ts';
+8: import type { loadWorkerConfig } from './worker-config.ts';
+9: 
+10: /** Only serializable trusted configuration crosses into the per-attempt host. */
+11: export async function nativePrismExecution(owner: NativeWorkerOwnership, native: ReturnType<typeof nativePrismSupervisorConfig>,
+12:   config: ReturnType<typeof loadWorkerConfig>) {
+13:   const journal = new NativeAttemptJournal(path.join(native.ownershipRoot, 'attempt-journal'), {
+14:     maximumRecords: native.maximumRecords, maximumStateBytes: native.maximumBytes,
+15:     maximumTotalBytes: native.maximumJournalBytes, maximumInputBytes: native.maximumInputBytes,
+16:     maximumOutputBytes: native.maximumOutputBytes, maximumResultBytes: native.maximumResultBytes,
+17:   });
+18:   await recoverNativeWorkerAttempts(journal, owner);
+19:   const command = nativePrismCommand(native, config);
+20:   return {
+21:     ready: () => owner.isReady(),
+22:     async execute(envelope: WorkerAttemptEnvelopeV3, signal: AbortSignal) {
+23:       validateWorkerResourceContractV3('workerAttemptEnvelope', envelope);
+24:       const recovered = await journal.hasAttempt(envelope);
+25:       if (!recovered && envelope.profile.profileDigest !== prismNativeWorkerProfile.profileDigest) throw new Error('PRISM_NATIVE_PROFILE_NOT_ACCEPTED');
+26:       const resourceLimits = prismAttemptResourceLimits(envelope, native.policy, recovered);
+27:       return executeNativeWorkerAttempt({ envelope, journal, process: { owner, command, signal,
+28:         limits: { ...resourceLimits,
+29:           timeoutMs: envelope.limits.timeoutMs + 8 * envelope.limits.cleanupTimeoutMs,
+30:           maximumInputBytes: native.maximumInputBytes, maximumOutputBytes: native.maximumOutputBytes,
+31:           pollIntervalMs: native.pollIntervalMs, closeTimeoutMs: native.closeTimeoutMs },
+32:       } });
+33:     },
+34:   };
+35: }
+36: 
+37: /** Build a closed child environment from the startup snapshot, never process.env. */
+38: export function nativePrismCommand(native: ReturnType<typeof nativePrismSupervisorConfig>, config: ReturnType<typeof loadWorkerConfig>) {
+39:   return { launcher: native.launcher, uid: native.uid, gid: native.gid, executable: process.execPath,
+40:     arguments: [fileURLToPath(new URL('./native-worker-host.ts', import.meta.url))], cwd: process.cwd(),
+41:     environment: { PATH: '/usr/local/bin:/usr/bin:/bin', HOME: '/tmp', NODE_ENV: 'production',
+42:       PRISM_ENGINE_CONTENT_DIGEST: native.engineContentDigest,
+43:       PLAYWRIGHT_BROWSERS_PATH: native.browserPath, PRISM_CONTROL_INTERNAL_URL: config.controlInternalUrl.toString(),
+44:       PRISM_WORKER_SECRET: config.workerSecret, WORKER_TRUST_SPIFFE_ENABLED: String(config.spiffeEnabled),
+45:       PRISM_NATIVE_ASSIGNED_INPUT_BYTES: String(native.maximumInputBytes) },
+46:   };
+47: }
+{"path": "skills/prism/server/native-worker-host.ts", "sha256": "485118712479bd2991724c4787acb4bf111ddd56866d0d584f608482a3b4ba34"}
+1: import { WorkerAttemptExecutor } from '@kubeclaw/worker-core';
+2: import { validateWorkerResourceContractV3, type WorkerAttemptEnvelopeV3 } from '@kubeclaw/pipeline-worker-core-contract';
+3: import { PrismEngine, DeterministicDesignProvider } from '../engine/index.ts';
+4: import { WorkerArtifactClient } from './worker-artifacts.ts';
+5: import { nativeOperationFor } from './worker-operation.ts';
+6: import { nativePrismHostConfig } from '../config/native-worker.ts';
+7: 
+8: const cancellation = new AbortController();
+9: const cancel = () => cancellation.abort(new Error('WORKER_ATTEMPT_CANCELLED'));
+10: process.once('SIGTERM', cancel); process.once('SIGINT', cancel);
+11: 
+12: async function main(): Promise<void> {
+13: const config = nativePrismHostConfig();
+14: const chunks: Buffer[] = [];
+15: let bytes = 0;
+16: for await (const chunk of process.stdin) {
+17:   bytes += chunk.length;
+18:   if (bytes > config.maximumInputBytes) throw new Error('PRISM_NATIVE_INPUT_LIMIT');
+19:   chunks.push(Buffer.from(chunk));
+20: }
+21: const envelope = JSON.parse(Buffer.concat(chunks).toString('utf8')) as WorkerAttemptEnvelopeV3;
+22: validateWorkerResourceContractV3('workerAttemptEnvelope', envelope);
+23: const artifacts = new WorkerArtifactClient(config.controlInternalUrl, config.workerSecret, config.spiffeEnabled);
+24: const engine = new PrismEngine(new DeterministicDesignProvider());
+25: const result = await new WorkerAttemptExecutor({ envelope, signal: cancellation.signal,
+26:   operation: nativeOperationFor(envelope, engine, artifacts, config.scope), receiptNamespace: 'prism-native-provisional',
+27:   storeFullLog(attemptId, content, { signal }) {
+28:     if (attemptId !== envelope.attemptId) throw new Error('Prism log attempt identity mismatch');
+29:     return artifacts.upload('prism-full-log', 'log', 'text/plain', Buffer.from(content), signal);
+30:   },
+31: }).execute();
+32: // Closing stdout is not the completion boundary: the supervisor drains the tree and reseals.
+33: process.stdout.write(JSON.stringify(result));
+34: }
+35: try { await main(); }
+36: finally { process.removeListener('SIGTERM', cancel); process.removeListener('SIGINT', cancel); }
+{"path": "skills/prism/server/worker-operation.ts", "sha256": "1987bd75921ce43775dc43e0a83e776be7624d6a1dc510ed572fdfce02c57471"}
+1: import type { WorkerAttemptEnvelopeV3, WorkerAttemptLimitsV2 } from '@kubeclaw/pipeline-worker-core-contract';
+2: import { observeNativeWorkerResources } from '@kubeclaw/worker-core';
+3: import type { WorkerAttemptContext, WorkerAttemptOperation, WorkerAttemptOperationResult } from '@kubeclaw/worker-core';
+4: import type { PrismEngine } from '../engine/index.ts';
+5: import { executePrismOperation } from '../engine/worker-binding.ts';
+6: import type { WorkerArtifactClient } from './worker-artifacts.ts';
+7: import { PrismBrowserCloseError } from '../engine/browser-capture.ts';
+8: 
+9: /** The same Prism lifecycle runs inside the dedicated native host. */
+10: export function nativeOperationFor(envelope: WorkerAttemptEnvelopeV3, engine: PrismEngine,
+11:   artifacts: WorkerArtifactClient, scope: string): WorkerAttemptOperation<WorkerAttemptEnvelopeV3> {
+12:   const operation = new PrismWorkerOperation(envelope, engine, artifacts);
+13:   return {
+14:     prepare: limits => operation.prepare(limits), execute: context => operation.execute(context),
+15:     terminate: () => operation.terminate(),
+16:     async measure({ signal }) {
+17:       signal.throwIfAborted();
+18:       const resources = observeNativeWorkerResources(scope);
+19:       return { cpuTimeMs: { status: 'observed', value: Math.ceil(resources.cpuTimeMicroseconds / 1000) },
+20:         maximumMemoryBytes: { status: 'observed', value: resources.maximumMemoryBytes },
+21:         maximumTasks: { status: 'observed', value: resources.maximumTasks } };
+22:     },
+23:   };
+24: }
+25: 
+26: export class PrismWorkerOperation implements Omit<WorkerAttemptOperation<WorkerAttemptEnvelopeV3>, 'measure'> {
+27:   private prepared = false;
+28:   private terminated = false;
+29:   private readonly controller = new AbortController();
+30:   private execution: Promise<WorkerAttemptOperationResult> | undefined;
+31:   private settlement: Promise<{ ok: true } | { ok: false; error: unknown }> | undefined;
+32:   private readonly envelope: WorkerAttemptEnvelopeV3;
+33:   private readonly engine: PrismEngine;
+34:   private readonly artifacts: WorkerArtifactClient;
+35:   constructor(envelope: WorkerAttemptEnvelopeV3, engine: PrismEngine, artifacts: WorkerArtifactClient) {
+36:     this.envelope = envelope; this.engine = engine; this.artifacts = artifacts;
+37:   }
+38:   prepare(_limits: WorkerAttemptLimitsV2) {
+39:     if (this.prepared || this.terminated) throw new Error('Prism attempt cannot be prepared again');
+40:     this.prepared = true;
+41:     return undefined;
+42:   }
+43:   execute(context: Pick<WorkerAttemptContext, 'signal' | 'log'>) {
+44:     if (this.execution) throw new Error('Prism attempt execution already started');
+45:     const signal = AbortSignal.any([context.signal, this.controller.signal]);
+46:     this.execution = this.run({ ...context, signal });
+47:     this.settlement = this.execution.then(() => ({ ok: true as const }),
+48:       (error: unknown) => ({ ok: false as const, error }));
+49:     return this.execution;
+50:   }
+51:   async terminate() {
+52:     this.terminated = true;
+53:     this.controller.abort(new Error('Prism attempt terminated'));
+54:     // Core bounds this drain and reports unresolved work; do not detach I/O.
+55:     const settled = await this.settlement;
+56:     if (settled && !settled.ok && settled.error instanceof PrismBrowserCloseError) throw settled.error;
+57:   }
+58:   private async run(context: Pick<WorkerAttemptContext, 'signal' | 'log'>) {
+59:     if (!this.prepared || this.terminated || context.signal.aborted)
+60:       throw new Error("Prism attempt cannot start");
+61:     if (this.envelope.operation.values.operation === "generate")
+62:       throw new Error("Prism generation requires the OpenClaw agent gateway");
+63:     context.log(
+64:       "system",
+65:       `Prism ${String(this.envelope.operation.values.operation)} operation started`,
+66:     );
+67:     const hydratedInput = await readInput(this.envelope, this.artifacts, context.signal);
+68:     const specialistResult = await executePrismOperation(
+69:       this.engine,
+70:       this.envelope.operation,
+71:       this.envelope.executionId,
+72:       hydratedInput,
+73:       context.signal,
+74:     );
+75:     if (this.terminated || context.signal.aborted)
+76:       throw new Error("Prism attempt was cancelled");
+77:     const values={...specialistResult.values};const evidence=[];
+78:     if(typeof values.screenshotBase64==="string"){evidence.push(await this.artifacts.upload("render-screenshot","preview","image/png",Buffer.from(values.screenshotBase64,"base64"), context.signal));delete values.screenshotBase64;}
+79:     if(typeof values.ariaSnapshot==="string"){evidence.push(await this.artifacts.upload("render-aria","accessibility-tree","text/plain",Buffer.from(values.ariaSnapshot), context.signal));delete values.ariaSnapshot;}
+80:     const boundedResult={...specialistResult,values};
+81:     return {
+82:       summary: "Prism operation completed",
+83:       specialistResult:boundedResult,
+84:       evidence,
+85:       exitCode: 0,
+86:       signal: null,
+87:     };
+88:   }
+89: }
+90: 
+91: async function readInput(envelope: WorkerAttemptEnvelopeV3, artifacts: WorkerArtifactClient,
+92:   signal: AbortSignal): Promise<Record<string, unknown>> {
+93:   const inputName = String(envelope.operation.values.inputName ?? '');
+94:   const declared = envelope.inputs.find((item) => item.name === inputName && item.kind === 'artifact');
+95:   if (!declared || declared.kind !== 'artifact' || declared.artifact.mediaType !== 'application/json'
+96:     || declared.artifact.type !== 'prism-engine-input') throw new Error('Prism input artifact is missing or invalid');
+97:   const bytes = await artifacts.read(declared.artifact, signal);
+98:   return JSON.parse(bytes.toString('utf8')) as Record<string, unknown>;
+99: }
+{"path": "skills/prism/config/native-worker.ts", "sha256": "c2a0722a4a938830529d5f60ff5fb4533984a0f8e38c37c693be79c0674141a6"}
+1: import path from 'node:path';
+2: import { requirePrismResourcePoolCapacity } from './resource-policy.ts';
+3: import type { loadWorkerConfig } from '../server/worker-config.ts';
+4: import { readNativeWorkerNodeIdentity, readNativeWorkerPoolPolicy, requireNativeWorkerRuntimeIdentity } from '@kubeclaw/worker-core';
+5: 
+6: /** Image identity shared by producer and worker. */
+7: export function prismEngineContentDigest(environment: NodeJS.ProcessEnv = process.env): string | undefined {
+8:   const digest = environment.PRISM_ENGINE_CONTENT_DIGEST?.trim();
+9:   if (environment.NODE_ENV === 'production' && !/^sha256:[a-f0-9]{64}$/u.test(digest ?? '')) {
+10:     throw new Error('PRISM_NATIVE_ENGINE_CONTENT_IDENTITY_REQUIRED');
+11:   }
+12:   return digest;
+13: }
+14: 
+15: export function nativePrismHostConfig(environment: NodeJS.ProcessEnv = process.env) {
+16:   const scope = environment.KUBECLAW_NATIVE_SCOPE;
+17:   if (!scope) throw new Error('PRISM_NATIVE_PREEXEC_MEMBERSHIP_REQUIRED');
+18:   if (environment.PRISM_NATIVE_MAXIMUM_INPUT_BYTES !== undefined) throw new Error('SWARM_CONFIG_LEGACY_OVERRIDE:PRISM_NATIVE_MAXIMUM_INPUT_BYTES');
+19:   const maximumInputBytes = Number(environment.PRISM_NATIVE_ASSIGNED_INPUT_BYTES);
+20:   if (!Number.isSafeInteger(maximumInputBytes) || maximumInputBytes < 1 || maximumInputBytes > 2_147_483_647) throw new Error('PRISM_NATIVE_INPUT_LIMIT_REQUIRED');
+21:   const controlInternalUrl = new URL(environment.PRISM_CONTROL_INTERNAL_URL!);
+22:   const workerSecret = environment.PRISM_WORKER_SECRET ?? '';
+23:   const spiffeEnabled = environment.WORKER_TRUST_SPIFFE_ENABLED === 'true';
+24:   if (!spiffeEnabled && !workerSecret) throw new Error('PRISM_NATIVE_ARTIFACT_AUTH_REQUIRED');
+25:   return Object.freeze({ scope, maximumInputBytes, controlInternalUrl, workerSecret, spiffeEnabled });
+26: }
+27: 
+28: export function nativePrismSupervisorConfig(config: ReturnType<typeof loadWorkerConfig>, environment: NodeJS.ProcessEnv = process.env) {
+29:   const root = (name: string) => {
+30:     const value = environment[name];
+31:     if (!value || !path.isAbsolute(value) || path.resolve(value) !== value || value === '/') throw new Error(`PRISM_NATIVE_PATH_REQUIRED:${name}`);
+32:     return value;
+33:   };
+34:   const engineContentDigest = prismEngineContentDigest(environment);
+35:   if (!/^sha256:[a-f0-9]{64}$/u.test(engineContentDigest ?? '')) throw new Error('PRISM_NATIVE_ENGINE_CONTENT_IDENTITY_REQUIRED');
+36:   const pool = readNativeWorkerPoolPolicy(root('PRISM_NATIVE_POOL_POLICY_FILE'), 'prism');
+37:   requirePrismResourcePoolCapacity(config.native.resourcePolicy, pool.limits);
+38:   requireNativeWorkerRuntimeIdentity(pool.runtimeIdentityFile);
+39:   return Object.freeze({
+40:     ...prismSupervisorSettings(config),
+41:     engineContentDigest: engineContentDigest!,
+42:     cgroupRoot: pool.cgroupRoot, ownershipRoot: pool.ownershipRoot,
+43:     poolLimits: pool.limits, nodeIdentity: readNativeWorkerNodeIdentity(pool.nodeIdentityFile),
+44:     launcher: root('PRISM_NATIVE_LAUNCHER'),
+45:     maximumActiveScopes: pool.maximumActiveScopes,
+46:     browserPath: environment.PLAYWRIGHT_BROWSERS_PATH ?? '/ms-playwright',
+47:   });
+48: }
+49: 
+50: /** Numeric startup snapshot; host authority is validated separately before composition. */
+51: export function prismSupervisorSettings(config: ReturnType<typeof loadWorkerConfig>) {
+52:   const supervisor = config.native.supervisor;
+53:   return Object.freeze({
+54:     policy: config.native.resourcePolicy,
+55:     uid: supervisor.uid, gid: supervisor.gid,
+56:     maximumRecords: supervisor.maximumOwnershipRecords,
+57:     maximumBytes: supervisor.maximumOwnershipBytes,
+58:     maximumInputBytes: config.ingress.maximumInputBytes,
+59:     maximumOutputBytes: supervisor.maximumOutputBytes,
+60:     maximumResultBytes: config.native.maximumResultBytes,
+61:     maximumJournalBytes: supervisor.maximumJournalBytes,
+62:     pollIntervalMs: supervisor.pollIntervalMs,
+63:     drainTimeoutMs: supervisor.drainTimeoutMs,
+64:     closeTimeoutMs: supervisor.closeTimeoutMs,
+65:   });
+66: }
+{"path": "skills/prism/engine/worker-envelope.ts", "sha256": "56ddb558742228e8c828b98b83916dcdcd1c46f355f2061bfc0c4bdac0290941"}
+1: import type { PrismResourcePolicy } from '../../common/plugin-runtime/foundation/config/swarm.ts';
+2: import { randomUUID } from "node:crypto";
+3: import type { WorkerArtifactRefV1, WorkerAttemptEnvelopeV1 } from "@kubeclaw/pipeline-worker-core-contract";
+4: import { canonicalJson, sha256Digest, workerAttemptSpecDigest, workerProfileDigest } from "@kubeclaw/worker-core";
+5: import { engineRequestSchema } from "@kubeclaw/prism-contracts-v1/digest";
+6: import type { EngineOperation } from "./index.ts";
+7: import type { WorkerAttemptEnvelopeV3, WorkerProfileV3 } from '@kubeclaw/pipeline-worker-core-contract';
+8: import { prismEngineContentDigest } from '../config/native-worker.ts';
+9: 
+10: const engineContentDigest = prismEngineContentDigest()
+11:   || sha256Digest({ engineId: "prism-design-engine", engineVersion: "1.0.0", development: true });
+12: const unsignedProfile = {
+13:   schemaVersion: "worker-profile.v3" as const,
+14:   profileId: "prism-design-engine-v3",
+15:   workerType: "prism",
+16:   coreContractId: "kubeclaw.pipeline-worker-core@1",
+17:   engine: { engineId: "prism-design-engine", contractId: "kubeclaw.prism-design-engine@1", engineVersion: "1.0.0", contentDigest: engineContentDigest },
+18:   resourceCapabilities: { schemaVersion: 'worker-resource-capabilities.v2' as const,
+19:     cpuTimeMs: { scope: 'native-attempt-tree' as const, unit: 'milliseconds' as const, measurement: 'measured' as const },
+20:     maximumMemoryBytes: { scope: 'native-attempt-tree' as const, unit: 'bytes' as const, measurement: 'measured' as const },
+21:     maximumTasks: { scope: 'native-attempt-tree' as const, unit: 'linux-tasks' as const, measurement: 'measured' as const },
+22:   },
+23:   capabilities: ["artifacts.read", "artifacts.write", "network.http", "secrets.read", "telemetry.emit"],
+24: };
+25: export const prismNativeWorkerProfile: WorkerProfileV3 = { ...unsignedProfile, profileDigest: workerProfileDigest(unsignedProfile) };
+26: /** Reconstruct the original producer order so PostgreSQL jsonb reordering preserves historical digests. */
+27: export function prismRequestDigest(operation: WorkerAttemptEnvelopeV1['operation'], inputDigest: string): string {
+28:   const values = JSON.parse(canonicalJson(operation.values)) as typeof operation.values;
+29:   const ordered = { contractId: operation.contractId, inputSchemaId: operation.inputSchemaId, inputSchemaDigest: operation.inputSchemaDigest,
+30:     values: { operation: values.operation, inputName: values.inputName, ...values } };
+31:   return sha256Digest(JSON.stringify({ operation: ordered, inputDigest }));
+32: }
+33: 
+34: export function prismNativeAttempt(operation: EngineOperation, inputArtifact: WorkerArtifactRefV1, idempotencyKey: string, policy: PrismResourcePolicy): WorkerAttemptEnvelopeV3 {
+35:   const now = new Date(); const expires = new Date(now.getTime() + 10 * 60_000); const attemptId = `attempt-${randomUUID()}`;
+36:   const request = engineRequestSchema(operation);
+37:   const unsigned = {
+38:     schemaVersion: "worker-attempt-envelope.v3" as const, protocolVersion: "worker-protocol.v1" as const,
+39:     pipelineRunId: `prism-${idempotencyKey}`.slice(0, 128), moduleId: null, gateId: null, planId: `plan-${idempotencyKey}`.slice(0, 128),
+40:     nodeId: `node-${operation}`, executionId: `execution-${randomUUID()}`, attemptId, attemptNumber: 1,
+41:     claim: { schemaVersion: "attempt-claim.v1" as const, claimId: `claim-${randomUUID()}`, attemptId, generation: 1, workerId: "prism-worker", claimedAt: now.toISOString(), expiresAt: expires.toISOString() },
+42:     profile: prismNativeWorkerProfile, packages: [], grantedCapabilities: prismNativeWorkerProfile.capabilities,
+43:     limits: { timeoutMs: 300_000, cleanupTimeoutMs: 10_000, logBytes: 1_048_576, resultBytes: 16_777_216, evidenceBytes: 134_217_728, evidenceFiles: 64 },
+44:     resourceBudgets: { schemaVersion: 'worker-resource-budgets.v2' as const,
+45:       cpuTimeMs: { state: 'requested' as const, limit: policy.cpuTimeMs },
+46:       maximumMemoryBytes: { state: 'requested' as const, limit: policy.memoryBytes },
+47:       maximumTasks: { state: 'requested' as const, limit: policy.tasks },
+48:     },
+49:     inputs: [{name:"prism-input",kind:"artifact" as const,artifact:inputArtifact}], operation: { contractId: "kubeclaw.prism-design-engine@1", inputSchemaId: request.schemaId, inputSchemaDigest: request.schemaDigest, values: { operation, inputName:"prism-input" } },
+50:     cancellationId: `cancel-${randomUUID()}`, issuedAt: now.toISOString(), queueDeadline: expires.toISOString(),
+51:   };
+52:   return { ...unsigned, attemptSpecDigest: workerAttemptSpecDigest(unsigned) };
+53: }
+54: 
+{"path": "skills/prism/storage/artifacts.ts", "sha256": "8177fe9d5199d1af866a2ad7d5d7fdfa82b99b0fe6df5b7f0c3c04e96536ef1f"}
+1: import { createHash, randomUUID } from 'node:crypto';
+2: import { constants } from 'node:fs';
+3: import { link, mkdir, open, unlink } from 'node:fs/promises';
+4: import { dirname, join, resolve } from 'node:path';
+5: 
+6: const digest = (value: Uint8Array): string => `sha256:${createHash('sha256').update(value).digest('hex')}`;
+7: 
+8: async function syncDirectory(directory: string): Promise<void> {
+9:   const handle = await open(directory, constants.O_RDONLY | constants.O_DIRECTORY);
+10:   try { await handle.sync(); } finally { await handle.close(); }
+11: }
+12: async function ensureDurableDirectory(directory: string): Promise<void> {
+13:   await mkdir(directory, { recursive: true });
+14:   // Also cover another concurrent creator that has not yet synced its parent.
+15:   for (let current = resolve(directory);;) {
+16:     await syncDirectory(current);
+17:     const parent = dirname(current); if (parent === current) return; current = parent;
+18:   }
+19: }
+20: async function verifiedBytes(file: string, expectedDigest: string, durable = false): Promise<Buffer> {
+21:   const handle = await open(file, constants.O_RDONLY | constants.O_NOFOLLOW | constants.O_NONBLOCK);
+22:   try {
+23:     if (!(await handle.stat()).isFile()) throw new Error('PRISM_ARTIFACT_NOT_REGULAR');
+24:     const bytes = await handle.readFile();
+25:     if (digest(bytes) !== expectedDigest) throw new Error(`PRISM_ARTIFACT_CORRUPT:${expectedDigest}`);
+26:     // An existing object's presence alone is not a durable acknowledgement.
+27:     if (durable) await handle.sync(); return bytes;
+28:   } finally { await handle.close(); }
+29: }
+30: 
+31: async function removePending(pending: string, directory: string, failure: unknown): Promise<void> {
+32:   try { await unlink(pending); await syncDirectory(directory); }
+33:   catch (error) {
+34:     if (failure) throw new AggregateError([failure, error], 'PRISM_ARTIFACT_PENDING_CLEANUP_FAILED', { cause: failure });
+35:     throw error;
+36:   }
+37: }
+38: 
+39: export class ContentAddressedArtifactStore {
+40:   readonly #root: string;
+41:   constructor(root: string) { this.#root = resolve(root); }
+42: 
+43:   async put(content: Uint8Array): Promise<{ artifactId: string; digest: string; sizeBytes: number }> {
+44:     // Take ownership before the first await; callers may reuse their buffer.
+45:     const bytes = Buffer.from(content); const contentDigest = digest(bytes); const hex = contentDigest.slice(7);
+46:     const file = join(this.#root, hex.slice(0, 2), hex); const directory = dirname(file);
+47:     await ensureDurableDirectory(directory);
+48:     const pending = `${file}.${randomUUID()}.pending`; let created = false; let failure: unknown;
+49:     try {
+50:       const handle = await open(pending, 'wx', 0o600); created = true;
+51:       try { await handle.writeFile(bytes); await handle.sync(); } finally { await handle.close(); }
+52:       try { await link(pending, file); }
+53:       catch (error) {
+54:         if ((error as NodeJS.ErrnoException).code !== 'EEXIST') throw error;
+55:         await verifiedBytes(file, contentDigest, true);
+56:       }
+57:       await syncDirectory(directory);
+58:       return { artifactId: `artifact:${contentDigest}`, digest: contentDigest, sizeBytes: bytes.byteLength };
+59:     } catch (error) { failure = error; throw error; }
+60:     finally { if (created) await removePending(pending, directory, failure); }
+61:   }
+62: 
+63:   async get(artifactId: string): Promise<Uint8Array> {
+64:     const match = /^artifact:sha256:([a-f0-9]{64})$/u.exec(artifactId);
+65:     if (!match) throw new Error('invalid artifact ID');
+66:     return verifiedBytes(join(this.#root, match[1]!.slice(0, 2), match[1]!), `sha256:${match[1]}`);
+67:   }
+68: }
+{"path": "skills/prism/engine/index.ts", "sha256": "8502a5bf60bc3b352556ed72464f743581b67fd4e70d70d3734a832c25a9ad16"}
+1: import { createHash } from "node:crypto";
+2: import type { PrismDocument } from "@kubeclaw/prism-contracts-v1";
+3: import { validatePrism } from "@kubeclaw/prism-contracts-v1";
+4: import { applyOperation, type PrismOperation } from "../domain/index.ts";
+5: import { evaluate } from "../evaluation/index.ts";
+6: import {
+7:   EngineExecutionCache,
+8:   type EngineCacheLimits,
+9: } from "./execution-cache.ts";
+10: import { renderOperation } from "./render-operation.ts";
+11: 
+12: export type EngineOperation =
+13:   "generate" | "render" | "evaluate" | "ingest" | "publish";
+14: export type EngineRequest = {
+15:   contract: "kubeclaw.prism-design-engine@1";
+16:   operation: EngineOperation;
+17:   input: Record<string, unknown>;
+18:   idempotencyKey: string;
+19: };
+20: export type EngineResult = {
+21:   operation: EngineOperation;
+22:   output: Record<string, unknown>;
+23: };
+24: export interface DesignProvider {
+25:   propose(
+26:     document: PrismDocument,
+27:     instruction: string,
+28:     signal?: AbortSignal,
+29:   ): Promise<PrismOperation[]>;
+30:   embed(
+31:     text: string,
+32:     signal?: AbortSignal,
+33:   ): Promise<{ embedding: number[]; model: string; modelVersion: string }>;
+34: }
+35: const hash = (value: string) =>
+36:   `sha256:${createHash("sha256").update(value).digest("hex")}`;
+37: function exactInput(
+38:   input: Record<string, unknown>,
+39:   allowed: readonly string[],
+40:   required: readonly string[],
+41: ): void {
+42:   for (const key of Object.keys(input))
+43:     if (!allowed.includes(key))
+44:       throw new Error(`unsupported Prism input field: ${key}`);
+45:   for (const key of required)
+46:     if (!(key in input)) throw new Error(`missing Prism input field: ${key}`);
+47: }
+48: 
+49: function validateOperationInput(request: EngineRequest): void {
+50:   if (request.operation === "generate")
+51:     exactInput(
+52:       request.input,
+53:       ["document", "instruction", "mode"],
+54:       ["document", "instruction"],
+55:     );
+56:   else if (request.operation === "render")
+57:     exactInput(
+58:       request.input,
+59:       ["document", "view", "state", "viewport", "capture", "assetSources"],
+60:       ["document", "view", "state", "viewport"],
+61:     );
+62:   else if (request.operation === "evaluate")
+63:     exactInput(request.input, ["document"], ["document"]);
+64:   else if (request.operation === "ingest")
+65:     exactInput(request.input, ["text"], ["text"]);
+66:   else exactInput(request.input, ["document", "approved"], ["document"]);
+67: }
+68: 
+69: export class PrismEngine {
+70:   private readonly provider: DesignProvider;
+71:   private readonly executions: EngineExecutionCache<EngineResult>;
+72:   constructor(provider: DesignProvider, cacheLimits?: EngineCacheLimits) {
+73:     this.provider = provider;
+74:     this.executions = new EngineExecutionCache(cacheLimits);
+75:   }
+76:   cacheUsage() {
+77:     return this.executions.usage();
+78:   }
+79:   async execute(
+80:     request: EngineRequest,
+81:     options: { signal?: AbortSignal } = {},
+82:   ): Promise<EngineResult> {
+83:     const owner = options.signal;
+84:     owner?.throwIfAborted();
+85:     if (request.contract !== "kubeclaw.prism-design-engine@1")
+86:       throw new Error("unsupported Prism engine contract");
+87:     // Bind deferred execution to the same caller-independent input as its identity.
+88:     const ownedRequest = structuredClone(request);
+89:     const fingerprint = hash(
+90:       JSON.stringify({
+91:         operation: ownedRequest.operation,
+92:         input: ownedRequest.input,
+93:       }),
+94:     );
+95:     return this.executions.execute(
+96:       ownedRequest.idempotencyKey,
+97:       fingerprint,
+98:       () => this.executeOnce(ownedRequest, owner),
+99:       owner,
+100:     );
+101:   }
+102:   private async ingest(
+103:     input: Record<string, unknown>,
+104:     signal?: AbortSignal,
+105:   ): Promise<EngineResult> {
+106:     const text = String(input.text ?? "").trim();
+107:     if (!text || text.length > 200_000)
+108:       throw new Error("ingest text length is invalid");
+109:     const embedded = await this.provider.embed(text, signal);
+110:     if (
+111:       !embedded.embedding.length ||
+112:       embedded.embedding.some((value) => !Number.isFinite(value))
+113:     )
+114:       throw new Error("embedding provider returned an invalid vector");
+115:     return {
+116:       operation: "ingest",
+117:       output: { ...embedded, sourceDigest: hash(text) },
+118:     };
+119:   }
+120:   private async executeOnce(
+121:     request: EngineRequest,
+122:     signal?: AbortSignal,
+123:   ): Promise<EngineResult> {
+124:     signal?.throwIfAborted();
+125:     validateOperationInput(request);
+126:     if (request.operation === "ingest")
+127:       return this.ingest(request.input, signal);
+128:     const document = request.input.document as PrismDocument;
+129:     validatePrism<PrismDocument>("designDocument", document);
+130:     let result: EngineResult;
+131:     if (request.operation === "generate") {
+132:       const operations = await this.provider.propose(
+133:         document,
+134:         String(request.input.instruction ?? ""),
+135:         signal,
+136:       );
+137:       const next = operations.reduce(
+138:         (current, operation) =>
+139:           applyOperation(current, {
+140:             ...operation,
+141:             baseRevision: current.meta.revision,
+142:           } as PrismOperation),
+143:         document,
+144:       );
+145:       result = {
+146:         operation: "generate",
+147:         output: {
+148:           document: next,
+149:           operations,
+150:           mode: String(request.input.mode ?? "refine"),
+151:         },
+152:       };
+153:     } else if (request.operation === "render") {
+154:       result = await renderOperation(document, request.input, signal);
+155:     } else if (request.operation === "evaluate") {
+156:       const report = evaluate(document);
+157:       result = {
+158:         operation: "evaluate",
+159:         output: report,
+160:       };
+161:     } else {
+162:       if (request.input.approved !== true)
+163:         throw new Error("explicit approval is required");
+164:       const canonical = JSON.stringify(document);
+165:       const manifest = {
+166:         schema: "prism.baseline-bundle.v1",
+167:         projectId: document.meta.projectId,
+168:         revision: document.meta.revision,
+169:         designDigest: hash(canonical),
+170:       };
+171:       result = {
+172:         operation: "publish",
+173:         output: { manifest, bundleDigest: hash(JSON.stringify(manifest)) },
+174:       };
+175:     }
+176:     return result;
+177:   }
+178: }
+179: 
+180: export { DeterministicDesignProvider, OpenAICompatibleDesignProvider } from "./design-providers.ts";
+{"path": "skills/prism/engine/worker-binding.ts", "sha256": "c7480a44ddfcac32fea7c95a02560b4940dc86509b0463aea951584f6b8f659e"}
+1: import type {
+2:   SpecialistOperationV1,
+3:   WorkerSpecialistResultV1,
+4: } from "@kubeclaw/pipeline-worker-core-contract";
+5: import { engineRequestSchema, engineResultSchema } from "@kubeclaw/prism-contracts-v1/digest";
+6: import { validateEngineRequest, validateEngineResult, validatePrism } from "@kubeclaw/prism-contracts-v1";
+7: import type { PrismEngine, EngineOperation } from "./index.ts";
+8: const supportedOperations = new Set<EngineOperation>([
+9:   "generate",
+10:   "render",
+11:   "evaluate",
+12:   "ingest",
+13:   "publish",
+14: ]);
+15: export async function executePrismOperation(
+16:   engine: PrismEngine,
+17:   operation: SpecialistOperationV1,
+18:   idempotencyKey: string,
+19:   hydratedInput?: Record<string,unknown>,
+20:   signal?: AbortSignal,
+21: ): Promise<WorkerSpecialistResultV1> {
+22:   if (operation.contractId !== "kubeclaw.prism-design-engine@1")
+23:     throw new Error("worker operation is not for Prism");
+24:   const rawName = operation.values.operation;
+25:   if (
+26:     typeof rawName !== "string" ||
+27:     !supportedOperations.has(rawName as EngineOperation)
+28:   )
+29:     throw new Error("unsupported Prism operation");
+30:   const name = rawName as EngineOperation;
+31:   const requestContract = engineRequestSchema(name);
+32:   if (operation.inputSchemaId !== requestContract.schemaId || operation.inputSchemaDigest !== requestContract.schemaDigest)
+33:     throw new Error("Prism request schema does not match the installed contract");
+34:   const input = hydratedInput??operation.values.input as Record<string, unknown>;
+35:   validateEngineRequest(name,{operation:name,input});
+36:   if(name!=="ingest")validatePrism("designDocument",input.document);
+37:   const result = await engine.execute({
+38:     contract: "kubeclaw.prism-design-engine@1",
+39:     operation: name,
+40:     input,
+41:     idempotencyKey,
+42:   }, signal ? { signal } : {});
+43:   const resultContract = engineResultSchema(name);
+44:   validateEngineResult(name,result.output);
+45:   return {
+46:     schemaId: resultContract.schemaId,
+47:     schemaDigest: resultContract.schemaDigest,
+48:     values: result.output as WorkerSpecialistResultV1["values"],
+49:   };
+50: }

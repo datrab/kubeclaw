@@ -1,0 +1,23 @@
+{
+  "version": "admission-binding.v1",
+  "inlineBinding": {
+    "schemaVersion": "admission-binding.v1",
+    "owner": "nova-platform",
+    "generationDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "profileDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "policyDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "schemaDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "sourceDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  },
+  "inlineBindingSchema": "admission-binding.schema.json",
+  "headerBytes": 514,
+  "headerWholeStateGrowthBytes": 525,
+  "allASCII": "schema/owner enums are equal-length13ASCII; fiveSHA256refs fixed71ASCII each; no unbounded profile names or embeddedwholemanifest. References resolve immutable fullprofile+author/source/schema manifest, not current config.",
+  "worstCaseFloor": {
+    "threshold256": 4011,
+    "threshold128": 3243
+  },
+  "reserveRelation": "reserve>=frozen canonical worstcase overflow incremental bytes + binding field growth (conservative includes header even though initialstate alreadyhasit); actualcandidate canonicalJSONincludingbinding<=same maximumBytes preeffect; validate actualbound generationheader againstschema before arithmetic",
+  "wholeCapAccounting": "inline binding and immutable referencedpolicy metadata must be counted under owning store metadata/totalquota, never excluded. Fullprofiles/documents remain by immutable digest, externally referenced storage quota already selected. No new untracked policy-store or accountingwaiver.",
+  "unsupportedFutureHeader": "Any addedfield/version/longerbinding changes envelopeproof and strictschema; reject until newexplicitversion/domain/positive/negative and history compatibility approved. No arbitrarymaxdynamicnamebounds."
+}

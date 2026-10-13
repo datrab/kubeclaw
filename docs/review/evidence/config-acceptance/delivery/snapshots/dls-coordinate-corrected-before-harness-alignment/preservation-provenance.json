@@ -1,0 +1,8 @@
+{
+  "metadataSha256": "119a86f276029b5a5f039d10023986ca6f6cf04bee74d20b5047d06aa7bab4ec",
+  "specExpectedHash": "5891fa28b2d798125358e0909c53e62a25b05995e2215aa6bebf78255d17fbca",
+  "reconstructionActualHash": "5891fa28b2d798125358e0909c53e62a25b05995e2215aa6bebf78255d17fbca",
+  "reconstructionVerified": true,
+  "method": "reverse only future harness filename alignment; byte identity checked, not arbitrary reconstruction",
+  "otherInputs": "complete retained profile bytes unchanged, source Codex spec unchanged"
+}

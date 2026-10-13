@@ -1,0 +1,30 @@
+{
+  "status": "not-accepted; actual productive parser+pure verdict/strict proposed-schema source evidence only, future cases notrun",
+  "rows": 1225,
+  "cases": 4379,
+  "results": {
+    "not-run": 3239,
+    "passed": 1140
+  },
+  "security02SchemaRows": 61,
+  "security02NewBusinessRows": 3,
+  "security02NewSourceDefinitions": 65,
+  "security02FutureCases": 256,
+  "allC0ClosedFalse": true,
+  "remainingConsumerReviewRows": 221,
+  "remainingSupplementalSourceTracedRows": 197,
+  "originalCandidates": 4642,
+  "manualCandidateRecordsThisBatch": 85,
+  "manualCandidateRecordsCombined": 149,
+  "remainingUnreviewedCandidates": 4493,
+  "explicitOpenCandidateGuards": 27,
+  "unmatchedGuardBusinessDefaultsNotInOriginalSyntaxRoster": [
+    "common.POLICY blockingSeverities/blockActiveThreats/blockMissingFixes integrated new3settingIDs, scannerError internalunuseddiagnosticmetadata not author",
+    "headers.PROFILES fullbase rule defaults inclHSTS31536000 are businesspolicy notprotocol; completeownedresolvedrules control explicit, exactindividual sourcecandidate/list settings still supplemental obligation",
+    "headers.execute maximumResponseBytes65536 literalline104 separate requestquota mustsame runtime-targetcompatibility/ownerreview",
+    "common.result evidence/disclosure slice limits128/512, safePart truncation/hash48/120/256; numericquota/privacy/evidence identities need exactpolicyvsprotocol dispositions, not hidden exclusion",
+    "Trivy runtime defaultdatabasepolicy48h/7days/8GiBperfile and current actualproducerage/fingerprint/hash/metadata replay constraints sourceclosedrolefixture not yetintegrated"
+  ],
+  "integrityErrors": [],
+  "remaining": "221 schema consumers,197 original supplemental source-traced rows,4493 unreviewed candidates plus explicit open guard/trust/runtime-owner and absent-syntax obligations. Three hidden businessflags supplemental rows are defined but full real producer/effect/mutation fixtures unapproved/notrun. Existing codec/context/A6 scope and historical case requirements retained."
+}

@@ -1,0 +1,266 @@
+{
+  "capturedAtUTC": "2026-10-13T02:44:31.770534+00:00",
+  "scope": "Parent checkpoint6 integrationtools/currentoutputs only; no authoredCore substantive or runtime/globalacceptance review",
+  "inputs": [
+    {
+      "path": "docs/review/evidence/config-acceptance/author/consolidate.py",
+      "sha256": "244c7aa444d06da8f955f39a1cc339e5bea88eb958915e03931b99c772416cdc",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-checkpoint6-integration/inputs/docs/review/evidence/config-acceptance/author/consolidate.py",
+      "gzip": false,
+      "scope": "integrationmechanics/IDs/requirements/hashes only; embeddedCoredefinitions NOT substantively reviewed"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/check-matrix.py",
+      "sha256": "229dfbf15ab71edd7a68b49ea73f7011213cc263119e14eef6f9738697e1e441",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-checkpoint6-integration/inputs/docs/review/evidence/config-acceptance/author/check-matrix.py",
+      "gzip": false,
+      "scope": "integrationmechanics/IDs/requirements/hashes only; embeddedCoredefinitions NOT substantively reviewed"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/observation_references.py",
+      "sha256": "448c7931e5128deb7537a6d492ffed4a260fcfa19c8250f2a46cc49b914c422f",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-checkpoint6-integration/inputs/docs/review/evidence/config-acceptance/author/observation_references.py",
+      "gzip": false,
+      "scope": "integrationmechanics/IDs/requirements/hashes only; embeddedCoredefinitions NOT substantively reviewed"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/check-core-supersession-integration.py",
+      "sha256": "8add0e711f2ea064802f02458d33f56e72390fe710807d86153a36d1c4a4ceb6",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-checkpoint6-integration/inputs/docs/review/evidence/config-acceptance/author/check-core-supersession-integration.py",
+      "gzip": false,
+      "scope": "integrationmechanics/IDs/requirements/hashes only; embeddedCoredefinitions NOT substantively reviewed"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/nova-carrier-01-bounded-disposition-20261013.json",
+      "sha256": "1ae964a95da1b85454f130adeae47075793a37a2ec989b06be528cfb9ef424de",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-checkpoint6-integration/inputs/docs/review/evidence/config-acceptance/author/nova-carrier-01-bounded-disposition-20261013.json",
+      "gzip": false,
+      "scope": "integrationmechanics/IDs/requirements/hashes only; embeddedCoredefinitions NOT substantively reviewed"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/runtime-reference-integrity-checkpoint-6.json",
+      "sha256": "1c1305b2ce3f3bc645e220715aec7305d77ccc593dd89320c4505ac02039ff1a",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-checkpoint6-integration/inputs/docs/review/evidence/config-acceptance/author/runtime-reference-integrity-checkpoint-6.json",
+      "gzip": false,
+      "scope": "integrationmechanics/IDs/requirements/hashes only; embeddedCoredefinitions NOT substantively reviewed"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/consolidation-checkpoint-6-attempt1.log",
+      "sha256": "5c92c0139ea93805d250c8a009ab593debb68a5c48998e666471983f250e0d36",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-checkpoint6-integration/inputs/docs/review/evidence/config-acceptance/author/consolidation-checkpoint-6-attempt1.log",
+      "gzip": false,
+      "scope": "integrationmechanics/IDs/requirements/hashes only; embeddedCoredefinitions NOT substantively reviewed"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/structural-checkpoint-6-attempt1.log",
+      "sha256": "d5c78f7619fcbb41f645f893d968f5f8f3c132d89906ec3871b6f94ca6667ce8",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-checkpoint6-integration/inputs/docs/review/evidence/config-acceptance/author/structural-checkpoint-6-attempt1.log",
+      "gzip": false,
+      "scope": "integrationmechanics/IDs/requirements/hashes only; embeddedCoredefinitions NOT substantively reviewed"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/strict-checkpoint-6-attempt1.log",
+      "sha256": "51f13e2af5b27e948d629805da8ffe1406d7c9356c1feb4e7870336d932750c7",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-checkpoint6-integration/inputs/docs/review/evidence/config-acceptance/author/strict-checkpoint-6-attempt1.log.gz",
+      "gzip": true,
+      "scope": "integrationmechanics/IDs/requirements/hashes only; embeddedCoredefinitions NOT substantively reviewed"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/canonical-refinements-checkpoint-6-attempt1.log",
+      "sha256": "de761dc0da40d1049df4246105b6fe7d2c37530f9962caf2eb088b09b5b9fbce",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-checkpoint6-integration/inputs/docs/review/evidence/config-acceptance/author/canonical-refinements-checkpoint-6-attempt1.log",
+      "gzip": false,
+      "scope": "integrationmechanics/IDs/requirements/hashes only; embeddedCoredefinitions NOT substantively reviewed"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/core-supersession-integration-attempt2-20261013.log",
+      "sha256": "4d48b0c449410572398c66fd9cabcfdafa77f0d3d4e7e07088341d985a2a8a7c",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-checkpoint6-integration/inputs/docs/review/evidence/config-acceptance/author/core-supersession-integration-attempt2-20261013.log",
+      "gzip": false,
+      "scope": "integrationmechanics/IDs/requirements/hashes only; embeddedCoredefinitions NOT substantively reviewed"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/core-supersession-integration-attempt5-20261013.log",
+      "sha256": "140ed2154be037331c9d2538ca6343c36889eb9e20d47c5b550c09234bb602ba",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-checkpoint6-integration/inputs/docs/review/evidence/config-acceptance/author/core-supersession-integration-attempt5-20261013.log",
+      "gzip": false,
+      "scope": "integrationmechanics/IDs/requirements/hashes only; embeddedCoredefinitions NOT substantively reviewed"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/core-supersession-integration-attempt1-20261013.log",
+      "sha256": "9436c17e50b3c561c18cad4ba1c0ed6d4af9854f4aa7e16656ec57e031f5acd8",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-checkpoint6-integration/inputs/docs/review/evidence/config-acceptance/author/core-supersession-integration-attempt1-20261013.log",
+      "gzip": false,
+      "scope": "integrationmechanics/IDs/requirements/hashes only; embeddedCoredefinitions NOT substantively reviewed"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/core-supersession-integration-attempt3-20261013.log",
+      "sha256": "fecad3e315cde87257134f9d6e8d81fc06e62a1c93554411a9f58cde6bc034dc",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-checkpoint6-integration/inputs/docs/review/evidence/config-acceptance/author/core-supersession-integration-attempt3-20261013.log",
+      "gzip": false,
+      "scope": "integrationmechanics/IDs/requirements/hashes only; embeddedCoredefinitions NOT substantively reviewed"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/core-supersession-integration-attempt4-20261013.log",
+      "sha256": "7a26d73d9e333136fcb1e6eb46279ff92473352ed1aacea0655a9dec233887c5",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-checkpoint6-integration/inputs/docs/review/evidence/config-acceptance/author/core-supersession-integration-attempt4-20261013.log",
+      "gzip": false,
+      "scope": "integrationmechanics/IDs/requirements/hashes only; embeddedCoredefinitions NOT substantively reviewed"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/check-core-supersession-integration-before-block-boundary-20261013.py",
+      "sha256": "7c8b457ae8f7ee620884bd02880851b0c247ac8d8c5a42d15249790d4a635821",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-checkpoint6-integration/inputs/docs/review/evidence/config-acceptance/author/check-core-supersession-integration-before-block-boundary-20261013.py",
+      "gzip": false,
+      "scope": "integrationmechanics/IDs/requirements/hashes only; embeddedCoredefinitions NOT substantively reviewed"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/check-core-supersession-integration-before-input-contract-check-20261013.py",
+      "sha256": "5e11070685a8f565f33a64f790d89134afb8e762a95ffca992c6efc2a4064590",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-checkpoint6-integration/inputs/docs/review/evidence/config-acceptance/author/check-core-supersession-integration-before-input-contract-check-20261013.py",
+      "gzip": false,
+      "scope": "integrationmechanics/IDs/requirements/hashes only; embeddedCoredefinitions NOT substantively reviewed"
+    },
+    {
+      "path": "docs/review/remediation/config-semantic-inventory.json",
+      "sha256": "9754474488aea549a9ff246bfaf9ebb7a494466c34d33e4a441b666cb1f92283",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-checkpoint6-integration/inputs/docs/review/remediation/config-semantic-inventory.json.gz",
+      "gzip": true,
+      "scope": "integrationmechanics/IDs/requirements/hashes only; embeddedCoredefinitions NOT substantively reviewed"
+    },
+    {
+      "path": "docs/review/remediation/config-acceptance-matrix.json",
+      "sha256": "46c5e413b9a78f9560d20d22625366b90b00e217e4fab5307db331cb5a8c7fc9",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-checkpoint6-integration/inputs/docs/review/remediation/config-acceptance-matrix.json.gz",
+      "gzip": true,
+      "scope": "integrationmechanics/IDs/requirements/hashes only; embeddedCoredefinitions NOT substantively reviewed"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/stable-material-correction-receipt.json",
+      "sha256": "b0f15920b3fd279fd25868d8f885bc0dade6b52adaeae4a165d77c6bbc7e81a1",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-checkpoint6-integration/inputs/docs/review/evidence/config-acceptance/components/icq-corrections-20261013/stable-material-correction-receipt.json",
+      "gzip": false,
+      "scope": "integrationmechanics/IDs/requirements/hashes only; embeddedCoredefinitions NOT substantively reviewed"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/stable-material-correction-receipt.json",
+      "sha256": "27ad0c413a0ef8fb28af301634549fea76692c6fa68ad199dd719d43289798fe",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-checkpoint6-integration/inputs/docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/stable-material-correction-receipt.json",
+      "gzip": false,
+      "scope": "integrationmechanics/IDs/requirements/hashes only; embeddedCoredefinitions NOT substantively reviewed"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-core-r06-recheck-20261013/independent-r06-review.json",
+      "sha256": "2253cfa1cfc01715dbee947e8f21f7ec42a7294596d1d10a72f279835917f8ab",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-checkpoint6-integration/inputs/docs/review/evidence/config-acceptance/independent-core-r06-recheck-20261013/independent-r06-review.json",
+      "gzip": false,
+      "scope": "integrationmechanics/IDs/requirements/hashes only; embeddedCoredefinitions NOT substantively reviewed"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/semantic-fragment.json",
+      "sha256": "8375d00031f7cdc46099f30d459cf9f3b9830a4a788aa2d56b5061633f7140d1",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-checkpoint6-integration/inputs/docs/review/evidence/config-acceptance/components/semantic-fragment.json",
+      "gzip": false,
+      "scope": "IDs/requirements/identity/reference integration only, not Core or Runtime substantive definitions"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/residual-fragment.json",
+      "sha256": "25ca9b453586600cb1bd3fe168fc5c6bb24304330e647a356d957929cb80ee8e",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-checkpoint6-integration/inputs/docs/review/evidence/config-acceptance/components/residual-fragment.json.gz",
+      "gzip": true,
+      "scope": "IDs/requirements/identity/reference integration only, not Core or Runtime substantive definitions"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/runtime/inventory-fragment.json",
+      "sha256": "0847f5fe3e8cf3ead350fe7daa6deffad35975c98cecda52888f46f0cd9ea23e",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-checkpoint6-integration/inputs/docs/review/evidence/config-acceptance/runtime/inventory-fragment.json.gz",
+      "gzip": true,
+      "scope": "IDs/requirements/identity/reference integration only, not Core or Runtime substantive definitions"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/inventory-fragment.json",
+      "sha256": "84da74e73d39a855235a43420eb8bafd6be195211c8a219807462e57b6f6eeeb",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-checkpoint6-integration/inputs/docs/review/evidence/config-acceptance/delivery/inventory-fragment.json.gz",
+      "gzip": true,
+      "scope": "IDs/requirements/identity/reference integration only, not Core or Runtime substantive definitions"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/main-fragment.json",
+      "sha256": "9fbd3c36d1b7fb0afc59b43c5ecbfc243c00bbe786739768a252a74da6ece199",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-checkpoint6-integration/inputs/docs/review/evidence/config-acceptance/author/main-fragment.json",
+      "gzip": false,
+      "scope": "IDs/requirements/identity/reference integration only, not Core or Runtime substantive definitions"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/runtime/case-proposals.json",
+      "sha256": "113c662242195c821e3a0d1623283f643b428e1126818126f9dd509aec8a493c",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-checkpoint6-integration/inputs/docs/review/evidence/config-acceptance/runtime/case-proposals.json.gz",
+      "gzip": true,
+      "scope": "IDs/requirements/identity/reference integration only, not Core or Runtime substantive definitions"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/observation-reference-controls-20261013.json",
+      "sha256": "466feec902e893e01ea0ed7139e5cf69b5658c89f29041b72c0065ac7273a564",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-checkpoint6-integration/inputs/docs/review/evidence/config-acceptance/author/observation-reference-controls-20261013.json",
+      "gzip": false,
+      "scope": "IDs/requirements/identity/reference integration only, not Core or Runtime substantive definitions"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-artifact-budget-06/observations.json",
+      "sha256": "83cc6904fd0aa62078c07f0c2cee7f5396f1ebc1c773b89dc5cc94e370a48a43",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-checkpoint6-integration/inputs/docs/review/evidence/config-acceptance/runtime/batches/bce3f075-artifact-budget-06/observations.json",
+      "gzip": false,
+      "scope": "IDs/requirements/identity/reference integration only, not Core or Runtime substantive definitions"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "sha256": "eb6aad6748b119c42123d0decb61516bc7177eb6c856238f4fc698af7f7a975d",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-checkpoint6-integration/inputs/docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "gzip": false,
+      "scope": "IDs/requirements/identity/reference integration only, not Core or Runtime substantive definitions"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/observations.json",
+      "sha256": "3de73701ff6809f698b97425df23d5c0b556b384f0fdb1ee8ade48ccde262601",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-checkpoint6-integration/inputs/docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/observations.json",
+      "gzip": false,
+      "scope": "IDs/requirements/identity/reference integration only, not Core or Runtime substantive definitions"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "sha256": "a66c02f3b610bd7e9f859e90adb7b180bb3f9d55ce03a35111acd6611fc01175",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-checkpoint6-integration/inputs/docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "gzip": false,
+      "scope": "IDs/requirements/identity/reference integration only, not Core or Runtime substantive definitions"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-declarations-10/observations.json",
+      "sha256": "a92203d5e9a1730732e17e9d311e4ccef92d9700ac652a46c447d3bf50562626",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-checkpoint6-integration/inputs/docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-declarations-10/observations.json",
+      "gzip": false,
+      "scope": "IDs/requirements/identity/reference integration only, not Core or Runtime substantive definitions"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-declarations-10/target-observations.json",
+      "sha256": "65ad3b6164ef0213f05ce59dc1ffd68975d59aab2ffa512f05d05cbc7ef24b56",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-checkpoint6-integration/inputs/docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-declarations-10/target-observations.json",
+      "gzip": false,
+      "scope": "IDs/requirements/identity/reference integration only, not Core or Runtime substantive definitions"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-repository-lint-11/observations.json",
+      "sha256": "1b3210600dcd14176d9789eeff02a41250722152854ac75aa8a63355cb8fe6f3",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-checkpoint6-integration/inputs/docs/review/evidence/config-acceptance/runtime/batches/bce3f075-repository-lint-11/observations.json",
+      "gzip": false,
+      "scope": "IDs/requirements/identity/reference integration only, not Core or Runtime substantive definitions"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-tailscale-09/observations.json",
+      "sha256": "b1b6a2f6dde69608cf608a567f04170e2f4b23d84ec30335331943929d4c3d94",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-checkpoint6-integration/inputs/docs/review/evidence/config-acceptance/runtime/batches/bce3f075-tailscale-09/observations.json",
+      "gzip": false,
+      "scope": "IDs/requirements/identity/reference integration only, not Core or Runtime substantive definitions"
+    }
+  ],
+  "mutableRoot": "Only exactsnapshot identities reviewed; parentstaging changes allowed but driftwillbequalified"
+}

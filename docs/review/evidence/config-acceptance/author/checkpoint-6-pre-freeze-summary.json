@@ -1,0 +1,25 @@
+{
+  "scope": "incomplete documentation checkpoint, not acceptance",
+  "inventoryRows": 2389,
+  "caseIds": 6289,
+  "openGaps": 30,
+  "structuralExit": 0,
+  "strictExit": 1,
+  "strictOpenObligations": 92743,
+  "canonicalSpecificationsChecked": 148,
+  "runtimeObservationReferencesChecked": 2229,
+  "deliveryManifestInputsChecked": 1746,
+  "deliveryDrift": 0,
+  "whitespaceInitialExit": 2,
+  "whitespaceFinalExit": 0,
+  "whitespaceDisposition": "54 exact evidence-byte paths retain intentional padding/upstream/render whitespace; no raw bytes or productive assertions altered. Initial failed check preserved.",
+  "rawLogs": {
+    "consolidation-checkpoint-6-attempt1.log": "5c92c0139ea93805d250c8a009ab593debb68a5c48998e666471983f250e0d36",
+    "structural-checkpoint-6-attempt1.log": "d5c78f7619fcbb41f645f893d968f5f8f3c132d89906ec3871b6f94ca6667ce8",
+    "strict-checkpoint-6-attempt1.log": "51f13e2af5b27e948d629805da8ffe1406d7c9356c1feb4e7870336d932750c7",
+    "canonical-refinements-checkpoint-6-attempt1.log": "de761dc0da40d1049df4246105b6fe7d2c37530f9962caf2eb088b09b5b9fbce",
+    "whitespace-checkpoint-6-attempt1.log": "1cff91b37c17a17bd11869f1710d70d5613d5d17bf486a27e5eea3dce670754b",
+    "whitespace-checkpoint-6-attempt2.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "broadSuite": "Historical unchanged source run649tests644passed5failed0skips, not rerun for this documentation snapshot."
+}

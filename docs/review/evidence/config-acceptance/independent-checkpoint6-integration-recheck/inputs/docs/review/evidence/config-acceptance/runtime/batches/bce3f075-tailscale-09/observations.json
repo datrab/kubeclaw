@@ -1,0 +1,1910 @@
+{
+  "command": "node docs/review/evidence/config-acceptance/runtime/batches/bce3f075-tailscale-09/check.mjs",
+  "node": "v24.21.0",
+  "sourceDigests": {
+    "skills/buster/plugins/tailscale-exposure/src/provider.js": "7e8f092bf66aac62bcd7ffd01b80710ccdd97c87f1ceec126139ba23d08ca1f0",
+    "skills/buster/plugins/tailscale-exposure/schemas/config.schema.json": "0ffe60c3f3b2ab2fa054a239892663c20bb59621b9e5fdbf05541d862a986ccd",
+    "skills/buster/plugins/tailscale-exposure/plugin.json": "c61695a3a068a240a335949e27287829fa8183b465bd648662525da67fc9648b",
+    "skills/buster/plugins/tailscale-exposure/package.json": "3918395fcd44dfcba85323354798768a11c9d4219e4284769579f02913d84f9d",
+    "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts": "6a15a085499aac578a2a131cc215200396b702eaba68f75281bd46c4cf7a33cc",
+    "skills/buster/engine/test-gates/tailscale-operation-policy.ts": "cf35868ce909f53a05fae0e8a4bdf81f0e8c030850d569839f13d47f5efa4607",
+    "skills/buster/engine/test-gates/exposure-generation.ts": "cbaed4e6debf9e225c0c5aab51ecc8383bed69ff3b5dc4f7fe7c18a0ee02a360",
+    "skills/buster/engine/test-gates/exposure-handoff.ts": "4e725c913e11f5eb11a4444c9a96373e423c06b2da33287e5269fbe1401b9e83",
+    "skills/buster/engine/test-gates/production-cluster-options.ts": "eb4448a7250ed6e2adbff8ec47956ba5c4d253d198697c344f75274eb3d61bff",
+    "skills/buster/engine/test-gates/capability-runtime.ts": "3615780a7c173fc3f43f0510e208378e276a9e34f71c8a7c1c643fde296ded11",
+    "skills/buster/engine/test-gates/remote-prepared-execution.ts": "832631872e86addc6ae98516f63c191e403675b679c795ad3d47a2fdb8350dde",
+    "skills/buster/engine/test-gates/provider-process-session.ts": "ea0ac4030fbcfb9428590bbc8f4a68c445596da9a56f6b4ad41c0df10cb7ca6d",
+    "skills/buster/engine/test-gates/runner-provider-operation.ts": "332e73e5e35b28800ab7ad70331adf8c2ed683f819a0ea6504eea0abbb61645c",
+    "skills/buster/engine/test-gates/runner-values.ts": "e0d381931d7e580113faaafb8ae05fa0e9431e15202a23b97bbc1fb974e27021",
+    "charts/kubeclaw/files/config/buster-engine.config.json": "d43c96506287ade07e23a38bf3d24764e81c16a2ebe8e5bb8a347ac640a3aaa5",
+    "skills/common/plugin-runtime/foundation/registry/schema.ts": "eb665b9db83e0d0d1bd15fbe5c6f916f479bf8a9c049de6d90b2d6f9f59cc557",
+    "package-lock.json": "c7b124ab4de93c983eebfd13f859cd328b7e7a823fe7dc662f9b6e0cf0ed736b"
+  },
+  "testDigests": {
+    "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-tailscale-09/check.mjs": "6927fc5832b0df912b2b2122d07a7d0535e8b86a6154e13548427999ec219ae6"
+  },
+  "inputDigests": {
+    "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-tailscale-09/contracts.json": "8c28c6318fe6586fbccad602cd14d5962f7992c4f1d021be772562d8fbd813a0"
+  },
+  "nativeOptions": {
+    "processInputPolicy": {
+      "cleanupTimeoutMs": 1500,
+      "terminationGraceMs": 250,
+      "acknowledgementPollMs": 10
+    },
+    "allowedNamespacePrefixes": [
+      "test"
+    ],
+    "allowedHostSuffixes": [
+      ".ts.net"
+    ],
+    "maximumExecutionMs": 900000,
+    "pollIntervalMs": 1000,
+    "shortCommandTimeoutMs": 15000,
+    "maximumCommandOutputBytes": 1048576,
+    "kubectlExecutable": "/usr/local/bin/kubectl",
+    "leaseApiGroup": "kubeclaw.forgestack.ai",
+    "leaseApiVersion": "v1alpha1",
+    "controllerNamespace": "c0-controller"
+  },
+  "observations": [
+    {
+      "setting": "RT-f1e7350413f49db3",
+      "field": "retentionMode",
+      "controls": {
+        "A": {
+          "owning": {
+            "accepted": true
+          },
+          "source": {
+            "invocation": {
+              "configuration": {
+                "values": {
+                  "retentionMode": "release",
+                  "endpointName": "service-a",
+                  "hostname": "public-a",
+                  "path": "/",
+                  "readinessTimeoutSeconds": 1
+                }
+              },
+              "inputs": [
+                {
+                  "name": "deployment",
+                  "kind": "value",
+                  "schemaId": "kubeclaw.kubernetes-deployment-fixture@1",
+                  "value": {
+                    "schemaVersion": "kubernetes-deployment-fixture.v1",
+                    "leaseName": "lease-a",
+                    "namespace": "test-a",
+                    "expiresAt": "2099-01-01T00:00:00Z",
+                    "endpoints": [
+                      {
+                        "name": "service-a",
+                        "url": "http://service-a.test-a.svc.cluster.local:80/"
+                      },
+                      {
+                        "name": "service-b",
+                        "url": "http://service-b.test-a.svc.cluster.local:81/"
+                      }
+                    ]
+                  }
+                }
+              ],
+              "timeoutMs": 5000,
+              "runId": "run:c0",
+              "nodeId": "exposure",
+              "moduleId": "exposure",
+              "attemptId": "attempt:c0"
+            },
+            "calls": [
+              {
+                "capability": "kubernetes.exposure",
+                "request": {
+                  "operation": "prepare",
+                  "resource": {
+                    "type": "kubernetes.exposure",
+                    "canonicalId": "kubernetes-exposure:attempt:c0"
+                  },
+                  "payload": {
+                    "leaseName": "lease-a",
+                    "namespace": "test-a",
+                    "expiresAt": "2099-01-01T00:00:00Z",
+                    "serviceName": "service-a",
+                    "servicePort": 80,
+                    "path": "/",
+                    "hostname": "public-a",
+                    "readinessTimeoutMs": 1000
+                  }
+                }
+              }
+            ],
+            "commands": [],
+            "error": "Error: C0_PROVIDER_REQUEST_STOP",
+            "boundary": "Actual provider parser/dependency input and request projection; context.invoke substituted STOP. Optional actual native parser uses execute substituted STOP before kubectl. No real capability RPC/command/controller/exposure/effect/grants acceptance."
+          }
+        },
+        "B": {
+          "owning": {
+            "accepted": true
+          },
+          "source": {
+            "invocation": {
+              "configuration": {
+                "values": {
+                  "retentionMode": "await-readiness",
+                  "endpointName": "service-a",
+                  "hostname": "public-a",
+                  "path": "/",
+                  "readinessTimeoutSeconds": 1
+                }
+              },
+              "inputs": [
+                {
+                  "name": "deployment",
+                  "kind": "value",
+                  "schemaId": "kubeclaw.kubernetes-deployment-fixture@1",
+                  "value": {
+                    "schemaVersion": "kubernetes-deployment-fixture.v1",
+                    "leaseName": "lease-a",
+                    "namespace": "test-a",
+                    "expiresAt": "2099-01-01T00:00:00Z",
+                    "endpoints": [
+                      {
+                        "name": "service-a",
+                        "url": "http://service-a.test-a.svc.cluster.local:80/"
+                      },
+                      {
+                        "name": "service-b",
+                        "url": "http://service-b.test-a.svc.cluster.local:81/"
+                      }
+                    ]
+                  }
+                }
+              ],
+              "timeoutMs": 5000,
+              "runId": "run:c0",
+              "nodeId": "exposure",
+              "moduleId": "exposure",
+              "attemptId": "attempt:c0"
+            },
+            "calls": [
+              {
+                "capability": "kubernetes.exposure",
+                "request": {
+                  "operation": "prepare",
+                  "resource": {
+                    "type": "kubernetes.exposure",
+                    "canonicalId": "kubernetes-exposure:attempt:c0"
+                  },
+                  "payload": {
+                    "leaseName": "lease-a",
+                    "namespace": "test-a",
+                    "expiresAt": "2099-01-01T00:00:00Z",
+                    "serviceName": "service-a",
+                    "servicePort": 80,
+                    "path": "/",
+                    "hostname": "public-a",
+                    "retentionMode": "await-readiness",
+                    "readinessTimeoutMs": 1000
+                  }
+                }
+              }
+            ],
+            "commands": [],
+            "error": "Error: C0_PROVIDER_REQUEST_STOP",
+            "boundary": "Actual provider parser/dependency input and request projection; context.invoke substituted STOP. Optional actual native parser uses execute substituted STOP before kubectl. No real capability RPC/command/controller/exposure/effect/grants acceptance."
+          }
+        },
+        "negative": {
+          "owning": {
+            "accepted": false,
+            "error": "RegistryError: Value failed schema /home/node/.openclaw/workspace/kubeclaw-config-c0/skills/buster/plugins/tailscale-exposure/schemas/config.schema.json"
+          },
+          "source": {
+            "invocation": {
+              "configuration": {
+                "values": {
+                  "retentionMode": "other",
+                  "endpointName": "service-a",
+                  "hostname": "public-a",
+                  "path": "/",
+                  "readinessTimeoutSeconds": 1
+                }
+              },
+              "inputs": [
+                {
+                  "name": "deployment",
+                  "kind": "value",
+                  "schemaId": "kubeclaw.kubernetes-deployment-fixture@1",
+                  "value": {
+                    "schemaVersion": "kubernetes-deployment-fixture.v1",
+                    "leaseName": "lease-a",
+                    "namespace": "test-a",
+                    "expiresAt": "2099-01-01T00:00:00Z",
+                    "endpoints": [
+                      {
+                        "name": "service-a",
+                        "url": "http://service-a.test-a.svc.cluster.local:80/"
+                      },
+                      {
+                        "name": "service-b",
+                        "url": "http://service-b.test-a.svc.cluster.local:81/"
+                      }
+                    ]
+                  }
+                }
+              ],
+              "timeoutMs": 5000,
+              "runId": "run:c0",
+              "nodeId": "exposure",
+              "moduleId": "exposure",
+              "attemptId": "attempt:c0"
+            },
+            "calls": [],
+            "commands": [],
+            "error": "Error: TAILSCALE_EXPOSURE_RETENTION_INVALID",
+            "boundary": "Actual provider parser/dependency input and request projection; context.invoke substituted STOP. Optional actual native parser uses execute substituted STOP before kubectl. No real capability RPC/command/controller/exposure/effect/grants acceptance."
+          }
+        }
+      },
+      "result": "passed",
+      "scope": "Current owning API schema and productive parser functions/requestSTOP, not future policy read or physical exposure"
+    },
+    {
+      "setting": "RT-acb2956bc0d67093",
+      "field": "endpointName",
+      "controls": {
+        "A": {
+          "owning": {
+            "accepted": true
+          },
+          "source": {
+            "invocation": {
+              "configuration": {
+                "values": {
+                  "retentionMode": "release",
+                  "endpointName": "service-a",
+                  "hostname": "public-a",
+                  "path": "/",
+                  "readinessTimeoutSeconds": 1
+                }
+              },
+              "inputs": [
+                {
+                  "name": "deployment",
+                  "kind": "value",
+                  "schemaId": "kubeclaw.kubernetes-deployment-fixture@1",
+                  "value": {
+                    "schemaVersion": "kubernetes-deployment-fixture.v1",
+                    "leaseName": "lease-a",
+                    "namespace": "test-a",
+                    "expiresAt": "2099-01-01T00:00:00Z",
+                    "endpoints": [
+                      {
+                        "name": "service-a",
+                        "url": "http://service-a.test-a.svc.cluster.local:80/"
+                      },
+                      {
+                        "name": "service-b",
+                        "url": "http://service-b.test-a.svc.cluster.local:81/"
+                      }
+                    ]
+                  }
+                }
+              ],
+              "timeoutMs": 5000,
+              "runId": "run:c0",
+              "nodeId": "exposure",
+              "moduleId": "exposure",
+              "attemptId": "attempt:c0"
+            },
+            "calls": [
+              {
+                "capability": "kubernetes.exposure",
+                "request": {
+                  "operation": "prepare",
+                  "resource": {
+                    "type": "kubernetes.exposure",
+                    "canonicalId": "kubernetes-exposure:attempt:c0"
+                  },
+                  "payload": {
+                    "leaseName": "lease-a",
+                    "namespace": "test-a",
+                    "expiresAt": "2099-01-01T00:00:00Z",
+                    "serviceName": "service-a",
+                    "servicePort": 80,
+                    "path": "/",
+                    "hostname": "public-a",
+                    "readinessTimeoutMs": 1000
+                  }
+                }
+              }
+            ],
+            "commands": [],
+            "error": "Error: C0_PROVIDER_REQUEST_STOP",
+            "boundary": "Actual provider parser/dependency input and request projection; context.invoke substituted STOP. Optional actual native parser uses execute substituted STOP before kubectl. No real capability RPC/command/controller/exposure/effect/grants acceptance."
+          }
+        },
+        "B": {
+          "owning": {
+            "accepted": true
+          },
+          "source": {
+            "invocation": {
+              "configuration": {
+                "values": {
+                  "retentionMode": "release",
+                  "endpointName": "service-b",
+                  "hostname": "public-a",
+                  "path": "/",
+                  "readinessTimeoutSeconds": 1
+                }
+              },
+              "inputs": [
+                {
+                  "name": "deployment",
+                  "kind": "value",
+                  "schemaId": "kubeclaw.kubernetes-deployment-fixture@1",
+                  "value": {
+                    "schemaVersion": "kubernetes-deployment-fixture.v1",
+                    "leaseName": "lease-a",
+                    "namespace": "test-a",
+                    "expiresAt": "2099-01-01T00:00:00Z",
+                    "endpoints": [
+                      {
+                        "name": "service-a",
+                        "url": "http://service-a.test-a.svc.cluster.local:80/"
+                      },
+                      {
+                        "name": "service-b",
+                        "url": "http://service-b.test-a.svc.cluster.local:81/"
+                      }
+                    ]
+                  }
+                }
+              ],
+              "timeoutMs": 5000,
+              "runId": "run:c0",
+              "nodeId": "exposure",
+              "moduleId": "exposure",
+              "attemptId": "attempt:c0"
+            },
+            "calls": [
+              {
+                "capability": "kubernetes.exposure",
+                "request": {
+                  "operation": "prepare",
+                  "resource": {
+                    "type": "kubernetes.exposure",
+                    "canonicalId": "kubernetes-exposure:attempt:c0"
+                  },
+                  "payload": {
+                    "leaseName": "lease-a",
+                    "namespace": "test-a",
+                    "expiresAt": "2099-01-01T00:00:00Z",
+                    "serviceName": "service-b",
+                    "servicePort": 81,
+                    "path": "/",
+                    "hostname": "public-a",
+                    "readinessTimeoutMs": 1000
+                  }
+                }
+              }
+            ],
+            "commands": [],
+            "error": "Error: C0_PROVIDER_REQUEST_STOP",
+            "boundary": "Actual provider parser/dependency input and request projection; context.invoke substituted STOP. Optional actual native parser uses execute substituted STOP before kubectl. No real capability RPC/command/controller/exposure/effect/grants acceptance."
+          }
+        },
+        "negative": {
+          "owning": {
+            "accepted": false,
+            "error": "RegistryError: Value failed schema /home/node/.openclaw/workspace/kubeclaw-config-c0/skills/buster/plugins/tailscale-exposure/schemas/config.schema.json"
+          },
+          "source": {
+            "invocation": {
+              "configuration": {
+                "values": {
+                  "retentionMode": "release",
+                  "endpointName": "BAD NAME",
+                  "hostname": "public-a",
+                  "path": "/",
+                  "readinessTimeoutSeconds": 1
+                }
+              },
+              "inputs": [
+                {
+                  "name": "deployment",
+                  "kind": "value",
+                  "schemaId": "kubeclaw.kubernetes-deployment-fixture@1",
+                  "value": {
+                    "schemaVersion": "kubernetes-deployment-fixture.v1",
+                    "leaseName": "lease-a",
+                    "namespace": "test-a",
+                    "expiresAt": "2099-01-01T00:00:00Z",
+                    "endpoints": [
+                      {
+                        "name": "service-a",
+                        "url": "http://service-a.test-a.svc.cluster.local:80/"
+                      },
+                      {
+                        "name": "service-b",
+                        "url": "http://service-b.test-a.svc.cluster.local:81/"
+                      }
+                    ]
+                  }
+                }
+              ],
+              "timeoutMs": 5000,
+              "runId": "run:c0",
+              "nodeId": "exposure",
+              "moduleId": "exposure",
+              "attemptId": "attempt:c0"
+            },
+            "calls": [],
+            "commands": [],
+            "error": "Error: TAILSCALE_EXPOSURE_ENDPOINT_NAME_INVALID",
+            "boundary": "Actual provider parser/dependency input and request projection; context.invoke substituted STOP. Optional actual native parser uses execute substituted STOP before kubectl. No real capability RPC/command/controller/exposure/effect/grants acceptance."
+          }
+        }
+      },
+      "result": "passed",
+      "scope": "Current owning API schema and productive parser functions/requestSTOP, not future policy read or physical exposure"
+    },
+    {
+      "setting": "RT-46e7265d0dd6458d",
+      "field": "hostname",
+      "controls": {
+        "A": {
+          "owning": {
+            "accepted": true
+          },
+          "source": {
+            "invocation": {
+              "configuration": {
+                "values": {
+                  "retentionMode": "release",
+                  "endpointName": "service-a",
+                  "hostname": "public-a",
+                  "path": "/",
+                  "readinessTimeoutSeconds": 1
+                }
+              },
+              "inputs": [
+                {
+                  "name": "deployment",
+                  "kind": "value",
+                  "schemaId": "kubeclaw.kubernetes-deployment-fixture@1",
+                  "value": {
+                    "schemaVersion": "kubernetes-deployment-fixture.v1",
+                    "leaseName": "lease-a",
+                    "namespace": "test-a",
+                    "expiresAt": "2099-01-01T00:00:00Z",
+                    "endpoints": [
+                      {
+                        "name": "service-a",
+                        "url": "http://service-a.test-a.svc.cluster.local:80/"
+                      },
+                      {
+                        "name": "service-b",
+                        "url": "http://service-b.test-a.svc.cluster.local:81/"
+                      }
+                    ]
+                  }
+                }
+              ],
+              "timeoutMs": 5000,
+              "runId": "run:c0",
+              "nodeId": "exposure",
+              "moduleId": "exposure",
+              "attemptId": "attempt:c0"
+            },
+            "calls": [
+              {
+                "capability": "kubernetes.exposure",
+                "request": {
+                  "operation": "prepare",
+                  "resource": {
+                    "type": "kubernetes.exposure",
+                    "canonicalId": "kubernetes-exposure:attempt:c0"
+                  },
+                  "payload": {
+                    "leaseName": "lease-a",
+                    "namespace": "test-a",
+                    "expiresAt": "2099-01-01T00:00:00Z",
+                    "serviceName": "service-a",
+                    "servicePort": 80,
+                    "path": "/",
+                    "hostname": "public-a",
+                    "readinessTimeoutMs": 1000
+                  }
+                }
+              }
+            ],
+            "commands": [],
+            "error": "Error: C0_PROVIDER_REQUEST_STOP",
+            "boundary": "Actual provider parser/dependency input and request projection; context.invoke substituted STOP. Optional actual native parser uses execute substituted STOP before kubectl. No real capability RPC/command/controller/exposure/effect/grants acceptance."
+          }
+        },
+        "B": {
+          "owning": {
+            "accepted": true
+          },
+          "source": {
+            "invocation": {
+              "configuration": {
+                "values": {
+                  "retentionMode": "release",
+                  "endpointName": "service-a",
+                  "hostname": "public-b",
+                  "path": "/",
+                  "readinessTimeoutSeconds": 1
+                }
+              },
+              "inputs": [
+                {
+                  "name": "deployment",
+                  "kind": "value",
+                  "schemaId": "kubeclaw.kubernetes-deployment-fixture@1",
+                  "value": {
+                    "schemaVersion": "kubernetes-deployment-fixture.v1",
+                    "leaseName": "lease-a",
+                    "namespace": "test-a",
+                    "expiresAt": "2099-01-01T00:00:00Z",
+                    "endpoints": [
+                      {
+                        "name": "service-a",
+                        "url": "http://service-a.test-a.svc.cluster.local:80/"
+                      },
+                      {
+                        "name": "service-b",
+                        "url": "http://service-b.test-a.svc.cluster.local:81/"
+                      }
+                    ]
+                  }
+                }
+              ],
+              "timeoutMs": 5000,
+              "runId": "run:c0",
+              "nodeId": "exposure",
+              "moduleId": "exposure",
+              "attemptId": "attempt:c0"
+            },
+            "calls": [
+              {
+                "capability": "kubernetes.exposure",
+                "request": {
+                  "operation": "prepare",
+                  "resource": {
+                    "type": "kubernetes.exposure",
+                    "canonicalId": "kubernetes-exposure:attempt:c0"
+                  },
+                  "payload": {
+                    "leaseName": "lease-a",
+                    "namespace": "test-a",
+                    "expiresAt": "2099-01-01T00:00:00Z",
+                    "serviceName": "service-a",
+                    "servicePort": 80,
+                    "path": "/",
+                    "hostname": "public-b",
+                    "readinessTimeoutMs": 1000
+                  }
+                }
+              }
+            ],
+            "commands": [],
+            "error": "Error: C0_PROVIDER_REQUEST_STOP",
+            "boundary": "Actual provider parser/dependency input and request projection; context.invoke substituted STOP. Optional actual native parser uses execute substituted STOP before kubectl. No real capability RPC/command/controller/exposure/effect/grants acceptance."
+          }
+        },
+        "negative": {
+          "owning": {
+            "accepted": false,
+            "error": "RegistryError: Value failed schema /home/node/.openclaw/workspace/kubeclaw-config-c0/skills/buster/plugins/tailscale-exposure/schemas/config.schema.json"
+          },
+          "source": {
+            "invocation": {
+              "configuration": {
+                "values": {
+                  "retentionMode": "release",
+                  "endpointName": "service-a",
+                  "hostname": "BAD NAME",
+                  "path": "/",
+                  "readinessTimeoutSeconds": 1
+                }
+              },
+              "inputs": [
+                {
+                  "name": "deployment",
+                  "kind": "value",
+                  "schemaId": "kubeclaw.kubernetes-deployment-fixture@1",
+                  "value": {
+                    "schemaVersion": "kubernetes-deployment-fixture.v1",
+                    "leaseName": "lease-a",
+                    "namespace": "test-a",
+                    "expiresAt": "2099-01-01T00:00:00Z",
+                    "endpoints": [
+                      {
+                        "name": "service-a",
+                        "url": "http://service-a.test-a.svc.cluster.local:80/"
+                      },
+                      {
+                        "name": "service-b",
+                        "url": "http://service-b.test-a.svc.cluster.local:81/"
+                      }
+                    ]
+                  }
+                }
+              ],
+              "timeoutMs": 5000,
+              "runId": "run:c0",
+              "nodeId": "exposure",
+              "moduleId": "exposure",
+              "attemptId": "attempt:c0"
+            },
+            "calls": [],
+            "commands": [],
+            "error": "Error: TAILSCALE_EXPOSURE_HOSTNAME_INVALID",
+            "boundary": "Actual provider parser/dependency input and request projection; context.invoke substituted STOP. Optional actual native parser uses execute substituted STOP before kubectl. No real capability RPC/command/controller/exposure/effect/grants acceptance."
+          }
+        }
+      },
+      "result": "passed",
+      "scope": "Current owning API schema and productive parser functions/requestSTOP, not future policy read or physical exposure"
+    },
+    {
+      "setting": "RT-b96960e386a14721",
+      "field": "path",
+      "controls": {
+        "A": {
+          "owning": {
+            "accepted": true
+          },
+          "source": {
+            "invocation": {
+              "configuration": {
+                "values": {
+                  "retentionMode": "release",
+                  "endpointName": "service-a",
+                  "hostname": "public-a",
+                  "path": "/",
+                  "readinessTimeoutSeconds": 1
+                }
+              },
+              "inputs": [
+                {
+                  "name": "deployment",
+                  "kind": "value",
+                  "schemaId": "kubeclaw.kubernetes-deployment-fixture@1",
+                  "value": {
+                    "schemaVersion": "kubernetes-deployment-fixture.v1",
+                    "leaseName": "lease-a",
+                    "namespace": "test-a",
+                    "expiresAt": "2099-01-01T00:00:00Z",
+                    "endpoints": [
+                      {
+                        "name": "service-a",
+                        "url": "http://service-a.test-a.svc.cluster.local:80/"
+                      },
+                      {
+                        "name": "service-b",
+                        "url": "http://service-b.test-a.svc.cluster.local:81/"
+                      }
+                    ]
+                  }
+                }
+              ],
+              "timeoutMs": 5000,
+              "runId": "run:c0",
+              "nodeId": "exposure",
+              "moduleId": "exposure",
+              "attemptId": "attempt:c0"
+            },
+            "calls": [
+              {
+                "capability": "kubernetes.exposure",
+                "request": {
+                  "operation": "prepare",
+                  "resource": {
+                    "type": "kubernetes.exposure",
+                    "canonicalId": "kubernetes-exposure:attempt:c0"
+                  },
+                  "payload": {
+                    "leaseName": "lease-a",
+                    "namespace": "test-a",
+                    "expiresAt": "2099-01-01T00:00:00Z",
+                    "serviceName": "service-a",
+                    "servicePort": 80,
+                    "path": "/",
+                    "hostname": "public-a",
+                    "readinessTimeoutMs": 1000
+                  }
+                }
+              }
+            ],
+            "commands": [],
+            "error": "Error: C0_PROVIDER_REQUEST_STOP",
+            "boundary": "Actual provider parser/dependency input and request projection; context.invoke substituted STOP. Optional actual native parser uses execute substituted STOP before kubectl. No real capability RPC/command/controller/exposure/effect/grants acceptance."
+          }
+        },
+        "B": {
+          "owning": {
+            "accepted": true
+          },
+          "source": {
+            "invocation": {
+              "configuration": {
+                "values": {
+                  "retentionMode": "release",
+                  "endpointName": "service-a",
+                  "hostname": "public-a",
+                  "path": "/ready",
+                  "readinessTimeoutSeconds": 1
+                }
+              },
+              "inputs": [
+                {
+                  "name": "deployment",
+                  "kind": "value",
+                  "schemaId": "kubeclaw.kubernetes-deployment-fixture@1",
+                  "value": {
+                    "schemaVersion": "kubernetes-deployment-fixture.v1",
+                    "leaseName": "lease-a",
+                    "namespace": "test-a",
+                    "expiresAt": "2099-01-01T00:00:00Z",
+                    "endpoints": [
+                      {
+                        "name": "service-a",
+                        "url": "http://service-a.test-a.svc.cluster.local:80/"
+                      },
+                      {
+                        "name": "service-b",
+                        "url": "http://service-b.test-a.svc.cluster.local:81/"
+                      }
+                    ]
+                  }
+                }
+              ],
+              "timeoutMs": 5000,
+              "runId": "run:c0",
+              "nodeId": "exposure",
+              "moduleId": "exposure",
+              "attemptId": "attempt:c0"
+            },
+            "calls": [
+              {
+                "capability": "kubernetes.exposure",
+                "request": {
+                  "operation": "prepare",
+                  "resource": {
+                    "type": "kubernetes.exposure",
+                    "canonicalId": "kubernetes-exposure:attempt:c0"
+                  },
+                  "payload": {
+                    "leaseName": "lease-a",
+                    "namespace": "test-a",
+                    "expiresAt": "2099-01-01T00:00:00Z",
+                    "serviceName": "service-a",
+                    "servicePort": 80,
+                    "path": "/ready",
+                    "hostname": "public-a",
+                    "readinessTimeoutMs": 1000
+                  }
+                }
+              }
+            ],
+            "commands": [],
+            "error": "Error: C0_PROVIDER_REQUEST_STOP",
+            "boundary": "Actual provider parser/dependency input and request projection; context.invoke substituted STOP. Optional actual native parser uses execute substituted STOP before kubectl. No real capability RPC/command/controller/exposure/effect/grants acceptance."
+          }
+        },
+        "negative": {
+          "owning": {
+            "accepted": false,
+            "error": "RegistryError: Value failed schema /home/node/.openclaw/workspace/kubeclaw-config-c0/skills/buster/plugins/tailscale-exposure/schemas/config.schema.json"
+          },
+          "source": {
+            "invocation": {
+              "configuration": {
+                "values": {
+                  "retentionMode": "release",
+                  "endpointName": "service-a",
+                  "hostname": "public-a",
+                  "path": "//outside",
+                  "readinessTimeoutSeconds": 1
+                }
+              },
+              "inputs": [
+                {
+                  "name": "deployment",
+                  "kind": "value",
+                  "schemaId": "kubeclaw.kubernetes-deployment-fixture@1",
+                  "value": {
+                    "schemaVersion": "kubernetes-deployment-fixture.v1",
+                    "leaseName": "lease-a",
+                    "namespace": "test-a",
+                    "expiresAt": "2099-01-01T00:00:00Z",
+                    "endpoints": [
+                      {
+                        "name": "service-a",
+                        "url": "http://service-a.test-a.svc.cluster.local:80/"
+                      },
+                      {
+                        "name": "service-b",
+                        "url": "http://service-b.test-a.svc.cluster.local:81/"
+                      }
+                    ]
+                  }
+                }
+              ],
+              "timeoutMs": 5000,
+              "runId": "run:c0",
+              "nodeId": "exposure",
+              "moduleId": "exposure",
+              "attemptId": "attempt:c0"
+            },
+            "calls": [],
+            "commands": [],
+            "error": "Error: TAILSCALE_EXPOSURE_PATH_INVALID",
+            "boundary": "Actual provider parser/dependency input and request projection; context.invoke substituted STOP. Optional actual native parser uses execute substituted STOP before kubectl. No real capability RPC/command/controller/exposure/effect/grants acceptance."
+          }
+        }
+      },
+      "result": "passed",
+      "scope": "Current owning API schema and productive parser functions/requestSTOP, not future policy read or physical exposure"
+    },
+    {
+      "setting": "RT-11582110acd39d2a",
+      "field": "readinessTimeoutSeconds",
+      "controls": {
+        "A": {
+          "owning": {
+            "accepted": true
+          },
+          "source": {
+            "invocation": {
+              "configuration": {
+                "values": {
+                  "retentionMode": "release",
+                  "endpointName": "service-a",
+                  "hostname": "public-a",
+                  "path": "/",
+                  "readinessTimeoutSeconds": 1
+                }
+              },
+              "inputs": [
+                {
+                  "name": "deployment",
+                  "kind": "value",
+                  "schemaId": "kubeclaw.kubernetes-deployment-fixture@1",
+                  "value": {
+                    "schemaVersion": "kubernetes-deployment-fixture.v1",
+                    "leaseName": "lease-a",
+                    "namespace": "test-a",
+                    "expiresAt": "2099-01-01T00:00:00Z",
+                    "endpoints": [
+                      {
+                        "name": "service-a",
+                        "url": "http://service-a.test-a.svc.cluster.local:80/"
+                      },
+                      {
+                        "name": "service-b",
+                        "url": "http://service-b.test-a.svc.cluster.local:81/"
+                      }
+                    ]
+                  }
+                }
+              ],
+              "timeoutMs": 5000,
+              "runId": "run:c0",
+              "nodeId": "exposure",
+              "moduleId": "exposure",
+              "attemptId": "attempt:c0"
+            },
+            "calls": [
+              {
+                "capability": "kubernetes.exposure",
+                "request": {
+                  "operation": "prepare",
+                  "resource": {
+                    "type": "kubernetes.exposure",
+                    "canonicalId": "kubernetes-exposure:attempt:c0"
+                  },
+                  "payload": {
+                    "leaseName": "lease-a",
+                    "namespace": "test-a",
+                    "expiresAt": "2099-01-01T00:00:00Z",
+                    "serviceName": "service-a",
+                    "servicePort": 80,
+                    "path": "/",
+                    "hostname": "public-a",
+                    "readinessTimeoutMs": 1000
+                  }
+                }
+              }
+            ],
+            "commands": [],
+            "error": "Error: C0_PROVIDER_REQUEST_STOP",
+            "boundary": "Actual provider parser/dependency input and request projection; context.invoke substituted STOP. Optional actual native parser uses execute substituted STOP before kubectl. No real capability RPC/command/controller/exposure/effect/grants acceptance."
+          }
+        },
+        "B": {
+          "owning": {
+            "accepted": true
+          },
+          "source": {
+            "invocation": {
+              "configuration": {
+                "values": {
+                  "retentionMode": "release",
+                  "endpointName": "service-a",
+                  "hostname": "public-a",
+                  "path": "/",
+                  "readinessTimeoutSeconds": 2
+                }
+              },
+              "inputs": [
+                {
+                  "name": "deployment",
+                  "kind": "value",
+                  "schemaId": "kubeclaw.kubernetes-deployment-fixture@1",
+                  "value": {
+                    "schemaVersion": "kubernetes-deployment-fixture.v1",
+                    "leaseName": "lease-a",
+                    "namespace": "test-a",
+                    "expiresAt": "2099-01-01T00:00:00Z",
+                    "endpoints": [
+                      {
+                        "name": "service-a",
+                        "url": "http://service-a.test-a.svc.cluster.local:80/"
+                      },
+                      {
+                        "name": "service-b",
+                        "url": "http://service-b.test-a.svc.cluster.local:81/"
+                      }
+                    ]
+                  }
+                }
+              ],
+              "timeoutMs": 5000,
+              "runId": "run:c0",
+              "nodeId": "exposure",
+              "moduleId": "exposure",
+              "attemptId": "attempt:c0"
+            },
+            "calls": [
+              {
+                "capability": "kubernetes.exposure",
+                "request": {
+                  "operation": "prepare",
+                  "resource": {
+                    "type": "kubernetes.exposure",
+                    "canonicalId": "kubernetes-exposure:attempt:c0"
+                  },
+                  "payload": {
+                    "leaseName": "lease-a",
+                    "namespace": "test-a",
+                    "expiresAt": "2099-01-01T00:00:00Z",
+                    "serviceName": "service-a",
+                    "servicePort": 80,
+                    "path": "/",
+                    "hostname": "public-a",
+                    "readinessTimeoutMs": 2000
+                  }
+                }
+              }
+            ],
+            "commands": [],
+            "error": "Error: C0_PROVIDER_REQUEST_STOP",
+            "boundary": "Actual provider parser/dependency input and request projection; context.invoke substituted STOP. Optional actual native parser uses execute substituted STOP before kubectl. No real capability RPC/command/controller/exposure/effect/grants acceptance."
+          }
+        },
+        "negative": {
+          "owning": {
+            "accepted": false,
+            "error": "RegistryError: Value failed schema /home/node/.openclaw/workspace/kubeclaw-config-c0/skills/buster/plugins/tailscale-exposure/schemas/config.schema.json"
+          },
+          "source": {
+            "invocation": {
+              "configuration": {
+                "values": {
+                  "retentionMode": "release",
+                  "endpointName": "service-a",
+                  "hostname": "public-a",
+                  "path": "/",
+                  "readinessTimeoutSeconds": 0
+                }
+              },
+              "inputs": [
+                {
+                  "name": "deployment",
+                  "kind": "value",
+                  "schemaId": "kubeclaw.kubernetes-deployment-fixture@1",
+                  "value": {
+                    "schemaVersion": "kubernetes-deployment-fixture.v1",
+                    "leaseName": "lease-a",
+                    "namespace": "test-a",
+                    "expiresAt": "2099-01-01T00:00:00Z",
+                    "endpoints": [
+                      {
+                        "name": "service-a",
+                        "url": "http://service-a.test-a.svc.cluster.local:80/"
+                      },
+                      {
+                        "name": "service-b",
+                        "url": "http://service-b.test-a.svc.cluster.local:81/"
+                      }
+                    ]
+                  }
+                }
+              ],
+              "timeoutMs": 5000,
+              "runId": "run:c0",
+              "nodeId": "exposure",
+              "moduleId": "exposure",
+              "attemptId": "attempt:c0"
+            },
+            "calls": [],
+            "commands": [],
+            "error": "Error: TAILSCALE_EXPOSURE_READINESS_TIMEOUT_INVALID",
+            "boundary": "Actual provider parser/dependency input and request projection; context.invoke substituted STOP. Optional actual native parser uses execute substituted STOP before kubectl. No real capability RPC/command/controller/exposure/effect/grants acceptance."
+          }
+        }
+      },
+      "result": "passed",
+      "scope": "Current owning API schema and productive parser functions/requestSTOP, not future policy read or physical exposure"
+    }
+  ],
+  "special": {
+    "unknown": {
+      "invocation": {
+        "configuration": {
+          "values": {
+            "retentionMode": "release",
+            "endpointName": "service-a",
+            "hostname": "public-a",
+            "path": "/",
+            "readinessTimeoutSeconds": 1,
+            "unknown": "ignored"
+          }
+        },
+        "inputs": [
+          {
+            "name": "deployment",
+            "kind": "value",
+            "schemaId": "kubeclaw.kubernetes-deployment-fixture@1",
+            "value": {
+              "schemaVersion": "kubernetes-deployment-fixture.v1",
+              "leaseName": "lease-a",
+              "namespace": "test-a",
+              "expiresAt": "2099-01-01T00:00:00Z",
+              "endpoints": [
+                {
+                  "name": "service-a",
+                  "url": "http://service-a.test-a.svc.cluster.local:80/"
+                },
+                {
+                  "name": "service-b",
+                  "url": "http://service-b.test-a.svc.cluster.local:81/"
+                }
+              ]
+            }
+          }
+        ],
+        "timeoutMs": 5000,
+        "runId": "run:c0",
+        "nodeId": "exposure",
+        "moduleId": "exposure",
+        "attemptId": "attempt:c0"
+      },
+      "calls": [
+        {
+          "capability": "kubernetes.exposure",
+          "request": {
+            "operation": "prepare",
+            "resource": {
+              "type": "kubernetes.exposure",
+              "canonicalId": "kubernetes-exposure:attempt:c0"
+            },
+            "payload": {
+              "leaseName": "lease-a",
+              "namespace": "test-a",
+              "expiresAt": "2099-01-01T00:00:00Z",
+              "serviceName": "service-a",
+              "servicePort": 80,
+              "path": "/",
+              "hostname": "public-a",
+              "readinessTimeoutMs": 1000
+            }
+          }
+        }
+      ],
+      "commands": [],
+      "error": "Error: C0_PROVIDER_REQUEST_STOP",
+      "boundary": "Actual provider parser/dependency input and request projection; context.invoke substituted STOP. Optional actual native parser uses execute substituted STOP before kubectl. No real capability RPC/command/controller/exposure/effect/grants acceptance."
+    },
+    "defaults": {
+      "invocation": {
+        "configuration": {
+          "values": {}
+        },
+        "inputs": [
+          {
+            "name": "deployment",
+            "kind": "value",
+            "schemaId": "kubeclaw.kubernetes-deployment-fixture@1",
+            "value": {
+              "schemaVersion": "kubernetes-deployment-fixture.v1",
+              "leaseName": "lease-a",
+              "namespace": "test-a",
+              "expiresAt": "2099-01-01T00:00:00Z",
+              "endpoints": [
+                {
+                  "name": "service-a",
+                  "url": "http://service-a.test-a.svc.cluster.local:80/"
+                }
+              ]
+            }
+          }
+        ],
+        "timeoutMs": 5000,
+        "runId": "run:c0",
+        "nodeId": "exposure",
+        "moduleId": "exposure",
+        "attemptId": "attempt:c0"
+      },
+      "calls": [
+        {
+          "capability": "kubernetes.exposure",
+          "request": {
+            "operation": "prepare",
+            "resource": {
+              "type": "kubernetes.exposure",
+              "canonicalId": "kubernetes-exposure:attempt:c0"
+            },
+            "payload": {
+              "leaseName": "lease-a",
+              "namespace": "test-a",
+              "expiresAt": "2099-01-01T00:00:00Z",
+              "serviceName": "service-a",
+              "servicePort": 80,
+              "path": "/",
+              "readinessTimeoutMs": 5000
+            }
+          }
+        }
+      ],
+      "commands": [],
+      "error": "Error: C0_PROVIDER_REQUEST_STOP",
+      "boundary": "Actual provider parser/dependency input and request projection; context.invoke substituted STOP. Optional actual native parser uses execute substituted STOP before kubectl. No real capability RPC/command/controller/exposure/effect/grants acceptance."
+    },
+    "nullDefaults": {
+      "invocation": {
+        "configuration": {
+          "values": {
+            "retentionMode": "release",
+            "endpointName": "service-a",
+            "hostname": "public-a",
+            "path": null,
+            "readinessTimeoutSeconds": null
+          }
+        },
+        "inputs": [
+          {
+            "name": "deployment",
+            "kind": "value",
+            "schemaId": "kubeclaw.kubernetes-deployment-fixture@1",
+            "value": {
+              "schemaVersion": "kubernetes-deployment-fixture.v1",
+              "leaseName": "lease-a",
+              "namespace": "test-a",
+              "expiresAt": "2099-01-01T00:00:00Z",
+              "endpoints": [
+                {
+                  "name": "service-a",
+                  "url": "http://service-a.test-a.svc.cluster.local:80/"
+                },
+                {
+                  "name": "service-b",
+                  "url": "http://service-b.test-a.svc.cluster.local:81/"
+                }
+              ]
+            }
+          }
+        ],
+        "timeoutMs": 5000,
+        "runId": "run:c0",
+        "nodeId": "exposure",
+        "moduleId": "exposure",
+        "attemptId": "attempt:c0"
+      },
+      "calls": [
+        {
+          "capability": "kubernetes.exposure",
+          "request": {
+            "operation": "prepare",
+            "resource": {
+              "type": "kubernetes.exposure",
+              "canonicalId": "kubernetes-exposure:attempt:c0"
+            },
+            "payload": {
+              "leaseName": "lease-a",
+              "namespace": "test-a",
+              "expiresAt": "2099-01-01T00:00:00Z",
+              "serviceName": "service-a",
+              "servicePort": 80,
+              "path": "/",
+              "hostname": "public-a",
+              "readinessTimeoutMs": 5000
+            }
+          }
+        }
+      ],
+      "commands": [],
+      "error": "Error: C0_PROVIDER_REQUEST_STOP",
+      "boundary": "Actual provider parser/dependency input and request projection; context.invoke substituted STOP. Optional actual native parser uses execute substituted STOP before kubectl. No real capability RPC/command/controller/exposure/effect/grants acceptance."
+    },
+    "nullRetention": {
+      "invocation": {
+        "configuration": {
+          "values": {
+            "retentionMode": null,
+            "endpointName": "service-a",
+            "hostname": "public-a",
+            "path": "/",
+            "readinessTimeoutSeconds": 1
+          }
+        },
+        "inputs": [
+          {
+            "name": "deployment",
+            "kind": "value",
+            "schemaId": "kubeclaw.kubernetes-deployment-fixture@1",
+            "value": {
+              "schemaVersion": "kubernetes-deployment-fixture.v1",
+              "leaseName": "lease-a",
+              "namespace": "test-a",
+              "expiresAt": "2099-01-01T00:00:00Z",
+              "endpoints": [
+                {
+                  "name": "service-a",
+                  "url": "http://service-a.test-a.svc.cluster.local:80/"
+                },
+                {
+                  "name": "service-b",
+                  "url": "http://service-b.test-a.svc.cluster.local:81/"
+                }
+              ]
+            }
+          }
+        ],
+        "timeoutMs": 5000,
+        "runId": "run:c0",
+        "nodeId": "exposure",
+        "moduleId": "exposure",
+        "attemptId": "attempt:c0"
+      },
+      "calls": [],
+      "commands": [],
+      "error": "Error: TAILSCALE_EXPOSURE_RETENTION_INVALID",
+      "boundary": "Actual provider parser/dependency input and request projection; context.invoke substituted STOP. Optional actual native parser uses execute substituted STOP before kubectl. No real capability RPC/command/controller/exposure/effect/grants acceptance."
+    },
+    "ambiguous": {
+      "invocation": {
+        "configuration": {
+          "values": {
+            "retentionMode": "release",
+            "hostname": "public-a",
+            "path": "/",
+            "readinessTimeoutSeconds": 1
+          }
+        },
+        "inputs": [
+          {
+            "name": "deployment",
+            "kind": "value",
+            "schemaId": "kubeclaw.kubernetes-deployment-fixture@1",
+            "value": {
+              "schemaVersion": "kubernetes-deployment-fixture.v1",
+              "leaseName": "lease-a",
+              "namespace": "test-a",
+              "expiresAt": "2099-01-01T00:00:00Z",
+              "endpoints": [
+                {
+                  "name": "service-a",
+                  "url": "http://service-a.test-a.svc.cluster.local:80/"
+                },
+                {
+                  "name": "service-b",
+                  "url": "http://service-b.test-a.svc.cluster.local:81/"
+                }
+              ]
+            }
+          }
+        ],
+        "timeoutMs": 5000,
+        "runId": "run:c0",
+        "nodeId": "exposure",
+        "moduleId": "exposure",
+        "attemptId": "attempt:c0"
+      },
+      "calls": [],
+      "commands": [],
+      "error": "Error: TAILSCALE_EXPOSURE_ENDPOINT_AMBIGUOUS",
+      "boundary": "Actual provider parser/dependency input and request projection; context.invoke substituted STOP. Optional actual native parser uses execute substituted STOP before kubectl. No real capability RPC/command/controller/exposure/effect/grants acceptance."
+    },
+    "missingEndpoint": {
+      "invocation": {
+        "configuration": {
+          "values": {
+            "retentionMode": "release",
+            "endpointName": "service-z",
+            "hostname": "public-a",
+            "path": "/",
+            "readinessTimeoutSeconds": 1
+          }
+        },
+        "inputs": [
+          {
+            "name": "deployment",
+            "kind": "value",
+            "schemaId": "kubeclaw.kubernetes-deployment-fixture@1",
+            "value": {
+              "schemaVersion": "kubernetes-deployment-fixture.v1",
+              "leaseName": "lease-a",
+              "namespace": "test-a",
+              "expiresAt": "2099-01-01T00:00:00Z",
+              "endpoints": [
+                {
+                  "name": "service-a",
+                  "url": "http://service-a.test-a.svc.cluster.local:80/"
+                },
+                {
+                  "name": "service-b",
+                  "url": "http://service-b.test-a.svc.cluster.local:81/"
+                }
+              ]
+            }
+          }
+        ],
+        "timeoutMs": 5000,
+        "runId": "run:c0",
+        "nodeId": "exposure",
+        "moduleId": "exposure",
+        "attemptId": "attempt:c0"
+      },
+      "calls": [],
+      "commands": [],
+      "error": "Error: TAILSCALE_EXPOSURE_ENDPOINT_NOT_FOUND",
+      "boundary": "Actual provider parser/dependency input and request projection; context.invoke substituted STOP. Optional actual native parser uses execute substituted STOP before kubectl. No real capability RPC/command/controller/exposure/effect/grants acceptance."
+    },
+    "duplicateNames": {
+      "invocation": {
+        "configuration": {
+          "values": {
+            "retentionMode": "release",
+            "endpointName": "service-a",
+            "hostname": "public-a",
+            "path": "/",
+            "readinessTimeoutSeconds": 1
+          }
+        },
+        "inputs": [
+          {
+            "name": "deployment",
+            "kind": "value",
+            "schemaId": "kubeclaw.kubernetes-deployment-fixture@1",
+            "value": {
+              "schemaVersion": "kubernetes-deployment-fixture.v1",
+              "leaseName": "lease-a",
+              "namespace": "test-a",
+              "expiresAt": "2099-01-01T00:00:00Z",
+              "endpoints": [
+                {
+                  "name": "service-a",
+                  "url": "http://service-a.test-a.svc.cluster.local:80/"
+                },
+                {
+                  "name": "service-a",
+                  "url": "http://service-a.test-a.svc.cluster.local:81/"
+                }
+              ]
+            }
+          }
+        ],
+        "timeoutMs": 5000,
+        "runId": "run:c0",
+        "nodeId": "exposure",
+        "moduleId": "exposure",
+        "attemptId": "attempt:c0"
+      },
+      "calls": [
+        {
+          "capability": "kubernetes.exposure",
+          "request": {
+            "operation": "prepare",
+            "resource": {
+              "type": "kubernetes.exposure",
+              "canonicalId": "kubernetes-exposure:attempt:c0"
+            },
+            "payload": {
+              "leaseName": "lease-a",
+              "namespace": "test-a",
+              "expiresAt": "2099-01-01T00:00:00Z",
+              "serviceName": "service-a",
+              "servicePort": 80,
+              "path": "/",
+              "hostname": "public-a",
+              "readinessTimeoutMs": 1000
+            }
+          }
+        }
+      ],
+      "commands": [],
+      "error": "Error: C0_PROVIDER_REQUEST_STOP",
+      "boundary": "Actual provider parser/dependency input and request projection; context.invoke substituted STOP. Optional actual native parser uses execute substituted STOP before kubectl. No real capability RPC/command/controller/exposure/effect/grants acceptance."
+    },
+    "unicodePath": {
+      "owning": {
+        "accepted": true
+      },
+      "source": {
+        "invocation": {
+          "configuration": {
+            "values": {
+              "retentionMode": "release",
+              "endpointName": "service-a",
+              "hostname": "public-a",
+              "path": "/😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀",
+              "readinessTimeoutSeconds": 1
+            }
+          },
+          "inputs": [
+            {
+              "name": "deployment",
+              "kind": "value",
+              "schemaId": "kubeclaw.kubernetes-deployment-fixture@1",
+              "value": {
+                "schemaVersion": "kubernetes-deployment-fixture.v1",
+                "leaseName": "lease-a",
+                "namespace": "test-a",
+                "expiresAt": "2099-01-01T00:00:00Z",
+                "endpoints": [
+                  {
+                    "name": "service-a",
+                    "url": "http://service-a.test-a.svc.cluster.local:80/"
+                  },
+                  {
+                    "name": "service-b",
+                    "url": "http://service-b.test-a.svc.cluster.local:81/"
+                  }
+                ]
+              }
+            }
+          ],
+          "timeoutMs": 5000,
+          "runId": "run:c0",
+          "nodeId": "exposure",
+          "moduleId": "exposure",
+          "attemptId": "attempt:c0"
+        },
+        "calls": [],
+        "commands": [],
+        "error": "Error: TAILSCALE_EXPOSURE_PATH_INVALID",
+        "boundary": "Actual provider parser/dependency input and request projection; context.invoke substituted STOP. Optional actual native parser uses execute substituted STOP before kubectl. No real capability RPC/command/controller/exposure/effect/grants acceptance."
+      }
+    },
+    "nulPath": {
+      "owning": {
+        "accepted": true
+      },
+      "source": {
+        "invocation": {
+          "configuration": {
+            "values": {
+              "retentionMode": "release",
+              "endpointName": "service-a",
+              "hostname": "public-a",
+              "path": "/a\u0000b",
+              "readinessTimeoutSeconds": 1
+            }
+          },
+          "inputs": [
+            {
+              "name": "deployment",
+              "kind": "value",
+              "schemaId": "kubeclaw.kubernetes-deployment-fixture@1",
+              "value": {
+                "schemaVersion": "kubernetes-deployment-fixture.v1",
+                "leaseName": "lease-a",
+                "namespace": "test-a",
+                "expiresAt": "2099-01-01T00:00:00Z",
+                "endpoints": [
+                  {
+                    "name": "service-a",
+                    "url": "http://service-a.test-a.svc.cluster.local:80/"
+                  },
+                  {
+                    "name": "service-b",
+                    "url": "http://service-b.test-a.svc.cluster.local:81/"
+                  }
+                ]
+              }
+            }
+          ],
+          "timeoutMs": 5000,
+          "runId": "run:c0",
+          "nodeId": "exposure",
+          "moduleId": "exposure",
+          "attemptId": "attempt:c0"
+        },
+        "calls": [],
+        "commands": [],
+        "error": "Error: TAILSCALE_EXPOSURE_PATH_INVALID",
+        "boundary": "Actual provider parser/dependency input and request projection; context.invoke substituted STOP. Optional actual native parser uses execute substituted STOP before kubectl. No real capability RPC/command/controller/exposure/effect/grants acceptance."
+      }
+    },
+    "cleanup": {
+      "invocation": {
+        "configuration": {
+          "values": {
+            "retentionMode": "release",
+            "endpointName": "service-a",
+            "hostname": "public-a",
+            "path": "/",
+            "readinessTimeoutSeconds": 1
+          }
+        },
+        "inputs": [
+          {
+            "name": "deployment",
+            "kind": "value",
+            "schemaId": "kubeclaw.kubernetes-deployment-fixture@1",
+            "value": {
+              "schemaVersion": "kubernetes-deployment-fixture.v1",
+              "leaseName": "lease-a",
+              "namespace": "test-a",
+              "expiresAt": "2099-01-01T00:00:00Z",
+              "endpoints": [
+                {
+                  "name": "service-a",
+                  "url": "http://service-a.test-a.svc.cluster.local:80/"
+                },
+                {
+                  "name": "service-b",
+                  "url": "http://service-b.test-a.svc.cluster.local:81/"
+                }
+              ]
+            }
+          }
+        ],
+        "timeoutMs": 5000,
+        "runId": "run:c0",
+        "nodeId": "exposure",
+        "moduleId": "exposure",
+        "attemptId": "attempt:c0"
+      },
+      "calls": [
+        {
+          "capability": "kubernetes.exposure",
+          "request": {
+            "operation": "release",
+            "resource": {
+              "type": "kubernetes.exposure",
+              "canonicalId": "kubernetes-exposure:attempt:c0"
+            },
+            "payload": {
+              "leaseName": "lease-a",
+              "namespace": "test-a",
+              "expiresAt": "2099-01-01T00:00:00Z",
+              "serviceName": "service-a",
+              "servicePort": 80,
+              "path": "/",
+              "hostname": "public-a"
+            }
+          }
+        }
+      ],
+      "commands": [],
+      "error": "Error: C0_PROVIDER_REQUEST_STOP",
+      "boundary": "Actual provider parser/dependency input and request projection; context.invoke substituted STOP. Optional actual native parser uses execute substituted STOP before kubectl. No real capability RPC/command/controller/exposure/effect/grants acceptance."
+    },
+    "nativePositive": {
+      "invocation": {
+        "configuration": {
+          "values": {
+            "retentionMode": "release",
+            "endpointName": "service-a",
+            "hostname": "public-a",
+            "path": "/",
+            "readinessTimeoutSeconds": 1
+          }
+        },
+        "inputs": [
+          {
+            "name": "deployment",
+            "kind": "value",
+            "schemaId": "kubeclaw.kubernetes-deployment-fixture@1",
+            "value": {
+              "schemaVersion": "kubernetes-deployment-fixture.v1",
+              "leaseName": "lease-a",
+              "namespace": "test-a",
+              "expiresAt": "2099-01-01T00:00:00Z",
+              "endpoints": [
+                {
+                  "name": "service-a",
+                  "url": "http://service-a.test-a.svc.cluster.local:80/"
+                },
+                {
+                  "name": "service-b",
+                  "url": "http://service-b.test-a.svc.cluster.local:81/"
+                }
+              ]
+            }
+          }
+        ],
+        "timeoutMs": 5000,
+        "runId": "run:c0",
+        "nodeId": "exposure",
+        "moduleId": "exposure",
+        "attemptId": "attempt:c0"
+      },
+      "calls": [
+        {
+          "capability": "kubernetes.exposure",
+          "request": {
+            "operation": "prepare",
+            "resource": {
+              "type": "kubernetes.exposure",
+              "canonicalId": "kubernetes-exposure:attempt:c0"
+            },
+            "payload": {
+              "leaseName": "lease-a",
+              "namespace": "test-a",
+              "expiresAt": "2099-01-01T00:00:00Z",
+              "serviceName": "service-a",
+              "servicePort": 80,
+              "path": "/",
+              "hostname": "public-a",
+              "readinessTimeoutMs": 1000
+            }
+          }
+        }
+      ],
+      "commands": [
+        {
+          "command": "/usr/local/bin/kubectl",
+          "args": [
+            "auth",
+            "can-i",
+            "get",
+            "busternamespaceleases.kubeclaw.forgestack.ai",
+            "-n",
+            "c0-controller"
+          ],
+          "timeout": 15000,
+          "maxBuffer": 1048576,
+          "environmentKeys": [
+            "PATH",
+            "KUBECONFIG",
+            "KUBERNETES_SERVICE_HOST",
+            "KUBERNETES_SERVICE_PORT"
+          ]
+        }
+      ],
+      "error": "Error: C0_STOP_BEFORE_KUBECTL",
+      "boundary": "Actual provider parser/dependency input and request projection; context.invoke substituted STOP. Optional actual native parser uses execute substituted STOP before kubectl. No real capability RPC/command/controller/exposure/effect/grants acceptance."
+    },
+    "nativePrefixDenied": {
+      "invocation": {
+        "configuration": {
+          "values": {
+            "retentionMode": "release",
+            "endpointName": "service-a",
+            "hostname": "public-a",
+            "path": "/",
+            "readinessTimeoutSeconds": 1
+          }
+        },
+        "inputs": [
+          {
+            "name": "deployment",
+            "kind": "value",
+            "schemaId": "kubeclaw.kubernetes-deployment-fixture@1",
+            "value": {
+              "schemaVersion": "kubernetes-deployment-fixture.v1",
+              "leaseName": "lease-a",
+              "namespace": "foreign",
+              "expiresAt": "2099-01-01T00:00:00Z",
+              "endpoints": [
+                {
+                  "name": "service-a",
+                  "url": "http://service-a.foreign.svc.cluster.local:80/"
+                }
+              ]
+            }
+          }
+        ],
+        "timeoutMs": 5000,
+        "runId": "run:c0",
+        "nodeId": "exposure",
+        "moduleId": "exposure",
+        "attemptId": "attempt:c0"
+      },
+      "calls": [
+        {
+          "capability": "kubernetes.exposure",
+          "request": {
+            "operation": "prepare",
+            "resource": {
+              "type": "kubernetes.exposure",
+              "canonicalId": "kubernetes-exposure:attempt:c0"
+            },
+            "payload": {
+              "leaseName": "lease-a",
+              "namespace": "foreign",
+              "expiresAt": "2099-01-01T00:00:00Z",
+              "serviceName": "service-a",
+              "servicePort": 80,
+              "path": "/",
+              "hostname": "public-a",
+              "readinessTimeoutMs": 1000
+            }
+          }
+        }
+      ],
+      "commands": [],
+      "error": "Error: TAILSCALE_EXPOSURE_NAMESPACE_DENIED",
+      "boundary": "Actual provider parser/dependency input and request projection; context.invoke substituted STOP. Optional actual native parser uses execute substituted STOP before kubectl. No real capability RPC/command/controller/exposure/effect/grants acceptance."
+    },
+    "syntheticHandoff": {
+      "identity": {
+        "owner": "sha256:4da95dcb257eb8fbd02da8d653441ba2ba3a7401eef0736b0fa8a97a30d4135f",
+        "request": "sha256:1588c1d1189eac4c82ee151ac0e9af195d4758368d3562931ea04cf6f49adba0"
+      },
+      "inputLease": {
+        "metadata": {
+          "uid": "c0-synthetic-lease-uid",
+          "resourceVersion": "1",
+          "generation": 1,
+          "annotations": {
+            "kubeclaw.forgestack.ai/exposure-owner": "sha256:4da95dcb257eb8fbd02da8d653441ba2ba3a7401eef0736b0fa8a97a30d4135f"
+          }
+        },
+        "spec": {
+          "cleanupPolicy": "retain",
+          "verifiedImage": "registry.invalid/app@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "manifestDigest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        },
+        "status": {
+          "expiresAt": "2099-01-01T00:00:00Z"
+        }
+      },
+      "transfer": {
+        "handoff": {
+          "schemaVersion": "demo-exposure-handoff.v1",
+          "phase": "awaiting-readiness",
+          "leaseUID": "c0-synthetic-lease-uid",
+          "sourceOwner": "sha256:4da95dcb257eb8fbd02da8d653441ba2ba3a7401eef0736b0fa8a97a30d4135f",
+          "sourceRequest": "sha256:1588c1d1189eac4c82ee151ac0e9af195d4758368d3562931ea04cf6f49adba0",
+          "owner": "sha256:55577af4dab214fa10c4c6f230735804d9bde18748221c25da529ea2d581e498",
+          "expiresAt": "2099-01-01T00:00:00Z",
+          "immutableImage": "registry.invalid/app@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "manifestDigest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        },
+        "patch": {
+          "metadata": {
+            "resourceVersion": "1",
+            "annotations": {
+              "kubeclaw.forgestack.ai/exposure-owner": "sha256:55577af4dab214fa10c4c6f230735804d9bde18748221c25da529ea2d581e498",
+              "kubeclaw.forgestack.ai/exposure-request": "sha256:1588c1d1189eac4c82ee151ac0e9af195d4758368d3562931ea04cf6f49adba0",
+              "kubeclaw.forgestack.ai/exposure-predecessors": "[\"sha256:4da95dcb257eb8fbd02da8d653441ba2ba3a7401eef0736b0fa8a97a30d4135f\"]",
+              "kubeclaw.forgestack.ai/readiness-handoff": "{\"schemaVersion\":\"demo-exposure-handoff.v1\",\"phase\":\"awaiting-readiness\",\"leaseUID\":\"c0-synthetic-lease-uid\",\"sourceOwner\":\"sha256:4da95dcb257eb8fbd02da8d653441ba2ba3a7401eef0736b0fa8a97a30d4135f\",\"sourceRequest\":\"sha256:1588c1d1189eac4c82ee151ac0e9af195d4758368d3562931ea04cf6f49adba0\",\"owner\":\"sha256:55577af4dab214fa10c4c6f230735804d9bde18748221c25da529ea2d581e498\",\"expiresAt\":\"2099-01-01T00:00:00Z\",\"immutableImage\":\"registry.invalid/app@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"manifestDigest\":\"sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb\"}"
+            }
+          }
+        }
+      },
+      "observed": {
+        "metadata": {
+          "uid": "c0-synthetic-lease-uid",
+          "resourceVersion": "1",
+          "generation": 1,
+          "annotations": {
+            "kubeclaw.forgestack.ai/exposure-owner": "sha256:55577af4dab214fa10c4c6f230735804d9bde18748221c25da529ea2d581e498",
+            "kubeclaw.forgestack.ai/exposure-request": "sha256:1588c1d1189eac4c82ee151ac0e9af195d4758368d3562931ea04cf6f49adba0",
+            "kubeclaw.forgestack.ai/exposure-predecessors": "[\"sha256:4da95dcb257eb8fbd02da8d653441ba2ba3a7401eef0736b0fa8a97a30d4135f\"]",
+            "kubeclaw.forgestack.ai/readiness-handoff": "{\"schemaVersion\":\"demo-exposure-handoff.v1\",\"phase\":\"awaiting-readiness\",\"leaseUID\":\"c0-synthetic-lease-uid\",\"sourceOwner\":\"sha256:4da95dcb257eb8fbd02da8d653441ba2ba3a7401eef0736b0fa8a97a30d4135f\",\"sourceRequest\":\"sha256:1588c1d1189eac4c82ee151ac0e9af195d4758368d3562931ea04cf6f49adba0\",\"owner\":\"sha256:55577af4dab214fa10c4c6f230735804d9bde18748221c25da529ea2d581e498\",\"expiresAt\":\"2099-01-01T00:00:00Z\",\"immutableImage\":\"registry.invalid/app@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"manifestDigest\":\"sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb\"}"
+          }
+        },
+        "spec": {
+          "cleanupPolicy": "retain",
+          "verifiedImage": "registry.invalid/app@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "manifestDigest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        },
+        "status": {
+          "expiresAt": "2099-01-01T00:00:00Z",
+          "exposureOwner": "sha256:55577af4dab214fa10c4c6f230735804d9bde18748221c25da529ea2d581e498",
+          "exposureGeneration": 1,
+          "exposurePhase": "Ready"
+        }
+      },
+      "receipt": {
+        "schemaVersion": "demo-exposure-handoff.v1",
+        "phase": "awaiting-readiness",
+        "leaseUID": "c0-synthetic-lease-uid",
+        "sourceOwner": "sha256:4da95dcb257eb8fbd02da8d653441ba2ba3a7401eef0736b0fa8a97a30d4135f",
+        "sourceRequest": "sha256:1588c1d1189eac4c82ee151ac0e9af195d4758368d3562931ea04cf6f49adba0",
+        "owner": "sha256:55577af4dab214fa10c4c6f230735804d9bde18748221c25da529ea2d581e498",
+        "expiresAt": "2099-01-01T00:00:00Z",
+        "immutableImage": "registry.invalid/app@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "manifestDigest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "exposureGeneration": 1
+      },
+      "negativeInputs": {
+        "changedGeneration": {
+          "metadata": {
+            "uid": "c0-synthetic-lease-uid",
+            "resourceVersion": "1",
+            "generation": 1,
+            "annotations": {
+              "kubeclaw.forgestack.ai/exposure-owner": "sha256:55577af4dab214fa10c4c6f230735804d9bde18748221c25da529ea2d581e498",
+              "kubeclaw.forgestack.ai/exposure-request": "sha256:1588c1d1189eac4c82ee151ac0e9af195d4758368d3562931ea04cf6f49adba0",
+              "kubeclaw.forgestack.ai/exposure-predecessors": "[\"sha256:4da95dcb257eb8fbd02da8d653441ba2ba3a7401eef0736b0fa8a97a30d4135f\"]",
+              "kubeclaw.forgestack.ai/readiness-handoff": "{\"schemaVersion\":\"demo-exposure-handoff.v1\",\"phase\":\"awaiting-readiness\",\"leaseUID\":\"c0-synthetic-lease-uid\",\"sourceOwner\":\"sha256:4da95dcb257eb8fbd02da8d653441ba2ba3a7401eef0736b0fa8a97a30d4135f\",\"sourceRequest\":\"sha256:1588c1d1189eac4c82ee151ac0e9af195d4758368d3562931ea04cf6f49adba0\",\"owner\":\"sha256:55577af4dab214fa10c4c6f230735804d9bde18748221c25da529ea2d581e498\",\"expiresAt\":\"2099-01-01T00:00:00Z\",\"immutableImage\":\"registry.invalid/app@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"manifestDigest\":\"sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb\"}"
+            }
+          },
+          "spec": {
+            "cleanupPolicy": "retain",
+            "verifiedImage": "registry.invalid/app@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "manifestDigest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          },
+          "status": {
+            "expiresAt": "2099-01-01T00:00:00Z",
+            "exposureOwner": "sha256:55577af4dab214fa10c4c6f230735804d9bde18748221c25da529ea2d581e498",
+            "exposureGeneration": 2,
+            "exposurePhase": "Ready"
+          }
+        },
+        "missingUid": {
+          "metadata": {
+            "resourceVersion": "1",
+            "generation": 1,
+            "annotations": {
+              "kubeclaw.forgestack.ai/exposure-owner": "sha256:4da95dcb257eb8fbd02da8d653441ba2ba3a7401eef0736b0fa8a97a30d4135f"
+            }
+          },
+          "spec": {
+            "cleanupPolicy": "retain",
+            "verifiedImage": "registry.invalid/app@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "manifestDigest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          },
+          "status": {
+            "expiresAt": "2099-01-01T00:00:00Z"
+          }
+        },
+        "noRetain": {
+          "metadata": {
+            "uid": "c0-synthetic-lease-uid",
+            "resourceVersion": "1",
+            "generation": 1,
+            "annotations": {
+              "kubeclaw.forgestack.ai/exposure-owner": "sha256:4da95dcb257eb8fbd02da8d653441ba2ba3a7401eef0736b0fa8a97a30d4135f"
+            }
+          },
+          "spec": {
+            "cleanupPolicy": "delete",
+            "verifiedImage": "registry.invalid/app@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "manifestDigest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          },
+          "status": {
+            "expiresAt": "2099-01-01T00:00:00Z"
+          }
+        }
+      },
+      "scope": "Real exported current helper transformations/guards with manufactured exact record values, not genuine UID/controller generation/image/manifest/expiry/provenance observations or release effects"
+    }
+  },
+  "passed": 6,
+  "failed": 0,
+  "scope": "Only current owning schema/parser/actual source helper transformations and request/command STOP; substitutions and synthetic deployment/UID records explicit. Future genuine role/controller/RBAC/Tailscale/state/owner policy/effects/recovery cases NOTRUN."
+}

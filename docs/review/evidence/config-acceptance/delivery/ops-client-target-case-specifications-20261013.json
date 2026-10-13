@@ -1,0 +1,456 @@
+{
+  "scope": "8 individuallydefined actual Opsclient fields incl newlyexposedbytebudget; source-derived constructor/profile/pairedcredential/activation/oracle specification, not native/API/childprocess execution",
+  "fields": [
+    {
+      "settingId": "DLV-OPS-MCP-KUBERNETES-API-URL",
+      "field": "KUBERNETES_API_URL",
+      "targetDomain": {
+        "domain": {
+          "type": "string",
+          "format": "uri",
+          "semantic": "exact HTTPS origin no userinfo/nonrootpath/search/hash; actual new URL normalization/native ctor then paired TLS issuer/server identity; targetcanonicalrequired origin"
+        },
+        "sameOwner": "existing Ops Chart serviceowner, requiredconstructoroption; no competingruntime/ENV/taskwriter",
+        "activation": "S construction capture selected complete service generation; in-flightAretains origin/CA/provider/executable/grantpolicy refs. Token/CA perrequest file rotation follows declared sameprovider only; no Latest service/auth reselect; B does notchange existingA closures.",
+        "proposedOnly": true
+      },
+      "completeProfiles": {
+        "A": {
+          "path": "docs/review/evidence/config-acceptance/delivery/ops-client-target-profiles-20261013/A.json",
+          "sha256": "e89708f34b989e4bec9b33580bfd61311e7d29dd2b40132ce78d6decc8285806"
+        },
+        "B": {
+          "path": "docs/review/evidence/config-acceptance/delivery/ops-client-target-profiles-20261013/B.json",
+          "sha256": "9843d997753e44429ef5e30c31e6ed55cfe0438e77fa7000bcdcd3f0c2ec1086"
+        }
+      },
+      "firstNativeBoundary": "HTTPS origin parameter does not attest peer/grants; no numeric model-policy inference",
+      "oracle": "future authenticated A/Blocal HTTPS fixture records requestedauthority/path; wrong origin/path/auth/plainHTTPreject at exact constructor or TLS/credential boundary; nativefactory positive first, fakeAPI not realdeployedgrantproof",
+      "source": {
+        "path": "tools/ops-mcp/src/kubernetes.mjs",
+        "field": "KUBERNETES_API_URL",
+        "sha256": "449e55709e017f53790539a83936f0471915850180ec9b08fc589251ab5e987b",
+        "line": 9,
+        "lineKind": "first field-name occurrence; productive read evidence remains separately identified"
+      },
+      "reader": {
+        "operation": "createKubeRequest startup validates origin; returned closure https.request GET with explicit ca rejectUnauthorized:true agent:false; rejects non2xx without returning API body, no redirect follow",
+        "references": [
+          {
+            "path": "tools/ops-mcp/src/kubernetes.mjs",
+            "sha256": "449e55709e017f53790539a83936f0471915850180ec9b08fc589251ab5e987b"
+          },
+          {
+            "path": "tools/ops-mcp/src/server.mjs",
+            "sha256": "a4fef1a5e66a45ea2885cc9a1715aba5835d77cb5219e39ac35a5f50b5bab65d"
+          }
+        ]
+      },
+      "caseIds": [
+        "DLV-CASE-MISSING-OLD-AUTHOR",
+        "DLV-CASE-ALTERNATE-PROFILES",
+        "DLV-CASE-OPS-RESIDUAL-CLIENTS"
+      ],
+      "requiredFixtureIdentity": "exact actual binary/Node image receipt, isolated TLS/API/GRPCfixture/protocol/credential-provider/grants sourceidentities beforefuture execution; primarysourcepin is not installedbinary/APIserverauthority"
+    },
+    {
+      "settingId": "DLV-OPS-MCP-KUBERNETES-TOKEN-FILE",
+      "field": "KUBERNETES_TOKEN_FILE",
+      "targetDomain": {
+        "domain": {
+          "type": "string",
+          "minLength": 1,
+          "providerRef": "selected exactsame Kubernetes client credential issuer/subject/audience/grants/revision/projectionidentity; root is not Ops bearer or Buster credential alias; native reads+trim everyGET, empty/whitespace rejects. AtomicK8s symlinks are allowed within captured trustedprovider layout, not blanketNOFOLLOW."
+        },
+        "sameOwner": "existing Ops Chart serviceowner, requiredconstructoroption; no competingruntime/ENV/taskwriter",
+        "activation": "S construction capture selected complete service generation; in-flightAretains origin/CA/provider/executable/grantpolicy refs. Token/CA perrequest file rotation follows declared sameprovider only; no Latest service/auth reselect; B does notchange existingA closures.",
+        "proposedOnly": true
+      },
+      "completeProfiles": {
+        "A": {
+          "path": "docs/review/evidence/config-acceptance/delivery/ops-client-target-profiles-20261013/A.json",
+          "sha256": "e89708f34b989e4bec9b33580bfd61311e7d29dd2b40132ce78d6decc8285806"
+        },
+        "B": {
+          "path": "docs/review/evidence/config-acceptance/delivery/ops-client-target-profiles-20261013/B.json",
+          "sha256": "9843d997753e44429ef5e30c31e6ed55cfe0438e77fa7000bcdcd3f0c2ec1086"
+        }
+      },
+      "firstNativeBoundary": "Invalid Kubernetes token file, file IO; API403 separate",
+      "oracle": "native tokenFile reread perGET; fixtureissuer+subject+audience/grant remainscaptured while acceptedrenewal works; missing/empty/whitespace/nativewrongAuth rejects; log onlyauthorizedlabel not token",
+      "source": {
+        "path": "tools/ops-mcp/src/kubernetes.mjs",
+        "field": "KUBERNETES_TOKEN_FILE",
+        "sha256": "449e55709e017f53790539a83936f0471915850180ec9b08fc589251ab5e987b",
+        "line": 10,
+        "lineKind": "first field-name occurrence; productive read evidence remains separately identified"
+      },
+      "reader": {
+        "operation": "readFileSync before each GET; atomic rotation seen next request, unlike startup-owned Codex supervisor credential; file permissions/Secret grant native prerequisite",
+        "references": [
+          {
+            "path": "tools/ops-mcp/src/kubernetes.mjs",
+            "sha256": "449e55709e017f53790539a83936f0471915850180ec9b08fc589251ab5e987b"
+          },
+          {
+            "path": "charts/ops-pod/templates/workload.yaml",
+            "sha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58"
+          }
+        ]
+      },
+      "caseIds": [
+        "DLV-CASE-MISSING-OLD-AUTHOR",
+        "DLV-CASE-ALTERNATE-PROFILES",
+        "DLV-CASE-OPS-RESIDUAL-CLIENTS"
+      ],
+      "requiredFixtureIdentity": "exact actual binary/Node image receipt, isolated TLS/API/GRPCfixture/protocol/credential-provider/grants sourceidentities beforefuture execution; primarysourcepin is not installedbinary/APIserverauthority"
+    },
+    {
+      "settingId": "DLV-OPS-MCP-KUBERNETES-CA-FILE",
+      "field": "KUBERNETES_CA_FILE",
+      "targetDomain": {
+        "domain": {
+          "type": "string",
+          "minLength": 1,
+          "trustRef": "selected same APIorigin issuer/CA publictrust closure; native reread everyGET; no insecureTLS or redirect follow fallback; roots/mutation/provider revisions require explicit capturedselection"
+        },
+        "sameOwner": "existing Ops Chart serviceowner, requiredconstructoroption; no competingruntime/ENV/taskwriter",
+        "activation": "S construction capture selected complete service generation; in-flightAretains origin/CA/provider/executable/grantpolicy refs. Token/CA perrequest file rotation follows declared sameprovider only; no Latest service/auth reselect; B does notchange existingA closures.",
+        "proposedOnly": true
+      },
+      "completeProfiles": {
+        "A": {
+          "path": "docs/review/evidence/config-acceptance/delivery/ops-client-target-profiles-20261013/A.json",
+          "sha256": "e89708f34b989e4bec9b33580bfd61311e7d29dd2b40132ce78d6decc8285806"
+        },
+        "B": {
+          "path": "docs/review/evidence/config-acceptance/delivery/ops-client-target-profiles-20261013/B.json",
+          "sha256": "9843d997753e44429ef5e30c31e6ed55cfe0438e77fa7000bcdcd3f0c2ec1086"
+        }
+      },
+      "firstNativeBoundary": "file IO/TLS cert/hostname/CA failure separate native boundary",
+      "oracle": "native caFile reread perGET and rejectUnauthorized:true; badCA/foreignserver rejects beforeresponse; capture A origin/trust/refno Latest whileBpublishes",
+      "source": {
+        "path": "tools/ops-mcp/src/kubernetes.mjs",
+        "field": "KUBERNETES_CA_FILE",
+        "sha256": "449e55709e017f53790539a83936f0471915850180ec9b08fc589251ab5e987b",
+        "line": 11,
+        "lineKind": "first field-name occurrence; productive read evidence remains separately identified"
+      },
+      "reader": {
+        "operation": "per-GET CA rotation/peer chain verification rejectUnauthorized; not ambient NODE_EXTRA_CA_CERTS-only trust",
+        "references": [
+          {
+            "path": "tools/ops-mcp/src/kubernetes.mjs",
+            "sha256": "449e55709e017f53790539a83936f0471915850180ec9b08fc589251ab5e987b"
+          },
+          {
+            "path": "charts/ops-pod/templates/workload.yaml",
+            "sha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58"
+          }
+        ]
+      },
+      "caseIds": [
+        "DLV-CASE-MISSING-OLD-AUTHOR",
+        "DLV-CASE-ALTERNATE-PROFILES",
+        "DLV-CASE-OPS-RESIDUAL-CLIENTS"
+      ],
+      "requiredFixtureIdentity": "exact actual binary/Node image receipt, isolated TLS/API/GRPCfixture/protocol/credential-provider/grants sourceidentities beforefuture execution; primarysourcepin is not installedbinary/APIserverauthority"
+    },
+    {
+      "settingId": "DLV-OPS-MCP-TIMEOUTMS",
+      "field": "timeoutMs",
+      "targetDomain": {
+        "domain": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647,
+          "unit": "ms",
+          "semantic": "targetreject absent/negative/zero/fractional/overflow before timer; current Node weak timeout option may coerce/clamp; actual GET timer req.destroy and clearonclose distinctworkflow retry"
+        },
+        "sameOwner": "existing Ops Chart serviceowner, requiredconstructoroption; no competingruntime/ENV/taskwriter",
+        "activation": "S construction capture selected complete service generation; in-flightAretains origin/CA/provider/executable/grantpolicy refs. Token/CA perrequest file rotation follows declared sameprovider only; no Latest service/auth reselect; B does notchange existingA closures.",
+        "proposedOnly": true
+      },
+      "completeProfiles": {
+        "A": {
+          "path": "docs/review/evidence/config-acceptance/delivery/ops-client-target-profiles-20261013/A.json",
+          "sha256": "e89708f34b989e4bec9b33580bfd61311e7d29dd2b40132ce78d6decc8285806"
+        },
+        "B": {
+          "path": "docs/review/evidence/config-acceptance/delivery/ops-client-target-profiles-20261013/B.json",
+          "sha256": "9843d997753e44429ef5e30c31e6ed55cfe0438e77fa7000bcdcd3f0c2ec1086"
+        }
+      },
+      "firstNativeBoundary": "Kubernetes API request timed out; timeout option not ENV setting and server currently calls no options",
+      "oracle": "real HTTPS controlledslowresponse justafterselectedtimeout fires req.destroy timedout, clearontimelyclose and actualsuccesscontrol. Deterministicclock/shortcalibration no many-hourwallclock waits",
+      "source": {
+        "path": "tools/ops-mcp/src/kubernetes.mjs",
+        "field": "timeoutMs",
+        "sha256": "449e55709e017f53790539a83936f0471915850180ec9b08fc589251ab5e987b",
+        "line": 12,
+        "lineKind": "first field-name occurrence; productive read evidence remains separately identified"
+      },
+      "reader": {
+        "operation": "createKubeRequest() captures timeout at server startup; setTimeout destroy error, clears req close; pagination retries only oversized pages and preserves selectors/continuation with separate deadline",
+        "references": [
+          {
+            "path": "tools/ops-mcp/src/kubernetes.mjs",
+            "sha256": "449e55709e017f53790539a83936f0471915850180ec9b08fc589251ab5e987b"
+          },
+          {
+            "path": "tools/ops-mcp/src/server.mjs",
+            "sha256": "a4fef1a5e66a45ea2885cc9a1715aba5835d77cb5219e39ac35a5f50b5bab65d"
+          }
+        ]
+      },
+      "caseIds": [
+        "DLV-CASE-MISSING-OLD-AUTHOR",
+        "DLV-CASE-ALTERNATE-PROFILES",
+        "DLV-CASE-OPS-RESIDUAL-CLIENTS"
+      ],
+      "requiredFixtureIdentity": "exact actual binary/Node image receipt, isolated TLS/API/GRPCfixture/protocol/credential-provider/grants sourceidentities beforefuture execution; primarysourcepin is not installedbinary/APIserverauthority"
+    },
+    {
+      "settingId": "DLV-OPS-MCP-HUBBLE-BIN",
+      "field": "HUBBLE_BIN",
+      "targetDomain": {
+        "domain": {
+          "type": "string",
+          "absoluteCanonicalExecutable": true,
+          "artifactRef": "exact same selected native HubbleGo module/binary/version/platform/ABI receipt, X_OKregular immutabletrustedfile; referencepath not version text; actualspawn errors are setupfailure"
+        },
+        "sameOwner": "existing Ops Chart serviceowner, requiredconstructoroption; no competingruntime/ENV/taskwriter",
+        "activation": "S construction capture selected complete service generation; in-flightAretains origin/CA/provider/executable/grantpolicy refs. Token/CA perrequest file rotation follows declared sameprovider only; no Latest service/auth reselect; B does notchange existingA closures.",
+        "proposedOnly": true
+      },
+      "completeProfiles": {
+        "A": {
+          "path": "docs/review/evidence/config-acceptance/delivery/ops-client-target-profiles-20261013/A.json",
+          "sha256": "e89708f34b989e4bec9b33580bfd61311e7d29dd2b40132ce78d6decc8285806"
+        },
+        "B": {
+          "path": "docs/review/evidence/config-acceptance/delivery/ops-client-target-profiles-20261013/B.json",
+          "sha256": "9843d997753e44429ef5e30c31e6ed55cfe0438e77fa7000bcdcd3f0c2ec1086"
+        }
+      },
+      "firstNativeBoundary": "spawn error vs cli_failed partial flow result; authentic Hubble artifact prerequisite",
+      "oracle": "exactspawn canonical nativeartifact and argv/no shell; unknown/mutable/taskpath rejected by targetbeforechild; versionreceipt and actualsuccessfulflow protocol fixture before negatives",
+      "source": {
+        "path": "tools/ops-mcp/src/hubble.mjs",
+        "field": "HUBBLE_BIN",
+        "sha256": "d4e60f2801e3c66ded259f420c1a9faca0071fa084dc198a35433f8c9cb4f599",
+        "line": 26,
+        "lineKind": "first field-name occurrence; productive read evidence remains separately identified"
+      },
+      "reader": {
+        "operation": "spawn binary command argv, no shell; child env only PATH and HOME=/tmp; binary/version from locked Ops Go build independent from path",
+        "references": [
+          {
+            "path": "tools/ops-mcp/src/hubble.mjs",
+            "sha256": "d4e60f2801e3c66ded259f420c1a9faca0071fa084dc198a35433f8c9cb4f599"
+          },
+          {
+            "path": "tools/ops-mcp/src/server.mjs",
+            "sha256": "a4fef1a5e66a45ea2885cc9a1715aba5835d77cb5219e39ac35a5f50b5bab65d"
+          },
+          {
+            "path": "tools/ops-mcp/Dockerfile",
+            "sha256": "bfb97ef41bdd945c49e42db5d87ef878a0b8894bc9af32418027a956ce852e41"
+          },
+          {
+            "path": "tools/ops-mcp/hubble/go.mod",
+            "sha256": "d18d5bf7be502b9ac2d2a714a9004859b6f13dab981775f5cadbc2a9034d5fdb"
+          }
+        ]
+      },
+      "caseIds": [
+        "DLV-CASE-MISSING-OLD-AUTHOR",
+        "DLV-CASE-ALTERNATE-PROFILES",
+        "DLV-CASE-OPS-RESIDUAL-CLIENTS"
+      ],
+      "requiredFixtureIdentity": "exact actual binary/Node image receipt, isolated TLS/API/GRPCfixture/protocol/credential-provider/grants sourceidentities beforefuture execution; primarysourcepin is not installedbinary/APIserverauthority"
+    },
+    {
+      "settingId": "DLV-OPS-MCP-HUBBLE-SERVER",
+      "field": "HUBBLE_SERVER",
+      "targetDomain": {
+        "domain": {
+          "type": "string",
+          "minLength": 1,
+          "bindingRef": "exact registered selected nativeGRPCrelay endpoint/serverauthority +actualCNI/route/grants/CLI TLS/config identity. NativeHubbleCLI accepts its realsupportedtargetgrammar; do not impose inventedHTTPSorigin grammar or infer API CIDR rule authorizes relay."
+        },
+        "sameOwner": "existing Ops Chart serviceowner, requiredconstructoroption; no competingruntime/ENV/taskwriter",
+        "activation": "S construction capture selected complete service generation; in-flightAretains origin/CA/provider/executable/grantpolicy refs. Token/CA perrequest file rotation follows declared sameprovider only; no Latest service/auth reselect; B does notchange existingA closures.",
+        "proposedOnly": true
+      },
+      "completeProfiles": {
+        "A": {
+          "path": "docs/review/evidence/config-acceptance/delivery/ops-client-target-profiles-20261013/A.json",
+          "sha256": "e89708f34b989e4bec9b33580bfd61311e7d29dd2b40132ce78d6decc8285806"
+        },
+        "B": {
+          "path": "docs/review/evidence/config-acceptance/delivery/ops-client-target-profiles-20261013/B.json",
+          "sha256": "9843d997753e44429ef5e30c31e6ed55cfe0438e77fa7000bcdcd3f0c2ec1086"
+        }
+      },
+      "firstNativeBoundary": "bad relay/CLI may return partial cli_failed/stderr not startup rejection",
+      "oracle": "nativeHubbleCLI connects selectedloopbacknativeGRPCfixture not defaultcluster relay; args --server exact selected binding; actualnetwork routepolicy precondition for live; missingrelay is setupnotsemanticmutant",
+      "source": {
+        "path": "tools/ops-mcp/src/hubble.mjs",
+        "field": "HUBBLE_SERVER",
+        "sha256": "d4e60f2801e3c66ded259f420c1a9faca0071fa084dc198a35433f8c9cb4f599",
+        "line": 27,
+        "lineKind": "first field-name occurrence; productive read evidence remains separately identified"
+      },
+      "reader": {
+        "operation": "getHubbleFlows observe --server; explicit args namespace/pod/verdict/time/limit; relay historical ring-buffer coverage unknown, empty not proof",
+        "references": [
+          {
+            "path": "tools/ops-mcp/src/hubble.mjs",
+            "sha256": "d4e60f2801e3c66ded259f420c1a9faca0071fa084dc198a35433f8c9cb4f599"
+          },
+          {
+            "path": "tools/ops-mcp/src/server.mjs",
+            "sha256": "a4fef1a5e66a45ea2885cc9a1715aba5835d77cb5219e39ac35a5f50b5bab65d"
+          },
+          {
+            "path": "tools/ops-mcp/hubble/main.go",
+            "sha256": "df89cb21264c42c7bbc7a3b3b9501581e5877a2a50db2459c509329f7f2c52c4"
+          }
+        ]
+      },
+      "caseIds": [
+        "DLV-CASE-MISSING-OLD-AUTHOR",
+        "DLV-CASE-ALTERNATE-PROFILES",
+        "DLV-CASE-OPS-RESIDUAL-CLIENTS"
+      ],
+      "requiredFixtureIdentity": "exact actual binary/Node image receipt, isolated TLS/API/GRPCfixture/protocol/credential-provider/grants sourceidentities beforefuture execution; primarysourcepin is not installedbinary/APIserverauthority"
+    },
+    {
+      "settingId": "DLV-OPS-MCP-TIMEOUT",
+      "field": "timeout",
+      "targetDomain": {
+        "domain": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647,
+          "unit": "ms",
+          "semantic": "native SIGKILL records timeout partialResult; targetboundedms explicit constructor option (NOT ENV); partialcoverage/unknown \u2260complete history/error-free result"
+        },
+        "sameOwner": "existing Ops Chart serviceowner, requiredconstructoroption; no competingruntime/ENV/taskwriter",
+        "activation": "S construction capture selected complete service generation; in-flightAretains origin/CA/provider/executable/grantpolicy refs. Token/CA perrequest file rotation follows declared sameprovider only; no Latest service/auth reselect; B does notchange existingA closures.",
+        "proposedOnly": true
+      },
+      "completeProfiles": {
+        "A": {
+          "path": "docs/review/evidence/config-acceptance/delivery/ops-client-target-profiles-20261013/A.json",
+          "sha256": "e89708f34b989e4bec9b33580bfd61311e7d29dd2b40132ce78d6decc8285806"
+        },
+        "B": {
+          "path": "docs/review/evidence/config-acceptance/delivery/ops-client-target-profiles-20261013/B.json",
+          "sha256": "9843d997753e44429ef5e30c31e6ed55cfe0438e77fa7000bcdcd3f0c2ec1086"
+        }
+      },
+      "firstNativeBoundary": "timeout produces partial with unknown historical completeness, not throw/global API timeout",
+      "oracle": "slowRelay stream produces selectedtimeout partial reason and SIGKILL; completefast positive first; timeoutpartialwarn/coverage observed and no false complete emptyhistory",
+      "source": {
+        "path": "tools/ops-mcp/src/hubble.mjs",
+        "field": "timeout",
+        "sha256": "d4e60f2801e3c66ded259f420c1a9faca0071fa084dc198a35433f8c9cb4f599",
+        "line": 28,
+        "lineKind": "first field-name occurrence; productive read evidence remains separately identified"
+      },
+      "reader": {
+        "operation": "timer stop timeout adds partial reason and SIGKILL; 2active ceiling, raw2MiB/output192KiB limits separate current policies",
+        "references": [
+          {
+            "path": "tools/ops-mcp/src/hubble.mjs",
+            "sha256": "d4e60f2801e3c66ded259f420c1a9faca0071fa084dc198a35433f8c9cb4f599"
+          },
+          {
+            "path": "tools/ops-mcp/src/server.mjs",
+            "sha256": "a4fef1a5e66a45ea2885cc9a1715aba5835d77cb5219e39ac35a5f50b5bab65d"
+          }
+        ]
+      },
+      "caseIds": [
+        "DLV-CASE-MISSING-OLD-AUTHOR",
+        "DLV-CASE-ALTERNATE-PROFILES",
+        "DLV-CASE-OPS-RESIDUAL-CLIENTS"
+      ],
+      "requiredFixtureIdentity": "exact actual binary/Node image receipt, isolated TLS/API/GRPCfixture/protocol/credential-provider/grants sourceidentities beforefuture execution; primarysourcepin is not installedbinary/APIserverauthority"
+    },
+    {
+      "settingId": "DLV-OPS-MCP-KUBERNETES-MAXBYTES",
+      "field": "createKubeRequest.maxBytes",
+      "targetDomain": {
+        "domain": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991,
+          "unit": "bytes",
+          "semantic": "dynamic tighter cap min(selected actualNode.MAX_STRING_LENGTH, selected declared boundedresponsememorybudget); buffered chunk/concat/string/JSON AST peak still requires actualselected physical resource evidence, no memorycapacity/quota inferred from this bytecap; counter/cumulativechunks and decodefit beforeadmission, no guesseduniversalresourcecapacity"
+        },
+        "sameOwner": "existing Ops Chart serviceowner, requiredconstructoroption; no competingruntime/ENV/taskwriter",
+        "activation": "S construction capture selected complete service generation; in-flightAretains origin/CA/provider/executable/grantpolicy refs. Token/CA perrequest file rotation follows declared sameprovider only; no Latest service/auth reselect; B does notchange existingA closures.",
+        "proposedOnly": true
+      },
+      "completeProfiles": {
+        "A": {
+          "path": "docs/review/evidence/config-acceptance/delivery/ops-client-target-profiles-20261013/A.json",
+          "sha256": "e89708f34b989e4bec9b33580bfd61311e7d29dd2b40132ce78d6decc8285806"
+        },
+        "B": {
+          "path": "docs/review/evidence/config-acceptance/delivery/ops-client-target-profiles-20261013/B.json",
+          "sha256": "9843d997753e44429ef5e30c31e6ed55cfe0438e77fa7000bcdcd3f0c2ec1086"
+        }
+      },
+      "firstNativeBoundary": "Kubernetes response exceeds the byte limit; narrow the query. Missing/newtargetinteger/domain/old equal or different option author rejects beforeGET (proposed).",
+      "oracle": "native chunks at budget pass, budget+1 throw exactbyteerror and stopbeforedecode; lateend does notoverride failure; text/JSON semantics separatelyverified with complete smallresponsecontrol",
+      "source": {
+        "path": "tools/ops-mcp/src/kubernetes.mjs",
+        "line": 13,
+        "field": "createKubeRequest.maxBytes",
+        "sha256": "449e55709e017f53790539a83936f0471915850180ec9b08fc589251ab5e987b"
+      },
+      "reader": {
+        "operation": "createKubeRequest returnedGET closure buffers cumulativechunks; over budget rejects and req.destroy, responseend refusesdata; thenBuffer.concat/toString/JSON.parse or asText. Default used by actual server.mjs once before registeredMCPtools call.",
+        "references": [
+          {
+            "path": "tools/ops-mcp/src/kubernetes.mjs",
+            "sha256": "449e55709e017f53790539a83936f0471915850180ec9b08fc589251ab5e987b"
+          },
+          {
+            "path": "tools/ops-mcp/src/server.mjs",
+            "sha256": "a4fef1a5e66a45ea2885cc9a1715aba5835d77cb5219e39ac35a5f50b5bab65d"
+          },
+          {
+            "path": "tools/ops-mcp/src/config.mjs",
+            "sha256": "3bb1b2b4caf43be233ad6fafaccf644702507442b93de1139e1be8babd9f529c"
+          },
+          {
+            "path": "charts/ops-pod/templates/workload.yaml",
+            "sha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58"
+          }
+        ]
+      },
+      "caseIds": [
+        "DLV-CASE-OPS-RESIDUAL-CLIENTS"
+      ],
+      "requiredFixtureIdentity": "exact actual binary/Node image receipt, isolated TLS/API/GRPCfixture/protocol/credential-provider/grants sourceidentities beforefuture execution; primarysourcepin is not installedbinary/APIserverauthority"
+    }
+  ],
+  "completeProfiles": {
+    "A": {
+      "path": "docs/review/evidence/config-acceptance/delivery/ops-client-target-profiles-20261013/A.json",
+      "sha256": "e89708f34b989e4bec9b33580bfd61311e7d29dd2b40132ce78d6decc8285806"
+    },
+    "B": {
+      "path": "docs/review/evidence/config-acceptance/delivery/ops-client-target-profiles-20261013/B.json",
+      "sha256": "9843d997753e44429ef5e30c31e6ed55cfe0438e77fa7000bcdcd3f0c2ec1086"
+    }
+  },
+  "futureHarness": "tests/verification/config/delivery-ops-policy.test.mts",
+  "remaining": "other actual MCP policy/namespace/bearer/origin/pagination/Hubble internal raw/output/concurrency/window default fields and actualrelay routecontract are not closedbythese clientconstructor rows"
+}

@@ -1,0 +1,1224 @@
+{
+  "profiles": [
+    {
+      "registration": "kubeclaw.api-flow:flow",
+      "completeA": {
+        "registration": "kubeclaw.api-flow:flow",
+        "instance": "c0-flow",
+        "evidencePolicy": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      },
+      "completeB": {
+        "registration": "kubeclaw.api-flow:flow",
+        "instance": "c0-flow",
+        "evidencePolicy": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report"
+          ],
+          "onError": [
+            "log",
+            "test-report"
+          ]
+        }
+      },
+      "domainDefinition": "Conservative preserve-original-outcome evidence defaults as baseline; may add only implemented supported types. Required artifact/report outputs remain additionally selected by actual runner helper. Baseline includes log, no silent drop of original evidence to manufacture B. Field with baseline already all supported has no independent legal B under this unapproved preserve-evidence proposal.",
+      "currentPackageSourceIdentity": {
+        "schemaVersion": "package-provenance.v2",
+        "package": {
+          "pluginId": "kubeclaw.api-flow",
+          "apiVersion": "pipeline-plugin-v2",
+          "packageVersion": "1.0.0",
+          "contentDigest": "sha256:404cc68fce4f287cc47d68f6661cc1ae6c848cf83fc4b098b73ee360a6f5881a"
+        },
+        "source": {
+          "type": "builtin",
+          "canonicalReference": "local:/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/buster/plugins/api-flow"
+        },
+        "canonicalPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/buster/plugins/api-flow",
+        "trustScope": "trusted_first_party",
+        "trustEvidence": {
+          "method": "builtin_allowlist",
+          "verifier": "c0-runtime-source-definition-batch10",
+          "verifiedAt": "2026-10-13T00:00:00.000Z"
+        },
+        "resolvedAt": "2026-10-13T00:00:00.000Z"
+      },
+      "registrySnapshotDigest": "sha256:3d289cbdb991aaad32a2a16f805291f000597701ce8b1c6b0aba9dee629991ef",
+      "targetAuthor": "one proposed existing registration/instance operator profile under sole pipeline.config.json; resolve original immutable package capability declaration and original selected evidence policy before plan claim; no current registry artifact default or node override author competing",
+      "activation": "R/source registry+package contracts remain frozen/constraints; module-bound M policy may add supported nonmandatory evidence within same declared quotas and grant/source role only. Resolved plan must bind full policy/source/schema/author generation; current exported resolver has no proved productive author caller. Future publisher/role/plan-author integration not implemented",
+      "notOperatorFields": "retrySafe/matrixFields remain declared implemented capabilities tied to actual source/code/operations, not configuration toggles; declared true does not prove current catalogue idempotence, [] no hypothetical supported matrix field. Target must prove compatibility/code+package contract, no evidence from source Boolean alone."
+    },
+    {
+      "registration": "kubeclaw.axe:axe",
+      "completeA": {
+        "registration": "kubeclaw.axe:axe",
+        "instance": "c0-axe",
+        "evidencePolicy": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      },
+      "completeB": {
+        "registration": "kubeclaw.axe:axe",
+        "instance": "c0-axe",
+        "evidencePolicy": {
+          "onPass": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log",
+            "test-report",
+            "screenshot"
+          ]
+        }
+      },
+      "domainDefinition": "Conservative preserve-original-outcome evidence defaults as baseline; may add only implemented supported types. Required artifact/report outputs remain additionally selected by actual runner helper. Baseline includes log, no silent drop of original evidence to manufacture B. Field with baseline already all supported has no independent legal B under this unapproved preserve-evidence proposal.",
+      "currentPackageSourceIdentity": {
+        "schemaVersion": "package-provenance.v2",
+        "package": {
+          "pluginId": "kubeclaw.axe",
+          "apiVersion": "pipeline-plugin-v2",
+          "packageVersion": "1.0.0",
+          "contentDigest": "sha256:676c664a3378ab87ba99fb72bd160814a788579fb72c0daccb02b32cbeb8a29b"
+        },
+        "source": {
+          "type": "builtin",
+          "canonicalReference": "local:/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/buster/plugins/axe"
+        },
+        "canonicalPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/buster/plugins/axe",
+        "trustScope": "trusted_first_party",
+        "trustEvidence": {
+          "method": "builtin_allowlist",
+          "verifier": "c0-runtime-source-definition-batch10",
+          "verifiedAt": "2026-10-13T00:00:00.000Z"
+        },
+        "resolvedAt": "2026-10-13T00:00:00.000Z"
+      },
+      "registrySnapshotDigest": "sha256:3d289cbdb991aaad32a2a16f805291f000597701ce8b1c6b0aba9dee629991ef",
+      "targetAuthor": "one proposed existing registration/instance operator profile under sole pipeline.config.json; resolve original immutable package capability declaration and original selected evidence policy before plan claim; no current registry artifact default or node override author competing",
+      "activation": "R/source registry+package contracts remain frozen/constraints; module-bound M policy may add supported nonmandatory evidence within same declared quotas and grant/source role only. Resolved plan must bind full policy/source/schema/author generation; current exported resolver has no proved productive author caller. Future publisher/role/plan-author integration not implemented",
+      "notOperatorFields": "retrySafe/matrixFields remain declared implemented capabilities tied to actual source/code/operations, not configuration toggles; declared true does not prove current catalogue idempotence, [] no hypothetical supported matrix field. Target must prove compatibility/code+package contract, no evidence from source Boolean alone."
+    },
+    {
+      "registration": "kubeclaw.container-build:buildkit",
+      "completeA": {
+        "registration": "kubeclaw.container-build:buildkit",
+        "instance": "c0-buildkit",
+        "evidencePolicy": {
+          "onPass": [
+            "log"
+          ],
+          "onFail": [
+            "log"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      },
+      "completeB": {
+        "registration": "kubeclaw.container-build:buildkit",
+        "instance": "c0-buildkit",
+        "evidencePolicy": {
+          "onPass": [
+            "log"
+          ],
+          "onFail": [
+            "log"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      },
+      "domainDefinition": "Conservative preserve-original-outcome evidence defaults as baseline; may add only implemented supported types. Required artifact/report outputs remain additionally selected by actual runner helper. Baseline includes log, no silent drop of original evidence to manufacture B. Field with baseline already all supported has no independent legal B under this unapproved preserve-evidence proposal.",
+      "currentPackageSourceIdentity": {
+        "schemaVersion": "package-provenance.v2",
+        "package": {
+          "pluginId": "kubeclaw.container-build",
+          "apiVersion": "pipeline-plugin-v2",
+          "packageVersion": "1.0.0",
+          "contentDigest": "sha256:ce30aef61cd0c14b57eaa822aa765403bdff45a07734bb2313e600a409043965"
+        },
+        "source": {
+          "type": "builtin",
+          "canonicalReference": "local:/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/buster/plugins/container-build"
+        },
+        "canonicalPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/buster/plugins/container-build",
+        "trustScope": "trusted_first_party",
+        "trustEvidence": {
+          "method": "builtin_allowlist",
+          "verifier": "c0-runtime-source-definition-batch10",
+          "verifiedAt": "2026-10-13T00:00:00.000Z"
+        },
+        "resolvedAt": "2026-10-13T00:00:00.000Z"
+      },
+      "registrySnapshotDigest": "sha256:3d289cbdb991aaad32a2a16f805291f000597701ce8b1c6b0aba9dee629991ef",
+      "targetAuthor": "one proposed existing registration/instance operator profile under sole pipeline.config.json; resolve original immutable package capability declaration and original selected evidence policy before plan claim; no current registry artifact default or node override author competing",
+      "activation": "R/source registry+package contracts remain frozen/constraints; module-bound M policy may add supported nonmandatory evidence within same declared quotas and grant/source role only. Resolved plan must bind full policy/source/schema/author generation; current exported resolver has no proved productive author caller. Future publisher/role/plan-author integration not implemented",
+      "notOperatorFields": "retrySafe/matrixFields remain declared implemented capabilities tied to actual source/code/operations, not configuration toggles; declared true does not prove current catalogue idempotence, [] no hypothetical supported matrix field. Target must prove compatibility/code+package contract, no evidence from source Boolean alone."
+    },
+    {
+      "registration": "kubeclaw.coverage-budget:lcov",
+      "completeA": {
+        "registration": "kubeclaw.coverage-budget:lcov",
+        "instance": "c0-lcov",
+        "evidencePolicy": {
+          "onPass": [
+            "log"
+          ],
+          "onFail": [
+            "log"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      },
+      "completeB": {
+        "registration": "kubeclaw.coverage-budget:lcov",
+        "instance": "c0-lcov",
+        "evidencePolicy": {
+          "onPass": [
+            "log"
+          ],
+          "onFail": [
+            "log"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      },
+      "domainDefinition": "Conservative preserve-original-outcome evidence defaults as baseline; may add only implemented supported types. Required artifact/report outputs remain additionally selected by actual runner helper. Baseline includes log, no silent drop of original evidence to manufacture B. Field with baseline already all supported has no independent legal B under this unapproved preserve-evidence proposal.",
+      "currentPackageSourceIdentity": {
+        "schemaVersion": "package-provenance.v2",
+        "package": {
+          "pluginId": "kubeclaw.coverage-budget",
+          "apiVersion": "pipeline-plugin-v2",
+          "packageVersion": "1.0.0",
+          "contentDigest": "sha256:5bf47fb3b463d7de326f3f1163d9aaa8adb2822eba6d15a722c1a4db3e7a7935"
+        },
+        "source": {
+          "type": "builtin",
+          "canonicalReference": "local:/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/buster/plugins/coverage-budget"
+        },
+        "canonicalPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/buster/plugins/coverage-budget",
+        "trustScope": "trusted_first_party",
+        "trustEvidence": {
+          "method": "builtin_allowlist",
+          "verifier": "c0-runtime-source-definition-batch10",
+          "verifiedAt": "2026-10-13T00:00:00.000Z"
+        },
+        "resolvedAt": "2026-10-13T00:00:00.000Z"
+      },
+      "registrySnapshotDigest": "sha256:3d289cbdb991aaad32a2a16f805291f000597701ce8b1c6b0aba9dee629991ef",
+      "targetAuthor": "one proposed existing registration/instance operator profile under sole pipeline.config.json; resolve original immutable package capability declaration and original selected evidence policy before plan claim; no current registry artifact default or node override author competing",
+      "activation": "R/source registry+package contracts remain frozen/constraints; module-bound M policy may add supported nonmandatory evidence within same declared quotas and grant/source role only. Resolved plan must bind full policy/source/schema/author generation; current exported resolver has no proved productive author caller. Future publisher/role/plan-author integration not implemented",
+      "notOperatorFields": "retrySafe/matrixFields remain declared implemented capabilities tied to actual source/code/operations, not configuration toggles; declared true does not prove current catalogue idempotence, [] no hypothetical supported matrix field. Target must prove compatibility/code+package contract, no evidence from source Boolean alone."
+    },
+    {
+      "registration": "kubeclaw.demo-auth-smoke:session",
+      "completeA": {
+        "registration": "kubeclaw.demo-auth-smoke:session",
+        "instance": "c0-session",
+        "evidencePolicy": {
+          "onPass": [
+            "log"
+          ],
+          "onFail": [
+            "log"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      },
+      "completeB": {
+        "registration": "kubeclaw.demo-auth-smoke:session",
+        "instance": "c0-session",
+        "evidencePolicy": {
+          "onPass": [
+            "log"
+          ],
+          "onFail": [
+            "log"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      },
+      "domainDefinition": "Conservative preserve-original-outcome evidence defaults as baseline; may add only implemented supported types. Required artifact/report outputs remain additionally selected by actual runner helper. Baseline includes log, no silent drop of original evidence to manufacture B. Field with baseline already all supported has no independent legal B under this unapproved preserve-evidence proposal.",
+      "currentPackageSourceIdentity": {
+        "schemaVersion": "package-provenance.v2",
+        "package": {
+          "pluginId": "kubeclaw.demo-auth-smoke",
+          "apiVersion": "pipeline-plugin-v2",
+          "packageVersion": "1.0.0",
+          "contentDigest": "sha256:4ec8731b0368f619f111d1c30a8b3fc5ad833b34e58f4cb0bedffc0de3cc302c"
+        },
+        "source": {
+          "type": "builtin",
+          "canonicalReference": "local:/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/buster/plugins/demo-auth-smoke"
+        },
+        "canonicalPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/buster/plugins/demo-auth-smoke",
+        "trustScope": "trusted_first_party",
+        "trustEvidence": {
+          "method": "builtin_allowlist",
+          "verifier": "c0-runtime-source-definition-batch10",
+          "verifiedAt": "2026-10-13T00:00:00.000Z"
+        },
+        "resolvedAt": "2026-10-13T00:00:00.000Z"
+      },
+      "registrySnapshotDigest": "sha256:3d289cbdb991aaad32a2a16f805291f000597701ce8b1c6b0aba9dee629991ef",
+      "targetAuthor": "one proposed existing registration/instance operator profile under sole pipeline.config.json; resolve original immutable package capability declaration and original selected evidence policy before plan claim; no current registry artifact default or node override author competing",
+      "activation": "R/source registry+package contracts remain frozen/constraints; module-bound M policy may add supported nonmandatory evidence within same declared quotas and grant/source role only. Resolved plan must bind full policy/source/schema/author generation; current exported resolver has no proved productive author caller. Future publisher/role/plan-author integration not implemented",
+      "notOperatorFields": "retrySafe/matrixFields remain declared implemented capabilities tied to actual source/code/operations, not configuration toggles; declared true does not prove current catalogue idempotence, [] no hypothetical supported matrix field. Target must prove compatibility/code+package contract, no evidence from source Boolean alone."
+    },
+    {
+      "registration": "kubeclaw.direct-command:command",
+      "completeA": {
+        "registration": "kubeclaw.direct-command:command",
+        "instance": "c0-command",
+        "evidencePolicy": {
+          "onPass": [
+            "log",
+            "test-report",
+            "coverage",
+            "artifact"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "coverage",
+            "artifact"
+          ],
+          "onError": [
+            "log",
+            "test-report",
+            "coverage",
+            "artifact"
+          ]
+        }
+      },
+      "completeB": {
+        "registration": "kubeclaw.direct-command:command",
+        "instance": "c0-command",
+        "evidencePolicy": {
+          "onPass": [
+            "log",
+            "test-report",
+            "coverage",
+            "artifact"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "coverage",
+            "artifact"
+          ],
+          "onError": [
+            "log",
+            "test-report",
+            "coverage",
+            "artifact"
+          ]
+        }
+      },
+      "domainDefinition": "Conservative preserve-original-outcome evidence defaults as baseline; may add only implemented supported types. Required artifact/report outputs remain additionally selected by actual runner helper. Baseline includes log, no silent drop of original evidence to manufacture B. Field with baseline already all supported has no independent legal B under this unapproved preserve-evidence proposal.",
+      "currentPackageSourceIdentity": {
+        "schemaVersion": "package-provenance.v2",
+        "package": {
+          "pluginId": "kubeclaw.direct-command",
+          "apiVersion": "pipeline-plugin-v2",
+          "packageVersion": "1.0.0",
+          "contentDigest": "sha256:93c17b306312317c8957380ab1ee5d9b3c3b53d5f2d4d7eeec0dfe8156c916fb"
+        },
+        "source": {
+          "type": "builtin",
+          "canonicalReference": "local:/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/buster/plugins/direct-command"
+        },
+        "canonicalPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/buster/plugins/direct-command",
+        "trustScope": "trusted_first_party",
+        "trustEvidence": {
+          "method": "builtin_allowlist",
+          "verifier": "c0-runtime-source-definition-batch10",
+          "verifiedAt": "2026-10-13T00:00:00.000Z"
+        },
+        "resolvedAt": "2026-10-13T00:00:00.000Z"
+      },
+      "registrySnapshotDigest": "sha256:3d289cbdb991aaad32a2a16f805291f000597701ce8b1c6b0aba9dee629991ef",
+      "targetAuthor": "one proposed existing registration/instance operator profile under sole pipeline.config.json; resolve original immutable package capability declaration and original selected evidence policy before plan claim; no current registry artifact default or node override author competing",
+      "activation": "R/source registry+package contracts remain frozen/constraints; module-bound M policy may add supported nonmandatory evidence within same declared quotas and grant/source role only. Resolved plan must bind full policy/source/schema/author generation; current exported resolver has no proved productive author caller. Future publisher/role/plan-author integration not implemented",
+      "notOperatorFields": "retrySafe/matrixFields remain declared implemented capabilities tied to actual source/code/operations, not configuration toggles; declared true does not prove current catalogue idempotence, [] no hypothetical supported matrix field. Target must prove compatibility/code+package contract, no evidence from source Boolean alone."
+    },
+    {
+      "registration": "kubeclaw.http:request",
+      "completeA": {
+        "registration": "kubeclaw.http:request",
+        "instance": "c0-request",
+        "evidencePolicy": {
+          "onPass": [
+            "log"
+          ],
+          "onFail": [
+            "log"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      },
+      "completeB": {
+        "registration": "kubeclaw.http:request",
+        "instance": "c0-request",
+        "evidencePolicy": {
+          "onPass": [
+            "log"
+          ],
+          "onFail": [
+            "log"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      },
+      "domainDefinition": "Conservative preserve-original-outcome evidence defaults as baseline; may add only implemented supported types. Required artifact/report outputs remain additionally selected by actual runner helper. Baseline includes log, no silent drop of original evidence to manufacture B. Field with baseline already all supported has no independent legal B under this unapproved preserve-evidence proposal.",
+      "currentPackageSourceIdentity": {
+        "schemaVersion": "package-provenance.v2",
+        "package": {
+          "pluginId": "kubeclaw.http",
+          "apiVersion": "pipeline-plugin-v2",
+          "packageVersion": "1.0.0",
+          "contentDigest": "sha256:92c8588cec754427a00d1d0963e0863302a8cd975e2574230daedb4c6182140b"
+        },
+        "source": {
+          "type": "builtin",
+          "canonicalReference": "local:/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/buster/plugins/http"
+        },
+        "canonicalPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/buster/plugins/http",
+        "trustScope": "trusted_first_party",
+        "trustEvidence": {
+          "method": "builtin_allowlist",
+          "verifier": "c0-runtime-source-definition-batch10",
+          "verifiedAt": "2026-10-13T00:00:00.000Z"
+        },
+        "resolvedAt": "2026-10-13T00:00:00.000Z"
+      },
+      "registrySnapshotDigest": "sha256:3d289cbdb991aaad32a2a16f805291f000597701ce8b1c6b0aba9dee629991ef",
+      "targetAuthor": "one proposed existing registration/instance operator profile under sole pipeline.config.json; resolve original immutable package capability declaration and original selected evidence policy before plan claim; no current registry artifact default or node override author competing",
+      "activation": "R/source registry+package contracts remain frozen/constraints; module-bound M policy may add supported nonmandatory evidence within same declared quotas and grant/source role only. Resolved plan must bind full policy/source/schema/author generation; current exported resolver has no proved productive author caller. Future publisher/role/plan-author integration not implemented",
+      "notOperatorFields": "retrySafe/matrixFields remain declared implemented capabilities tied to actual source/code/operations, not configuration toggles; declared true does not prove current catalogue idempotence, [] no hypothetical supported matrix field. Target must prove compatibility/code+package contract, no evidence from source Boolean alone."
+    },
+    {
+      "registration": "kubeclaw.kubernetes-fixture:deployment",
+      "completeA": {
+        "registration": "kubeclaw.kubernetes-fixture:deployment",
+        "instance": "c0-deployment",
+        "evidencePolicy": {
+          "onPass": [
+            "log"
+          ],
+          "onFail": [
+            "log"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      },
+      "completeB": {
+        "registration": "kubeclaw.kubernetes-fixture:deployment",
+        "instance": "c0-deployment",
+        "evidencePolicy": {
+          "onPass": [
+            "log"
+          ],
+          "onFail": [
+            "log"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      },
+      "domainDefinition": "Conservative preserve-original-outcome evidence defaults as baseline; may add only implemented supported types. Required artifact/report outputs remain additionally selected by actual runner helper. Baseline includes log, no silent drop of original evidence to manufacture B. Field with baseline already all supported has no independent legal B under this unapproved preserve-evidence proposal.",
+      "currentPackageSourceIdentity": {
+        "schemaVersion": "package-provenance.v2",
+        "package": {
+          "pluginId": "kubeclaw.kubernetes-fixture",
+          "apiVersion": "pipeline-plugin-v2",
+          "packageVersion": "1.0.0",
+          "contentDigest": "sha256:c32908acf4678cc56f5c61299cb321af56a2ed3583dec08f6425ac56313c5ee3"
+        },
+        "source": {
+          "type": "builtin",
+          "canonicalReference": "local:/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/buster/plugins/kubernetes-fixture"
+        },
+        "canonicalPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/buster/plugins/kubernetes-fixture",
+        "trustScope": "trusted_first_party",
+        "trustEvidence": {
+          "method": "builtin_allowlist",
+          "verifier": "c0-runtime-source-definition-batch10",
+          "verifiedAt": "2026-10-13T00:00:00.000Z"
+        },
+        "resolvedAt": "2026-10-13T00:00:00.000Z"
+      },
+      "registrySnapshotDigest": "sha256:3d289cbdb991aaad32a2a16f805291f000597701ce8b1c6b0aba9dee629991ef",
+      "targetAuthor": "one proposed existing registration/instance operator profile under sole pipeline.config.json; resolve original immutable package capability declaration and original selected evidence policy before plan claim; no current registry artifact default or node override author competing",
+      "activation": "R/source registry+package contracts remain frozen/constraints; module-bound M policy may add supported nonmandatory evidence within same declared quotas and grant/source role only. Resolved plan must bind full policy/source/schema/author generation; current exported resolver has no proved productive author caller. Future publisher/role/plan-author integration not implemented",
+      "notOperatorFields": "retrySafe/matrixFields remain declared implemented capabilities tied to actual source/code/operations, not configuration toggles; declared true does not prove current catalogue idempotence, [] no hypothetical supported matrix field. Target must prove compatibility/code+package contract, no evidence from source Boolean alone."
+    },
+    {
+      "registration": "kubeclaw.lighthouse:lighthouse",
+      "completeA": {
+        "registration": "kubeclaw.lighthouse:lighthouse",
+        "instance": "c0-lighthouse",
+        "evidencePolicy": {
+          "onPass": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onFail": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      },
+      "completeB": {
+        "registration": "kubeclaw.lighthouse:lighthouse",
+        "instance": "c0-lighthouse",
+        "evidencePolicy": {
+          "onPass": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onFail": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onError": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ]
+        }
+      },
+      "domainDefinition": "Conservative preserve-original-outcome evidence defaults as baseline; may add only implemented supported types. Required artifact/report outputs remain additionally selected by actual runner helper. Baseline includes log, no silent drop of original evidence to manufacture B. Field with baseline already all supported has no independent legal B under this unapproved preserve-evidence proposal.",
+      "currentPackageSourceIdentity": {
+        "schemaVersion": "package-provenance.v2",
+        "package": {
+          "pluginId": "kubeclaw.lighthouse",
+          "apiVersion": "pipeline-plugin-v2",
+          "packageVersion": "1.0.0",
+          "contentDigest": "sha256:c0b8f848ff18b35ee217246d6e38f2c70c1a49c9d9b81c8d8fb9a41261ae7d9c"
+        },
+        "source": {
+          "type": "builtin",
+          "canonicalReference": "local:/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/buster/plugins/lighthouse"
+        },
+        "canonicalPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/buster/plugins/lighthouse",
+        "trustScope": "trusted_first_party",
+        "trustEvidence": {
+          "method": "builtin_allowlist",
+          "verifier": "c0-runtime-source-definition-batch10",
+          "verifiedAt": "2026-10-13T00:00:00.000Z"
+        },
+        "resolvedAt": "2026-10-13T00:00:00.000Z"
+      },
+      "registrySnapshotDigest": "sha256:3d289cbdb991aaad32a2a16f805291f000597701ce8b1c6b0aba9dee629991ef",
+      "targetAuthor": "one proposed existing registration/instance operator profile under sole pipeline.config.json; resolve original immutable package capability declaration and original selected evidence policy before plan claim; no current registry artifact default or node override author competing",
+      "activation": "R/source registry+package contracts remain frozen/constraints; module-bound M policy may add supported nonmandatory evidence within same declared quotas and grant/source role only. Resolved plan must bind full policy/source/schema/author generation; current exported resolver has no proved productive author caller. Future publisher/role/plan-author integration not implemented",
+      "notOperatorFields": "retrySafe/matrixFields remain declared implemented capabilities tied to actual source/code/operations, not configuration toggles; declared true does not prove current catalogue idempotence, [] no hypothetical supported matrix field. Target must prove compatibility/code+package contract, no evidence from source Boolean alone."
+    },
+    {
+      "registration": "kubeclaw.openapi:operations",
+      "completeA": {
+        "registration": "kubeclaw.openapi:operations",
+        "instance": "c0-operations",
+        "evidencePolicy": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      },
+      "completeB": {
+        "registration": "kubeclaw.openapi:operations",
+        "instance": "c0-operations",
+        "evidencePolicy": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report"
+          ],
+          "onError": [
+            "log",
+            "test-report"
+          ]
+        }
+      },
+      "domainDefinition": "Conservative preserve-original-outcome evidence defaults as baseline; may add only implemented supported types. Required artifact/report outputs remain additionally selected by actual runner helper. Baseline includes log, no silent drop of original evidence to manufacture B. Field with baseline already all supported has no independent legal B under this unapproved preserve-evidence proposal.",
+      "currentPackageSourceIdentity": {
+        "schemaVersion": "package-provenance.v2",
+        "package": {
+          "pluginId": "kubeclaw.openapi",
+          "apiVersion": "pipeline-plugin-v2",
+          "packageVersion": "1.0.0",
+          "contentDigest": "sha256:624f09f03ee1b4d80c0c9b2828e4e9b35661bdf4caab5f117b3b3a33645e49bb"
+        },
+        "source": {
+          "type": "builtin",
+          "canonicalReference": "local:/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/buster/plugins/openapi"
+        },
+        "canonicalPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/buster/plugins/openapi",
+        "trustScope": "trusted_first_party",
+        "trustEvidence": {
+          "method": "builtin_allowlist",
+          "verifier": "c0-runtime-source-definition-batch10",
+          "verifiedAt": "2026-10-13T00:00:00.000Z"
+        },
+        "resolvedAt": "2026-10-13T00:00:00.000Z"
+      },
+      "registrySnapshotDigest": "sha256:3d289cbdb991aaad32a2a16f805291f000597701ce8b1c6b0aba9dee629991ef",
+      "targetAuthor": "one proposed existing registration/instance operator profile under sole pipeline.config.json; resolve original immutable package capability declaration and original selected evidence policy before plan claim; no current registry artifact default or node override author competing",
+      "activation": "R/source registry+package contracts remain frozen/constraints; module-bound M policy may add supported nonmandatory evidence within same declared quotas and grant/source role only. Resolved plan must bind full policy/source/schema/author generation; current exported resolver has no proved productive author caller. Future publisher/role/plan-author integration not implemented",
+      "notOperatorFields": "retrySafe/matrixFields remain declared implemented capabilities tied to actual source/code/operations, not configuration toggles; declared true does not prove current catalogue idempotence, [] no hypothetical supported matrix field. Target must prove compatibility/code+package contract, no evidence from source Boolean alone."
+    },
+    {
+      "registration": "kubeclaw.playwright:playwright",
+      "completeA": {
+        "registration": "kubeclaw.playwright:playwright",
+        "instance": "c0-playwright",
+        "evidencePolicy": {
+          "onPass": [
+            "log",
+            "test-report",
+            "screenshot",
+            "video",
+            "trace",
+            "test-artifact"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot",
+            "video",
+            "trace",
+            "test-artifact"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      },
+      "completeB": {
+        "registration": "kubeclaw.playwright:playwright",
+        "instance": "c0-playwright",
+        "evidencePolicy": {
+          "onPass": [
+            "log",
+            "test-report",
+            "screenshot",
+            "video",
+            "trace",
+            "test-artifact"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot",
+            "video",
+            "trace",
+            "test-artifact"
+          ],
+          "onError": [
+            "log",
+            "test-report",
+            "screenshot",
+            "video",
+            "trace",
+            "test-artifact"
+          ]
+        }
+      },
+      "domainDefinition": "Conservative preserve-original-outcome evidence defaults as baseline; may add only implemented supported types. Required artifact/report outputs remain additionally selected by actual runner helper. Baseline includes log, no silent drop of original evidence to manufacture B. Field with baseline already all supported has no independent legal B under this unapproved preserve-evidence proposal.",
+      "currentPackageSourceIdentity": {
+        "schemaVersion": "package-provenance.v2",
+        "package": {
+          "pluginId": "kubeclaw.playwright",
+          "apiVersion": "pipeline-plugin-v2",
+          "packageVersion": "1.0.0",
+          "contentDigest": "sha256:6a57e70b6e95041f7c09ca4f397d36a8414541f7e7b4de8a89e51c737fe6a7ef"
+        },
+        "source": {
+          "type": "builtin",
+          "canonicalReference": "local:/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/buster/plugins/playwright"
+        },
+        "canonicalPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/buster/plugins/playwright",
+        "trustScope": "trusted_first_party",
+        "trustEvidence": {
+          "method": "builtin_allowlist",
+          "verifier": "c0-runtime-source-definition-batch10",
+          "verifiedAt": "2026-10-13T00:00:00.000Z"
+        },
+        "resolvedAt": "2026-10-13T00:00:00.000Z"
+      },
+      "registrySnapshotDigest": "sha256:3d289cbdb991aaad32a2a16f805291f000597701ce8b1c6b0aba9dee629991ef",
+      "targetAuthor": "one proposed existing registration/instance operator profile under sole pipeline.config.json; resolve original immutable package capability declaration and original selected evidence policy before plan claim; no current registry artifact default or node override author competing",
+      "activation": "R/source registry+package contracts remain frozen/constraints; module-bound M policy may add supported nonmandatory evidence within same declared quotas and grant/source role only. Resolved plan must bind full policy/source/schema/author generation; current exported resolver has no proved productive author caller. Future publisher/role/plan-author integration not implemented",
+      "notOperatorFields": "retrySafe/matrixFields remain declared implemented capabilities tied to actual source/code/operations, not configuration toggles; declared true does not prove current catalogue idempotence, [] no hypothetical supported matrix field. Target must prove compatibility/code+package contract, no evidence from source Boolean alone."
+    },
+    {
+      "registration": "kubeclaw.security-providers:headers",
+      "completeA": {
+        "registration": "kubeclaw.security-providers:headers",
+        "instance": "c0-headers",
+        "evidencePolicy": {
+          "onPass": [
+            "log"
+          ],
+          "onFail": [
+            "log"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      },
+      "completeB": {
+        "registration": "kubeclaw.security-providers:headers",
+        "instance": "c0-headers",
+        "evidencePolicy": {
+          "onPass": [
+            "log"
+          ],
+          "onFail": [
+            "log"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      },
+      "domainDefinition": "Conservative preserve-original-outcome evidence defaults as baseline; may add only implemented supported types. Required artifact/report outputs remain additionally selected by actual runner helper. Baseline includes log, no silent drop of original evidence to manufacture B. Field with baseline already all supported has no independent legal B under this unapproved preserve-evidence proposal.",
+      "currentPackageSourceIdentity": {
+        "schemaVersion": "package-provenance.v2",
+        "package": {
+          "pluginId": "kubeclaw.security-providers",
+          "apiVersion": "pipeline-plugin-v2",
+          "packageVersion": "1.0.0",
+          "contentDigest": "sha256:1f49bf0aba5957df255facd6d7a6a869d3c85cb27366ebe77b114dcc7cc08314"
+        },
+        "source": {
+          "type": "builtin",
+          "canonicalReference": "local:/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/buster/plugins/security-providers"
+        },
+        "canonicalPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/buster/plugins/security-providers",
+        "trustScope": "trusted_first_party",
+        "trustEvidence": {
+          "method": "builtin_allowlist",
+          "verifier": "c0-runtime-source-definition-batch10",
+          "verifiedAt": "2026-10-13T00:00:00.000Z"
+        },
+        "resolvedAt": "2026-10-13T00:00:00.000Z"
+      },
+      "registrySnapshotDigest": "sha256:3d289cbdb991aaad32a2a16f805291f000597701ce8b1c6b0aba9dee629991ef",
+      "targetAuthor": "one proposed existing registration/instance operator profile under sole pipeline.config.json; resolve original immutable package capability declaration and original selected evidence policy before plan claim; no current registry artifact default or node override author competing",
+      "activation": "R/source registry+package contracts remain frozen/constraints; module-bound M policy may add supported nonmandatory evidence within same declared quotas and grant/source role only. Resolved plan must bind full policy/source/schema/author generation; current exported resolver has no proved productive author caller. Future publisher/role/plan-author integration not implemented",
+      "notOperatorFields": "retrySafe/matrixFields remain declared implemented capabilities tied to actual source/code/operations, not configuration toggles; declared true does not prove current catalogue idempotence, [] no hypothetical supported matrix field. Target must prove compatibility/code+package contract, no evidence from source Boolean alone."
+    },
+    {
+      "registration": "kubeclaw.security-providers:dependency-trivy",
+      "completeA": {
+        "registration": "kubeclaw.security-providers:dependency-trivy",
+        "instance": "c0-dependency-trivy",
+        "evidencePolicy": {
+          "onPass": [
+            "log"
+          ],
+          "onFail": [
+            "log"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      },
+      "completeB": {
+        "registration": "kubeclaw.security-providers:dependency-trivy",
+        "instance": "c0-dependency-trivy",
+        "evidencePolicy": {
+          "onPass": [
+            "log"
+          ],
+          "onFail": [
+            "log"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      },
+      "domainDefinition": "Conservative preserve-original-outcome evidence defaults as baseline; may add only implemented supported types. Required artifact/report outputs remain additionally selected by actual runner helper. Baseline includes log, no silent drop of original evidence to manufacture B. Field with baseline already all supported has no independent legal B under this unapproved preserve-evidence proposal.",
+      "currentPackageSourceIdentity": {
+        "schemaVersion": "package-provenance.v2",
+        "package": {
+          "pluginId": "kubeclaw.security-providers",
+          "apiVersion": "pipeline-plugin-v2",
+          "packageVersion": "1.0.0",
+          "contentDigest": "sha256:1f49bf0aba5957df255facd6d7a6a869d3c85cb27366ebe77b114dcc7cc08314"
+        },
+        "source": {
+          "type": "builtin",
+          "canonicalReference": "local:/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/buster/plugins/security-providers"
+        },
+        "canonicalPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/buster/plugins/security-providers",
+        "trustScope": "trusted_first_party",
+        "trustEvidence": {
+          "method": "builtin_allowlist",
+          "verifier": "c0-runtime-source-definition-batch10",
+          "verifiedAt": "2026-10-13T00:00:00.000Z"
+        },
+        "resolvedAt": "2026-10-13T00:00:00.000Z"
+      },
+      "registrySnapshotDigest": "sha256:3d289cbdb991aaad32a2a16f805291f000597701ce8b1c6b0aba9dee629991ef",
+      "targetAuthor": "one proposed existing registration/instance operator profile under sole pipeline.config.json; resolve original immutable package capability declaration and original selected evidence policy before plan claim; no current registry artifact default or node override author competing",
+      "activation": "R/source registry+package contracts remain frozen/constraints; module-bound M policy may add supported nonmandatory evidence within same declared quotas and grant/source role only. Resolved plan must bind full policy/source/schema/author generation; current exported resolver has no proved productive author caller. Future publisher/role/plan-author integration not implemented",
+      "notOperatorFields": "retrySafe/matrixFields remain declared implemented capabilities tied to actual source/code/operations, not configuration toggles; declared true does not prove current catalogue idempotence, [] no hypothetical supported matrix field. Target must prove compatibility/code+package contract, no evidence from source Boolean alone."
+    },
+    {
+      "registration": "kubeclaw.security-providers:image-trivy",
+      "completeA": {
+        "registration": "kubeclaw.security-providers:image-trivy",
+        "instance": "c0-image-trivy",
+        "evidencePolicy": {
+          "onPass": [
+            "log"
+          ],
+          "onFail": [
+            "log"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      },
+      "completeB": {
+        "registration": "kubeclaw.security-providers:image-trivy",
+        "instance": "c0-image-trivy",
+        "evidencePolicy": {
+          "onPass": [
+            "log"
+          ],
+          "onFail": [
+            "log"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      },
+      "domainDefinition": "Conservative preserve-original-outcome evidence defaults as baseline; may add only implemented supported types. Required artifact/report outputs remain additionally selected by actual runner helper. Baseline includes log, no silent drop of original evidence to manufacture B. Field with baseline already all supported has no independent legal B under this unapproved preserve-evidence proposal.",
+      "currentPackageSourceIdentity": {
+        "schemaVersion": "package-provenance.v2",
+        "package": {
+          "pluginId": "kubeclaw.security-providers",
+          "apiVersion": "pipeline-plugin-v2",
+          "packageVersion": "1.0.0",
+          "contentDigest": "sha256:1f49bf0aba5957df255facd6d7a6a869d3c85cb27366ebe77b114dcc7cc08314"
+        },
+        "source": {
+          "type": "builtin",
+          "canonicalReference": "local:/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/buster/plugins/security-providers"
+        },
+        "canonicalPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/buster/plugins/security-providers",
+        "trustScope": "trusted_first_party",
+        "trustEvidence": {
+          "method": "builtin_allowlist",
+          "verifier": "c0-runtime-source-definition-batch10",
+          "verifiedAt": "2026-10-13T00:00:00.000Z"
+        },
+        "resolvedAt": "2026-10-13T00:00:00.000Z"
+      },
+      "registrySnapshotDigest": "sha256:3d289cbdb991aaad32a2a16f805291f000597701ce8b1c6b0aba9dee629991ef",
+      "targetAuthor": "one proposed existing registration/instance operator profile under sole pipeline.config.json; resolve original immutable package capability declaration and original selected evidence policy before plan claim; no current registry artifact default or node override author competing",
+      "activation": "R/source registry+package contracts remain frozen/constraints; module-bound M policy may add supported nonmandatory evidence within same declared quotas and grant/source role only. Resolved plan must bind full policy/source/schema/author generation; current exported resolver has no proved productive author caller. Future publisher/role/plan-author integration not implemented",
+      "notOperatorFields": "retrySafe/matrixFields remain declared implemented capabilities tied to actual source/code/operations, not configuration toggles; declared true does not prove current catalogue idempotence, [] no hypothetical supported matrix field. Target must prove compatibility/code+package contract, no evidence from source Boolean alone."
+    },
+    {
+      "registration": "kubeclaw.security-providers:kubernetes-policy",
+      "completeA": {
+        "registration": "kubeclaw.security-providers:kubernetes-policy",
+        "instance": "c0-kubernetes-policy",
+        "evidencePolicy": {
+          "onPass": [
+            "log"
+          ],
+          "onFail": [
+            "log"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      },
+      "completeB": {
+        "registration": "kubeclaw.security-providers:kubernetes-policy",
+        "instance": "c0-kubernetes-policy",
+        "evidencePolicy": {
+          "onPass": [
+            "log"
+          ],
+          "onFail": [
+            "log"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      },
+      "domainDefinition": "Conservative preserve-original-outcome evidence defaults as baseline; may add only implemented supported types. Required artifact/report outputs remain additionally selected by actual runner helper. Baseline includes log, no silent drop of original evidence to manufacture B. Field with baseline already all supported has no independent legal B under this unapproved preserve-evidence proposal.",
+      "currentPackageSourceIdentity": {
+        "schemaVersion": "package-provenance.v2",
+        "package": {
+          "pluginId": "kubeclaw.security-providers",
+          "apiVersion": "pipeline-plugin-v2",
+          "packageVersion": "1.0.0",
+          "contentDigest": "sha256:1f49bf0aba5957df255facd6d7a6a869d3c85cb27366ebe77b114dcc7cc08314"
+        },
+        "source": {
+          "type": "builtin",
+          "canonicalReference": "local:/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/buster/plugins/security-providers"
+        },
+        "canonicalPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/buster/plugins/security-providers",
+        "trustScope": "trusted_first_party",
+        "trustEvidence": {
+          "method": "builtin_allowlist",
+          "verifier": "c0-runtime-source-definition-batch10",
+          "verifiedAt": "2026-10-13T00:00:00.000Z"
+        },
+        "resolvedAt": "2026-10-13T00:00:00.000Z"
+      },
+      "registrySnapshotDigest": "sha256:3d289cbdb991aaad32a2a16f805291f000597701ce8b1c6b0aba9dee629991ef",
+      "targetAuthor": "one proposed existing registration/instance operator profile under sole pipeline.config.json; resolve original immutable package capability declaration and original selected evidence policy before plan claim; no current registry artifact default or node override author competing",
+      "activation": "R/source registry+package contracts remain frozen/constraints; module-bound M policy may add supported nonmandatory evidence within same declared quotas and grant/source role only. Resolved plan must bind full policy/source/schema/author generation; current exported resolver has no proved productive author caller. Future publisher/role/plan-author integration not implemented",
+      "notOperatorFields": "retrySafe/matrixFields remain declared implemented capabilities tied to actual source/code/operations, not configuration toggles; declared true does not prove current catalogue idempotence, [] no hypothetical supported matrix field. Target must prove compatibility/code+package contract, no evidence from source Boolean alone."
+    },
+    {
+      "registration": "kubeclaw.security-providers:kubernetes-runtime",
+      "completeA": {
+        "registration": "kubeclaw.security-providers:kubernetes-runtime",
+        "instance": "c0-kubernetes-runtime",
+        "evidencePolicy": {
+          "onPass": [
+            "log"
+          ],
+          "onFail": [
+            "log"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      },
+      "completeB": {
+        "registration": "kubeclaw.security-providers:kubernetes-runtime",
+        "instance": "c0-kubernetes-runtime",
+        "evidencePolicy": {
+          "onPass": [
+            "log"
+          ],
+          "onFail": [
+            "log"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      },
+      "domainDefinition": "Conservative preserve-original-outcome evidence defaults as baseline; may add only implemented supported types. Required artifact/report outputs remain additionally selected by actual runner helper. Baseline includes log, no silent drop of original evidence to manufacture B. Field with baseline already all supported has no independent legal B under this unapproved preserve-evidence proposal.",
+      "currentPackageSourceIdentity": {
+        "schemaVersion": "package-provenance.v2",
+        "package": {
+          "pluginId": "kubeclaw.security-providers",
+          "apiVersion": "pipeline-plugin-v2",
+          "packageVersion": "1.0.0",
+          "contentDigest": "sha256:1f49bf0aba5957df255facd6d7a6a869d3c85cb27366ebe77b114dcc7cc08314"
+        },
+        "source": {
+          "type": "builtin",
+          "canonicalReference": "local:/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/buster/plugins/security-providers"
+        },
+        "canonicalPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/buster/plugins/security-providers",
+        "trustScope": "trusted_first_party",
+        "trustEvidence": {
+          "method": "builtin_allowlist",
+          "verifier": "c0-runtime-source-definition-batch10",
+          "verifiedAt": "2026-10-13T00:00:00.000Z"
+        },
+        "resolvedAt": "2026-10-13T00:00:00.000Z"
+      },
+      "registrySnapshotDigest": "sha256:3d289cbdb991aaad32a2a16f805291f000597701ce8b1c6b0aba9dee629991ef",
+      "targetAuthor": "one proposed existing registration/instance operator profile under sole pipeline.config.json; resolve original immutable package capability declaration and original selected evidence policy before plan claim; no current registry artifact default or node override author competing",
+      "activation": "R/source registry+package contracts remain frozen/constraints; module-bound M policy may add supported nonmandatory evidence within same declared quotas and grant/source role only. Resolved plan must bind full policy/source/schema/author generation; current exported resolver has no proved productive author caller. Future publisher/role/plan-author integration not implemented",
+      "notOperatorFields": "retrySafe/matrixFields remain declared implemented capabilities tied to actual source/code/operations, not configuration toggles; declared true does not prove current catalogue idempotence, [] no hypothetical supported matrix field. Target must prove compatibility/code+package contract, no evidence from source Boolean alone."
+    },
+    {
+      "registration": "kubeclaw.size-budget:artifact",
+      "completeA": {
+        "registration": "kubeclaw.size-budget:artifact",
+        "instance": "c0-artifact",
+        "evidencePolicy": {
+          "onPass": [
+            "log",
+            "size-budget-baseline"
+          ],
+          "onFail": [
+            "log",
+            "size-budget-baseline"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      },
+      "completeB": {
+        "registration": "kubeclaw.size-budget:artifact",
+        "instance": "c0-artifact",
+        "evidencePolicy": {
+          "onPass": [
+            "log",
+            "size-budget-baseline"
+          ],
+          "onFail": [
+            "log",
+            "size-budget-baseline"
+          ],
+          "onError": [
+            "log",
+            "size-budget-baseline"
+          ]
+        }
+      },
+      "domainDefinition": "Conservative preserve-original-outcome evidence defaults as baseline; may add only implemented supported types. Required artifact/report outputs remain additionally selected by actual runner helper. Baseline includes log, no silent drop of original evidence to manufacture B. Field with baseline already all supported has no independent legal B under this unapproved preserve-evidence proposal.",
+      "currentPackageSourceIdentity": {
+        "schemaVersion": "package-provenance.v2",
+        "package": {
+          "pluginId": "kubeclaw.size-budget",
+          "apiVersion": "pipeline-plugin-v2",
+          "packageVersion": "1.0.0",
+          "contentDigest": "sha256:208293f120755cbe96dce8f6bd8760b4130923c50e8a9fc2d43514a06a37f190"
+        },
+        "source": {
+          "type": "builtin",
+          "canonicalReference": "local:/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/buster/plugins/size-budget"
+        },
+        "canonicalPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/buster/plugins/size-budget",
+        "trustScope": "trusted_first_party",
+        "trustEvidence": {
+          "method": "builtin_allowlist",
+          "verifier": "c0-runtime-source-definition-batch10",
+          "verifiedAt": "2026-10-13T00:00:00.000Z"
+        },
+        "resolvedAt": "2026-10-13T00:00:00.000Z"
+      },
+      "registrySnapshotDigest": "sha256:3d289cbdb991aaad32a2a16f805291f000597701ce8b1c6b0aba9dee629991ef",
+      "targetAuthor": "one proposed existing registration/instance operator profile under sole pipeline.config.json; resolve original immutable package capability declaration and original selected evidence policy before plan claim; no current registry artifact default or node override author competing",
+      "activation": "R/source registry+package contracts remain frozen/constraints; module-bound M policy may add supported nonmandatory evidence within same declared quotas and grant/source role only. Resolved plan must bind full policy/source/schema/author generation; current exported resolver has no proved productive author caller. Future publisher/role/plan-author integration not implemented",
+      "notOperatorFields": "retrySafe/matrixFields remain declared implemented capabilities tied to actual source/code/operations, not configuration toggles; declared true does not prove current catalogue idempotence, [] no hypothetical supported matrix field. Target must prove compatibility/code+package contract, no evidence from source Boolean alone."
+    },
+    {
+      "registration": "kubeclaw.tailscale-exposure:exposure",
+      "completeA": {
+        "registration": "kubeclaw.tailscale-exposure:exposure",
+        "instance": "c0-exposure",
+        "evidencePolicy": {
+          "onPass": [
+            "log"
+          ],
+          "onFail": [
+            "log"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      },
+      "completeB": {
+        "registration": "kubeclaw.tailscale-exposure:exposure",
+        "instance": "c0-exposure",
+        "evidencePolicy": {
+          "onPass": [
+            "log"
+          ],
+          "onFail": [
+            "log"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      },
+      "domainDefinition": "Conservative preserve-original-outcome evidence defaults as baseline; may add only implemented supported types. Required artifact/report outputs remain additionally selected by actual runner helper. Baseline includes log, no silent drop of original evidence to manufacture B. Field with baseline already all supported has no independent legal B under this unapproved preserve-evidence proposal.",
+      "currentPackageSourceIdentity": {
+        "schemaVersion": "package-provenance.v2",
+        "package": {
+          "pluginId": "kubeclaw.tailscale-exposure",
+          "apiVersion": "pipeline-plugin-v2",
+          "packageVersion": "1.0.0",
+          "contentDigest": "sha256:10e4733cac3cd551b84f038f6cf3cb37a913d262391047ac321dd8d82ef177dd"
+        },
+        "source": {
+          "type": "builtin",
+          "canonicalReference": "local:/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/buster/plugins/tailscale-exposure"
+        },
+        "canonicalPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/buster/plugins/tailscale-exposure",
+        "trustScope": "trusted_first_party",
+        "trustEvidence": {
+          "method": "builtin_allowlist",
+          "verifier": "c0-runtime-source-definition-batch10",
+          "verifiedAt": "2026-10-13T00:00:00.000Z"
+        },
+        "resolvedAt": "2026-10-13T00:00:00.000Z"
+      },
+      "registrySnapshotDigest": "sha256:3d289cbdb991aaad32a2a16f805291f000597701ce8b1c6b0aba9dee629991ef",
+      "targetAuthor": "one proposed existing registration/instance operator profile under sole pipeline.config.json; resolve original immutable package capability declaration and original selected evidence policy before plan claim; no current registry artifact default or node override author competing",
+      "activation": "R/source registry+package contracts remain frozen/constraints; module-bound M policy may add supported nonmandatory evidence within same declared quotas and grant/source role only. Resolved plan must bind full policy/source/schema/author generation; current exported resolver has no proved productive author caller. Future publisher/role/plan-author integration not implemented",
+      "notOperatorFields": "retrySafe/matrixFields remain declared implemented capabilities tied to actual source/code/operations, not configuration toggles; declared true does not prove current catalogue idempotence, [] no hypothetical supported matrix field. Target must prove compatibility/code+package contract, no evidence from source Boolean alone."
+    },
+    {
+      "registration": "kubeclaw.visual:visual",
+      "completeA": {
+        "registration": "kubeclaw.visual:visual",
+        "instance": "c0-visual",
+        "evidencePolicy": {
+          "onPass": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      },
+      "completeB": {
+        "registration": "kubeclaw.visual:visual",
+        "instance": "c0-visual",
+        "evidencePolicy": {
+          "onPass": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onError": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ]
+        }
+      },
+      "domainDefinition": "Conservative preserve-original-outcome evidence defaults as baseline; may add only implemented supported types. Required artifact/report outputs remain additionally selected by actual runner helper. Baseline includes log, no silent drop of original evidence to manufacture B. Field with baseline already all supported has no independent legal B under this unapproved preserve-evidence proposal.",
+      "currentPackageSourceIdentity": {
+        "schemaVersion": "package-provenance.v2",
+        "package": {
+          "pluginId": "kubeclaw.visual",
+          "apiVersion": "pipeline-plugin-v2",
+          "packageVersion": "1.0.0",
+          "contentDigest": "sha256:bad99128dd2f6434a4fe8b96969ea1053ddd43eae745aefb997ee9de5ff389e4"
+        },
+        "source": {
+          "type": "builtin",
+          "canonicalReference": "local:/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/buster/plugins/visual"
+        },
+        "canonicalPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/buster/plugins/visual",
+        "trustScope": "trusted_first_party",
+        "trustEvidence": {
+          "method": "builtin_allowlist",
+          "verifier": "c0-runtime-source-definition-batch10",
+          "verifiedAt": "2026-10-13T00:00:00.000Z"
+        },
+        "resolvedAt": "2026-10-13T00:00:00.000Z"
+      },
+      "registrySnapshotDigest": "sha256:3d289cbdb991aaad32a2a16f805291f000597701ce8b1c6b0aba9dee629991ef",
+      "targetAuthor": "one proposed existing registration/instance operator profile under sole pipeline.config.json; resolve original immutable package capability declaration and original selected evidence policy before plan claim; no current registry artifact default or node override author competing",
+      "activation": "R/source registry+package contracts remain frozen/constraints; module-bound M policy may add supported nonmandatory evidence within same declared quotas and grant/source role only. Resolved plan must bind full policy/source/schema/author generation; current exported resolver has no proved productive author caller. Future publisher/role/plan-author integration not implemented",
+      "notOperatorFields": "retrySafe/matrixFields remain declared implemented capabilities tied to actual source/code/operations, not configuration toggles; declared true does not prove current catalogue idempotence, [] no hypothetical supported matrix field. Target must prove compatibility/code+package contract, no evidence from source Boolean alone."
+    }
+  ],
+  "status": "unapproved C0 evidence-preserving supported-domain definition, not deployed policy/role/capacity or runtime acceptance",
+  "sourceScopes": "Current actual discover/canonical builder/selection source controls separate; exact external productive plan-author, installed/dynamic packages, full role/grants/input/output/report sources and bound metadata accounting remain obligations"
+}

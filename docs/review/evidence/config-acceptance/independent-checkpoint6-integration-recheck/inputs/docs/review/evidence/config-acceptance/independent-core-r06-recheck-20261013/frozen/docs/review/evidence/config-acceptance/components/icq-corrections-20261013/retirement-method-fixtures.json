@@ -1,0 +1,122 @@
+{
+  "corrects": [
+    "ICQ-03",
+    "ICQ-06"
+  ],
+  "fixtureGenerator": {
+    "helper": {
+      "path": "tests/verification/reliability/attempt-retirement-fixture.mjs",
+      "sha256": "235cfee17ee594997f80ae1012b186d8e79a1aed229029a509325763322adbd3"
+    },
+    "dependencies": [
+      {
+        "path": "tests/verification/reliability/repair-budget-fixture.mjs",
+        "sha256": "3d40021b3d9fa4902d76268d9e3b5e0e701bad3779380b1e561898651856b863"
+      },
+      {
+        "path": "skills/common/plugin-runtime/foundation/observability/durable-attempts.ts",
+        "sha256": "19a9a9ad9e3a3bbb876d2b846a3e97b738a1e9c2586e37c4bb2a80a960d46d20"
+      },
+      {
+        "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+        "sha256": "5624aa2b5f980a373ab30fdf012dee1346418ac3b2537244475f2a496d3766a0"
+      },
+      {
+        "path": "skills/common/plugin-runtime/foundation/observability/replay-validation.ts",
+        "sha256": "8e11ae8d57a44f7a0947ee9f81a794630eab3c5cbdfcde38673ba1e41e62cbbc"
+      }
+    ],
+    "exactCall": "await fixture(t, {}, \"\")",
+    "disposableCleanup": "t.after fs.rmSync ownedroot; no installedservices/network; fixed helpersynthetic registeredadapter callbacks are not realbusiness effects",
+    "returnedPriorState": "f.scope.admissionRoot/admission.json + f.scope.attemptRoot/attempt-store.json + original evidence + source run/journal/snapshot; exact generator fields/callargs pinned; all byte/hashes inventoried before firstcase",
+    "argumentInputs": {
+      "retireAdmission": "f.scope exactly; original completion record f.record + closure f.closure + evidence f.evidence from helper",
+      "retireCompletion": {
+        "operationId": "compact:one",
+        "actor": "operator:local",
+        "source": "original helper attempt completion ref looked up by f.runId/f.result.attemptId/claimGeneration1 (must exact-equal storedsource)",
+        "recordDigest": "f.record.recordDigest",
+        "authority": {
+          "runRoot": "f.run",
+          "journalHead": "f.scope.expectedJournalHead",
+          "snapshotDigest": "f.scope.expectedSnapshotDigest"
+        }
+      },
+      "retireImportedResult": "await projectionFixture(t,{}) then projectionScope exact; importCompletion original helper stored prefix digest/head and expectedStoreDigest"
+    }
+  },
+  "originalOwnerFixture": "existing NovaPlatform A cloned ONLY to helper exact admissionLimits/attemptLimits; store lock5 reason256/180 reserve8192 and strictheader fixed original profile/reference. Whole admission50000 and attemptMetadata100000 unchanged. B onlywait1/threshold128/prefix56/reserve16384; no change of helper resource caps. Cannot apply to unknown deployed originalstate.",
+  "methodCases": [
+    {
+      "method": "retireCompletion",
+      "prior": "immutable fixtureGenerator exactCall",
+      "input": "argumentInputs.retireCompletion + authorize original run/inventory closure unchanged",
+      "oracle": [
+        "confirmed original source resolves to exact record, result, evidence and closure",
+        "candidate v2 keeps nextCursor3, one live otherrecord andone retiredentry",
+        "releasedBytes=canonical(before).byteLength-canonical(after).byteLength >0; actual source/history/journal/evidence unchanged",
+        "candidate stays<=same wholecap and no newordinary payload spends reservedremainingheadroom",
+        "repeat exactoperation resolves originalsource, newlyRetiredfalse/releasedBytes0, hashunchanged"
+      ]
+    },
+    {
+      "method": "admit replay after retirement",
+      "prior": "same retirement committed state",
+      "input": "canonicalJson(f.record)",
+      "oracle": [
+        "duplicate acknowledgement original canonicalCursor1",
+        "no reinsert/reformat/redigest or admission statewrite",
+        "admittedRecords/admittedTail produce original exact f.record with originaladmittedAt",
+        "missingorchanged originalattempt/evidence rejects; producerpending record retained, no ack; restoreoriginalpositive"
+      ]
+    },
+    {
+      "method": "retireAdmission/retireImportedResult targetpolicyguard",
+      "prior": "same pinned helper withauthenticated original bindingA and existing heads",
+      "mutations": [
+        {
+          "pointer": "scope.attemptLimits.maximumMetadataBytes",
+          "from": 100000,
+          "to": 200000
+        },
+        {
+          "pointer": "scope.admissionLimits.maximumBytes",
+          "from": 50000,
+          "to": 100000
+        },
+        {
+          "pointer": "originalHeader",
+          "to": "missing legacy capture"
+        },
+        {
+          "pointer": "policyDigest",
+          "to": "latest B"
+        },
+        {
+          "pointer": "owner",
+          "to": "other author"
+        }
+      ],
+      "oracle": [
+        "rejectbeforeconstructor boundedallocation/mutation; originalstore/history/evidencehashunchanged",
+        "unmodifiedA originalreference and samehead positive; no secondoperatorquotaauthor",
+        "unboundhistorical read allowed under sourcecurrentlimits, mutationonlyexplicitverifiedmigration; missingproofblocks, no inferredA"
+      ]
+    },
+    {
+      "method": "migration",
+      "prior": "original v1 helper unbound state and exact source/run/head bytes",
+      "input": "independently authenticated existingNova complete selectedoriginalprofile+source+schema+policy matching helper quotas; no invented originalidentity",
+      "oracle": [
+        "without authenticcapture evidence failunchanged",
+        "with approvedauthenticmigration fixture holdoriginalrun/storefences; charge header/reference tosame originalmetadata cap",
+        "if canonical(candidate)>originalwholecap reject unchanged, no compaction/shrink tofit",
+        "publishB concurrently cannot substitute originalreferences"
+      ]
+    }
+  ],
+  "exactCompleteOwningProfiles": {
+    "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/retirement-complete-owner-profiles.json",
+    "sha256": "96dfb283f4a9037500912ae42b5060b2366b57da544e4819ab85ffac8441a5d8"
+  }
+}

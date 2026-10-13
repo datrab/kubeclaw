@@ -1,24 +1,45 @@
 {
-  "rows": 801,
-  "sources": 220,
+  "rows": 825,
+  "sources": 330,
   "duplicateIds": 0,
   "statuses": {
-    "source-traced": 339,
-    "source-traced-validation-expansion-open": 122,
-    "source-traced-pinned-consumer": 69,
-    "source-traced-declared-unused": 1,
-    "source-traced-external-validator-blocked": 5,
-    "source-traced-buildstep-domain-open": 71,
-    "source-traced-template-domains-open": 188,
-    "source-traced-k8s-validation-open": 5,
-    "source-traced-external-tailnet-reader-open": 1
+    "source-traced": 735,
+    "source-traced-declared-unused": 16,
+    "source-traced-pinned-consumer": 74
   },
-  "openSemanticRows": 392,
-  "caseSpecifications": 102,
+  "openSemanticRows": 825,
+  "caseSpecifications": 202,
   "caseResults": {
-    "not-run": 102
+    "not-run": 202
   },
   "danglingCaseIds": [],
   "acceptance": "C0 INCOMPLETE; static source-traced statuses are not independent acceptance or runtime PASS",
-  "requiredRemaining": "field domains/dispositions across remaining chart/ARG/runtime/script surfaces; exact case harness/profile gaps; C0 reviewer; no implementation approval"
+  "requiredRemaining": "field domains/dispositions across remaining chart/ARG/runtime/script surfaces; exact case harness/profile gaps; C0 reviewer; no implementation approval",
+  "openSemanticRowsMeaning": "all rows still unaccepted; source-traced is not target semantic closure",
+  "settingRows": 825,
+  "sourceFiles": 330,
+  "status": "C0 incremental source/target/case definitions; NOT ACCEPTED; remaining semantic per-field obligations explicit",
+  "futureImplementationResults": {
+    "not-run": 202
+  },
+  "targetDomainCoverage": {
+    "definedProposalRows": 546,
+    "missingByOwner": {
+      "openclaw-agent-observer": 17,
+      "openclaw-prism": 1,
+      "role-package-nova": 7,
+      "role-package-prism": 7,
+      "role-package-buster": 7,
+      "delivery": 6,
+      "chart-kubeclaw": 136,
+      "chart-prism": 51,
+      "chart-ops-pod": 14,
+      "chart-gitops": 8,
+      "ops-deployer": 15,
+      "native-delivery-projection": 10
+    },
+    "meaning": "proposal presence not domain completeness/native positive/independent review/acceptance"
+  },
+  "currentInventorySha256": "84da74e73d39a855235a43420eb8bafd6be195211c8a219807462e57b6f6eeeb",
+  "currentCasesSha256": "0830c7cc35924c3a1b046b0b74c5b98712369461fd8dad2b9ed45c44448c697b"
 }

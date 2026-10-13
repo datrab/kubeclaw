@@ -1,0 +1,1240 @@
+{
+  "scope": "full host target author schema, complete correlated definition profiles and per-field native/source/H oracles; runtime execution not-run",
+  "schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "PROPOSED same-owner authored native host policy; software versions excluded",
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "schemaVersion",
+      "nodeName",
+      "systemReserve",
+      "kubernetesReserve",
+      "pools"
+    ],
+    "properties": {
+      "schemaVersion": {
+        "const": 1
+      },
+      "nodeName": {
+        "type": "string",
+        "pattern": "^[a-z0-9](?:[a-z0-9.-]{0,251}[a-z0-9])?$"
+      },
+      "systemReserve": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "cpuMillicores",
+          "memoryBytes",
+          "tasks"
+        ],
+        "properties": {
+          "cpuMillicores": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          },
+          "memoryBytes": {
+            "type": "integer",
+            "minimum": 4096,
+            "maximum": 9007199254740991,
+            "multipleOf": 4096
+          },
+          "tasks": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          }
+        }
+      },
+      "kubernetesReserve": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "cpuMillicores",
+          "memoryBytes",
+          "tasks"
+        ],
+        "properties": {
+          "cpuMillicores": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          },
+          "memoryBytes": {
+            "type": "integer",
+            "minimum": 4096,
+            "maximum": 9007199254740991,
+            "multipleOf": 4096
+          },
+          "tasks": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          }
+        }
+      },
+      "pools": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "buster",
+          "prism"
+        ],
+        "properties": {
+          "buster": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "cpuMillicores",
+              "memoryBytes",
+              "tasks",
+              "namespace",
+              "maximumActiveScopes",
+              "cpuPeriodMicroseconds"
+            ],
+            "properties": {
+              "cpuMillicores": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 90071992547409
+              },
+              "memoryBytes": {
+                "type": "integer",
+                "minimum": 4096,
+                "maximum": 9007199254740991,
+                "multipleOf": 4096
+              },
+              "tasks": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 9007199254740991
+              },
+              "namespace": {
+                "type": "string",
+                "pattern": "^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$"
+              },
+              "maximumActiveScopes": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 9007199254740991
+              },
+              "cpuPeriodMicroseconds": {
+                "type": "integer",
+                "minimum": 1000,
+                "maximum": 1000000
+              }
+            }
+          },
+          "prism": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "cpuMillicores",
+              "memoryBytes",
+              "tasks",
+              "namespace",
+              "maximumActiveScopes",
+              "cpuPeriodMicroseconds"
+            ],
+            "properties": {
+              "cpuMillicores": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 90071992547409
+              },
+              "memoryBytes": {
+                "type": "integer",
+                "minimum": 4096,
+                "maximum": 9007199254740991,
+                "multipleOf": 4096
+              },
+              "tasks": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 9007199254740991
+              },
+              "namespace": {
+                "type": "string",
+                "pattern": "^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$"
+              },
+              "maximumActiveScopes": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 9007199254740991
+              },
+              "cpuPeriodMicroseconds": {
+                "type": "integer",
+                "minimum": 1000,
+                "maximum": 1000000
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "correlations": {
+    "source": "scripts/native-worker-node-policy.mjs/prepare-native-worker-pools.mjs/native-worker-node-capacity.mjs",
+    "rules": [
+      {
+        "id": "HOST-AGGREGATE-SAFE",
+        "expression": "for resource cpuMillicores,memoryBytes,tasks: BigInt(system)+BigInt(kubernetes)+sum(BigInt(role)) <=9007199254740991; never round overflow",
+        "reject": "NATIVE_NODE_TOTAL_RANGE_INVALID"
+      },
+      {
+        "id": "HOST-CFS-RATE",
+        "expression": "q=BigInt(pool.cpuMillicores)*BigInt(pool.cpuPeriodMicroseconds)/1000; product divisible by1000; q>=1000 and q<=9007199254740991; CFS period1000..1000000; currentcpuMillicores bound<=floor(MAX_SAFE/100) preserved until separately reviewed",
+        "reject": "NATIVE_NODE_CPU_QUOTA_RATE_INVALID (proposed producer semantic guard; existing Core/setup range diagnostics remain separate)"
+      },
+      {
+        "id": "HOST-CAPACITY",
+        "expression": "same physical node UID/machineId/bootId Ready; selected deployed containerd version equals sole versions.json selection; cgroupDriver systemd/cgroupsPerQOS/enforceNodeAllocatable pods; taskCapacity min(pidMax,threadsMax)>withheld and0<podTasksMax<=remaining; for CPU/memory capacity>withheld and0<allocatable<=capacity-withheld; host profile plus active scope reservations fit actual admission algorithm, not syntactic max alone",
+        "reject": "exact native-worker-node-capacity.mjs NATIVE_NODE_* and Core native pool readiness/limit mismatch diagnostics"
+      },
+      {
+        "id": "HOST-VERSION-SOLE",
+        "expression": "author schema has no runtime or software version property; selected versions.json#/nativeRuntime/containerd/version materializer ONLY adds current generated runtime.containerdVersion for real renderer/preflight/activation; no same-value exception for oldauthor",
+        "reject": "CONFIG_OLD_AUTHOR:runtime.containerdVersion (proposed)"
+      }
+    ]
+  },
+  "profiles": {
+    "A": {
+      "authorFile": "docs/review/evidence/config-acceptance/delivery/native-host-target-profiles-20261013/A.yaml",
+      "authorSha256": "34e46888019fcc3688de188a2e06c62851de972c4ce587c10d05f6cc701ebbb6",
+      "versionSelection": "versions.json#/nativeRuntime/containerd/version",
+      "versionCandidate": "2.2.0",
+      "versionNote": "supported syntax definition candidates ONLY; authentic selected distribution/package/runtime identity required for installed controls. Migration preserves declared2.3.4-k3s1.36 in solemanifest, not installed claim.",
+      "semanticPrerequisites": [
+        "HOST-AGGREGATE-SAFE",
+        "HOST-CFS-RATE",
+        "HOST-CAPACITY",
+        "HOST-VERSION-SOLE"
+      ]
+    },
+    "B": {
+      "authorFile": "docs/review/evidence/config-acceptance/delivery/native-host-target-profiles-20261013/B.yaml",
+      "authorSha256": "40edb4fc04f9c70beb9efc5ca80f88a71776f5487eefa14e5d3309c11e6c200a",
+      "versionSelection": "versions.json#/nativeRuntime/containerd/version",
+      "versionCandidate": "2.3.0",
+      "versionNote": "supported syntax definition candidates ONLY; authentic selected distribution/package/runtime identity required for installed controls. Migration preserves declared2.3.4-k3s1.36 in solemanifest, not installed claim.",
+      "semanticPrerequisites": [
+        "HOST-AGGREGATE-SAFE",
+        "HOST-CFS-RATE",
+        "HOST-CAPACITY",
+        "HOST-VERSION-SOLE"
+      ]
+    }
+  },
+  "fields": [
+    {
+      "settingId": "DLV-NATIVE-HOST-SCHEMAVERSION",
+      "field": "schemaVersion",
+      "domain": {
+        "const": 1
+      },
+      "A": {
+        "authorFile": "docs/review/evidence/config-acceptance/delivery/native-host-target-profiles-20261013/A.yaml",
+        "authorSha256": "34e46888019fcc3688de188a2e06c62851de972c4ce587c10d05f6cc701ebbb6",
+        "versionSelection": "versions.json#/nativeRuntime/containerd/version",
+        "versionCandidate": "2.2.0",
+        "versionNote": "supported syntax definition candidates ONLY; authentic selected distribution/package/runtime identity required for installed controls. Migration preserves declared2.3.4-k3s1.36 in solemanifest, not installed claim.",
+        "semanticPrerequisites": [
+          "HOST-AGGREGATE-SAFE",
+          "HOST-CFS-RATE",
+          "HOST-CAPACITY",
+          "HOST-VERSION-SOLE"
+        ]
+      },
+      "B": {
+        "authorFile": "docs/review/evidence/config-acceptance/delivery/native-host-target-profiles-20261013/B.yaml",
+        "authorSha256": "40edb4fc04f9c70beb9efc5ca80f88a71776f5487eefa14e5d3309c11e6c200a",
+        "versionSelection": "versions.json#/nativeRuntime/containerd/version",
+        "versionCandidate": "2.3.0",
+        "versionNote": "supported syntax definition candidates ONLY; authentic selected distribution/package/runtime identity required for installed controls. Migration preserves declared2.3.4-k3s1.36 in solemanifest, not installed claim.",
+        "semanticPrerequisites": [
+          "HOST-AGGREGATE-SAFE",
+          "HOST-CFS-RATE",
+          "HOST-CAPACITY",
+          "HOST-VERSION-SOLE"
+        ]
+      },
+      "activation": "protocol",
+      "firstNativeBoundary": "NATIVE_NODE_IDENTITY_REQUIRED",
+      "targetBoundary": "CONFIG_REQUIRED/CONFIG_DOMAIN/CONFIG_OLD_AUTHOR before renderer or host effects (proposed); source native guards remain separately observed",
+      "positiveOracle": "exact field value and unchanged other authored/captured identity fields -> nativePoolPolicy/renderer outputs -> selected physical cgroup/kubelet/installed-version readback in H fixture, not rendered text alone",
+      "priorState": "recorded A nodeUID/machineID/bootID/runtime/provider grants; nonempty owned scope and sealed journal before B publication; A scope unchanged and B host admission fenced until quiescent",
+      "source": {
+        "path": "scripts/native-worker-node-policy.mjs",
+        "field": "schemaVersion",
+        "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+        "line": 17,
+        "lineKind": "first field-name occurrence; productive read evidence remains separately identified"
+      },
+      "caseIds": [
+        "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+        "DLV-CASE-NATIVE-HOST-ACTIVATION"
+      ]
+    },
+    {
+      "settingId": "DLV-NATIVE-HOST-NODENAME",
+      "field": "nodeName",
+      "domain": {
+        "type": "string",
+        "pattern": "^[a-z0-9](?:[a-z0-9.-]{0,251}[a-z0-9])?$"
+      },
+      "A": {
+        "authorFile": "docs/review/evidence/config-acceptance/delivery/native-host-target-profiles-20261013/A.yaml",
+        "authorSha256": "34e46888019fcc3688de188a2e06c62851de972c4ce587c10d05f6cc701ebbb6",
+        "versionSelection": "versions.json#/nativeRuntime/containerd/version",
+        "versionCandidate": "2.2.0",
+        "versionNote": "supported syntax definition candidates ONLY; authentic selected distribution/package/runtime identity required for installed controls. Migration preserves declared2.3.4-k3s1.36 in solemanifest, not installed claim.",
+        "semanticPrerequisites": [
+          "HOST-AGGREGATE-SAFE",
+          "HOST-CFS-RATE",
+          "HOST-CAPACITY",
+          "HOST-VERSION-SOLE"
+        ]
+      },
+      "B": {
+        "authorFile": "docs/review/evidence/config-acceptance/delivery/native-host-target-profiles-20261013/B.yaml",
+        "authorSha256": "40edb4fc04f9c70beb9efc5ca80f88a71776f5487eefa14e5d3309c11e6c200a",
+        "versionSelection": "versions.json#/nativeRuntime/containerd/version",
+        "versionCandidate": "2.3.0",
+        "versionNote": "supported syntax definition candidates ONLY; authentic selected distribution/package/runtime identity required for installed controls. Migration preserves declared2.3.4-k3s1.36 in solemanifest, not installed claim.",
+        "semanticPrerequisites": [
+          "HOST-AGGREGATE-SAFE",
+          "HOST-CFS-RATE",
+          "HOST-CAPACITY",
+          "HOST-VERSION-SOLE"
+        ]
+      },
+      "activation": "H",
+      "firstNativeBoundary": "NATIVE_NODE_IDENTITY_REQUIRED",
+      "targetBoundary": "CONFIG_REQUIRED/CONFIG_DOMAIN/CONFIG_OLD_AUTHOR before renderer or host effects (proposed); source native guards remain separately observed",
+      "positiveOracle": "exact field value and unchanged other authored/captured identity fields -> nativePoolPolicy/renderer outputs -> selected physical cgroup/kubelet/installed-version readback in H fixture, not rendered text alone",
+      "priorState": "recorded A nodeUID/machineID/bootID/runtime/provider grants; nonempty owned scope and sealed journal before B publication; A scope unchanged and B host admission fenced until quiescent",
+      "source": {
+        "path": "scripts/native-worker-node-policy.mjs",
+        "field": "nodeName",
+        "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+        "line": 17,
+        "lineKind": "first field-name occurrence; productive read evidence remains separately identified"
+      },
+      "caseIds": [
+        "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+        "DLV-CASE-NATIVE-HOST-ACTIVATION"
+      ]
+    },
+    {
+      "settingId": "DLV-NATIVE-HOST-SYSTEMRESERVE-CPUMILLICORES",
+      "field": "systemReserve.cpuMillicores",
+      "domain": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 9007199254740991
+      },
+      "A": {
+        "authorFile": "docs/review/evidence/config-acceptance/delivery/native-host-target-profiles-20261013/A.yaml",
+        "authorSha256": "34e46888019fcc3688de188a2e06c62851de972c4ce587c10d05f6cc701ebbb6",
+        "versionSelection": "versions.json#/nativeRuntime/containerd/version",
+        "versionCandidate": "2.2.0",
+        "versionNote": "supported syntax definition candidates ONLY; authentic selected distribution/package/runtime identity required for installed controls. Migration preserves declared2.3.4-k3s1.36 in solemanifest, not installed claim.",
+        "semanticPrerequisites": [
+          "HOST-AGGREGATE-SAFE",
+          "HOST-CFS-RATE",
+          "HOST-CAPACITY",
+          "HOST-VERSION-SOLE"
+        ]
+      },
+      "B": {
+        "authorFile": "docs/review/evidence/config-acceptance/delivery/native-host-target-profiles-20261013/B.yaml",
+        "authorSha256": "40edb4fc04f9c70beb9efc5ca80f88a71776f5487eefa14e5d3309c11e6c200a",
+        "versionSelection": "versions.json#/nativeRuntime/containerd/version",
+        "versionCandidate": "2.3.0",
+        "versionNote": "supported syntax definition candidates ONLY; authentic selected distribution/package/runtime identity required for installed controls. Migration preserves declared2.3.4-k3s1.36 in solemanifest, not installed claim.",
+        "semanticPrerequisites": [
+          "HOST-AGGREGATE-SAFE",
+          "HOST-CFS-RATE",
+          "HOST-CAPACITY",
+          "HOST-VERSION-SOLE"
+        ]
+      },
+      "activation": "H",
+      "firstNativeBoundary": "NATIVE_NODE_POLICY_LIMIT_INVALID",
+      "targetBoundary": "CONFIG_REQUIRED/CONFIG_DOMAIN/CONFIG_OLD_AUTHOR before renderer or host effects (proposed); source native guards remain separately observed",
+      "positiveOracle": "exact field value and unchanged other authored/captured identity fields -> nativePoolPolicy/renderer outputs -> selected physical cgroup/kubelet/installed-version readback in H fixture, not rendered text alone",
+      "priorState": "recorded A nodeUID/machineID/bootID/runtime/provider grants; nonempty owned scope and sealed journal before B publication; A scope unchanged and B host admission fenced until quiescent",
+      "source": {
+        "path": "scripts/native-worker-node-policy.mjs",
+        "field": "systemReserve.cpuMillicores",
+        "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+        "line": null
+      },
+      "caseIds": [
+        "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+        "DLV-CASE-NATIVE-HOST-ACTIVATION"
+      ]
+    },
+    {
+      "settingId": "DLV-NATIVE-HOST-SYSTEMRESERVE-MEMORYBYTES",
+      "field": "systemReserve.memoryBytes",
+      "domain": {
+        "type": "integer",
+        "minimum": 4096,
+        "maximum": 9007199254740991,
+        "multipleOf": 4096
+      },
+      "A": {
+        "authorFile": "docs/review/evidence/config-acceptance/delivery/native-host-target-profiles-20261013/A.yaml",
+        "authorSha256": "34e46888019fcc3688de188a2e06c62851de972c4ce587c10d05f6cc701ebbb6",
+        "versionSelection": "versions.json#/nativeRuntime/containerd/version",
+        "versionCandidate": "2.2.0",
+        "versionNote": "supported syntax definition candidates ONLY; authentic selected distribution/package/runtime identity required for installed controls. Migration preserves declared2.3.4-k3s1.36 in solemanifest, not installed claim.",
+        "semanticPrerequisites": [
+          "HOST-AGGREGATE-SAFE",
+          "HOST-CFS-RATE",
+          "HOST-CAPACITY",
+          "HOST-VERSION-SOLE"
+        ]
+      },
+      "B": {
+        "authorFile": "docs/review/evidence/config-acceptance/delivery/native-host-target-profiles-20261013/B.yaml",
+        "authorSha256": "40edb4fc04f9c70beb9efc5ca80f88a71776f5487eefa14e5d3309c11e6c200a",
+        "versionSelection": "versions.json#/nativeRuntime/containerd/version",
+        "versionCandidate": "2.3.0",
+        "versionNote": "supported syntax definition candidates ONLY; authentic selected distribution/package/runtime identity required for installed controls. Migration preserves declared2.3.4-k3s1.36 in solemanifest, not installed claim.",
+        "semanticPrerequisites": [
+          "HOST-AGGREGATE-SAFE",
+          "HOST-CFS-RATE",
+          "HOST-CAPACITY",
+          "HOST-VERSION-SOLE"
+        ]
+      },
+      "activation": "H",
+      "firstNativeBoundary": "NATIVE_NODE_MEMORY_ALIGNMENT_INVALID",
+      "targetBoundary": "CONFIG_REQUIRED/CONFIG_DOMAIN/CONFIG_OLD_AUTHOR before renderer or host effects (proposed); source native guards remain separately observed",
+      "positiveOracle": "exact field value and unchanged other authored/captured identity fields -> nativePoolPolicy/renderer outputs -> selected physical cgroup/kubelet/installed-version readback in H fixture, not rendered text alone",
+      "priorState": "recorded A nodeUID/machineID/bootID/runtime/provider grants; nonempty owned scope and sealed journal before B publication; A scope unchanged and B host admission fenced until quiescent",
+      "source": {
+        "path": "scripts/native-worker-node-policy.mjs",
+        "field": "systemReserve.memoryBytes",
+        "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+        "line": null
+      },
+      "caseIds": [
+        "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+        "DLV-CASE-NATIVE-HOST-ACTIVATION"
+      ]
+    },
+    {
+      "settingId": "DLV-NATIVE-HOST-SYSTEMRESERVE-TASKS",
+      "field": "systemReserve.tasks",
+      "domain": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 9007199254740991
+      },
+      "A": {
+        "authorFile": "docs/review/evidence/config-acceptance/delivery/native-host-target-profiles-20261013/A.yaml",
+        "authorSha256": "34e46888019fcc3688de188a2e06c62851de972c4ce587c10d05f6cc701ebbb6",
+        "versionSelection": "versions.json#/nativeRuntime/containerd/version",
+        "versionCandidate": "2.2.0",
+        "versionNote": "supported syntax definition candidates ONLY; authentic selected distribution/package/runtime identity required for installed controls. Migration preserves declared2.3.4-k3s1.36 in solemanifest, not installed claim.",
+        "semanticPrerequisites": [
+          "HOST-AGGREGATE-SAFE",
+          "HOST-CFS-RATE",
+          "HOST-CAPACITY",
+          "HOST-VERSION-SOLE"
+        ]
+      },
+      "B": {
+        "authorFile": "docs/review/evidence/config-acceptance/delivery/native-host-target-profiles-20261013/B.yaml",
+        "authorSha256": "40edb4fc04f9c70beb9efc5ca80f88a71776f5487eefa14e5d3309c11e6c200a",
+        "versionSelection": "versions.json#/nativeRuntime/containerd/version",
+        "versionCandidate": "2.3.0",
+        "versionNote": "supported syntax definition candidates ONLY; authentic selected distribution/package/runtime identity required for installed controls. Migration preserves declared2.3.4-k3s1.36 in solemanifest, not installed claim.",
+        "semanticPrerequisites": [
+          "HOST-AGGREGATE-SAFE",
+          "HOST-CFS-RATE",
+          "HOST-CAPACITY",
+          "HOST-VERSION-SOLE"
+        ]
+      },
+      "activation": "H",
+      "firstNativeBoundary": "NATIVE_NODE_POLICY_LIMIT_INVALID",
+      "targetBoundary": "CONFIG_REQUIRED/CONFIG_DOMAIN/CONFIG_OLD_AUTHOR before renderer or host effects (proposed); source native guards remain separately observed",
+      "positiveOracle": "exact field value and unchanged other authored/captured identity fields -> nativePoolPolicy/renderer outputs -> selected physical cgroup/kubelet/installed-version readback in H fixture, not rendered text alone",
+      "priorState": "recorded A nodeUID/machineID/bootID/runtime/provider grants; nonempty owned scope and sealed journal before B publication; A scope unchanged and B host admission fenced until quiescent",
+      "source": {
+        "path": "scripts/native-worker-node-policy.mjs",
+        "field": "systemReserve.tasks",
+        "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+        "line": 20,
+        "lineKind": "first field-name occurrence; productive read evidence remains separately identified"
+      },
+      "caseIds": [
+        "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+        "DLV-CASE-NATIVE-HOST-ACTIVATION"
+      ]
+    },
+    {
+      "settingId": "DLV-NATIVE-HOST-KUBERNETESRESERVE-CPUMILLICORES",
+      "field": "kubernetesReserve.cpuMillicores",
+      "domain": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 9007199254740991
+      },
+      "A": {
+        "authorFile": "docs/review/evidence/config-acceptance/delivery/native-host-target-profiles-20261013/A.yaml",
+        "authorSha256": "34e46888019fcc3688de188a2e06c62851de972c4ce587c10d05f6cc701ebbb6",
+        "versionSelection": "versions.json#/nativeRuntime/containerd/version",
+        "versionCandidate": "2.2.0",
+        "versionNote": "supported syntax definition candidates ONLY; authentic selected distribution/package/runtime identity required for installed controls. Migration preserves declared2.3.4-k3s1.36 in solemanifest, not installed claim.",
+        "semanticPrerequisites": [
+          "HOST-AGGREGATE-SAFE",
+          "HOST-CFS-RATE",
+          "HOST-CAPACITY",
+          "HOST-VERSION-SOLE"
+        ]
+      },
+      "B": {
+        "authorFile": "docs/review/evidence/config-acceptance/delivery/native-host-target-profiles-20261013/B.yaml",
+        "authorSha256": "40edb4fc04f9c70beb9efc5ca80f88a71776f5487eefa14e5d3309c11e6c200a",
+        "versionSelection": "versions.json#/nativeRuntime/containerd/version",
+        "versionCandidate": "2.3.0",
+        "versionNote": "supported syntax definition candidates ONLY; authentic selected distribution/package/runtime identity required for installed controls. Migration preserves declared2.3.4-k3s1.36 in solemanifest, not installed claim.",
+        "semanticPrerequisites": [
+          "HOST-AGGREGATE-SAFE",
+          "HOST-CFS-RATE",
+          "HOST-CAPACITY",
+          "HOST-VERSION-SOLE"
+        ]
+      },
+      "activation": "H",
+      "firstNativeBoundary": "NATIVE_NODE_POLICY_LIMIT_INVALID",
+      "targetBoundary": "CONFIG_REQUIRED/CONFIG_DOMAIN/CONFIG_OLD_AUTHOR before renderer or host effects (proposed); source native guards remain separately observed",
+      "positiveOracle": "exact field value and unchanged other authored/captured identity fields -> nativePoolPolicy/renderer outputs -> selected physical cgroup/kubelet/installed-version readback in H fixture, not rendered text alone",
+      "priorState": "recorded A nodeUID/machineID/bootID/runtime/provider grants; nonempty owned scope and sealed journal before B publication; A scope unchanged and B host admission fenced until quiescent",
+      "source": {
+        "path": "scripts/native-worker-node-policy.mjs",
+        "field": "kubernetesReserve.cpuMillicores",
+        "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+        "line": 58,
+        "lineKind": "first field-name occurrence; productive read evidence remains separately identified"
+      },
+      "caseIds": [
+        "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+        "DLV-CASE-NATIVE-HOST-ACTIVATION"
+      ]
+    },
+    {
+      "settingId": "DLV-NATIVE-HOST-KUBERNETESRESERVE-MEMORYBYTES",
+      "field": "kubernetesReserve.memoryBytes",
+      "domain": {
+        "type": "integer",
+        "minimum": 4096,
+        "maximum": 9007199254740991,
+        "multipleOf": 4096
+      },
+      "A": {
+        "authorFile": "docs/review/evidence/config-acceptance/delivery/native-host-target-profiles-20261013/A.yaml",
+        "authorSha256": "34e46888019fcc3688de188a2e06c62851de972c4ce587c10d05f6cc701ebbb6",
+        "versionSelection": "versions.json#/nativeRuntime/containerd/version",
+        "versionCandidate": "2.2.0",
+        "versionNote": "supported syntax definition candidates ONLY; authentic selected distribution/package/runtime identity required for installed controls. Migration preserves declared2.3.4-k3s1.36 in solemanifest, not installed claim.",
+        "semanticPrerequisites": [
+          "HOST-AGGREGATE-SAFE",
+          "HOST-CFS-RATE",
+          "HOST-CAPACITY",
+          "HOST-VERSION-SOLE"
+        ]
+      },
+      "B": {
+        "authorFile": "docs/review/evidence/config-acceptance/delivery/native-host-target-profiles-20261013/B.yaml",
+        "authorSha256": "40edb4fc04f9c70beb9efc5ca80f88a71776f5487eefa14e5d3309c11e6c200a",
+        "versionSelection": "versions.json#/nativeRuntime/containerd/version",
+        "versionCandidate": "2.3.0",
+        "versionNote": "supported syntax definition candidates ONLY; authentic selected distribution/package/runtime identity required for installed controls. Migration preserves declared2.3.4-k3s1.36 in solemanifest, not installed claim.",
+        "semanticPrerequisites": [
+          "HOST-AGGREGATE-SAFE",
+          "HOST-CFS-RATE",
+          "HOST-CAPACITY",
+          "HOST-VERSION-SOLE"
+        ]
+      },
+      "activation": "H",
+      "firstNativeBoundary": "NATIVE_NODE_MEMORY_ALIGNMENT_INVALID",
+      "targetBoundary": "CONFIG_REQUIRED/CONFIG_DOMAIN/CONFIG_OLD_AUTHOR before renderer or host effects (proposed); source native guards remain separately observed",
+      "positiveOracle": "exact field value and unchanged other authored/captured identity fields -> nativePoolPolicy/renderer outputs -> selected physical cgroup/kubelet/installed-version readback in H fixture, not rendered text alone",
+      "priorState": "recorded A nodeUID/machineID/bootID/runtime/provider grants; nonempty owned scope and sealed journal before B publication; A scope unchanged and B host admission fenced until quiescent",
+      "source": {
+        "path": "scripts/native-worker-node-policy.mjs",
+        "field": "kubernetesReserve.memoryBytes",
+        "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+        "line": 58,
+        "lineKind": "first field-name occurrence; productive read evidence remains separately identified"
+      },
+      "caseIds": [
+        "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+        "DLV-CASE-NATIVE-HOST-ACTIVATION"
+      ]
+    },
+    {
+      "settingId": "DLV-NATIVE-HOST-KUBERNETESRESERVE-TASKS",
+      "field": "kubernetesReserve.tasks",
+      "domain": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 9007199254740991
+      },
+      "A": {
+        "authorFile": "docs/review/evidence/config-acceptance/delivery/native-host-target-profiles-20261013/A.yaml",
+        "authorSha256": "34e46888019fcc3688de188a2e06c62851de972c4ce587c10d05f6cc701ebbb6",
+        "versionSelection": "versions.json#/nativeRuntime/containerd/version",
+        "versionCandidate": "2.2.0",
+        "versionNote": "supported syntax definition candidates ONLY; authentic selected distribution/package/runtime identity required for installed controls. Migration preserves declared2.3.4-k3s1.36 in solemanifest, not installed claim.",
+        "semanticPrerequisites": [
+          "HOST-AGGREGATE-SAFE",
+          "HOST-CFS-RATE",
+          "HOST-CAPACITY",
+          "HOST-VERSION-SOLE"
+        ]
+      },
+      "B": {
+        "authorFile": "docs/review/evidence/config-acceptance/delivery/native-host-target-profiles-20261013/B.yaml",
+        "authorSha256": "40edb4fc04f9c70beb9efc5ca80f88a71776f5487eefa14e5d3309c11e6c200a",
+        "versionSelection": "versions.json#/nativeRuntime/containerd/version",
+        "versionCandidate": "2.3.0",
+        "versionNote": "supported syntax definition candidates ONLY; authentic selected distribution/package/runtime identity required for installed controls. Migration preserves declared2.3.4-k3s1.36 in solemanifest, not installed claim.",
+        "semanticPrerequisites": [
+          "HOST-AGGREGATE-SAFE",
+          "HOST-CFS-RATE",
+          "HOST-CAPACITY",
+          "HOST-VERSION-SOLE"
+        ]
+      },
+      "activation": "H",
+      "firstNativeBoundary": "NATIVE_NODE_POLICY_LIMIT_INVALID",
+      "targetBoundary": "CONFIG_REQUIRED/CONFIG_DOMAIN/CONFIG_OLD_AUTHOR before renderer or host effects (proposed); source native guards remain separately observed",
+      "positiveOracle": "exact field value and unchanged other authored/captured identity fields -> nativePoolPolicy/renderer outputs -> selected physical cgroup/kubelet/installed-version readback in H fixture, not rendered text alone",
+      "priorState": "recorded A nodeUID/machineID/bootID/runtime/provider grants; nonempty owned scope and sealed journal before B publication; A scope unchanged and B host admission fenced until quiescent",
+      "source": {
+        "path": "scripts/native-worker-node-policy.mjs",
+        "field": "kubernetesReserve.tasks",
+        "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+        "line": 20,
+        "lineKind": "first field-name occurrence; productive read evidence remains separately identified"
+      },
+      "caseIds": [
+        "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+        "DLV-CASE-NATIVE-HOST-ACTIVATION"
+      ]
+    },
+    {
+      "settingId": "DLV-NATIVE-HOST-POOLS-BUSTER-NAMESPACE",
+      "field": "pools.buster.namespace",
+      "domain": {
+        "type": "string",
+        "pattern": "^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$"
+      },
+      "A": {
+        "authorFile": "docs/review/evidence/config-acceptance/delivery/native-host-target-profiles-20261013/A.yaml",
+        "authorSha256": "34e46888019fcc3688de188a2e06c62851de972c4ce587c10d05f6cc701ebbb6",
+        "versionSelection": "versions.json#/nativeRuntime/containerd/version",
+        "versionCandidate": "2.2.0",
+        "versionNote": "supported syntax definition candidates ONLY; authentic selected distribution/package/runtime identity required for installed controls. Migration preserves declared2.3.4-k3s1.36 in solemanifest, not installed claim.",
+        "semanticPrerequisites": [
+          "HOST-AGGREGATE-SAFE",
+          "HOST-CFS-RATE",
+          "HOST-CAPACITY",
+          "HOST-VERSION-SOLE"
+        ]
+      },
+      "B": {
+        "authorFile": "docs/review/evidence/config-acceptance/delivery/native-host-target-profiles-20261013/B.yaml",
+        "authorSha256": "40edb4fc04f9c70beb9efc5ca80f88a71776f5487eefa14e5d3309c11e6c200a",
+        "versionSelection": "versions.json#/nativeRuntime/containerd/version",
+        "versionCandidate": "2.3.0",
+        "versionNote": "supported syntax definition candidates ONLY; authentic selected distribution/package/runtime identity required for installed controls. Migration preserves declared2.3.4-k3s1.36 in solemanifest, not installed claim.",
+        "semanticPrerequisites": [
+          "HOST-AGGREGATE-SAFE",
+          "HOST-CFS-RATE",
+          "HOST-CAPACITY",
+          "HOST-VERSION-SOLE"
+        ]
+      },
+      "activation": "H",
+      "firstNativeBoundary": "NATIVE_NODE_NAMESPACE_REQUIRED",
+      "targetBoundary": "CONFIG_REQUIRED/CONFIG_DOMAIN/CONFIG_OLD_AUTHOR before renderer or host effects (proposed); source native guards remain separately observed",
+      "positiveOracle": "exact field value and unchanged other authored/captured identity fields -> nativePoolPolicy/renderer outputs -> selected physical cgroup/kubelet/installed-version readback in H fixture, not rendered text alone",
+      "priorState": "recorded A nodeUID/machineID/bootID/runtime/provider grants; nonempty owned scope and sealed journal before B publication; A scope unchanged and B host admission fenced until quiescent",
+      "source": {
+        "path": "scripts/native-worker-node-policy.mjs",
+        "field": "pools.buster.namespace",
+        "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+        "line": null
+      },
+      "caseIds": [
+        "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+        "DLV-CASE-NATIVE-HOST-ACTIVATION"
+      ]
+    },
+    {
+      "settingId": "DLV-NATIVE-HOST-POOLS-BUSTER-CPUMILLICORES",
+      "field": "pools.buster.cpuMillicores",
+      "domain": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 90071992547409
+      },
+      "A": {
+        "authorFile": "docs/review/evidence/config-acceptance/delivery/native-host-target-profiles-20261013/A.yaml",
+        "authorSha256": "34e46888019fcc3688de188a2e06c62851de972c4ce587c10d05f6cc701ebbb6",
+        "versionSelection": "versions.json#/nativeRuntime/containerd/version",
+        "versionCandidate": "2.2.0",
+        "versionNote": "supported syntax definition candidates ONLY; authentic selected distribution/package/runtime identity required for installed controls. Migration preserves declared2.3.4-k3s1.36 in solemanifest, not installed claim.",
+        "semanticPrerequisites": [
+          "HOST-AGGREGATE-SAFE",
+          "HOST-CFS-RATE",
+          "HOST-CAPACITY",
+          "HOST-VERSION-SOLE"
+        ]
+      },
+      "B": {
+        "authorFile": "docs/review/evidence/config-acceptance/delivery/native-host-target-profiles-20261013/B.yaml",
+        "authorSha256": "40edb4fc04f9c70beb9efc5ca80f88a71776f5487eefa14e5d3309c11e6c200a",
+        "versionSelection": "versions.json#/nativeRuntime/containerd/version",
+        "versionCandidate": "2.3.0",
+        "versionNote": "supported syntax definition candidates ONLY; authentic selected distribution/package/runtime identity required for installed controls. Migration preserves declared2.3.4-k3s1.36 in solemanifest, not installed claim.",
+        "semanticPrerequisites": [
+          "HOST-AGGREGATE-SAFE",
+          "HOST-CFS-RATE",
+          "HOST-CAPACITY",
+          "HOST-VERSION-SOLE"
+        ]
+      },
+      "activation": "H",
+      "firstNativeBoundary": "NATIVE_NODE_CPU_RANGE_INVALID",
+      "targetBoundary": "CONFIG_REQUIRED/CONFIG_DOMAIN/CONFIG_OLD_AUTHOR before renderer or host effects (proposed); source native guards remain separately observed",
+      "positiveOracle": "exact field value and unchanged other authored/captured identity fields -> nativePoolPolicy/renderer outputs -> selected physical cgroup/kubelet/installed-version readback in H fixture, not rendered text alone",
+      "priorState": "recorded A nodeUID/machineID/bootID/runtime/provider grants; nonempty owned scope and sealed journal before B publication; A scope unchanged and B host admission fenced until quiescent",
+      "source": {
+        "path": "scripts/native-worker-node-policy.mjs",
+        "field": "pools.buster.cpuMillicores",
+        "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+        "line": null
+      },
+      "caseIds": [
+        "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+        "DLV-CASE-NATIVE-HOST-ACTIVATION"
+      ]
+    },
+    {
+      "settingId": "DLV-NATIVE-HOST-POOLS-BUSTER-MEMORYBYTES",
+      "field": "pools.buster.memoryBytes",
+      "domain": {
+        "type": "integer",
+        "minimum": 4096,
+        "maximum": 9007199254740991,
+        "multipleOf": 4096
+      },
+      "A": {
+        "authorFile": "docs/review/evidence/config-acceptance/delivery/native-host-target-profiles-20261013/A.yaml",
+        "authorSha256": "34e46888019fcc3688de188a2e06c62851de972c4ce587c10d05f6cc701ebbb6",
+        "versionSelection": "versions.json#/nativeRuntime/containerd/version",
+        "versionCandidate": "2.2.0",
+        "versionNote": "supported syntax definition candidates ONLY; authentic selected distribution/package/runtime identity required for installed controls. Migration preserves declared2.3.4-k3s1.36 in solemanifest, not installed claim.",
+        "semanticPrerequisites": [
+          "HOST-AGGREGATE-SAFE",
+          "HOST-CFS-RATE",
+          "HOST-CAPACITY",
+          "HOST-VERSION-SOLE"
+        ]
+      },
+      "B": {
+        "authorFile": "docs/review/evidence/config-acceptance/delivery/native-host-target-profiles-20261013/B.yaml",
+        "authorSha256": "40edb4fc04f9c70beb9efc5ca80f88a71776f5487eefa14e5d3309c11e6c200a",
+        "versionSelection": "versions.json#/nativeRuntime/containerd/version",
+        "versionCandidate": "2.3.0",
+        "versionNote": "supported syntax definition candidates ONLY; authentic selected distribution/package/runtime identity required for installed controls. Migration preserves declared2.3.4-k3s1.36 in solemanifest, not installed claim.",
+        "semanticPrerequisites": [
+          "HOST-AGGREGATE-SAFE",
+          "HOST-CFS-RATE",
+          "HOST-CAPACITY",
+          "HOST-VERSION-SOLE"
+        ]
+      },
+      "activation": "H",
+      "firstNativeBoundary": "NATIVE_NODE_MEMORY_ALIGNMENT_INVALID",
+      "targetBoundary": "CONFIG_REQUIRED/CONFIG_DOMAIN/CONFIG_OLD_AUTHOR before renderer or host effects (proposed); source native guards remain separately observed",
+      "positiveOracle": "exact field value and unchanged other authored/captured identity fields -> nativePoolPolicy/renderer outputs -> selected physical cgroup/kubelet/installed-version readback in H fixture, not rendered text alone",
+      "priorState": "recorded A nodeUID/machineID/bootID/runtime/provider grants; nonempty owned scope and sealed journal before B publication; A scope unchanged and B host admission fenced until quiescent",
+      "source": {
+        "path": "scripts/native-worker-node-policy.mjs",
+        "field": "pools.buster.memoryBytes",
+        "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+        "line": null
+      },
+      "caseIds": [
+        "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+        "DLV-CASE-NATIVE-HOST-ACTIVATION"
+      ]
+    },
+    {
+      "settingId": "DLV-NATIVE-HOST-POOLS-BUSTER-TASKS",
+      "field": "pools.buster.tasks",
+      "domain": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 9007199254740991
+      },
+      "A": {
+        "authorFile": "docs/review/evidence/config-acceptance/delivery/native-host-target-profiles-20261013/A.yaml",
+        "authorSha256": "34e46888019fcc3688de188a2e06c62851de972c4ce587c10d05f6cc701ebbb6",
+        "versionSelection": "versions.json#/nativeRuntime/containerd/version",
+        "versionCandidate": "2.2.0",
+        "versionNote": "supported syntax definition candidates ONLY; authentic selected distribution/package/runtime identity required for installed controls. Migration preserves declared2.3.4-k3s1.36 in solemanifest, not installed claim.",
+        "semanticPrerequisites": [
+          "HOST-AGGREGATE-SAFE",
+          "HOST-CFS-RATE",
+          "HOST-CAPACITY",
+          "HOST-VERSION-SOLE"
+        ]
+      },
+      "B": {
+        "authorFile": "docs/review/evidence/config-acceptance/delivery/native-host-target-profiles-20261013/B.yaml",
+        "authorSha256": "40edb4fc04f9c70beb9efc5ca80f88a71776f5487eefa14e5d3309c11e6c200a",
+        "versionSelection": "versions.json#/nativeRuntime/containerd/version",
+        "versionCandidate": "2.3.0",
+        "versionNote": "supported syntax definition candidates ONLY; authentic selected distribution/package/runtime identity required for installed controls. Migration preserves declared2.3.4-k3s1.36 in solemanifest, not installed claim.",
+        "semanticPrerequisites": [
+          "HOST-AGGREGATE-SAFE",
+          "HOST-CFS-RATE",
+          "HOST-CAPACITY",
+          "HOST-VERSION-SOLE"
+        ]
+      },
+      "activation": "H",
+      "firstNativeBoundary": "NATIVE_NODE_POLICY_LIMIT_INVALID",
+      "targetBoundary": "CONFIG_REQUIRED/CONFIG_DOMAIN/CONFIG_OLD_AUTHOR before renderer or host effects (proposed); source native guards remain separately observed",
+      "positiveOracle": "exact field value and unchanged other authored/captured identity fields -> nativePoolPolicy/renderer outputs -> selected physical cgroup/kubelet/installed-version readback in H fixture, not rendered text alone",
+      "priorState": "recorded A nodeUID/machineID/bootID/runtime/provider grants; nonempty owned scope and sealed journal before B publication; A scope unchanged and B host admission fenced until quiescent",
+      "source": {
+        "path": "scripts/native-worker-node-policy.mjs",
+        "field": "pools.buster.tasks",
+        "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+        "line": null
+      },
+      "caseIds": [
+        "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+        "DLV-CASE-NATIVE-HOST-ACTIVATION"
+      ]
+    },
+    {
+      "settingId": "DLV-NATIVE-HOST-POOLS-BUSTER-MAXIMUMACTIVESCOPES",
+      "field": "pools.buster.maximumActiveScopes",
+      "domain": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 9007199254740991
+      },
+      "A": {
+        "authorFile": "docs/review/evidence/config-acceptance/delivery/native-host-target-profiles-20261013/A.yaml",
+        "authorSha256": "34e46888019fcc3688de188a2e06c62851de972c4ce587c10d05f6cc701ebbb6",
+        "versionSelection": "versions.json#/nativeRuntime/containerd/version",
+        "versionCandidate": "2.2.0",
+        "versionNote": "supported syntax definition candidates ONLY; authentic selected distribution/package/runtime identity required for installed controls. Migration preserves declared2.3.4-k3s1.36 in solemanifest, not installed claim.",
+        "semanticPrerequisites": [
+          "HOST-AGGREGATE-SAFE",
+          "HOST-CFS-RATE",
+          "HOST-CAPACITY",
+          "HOST-VERSION-SOLE"
+        ]
+      },
+      "B": {
+        "authorFile": "docs/review/evidence/config-acceptance/delivery/native-host-target-profiles-20261013/B.yaml",
+        "authorSha256": "40edb4fc04f9c70beb9efc5ca80f88a71776f5487eefa14e5d3309c11e6c200a",
+        "versionSelection": "versions.json#/nativeRuntime/containerd/version",
+        "versionCandidate": "2.3.0",
+        "versionNote": "supported syntax definition candidates ONLY; authentic selected distribution/package/runtime identity required for installed controls. Migration preserves declared2.3.4-k3s1.36 in solemanifest, not installed claim.",
+        "semanticPrerequisites": [
+          "HOST-AGGREGATE-SAFE",
+          "HOST-CFS-RATE",
+          "HOST-CAPACITY",
+          "HOST-VERSION-SOLE"
+        ]
+      },
+      "activation": "H",
+      "firstNativeBoundary": "NATIVE_NODE_POLICY_LIMIT_INVALID",
+      "targetBoundary": "CONFIG_REQUIRED/CONFIG_DOMAIN/CONFIG_OLD_AUTHOR before renderer or host effects (proposed); source native guards remain separately observed",
+      "positiveOracle": "exact field value and unchanged other authored/captured identity fields -> nativePoolPolicy/renderer outputs -> selected physical cgroup/kubelet/installed-version readback in H fixture, not rendered text alone",
+      "priorState": "recorded A nodeUID/machineID/bootID/runtime/provider grants; nonempty owned scope and sealed journal before B publication; A scope unchanged and B host admission fenced until quiescent",
+      "source": {
+        "path": "scripts/native-worker-node-policy.mjs",
+        "field": "pools.buster.maximumActiveScopes",
+        "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+        "line": null
+      },
+      "caseIds": [
+        "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+        "DLV-CASE-NATIVE-HOST-ACTIVATION"
+      ]
+    },
+    {
+      "settingId": "DLV-NATIVE-HOST-POOLS-PRISM-NAMESPACE",
+      "field": "pools.prism.namespace",
+      "domain": {
+        "type": "string",
+        "pattern": "^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$"
+      },
+      "A": {
+        "authorFile": "docs/review/evidence/config-acceptance/delivery/native-host-target-profiles-20261013/A.yaml",
+        "authorSha256": "34e46888019fcc3688de188a2e06c62851de972c4ce587c10d05f6cc701ebbb6",
+        "versionSelection": "versions.json#/nativeRuntime/containerd/version",
+        "versionCandidate": "2.2.0",
+        "versionNote": "supported syntax definition candidates ONLY; authentic selected distribution/package/runtime identity required for installed controls. Migration preserves declared2.3.4-k3s1.36 in solemanifest, not installed claim.",
+        "semanticPrerequisites": [
+          "HOST-AGGREGATE-SAFE",
+          "HOST-CFS-RATE",
+          "HOST-CAPACITY",
+          "HOST-VERSION-SOLE"
+        ]
+      },
+      "B": {
+        "authorFile": "docs/review/evidence/config-acceptance/delivery/native-host-target-profiles-20261013/B.yaml",
+        "authorSha256": "40edb4fc04f9c70beb9efc5ca80f88a71776f5487eefa14e5d3309c11e6c200a",
+        "versionSelection": "versions.json#/nativeRuntime/containerd/version",
+        "versionCandidate": "2.3.0",
+        "versionNote": "supported syntax definition candidates ONLY; authentic selected distribution/package/runtime identity required for installed controls. Migration preserves declared2.3.4-k3s1.36 in solemanifest, not installed claim.",
+        "semanticPrerequisites": [
+          "HOST-AGGREGATE-SAFE",
+          "HOST-CFS-RATE",
+          "HOST-CAPACITY",
+          "HOST-VERSION-SOLE"
+        ]
+      },
+      "activation": "H",
+      "firstNativeBoundary": "NATIVE_NODE_NAMESPACE_REQUIRED",
+      "targetBoundary": "CONFIG_REQUIRED/CONFIG_DOMAIN/CONFIG_OLD_AUTHOR before renderer or host effects (proposed); source native guards remain separately observed",
+      "positiveOracle": "exact field value and unchanged other authored/captured identity fields -> nativePoolPolicy/renderer outputs -> selected physical cgroup/kubelet/installed-version readback in H fixture, not rendered text alone",
+      "priorState": "recorded A nodeUID/machineID/bootID/runtime/provider grants; nonempty owned scope and sealed journal before B publication; A scope unchanged and B host admission fenced until quiescent",
+      "source": {
+        "path": "scripts/native-worker-node-policy.mjs",
+        "field": "pools.prism.namespace",
+        "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+        "line": null
+      },
+      "caseIds": [
+        "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+        "DLV-CASE-NATIVE-HOST-ACTIVATION"
+      ]
+    },
+    {
+      "settingId": "DLV-NATIVE-HOST-POOLS-PRISM-CPUMILLICORES",
+      "field": "pools.prism.cpuMillicores",
+      "domain": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 90071992547409
+      },
+      "A": {
+        "authorFile": "docs/review/evidence/config-acceptance/delivery/native-host-target-profiles-20261013/A.yaml",
+        "authorSha256": "34e46888019fcc3688de188a2e06c62851de972c4ce587c10d05f6cc701ebbb6",
+        "versionSelection": "versions.json#/nativeRuntime/containerd/version",
+        "versionCandidate": "2.2.0",
+        "versionNote": "supported syntax definition candidates ONLY; authentic selected distribution/package/runtime identity required for installed controls. Migration preserves declared2.3.4-k3s1.36 in solemanifest, not installed claim.",
+        "semanticPrerequisites": [
+          "HOST-AGGREGATE-SAFE",
+          "HOST-CFS-RATE",
+          "HOST-CAPACITY",
+          "HOST-VERSION-SOLE"
+        ]
+      },
+      "B": {
+        "authorFile": "docs/review/evidence/config-acceptance/delivery/native-host-target-profiles-20261013/B.yaml",
+        "authorSha256": "40edb4fc04f9c70beb9efc5ca80f88a71776f5487eefa14e5d3309c11e6c200a",
+        "versionSelection": "versions.json#/nativeRuntime/containerd/version",
+        "versionCandidate": "2.3.0",
+        "versionNote": "supported syntax definition candidates ONLY; authentic selected distribution/package/runtime identity required for installed controls. Migration preserves declared2.3.4-k3s1.36 in solemanifest, not installed claim.",
+        "semanticPrerequisites": [
+          "HOST-AGGREGATE-SAFE",
+          "HOST-CFS-RATE",
+          "HOST-CAPACITY",
+          "HOST-VERSION-SOLE"
+        ]
+      },
+      "activation": "H",
+      "firstNativeBoundary": "NATIVE_NODE_CPU_RANGE_INVALID",
+      "targetBoundary": "CONFIG_REQUIRED/CONFIG_DOMAIN/CONFIG_OLD_AUTHOR before renderer or host effects (proposed); source native guards remain separately observed",
+      "positiveOracle": "exact field value and unchanged other authored/captured identity fields -> nativePoolPolicy/renderer outputs -> selected physical cgroup/kubelet/installed-version readback in H fixture, not rendered text alone",
+      "priorState": "recorded A nodeUID/machineID/bootID/runtime/provider grants; nonempty owned scope and sealed journal before B publication; A scope unchanged and B host admission fenced until quiescent",
+      "source": {
+        "path": "scripts/native-worker-node-policy.mjs",
+        "field": "pools.prism.cpuMillicores",
+        "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+        "line": null
+      },
+      "caseIds": [
+        "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+        "DLV-CASE-NATIVE-HOST-ACTIVATION"
+      ]
+    },
+    {
+      "settingId": "DLV-NATIVE-HOST-POOLS-PRISM-MEMORYBYTES",
+      "field": "pools.prism.memoryBytes",
+      "domain": {
+        "type": "integer",
+        "minimum": 4096,
+        "maximum": 9007199254740991,
+        "multipleOf": 4096
+      },
+      "A": {
+        "authorFile": "docs/review/evidence/config-acceptance/delivery/native-host-target-profiles-20261013/A.yaml",
+        "authorSha256": "34e46888019fcc3688de188a2e06c62851de972c4ce587c10d05f6cc701ebbb6",
+        "versionSelection": "versions.json#/nativeRuntime/containerd/version",
+        "versionCandidate": "2.2.0",
+        "versionNote": "supported syntax definition candidates ONLY; authentic selected distribution/package/runtime identity required for installed controls. Migration preserves declared2.3.4-k3s1.36 in solemanifest, not installed claim.",
+        "semanticPrerequisites": [
+          "HOST-AGGREGATE-SAFE",
+          "HOST-CFS-RATE",
+          "HOST-CAPACITY",
+          "HOST-VERSION-SOLE"
+        ]
+      },
+      "B": {
+        "authorFile": "docs/review/evidence/config-acceptance/delivery/native-host-target-profiles-20261013/B.yaml",
+        "authorSha256": "40edb4fc04f9c70beb9efc5ca80f88a71776f5487eefa14e5d3309c11e6c200a",
+        "versionSelection": "versions.json#/nativeRuntime/containerd/version",
+        "versionCandidate": "2.3.0",
+        "versionNote": "supported syntax definition candidates ONLY; authentic selected distribution/package/runtime identity required for installed controls. Migration preserves declared2.3.4-k3s1.36 in solemanifest, not installed claim.",
+        "semanticPrerequisites": [
+          "HOST-AGGREGATE-SAFE",
+          "HOST-CFS-RATE",
+          "HOST-CAPACITY",
+          "HOST-VERSION-SOLE"
+        ]
+      },
+      "activation": "H",
+      "firstNativeBoundary": "NATIVE_NODE_MEMORY_ALIGNMENT_INVALID",
+      "targetBoundary": "CONFIG_REQUIRED/CONFIG_DOMAIN/CONFIG_OLD_AUTHOR before renderer or host effects (proposed); source native guards remain separately observed",
+      "positiveOracle": "exact field value and unchanged other authored/captured identity fields -> nativePoolPolicy/renderer outputs -> selected physical cgroup/kubelet/installed-version readback in H fixture, not rendered text alone",
+      "priorState": "recorded A nodeUID/machineID/bootID/runtime/provider grants; nonempty owned scope and sealed journal before B publication; A scope unchanged and B host admission fenced until quiescent",
+      "source": {
+        "path": "scripts/native-worker-node-policy.mjs",
+        "field": "pools.prism.memoryBytes",
+        "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+        "line": null
+      },
+      "caseIds": [
+        "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+        "DLV-CASE-NATIVE-HOST-ACTIVATION"
+      ]
+    },
+    {
+      "settingId": "DLV-NATIVE-HOST-POOLS-PRISM-TASKS",
+      "field": "pools.prism.tasks",
+      "domain": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 9007199254740991
+      },
+      "A": {
+        "authorFile": "docs/review/evidence/config-acceptance/delivery/native-host-target-profiles-20261013/A.yaml",
+        "authorSha256": "34e46888019fcc3688de188a2e06c62851de972c4ce587c10d05f6cc701ebbb6",
+        "versionSelection": "versions.json#/nativeRuntime/containerd/version",
+        "versionCandidate": "2.2.0",
+        "versionNote": "supported syntax definition candidates ONLY; authentic selected distribution/package/runtime identity required for installed controls. Migration preserves declared2.3.4-k3s1.36 in solemanifest, not installed claim.",
+        "semanticPrerequisites": [
+          "HOST-AGGREGATE-SAFE",
+          "HOST-CFS-RATE",
+          "HOST-CAPACITY",
+          "HOST-VERSION-SOLE"
+        ]
+      },
+      "B": {
+        "authorFile": "docs/review/evidence/config-acceptance/delivery/native-host-target-profiles-20261013/B.yaml",
+        "authorSha256": "40edb4fc04f9c70beb9efc5ca80f88a71776f5487eefa14e5d3309c11e6c200a",
+        "versionSelection": "versions.json#/nativeRuntime/containerd/version",
+        "versionCandidate": "2.3.0",
+        "versionNote": "supported syntax definition candidates ONLY; authentic selected distribution/package/runtime identity required for installed controls. Migration preserves declared2.3.4-k3s1.36 in solemanifest, not installed claim.",
+        "semanticPrerequisites": [
+          "HOST-AGGREGATE-SAFE",
+          "HOST-CFS-RATE",
+          "HOST-CAPACITY",
+          "HOST-VERSION-SOLE"
+        ]
+      },
+      "activation": "H",
+      "firstNativeBoundary": "NATIVE_NODE_POLICY_LIMIT_INVALID",
+      "targetBoundary": "CONFIG_REQUIRED/CONFIG_DOMAIN/CONFIG_OLD_AUTHOR before renderer or host effects (proposed); source native guards remain separately observed",
+      "positiveOracle": "exact field value and unchanged other authored/captured identity fields -> nativePoolPolicy/renderer outputs -> selected physical cgroup/kubelet/installed-version readback in H fixture, not rendered text alone",
+      "priorState": "recorded A nodeUID/machineID/bootID/runtime/provider grants; nonempty owned scope and sealed journal before B publication; A scope unchanged and B host admission fenced until quiescent",
+      "source": {
+        "path": "scripts/native-worker-node-policy.mjs",
+        "field": "pools.prism.tasks",
+        "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+        "line": null
+      },
+      "caseIds": [
+        "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+        "DLV-CASE-NATIVE-HOST-ACTIVATION"
+      ]
+    },
+    {
+      "settingId": "DLV-NATIVE-HOST-POOLS-PRISM-MAXIMUMACTIVESCOPES",
+      "field": "pools.prism.maximumActiveScopes",
+      "domain": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 9007199254740991
+      },
+      "A": {
+        "authorFile": "docs/review/evidence/config-acceptance/delivery/native-host-target-profiles-20261013/A.yaml",
+        "authorSha256": "34e46888019fcc3688de188a2e06c62851de972c4ce587c10d05f6cc701ebbb6",
+        "versionSelection": "versions.json#/nativeRuntime/containerd/version",
+        "versionCandidate": "2.2.0",
+        "versionNote": "supported syntax definition candidates ONLY; authentic selected distribution/package/runtime identity required for installed controls. Migration preserves declared2.3.4-k3s1.36 in solemanifest, not installed claim.",
+        "semanticPrerequisites": [
+          "HOST-AGGREGATE-SAFE",
+          "HOST-CFS-RATE",
+          "HOST-CAPACITY",
+          "HOST-VERSION-SOLE"
+        ]
+      },
+      "B": {
+        "authorFile": "docs/review/evidence/config-acceptance/delivery/native-host-target-profiles-20261013/B.yaml",
+        "authorSha256": "40edb4fc04f9c70beb9efc5ca80f88a71776f5487eefa14e5d3309c11e6c200a",
+        "versionSelection": "versions.json#/nativeRuntime/containerd/version",
+        "versionCandidate": "2.3.0",
+        "versionNote": "supported syntax definition candidates ONLY; authentic selected distribution/package/runtime identity required for installed controls. Migration preserves declared2.3.4-k3s1.36 in solemanifest, not installed claim.",
+        "semanticPrerequisites": [
+          "HOST-AGGREGATE-SAFE",
+          "HOST-CFS-RATE",
+          "HOST-CAPACITY",
+          "HOST-VERSION-SOLE"
+        ]
+      },
+      "activation": "H",
+      "firstNativeBoundary": "NATIVE_NODE_POLICY_LIMIT_INVALID",
+      "targetBoundary": "CONFIG_REQUIRED/CONFIG_DOMAIN/CONFIG_OLD_AUTHOR before renderer or host effects (proposed); source native guards remain separately observed",
+      "positiveOracle": "exact field value and unchanged other authored/captured identity fields -> nativePoolPolicy/renderer outputs -> selected physical cgroup/kubelet/installed-version readback in H fixture, not rendered text alone",
+      "priorState": "recorded A nodeUID/machineID/bootID/runtime/provider grants; nonempty owned scope and sealed journal before B publication; A scope unchanged and B host admission fenced until quiescent",
+      "source": {
+        "path": "scripts/native-worker-node-policy.mjs",
+        "field": "pools.prism.maximumActiveScopes",
+        "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+        "line": null
+      },
+      "caseIds": [
+        "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+        "DLV-CASE-NATIVE-HOST-ACTIVATION"
+      ]
+    },
+    {
+      "settingId": "DLV-NATIVE-HOST-RUNTIME-CONTAINERDVERSION",
+      "field": "runtime.containerdVersion",
+      "domain": {
+        "type": "string",
+        "pattern": "^2\\.(?:[2-9]|[1-9][0-9]+)\\.[0-9]+(?:[-+][A-Za-z0-9.-]+)?$",
+        "author": "versions.json#/nativeRuntime/containerd/version",
+        "noVersionAuthorInHostPolicy": true,
+        "canonicalRule": "sole versions entry has no leading v; current renderer accepts v but exact activation comparison does not normalize, so generatedversion must canonicalize at selected V author validation, not native silent fallback"
+      },
+      "A": {
+        "authorFile": "docs/review/evidence/config-acceptance/delivery/native-host-target-profiles-20261013/A.yaml",
+        "authorSha256": "34e46888019fcc3688de188a2e06c62851de972c4ce587c10d05f6cc701ebbb6",
+        "versionSelection": "versions.json#/nativeRuntime/containerd/version",
+        "versionCandidate": "2.2.0",
+        "versionNote": "supported syntax definition candidates ONLY; authentic selected distribution/package/runtime identity required for installed controls. Migration preserves declared2.3.4-k3s1.36 in solemanifest, not installed claim.",
+        "semanticPrerequisites": [
+          "HOST-AGGREGATE-SAFE",
+          "HOST-CFS-RATE",
+          "HOST-CAPACITY",
+          "HOST-VERSION-SOLE"
+        ]
+      },
+      "B": {
+        "authorFile": "docs/review/evidence/config-acceptance/delivery/native-host-target-profiles-20261013/B.yaml",
+        "authorSha256": "40edb4fc04f9c70beb9efc5ca80f88a71776f5487eefa14e5d3309c11e6c200a",
+        "versionSelection": "versions.json#/nativeRuntime/containerd/version",
+        "versionCandidate": "2.3.0",
+        "versionNote": "supported syntax definition candidates ONLY; authentic selected distribution/package/runtime identity required for installed controls. Migration preserves declared2.3.4-k3s1.36 in solemanifest, not installed claim.",
+        "semanticPrerequisites": [
+          "HOST-AGGREGATE-SAFE",
+          "HOST-CFS-RATE",
+          "HOST-CAPACITY",
+          "HOST-VERSION-SOLE"
+        ]
+      },
+      "activation": "H",
+      "firstNativeBoundary": "NATIVE_NODE_SELECTED_CONTAINERD_VERSION_REQUIRED",
+      "targetBoundary": "CONFIG_REQUIRED/CONFIG_DOMAIN/CONFIG_OLD_AUTHOR before renderer or host effects (proposed); source native guards remain separately observed",
+      "positiveOracle": "exact field value and unchanged other authored/captured identity fields -> nativePoolPolicy/renderer outputs -> selected physical cgroup/kubelet/installed-version readback in H fixture, not rendered text alone",
+      "priorState": "recorded A nodeUID/machineID/bootID/runtime/provider grants; nonempty owned scope and sealed journal before B publication; A scope unchanged and B host admission fenced until quiescent",
+      "source": {
+        "path": "scripts/native-worker-node-policy.mjs",
+        "field": "runtime.containerdVersion",
+        "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+        "line": null
+      },
+      "caseIds": [
+        "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+        "DLV-CASE-NATIVE-HOST-ACTIVATION"
+      ]
+    },
+    {
+      "settingId": "DLV-NATIVE-HOST-POOL-CPU-PERIOD-PROJECTION",
+      "field": "pool CPU period / quota relation",
+      "domain": {
+        "type": "integer",
+        "minimum": 1000,
+        "maximum": 1000000
+      },
+      "A": {
+        "authorFile": "docs/review/evidence/config-acceptance/delivery/native-host-target-profiles-20261013/A.yaml",
+        "authorSha256": "34e46888019fcc3688de188a2e06c62851de972c4ce587c10d05f6cc701ebbb6",
+        "versionSelection": "versions.json#/nativeRuntime/containerd/version",
+        "versionCandidate": "2.2.0",
+        "versionNote": "supported syntax definition candidates ONLY; authentic selected distribution/package/runtime identity required for installed controls. Migration preserves declared2.3.4-k3s1.36 in solemanifest, not installed claim.",
+        "semanticPrerequisites": [
+          "HOST-AGGREGATE-SAFE",
+          "HOST-CFS-RATE",
+          "HOST-CAPACITY",
+          "HOST-VERSION-SOLE"
+        ]
+      },
+      "B": {
+        "authorFile": "docs/review/evidence/config-acceptance/delivery/native-host-target-profiles-20261013/B.yaml",
+        "authorSha256": "40edb4fc04f9c70beb9efc5ca80f88a71776f5487eefa14e5d3309c11e6c200a",
+        "versionSelection": "versions.json#/nativeRuntime/containerd/version",
+        "versionCandidate": "2.3.0",
+        "versionNote": "supported syntax definition candidates ONLY; authentic selected distribution/package/runtime identity required for installed controls. Migration preserves declared2.3.4-k3s1.36 in solemanifest, not installed claim.",
+        "semanticPrerequisites": [
+          "HOST-AGGREGATE-SAFE",
+          "HOST-CFS-RATE",
+          "HOST-CAPACITY",
+          "HOST-VERSION-SOLE"
+        ]
+      },
+      "activation": "H",
+      "firstNativeBoundary": "WORKER_NATIVE_POOL_POLICY_LIMIT_INVALID",
+      "targetBoundary": "CONFIG_REQUIRED/CONFIG_DOMAIN/CONFIG_OLD_AUTHOR before renderer or host effects (proposed); source native guards remain separately observed",
+      "positiveOracle": "exact field value and unchanged other authored/captured identity fields -> nativePoolPolicy/renderer outputs -> selected physical cgroup/kubelet/installed-version readback in H fixture, not rendered text alone",
+      "priorState": "recorded A nodeUID/machineID/bootID/runtime/provider grants; nonempty owned scope and sealed journal before B publication; A scope unchanged and B host admission fenced until quiescent",
+      "source": {
+        "path": "scripts/native-worker-node-policy.mjs",
+        "line": 48,
+        "field": "pool CPU period / quota relation",
+        "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1"
+      },
+      "caseIds": [
+        "DLV-CASE-NATIVE-PROVISIONING-IDENTITY-CLOSURE"
+      ]
+    }
+  ],
+  "futureHarness": "tests/verification/config/delivery-native-host-policy.test.mts",
+  "fixtureDeclaration": "isolated disposable delegated cgroup-v2 node with selected native runtime/package/grant/image/kernel receipts; synthetic definition profiles are not physical capacity. Harness must assert preconditions and cannot classify setup failure/unsupported ABI as semantic negative kill. Parent originalModule cleanup/grantIDs pending; no fabricated alias."
+}

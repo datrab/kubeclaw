@@ -1,0 +1,880 @@
+{
+  "caseId": "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+  "command": "node docs/review/evidence/config-acceptance/runtime/batches/bce3f075-security-02/check-owned-policy.mjs",
+  "node": "v24.21.0",
+  "sourceDigests": {
+    "skills/common/plugin-runtime/foundation/registry/schema.ts": "eb665b9db83e0d0d1bd15fbe5c6f916f479bf8a9c049de6d90b2d6f9f59cc557"
+  },
+  "testDigests": {
+    "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-security-02/check-owned-policy.mjs": "0febad7ea9f27d81c10907a45ee3d0228ea549a93fa5559ba0b298ac1c8dda4e"
+  },
+  "inputDigests": {
+    "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-security-02/owned-policy.schema.json": "5a8faa9f58b774a750606f2565f0191a956833add73bf557b924e9327631da8f",
+    "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-security-02/owned-policy-controls.json": "42a3e0555351c7766d4ec46f4d835283ed8846fb440ee7e4a5ccead5bb36a529"
+  },
+  "observations": [
+    {
+      "setting": "RT-163ebc138c768e21",
+      "completeA": "valid proposed owner",
+      "completeB": "valid proposed owner",
+      "missingBusinessFlag": "reject",
+      "retiredPreset": "reject",
+      "presentUnusedValue": "reject",
+      "unusedScannerError": "reject",
+      "unsafeNonfiniteHstsThreshold": "reject targetsemantic; current schema/parser accept",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-d233d3039be3adc4",
+      "completeA": "valid proposed owner",
+      "completeB": "valid proposed owner",
+      "missingBusinessFlag": "reject",
+      "retiredPreset": "reject",
+      "presentUnusedValue": "reject",
+      "unusedScannerError": "reject",
+      "unsafeNonfiniteHstsThreshold": "reject targetsemantic; current schema/parser accept",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-6eac87138fc57ac9",
+      "completeA": "valid proposed owner",
+      "completeB": "valid proposed owner",
+      "missingBusinessFlag": "reject",
+      "retiredPreset": "reject",
+      "presentUnusedValue": "reject",
+      "unusedScannerError": "reject",
+      "unsafeNonfiniteHstsThreshold": "reject targetsemantic; current schema/parser accept",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-6afb26eb1a7b7271",
+      "completeA": "valid proposed owner",
+      "completeB": "valid proposed owner",
+      "missingBusinessFlag": "reject",
+      "retiredPreset": "reject",
+      "presentUnusedValue": "reject",
+      "unusedScannerError": "reject",
+      "unsafeNonfiniteHstsThreshold": "reject targetsemantic; current schema/parser accept",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-611f5b01895a7c90",
+      "completeA": "valid proposed owner",
+      "completeB": "valid proposed owner",
+      "missingBusinessFlag": "reject",
+      "retiredPreset": "reject",
+      "presentUnusedValue": "reject",
+      "unusedScannerError": "reject",
+      "unsafeNonfiniteHstsThreshold": "reject targetsemantic; current schema/parser accept",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-93c925a29f21dd8d",
+      "completeA": "valid proposed owner",
+      "completeB": "valid proposed owner",
+      "missingBusinessFlag": "reject",
+      "retiredPreset": "reject",
+      "presentUnusedValue": "reject",
+      "unusedScannerError": "reject",
+      "unsafeNonfiniteHstsThreshold": "reject targetsemantic; current schema/parser accept",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-d852318fd5b15892",
+      "completeA": "valid proposed owner",
+      "completeB": "valid proposed owner",
+      "missingBusinessFlag": "reject",
+      "retiredPreset": "reject",
+      "presentUnusedValue": "reject",
+      "unusedScannerError": "reject",
+      "unsafeNonfiniteHstsThreshold": "reject targetsemantic; current schema/parser accept",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-cd92cb7109a38c4a",
+      "completeA": "valid proposed owner",
+      "completeB": "valid proposed owner",
+      "missingBusinessFlag": "reject",
+      "retiredPreset": "reject",
+      "presentUnusedValue": "reject",
+      "unusedScannerError": "reject",
+      "unsafeNonfiniteHstsThreshold": "reject targetsemantic; current schema/parser accept",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-8a73cb4fa2939ad4",
+      "completeA": "valid proposed owner",
+      "completeB": "valid proposed owner",
+      "missingBusinessFlag": "reject",
+      "retiredPreset": "reject",
+      "presentUnusedValue": "reject",
+      "unusedScannerError": "reject",
+      "unsafeNonfiniteHstsThreshold": "reject targetsemantic; current schema/parser accept",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-ebb85facca8d1b1b",
+      "completeA": "valid proposed owner",
+      "completeB": "valid proposed owner",
+      "missingBusinessFlag": "reject",
+      "retiredPreset": "reject",
+      "presentUnusedValue": "reject",
+      "unusedScannerError": "reject",
+      "unsafeNonfiniteHstsThreshold": "reject targetsemantic; current schema/parser accept",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-d87b67b33610f619",
+      "completeA": "valid proposed owner",
+      "completeB": "valid proposed owner",
+      "missingBusinessFlag": "reject",
+      "retiredPreset": "reject",
+      "presentUnusedValue": "reject",
+      "unusedScannerError": "reject",
+      "unsafeNonfiniteHstsThreshold": "reject targetsemantic; current schema/parser accept",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-ef66623413223fef",
+      "completeA": "valid proposed owner",
+      "completeB": "valid proposed owner",
+      "missingBusinessFlag": "reject",
+      "retiredPreset": "reject",
+      "presentUnusedValue": "reject",
+      "unusedScannerError": "reject",
+      "unsafeNonfiniteHstsThreshold": "reject targetsemantic; current schema/parser accept",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-101f7a1f1f29236a",
+      "completeA": "valid proposed owner",
+      "completeB": "valid proposed owner",
+      "missingBusinessFlag": "reject",
+      "retiredPreset": "reject",
+      "presentUnusedValue": "reject",
+      "unusedScannerError": "reject",
+      "unsafeNonfiniteHstsThreshold": "reject targetsemantic; current schema/parser accept",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-5118b56e0742663b",
+      "completeA": "valid proposed owner",
+      "completeB": "valid proposed owner",
+      "missingBusinessFlag": "reject",
+      "retiredPreset": "reject",
+      "presentUnusedValue": "reject",
+      "unusedScannerError": "reject",
+      "unsafeNonfiniteHstsThreshold": "reject targetsemantic; current schema/parser accept",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-584baa9f0f15c058",
+      "completeA": "valid proposed owner",
+      "completeB": "valid proposed owner",
+      "missingBusinessFlag": "reject",
+      "retiredPreset": "reject",
+      "presentUnusedValue": "reject",
+      "unusedScannerError": "reject",
+      "unsafeNonfiniteHstsThreshold": "reject targetsemantic; current schema/parser accept",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-6ecf22c1afd37e91",
+      "completeA": "valid proposed owner",
+      "completeB": "valid proposed owner",
+      "missingBusinessFlag": "reject",
+      "retiredPreset": "reject",
+      "presentUnusedValue": "reject",
+      "unusedScannerError": "reject",
+      "unsafeNonfiniteHstsThreshold": "reject targetsemantic; current schema/parser accept",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-e702d189d1282e3b",
+      "completeA": "valid proposed owner",
+      "completeB": "valid proposed owner",
+      "missingBusinessFlag": "reject",
+      "retiredPreset": "reject",
+      "presentUnusedValue": "reject",
+      "unusedScannerError": "reject",
+      "unsafeNonfiniteHstsThreshold": "reject targetsemantic; current schema/parser accept",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-58a77efdd8cd5820",
+      "completeA": "valid proposed owner",
+      "completeB": "valid proposed owner",
+      "missingBusinessFlag": "reject",
+      "retiredPreset": "reject",
+      "presentUnusedValue": "reject",
+      "unusedScannerError": "reject",
+      "unsafeNonfiniteHstsThreshold": "reject targetsemantic; current schema/parser accept",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-95a1b17121581a49",
+      "completeA": "valid proposed owner",
+      "completeB": "valid proposed owner",
+      "missingBusinessFlag": "reject",
+      "retiredPreset": "reject",
+      "presentUnusedValue": "reject",
+      "unusedScannerError": "reject",
+      "unsafeNonfiniteHstsThreshold": "reject targetsemantic; current schema/parser accept",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-f4e73c3bb3c19c65",
+      "completeA": "valid proposed owner",
+      "completeB": "valid proposed owner",
+      "missingBusinessFlag": "reject",
+      "retiredPreset": "reject",
+      "presentUnusedValue": "reject",
+      "unusedScannerError": "reject",
+      "unsafeNonfiniteHstsThreshold": "reject targetsemantic; current schema/parser accept",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-0da96fe7ba066ccb",
+      "completeA": "valid proposed owner",
+      "completeB": "valid proposed owner",
+      "missingBusinessFlag": "reject",
+      "retiredPreset": "reject",
+      "presentUnusedValue": "reject",
+      "unusedScannerError": "reject",
+      "unsafeNonfiniteHstsThreshold": "reject targetsemantic; current schema/parser accept",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-0c0b02b6fbc2160c",
+      "completeA": "valid proposed owner",
+      "completeB": "valid proposed owner",
+      "missingBusinessFlag": "reject",
+      "retiredPreset": "reject",
+      "presentUnusedValue": "reject",
+      "unusedScannerError": "reject",
+      "unsafeNonfiniteHstsThreshold": "reject targetsemantic; current schema/parser accept",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-c9bc44d00a7b9c90",
+      "completeA": "valid proposed owner",
+      "completeB": "valid proposed owner",
+      "missingBusinessFlag": "reject",
+      "retiredPreset": "reject",
+      "presentUnusedValue": "reject",
+      "unusedScannerError": "reject",
+      "unsafeNonfiniteHstsThreshold": "reject targetsemantic; current schema/parser accept",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-6b059c9d6ad52058",
+      "completeA": "valid proposed owner",
+      "completeB": "valid proposed owner",
+      "missingBusinessFlag": "reject",
+      "retiredPreset": "reject",
+      "presentUnusedValue": "reject",
+      "unusedScannerError": "reject",
+      "unsafeNonfiniteHstsThreshold": "reject targetsemantic; current schema/parser accept",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-cdfcefd44e87996b",
+      "completeA": "valid proposed owner",
+      "completeB": "valid proposed owner",
+      "missingBusinessFlag": "reject",
+      "retiredPreset": "reject",
+      "presentUnusedValue": "reject",
+      "unusedScannerError": "reject",
+      "unsafeNonfiniteHstsThreshold": "reject targetsemantic; current schema/parser accept",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-f365121af3c2af9e",
+      "completeA": "valid proposed owner",
+      "completeB": "valid proposed owner",
+      "missingBusinessFlag": "reject",
+      "retiredPreset": "reject",
+      "presentUnusedValue": "reject",
+      "unusedScannerError": "reject",
+      "unsafeNonfiniteHstsThreshold": "reject targetsemantic; current schema/parser accept",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-3caa1e915a125dcd",
+      "completeA": "valid proposed owner",
+      "completeB": "valid proposed owner",
+      "missingBusinessFlag": "reject",
+      "retiredPreset": "reject",
+      "presentUnusedValue": "reject",
+      "unusedScannerError": "reject",
+      "unsafeNonfiniteHstsThreshold": "reject targetsemantic; current schema/parser accept",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-ea0bcd6957dbc556",
+      "completeA": "valid proposed owner",
+      "completeB": "valid proposed owner",
+      "missingBusinessFlag": "reject",
+      "retiredPreset": "reject",
+      "presentUnusedValue": "reject",
+      "unusedScannerError": "reject",
+      "unsafeNonfiniteHstsThreshold": "reject targetsemantic; current schema/parser accept",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-4c38b23dda98be93",
+      "completeA": "valid proposed owner",
+      "completeB": "valid proposed owner",
+      "missingBusinessFlag": "reject",
+      "retiredPreset": "reject",
+      "presentUnusedValue": "reject",
+      "unusedScannerError": "reject",
+      "unsafeNonfiniteHstsThreshold": "reject targetsemantic; current schema/parser accept",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-0e050207e6faa65c",
+      "completeA": "valid proposed owner",
+      "completeB": "valid proposed owner",
+      "missingBusinessFlag": "reject",
+      "retiredPreset": "reject",
+      "presentUnusedValue": "reject",
+      "unusedScannerError": "reject",
+      "unsafeNonfiniteHstsThreshold": "reject targetsemantic; current schema/parser accept",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-ec0fc91072a8b630",
+      "completeA": "valid proposed owner",
+      "completeB": "valid proposed owner",
+      "missingBusinessFlag": "reject",
+      "retiredPreset": "reject",
+      "presentUnusedValue": "reject",
+      "unusedScannerError": "reject",
+      "unsafeNonfiniteHstsThreshold": "reject targetsemantic; current schema/parser accept",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-1242f6b3245f130e",
+      "completeA": "valid proposed owner",
+      "completeB": "valid proposed owner",
+      "missingBusinessFlag": "reject",
+      "retiredPreset": "reject",
+      "presentUnusedValue": "reject",
+      "unusedScannerError": "reject",
+      "unsafeNonfiniteHstsThreshold": "reject targetsemantic; current schema/parser accept",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-3f66e997ecc380c1",
+      "completeA": "valid proposed owner",
+      "completeB": "valid proposed owner",
+      "missingBusinessFlag": "reject",
+      "retiredPreset": "reject",
+      "presentUnusedValue": "reject",
+      "unusedScannerError": "reject",
+      "unsafeNonfiniteHstsThreshold": "reject targetsemantic; current schema/parser accept",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-81f4bdf5f3872b9e",
+      "completeA": "valid proposed owner",
+      "completeB": "valid proposed owner",
+      "missingBusinessFlag": "reject",
+      "retiredPreset": "reject",
+      "presentUnusedValue": "reject",
+      "unusedScannerError": "reject",
+      "unsafeNonfiniteHstsThreshold": "reject targetsemantic; current schema/parser accept",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-4a23015d6ca86669",
+      "completeA": "valid proposed owner",
+      "completeB": "valid proposed owner",
+      "missingBusinessFlag": "reject",
+      "retiredPreset": "reject",
+      "presentUnusedValue": "reject",
+      "unusedScannerError": "reject",
+      "unsafeNonfiniteHstsThreshold": "reject targetsemantic; current schema/parser accept",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-a3dc4204fd2dbc99",
+      "completeA": "valid proposed owner",
+      "completeB": "valid proposed owner",
+      "missingBusinessFlag": "reject",
+      "retiredPreset": "reject",
+      "presentUnusedValue": "reject",
+      "unusedScannerError": "reject",
+      "unsafeNonfiniteHstsThreshold": "reject targetsemantic; current schema/parser accept",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-d912c283aeea31d8",
+      "completeA": "valid proposed owner",
+      "completeB": "valid proposed owner",
+      "missingBusinessFlag": "reject",
+      "retiredPreset": "reject",
+      "presentUnusedValue": "reject",
+      "unusedScannerError": "reject",
+      "unsafeNonfiniteHstsThreshold": "reject targetsemantic; current schema/parser accept",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-25155a8525353895",
+      "completeA": "valid proposed owner",
+      "completeB": "valid proposed owner",
+      "missingBusinessFlag": "reject",
+      "retiredPreset": "reject",
+      "presentUnusedValue": "reject",
+      "unusedScannerError": "reject",
+      "unsafeNonfiniteHstsThreshold": "reject targetsemantic; current schema/parser accept",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-513bbd46b45156b7",
+      "completeA": "valid proposed owner",
+      "completeB": "valid proposed owner",
+      "missingBusinessFlag": "reject",
+      "retiredPreset": "reject",
+      "presentUnusedValue": "reject",
+      "unusedScannerError": "reject",
+      "unsafeNonfiniteHstsThreshold": "reject targetsemantic; current schema/parser accept",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-6d1bc088852536a7",
+      "completeA": "valid proposed owner",
+      "completeB": "valid proposed owner",
+      "missingBusinessFlag": "reject",
+      "retiredPreset": "reject",
+      "presentUnusedValue": "reject",
+      "unusedScannerError": "reject",
+      "unsafeNonfiniteHstsThreshold": "reject targetsemantic; current schema/parser accept",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-2dc4f91b61e79184",
+      "completeA": "valid proposed owner",
+      "completeB": "valid proposed owner",
+      "missingBusinessFlag": "reject",
+      "retiredPreset": "reject",
+      "presentUnusedValue": "reject",
+      "unusedScannerError": "reject",
+      "unsafeNonfiniteHstsThreshold": "reject targetsemantic; current schema/parser accept",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-bd7eee80bc8feca2",
+      "completeA": "valid proposed owner",
+      "completeB": "valid proposed owner",
+      "missingBusinessFlag": "reject",
+      "retiredPreset": "reject",
+      "presentUnusedValue": "reject",
+      "unusedScannerError": "reject",
+      "unsafeNonfiniteHstsThreshold": "reject targetsemantic; current schema/parser accept",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-53653aa9d3f03c8f",
+      "completeA": "valid proposed owner",
+      "completeB": "valid proposed owner",
+      "missingBusinessFlag": "reject",
+      "retiredPreset": "reject",
+      "presentUnusedValue": "reject",
+      "unusedScannerError": "reject",
+      "unsafeNonfiniteHstsThreshold": "reject targetsemantic; current schema/parser accept",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-376a55c52779beed",
+      "completeA": "valid proposed owner",
+      "completeB": "valid proposed owner",
+      "missingBusinessFlag": "reject",
+      "retiredPreset": "reject",
+      "presentUnusedValue": "reject",
+      "unusedScannerError": "reject",
+      "unsafeNonfiniteHstsThreshold": "reject targetsemantic; current schema/parser accept",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-e8358fe85c80d3d0",
+      "completeA": "valid proposed owner",
+      "completeB": "valid proposed owner",
+      "missingBusinessFlag": "reject",
+      "retiredPreset": "reject",
+      "presentUnusedValue": "reject",
+      "unusedScannerError": "reject",
+      "unsafeNonfiniteHstsThreshold": "reject targetsemantic; current schema/parser accept",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-2fe8190f12f15510",
+      "completeA": "valid proposed owner",
+      "completeB": "valid proposed owner",
+      "missingBusinessFlag": "reject",
+      "retiredPreset": "reject",
+      "presentUnusedValue": "reject",
+      "unusedScannerError": "reject",
+      "unsafeNonfiniteHstsThreshold": "reject targetsemantic; current schema/parser accept",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-8de947a02be68652",
+      "completeA": "valid proposed owner",
+      "completeB": "valid proposed owner",
+      "missingBusinessFlag": "reject",
+      "retiredPreset": "reject",
+      "presentUnusedValue": "reject",
+      "unusedScannerError": "reject",
+      "unsafeNonfiniteHstsThreshold": "reject targetsemantic; current schema/parser accept",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-76d0d20d46b9a8e6",
+      "completeA": "valid proposed owner",
+      "completeB": "valid proposed owner",
+      "missingBusinessFlag": "reject",
+      "retiredPreset": "reject",
+      "presentUnusedValue": "reject",
+      "unusedScannerError": "reject",
+      "unsafeNonfiniteHstsThreshold": "reject targetsemantic; current schema/parser accept",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-773179d734f2eb77",
+      "completeA": "valid proposed owner",
+      "completeB": "valid proposed owner",
+      "missingBusinessFlag": "reject",
+      "retiredPreset": "reject",
+      "presentUnusedValue": "reject",
+      "unusedScannerError": "reject",
+      "unsafeNonfiniteHstsThreshold": "reject targetsemantic; current schema/parser accept",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-9370858078281283",
+      "completeA": "valid proposed owner",
+      "completeB": "valid proposed owner",
+      "missingBusinessFlag": "reject",
+      "retiredPreset": "reject",
+      "presentUnusedValue": "reject",
+      "unusedScannerError": "reject",
+      "unsafeNonfiniteHstsThreshold": "reject targetsemantic; current schema/parser accept",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-f036e66205a0fa61",
+      "completeA": "valid proposed owner",
+      "completeB": "valid proposed owner",
+      "missingBusinessFlag": "reject",
+      "retiredPreset": "reject",
+      "presentUnusedValue": "reject",
+      "unusedScannerError": "reject",
+      "unsafeNonfiniteHstsThreshold": "reject targetsemantic; current schema/parser accept",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-ffc33c06d6b6a1c2",
+      "completeA": "valid proposed owner",
+      "completeB": "valid proposed owner",
+      "missingBusinessFlag": "reject",
+      "retiredPreset": "reject",
+      "presentUnusedValue": "reject",
+      "unusedScannerError": "reject",
+      "unsafeNonfiniteHstsThreshold": "reject targetsemantic; current schema/parser accept",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-0a39f16498c38979",
+      "completeA": "valid proposed owner",
+      "completeB": "valid proposed owner",
+      "missingBusinessFlag": "reject",
+      "retiredPreset": "reject",
+      "presentUnusedValue": "reject",
+      "unusedScannerError": "reject",
+      "unsafeNonfiniteHstsThreshold": "reject targetsemantic; current schema/parser accept",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-c00914a2402f91bf",
+      "completeA": "valid proposed owner",
+      "completeB": "valid proposed owner",
+      "missingBusinessFlag": "reject",
+      "retiredPreset": "reject",
+      "presentUnusedValue": "reject",
+      "unusedScannerError": "reject",
+      "unsafeNonfiniteHstsThreshold": "reject targetsemantic; current schema/parser accept",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-8d1e26bc5360c737",
+      "completeA": "valid proposed owner",
+      "completeB": "valid proposed owner",
+      "missingBusinessFlag": "reject",
+      "retiredPreset": "reject",
+      "presentUnusedValue": "reject",
+      "unusedScannerError": "reject",
+      "unsafeNonfiniteHstsThreshold": "reject targetsemantic; current schema/parser accept",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-ae78d041c3d0fbd6",
+      "completeA": "valid proposed owner",
+      "completeB": "valid proposed owner",
+      "missingBusinessFlag": "reject",
+      "retiredPreset": "reject",
+      "presentUnusedValue": "reject",
+      "unusedScannerError": "reject",
+      "unsafeNonfiniteHstsThreshold": "reject targetsemantic; current schema/parser accept",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-9941fbebdaea1c41",
+      "completeA": "valid proposed owner",
+      "completeB": "valid proposed owner",
+      "missingBusinessFlag": "reject",
+      "retiredPreset": "reject",
+      "presentUnusedValue": "reject",
+      "unusedScannerError": "reject",
+      "unsafeNonfiniteHstsThreshold": "reject targetsemantic; current schema/parser accept",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-2672b24a1df6464d",
+      "completeA": "valid proposed owner",
+      "completeB": "valid proposed owner",
+      "missingBusinessFlag": "reject",
+      "retiredPreset": "reject",
+      "presentUnusedValue": "reject",
+      "unusedScannerError": "reject",
+      "unsafeNonfiniteHstsThreshold": "reject targetsemantic; current schema/parser accept",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-52731740c2eb92d2",
+      "completeA": "valid proposed owner",
+      "completeB": "valid proposed owner",
+      "missingBusinessFlag": "reject",
+      "retiredPreset": "reject",
+      "presentUnusedValue": "reject",
+      "unusedScannerError": "reject",
+      "unsafeNonfiniteHstsThreshold": "reject targetsemantic; current schema/parser accept",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-cc64dd898be55e05",
+      "completeA": "valid proposed owner",
+      "completeB": "valid proposed owner",
+      "missingBusinessFlag": "reject",
+      "retiredPreset": "reject",
+      "presentUnusedValue": "reject",
+      "unusedScannerError": "reject",
+      "unsafeNonfiniteHstsThreshold": "reject targetsemantic; current schema/parser accept",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-95d37d46c3d99337",
+      "completeA": "valid proposed owner",
+      "completeB": "valid proposed owner",
+      "missingBusinessFlag": "reject",
+      "retiredPreset": "reject",
+      "presentUnusedValue": "reject",
+      "unusedScannerError": "reject",
+      "unsafeNonfiniteHstsThreshold": "reject targetsemantic; current schema/parser accept",
+      "result": "passed"
+    }
+  ],
+  "business": [
+    {
+      "field": "blockingSeverities",
+      "alternative": {
+        "providerTimeoutMs": {
+          "headers": 10000,
+          "dependency": 300000,
+          "image": 300000,
+          "kubernetes-policy": 120000,
+          "kubernetes-runtime": 120000
+        },
+        "headerRules": [
+          {
+            "id": "content-type-nosniff",
+            "header": "x-content-type-options",
+            "severity": "high",
+            "kind": "equals",
+            "value": "nosniff"
+          },
+          {
+            "id": "content-security-policy",
+            "header": "content-security-policy",
+            "severity": "high",
+            "kind": "present"
+          },
+          {
+            "id": "referrer-policy",
+            "header": "referrer-policy",
+            "severity": "medium",
+            "kind": "present"
+          },
+          {
+            "id": "permissions-policy",
+            "header": "permissions-policy",
+            "severity": "medium",
+            "kind": "present"
+          },
+          {
+            "id": "custom",
+            "header": "x-custom",
+            "severity": "high",
+            "kind": "equals",
+            "value": "a"
+          }
+        ],
+        "verdictPolicy": {
+          "blockingSeverities": [
+            "critical"
+          ],
+          "blockActiveThreats": true,
+          "blockMissingFixes": true,
+          "acceptances": [
+            {
+              "findingId": "header:custom:/a",
+              "reason": "C0 reviewed control waiver",
+              "expiresAt": "2099-01-01T00:00:00.000Z"
+            }
+          ]
+        }
+      },
+      "explicitNullReject": true,
+      "result": "passed"
+    },
+    {
+      "field": "blockActiveThreats",
+      "alternative": {
+        "providerTimeoutMs": {
+          "headers": 10000,
+          "dependency": 300000,
+          "image": 300000,
+          "kubernetes-policy": 120000,
+          "kubernetes-runtime": 120000
+        },
+        "headerRules": [
+          {
+            "id": "content-type-nosniff",
+            "header": "x-content-type-options",
+            "severity": "high",
+            "kind": "equals",
+            "value": "nosniff"
+          },
+          {
+            "id": "content-security-policy",
+            "header": "content-security-policy",
+            "severity": "high",
+            "kind": "present"
+          },
+          {
+            "id": "referrer-policy",
+            "header": "referrer-policy",
+            "severity": "medium",
+            "kind": "present"
+          },
+          {
+            "id": "permissions-policy",
+            "header": "permissions-policy",
+            "severity": "medium",
+            "kind": "present"
+          },
+          {
+            "id": "custom",
+            "header": "x-custom",
+            "severity": "high",
+            "kind": "equals",
+            "value": "a"
+          }
+        ],
+        "verdictPolicy": {
+          "blockingSeverities": [
+            "critical",
+            "high"
+          ],
+          "blockActiveThreats": false,
+          "blockMissingFixes": true,
+          "acceptances": [
+            {
+              "findingId": "header:custom:/a",
+              "reason": "C0 reviewed control waiver",
+              "expiresAt": "2099-01-01T00:00:00.000Z"
+            }
+          ]
+        }
+      },
+      "explicitNullReject": true,
+      "result": "passed"
+    },
+    {
+      "field": "blockMissingFixes",
+      "alternative": {
+        "providerTimeoutMs": {
+          "headers": 10000,
+          "dependency": 300000,
+          "image": 300000,
+          "kubernetes-policy": 120000,
+          "kubernetes-runtime": 120000
+        },
+        "headerRules": [
+          {
+            "id": "content-type-nosniff",
+            "header": "x-content-type-options",
+            "severity": "high",
+            "kind": "equals",
+            "value": "nosniff"
+          },
+          {
+            "id": "content-security-policy",
+            "header": "content-security-policy",
+            "severity": "high",
+            "kind": "present"
+          },
+          {
+            "id": "referrer-policy",
+            "header": "referrer-policy",
+            "severity": "medium",
+            "kind": "present"
+          },
+          {
+            "id": "permissions-policy",
+            "header": "permissions-policy",
+            "severity": "medium",
+            "kind": "present"
+          },
+          {
+            "id": "custom",
+            "header": "x-custom",
+            "severity": "high",
+            "kind": "equals",
+            "value": "a"
+          }
+        ],
+        "verdictPolicy": {
+          "blockingSeverities": [
+            "critical",
+            "high"
+          ],
+          "blockActiveThreats": true,
+          "blockMissingFixes": false,
+          "acceptances": [
+            {
+              "findingId": "header:custom:/a",
+              "reason": "C0 reviewed control waiver",
+              "expiresAt": "2099-01-01T00:00:00.000Z"
+            }
+          ]
+        }
+      },
+      "explicitNullReject": true,
+      "result": "passed"
+    }
+  ],
+  "result": "passed",
+  "scope": "proposed owner schema+semantic C0 definition only. CURRENT productive common.policy rejects explicitbusinessflags and always expands hardcoded POLICY. No migrated loader, supportedinstalledscanner/runtime/database, real scan/network/EFFECT or implementation acceptance."
+}

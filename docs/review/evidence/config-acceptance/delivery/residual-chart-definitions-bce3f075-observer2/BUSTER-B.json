@@ -1,0 +1,238 @@
+{
+  "image": {
+    "digest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+  },
+  "imagePullSecrets": [
+    {
+      "name": "delivery-pull-b"
+    }
+  ],
+  "auth": {
+    "existingSecret": "delivery-auth-b",
+    "existingSecretKey": "gateway-token"
+  },
+  "litellm": {
+    "existingSecret": "delivery-litellm-b",
+    "existingSecretKey": "api-key"
+  },
+  "discord": {
+    "enabled": true,
+    "existingSecret": "delivery-discord-b",
+    "existingSecretKey": "discord-token"
+  },
+  "agent": {
+    "git": {
+      "enabled": false
+    },
+    "model": {
+      "primary": "openai/gpt-5.5",
+      "fallbacks": [
+        "openai/gpt-5.6-sol"
+      ]
+    }
+  },
+  "gateway": {
+    "startupDoctor": {
+      "resources": {
+        "requests": {
+          "cpu": "200m",
+          "memory": "256Mi"
+        },
+        "limits": {
+          "cpu": "2",
+          "memory": "2Gi"
+        }
+      }
+    },
+    "resources": {
+      "requests": {
+        "cpu": "600m",
+        "memory": "768Mi",
+        "ephemeral-storage": "2Gi"
+      },
+      "limits": {
+        "cpu": "6",
+        "memory": "6Gi",
+        "ephemeral-storage": "4Gi"
+      }
+    },
+    "port": 18782,
+    "bridgePort": 18792,
+    "url": "http://127.0.0.1:18782"
+  },
+  "initSetup": {
+    "resources": {
+      "requests": {
+        "cpu": "200m",
+        "memory": "256Mi"
+      },
+      "limits": {
+        "cpu": "2",
+        "memory": "2Gi"
+      }
+    }
+  },
+  "resources": {
+    "requests": {
+      "cpu": "200m",
+      "memory": "256Mi"
+    },
+    "limits": {
+      "cpu": "2",
+      "memory": "2Gi"
+    }
+  },
+  "workerTrust": {
+    "spiffe": {
+      "enabled": true,
+      "envoy": {
+        "resources": {
+          "requests": {
+            "cpu": "200m",
+            "memory": "256Mi"
+          },
+          "limits": {
+            "cpu": "2",
+            "memory": "2Gi"
+          }
+        }
+      }
+    }
+  },
+  "persistence": {
+    "config": {
+      "enabled": true,
+      "size": "20Gi",
+      "storageClass": "delivery-storage-b",
+      "accessModes": [
+        "ReadWriteOnce"
+      ]
+    },
+    "workspace": {
+      "enabled": true,
+      "size": "40Gi",
+      "storageClass": "delivery-storage-b",
+      "accessModes": [
+        "ReadWriteOnce"
+      ]
+    }
+  },
+  "serviceAccount": {
+    "create": true
+  },
+  "agentRole": "buster",
+  "busterNative": {
+    "nodeName": "delivery-node",
+    "namespace": "default",
+    "policyDigest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+  },
+  "busterNamespaceBroker": {
+    "enabled": true,
+    "controller": {
+      "resources": {
+        "requests": {
+          "cpu": "200m",
+          "memory": "256Mi"
+        },
+        "limits": {
+          "cpu": "2",
+          "memory": "2Gi"
+        }
+      }
+    }
+  },
+  "extraContainers": [
+    {
+      "name": "buster-v2-runtime",
+      "image": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "resources": {
+        "requests": {
+          "cpu": "200m",
+          "memory": "256Mi"
+        },
+        "limits": {
+          "cpu": "2",
+          "memory": "2Gi"
+        }
+      }
+    }
+  ],
+  "runtimeInfrastructure": {
+    "registry": {
+      "endpoint": "https://registry.example.test",
+      "transport": "https",
+      "authSecretName": "delivery-registry-b"
+    }
+  },
+  "service": {
+    "type": "ClusterIP",
+    "gatewayPort": 18782,
+    "gatewayTargetPort": 18782,
+    "bridgeEnabled": false,
+    "bridgePort": 18792,
+    "nodePort": 0,
+    "bridgeNodePort": 0,
+    "extraPorts": []
+  },
+  "probes": {
+    "startup": {
+      "enabled": true,
+      "initialDelaySeconds": 2,
+      "periodSeconds": 7,
+      "timeoutSeconds": 5,
+      "failureThreshold": 22
+    },
+    "readiness": {
+      "enabled": true,
+      "initialDelaySeconds": 2,
+      "periodSeconds": 8,
+      "timeoutSeconds": 6,
+      "failureThreshold": 5
+    },
+    "dependencies": {
+      "gateway": {
+        "enabled": true
+      },
+      "redis": {
+        "enabled": true
+      },
+      "redisStream": {
+        "enabled": true,
+        "stream": "dlv:health:b",
+        "maxLen": 1000
+      },
+      "litellm": {
+        "enabled": false
+      },
+      "registries": {
+        "enabled": true,
+        "endpoints": [
+          "https://registry-b.delivery.invalid"
+        ]
+      }
+    }
+  },
+  "shutdown": {
+    "terminationGracePeriodSeconds": 200,
+    "preStopDrainSeconds": 7,
+    "drainFile": "/tmp/dlv-b-draining"
+  },
+  "workspace": {
+    "enabled": true,
+    "overrideOnRestart": false,
+    "soul": "Delivery definition B",
+    "agents": "",
+    "user": "",
+    "tools": "",
+    "memory": "",
+    "identity": "",
+    "bootstrap": ""
+  },
+  "pluginSeed": {
+    "installMode": "external-official",
+    "specs": [
+      "npm:@openclaw/acpx@2026.9.5",
+      "npm:@openclaw/discord@2026.9.5"
+    ]
+  }
+}

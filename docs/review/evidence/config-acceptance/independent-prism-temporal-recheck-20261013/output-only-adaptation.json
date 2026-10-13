@@ -1,0 +1,6 @@
+{
+  "originalScript": "docs/review/evidence/config-acceptance/author/check-prism-handoff-definitions.mjs",
+  "originalSHA256": "e1c3cf2ceb42e509907771c8a76b6a4db6f74d4a1cd018ac30be49483c6a7c08",
+  "adaptedSHA256": "d626022c055989c1ecfbe1c0eb7b3b4918c0b5b6e915c735c57ab50e4ac8da1e",
+  "onlyChange": "Single receipt-output path; no validator/input/assertion changes; parentfilesnotwritten"
+}

@@ -1,0 +1,14 @@
+{"argv": ["rg", "-n", "roles", "skills/prism/server", "skills/prism/control", "skills/prism/corpus"], "exitCode": 0}
+skills/prism/server/bootstrap-database.ts:2:import { bootstrapPrismDatabaseRoles } from './database-roles.ts';
+skills/prism/server/database-roles.ts:5:const roles = ['migrator', 'runtime', 'readonly'] as const;
+skills/prism/server/database-roles.ts:28:  if (roles.some(role => !passwords[role])) throw new Error('PRISM_ROLE_PASSWORD_REQUIRED');
+skills/prism/server/database-roles.ts:35:        "SELECT rolname FROM pg_roles WHERE rolname = ANY($1::text[])", [roles.map(role => `prism_${role}`)])).rows.map(row => row.rolname));
+skills/prism/server/database-roles.ts:44:  for (const role of roles) if (existing.has(`prism_${role}`)) await verifyCredential(adminUrl, `prism_${role}`, passwords[role]);
+skills/prism/server/database-roles.ts:45:  for (const role of roles) if (!existing.has(`prism_${role}`)) await client.query(`CREATE ROLE prism_${role} LOGIN PASSWORD ${literal(passwords[role])}`);
+skills/prism/server/control-context.ts:51:  return { user: session.user, roles: session.roles, csrf };
+skills/prism/control/session.ts:3:export type Session = { user: string; audience: "prism"; roles: string[]; expiresAt: number };
+skills/prism/control/session.ts:5:export function mintSession(user: string, secret: string, now = Date.now(), roles=["editor"]): string {
+skills/prism/control/session.ts:6:  const payload = encode({ user, audience:"prism", roles, expiresAt: now + 15 * 60_000 });
+skills/prism/control/session.ts:14:  if (!session.user || session.audience!=="prism" || !Array.isArray(session.roles) || session.expiresAt <= now) throw new Error("expired session"); return session;
+
+{"argv": ["rg", "-n", "actor.roles", "skills/prism"], "exitCode": 1}

@@ -1,0 +1,108 @@
+{
+  "scope": "documentation-integrity controls, no real files mutated, no substantive Core semantic review",
+  "sourceSha256": "0cbd2f83fc7002f4fdbb83b2d02e4060d6aae59589a0726ae0f7bd3ae95bf72a",
+  "observations": [
+    {
+      "id": "real-restored-positive",
+      "expectedRejection": null,
+      "exitCode": 0,
+      "errorCount": 0,
+      "errors": [],
+      "scope": "only virtual initial JSON loads differ; all actual source/reference files unchanged"
+    },
+    {
+      "id": "native-single-case-omission",
+      "expectedRejection": "original specification/requirement loss",
+      "exitCode": 1,
+      "errorCount": 2,
+      "errors": [
+        "native RUNTIME-NATIVE-CASE-SPECIFICATIONS: original specification/requirement loss",
+        "native RUNTIME-NATIVE-CASE-SPECIFICATIONS: missing/duplicate native mapping"
+      ],
+      "scope": "only virtual initial JSON loads differ; all actual source/reference files unchanged"
+    },
+    {
+      "id": "native-requirement-omission",
+      "expectedRejection": "mapping requirement loss",
+      "exitCode": 1,
+      "errorCount": 1,
+      "errors": [
+        "native RT-COMPILER-REPAIRBUDGET-CATEGORIES-LINT-MISSING: mapping requirement loss"
+      ],
+      "scope": "only virtual initial JSON loads differ; all actual source/reference files unchanged"
+    },
+    {
+      "id": "native-observation-reference-tamper",
+      "expectedRejection": "native observation references:",
+      "exitCode": 1,
+      "errorCount": 2,
+      "errors": [
+        "native RUNTIME-NATIVE-CASE-SPECIFICATIONS: original specification/requirement loss",
+        "native observation references: REFERENCE_ARTIFACT_DRIFT"
+      ],
+      "scope": "only virtual initial JSON loads differ; all actual source/reference files unchanged"
+    },
+    {
+      "id": "baseline-metadata-tamper",
+      "expectedRejection": "baseline requirement metadata drift",
+      "exitCode": 1,
+      "errorCount": 1,
+      "errors": [
+        "supplemental CORE-ICQ-DEFINITION-CORRECTIONS-20261013: baseline requirement metadata drift"
+      ],
+      "scope": "only virtual initial JSON loads differ; all actual source/reference files unchanged"
+    },
+    {
+      "id": "supplemental-required-ID-loss",
+      "expectedRejection": "baseline case/requirement loss",
+      "exitCode": 1,
+      "errorCount": 1,
+      "errors": [
+        "supplemental QC-BUSTER-PROVIDER-MEASUREMENT-FALLBACKS-RECOVERY-EVAL: baseline case/requirement loss"
+      ],
+      "scope": "only virtual initial JSON loads differ; all actual source/reference files unchanged"
+    },
+    {
+      "id": "supplemental-required-obligation-loss",
+      "expectedRejection": "baseline case/requirement loss",
+      "exitCode": 1,
+      "errorCount": 1,
+      "errors": [
+        "supplemental QC-FOUNDATION-FLOCK-WAIT-VAL: baseline case/requirement loss"
+      ],
+      "scope": "only virtual initial JSON loads differ; all actual source/reference files unchanged"
+    },
+    {
+      "id": "native-WHOLE-package-omission-undetected",
+      "expectedRejection": null,
+      "exitCode": 0,
+      "errorCount": 0,
+      "errors": [],
+      "scope": "only virtual initial JSON loads differ; all actual source/reference files unchanged"
+    },
+    {
+      "id": "canonical-native-spec-reference-tamper-undetected",
+      "expectedRejection": null,
+      "exitCode": 0,
+      "errorCount": 0,
+      "errors": [],
+      "scope": "only virtual initial JSON loads differ; all actual source/reference files unchanged"
+    },
+    {
+      "id": "inventory-native-package-count-tamper-undetected",
+      "expectedRejection": null,
+      "exitCode": 0,
+      "errorCount": 0,
+      "errors": [],
+      "scope": "only virtual initial JSON loads differ; all actual source/reference files unchanged"
+    },
+    {
+      "id": "real-restored-final-positive",
+      "expectedRejection": null,
+      "exitCode": 0,
+      "errorCount": 0,
+      "errors": [],
+      "scope": "only virtual initial JSON loads differ; all actual source/reference files unchanged"
+    }
+  ]
+}

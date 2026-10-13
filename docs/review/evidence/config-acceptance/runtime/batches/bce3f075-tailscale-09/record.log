@@ -1,0 +1,22 @@
+{
+  "status": "stable source/current parser-helper definition milestone only; NOT ACCEPTED",
+  "rows": 1248,
+  "cases": 5219,
+  "caseResults": {
+    "not-run": 3907,
+    "passed": 1312
+  },
+  "batch09SchemaRows": 5,
+  "newNarrowDefinitionCases": 5,
+  "newFutureNotRunCases": 20,
+  "oldCaseBodiesUnchanged": 5194,
+  "immutableObservationReferenceOccurrences": 1149,
+  "allC0ClosedFalse": true,
+  "remainingConsumerReviewRows": 77,
+  "remainingOriginalSupplementalSourceTracedRows": 197,
+  "originalCandidates": 4642,
+  "manualCandidateRecordsThisBatch": 88,
+  "manualCandidateRecordsCombined": 587,
+  "remainingUnreviewedCandidates": 4055,
+  "reviewedOpenCandidates": 95
+}

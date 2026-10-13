@@ -1,0 +1,18 @@
+{
+  "newRows": [
+    "RT-TRIVY-DATABASE-MAXIMUMJAVAAGEMS",
+    "RT-TRIVY-DATABASE-MAXIMUMVULNERABILITYAGEMS",
+    "RT-TRIVY-DATABASE-MAXIMUMDATABASEBYTES"
+  ],
+  "newDefinitions": 3,
+  "newFutureCases": 12,
+  "stillOpen": [
+    "metadata.json native fingerprint16KiB is separate unconfigurableprocessingquota, not governed by maximumDatabaseBytes",
+    "maximumDatabaseBytes applies PER DATABASE file, not totalcache; two48bytefiles admitted at64perfiletotal96",
+    "age checked actual clock beforeeachdatafingerprint then againcommonfinal evaluatedclock and providerreceiptclock, immutabilitydoesnotfreeze freshnesstime",
+    "sourcebefore/after hashes prove currentbytes/metadata not genuineDBformat/producertrust; actual installedscanner/database/profile/image/grants and mutationduringreal scan remain external futurefixtures",
+    "fullrealruntimefixture+source/tool/genuineDB/registry/grants/operatorpolicy inputs unknown",
+    "currentcapturedR policy cannotnextMretargetwithoutapprovednewinstance/C5 typeddependency"
+  ],
+  "status": "not-accepted"
+}

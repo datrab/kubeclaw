@@ -1,0 +1,28 @@
+[
+  {
+    "id": "duplicate-question",
+    "argv": [
+      "python3",
+      "docs/review/evidence/config-acceptance/components/question-closure-bce3f075/check-question-definition-integrity.py",
+      "--definitions",
+      "docs/review/evidence/config-acceptance/independent-core-source-question-bce3f075-20261013/duplicate-question.fixture.json"
+    ],
+    "exitCode": 1,
+    "fixtureSha256": "93722831eeccb76e8d6227614eec2de5a0ad32c93958caf55c4579fa567375c2",
+    "stdoutSha256": "a5b00189c200fd31a06f7eb6a92a3adaf084d46e35a6d881c5d44b24bd398354",
+    "scope": "Documentation identity/link negative/restored control, not F-MUT or semantic acceptance"
+  },
+  {
+    "id": "restored-question",
+    "argv": [
+      "python3",
+      "docs/review/evidence/config-acceptance/components/question-closure-bce3f075/check-question-definition-integrity.py",
+      "--definitions",
+      "docs/review/evidence/config-acceptance/independent-core-source-question-bce3f075-20261013/restored-question.fixture.json"
+    ],
+    "exitCode": 0,
+    "fixtureSha256": "35dc182ecb8c5981571aaf2a020ca0e42c2498934f15b64a23cd75464f12d011",
+    "stdoutSha256": "40304bd206dc343af323a681e69cbfa67791cf00ce01c2886f663c2ce5f8be95",
+    "scope": "Documentation identity/link negative/restored control, not F-MUT or semantic acceptance"
+  }
+]

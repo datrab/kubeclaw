@@ -1,0 +1,5 @@
+{
+  "result": "failed",
+  "reason": "TOML7observations actual valid syntax; ESLint profile filename glob selected0files, NO ESLint syntax success inferred. Corrected explicit2-file collection required.",
+  "scope": "diagnostic snapshot only"
+}

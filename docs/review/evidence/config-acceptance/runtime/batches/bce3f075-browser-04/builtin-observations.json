@@ -1,0 +1,2341 @@
+{
+  "caseId": "RT-C0-BCE3F075-AXE-BUILTIN-LEAVES",
+  "command": "node docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/builtin-definitions.mjs",
+  "node": "v24.21.0",
+  "typescript": "5.9.3",
+  "sourceDigests": {
+    "skills/buster/plugins/axe/src/provider.js": "3943f787c2d7fc1f2215268c043135f0a6d6425fd6e09b26d48bb2171e87c472",
+    "skills/buster/engine/test-gates/browser-axe-runtime.ts": "7370bdf54556875b996cc0ac4c4219a8c9ddc11d25dfb72875f41806e82482c8"
+  },
+  "testDigests": {
+    "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/builtin-definitions.mjs": "fc23a55c3b815beb06b954227abf96f9cf6af9dc284abf4bccffa6ab061178b9"
+  },
+  "inputDigests": {
+    "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json": "eb6aad6748b119c42123d0decb61516bc7177eb6c856238f4fc698af7f7a975d",
+    "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/axe-owned.schema.json": "d90bcc245eb9100f2a493942bc446ea5c82e1a8d5187ead62068e00c90926bb6"
+  },
+  "entries": [
+    {
+      "setting": "RT-AXE-BUILTIN-DESKTOP-BROWSER",
+      "preset": "desktop",
+      "field": "browser",
+      "current": "chromium",
+      "unit": "backendselector within capturedruntimeallowedbrowser+exe map; no actualrenderer support claimed",
+      "source": {
+        "path": "skills/buster/plugins/axe/src/provider.js",
+        "definitionStartLine": 5,
+        "definitionSource": "BUILTIN_PROFILES = Object.freeze({\n  desktop: Object.freeze({ name: 'desktop', browser: 'chromium', viewport: { width: 1440, height: 900 },\n    colorScheme: 'light', reducedMotion: 'no-preference', locale: 'en-US', timezoneId: 'UTC', hasTouch: false, isMobile: false, deviceScaleFactor: 1 }),\n  mobile: Object.freeze({ name: 'mobile', browser: 'chromium', viewport: { width: 390, height: 844 },\n    colorScheme: 'light', reducedMotion: 'no-preference', locale: 'en-US', timezoneId: 'UTC', hasTouch: true, isMobile: true, deviceScaleFactor: 1 }),\n})",
+        "definitionSha256": "f1aa6664d464a8a3f9161aac175e3fd1821429e153ce440c163d0066c811b64b"
+      },
+      "actualForwardedPreset": {
+        "name": "desktop",
+        "browser": "chromium",
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "colorScheme": "light",
+        "reducedMotion": "no-preference",
+        "locale": "en-US",
+        "timezoneId": "UTC",
+        "hasTouch": false,
+        "isMobile": false,
+        "deviceScaleFactor": 1
+      },
+      "completeOwnedA": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "desktop"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "completeOwnedB": {
+        "profiles": {
+          "desktop": {
+            "browser": "webkit",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "desktop"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "currentSourceAndProposedTypeDefinition": "passed",
+      "missingTargetReject": true,
+      "limitation": "exact current source AST+same actual provider builtin forwarding under capture transport+proposed owner schema only. B schema valid NOT actualinstalledSDK/browser/ICU/role/render support; real compatibility and effects future required",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-AXE-BUILTIN-DESKTOP-VIEWPORT-WIDTH",
+      "preset": "desktop",
+      "field": "viewport.width",
+      "current": 1440,
+      "unit": "CSS viewport pixels",
+      "source": {
+        "path": "skills/buster/plugins/axe/src/provider.js",
+        "definitionStartLine": 5,
+        "definitionSource": "BUILTIN_PROFILES = Object.freeze({\n  desktop: Object.freeze({ name: 'desktop', browser: 'chromium', viewport: { width: 1440, height: 900 },\n    colorScheme: 'light', reducedMotion: 'no-preference', locale: 'en-US', timezoneId: 'UTC', hasTouch: false, isMobile: false, deviceScaleFactor: 1 }),\n  mobile: Object.freeze({ name: 'mobile', browser: 'chromium', viewport: { width: 390, height: 844 },\n    colorScheme: 'light', reducedMotion: 'no-preference', locale: 'en-US', timezoneId: 'UTC', hasTouch: true, isMobile: true, deviceScaleFactor: 1 }),\n})",
+        "definitionSha256": "f1aa6664d464a8a3f9161aac175e3fd1821429e153ce440c163d0066c811b64b"
+      },
+      "actualForwardedPreset": {
+        "name": "desktop",
+        "browser": "chromium",
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "colorScheme": "light",
+        "reducedMotion": "no-preference",
+        "locale": "en-US",
+        "timezoneId": "UTC",
+        "hasTouch": false,
+        "isMobile": false,
+        "deviceScaleFactor": 1
+      },
+      "completeOwnedA": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "desktop"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "completeOwnedB": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1024,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "desktop"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "currentSourceAndProposedTypeDefinition": "passed",
+      "missingTargetReject": true,
+      "limitation": "exact current source AST+same actual provider builtin forwarding under capture transport+proposed owner schema only. B schema valid NOT actualinstalledSDK/browser/ICU/role/render support; real compatibility and effects future required",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-AXE-BUILTIN-DESKTOP-VIEWPORT-HEIGHT",
+      "preset": "desktop",
+      "field": "viewport.height",
+      "current": 900,
+      "unit": "CSS viewport pixels",
+      "source": {
+        "path": "skills/buster/plugins/axe/src/provider.js",
+        "definitionStartLine": 5,
+        "definitionSource": "BUILTIN_PROFILES = Object.freeze({\n  desktop: Object.freeze({ name: 'desktop', browser: 'chromium', viewport: { width: 1440, height: 900 },\n    colorScheme: 'light', reducedMotion: 'no-preference', locale: 'en-US', timezoneId: 'UTC', hasTouch: false, isMobile: false, deviceScaleFactor: 1 }),\n  mobile: Object.freeze({ name: 'mobile', browser: 'chromium', viewport: { width: 390, height: 844 },\n    colorScheme: 'light', reducedMotion: 'no-preference', locale: 'en-US', timezoneId: 'UTC', hasTouch: true, isMobile: true, deviceScaleFactor: 1 }),\n})",
+        "definitionSha256": "f1aa6664d464a8a3f9161aac175e3fd1821429e153ce440c163d0066c811b64b"
+      },
+      "actualForwardedPreset": {
+        "name": "desktop",
+        "browser": "chromium",
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "colorScheme": "light",
+        "reducedMotion": "no-preference",
+        "locale": "en-US",
+        "timezoneId": "UTC",
+        "hasTouch": false,
+        "isMobile": false,
+        "deviceScaleFactor": 1
+      },
+      "completeOwnedA": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "desktop"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "completeOwnedB": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 768
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "desktop"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "currentSourceAndProposedTypeDefinition": "passed",
+      "missingTargetReject": true,
+      "limitation": "exact current source AST+same actual provider builtin forwarding under capture transport+proposed owner schema only. B schema valid NOT actualinstalledSDK/browser/ICU/role/render support; real compatibility and effects future required",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-AXE-BUILTIN-DESKTOP-COLORSCHEME",
+      "preset": "desktop",
+      "field": "colorScheme",
+      "current": "light",
+      "unit": "light/dark/no-preference enum",
+      "source": {
+        "path": "skills/buster/plugins/axe/src/provider.js",
+        "definitionStartLine": 5,
+        "definitionSource": "BUILTIN_PROFILES = Object.freeze({\n  desktop: Object.freeze({ name: 'desktop', browser: 'chromium', viewport: { width: 1440, height: 900 },\n    colorScheme: 'light', reducedMotion: 'no-preference', locale: 'en-US', timezoneId: 'UTC', hasTouch: false, isMobile: false, deviceScaleFactor: 1 }),\n  mobile: Object.freeze({ name: 'mobile', browser: 'chromium', viewport: { width: 390, height: 844 },\n    colorScheme: 'light', reducedMotion: 'no-preference', locale: 'en-US', timezoneId: 'UTC', hasTouch: true, isMobile: true, deviceScaleFactor: 1 }),\n})",
+        "definitionSha256": "f1aa6664d464a8a3f9161aac175e3fd1821429e153ce440c163d0066c811b64b"
+      },
+      "actualForwardedPreset": {
+        "name": "desktop",
+        "browser": "chromium",
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "colorScheme": "light",
+        "reducedMotion": "no-preference",
+        "locale": "en-US",
+        "timezoneId": "UTC",
+        "hasTouch": false,
+        "isMobile": false,
+        "deviceScaleFactor": 1
+      },
+      "completeOwnedA": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "desktop"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "completeOwnedB": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "dark",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "desktop"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "currentSourceAndProposedTypeDefinition": "passed",
+      "missingTargetReject": true,
+      "limitation": "exact current source AST+same actual provider builtin forwarding under capture transport+proposed owner schema only. B schema valid NOT actualinstalledSDK/browser/ICU/role/render support; real compatibility and effects future required",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-AXE-BUILTIN-DESKTOP-REDUCEDMOTION",
+      "preset": "desktop",
+      "field": "reducedMotion",
+      "current": "no-preference",
+      "unit": "reduce/no-preference enum",
+      "source": {
+        "path": "skills/buster/plugins/axe/src/provider.js",
+        "definitionStartLine": 5,
+        "definitionSource": "BUILTIN_PROFILES = Object.freeze({\n  desktop: Object.freeze({ name: 'desktop', browser: 'chromium', viewport: { width: 1440, height: 900 },\n    colorScheme: 'light', reducedMotion: 'no-preference', locale: 'en-US', timezoneId: 'UTC', hasTouch: false, isMobile: false, deviceScaleFactor: 1 }),\n  mobile: Object.freeze({ name: 'mobile', browser: 'chromium', viewport: { width: 390, height: 844 },\n    colorScheme: 'light', reducedMotion: 'no-preference', locale: 'en-US', timezoneId: 'UTC', hasTouch: true, isMobile: true, deviceScaleFactor: 1 }),\n})",
+        "definitionSha256": "f1aa6664d464a8a3f9161aac175e3fd1821429e153ce440c163d0066c811b64b"
+      },
+      "actualForwardedPreset": {
+        "name": "desktop",
+        "browser": "chromium",
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "colorScheme": "light",
+        "reducedMotion": "no-preference",
+        "locale": "en-US",
+        "timezoneId": "UTC",
+        "hasTouch": false,
+        "isMobile": false,
+        "deviceScaleFactor": 1
+      },
+      "completeOwnedA": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "desktop"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "completeOwnedB": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "reduce",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "desktop"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "currentSourceAndProposedTypeDefinition": "passed",
+      "missingTargetReject": true,
+      "limitation": "exact current source AST+same actual provider builtin forwarding under capture transport+proposed owner schema only. B schema valid NOT actualinstalledSDK/browser/ICU/role/render support; real compatibility and effects future required",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-AXE-BUILTIN-DESKTOP-LOCALE",
+      "preset": "desktop",
+      "field": "locale",
+      "current": "en-US",
+      "unit": "BCP47-like requestedlocale string; actualinstalledbrowser/ICU support required, no madeupfinitecatalog",
+      "source": {
+        "path": "skills/buster/plugins/axe/src/provider.js",
+        "definitionStartLine": 5,
+        "definitionSource": "BUILTIN_PROFILES = Object.freeze({\n  desktop: Object.freeze({ name: 'desktop', browser: 'chromium', viewport: { width: 1440, height: 900 },\n    colorScheme: 'light', reducedMotion: 'no-preference', locale: 'en-US', timezoneId: 'UTC', hasTouch: false, isMobile: false, deviceScaleFactor: 1 }),\n  mobile: Object.freeze({ name: 'mobile', browser: 'chromium', viewport: { width: 390, height: 844 },\n    colorScheme: 'light', reducedMotion: 'no-preference', locale: 'en-US', timezoneId: 'UTC', hasTouch: true, isMobile: true, deviceScaleFactor: 1 }),\n})",
+        "definitionSha256": "f1aa6664d464a8a3f9161aac175e3fd1821429e153ce440c163d0066c811b64b"
+      },
+      "actualForwardedPreset": {
+        "name": "desktop",
+        "browser": "chromium",
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "colorScheme": "light",
+        "reducedMotion": "no-preference",
+        "locale": "en-US",
+        "timezoneId": "UTC",
+        "hasTouch": false,
+        "isMobile": false,
+        "deviceScaleFactor": 1
+      },
+      "completeOwnedA": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "desktop"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "completeOwnedB": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "fr-FR",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "desktop"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "currentSourceAndProposedTypeDefinition": "passed",
+      "missingTargetReject": true,
+      "limitation": "exact current source AST+same actual provider builtin forwarding under capture transport+proposed owner schema only. B schema valid NOT actualinstalledSDK/browser/ICU/role/render support; real compatibility and effects future required",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-AXE-BUILTIN-DESKTOP-TIMEZONEID",
+      "preset": "desktop",
+      "field": "timezoneId",
+      "current": "UTC",
+      "unit": "requestedtimezone string; actualinstalledbrowser/ICU support required; actualclocknotCONFIGgeneration",
+      "source": {
+        "path": "skills/buster/plugins/axe/src/provider.js",
+        "definitionStartLine": 5,
+        "definitionSource": "BUILTIN_PROFILES = Object.freeze({\n  desktop: Object.freeze({ name: 'desktop', browser: 'chromium', viewport: { width: 1440, height: 900 },\n    colorScheme: 'light', reducedMotion: 'no-preference', locale: 'en-US', timezoneId: 'UTC', hasTouch: false, isMobile: false, deviceScaleFactor: 1 }),\n  mobile: Object.freeze({ name: 'mobile', browser: 'chromium', viewport: { width: 390, height: 844 },\n    colorScheme: 'light', reducedMotion: 'no-preference', locale: 'en-US', timezoneId: 'UTC', hasTouch: true, isMobile: true, deviceScaleFactor: 1 }),\n})",
+        "definitionSha256": "f1aa6664d464a8a3f9161aac175e3fd1821429e153ce440c163d0066c811b64b"
+      },
+      "actualForwardedPreset": {
+        "name": "desktop",
+        "browser": "chromium",
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "colorScheme": "light",
+        "reducedMotion": "no-preference",
+        "locale": "en-US",
+        "timezoneId": "UTC",
+        "hasTouch": false,
+        "isMobile": false,
+        "deviceScaleFactor": 1
+      },
+      "completeOwnedA": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "desktop"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "completeOwnedB": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "Europe/Paris",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "desktop"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "currentSourceAndProposedTypeDefinition": "passed",
+      "missingTargetReject": true,
+      "limitation": "exact current source AST+same actual provider builtin forwarding under capture transport+proposed owner schema only. B schema valid NOT actualinstalledSDK/browser/ICU/role/render support; real compatibility and effects future required",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-AXE-BUILTIN-DESKTOP-HASTOUCH",
+      "preset": "desktop",
+      "field": "hasTouch",
+      "current": false,
+      "unit": "browsercontext emulatedtouch boolean, not physicaltouchdevice claim",
+      "source": {
+        "path": "skills/buster/plugins/axe/src/provider.js",
+        "definitionStartLine": 5,
+        "definitionSource": "BUILTIN_PROFILES = Object.freeze({\n  desktop: Object.freeze({ name: 'desktop', browser: 'chromium', viewport: { width: 1440, height: 900 },\n    colorScheme: 'light', reducedMotion: 'no-preference', locale: 'en-US', timezoneId: 'UTC', hasTouch: false, isMobile: false, deviceScaleFactor: 1 }),\n  mobile: Object.freeze({ name: 'mobile', browser: 'chromium', viewport: { width: 390, height: 844 },\n    colorScheme: 'light', reducedMotion: 'no-preference', locale: 'en-US', timezoneId: 'UTC', hasTouch: true, isMobile: true, deviceScaleFactor: 1 }),\n})",
+        "definitionSha256": "f1aa6664d464a8a3f9161aac175e3fd1821429e153ce440c163d0066c811b64b"
+      },
+      "actualForwardedPreset": {
+        "name": "desktop",
+        "browser": "chromium",
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "colorScheme": "light",
+        "reducedMotion": "no-preference",
+        "locale": "en-US",
+        "timezoneId": "UTC",
+        "hasTouch": false,
+        "isMobile": false,
+        "deviceScaleFactor": 1
+      },
+      "completeOwnedA": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "desktop"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "completeOwnedB": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "desktop"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "currentSourceAndProposedTypeDefinition": "passed",
+      "missingTargetReject": true,
+      "limitation": "exact current source AST+same actual provider builtin forwarding under capture transport+proposed owner schema only. B schema valid NOT actualinstalledSDK/browser/ICU/role/render support; real compatibility and effects future required",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-AXE-BUILTIN-DESKTOP-ISMOBILE",
+      "preset": "desktop",
+      "field": "isMobile",
+      "current": false,
+      "unit": "browsercontext mobile-layout boolean, not physicaldevice identity",
+      "source": {
+        "path": "skills/buster/plugins/axe/src/provider.js",
+        "definitionStartLine": 5,
+        "definitionSource": "BUILTIN_PROFILES = Object.freeze({\n  desktop: Object.freeze({ name: 'desktop', browser: 'chromium', viewport: { width: 1440, height: 900 },\n    colorScheme: 'light', reducedMotion: 'no-preference', locale: 'en-US', timezoneId: 'UTC', hasTouch: false, isMobile: false, deviceScaleFactor: 1 }),\n  mobile: Object.freeze({ name: 'mobile', browser: 'chromium', viewport: { width: 390, height: 844 },\n    colorScheme: 'light', reducedMotion: 'no-preference', locale: 'en-US', timezoneId: 'UTC', hasTouch: true, isMobile: true, deviceScaleFactor: 1 }),\n})",
+        "definitionSha256": "f1aa6664d464a8a3f9161aac175e3fd1821429e153ce440c163d0066c811b64b"
+      },
+      "actualForwardedPreset": {
+        "name": "desktop",
+        "browser": "chromium",
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "colorScheme": "light",
+        "reducedMotion": "no-preference",
+        "locale": "en-US",
+        "timezoneId": "UTC",
+        "hasTouch": false,
+        "isMobile": false,
+        "deviceScaleFactor": 1
+      },
+      "completeOwnedA": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "desktop"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "completeOwnedB": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "desktop"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "currentSourceAndProposedTypeDefinition": "passed",
+      "missingTargetReject": true,
+      "limitation": "exact current source AST+same actual provider builtin forwarding under capture transport+proposed owner schema only. B schema valid NOT actualinstalledSDK/browser/ICU/role/render support; real compatibility and effects future required",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-AXE-BUILTIN-DESKTOP-DEVICESCALEFACTOR",
+      "preset": "desktop",
+      "field": "deviceScaleFactor",
+      "current": 1,
+      "unit": "emulateddevicepixels perCSSpixel, finite .5..4",
+      "source": {
+        "path": "skills/buster/plugins/axe/src/provider.js",
+        "definitionStartLine": 5,
+        "definitionSource": "BUILTIN_PROFILES = Object.freeze({\n  desktop: Object.freeze({ name: 'desktop', browser: 'chromium', viewport: { width: 1440, height: 900 },\n    colorScheme: 'light', reducedMotion: 'no-preference', locale: 'en-US', timezoneId: 'UTC', hasTouch: false, isMobile: false, deviceScaleFactor: 1 }),\n  mobile: Object.freeze({ name: 'mobile', browser: 'chromium', viewport: { width: 390, height: 844 },\n    colorScheme: 'light', reducedMotion: 'no-preference', locale: 'en-US', timezoneId: 'UTC', hasTouch: true, isMobile: true, deviceScaleFactor: 1 }),\n})",
+        "definitionSha256": "f1aa6664d464a8a3f9161aac175e3fd1821429e153ce440c163d0066c811b64b"
+      },
+      "actualForwardedPreset": {
+        "name": "desktop",
+        "browser": "chromium",
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "colorScheme": "light",
+        "reducedMotion": "no-preference",
+        "locale": "en-US",
+        "timezoneId": "UTC",
+        "hasTouch": false,
+        "isMobile": false,
+        "deviceScaleFactor": 1
+      },
+      "completeOwnedA": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "desktop"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "completeOwnedB": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 2
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "desktop"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "currentSourceAndProposedTypeDefinition": "passed",
+      "missingTargetReject": true,
+      "limitation": "exact current source AST+same actual provider builtin forwarding under capture transport+proposed owner schema only. B schema valid NOT actualinstalledSDK/browser/ICU/role/render support; real compatibility and effects future required",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-AXE-BUILTIN-MOBILE-BROWSER",
+      "preset": "mobile",
+      "field": "browser",
+      "current": "chromium",
+      "unit": "backendselector within capturedruntimeallowedbrowser+exe map; no actualrenderer support claimed",
+      "source": {
+        "path": "skills/buster/plugins/axe/src/provider.js",
+        "definitionStartLine": 5,
+        "definitionSource": "BUILTIN_PROFILES = Object.freeze({\n  desktop: Object.freeze({ name: 'desktop', browser: 'chromium', viewport: { width: 1440, height: 900 },\n    colorScheme: 'light', reducedMotion: 'no-preference', locale: 'en-US', timezoneId: 'UTC', hasTouch: false, isMobile: false, deviceScaleFactor: 1 }),\n  mobile: Object.freeze({ name: 'mobile', browser: 'chromium', viewport: { width: 390, height: 844 },\n    colorScheme: 'light', reducedMotion: 'no-preference', locale: 'en-US', timezoneId: 'UTC', hasTouch: true, isMobile: true, deviceScaleFactor: 1 }),\n})",
+        "definitionSha256": "f1aa6664d464a8a3f9161aac175e3fd1821429e153ce440c163d0066c811b64b"
+      },
+      "actualForwardedPreset": {
+        "name": "mobile",
+        "browser": "chromium",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "colorScheme": "light",
+        "reducedMotion": "no-preference",
+        "locale": "en-US",
+        "timezoneId": "UTC",
+        "hasTouch": true,
+        "isMobile": true,
+        "deviceScaleFactor": 1
+      },
+      "completeOwnedA": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "mobile"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "completeOwnedB": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "webkit",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "mobile"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "currentSourceAndProposedTypeDefinition": "passed",
+      "missingTargetReject": true,
+      "limitation": "exact current source AST+same actual provider builtin forwarding under capture transport+proposed owner schema only. B schema valid NOT actualinstalledSDK/browser/ICU/role/render support; real compatibility and effects future required",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-AXE-BUILTIN-MOBILE-VIEWPORT-WIDTH",
+      "preset": "mobile",
+      "field": "viewport.width",
+      "current": 390,
+      "unit": "CSS viewport pixels",
+      "source": {
+        "path": "skills/buster/plugins/axe/src/provider.js",
+        "definitionStartLine": 5,
+        "definitionSource": "BUILTIN_PROFILES = Object.freeze({\n  desktop: Object.freeze({ name: 'desktop', browser: 'chromium', viewport: { width: 1440, height: 900 },\n    colorScheme: 'light', reducedMotion: 'no-preference', locale: 'en-US', timezoneId: 'UTC', hasTouch: false, isMobile: false, deviceScaleFactor: 1 }),\n  mobile: Object.freeze({ name: 'mobile', browser: 'chromium', viewport: { width: 390, height: 844 },\n    colorScheme: 'light', reducedMotion: 'no-preference', locale: 'en-US', timezoneId: 'UTC', hasTouch: true, isMobile: true, deviceScaleFactor: 1 }),\n})",
+        "definitionSha256": "f1aa6664d464a8a3f9161aac175e3fd1821429e153ce440c163d0066c811b64b"
+      },
+      "actualForwardedPreset": {
+        "name": "mobile",
+        "browser": "chromium",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "colorScheme": "light",
+        "reducedMotion": "no-preference",
+        "locale": "en-US",
+        "timezoneId": "UTC",
+        "hasTouch": true,
+        "isMobile": true,
+        "deviceScaleFactor": 1
+      },
+      "completeOwnedA": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "mobile"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "completeOwnedB": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 360,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "mobile"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "currentSourceAndProposedTypeDefinition": "passed",
+      "missingTargetReject": true,
+      "limitation": "exact current source AST+same actual provider builtin forwarding under capture transport+proposed owner schema only. B schema valid NOT actualinstalledSDK/browser/ICU/role/render support; real compatibility and effects future required",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-AXE-BUILTIN-MOBILE-VIEWPORT-HEIGHT",
+      "preset": "mobile",
+      "field": "viewport.height",
+      "current": 844,
+      "unit": "CSS viewport pixels",
+      "source": {
+        "path": "skills/buster/plugins/axe/src/provider.js",
+        "definitionStartLine": 5,
+        "definitionSource": "BUILTIN_PROFILES = Object.freeze({\n  desktop: Object.freeze({ name: 'desktop', browser: 'chromium', viewport: { width: 1440, height: 900 },\n    colorScheme: 'light', reducedMotion: 'no-preference', locale: 'en-US', timezoneId: 'UTC', hasTouch: false, isMobile: false, deviceScaleFactor: 1 }),\n  mobile: Object.freeze({ name: 'mobile', browser: 'chromium', viewport: { width: 390, height: 844 },\n    colorScheme: 'light', reducedMotion: 'no-preference', locale: 'en-US', timezoneId: 'UTC', hasTouch: true, isMobile: true, deviceScaleFactor: 1 }),\n})",
+        "definitionSha256": "f1aa6664d464a8a3f9161aac175e3fd1821429e153ce440c163d0066c811b64b"
+      },
+      "actualForwardedPreset": {
+        "name": "mobile",
+        "browser": "chromium",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "colorScheme": "light",
+        "reducedMotion": "no-preference",
+        "locale": "en-US",
+        "timezoneId": "UTC",
+        "hasTouch": true,
+        "isMobile": true,
+        "deviceScaleFactor": 1
+      },
+      "completeOwnedA": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "mobile"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "completeOwnedB": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 780
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "mobile"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "currentSourceAndProposedTypeDefinition": "passed",
+      "missingTargetReject": true,
+      "limitation": "exact current source AST+same actual provider builtin forwarding under capture transport+proposed owner schema only. B schema valid NOT actualinstalledSDK/browser/ICU/role/render support; real compatibility and effects future required",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-AXE-BUILTIN-MOBILE-COLORSCHEME",
+      "preset": "mobile",
+      "field": "colorScheme",
+      "current": "light",
+      "unit": "light/dark/no-preference enum",
+      "source": {
+        "path": "skills/buster/plugins/axe/src/provider.js",
+        "definitionStartLine": 5,
+        "definitionSource": "BUILTIN_PROFILES = Object.freeze({\n  desktop: Object.freeze({ name: 'desktop', browser: 'chromium', viewport: { width: 1440, height: 900 },\n    colorScheme: 'light', reducedMotion: 'no-preference', locale: 'en-US', timezoneId: 'UTC', hasTouch: false, isMobile: false, deviceScaleFactor: 1 }),\n  mobile: Object.freeze({ name: 'mobile', browser: 'chromium', viewport: { width: 390, height: 844 },\n    colorScheme: 'light', reducedMotion: 'no-preference', locale: 'en-US', timezoneId: 'UTC', hasTouch: true, isMobile: true, deviceScaleFactor: 1 }),\n})",
+        "definitionSha256": "f1aa6664d464a8a3f9161aac175e3fd1821429e153ce440c163d0066c811b64b"
+      },
+      "actualForwardedPreset": {
+        "name": "mobile",
+        "browser": "chromium",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "colorScheme": "light",
+        "reducedMotion": "no-preference",
+        "locale": "en-US",
+        "timezoneId": "UTC",
+        "hasTouch": true,
+        "isMobile": true,
+        "deviceScaleFactor": 1
+      },
+      "completeOwnedA": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "mobile"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "completeOwnedB": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "dark",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "mobile"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "currentSourceAndProposedTypeDefinition": "passed",
+      "missingTargetReject": true,
+      "limitation": "exact current source AST+same actual provider builtin forwarding under capture transport+proposed owner schema only. B schema valid NOT actualinstalledSDK/browser/ICU/role/render support; real compatibility and effects future required",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-AXE-BUILTIN-MOBILE-REDUCEDMOTION",
+      "preset": "mobile",
+      "field": "reducedMotion",
+      "current": "no-preference",
+      "unit": "reduce/no-preference enum",
+      "source": {
+        "path": "skills/buster/plugins/axe/src/provider.js",
+        "definitionStartLine": 5,
+        "definitionSource": "BUILTIN_PROFILES = Object.freeze({\n  desktop: Object.freeze({ name: 'desktop', browser: 'chromium', viewport: { width: 1440, height: 900 },\n    colorScheme: 'light', reducedMotion: 'no-preference', locale: 'en-US', timezoneId: 'UTC', hasTouch: false, isMobile: false, deviceScaleFactor: 1 }),\n  mobile: Object.freeze({ name: 'mobile', browser: 'chromium', viewport: { width: 390, height: 844 },\n    colorScheme: 'light', reducedMotion: 'no-preference', locale: 'en-US', timezoneId: 'UTC', hasTouch: true, isMobile: true, deviceScaleFactor: 1 }),\n})",
+        "definitionSha256": "f1aa6664d464a8a3f9161aac175e3fd1821429e153ce440c163d0066c811b64b"
+      },
+      "actualForwardedPreset": {
+        "name": "mobile",
+        "browser": "chromium",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "colorScheme": "light",
+        "reducedMotion": "no-preference",
+        "locale": "en-US",
+        "timezoneId": "UTC",
+        "hasTouch": true,
+        "isMobile": true,
+        "deviceScaleFactor": 1
+      },
+      "completeOwnedA": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "mobile"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "completeOwnedB": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "reduce",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "mobile"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "currentSourceAndProposedTypeDefinition": "passed",
+      "missingTargetReject": true,
+      "limitation": "exact current source AST+same actual provider builtin forwarding under capture transport+proposed owner schema only. B schema valid NOT actualinstalledSDK/browser/ICU/role/render support; real compatibility and effects future required",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-AXE-BUILTIN-MOBILE-LOCALE",
+      "preset": "mobile",
+      "field": "locale",
+      "current": "en-US",
+      "unit": "BCP47-like requestedlocale string; actualinstalledbrowser/ICU support required, no madeupfinitecatalog",
+      "source": {
+        "path": "skills/buster/plugins/axe/src/provider.js",
+        "definitionStartLine": 5,
+        "definitionSource": "BUILTIN_PROFILES = Object.freeze({\n  desktop: Object.freeze({ name: 'desktop', browser: 'chromium', viewport: { width: 1440, height: 900 },\n    colorScheme: 'light', reducedMotion: 'no-preference', locale: 'en-US', timezoneId: 'UTC', hasTouch: false, isMobile: false, deviceScaleFactor: 1 }),\n  mobile: Object.freeze({ name: 'mobile', browser: 'chromium', viewport: { width: 390, height: 844 },\n    colorScheme: 'light', reducedMotion: 'no-preference', locale: 'en-US', timezoneId: 'UTC', hasTouch: true, isMobile: true, deviceScaleFactor: 1 }),\n})",
+        "definitionSha256": "f1aa6664d464a8a3f9161aac175e3fd1821429e153ce440c163d0066c811b64b"
+      },
+      "actualForwardedPreset": {
+        "name": "mobile",
+        "browser": "chromium",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "colorScheme": "light",
+        "reducedMotion": "no-preference",
+        "locale": "en-US",
+        "timezoneId": "UTC",
+        "hasTouch": true,
+        "isMobile": true,
+        "deviceScaleFactor": 1
+      },
+      "completeOwnedA": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "mobile"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "completeOwnedB": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "fr-FR",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "mobile"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "currentSourceAndProposedTypeDefinition": "passed",
+      "missingTargetReject": true,
+      "limitation": "exact current source AST+same actual provider builtin forwarding under capture transport+proposed owner schema only. B schema valid NOT actualinstalledSDK/browser/ICU/role/render support; real compatibility and effects future required",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-AXE-BUILTIN-MOBILE-TIMEZONEID",
+      "preset": "mobile",
+      "field": "timezoneId",
+      "current": "UTC",
+      "unit": "requestedtimezone string; actualinstalledbrowser/ICU support required; actualclocknotCONFIGgeneration",
+      "source": {
+        "path": "skills/buster/plugins/axe/src/provider.js",
+        "definitionStartLine": 5,
+        "definitionSource": "BUILTIN_PROFILES = Object.freeze({\n  desktop: Object.freeze({ name: 'desktop', browser: 'chromium', viewport: { width: 1440, height: 900 },\n    colorScheme: 'light', reducedMotion: 'no-preference', locale: 'en-US', timezoneId: 'UTC', hasTouch: false, isMobile: false, deviceScaleFactor: 1 }),\n  mobile: Object.freeze({ name: 'mobile', browser: 'chromium', viewport: { width: 390, height: 844 },\n    colorScheme: 'light', reducedMotion: 'no-preference', locale: 'en-US', timezoneId: 'UTC', hasTouch: true, isMobile: true, deviceScaleFactor: 1 }),\n})",
+        "definitionSha256": "f1aa6664d464a8a3f9161aac175e3fd1821429e153ce440c163d0066c811b64b"
+      },
+      "actualForwardedPreset": {
+        "name": "mobile",
+        "browser": "chromium",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "colorScheme": "light",
+        "reducedMotion": "no-preference",
+        "locale": "en-US",
+        "timezoneId": "UTC",
+        "hasTouch": true,
+        "isMobile": true,
+        "deviceScaleFactor": 1
+      },
+      "completeOwnedA": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "mobile"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "completeOwnedB": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "Europe/Paris",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "mobile"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "currentSourceAndProposedTypeDefinition": "passed",
+      "missingTargetReject": true,
+      "limitation": "exact current source AST+same actual provider builtin forwarding under capture transport+proposed owner schema only. B schema valid NOT actualinstalledSDK/browser/ICU/role/render support; real compatibility and effects future required",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-AXE-BUILTIN-MOBILE-HASTOUCH",
+      "preset": "mobile",
+      "field": "hasTouch",
+      "current": true,
+      "unit": "browsercontext emulatedtouch boolean, not physicaltouchdevice claim",
+      "source": {
+        "path": "skills/buster/plugins/axe/src/provider.js",
+        "definitionStartLine": 5,
+        "definitionSource": "BUILTIN_PROFILES = Object.freeze({\n  desktop: Object.freeze({ name: 'desktop', browser: 'chromium', viewport: { width: 1440, height: 900 },\n    colorScheme: 'light', reducedMotion: 'no-preference', locale: 'en-US', timezoneId: 'UTC', hasTouch: false, isMobile: false, deviceScaleFactor: 1 }),\n  mobile: Object.freeze({ name: 'mobile', browser: 'chromium', viewport: { width: 390, height: 844 },\n    colorScheme: 'light', reducedMotion: 'no-preference', locale: 'en-US', timezoneId: 'UTC', hasTouch: true, isMobile: true, deviceScaleFactor: 1 }),\n})",
+        "definitionSha256": "f1aa6664d464a8a3f9161aac175e3fd1821429e153ce440c163d0066c811b64b"
+      },
+      "actualForwardedPreset": {
+        "name": "mobile",
+        "browser": "chromium",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "colorScheme": "light",
+        "reducedMotion": "no-preference",
+        "locale": "en-US",
+        "timezoneId": "UTC",
+        "hasTouch": true,
+        "isMobile": true,
+        "deviceScaleFactor": 1
+      },
+      "completeOwnedA": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "mobile"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "completeOwnedB": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "mobile"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "currentSourceAndProposedTypeDefinition": "passed",
+      "missingTargetReject": true,
+      "limitation": "exact current source AST+same actual provider builtin forwarding under capture transport+proposed owner schema only. B schema valid NOT actualinstalledSDK/browser/ICU/role/render support; real compatibility and effects future required",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-AXE-BUILTIN-MOBILE-ISMOBILE",
+      "preset": "mobile",
+      "field": "isMobile",
+      "current": true,
+      "unit": "browsercontext mobile-layout boolean, not physicaldevice identity",
+      "source": {
+        "path": "skills/buster/plugins/axe/src/provider.js",
+        "definitionStartLine": 5,
+        "definitionSource": "BUILTIN_PROFILES = Object.freeze({\n  desktop: Object.freeze({ name: 'desktop', browser: 'chromium', viewport: { width: 1440, height: 900 },\n    colorScheme: 'light', reducedMotion: 'no-preference', locale: 'en-US', timezoneId: 'UTC', hasTouch: false, isMobile: false, deviceScaleFactor: 1 }),\n  mobile: Object.freeze({ name: 'mobile', browser: 'chromium', viewport: { width: 390, height: 844 },\n    colorScheme: 'light', reducedMotion: 'no-preference', locale: 'en-US', timezoneId: 'UTC', hasTouch: true, isMobile: true, deviceScaleFactor: 1 }),\n})",
+        "definitionSha256": "f1aa6664d464a8a3f9161aac175e3fd1821429e153ce440c163d0066c811b64b"
+      },
+      "actualForwardedPreset": {
+        "name": "mobile",
+        "browser": "chromium",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "colorScheme": "light",
+        "reducedMotion": "no-preference",
+        "locale": "en-US",
+        "timezoneId": "UTC",
+        "hasTouch": true,
+        "isMobile": true,
+        "deviceScaleFactor": 1
+      },
+      "completeOwnedA": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "mobile"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "completeOwnedB": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "mobile"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "currentSourceAndProposedTypeDefinition": "passed",
+      "missingTargetReject": true,
+      "limitation": "exact current source AST+same actual provider builtin forwarding under capture transport+proposed owner schema only. B schema valid NOT actualinstalledSDK/browser/ICU/role/render support; real compatibility and effects future required",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-AXE-BUILTIN-MOBILE-DEVICESCALEFACTOR",
+      "preset": "mobile",
+      "field": "deviceScaleFactor",
+      "current": 1,
+      "unit": "emulateddevicepixels perCSSpixel, finite .5..4",
+      "source": {
+        "path": "skills/buster/plugins/axe/src/provider.js",
+        "definitionStartLine": 5,
+        "definitionSource": "BUILTIN_PROFILES = Object.freeze({\n  desktop: Object.freeze({ name: 'desktop', browser: 'chromium', viewport: { width: 1440, height: 900 },\n    colorScheme: 'light', reducedMotion: 'no-preference', locale: 'en-US', timezoneId: 'UTC', hasTouch: false, isMobile: false, deviceScaleFactor: 1 }),\n  mobile: Object.freeze({ name: 'mobile', browser: 'chromium', viewport: { width: 390, height: 844 },\n    colorScheme: 'light', reducedMotion: 'no-preference', locale: 'en-US', timezoneId: 'UTC', hasTouch: true, isMobile: true, deviceScaleFactor: 1 }),\n})",
+        "definitionSha256": "f1aa6664d464a8a3f9161aac175e3fd1821429e153ce440c163d0066c811b64b"
+      },
+      "actualForwardedPreset": {
+        "name": "mobile",
+        "browser": "chromium",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "colorScheme": "light",
+        "reducedMotion": "no-preference",
+        "locale": "en-US",
+        "timezoneId": "UTC",
+        "hasTouch": true,
+        "isMobile": true,
+        "deviceScaleFactor": 1
+      },
+      "completeOwnedA": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "mobile"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "completeOwnedB": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 2
+          }
+        },
+        "selectedProfiles": [
+          "mobile"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "currentSourceAndProposedTypeDefinition": "passed",
+      "missingTargetReject": true,
+      "limitation": "exact current source AST+same actual provider builtin forwarding under capture transport+proposed owner schema only. B schema valid NOT actualinstalledSDK/browser/ICU/role/render support; real compatibility and effects future required",
+      "result": "passed"
+    }
+  ],
+  "result": "passed",
+  "scope": "current exact20builtin leaf values/forwarding + proposed strictowner schema definition only, NOT realrenderer/SDKmodel/ICU/role/EFFECT or accepted globalCONFIG. current source .name aliases mapkey, target deriveslabel not secondauthor."
+}

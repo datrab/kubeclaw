@@ -1,0 +1,15 @@
+{
+  "reason": "preserve exact pre-DLS001003004 material correction bytes; old receipt and raw execution observations retain historical meaning",
+  "files": {
+    "inventory-fragment.json": "c727e3e76833f03308af60bc2c91f648fb0008e661cd9844d791a6886a954622",
+    "proposed-cases.json": "4c4b915b6af6c992376baea5831c2f308a168b4e8e21d32cf1019f71ee4c01a4",
+    "target-binding-proposals-bce3f075.json": "141be1212fb57a4c9794b6b66a5e18fd2a53873cfa21e1e627f61233e79cf228",
+    "native-provisioning-contracts-bce3f075.json": "74c9782f4e710f4d4d12a2628fc18eb0f91403278648d201f0c7e622d9ac0bb9",
+    "semantic-closure-artifact-digests.json": "dd628434d67d1e7ca03cb5f6513757aa1f79f82371ca045ddb4d603e30a8958c",
+    "delivery-stable-completion-bce3f075-followup.json": "89c6a7e696d300a3b9fca7c4e0733f5f22f4a1e7687b8c20da96dbc2ac68d1da",
+    "refine-target-bindings-bce3f075.py": "d79cc9a2b82861440842769eab90a43ebb88d96d868eb2404f2ee39b59eb2530",
+    "refine-native-provisioning-bce3f075.py": "4e07f85a571dfc420c5f4d5b52d39de94a0c77c40748e960aa0319f59a26149c",
+    "collect-delivery.cjs": "df7792ded1016f268eb9a2dd3ba6ef129367873b3a5d8216c4f0e7d948226f7a",
+    "README.md": "4437cd21076d98e4489023073b825ce3c83bec8986c09e26033ef72b08ee46ca"
+  }
+}

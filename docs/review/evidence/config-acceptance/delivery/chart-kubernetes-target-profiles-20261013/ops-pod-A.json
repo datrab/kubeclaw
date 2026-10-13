@@ -1,0 +1,73 @@
+{
+  "codexImage": "ghcr.io/datrab/kubeclaw-ops-codex@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "mcpImage": "ghcr.io/datrab/kubeclaw-ops-mcp@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "imagePullSecrets": [
+    {
+      "name": "delivery-pull-a"
+    }
+  ],
+  "bearerSecret": "delivery-bearer-a",
+  "githubSecret": "delivery-github-a",
+  "persistence": {
+    "size": "20Gi",
+    "storageClass": "delivery-storage-a"
+  },
+  "resources": {
+    "codex": {
+      "requests": {
+        "cpu": "100m",
+        "memory": "128Mi"
+      },
+      "limits": {
+        "cpu": "1",
+        "memory": "1Gi"
+      }
+    },
+    "mcp": {
+      "requests": {
+        "cpu": "100m",
+        "memory": "128Mi"
+      },
+      "limits": {
+        "cpu": "1",
+        "memory": "1Gi"
+      }
+    }
+  },
+  "rbac": {
+    "namespaces": [
+      "default",
+      "argocd"
+    ],
+    "execNamespaces": [
+      "default"
+    ]
+  },
+  "argoNamespace": "argocd",
+  "defaultNamespace": "default",
+  "networkPolicy": {
+    "enabled": true,
+    "cilium": false,
+    "apiServerCIDRs": [
+      "192.0.2.10/32"
+    ],
+    "apiServerPort": 6443
+  },
+  "tailscale": {
+    "enabled": true,
+    "image": "ghcr.io/tailscale/tailscale:v1.102.3",
+    "authSecret": "delivery-tailnet-a",
+    "hostname": "kubeclaw-ops",
+    "extraArgs": "--accept-dns=false",
+    "resources": {
+      "requests": {
+        "cpu": "100m",
+        "memory": "128Mi"
+      },
+      "limits": {
+        "cpu": "1",
+        "memory": "1Gi"
+      }
+    }
+  }
+}

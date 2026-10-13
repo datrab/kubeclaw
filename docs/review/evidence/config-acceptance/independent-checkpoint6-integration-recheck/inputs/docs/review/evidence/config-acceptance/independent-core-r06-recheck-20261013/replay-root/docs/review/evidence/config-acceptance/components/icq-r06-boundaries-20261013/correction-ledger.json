@@ -1,0 +1,20 @@
+{
+  "findings": [
+    {
+      "id": "ICQ-R06-01",
+      "change": "Normaloracle.bytes1934 readback only; source admit/ACK andadmitAndRead records return no bytefield; old1940/531history preserved"
+    },
+    {
+      "id": "ICQ-R06-02",
+      "change": "Concrete complete positive/negative originalselection manifests and matching regenerated boundbytes/hashes perALL-WRITES method. Negativeprofile freshcapturebeforebaseline, not mutatepositivequota. ExistingglobalAref inadmissible for boundaryprofiles."
+    }
+  ],
+  "independentFindingSource": {
+    "path": "docs/review/evidence/config-acceptance/independent-core-icq-material-recheck-20261013/independent-material-review.json",
+    "sha256": "cf6a80709566d3efee4384fb80d5919093ba9db6c215679539db778a17ff8fba",
+    "sizeBytes": 22208
+  },
+  "authorAcceptance": false,
+  "runtimeAcceptance": false,
+  "wholeC0Acceptance": false
+}

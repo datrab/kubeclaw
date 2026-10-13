@@ -1,0 +1,67 @@
+{
+  "scope": "Actual existing local renderer definition checks only. Synthetic complete Kubernetes-shaped inputs are not external-schema, image, deployment, LiteLLM behavior or runtime acceptance.",
+  "sourceSha256": "036f4658360318ba7d503edb15fff1b7e1590dc5a42b34c20fbceab9c0181c9c",
+  "testSha256": "71a1cfae10774abb46548814005dd1ae40b5312e85770506c626dadcda5c7228",
+  "results": [
+    {
+      "name": "A-original-config-snapshot",
+      "argv": [
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/scripts/render-litellm-deployment.mjs",
+        "/tmp/c0-litellm-snapshot-QqBRS1/config.yaml",
+        "/tmp/c0-litellm-snapshot-QqBRS1/deployment.yaml"
+      ],
+      "exit": 0,
+      "configSha256": "383e57317bf395f53fff20e92f8dd4d8242deca8baf234a85c7d0982f709a91c",
+      "deploymentSha256": "fba5abf4708121cecc333faed1f4a64562a6f120918a95a3e608ef43e4194caf",
+      "stdout": "apiVersion: v1\nkind: ConfigMap\nmetadata:\n  name: litellm-config\ndata:\n  config.yaml: |\n    model_list: []\n---\napiVersion: apps/v1\nkind: Deployment\nmetadata:\n  name: litellm\nspec:\n  replicas: 1\n  selector:\n    matchLabels:\n      app: litellm\n  template:\n    metadata:\n      labels:\n        app: litellm\n      annotations:\n        checksum/litellm-config: 383e57317bf395f53fff20e92f8dd4d8242deca8baf234a85c7d0982f709a91c\n    spec:\n      containers:\n        - name: litellm\n          image: example.invalid/litellm@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n          volumeMounts:\n            - name: config\n              mountPath: /config\n      volumes:\n        - name: config\n          configMap:\n            name: litellm-config\n",
+      "stderr": "",
+      "expectedError": null,
+      "passed": true
+    },
+    {
+      "name": "B-distinct-config-same-snapshot",
+      "argv": [
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/scripts/render-litellm-deployment.mjs",
+        "/tmp/c0-litellm-snapshot-QqBRS1/config.yaml",
+        "/tmp/c0-litellm-snapshot-QqBRS1/deployment.yaml"
+      ],
+      "exit": 0,
+      "configSha256": "ae7ff5456d899c1ba69d7e9216d717c7299dac4a16b444cc738f5aa8462509e2",
+      "deploymentSha256": "fba5abf4708121cecc333faed1f4a64562a6f120918a95a3e608ef43e4194caf",
+      "stdout": "apiVersion: v1\nkind: ConfigMap\nmetadata:\n  name: litellm-config\ndata:\n  config.yaml: |\n    model_list: []\n    general_settings:\n      max_parallel_requests: 2\n---\napiVersion: apps/v1\nkind: Deployment\nmetadata:\n  name: litellm\nspec:\n  replicas: 1\n  selector:\n    matchLabels:\n      app: litellm\n  template:\n    metadata:\n      labels:\n        app: litellm\n      annotations:\n        checksum/litellm-config: ae7ff5456d899c1ba69d7e9216d717c7299dac4a16b444cc738f5aa8462509e2\n    spec:\n      containers:\n        - name: litellm\n          image: example.invalid/litellm@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n          volumeMounts:\n            - name: config\n              mountPath: /config\n      volumes:\n        - name: config\n          configMap:\n            name: litellm-config\n",
+      "stderr": "",
+      "expectedError": null,
+      "passed": true
+    },
+    {
+      "name": "duplicate-named-deployment-rejected",
+      "argv": [
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/scripts/render-litellm-deployment.mjs",
+        "/tmp/c0-litellm-snapshot-QqBRS1/config.yaml",
+        "/tmp/c0-litellm-snapshot-QqBRS1/deployment.yaml"
+      ],
+      "exit": 1,
+      "configSha256": "383e57317bf395f53fff20e92f8dd4d8242deca8baf234a85c7d0982f709a91c",
+      "deploymentSha256": "ba97f8e8f8eb83bc4dd57fdac891a41b28851d8cd8b19a3035438f00b7b8fc0e",
+      "stdout": "",
+      "stderr": "file:///home/node/.openclaw/workspace/kubeclaw-config-c0/scripts/render-litellm-deployment.mjs:13\nif (deployments.length !== 1) throw new Error('LITELLM_DEPLOYMENT_REQUIRED');\n                                    ^\n\nError: LITELLM_DEPLOYMENT_REQUIRED\n    at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/scripts/render-litellm-deployment.mjs:13:37\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:647:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.21.0\n",
+      "expectedError": "LITELLM_DEPLOYMENT_REQUIRED",
+      "passed": true
+    },
+    {
+      "name": "different-config-mount-rejected",
+      "argv": [
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/scripts/render-litellm-deployment.mjs",
+        "/tmp/c0-litellm-snapshot-QqBRS1/config.yaml",
+        "/tmp/c0-litellm-snapshot-QqBRS1/deployment.yaml"
+      ],
+      "exit": 1,
+      "configSha256": "383e57317bf395f53fff20e92f8dd4d8242deca8baf234a85c7d0982f709a91c",
+      "deploymentSha256": "8d6a6b39a29f15483ceabc60b05003d49d85a43d397bfd89a1063960bb7f50c7",
+      "stdout": "",
+      "stderr": "file:///home/node/.openclaw/workspace/kubeclaw-config-c0/scripts/render-litellm-deployment.mjs:16\nif (volume?.configMap?.name !== 'litellm-config') throw new Error('LITELLM_CONFIG_MOUNT_INVALID');\n                                                        ^\n\nError: LITELLM_CONFIG_MOUNT_INVALID\n    at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/scripts/render-litellm-deployment.mjs:16:57\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:647:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.21.0\n",
+      "expectedError": "LITELLM_CONFIG_MOUNT_INVALID",
+      "passed": true
+    }
+  ]
+}

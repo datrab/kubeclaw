@@ -1,0 +1,14 @@
+import { fileURLToPath } from 'node:url';
+import { loadPrismSettings } from '../../common/plugin-runtime/foundation/config/swarm.ts';
+import type { StudioOptions } from './studio-request.ts';
+
+/** Operator settings are one authored snapshot; assets and secrets remain installation inputs. */
+export function loadStudioConfig(environment: NodeJS.ProcessEnv = process.env): StudioOptions & { port: number } {
+  for (const key of ['PORT', 'PRISM_CONTROL_TIMEOUT_MS', 'PRISM_CONTROL_URL']) {
+    if (environment[key] !== undefined) throw new Error(`SWARM_CONFIG_LEGACY_OVERRIDE:${key}:use prism-studio.config.json settings`);
+  }
+  const settings = loadPrismSettings(environment).studio;
+  return Object.freeze({ port: settings.port, controlTimeoutMs: settings.controlTimeoutMs,
+    root: environment.STUDIO_ROOT ?? fileURLToPath(new URL('../dist-studio', import.meta.url)),
+    control: new URL(settings.controlUrl), ingressSecret: environment.PRISM_INGRESS_SECRET ?? '' });
+}

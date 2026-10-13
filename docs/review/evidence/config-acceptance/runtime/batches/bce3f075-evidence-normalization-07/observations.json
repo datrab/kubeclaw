@@ -1,0 +1,70 @@
+{
+  "status": "passed narrow documentation normalization integrity only; NOT semantic/runtime acceptance or F-MUT",
+  "caseCount": 5047,
+  "normalizedReferenceCount": 775,
+  "fullBeforeAndAfterCasesObjectEquivalent": true,
+  "originalBeforeBytesPreservedSha256": "410768bda16003ac6407b93b42a58ccb04f6f94e95727e6a6270a2fedcaece5c",
+  "beforeGzipSha256": "fbfd140feb4ad67f8e02359c7f7df2316925a90cd13f33fdb3b3be4e2f234214",
+  "currentNormalizedBytesSha256": "de53ca14e4706715bc1657bb275373e384e22242ce834fba839c309138c63a42",
+  "controls": [
+    {
+      "name": "absent-artifact",
+      "result": "rejected",
+      "boundary": "REFERENCE_ARTIFACT_ABSENT"
+    },
+    {
+      "name": "existing-wrong-pointer",
+      "result": "rejected",
+      "boundary": "REFERENCE_WRONG_VALUE"
+    },
+    {
+      "name": "absent-pointer",
+      "result": "rejected",
+      "boundary": "REFERENCE_POINTER_ABSENT"
+    },
+    {
+      "name": "invalid-RFC6901-escape",
+      "result": "rejected",
+      "boundary": "REFERENCE_POINTER_ESCAPE_INVALID"
+    },
+    {
+      "name": "parent-path-escape",
+      "result": "rejected",
+      "boundary": "REFERENCE_PATH_ESCAPE"
+    },
+    {
+      "name": "drifted-artifact",
+      "result": "rejected",
+      "boundary": "REFERENCE_ARTIFACT_DRIFT"
+    },
+    {
+      "name": "cycle-reference",
+      "result": "rejected",
+      "boundary": "REFERENCE_CYCLE"
+    },
+    {
+      "name": "symlink-escape",
+      "result": "rejected",
+      "boundary": "REFERENCE_SYMLINK_ESCAPE"
+    },
+    {
+      "name": "restored-original-reference",
+      "result": "passed",
+      "valueSha256": "d8bd7a1d1b3d1092170410d721245104c4d08beaa8e2f58f15afc28dc603f2f1"
+    }
+  ],
+  "sourceCommit": "bce3f075156a86be345821499c04628cb35c2762",
+  "sourceTree": "a8b0adf641de573565360b0c4eb577d6bc7545c3",
+  "testDigests": {
+    "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-evidence-normalization-07/check.py": "4ef8277d9564ef2285f9389f8e2e775731fc8c802f7051f449e47773ba27c2ea",
+    "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-evidence-normalization-07/normalize.py": "b8d9c2d6222bc950278cb70b14b91a436ea78ec5139e23157edafdf585896eca"
+  },
+  "inputDigests": {
+    "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-evidence-normalization-07/normalization-manifest.json": "2a8f6f620035acef266962c99d0edef364e065fb9b70d8af9a3ccc95b1fa02fd",
+    "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json": "eb6aad6748b119c42123d0decb61516bc7177eb6c856238f4fc698af7f7a975d",
+    "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json": "a66c02f3b610bd7e9f859e90adb7b180bb3f9d55ce03a35111acd6611fc01175",
+    "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-artifact-budget-06/observations.json": "83cc6904fd0aa62078c07f0c2cee7f5396f1ebc1c773b89dc5cc94e370a48a43"
+  },
+  "reviewerConfirmation": "pending",
+  "unchanged": "requiredcase IDs/settings/requirements/results/oracles/fullA/B/negative/source/target configprofiles/source+test+input digests/rawlogs/history; ONLY repeated observation/special payloads replaced with exact immutable references"
+}

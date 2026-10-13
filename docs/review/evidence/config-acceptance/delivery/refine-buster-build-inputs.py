@@ -27,6 +27,7 @@ entries={
 for r in v['rows']:
  if r['owner']!='image-buster-runtime':continue
  field=r['source']['field']
+ if field=='TARGETARCH':r['class']='generated-binding'
  if field not in entries:continue
  domain,op,error,line=entries[field];refs=[source(docker,r['id']),source(versions,r['id']),source('versions.json',r['id'])]
  if field in ['RUFF_VERSION','MYPY_VERSION','PIP_AUDIT_VERSION','SEMGREP_VERSION']:

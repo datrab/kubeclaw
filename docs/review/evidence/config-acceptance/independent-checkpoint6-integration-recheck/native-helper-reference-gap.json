@@ -1,0 +1,7 @@
+{
+  "scope": "documentation-helper virtual initial matrix load only; no real root changes, not runtime F-MUT",
+  "caseId": "RT-351419f2c26e2696-CURRENT-SCHEMA-FIELD",
+  "mutation": "canonical nativeSpecificationReferences[0].sourceSha256 zeros",
+  "actualHelperAssertionsStillPassed": true,
+  "sourceMatrixIdentityPrintedByHelperDoesNotDescribeVirtualMutation": true
+}

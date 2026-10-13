@@ -1,0 +1,2521 @@
+{
+  "scope": "actual pure target primitive controls for complete definition profiles; primary native Zod full-config/registry/service/credential/remote model compatibility NOT validated here",
+  "records": [
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-ENABLED-A",
+      "settingId": "DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-ENABLED",
+      "field": "memory.search.enabled",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-ENABLED.A.json",
+      "schema": {
+        "type": "boolean"
+      },
+      "value": true,
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-ENABLED-B",
+      "settingId": "DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-ENABLED",
+      "field": "memory.search.enabled",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-ENABLED.B.json",
+      "schema": {
+        "type": "boolean"
+      },
+      "value": false,
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-EXPERIMENTAL-SESSIONMEMORY-A",
+      "settingId": "DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-EXPERIMENTAL-SESSIONMEMORY",
+      "field": "memory.search.experimental.sessionMemory",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-EXPERIMENTAL-SESSIONMEMORY.A.json",
+      "schema": {
+        "type": "boolean"
+      },
+      "value": true,
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-EXPERIMENTAL-SESSIONMEMORY-B",
+      "settingId": "DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-EXPERIMENTAL-SESSIONMEMORY",
+      "field": "memory.search.experimental.sessionMemory",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-EXPERIMENTAL-SESSIONMEMORY.B.json",
+      "schema": {
+        "type": "boolean"
+      },
+      "value": false,
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-SOURCES-A",
+      "settingId": "DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-SOURCES",
+      "field": "memory.search.sources",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-SOURCES.A.json",
+      "schema": {
+        "type": "array",
+        "uniqueItems": true,
+        "items": {
+          "enum": [
+            "memory",
+            "sessions"
+          ]
+        },
+        "minItems": 0
+      },
+      "value": [
+        "memory",
+        "sessions"
+      ],
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-SOURCES-B",
+      "settingId": "DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-SOURCES",
+      "field": "memory.search.sources",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-SOURCES.B.json",
+      "schema": {
+        "type": "array",
+        "uniqueItems": true,
+        "items": {
+          "enum": [
+            "memory",
+            "sessions"
+          ]
+        },
+        "minItems": 0
+      },
+      "value": [
+        "memory"
+      ],
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-PROVIDER-A",
+      "settingId": "DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-PROVIDER",
+      "field": "memory.search.provider",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-PROVIDER.A.json",
+      "schema": {
+        "type": "string",
+        "minLength": 1
+      },
+      "value": "openai-compatible",
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-PROVIDER-B",
+      "settingId": "DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-PROVIDER",
+      "field": "memory.search.provider",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-PROVIDER.B.json",
+      "schema": {
+        "type": "string",
+        "minLength": 1
+      },
+      "value": "openai",
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-BASEURL-A",
+      "settingId": "DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-BASEURL",
+      "field": "memory.search.remote.baseUrl",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-BASEURL.A.json",
+      "schema": {
+        "type": "string",
+        "minLength": 1
+      },
+      "value": "http://127.0.0.1:18081/v1",
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-BASEURL-B",
+      "settingId": "DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-BASEURL",
+      "field": "memory.search.remote.baseUrl",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-BASEURL.B.json",
+      "schema": {
+        "type": "string",
+        "minLength": 1
+      },
+      "value": "http://127.0.0.1:18082/v1",
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-APIKEY-SOURCE-A",
+      "settingId": "DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-APIKEY-SOURCE",
+      "field": "memory.search.remote.apiKey.source",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-APIKEY-SOURCE.A.json",
+      "schema": {
+        "enum": [
+          "env",
+          "file",
+          "exec",
+          "store"
+        ]
+      },
+      "value": "env",
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-APIKEY-SOURCE-B",
+      "settingId": "DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-APIKEY-SOURCE",
+      "field": "memory.search.remote.apiKey.source",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-APIKEY-SOURCE.B.json",
+      "schema": {
+        "enum": [
+          "env",
+          "file",
+          "exec",
+          "store"
+        ]
+      },
+      "value": "file",
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-APIKEY-PROVIDER-A",
+      "settingId": "DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-APIKEY-PROVIDER",
+      "field": "memory.search.remote.apiKey.provider",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-APIKEY-PROVIDER.A.json",
+      "schema": {
+        "type": "string",
+        "pattern": "^[a-z][a-z0-9_-]{0,63}$"
+      },
+      "value": "default",
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-APIKEY-PROVIDER-B",
+      "settingId": "DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-APIKEY-PROVIDER",
+      "field": "memory.search.remote.apiKey.provider",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-APIKEY-PROVIDER.B.json",
+      "schema": {
+        "type": "string",
+        "pattern": "^[a-z][a-z0-9_-]{0,63}$"
+      },
+      "value": "delivery-test",
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-APIKEY-ID-A",
+      "settingId": "DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-APIKEY-ID",
+      "field": "memory.search.remote.apiKey.id",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-APIKEY-ID.A.json",
+      "schema": {
+        "type": "string"
+      },
+      "value": "LITELLM_API_KEY",
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-APIKEY-ID-B",
+      "settingId": "DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-APIKEY-ID",
+      "field": "memory.search.remote.apiKey.id",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-APIKEY-ID.B.json",
+      "schema": {
+        "type": "string"
+      },
+      "value": "DLV_TEST_EMBEDDING_TOKEN",
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-MODEL-A",
+      "settingId": "DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-MODEL",
+      "field": "memory.search.model",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-MODEL.A.json",
+      "schema": {
+        "type": "string",
+        "minLength": 1
+      },
+      "value": "dlv-embedding-a",
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-MODEL-B",
+      "settingId": "DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-MODEL",
+      "field": "memory.search.model",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-MODEL.B.json",
+      "schema": {
+        "type": "string",
+        "minLength": 1
+      },
+      "value": "dlv-embedding-b",
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-THINKINGDEFAULT-A",
+      "settingId": "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-THINKINGDEFAULT",
+      "field": "agents.defaults.thinkingDefault",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-THINKINGDEFAULT.A.json",
+      "schema": {
+        "enum": [
+          "off",
+          "minimal",
+          "low",
+          "medium",
+          "high",
+          "xhigh",
+          "adaptive",
+          "max",
+          "ultra"
+        ]
+      },
+      "value": "off",
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-THINKINGDEFAULT-B",
+      "settingId": "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-THINKINGDEFAULT",
+      "field": "agents.defaults.thinkingDefault",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-THINKINGDEFAULT.B.json",
+      "schema": {
+        "enum": [
+          "off",
+          "minimal",
+          "low",
+          "medium",
+          "high",
+          "xhigh",
+          "adaptive",
+          "max",
+          "ultra"
+        ]
+      },
+      "value": "low",
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-REASONINGDEFAULT-A",
+      "settingId": "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-REASONINGDEFAULT",
+      "field": "agents.defaults.reasoningDefault",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-REASONINGDEFAULT.A.json",
+      "schema": {
+        "enum": [
+          "off",
+          "on",
+          "stream"
+        ]
+      },
+      "value": "off",
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-REASONINGDEFAULT-B",
+      "settingId": "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-REASONINGDEFAULT",
+      "field": "agents.defaults.reasoningDefault",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-REASONINGDEFAULT.B.json",
+      "schema": {
+        "enum": [
+          "off",
+          "on",
+          "stream"
+        ]
+      },
+      "value": "on",
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELPOLICY-ALLOW-A",
+      "settingId": "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELPOLICY-ALLOW",
+      "field": "agents.defaults.modelPolicy.allow",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELPOLICY-ALLOW.A.json",
+      "schema": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "uniqueItems": true
+      },
+      "value": [
+        "openai/gpt-5.6-sol",
+        "openai/gpt-5.5"
+      ],
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELPOLICY-ALLOW-B",
+      "settingId": "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELPOLICY-ALLOW",
+      "field": "agents.defaults.modelPolicy.allow",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELPOLICY-ALLOW.B.json",
+      "schema": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "uniqueItems": true
+      },
+      "value": [
+        "openai/gpt-5.5"
+      ],
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELS-OPENAI-GPT-6-ASTRA-AGENTRUNTIME-ID-A",
+      "settingId": "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELS-OPENAI-GPT-6-ASTRA-AGENTRUNTIME-ID",
+      "field": "agents.defaults.models.openai/gpt-6-astra.agentRuntime.id",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELS-OPENAI-GPT-6-ASTRA-AGENTRUNTIME-ID.A.json",
+      "schema": {
+        "type": "string",
+        "enum": [
+          "openclaw",
+          "codex"
+        ]
+      },
+      "value": "codex",
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELS-OPENAI-GPT-6-ASTRA-AGENTRUNTIME-ID-B",
+      "settingId": "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELS-OPENAI-GPT-6-ASTRA-AGENTRUNTIME-ID",
+      "field": "agents.defaults.models.openai/gpt-6-astra.agentRuntime.id",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELS-OPENAI-GPT-6-ASTRA-AGENTRUNTIME-ID.B.json",
+      "schema": {
+        "type": "string",
+        "enum": [
+          "openclaw",
+          "codex"
+        ]
+      },
+      "value": "openclaw",
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELS-OPENAI-GPT-5-6-SOL-AGENTRUNTIME-ID-A",
+      "settingId": "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELS-OPENAI-GPT-5-6-SOL-AGENTRUNTIME-ID",
+      "field": "agents.defaults.models.openai/gpt-5.6-sol.agentRuntime.id",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELS-OPENAI-GPT-5-6-SOL-AGENTRUNTIME-ID.A.json",
+      "schema": {
+        "type": "string",
+        "enum": [
+          "openclaw",
+          "codex"
+        ]
+      },
+      "value": "codex",
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELS-OPENAI-GPT-5-6-SOL-AGENTRUNTIME-ID-B",
+      "settingId": "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELS-OPENAI-GPT-5-6-SOL-AGENTRUNTIME-ID",
+      "field": "agents.defaults.models.openai/gpt-5.6-sol.agentRuntime.id",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELS-OPENAI-GPT-5-6-SOL-AGENTRUNTIME-ID.B.json",
+      "schema": {
+        "type": "string",
+        "enum": [
+          "openclaw",
+          "codex"
+        ]
+      },
+      "value": "openclaw",
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELS-OPENAI-GPT-5-5-AGENTRUNTIME-ID-A",
+      "settingId": "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELS-OPENAI-GPT-5-5-AGENTRUNTIME-ID",
+      "field": "agents.defaults.models.openai/gpt-5.5.agentRuntime.id",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELS-OPENAI-GPT-5-5-AGENTRUNTIME-ID.A.json",
+      "schema": {
+        "type": "string",
+        "enum": [
+          "openclaw",
+          "codex"
+        ]
+      },
+      "value": "codex",
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELS-OPENAI-GPT-5-5-AGENTRUNTIME-ID-B",
+      "settingId": "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELS-OPENAI-GPT-5-5-AGENTRUNTIME-ID",
+      "field": "agents.defaults.models.openai/gpt-5.5.agentRuntime.id",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELS-OPENAI-GPT-5-5-AGENTRUNTIME-ID.B.json",
+      "schema": {
+        "type": "string",
+        "enum": [
+          "openclaw",
+          "codex"
+        ]
+      },
+      "value": "openclaw",
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-WORKSPACE-A",
+      "settingId": "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-WORKSPACE",
+      "field": "agents.defaults.workspace",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-WORKSPACE.A.json",
+      "schema": {
+        "type": "string",
+        "minLength": 1
+      },
+      "value": "/home/node/.openclaw/workspace",
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-WORKSPACE-B",
+      "settingId": "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-WORKSPACE",
+      "field": "agents.defaults.workspace",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-WORKSPACE.B.json",
+      "schema": {
+        "type": "string",
+        "minLength": 1
+      },
+      "value": "/tmp/dlv-workspace-b",
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-EMBEDDEDAGENT-EXECUTIONCONTRACT-A",
+      "settingId": "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-EMBEDDEDAGENT-EXECUTIONCONTRACT",
+      "field": "agents.defaults.embeddedAgent.executionContract",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-EMBEDDEDAGENT-EXECUTIONCONTRACT.A.json",
+      "schema": {
+        "enum": [
+          "default",
+          "strict-agentic"
+        ]
+      },
+      "value": "strict-agentic",
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-EMBEDDEDAGENT-EXECUTIONCONTRACT-B",
+      "settingId": "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-EMBEDDEDAGENT-EXECUTIONCONTRACT",
+      "field": "agents.defaults.embeddedAgent.executionContract",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-EMBEDDEDAGENT-EXECUTIONCONTRACT.B.json",
+      "schema": {
+        "enum": [
+          "default",
+          "strict-agentic"
+        ]
+      },
+      "value": "default",
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-CONTEXTPRUNING-MODE-A",
+      "settingId": "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-CONTEXTPRUNING-MODE",
+      "field": "agents.defaults.contextPruning.mode",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-CONTEXTPRUNING-MODE.A.json",
+      "schema": {
+        "enum": [
+          "off",
+          "cache-ttl"
+        ]
+      },
+      "value": "cache-ttl",
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-CONTEXTPRUNING-MODE-B",
+      "settingId": "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-CONTEXTPRUNING-MODE",
+      "field": "agents.defaults.contextPruning.mode",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-CONTEXTPRUNING-MODE.B.json",
+      "schema": {
+        "enum": [
+          "off",
+          "cache-ttl"
+        ]
+      },
+      "value": "off",
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-CONTEXTPRUNING-TTL-A",
+      "settingId": "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-CONTEXTPRUNING-TTL",
+      "field": "agents.defaults.contextPruning.ttl",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-CONTEXTPRUNING-TTL.A.json",
+      "schema": {
+        "type": "string"
+      },
+      "value": "2h",
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-CONTEXTPRUNING-TTL-B",
+      "settingId": "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-CONTEXTPRUNING-TTL",
+      "field": "agents.defaults.contextPruning.ttl",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-CONTEXTPRUNING-TTL.B.json",
+      "schema": {
+        "type": "string"
+      },
+      "value": "10m",
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-COMPACTION-MODE-A",
+      "settingId": "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-COMPACTION-MODE",
+      "field": "agents.defaults.compaction.mode",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-COMPACTION-MODE.A.json",
+      "schema": {
+        "enum": [
+          "default",
+          "safeguard"
+        ]
+      },
+      "value": "safeguard",
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-COMPACTION-MODE-B",
+      "settingId": "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-COMPACTION-MODE",
+      "field": "agents.defaults.compaction.mode",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-COMPACTION-MODE.B.json",
+      "schema": {
+        "enum": [
+          "default",
+          "safeguard"
+        ]
+      },
+      "value": "default",
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-COMPACTION-KEEPRECENTTOKENS-A",
+      "settingId": "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-COMPACTION-KEEPRECENTTOKENS",
+      "field": "agents.defaults.compaction.keepRecentTokens",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-COMPACTION-KEEPRECENTTOKENS.A.json",
+      "schema": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 9007199254740991
+      },
+      "value": 140000,
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-COMPACTION-KEEPRECENTTOKENS-B",
+      "settingId": "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-COMPACTION-KEEPRECENTTOKENS",
+      "field": "agents.defaults.compaction.keepRecentTokens",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-COMPACTION-KEEPRECENTTOKENS.B.json",
+      "schema": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 9007199254740991
+      },
+      "value": 20000,
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-COMPACTION-MEMORYFLUSH-ENABLED-A",
+      "settingId": "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-COMPACTION-MEMORYFLUSH-ENABLED",
+      "field": "agents.defaults.compaction.memoryFlush.enabled",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-COMPACTION-MEMORYFLUSH-ENABLED.A.json",
+      "schema": {
+        "type": "boolean"
+      },
+      "value": true,
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-COMPACTION-MEMORYFLUSH-ENABLED-B",
+      "settingId": "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-COMPACTION-MEMORYFLUSH-ENABLED",
+      "field": "agents.defaults.compaction.memoryFlush.enabled",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-COMPACTION-MEMORYFLUSH-ENABLED.B.json",
+      "schema": {
+        "type": "boolean"
+      },
+      "value": false,
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-SUBAGENTS-MAXCONCURRENT-A",
+      "settingId": "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-SUBAGENTS-MAXCONCURRENT",
+      "field": "agents.defaults.subagents.maxConcurrent",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-SUBAGENTS-MAXCONCURRENT.A.json",
+      "schema": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 9007199254740991
+      },
+      "value": 20,
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-SUBAGENTS-MAXCONCURRENT-B",
+      "settingId": "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-SUBAGENTS-MAXCONCURRENT",
+      "field": "agents.defaults.subagents.maxConcurrent",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-SUBAGENTS-MAXCONCURRENT.B.json",
+      "schema": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 9007199254740991
+      },
+      "value": 2,
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-SUBAGENTS-ARCHIVEAFTERMINUTES-A",
+      "settingId": "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-SUBAGENTS-ARCHIVEAFTERMINUTES",
+      "field": "agents.defaults.subagents.archiveAfterMinutes",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-SUBAGENTS-ARCHIVEAFTERMINUTES.A.json",
+      "schema": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 144000000000
+      },
+      "value": 240,
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-SUBAGENTS-ARCHIVEAFTERMINUTES-B",
+      "settingId": "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-SUBAGENTS-ARCHIVEAFTERMINUTES",
+      "field": "agents.defaults.subagents.archiveAfterMinutes",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-SUBAGENTS-ARCHIVEAFTERMINUTES.B.json",
+      "schema": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 144000000000
+      },
+      "value": 120,
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-SUBAGENTS-RUNTIMEOUTSECONDS-A",
+      "settingId": "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-SUBAGENTS-RUNTIMEOUTSECONDS",
+      "field": "agents.defaults.subagents.runTimeoutSeconds",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-SUBAGENTS-RUNTIMEOUTSECONDS.A.json",
+      "schema": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 2147483
+      },
+      "value": 43200,
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-SUBAGENTS-RUNTIMEOUTSECONDS-B",
+      "settingId": "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-SUBAGENTS-RUNTIMEOUTSECONDS",
+      "field": "agents.defaults.subagents.runTimeoutSeconds",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-SUBAGENTS-RUNTIMEOUTSECONDS.B.json",
+      "schema": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 2147483
+      },
+      "value": 120,
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-SUBAGENTS-MAXSPAWNDEPTH-A",
+      "settingId": "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-SUBAGENTS-MAXSPAWNDEPTH",
+      "field": "agents.defaults.subagents.maxSpawnDepth",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-SUBAGENTS-MAXSPAWNDEPTH.A.json",
+      "schema": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 5
+      },
+      "value": 3,
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-SUBAGENTS-MAXSPAWNDEPTH-B",
+      "settingId": "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-SUBAGENTS-MAXSPAWNDEPTH",
+      "field": "agents.defaults.subagents.maxSpawnDepth",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-SUBAGENTS-MAXSPAWNDEPTH.B.json",
+      "schema": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 5
+      },
+      "value": 1,
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-CONTEXTINJECTION-A",
+      "settingId": "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-CONTEXTINJECTION",
+      "field": "agents.defaults.contextInjection",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-CONTEXTINJECTION.A.json",
+      "schema": {
+        "enum": [
+          "always",
+          "continuation-skip",
+          "never"
+        ]
+      },
+      "value": "never",
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-CONTEXTINJECTION-B",
+      "settingId": "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-CONTEXTINJECTION",
+      "field": "agents.defaults.contextInjection",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-CONTEXTINJECTION.B.json",
+      "schema": {
+        "enum": [
+          "always",
+          "continuation-skip",
+          "never"
+        ]
+      },
+      "value": "always",
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-AGENTS-ENTRIES-MAIN-SUBAGENTS-ALLOWAGENTS-A",
+      "settingId": "DLV-GATEWAY-OPENCLAW-AGENTS-ENTRIES-MAIN-SUBAGENTS-ALLOWAGENTS",
+      "field": "agents.entries.main.subagents.allowAgents",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-ENTRIES-MAIN-SUBAGENTS-ALLOWAGENTS.A.json",
+      "schema": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "uniqueItems": true
+      },
+      "value": [
+        "*"
+      ],
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-AGENTS-ENTRIES-MAIN-SUBAGENTS-ALLOWAGENTS-B",
+      "settingId": "DLV-GATEWAY-OPENCLAW-AGENTS-ENTRIES-MAIN-SUBAGENTS-ALLOWAGENTS",
+      "field": "agents.entries.main.subagents.allowAgents",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-ENTRIES-MAIN-SUBAGENTS-ALLOWAGENTS.B.json",
+      "schema": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "uniqueItems": true
+      },
+      "value": [
+        "main"
+      ],
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-AGENTS-ENTRIES-MAIN-SKILLS-A",
+      "settingId": "DLV-GATEWAY-OPENCLAW-AGENTS-ENTRIES-MAIN-SKILLS",
+      "field": "agents.entries.main.skills",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-ENTRIES-MAIN-SKILLS.A.json",
+      "schema": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "uniqueItems": true
+      },
+      "value": [],
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-AGENTS-ENTRIES-MAIN-SKILLS-B",
+      "settingId": "DLV-GATEWAY-OPENCLAW-AGENTS-ENTRIES-MAIN-SKILLS",
+      "field": "agents.entries.main.skills",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-ENTRIES-MAIN-SKILLS.B.json",
+      "schema": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "uniqueItems": true
+      },
+      "value": [
+        "project-setup"
+      ],
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-AGENTS-ENTRIES-MAIN-SKILLSLIMITS-MAXSKILLSPROMPTCHARS-A",
+      "settingId": "DLV-GATEWAY-OPENCLAW-AGENTS-ENTRIES-MAIN-SKILLSLIMITS-MAXSKILLSPROMPTCHARS",
+      "field": "agents.entries.main.skillsLimits.maxSkillsPromptChars",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-ENTRIES-MAIN-SKILLSLIMITS-MAXSKILLSPROMPTCHARS.A.json",
+      "schema": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 9007199254740991
+      },
+      "value": 1200,
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-AGENTS-ENTRIES-MAIN-SKILLSLIMITS-MAXSKILLSPROMPTCHARS-B",
+      "settingId": "DLV-GATEWAY-OPENCLAW-AGENTS-ENTRIES-MAIN-SKILLSLIMITS-MAXSKILLSPROMPTCHARS",
+      "field": "agents.entries.main.skillsLimits.maxSkillsPromptChars",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-ENTRIES-MAIN-SKILLSLIMITS-MAXSKILLSPROMPTCHARS.B.json",
+      "schema": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 9007199254740991
+      },
+      "value": 120,
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-ACP-ENABLED-A",
+      "settingId": "DLV-GATEWAY-OPENCLAW-ACP-ENABLED",
+      "field": "acp.enabled",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-ACP-ENABLED.A.json",
+      "schema": {
+        "type": "boolean"
+      },
+      "value": true,
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-ACP-ENABLED-B",
+      "settingId": "DLV-GATEWAY-OPENCLAW-ACP-ENABLED",
+      "field": "acp.enabled",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-ACP-ENABLED.B.json",
+      "schema": {
+        "type": "boolean"
+      },
+      "value": false,
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-ACP-BACKEND-A",
+      "settingId": "DLV-GATEWAY-OPENCLAW-ACP-BACKEND",
+      "field": "acp.backend",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-ACP-BACKEND.A.json",
+      "schema": {
+        "type": "string",
+        "minLength": 1
+      },
+      "value": "acpx",
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-ACP-BACKEND-B",
+      "settingId": "DLV-GATEWAY-OPENCLAW-ACP-BACKEND",
+      "field": "acp.backend",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-ACP-BACKEND.B.json",
+      "schema": {
+        "type": "string",
+        "minLength": 1
+      },
+      "value": "acpx",
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-ACP-DEFAULTAGENT-A",
+      "settingId": "DLV-GATEWAY-OPENCLAW-ACP-DEFAULTAGENT",
+      "field": "acp.defaultAgent",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-ACP-DEFAULTAGENT.A.json",
+      "schema": {
+        "type": "string",
+        "minLength": 1
+      },
+      "value": "codex",
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-ACP-DEFAULTAGENT-B",
+      "settingId": "DLV-GATEWAY-OPENCLAW-ACP-DEFAULTAGENT",
+      "field": "acp.defaultAgent",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-ACP-DEFAULTAGENT.B.json",
+      "schema": {
+        "type": "string",
+        "minLength": 1
+      },
+      "value": "claude",
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-ACP-ALLOWEDAGENTS-A",
+      "settingId": "DLV-GATEWAY-OPENCLAW-ACP-ALLOWEDAGENTS",
+      "field": "acp.allowedAgents",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-ACP-ALLOWEDAGENTS.A.json",
+      "schema": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "uniqueItems": true
+      },
+      "value": [
+        "claude",
+        "codex",
+        "kimi",
+        "gemini",
+        "pi"
+      ],
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-ACP-ALLOWEDAGENTS-B",
+      "settingId": "DLV-GATEWAY-OPENCLAW-ACP-ALLOWEDAGENTS",
+      "field": "acp.allowedAgents",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-ACP-ALLOWEDAGENTS.B.json",
+      "schema": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "uniqueItems": true
+      },
+      "value": [
+        "codex"
+      ],
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-TOOLS-PROFILE-A",
+      "settingId": "DLV-GATEWAY-OPENCLAW-TOOLS-PROFILE",
+      "field": "tools.profile",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-TOOLS-PROFILE.A.json",
+      "schema": {
+        "enum": [
+          "minimal",
+          "coding",
+          "messaging",
+          "full"
+        ]
+      },
+      "value": "coding",
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-TOOLS-PROFILE-B",
+      "settingId": "DLV-GATEWAY-OPENCLAW-TOOLS-PROFILE",
+      "field": "tools.profile",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-TOOLS-PROFILE.B.json",
+      "schema": {
+        "enum": [
+          "minimal",
+          "coding",
+          "messaging",
+          "full"
+        ]
+      },
+      "value": "minimal",
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-TOOLS-SESSIONS-VISIBILITY-A",
+      "settingId": "DLV-GATEWAY-OPENCLAW-TOOLS-SESSIONS-VISIBILITY",
+      "field": "tools.sessions.visibility",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-TOOLS-SESSIONS-VISIBILITY.A.json",
+      "schema": {
+        "enum": [
+          "self",
+          "tree",
+          "agent",
+          "all"
+        ]
+      },
+      "value": "all",
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-TOOLS-SESSIONS-VISIBILITY-B",
+      "settingId": "DLV-GATEWAY-OPENCLAW-TOOLS-SESSIONS-VISIBILITY",
+      "field": "tools.sessions.visibility",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-TOOLS-SESSIONS-VISIBILITY.B.json",
+      "schema": {
+        "enum": [
+          "self",
+          "tree",
+          "agent",
+          "all"
+        ]
+      },
+      "value": "tree",
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-TOOLS-SESSIONS-SPAWN-ATTACHMENTS-ENABLED-A",
+      "settingId": "DLV-GATEWAY-OPENCLAW-TOOLS-SESSIONS-SPAWN-ATTACHMENTS-ENABLED",
+      "field": "tools.sessions_spawn.attachments.enabled",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-TOOLS-SESSIONS-SPAWN-ATTACHMENTS-ENABLED.A.json",
+      "schema": {
+        "type": "boolean"
+      },
+      "value": true,
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-TOOLS-SESSIONS-SPAWN-ATTACHMENTS-ENABLED-B",
+      "settingId": "DLV-GATEWAY-OPENCLAW-TOOLS-SESSIONS-SPAWN-ATTACHMENTS-ENABLED",
+      "field": "tools.sessions_spawn.attachments.enabled",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-TOOLS-SESSIONS-SPAWN-ATTACHMENTS-ENABLED.B.json",
+      "schema": {
+        "type": "boolean"
+      },
+      "value": false,
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-TOOLS-EXEC-TIMEOUTSECONDS-A",
+      "settingId": "DLV-GATEWAY-OPENCLAW-TOOLS-EXEC-TIMEOUTSECONDS",
+      "field": "tools.exec.timeoutSeconds",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-TOOLS-EXEC-TIMEOUTSECONDS.A.json",
+      "schema": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 2147483
+      },
+      "value": 604800,
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-TOOLS-EXEC-TIMEOUTSECONDS-B",
+      "settingId": "DLV-GATEWAY-OPENCLAW-TOOLS-EXEC-TIMEOUTSECONDS",
+      "field": "tools.exec.timeoutSeconds",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-TOOLS-EXEC-TIMEOUTSECONDS.B.json",
+      "schema": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 2147483
+      },
+      "value": 120,
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-TOOLS-EXEC-MODE-A",
+      "settingId": "DLV-GATEWAY-OPENCLAW-TOOLS-EXEC-MODE",
+      "field": "tools.exec.mode",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-TOOLS-EXEC-MODE.A.json",
+      "schema": {
+        "enum": [
+          "deny",
+          "allowlist",
+          "ask",
+          "auto",
+          "full"
+        ]
+      },
+      "value": "full",
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-TOOLS-EXEC-MODE-B",
+      "settingId": "DLV-GATEWAY-OPENCLAW-TOOLS-EXEC-MODE",
+      "field": "tools.exec.mode",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-TOOLS-EXEC-MODE.B.json",
+      "schema": {
+        "enum": [
+          "deny",
+          "allowlist",
+          "ask",
+          "auto",
+          "full"
+        ]
+      },
+      "value": "deny",
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-TOOLS-AGENTTOAGENT-ENABLED-A",
+      "settingId": "DLV-GATEWAY-OPENCLAW-TOOLS-AGENTTOAGENT-ENABLED",
+      "field": "tools.agentToAgent.enabled",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-TOOLS-AGENTTOAGENT-ENABLED.A.json",
+      "schema": {
+        "type": "boolean"
+      },
+      "value": true,
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-TOOLS-AGENTTOAGENT-ENABLED-B",
+      "settingId": "DLV-GATEWAY-OPENCLAW-TOOLS-AGENTTOAGENT-ENABLED",
+      "field": "tools.agentToAgent.enabled",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-TOOLS-AGENTTOAGENT-ENABLED.B.json",
+      "schema": {
+        "type": "boolean"
+      },
+      "value": false,
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-COMMANDS-NATIVE-A",
+      "settingId": "DLV-GATEWAY-OPENCLAW-COMMANDS-NATIVE",
+      "field": "commands.native",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-COMMANDS-NATIVE.A.json",
+      "schema": {
+        "anyOf": [
+          {
+            "type": "boolean"
+          },
+          {
+            "const": "auto"
+          }
+        ]
+      },
+      "value": "auto",
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-COMMANDS-NATIVE-B",
+      "settingId": "DLV-GATEWAY-OPENCLAW-COMMANDS-NATIVE",
+      "field": "commands.native",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-COMMANDS-NATIVE.B.json",
+      "schema": {
+        "anyOf": [
+          {
+            "type": "boolean"
+          },
+          {
+            "const": "auto"
+          }
+        ]
+      },
+      "value": false,
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-COMMANDS-NATIVESKILLS-A",
+      "settingId": "DLV-GATEWAY-OPENCLAW-COMMANDS-NATIVESKILLS",
+      "field": "commands.nativeSkills",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-COMMANDS-NATIVESKILLS.A.json",
+      "schema": {
+        "anyOf": [
+          {
+            "type": "boolean"
+          },
+          {
+            "const": "auto"
+          }
+        ]
+      },
+      "value": "auto",
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-COMMANDS-NATIVESKILLS-B",
+      "settingId": "DLV-GATEWAY-OPENCLAW-COMMANDS-NATIVESKILLS",
+      "field": "commands.nativeSkills",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-COMMANDS-NATIVESKILLS.B.json",
+      "schema": {
+        "anyOf": [
+          {
+            "type": "boolean"
+          },
+          {
+            "const": "auto"
+          }
+        ]
+      },
+      "value": false,
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-COMMANDS-RESTART-A",
+      "settingId": "DLV-GATEWAY-OPENCLAW-COMMANDS-RESTART",
+      "field": "commands.restart",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-COMMANDS-RESTART.A.json",
+      "schema": {
+        "type": "boolean"
+      },
+      "value": true,
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-COMMANDS-RESTART-B",
+      "settingId": "DLV-GATEWAY-OPENCLAW-COMMANDS-RESTART",
+      "field": "commands.restart",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-COMMANDS-RESTART.B.json",
+      "schema": {
+        "type": "boolean"
+      },
+      "value": false,
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-SESSION-DMSCOPE-A",
+      "settingId": "DLV-GATEWAY-OPENCLAW-SESSION-DMSCOPE",
+      "field": "session.dmScope",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-SESSION-DMSCOPE.A.json",
+      "schema": {
+        "enum": [
+          "main",
+          "per-peer",
+          "per-channel-peer",
+          "per-account-channel-peer"
+        ]
+      },
+      "value": "per-channel-peer",
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-SESSION-DMSCOPE-B",
+      "settingId": "DLV-GATEWAY-OPENCLAW-SESSION-DMSCOPE",
+      "field": "session.dmScope",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-SESSION-DMSCOPE.B.json",
+      "schema": {
+        "enum": [
+          "main",
+          "per-peer",
+          "per-channel-peer",
+          "per-account-channel-peer"
+        ]
+      },
+      "value": "main",
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-SESSION-RESETBYTYPE-GROUP-MODE-A",
+      "settingId": "DLV-GATEWAY-OPENCLAW-SESSION-RESETBYTYPE-GROUP-MODE",
+      "field": "session.resetByType.group.mode",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-SESSION-RESETBYTYPE-GROUP-MODE.A.json",
+      "schema": {
+        "enum": [
+          "none",
+          "daily",
+          "idle"
+        ]
+      },
+      "value": "idle",
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-SESSION-RESETBYTYPE-GROUP-MODE-B",
+      "settingId": "DLV-GATEWAY-OPENCLAW-SESSION-RESETBYTYPE-GROUP-MODE",
+      "field": "session.resetByType.group.mode",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-SESSION-RESETBYTYPE-GROUP-MODE.B.json",
+      "schema": {
+        "enum": [
+          "none",
+          "daily",
+          "idle"
+        ]
+      },
+      "value": "daily",
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-SESSION-RESETBYTYPE-GROUP-IDLEMINUTES-A",
+      "settingId": "DLV-GATEWAY-OPENCLAW-SESSION-RESETBYTYPE-GROUP-IDLEMINUTES",
+      "field": "session.resetByType.group.idleMinutes",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-SESSION-RESETBYTYPE-GROUP-IDLEMINUTES.A.json",
+      "schema": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 144000000000
+      },
+      "value": 43200,
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-SESSION-RESETBYTYPE-GROUP-IDLEMINUTES-B",
+      "settingId": "DLV-GATEWAY-OPENCLAW-SESSION-RESETBYTYPE-GROUP-IDLEMINUTES",
+      "field": "session.resetByType.group.idleMinutes",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-SESSION-RESETBYTYPE-GROUP-IDLEMINUTES.B.json",
+      "schema": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 144000000000
+      },
+      "value": 120,
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-SESSION-THREADBINDINGS-ENABLED-A",
+      "settingId": "DLV-GATEWAY-OPENCLAW-SESSION-THREADBINDINGS-ENABLED",
+      "field": "session.threadBindings.enabled",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-SESSION-THREADBINDINGS-ENABLED.A.json",
+      "schema": {
+        "type": "boolean"
+      },
+      "value": true,
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-SESSION-THREADBINDINGS-ENABLED-B",
+      "settingId": "DLV-GATEWAY-OPENCLAW-SESSION-THREADBINDINGS-ENABLED",
+      "field": "session.threadBindings.enabled",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-SESSION-THREADBINDINGS-ENABLED.B.json",
+      "schema": {
+        "type": "boolean"
+      },
+      "value": false,
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-SESSION-THREADBINDINGS-IDLEHOURS-A",
+      "settingId": "DLV-GATEWAY-OPENCLAW-SESSION-THREADBINDINGS-IDLEHOURS",
+      "field": "session.threadBindings.idleHours",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-SESSION-THREADBINDINGS-IDLEHOURS.A.json",
+      "schema": {
+        "type": "number",
+        "minimum": 0,
+        "maximum": 2400000000
+      },
+      "value": 999,
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-SESSION-THREADBINDINGS-IDLEHOURS-B",
+      "settingId": "DLV-GATEWAY-OPENCLAW-SESSION-THREADBINDINGS-IDLEHOURS",
+      "field": "session.threadBindings.idleHours",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-SESSION-THREADBINDINGS-IDLEHOURS.B.json",
+      "schema": {
+        "type": "number",
+        "minimum": 0,
+        "maximum": 2400000000
+      },
+      "value": 2,
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-SESSION-THREADBINDINGS-MAXAGEHOURS-A",
+      "settingId": "DLV-GATEWAY-OPENCLAW-SESSION-THREADBINDINGS-MAXAGEHOURS",
+      "field": "session.threadBindings.maxAgeHours",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-SESSION-THREADBINDINGS-MAXAGEHOURS.A.json",
+      "schema": {
+        "type": "number",
+        "minimum": 0,
+        "maximum": 2400000000
+      },
+      "value": 0,
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-SESSION-THREADBINDINGS-MAXAGEHOURS-B",
+      "settingId": "DLV-GATEWAY-OPENCLAW-SESSION-THREADBINDINGS-MAXAGEHOURS",
+      "field": "session.threadBindings.maxAgeHours",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-SESSION-THREADBINDINGS-MAXAGEHOURS.B.json",
+      "schema": {
+        "type": "number",
+        "minimum": 0,
+        "maximum": 2400000000
+      },
+      "value": 48,
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-GROUPPOLICY-A",
+      "settingId": "DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-GROUPPOLICY",
+      "field": "channels.discord.groupPolicy",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-GROUPPOLICY.A.json",
+      "schema": {
+        "enum": [
+          "open",
+          "disabled",
+          "allowlist"
+        ]
+      },
+      "value": "allowlist",
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-GROUPPOLICY-B",
+      "settingId": "DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-GROUPPOLICY",
+      "field": "channels.discord.groupPolicy",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-GROUPPOLICY.B.json",
+      "schema": {
+        "enum": [
+          "open",
+          "disabled",
+          "allowlist"
+        ]
+      },
+      "value": "disabled",
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-STREAMING-MODE-A",
+      "settingId": "DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-STREAMING-MODE",
+      "field": "channels.discord.streaming.mode",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-STREAMING-MODE.A.json",
+      "schema": {
+        "enum": [
+          "off",
+          "partial",
+          "block",
+          "progress"
+        ]
+      },
+      "value": "partial",
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-STREAMING-MODE-B",
+      "settingId": "DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-STREAMING-MODE",
+      "field": "channels.discord.streaming.mode",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-STREAMING-MODE.B.json",
+      "schema": {
+        "enum": [
+          "off",
+          "partial",
+          "block",
+          "progress"
+        ]
+      },
+      "value": "off",
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-INBOUNDWORKER-RUNTIMEOUTMS-A",
+      "settingId": "DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-INBOUNDWORKER-RUNTIMEOUTMS",
+      "field": "channels.discord.inboundWorker.runTimeoutMs",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-INBOUNDWORKER-RUNTIMEOUTMS.A.json",
+      "schema": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 9007199254740991
+      },
+      "value": 43200000,
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-INBOUNDWORKER-RUNTIMEOUTMS-B",
+      "settingId": "DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-INBOUNDWORKER-RUNTIMEOUTMS",
+      "field": "channels.discord.inboundWorker.runTimeoutMs",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-INBOUNDWORKER-RUNTIMEOUTMS.B.json",
+      "schema": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 9007199254740991
+      },
+      "value": 60000,
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-GUILDS-REQUIREMENTION-A",
+      "settingId": "DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-GUILDS-REQUIREMENTION",
+      "field": "channels.discord.guilds.*.requireMention",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-GUILDS-REQUIREMENTION.A.json",
+      "schema": {
+        "type": "boolean"
+      },
+      "value": true,
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-GUILDS-REQUIREMENTION-B",
+      "settingId": "DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-GUILDS-REQUIREMENTION",
+      "field": "channels.discord.guilds.*.requireMention",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-GUILDS-REQUIREMENTION.B.json",
+      "schema": {
+        "type": "boolean"
+      },
+      "value": false,
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-THREADBINDINGS-ENABLED-A",
+      "settingId": "DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-THREADBINDINGS-ENABLED",
+      "field": "channels.discord.threadBindings.enabled",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-THREADBINDINGS-ENABLED.A.json",
+      "schema": {
+        "type": "boolean"
+      },
+      "value": true,
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-THREADBINDINGS-ENABLED-B",
+      "settingId": "DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-THREADBINDINGS-ENABLED",
+      "field": "channels.discord.threadBindings.enabled",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-THREADBINDINGS-ENABLED.B.json",
+      "schema": {
+        "type": "boolean"
+      },
+      "value": false,
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-THREADBINDINGS-IDLEHOURS-A",
+      "settingId": "DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-THREADBINDINGS-IDLEHOURS",
+      "field": "channels.discord.threadBindings.idleHours",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-THREADBINDINGS-IDLEHOURS.A.json",
+      "schema": {
+        "type": "number",
+        "minimum": 0,
+        "maximum": 2400000000
+      },
+      "value": 999,
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-THREADBINDINGS-IDLEHOURS-B",
+      "settingId": "DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-THREADBINDINGS-IDLEHOURS",
+      "field": "channels.discord.threadBindings.idleHours",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-THREADBINDINGS-IDLEHOURS.B.json",
+      "schema": {
+        "type": "number",
+        "minimum": 0,
+        "maximum": 2400000000
+      },
+      "value": 2,
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-THREADBINDINGS-SPAWNSESSIONS-A",
+      "settingId": "DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-THREADBINDINGS-SPAWNSESSIONS",
+      "field": "channels.discord.threadBindings.spawnSessions",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-THREADBINDINGS-SPAWNSESSIONS.A.json",
+      "schema": {
+        "type": "boolean"
+      },
+      "value": true,
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-THREADBINDINGS-SPAWNSESSIONS-B",
+      "settingId": "DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-THREADBINDINGS-SPAWNSESSIONS",
+      "field": "channels.discord.threadBindings.spawnSessions",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-THREADBINDINGS-SPAWNSESSIONS.B.json",
+      "schema": {
+        "type": "boolean"
+      },
+      "value": false,
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-EXECAPPROVALS-ENABLED-A",
+      "settingId": "DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-EXECAPPROVALS-ENABLED",
+      "field": "channels.discord.execApprovals.enabled",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-EXECAPPROVALS-ENABLED.A.json",
+      "schema": {
+        "anyOf": [
+          {
+            "type": "boolean"
+          },
+          {
+            "const": "auto"
+          }
+        ]
+      },
+      "value": true,
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-EXECAPPROVALS-ENABLED-B",
+      "settingId": "DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-EXECAPPROVALS-ENABLED",
+      "field": "channels.discord.execApprovals.enabled",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-EXECAPPROVALS-ENABLED.B.json",
+      "schema": {
+        "anyOf": [
+          {
+            "type": "boolean"
+          },
+          {
+            "const": "auto"
+          }
+        ]
+      },
+      "value": false,
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-EXECAPPROVALS-TARGET-A",
+      "settingId": "DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-EXECAPPROVALS-TARGET",
+      "field": "channels.discord.execApprovals.target",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-EXECAPPROVALS-TARGET.A.json",
+      "schema": {
+        "enum": [
+          "dm",
+          "channel",
+          "both"
+        ]
+      },
+      "value": "dm",
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-EXECAPPROVALS-TARGET-B",
+      "settingId": "DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-EXECAPPROVALS-TARGET",
+      "field": "channels.discord.execApprovals.target",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-EXECAPPROVALS-TARGET.B.json",
+      "schema": {
+        "enum": [
+          "dm",
+          "channel",
+          "both"
+        ]
+      },
+      "value": "channel",
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-GATEWAY-MODE-A",
+      "settingId": "DLV-GATEWAY-OPENCLAW-GATEWAY-MODE",
+      "field": "gateway.mode",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-GATEWAY-MODE.A.json",
+      "schema": {
+        "enum": [
+          "local",
+          "remote"
+        ]
+      },
+      "value": "local",
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-GATEWAY-MODE-B",
+      "settingId": "DLV-GATEWAY-OPENCLAW-GATEWAY-MODE",
+      "field": "gateway.mode",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-GATEWAY-MODE.B.json",
+      "schema": {
+        "enum": [
+          "local",
+          "remote"
+        ]
+      },
+      "value": "remote",
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-GATEWAY-BIND-A",
+      "settingId": "DLV-GATEWAY-OPENCLAW-GATEWAY-BIND",
+      "field": "gateway.bind",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-GATEWAY-BIND.A.json",
+      "schema": {
+        "enum": [
+          "auto",
+          "lan",
+          "loopback",
+          "custom",
+          "tailnet"
+        ]
+      },
+      "value": "loopback",
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-GATEWAY-BIND-B",
+      "settingId": "DLV-GATEWAY-OPENCLAW-GATEWAY-BIND",
+      "field": "gateway.bind",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-GATEWAY-BIND.B.json",
+      "schema": {
+        "enum": [
+          "auto",
+          "lan",
+          "loopback",
+          "custom",
+          "tailnet"
+        ]
+      },
+      "value": "lan",
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-GATEWAY-CONTROLUI-DANGEROUSLYALLOWHOSTHEADERORIGINFALLBACK-A",
+      "settingId": "DLV-GATEWAY-OPENCLAW-GATEWAY-CONTROLUI-DANGEROUSLYALLOWHOSTHEADERORIGINFALLBACK",
+      "field": "gateway.controlUi.dangerouslyAllowHostHeaderOriginFallback",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-GATEWAY-CONTROLUI-DANGEROUSLYALLOWHOSTHEADERORIGINFALLBACK.A.json",
+      "schema": {
+        "type": "boolean"
+      },
+      "value": true,
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-GATEWAY-CONTROLUI-DANGEROUSLYALLOWHOSTHEADERORIGINFALLBACK-B",
+      "settingId": "DLV-GATEWAY-OPENCLAW-GATEWAY-CONTROLUI-DANGEROUSLYALLOWHOSTHEADERORIGINFALLBACK",
+      "field": "gateway.controlUi.dangerouslyAllowHostHeaderOriginFallback",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-GATEWAY-CONTROLUI-DANGEROUSLYALLOWHOSTHEADERORIGINFALLBACK.B.json",
+      "schema": {
+        "type": "boolean"
+      },
+      "value": false,
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-GATEWAY-AUTH-MODE-A",
+      "settingId": "DLV-GATEWAY-OPENCLAW-GATEWAY-AUTH-MODE",
+      "field": "gateway.auth.mode",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-GATEWAY-AUTH-MODE.A.json",
+      "schema": {
+        "enum": [
+          "none",
+          "token",
+          "password",
+          "trusted-proxy"
+        ]
+      },
+      "value": "token",
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-GATEWAY-AUTH-MODE-B",
+      "settingId": "DLV-GATEWAY-OPENCLAW-GATEWAY-AUTH-MODE",
+      "field": "gateway.auth.mode",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-GATEWAY-AUTH-MODE.B.json",
+      "schema": {
+        "enum": [
+          "none",
+          "token",
+          "password",
+          "trusted-proxy"
+        ]
+      },
+      "value": "password",
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-GATEWAY-TOOLS-ALLOW-A",
+      "settingId": "DLV-GATEWAY-OPENCLAW-GATEWAY-TOOLS-ALLOW",
+      "field": "gateway.tools.allow",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-GATEWAY-TOOLS-ALLOW.A.json",
+      "schema": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "uniqueItems": true
+      },
+      "value": [
+        "sessions_spawn",
+        "sessions_send",
+        "session_status",
+        "group:openclaw"
+      ],
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-GATEWAY-TOOLS-ALLOW-B",
+      "settingId": "DLV-GATEWAY-OPENCLAW-GATEWAY-TOOLS-ALLOW",
+      "field": "gateway.tools.allow",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-GATEWAY-TOOLS-ALLOW.B.json",
+      "schema": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "uniqueItems": true
+      },
+      "value": [],
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-GATEWAY-TAILSCALE-MODE-A",
+      "settingId": "DLV-GATEWAY-OPENCLAW-GATEWAY-TAILSCALE-MODE",
+      "field": "gateway.tailscale.mode",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-GATEWAY-TAILSCALE-MODE.A.json",
+      "schema": {
+        "enum": [
+          "off",
+          "serve",
+          "funnel"
+        ]
+      },
+      "value": "off",
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-GATEWAY-TAILSCALE-MODE-B",
+      "settingId": "DLV-GATEWAY-OPENCLAW-GATEWAY-TAILSCALE-MODE",
+      "field": "gateway.tailscale.mode",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-GATEWAY-TAILSCALE-MODE.B.json",
+      "schema": {
+        "enum": [
+          "off",
+          "serve",
+          "funnel"
+        ]
+      },
+      "value": "serve",
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-ACPX-ENABLED-A",
+      "settingId": "DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-ACPX-ENABLED",
+      "field": "plugins.entries.acpx.enabled",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-ACPX-ENABLED.A.json",
+      "schema": {
+        "type": "boolean"
+      },
+      "value": true,
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-ACPX-ENABLED-B",
+      "settingId": "DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-ACPX-ENABLED",
+      "field": "plugins.entries.acpx.enabled",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-ACPX-ENABLED.B.json",
+      "schema": {
+        "type": "boolean"
+      },
+      "value": false,
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-ACPX-CONFIG-PERMISSIONMODE-A",
+      "settingId": "DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-ACPX-CONFIG-PERMISSIONMODE",
+      "field": "plugins.entries.acpx.config.permissionMode",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-ACPX-CONFIG-PERMISSIONMODE.A.json",
+      "schema": {
+        "enum": [
+          "approve-all",
+          "approve-reads",
+          "deny-all"
+        ]
+      },
+      "value": "approve-all",
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-ACPX-CONFIG-PERMISSIONMODE-B",
+      "settingId": "DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-ACPX-CONFIG-PERMISSIONMODE",
+      "field": "plugins.entries.acpx.config.permissionMode",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-ACPX-CONFIG-PERMISSIONMODE.B.json",
+      "schema": {
+        "enum": [
+          "approve-all",
+          "approve-reads",
+          "deny-all"
+        ]
+      },
+      "value": "approve-reads",
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-OPENAI-ENABLED-A",
+      "settingId": "DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-OPENAI-ENABLED",
+      "field": "plugins.entries.openai.enabled",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-OPENAI-ENABLED.A.json",
+      "schema": {
+        "type": "boolean"
+      },
+      "value": true,
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-OPENAI-ENABLED-B",
+      "settingId": "DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-OPENAI-ENABLED",
+      "field": "plugins.entries.openai.enabled",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-OPENAI-ENABLED.B.json",
+      "schema": {
+        "type": "boolean"
+      },
+      "value": false,
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-CODEX-ENABLED-A",
+      "settingId": "DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-CODEX-ENABLED",
+      "field": "plugins.entries.codex.enabled",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-CODEX-ENABLED.A.json",
+      "schema": {
+        "type": "boolean"
+      },
+      "value": true,
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-CODEX-ENABLED-B",
+      "settingId": "DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-CODEX-ENABLED",
+      "field": "plugins.entries.codex.enabled",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-CODEX-ENABLED.B.json",
+      "schema": {
+        "type": "boolean"
+      },
+      "value": false,
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-MESSAGES-GROUPCHAT-VISIBLEREPLIES-A",
+      "settingId": "DLV-GATEWAY-OPENCLAW-MESSAGES-GROUPCHAT-VISIBLEREPLIES",
+      "field": "messages.groupChat.visibleReplies",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-MESSAGES-GROUPCHAT-VISIBLEREPLIES.A.json",
+      "schema": {
+        "enum": [
+          "automatic",
+          "message_tool"
+        ]
+      },
+      "value": "automatic",
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-GATEWAY-OPENCLAW-MESSAGES-GROUPCHAT-VISIBLEREPLIES-B",
+      "settingId": "DLV-GATEWAY-OPENCLAW-MESSAGES-GROUPCHAT-VISIBLEREPLIES",
+      "field": "messages.groupChat.visibleReplies",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-MESSAGES-GROUPCHAT-VISIBLEREPLIES.B.json",
+      "schema": {
+        "enum": [
+          "automatic",
+          "message_tool"
+        ]
+      },
+      "value": "message_tool",
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-NATIVE-OPENCLAW-AGENTS-DEFAULTS-TIMEOUTSECONDS-A",
+      "settingId": "DLV-NATIVE-OPENCLAW-AGENTS-DEFAULTS-TIMEOUTSECONDS",
+      "field": "agents.defaults.timeoutSeconds",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-NATIVE-OPENCLAW-AGENTS-DEFAULTS-TIMEOUTSECONDS.A.json",
+      "schema": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 2147483
+      },
+      "value": 172800,
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    },
+    {
+      "id": "DLV-C0-DLS-GW-PRIMITIVE-DLV-NATIVE-OPENCLAW-AGENTS-DEFAULTS-TIMEOUTSECONDS-B",
+      "settingId": "DLV-NATIVE-OPENCLAW-AGENTS-DEFAULTS-TIMEOUTSECONDS",
+      "field": "agents.defaults.timeoutSeconds",
+      "profile": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-NATIVE-OPENCLAW-AGENTS-DEFAULTS-TIMEOUTSECONDS.B.json",
+      "schema": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 2147483
+      },
+      "value": 120,
+      "valid": true,
+      "errors": null,
+      "result": "passed",
+      "scope": "own source-derived target primitive type/enum/range/refname/URL shape ONLY; semantic registry/model/caller/SecretRef/SSI/native constraints unrun"
+    }
+  ],
+  "sourceDigests": {
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-ENABLED.A.json": "e893a783d0b5f55bd0d110fd5b1d92b07e30a2836a236689dd856ee8697a2907",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-ENABLED.B.json": "4dad733ba5db0cec7763e0ff7299e3192f32b17e566e057ee2a987f379050735",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-EXPERIMENTAL-SESSIONMEMORY.A.json": "e893a783d0b5f55bd0d110fd5b1d92b07e30a2836a236689dd856ee8697a2907",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-EXPERIMENTAL-SESSIONMEMORY.B.json": "959da620f3b30317aa13779a87452d2237df3829fa774f9c55ffbe84b7a0731e",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-SOURCES.A.json": "e893a783d0b5f55bd0d110fd5b1d92b07e30a2836a236689dd856ee8697a2907",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-SOURCES.B.json": "e11b3aa215b9e4322cdf9a263fdaebc4df391bbe3aae1eb47c5fcc1cc69fc0ad",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-PROVIDER.A.json": "e893a783d0b5f55bd0d110fd5b1d92b07e30a2836a236689dd856ee8697a2907",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-PROVIDER.B.json": "e52dd9a828fbdc6abdabb3e43832fa818f6b438101a0702436a0aa30bd5bbd0a",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-BASEURL.A.json": "e893a783d0b5f55bd0d110fd5b1d92b07e30a2836a236689dd856ee8697a2907",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-BASEURL.B.json": "286a6b48901469e1671eeaf37da3a677707ff51a0b667fe3a7e72f29d10d191a",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-APIKEY-SOURCE.A.json": "e893a783d0b5f55bd0d110fd5b1d92b07e30a2836a236689dd856ee8697a2907",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-APIKEY-SOURCE.B.json": "33e658031595dea1e406f752c6715c8480ab1a7ba6a2950274e08db6399e43a3",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-APIKEY-PROVIDER.A.json": "e893a783d0b5f55bd0d110fd5b1d92b07e30a2836a236689dd856ee8697a2907",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-APIKEY-PROVIDER.B.json": "8237419dd3a45b5662f1666eea566e3717aaa330af4f647557e43215bbcf7a60",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-APIKEY-ID.A.json": "e893a783d0b5f55bd0d110fd5b1d92b07e30a2836a236689dd856ee8697a2907",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-APIKEY-ID.B.json": "35cc482d45ec6f31e597e5bb3e6a42718207cc87fcc3c12f4c5d0d665586567c",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-MODEL.A.json": "e893a783d0b5f55bd0d110fd5b1d92b07e30a2836a236689dd856ee8697a2907",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-MODEL.B.json": "286a6b48901469e1671eeaf37da3a677707ff51a0b667fe3a7e72f29d10d191a",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-THINKINGDEFAULT.A.json": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-THINKINGDEFAULT.B.json": "fc77f3121311e9f50609e4b008b927cb6f54ee480e6b80c4324fd4e10a577ace",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-REASONINGDEFAULT.A.json": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-REASONINGDEFAULT.B.json": "70ea7302c4134f40cf950a3446e7f12f37471b27c5cc644432382d463353d271",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELPOLICY-ALLOW.A.json": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELPOLICY-ALLOW.B.json": "6e918a4eeb9b8cee2c74c460fcabe91d6fbe2ba1185f30d7a860a3f6b4198a00",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELS-OPENAI-GPT-6-ASTRA-AGENTRUNTIME-ID.A.json": "ac634388c638cf31f022ef1ded7481a8f0ee1d748f437f876b04d53aa00757af",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELS-OPENAI-GPT-6-ASTRA-AGENTRUNTIME-ID.B.json": "666e2e70c1e31319d7af7f055b343129a7538295916b3af4fde359b68f58395c",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELS-OPENAI-GPT-5-6-SOL-AGENTRUNTIME-ID.A.json": "dfe279de0930f194b53823908efabd0045a92204a04d69b18e32920cd0ca0f68",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELS-OPENAI-GPT-5-6-SOL-AGENTRUNTIME-ID.B.json": "352bf53baf9b0b9ae8b009a96b025b1b51626b8d4b31cc5390ea033dd184f855",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELS-OPENAI-GPT-5-5-AGENTRUNTIME-ID.A.json": "9c164039f2b37daf2d5ac11ec2370cd6465f053555a03282238486b1b9f6292b",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELS-OPENAI-GPT-5-5-AGENTRUNTIME-ID.B.json": "f70d361a5dd8465b42cf3b357c033b98d647135ae188fc4dd404e96361d00ba1",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-WORKSPACE.A.json": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-WORKSPACE.B.json": "6227c08f26f871694c3ccf54f4f39e01121d0214efa9dabb450b4ae382749c5b",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-EMBEDDEDAGENT-EXECUTIONCONTRACT.A.json": "b4469a7a33aba0ecdbf6a09d4bfbdd88e0fe0009416e997e22b68f0d8ff8d368",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-EMBEDDEDAGENT-EXECUTIONCONTRACT.B.json": "3066b10e2a77db887715f175a83b888e2581b4cdf527841f2b0b912ae38cb4a8",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-CONTEXTPRUNING-MODE.A.json": "b4469a7a33aba0ecdbf6a09d4bfbdd88e0fe0009416e997e22b68f0d8ff8d368",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-CONTEXTPRUNING-MODE.B.json": "376115b944e54d03cd30d1a08c0d42c5f2edcc874e6dcfa4553c19657b49696a",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-CONTEXTPRUNING-TTL.A.json": "b4469a7a33aba0ecdbf6a09d4bfbdd88e0fe0009416e997e22b68f0d8ff8d368",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-CONTEXTPRUNING-TTL.B.json": "36dc69460aa8ed61f44fd18d222f73dae15fb7303698e82c54954c416223cb5c",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-COMPACTION-MODE.A.json": "b4469a7a33aba0ecdbf6a09d4bfbdd88e0fe0009416e997e22b68f0d8ff8d368",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-COMPACTION-MODE.B.json": "8a9ac47584f3ffcf5f1e7d49af133282846cccddf8e8bf2f8e227ab812e8cae3",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-COMPACTION-KEEPRECENTTOKENS.A.json": "b4469a7a33aba0ecdbf6a09d4bfbdd88e0fe0009416e997e22b68f0d8ff8d368",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-COMPACTION-KEEPRECENTTOKENS.B.json": "73502c57fa5a446206abdcbb281b0a43e7e30a6afaa25ee9b20663b410b9fac3",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-COMPACTION-MEMORYFLUSH-ENABLED.A.json": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-COMPACTION-MEMORYFLUSH-ENABLED.B.json": "ad6652ad710147674bb9a874225faeb8c154a895b50bbf43aa7d155830d67170",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-SUBAGENTS-MAXCONCURRENT.A.json": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-SUBAGENTS-MAXCONCURRENT.B.json": "13d26f393b7023664f1bc7bd9ff4f5b6aa8c0baeeed94175f4663a01c45a47da",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-SUBAGENTS-ARCHIVEAFTERMINUTES.A.json": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-SUBAGENTS-ARCHIVEAFTERMINUTES.B.json": "f633a6d191d16567310a6c3e7e51245963d90ef6aecf494b94afa91f88c0dff3",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-SUBAGENTS-RUNTIMEOUTSECONDS.A.json": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-SUBAGENTS-RUNTIMEOUTSECONDS.B.json": "ac5c0ab33ccdc03c1934722d5b5ce35be411d16acd9eef56005fcabbdc9a2fc2",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-SUBAGENTS-MAXSPAWNDEPTH.A.json": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-SUBAGENTS-MAXSPAWNDEPTH.B.json": "fe5c8127fa283af090553c523c13bcc1f79256adbb160173708cfd35f0ae1531",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-CONTEXTINJECTION.A.json": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-CONTEXTINJECTION.B.json": "fb40f7dc73fadf6ef547b631cd1dbb9013ded86cee30774411efebc6e7ecb6f2",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-ENTRIES-MAIN-SUBAGENTS-ALLOWAGENTS.A.json": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-ENTRIES-MAIN-SUBAGENTS-ALLOWAGENTS.B.json": "203190c8dfa085b163526d0e4aa2e2de9751e235a4595ba4f82f38c63b6a8109",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-ENTRIES-MAIN-SKILLS.A.json": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-ENTRIES-MAIN-SKILLS.B.json": "1b9dc744b779fe426c38a4ced194e2d732ac48d9e20a6bdbf0c2d1428b82c929",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-ENTRIES-MAIN-SKILLSLIMITS-MAXSKILLSPROMPTCHARS.A.json": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-ENTRIES-MAIN-SKILLSLIMITS-MAXSKILLSPROMPTCHARS.B.json": "d7647b170915675c09699443153f666d8c2724641bac26e5dc7636f475c979e0",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-ACP-ENABLED.A.json": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-ACP-ENABLED.B.json": "d8bebeec5ca7d33c9ba1334fc9a169cfeb3c78730862536b8ae426c0aefbc36a",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-ACP-BACKEND.A.json": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-ACP-BACKEND.B.json": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-ACP-DEFAULTAGENT.A.json": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-ACP-DEFAULTAGENT.B.json": "795e7499f9bab2700bf7703dc2aa4dba87e8c7a93962aa75a51d7a1cbfae3a75",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-ACP-ALLOWEDAGENTS.A.json": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-ACP-ALLOWEDAGENTS.B.json": "787214b42b9b6cb42d66fe5fede95e3b93bdeba1a481f54f6b8e915226d6bcd2",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-TOOLS-PROFILE.A.json": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-TOOLS-PROFILE.B.json": "1441cd49ba3170b0f351e6373fa766edbb5dc9c666985005d674902f6407199b",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-TOOLS-SESSIONS-VISIBILITY.A.json": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-TOOLS-SESSIONS-VISIBILITY.B.json": "52e4964bb36d7f1dfaeff2f1ee509b8d626055fc615af530744abb839f6d57ec",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-TOOLS-SESSIONS-SPAWN-ATTACHMENTS-ENABLED.A.json": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-TOOLS-SESSIONS-SPAWN-ATTACHMENTS-ENABLED.B.json": "8332bb2f17cb01f9fed4d2996a7ee6f2e88ce3250f09283a3902f9fd18ea6e6a",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-TOOLS-EXEC-TIMEOUTSECONDS.A.json": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-TOOLS-EXEC-TIMEOUTSECONDS.B.json": "81e140058ed9c7fbe2eb3fc633cd756bf2b78b99aade5dea49134297fd71a1d1",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-TOOLS-EXEC-MODE.A.json": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-TOOLS-EXEC-MODE.B.json": "2641cd28464eab51eb12c59a4884e3b9063469b69fb3e1d6c4599a620abaf197",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-TOOLS-AGENTTOAGENT-ENABLED.A.json": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-TOOLS-AGENTTOAGENT-ENABLED.B.json": "0f8f206fd73bd052529dae754aa471f7867201366ca982f6e4154c75f5dbcb76",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-COMMANDS-NATIVE.A.json": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-COMMANDS-NATIVE.B.json": "c59d09222d7e13a1988874effdda4ee7e60ca0c8ab65252a963854d308046b84",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-COMMANDS-NATIVESKILLS.A.json": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-COMMANDS-NATIVESKILLS.B.json": "a2955c31612835ea20fb1410cf26cd1470adc643448fe72f12061384e3b5f616",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-COMMANDS-RESTART.A.json": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-COMMANDS-RESTART.B.json": "e04a7af3b487fef7cc4257d0911871a3af4da8e4346cf8225fa80692fe49759a",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-SESSION-DMSCOPE.A.json": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-SESSION-DMSCOPE.B.json": "391595410db00da2b7f43471ee08b4ace5e7e2a59668fe95f3a1d1bda2c4a190",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-SESSION-RESETBYTYPE-GROUP-MODE.A.json": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-SESSION-RESETBYTYPE-GROUP-MODE.B.json": "267accfee5539780d91fc65983ab2ab0a2bc5d785bf9ed20835c04e77d496a48",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-SESSION-RESETBYTYPE-GROUP-IDLEMINUTES.A.json": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-SESSION-RESETBYTYPE-GROUP-IDLEMINUTES.B.json": "3906e17a67091804435d435c284d7268225869c0fc706ad0b2be2984e4a5db65",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-SESSION-THREADBINDINGS-ENABLED.A.json": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-SESSION-THREADBINDINGS-ENABLED.B.json": "c51f2ff998875edc75ef2f6f72cf19bc1566db3cd18d7c24e6d515f2ba2781ad",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-SESSION-THREADBINDINGS-IDLEHOURS.A.json": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-SESSION-THREADBINDINGS-IDLEHOURS.B.json": "82f9ad39be99aaba3bdb2f4350dd82b7e39f9d793ad8e3fbc2c32dcc9d5943ea",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-SESSION-THREADBINDINGS-MAXAGEHOURS.A.json": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-SESSION-THREADBINDINGS-MAXAGEHOURS.B.json": "2459c9629138576846c7226b04a8d44c62e28d46bd3ca331e895c581bc997797",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-GROUPPOLICY.A.json": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-GROUPPOLICY.B.json": "433e01e0651b77b6cd1bbb528846151474a36b4ff172a1ce33995d9efdbf8bae",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-STREAMING-MODE.A.json": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-STREAMING-MODE.B.json": "03ae1e8d8587eac4b7d765062636f1952edaa1e209db4a10dc9442012248e08c",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-INBOUNDWORKER-RUNTIMEOUTMS.A.json": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-INBOUNDWORKER-RUNTIMEOUTMS.B.json": "3124460ff1cc87989a093721a8e78ab4cd79eafb6d1837a8a90c632eb894f97a",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-GUILDS-REQUIREMENTION.A.json": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-GUILDS-REQUIREMENTION.B.json": "43c26faf3179c017b59f473b72076e407a7ca44ef524c1826b08cbe2e7b5caa5",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-THREADBINDINGS-ENABLED.A.json": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-THREADBINDINGS-ENABLED.B.json": "3c7646b7776881c91a738e301299e492121b276936899735d2bed181b0945d57",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-THREADBINDINGS-IDLEHOURS.A.json": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-THREADBINDINGS-IDLEHOURS.B.json": "51e9edb319dc810c6bcf9d0d9234ddcbcaebd2b48d40d49a9aae9e0760f5b87f",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-THREADBINDINGS-SPAWNSESSIONS.A.json": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-THREADBINDINGS-SPAWNSESSIONS.B.json": "db356c1eac4fa61139f324dca132e6c402739d68c7172162439446d4e55c2e75",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-EXECAPPROVALS-ENABLED.A.json": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-EXECAPPROVALS-ENABLED.B.json": "4d74473ad95b99b3d31496c98111beac210034f2abac221434366386a4aa0b08",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-EXECAPPROVALS-TARGET.A.json": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-EXECAPPROVALS-TARGET.B.json": "b48e1012f09364daae1843844dba7c6a84c4877a29d851af9926685fef24ac18",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-GATEWAY-MODE.A.json": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-GATEWAY-MODE.B.json": "f630d4736847a4c0aa500f92d6b8e49d04c5da32897dcc6a60147dc5aac31a77",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-GATEWAY-BIND.A.json": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-GATEWAY-BIND.B.json": "d00315af5c730b28f1bbe6e09a7f4cebba00091523aebe514a373d29208f5334",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-GATEWAY-CONTROLUI-DANGEROUSLYALLOWHOSTHEADERORIGINFALLBACK.A.json": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-GATEWAY-CONTROLUI-DANGEROUSLYALLOWHOSTHEADERORIGINFALLBACK.B.json": "68a81d01766659df6f4ea073371dd34e0cd8f6678bac895c3ad733c069d7dd7d",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-GATEWAY-AUTH-MODE.A.json": "8c0ecff6dd36975f414d57aa86ab7b10b3ef85f6510e522255249019ddc6cda8",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-GATEWAY-AUTH-MODE.B.json": "a7db512c5cae0771b91fccdfe4ee9d84c086ae61ff4aab05b2e22871beebfc62",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-GATEWAY-TOOLS-ALLOW.A.json": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-GATEWAY-TOOLS-ALLOW.B.json": "4f60fd0e8e1f796fa7947f2c18c37018e726c2971506f5809f1f8b0a313c4a10",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-GATEWAY-TAILSCALE-MODE.A.json": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-GATEWAY-TAILSCALE-MODE.B.json": "87f120f13c01c33d84580550b272df18c8974324a42ccf05ae3b17dcfc7addb7",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-ACPX-ENABLED.A.json": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-ACPX-ENABLED.B.json": "cd75d337a20f273946c033e7c312d799c8f8265ad20eb22fb1991086d216d366",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-ACPX-CONFIG-PERMISSIONMODE.A.json": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-ACPX-CONFIG-PERMISSIONMODE.B.json": "9a82e060a93db2cf09c702f29fa395e413785704e9b5033eaea311c98f66ce54",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-OPENAI-ENABLED.A.json": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-OPENAI-ENABLED.B.json": "ae736b80ee651cdb912d406acfcac1e2a3956b84e3bd6f71dc3cc0cace921c79",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-CODEX-ENABLED.A.json": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-CODEX-ENABLED.B.json": "501a90af54574289f0c2926f5331527fd662e56358ffb00c1ed0d0db05f249e0",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-MESSAGES-GROUPCHAT-VISIBLEREPLIES.A.json": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-MESSAGES-GROUPCHAT-VISIBLEREPLIES.B.json": "47ff6c39990b2380f477d5a5cbab95a0d07cad6ff92e4a7e7e7c670e16339b67",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-NATIVE-OPENCLAW-AGENTS-DEFAULTS-TIMEOUTSECONDS.A.json": "7f07c59ba0dd88e4ce0632ad83b6ad6892276512322fb6e4bc95a73bf5203248",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-NATIVE-OPENCLAW-AGENTS-DEFAULTS-TIMEOUTSECONDS.B.json": "3708db7a73eb485540be4eff5e9b0cc0a7f6521cf30f56ef4274ef675a482be3",
+    "docs/review/evidence/config-acceptance/delivery/gateway-target-case-specifications-20261013.json": "11756bc76b28e093f5f74b7424c644dc0c2c94947a592d0854ecaa9557bd19b0",
+    "docs/review/evidence/config-acceptance/delivery/check-gateway-target-primitives-20261013.cjs": "020e2717a107dd120c52a965812509918cd3ef8923d57c55f4ee2c38bafadc56"
+  },
+  "tools": {
+    "node": "v24.21.0",
+    "ajv": "8.20.0"
+  },
+  "acceptance": "NOT ACCEPTED"
+}

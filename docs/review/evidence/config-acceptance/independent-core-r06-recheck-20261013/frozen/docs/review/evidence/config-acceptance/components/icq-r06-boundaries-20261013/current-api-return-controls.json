@@ -1,0 +1,54 @@
+{
+  "results": [
+    {
+      "method": "admit",
+      "resultOwnKeys": [
+        "acknowledgement"
+      ],
+      "ackOwnKeys": [
+        "schemaVersion",
+        "recordId",
+        "producer",
+        "pipelineRunId",
+        "sequence",
+        "state",
+        "admittedAt",
+        "canonicalCursor",
+        "recordDigest"
+      ],
+      "currentStateBytes": 1409,
+      "targetBindingGrowth": 525,
+      "targetCanonicalStateBytes": 1934,
+      "passed": true
+    },
+    {
+      "method": "admitAndRead",
+      "resultOwnKeys": [
+        "acknowledgement",
+        "records"
+      ],
+      "ackOwnKeys": [
+        "schemaVersion",
+        "recordId",
+        "producer",
+        "pipelineRunId",
+        "sequence",
+        "state",
+        "admittedAt",
+        "canonicalCursor",
+        "recordDigest"
+      ],
+      "currentStateBytes": 1409,
+      "targetBindingGrowth": 525,
+      "targetCanonicalStateBytes": 1934,
+      "passed": true
+    }
+  ],
+  "passed": 2,
+  "scope": "Actual current local source API shape/readback only; no target binding/reserve projection, policyactivation or runtimeacceptance.",
+  "sourceIdentities": {
+    "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts": "5624aa2b5f980a373ab30fdf012dee1346418ac3b2537244475f2a496d3766a0",
+    "contracts/pipeline-observability/v1/src/index.ts": "f4f928c9b1b8c1345c829a44b89d05f847b057051aff05ce6d8cd8b98ed897c2",
+    "package-lock.json": "c7b124ab4de93c983eebfd13f859cd328b7e7a823fe7dc662f9b6e0cf0ed736b"
+  }
+}

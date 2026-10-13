@@ -1,0 +1,71 @@
+{
+  "status": "stable provider declaration/source/current registry-helper and strict proposed evidence-profile definition milestone ONLY; NOT ACCEPTED",
+  "rows": 1248,
+  "cases": 5713,
+  "caseResults": {
+    "not-run": 4287,
+    "passed": 1426
+  },
+  "batch10OriginalSupplementalRowsRefined": 95,
+  "newNarrowCurrentDefinitionCases": 95,
+  "newStrictProposedProfileDefinitionCases": 19,
+  "newFutureNotRunCases": 380,
+  "oldCaseBodiesUnchanged": 5219,
+  "immutableObservationReferenceOccurrences": 2213,
+  "allC0ClosedFalse": true,
+  "remainingConsumerReviewRows": 77,
+  "remainingOriginalSupplementalSourceTracedRows": 102,
+  "originalCandidates": 4642,
+  "manualCandidateRecordsThisBatch": 109,
+  "manualCandidateRecordsCombined": 696,
+  "remainingUnreviewedCandidates": 3946,
+  "reviewedOpenCandidates": 129,
+  "unmatchedSourceObligations": [
+    {
+      "path": "skills/nova/core/test-gates/resolver.ts",
+      "lines": [
+        493,
+        497,
+        559,
+        568,
+        575
+      ],
+      "reason": "Actual matrix whitelist + suppliedproductcount, explicitunsafeRetry consent currenttask safety, blockingcoverage/size assertion requirements not lexical rows. Current Source/API producer gap remains no global owner invented.",
+      "sourceSha256": "56eab5e577fe39e157a2117ad4fddd96d5282d4ff5a8270a3677ee0361a385c3"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-attempt-evidence.ts",
+      "lines": [
+        9,
+        10,
+        12,
+        13,
+        15,
+        18,
+        40,
+        44,
+        51,
+        55,
+        59,
+        64,
+        83,
+        87
+      ],
+      "reason": "Actual produced artifact/report types added irrespective optional selected policy; staged evidence/runnerlog consume remaining existing byte/file budgets; failure retains explicit evidence fault and may fall back empty only after collection failures. Full real source/output/mandatory evidence/grant/actor/generation/capacity definitions and actual linked failed collection observations required; manufactured helper projection not productive artifact proof.",
+      "sourceSha256": "2613dc8b3a3f252d4afa13415b17e6345de726e8ccb2115e7551615a4578e174"
+    },
+    {
+      "path": "skills/nova/core/execution/engine-run.ts",
+      "lines": [
+        37,
+        57,
+        61,
+        83,
+        87
+      ],
+      "reason": "Parent primary map actual runtime prepare/activate BEFORE runlock/snapshot equality, no activation effects reproduced. Existing v4whole graph/config/package/grants binding cannot be bypassed by policyfilename; D20 parent firstmodule/carrier/view/legacy contract OPEN. No new universal module owner IDs.",
+      "sourceSha256": "eca97e2a488bd31d597c0dd71cd9971beffc9a5dc94fad1dbccf8867aa8f4819"
+    }
+  ],
+  "remaining": "77 original schema consumers,102 untouched original supplemental rows,3946 unreviewed candidates plus129 reviewed-open;95 declarations are SOURCE-REFINED NOT ACCEPTED, no claim they are semantically closed. Exact public resolver producer absent, source metadata retry safety/code/matrix and genuine evidence emission/role/sandbox/grants/immutable owner binding/accounting still open. Current v4whole graph/config/package/grants equality plus prepare/activate BEFORE lock/equality and explicit admin upgrade rules preserved. D20 parent first-module carrier/membership/view/legacy/cleanup contract OPEN; profile filename, JSON validation, per-stage started or SDKcodec cannot solve it. No provider/retry/matrix/evidence/registryactivation/physical/model acceptance."
+}

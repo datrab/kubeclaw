@@ -1,0 +1,1 @@
+{"exit":1,"scope":"evidencewalker only, before derived writes","correction":"resolve local refs and record opaque type-object fields as unconstrained, not guessed hidden schema; Studio replicas is emitted raw, NOT const1"}

@@ -1,0 +1,2832 @@
+{
+  "scope": "34 health source fields with exact existing Chart aliases, actual native consumer/domain/full fixture definitions and newfuturecase; no separate config/gateway/health author or native service/network/file state action",
+  "fields": [
+    {
+      "settingId": "DLV-GATEWAY-HEALTH-KUBECLAW-HEALTH-TIMEOUT-MS",
+      "field": "KUBECLAW_HEALTH_TIMEOUT_MS",
+      "targetDomain": {
+        "domain": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647,
+          "unit": "ms",
+          "sameOwnerField": "probes.dependencies.timeoutMs proposed required positivems; source currentlyreadiness.timeoutSeconds*1000; targetnot same overallprobe budget author",
+          "semantic": "native withTimeout Promise.race clears timer but doesnot cancel arbitrary underlyingpromise; HTTP AbortController timer separate, Redis client has connect/commandtimeout and finallyquit, synchronous fs/stat work not preempted. Targetcrossfield overall per-mode kubelet Exec timeout must cover enabled sequential dependency worstcase plus declared teardown/FS budget, checked overflow-safe; current same10s perdependency/wholeprobe conflation is counterexample. Caller sideeffect lateXADD after outertimeout and childtermination must be observed, not inferredcancelled."
+        },
+        "required": true,
+        "proposedOnly": true,
+        "currentProjectionAlias": {
+          "settingId": "DLV-CHART-KUBECLAW-PROBES-READINESS-TIMEOUTSECONDS",
+          "source": {
+            "path": "charts/kubeclaw/values.yaml",
+            "field": "probes.readiness.timeoutSeconds",
+            "sha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1",
+            "line": null,
+            "valuePath": "probes.readiness.timeoutSeconds",
+            "lineKind": "YAML field path retained; repeated/inline key exact location expansion pending"
+          },
+          "projection": "timeoutSeconds*1000",
+          "authority": "readonly actual producer field; endpoint/provider/key/service tuples require same binding; no new health editable copy"
+        },
+        "primaryAuthorAlias": null,
+        "domainAppliesTo": "resolved effective value after readonly binding resolution; unresolved commit/provider references in fixture definition are NOT scalar-native-valid evidence",
+        "activation": "H/R same selected deployment/service/nativeprovider/mount generation, health probe snapshots at invocation. RetainedAoriginal Pod/grants/stream/status/code/provider refs never BLatest; no operationalhealth result stands for module/foundations approval."
+      },
+      "primaryAuthorAlias": {
+        "settingId": "DLV-CHART-KUBECLAW-PROBES-READINESS-TIMEOUTSECONDS",
+        "source": {
+          "path": "charts/kubeclaw/values.yaml",
+          "field": "probes.readiness.timeoutSeconds",
+          "sha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1",
+          "line": null,
+          "valuePath": "probes.readiness.timeoutSeconds",
+          "lineKind": "YAML field path retained; repeated/inline key exact location expansion pending"
+        },
+        "projection": "timeoutSeconds*1000",
+        "authority": "readonly actual producer field; endpoint/provider/key/service tuples require same binding; no new health editable copy"
+      },
+      "completeProfiles": {
+        "A": {
+          "path": "docs/review/evidence/config-acceptance/delivery/gateway-health-target-profiles-20261013/A.json",
+          "sha256": "84744cb5f1474cf06ba1da63738b4d0a3d26f31250c998b60eb2f17d2a54cc5a"
+        },
+        "B": {
+          "path": "docs/review/evidence/config-acceptance/delivery/gateway-health-target-profiles-20261013/B.json",
+          "sha256": "3da3f6624646091f9ed43ea44c1462136ebe5beafab8f02056c16924c9cb5c5c"
+        }
+      },
+      "profileCoordinate": "settings.KUBECLAW_HEALTH_TIMEOUT_MS",
+      "actualReader": {
+        "path": "charts/kubeclaw/templates/deployment.yaml",
+        "line": 712,
+        "operation": "withTimeout(725), httpOk(782) AbortController, openRedis connectTimeout/commandTimeout(811\u2013812)",
+        "generatedFile": "/runtime-config/kubeclaw-health.mjs"
+      },
+      "source": {
+        "path": "charts/kubeclaw/templates/deployment.yaml",
+        "field": "KUBECLAW_HEALTH_TIMEOUT_MS",
+        "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041",
+        "line": 712,
+        "lineKind": "productive generated health script field read"
+      },
+      "firstCurrentBoundary": "timed out after ${timeoutMs}ms; HTTP abort/Redis errors \u2192 failures exit1",
+      "nativeOracle": "actual byte-identical generated Node healthcaller + controlled same selected scoped native services/mounts. Observe exact requestedurl/method/auth label/RedisPING/XADD arguments/timerAbort/drain/status/events/mode-specificexit and boundedcleanup. Check code-bundle compares only role/optionalcommit/contract today; spoofed record.ok/stale/misowned files and absentcommit are counterexamples requiring target provenance guard, not existing PASS. Registry401 connectivity differsfrom authenticatedprovider/image grants. Positive actual service before malformed/missing/old equal+different caller/profile/marker/provider/currentfallback negatives.",
+      "futureHarness": "tests/verification/config/delivery-chart-fields.test.mts",
+      "futureInvocation": [
+        "node",
+        "--test",
+        "--test-name-pattern=^DLV-CASE-GATEWAY-HEALTH-NATIVE-POLICY$",
+        "tests/verification/config/delivery-chart-fields.test.mts"
+      ],
+      "priorState": "original A binding before effects, nonempty health/status/stream state and exact Pod/provider/code/cleanup refs; parent universal originalModule/grant/cleanup contracts remain pending",
+      "caseIds": [
+        "DLV-CASE-GATEWAY-HEALTH-NATIVE-POLICY",
+        "DLV-CASE-HEALTH-MARKER-GENERATION",
+        "DLV-CASE-HEALTH-MISSING-BOUNDS",
+        "DLV-CASE-HEALTH-PROFILE"
+      ]
+    },
+    {
+      "settingId": "DLV-GATEWAY-HEALTH-KUBECLAW-HEALTH-STARTUP-STATUS-PATH",
+      "field": "KUBECLAW_HEALTH_STARTUP_STATUS_PATH",
+      "targetDomain": {
+        "domain": {
+          "type": "string",
+          "const": "/home/node/.openclaw/logs/startup-verification.json",
+          "semantic": "same actual trusted mounted/state root binding, canonical file/ownership/revision/grants checked; not arbitrary retarget. SWARM_CONFIG currentlocator undergoes explicit C1 pipeline.config migration with its sole author; source literal not new author."
+        },
+        "required": true,
+        "proposedOnly": true,
+        "currentProjectionAlias": null,
+        "primaryAuthorAlias": null,
+        "domainAppliesTo": "resolved effective value after readonly binding resolution; unresolved commit/provider references in fixture definition are NOT scalar-native-valid evidence",
+        "activation": "H/R same selected deployment/service/nativeprovider/mount generation, health probe snapshots at invocation. RetainedAoriginal Pod/grants/stream/status/code/provider refs never BLatest; no operationalhealth result stands for module/foundations approval."
+      },
+      "primaryAuthorAlias": null,
+      "completeProfiles": {
+        "A": {
+          "path": "docs/review/evidence/config-acceptance/delivery/gateway-health-target-profiles-20261013/A.json",
+          "sha256": "84744cb5f1474cf06ba1da63738b4d0a3d26f31250c998b60eb2f17d2a54cc5a"
+        },
+        "B": {
+          "path": "docs/review/evidence/config-acceptance/delivery/gateway-health-target-profiles-20261013/B.json",
+          "sha256": "3da3f6624646091f9ed43ea44c1462136ebe5beafab8f02056c16924c9cb5c5c"
+        }
+      },
+      "profileCoordinate": "readonlyBindings.KUBECLAW_HEALTH_STARTUP_STATUS_PATH",
+      "actualReader": {
+        "path": "charts/kubeclaw/templates/deployment.yaml",
+        "line": 713,
+        "operation": "writeStartupVerification(754)/readStartupVerification(769)",
+        "generatedFile": "/runtime-config/kubeclaw-health.mjs"
+      },
+      "source": {
+        "path": "charts/kubeclaw/templates/deployment.yaml",
+        "field": "KUBECLAW_HEALTH_STARTUP_STATUS_PATH",
+        "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041",
+        "line": 713,
+        "lineKind": "productive generated health script field read"
+      },
+      "firstCurrentBoundary": "fs errors captured by check; startup write error may propagate",
+      "nativeOracle": "actual byte-identical generated Node healthcaller + controlled same selected scoped native services/mounts. Observe exact requestedurl/method/auth label/RedisPING/XADD arguments/timerAbort/drain/status/events/mode-specificexit and boundedcleanup. Check code-bundle compares only role/optionalcommit/contract today; spoofed record.ok/stale/misowned files and absentcommit are counterexamples requiring target provenance guard, not existing PASS. Registry401 connectivity differsfrom authenticatedprovider/image grants. Positive actual service before malformed/missing/old equal+different caller/profile/marker/provider/currentfallback negatives.",
+      "futureHarness": "tests/verification/config/delivery-chart-fields.test.mts",
+      "futureInvocation": [
+        "node",
+        "--test",
+        "--test-name-pattern=^DLV-CASE-GATEWAY-HEALTH-NATIVE-POLICY$",
+        "tests/verification/config/delivery-chart-fields.test.mts"
+      ],
+      "priorState": "original A binding before effects, nonempty health/status/stream state and exact Pod/provider/code/cleanup refs; parent universal originalModule/grant/cleanup contracts remain pending",
+      "caseIds": [
+        "DLV-CASE-GATEWAY-HEALTH-NATIVE-POLICY",
+        "DLV-CASE-HEALTH-MARKER-GENERATION",
+        "DLV-CASE-HEALTH-MISSING-BOUNDS",
+        "DLV-CASE-HEALTH-PROFILE"
+      ]
+    },
+    {
+      "settingId": "DLV-GATEWAY-HEALTH-KUBECLAW-HEALTH-STARTUP-EVENT-LOG-PATH",
+      "field": "KUBECLAW_HEALTH_STARTUP_EVENT_LOG_PATH",
+      "targetDomain": {
+        "domain": {
+          "type": "string",
+          "const": "/home/node/.openclaw/logs/startup-verification.jsonl",
+          "semantic": "same actual trusted mounted/state root binding, canonical file/ownership/revision/grants checked; not arbitrary retarget. SWARM_CONFIG currentlocator undergoes explicit C1 pipeline.config migration with its sole author; source literal not new author."
+        },
+        "required": true,
+        "proposedOnly": true,
+        "currentProjectionAlias": null,
+        "primaryAuthorAlias": null,
+        "domainAppliesTo": "resolved effective value after readonly binding resolution; unresolved commit/provider references in fixture definition are NOT scalar-native-valid evidence",
+        "activation": "H/R same selected deployment/service/nativeprovider/mount generation, health probe snapshots at invocation. RetainedAoriginal Pod/grants/stream/status/code/provider refs never BLatest; no operationalhealth result stands for module/foundations approval."
+      },
+      "primaryAuthorAlias": null,
+      "completeProfiles": {
+        "A": {
+          "path": "docs/review/evidence/config-acceptance/delivery/gateway-health-target-profiles-20261013/A.json",
+          "sha256": "84744cb5f1474cf06ba1da63738b4d0a3d26f31250c998b60eb2f17d2a54cc5a"
+        },
+        "B": {
+          "path": "docs/review/evidence/config-acceptance/delivery/gateway-health-target-profiles-20261013/B.json",
+          "sha256": "3da3f6624646091f9ed43ea44c1462136ebe5beafab8f02056c16924c9cb5c5c"
+        }
+      },
+      "profileCoordinate": "readonlyBindings.KUBECLAW_HEALTH_STARTUP_EVENT_LOG_PATH",
+      "actualReader": {
+        "path": "charts/kubeclaw/templates/deployment.yaml",
+        "line": 714,
+        "operation": "writeStartupVerification(759) appendFileSync",
+        "generatedFile": "/runtime-config/kubeclaw-health.mjs"
+      },
+      "source": {
+        "path": "charts/kubeclaw/templates/deployment.yaml",
+        "field": "KUBECLAW_HEALTH_STARTUP_EVENT_LOG_PATH",
+        "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041",
+        "line": 714,
+        "lineKind": "productive generated health script field read"
+      },
+      "firstCurrentBoundary": "fs errors propagate from startup marker persistence",
+      "nativeOracle": "actual byte-identical generated Node healthcaller + controlled same selected scoped native services/mounts. Observe exact requestedurl/method/auth label/RedisPING/XADD arguments/timerAbort/drain/status/events/mode-specificexit and boundedcleanup. Check code-bundle compares only role/optionalcommit/contract today; spoofed record.ok/stale/misowned files and absentcommit are counterexamples requiring target provenance guard, not existing PASS. Registry401 connectivity differsfrom authenticatedprovider/image grants. Positive actual service before malformed/missing/old equal+different caller/profile/marker/provider/currentfallback negatives.",
+      "futureHarness": "tests/verification/config/delivery-chart-fields.test.mts",
+      "futureInvocation": [
+        "node",
+        "--test",
+        "--test-name-pattern=^DLV-CASE-GATEWAY-HEALTH-NATIVE-POLICY$",
+        "tests/verification/config/delivery-chart-fields.test.mts"
+      ],
+      "priorState": "original A binding before effects, nonempty health/status/stream state and exact Pod/provider/code/cleanup refs; parent universal originalModule/grant/cleanup contracts remain pending",
+      "caseIds": [
+        "DLV-CASE-GATEWAY-HEALTH-NATIVE-POLICY",
+        "DLV-CASE-HEALTH-MARKER-GENERATION",
+        "DLV-CASE-HEALTH-MISSING-BOUNDS",
+        "DLV-CASE-HEALTH-PROFILE"
+      ]
+    },
+    {
+      "settingId": "DLV-GATEWAY-HEALTH-KUBECLAW-HEALTH-REDIS-STREAM",
+      "field": "KUBECLAW_HEALTH_REDIS_STREAM",
+      "targetDomain": {
+        "domain": {
+          "type": "string",
+          "minLength": 1,
+          "semantic": "explicit operational health stream in selected Redis namespace/grants; native emptyfallsback kubeclaw:health:${agent}; target originalstream/owner retained, not arbitrarytask/data author. ActualXADD sideeffect, approximate MAXLEN not Storegrant."
+        },
+        "required": true,
+        "proposedOnly": true,
+        "currentProjectionAlias": {
+          "settingId": "DLV-CHART-KUBECLAW-PROBES-DEPENDENCIES-REDISSTREAM-STREAM",
+          "source": {
+            "path": "charts/kubeclaw/values.yaml",
+            "field": "probes.dependencies.redisStream.stream",
+            "sha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1",
+            "line": 342,
+            "valuePath": "probes.dependencies.redisStream.stream",
+            "lineKind": "unique YAML key author"
+          },
+          "projection": "exact Chart/helper selector/conditional source expression, not value-equality alias",
+          "authority": "readonly actual producer field; endpoint/provider/key/service tuples require same binding; no new health editable copy"
+        },
+        "primaryAuthorAlias": {
+          "settingId": "DLV-CHART-KUBECLAW-PROBES-DEPENDENCIES-REDISSTREAM-STREAM",
+          "source": {
+            "path": "charts/kubeclaw/values.yaml",
+            "field": "probes.dependencies.redisStream.stream",
+            "sha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1",
+            "line": 342,
+            "valuePath": "probes.dependencies.redisStream.stream",
+            "lineKind": "unique YAML key author"
+          },
+          "projection": "exact Chart/helper selector/conditional source expression, not value-equality alias",
+          "authority": "readonly actual producer field; endpoint/provider/key/service tuples require same binding; no new health editable copy"
+        },
+        "domainAppliesTo": "resolved effective value after readonly binding resolution; unresolved commit/provider references in fixture definition are NOT scalar-native-valid evidence",
+        "activation": "H/R same selected deployment/service/nativeprovider/mount generation, health probe snapshots at invocation. RetainedAoriginal Pod/grants/stream/status/code/provider refs never BLatest; no operationalhealth result stands for module/foundations approval."
+      },
+      "primaryAuthorAlias": {
+        "settingId": "DLV-CHART-KUBECLAW-PROBES-DEPENDENCIES-REDISSTREAM-STREAM",
+        "source": {
+          "path": "charts/kubeclaw/values.yaml",
+          "field": "probes.dependencies.redisStream.stream",
+          "sha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1",
+          "line": 342,
+          "valuePath": "probes.dependencies.redisStream.stream",
+          "lineKind": "unique YAML key author"
+        },
+        "projection": "exact Chart/helper selector/conditional source expression, not value-equality alias",
+        "authority": "readonly actual producer field; endpoint/provider/key/service tuples require same binding; no new health editable copy"
+      },
+      "completeProfiles": {
+        "A": {
+          "path": "docs/review/evidence/config-acceptance/delivery/gateway-health-target-profiles-20261013/A.json",
+          "sha256": "84744cb5f1474cf06ba1da63738b4d0a3d26f31250c998b60eb2f17d2a54cc5a"
+        },
+        "B": {
+          "path": "docs/review/evidence/config-acceptance/delivery/gateway-health-target-profiles-20261013/B.json",
+          "sha256": "3da3f6624646091f9ed43ea44c1462136ebe5beafab8f02056c16924c9cb5c5c"
+        }
+      },
+      "profileCoordinate": "readonlyBindings.KUBECLAW_HEALTH_REDIS_STREAM",
+      "actualReader": {
+        "path": "charts/kubeclaw/templates/deployment.yaml",
+        "line": 834,
+        "operation": "checkRedisStream XADD(836)",
+        "generatedFile": "/runtime-config/kubeclaw-health.mjs"
+      },
+      "source": {
+        "path": "charts/kubeclaw/templates/deployment.yaml",
+        "field": "KUBECLAW_HEALTH_REDIS_STREAM",
+        "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041",
+        "line": 834,
+        "lineKind": "productive generated health script field read"
+      },
+      "firstCurrentBoundary": "Redis XADD error / XADD returned no entry id \u2192 startup check failures",
+      "nativeOracle": "actual byte-identical generated Node healthcaller + controlled same selected scoped native services/mounts. Observe exact requestedurl/method/auth label/RedisPING/XADD arguments/timerAbort/drain/status/events/mode-specificexit and boundedcleanup. Check code-bundle compares only role/optionalcommit/contract today; spoofed record.ok/stale/misowned files and absentcommit are counterexamples requiring target provenance guard, not existing PASS. Registry401 connectivity differsfrom authenticatedprovider/image grants. Positive actual service before malformed/missing/old equal+different caller/profile/marker/provider/currentfallback negatives.",
+      "futureHarness": "tests/verification/config/delivery-chart-fields.test.mts",
+      "futureInvocation": [
+        "node",
+        "--test",
+        "--test-name-pattern=^DLV-CASE-GATEWAY-HEALTH-NATIVE-POLICY$",
+        "tests/verification/config/delivery-chart-fields.test.mts"
+      ],
+      "priorState": "original A binding before effects, nonempty health/status/stream state and exact Pod/provider/code/cleanup refs; parent universal originalModule/grant/cleanup contracts remain pending",
+      "caseIds": [
+        "DLV-CASE-GATEWAY-HEALTH-NATIVE-POLICY",
+        "DLV-CASE-HEALTH-MARKER-GENERATION",
+        "DLV-CASE-HEALTH-MISSING-BOUNDS",
+        "DLV-CASE-HEALTH-PROFILE"
+      ]
+    },
+    {
+      "settingId": "DLV-GATEWAY-HEALTH-KUBECLAW-HEALTH-REDIS-STREAM-MAX-LEN",
+      "field": "KUBECLAW_HEALTH_REDIS_STREAM_MAX_LEN",
+      "targetDomain": {
+        "domain": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991,
+          "unit": "count",
+          "semantic": "exact ioredis maxRetries semantics vs Redis XADD MAXLEN ~ approximate trim not hard quota. Actual locked ioredis/Redis native protocol and admission/resource budget required; no shared Core lease/count alias."
+        },
+        "required": true,
+        "proposedOnly": true,
+        "currentProjectionAlias": {
+          "settingId": "DLV-CHART-KUBECLAW-PROBES-DEPENDENCIES-REDISSTREAM-MAXLEN",
+          "source": {
+            "path": "charts/kubeclaw/values.yaml",
+            "field": "probes.dependencies.redisStream.maxLen",
+            "sha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1",
+            "line": 343,
+            "valuePath": "probes.dependencies.redisStream.maxLen",
+            "lineKind": "unique YAML key author"
+          },
+          "projection": "exact Chart/helper selector/conditional source expression, not value-equality alias",
+          "authority": "readonly actual producer field; endpoint/provider/key/service tuples require same binding; no new health editable copy"
+        },
+        "primaryAuthorAlias": {
+          "settingId": "DLV-CHART-KUBECLAW-PROBES-DEPENDENCIES-REDISSTREAM-MAXLEN",
+          "source": {
+            "path": "charts/kubeclaw/values.yaml",
+            "field": "probes.dependencies.redisStream.maxLen",
+            "sha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1",
+            "line": 343,
+            "valuePath": "probes.dependencies.redisStream.maxLen",
+            "lineKind": "unique YAML key author"
+          },
+          "projection": "exact Chart/helper selector/conditional source expression, not value-equality alias",
+          "authority": "readonly actual producer field; endpoint/provider/key/service tuples require same binding; no new health editable copy"
+        },
+        "domainAppliesTo": "resolved effective value after readonly binding resolution; unresolved commit/provider references in fixture definition are NOT scalar-native-valid evidence",
+        "activation": "H/R same selected deployment/service/nativeprovider/mount generation, health probe snapshots at invocation. RetainedAoriginal Pod/grants/stream/status/code/provider refs never BLatest; no operationalhealth result stands for module/foundations approval."
+      },
+      "primaryAuthorAlias": {
+        "settingId": "DLV-CHART-KUBECLAW-PROBES-DEPENDENCIES-REDISSTREAM-MAXLEN",
+        "source": {
+          "path": "charts/kubeclaw/values.yaml",
+          "field": "probes.dependencies.redisStream.maxLen",
+          "sha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1",
+          "line": 343,
+          "valuePath": "probes.dependencies.redisStream.maxLen",
+          "lineKind": "unique YAML key author"
+        },
+        "projection": "exact Chart/helper selector/conditional source expression, not value-equality alias",
+        "authority": "readonly actual producer field; endpoint/provider/key/service tuples require same binding; no new health editable copy"
+      },
+      "completeProfiles": {
+        "A": {
+          "path": "docs/review/evidence/config-acceptance/delivery/gateway-health-target-profiles-20261013/A.json",
+          "sha256": "84744cb5f1474cf06ba1da63738b4d0a3d26f31250c998b60eb2f17d2a54cc5a"
+        },
+        "B": {
+          "path": "docs/review/evidence/config-acceptance/delivery/gateway-health-target-profiles-20261013/B.json",
+          "sha256": "3da3f6624646091f9ed43ea44c1462136ebe5beafab8f02056c16924c9cb5c5c"
+        }
+      },
+      "profileCoordinate": "readonlyBindings.KUBECLAW_HEALTH_REDIS_STREAM_MAX_LEN",
+      "actualReader": {
+        "path": "charts/kubeclaw/templates/deployment.yaml",
+        "line": 835,
+        "operation": "checkRedisStream XADD MAXLEN ~ maxLen(836)",
+        "generatedFile": "/runtime-config/kubeclaw-health.mjs"
+      },
+      "source": {
+        "path": "charts/kubeclaw/templates/deployment.yaml",
+        "field": "KUBECLAW_HEALTH_REDIS_STREAM_MAX_LEN",
+        "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041",
+        "line": 835,
+        "lineKind": "productive generated health script field read"
+      },
+      "firstCurrentBoundary": "Redis XADD error / XADD returned no entry id \u2192 startup check failures",
+      "nativeOracle": "actual byte-identical generated Node healthcaller + controlled same selected scoped native services/mounts. Observe exact requestedurl/method/auth label/RedisPING/XADD arguments/timerAbort/drain/status/events/mode-specificexit and boundedcleanup. Check code-bundle compares only role/optionalcommit/contract today; spoofed record.ok/stale/misowned files and absentcommit are counterexamples requiring target provenance guard, not existing PASS. Registry401 connectivity differsfrom authenticatedprovider/image grants. Positive actual service before malformed/missing/old equal+different caller/profile/marker/provider/currentfallback negatives.",
+      "futureHarness": "tests/verification/config/delivery-chart-fields.test.mts",
+      "futureInvocation": [
+        "node",
+        "--test",
+        "--test-name-pattern=^DLV-CASE-GATEWAY-HEALTH-NATIVE-POLICY$",
+        "tests/verification/config/delivery-chart-fields.test.mts"
+      ],
+      "priorState": "original A binding before effects, nonempty health/status/stream state and exact Pod/provider/code/cleanup refs; parent universal originalModule/grant/cleanup contracts remain pending",
+      "caseIds": [
+        "DLV-CASE-GATEWAY-HEALTH-NATIVE-POLICY",
+        "DLV-CASE-HEALTH-MARKER-GENERATION",
+        "DLV-CASE-HEALTH-MISSING-BOUNDS",
+        "DLV-CASE-HEALTH-PROFILE"
+      ]
+    },
+    {
+      "settingId": "DLV-GATEWAY-HEALTH-KUBECLAW-HEALTH-REGISTRIES",
+      "field": "KUBECLAW_HEALTH_REGISTRIES",
+      "targetDomain": {
+        "domain": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "semantic": "canonical selected http(s) registry origin/base binding, no guess hostprefix fallback"
+          },
+          "semantic": "actual native /v2/ accepts401 as connectivity; no authenticatedpull/push/cert/imageByteproof from this positive. Emptylist nativeexplicitfailure when checkenabled."
+        },
+        "required": true,
+        "proposedOnly": true,
+        "currentProjectionAlias": {
+          "settingId": "DLV-CHART-KUBECLAW-PROBES-DEPENDENCIES-REGISTRIES-ENDPOINTS",
+          "source": {
+            "path": "charts/kubeclaw/values.yaml",
+            "field": "probes.dependencies.registries.endpoints",
+            "sha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1",
+            "line": 348,
+            "valuePath": "probes.dependencies.registries.endpoints",
+            "lineKind": "unique YAML key author"
+          },
+          "projection": "join comma",
+          "authority": "readonly actual producer field; endpoint/provider/key/service tuples require same binding; no new health editable copy"
+        },
+        "primaryAuthorAlias": {
+          "settingId": "DLV-CHART-KUBECLAW-PROBES-DEPENDENCIES-REGISTRIES-ENDPOINTS",
+          "source": {
+            "path": "charts/kubeclaw/values.yaml",
+            "field": "probes.dependencies.registries.endpoints",
+            "sha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1",
+            "line": 348,
+            "valuePath": "probes.dependencies.registries.endpoints",
+            "lineKind": "unique YAML key author"
+          },
+          "projection": "join comma",
+          "authority": "readonly actual producer field; endpoint/provider/key/service tuples require same binding; no new health editable copy"
+        },
+        "domainAppliesTo": "resolved effective value after readonly binding resolution; unresolved commit/provider references in fixture definition are NOT scalar-native-valid evidence",
+        "activation": "H/R same selected deployment/service/nativeprovider/mount generation, health probe snapshots at invocation. RetainedAoriginal Pod/grants/stream/status/code/provider refs never BLatest; no operationalhealth result stands for module/foundations approval."
+      },
+      "primaryAuthorAlias": {
+        "settingId": "DLV-CHART-KUBECLAW-PROBES-DEPENDENCIES-REGISTRIES-ENDPOINTS",
+        "source": {
+          "path": "charts/kubeclaw/values.yaml",
+          "field": "probes.dependencies.registries.endpoints",
+          "sha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1",
+          "line": 348,
+          "valuePath": "probes.dependencies.registries.endpoints",
+          "lineKind": "unique YAML key author"
+        },
+        "projection": "join comma",
+        "authority": "readonly actual producer field; endpoint/provider/key/service tuples require same binding; no new health editable copy"
+      },
+      "completeProfiles": {
+        "A": {
+          "path": "docs/review/evidence/config-acceptance/delivery/gateway-health-target-profiles-20261013/A.json",
+          "sha256": "84744cb5f1474cf06ba1da63738b4d0a3d26f31250c998b60eb2f17d2a54cc5a"
+        },
+        "B": {
+          "path": "docs/review/evidence/config-acceptance/delivery/gateway-health-target-profiles-20261013/B.json",
+          "sha256": "3da3f6624646091f9ed43ea44c1462136ebe5beafab8f02056c16924c9cb5c5c"
+        }
+      },
+      "profileCoordinate": "readonlyBindings.KUBECLAW_HEALTH_REGISTRIES",
+      "actualReader": {
+        "path": "charts/kubeclaw/templates/deployment.yaml",
+        "line": 857,
+        "operation": "checkRegistries loops httpOk(${origin}/v2/) accepted HTTP401(864)",
+        "generatedFile": "/runtime-config/kubeclaw-health.mjs"
+      },
+      "source": {
+        "path": "charts/kubeclaw/templates/deployment.yaml",
+        "field": "KUBECLAW_HEALTH_REGISTRIES",
+        "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041",
+        "line": 857,
+        "lineKind": "productive generated health script field read"
+      },
+      "firstCurrentBoundary": "no registry endpoints configured / HTTP status / timeout \u2192 startup check failure",
+      "nativeOracle": "actual byte-identical generated Node healthcaller + controlled same selected scoped native services/mounts. Observe exact requestedurl/method/auth label/RedisPING/XADD arguments/timerAbort/drain/status/events/mode-specificexit and boundedcleanup. Check code-bundle compares only role/optionalcommit/contract today; spoofed record.ok/stale/misowned files and absentcommit are counterexamples requiring target provenance guard, not existing PASS. Registry401 connectivity differsfrom authenticatedprovider/image grants. Positive actual service before malformed/missing/old equal+different caller/profile/marker/provider/currentfallback negatives.",
+      "futureHarness": "tests/verification/config/delivery-chart-fields.test.mts",
+      "futureInvocation": [
+        "node",
+        "--test",
+        "--test-name-pattern=^DLV-CASE-GATEWAY-HEALTH-NATIVE-POLICY$",
+        "tests/verification/config/delivery-chart-fields.test.mts"
+      ],
+      "priorState": "original A binding before effects, nonempty health/status/stream state and exact Pod/provider/code/cleanup refs; parent universal originalModule/grant/cleanup contracts remain pending",
+      "caseIds": [
+        "DLV-CASE-GATEWAY-HEALTH-NATIVE-POLICY",
+        "DLV-CASE-HEALTH-MARKER-GENERATION",
+        "DLV-CASE-HEALTH-MISSING-BOUNDS",
+        "DLV-CASE-HEALTH-PROFILE"
+      ]
+    },
+    {
+      "settingId": "DLV-GATEWAY-HEALTH-KUBECLAW-HEALTH-REQUIRE-STARTUP-MARKER",
+      "field": "KUBECLAW_HEALTH_REQUIRE_STARTUP_MARKER",
+      "targetDomain": {
+        "domain": {
+          "type": "boolean",
+          "semantic": "explicit canonical selected boolean\u2192generated ENV true/false; reject native other-string false/defaultfallback. Healthcheck enablement changes operational readiness only and NEVER disables mandatory original delivery/foundations verification or grants; mutable record.ok alone not provenance proof."
+        },
+        "required": true,
+        "proposedOnly": true,
+        "currentProjectionAlias": null,
+        "primaryAuthorAlias": null,
+        "domainAppliesTo": "resolved effective value after readonly binding resolution; unresolved commit/provider references in fixture definition are NOT scalar-native-valid evidence",
+        "activation": "H/R same selected deployment/service/nativeprovider/mount generation, health probe snapshots at invocation. RetainedAoriginal Pod/grants/stream/status/code/provider refs never BLatest; no operationalhealth result stands for module/foundations approval."
+      },
+      "primaryAuthorAlias": null,
+      "completeProfiles": {
+        "A": {
+          "path": "docs/review/evidence/config-acceptance/delivery/gateway-health-target-profiles-20261013/A.json",
+          "sha256": "84744cb5f1474cf06ba1da63738b4d0a3d26f31250c998b60eb2f17d2a54cc5a"
+        },
+        "B": {
+          "path": "docs/review/evidence/config-acceptance/delivery/gateway-health-target-profiles-20261013/B.json",
+          "sha256": "3da3f6624646091f9ed43ea44c1462136ebe5beafab8f02056c16924c9cb5c5c"
+        }
+      },
+      "profileCoordinate": "settings.KUBECLAW_HEALTH_REQUIRE_STARTUP_MARKER",
+      "actualReader": {
+        "path": "charts/kubeclaw/templates/deployment.yaml",
+        "line": 875,
+        "operation": "checkStartupVerificationStatus \u2192 readStartupVerification (876)",
+        "generatedFile": "/runtime-config/kubeclaw-health.mjs"
+      },
+      "source": {
+        "path": "charts/kubeclaw/templates/deployment.yaml",
+        "field": "KUBECLAW_HEALTH_REQUIRE_STARTUP_MARKER",
+        "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041",
+        "line": 875,
+        "lineKind": "productive generated health script field read"
+      },
+      "firstCurrentBoundary": "startup verification did not pass: stored failures; absent/unreadable marker fs error",
+      "nativeOracle": "actual byte-identical generated Node healthcaller + controlled same selected scoped native services/mounts. Observe exact requestedurl/method/auth label/RedisPING/XADD arguments/timerAbort/drain/status/events/mode-specificexit and boundedcleanup. Check code-bundle compares only role/optionalcommit/contract today; spoofed record.ok/stale/misowned files and absentcommit are counterexamples requiring target provenance guard, not existing PASS. Registry401 connectivity differsfrom authenticatedprovider/image grants. Positive actual service before malformed/missing/old equal+different caller/profile/marker/provider/currentfallback negatives.",
+      "futureHarness": "tests/verification/config/delivery-chart-fields.test.mts",
+      "futureInvocation": [
+        "node",
+        "--test",
+        "--test-name-pattern=^DLV-CASE-GATEWAY-HEALTH-NATIVE-POLICY$",
+        "tests/verification/config/delivery-chart-fields.test.mts"
+      ],
+      "priorState": "original A binding before effects, nonempty health/status/stream state and exact Pod/provider/code/cleanup refs; parent universal originalModule/grant/cleanup contracts remain pending",
+      "caseIds": [
+        "DLV-CASE-GATEWAY-HEALTH-NATIVE-POLICY",
+        "DLV-CASE-HEALTH-MARKER-GENERATION",
+        "DLV-CASE-HEALTH-MISSING-BOUNDS",
+        "DLV-CASE-HEALTH-PROFILE"
+      ]
+    },
+    {
+      "settingId": "DLV-GATEWAY-HEALTH-KUBECLAW-HEALTH-CHECK-GATEWAY",
+      "field": "KUBECLAW_HEALTH_CHECK_GATEWAY",
+      "targetDomain": {
+        "domain": {
+          "type": "boolean",
+          "semantic": "explicit canonical selected boolean\u2192generated ENV true/false; reject native other-string false/defaultfallback. Healthcheck enablement changes operational readiness only and NEVER disables mandatory original delivery/foundations verification or grants; mutable record.ok alone not provenance proof."
+        },
+        "required": true,
+        "proposedOnly": true,
+        "currentProjectionAlias": {
+          "settingId": "DLV-CHART-KUBECLAW-PROBES-DEPENDENCIES-GATEWAY-ENABLED",
+          "source": {
+            "path": "charts/kubeclaw/values.yaml",
+            "field": "probes.dependencies.gateway.enabled",
+            "sha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1",
+            "line": null,
+            "valuePath": "probes.dependencies.gateway.enabled",
+            "lineKind": "YAML field path retained; repeated/inline key exact location expansion pending"
+          },
+          "projection": "exact Chart/helper selector/conditional source expression, not value-equality alias",
+          "authority": "readonly actual producer field; endpoint/provider/key/service tuples require same binding; no new health editable copy"
+        },
+        "primaryAuthorAlias": {
+          "settingId": "DLV-CHART-KUBECLAW-PROBES-DEPENDENCIES-GATEWAY-ENABLED",
+          "source": {
+            "path": "charts/kubeclaw/values.yaml",
+            "field": "probes.dependencies.gateway.enabled",
+            "sha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1",
+            "line": null,
+            "valuePath": "probes.dependencies.gateway.enabled",
+            "lineKind": "YAML field path retained; repeated/inline key exact location expansion pending"
+          },
+          "projection": "exact Chart/helper selector/conditional source expression, not value-equality alias",
+          "authority": "readonly actual producer field; endpoint/provider/key/service tuples require same binding; no new health editable copy"
+        },
+        "domainAppliesTo": "resolved effective value after readonly binding resolution; unresolved commit/provider references in fixture definition are NOT scalar-native-valid evidence",
+        "activation": "H/R same selected deployment/service/nativeprovider/mount generation, health probe snapshots at invocation. RetainedAoriginal Pod/grants/stream/status/code/provider refs never BLatest; no operationalhealth result stands for module/foundations approval."
+      },
+      "primaryAuthorAlias": {
+        "settingId": "DLV-CHART-KUBECLAW-PROBES-DEPENDENCIES-GATEWAY-ENABLED",
+        "source": {
+          "path": "charts/kubeclaw/values.yaml",
+          "field": "probes.dependencies.gateway.enabled",
+          "sha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1",
+          "line": null,
+          "valuePath": "probes.dependencies.gateway.enabled",
+          "lineKind": "YAML field path retained; repeated/inline key exact location expansion pending"
+        },
+        "projection": "exact Chart/helper selector/conditional source expression, not value-equality alias",
+        "authority": "readonly actual producer field; endpoint/provider/key/service tuples require same binding; no new health editable copy"
+      },
+      "completeProfiles": {
+        "A": {
+          "path": "docs/review/evidence/config-acceptance/delivery/gateway-health-target-profiles-20261013/A.json",
+          "sha256": "84744cb5f1474cf06ba1da63738b4d0a3d26f31250c998b60eb2f17d2a54cc5a"
+        },
+        "B": {
+          "path": "docs/review/evidence/config-acceptance/delivery/gateway-health-target-profiles-20261013/B.json",
+          "sha256": "3da3f6624646091f9ed43ea44c1462136ebe5beafab8f02056c16924c9cb5c5c"
+        }
+      },
+      "profileCoordinate": "readonlyBindings.KUBECLAW_HEALTH_CHECK_GATEWAY",
+      "actualReader": {
+        "path": "charts/kubeclaw/templates/deployment.yaml",
+        "line": 902,
+        "operation": "startup/liveness/readiness \u2192 checkGateway \u2192 fetch /health",
+        "generatedFile": "/runtime-config/kubeclaw-health.mjs"
+      },
+      "source": {
+        "path": "charts/kubeclaw/templates/deployment.yaml",
+        "field": "KUBECLAW_HEALTH_CHECK_GATEWAY",
+        "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041",
+        "line": 902,
+        "lineKind": "productive generated health script field read"
+      },
+      "firstCurrentBoundary": "HTTP status/timeout \u2192 failures exit1",
+      "nativeOracle": "actual byte-identical generated Node healthcaller + controlled same selected scoped native services/mounts. Observe exact requestedurl/method/auth label/RedisPING/XADD arguments/timerAbort/drain/status/events/mode-specificexit and boundedcleanup. Check code-bundle compares only role/optionalcommit/contract today; spoofed record.ok/stale/misowned files and absentcommit are counterexamples requiring target provenance guard, not existing PASS. Registry401 connectivity differsfrom authenticatedprovider/image grants. Positive actual service before malformed/missing/old equal+different caller/profile/marker/provider/currentfallback negatives.",
+      "futureHarness": "tests/verification/config/delivery-chart-fields.test.mts",
+      "futureInvocation": [
+        "node",
+        "--test",
+        "--test-name-pattern=^DLV-CASE-GATEWAY-HEALTH-NATIVE-POLICY$",
+        "tests/verification/config/delivery-chart-fields.test.mts"
+      ],
+      "priorState": "original A binding before effects, nonempty health/status/stream state and exact Pod/provider/code/cleanup refs; parent universal originalModule/grant/cleanup contracts remain pending",
+      "caseIds": [
+        "DLV-CASE-GATEWAY-HEALTH-NATIVE-POLICY",
+        "DLV-CASE-HEALTH-MARKER-GENERATION",
+        "DLV-CASE-HEALTH-MISSING-BOUNDS",
+        "DLV-CASE-HEALTH-PROFILE"
+      ]
+    },
+    {
+      "settingId": "DLV-GATEWAY-HEALTH-KUBECLAW-HEALTH-CHECK-REDIS",
+      "field": "KUBECLAW_HEALTH_CHECK_REDIS",
+      "targetDomain": {
+        "domain": {
+          "type": "boolean",
+          "semantic": "explicit canonical selected boolean\u2192generated ENV true/false; reject native other-string false/defaultfallback. Healthcheck enablement changes operational readiness only and NEVER disables mandatory original delivery/foundations verification or grants; mutable record.ok alone not provenance proof."
+        },
+        "required": true,
+        "proposedOnly": true,
+        "currentProjectionAlias": {
+          "settingId": "DLV-CHART-KUBECLAW-PROBES-DEPENDENCIES-REDIS-ENABLED",
+          "source": {
+            "path": "charts/kubeclaw/values.yaml",
+            "field": "probes.dependencies.redis.enabled",
+            "sha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1",
+            "line": null,
+            "valuePath": "probes.dependencies.redis.enabled",
+            "lineKind": "YAML field path retained; repeated/inline key exact location expansion pending"
+          },
+          "projection": "exact Chart/helper selector/conditional source expression, not value-equality alias",
+          "authority": "readonly actual producer field; endpoint/provider/key/service tuples require same binding; no new health editable copy"
+        },
+        "primaryAuthorAlias": {
+          "settingId": "DLV-CHART-KUBECLAW-PROBES-DEPENDENCIES-REDIS-ENABLED",
+          "source": {
+            "path": "charts/kubeclaw/values.yaml",
+            "field": "probes.dependencies.redis.enabled",
+            "sha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1",
+            "line": null,
+            "valuePath": "probes.dependencies.redis.enabled",
+            "lineKind": "YAML field path retained; repeated/inline key exact location expansion pending"
+          },
+          "projection": "exact Chart/helper selector/conditional source expression, not value-equality alias",
+          "authority": "readonly actual producer field; endpoint/provider/key/service tuples require same binding; no new health editable copy"
+        },
+        "domainAppliesTo": "resolved effective value after readonly binding resolution; unresolved commit/provider references in fixture definition are NOT scalar-native-valid evidence",
+        "activation": "H/R same selected deployment/service/nativeprovider/mount generation, health probe snapshots at invocation. RetainedAoriginal Pod/grants/stream/status/code/provider refs never BLatest; no operationalhealth result stands for module/foundations approval."
+      },
+      "primaryAuthorAlias": {
+        "settingId": "DLV-CHART-KUBECLAW-PROBES-DEPENDENCIES-REDIS-ENABLED",
+        "source": {
+          "path": "charts/kubeclaw/values.yaml",
+          "field": "probes.dependencies.redis.enabled",
+          "sha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1",
+          "line": null,
+          "valuePath": "probes.dependencies.redis.enabled",
+          "lineKind": "YAML field path retained; repeated/inline key exact location expansion pending"
+        },
+        "projection": "exact Chart/helper selector/conditional source expression, not value-equality alias",
+        "authority": "readonly actual producer field; endpoint/provider/key/service tuples require same binding; no new health editable copy"
+      },
+      "completeProfiles": {
+        "A": {
+          "path": "docs/review/evidence/config-acceptance/delivery/gateway-health-target-profiles-20261013/A.json",
+          "sha256": "84744cb5f1474cf06ba1da63738b4d0a3d26f31250c998b60eb2f17d2a54cc5a"
+        },
+        "B": {
+          "path": "docs/review/evidence/config-acceptance/delivery/gateway-health-target-profiles-20261013/B.json",
+          "sha256": "3da3f6624646091f9ed43ea44c1462136ebe5beafab8f02056c16924c9cb5c5c"
+        }
+      },
+      "profileCoordinate": "readonlyBindings.KUBECLAW_HEALTH_CHECK_REDIS",
+      "actualReader": {
+        "path": "charts/kubeclaw/templates/deployment.yaml",
+        "line": 910,
+        "operation": "startup/readiness \u2192 checkRedis \u2192 redis.ping",
+        "generatedFile": "/runtime-config/kubeclaw-health.mjs"
+      },
+      "source": {
+        "path": "charts/kubeclaw/templates/deployment.yaml",
+        "field": "KUBECLAW_HEALTH_CHECK_REDIS",
+        "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041",
+        "line": 910,
+        "lineKind": "productive generated health script field read"
+      },
+      "firstCurrentBoundary": "REDIS_HOST/REDIS_PORT is required; unexpected PING response; Redis error/timeout",
+      "nativeOracle": "actual byte-identical generated Node healthcaller + controlled same selected scoped native services/mounts. Observe exact requestedurl/method/auth label/RedisPING/XADD arguments/timerAbort/drain/status/events/mode-specificexit and boundedcleanup. Check code-bundle compares only role/optionalcommit/contract today; spoofed record.ok/stale/misowned files and absentcommit are counterexamples requiring target provenance guard, not existing PASS. Registry401 connectivity differsfrom authenticatedprovider/image grants. Positive actual service before malformed/missing/old equal+different caller/profile/marker/provider/currentfallback negatives.",
+      "futureHarness": "tests/verification/config/delivery-chart-fields.test.mts",
+      "futureInvocation": [
+        "node",
+        "--test",
+        "--test-name-pattern=^DLV-CASE-GATEWAY-HEALTH-NATIVE-POLICY$",
+        "tests/verification/config/delivery-chart-fields.test.mts"
+      ],
+      "priorState": "original A binding before effects, nonempty health/status/stream state and exact Pod/provider/code/cleanup refs; parent universal originalModule/grant/cleanup contracts remain pending",
+      "caseIds": [
+        "DLV-CASE-GATEWAY-HEALTH-NATIVE-POLICY",
+        "DLV-CASE-HEALTH-MARKER-GENERATION",
+        "DLV-CASE-HEALTH-MISSING-BOUNDS",
+        "DLV-CASE-HEALTH-PROFILE"
+      ]
+    },
+    {
+      "settingId": "DLV-GATEWAY-HEALTH-KUBECLAW-HEALTH-CHECK-REDIS-STREAM",
+      "field": "KUBECLAW_HEALTH_CHECK_REDIS_STREAM",
+      "targetDomain": {
+        "domain": {
+          "type": "boolean",
+          "semantic": "explicit canonical selected boolean\u2192generated ENV true/false; reject native other-string false/defaultfallback. Healthcheck enablement changes operational readiness only and NEVER disables mandatory original delivery/foundations verification or grants; mutable record.ok alone not provenance proof."
+        },
+        "required": true,
+        "proposedOnly": true,
+        "currentProjectionAlias": {
+          "settingId": "DLV-CHART-KUBECLAW-PROBES-DEPENDENCIES-REDISSTREAM-ENABLED",
+          "source": {
+            "path": "charts/kubeclaw/values.yaml",
+            "field": "probes.dependencies.redisStream.enabled",
+            "sha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1",
+            "line": null,
+            "valuePath": "probes.dependencies.redisStream.enabled",
+            "lineKind": "YAML field path retained; repeated/inline key exact location expansion pending"
+          },
+          "projection": "exact Chart/helper selector/conditional source expression, not value-equality alias",
+          "authority": "readonly actual producer field; endpoint/provider/key/service tuples require same binding; no new health editable copy"
+        },
+        "primaryAuthorAlias": {
+          "settingId": "DLV-CHART-KUBECLAW-PROBES-DEPENDENCIES-REDISSTREAM-ENABLED",
+          "source": {
+            "path": "charts/kubeclaw/values.yaml",
+            "field": "probes.dependencies.redisStream.enabled",
+            "sha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1",
+            "line": null,
+            "valuePath": "probes.dependencies.redisStream.enabled",
+            "lineKind": "YAML field path retained; repeated/inline key exact location expansion pending"
+          },
+          "projection": "exact Chart/helper selector/conditional source expression, not value-equality alias",
+          "authority": "readonly actual producer field; endpoint/provider/key/service tuples require same binding; no new health editable copy"
+        },
+        "domainAppliesTo": "resolved effective value after readonly binding resolution; unresolved commit/provider references in fixture definition are NOT scalar-native-valid evidence",
+        "activation": "H/R same selected deployment/service/nativeprovider/mount generation, health probe snapshots at invocation. RetainedAoriginal Pod/grants/stream/status/code/provider refs never BLatest; no operationalhealth result stands for module/foundations approval."
+      },
+      "primaryAuthorAlias": {
+        "settingId": "DLV-CHART-KUBECLAW-PROBES-DEPENDENCIES-REDISSTREAM-ENABLED",
+        "source": {
+          "path": "charts/kubeclaw/values.yaml",
+          "field": "probes.dependencies.redisStream.enabled",
+          "sha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1",
+          "line": null,
+          "valuePath": "probes.dependencies.redisStream.enabled",
+          "lineKind": "YAML field path retained; repeated/inline key exact location expansion pending"
+        },
+        "projection": "exact Chart/helper selector/conditional source expression, not value-equality alias",
+        "authority": "readonly actual producer field; endpoint/provider/key/service tuples require same binding; no new health editable copy"
+      },
+      "completeProfiles": {
+        "A": {
+          "path": "docs/review/evidence/config-acceptance/delivery/gateway-health-target-profiles-20261013/A.json",
+          "sha256": "84744cb5f1474cf06ba1da63738b4d0a3d26f31250c998b60eb2f17d2a54cc5a"
+        },
+        "B": {
+          "path": "docs/review/evidence/config-acceptance/delivery/gateway-health-target-profiles-20261013/B.json",
+          "sha256": "3da3f6624646091f9ed43ea44c1462136ebe5beafab8f02056c16924c9cb5c5c"
+        }
+      },
+      "profileCoordinate": "readonlyBindings.KUBECLAW_HEALTH_CHECK_REDIS_STREAM",
+      "actualReader": {
+        "path": "charts/kubeclaw/templates/deployment.yaml",
+        "line": 911,
+        "operation": "startup only \u2192 checkRedisStream \u2192 XADD health effect",
+        "generatedFile": "/runtime-config/kubeclaw-health.mjs"
+      },
+      "source": {
+        "path": "charts/kubeclaw/templates/deployment.yaml",
+        "field": "KUBECLAW_HEALTH_CHECK_REDIS_STREAM",
+        "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041",
+        "line": 911,
+        "lineKind": "productive generated health script field read"
+      },
+      "firstCurrentBoundary": "XADD returned no entry id; Redis error/timeout",
+      "nativeOracle": "actual byte-identical generated Node healthcaller + controlled same selected scoped native services/mounts. Observe exact requestedurl/method/auth label/RedisPING/XADD arguments/timerAbort/drain/status/events/mode-specificexit and boundedcleanup. Check code-bundle compares only role/optionalcommit/contract today; spoofed record.ok/stale/misowned files and absentcommit are counterexamples requiring target provenance guard, not existing PASS. Registry401 connectivity differsfrom authenticatedprovider/image grants. Positive actual service before malformed/missing/old equal+different caller/profile/marker/provider/currentfallback negatives.",
+      "futureHarness": "tests/verification/config/delivery-chart-fields.test.mts",
+      "futureInvocation": [
+        "node",
+        "--test",
+        "--test-name-pattern=^DLV-CASE-GATEWAY-HEALTH-NATIVE-POLICY$",
+        "tests/verification/config/delivery-chart-fields.test.mts"
+      ],
+      "priorState": "original A binding before effects, nonempty health/status/stream state and exact Pod/provider/code/cleanup refs; parent universal originalModule/grant/cleanup contracts remain pending",
+      "caseIds": [
+        "DLV-CASE-GATEWAY-HEALTH-NATIVE-POLICY",
+        "DLV-CASE-HEALTH-MARKER-GENERATION",
+        "DLV-CASE-HEALTH-MISSING-BOUNDS",
+        "DLV-CASE-HEALTH-PROFILE"
+      ]
+    },
+    {
+      "settingId": "DLV-GATEWAY-HEALTH-KUBECLAW-HEALTH-CHECK-LITELLM",
+      "field": "KUBECLAW_HEALTH_CHECK_LITELLM",
+      "targetDomain": {
+        "domain": {
+          "type": "boolean",
+          "semantic": "explicit canonical selected boolean\u2192generated ENV true/false; reject native other-string false/defaultfallback. Healthcheck enablement changes operational readiness only and NEVER disables mandatory original delivery/foundations verification or grants; mutable record.ok alone not provenance proof."
+        },
+        "required": true,
+        "proposedOnly": true,
+        "currentProjectionAlias": {
+          "settingId": "DLV-CHART-KUBECLAW-PROBES-DEPENDENCIES-LITELLM-ENABLED",
+          "source": {
+            "path": "charts/kubeclaw/values.yaml",
+            "field": "probes.dependencies.litellm.enabled",
+            "sha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1",
+            "line": null,
+            "valuePath": "probes.dependencies.litellm.enabled",
+            "lineKind": "YAML field path retained; repeated/inline key exact location expansion pending"
+          },
+          "projection": "exact Chart/helper selector/conditional source expression, not value-equality alias",
+          "authority": "readonly actual producer field; endpoint/provider/key/service tuples require same binding; no new health editable copy"
+        },
+        "primaryAuthorAlias": {
+          "settingId": "DLV-CHART-KUBECLAW-PROBES-DEPENDENCIES-LITELLM-ENABLED",
+          "source": {
+            "path": "charts/kubeclaw/values.yaml",
+            "field": "probes.dependencies.litellm.enabled",
+            "sha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1",
+            "line": null,
+            "valuePath": "probes.dependencies.litellm.enabled",
+            "lineKind": "YAML field path retained; repeated/inline key exact location expansion pending"
+          },
+          "projection": "exact Chart/helper selector/conditional source expression, not value-equality alias",
+          "authority": "readonly actual producer field; endpoint/provider/key/service tuples require same binding; no new health editable copy"
+        },
+        "domainAppliesTo": "resolved effective value after readonly binding resolution; unresolved commit/provider references in fixture definition are NOT scalar-native-valid evidence",
+        "activation": "H/R same selected deployment/service/nativeprovider/mount generation, health probe snapshots at invocation. RetainedAoriginal Pod/grants/stream/status/code/provider refs never BLatest; no operationalhealth result stands for module/foundations approval."
+      },
+      "primaryAuthorAlias": {
+        "settingId": "DLV-CHART-KUBECLAW-PROBES-DEPENDENCIES-LITELLM-ENABLED",
+        "source": {
+          "path": "charts/kubeclaw/values.yaml",
+          "field": "probes.dependencies.litellm.enabled",
+          "sha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1",
+          "line": null,
+          "valuePath": "probes.dependencies.litellm.enabled",
+          "lineKind": "YAML field path retained; repeated/inline key exact location expansion pending"
+        },
+        "projection": "exact Chart/helper selector/conditional source expression, not value-equality alias",
+        "authority": "readonly actual producer field; endpoint/provider/key/service tuples require same binding; no new health editable copy"
+      },
+      "completeProfiles": {
+        "A": {
+          "path": "docs/review/evidence/config-acceptance/delivery/gateway-health-target-profiles-20261013/A.json",
+          "sha256": "84744cb5f1474cf06ba1da63738b4d0a3d26f31250c998b60eb2f17d2a54cc5a"
+        },
+        "B": {
+          "path": "docs/review/evidence/config-acceptance/delivery/gateway-health-target-profiles-20261013/B.json",
+          "sha256": "3da3f6624646091f9ed43ea44c1462136ebe5beafab8f02056c16924c9cb5c5c"
+        }
+      },
+      "profileCoordinate": "readonlyBindings.KUBECLAW_HEALTH_CHECK_LITELLM",
+      "actualReader": {
+        "path": "charts/kubeclaw/templates/deployment.yaml",
+        "line": 912,
+        "operation": "startup only \u2192 checkLiteLLM \u2192 fetch URL/health",
+        "generatedFile": "/runtime-config/kubeclaw-health.mjs"
+      },
+      "source": {
+        "path": "charts/kubeclaw/templates/deployment.yaml",
+        "field": "KUBECLAW_HEALTH_CHECK_LITELLM",
+        "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041",
+        "line": 912,
+        "lineKind": "productive generated health script field read"
+      },
+      "firstCurrentBoundary": "HTTP status/timeout \u2192 startup failure",
+      "nativeOracle": "actual byte-identical generated Node healthcaller + controlled same selected scoped native services/mounts. Observe exact requestedurl/method/auth label/RedisPING/XADD arguments/timerAbort/drain/status/events/mode-specificexit and boundedcleanup. Check code-bundle compares only role/optionalcommit/contract today; spoofed record.ok/stale/misowned files and absentcommit are counterexamples requiring target provenance guard, not existing PASS. Registry401 connectivity differsfrom authenticatedprovider/image grants. Positive actual service before malformed/missing/old equal+different caller/profile/marker/provider/currentfallback negatives.",
+      "futureHarness": "tests/verification/config/delivery-chart-fields.test.mts",
+      "futureInvocation": [
+        "node",
+        "--test",
+        "--test-name-pattern=^DLV-CASE-GATEWAY-HEALTH-NATIVE-POLICY$",
+        "tests/verification/config/delivery-chart-fields.test.mts"
+      ],
+      "priorState": "original A binding before effects, nonempty health/status/stream state and exact Pod/provider/code/cleanup refs; parent universal originalModule/grant/cleanup contracts remain pending",
+      "caseIds": [
+        "DLV-CASE-GATEWAY-HEALTH-NATIVE-POLICY",
+        "DLV-CASE-HEALTH-MARKER-GENERATION",
+        "DLV-CASE-HEALTH-MISSING-BOUNDS",
+        "DLV-CASE-HEALTH-PROFILE"
+      ]
+    },
+    {
+      "settingId": "DLV-GATEWAY-HEALTH-KUBECLAW-HEALTH-CHECK-REGISTRIES",
+      "field": "KUBECLAW_HEALTH_CHECK_REGISTRIES",
+      "targetDomain": {
+        "domain": {
+          "type": "boolean",
+          "semantic": "explicit canonical selected boolean\u2192generated ENV true/false; reject native other-string false/defaultfallback. Healthcheck enablement changes operational readiness only and NEVER disables mandatory original delivery/foundations verification or grants; mutable record.ok alone not provenance proof."
+        },
+        "required": true,
+        "proposedOnly": true,
+        "currentProjectionAlias": {
+          "settingId": "DLV-CHART-KUBECLAW-PROBES-DEPENDENCIES-REGISTRIES-ENABLED",
+          "source": {
+            "path": "charts/kubeclaw/values.yaml",
+            "field": "probes.dependencies.registries.enabled",
+            "sha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1",
+            "line": null,
+            "valuePath": "probes.dependencies.registries.enabled",
+            "lineKind": "YAML field path retained; repeated/inline key exact location expansion pending"
+          },
+          "projection": "exact Chart/helper selector/conditional source expression, not value-equality alias",
+          "authority": "readonly actual producer field; endpoint/provider/key/service tuples require same binding; no new health editable copy"
+        },
+        "primaryAuthorAlias": {
+          "settingId": "DLV-CHART-KUBECLAW-PROBES-DEPENDENCIES-REGISTRIES-ENABLED",
+          "source": {
+            "path": "charts/kubeclaw/values.yaml",
+            "field": "probes.dependencies.registries.enabled",
+            "sha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1",
+            "line": null,
+            "valuePath": "probes.dependencies.registries.enabled",
+            "lineKind": "YAML field path retained; repeated/inline key exact location expansion pending"
+          },
+          "projection": "exact Chart/helper selector/conditional source expression, not value-equality alias",
+          "authority": "readonly actual producer field; endpoint/provider/key/service tuples require same binding; no new health editable copy"
+        },
+        "domainAppliesTo": "resolved effective value after readonly binding resolution; unresolved commit/provider references in fixture definition are NOT scalar-native-valid evidence",
+        "activation": "H/R same selected deployment/service/nativeprovider/mount generation, health probe snapshots at invocation. RetainedAoriginal Pod/grants/stream/status/code/provider refs never BLatest; no operationalhealth result stands for module/foundations approval."
+      },
+      "primaryAuthorAlias": {
+        "settingId": "DLV-CHART-KUBECLAW-PROBES-DEPENDENCIES-REGISTRIES-ENABLED",
+        "source": {
+          "path": "charts/kubeclaw/values.yaml",
+          "field": "probes.dependencies.registries.enabled",
+          "sha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1",
+          "line": null,
+          "valuePath": "probes.dependencies.registries.enabled",
+          "lineKind": "YAML field path retained; repeated/inline key exact location expansion pending"
+        },
+        "projection": "exact Chart/helper selector/conditional source expression, not value-equality alias",
+        "authority": "readonly actual producer field; endpoint/provider/key/service tuples require same binding; no new health editable copy"
+      },
+      "completeProfiles": {
+        "A": {
+          "path": "docs/review/evidence/config-acceptance/delivery/gateway-health-target-profiles-20261013/A.json",
+          "sha256": "84744cb5f1474cf06ba1da63738b4d0a3d26f31250c998b60eb2f17d2a54cc5a"
+        },
+        "B": {
+          "path": "docs/review/evidence/config-acceptance/delivery/gateway-health-target-profiles-20261013/B.json",
+          "sha256": "3da3f6624646091f9ed43ea44c1462136ebe5beafab8f02056c16924c9cb5c5c"
+        }
+      },
+      "profileCoordinate": "readonlyBindings.KUBECLAW_HEALTH_CHECK_REGISTRIES",
+      "actualReader": {
+        "path": "charts/kubeclaw/templates/deployment.yaml",
+        "line": 913,
+        "operation": "startup only \u2192 checkRegistries",
+        "generatedFile": "/runtime-config/kubeclaw-health.mjs"
+      },
+      "source": {
+        "path": "charts/kubeclaw/templates/deployment.yaml",
+        "field": "KUBECLAW_HEALTH_CHECK_REGISTRIES",
+        "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041",
+        "line": 913,
+        "lineKind": "productive generated health script field read"
+      },
+      "firstCurrentBoundary": "no registry endpoints configured; HTTP status/timeout",
+      "nativeOracle": "actual byte-identical generated Node healthcaller + controlled same selected scoped native services/mounts. Observe exact requestedurl/method/auth label/RedisPING/XADD arguments/timerAbort/drain/status/events/mode-specificexit and boundedcleanup. Check code-bundle compares only role/optionalcommit/contract today; spoofed record.ok/stale/misowned files and absentcommit are counterexamples requiring target provenance guard, not existing PASS. Registry401 connectivity differsfrom authenticatedprovider/image grants. Positive actual service before malformed/missing/old equal+different caller/profile/marker/provider/currentfallback negatives.",
+      "futureHarness": "tests/verification/config/delivery-chart-fields.test.mts",
+      "futureInvocation": [
+        "node",
+        "--test",
+        "--test-name-pattern=^DLV-CASE-GATEWAY-HEALTH-NATIVE-POLICY$",
+        "tests/verification/config/delivery-chart-fields.test.mts"
+      ],
+      "priorState": "original A binding before effects, nonempty health/status/stream state and exact Pod/provider/code/cleanup refs; parent universal originalModule/grant/cleanup contracts remain pending",
+      "caseIds": [
+        "DLV-CASE-GATEWAY-HEALTH-NATIVE-POLICY",
+        "DLV-CASE-HEALTH-MARKER-GENERATION",
+        "DLV-CASE-HEALTH-MISSING-BOUNDS",
+        "DLV-CASE-HEALTH-PROFILE"
+      ]
+    },
+    {
+      "settingId": "DLV-GATEWAY-HEALTH-REDIS-HOST",
+      "field": "REDIS_HOST",
+      "targetDomain": {
+        "domain": {
+          "type": "string",
+          "minLength": 1,
+          "generatedFrom": "actual selected role/instance/Pod/Redis service identity. HOSTNAME Podoriginal task observation, not editable intent. REDIS_HOST actual selected provider service/TLS topology; native stringsyntax alone insufficient."
+        },
+        "required": true,
+        "proposedOnly": true,
+        "currentProjectionAlias": {
+          "settingId": "DLV-CHART-KUBECLAW-REDIS-HOST",
+          "source": {
+            "path": "charts/kubeclaw/values.yaml",
+            "field": "redis.host",
+            "sha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1",
+            "line": 230,
+            "valuePath": "redis.host",
+            "lineKind": "unique YAML key author"
+          },
+          "projection": "exact Chart/helper selector/conditional source expression, not value-equality alias",
+          "authority": "readonly actual producer field; endpoint/provider/key/service tuples require same binding; no new health editable copy"
+        },
+        "primaryAuthorAlias": {
+          "settingId": "DLV-CHART-KUBECLAW-REDIS-HOST",
+          "source": {
+            "path": "charts/kubeclaw/values.yaml",
+            "field": "redis.host",
+            "sha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1",
+            "line": 230,
+            "valuePath": "redis.host",
+            "lineKind": "unique YAML key author"
+          },
+          "projection": "exact Chart/helper selector/conditional source expression, not value-equality alias",
+          "authority": "readonly actual producer field; endpoint/provider/key/service tuples require same binding; no new health editable copy"
+        },
+        "domainAppliesTo": "resolved effective value after readonly binding resolution; unresolved commit/provider references in fixture definition are NOT scalar-native-valid evidence",
+        "activation": "H/R same selected deployment/service/nativeprovider/mount generation, health probe snapshots at invocation. RetainedAoriginal Pod/grants/stream/status/code/provider refs never BLatest; no operationalhealth result stands for module/foundations approval."
+      },
+      "primaryAuthorAlias": {
+        "settingId": "DLV-CHART-KUBECLAW-REDIS-HOST",
+        "source": {
+          "path": "charts/kubeclaw/values.yaml",
+          "field": "redis.host",
+          "sha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1",
+          "line": 230,
+          "valuePath": "redis.host",
+          "lineKind": "unique YAML key author"
+        },
+        "projection": "exact Chart/helper selector/conditional source expression, not value-equality alias",
+        "authority": "readonly actual producer field; endpoint/provider/key/service tuples require same binding; no new health editable copy"
+      },
+      "completeProfiles": {
+        "A": {
+          "path": "docs/review/evidence/config-acceptance/delivery/gateway-health-target-profiles-20261013/A.json",
+          "sha256": "84744cb5f1474cf06ba1da63738b4d0a3d26f31250c998b60eb2f17d2a54cc5a"
+        },
+        "B": {
+          "path": "docs/review/evidence/config-acceptance/delivery/gateway-health-target-profiles-20261013/B.json",
+          "sha256": "3da3f6624646091f9ed43ea44c1462136ebe5beafab8f02056c16924c9cb5c5c"
+        }
+      },
+      "profileCoordinate": "readonlyBindings.REDIS_HOST",
+      "actualReader": {
+        "path": "charts/kubeclaw/templates/deployment.yaml",
+        "line": 803,
+        "operation": "openRedis \u2192 ioredis constructor",
+        "generatedFile": "/runtime-config/kubeclaw-health.mjs"
+      },
+      "source": {
+        "path": "charts/kubeclaw/templates/deployment.yaml",
+        "field": "REDIS_HOST",
+        "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041",
+        "line": 803,
+        "lineKind": "productive generated health script field read"
+      },
+      "firstCurrentBoundary": "REDIS_HOST is required / Redis connection error",
+      "nativeOracle": "actual byte-identical generated Node healthcaller + controlled same selected scoped native services/mounts. Observe exact requestedurl/method/auth label/RedisPING/XADD arguments/timerAbort/drain/status/events/mode-specificexit and boundedcleanup. Check code-bundle compares only role/optionalcommit/contract today; spoofed record.ok/stale/misowned files and absentcommit are counterexamples requiring target provenance guard, not existing PASS. Registry401 connectivity differsfrom authenticatedprovider/image grants. Positive actual service before malformed/missing/old equal+different caller/profile/marker/provider/currentfallback negatives.",
+      "futureHarness": "tests/verification/config/delivery-chart-fields.test.mts",
+      "futureInvocation": [
+        "node",
+        "--test",
+        "--test-name-pattern=^DLV-CASE-GATEWAY-HEALTH-NATIVE-POLICY$",
+        "tests/verification/config/delivery-chart-fields.test.mts"
+      ],
+      "priorState": "original A binding before effects, nonempty health/status/stream state and exact Pod/provider/code/cleanup refs; parent universal originalModule/grant/cleanup contracts remain pending",
+      "caseIds": [
+        "DLV-CASE-GATEWAY-HEALTH-NATIVE-POLICY",
+        "DLV-CASE-HEALTH-MARKER-GENERATION",
+        "DLV-CASE-HEALTH-MISSING-BOUNDS",
+        "DLV-CASE-HEALTH-PROFILE"
+      ]
+    },
+    {
+      "settingId": "DLV-GATEWAY-HEALTH-REDIS-PORT",
+      "field": "REDIS_PORT",
+      "targetDomain": {
+        "domain": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 65535,
+          "semantic": "derived selected registered service/loopback transport, coherent actual gatewayargv/config/service port/Redisclient endpoint; parseInt suffix/zero/absent native fallback not target admission"
+        },
+        "required": true,
+        "proposedOnly": true,
+        "currentProjectionAlias": {
+          "settingId": "DLV-CHART-KUBECLAW-REDIS-PORT",
+          "source": {
+            "path": "charts/kubeclaw/values.yaml",
+            "field": "redis.port",
+            "sha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1",
+            "line": null,
+            "valuePath": "redis.port",
+            "lineKind": "YAML field path retained; repeated/inline key exact location expansion pending"
+          },
+          "projection": "exact Chart/helper selector/conditional source expression, not value-equality alias",
+          "authority": "readonly actual producer field; endpoint/provider/key/service tuples require same binding; no new health editable copy"
+        },
+        "primaryAuthorAlias": {
+          "settingId": "DLV-CHART-KUBECLAW-REDIS-PORT",
+          "source": {
+            "path": "charts/kubeclaw/values.yaml",
+            "field": "redis.port",
+            "sha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1",
+            "line": null,
+            "valuePath": "redis.port",
+            "lineKind": "YAML field path retained; repeated/inline key exact location expansion pending"
+          },
+          "projection": "exact Chart/helper selector/conditional source expression, not value-equality alias",
+          "authority": "readonly actual producer field; endpoint/provider/key/service tuples require same binding; no new health editable copy"
+        },
+        "domainAppliesTo": "resolved effective value after readonly binding resolution; unresolved commit/provider references in fixture definition are NOT scalar-native-valid evidence",
+        "activation": "H/R same selected deployment/service/nativeprovider/mount generation, health probe snapshots at invocation. RetainedAoriginal Pod/grants/stream/status/code/provider refs never BLatest; no operationalhealth result stands for module/foundations approval."
+      },
+      "primaryAuthorAlias": {
+        "settingId": "DLV-CHART-KUBECLAW-REDIS-PORT",
+        "source": {
+          "path": "charts/kubeclaw/values.yaml",
+          "field": "redis.port",
+          "sha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1",
+          "line": null,
+          "valuePath": "redis.port",
+          "lineKind": "YAML field path retained; repeated/inline key exact location expansion pending"
+        },
+        "projection": "exact Chart/helper selector/conditional source expression, not value-equality alias",
+        "authority": "readonly actual producer field; endpoint/provider/key/service tuples require same binding; no new health editable copy"
+      },
+      "completeProfiles": {
+        "A": {
+          "path": "docs/review/evidence/config-acceptance/delivery/gateway-health-target-profiles-20261013/A.json",
+          "sha256": "84744cb5f1474cf06ba1da63738b4d0a3d26f31250c998b60eb2f17d2a54cc5a"
+        },
+        "B": {
+          "path": "docs/review/evidence/config-acceptance/delivery/gateway-health-target-profiles-20261013/B.json",
+          "sha256": "3da3f6624646091f9ed43ea44c1462136ebe5beafab8f02056c16924c9cb5c5c"
+        }
+      },
+      "profileCoordinate": "readonlyBindings.REDIS_PORT",
+      "actualReader": {
+        "path": "charts/kubeclaw/templates/deployment.yaml",
+        "line": 804,
+        "operation": "openRedis \u2192 ioredis constructor",
+        "generatedFile": "/runtime-config/kubeclaw-health.mjs"
+      },
+      "source": {
+        "path": "charts/kubeclaw/templates/deployment.yaml",
+        "field": "REDIS_PORT",
+        "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041",
+        "line": 804,
+        "lineKind": "productive generated health script field read"
+      },
+      "firstCurrentBoundary": "REDIS_PORT is required / ioredis invalid port/network error",
+      "nativeOracle": "actual byte-identical generated Node healthcaller + controlled same selected scoped native services/mounts. Observe exact requestedurl/method/auth label/RedisPING/XADD arguments/timerAbort/drain/status/events/mode-specificexit and boundedcleanup. Check code-bundle compares only role/optionalcommit/contract today; spoofed record.ok/stale/misowned files and absentcommit are counterexamples requiring target provenance guard, not existing PASS. Registry401 connectivity differsfrom authenticatedprovider/image grants. Positive actual service before malformed/missing/old equal+different caller/profile/marker/provider/currentfallback negatives.",
+      "futureHarness": "tests/verification/config/delivery-chart-fields.test.mts",
+      "futureInvocation": [
+        "node",
+        "--test",
+        "--test-name-pattern=^DLV-CASE-GATEWAY-HEALTH-NATIVE-POLICY$",
+        "tests/verification/config/delivery-chart-fields.test.mts"
+      ],
+      "priorState": "original A binding before effects, nonempty health/status/stream state and exact Pod/provider/code/cleanup refs; parent universal originalModule/grant/cleanup contracts remain pending",
+      "caseIds": [
+        "DLV-CASE-GATEWAY-HEALTH-NATIVE-POLICY",
+        "DLV-CASE-HEALTH-MARKER-GENERATION",
+        "DLV-CASE-HEALTH-MISSING-BOUNDS",
+        "DLV-CASE-HEALTH-PROFILE"
+      ]
+    },
+    {
+      "settingId": "DLV-GATEWAY-HEALTH-REDIS-USERNAME",
+      "field": "REDIS_USERNAME",
+      "targetDomain": {
+        "domain": {
+          "type": "object",
+          "required": [
+            "providerRef",
+            "field"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "providerRef": {
+              "type": "string",
+              "minLength": 1
+            },
+            "field": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "semantic": "typed same selected actual provider/Secret name/key/protocol/username+password pair, no inline bytes or token hash. StartupENV binding cannot rotate by newprofile; auth headers/Redis identity actual native boundaries."
+        },
+        "required": true,
+        "proposedOnly": true,
+        "currentProjectionAlias": null,
+        "primaryAuthorAlias": null,
+        "domainAppliesTo": "resolved effective value after readonly binding resolution; unresolved commit/provider references in fixture definition are NOT scalar-native-valid evidence",
+        "activation": "H/R same selected deployment/service/nativeprovider/mount generation, health probe snapshots at invocation. RetainedAoriginal Pod/grants/stream/status/code/provider refs never BLatest; no operationalhealth result stands for module/foundations approval."
+      },
+      "primaryAuthorAlias": null,
+      "completeProfiles": {
+        "A": {
+          "path": "docs/review/evidence/config-acceptance/delivery/gateway-health-target-profiles-20261013/A.json",
+          "sha256": "84744cb5f1474cf06ba1da63738b4d0a3d26f31250c998b60eb2f17d2a54cc5a"
+        },
+        "B": {
+          "path": "docs/review/evidence/config-acceptance/delivery/gateway-health-target-profiles-20261013/B.json",
+          "sha256": "3da3f6624646091f9ed43ea44c1462136ebe5beafab8f02056c16924c9cb5c5c"
+        }
+      },
+      "profileCoordinate": "readonlyBindings.REDIS_USERNAME",
+      "actualReader": {
+        "path": "charts/kubeclaw/templates/deployment.yaml",
+        "line": 808,
+        "operation": "openRedis ioredis.username",
+        "generatedFile": "/runtime-config/kubeclaw-health.mjs"
+      },
+      "source": {
+        "path": "charts/kubeclaw/templates/deployment.yaml",
+        "field": "REDIS_USERNAME",
+        "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041",
+        "line": 808,
+        "lineKind": "productive generated health script field read"
+      },
+      "firstCurrentBoundary": "Redis auth errors through check",
+      "nativeOracle": "actual byte-identical generated Node healthcaller + controlled same selected scoped native services/mounts. Observe exact requestedurl/method/auth label/RedisPING/XADD arguments/timerAbort/drain/status/events/mode-specificexit and boundedcleanup. Check code-bundle compares only role/optionalcommit/contract today; spoofed record.ok/stale/misowned files and absentcommit are counterexamples requiring target provenance guard, not existing PASS. Registry401 connectivity differsfrom authenticatedprovider/image grants. Positive actual service before malformed/missing/old equal+different caller/profile/marker/provider/currentfallback negatives.",
+      "futureHarness": "tests/verification/config/delivery-chart-fields.test.mts",
+      "futureInvocation": [
+        "node",
+        "--test",
+        "--test-name-pattern=^DLV-CASE-GATEWAY-HEALTH-NATIVE-POLICY$",
+        "tests/verification/config/delivery-chart-fields.test.mts"
+      ],
+      "priorState": "original A binding before effects, nonempty health/status/stream state and exact Pod/provider/code/cleanup refs; parent universal originalModule/grant/cleanup contracts remain pending",
+      "caseIds": [
+        "DLV-CASE-GATEWAY-HEALTH-NATIVE-POLICY",
+        "DLV-CASE-HEALTH-MARKER-GENERATION",
+        "DLV-CASE-HEALTH-MISSING-BOUNDS",
+        "DLV-CASE-HEALTH-PROFILE"
+      ]
+    },
+    {
+      "settingId": "DLV-GATEWAY-HEALTH-REDIS-PASSWORD",
+      "field": "REDIS_PASSWORD",
+      "targetDomain": {
+        "domain": {
+          "type": "object",
+          "required": [
+            "providerRef",
+            "field"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "providerRef": {
+              "type": "string",
+              "minLength": 1
+            },
+            "field": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "semantic": "typed same selected actual provider/Secret name/key/protocol/username+password pair, no inline bytes or token hash. StartupENV binding cannot rotate by newprofile; auth headers/Redis identity actual native boundaries."
+        },
+        "required": true,
+        "proposedOnly": true,
+        "currentProjectionAlias": {
+          "settingId": "DLV-CHART-KUBECLAW-REDIS-SECRETNAME",
+          "source": {
+            "path": "charts/kubeclaw/values.yaml",
+            "field": "redis.secretName",
+            "sha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1",
+            "line": null,
+            "valuePath": "redis.secretName",
+            "lineKind": "YAML field path retained; repeated/inline key exact location expansion pending"
+          },
+          "projection": "exact Chart/helper selector/conditional source expression, not value-equality alias",
+          "authority": "readonly actual producer field; endpoint/provider/key/service tuples require same binding; no new health editable copy"
+        },
+        "primaryAuthorAlias": {
+          "settingId": "DLV-CHART-KUBECLAW-REDIS-SECRETNAME",
+          "source": {
+            "path": "charts/kubeclaw/values.yaml",
+            "field": "redis.secretName",
+            "sha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1",
+            "line": null,
+            "valuePath": "redis.secretName",
+            "lineKind": "YAML field path retained; repeated/inline key exact location expansion pending"
+          },
+          "projection": "exact Chart/helper selector/conditional source expression, not value-equality alias",
+          "authority": "readonly actual producer field; endpoint/provider/key/service tuples require same binding; no new health editable copy"
+        },
+        "domainAppliesTo": "resolved effective value after readonly binding resolution; unresolved commit/provider references in fixture definition are NOT scalar-native-valid evidence",
+        "activation": "H/R same selected deployment/service/nativeprovider/mount generation, health probe snapshots at invocation. RetainedAoriginal Pod/grants/stream/status/code/provider refs never BLatest; no operationalhealth result stands for module/foundations approval."
+      },
+      "primaryAuthorAlias": {
+        "settingId": "DLV-CHART-KUBECLAW-REDIS-SECRETNAME",
+        "source": {
+          "path": "charts/kubeclaw/values.yaml",
+          "field": "redis.secretName",
+          "sha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1",
+          "line": null,
+          "valuePath": "redis.secretName",
+          "lineKind": "YAML field path retained; repeated/inline key exact location expansion pending"
+        },
+        "projection": "exact Chart/helper selector/conditional source expression, not value-equality alias",
+        "authority": "readonly actual producer field; endpoint/provider/key/service tuples require same binding; no new health editable copy"
+      },
+      "completeProfiles": {
+        "A": {
+          "path": "docs/review/evidence/config-acceptance/delivery/gateway-health-target-profiles-20261013/A.json",
+          "sha256": "84744cb5f1474cf06ba1da63738b4d0a3d26f31250c998b60eb2f17d2a54cc5a"
+        },
+        "B": {
+          "path": "docs/review/evidence/config-acceptance/delivery/gateway-health-target-profiles-20261013/B.json",
+          "sha256": "3da3f6624646091f9ed43ea44c1462136ebe5beafab8f02056c16924c9cb5c5c"
+        }
+      },
+      "profileCoordinate": "readonlyBindings.REDIS_PASSWORD",
+      "actualReader": {
+        "path": "charts/kubeclaw/templates/deployment.yaml",
+        "line": 809,
+        "operation": "openRedis ioredis.password",
+        "generatedFile": "/runtime-config/kubeclaw-health.mjs"
+      },
+      "source": {
+        "path": "charts/kubeclaw/templates/deployment.yaml",
+        "field": "REDIS_PASSWORD",
+        "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041",
+        "line": 809,
+        "lineKind": "productive generated health script field read"
+      },
+      "firstCurrentBoundary": "Redis auth errors through check",
+      "nativeOracle": "actual byte-identical generated Node healthcaller + controlled same selected scoped native services/mounts. Observe exact requestedurl/method/auth label/RedisPING/XADD arguments/timerAbort/drain/status/events/mode-specificexit and boundedcleanup. Check code-bundle compares only role/optionalcommit/contract today; spoofed record.ok/stale/misowned files and absentcommit are counterexamples requiring target provenance guard, not existing PASS. Registry401 connectivity differsfrom authenticatedprovider/image grants. Positive actual service before malformed/missing/old equal+different caller/profile/marker/provider/currentfallback negatives.",
+      "futureHarness": "tests/verification/config/delivery-chart-fields.test.mts",
+      "futureInvocation": [
+        "node",
+        "--test",
+        "--test-name-pattern=^DLV-CASE-GATEWAY-HEALTH-NATIVE-POLICY$",
+        "tests/verification/config/delivery-chart-fields.test.mts"
+      ],
+      "priorState": "original A binding before effects, nonempty health/status/stream state and exact Pod/provider/code/cleanup refs; parent universal originalModule/grant/cleanup contracts remain pending",
+      "caseIds": [
+        "DLV-CASE-GATEWAY-HEALTH-NATIVE-POLICY",
+        "DLV-CASE-HEALTH-MARKER-GENERATION",
+        "DLV-CASE-HEALTH-MISSING-BOUNDS",
+        "DLV-CASE-HEALTH-PROFILE"
+      ]
+    },
+    {
+      "settingId": "DLV-GATEWAY-HEALTH-REDISMAXRETRIESPERREQUEST",
+      "field": "redisMaxRetriesPerRequest",
+      "targetDomain": {
+        "domain": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991,
+          "unit": "count",
+          "semantic": "exact ioredis maxRetries semantics vs Redis XADD MAXLEN ~ approximate trim not hard quota. Actual locked ioredis/Redis native protocol and admission/resource budget required; no shared Core lease/count alias."
+        },
+        "required": true,
+        "proposedOnly": true,
+        "currentProjectionAlias": null,
+        "primaryAuthorAlias": null,
+        "domainAppliesTo": "resolved effective value after readonly binding resolution; unresolved commit/provider references in fixture definition are NOT scalar-native-valid evidence",
+        "activation": "H/R same selected deployment/service/nativeprovider/mount generation, health probe snapshots at invocation. RetainedAoriginal Pod/grants/stream/status/code/provider refs never BLatest; no operationalhealth result stands for module/foundations approval."
+      },
+      "primaryAuthorAlias": null,
+      "completeProfiles": {
+        "A": {
+          "path": "docs/review/evidence/config-acceptance/delivery/gateway-health-target-profiles-20261013/A.json",
+          "sha256": "84744cb5f1474cf06ba1da63738b4d0a3d26f31250c998b60eb2f17d2a54cc5a"
+        },
+        "B": {
+          "path": "docs/review/evidence/config-acceptance/delivery/gateway-health-target-profiles-20261013/B.json",
+          "sha256": "3da3f6624646091f9ed43ea44c1462136ebe5beafab8f02056c16924c9cb5c5c"
+        }
+      },
+      "profileCoordinate": "settings.redisMaxRetriesPerRequest",
+      "actualReader": {
+        "path": "charts/kubeclaw/templates/deployment.yaml",
+        "line": 813,
+        "operation": "openRedis ioredis.maxRetriesPerRequest",
+        "generatedFile": "/runtime-config/kubeclaw-health.mjs"
+      },
+      "source": {
+        "path": "charts/kubeclaw/templates/deployment.yaml",
+        "field": "redisMaxRetriesPerRequest",
+        "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041",
+        "line": 813,
+        "lineKind": "productive generated health script field read"
+      },
+      "firstCurrentBoundary": "ioredis command retries stop per limit",
+      "nativeOracle": "actual byte-identical generated Node healthcaller + controlled same selected scoped native services/mounts. Observe exact requestedurl/method/auth label/RedisPING/XADD arguments/timerAbort/drain/status/events/mode-specificexit and boundedcleanup. Check code-bundle compares only role/optionalcommit/contract today; spoofed record.ok/stale/misowned files and absentcommit are counterexamples requiring target provenance guard, not existing PASS. Registry401 connectivity differsfrom authenticatedprovider/image grants. Positive actual service before malformed/missing/old equal+different caller/profile/marker/provider/currentfallback negatives.",
+      "futureHarness": "tests/verification/config/delivery-chart-fields.test.mts",
+      "futureInvocation": [
+        "node",
+        "--test",
+        "--test-name-pattern=^DLV-CASE-GATEWAY-HEALTH-NATIVE-POLICY$",
+        "tests/verification/config/delivery-chart-fields.test.mts"
+      ],
+      "priorState": "original A binding before effects, nonempty health/status/stream state and exact Pod/provider/code/cleanup refs; parent universal originalModule/grant/cleanup contracts remain pending",
+      "caseIds": [
+        "DLV-CASE-GATEWAY-HEALTH-NATIVE-POLICY",
+        "DLV-CASE-HEALTH-MARKER-GENERATION",
+        "DLV-CASE-HEALTH-MISSING-BOUNDS",
+        "DLV-CASE-HEALTH-PROFILE"
+      ]
+    },
+    {
+      "settingId": "DLV-GATEWAY-HEALTH-REDISENABLEREADYCHECK",
+      "field": "redisEnableReadyCheck",
+      "targetDomain": {
+        "domain": {
+          "type": "boolean",
+          "semantic": "explicit canonical selected boolean\u2192generated ENV true/false; reject native other-string false/defaultfallback. Healthcheck enablement changes operational readiness only and NEVER disables mandatory original delivery/foundations verification or grants; mutable record.ok alone not provenance proof."
+        },
+        "required": true,
+        "proposedOnly": true,
+        "currentProjectionAlias": null,
+        "primaryAuthorAlias": null,
+        "domainAppliesTo": "resolved effective value after readonly binding resolution; unresolved commit/provider references in fixture definition are NOT scalar-native-valid evidence",
+        "activation": "H/R same selected deployment/service/nativeprovider/mount generation, health probe snapshots at invocation. RetainedAoriginal Pod/grants/stream/status/code/provider refs never BLatest; no operationalhealth result stands for module/foundations approval."
+      },
+      "primaryAuthorAlias": null,
+      "completeProfiles": {
+        "A": {
+          "path": "docs/review/evidence/config-acceptance/delivery/gateway-health-target-profiles-20261013/A.json",
+          "sha256": "84744cb5f1474cf06ba1da63738b4d0a3d26f31250c998b60eb2f17d2a54cc5a"
+        },
+        "B": {
+          "path": "docs/review/evidence/config-acceptance/delivery/gateway-health-target-profiles-20261013/B.json",
+          "sha256": "3da3f6624646091f9ed43ea44c1462136ebe5beafab8f02056c16924c9cb5c5c"
+        }
+      },
+      "profileCoordinate": "settings.redisEnableReadyCheck",
+      "actualReader": {
+        "path": "charts/kubeclaw/templates/deployment.yaml",
+        "line": 814,
+        "operation": "openRedis ioredis.enableReadyCheck",
+        "generatedFile": "/runtime-config/kubeclaw-health.mjs"
+      },
+      "source": {
+        "path": "charts/kubeclaw/templates/deployment.yaml",
+        "field": "redisEnableReadyCheck",
+        "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041",
+        "line": 814,
+        "lineKind": "productive generated health script field read"
+      },
+      "firstCurrentBoundary": "connection readiness errors/timeouts",
+      "nativeOracle": "actual byte-identical generated Node healthcaller + controlled same selected scoped native services/mounts. Observe exact requestedurl/method/auth label/RedisPING/XADD arguments/timerAbort/drain/status/events/mode-specificexit and boundedcleanup. Check code-bundle compares only role/optionalcommit/contract today; spoofed record.ok/stale/misowned files and absentcommit are counterexamples requiring target provenance guard, not existing PASS. Registry401 connectivity differsfrom authenticatedprovider/image grants. Positive actual service before malformed/missing/old equal+different caller/profile/marker/provider/currentfallback negatives.",
+      "futureHarness": "tests/verification/config/delivery-chart-fields.test.mts",
+      "futureInvocation": [
+        "node",
+        "--test",
+        "--test-name-pattern=^DLV-CASE-GATEWAY-HEALTH-NATIVE-POLICY$",
+        "tests/verification/config/delivery-chart-fields.test.mts"
+      ],
+      "priorState": "original A binding before effects, nonempty health/status/stream state and exact Pod/provider/code/cleanup refs; parent universal originalModule/grant/cleanup contracts remain pending",
+      "caseIds": [
+        "DLV-CASE-GATEWAY-HEALTH-NATIVE-POLICY",
+        "DLV-CASE-HEALTH-MARKER-GENERATION",
+        "DLV-CASE-HEALTH-MISSING-BOUNDS",
+        "DLV-CASE-HEALTH-PROFILE"
+      ]
+    },
+    {
+      "settingId": "DLV-GATEWAY-HEALTH-OPENCLAW-GATEWAY-URL",
+      "field": "OPENCLAW_GATEWAY_URL",
+      "targetDomain": {
+        "domain": {
+          "type": "string",
+          "semantic": "canonical full selected http(s) origin/base actual endpoint path normalization; no userinfo/query/fragment/relative URL as target; current removes /tools/invoke /v1 /trailing slash and fetch /health. Coherent selected service/TLS/provider; HTTP401 is NOT positive here. No paid model call."
+        },
+        "required": true,
+        "proposedOnly": true,
+        "currentProjectionAlias": {
+          "settingId": "DLV-CHART-KUBECLAW-GATEWAY-URL",
+          "source": {
+            "path": "charts/kubeclaw/values.yaml",
+            "field": "gateway.url",
+            "sha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1",
+            "line": 72,
+            "valuePath": "gateway.url",
+            "lineKind": "unique YAML key author"
+          },
+          "projection": "exact Chart/helper selector/conditional source expression, not value-equality alias",
+          "authority": "readonly actual producer field; endpoint/provider/key/service tuples require same binding; no new health editable copy"
+        },
+        "primaryAuthorAlias": {
+          "settingId": "DLV-CHART-KUBECLAW-GATEWAY-URL",
+          "source": {
+            "path": "charts/kubeclaw/values.yaml",
+            "field": "gateway.url",
+            "sha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1",
+            "line": 72,
+            "valuePath": "gateway.url",
+            "lineKind": "unique YAML key author"
+          },
+          "projection": "exact Chart/helper selector/conditional source expression, not value-equality alias",
+          "authority": "readonly actual producer field; endpoint/provider/key/service tuples require same binding; no new health editable copy"
+        },
+        "domainAppliesTo": "resolved effective value after readonly binding resolution; unresolved commit/provider references in fixture definition are NOT scalar-native-valid evidence",
+        "activation": "H/R same selected deployment/service/nativeprovider/mount generation, health probe snapshots at invocation. RetainedAoriginal Pod/grants/stream/status/code/provider refs never BLatest; no operationalhealth result stands for module/foundations approval."
+      },
+      "primaryAuthorAlias": {
+        "settingId": "DLV-CHART-KUBECLAW-GATEWAY-URL",
+        "source": {
+          "path": "charts/kubeclaw/values.yaml",
+          "field": "gateway.url",
+          "sha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1",
+          "line": 72,
+          "valuePath": "gateway.url",
+          "lineKind": "unique YAML key author"
+        },
+        "projection": "exact Chart/helper selector/conditional source expression, not value-equality alias",
+        "authority": "readonly actual producer field; endpoint/provider/key/service tuples require same binding; no new health editable copy"
+      },
+      "completeProfiles": {
+        "A": {
+          "path": "docs/review/evidence/config-acceptance/delivery/gateway-health-target-profiles-20261013/A.json",
+          "sha256": "84744cb5f1474cf06ba1da63738b4d0a3d26f31250c998b60eb2f17d2a54cc5a"
+        },
+        "B": {
+          "path": "docs/review/evidence/config-acceptance/delivery/gateway-health-target-profiles-20261013/B.json",
+          "sha256": "3da3f6624646091f9ed43ea44c1462136ebe5beafab8f02056c16924c9cb5c5c"
+        }
+      },
+      "profileCoordinate": "readonlyBindings.OPENCLAW_GATEWAY_URL",
+      "actualReader": {
+        "path": "charts/kubeclaw/templates/deployment.yaml",
+        "line": 793,
+        "operation": "checkGateway \u2192 httpOk /health",
+        "generatedFile": "/runtime-config/kubeclaw-health.mjs"
+      },
+      "source": {
+        "path": "charts/kubeclaw/templates/deployment.yaml",
+        "field": "OPENCLAW_GATEWAY_URL",
+        "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041",
+        "line": 793,
+        "lineKind": "productive generated health script field read"
+      },
+      "firstCurrentBoundary": "HTTP error/abort/URL error \u2192 check failure",
+      "nativeOracle": "actual byte-identical generated Node healthcaller + controlled same selected scoped native services/mounts. Observe exact requestedurl/method/auth label/RedisPING/XADD arguments/timerAbort/drain/status/events/mode-specificexit and boundedcleanup. Check code-bundle compares only role/optionalcommit/contract today; spoofed record.ok/stale/misowned files and absentcommit are counterexamples requiring target provenance guard, not existing PASS. Registry401 connectivity differsfrom authenticatedprovider/image grants. Positive actual service before malformed/missing/old equal+different caller/profile/marker/provider/currentfallback negatives.",
+      "futureHarness": "tests/verification/config/delivery-chart-fields.test.mts",
+      "futureInvocation": [
+        "node",
+        "--test",
+        "--test-name-pattern=^DLV-CASE-GATEWAY-HEALTH-NATIVE-POLICY$",
+        "tests/verification/config/delivery-chart-fields.test.mts"
+      ],
+      "priorState": "original A binding before effects, nonempty health/status/stream state and exact Pod/provider/code/cleanup refs; parent universal originalModule/grant/cleanup contracts remain pending",
+      "caseIds": [
+        "DLV-CASE-GATEWAY-HEALTH-NATIVE-POLICY",
+        "DLV-CASE-HEALTH-MARKER-GENERATION",
+        "DLV-CASE-HEALTH-MISSING-BOUNDS",
+        "DLV-CASE-HEALTH-PROFILE"
+      ]
+    },
+    {
+      "settingId": "DLV-GATEWAY-HEALTH-GATEWAY-PORT",
+      "field": "GATEWAY_PORT",
+      "targetDomain": {
+        "domain": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 65535,
+          "semantic": "derived selected registered service/loopback transport, coherent actual gatewayargv/config/service port/Redisclient endpoint; parseInt suffix/zero/absent native fallback not target admission"
+        },
+        "required": true,
+        "proposedOnly": true,
+        "currentProjectionAlias": {
+          "settingId": "DLV-CHART-KUBECLAW-GATEWAY-PORT",
+          "source": {
+            "path": "charts/kubeclaw/values.yaml",
+            "field": "gateway.port",
+            "sha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1",
+            "line": null,
+            "lineKind": "YAML field path retained; repeated/inline key exact location expansion pending",
+            "valuePath": "gateway.port"
+          },
+          "projection": "exact Chart/helper selector/conditional source expression, not value-equality alias",
+          "authority": "readonly actual producer field; endpoint/provider/key/service tuples require same binding; no new health editable copy"
+        },
+        "primaryAuthorAlias": {
+          "settingId": "DLV-CHART-KUBECLAW-GATEWAY-PORT",
+          "source": {
+            "path": "charts/kubeclaw/values.yaml",
+            "field": "gateway.port",
+            "sha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1",
+            "line": null,
+            "lineKind": "YAML field path retained; repeated/inline key exact location expansion pending",
+            "valuePath": "gateway.port"
+          },
+          "projection": "exact Chart/helper selector/conditional source expression, not value-equality alias",
+          "authority": "readonly actual producer field; endpoint/provider/key/service tuples require same binding; no new health editable copy"
+        },
+        "domainAppliesTo": "resolved effective value after readonly binding resolution; unresolved commit/provider references in fixture definition are NOT scalar-native-valid evidence",
+        "activation": "H/R same selected deployment/service/nativeprovider/mount generation, health probe snapshots at invocation. RetainedAoriginal Pod/grants/stream/status/code/provider refs never BLatest; no operationalhealth result stands for module/foundations approval."
+      },
+      "primaryAuthorAlias": {
+        "settingId": "DLV-CHART-KUBECLAW-GATEWAY-PORT",
+        "source": {
+          "path": "charts/kubeclaw/values.yaml",
+          "field": "gateway.port",
+          "sha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1",
+          "line": null,
+          "lineKind": "YAML field path retained; repeated/inline key exact location expansion pending",
+          "valuePath": "gateway.port"
+        },
+        "projection": "exact Chart/helper selector/conditional source expression, not value-equality alias",
+        "authority": "readonly actual producer field; endpoint/provider/key/service tuples require same binding; no new health editable copy"
+      },
+      "completeProfiles": {
+        "A": {
+          "path": "docs/review/evidence/config-acceptance/delivery/gateway-health-target-profiles-20261013/A.json",
+          "sha256": "84744cb5f1474cf06ba1da63738b4d0a3d26f31250c998b60eb2f17d2a54cc5a"
+        },
+        "B": {
+          "path": "docs/review/evidence/config-acceptance/delivery/gateway-health-target-profiles-20261013/B.json",
+          "sha256": "3da3f6624646091f9ed43ea44c1462136ebe5beafab8f02056c16924c9cb5c5c"
+        }
+      },
+      "profileCoordinate": "readonlyBindings.GATEWAY_PORT",
+      "actualReader": {
+        "path": "charts/kubeclaw/templates/deployment.yaml",
+        "line": 793,
+        "operation": "checkGateway loopback fallback URL",
+        "generatedFile": "/runtime-config/kubeclaw-health.mjs"
+      },
+      "source": {
+        "path": "charts/kubeclaw/templates/deployment.yaml",
+        "field": "GATEWAY_PORT",
+        "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041",
+        "line": 793,
+        "lineKind": "productive generated health script field read"
+      },
+      "firstCurrentBoundary": "fetch URL/network error",
+      "nativeOracle": "actual byte-identical generated Node healthcaller + controlled same selected scoped native services/mounts. Observe exact requestedurl/method/auth label/RedisPING/XADD arguments/timerAbort/drain/status/events/mode-specificexit and boundedcleanup. Check code-bundle compares only role/optionalcommit/contract today; spoofed record.ok/stale/misowned files and absentcommit are counterexamples requiring target provenance guard, not existing PASS. Registry401 connectivity differsfrom authenticatedprovider/image grants. Positive actual service before malformed/missing/old equal+different caller/profile/marker/provider/currentfallback negatives.",
+      "futureHarness": "tests/verification/config/delivery-chart-fields.test.mts",
+      "futureInvocation": [
+        "node",
+        "--test",
+        "--test-name-pattern=^DLV-CASE-GATEWAY-HEALTH-NATIVE-POLICY$",
+        "tests/verification/config/delivery-chart-fields.test.mts"
+      ],
+      "priorState": "original A binding before effects, nonempty health/status/stream state and exact Pod/provider/code/cleanup refs; parent universal originalModule/grant/cleanup contracts remain pending",
+      "caseIds": [
+        "DLV-CASE-GATEWAY-HEALTH-NATIVE-POLICY",
+        "DLV-CASE-HEALTH-MARKER-GENERATION",
+        "DLV-CASE-HEALTH-MISSING-BOUNDS",
+        "DLV-CASE-HEALTH-PROFILE"
+      ]
+    },
+    {
+      "settingId": "DLV-GATEWAY-HEALTH-OPENCLAW-GATEWAY-TOKEN",
+      "field": "OPENCLAW_GATEWAY_TOKEN",
+      "targetDomain": {
+        "domain": {
+          "type": "object",
+          "required": [
+            "providerRef",
+            "field"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "providerRef": {
+              "type": "string",
+              "minLength": 1
+            },
+            "field": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "semantic": "typed same selected actual provider/Secret name/key/protocol/username+password pair, no inline bytes or token hash. StartupENV binding cannot rotate by newprofile; auth headers/Redis identity actual native boundaries."
+        },
+        "required": true,
+        "proposedOnly": true,
+        "currentProjectionAlias": {
+          "settingId": "DLV-CHART-KUBECLAW-AUTH-EXISTINGSECRET",
+          "source": {
+            "path": "charts/kubeclaw/values.yaml",
+            "field": "auth.existingSecret",
+            "sha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1",
+            "line": null,
+            "lineKind": "YAML field path retained; repeated/inline key exact location expansion pending",
+            "valuePath": "auth.existingSecret"
+          },
+          "projection": "exact Chart/helper selector/conditional source expression, not value-equality alias",
+          "authority": "readonly actual producer field; endpoint/provider/key/service tuples require same binding; no new health editable copy"
+        },
+        "primaryAuthorAlias": {
+          "settingId": "DLV-CHART-KUBECLAW-AUTH-EXISTINGSECRET",
+          "source": {
+            "path": "charts/kubeclaw/values.yaml",
+            "field": "auth.existingSecret",
+            "sha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1",
+            "line": null,
+            "lineKind": "YAML field path retained; repeated/inline key exact location expansion pending",
+            "valuePath": "auth.existingSecret"
+          },
+          "projection": "exact Chart/helper selector/conditional source expression, not value-equality alias",
+          "authority": "readonly actual producer field; endpoint/provider/key/service tuples require same binding; no new health editable copy"
+        },
+        "domainAppliesTo": "resolved effective value after readonly binding resolution; unresolved commit/provider references in fixture definition are NOT scalar-native-valid evidence",
+        "activation": "H/R same selected deployment/service/nativeprovider/mount generation, health probe snapshots at invocation. RetainedAoriginal Pod/grants/stream/status/code/provider refs never BLatest; no operationalhealth result stands for module/foundations approval."
+      },
+      "primaryAuthorAlias": {
+        "settingId": "DLV-CHART-KUBECLAW-AUTH-EXISTINGSECRET",
+        "source": {
+          "path": "charts/kubeclaw/values.yaml",
+          "field": "auth.existingSecret",
+          "sha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1",
+          "line": null,
+          "lineKind": "YAML field path retained; repeated/inline key exact location expansion pending",
+          "valuePath": "auth.existingSecret"
+        },
+        "projection": "exact Chart/helper selector/conditional source expression, not value-equality alias",
+        "authority": "readonly actual producer field; endpoint/provider/key/service tuples require same binding; no new health editable copy"
+      },
+      "completeProfiles": {
+        "A": {
+          "path": "docs/review/evidence/config-acceptance/delivery/gateway-health-target-profiles-20261013/A.json",
+          "sha256": "84744cb5f1474cf06ba1da63738b4d0a3d26f31250c998b60eb2f17d2a54cc5a"
+        },
+        "B": {
+          "path": "docs/review/evidence/config-acceptance/delivery/gateway-health-target-profiles-20261013/B.json",
+          "sha256": "3da3f6624646091f9ed43ea44c1462136ebe5beafab8f02056c16924c9cb5c5c"
+        }
+      },
+      "profileCoordinate": "readonlyBindings.OPENCLAW_GATEWAY_TOKEN",
+      "actualReader": {
+        "path": "charts/kubeclaw/templates/deployment.yaml",
+        "line": 794,
+        "operation": "checkGateway Authorization Bearer header",
+        "generatedFile": "/runtime-config/kubeclaw-health.mjs"
+      },
+      "source": {
+        "path": "charts/kubeclaw/templates/deployment.yaml",
+        "field": "OPENCLAW_GATEWAY_TOKEN",
+        "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041",
+        "line": 794,
+        "lineKind": "productive generated health script field read"
+      },
+      "firstCurrentBoundary": "HTTP401 rejects (not accepted)",
+      "nativeOracle": "actual byte-identical generated Node healthcaller + controlled same selected scoped native services/mounts. Observe exact requestedurl/method/auth label/RedisPING/XADD arguments/timerAbort/drain/status/events/mode-specificexit and boundedcleanup. Check code-bundle compares only role/optionalcommit/contract today; spoofed record.ok/stale/misowned files and absentcommit are counterexamples requiring target provenance guard, not existing PASS. Registry401 connectivity differsfrom authenticatedprovider/image grants. Positive actual service before malformed/missing/old equal+different caller/profile/marker/provider/currentfallback negatives.",
+      "futureHarness": "tests/verification/config/delivery-chart-fields.test.mts",
+      "futureInvocation": [
+        "node",
+        "--test",
+        "--test-name-pattern=^DLV-CASE-GATEWAY-HEALTH-NATIVE-POLICY$",
+        "tests/verification/config/delivery-chart-fields.test.mts"
+      ],
+      "priorState": "original A binding before effects, nonempty health/status/stream state and exact Pod/provider/code/cleanup refs; parent universal originalModule/grant/cleanup contracts remain pending",
+      "caseIds": [
+        "DLV-CASE-GATEWAY-HEALTH-NATIVE-POLICY",
+        "DLV-CASE-HEALTH-MARKER-GENERATION",
+        "DLV-CASE-HEALTH-MISSING-BOUNDS",
+        "DLV-CASE-HEALTH-PROFILE"
+      ]
+    },
+    {
+      "settingId": "DLV-GATEWAY-HEALTH-LITELLM-URL",
+      "field": "LITELLM_URL",
+      "targetDomain": {
+        "domain": {
+          "type": "string",
+          "semantic": "canonical full selected http(s) origin/base actual endpoint path normalization; no userinfo/query/fragment/relative URL as target; current removes /tools/invoke /v1 /trailing slash and fetch /health. Coherent selected service/TLS/provider; HTTP401 is NOT positive here. No paid model call."
+        },
+        "required": true,
+        "proposedOnly": true,
+        "currentProjectionAlias": {
+          "settingId": "DLV-CHART-KUBECLAW-LITELLM-ENDPOINT",
+          "source": {
+            "path": "charts/kubeclaw/values.yaml",
+            "field": "litellm.endpoint",
+            "sha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1",
+            "line": null,
+            "valuePath": "litellm.endpoint",
+            "lineKind": "YAML field path retained; repeated/inline key exact location expansion pending"
+          },
+          "projection": "exact Chart/helper selector/conditional source expression, not value-equality alias",
+          "authority": "readonly actual producer field; endpoint/provider/key/service tuples require same binding; no new health editable copy"
+        },
+        "primaryAuthorAlias": {
+          "settingId": "DLV-CHART-KUBECLAW-LITELLM-ENDPOINT",
+          "source": {
+            "path": "charts/kubeclaw/values.yaml",
+            "field": "litellm.endpoint",
+            "sha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1",
+            "line": null,
+            "valuePath": "litellm.endpoint",
+            "lineKind": "YAML field path retained; repeated/inline key exact location expansion pending"
+          },
+          "projection": "exact Chart/helper selector/conditional source expression, not value-equality alias",
+          "authority": "readonly actual producer field; endpoint/provider/key/service tuples require same binding; no new health editable copy"
+        },
+        "domainAppliesTo": "resolved effective value after readonly binding resolution; unresolved commit/provider references in fixture definition are NOT scalar-native-valid evidence",
+        "activation": "H/R same selected deployment/service/nativeprovider/mount generation, health probe snapshots at invocation. RetainedAoriginal Pod/grants/stream/status/code/provider refs never BLatest; no operationalhealth result stands for module/foundations approval."
+      },
+      "primaryAuthorAlias": {
+        "settingId": "DLV-CHART-KUBECLAW-LITELLM-ENDPOINT",
+        "source": {
+          "path": "charts/kubeclaw/values.yaml",
+          "field": "litellm.endpoint",
+          "sha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1",
+          "line": null,
+          "valuePath": "litellm.endpoint",
+          "lineKind": "YAML field path retained; repeated/inline key exact location expansion pending"
+        },
+        "projection": "exact Chart/helper selector/conditional source expression, not value-equality alias",
+        "authority": "readonly actual producer field; endpoint/provider/key/service tuples require same binding; no new health editable copy"
+      },
+      "completeProfiles": {
+        "A": {
+          "path": "docs/review/evidence/config-acceptance/delivery/gateway-health-target-profiles-20261013/A.json",
+          "sha256": "84744cb5f1474cf06ba1da63738b4d0a3d26f31250c998b60eb2f17d2a54cc5a"
+        },
+        "B": {
+          "path": "docs/review/evidence/config-acceptance/delivery/gateway-health-target-profiles-20261013/B.json",
+          "sha256": "3da3f6624646091f9ed43ea44c1462136ebe5beafab8f02056c16924c9cb5c5c"
+        }
+      },
+      "profileCoordinate": "readonlyBindings.LITELLM_URL",
+      "actualReader": {
+        "path": "charts/kubeclaw/templates/deployment.yaml",
+        "line": 847,
+        "operation": "checkLiteLLM baseUrl \u2192 httpOk /health",
+        "generatedFile": "/runtime-config/kubeclaw-health.mjs"
+      },
+      "source": {
+        "path": "charts/kubeclaw/templates/deployment.yaml",
+        "field": "LITELLM_URL",
+        "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041",
+        "line": 847,
+        "lineKind": "productive generated health script field read"
+      },
+      "firstCurrentBoundary": "fetch URL/HTTP/abort error",
+      "nativeOracle": "actual byte-identical generated Node healthcaller + controlled same selected scoped native services/mounts. Observe exact requestedurl/method/auth label/RedisPING/XADD arguments/timerAbort/drain/status/events/mode-specificexit and boundedcleanup. Check code-bundle compares only role/optionalcommit/contract today; spoofed record.ok/stale/misowned files and absentcommit are counterexamples requiring target provenance guard, not existing PASS. Registry401 connectivity differsfrom authenticatedprovider/image grants. Positive actual service before malformed/missing/old equal+different caller/profile/marker/provider/currentfallback negatives.",
+      "futureHarness": "tests/verification/config/delivery-chart-fields.test.mts",
+      "futureInvocation": [
+        "node",
+        "--test",
+        "--test-name-pattern=^DLV-CASE-GATEWAY-HEALTH-NATIVE-POLICY$",
+        "tests/verification/config/delivery-chart-fields.test.mts"
+      ],
+      "priorState": "original A binding before effects, nonempty health/status/stream state and exact Pod/provider/code/cleanup refs; parent universal originalModule/grant/cleanup contracts remain pending",
+      "caseIds": [
+        "DLV-CASE-GATEWAY-HEALTH-NATIVE-POLICY",
+        "DLV-CASE-HEALTH-MARKER-GENERATION",
+        "DLV-CASE-HEALTH-MISSING-BOUNDS",
+        "DLV-CASE-HEALTH-PROFILE"
+      ]
+    },
+    {
+      "settingId": "DLV-GATEWAY-HEALTH-LITELLM-API-KEY",
+      "field": "LITELLM_API_KEY",
+      "targetDomain": {
+        "domain": {
+          "type": "object",
+          "required": [
+            "providerRef",
+            "field"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "providerRef": {
+              "type": "string",
+              "minLength": 1
+            },
+            "field": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "semantic": "typed same selected actual provider/Secret name/key/protocol/username+password pair, no inline bytes or token hash. StartupENV binding cannot rotate by newprofile; auth headers/Redis identity actual native boundaries."
+        },
+        "required": true,
+        "proposedOnly": true,
+        "currentProjectionAlias": {
+          "settingId": "DLV-CHART-KUBECLAW-LITELLM-EXISTINGSECRET",
+          "source": {
+            "path": "charts/kubeclaw/values.yaml",
+            "field": "litellm.existingSecret",
+            "sha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1",
+            "line": null,
+            "lineKind": "YAML field path retained; repeated/inline key exact location expansion pending",
+            "valuePath": "litellm.existingSecret"
+          },
+          "projection": "exact Chart/helper selector/conditional source expression, not value-equality alias",
+          "authority": "readonly actual producer field; endpoint/provider/key/service tuples require same binding; no new health editable copy"
+        },
+        "primaryAuthorAlias": {
+          "settingId": "DLV-CHART-KUBECLAW-LITELLM-EXISTINGSECRET",
+          "source": {
+            "path": "charts/kubeclaw/values.yaml",
+            "field": "litellm.existingSecret",
+            "sha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1",
+            "line": null,
+            "lineKind": "YAML field path retained; repeated/inline key exact location expansion pending",
+            "valuePath": "litellm.existingSecret"
+          },
+          "projection": "exact Chart/helper selector/conditional source expression, not value-equality alias",
+          "authority": "readonly actual producer field; endpoint/provider/key/service tuples require same binding; no new health editable copy"
+        },
+        "domainAppliesTo": "resolved effective value after readonly binding resolution; unresolved commit/provider references in fixture definition are NOT scalar-native-valid evidence",
+        "activation": "H/R same selected deployment/service/nativeprovider/mount generation, health probe snapshots at invocation. RetainedAoriginal Pod/grants/stream/status/code/provider refs never BLatest; no operationalhealth result stands for module/foundations approval."
+      },
+      "primaryAuthorAlias": {
+        "settingId": "DLV-CHART-KUBECLAW-LITELLM-EXISTINGSECRET",
+        "source": {
+          "path": "charts/kubeclaw/values.yaml",
+          "field": "litellm.existingSecret",
+          "sha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1",
+          "line": null,
+          "lineKind": "YAML field path retained; repeated/inline key exact location expansion pending",
+          "valuePath": "litellm.existingSecret"
+        },
+        "projection": "exact Chart/helper selector/conditional source expression, not value-equality alias",
+        "authority": "readonly actual producer field; endpoint/provider/key/service tuples require same binding; no new health editable copy"
+      },
+      "completeProfiles": {
+        "A": {
+          "path": "docs/review/evidence/config-acceptance/delivery/gateway-health-target-profiles-20261013/A.json",
+          "sha256": "84744cb5f1474cf06ba1da63738b4d0a3d26f31250c998b60eb2f17d2a54cc5a"
+        },
+        "B": {
+          "path": "docs/review/evidence/config-acceptance/delivery/gateway-health-target-profiles-20261013/B.json",
+          "sha256": "3da3f6624646091f9ed43ea44c1462136ebe5beafab8f02056c16924c9cb5c5c"
+        }
+      },
+      "profileCoordinate": "readonlyBindings.LITELLM_API_KEY",
+      "actualReader": {
+        "path": "charts/kubeclaw/templates/deployment.yaml",
+        "line": 848,
+        "operation": "checkLiteLLM Authorization Bearer header",
+        "generatedFile": "/runtime-config/kubeclaw-health.mjs"
+      },
+      "source": {
+        "path": "charts/kubeclaw/templates/deployment.yaml",
+        "field": "LITELLM_API_KEY",
+        "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041",
+        "line": 848,
+        "lineKind": "productive generated health script field read"
+      },
+      "firstCurrentBoundary": "HTTP401 rejects (not accepted)",
+      "nativeOracle": "actual byte-identical generated Node healthcaller + controlled same selected scoped native services/mounts. Observe exact requestedurl/method/auth label/RedisPING/XADD arguments/timerAbort/drain/status/events/mode-specificexit and boundedcleanup. Check code-bundle compares only role/optionalcommit/contract today; spoofed record.ok/stale/misowned files and absentcommit are counterexamples requiring target provenance guard, not existing PASS. Registry401 connectivity differsfrom authenticatedprovider/image grants. Positive actual service before malformed/missing/old equal+different caller/profile/marker/provider/currentfallback negatives.",
+      "futureHarness": "tests/verification/config/delivery-chart-fields.test.mts",
+      "futureInvocation": [
+        "node",
+        "--test",
+        "--test-name-pattern=^DLV-CASE-GATEWAY-HEALTH-NATIVE-POLICY$",
+        "tests/verification/config/delivery-chart-fields.test.mts"
+      ],
+      "priorState": "original A binding before effects, nonempty health/status/stream state and exact Pod/provider/code/cleanup refs; parent universal originalModule/grant/cleanup contracts remain pending",
+      "caseIds": [
+        "DLV-CASE-GATEWAY-HEALTH-NATIVE-POLICY",
+        "DLV-CASE-HEALTH-MARKER-GENERATION",
+        "DLV-CASE-HEALTH-MISSING-BOUNDS",
+        "DLV-CASE-HEALTH-PROFILE"
+      ]
+    },
+    {
+      "settingId": "DLV-GATEWAY-HEALTH-KUBECLAW-DRAIN-FILE",
+      "field": "KUBECLAW_DRAIN_FILE",
+      "targetDomain": {
+        "domain": {
+          "type": "string",
+          "const": "/tmp/kubeclaw-draining",
+          "semantic": "same actual trusted mounted/state root binding, canonical file/ownership/revision/grants checked; not arbitrary retarget. SWARM_CONFIG currentlocator undergoes explicit C1 pipeline.config migration with its sole author; source literal not new author."
+        },
+        "required": true,
+        "proposedOnly": true,
+        "currentProjectionAlias": {
+          "settingId": "DLV-CHART-KUBECLAW-SHUTDOWN-DRAINFILE",
+          "source": {
+            "path": "charts/kubeclaw/values.yaml",
+            "field": "shutdown.drainFile",
+            "sha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1",
+            "line": 359,
+            "valuePath": "shutdown.drainFile",
+            "lineKind": "unique YAML key author"
+          },
+          "projection": "exact Chart/helper selector/conditional source expression, not value-equality alias",
+          "authority": "readonly actual producer field; endpoint/provider/key/service tuples require same binding; no new health editable copy"
+        },
+        "primaryAuthorAlias": {
+          "settingId": "DLV-CHART-KUBECLAW-SHUTDOWN-DRAINFILE",
+          "source": {
+            "path": "charts/kubeclaw/values.yaml",
+            "field": "shutdown.drainFile",
+            "sha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1",
+            "line": 359,
+            "valuePath": "shutdown.drainFile",
+            "lineKind": "unique YAML key author"
+          },
+          "projection": "exact Chart/helper selector/conditional source expression, not value-equality alias",
+          "authority": "readonly actual producer field; endpoint/provider/key/service tuples require same binding; no new health editable copy"
+        },
+        "domainAppliesTo": "resolved effective value after readonly binding resolution; unresolved commit/provider references in fixture definition are NOT scalar-native-valid evidence",
+        "activation": "H/R same selected deployment/service/nativeprovider/mount generation, health probe snapshots at invocation. RetainedAoriginal Pod/grants/stream/status/code/provider refs never BLatest; no operationalhealth result stands for module/foundations approval."
+      },
+      "primaryAuthorAlias": {
+        "settingId": "DLV-CHART-KUBECLAW-SHUTDOWN-DRAINFILE",
+        "source": {
+          "path": "charts/kubeclaw/values.yaml",
+          "field": "shutdown.drainFile",
+          "sha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1",
+          "line": 359,
+          "valuePath": "shutdown.drainFile",
+          "lineKind": "unique YAML key author"
+        },
+        "projection": "exact Chart/helper selector/conditional source expression, not value-equality alias",
+        "authority": "readonly actual producer field; endpoint/provider/key/service tuples require same binding; no new health editable copy"
+      },
+      "completeProfiles": {
+        "A": {
+          "path": "docs/review/evidence/config-acceptance/delivery/gateway-health-target-profiles-20261013/A.json",
+          "sha256": "84744cb5f1474cf06ba1da63738b4d0a3d26f31250c998b60eb2f17d2a54cc5a"
+        },
+        "B": {
+          "path": "docs/review/evidence/config-acceptance/delivery/gateway-health-target-profiles-20261013/B.json",
+          "sha256": "3da3f6624646091f9ed43ea44c1462136ebe5beafab8f02056c16924c9cb5c5c"
+        }
+      },
+      "profileCoordinate": "readonlyBindings.KUBECLAW_DRAIN_FILE",
+      "actualReader": {
+        "path": "charts/kubeclaw/templates/deployment.yaml",
+        "line": 870,
+        "operation": "checkDrainState fs.existsSync; readiness only",
+        "generatedFile": "/runtime-config/kubeclaw-health.mjs"
+      },
+      "source": {
+        "path": "charts/kubeclaw/templates/deployment.yaml",
+        "field": "KUBECLAW_DRAIN_FILE",
+        "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041",
+        "line": 870,
+        "lineKind": "productive generated health script field read"
+      },
+      "firstCurrentBoundary": "${path} exists; container is draining",
+      "nativeOracle": "actual byte-identical generated Node healthcaller + controlled same selected scoped native services/mounts. Observe exact requestedurl/method/auth label/RedisPING/XADD arguments/timerAbort/drain/status/events/mode-specificexit and boundedcleanup. Check code-bundle compares only role/optionalcommit/contract today; spoofed record.ok/stale/misowned files and absentcommit are counterexamples requiring target provenance guard, not existing PASS. Registry401 connectivity differsfrom authenticatedprovider/image grants. Positive actual service before malformed/missing/old equal+different caller/profile/marker/provider/currentfallback negatives.",
+      "futureHarness": "tests/verification/config/delivery-chart-fields.test.mts",
+      "futureInvocation": [
+        "node",
+        "--test",
+        "--test-name-pattern=^DLV-CASE-GATEWAY-HEALTH-NATIVE-POLICY$",
+        "tests/verification/config/delivery-chart-fields.test.mts"
+      ],
+      "priorState": "original A binding before effects, nonempty health/status/stream state and exact Pod/provider/code/cleanup refs; parent universal originalModule/grant/cleanup contracts remain pending",
+      "caseIds": [
+        "DLV-CASE-GATEWAY-HEALTH-NATIVE-POLICY",
+        "DLV-CASE-HEALTH-MARKER-GENERATION",
+        "DLV-CASE-HEALTH-MISSING-BOUNDS",
+        "DLV-CASE-HEALTH-PROFILE"
+      ]
+    },
+    {
+      "settingId": "DLV-GATEWAY-HEALTH-KUBECLAW-CODE-BUNDLE-MANIFEST",
+      "field": "KUBECLAW_CODE_BUNDLE_MANIFEST",
+      "targetDomain": {
+        "domain": {
+          "type": "string",
+          "const": "/runtime-config/code-bundle-manifest.json",
+          "semantic": "same actual trusted mounted/state root binding, canonical file/ownership/revision/grants checked; not arbitrary retarget. SWARM_CONFIG currentlocator undergoes explicit C1 pipeline.config migration with its sole author; source literal not new author."
+        },
+        "required": true,
+        "proposedOnly": true,
+        "currentProjectionAlias": null,
+        "primaryAuthorAlias": null,
+        "domainAppliesTo": "resolved effective value after readonly binding resolution; unresolved commit/provider references in fixture definition are NOT scalar-native-valid evidence",
+        "activation": "H/R same selected deployment/service/nativeprovider/mount generation, health probe snapshots at invocation. RetainedAoriginal Pod/grants/stream/status/code/provider refs never BLatest; no operationalhealth result stands for module/foundations approval."
+      },
+      "primaryAuthorAlias": null,
+      "completeProfiles": {
+        "A": {
+          "path": "docs/review/evidence/config-acceptance/delivery/gateway-health-target-profiles-20261013/A.json",
+          "sha256": "84744cb5f1474cf06ba1da63738b4d0a3d26f31250c998b60eb2f17d2a54cc5a"
+        },
+        "B": {
+          "path": "docs/review/evidence/config-acceptance/delivery/gateway-health-target-profiles-20261013/B.json",
+          "sha256": "3da3f6624646091f9ed43ea44c1462136ebe5beafab8f02056c16924c9cb5c5c"
+        }
+      },
+      "profileCoordinate": "readonlyBindings.KUBECLAW_CODE_BUNDLE_MANIFEST",
+      "actualReader": {
+        "path": "charts/kubeclaw/templates/deployment.yaml",
+        "line": 748,
+        "operation": "readBundleManifest \u2192 checkCodeBundle",
+        "generatedFile": "/runtime-config/kubeclaw-health.mjs"
+      },
+      "source": {
+        "path": "charts/kubeclaw/templates/deployment.yaml",
+        "field": "KUBECLAW_CODE_BUNDLE_MANIFEST",
+        "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041",
+        "line": 748,
+        "lineKind": "productive generated health script field read"
+      },
+      "firstCurrentBoundary": "not a file/fs/JSON errors \u2192 health check fails",
+      "nativeOracle": "actual byte-identical generated Node healthcaller + controlled same selected scoped native services/mounts. Observe exact requestedurl/method/auth label/RedisPING/XADD arguments/timerAbort/drain/status/events/mode-specificexit and boundedcleanup. Check code-bundle compares only role/optionalcommit/contract today; spoofed record.ok/stale/misowned files and absentcommit are counterexamples requiring target provenance guard, not existing PASS. Registry401 connectivity differsfrom authenticatedprovider/image grants. Positive actual service before malformed/missing/old equal+different caller/profile/marker/provider/currentfallback negatives.",
+      "futureHarness": "tests/verification/config/delivery-chart-fields.test.mts",
+      "futureInvocation": [
+        "node",
+        "--test",
+        "--test-name-pattern=^DLV-CASE-GATEWAY-HEALTH-NATIVE-POLICY$",
+        "tests/verification/config/delivery-chart-fields.test.mts"
+      ],
+      "priorState": "original A binding before effects, nonempty health/status/stream state and exact Pod/provider/code/cleanup refs; parent universal originalModule/grant/cleanup contracts remain pending",
+      "caseIds": [
+        "DLV-CASE-GATEWAY-HEALTH-NATIVE-POLICY",
+        "DLV-CASE-HEALTH-MARKER-GENERATION",
+        "DLV-CASE-HEALTH-MISSING-BOUNDS",
+        "DLV-CASE-HEALTH-PROFILE"
+      ]
+    },
+    {
+      "settingId": "DLV-GATEWAY-HEALTH-KUBECLAW-CODE-BUNDLE-ENABLED",
+      "field": "KUBECLAW_CODE_BUNDLE_ENABLED",
+      "targetDomain": {
+        "domain": {
+          "type": "boolean",
+          "semantic": "explicit canonical selected boolean\u2192generated ENV true/false; reject native other-string false/defaultfallback. Healthcheck enablement changes operational readiness only and NEVER disables mandatory original delivery/foundations verification or grants; mutable record.ok alone not provenance proof."
+        },
+        "required": true,
+        "proposedOnly": true,
+        "currentProjectionAlias": {
+          "settingId": "DLV-CHART-KUBECLAW-CODEBUNDLE-ENABLED",
+          "source": {
+            "path": "charts/kubeclaw/values.yaml",
+            "field": "codeBundle.enabled",
+            "sha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1",
+            "line": null,
+            "valuePath": "codeBundle.enabled",
+            "lineKind": "YAML field path retained; repeated/inline key exact location expansion pending"
+          },
+          "projection": "exact Chart/helper selector/conditional source expression, not value-equality alias",
+          "authority": "readonly actual producer field; endpoint/provider/key/service tuples require same binding; no new health editable copy"
+        },
+        "primaryAuthorAlias": {
+          "settingId": "DLV-CHART-KUBECLAW-CODEBUNDLE-ENABLED",
+          "source": {
+            "path": "charts/kubeclaw/values.yaml",
+            "field": "codeBundle.enabled",
+            "sha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1",
+            "line": null,
+            "valuePath": "codeBundle.enabled",
+            "lineKind": "YAML field path retained; repeated/inline key exact location expansion pending"
+          },
+          "projection": "exact Chart/helper selector/conditional source expression, not value-equality alias",
+          "authority": "readonly actual producer field; endpoint/provider/key/service tuples require same binding; no new health editable copy"
+        },
+        "domainAppliesTo": "resolved effective value after readonly binding resolution; unresolved commit/provider references in fixture definition are NOT scalar-native-valid evidence",
+        "activation": "H/R same selected deployment/service/nativeprovider/mount generation, health probe snapshots at invocation. RetainedAoriginal Pod/grants/stream/status/code/provider refs never BLatest; no operationalhealth result stands for module/foundations approval."
+      },
+      "primaryAuthorAlias": {
+        "settingId": "DLV-CHART-KUBECLAW-CODEBUNDLE-ENABLED",
+        "source": {
+          "path": "charts/kubeclaw/values.yaml",
+          "field": "codeBundle.enabled",
+          "sha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1",
+          "line": null,
+          "valuePath": "codeBundle.enabled",
+          "lineKind": "YAML field path retained; repeated/inline key exact location expansion pending"
+        },
+        "projection": "exact Chart/helper selector/conditional source expression, not value-equality alias",
+        "authority": "readonly actual producer field; endpoint/provider/key/service tuples require same binding; no new health editable copy"
+      },
+      "completeProfiles": {
+        "A": {
+          "path": "docs/review/evidence/config-acceptance/delivery/gateway-health-target-profiles-20261013/A.json",
+          "sha256": "84744cb5f1474cf06ba1da63738b4d0a3d26f31250c998b60eb2f17d2a54cc5a"
+        },
+        "B": {
+          "path": "docs/review/evidence/config-acceptance/delivery/gateway-health-target-profiles-20261013/B.json",
+          "sha256": "3da3f6624646091f9ed43ea44c1462136ebe5beafab8f02056c16924c9cb5c5c"
+        }
+      },
+      "profileCoordinate": "readonlyBindings.KUBECLAW_CODE_BUNDLE_ENABLED",
+      "actualReader": {
+        "path": "charts/kubeclaw/templates/deployment.yaml",
+        "line": 883,
+        "operation": "checkCodeBundle bypass if disabled",
+        "generatedFile": "/runtime-config/kubeclaw-health.mjs"
+      },
+      "source": {
+        "path": "charts/kubeclaw/templates/deployment.yaml",
+        "field": "KUBECLAW_CODE_BUNDLE_ENABLED",
+        "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041",
+        "line": 883,
+        "lineKind": "productive generated health script field read"
+      },
+      "firstCurrentBoundary": "no missing-source error when false; true reads manifest",
+      "nativeOracle": "actual byte-identical generated Node healthcaller + controlled same selected scoped native services/mounts. Observe exact requestedurl/method/auth label/RedisPING/XADD arguments/timerAbort/drain/status/events/mode-specificexit and boundedcleanup. Check code-bundle compares only role/optionalcommit/contract today; spoofed record.ok/stale/misowned files and absentcommit are counterexamples requiring target provenance guard, not existing PASS. Registry401 connectivity differsfrom authenticatedprovider/image grants. Positive actual service before malformed/missing/old equal+different caller/profile/marker/provider/currentfallback negatives.",
+      "futureHarness": "tests/verification/config/delivery-chart-fields.test.mts",
+      "futureInvocation": [
+        "node",
+        "--test",
+        "--test-name-pattern=^DLV-CASE-GATEWAY-HEALTH-NATIVE-POLICY$",
+        "tests/verification/config/delivery-chart-fields.test.mts"
+      ],
+      "priorState": "original A binding before effects, nonempty health/status/stream state and exact Pod/provider/code/cleanup refs; parent universal originalModule/grant/cleanup contracts remain pending",
+      "caseIds": [
+        "DLV-CASE-GATEWAY-HEALTH-NATIVE-POLICY",
+        "DLV-CASE-HEALTH-MARKER-GENERATION",
+        "DLV-CASE-HEALTH-MISSING-BOUNDS",
+        "DLV-CASE-HEALTH-PROFILE"
+      ]
+    },
+    {
+      "settingId": "DLV-GATEWAY-HEALTH-KUBECLAW-CODE-BUNDLE-AGENT",
+      "field": "KUBECLAW_CODE_BUNDLE_AGENT",
+      "targetDomain": {
+        "domain": {
+          "type": "string",
+          "minLength": 1,
+          "generatedFrom": "actual selected role/instance/Pod/Redis service identity. HOSTNAME Podoriginal task observation, not editable intent. REDIS_HOST actual selected provider service/TLS topology; native stringsyntax alone insufficient."
+        },
+        "required": true,
+        "proposedOnly": true,
+        "currentProjectionAlias": {
+          "settingId": "DLV-CHART-KUBECLAW-AGENTROLE",
+          "source": {
+            "path": "charts/kubeclaw/values.yaml",
+            "field": "agentRole",
+            "sha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1",
+            "line": 18,
+            "lineKind": "unique YAML key author",
+            "valuePath": "agentRole"
+          },
+          "projection": "exact Chart/helper selector/conditional source expression, not value-equality alias",
+          "authority": "readonly actual producer field; endpoint/provider/key/service tuples require same binding; no new health editable copy"
+        },
+        "primaryAuthorAlias": {
+          "settingId": "DLV-CHART-KUBECLAW-AGENTROLE",
+          "source": {
+            "path": "charts/kubeclaw/values.yaml",
+            "field": "agentRole",
+            "sha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1",
+            "line": 18,
+            "lineKind": "unique YAML key author",
+            "valuePath": "agentRole"
+          },
+          "projection": "exact Chart/helper selector/conditional source expression, not value-equality alias",
+          "authority": "readonly actual producer field; endpoint/provider/key/service tuples require same binding; no new health editable copy"
+        },
+        "domainAppliesTo": "resolved effective value after readonly binding resolution; unresolved commit/provider references in fixture definition are NOT scalar-native-valid evidence",
+        "activation": "H/R same selected deployment/service/nativeprovider/mount generation, health probe snapshots at invocation. RetainedAoriginal Pod/grants/stream/status/code/provider refs never BLatest; no operationalhealth result stands for module/foundations approval."
+      },
+      "primaryAuthorAlias": {
+        "settingId": "DLV-CHART-KUBECLAW-AGENTROLE",
+        "source": {
+          "path": "charts/kubeclaw/values.yaml",
+          "field": "agentRole",
+          "sha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1",
+          "line": 18,
+          "lineKind": "unique YAML key author",
+          "valuePath": "agentRole"
+        },
+        "projection": "exact Chart/helper selector/conditional source expression, not value-equality alias",
+        "authority": "readonly actual producer field; endpoint/provider/key/service tuples require same binding; no new health editable copy"
+      },
+      "completeProfiles": {
+        "A": {
+          "path": "docs/review/evidence/config-acceptance/delivery/gateway-health-target-profiles-20261013/A.json",
+          "sha256": "84744cb5f1474cf06ba1da63738b4d0a3d26f31250c998b60eb2f17d2a54cc5a"
+        },
+        "B": {
+          "path": "docs/review/evidence/config-acceptance/delivery/gateway-health-target-profiles-20261013/B.json",
+          "sha256": "3da3f6624646091f9ed43ea44c1462136ebe5beafab8f02056c16924c9cb5c5c"
+        }
+      },
+      "profileCoordinate": "readonlyBindings.KUBECLAW_CODE_BUNDLE_AGENT",
+      "actualReader": {
+        "path": "charts/kubeclaw/templates/deployment.yaml",
+        "line": 885,
+        "operation": "checkCodeBundle manifest.role equality",
+        "generatedFile": "/runtime-config/kubeclaw-health.mjs"
+      },
+      "source": {
+        "path": "charts/kubeclaw/templates/deployment.yaml",
+        "field": "KUBECLAW_CODE_BUNDLE_AGENT",
+        "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041",
+        "line": 885,
+        "lineKind": "productive generated health script field read"
+      },
+      "firstCurrentBoundary": "bundle role does not match expectedAgent",
+      "nativeOracle": "actual byte-identical generated Node healthcaller + controlled same selected scoped native services/mounts. Observe exact requestedurl/method/auth label/RedisPING/XADD arguments/timerAbort/drain/status/events/mode-specificexit and boundedcleanup. Check code-bundle compares only role/optionalcommit/contract today; spoofed record.ok/stale/misowned files and absentcommit are counterexamples requiring target provenance guard, not existing PASS. Registry401 connectivity differsfrom authenticatedprovider/image grants. Positive actual service before malformed/missing/old equal+different caller/profile/marker/provider/currentfallback negatives.",
+      "futureHarness": "tests/verification/config/delivery-chart-fields.test.mts",
+      "futureInvocation": [
+        "node",
+        "--test",
+        "--test-name-pattern=^DLV-CASE-GATEWAY-HEALTH-NATIVE-POLICY$",
+        "tests/verification/config/delivery-chart-fields.test.mts"
+      ],
+      "priorState": "original A binding before effects, nonempty health/status/stream state and exact Pod/provider/code/cleanup refs; parent universal originalModule/grant/cleanup contracts remain pending",
+      "caseIds": [
+        "DLV-CASE-GATEWAY-HEALTH-NATIVE-POLICY",
+        "DLV-CASE-HEALTH-MARKER-GENERATION",
+        "DLV-CASE-HEALTH-MISSING-BOUNDS",
+        "DLV-CASE-HEALTH-PROFILE"
+      ]
+    },
+    {
+      "settingId": "DLV-GATEWAY-HEALTH-KUBECLAW-CODE-BUNDLE-EXPECTED-COMMIT",
+      "field": "KUBECLAW_CODE_BUNDLE_EXPECTED_COMMIT",
+      "targetDomain": {
+        "domain": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{40}$",
+          "semantic": "derived exact actual selected immutable source/code bundle receipt; current only optional stringcompare and role/contract, no code tree/hash/installed foundations attestation. Mandatory full closure belongs parent/generation before engine imports/inputs, not health boolean."
+        },
+        "required": true,
+        "proposedOnly": true,
+        "currentProjectionAlias": {
+          "settingId": "DLV-CHART-KUBECLAW-CODEBUNDLE-EXPECTEDCOMMIT",
+          "source": {
+            "path": "charts/kubeclaw/values.yaml",
+            "field": "codeBundle.expectedCommit",
+            "sha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1",
+            "line": 40,
+            "valuePath": "codeBundle.expectedCommit",
+            "lineKind": "unique YAML key author"
+          },
+          "projection": "exact Chart/helper selector/conditional source expression, not value-equality alias",
+          "authority": "readonly actual producer field; endpoint/provider/key/service tuples require same binding; no new health editable copy"
+        },
+        "primaryAuthorAlias": {
+          "settingId": "DLV-CHART-KUBECLAW-CODEBUNDLE-EXPECTEDCOMMIT",
+          "source": {
+            "path": "charts/kubeclaw/values.yaml",
+            "field": "codeBundle.expectedCommit",
+            "sha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1",
+            "line": 40,
+            "valuePath": "codeBundle.expectedCommit",
+            "lineKind": "unique YAML key author"
+          },
+          "projection": "exact Chart/helper selector/conditional source expression, not value-equality alias",
+          "authority": "readonly actual producer field; endpoint/provider/key/service tuples require same binding; no new health editable copy"
+        },
+        "domainAppliesTo": "resolved effective value after readonly binding resolution; unresolved commit/provider references in fixture definition are NOT scalar-native-valid evidence",
+        "activation": "H/R same selected deployment/service/nativeprovider/mount generation, health probe snapshots at invocation. RetainedAoriginal Pod/grants/stream/status/code/provider refs never BLatest; no operationalhealth result stands for module/foundations approval."
+      },
+      "primaryAuthorAlias": {
+        "settingId": "DLV-CHART-KUBECLAW-CODEBUNDLE-EXPECTEDCOMMIT",
+        "source": {
+          "path": "charts/kubeclaw/values.yaml",
+          "field": "codeBundle.expectedCommit",
+          "sha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1",
+          "line": 40,
+          "valuePath": "codeBundle.expectedCommit",
+          "lineKind": "unique YAML key author"
+        },
+        "projection": "exact Chart/helper selector/conditional source expression, not value-equality alias",
+        "authority": "readonly actual producer field; endpoint/provider/key/service tuples require same binding; no new health editable copy"
+      },
+      "completeProfiles": {
+        "A": {
+          "path": "docs/review/evidence/config-acceptance/delivery/gateway-health-target-profiles-20261013/A.json",
+          "sha256": "84744cb5f1474cf06ba1da63738b4d0a3d26f31250c998b60eb2f17d2a54cc5a"
+        },
+        "B": {
+          "path": "docs/review/evidence/config-acceptance/delivery/gateway-health-target-profiles-20261013/B.json",
+          "sha256": "3da3f6624646091f9ed43ea44c1462136ebe5beafab8f02056c16924c9cb5c5c"
+        }
+      },
+      "profileCoordinate": "readonlyBindings.KUBECLAW_CODE_BUNDLE_EXPECTED_COMMIT",
+      "actualReader": {
+        "path": "charts/kubeclaw/templates/deployment.yaml",
+        "line": 886,
+        "operation": "checkCodeBundle manifest.commit equality if truthy",
+        "generatedFile": "/runtime-config/kubeclaw-health.mjs"
+      },
+      "source": {
+        "path": "charts/kubeclaw/templates/deployment.yaml",
+        "field": "KUBECLAW_CODE_BUNDLE_EXPECTED_COMMIT",
+        "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041",
+        "line": 886,
+        "lineKind": "productive generated health script field read"
+      },
+      "firstCurrentBoundary": "bundle commit does not match expectedCommit",
+      "nativeOracle": "actual byte-identical generated Node healthcaller + controlled same selected scoped native services/mounts. Observe exact requestedurl/method/auth label/RedisPING/XADD arguments/timerAbort/drain/status/events/mode-specificexit and boundedcleanup. Check code-bundle compares only role/optionalcommit/contract today; spoofed record.ok/stale/misowned files and absentcommit are counterexamples requiring target provenance guard, not existing PASS. Registry401 connectivity differsfrom authenticatedprovider/image grants. Positive actual service before malformed/missing/old equal+different caller/profile/marker/provider/currentfallback negatives.",
+      "futureHarness": "tests/verification/config/delivery-chart-fields.test.mts",
+      "futureInvocation": [
+        "node",
+        "--test",
+        "--test-name-pattern=^DLV-CASE-GATEWAY-HEALTH-NATIVE-POLICY$",
+        "tests/verification/config/delivery-chart-fields.test.mts"
+      ],
+      "priorState": "original A binding before effects, nonempty health/status/stream state and exact Pod/provider/code/cleanup refs; parent universal originalModule/grant/cleanup contracts remain pending",
+      "caseIds": [
+        "DLV-CASE-GATEWAY-HEALTH-NATIVE-POLICY",
+        "DLV-CASE-HEALTH-MARKER-GENERATION",
+        "DLV-CASE-HEALTH-MISSING-BOUNDS",
+        "DLV-CASE-HEALTH-PROFILE"
+      ]
+    },
+    {
+      "settingId": "DLV-GATEWAY-HEALTH-KUBECLAW-CODE-BUNDLE-CONTRACT-VERSION",
+      "field": "KUBECLAW_CODE_BUNDLE_CONTRACT_VERSION",
+      "targetDomain": {
+        "domain": {
+          "type": "string",
+          "const": "v2",
+          "semantic": "existing selected bundle protocol version, not tunable string; incompatible protocol requires explicit versioned package/provenance migration, not native comparison bypass"
+        },
+        "required": true,
+        "proposedOnly": true,
+        "currentProjectionAlias": {
+          "settingId": "DLV-CHART-KUBECLAW-CODEBUNDLE-CONTRACTVERSION",
+          "source": {
+            "path": "charts/kubeclaw/values.yaml",
+            "field": "codeBundle.contractVersion",
+            "sha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1",
+            "line": 41,
+            "valuePath": "codeBundle.contractVersion",
+            "lineKind": "unique YAML key author"
+          },
+          "projection": "exact Chart/helper selector/conditional source expression, not value-equality alias",
+          "authority": "readonly actual producer field; endpoint/provider/key/service tuples require same binding; no new health editable copy"
+        },
+        "primaryAuthorAlias": {
+          "settingId": "DLV-CHART-KUBECLAW-CODEBUNDLE-CONTRACTVERSION",
+          "source": {
+            "path": "charts/kubeclaw/values.yaml",
+            "field": "codeBundle.contractVersion",
+            "sha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1",
+            "line": 41,
+            "valuePath": "codeBundle.contractVersion",
+            "lineKind": "unique YAML key author"
+          },
+          "projection": "exact Chart/helper selector/conditional source expression, not value-equality alias",
+          "authority": "readonly actual producer field; endpoint/provider/key/service tuples require same binding; no new health editable copy"
+        },
+        "domainAppliesTo": "resolved effective value after readonly binding resolution; unresolved commit/provider references in fixture definition are NOT scalar-native-valid evidence",
+        "activation": "H/R same selected deployment/service/nativeprovider/mount generation, health probe snapshots at invocation. RetainedAoriginal Pod/grants/stream/status/code/provider refs never BLatest; no operationalhealth result stands for module/foundations approval."
+      },
+      "primaryAuthorAlias": {
+        "settingId": "DLV-CHART-KUBECLAW-CODEBUNDLE-CONTRACTVERSION",
+        "source": {
+          "path": "charts/kubeclaw/values.yaml",
+          "field": "codeBundle.contractVersion",
+          "sha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1",
+          "line": 41,
+          "valuePath": "codeBundle.contractVersion",
+          "lineKind": "unique YAML key author"
+        },
+        "projection": "exact Chart/helper selector/conditional source expression, not value-equality alias",
+        "authority": "readonly actual producer field; endpoint/provider/key/service tuples require same binding; no new health editable copy"
+      },
+      "completeProfiles": {
+        "A": {
+          "path": "docs/review/evidence/config-acceptance/delivery/gateway-health-target-profiles-20261013/A.json",
+          "sha256": "84744cb5f1474cf06ba1da63738b4d0a3d26f31250c998b60eb2f17d2a54cc5a"
+        },
+        "B": {
+          "path": "docs/review/evidence/config-acceptance/delivery/gateway-health-target-profiles-20261013/B.json",
+          "sha256": "3da3f6624646091f9ed43ea44c1462136ebe5beafab8f02056c16924c9cb5c5c"
+        }
+      },
+      "profileCoordinate": "readonlyBindings.KUBECLAW_CODE_BUNDLE_CONTRACT_VERSION",
+      "actualReader": {
+        "path": "charts/kubeclaw/templates/deployment.yaml",
+        "line": 887,
+        "operation": "checkCodeBundle manifest.contractVersion equality if truthy",
+        "generatedFile": "/runtime-config/kubeclaw-health.mjs"
+      },
+      "source": {
+        "path": "charts/kubeclaw/templates/deployment.yaml",
+        "field": "KUBECLAW_CODE_BUNDLE_CONTRACT_VERSION",
+        "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041",
+        "line": 887,
+        "lineKind": "productive generated health script field read"
+      },
+      "firstCurrentBoundary": "bundle contract does not match expectedContract",
+      "nativeOracle": "actual byte-identical generated Node healthcaller + controlled same selected scoped native services/mounts. Observe exact requestedurl/method/auth label/RedisPING/XADD arguments/timerAbort/drain/status/events/mode-specificexit and boundedcleanup. Check code-bundle compares only role/optionalcommit/contract today; spoofed record.ok/stale/misowned files and absentcommit are counterexamples requiring target provenance guard, not existing PASS. Registry401 connectivity differsfrom authenticatedprovider/image grants. Positive actual service before malformed/missing/old equal+different caller/profile/marker/provider/currentfallback negatives.",
+      "futureHarness": "tests/verification/config/delivery-chart-fields.test.mts",
+      "futureInvocation": [
+        "node",
+        "--test",
+        "--test-name-pattern=^DLV-CASE-GATEWAY-HEALTH-NATIVE-POLICY$",
+        "tests/verification/config/delivery-chart-fields.test.mts"
+      ],
+      "priorState": "original A binding before effects, nonempty health/status/stream state and exact Pod/provider/code/cleanup refs; parent universal originalModule/grant/cleanup contracts remain pending",
+      "caseIds": [
+        "DLV-CASE-GATEWAY-HEALTH-NATIVE-POLICY",
+        "DLV-CASE-HEALTH-MARKER-GENERATION",
+        "DLV-CASE-HEALTH-MISSING-BOUNDS",
+        "DLV-CASE-HEALTH-PROFILE"
+      ]
+    },
+    {
+      "settingId": "DLV-GATEWAY-HEALTH-MODE",
+      "field": "mode",
+      "targetDomain": {
+        "domain": {
+          "enum": [
+            "startup-status",
+            "liveness",
+            "startup",
+            "readiness"
+          ],
+          "semantic": "explicit current CLIcallermode; unknown native fallback to readiness rejectedtarget. Mode-specific checks/output never universal runtime/provenance acceptance."
+        },
+        "required": true,
+        "proposedOnly": true,
+        "currentProjectionAlias": null,
+        "primaryAuthorAlias": null,
+        "domainAppliesTo": "resolved effective value after readonly binding resolution; unresolved commit/provider references in fixture definition are NOT scalar-native-valid evidence",
+        "activation": "H/R same selected deployment/service/nativeprovider/mount generation, health probe snapshots at invocation. RetainedAoriginal Pod/grants/stream/status/code/provider refs never BLatest; no operationalhealth result stands for module/foundations approval."
+      },
+      "primaryAuthorAlias": null,
+      "completeProfiles": {
+        "A": {
+          "path": "docs/review/evidence/config-acceptance/delivery/gateway-health-target-profiles-20261013/A.json",
+          "sha256": "84744cb5f1474cf06ba1da63738b4d0a3d26f31250c998b60eb2f17d2a54cc5a"
+        },
+        "B": {
+          "path": "docs/review/evidence/config-acceptance/delivery/gateway-health-target-profiles-20261013/B.json",
+          "sha256": "3da3f6624646091f9ed43ea44c1462136ebe5beafab8f02056c16924c9cb5c5c"
+        }
+      },
+      "profileCoordinate": "readonlyBindings.mode",
+      "actualReader": {
+        "path": "charts/kubeclaw/templates/deployment.yaml",
+        "line": 709,
+        "operation": "top-level health mode dispatch(899)",
+        "generatedFile": "/runtime-config/kubeclaw-health.mjs"
+      },
+      "source": {
+        "path": "charts/kubeclaw/templates/deployment.yaml",
+        "field": "mode",
+        "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041",
+        "line": 709,
+        "lineKind": "productive generated health script field read"
+      },
+      "firstCurrentBoundary": "failure output JSON includes mode; exit1 when any check fails",
+      "nativeOracle": "actual byte-identical generated Node healthcaller + controlled same selected scoped native services/mounts. Observe exact requestedurl/method/auth label/RedisPING/XADD arguments/timerAbort/drain/status/events/mode-specificexit and boundedcleanup. Check code-bundle compares only role/optionalcommit/contract today; spoofed record.ok/stale/misowned files and absentcommit are counterexamples requiring target provenance guard, not existing PASS. Registry401 connectivity differsfrom authenticatedprovider/image grants. Positive actual service before malformed/missing/old equal+different caller/profile/marker/provider/currentfallback negatives.",
+      "futureHarness": "tests/verification/config/delivery-chart-fields.test.mts",
+      "futureInvocation": [
+        "node",
+        "--test",
+        "--test-name-pattern=^DLV-CASE-GATEWAY-HEALTH-NATIVE-POLICY$",
+        "tests/verification/config/delivery-chart-fields.test.mts"
+      ],
+      "priorState": "original A binding before effects, nonempty health/status/stream state and exact Pod/provider/code/cleanup refs; parent universal originalModule/grant/cleanup contracts remain pending",
+      "caseIds": [
+        "DLV-CASE-GATEWAY-HEALTH-NATIVE-POLICY",
+        "DLV-CASE-HEALTH-MARKER-GENERATION",
+        "DLV-CASE-HEALTH-MISSING-BOUNDS",
+        "DLV-CASE-HEALTH-PROFILE"
+      ]
+    },
+    {
+      "settingId": "DLV-GATEWAY-HEALTH-AGENT-NAME",
+      "field": "AGENT_NAME",
+      "targetDomain": {
+        "domain": {
+          "type": "string",
+          "minLength": 1,
+          "generatedFrom": "actual selected role/instance/Pod/Redis service identity. HOSTNAME Podoriginal task observation, not editable intent. REDIS_HOST actual selected provider service/TLS topology; native stringsyntax alone insufficient."
+        },
+        "required": true,
+        "proposedOnly": true,
+        "currentProjectionAlias": null,
+        "primaryAuthorAlias": null,
+        "domainAppliesTo": "resolved effective value after readonly binding resolution; unresolved commit/provider references in fixture definition are NOT scalar-native-valid evidence",
+        "activation": "H/R same selected deployment/service/nativeprovider/mount generation, health probe snapshots at invocation. RetainedAoriginal Pod/grants/stream/status/code/provider refs never BLatest; no operationalhealth result stands for module/foundations approval."
+      },
+      "primaryAuthorAlias": null,
+      "completeProfiles": {
+        "A": {
+          "path": "docs/review/evidence/config-acceptance/delivery/gateway-health-target-profiles-20261013/A.json",
+          "sha256": "84744cb5f1474cf06ba1da63738b4d0a3d26f31250c998b60eb2f17d2a54cc5a"
+        },
+        "B": {
+          "path": "docs/review/evidence/config-acceptance/delivery/gateway-health-target-profiles-20261013/B.json",
+          "sha256": "3da3f6624646091f9ed43ea44c1462136ebe5beafab8f02056c16924c9cb5c5c"
+        }
+      },
+      "profileCoordinate": "readonlyBindings.AGENT_NAME",
+      "actualReader": {
+        "path": "charts/kubeclaw/templates/deployment.yaml",
+        "line": 710,
+        "operation": "health Redis stream derived key/manifest expected role/startup record",
+        "generatedFile": "/runtime-config/kubeclaw-health.mjs"
+      },
+      "source": {
+        "path": "charts/kubeclaw/templates/deployment.yaml",
+        "field": "AGENT_NAME",
+        "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041",
+        "line": 710,
+        "lineKind": "productive generated health script field read"
+      },
+      "firstCurrentBoundary": "manifest role equality error when code enabled",
+      "nativeOracle": "actual byte-identical generated Node healthcaller + controlled same selected scoped native services/mounts. Observe exact requestedurl/method/auth label/RedisPING/XADD arguments/timerAbort/drain/status/events/mode-specificexit and boundedcleanup. Check code-bundle compares only role/optionalcommit/contract today; spoofed record.ok/stale/misowned files and absentcommit are counterexamples requiring target provenance guard, not existing PASS. Registry401 connectivity differsfrom authenticatedprovider/image grants. Positive actual service before malformed/missing/old equal+different caller/profile/marker/provider/currentfallback negatives.",
+      "futureHarness": "tests/verification/config/delivery-chart-fields.test.mts",
+      "futureInvocation": [
+        "node",
+        "--test",
+        "--test-name-pattern=^DLV-CASE-GATEWAY-HEALTH-NATIVE-POLICY$",
+        "tests/verification/config/delivery-chart-fields.test.mts"
+      ],
+      "priorState": "original A binding before effects, nonempty health/status/stream state and exact Pod/provider/code/cleanup refs; parent universal originalModule/grant/cleanup contracts remain pending",
+      "caseIds": [
+        "DLV-CASE-GATEWAY-HEALTH-NATIVE-POLICY",
+        "DLV-CASE-HEALTH-MARKER-GENERATION",
+        "DLV-CASE-HEALTH-MISSING-BOUNDS",
+        "DLV-CASE-HEALTH-PROFILE"
+      ]
+    },
+    {
+      "settingId": "DLV-GATEWAY-HEALTH-KUBECLAW-CONTAINER-ROLE",
+      "field": "KUBECLAW_CONTAINER_ROLE",
+      "targetDomain": {
+        "domain": {
+          "type": "string",
+          "minLength": 1,
+          "generatedFrom": "actual selected role/instance/Pod/Redis service identity. HOSTNAME Podoriginal task observation, not editable intent. REDIS_HOST actual selected provider service/TLS topology; native stringsyntax alone insufficient."
+        },
+        "required": true,
+        "proposedOnly": true,
+        "currentProjectionAlias": null,
+        "primaryAuthorAlias": null,
+        "domainAppliesTo": "resolved effective value after readonly binding resolution; unresolved commit/provider references in fixture definition are NOT scalar-native-valid evidence",
+        "activation": "H/R same selected deployment/service/nativeprovider/mount generation, health probe snapshots at invocation. RetainedAoriginal Pod/grants/stream/status/code/provider refs never BLatest; no operationalhealth result stands for module/foundations approval."
+      },
+      "primaryAuthorAlias": null,
+      "completeProfiles": {
+        "A": {
+          "path": "docs/review/evidence/config-acceptance/delivery/gateway-health-target-profiles-20261013/A.json",
+          "sha256": "84744cb5f1474cf06ba1da63738b4d0a3d26f31250c998b60eb2f17d2a54cc5a"
+        },
+        "B": {
+          "path": "docs/review/evidence/config-acceptance/delivery/gateway-health-target-profiles-20261013/B.json",
+          "sha256": "3da3f6624646091f9ed43ea44c1462136ebe5beafab8f02056c16924c9cb5c5c"
+        }
+      },
+      "profileCoordinate": "readonlyBindings.KUBECLAW_CONTAINER_ROLE",
+      "actualReader": {
+        "path": "charts/kubeclaw/templates/deployment.yaml",
+        "line": 711,
+        "operation": "writeStartupVerification.containerRole",
+        "generatedFile": "/runtime-config/kubeclaw-health.mjs"
+      },
+      "source": {
+        "path": "charts/kubeclaw/templates/deployment.yaml",
+        "field": "KUBECLAW_CONTAINER_ROLE",
+        "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041",
+        "line": 711,
+        "lineKind": "productive generated health script field read"
+      },
+      "firstCurrentBoundary": "no role-specific error here",
+      "nativeOracle": "actual byte-identical generated Node healthcaller + controlled same selected scoped native services/mounts. Observe exact requestedurl/method/auth label/RedisPING/XADD arguments/timerAbort/drain/status/events/mode-specificexit and boundedcleanup. Check code-bundle compares only role/optionalcommit/contract today; spoofed record.ok/stale/misowned files and absentcommit are counterexamples requiring target provenance guard, not existing PASS. Registry401 connectivity differsfrom authenticatedprovider/image grants. Positive actual service before malformed/missing/old equal+different caller/profile/marker/provider/currentfallback negatives.",
+      "futureHarness": "tests/verification/config/delivery-chart-fields.test.mts",
+      "futureInvocation": [
+        "node",
+        "--test",
+        "--test-name-pattern=^DLV-CASE-GATEWAY-HEALTH-NATIVE-POLICY$",
+        "tests/verification/config/delivery-chart-fields.test.mts"
+      ],
+      "priorState": "original A binding before effects, nonempty health/status/stream state and exact Pod/provider/code/cleanup refs; parent universal originalModule/grant/cleanup contracts remain pending",
+      "caseIds": [
+        "DLV-CASE-GATEWAY-HEALTH-NATIVE-POLICY",
+        "DLV-CASE-HEALTH-MARKER-GENERATION",
+        "DLV-CASE-HEALTH-MISSING-BOUNDS",
+        "DLV-CASE-HEALTH-PROFILE"
+      ]
+    },
+    {
+      "settingId": "DLV-GATEWAY-HEALTH-HOSTNAME",
+      "field": "HOSTNAME",
+      "targetDomain": {
+        "domain": {
+          "type": "string",
+          "minLength": 1,
+          "generatedFrom": "actual selected role/instance/Pod/Redis service identity. HOSTNAME Podoriginal task observation, not editable intent. REDIS_HOST actual selected provider service/TLS topology; native stringsyntax alone insufficient."
+        },
+        "required": true,
+        "proposedOnly": true,
+        "currentProjectionAlias": null,
+        "primaryAuthorAlias": null,
+        "domainAppliesTo": "resolved effective value after readonly binding resolution; unresolved commit/provider references in fixture definition are NOT scalar-native-valid evidence",
+        "activation": "H/R same selected deployment/service/nativeprovider/mount generation, health probe snapshots at invocation. RetainedAoriginal Pod/grants/stream/status/code/provider refs never BLatest; no operationalhealth result stands for module/foundations approval."
+      },
+      "primaryAuthorAlias": null,
+      "completeProfiles": {
+        "A": {
+          "path": "docs/review/evidence/config-acceptance/delivery/gateway-health-target-profiles-20261013/A.json",
+          "sha256": "84744cb5f1474cf06ba1da63738b4d0a3d26f31250c998b60eb2f17d2a54cc5a"
+        },
+        "B": {
+          "path": "docs/review/evidence/config-acceptance/delivery/gateway-health-target-profiles-20261013/B.json",
+          "sha256": "3da3f6624646091f9ed43ea44c1462136ebe5beafab8f02056c16924c9cb5c5c"
+        }
+      },
+      "profileCoordinate": "readonlyBindings.HOSTNAME",
+      "actualReader": {
+        "path": "charts/kubeclaw/templates/deployment.yaml",
+        "line": 838,
+        "operation": "checkRedisStream XADD pod field",
+        "generatedFile": "/runtime-config/kubeclaw-health.mjs"
+      },
+      "source": {
+        "path": "charts/kubeclaw/templates/deployment.yaml",
+        "field": "HOSTNAME",
+        "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041",
+        "line": 838,
+        "lineKind": "productive generated health script field read"
+      },
+      "firstCurrentBoundary": "no specific validation error",
+      "nativeOracle": "actual byte-identical generated Node healthcaller + controlled same selected scoped native services/mounts. Observe exact requestedurl/method/auth label/RedisPING/XADD arguments/timerAbort/drain/status/events/mode-specificexit and boundedcleanup. Check code-bundle compares only role/optionalcommit/contract today; spoofed record.ok/stale/misowned files and absentcommit are counterexamples requiring target provenance guard, not existing PASS. Registry401 connectivity differsfrom authenticatedprovider/image grants. Positive actual service before malformed/missing/old equal+different caller/profile/marker/provider/currentfallback negatives.",
+      "futureHarness": "tests/verification/config/delivery-chart-fields.test.mts",
+      "futureInvocation": [
+        "node",
+        "--test",
+        "--test-name-pattern=^DLV-CASE-GATEWAY-HEALTH-NATIVE-POLICY$",
+        "tests/verification/config/delivery-chart-fields.test.mts"
+      ],
+      "priorState": "original A binding before effects, nonempty health/status/stream state and exact Pod/provider/code/cleanup refs; parent universal originalModule/grant/cleanup contracts remain pending",
+      "caseIds": [
+        "DLV-CASE-GATEWAY-HEALTH-NATIVE-POLICY",
+        "DLV-CASE-HEALTH-MARKER-GENERATION",
+        "DLV-CASE-HEALTH-MISSING-BOUNDS",
+        "DLV-CASE-HEALTH-PROFILE"
+      ]
+    },
+    {
+      "settingId": "DLV-GATEWAY-HEALTH-SWARM-CONFIG",
+      "field": "SWARM_CONFIG",
+      "targetDomain": {
+        "domain": {
+          "type": "string",
+          "const": "/etc/kubeclaw/swarm/swarm.config.json",
+          "semantic": "same actual trusted mounted/state root binding, canonical file/ownership/revision/grants checked; not arbitrary retarget. SWARM_CONFIG currentlocator undergoes explicit C1 pipeline.config migration with its sole author; source literal not new author."
+        },
+        "required": true,
+        "proposedOnly": true,
+        "currentProjectionAlias": null,
+        "primaryAuthorAlias": null,
+        "domainAppliesTo": "resolved effective value after readonly binding resolution; unresolved commit/provider references in fixture definition are NOT scalar-native-valid evidence",
+        "activation": "H/R same selected deployment/service/nativeprovider/mount generation, health probe snapshots at invocation. RetainedAoriginal Pod/grants/stream/status/code/provider refs never BLatest; no operationalhealth result stands for module/foundations approval."
+      },
+      "primaryAuthorAlias": null,
+      "completeProfiles": {
+        "A": {
+          "path": "docs/review/evidence/config-acceptance/delivery/gateway-health-target-profiles-20261013/A.json",
+          "sha256": "84744cb5f1474cf06ba1da63738b4d0a3d26f31250c998b60eb2f17d2a54cc5a"
+        },
+        "B": {
+          "path": "docs/review/evidence/config-acceptance/delivery/gateway-health-target-profiles-20261013/B.json",
+          "sha256": "3da3f6624646091f9ed43ea44c1462136ebe5beafab8f02056c16924c9cb5c5c"
+        }
+      },
+      "profileCoordinate": "readonlyBindings.SWARM_CONFIG",
+      "actualReader": {
+        "path": "charts/kubeclaw/templates/deployment.yaml",
+        "line": 905,
+        "operation": "requirePath in top-level health runtime config check",
+        "generatedFile": "/runtime-config/kubeclaw-health.mjs"
+      },
+      "source": {
+        "path": "charts/kubeclaw/templates/deployment.yaml",
+        "field": "SWARM_CONFIG",
+        "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041",
+        "line": 905,
+        "lineKind": "productive generated health script field read"
+      },
+      "firstCurrentBoundary": "fs error/not a file \u2192 failures exit1",
+      "nativeOracle": "actual byte-identical generated Node healthcaller + controlled same selected scoped native services/mounts. Observe exact requestedurl/method/auth label/RedisPING/XADD arguments/timerAbort/drain/status/events/mode-specificexit and boundedcleanup. Check code-bundle compares only role/optionalcommit/contract today; spoofed record.ok/stale/misowned files and absentcommit are counterexamples requiring target provenance guard, not existing PASS. Registry401 connectivity differsfrom authenticatedprovider/image grants. Positive actual service before malformed/missing/old equal+different caller/profile/marker/provider/currentfallback negatives.",
+      "futureHarness": "tests/verification/config/delivery-chart-fields.test.mts",
+      "futureInvocation": [
+        "node",
+        "--test",
+        "--test-name-pattern=^DLV-CASE-GATEWAY-HEALTH-NATIVE-POLICY$",
+        "tests/verification/config/delivery-chart-fields.test.mts"
+      ],
+      "priorState": "original A binding before effects, nonempty health/status/stream state and exact Pod/provider/code/cleanup refs; parent universal originalModule/grant/cleanup contracts remain pending",
+      "caseIds": [
+        "DLV-CASE-GATEWAY-HEALTH-NATIVE-POLICY",
+        "DLV-CASE-HEALTH-MARKER-GENERATION",
+        "DLV-CASE-HEALTH-MISSING-BOUNDS",
+        "DLV-CASE-HEALTH-PROFILE"
+      ]
+    }
+  ],
+  "profiles": {
+    "A": {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-health-target-profiles-20261013/A.json",
+      "sha256": "84744cb5f1474cf06ba1da63738b4d0a3d26f31250c998b60eb2f17d2a54cc5a"
+    },
+    "B": {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-health-target-profiles-20261013/B.json",
+      "sha256": "3da3f6624646091f9ed43ea44c1462136ebe5beafab8f02056c16924c9cb5c5c"
+    }
+  },
+  "sourceVsAttestation": "current marker record.ok and code-bundle role/string compare are operational observations, not cryptographic/source/install/grant provenance; target mandatory original delivery verification precedes engine imports/inputs/activation, parent contract pending"
+}

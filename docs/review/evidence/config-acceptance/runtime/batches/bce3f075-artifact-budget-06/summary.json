@@ -1,0 +1,59 @@
+{
+  "status": "not-accepted; actual current native local artifact/tar/gzip/LCOV/hash/businessverdict fixtures only; no genuine sourcebuild/coverage producer/baseline provenance/artifactStore/role/grants/globaleffect acceptance; proposed complete owner definition notimplemented, future cases notrun",
+  "rows": 1248,
+  "cases": 5047,
+  "results": {
+    "not-run": 3771,
+    "passed": 1276
+  },
+  "artifactBudget06SchemaRows": 14,
+  "artifactBudget06CurrentDefinitions": 15,
+  "artifactBudget06FutureCases": 56,
+  "allC0ClosedFalse": true,
+  "remainingConsumerReviewRows": 111,
+  "remainingSupplementalSourceTracedRows": 197,
+  "originalCandidates": 4642,
+  "manualCandidateRecordsThisBatch": 45,
+  "manualCandidateRecordsCombined": 458,
+  "remainingUnreviewedCandidates": 4184,
+  "explicitOpenCandidateGuards": 81,
+  "unmatchedGuardBusinessDefaultsNotInOriginalSyntaxRoster": [
+    {
+      "path": "skills/buster/plugins/size-budget/src/provider.js",
+      "lines": [
+        7,
+        8,
+        9,
+        10,
+        117,
+        169,
+        180,
+        211,
+        264,
+        265,
+        287,
+        307,
+        317,
+        348
+      ],
+      "reason": "512MiB input/2GiB expanded/100000files/1MiB baseline numericquotas+64KiB IOchunks, checksum512 TARcodec NOTsamequota, file mutation gap hashthenmeasurement nofinal guard, genuinebaseline source/provenance absent, allmedium findingseverity businesspolicy; exactowningfield/domains/cases stillneeded",
+      "sourceSha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+    },
+    {
+      "path": "skills/buster/plugins/coverage-budget/src/provider.js",
+      "lines": [
+        5,
+        6,
+        9,
+        14,
+        33,
+        65,
+        90
+      ],
+      "reason": "64MiB LCOVcap AFTERfullread/2M DAcount (duplicatesincluded), signal/cancellation absent, sourceproducer/pathnormalization provenance no currentenforcement, fixedmediumfinding severity businesspolicy remainsownergap",
+      "sourceSha256": "3e76c0b48e6728a195de48f8c7325e517e0681e8e0e169e7adb129bd0752430b"
+    }
+  ],
+  "integrityErrors": [],
+  "remaining": "111 schema consumers,197 original supplemental source-traced rows and candidate exactcounts above plus explicit processingquota/provenance/source-stability/nestedowner obligations. Fourteen rootbusiness/codec fields source reviewed, actualnative validfixturecontrols narrowpassed. Realisolatedroles/genuineproducer/sourcebuild/coverage/baseline/Store/grants andphysicaltargetauthor packaging/nullablemigration productivebeforeeffect validation stillnecessary. Currentbaseline.sourceDigest onlystring, hashthenmeasure sourcefilemutation safety andcoverage fullread-before64MiBcap/cancellation gaps explicitlyopen. No fullcoverage/binding/runtimeacceptance. Existing codec/context/A6 scope andhistorical case requirements retained."
+}

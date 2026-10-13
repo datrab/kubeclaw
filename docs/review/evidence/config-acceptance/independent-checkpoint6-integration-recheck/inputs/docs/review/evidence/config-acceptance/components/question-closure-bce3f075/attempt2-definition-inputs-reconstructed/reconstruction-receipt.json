@@ -1,0 +1,41 @@
+{
+  "scope": "Deterministic removal of later appended ownerprojection fields; matches every original rawattempt2 input hash exactly, not new rawexecution",
+  "checks": [
+    {
+      "path": "docs/review/evidence/config-acceptance/components/question-closure-bce3f075/attempt2-definition-inputs-reconstructed/complete-profiles.json",
+      "expectedHashFromRawAttempt2": "adddbe8ae443463c3c039952c4caaf0aff8acbc3d8a186a29de0afe62c171de0",
+      "actual": "adddbe8ae443463c3c039952c4caaf0aff8acbc3d8a186a29de0afe62c171de0",
+      "exactMatch": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/question-closure-bce3f075/attempt2-definition-inputs-reconstructed/proposed-buster-component.schema.json",
+      "expectedHashFromRawAttempt2": "dbe6bf3ec33d0004d7e5acf3447a02fab8a0969e862b6dc89a0651051a279ff4",
+      "actual": "dbe6bf3ec33d0004d7e5acf3447a02fab8a0969e862b6dc89a0651051a279ff4",
+      "exactMatch": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/question-closure-bce3f075/attempt2-definition-inputs-reconstructed/proposed-nova-platform.schema.json",
+      "expectedHashFromRawAttempt2": "51766f86dd690d68e09ee745fc9d273e0792b4302b5b6169e5af8ffe455522e4",
+      "actual": "51766f86dd690d68e09ee745fc9d273e0792b4302b5b6169e5af8ffe455522e4",
+      "exactMatch": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/question-closure-bce3f075/attempt2-definition-inputs-reconstructed/validate-proposed-definitions.mjs",
+      "expectedHashFromRawAttempt2": "0afbd188d5e49eb87fda0377cf314d3caed38daf587a54d88c8a901901d38ad2",
+      "actual": "0afbd188d5e49eb87fda0377cf314d3caed38daf587a54d88c8a901901d38ad2",
+      "exactMatch": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/question-closure-bce3f075/attempt2-definition-inputs-reconstructed/admission-binding.schema.json",
+      "expectedHashFromRawAttempt2": "2c3b0e60d390bb6a1ec20e5b4600b2e9da6205508db93160872d58aa8e4cc9a9",
+      "actual": "2c3b0e60d390bb6a1ec20e5b4600b2e9da6205508db93160872d58aa8e4cc9a9",
+      "exactMatch": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/question-closure-bce3f075/attempt2-definition-inputs-reconstructed/serialization-envelope-contract.json",
+      "expectedHashFromRawAttempt2": "30eee23ca82c1d223dee96b5ca15034165b99418a7b39ecda756da11242edd8f",
+      "actual": "30eee23ca82c1d223dee96b5ca15034165b99418a7b39ecda756da11242edd8f",
+      "exactMatch": true
+    }
+  ]
+}

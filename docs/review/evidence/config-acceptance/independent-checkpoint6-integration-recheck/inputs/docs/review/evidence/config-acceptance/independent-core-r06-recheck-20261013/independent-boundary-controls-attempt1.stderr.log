@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/independent-core-r06-recheck-20261013/independent-boundary-controls.py", line 17, in <module>
+    prior=read(c['prior']);r=assertBinding(prior,c['completeOwningAuthor']);check('positive-original-quota:'+c['id'],r['policy']['admission']['maximumBytes']==c['wholeCap']);check('positive-explicit-binding:'+c['id'],prior['binding']==c['originalBinding']);manifest=read(c['originalPolicyManifest']);check('manifest-exactref:'+c['id'],manifest==r);positiveBindings[c['id']]=r
+                                                                                                                                                                                                                                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/independent-core-r06-recheck-20261013/independent-boundary-controls.py", line 11, in read
+    raw=(R/ref['path']).read_bytes();check('snapshot-identity:'+ref['path'],sha(raw)==ref['sha256'] and len(raw)==ref['sizeBytes']);v=json.loads(raw);check('snapshot-real-canonical-equivalence:'+ref['path'],canonical(v)==raw);return v
+                                                                                                                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/independent-core-r06-recheck-20261013/independent-boundary-controls.py", line 5, in check
+    results.append({'id':id,'passed':bool(ok),'details':details});assert ok,id
+                                                                  ^^^^^^^^^^^^
+AssertionError: snapshot-real-canonical-equivalence:docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/manifests/normal-admit-positive-original.json

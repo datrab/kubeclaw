@@ -1,0 +1,41 @@
+{
+  "scope": "current FileJournal local persistence only",
+  "observations": [
+    {
+      "id": "CURRENT-JOURNAL-CAPTURE",
+      "result": "passed"
+    },
+    {
+      "id": "CURRENT-JOURNAL-REOPEN",
+      "result": "passed"
+    },
+    {
+      "id": "CURRENT-JOURNAL-TWO-OBJECT-DEDUP",
+      "result": "passed"
+    },
+    {
+      "id": "CURRENT-JOURNAL-CONFLICT-BEFORE-APPEND",
+      "result": "passed"
+    },
+    {
+      "id": "CURRENT-JOURNAL-INCOMPLETE-TAIL-RECOVERY",
+      "result": "passed"
+    },
+    {
+      "id": "CURRENT-JOURNAL-APPENDED-RECORD-NOT-ROLLBACK",
+      "result": "passed"
+    },
+    {
+      "id": "CURRENT-JOURNAL-CALLBACK-CANNOT-ESCAPE",
+      "result": "passed"
+    }
+  ],
+  "fixtureBytes": 543,
+  "fixtureSha256": "eb1d958bd479654cb764ddde106dacaac09d3be1c963b0a7eb75ad6369996fa8",
+  "limitations": [
+    "specimen is not a current LifecycleEvent",
+    "no true multi-process contention or process-kill crash exercised",
+    "transact is synchronous exclusion, not multi-record rollback; no await inside callback",
+    "no proposed module binding, observer, SDK, capacity or deployed-host acceptance"
+  ]
+}

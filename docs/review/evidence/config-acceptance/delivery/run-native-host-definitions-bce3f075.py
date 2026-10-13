@@ -1,0 +1,20 @@
+"""Actual existing preparation-only renderer. Never execute generated service/setup/host artifacts."""
+import pathlib,json,hashlib,subprocess,yaml,sys
+out=pathlib.Path(__file__).resolve().parent;repo=out.parents[4];folder=out/'native-host-definition-profiles-bce3f075';folder.mkdir(exist_ok=True);records=[];sources={}
+def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
+def rel(p):return str(p.relative_to(repo))
+for name,mul in [('A',1),('B',2)]:
+ policy={'schemaVersion':1,'nodeName':'dlv-native-'+name.lower(),'systemReserve':{'cpuMillicores':100*mul,'memoryBytes':1048576*mul,'tasks':16*mul},'kubernetesReserve':{'cpuMillicores':100*mul,'memoryBytes':1048576*mul,'tasks':16*mul},'pools':{role:{'namespace':'dlv-'+role+'-'+name.lower(),'cpuMillicores':500*mul,'memoryBytes':67108864*mul,'tasks':32*mul,'maximumActiveScopes':2*mul} for role in ['buster','prism']},'runtime':{'containerdVersion':'2.2.0' if name=='A' else '2.3.0'}}
+ file=folder/(name+'.yaml');file.write_text(yaml.safe_dump(policy,sort_keys=False));sources[rel(file)]=sha(file);destination=folder/(name+'-bundle');command=['node','scripts/render-native-worker-node.mjs',rel(file),rel(destination)];actual=subprocess.run(command,cwd=repo,capture_output=True,text=True)
+ stdout=folder/(name+'.stdout');stderr=folder/(name+'.stderr');stdout.write_text(actual.stdout);stderr.write_text(actual.stderr)
+ record={'id':'DLV-C0-BCE3-NATIVE-HOST-RENDER-'+name,'command':command,'profile':rel(file),'exit':actual.returncode,'rawEvidencePaths':[rel(stdout),rel(stderr)],'result':'passed' if actual.returncode==0 else 'failed','scope':'existing preparation-only renderer and output bindings; NOT installed selected node/API/cgroup/runtime receipt'}
+ if actual.returncode==0:
+  a=json.loads((destination/'buster-pool.json').read_text());b=json.loads((destination/'prism-pool.json').read_text());nri=json.loads((destination/'native-nri.json').read_text());setup=json.loads((destination/'native-node-policy.json').read_text());cv=yaml.safe_load((destination/'buster-native-values.yaml').read_text());pv=yaml.safe_load((destination/'prism-native-values.yaml').read_text());canonical=subprocess.check_output(['node','--input-type=module','-e',"import {loadNativeNodePolicy,nativePoolPolicy} from './scripts/native-worker-node-policy.mjs'; console.log(nativePoolPolicy(loadNativeNodePolicy(process.argv[1]),'buster').policyDigest)",rel(file)],cwd=repo,text=True).strip()
+  checks={'samePolicyDigest':a['policyDigest']==b['policyDigest']==canonical,'busterChartDigest':cv['busterNative']['policyDigest']==canonical,'prismChartDigest':pv['worker']['native']['policyDigest']==canonical,'cpuQuotaPeriod':all(pool['limits']['cpuQuotaMicroseconds']==policy['pools'][role]['cpuMillicores']*100 and pool['limits']['cpuPeriodMicroseconds']==100000 for role,pool in [('buster',a),('prism',b)]),'setupMembers':setup['pools']=={'buster':a['limits'],'prism':b['limits']},'nriRuntime':nri['containerdVersion']==policy['runtime']['containerdVersion']}
+  record['fieldWitnesses']=checks;record['policyDigest']=canonical;record['result']='passed' if all(checks.values()) else 'failed'
+  for p in destination.iterdir():
+   if p.is_file():sources[rel(p)]=sha(p)
+ records.append(record)
+for file in [pathlib.Path(__file__),repo/'scripts/native-worker-node-policy.mjs',repo/'scripts/render-native-worker-node.mjs',repo/'scripts/prepare-native-worker-pools.mjs',repo/'versions.json']:
+ sources[rel(file)]=sha(file)
+body={'scope':'actual isolated existing native preparation renderer only; all generated host setup/service binaries/scripts are data, never run','records':records,'sourceDigests':sources,'tools':{'node':subprocess.check_output(['node','--version'],text=True).strip()},'acceptance':'NOT ACCEPTED; synthetic policy shapes are not physical capacity or installed runtime claims'};(out/'native-host-definitions-bce3f075.json').write_text(json.dumps(body,indent=2)+'\n');print(json.dumps({'records':len(records),'results':[r['result'] for r in records]}));sys.exit(any(r['result']!='passed' for r in records))

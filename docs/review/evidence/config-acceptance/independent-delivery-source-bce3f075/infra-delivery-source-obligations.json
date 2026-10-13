@@ -1,0 +1,3950 @@
+{
+  "scope": "Independent code-reachable current infra overlay/input obligations; no701-coordinate-as-settings claim",
+  "records": [
+    {
+      "path": "my-values/infra/argocd-tailscale-ingress.yaml",
+      "sha256": "eb86daeca77a9329d80d0f0f96b0b9a46ee5807a7b9bd9187cb6ebb2d1ece58e",
+      "fieldCoordinates": [
+        {
+          "path": "my-values/infra/argocd-tailscale-ingress.yaml",
+          "coordinate": "/apiVersion",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/argocd-tailscale-ingress.yaml",
+          "coordinate": "/kind",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/argocd-tailscale-ingress.yaml",
+          "coordinate": "/metadata/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/argocd-tailscale-ingress.yaml",
+          "coordinate": "/metadata/namespace",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/argocd-tailscale-ingress.yaml",
+          "coordinate": "/spec/ingressClassName",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/argocd-tailscale-ingress.yaml",
+          "coordinate": "/spec/defaultBackend/service/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/argocd-tailscale-ingress.yaml",
+          "coordinate": "/spec/defaultBackend/service/port/number",
+          "type": "int"
+        },
+        {
+          "path": "my-values/infra/argocd-tailscale-ingress.yaml",
+          "coordinate": "/spec/tls/0/hosts/0",
+          "type": "str"
+        }
+      ],
+      "in312SourceList": false,
+      "in33CoordinateSources": false,
+      "callerSearch": {
+        "argv": [
+          "rg",
+          "-n",
+          "-F",
+          "argocd-tailscale-ingress.yaml",
+          "scripts",
+          ".github/workflows"
+        ],
+        "exit": 0,
+        "stdout": "scripts/argocd-self-management.mjs:48:        directory: { include: 'argocd-tailscale-ingress.yaml' },\nscripts/deploy-argocd.sh:11:ARGOCD_TAILSCALE_INGRESS=\"${ARGOCD_TAILSCALE_INGRESS:-$REPO_DIR/my-values/infra/argocd-tailscale-ingress.yaml}\"\n",
+        "stderr": ""
+      },
+      "expectedDisposition": "Current caller/original author\u2192operator/protocol/version/secret/generated/task per coordinate, single proposed author/ref, native schema/first error/domain/activation/cases; or checked historical/generated/nonproductive exclusion. Counts alone do not designate settings."
+    },
+    {
+      "path": "my-values/infra/argocd-values.yaml",
+      "sha256": "eb0a7cdadf4bab951724dafa6ec48f5d4e07152cb3d41929c59d3c2899247dac",
+      "fieldCoordinates": [
+        {
+          "path": "my-values/infra/argocd-values.yaml",
+          "coordinate": "/configs/cm/application.resourceTrackingMethod",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/argocd-values.yaml",
+          "coordinate": "/configs/params/server.insecure",
+          "type": "bool"
+        },
+        {
+          "path": "my-values/infra/argocd-values.yaml",
+          "coordinate": "/server/service/type",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/argocd-values.yaml",
+          "coordinate": "/server/ingress/enabled",
+          "type": "bool"
+        }
+      ],
+      "in312SourceList": false,
+      "in33CoordinateSources": false,
+      "callerSearch": {
+        "argv": [
+          "rg",
+          "-n",
+          "-F",
+          "argocd-values.yaml",
+          "scripts",
+          ".github/workflows"
+        ],
+        "exit": 0,
+        "stdout": "scripts/argocd-self-management.mjs:42:          valueFiles: ['$values/my-values/infra/argocd-values.yaml'],\nscripts/deploy-argocd.sh:10:ARGOCD_VALUES_FILE=\"${ARGOCD_VALUES_FILE:-$REPO_DIR/my-values/infra/argocd-values.yaml}\"\n",
+        "stderr": ""
+      },
+      "expectedDisposition": "Current caller/original author\u2192operator/protocol/version/secret/generated/task per coordinate, single proposed author/ref, native schema/first error/domain/activation/cases; or checked historical/generated/nonproductive exclusion. Counts alone do not designate settings."
+    },
+    {
+      "path": "my-values/infra/buster-namespace-fence.yaml",
+      "sha256": "d603a6c1ae1460aa071ed8d35c364402551a7598fa36a41951a44ec91b11b2b2",
+      "fieldCoordinates": [
+        {
+          "path": "my-values/infra/buster-namespace-fence.yaml",
+          "coordinate": "/document0/apiVersion",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/buster-namespace-fence.yaml",
+          "coordinate": "/document0/kind",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/buster-namespace-fence.yaml",
+          "coordinate": "/document0/metadata/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/buster-namespace-fence.yaml",
+          "coordinate": "/document0/spec/failurePolicy",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/buster-namespace-fence.yaml",
+          "coordinate": "/document0/spec/matchConstraints/resourceRules/0/apiGroups/0",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/buster-namespace-fence.yaml",
+          "coordinate": "/document0/spec/matchConstraints/resourceRules/0/apiVersions/0",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/buster-namespace-fence.yaml",
+          "coordinate": "/document0/spec/matchConstraints/resourceRules/0/resources/0",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/buster-namespace-fence.yaml",
+          "coordinate": "/document0/spec/matchConstraints/resourceRules/0/operations/0",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/buster-namespace-fence.yaml",
+          "coordinate": "/document0/spec/matchConstraints/resourceRules/0/operations/1",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/buster-namespace-fence.yaml",
+          "coordinate": "/document0/spec/matchConstraints/resourceRules/0/operations/2",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/buster-namespace-fence.yaml",
+          "coordinate": "/document0/spec/matchConditions/0/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/buster-namespace-fence.yaml",
+          "coordinate": "/document0/spec/matchConditions/0/expression",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/buster-namespace-fence.yaml",
+          "coordinate": "/document0/spec/validations/0/expression",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/buster-namespace-fence.yaml",
+          "coordinate": "/document0/spec/validations/0/message",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/buster-namespace-fence.yaml",
+          "coordinate": "/document0/spec/validations/1/expression",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/buster-namespace-fence.yaml",
+          "coordinate": "/document0/spec/validations/1/message",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/buster-namespace-fence.yaml",
+          "coordinate": "/document0/spec/validations/2/expression",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/buster-namespace-fence.yaml",
+          "coordinate": "/document0/spec/validations/2/message",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/buster-namespace-fence.yaml",
+          "coordinate": "/document1/apiVersion",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/buster-namespace-fence.yaml",
+          "coordinate": "/document1/kind",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/buster-namespace-fence.yaml",
+          "coordinate": "/document1/metadata/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/buster-namespace-fence.yaml",
+          "coordinate": "/document1/spec/policyName",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/buster-namespace-fence.yaml",
+          "coordinate": "/document1/spec/validationActions/0",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/buster-namespace-fence.yaml",
+          "coordinate": "/document2/apiVersion",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/buster-namespace-fence.yaml",
+          "coordinate": "/document2/kind",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/buster-namespace-fence.yaml",
+          "coordinate": "/document2/metadata/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/buster-namespace-fence.yaml",
+          "coordinate": "/document2/spec/failurePolicy",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/buster-namespace-fence.yaml",
+          "coordinate": "/document2/spec/matchConstraints/resourceRules/0/apiGroups/0",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/buster-namespace-fence.yaml",
+          "coordinate": "/document2/spec/matchConstraints/resourceRules/0/apiVersions/0",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/buster-namespace-fence.yaml",
+          "coordinate": "/document2/spec/matchConstraints/resourceRules/0/resources/0",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/buster-namespace-fence.yaml",
+          "coordinate": "/document2/spec/matchConstraints/resourceRules/0/operations/0",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/buster-namespace-fence.yaml",
+          "coordinate": "/document2/spec/matchConstraints/resourceRules/0/operations/1",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/buster-namespace-fence.yaml",
+          "coordinate": "/document2/spec/variables/0/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/buster-namespace-fence.yaml",
+          "coordinate": "/document2/spec/variables/0/expression",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/buster-namespace-fence.yaml",
+          "coordinate": "/document2/spec/variables/1/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/buster-namespace-fence.yaml",
+          "coordinate": "/document2/spec/variables/1/expression",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/buster-namespace-fence.yaml",
+          "coordinate": "/document2/spec/validations/0/expression",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/buster-namespace-fence.yaml",
+          "coordinate": "/document2/spec/validations/0/message",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/buster-namespace-fence.yaml",
+          "coordinate": "/document3/apiVersion",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/buster-namespace-fence.yaml",
+          "coordinate": "/document3/kind",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/buster-namespace-fence.yaml",
+          "coordinate": "/document3/metadata/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/buster-namespace-fence.yaml",
+          "coordinate": "/document3/spec/policyName",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/buster-namespace-fence.yaml",
+          "coordinate": "/document3/spec/validationActions/0",
+          "type": "str"
+        }
+      ],
+      "in312SourceList": false,
+      "in33CoordinateSources": false,
+      "callerSearch": {
+        "argv": [
+          "rg",
+          "-n",
+          "-F",
+          "buster-namespace-fence.yaml",
+          "scripts",
+          ".github/workflows"
+        ],
+        "exit": 0,
+        "stdout": "scripts/deploy.sh:2789:  delete_manifest_if_cluster_resource_present validatingadmissionpolicy buster-namespace-fence \"$INFRA_DIR/buster-namespace-fence.yaml\"\nscripts/docs-inventory.mjs:160:    'my-values/infra/buster-namespace-fence.yaml',\n",
+        "stderr": ""
+      },
+      "expectedDisposition": "Current caller/original author\u2192operator/protocol/version/secret/generated/task per coordinate, single proposed author/ref, native schema/first error/domain/activation/cases; or checked historical/generated/nonproductive exclusion. Counts alone do not designate settings."
+    },
+    {
+      "path": "my-values/infra/cilium-cluster-policies.yaml",
+      "sha256": "06420e996f1a1953ffe81fb3ab2a96f48e144359008e8389ac98fc3f5680b5b7",
+      "fieldCoordinates": [
+        {
+          "path": "my-values/infra/cilium-cluster-policies.yaml",
+          "coordinate": "/document0/apiVersion",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/cilium-cluster-policies.yaml",
+          "coordinate": "/document0/kind",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/cilium-cluster-policies.yaml",
+          "coordinate": "/document0/metadata/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/cilium-cluster-policies.yaml",
+          "coordinate": "/document0/spec/description",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/cilium-cluster-policies.yaml",
+          "coordinate": "/document0/spec/endpointSelector/matchExpressions/0/key",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/cilium-cluster-policies.yaml",
+          "coordinate": "/document0/spec/endpointSelector/matchExpressions/0/operator",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/cilium-cluster-policies.yaml",
+          "coordinate": "/document0/spec/endpointSelector/matchExpressions/0/values/0",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/cilium-cluster-policies.yaml",
+          "coordinate": "/document0/spec/endpointSelector/matchExpressions/0/values/1",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/cilium-cluster-policies.yaml",
+          "coordinate": "/document0/spec/endpointSelector/matchExpressions/0/values/2",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/cilium-cluster-policies.yaml",
+          "coordinate": "/document0/spec/endpointSelector/matchExpressions/0/values/3",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/cilium-cluster-policies.yaml",
+          "coordinate": "/document0/spec/endpointSelector/matchExpressions/0/values/4",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/cilium-cluster-policies.yaml",
+          "coordinate": "/document0/spec/enableDefaultDeny/ingress",
+          "type": "bool"
+        },
+        {
+          "path": "my-values/infra/cilium-cluster-policies.yaml",
+          "coordinate": "/document0/spec/enableDefaultDeny/egress",
+          "type": "bool"
+        },
+        {
+          "path": "my-values/infra/cilium-cluster-policies.yaml",
+          "coordinate": "/document0/spec/ingress",
+          "type": "list"
+        },
+        {
+          "path": "my-values/infra/cilium-cluster-policies.yaml",
+          "coordinate": "/document0/spec/egress",
+          "type": "list"
+        },
+        {
+          "path": "my-values/infra/cilium-cluster-policies.yaml",
+          "coordinate": "/document1/apiVersion",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/cilium-cluster-policies.yaml",
+          "coordinate": "/document1/kind",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/cilium-cluster-policies.yaml",
+          "coordinate": "/document1/metadata/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/cilium-cluster-policies.yaml",
+          "coordinate": "/document1/spec/description",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/cilium-cluster-policies.yaml",
+          "coordinate": "/document1/spec/endpointSelector/matchExpressions/0/key",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/cilium-cluster-policies.yaml",
+          "coordinate": "/document1/spec/endpointSelector/matchExpressions/0/operator",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/cilium-cluster-policies.yaml",
+          "coordinate": "/document1/spec/endpointSelector/matchExpressions/0/values/0",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/cilium-cluster-policies.yaml",
+          "coordinate": "/document1/spec/endpointSelector/matchExpressions/0/values/1",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/cilium-cluster-policies.yaml",
+          "coordinate": "/document1/spec/endpointSelector/matchExpressions/0/values/2",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/cilium-cluster-policies.yaml",
+          "coordinate": "/document1/spec/endpointSelector/matchExpressions/0/values/3",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/cilium-cluster-policies.yaml",
+          "coordinate": "/document1/spec/endpointSelector/matchExpressions/0/values/4",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/cilium-cluster-policies.yaml",
+          "coordinate": "/document1/spec/enableDefaultDeny/ingress",
+          "type": "bool"
+        },
+        {
+          "path": "my-values/infra/cilium-cluster-policies.yaml",
+          "coordinate": "/document1/spec/enableDefaultDeny/egress",
+          "type": "bool"
+        },
+        {
+          "path": "my-values/infra/cilium-cluster-policies.yaml",
+          "coordinate": "/document1/spec/egress/0/toEndpoints/0/matchLabels/k8s:io.kubernetes.pod.namespace",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/cilium-cluster-policies.yaml",
+          "coordinate": "/document1/spec/egress/0/toEndpoints/0/matchLabels/k8s-app",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/cilium-cluster-policies.yaml",
+          "coordinate": "/document1/spec/egress/0/toPorts/0/ports/0/port",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/cilium-cluster-policies.yaml",
+          "coordinate": "/document1/spec/egress/0/toPorts/0/ports/0/protocol",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/cilium-cluster-policies.yaml",
+          "coordinate": "/document1/spec/egress/0/toPorts/0/ports/1/port",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/cilium-cluster-policies.yaml",
+          "coordinate": "/document1/spec/egress/0/toPorts/0/ports/1/protocol",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/cilium-cluster-policies.yaml",
+          "coordinate": "/document2/apiVersion",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/cilium-cluster-policies.yaml",
+          "coordinate": "/document2/kind",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/cilium-cluster-policies.yaml",
+          "coordinate": "/document2/metadata/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/cilium-cluster-policies.yaml",
+          "coordinate": "/document2/spec/description",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/cilium-cluster-policies.yaml",
+          "coordinate": "/document2/spec/endpointSelector/matchLabels/reserved:health",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/cilium-cluster-policies.yaml",
+          "coordinate": "/document2/spec/ingress/0/fromEntities/0",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/cilium-cluster-policies.yaml",
+          "coordinate": "/document2/spec/egress/0/toEntities/0",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/cilium-cluster-policies.yaml",
+          "coordinate": "/document3/apiVersion",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/cilium-cluster-policies.yaml",
+          "coordinate": "/document3/kind",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/cilium-cluster-policies.yaml",
+          "coordinate": "/document3/metadata/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/cilium-cluster-policies.yaml",
+          "coordinate": "/document3/metadata/namespace",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/cilium-cluster-policies.yaml",
+          "coordinate": "/document3/spec/endpointSelector/matchLabels/k8s-app",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/cilium-cluster-policies.yaml",
+          "coordinate": "/document3/spec/ingress/0/fromEndpoints/0/matchLabels/k8s:io.kubernetes.pod.namespace",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/cilium-cluster-policies.yaml",
+          "coordinate": "/document3/spec/ingress/0/fromEndpoints/0/matchLabels/app.kubernetes.io/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/cilium-cluster-policies.yaml",
+          "coordinate": "/document3/spec/ingress/0/fromEndpoints/1/matchLabels/k8s:io.kubernetes.pod.namespace",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/cilium-cluster-policies.yaml",
+          "coordinate": "/document3/spec/ingress/0/fromEndpoints/1/matchLabels/k8s-app",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/cilium-cluster-policies.yaml",
+          "coordinate": "/document3/spec/ingress/0/toPorts/0/ports/0/port",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/cilium-cluster-policies.yaml",
+          "coordinate": "/document3/spec/ingress/0/toPorts/0/ports/0/protocol",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/cilium-cluster-policies.yaml",
+          "coordinate": "/document3/spec/ingress/1/fromEntities/0",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/cilium-cluster-policies.yaml",
+          "coordinate": "/document3/spec/ingress/1/fromEntities/1",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/cilium-cluster-policies.yaml",
+          "coordinate": "/document3/spec/ingress/1/toPorts/0/ports/0/port",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/cilium-cluster-policies.yaml",
+          "coordinate": "/document3/spec/ingress/1/toPorts/0/ports/0/protocol",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/cilium-cluster-policies.yaml",
+          "coordinate": "/document3/spec/ingress/1/toPorts/0/ports/1/port",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/cilium-cluster-policies.yaml",
+          "coordinate": "/document3/spec/ingress/1/toPorts/0/ports/1/protocol",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/cilium-cluster-policies.yaml",
+          "coordinate": "/document4/apiVersion",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/cilium-cluster-policies.yaml",
+          "coordinate": "/document4/kind",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/cilium-cluster-policies.yaml",
+          "coordinate": "/document4/metadata/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/cilium-cluster-policies.yaml",
+          "coordinate": "/document4/metadata/namespace",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/cilium-cluster-policies.yaml",
+          "coordinate": "/document4/spec/endpointSelector/matchLabels/k8s-app",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/cilium-cluster-policies.yaml",
+          "coordinate": "/document4/spec/enableDefaultDeny/ingress",
+          "type": "bool"
+        },
+        {
+          "path": "my-values/infra/cilium-cluster-policies.yaml",
+          "coordinate": "/document4/spec/ingress",
+          "type": "list"
+        }
+      ],
+      "in312SourceList": false,
+      "in33CoordinateSources": false,
+      "callerSearch": {
+        "argv": [
+          "rg",
+          "-n",
+          "-F",
+          "cilium-cluster-policies.yaml",
+          "scripts",
+          ".github/workflows"
+        ],
+        "exit": 0,
+        "stdout": "scripts/tests/cilium-observation-guards.test.py:41:            'policies': [str(ROOT / 'my-values/infra/cilium-cluster-policies.yaml'),\nscripts/migrate-kubeclaw-network-policies-to-cilium.sh:8:BASELINE_FILE=\"$REPO_DIR/my-values/infra/cilium-cluster-policies.yaml\"\nscripts/deploy-cilium.sh:30:kubectl apply -f \"$REPO_DIR/my-values/infra/cilium-cluster-policies.yaml\"\nscripts/verify-cilium-policies.py:25:        scope = [] if path.endswith(('cilium-cluster-policies.yaml', 'spire-network-policies.yaml')) else ['-n', namespace]\n",
+        "stderr": ""
+      },
+      "expectedDisposition": "Current caller/original author\u2192operator/protocol/version/secret/generated/task per coordinate, single proposed author/ref, native schema/first error/domain/activation/cases; or checked historical/generated/nonproductive exclusion. Counts alone do not designate settings."
+    },
+    {
+      "path": "my-values/infra/cilium-values.yaml",
+      "sha256": "f2ffb47f76defc4375cd4e87d30c3ee001f49512d3408846cc305625cc6f7a8e",
+      "fieldCoordinates": [
+        {
+          "path": "my-values/infra/cilium-values.yaml",
+          "coordinate": "/namespaceOverride",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/cilium-values.yaml",
+          "coordinate": "/operator/replicas",
+          "type": "int"
+        },
+        {
+          "path": "my-values/infra/cilium-values.yaml",
+          "coordinate": "/operator/hostNetwork",
+          "type": "bool"
+        },
+        {
+          "path": "my-values/infra/cilium-values.yaml",
+          "coordinate": "/operator/tolerations/0/key",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/cilium-values.yaml",
+          "coordinate": "/operator/tolerations/0/operator",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/cilium-values.yaml",
+          "coordinate": "/operator/tolerations/0/effect",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/cilium-values.yaml",
+          "coordinate": "/operator/tolerations/1/key",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/cilium-values.yaml",
+          "coordinate": "/operator/tolerations/1/operator",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/cilium-values.yaml",
+          "coordinate": "/operator/tolerations/1/effect",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/cilium-values.yaml",
+          "coordinate": "/operator/tolerations/2/key",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/cilium-values.yaml",
+          "coordinate": "/operator/tolerations/2/operator",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/cilium-values.yaml",
+          "coordinate": "/operator/tolerations/2/effect",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/cilium-values.yaml",
+          "coordinate": "/operator/tolerations/3/key",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/cilium-values.yaml",
+          "coordinate": "/operator/tolerations/3/operator",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/cilium-values.yaml",
+          "coordinate": "/operator/tolerations/3/effect",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/cilium-values.yaml",
+          "coordinate": "/kubeProxyReplacement",
+          "type": "bool"
+        },
+        {
+          "path": "my-values/infra/cilium-values.yaml",
+          "coordinate": "/ipam/mode",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/cilium-values.yaml",
+          "coordinate": "/ipam/operator/clusterPoolIPv4PodCIDRList/0",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/cilium-values.yaml",
+          "coordinate": "/ipam/operator/clusterPoolIPv4MaskSize",
+          "type": "int"
+        },
+        {
+          "path": "my-values/infra/cilium-values.yaml",
+          "coordinate": "/routingMode",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/cilium-values.yaml",
+          "coordinate": "/tunnelProtocol",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/cilium-values.yaml",
+          "coordinate": "/policyEnforcementMode",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/cilium-values.yaml",
+          "coordinate": "/cni/exclusive",
+          "type": "bool"
+        },
+        {
+          "path": "my-values/infra/cilium-values.yaml",
+          "coordinate": "/cni/uninstall",
+          "type": "bool"
+        },
+        {
+          "path": "my-values/infra/cilium-values.yaml",
+          "coordinate": "/hubble/enabled",
+          "type": "bool"
+        },
+        {
+          "path": "my-values/infra/cilium-values.yaml",
+          "coordinate": "/hubble/relay/enabled",
+          "type": "bool"
+        },
+        {
+          "path": "my-values/infra/cilium-values.yaml",
+          "coordinate": "/hubble/relay/servicePort",
+          "type": "int"
+        },
+        {
+          "path": "my-values/infra/cilium-values.yaml",
+          "coordinate": "/hubble/relay/service/type",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/cilium-values.yaml",
+          "coordinate": "/hubble/relay/tls/server/enabled",
+          "type": "bool"
+        },
+        {
+          "path": "my-values/infra/cilium-values.yaml",
+          "coordinate": "/hubble/ui/enabled",
+          "type": "bool"
+        },
+        {
+          "path": "my-values/infra/cilium-values.yaml",
+          "coordinate": "/hubble/ui/backend/extraEnv/0/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/cilium-values.yaml",
+          "coordinate": "/hubble/ui/backend/extraEnv/0/value",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/cilium-values.yaml",
+          "coordinate": "/hubble/ui/service/type",
+          "type": "str"
+        }
+      ],
+      "in312SourceList": false,
+      "in33CoordinateSources": false,
+      "callerSearch": {
+        "argv": [
+          "rg",
+          "-n",
+          "-F",
+          "cilium-values.yaml",
+          "scripts",
+          ".github/workflows"
+        ],
+        "exit": 0,
+        "stdout": "scripts/deploy-cilium.sh:26:  --values \"$REPO_DIR/my-values/infra/cilium-values.yaml\" --timeout 10m\n",
+        "stderr": ""
+      },
+      "expectedDisposition": "Current caller/original author\u2192operator/protocol/version/secret/generated/task per coordinate, single proposed author/ref, native schema/first error/domain/activation/cases; or checked historical/generated/nonproductive exclusion. Counts alone do not designate settings."
+    },
+    {
+      "path": "my-values/infra/k3s-registries.yaml",
+      "sha256": "56989ad77a2924cb81b6ac5d08f0ae9d15d8f856cadba456595a515f23c00149",
+      "fieldCoordinates": [
+        {
+          "path": "my-values/infra/k3s-registries.yaml",
+          "coordinate": "/mirrors",
+          "type": "dict"
+        },
+        {
+          "path": "my-values/infra/k3s-registries.yaml",
+          "coordinate": "/configs",
+          "type": "dict"
+        }
+      ],
+      "in312SourceList": false,
+      "in33CoordinateSources": false,
+      "callerSearch": {
+        "argv": [
+          "rg",
+          "-n",
+          "-F",
+          "k3s-registries.yaml",
+          "scripts",
+          ".github/workflows"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": ""
+      },
+      "expectedDisposition": "Current caller/original author\u2192operator/protocol/version/secret/generated/task per coordinate, single proposed author/ref, native schema/first error/domain/activation/cases; or checked historical/generated/nonproductive exclusion. Counts alone do not designate settings."
+    },
+    {
+      "path": "my-values/infra/litellm-config.yaml",
+      "sha256": "70356ac84fef937d6cfad5ea54583a16342784d8299406e155524128542baa6d",
+      "fieldCoordinates": [
+        {
+          "path": "my-values/infra/litellm-config.yaml",
+          "coordinate": "/model_list/0/model_name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/litellm-config.yaml",
+          "coordinate": "/model_list/0/litellm_params/model",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/litellm-config.yaml",
+          "coordinate": "/model_list/0/litellm_params/vertex_project",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/litellm-config.yaml",
+          "coordinate": "/model_list/0/litellm_params/vertex_location",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/litellm-config.yaml",
+          "coordinate": "/general_settings/master_key",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/litellm-config.yaml",
+          "coordinate": "/litellm_settings/set_verbose",
+          "type": "bool"
+        },
+        {
+          "path": "my-values/infra/litellm-config.yaml",
+          "coordinate": "/litellm_settings/drop_params",
+          "type": "bool"
+        }
+      ],
+      "in312SourceList": false,
+      "in33CoordinateSources": false,
+      "callerSearch": {
+        "argv": [
+          "rg",
+          "-n",
+          "-F",
+          "litellm-config.yaml",
+          "scripts",
+          ".github/workflows"
+        ],
+        "exit": 0,
+        "stdout": "scripts/docs-inventory.mjs:154:    'my-values/infra/litellm-config.yaml',\nscripts/render-postgresql-recovery.mjs:45:  const config = load(fs.readFileSync(path.join(path.dirname(applicationFile), 'litellm-config.yaml'), 'utf8'));\nscripts/deploy.sh:1188:      \"$INFRA_DIR/litellm-config.yaml\" \"$INFRA_DIR/litellm-deployment.yaml\")\" || return 1\n",
+        "stderr": ""
+      },
+      "expectedDisposition": "Current caller/original author\u2192operator/protocol/version/secret/generated/task per coordinate, single proposed author/ref, native schema/first error/domain/activation/cases; or checked historical/generated/nonproductive exclusion. Counts alone do not designate settings."
+    },
+    {
+      "path": "my-values/infra/litellm-deployment.yaml",
+      "sha256": "21136d7cc63b549db0d9e1f3a32d449c5bf3c2644790d144d47d476372c56bab",
+      "fieldCoordinates": [
+        {
+          "path": "my-values/infra/litellm-deployment.yaml",
+          "coordinate": "/document0/apiVersion",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/litellm-deployment.yaml",
+          "coordinate": "/document0/kind",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/litellm-deployment.yaml",
+          "coordinate": "/document0/metadata/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/litellm-deployment.yaml",
+          "coordinate": "/document0/metadata/labels/app",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/litellm-deployment.yaml",
+          "coordinate": "/document0/spec/replicas",
+          "type": "int"
+        },
+        {
+          "path": "my-values/infra/litellm-deployment.yaml",
+          "coordinate": "/document0/spec/strategy/type",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/litellm-deployment.yaml",
+          "coordinate": "/document0/spec/selector/matchLabels/app",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/litellm-deployment.yaml",
+          "coordinate": "/document0/spec/template/metadata/labels/app",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/litellm-deployment.yaml",
+          "coordinate": "/document0/spec/template/spec/containers/0/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/litellm-deployment.yaml",
+          "coordinate": "/document0/spec/template/spec/containers/0/image",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/litellm-deployment.yaml",
+          "coordinate": "/document0/spec/template/spec/containers/0/imagePullPolicy",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/litellm-deployment.yaml",
+          "coordinate": "/document0/spec/template/spec/containers/0/args/0",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/litellm-deployment.yaml",
+          "coordinate": "/document0/spec/template/spec/containers/0/args/1",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/litellm-deployment.yaml",
+          "coordinate": "/document0/spec/template/spec/containers/0/args/2",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/litellm-deployment.yaml",
+          "coordinate": "/document0/spec/template/spec/containers/0/args/3",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/litellm-deployment.yaml",
+          "coordinate": "/document0/spec/template/spec/containers/0/env/0/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/litellm-deployment.yaml",
+          "coordinate": "/document0/spec/template/spec/containers/0/env/0/value",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/litellm-deployment.yaml",
+          "coordinate": "/document0/spec/template/spec/containers/0/env/1/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/litellm-deployment.yaml",
+          "coordinate": "/document0/spec/template/spec/containers/0/env/1/value",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/litellm-deployment.yaml",
+          "coordinate": "/document0/spec/template/spec/containers/0/envFrom/0/secretRef/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/litellm-deployment.yaml",
+          "coordinate": "/document0/spec/template/spec/containers/0/ports/0/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/litellm-deployment.yaml",
+          "coordinate": "/document0/spec/template/spec/containers/0/ports/0/containerPort",
+          "type": "int"
+        },
+        {
+          "path": "my-values/infra/litellm-deployment.yaml",
+          "coordinate": "/document0/spec/template/spec/containers/0/ports/0/protocol",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/litellm-deployment.yaml",
+          "coordinate": "/document0/spec/template/spec/containers/0/startupProbe/httpGet/path",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/litellm-deployment.yaml",
+          "coordinate": "/document0/spec/template/spec/containers/0/startupProbe/httpGet/port",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/litellm-deployment.yaml",
+          "coordinate": "/document0/spec/template/spec/containers/0/startupProbe/periodSeconds",
+          "type": "int"
+        },
+        {
+          "path": "my-values/infra/litellm-deployment.yaml",
+          "coordinate": "/document0/spec/template/spec/containers/0/startupProbe/timeoutSeconds",
+          "type": "int"
+        },
+        {
+          "path": "my-values/infra/litellm-deployment.yaml",
+          "coordinate": "/document0/spec/template/spec/containers/0/startupProbe/failureThreshold",
+          "type": "int"
+        },
+        {
+          "path": "my-values/infra/litellm-deployment.yaml",
+          "coordinate": "/document0/spec/template/spec/containers/0/readinessProbe/httpGet/path",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/litellm-deployment.yaml",
+          "coordinate": "/document0/spec/template/spec/containers/0/readinessProbe/httpGet/port",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/litellm-deployment.yaml",
+          "coordinate": "/document0/spec/template/spec/containers/0/readinessProbe/periodSeconds",
+          "type": "int"
+        },
+        {
+          "path": "my-values/infra/litellm-deployment.yaml",
+          "coordinate": "/document0/spec/template/spec/containers/0/readinessProbe/timeoutSeconds",
+          "type": "int"
+        },
+        {
+          "path": "my-values/infra/litellm-deployment.yaml",
+          "coordinate": "/document0/spec/template/spec/containers/0/readinessProbe/failureThreshold",
+          "type": "int"
+        },
+        {
+          "path": "my-values/infra/litellm-deployment.yaml",
+          "coordinate": "/document0/spec/template/spec/containers/0/livenessProbe/httpGet/path",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/litellm-deployment.yaml",
+          "coordinate": "/document0/spec/template/spec/containers/0/livenessProbe/httpGet/port",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/litellm-deployment.yaml",
+          "coordinate": "/document0/spec/template/spec/containers/0/livenessProbe/periodSeconds",
+          "type": "int"
+        },
+        {
+          "path": "my-values/infra/litellm-deployment.yaml",
+          "coordinate": "/document0/spec/template/spec/containers/0/livenessProbe/timeoutSeconds",
+          "type": "int"
+        },
+        {
+          "path": "my-values/infra/litellm-deployment.yaml",
+          "coordinate": "/document0/spec/template/spec/containers/0/livenessProbe/failureThreshold",
+          "type": "int"
+        },
+        {
+          "path": "my-values/infra/litellm-deployment.yaml",
+          "coordinate": "/document0/spec/template/spec/containers/0/volumeMounts/0/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/litellm-deployment.yaml",
+          "coordinate": "/document0/spec/template/spec/containers/0/volumeMounts/0/mountPath",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/litellm-deployment.yaml",
+          "coordinate": "/document0/spec/template/spec/containers/0/volumeMounts/0/subPath",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/litellm-deployment.yaml",
+          "coordinate": "/document0/spec/template/spec/containers/0/volumeMounts/1/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/litellm-deployment.yaml",
+          "coordinate": "/document0/spec/template/spec/containers/0/volumeMounts/1/mountPath",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/litellm-deployment.yaml",
+          "coordinate": "/document0/spec/template/spec/containers/0/volumeMounts/1/readOnly",
+          "type": "bool"
+        },
+        {
+          "path": "my-values/infra/litellm-deployment.yaml",
+          "coordinate": "/document0/spec/template/spec/containers/0/resources/requests/cpu",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/litellm-deployment.yaml",
+          "coordinate": "/document0/spec/template/spec/containers/0/resources/requests/memory",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/litellm-deployment.yaml",
+          "coordinate": "/document0/spec/template/spec/containers/0/resources/limits/cpu",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/litellm-deployment.yaml",
+          "coordinate": "/document0/spec/template/spec/containers/0/resources/limits/memory",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/litellm-deployment.yaml",
+          "coordinate": "/document0/spec/template/spec/volumes/0/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/litellm-deployment.yaml",
+          "coordinate": "/document0/spec/template/spec/volumes/0/configMap/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/litellm-deployment.yaml",
+          "coordinate": "/document0/spec/template/spec/volumes/1/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/litellm-deployment.yaml",
+          "coordinate": "/document0/spec/template/spec/volumes/1/secret/secretName",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/litellm-deployment.yaml",
+          "coordinate": "/document1/apiVersion",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/litellm-deployment.yaml",
+          "coordinate": "/document1/kind",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/litellm-deployment.yaml",
+          "coordinate": "/document1/metadata/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/litellm-deployment.yaml",
+          "coordinate": "/document1/metadata/labels/app",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/litellm-deployment.yaml",
+          "coordinate": "/document1/spec/type",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/litellm-deployment.yaml",
+          "coordinate": "/document1/spec/selector/app",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/litellm-deployment.yaml",
+          "coordinate": "/document1/spec/ports/0/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/litellm-deployment.yaml",
+          "coordinate": "/document1/spec/ports/0/port",
+          "type": "int"
+        },
+        {
+          "path": "my-values/infra/litellm-deployment.yaml",
+          "coordinate": "/document1/spec/ports/0/targetPort",
+          "type": "int"
+        },
+        {
+          "path": "my-values/infra/litellm-deployment.yaml",
+          "coordinate": "/document1/spec/ports/0/protocol",
+          "type": "str"
+        }
+      ],
+      "in312SourceList": false,
+      "in33CoordinateSources": false,
+      "callerSearch": {
+        "argv": [
+          "rg",
+          "-n",
+          "-F",
+          "litellm-deployment.yaml",
+          "scripts",
+          ".github/workflows"
+        ],
+        "exit": 0,
+        "stdout": "scripts/deploy.sh:1121:      \"$INFRA_DIR/postgresql-recovery.yaml\" \"$POSTGRESQL_VALUES_FILE\" \"$INFRA_DIR/litellm-deployment.yaml\" \"$POSTGRESQL_RELEASE\")\"\nscripts/deploy.sh:1188:      \"$INFRA_DIR/litellm-config.yaml\" \"$INFRA_DIR/litellm-deployment.yaml\")\" || return 1\nscripts/deploy.sh:2773:  delete_manifested_resource_if_present deployment litellm \"$INFRA_DIR/litellm-deployment.yaml\" \\\nscripts/docs-inventory.mjs:155:    'my-values/infra/litellm-deployment.yaml',\n",
+        "stderr": ""
+      },
+      "expectedDisposition": "Current caller/original author\u2192operator/protocol/version/secret/generated/task per coordinate, single proposed author/ref, native schema/first error/domain/activation/cases; or checked historical/generated/nonproductive exclusion. Counts alone do not designate settings."
+    },
+    {
+      "path": "my-values/infra/litellm-values.yaml",
+      "sha256": "45feac33c4b944bfb7d5af22482ea09bb017649bfcce5f8608985c81323adf2e",
+      "fieldCoordinates": [
+        {
+          "path": "my-values/infra/litellm-values.yaml",
+          "coordinate": "/extraVolumes/0/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/litellm-values.yaml",
+          "coordinate": "/extraVolumes/0/secret/secretName",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/litellm-values.yaml",
+          "coordinate": "/extraVolumeMounts/0/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/litellm-values.yaml",
+          "coordinate": "/extraVolumeMounts/0/mountPath",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/litellm-values.yaml",
+          "coordinate": "/extraVolumeMounts/0/readOnly",
+          "type": "bool"
+        },
+        {
+          "path": "my-values/infra/litellm-values.yaml",
+          "coordinate": "/extraEnv/0/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/litellm-values.yaml",
+          "coordinate": "/extraEnv/0/value",
+          "type": "str"
+        }
+      ],
+      "in312SourceList": false,
+      "in33CoordinateSources": false,
+      "callerSearch": {
+        "argv": [
+          "rg",
+          "-n",
+          "-F",
+          "litellm-values.yaml",
+          "scripts",
+          ".github/workflows"
+        ],
+        "exit": 0,
+        "stdout": "scripts/docs-inventory.mjs:153:    'my-values/infra/litellm-values.yaml',\n",
+        "stderr": ""
+      },
+      "expectedDisposition": "Current caller/original author\u2192operator/protocol/version/secret/generated/task per coordinate, single proposed author/ref, native schema/first error/domain/activation/cases; or checked historical/generated/nonproductive exclusion. Counts alone do not designate settings."
+    },
+    {
+      "path": "my-values/infra/native-worker-pools-ax41.yaml",
+      "sha256": "47b2aa2f998dd741a31a914cf3fb3a293a335863679734656de1a5b1c366696c",
+      "fieldCoordinates": [
+        {
+          "path": "my-values/infra/native-worker-pools-ax41.yaml",
+          "coordinate": "/schemaVersion",
+          "type": "int"
+        },
+        {
+          "path": "my-values/infra/native-worker-pools-ax41.yaml",
+          "coordinate": "/nodeName",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/native-worker-pools-ax41.yaml",
+          "coordinate": "/runtime/containerdVersion",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/native-worker-pools-ax41.yaml",
+          "coordinate": "/systemReserve/cpuMillicores",
+          "type": "int"
+        },
+        {
+          "path": "my-values/infra/native-worker-pools-ax41.yaml",
+          "coordinate": "/systemReserve/memoryBytes",
+          "type": "int"
+        },
+        {
+          "path": "my-values/infra/native-worker-pools-ax41.yaml",
+          "coordinate": "/systemReserve/tasks",
+          "type": "int"
+        },
+        {
+          "path": "my-values/infra/native-worker-pools-ax41.yaml",
+          "coordinate": "/kubernetesReserve/cpuMillicores",
+          "type": "int"
+        },
+        {
+          "path": "my-values/infra/native-worker-pools-ax41.yaml",
+          "coordinate": "/kubernetesReserve/memoryBytes",
+          "type": "int"
+        },
+        {
+          "path": "my-values/infra/native-worker-pools-ax41.yaml",
+          "coordinate": "/kubernetesReserve/tasks",
+          "type": "int"
+        },
+        {
+          "path": "my-values/infra/native-worker-pools-ax41.yaml",
+          "coordinate": "/pools/buster/namespace",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/native-worker-pools-ax41.yaml",
+          "coordinate": "/pools/buster/cpuMillicores",
+          "type": "int"
+        },
+        {
+          "path": "my-values/infra/native-worker-pools-ax41.yaml",
+          "coordinate": "/pools/buster/memoryBytes",
+          "type": "int"
+        },
+        {
+          "path": "my-values/infra/native-worker-pools-ax41.yaml",
+          "coordinate": "/pools/buster/tasks",
+          "type": "int"
+        },
+        {
+          "path": "my-values/infra/native-worker-pools-ax41.yaml",
+          "coordinate": "/pools/buster/maximumActiveScopes",
+          "type": "int"
+        },
+        {
+          "path": "my-values/infra/native-worker-pools-ax41.yaml",
+          "coordinate": "/pools/prism/namespace",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/native-worker-pools-ax41.yaml",
+          "coordinate": "/pools/prism/cpuMillicores",
+          "type": "int"
+        },
+        {
+          "path": "my-values/infra/native-worker-pools-ax41.yaml",
+          "coordinate": "/pools/prism/memoryBytes",
+          "type": "int"
+        },
+        {
+          "path": "my-values/infra/native-worker-pools-ax41.yaml",
+          "coordinate": "/pools/prism/tasks",
+          "type": "int"
+        },
+        {
+          "path": "my-values/infra/native-worker-pools-ax41.yaml",
+          "coordinate": "/pools/prism/maximumActiveScopes",
+          "type": "int"
+        }
+      ],
+      "in312SourceList": false,
+      "in33CoordinateSources": false,
+      "callerSearch": {
+        "argv": [
+          "rg",
+          "-n",
+          "-F",
+          "native-worker-pools-ax41.yaml",
+          "scripts",
+          ".github/workflows"
+        ],
+        "exit": 0,
+        "stdout": "scripts/activate-native-worker-ax41.sh:27:node scripts/render-native-worker-node.mjs my-values/infra/native-worker-pools-ax41.yaml \"$backup/generated\"\nscripts/activate-native-worker-ax41.sh:99:node scripts/native-worker-node-preflight.mjs my-values/infra/native-worker-pools-ax41.yaml\nscripts/repair-native-worker-pools-lifetime.sh:17:  \"$repository/my-values/infra/native-worker-pools-ax41.yaml\" \"$backup/generated\"\nscripts/repair-native-nri-launch.sh:14:node scripts/native-worker-node-preflight.mjs my-values/infra/native-worker-pools-ax41.yaml\nscripts/repair-native-nri-launch.sh:32:node scripts/native-worker-node-preflight.mjs my-values/infra/native-worker-pools-ax41.yaml\nscripts/prepare-ax41-buster-browser.sh:15:/usr/local/bin/node \"$repository/scripts/native-worker-node-preflight.mjs\" \"$repository/my-values/infra/native-worker-pools-ax41.yaml\"\n",
+        "stderr": ""
+      },
+      "expectedDisposition": "Current caller/original author\u2192operator/protocol/version/secret/generated/task per coordinate, single proposed author/ref, native schema/first error/domain/activation/cases; or checked historical/generated/nonproductive exclusion. Counts alone do not designate settings."
+    },
+    {
+      "path": "my-values/infra/native-worker-pools.yaml",
+      "sha256": "3fdf392b1e755b7b3a5b29954b0feb786140956209de6f6011adc2412aeb0888",
+      "fieldCoordinates": [
+        {
+          "path": "my-values/infra/native-worker-pools.yaml",
+          "coordinate": "/schemaVersion",
+          "type": "int"
+        },
+        {
+          "path": "my-values/infra/native-worker-pools.yaml",
+          "coordinate": "/nodeName",
+          "type": "NoneType"
+        },
+        {
+          "path": "my-values/infra/native-worker-pools.yaml",
+          "coordinate": "/runtime/containerdVersion",
+          "type": "NoneType"
+        },
+        {
+          "path": "my-values/infra/native-worker-pools.yaml",
+          "coordinate": "/systemReserve/cpuMillicores",
+          "type": "int"
+        },
+        {
+          "path": "my-values/infra/native-worker-pools.yaml",
+          "coordinate": "/systemReserve/memoryBytes",
+          "type": "int"
+        },
+        {
+          "path": "my-values/infra/native-worker-pools.yaml",
+          "coordinate": "/systemReserve/tasks",
+          "type": "int"
+        },
+        {
+          "path": "my-values/infra/native-worker-pools.yaml",
+          "coordinate": "/kubernetesReserve/cpuMillicores",
+          "type": "int"
+        },
+        {
+          "path": "my-values/infra/native-worker-pools.yaml",
+          "coordinate": "/kubernetesReserve/memoryBytes",
+          "type": "int"
+        },
+        {
+          "path": "my-values/infra/native-worker-pools.yaml",
+          "coordinate": "/kubernetesReserve/tasks",
+          "type": "int"
+        },
+        {
+          "path": "my-values/infra/native-worker-pools.yaml",
+          "coordinate": "/pools/buster/namespace",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/native-worker-pools.yaml",
+          "coordinate": "/pools/buster/cpuMillicores",
+          "type": "int"
+        },
+        {
+          "path": "my-values/infra/native-worker-pools.yaml",
+          "coordinate": "/pools/buster/memoryBytes",
+          "type": "int"
+        },
+        {
+          "path": "my-values/infra/native-worker-pools.yaml",
+          "coordinate": "/pools/buster/tasks",
+          "type": "int"
+        },
+        {
+          "path": "my-values/infra/native-worker-pools.yaml",
+          "coordinate": "/pools/buster/maximumActiveScopes",
+          "type": "int"
+        },
+        {
+          "path": "my-values/infra/native-worker-pools.yaml",
+          "coordinate": "/pools/prism/namespace",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/native-worker-pools.yaml",
+          "coordinate": "/pools/prism/cpuMillicores",
+          "type": "int"
+        },
+        {
+          "path": "my-values/infra/native-worker-pools.yaml",
+          "coordinate": "/pools/prism/memoryBytes",
+          "type": "int"
+        },
+        {
+          "path": "my-values/infra/native-worker-pools.yaml",
+          "coordinate": "/pools/prism/tasks",
+          "type": "int"
+        },
+        {
+          "path": "my-values/infra/native-worker-pools.yaml",
+          "coordinate": "/pools/prism/maximumActiveScopes",
+          "type": "int"
+        }
+      ],
+      "in312SourceList": false,
+      "in33CoordinateSources": false,
+      "callerSearch": {
+        "argv": [
+          "rg",
+          "-n",
+          "-F",
+          "native-worker-pools.yaml",
+          "scripts",
+          ".github/workflows"
+        ],
+        "exit": 0,
+        "stdout": "scripts/deploy.sh:1446:      \"${NATIVE_WORKER_NODE_POLICY_FILE:-$INFRA_DIR/native-worker-pools.yaml}\" \"$NAMESPACE\" \\\nscripts/deploy.sh:1780:    \"${NATIVE_WORKER_NODE_POLICY_FILE:-$INFRA_DIR/native-worker-pools.yaml}\" \"$PRISM_NAMESPACE\" \\\nscripts/deploy.sh:2919:    node \"$SCRIPT_DIR/render-native-worker-node.mjs\" \"${3:-$INFRA_DIR/native-worker-pools.yaml}\" \"$2\"\nscripts/deploy.sh:2923:    node \"$SCRIPT_DIR/native-worker-node-preflight.mjs\" \"${2:-$INFRA_DIR/native-worker-pools.yaml}\"\nscripts/gitops.mjs:166:export function preflightGitOps(repository, result, argoNamespace, run = runCommand, policyFile = path.join(repository, 'my-values/infra/native-worker-pools.yaml')) {\n",
+        "stderr": ""
+      },
+      "expectedDisposition": "Current caller/original author\u2192operator/protocol/version/secret/generated/task per coordinate, single proposed author/ref, native schema/first error/domain/activation/cases; or checked historical/generated/nonproductive exclusion. Counts alone do not designate settings."
+    },
+    {
+      "path": "my-values/infra/network-policies.yaml",
+      "sha256": "a42018fe382e389077f4ed373c4ae54ebfd7e46a639b5360215cd80948823d79",
+      "fieldCoordinates": [
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document0/apiVersion",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document0/kind",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document0/metadata/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document0/spec/endpointSelector/matchLabels/app.kubernetes.io/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document0/spec/endpointSelector/matchExpressions/0/key",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document0/spec/endpointSelector/matchExpressions/0/operator",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document0/spec/endpointSelector/matchExpressions/0/values/0",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document0/spec/egress/0/toEndpoints/0/matchLabels/app.kubernetes.io/instance",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document0/spec/egress/0/toEndpoints/0/matchLabels/app.kubernetes.io/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document0/spec/egress/0/toPorts/0/ports/0/protocol",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document0/spec/egress/0/toPorts/0/ports/0/port",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document0/spec/egress/1/toEndpoints/0/matchLabels/app",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document0/spec/egress/1/toPorts/0/ports/0/protocol",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document0/spec/egress/1/toPorts/0/ports/0/port",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document0/spec/egress/2/toEndpoints/0/matchLabels/app",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document0/spec/egress/2/toPorts/0/ports/0/protocol",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document0/spec/egress/2/toPorts/0/ports/0/port",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document0/spec/egress/2/toPorts/0/ports/1/protocol",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document0/spec/egress/2/toPorts/0/ports/1/port",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document0/spec/egress/3/toEndpoints/0/matchLabels/app",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document0/spec/egress/3/toPorts/0/ports/0/protocol",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document0/spec/egress/3/toPorts/0/ports/0/port",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document0/spec/egress/4/toEndpoints/0/matchLabels/app.kubernetes.io/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document0/spec/egress/4/toPorts/0/ports/0/protocol",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document0/spec/egress/4/toPorts/0/ports/0/port",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document0/spec/egress/4/toPorts/0/ports/1/protocol",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document0/spec/egress/4/toPorts/0/ports/1/port",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document0/spec/egress/5/toEntities/0",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document0/spec/egress/5/toPorts/0/ports/0/protocol",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document0/spec/egress/5/toPorts/0/ports/0/port",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document0/spec/egress/5/toPorts/0/ports/1/protocol",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document0/spec/egress/5/toPorts/0/ports/1/port",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document0/spec/egress/5/toPorts/0/ports/2/protocol",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document0/spec/egress/5/toPorts/0/ports/2/port",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document1/apiVersion",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document1/kind",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document1/metadata/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document1/spec/podSelector/matchLabels/app.kubernetes.io/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document1/spec/podSelector/matchExpressions/0/key",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document1/spec/podSelector/matchExpressions/0/operator",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document1/spec/podSelector/matchExpressions/0/values/0",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document1/spec/policyTypes/0",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document1/spec/ingress/0/from/0/podSelector",
+          "type": "dict"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document1/spec/ingress/0/ports/0/protocol",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document1/spec/ingress/0/ports/0/port",
+          "type": "int"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document1/spec/ingress/0/ports/1/protocol",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document1/spec/ingress/0/ports/1/port",
+          "type": "int"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document2/apiVersion",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document2/kind",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document2/metadata/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document2/spec/endpointSelector/matchLabels/app.kubernetes.io/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document2/spec/endpointSelector/matchLabels/app.kubernetes.io/component",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document2/spec/egress/0/toEntities/0",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document2/spec/egress/0/toPorts/0/ports/0/protocol",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document2/spec/egress/0/toPorts/0/ports/0/port",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document2/spec/egress/0/toPorts/0/ports/1/protocol",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document2/spec/egress/0/toPorts/0/ports/1/port",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document3/apiVersion",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document3/kind",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document3/metadata/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document3/spec/endpointSelector/matchLabels/app.kubernetes.io/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document3/spec/endpointSelector/matchLabels/app.kubernetes.io/component",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document3/spec/egress/0/toEndpoints/0/matchLabels/app.kubernetes.io/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document3/spec/egress/0/toEndpoints/0/matchLabels/app.kubernetes.io/component",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document3/spec/egress/0/toPorts/0/ports/0/protocol",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document3/spec/egress/0/toPorts/0/ports/0/port",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document4/apiVersion",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document4/kind",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document4/metadata/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document4/spec/endpointSelector/matchLabels/app.kubernetes.io/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document4/spec/endpointSelector/matchLabels/app.kubernetes.io/component",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document4/spec/ingress/0/fromEndpoints/0/matchLabels/app.kubernetes.io/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document4/spec/ingress/0/fromEndpoints/0/matchLabels/app.kubernetes.io/component",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document4/spec/ingress/0/toPorts/0/ports/0/protocol",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document4/spec/ingress/0/toPorts/0/ports/0/port",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document5/apiVersion",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document5/kind",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document5/metadata/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document5/spec/endpointSelector/matchLabels/app.kubernetes.io/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document5/spec/endpointSelector/matchLabels/app.kubernetes.io/component",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document5/spec/egress/0/toEndpoints/0/matchLabels/app.kubernetes.io/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document5/spec/egress/0/toEndpoints/0/matchLabels/app.kubernetes.io/component",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document5/spec/egress/0/toPorts/0/ports/0/protocol",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document5/spec/egress/0/toPorts/0/ports/0/port",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document5/spec/egress/1/toEndpoints/0/matchLabels/app.kubernetes.io/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document5/spec/egress/1/toEndpoints/0/matchLabels/app.kubernetes.io/component",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document5/spec/egress/1/toEndpoints/0/matchLabels/io.cilium.k8s.namespace.labels.kubeclaw/managed-by",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document5/spec/egress/1/toPorts/0/ports/0/protocol",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document5/spec/egress/1/toPorts/0/ports/0/port",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document6/apiVersion",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document6/kind",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document6/metadata/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document6/spec/endpointSelector/matchLabels/app.kubernetes.io/instance",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document6/spec/endpointSelector/matchLabels/app.kubernetes.io/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document6/spec/ingress/0/fromEndpoints/0/matchLabels/app.kubernetes.io/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document6/spec/ingress/0/fromEndpoints/1/matchLabels/app.kubernetes.io/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document6/spec/ingress/0/toPorts/0/ports/0/protocol",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document6/spec/ingress/0/toPorts/0/ports/0/port",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document7/apiVersion",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document7/kind",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document7/metadata/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document7/spec/endpointSelector/matchLabels/app.kubernetes.io/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document7/spec/egress/0/toEndpoints/0/matchLabels/app.kubernetes.io/instance",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document7/spec/egress/0/toEndpoints/0/matchLabels/app.kubernetes.io/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document7/spec/egress/0/toPorts/0/ports/0/protocol",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document7/spec/egress/0/toPorts/0/ports/0/port",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document8/apiVersion",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document8/kind",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document8/metadata/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document8/spec/endpointSelector/matchLabels/app",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document8/spec/ingress/0/fromEndpoints/0/matchLabels/app.kubernetes.io/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document8/spec/ingress/0/toPorts/0/ports/0/protocol",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document8/spec/ingress/0/toPorts/0/ports/0/port",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document9/apiVersion",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document9/kind",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document9/metadata/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document9/spec/endpointSelector/matchLabels/app",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document9/spec/egress/0/toEndpoints/0/matchLabels/app.kubernetes.io/instance",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document9/spec/egress/0/toEndpoints/0/matchLabels/app.kubernetes.io/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document9/spec/egress/0/toPorts/0/ports/0/protocol",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document9/spec/egress/0/toPorts/0/ports/0/port",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document9/spec/egress/1/toEntities/0",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document9/spec/egress/1/toPorts/0/ports/0/protocol",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document9/spec/egress/1/toPorts/0/ports/0/port",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document9/spec/egress/1/toPorts/0/ports/1/protocol",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document9/spec/egress/1/toPorts/0/ports/1/port",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document10/apiVersion",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document10/kind",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document10/metadata/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document10/spec/endpointSelector/matchLabels/app.kubernetes.io/instance",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document10/spec/endpointSelector/matchLabels/app.kubernetes.io/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document10/spec/ingress/0/fromEndpoints/0/matchLabels/app",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document10/spec/ingress/0/toPorts/0/ports/0/protocol",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document10/spec/ingress/0/toPorts/0/ports/0/port",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document11/apiVersion",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document11/kind",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document11/metadata/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document11/spec/endpointSelector/matchLabels/app",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document11/spec/ingress/0/fromEndpoints/0/matchLabels/app.kubernetes.io/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document11/spec/ingress/0/toPorts/0/ports/0/protocol",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document11/spec/ingress/0/toPorts/0/ports/0/port",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document11/spec/ingress/0/toPorts/0/ports/1/protocol",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document11/spec/ingress/0/toPorts/0/ports/1/port",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document11/spec/ingress/1/fromEntities/0",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document11/spec/ingress/1/fromEntities/1",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document11/spec/ingress/1/toPorts/0/ports/0/protocol",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document11/spec/ingress/1/toPorts/0/ports/0/port",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document11/spec/ingress/1/toPorts/0/ports/1/protocol",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document11/spec/ingress/1/toPorts/0/ports/1/port",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document12/apiVersion",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document12/kind",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document12/metadata/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document12/spec/endpointSelector/matchLabels/app",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document12/spec/ingress/0/fromEndpoints/0/matchLabels/app.kubernetes.io/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document12/spec/ingress/0/toPorts/0/ports/0/protocol",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document12/spec/ingress/0/toPorts/0/ports/0/port",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document12/spec/ingress/1/fromEntities/0",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document12/spec/ingress/1/fromEntities/1",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document12/spec/ingress/1/toPorts/0/ports/0/protocol",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document12/spec/ingress/1/toPorts/0/ports/0/port",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document13/apiVersion",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document13/kind",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document13/metadata/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document13/spec/endpointSelector/matchLabels/app",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document13/spec/egress/0/toEntities/0",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document13/spec/egress/0/toPorts/0/ports/0/protocol",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document13/spec/egress/0/toPorts/0/ports/0/port",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document13/spec/egress/0/toPorts/0/ports/1/protocol",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document13/spec/egress/0/toPorts/0/ports/1/port",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document14/apiVersion",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document14/kind",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document14/metadata/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document14/spec/endpointSelector/matchLabels/app.kubernetes.io/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document14/spec/endpointSelector/matchExpressions/0/key",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document14/spec/endpointSelector/matchExpressions/0/operator",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document14/spec/endpointSelector/matchExpressions/0/values/0",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document14/spec/endpointSelector/matchExpressions/0/values/1",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document14/spec/egress/0/toEntities/0",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document14/spec/egress/0/toPorts/0/ports/0/port",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document14/spec/egress/0/toPorts/0/ports/0/protocol",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document14/spec/egress/0/toPorts/0/ports/1/port",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/network-policies.yaml",
+          "coordinate": "/document14/spec/egress/0/toPorts/0/ports/1/protocol",
+          "type": "str"
+        }
+      ],
+      "in312SourceList": false,
+      "in33CoordinateSources": false,
+      "callerSearch": {
+        "argv": [
+          "rg",
+          "-n",
+          "-F",
+          "network-policies.yaml",
+          "scripts",
+          ".github/workflows"
+        ],
+        "exit": 0,
+        "stdout": "scripts/deploy.sh:1123:  stateful_network_policies=\"$(node \"$REPO_DIR/scripts/render-stateful-network-policies.mjs\" \"$INFRA_DIR/network-policies.yaml\" \"$NAMESPACE\" \\\nscripts/deploy.sh:1135:    kubectl apply -f \"$INFRA_DIR/spire-network-policies.yaml\"\nscripts/deploy.sh:2787:  kubectl delete -n \"$NAMESPACE\" -f \"$INFRA_DIR/network-policies.yaml\" --ignore-not-found\nscripts/tests/cilium-observation-guards.test.py:42:                         str(ROOT / 'my-values/infra/network-policies.yaml')]}\nscripts/migrate-kubeclaw-network-policies-to-cilium.sh:7:POLICY_FILE=\"${POLICY_FILE:-$REPO_DIR/my-values/infra/network-policies.yaml}\"\nscripts/verify-cilium-policies.py:25:        scope = [] if path.endswith(('cilium-cluster-policies.yaml', 'spire-network-policies.yaml')) else ['-n', namespace]\nscripts/docs-inventory.mjs:159:    'my-values/infra/network-policies.yaml',\n",
+        "stderr": ""
+      },
+      "expectedDisposition": "Current caller/original author\u2192operator/protocol/version/secret/generated/task per coordinate, single proposed author/ref, native schema/first error/domain/activation/cases; or checked historical/generated/nonproductive exclusion. Counts alone do not designate settings."
+    },
+    {
+      "path": "my-values/infra/postgresql-recovery.yaml",
+      "sha256": "5f0ffb0cdf5acdbd814da726060d5125c5cae912554f27de57251ea90ae8d438",
+      "fieldCoordinates": [
+        {
+          "path": "my-values/infra/postgresql-recovery.yaml",
+          "coordinate": "/schemaVersion",
+          "type": "int"
+        },
+        {
+          "path": "my-values/infra/postgresql-recovery.yaml",
+          "coordinate": "/backupIntervalMinutes",
+          "type": "int"
+        },
+        {
+          "path": "my-values/infra/postgresql-recovery.yaml",
+          "coordinate": "/verificationIntervalMinutes",
+          "type": "int"
+        },
+        {
+          "path": "my-values/infra/postgresql-recovery.yaml",
+          "coordinate": "/maximumAgeSeconds",
+          "type": "int"
+        },
+        {
+          "path": "my-values/infra/postgresql-recovery.yaml",
+          "coordinate": "/maximumDurationSeconds",
+          "type": "int"
+        },
+        {
+          "path": "my-values/infra/postgresql-recovery.yaml",
+          "coordinate": "/verificationDeadlineSeconds",
+          "type": "int"
+        },
+        {
+          "path": "my-values/infra/postgresql-recovery.yaml",
+          "coordinate": "/maximumBackupBytes",
+          "type": "int"
+        },
+        {
+          "path": "my-values/infra/postgresql-recovery.yaml",
+          "coordinate": "/maximumRetainedBytes",
+          "type": "int"
+        },
+        {
+          "path": "my-values/infra/postgresql-recovery.yaml",
+          "coordinate": "/persistence/size",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/postgresql-recovery.yaml",
+          "coordinate": "/persistence/storageClass",
+          "type": "NoneType"
+        },
+        {
+          "path": "my-values/infra/postgresql-recovery.yaml",
+          "coordinate": "/resources/requests/cpu",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/postgresql-recovery.yaml",
+          "coordinate": "/resources/requests/memory",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/postgresql-recovery.yaml",
+          "coordinate": "/resources/limits/cpu",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/postgresql-recovery.yaml",
+          "coordinate": "/resources/limits/memory",
+          "type": "str"
+        }
+      ],
+      "in312SourceList": false,
+      "in33CoordinateSources": false,
+      "callerSearch": {
+        "argv": [
+          "rg",
+          "-n",
+          "-F",
+          "postgresql-recovery.yaml",
+          "scripts",
+          ".github/workflows"
+        ],
+        "exit": 0,
+        "stdout": "scripts/deploy.sh:1121:      \"$INFRA_DIR/postgresql-recovery.yaml\" \"$POSTGRESQL_VALUES_FILE\" \"$INFRA_DIR/litellm-deployment.yaml\" \"$POSTGRESQL_RELEASE\")\"\n",
+        "stderr": ""
+      },
+      "expectedDisposition": "Current caller/original author\u2192operator/protocol/version/secret/generated/task per coordinate, single proposed author/ref, native schema/first error/domain/activation/cases; or checked historical/generated/nonproductive exclusion. Counts alone do not designate settings."
+    },
+    {
+      "path": "my-values/infra/postgresql-values.yaml",
+      "sha256": "b7c1445d47350c6fcae2fc7de901e930dec1f8309331bf0db69c70c1f3404994",
+      "fieldCoordinates": [
+        {
+          "path": "my-values/infra/postgresql-values.yaml",
+          "coordinate": "/image/registry",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/postgresql-values.yaml",
+          "coordinate": "/image/repository",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/postgresql-values.yaml",
+          "coordinate": "/image/tag",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/postgresql-values.yaml",
+          "coordinate": "/image/digest",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/postgresql-values.yaml",
+          "coordinate": "/architecture",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/postgresql-values.yaml",
+          "coordinate": "/auth/database",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/postgresql-values.yaml",
+          "coordinate": "/auth/username",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/postgresql-values.yaml",
+          "coordinate": "/auth/existingSecret",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/postgresql-values.yaml",
+          "coordinate": "/auth/secretKeys/adminPasswordKey",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/postgresql-values.yaml",
+          "coordinate": "/auth/secretKeys/userPasswordKey",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/postgresql-values.yaml",
+          "coordinate": "/primary/persistence/size",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/postgresql-values.yaml",
+          "coordinate": "/primary/resources/requests/cpu",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/postgresql-values.yaml",
+          "coordinate": "/primary/resources/requests/memory",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/postgresql-values.yaml",
+          "coordinate": "/primary/resources/limits/cpu",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/postgresql-values.yaml",
+          "coordinate": "/primary/resources/limits/memory",
+          "type": "str"
+        }
+      ],
+      "in312SourceList": false,
+      "in33CoordinateSources": false,
+      "callerSearch": {
+        "argv": [
+          "rg",
+          "-n",
+          "-F",
+          "postgresql-values.yaml",
+          "scripts",
+          ".github/workflows"
+        ],
+        "exit": 0,
+        "stdout": "scripts/deploy.sh:76:POSTGRESQL_VALUES_FILE=\"${POSTGRESQL_VALUES_FILE:-$INFRA_DIR/postgresql-values.yaml}\"\nscripts/docs-inventory.mjs:152:    'my-values/infra/postgresql-values.yaml',\n",
+        "stderr": ""
+      },
+      "expectedDisposition": "Current caller/original author\u2192operator/protocol/version/secret/generated/task per coordinate, single proposed author/ref, native schema/first error/domain/activation/cases; or checked historical/generated/nonproductive exclusion. Counts alone do not designate settings."
+    },
+    {
+      "path": "my-values/infra/redis-values.yaml",
+      "sha256": "929dec7ffac0922517188e0fb318b746e276292acad2723c59da802e5962c9b2",
+      "fieldCoordinates": [
+        {
+          "path": "my-values/infra/redis-values.yaml",
+          "coordinate": "/image/registry",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/redis-values.yaml",
+          "coordinate": "/image/repository",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/redis-values.yaml",
+          "coordinate": "/image/tag",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/redis-values.yaml",
+          "coordinate": "/image/digest",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/redis-values.yaml",
+          "coordinate": "/architecture",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/redis-values.yaml",
+          "coordinate": "/commonConfiguration",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/redis-values.yaml",
+          "coordinate": "/auth/enabled",
+          "type": "bool"
+        },
+        {
+          "path": "my-values/infra/redis-values.yaml",
+          "coordinate": "/auth/existingSecret",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/redis-values.yaml",
+          "coordinate": "/auth/existingSecretPasswordKey",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/redis-values.yaml",
+          "coordinate": "/master/persistence/size",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/redis-values.yaml",
+          "coordinate": "/master/resources/requests/cpu",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/redis-values.yaml",
+          "coordinate": "/master/resources/requests/memory",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/redis-values.yaml",
+          "coordinate": "/master/resources/limits/cpu",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/redis-values.yaml",
+          "coordinate": "/master/resources/limits/memory",
+          "type": "str"
+        }
+      ],
+      "in312SourceList": false,
+      "in33CoordinateSources": false,
+      "callerSearch": {
+        "argv": [
+          "rg",
+          "-n",
+          "-F",
+          "redis-values.yaml",
+          "scripts",
+          ".github/workflows"
+        ],
+        "exit": 0,
+        "stdout": "scripts/deploy.sh:78:REDIS_VALUES_FILE=\"${REDIS_VALUES_FILE:-$INFRA_DIR/redis-values.yaml}\"\nscripts/docs-generate-core.mjs:131:| Redis | \\`my-values/setup-secrets.sh\\`; \\`my-values/infra/redis-values.yaml\\` | optional telemetry transport and agent-observability ingestion | Redis auth/connection failure or delayed live telemetry; pipeline and Buster job authority remain independent |\nscripts/docs-inventory.mjs:151:    'my-values/infra/redis-values.yaml',\nscripts/redis-prepare-migration.sh:46:node --input-type=module - \"$script_root/my-values/infra/redis-values.yaml\" >\"$stage/policy.conf\" <<'NODE'\n",
+        "stderr": ""
+      },
+      "expectedDisposition": "Current caller/original author\u2192operator/protocol/version/secret/generated/task per coordinate, single proposed author/ref, native schema/first error/domain/activation/cases; or checked historical/generated/nonproductive exclusion. Counts alone do not designate settings."
+    },
+    {
+      "path": "my-values/infra/registry-local.yaml",
+      "sha256": "3fe00107c5ee2387313626219668bdc02d994a96c32776a7dd2138bdd16f10ae",
+      "fieldCoordinates": [
+        {
+          "path": "my-values/infra/registry-local.yaml",
+          "coordinate": "/document0/apiVersion",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/registry-local.yaml",
+          "coordinate": "/document0/kind",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/registry-local.yaml",
+          "coordinate": "/document0/metadata/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/registry-local.yaml",
+          "coordinate": "/document0/spec/accessModes/0",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/registry-local.yaml",
+          "coordinate": "/document0/spec/storageClassName",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/registry-local.yaml",
+          "coordinate": "/document0/spec/resources/requests/storage",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/registry-local.yaml",
+          "coordinate": "/document1/apiVersion",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/registry-local.yaml",
+          "coordinate": "/document1/kind",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/registry-local.yaml",
+          "coordinate": "/document1/metadata/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/registry-local.yaml",
+          "coordinate": "/document1/data/config.yml",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/registry-local.yaml",
+          "coordinate": "/document2/apiVersion",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/registry-local.yaml",
+          "coordinate": "/document2/kind",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/registry-local.yaml",
+          "coordinate": "/document2/metadata/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/registry-local.yaml",
+          "coordinate": "/document2/metadata/labels/app",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/registry-local.yaml",
+          "coordinate": "/document2/spec/replicas",
+          "type": "int"
+        },
+        {
+          "path": "my-values/infra/registry-local.yaml",
+          "coordinate": "/document2/spec/strategy/type",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/registry-local.yaml",
+          "coordinate": "/document2/spec/selector/matchLabels/app",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/registry-local.yaml",
+          "coordinate": "/document2/spec/template/metadata/labels/app",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/registry-local.yaml",
+          "coordinate": "/document2/spec/template/spec/containers/0/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/registry-local.yaml",
+          "coordinate": "/document2/spec/template/spec/containers/0/image",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/registry-local.yaml",
+          "coordinate": "/document2/spec/template/spec/containers/0/args/0",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/registry-local.yaml",
+          "coordinate": "/document2/spec/template/spec/containers/0/args/1",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/registry-local.yaml",
+          "coordinate": "/document2/spec/template/spec/containers/0/ports/0/containerPort",
+          "type": "int"
+        },
+        {
+          "path": "my-values/infra/registry-local.yaml",
+          "coordinate": "/document2/spec/template/spec/containers/0/env/0/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/registry-local.yaml",
+          "coordinate": "/document2/spec/template/spec/containers/0/env/0/value",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/registry-local.yaml",
+          "coordinate": "/document2/spec/template/spec/containers/0/volumeMounts/0/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/registry-local.yaml",
+          "coordinate": "/document2/spec/template/spec/containers/0/volumeMounts/0/mountPath",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/registry-local.yaml",
+          "coordinate": "/document2/spec/template/spec/containers/0/volumeMounts/1/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/registry-local.yaml",
+          "coordinate": "/document2/spec/template/spec/containers/0/volumeMounts/1/mountPath",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/registry-local.yaml",
+          "coordinate": "/document2/spec/template/spec/containers/0/volumeMounts/1/readOnly",
+          "type": "bool"
+        },
+        {
+          "path": "my-values/infra/registry-local.yaml",
+          "coordinate": "/document2/spec/template/spec/containers/0/readinessProbe/httpGet/path",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/registry-local.yaml",
+          "coordinate": "/document2/spec/template/spec/containers/0/readinessProbe/httpGet/port",
+          "type": "int"
+        },
+        {
+          "path": "my-values/infra/registry-local.yaml",
+          "coordinate": "/document2/spec/template/spec/containers/0/livenessProbe/httpGet/path",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/registry-local.yaml",
+          "coordinate": "/document2/spec/template/spec/containers/0/livenessProbe/httpGet/port",
+          "type": "int"
+        },
+        {
+          "path": "my-values/infra/registry-local.yaml",
+          "coordinate": "/document2/spec/template/spec/containers/0/livenessProbe/initialDelaySeconds",
+          "type": "int"
+        },
+        {
+          "path": "my-values/infra/registry-local.yaml",
+          "coordinate": "/document2/spec/template/spec/containers/0/resources/requests/cpu",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/registry-local.yaml",
+          "coordinate": "/document2/spec/template/spec/containers/0/resources/requests/memory",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/registry-local.yaml",
+          "coordinate": "/document2/spec/template/spec/containers/0/resources/limits/cpu",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/registry-local.yaml",
+          "coordinate": "/document2/spec/template/spec/containers/0/resources/limits/memory",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/registry-local.yaml",
+          "coordinate": "/document2/spec/template/spec/volumes/0/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/registry-local.yaml",
+          "coordinate": "/document2/spec/template/spec/volumes/0/persistentVolumeClaim/claimName",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/registry-local.yaml",
+          "coordinate": "/document2/spec/template/spec/volumes/1/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/registry-local.yaml",
+          "coordinate": "/document2/spec/template/spec/volumes/1/configMap/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/registry-local.yaml",
+          "coordinate": "/document3/apiVersion",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/registry-local.yaml",
+          "coordinate": "/document3/kind",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/registry-local.yaml",
+          "coordinate": "/document3/metadata/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/registry-local.yaml",
+          "coordinate": "/document3/metadata/labels/app",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/registry-local.yaml",
+          "coordinate": "/document3/spec/selector/app",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/registry-local.yaml",
+          "coordinate": "/document3/spec/ports/0/port",
+          "type": "int"
+        },
+        {
+          "path": "my-values/infra/registry-local.yaml",
+          "coordinate": "/document3/spec/ports/0/targetPort",
+          "type": "int"
+        },
+        {
+          "path": "my-values/infra/registry-local.yaml",
+          "coordinate": "/document3/spec/ports/0/protocol",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/registry-local.yaml",
+          "coordinate": "/document3/spec/type",
+          "type": "str"
+        }
+      ],
+      "in312SourceList": false,
+      "in33CoordinateSources": false,
+      "callerSearch": {
+        "argv": [
+          "rg",
+          "-n",
+          "-F",
+          "registry-local.yaml",
+          "scripts",
+          ".github/workflows"
+        ],
+        "exit": 0,
+        "stdout": "scripts/docs-inventory.mjs:158:    'my-values/infra/registry-local.yaml',\nscripts/render-registry-local.mjs:5:const template = new URL('../my-values/infra/registry-local.yaml', import.meta.url);\n",
+        "stderr": ""
+      },
+      "expectedDisposition": "Current caller/original author\u2192operator/protocol/version/secret/generated/task per coordinate, single proposed author/ref, native schema/first error/domain/activation/cases; or checked historical/generated/nonproductive exclusion. Counts alone do not designate settings."
+    },
+    {
+      "path": "my-values/infra/registry-mirror.yaml",
+      "sha256": "19673e314634c078740c21094e2de9a3db3fe9a5eaccc5be1b597f4454a11645",
+      "fieldCoordinates": [
+        {
+          "path": "my-values/infra/registry-mirror.yaml",
+          "coordinate": "/document0/apiVersion",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/registry-mirror.yaml",
+          "coordinate": "/document0/kind",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/registry-mirror.yaml",
+          "coordinate": "/document0/metadata/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/registry-mirror.yaml",
+          "coordinate": "/document0/metadata/labels/app",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/registry-mirror.yaml",
+          "coordinate": "/document0/spec/accessModes/0",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/registry-mirror.yaml",
+          "coordinate": "/document0/spec/resources/requests/storage",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/registry-mirror.yaml",
+          "coordinate": "/document1/apiVersion",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/registry-mirror.yaml",
+          "coordinate": "/document1/kind",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/registry-mirror.yaml",
+          "coordinate": "/document1/metadata/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/registry-mirror.yaml",
+          "coordinate": "/document1/metadata/labels/app",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/registry-mirror.yaml",
+          "coordinate": "/document1/spec/replicas",
+          "type": "int"
+        },
+        {
+          "path": "my-values/infra/registry-mirror.yaml",
+          "coordinate": "/document1/spec/selector/matchLabels/app",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/registry-mirror.yaml",
+          "coordinate": "/document1/spec/template/metadata/labels/app",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/registry-mirror.yaml",
+          "coordinate": "/document1/spec/template/spec/containers/0/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/registry-mirror.yaml",
+          "coordinate": "/document1/spec/template/spec/containers/0/image",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/registry-mirror.yaml",
+          "coordinate": "/document1/spec/template/spec/containers/0/ports/0/containerPort",
+          "type": "int"
+        },
+        {
+          "path": "my-values/infra/registry-mirror.yaml",
+          "coordinate": "/document1/spec/template/spec/containers/0/env/0/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/registry-mirror.yaml",
+          "coordinate": "/document1/spec/template/spec/containers/0/env/0/value",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/registry-mirror.yaml",
+          "coordinate": "/document1/spec/template/spec/containers/0/env/1/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/registry-mirror.yaml",
+          "coordinate": "/document1/spec/template/spec/containers/0/env/1/value",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/registry-mirror.yaml",
+          "coordinate": "/document1/spec/template/spec/containers/0/volumeMounts/0/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/registry-mirror.yaml",
+          "coordinate": "/document1/spec/template/spec/containers/0/volumeMounts/0/mountPath",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/registry-mirror.yaml",
+          "coordinate": "/document1/spec/template/spec/containers/0/resources/requests/cpu",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/registry-mirror.yaml",
+          "coordinate": "/document1/spec/template/spec/containers/0/resources/requests/memory",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/registry-mirror.yaml",
+          "coordinate": "/document1/spec/template/spec/containers/0/resources/limits/cpu",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/registry-mirror.yaml",
+          "coordinate": "/document1/spec/template/spec/containers/0/resources/limits/memory",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/registry-mirror.yaml",
+          "coordinate": "/document1/spec/template/spec/containers/0/readinessProbe/httpGet/path",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/registry-mirror.yaml",
+          "coordinate": "/document1/spec/template/spec/containers/0/readinessProbe/httpGet/port",
+          "type": "int"
+        },
+        {
+          "path": "my-values/infra/registry-mirror.yaml",
+          "coordinate": "/document1/spec/template/spec/containers/0/readinessProbe/initialDelaySeconds",
+          "type": "int"
+        },
+        {
+          "path": "my-values/infra/registry-mirror.yaml",
+          "coordinate": "/document1/spec/template/spec/containers/0/readinessProbe/periodSeconds",
+          "type": "int"
+        },
+        {
+          "path": "my-values/infra/registry-mirror.yaml",
+          "coordinate": "/document1/spec/template/spec/containers/0/livenessProbe/httpGet/path",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/registry-mirror.yaml",
+          "coordinate": "/document1/spec/template/spec/containers/0/livenessProbe/httpGet/port",
+          "type": "int"
+        },
+        {
+          "path": "my-values/infra/registry-mirror.yaml",
+          "coordinate": "/document1/spec/template/spec/containers/0/livenessProbe/initialDelaySeconds",
+          "type": "int"
+        },
+        {
+          "path": "my-values/infra/registry-mirror.yaml",
+          "coordinate": "/document1/spec/template/spec/containers/0/livenessProbe/periodSeconds",
+          "type": "int"
+        },
+        {
+          "path": "my-values/infra/registry-mirror.yaml",
+          "coordinate": "/document1/spec/template/spec/volumes/0/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/registry-mirror.yaml",
+          "coordinate": "/document1/spec/template/spec/volumes/0/persistentVolumeClaim/claimName",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/registry-mirror.yaml",
+          "coordinate": "/document2/apiVersion",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/registry-mirror.yaml",
+          "coordinate": "/document2/kind",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/registry-mirror.yaml",
+          "coordinate": "/document2/metadata/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/registry-mirror.yaml",
+          "coordinate": "/document2/metadata/labels/app",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/registry-mirror.yaml",
+          "coordinate": "/document2/spec/type",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/registry-mirror.yaml",
+          "coordinate": "/document2/spec/ports/0/port",
+          "type": "int"
+        },
+        {
+          "path": "my-values/infra/registry-mirror.yaml",
+          "coordinate": "/document2/spec/ports/0/targetPort",
+          "type": "int"
+        },
+        {
+          "path": "my-values/infra/registry-mirror.yaml",
+          "coordinate": "/document2/spec/ports/0/protocol",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/registry-mirror.yaml",
+          "coordinate": "/document2/spec/selector/app",
+          "type": "str"
+        }
+      ],
+      "in312SourceList": false,
+      "in33CoordinateSources": false,
+      "callerSearch": {
+        "argv": [
+          "rg",
+          "-n",
+          "-F",
+          "registry-mirror.yaml",
+          "scripts",
+          ".github/workflows"
+        ],
+        "exit": 0,
+        "stdout": "scripts/deploy.sh:1202:      kubectl apply -n \"$NAMESPACE\" -f \"$INFRA_DIR/registry-mirror.yaml\"\nscripts/deploy.sh:2777:  delete_manifested_resource_if_present deployment registry-mirror \"$INFRA_DIR/registry-mirror.yaml\" \\\nscripts/argocd-self-management.mjs:139:      directory: { include: 'registry-mirror.yaml', recurse: false },\nscripts/versions.mjs:108:  replaceOne('my-values/infra/registry-mirror.yaml', /^          image: [^\\n]+$/m,\nscripts/docs-inventory.mjs:157:    'my-values/infra/registry-mirror.yaml',\n",
+        "stderr": ""
+      },
+      "expectedDisposition": "Current caller/original author\u2192operator/protocol/version/secret/generated/task per coordinate, single proposed author/ref, native schema/first error/domain/activation/cases; or checked historical/generated/nonproductive exclusion. Counts alone do not designate settings."
+    },
+    {
+      "path": "my-values/infra/spire-network-policies.yaml",
+      "sha256": "112ec8318eb6a271435115da9ce0f5119c234e5da7420b919da695759c0a7e28",
+      "fieldCoordinates": [
+        {
+          "path": "my-values/infra/spire-network-policies.yaml",
+          "coordinate": "/document0/apiVersion",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/spire-network-policies.yaml",
+          "coordinate": "/document0/kind",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/spire-network-policies.yaml",
+          "coordinate": "/document0/metadata/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/spire-network-policies.yaml",
+          "coordinate": "/document0/metadata/namespace",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/spire-network-policies.yaml",
+          "coordinate": "/document0/spec/endpointSelector/matchLabels/app.kubernetes.io/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/spire-network-policies.yaml",
+          "coordinate": "/document0/spec/endpointSelector/matchLabels/app.kubernetes.io/instance",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/spire-network-policies.yaml",
+          "coordinate": "/document0/spec/ingress/0/fromEndpoints/0/matchLabels/k8s:io.kubernetes.pod.namespace",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/spire-network-policies.yaml",
+          "coordinate": "/document0/spec/ingress/0/fromEndpoints/0/matchLabels/app.kubernetes.io/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/spire-network-policies.yaml",
+          "coordinate": "/document0/spec/ingress/0/fromEndpoints/0/matchLabels/app.kubernetes.io/instance",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/spire-network-policies.yaml",
+          "coordinate": "/document0/spec/ingress/0/toPorts/0/ports/0/port",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/spire-network-policies.yaml",
+          "coordinate": "/document0/spec/ingress/0/toPorts/0/ports/0/protocol",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/spire-network-policies.yaml",
+          "coordinate": "/document0/spec/ingress/1/fromEntities/0",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/spire-network-policies.yaml",
+          "coordinate": "/document0/spec/ingress/1/fromEntities/1",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/spire-network-policies.yaml",
+          "coordinate": "/document0/spec/ingress/1/toPorts/0/ports/0/port",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/spire-network-policies.yaml",
+          "coordinate": "/document0/spec/ingress/1/toPorts/0/ports/0/protocol",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/spire-network-policies.yaml",
+          "coordinate": "/document0/spec/ingress/2/fromEntities/0",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/spire-network-policies.yaml",
+          "coordinate": "/document0/spec/ingress/2/toPorts/0/ports/0/port",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/spire-network-policies.yaml",
+          "coordinate": "/document0/spec/ingress/2/toPorts/0/ports/0/protocol",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/spire-network-policies.yaml",
+          "coordinate": "/document1/apiVersion",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/spire-network-policies.yaml",
+          "coordinate": "/document1/kind",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/spire-network-policies.yaml",
+          "coordinate": "/document1/metadata/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/spire-network-policies.yaml",
+          "coordinate": "/document1/metadata/namespace",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/spire-network-policies.yaml",
+          "coordinate": "/document1/spec/endpointSelector/matchExpressions/0/key",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/spire-network-policies.yaml",
+          "coordinate": "/document1/spec/endpointSelector/matchExpressions/0/operator",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/spire-network-policies.yaml",
+          "coordinate": "/document1/spec/endpointSelector/matchExpressions/0/values/0",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/spire-network-policies.yaml",
+          "coordinate": "/document1/spec/endpointSelector/matchExpressions/0/values/1",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/spire-network-policies.yaml",
+          "coordinate": "/document1/spec/endpointSelector/matchExpressions/0/values/2",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/spire-network-policies.yaml",
+          "coordinate": "/document1/spec/endpointSelector/matchExpressions/0/values/3",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/spire-network-policies.yaml",
+          "coordinate": "/document1/spec/endpointSelector/matchExpressions/0/values/4",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/spire-network-policies.yaml",
+          "coordinate": "/document1/spec/egress/0/toEntities/0",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/spire-network-policies.yaml",
+          "coordinate": "/document1/spec/egress/0/toPorts/0/ports/0/port",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/spire-network-policies.yaml",
+          "coordinate": "/document1/spec/egress/0/toPorts/0/ports/0/protocol",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/spire-network-policies.yaml",
+          "coordinate": "/document1/spec/egress/0/toPorts/0/ports/1/port",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/spire-network-policies.yaml",
+          "coordinate": "/document1/spec/egress/0/toPorts/0/ports/1/protocol",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/spire-network-policies.yaml",
+          "coordinate": "/document2/apiVersion",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/spire-network-policies.yaml",
+          "coordinate": "/document2/kind",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/spire-network-policies.yaml",
+          "coordinate": "/document2/metadata/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/spire-network-policies.yaml",
+          "coordinate": "/document2/metadata/namespace",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/spire-network-policies.yaml",
+          "coordinate": "/document2/spec/endpointSelector/matchLabels/app.kubernetes.io/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/spire-network-policies.yaml",
+          "coordinate": "/document2/spec/endpointSelector/matchLabels/app.kubernetes.io/instance",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/spire-network-policies.yaml",
+          "coordinate": "/document2/spec/egress/0/toEndpoints/0/matchLabels/k8s:io.kubernetes.pod.namespace",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/spire-network-policies.yaml",
+          "coordinate": "/document2/spec/egress/0/toEndpoints/0/matchLabels/app.kubernetes.io/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/spire-network-policies.yaml",
+          "coordinate": "/document2/spec/egress/0/toEndpoints/0/matchLabels/app.kubernetes.io/instance",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/spire-network-policies.yaml",
+          "coordinate": "/document2/spec/egress/0/toPorts/0/ports/0/port",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/spire-network-policies.yaml",
+          "coordinate": "/document2/spec/egress/0/toPorts/0/ports/0/protocol",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/spire-network-policies.yaml",
+          "coordinate": "/document2/spec/egress/0/toPorts/0/ports/1/port",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/spire-network-policies.yaml",
+          "coordinate": "/document2/spec/egress/0/toPorts/0/ports/1/protocol",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/spire-network-policies.yaml",
+          "coordinate": "/document2/spec/egress/1/toEntities/0",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/spire-network-policies.yaml",
+          "coordinate": "/document2/spec/egress/1/toEntities/1",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/spire-network-policies.yaml",
+          "coordinate": "/document2/spec/egress/1/toPorts/0/ports/0/port",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/spire-network-policies.yaml",
+          "coordinate": "/document2/spec/egress/1/toPorts/0/ports/0/protocol",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/spire-network-policies.yaml",
+          "coordinate": "/document2/spec/egress/2/toEntities/0",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/spire-network-policies.yaml",
+          "coordinate": "/document2/spec/egress/2/toPorts/0/ports/0/port",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/spire-network-policies.yaml",
+          "coordinate": "/document2/spec/egress/2/toPorts/0/ports/0/protocol",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/spire-network-policies.yaml",
+          "coordinate": "/document2/spec/egress/2/toPorts/0/ports/1/port",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/spire-network-policies.yaml",
+          "coordinate": "/document2/spec/egress/2/toPorts/0/ports/1/protocol",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/spire-network-policies.yaml",
+          "coordinate": "/document3/apiVersion",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/spire-network-policies.yaml",
+          "coordinate": "/document3/kind",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/spire-network-policies.yaml",
+          "coordinate": "/document3/metadata/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/spire-network-policies.yaml",
+          "coordinate": "/document3/metadata/namespace",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/spire-network-policies.yaml",
+          "coordinate": "/document3/spec/endpointSelector/matchLabels/app.kubernetes.io/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/spire-network-policies.yaml",
+          "coordinate": "/document3/spec/endpointSelector/matchLabels/app.kubernetes.io/instance",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/spire-network-policies.yaml",
+          "coordinate": "/document3/spec/egress/0/toEntities/0",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/spire-network-policies.yaml",
+          "coordinate": "/document3/spec/egress/0/toPorts/0/ports/0/port",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/spire-network-policies.yaml",
+          "coordinate": "/document3/spec/egress/0/toPorts/0/ports/0/protocol",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/spire-network-policies.yaml",
+          "coordinate": "/document3/spec/egress/0/toPorts/0/ports/1/port",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/spire-network-policies.yaml",
+          "coordinate": "/document3/spec/egress/0/toPorts/0/ports/1/protocol",
+          "type": "str"
+        }
+      ],
+      "in312SourceList": false,
+      "in33CoordinateSources": false,
+      "callerSearch": {
+        "argv": [
+          "rg",
+          "-n",
+          "-F",
+          "spire-network-policies.yaml",
+          "scripts",
+          ".github/workflows"
+        ],
+        "exit": 0,
+        "stdout": "scripts/deploy.sh:1135:    kubectl apply -f \"$INFRA_DIR/spire-network-policies.yaml\"\nscripts/verify-cilium-policies.py:25:        scope = [] if path.endswith(('cilium-cluster-policies.yaml', 'spire-network-policies.yaml')) else ['-n', namespace]\n",
+        "stderr": ""
+      },
+      "expectedDisposition": "Current caller/original author\u2192operator/protocol/version/secret/generated/task per coordinate, single proposed author/ref, native schema/first error/domain/activation/cases; or checked historical/generated/nonproductive exclusion. Counts alone do not designate settings."
+    },
+    {
+      "path": "my-values/infra/spire-values.yaml",
+      "sha256": "dad3b9a5f3815773de1c49acfe1ea982f97bb076fcd312fb99155a5a083a06fd",
+      "fieldCoordinates": [
+        {
+          "path": "my-values/infra/spire-values.yaml",
+          "coordinate": "/global/k8s/clusterDomain",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/spire-values.yaml",
+          "coordinate": "/global/spire/clusterName",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/spire-values.yaml",
+          "coordinate": "/global/spire/trustDomain",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/spire-values.yaml",
+          "coordinate": "/global/spire/caSubject/country",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/spire-values.yaml",
+          "coordinate": "/global/spire/caSubject/organization",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/spire-values.yaml",
+          "coordinate": "/global/spire/caSubject/commonName",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/spire-values.yaml",
+          "coordinate": "/global/spire/recommendations/enabled",
+          "type": "bool"
+        },
+        {
+          "path": "my-values/infra/spire-values.yaml",
+          "coordinate": "/global/spire/recommendations/namespaceLayout",
+          "type": "bool"
+        },
+        {
+          "path": "my-values/infra/spire-values.yaml",
+          "coordinate": "/global/spire/recommendations/namespacePSS",
+          "type": "bool"
+        },
+        {
+          "path": "my-values/infra/spire-values.yaml",
+          "coordinate": "/global/spire/recommendations/priorityClassName",
+          "type": "bool"
+        },
+        {
+          "path": "my-values/infra/spire-values.yaml",
+          "coordinate": "/global/spire/recommendations/strictMode",
+          "type": "bool"
+        },
+        {
+          "path": "my-values/infra/spire-values.yaml",
+          "coordinate": "/global/spire/recommendations/securityContexts",
+          "type": "bool"
+        },
+        {
+          "path": "my-values/infra/spire-values.yaml",
+          "coordinate": "/global/spire/recommendations/prometheus",
+          "type": "bool"
+        },
+        {
+          "path": "my-values/infra/spire-values.yaml",
+          "coordinate": "/global/spire/namespaces/create",
+          "type": "bool"
+        },
+        {
+          "path": "my-values/infra/spire-values.yaml",
+          "coordinate": "/global/spire/namespaces/system/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/spire-values.yaml",
+          "coordinate": "/global/spire/namespaces/system/create",
+          "type": "bool"
+        },
+        {
+          "path": "my-values/infra/spire-values.yaml",
+          "coordinate": "/global/spire/namespaces/server/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/spire-values.yaml",
+          "coordinate": "/global/spire/namespaces/server/create",
+          "type": "bool"
+        },
+        {
+          "path": "my-values/infra/spire-values.yaml",
+          "coordinate": "/spire-server/controllerManager/identities/clusterSPIFFEIDs/default/enabled",
+          "type": "bool"
+        },
+        {
+          "path": "my-values/infra/spire-values.yaml",
+          "coordinate": "/spire-server/controllerManager/identities/clusterSPIFFEIDs/default/spiffeIDTemplate",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/spire-values.yaml",
+          "coordinate": "/spire-server/controllerManager/identities/clusterSPIFFEIDs/default/podSelector/matchLabels/kubeclaw.dev/worker-trust",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/spire-values.yaml",
+          "coordinate": "/spire-server/controllerManager/identities/clusterSPIFFEIDs/default/namespaceSelector",
+          "type": "dict"
+        },
+        {
+          "path": "my-values/infra/spire-values.yaml",
+          "coordinate": "/spire-server/controllerManager/identities/clusterSPIFFEIDs/oidc-discovery-provider/enabled",
+          "type": "bool"
+        },
+        {
+          "path": "my-values/infra/spire-values.yaml",
+          "coordinate": "/spire-server/controllerManager/identities/clusterSPIFFEIDs/test-keys/enabled",
+          "type": "bool"
+        },
+        {
+          "path": "my-values/infra/spire-values.yaml",
+          "coordinate": "/spire-server/jwtSVIDSupport",
+          "type": "bool"
+        },
+        {
+          "path": "my-values/infra/spire-values.yaml",
+          "coordinate": "/spiffe-oidc-discovery-provider/enabled",
+          "type": "bool"
+        },
+        {
+          "path": "my-values/infra/spire-values.yaml",
+          "coordinate": "/spiffe-csi-driver/image/tag",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/spire-values.yaml",
+          "coordinate": "/tornjak-frontend/enabled",
+          "type": "bool"
+        }
+      ],
+      "in312SourceList": false,
+      "in33CoordinateSources": false,
+      "callerSearch": {
+        "argv": [
+          "rg",
+          "-n",
+          "-F",
+          "spire-values.yaml",
+          "scripts",
+          ".github/workflows"
+        ],
+        "exit": 0,
+        "stdout": "scripts/deploy.sh:96:SPIRE_VALUES_FILE=\"${SPIRE_VALUES_FILE:-$INFRA_DIR/spire-values.yaml}\"\n",
+        "stderr": ""
+      },
+      "expectedDisposition": "Current caller/original author\u2192operator/protocol/version/secret/generated/task per coordinate, single proposed author/ref, native schema/first error/domain/activation/cases; or checked historical/generated/nonproductive exclusion. Counts alone do not designate settings."
+    },
+    {
+      "path": "my-values/infra/tailscale-operator-values.yaml",
+      "sha256": "8c8f44a3f243b519973ea250d283da3c6a08b31a9224ee3b34012b4e28f36110",
+      "fieldCoordinates": [
+        {
+          "path": "my-values/infra/tailscale-operator-values.yaml",
+          "coordinate": "/oauth/clientId",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/tailscale-operator-values.yaml",
+          "coordinate": "/oauth/clientSecret",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/tailscale-operator-values.yaml",
+          "coordinate": "/installCRDs",
+          "type": "bool"
+        },
+        {
+          "path": "my-values/infra/tailscale-operator-values.yaml",
+          "coordinate": "/ingressClass/enabled",
+          "type": "bool"
+        },
+        {
+          "path": "my-values/infra/tailscale-operator-values.yaml",
+          "coordinate": "/ingressClass/name",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/tailscale-operator-values.yaml",
+          "coordinate": "/operatorConfig/image/repository",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/tailscale-operator-values.yaml",
+          "coordinate": "/operatorConfig/image/digest",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/tailscale-operator-values.yaml",
+          "coordinate": "/operatorConfig/defaultTags/0",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/tailscale-operator-values.yaml",
+          "coordinate": "/operatorConfig/resources/requests/cpu",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/tailscale-operator-values.yaml",
+          "coordinate": "/operatorConfig/resources/requests/memory",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/tailscale-operator-values.yaml",
+          "coordinate": "/operatorConfig/resources/limits/cpu",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/tailscale-operator-values.yaml",
+          "coordinate": "/operatorConfig/resources/limits/memory",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/tailscale-operator-values.yaml",
+          "coordinate": "/proxyConfig/image/repository",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/tailscale-operator-values.yaml",
+          "coordinate": "/proxyConfig/image/digest",
+          "type": "str"
+        },
+        {
+          "path": "my-values/infra/tailscale-operator-values.yaml",
+          "coordinate": "/proxyConfig/defaultTags",
+          "type": "str"
+        }
+      ],
+      "in312SourceList": false,
+      "in33CoordinateSources": false,
+      "callerSearch": {
+        "argv": [
+          "rg",
+          "-n",
+          "-F",
+          "tailscale-operator-values.yaml",
+          "scripts",
+          ".github/workflows"
+        ],
+        "exit": 0,
+        "stdout": "scripts/deploy.sh:86:TAILSCALE_VALUES_FILE=\"${TAILSCALE_VALUES_FILE:-$INFRA_DIR/tailscale-operator-values.yaml}\"\nscripts/versions.mjs:104:    replaceOne('my-values/infra/tailscale-operator-values.yaml',\nscripts/docs-inventory.mjs:156:    'my-values/infra/tailscale-operator-values.yaml',\n",
+        "stderr": ""
+      },
+      "expectedDisposition": "Current caller/original author\u2192operator/protocol/version/secret/generated/task per coordinate, single proposed author/ref, native schema/first error/domain/activation/cases; or checked historical/generated/nonproductive exclusion. Counts alone do not designate settings."
+    }
+  ]
+}

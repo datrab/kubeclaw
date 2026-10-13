@@ -1,0 +1,379 @@
+{
+  "busterComponentFile": "files/config/buster-engine.config.json",
+  "agentRole": "nova",
+  "image": {
+    "digest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "repository": "ghcr.io/datrab/kubeclaw-nova",
+    "tag": "latest",
+    "pullPolicy": "Always"
+  },
+  "imagePullSecrets": [
+    {
+      "name": "delivery-pull-b"
+    }
+  ],
+  "codeBundle": {
+    "sha256": "",
+    "enabled": false,
+    "archiveUrl": "",
+    "expectedCommit": "",
+    "contractVersion": "v2",
+    "auth": {
+      "existingSecret": "",
+      "existingSecretKey": "token"
+    }
+  },
+  "runtimeInfrastructure": {
+    "registry": {
+      "endpoint": "",
+      "transport": "",
+      "authSecretName": "",
+      "usernameKey": "username",
+      "passwordKey": "password",
+      "caSecretName": "",
+      "caSecretKey": "ca.crt",
+      "nodeCaFile": ""
+    },
+    "dockerHubMirror": {
+      "endpoint": "",
+      "transport": "",
+      "caSecretName": "",
+      "caSecretKey": "ca.crt",
+      "nodeCaFile": ""
+    }
+  },
+  "gateway": {
+    "url": "",
+    "startupDoctor": {
+      "enabled": true,
+      "nodeOptions": "--max-old-space-size=768",
+      "resources": {
+        "requests": {
+          "cpu": "200m",
+          "memory": "256Mi"
+        },
+        "limits": {
+          "cpu": "2",
+          "memory": "2Gi"
+        }
+      }
+    },
+    "command": [
+      "node",
+      "/app/openclaw.mjs",
+      "gateway",
+      "--bind",
+      "lan",
+      "--port",
+      "18789"
+    ],
+    "port": 18789,
+    "bridgePort": 18790,
+    "resources": {}
+  },
+  "initSetup": {
+    "resources": {
+      "requests": {
+        "cpu": "200m",
+        "memory": "256Mi"
+      },
+      "limits": {
+        "cpu": "2",
+        "memory": "2Gi"
+      }
+    }
+  },
+  "pluginSeed": {
+    "installMode": "official-npm-v1",
+    "specs": [
+      "npm:@openclaw/acpx@2026.9.5",
+      "npm:@openclaw/discord@2026.9.5"
+    ]
+  },
+  "capabilityProviders": {},
+  "replicaCount": 1,
+  "workerTrust": {
+    "spiffe": {
+      "enabled": true,
+      "trustDomain": "kubeclaw.internal",
+      "socketPath": "/run/spire/sockets/spire-agent.sock",
+      "csiDriver": "csi.spiffe.io",
+      "envoy": {
+        "repository": "envoyproxy/envoy",
+        "tag": "v1.39.0",
+        "digest": "sha256:d59f7f5fa10cff6d5892b6c5e7df5c9297ddfb2c3683e33fbfb82da24de4fa66",
+        "pullPolicy": "IfNotPresent",
+        "resources": {
+          "requests": {
+            "cpu": "200m",
+            "memory": "256Mi"
+          },
+          "limits": {
+            "cpu": "2",
+            "memory": "2Gi"
+          }
+        }
+      }
+    }
+  },
+  "auth": {
+    "token": "",
+    "existingSecret": "dlv-auth-b",
+    "existingSecretKey": "gateway-token"
+  },
+  "litellm": {
+    "endpoint": "http://litellm.kubeclaw.svc.cluster.local:4000/v1",
+    "apiKey": "",
+    "existingSecret": "dlv-litellm-b",
+    "existingSecretKey": "api-key"
+  },
+  "stitch": {
+    "existingSecret": "",
+    "existingSecretKey": "stitchApiKey"
+  },
+  "discord": {
+    "enabled": true,
+    "channelId": "",
+    "execApprovers": [],
+    "token": "",
+    "existingSecret": "dlv-discord-b",
+    "existingSecretKey": "discord-token"
+  },
+  "discordWebhook": {
+    "secretName": "",
+    "secretKey": "discordWebhook"
+  },
+  "agent": {
+    "project": "",
+    "model": {
+      "primary": "openai/gpt-5.6-sol",
+      "fallbacks": [
+        "openai/gpt-5.5"
+      ]
+    },
+    "git": {
+      "enabled": false,
+      "secretName": "",
+      "repoUrl": ""
+    }
+  },
+  "redis": {
+    "host": "redis-master.kubeclaw.svc.cluster.local",
+    "port": "6379",
+    "secretName": "redis-secrets",
+    "secretKey": "redis-password"
+  },
+  "workspace": {
+    "enabled": true,
+    "overrideOnRestart": false,
+    "soul": "",
+    "agents": "",
+    "user": "",
+    "tools": "",
+    "memory": "",
+    "identity": "",
+    "bootstrap": ""
+  },
+  "service": {
+    "type": "ClusterIP",
+    "gatewayPort": 18789,
+    "gatewayTargetPort": "gateway",
+    "bridgeEnabled": true,
+    "bridgePort": 18790,
+    "nodePort": 0,
+    "bridgeNodePort": 0,
+    "extraPorts": []
+  },
+  "persistence": {
+    "config": {
+      "enabled": true,
+      "size": "20Gi",
+      "storageClass": "delivery-storage-b",
+      "accessModes": [
+        "ReadWriteOnce"
+      ]
+    },
+    "workspace": {
+      "enabled": true,
+      "size": "40Gi",
+      "storageClass": "delivery-storage-b",
+      "accessModes": [
+        "ReadWriteOnce"
+      ]
+    }
+  },
+  "resources": {
+    "requests": {
+      "cpu": "200m",
+      "memory": "256Mi"
+    },
+    "limits": {
+      "cpu": "2",
+      "memory": "2Gi"
+    }
+  },
+  "runAsRoot": true,
+  "probes": {
+    "startup": {
+      "enabled": true,
+      "initialDelaySeconds": 10,
+      "periodSeconds": 10,
+      "timeoutSeconds": 40,
+      "failureThreshold": 24
+    },
+    "readiness": {
+      "enabled": true,
+      "initialDelaySeconds": 5,
+      "periodSeconds": 10,
+      "timeoutSeconds": 40,
+      "failureThreshold": 3
+    },
+    "liveness": {
+      "enabled": true,
+      "initialDelaySeconds": 120,
+      "periodSeconds": 30,
+      "timeoutSeconds": 40,
+      "failureThreshold": 3
+    },
+    "dependencies": {
+      "gateway": {
+        "enabled": true
+      },
+      "redis": {
+        "enabled": true
+      },
+      "redisStream": {
+        "enabled": true,
+        "stream": "",
+        "maxLen": 1000
+      },
+      "litellm": {
+        "enabled": true
+      },
+      "registries": {
+        "enabled": true,
+        "endpoints": [
+          "http://registry-local.kubeclaw.svc.cluster.local:5001",
+          "http://registry-mirror.kubeclaw.svc.cluster.local:5000"
+        ]
+      },
+      "timeoutMs": 2000
+    }
+  },
+  "shutdown": {
+    "terminationGracePeriodSeconds": 180,
+    "drainFile": "/tmp/kubeclaw-draining",
+    "preStopDrainSeconds": 5
+  },
+  "serviceAccount": {
+    "create": true,
+    "automount": false
+  },
+  "busterNamespaceBroker": {
+    "enabled": false,
+    "leaseClient": {
+      "enabled": false,
+      "verificationRead": {
+        "enabled": false,
+        "tailscaleOperatorNamespace": "tailscale",
+        "tailscaleOAuthSecretName": "operator-oauth"
+      }
+    },
+    "readyClient": {
+      "enabled": false,
+      "endpoint": "",
+      "audience": "",
+      "caSecretName": ""
+    },
+    "allowedPrefixes": [
+      "test"
+    ],
+    "defaultTtlSeconds": 7200,
+    "maxTtlSeconds": 86400,
+    "controller": {
+      "productDecisions": {
+        "enabled": false,
+        "audience": "",
+        "producerNamespace": "",
+        "producerServiceAccount": "",
+        "issuer": "",
+        "verifyKey": "",
+        "allowedActors": []
+      },
+      "readiness": {
+        "enabled": false,
+        "audience": "",
+        "producerNamespace": "",
+        "producerServiceAccount": "",
+        "tlsSecretName": ""
+      },
+      "allowedAccess": [
+        {
+          "subject": "agent-buster",
+          "modes": [
+            "deployer",
+            "tester"
+          ]
+        },
+        {
+          "subject": "agent-nova",
+          "modes": [
+            "deployer"
+          ]
+        }
+      ],
+      "allowedSourceSecrets": [],
+      "image": {
+        "repository": "ghcr.io/datrab/kubeclaw-namespace-controller",
+        "tag": "latest",
+        "pullPolicy": "Always"
+      },
+      "pollIntervalMs": 3000,
+      "resources": {
+        "requests": {
+          "cpu": "50m",
+          "memory": "128Mi"
+        },
+        "limits": {
+          "cpu": "500m",
+          "memory": "512Mi"
+        }
+      }
+    }
+  },
+  "commands": {
+    "ownerAllowFrom": [],
+    "allowFromDiscord": []
+  },
+  "swarmConfig": {
+    "overrideOnRestart": false
+  },
+  "semgrepConfigYaml": "",
+  "eslintConfigMjs": "",
+  "customSkills": {},
+  "nodeSelector": {},
+  "tolerations": [],
+  "podAnnotations": {},
+  "extraEnv": [],
+  "extraContainers": [],
+  "archviewer": {
+    "enabled": false,
+    "networkPolicyProvider": "cilium",
+    "existingSecret": "",
+    "hostname": "nova-architecture",
+    "tailscaleOperatorNamespace": "tailscale"
+  },
+  "extraVolumes": [],
+  "extraVolumeMounts": [],
+  "busterRuntimePersistence": {
+    "enabled": false,
+    "claimName": "",
+    "size": "64Gi",
+    "storageClass": ""
+  },
+  "busterNative": {
+    "nodeName": "",
+    "namespace": "",
+    "policyDigest": ""
+  }
+}

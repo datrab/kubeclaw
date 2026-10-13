@@ -1,0 +1,133 @@
+{
+  "scope": "Author documentation/profile/schema/canonical byte+semantic contradiction controls only. No current targetprojection/F-MUT/runtime/globalC0acceptance.",
+  "results": [
+    {
+      "id": "strict-boundary-manifest-normal-admit-positive-original",
+      "passed": true
+    },
+    {
+      "id": "strict-boundary-manifest-normal-admit-negative-original",
+      "passed": true
+    },
+    {
+      "id": "strict-boundary-manifest-normal-admitAndRead-positive-original",
+      "passed": true
+    },
+    {
+      "id": "strict-boundary-manifest-normal-admitAndRead-negative-original",
+      "passed": true
+    },
+    {
+      "id": "strict-boundary-manifest-duplicate-positive-original",
+      "passed": true
+    },
+    {
+      "id": "strict-boundary-manifest-quarantine-positive-original",
+      "passed": true
+    },
+    {
+      "id": "strict-boundary-manifest-quarantine-negative-original",
+      "passed": true
+    },
+    {
+      "id": "strict-boundary-manifest-overflow-positive-original",
+      "passed": true
+    },
+    {
+      "id": "strict-boundary-manifest-recordGap-positive-original",
+      "passed": true
+    },
+    {
+      "id": "strict-boundary-manifest-recordGap-negative-original",
+      "passed": true
+    },
+    {
+      "id": "strict-boundary-manifest-gap-restoration-unproved-positive-original",
+      "passed": true
+    },
+    {
+      "id": "strict-boundary-manifest-oversized-history-positive-original",
+      "passed": true
+    },
+    {
+      "id": "strict-boundary-manifest-counter-overflow-positive-original",
+      "passed": true
+    },
+    {
+      "id": "original-boundary-semantic-normal-admit",
+      "passed": true
+    },
+    {
+      "id": "original-boundary-semantic-normal-admitAndRead",
+      "passed": true
+    },
+    {
+      "id": "original-boundary-semantic-duplicate",
+      "passed": true
+    },
+    {
+      "id": "original-boundary-semantic-quarantine",
+      "passed": true
+    },
+    {
+      "id": "original-boundary-semantic-overflow",
+      "passed": true
+    },
+    {
+      "id": "original-boundary-semantic-recordGap",
+      "passed": true
+    },
+    {
+      "id": "original-boundary-semantic-gap-restoration-unproved",
+      "passed": true
+    },
+    {
+      "id": "original-boundary-semantic-oversized-history",
+      "passed": true
+    },
+    {
+      "id": "original-boundary-semantic-counter-overflow",
+      "passed": true
+    },
+    {
+      "id": "negative-stale1940-oracle-rejected",
+      "passed": true
+    },
+    {
+      "id": "restored1934-oracle-positive",
+      "passed": true
+    },
+    {
+      "id": "negative-globalA-vs-boundary-profile-rejected",
+      "passed": true
+    },
+    {
+      "id": "negative-wrong-positivequota-with-originalheader-rejected",
+      "passed": true
+    },
+    {
+      "id": "negative-negativeoriginal-rebound-to-positiveheader-rejected",
+      "passed": true
+    },
+    {
+      "id": "restored-negativeoriginal-binding-positive",
+      "passed": true
+    },
+    {
+      "id": "samehistoricalglobalA-digest-not-misclassified-boundary",
+      "passed": true
+    },
+    {
+      "id": "ALL-WRITES-original22-requirements-conserved",
+      "passed": true
+    },
+    {
+      "id": "preserved-all-old-inputs-and-independent-report",
+      "passed": true
+    }
+  ],
+  "passed": 31,
+  "failed": 0,
+  "manifestCount": 13,
+  "futureCasesRun": 0
+}

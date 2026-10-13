@@ -1,0 +1,3609 @@
+{
+  "corrects": "ICQ-06",
+  "historicalMap": {
+    "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/question-closure-bce3f075/lock-owner-map.json",
+    "sha256": "f67d92b3dee1e4cea9ab728bdea87866fa5686f250f54ba8c56d20eb161efd81"
+  },
+  "completeCompanions": {
+    "BusterPreparedJob": [
+      {
+        "id": "A",
+        "completeConfig": {
+          "schemaVersion": "buster-remote-plan-runtime.v1",
+          "platformConfig": "${CASE_ROOT}/platform.json",
+          "host": "127.0.0.1",
+          "port": 0,
+          "tokenEnvironmentVariable": "ICQ_TEST_TOKEN",
+          "sourceAttestationPublicKeyEnvironmentVariable": "ICQ_TEST_SOURCE_PUBLIC_KEY",
+          "trustedSourceAuthority": "nova:icq-synthetic",
+          "stateRoot": "${CASE_ROOT}/plan-jobs",
+          "runtimeRoot": "${CASE_ROOT}/runs",
+          "tarExecutable": "/usr/bin/tar",
+          "allowedCapabilities": [],
+          "recordLimits": {
+            "maximumRecords": 10,
+            "maximumBytes": 1048576,
+            "maximumRecordBytes": 131072
+          },
+          "maximumResultBytes": 65536,
+          "maximumResultStoreBytes": 1048576,
+          "maximumResponseBytes": 65536,
+          "shutdownTimeoutMs": 5000,
+          "storeLockWaitSeconds": 5
+        },
+        "scope": "complete synthetic existing-author fixture with proposed lock extension; NOT deployed profile or all parent target-policy validation",
+        "materialization": "Only CASE_ROOT substitution after mkdtemp; fixedloopbackservice notconnected for lock case; secrets/key fixtures are testowned companion refs, never real credentials"
+      },
+      {
+        "id": "B",
+        "completeConfig": {
+          "schemaVersion": "buster-remote-plan-runtime.v1",
+          "platformConfig": "${CASE_ROOT}/platform.json",
+          "host": "127.0.0.1",
+          "port": 0,
+          "tokenEnvironmentVariable": "ICQ_TEST_TOKEN",
+          "sourceAttestationPublicKeyEnvironmentVariable": "ICQ_TEST_SOURCE_PUBLIC_KEY",
+          "trustedSourceAuthority": "nova:icq-synthetic",
+          "stateRoot": "${CASE_ROOT}/plan-jobs",
+          "runtimeRoot": "${CASE_ROOT}/runs",
+          "tarExecutable": "/usr/bin/tar",
+          "allowedCapabilities": [],
+          "recordLimits": {
+            "maximumRecords": 10,
+            "maximumBytes": 1048576,
+            "maximumRecordBytes": 131072
+          },
+          "maximumResultBytes": 65536,
+          "maximumResultStoreBytes": 1048576,
+          "maximumResponseBytes": 65536,
+          "shutdownTimeoutMs": 5000,
+          "storeLockWaitSeconds": 1
+        },
+        "scope": "complete synthetic existing-author fixture with proposed lock extension; NOT deployed profile or all parent target-policy validation",
+        "materialization": "Only CASE_ROOT substitution after mkdtemp; fixedloopbackservice notconnected for lock case; secrets/key fixtures are testowned companion refs, never real credentials"
+      }
+    ],
+    "NovaStandaloneGate": [
+      {
+        "id": "A",
+        "completeConfig": {
+          "schemaVersion": "nova-remote-test-gate-runtime.v1",
+          "endpoint": "http://127.0.0.1:18080",
+          "authentication": "bearer",
+          "tokenEnvironmentVariable": "ICQ_TEST_TOKEN",
+          "sourceAttestationPrivateKeyEnvironmentVariable": "ICQ_TEST_SOURCE_PRIVATE_KEY",
+          "sourceAuthority": "nova:icq-synthetic",
+          "stateRoot": "${CASE_ROOT}/nova-gate",
+          "pollMilliseconds": 10,
+          "maximumResponseBytes": 1048576,
+          "maximumResultBytes": 16777216,
+          "maximumArchiveBytes": 1048576,
+          "maximumArchiveStoreBytes": 4194304,
+          "maximumEvidenceBytes": 1048576,
+          "maximumEvidenceStoreBytes": 4194304,
+          "recordLimits": {
+            "maximumRecords": 10,
+            "maximumBytes": 1048576,
+            "maximumRecordBytes": 131072
+          },
+          "storeLockWaitSeconds": 5
+        },
+        "scope": "complete synthetic existing-author fixture with proposed lock extension; NOT deployed profile or all parent target-policy validation",
+        "materialization": "Only CASE_ROOT substitution after mkdtemp; fixedloopbackservice notconnected for lock case; secrets/key fixtures are testowned companion refs, never real credentials"
+      },
+      {
+        "id": "B",
+        "completeConfig": {
+          "schemaVersion": "nova-remote-test-gate-runtime.v1",
+          "endpoint": "http://127.0.0.1:18080",
+          "authentication": "bearer",
+          "tokenEnvironmentVariable": "ICQ_TEST_TOKEN",
+          "sourceAttestationPrivateKeyEnvironmentVariable": "ICQ_TEST_SOURCE_PRIVATE_KEY",
+          "sourceAuthority": "nova:icq-synthetic",
+          "stateRoot": "${CASE_ROOT}/nova-gate",
+          "pollMilliseconds": 10,
+          "maximumResponseBytes": 1048576,
+          "maximumResultBytes": 16777216,
+          "maximumArchiveBytes": 1048576,
+          "maximumArchiveStoreBytes": 4194304,
+          "maximumEvidenceBytes": 1048576,
+          "maximumEvidenceStoreBytes": 4194304,
+          "recordLimits": {
+            "maximumRecords": 10,
+            "maximumBytes": 1048576,
+            "maximumRecordBytes": 131072
+          },
+          "storeLockWaitSeconds": 1
+        },
+        "scope": "complete synthetic existing-author fixture with proposed lock extension; NOT deployed profile or all parent target-policy validation",
+        "materialization": "Only CASE_ROOT substitution after mkdtemp; fixedloopbackservice notconnected for lock case; secrets/key fixtures are testowned companion refs, never real credentials"
+      }
+    ],
+    "NovaRegisteredGate": [
+      {
+        "id": "A",
+        "completeConfig": {
+          "endpoint": "http://127.0.0.1:18080",
+          "authentication": "bearer",
+          "tokenSecret": "icq.test.token",
+          "sourcePrivateKeySecret": "icq.test.source-private",
+          "sourceAuthority": "nova:icq-synthetic",
+          "stateRoot": "${CASE_ROOT}/registered-gate",
+          "allowedRepositoryRoots": [
+            "${CASE_ROOT}/repository"
+          ],
+          "storeLockWaitSeconds": 5
+        },
+        "scope": "complete synthetic existing-author fixture with proposed lock extension; NOT deployed profile or all parent target-policy validation",
+        "materialization": "Only CASE_ROOT substitution after mkdtemp; fixedloopbackservice notconnected for lock case; secrets/key fixtures are testowned companion refs, never real credentials"
+      },
+      {
+        "id": "B",
+        "completeConfig": {
+          "endpoint": "http://127.0.0.1:18080",
+          "authentication": "bearer",
+          "tokenSecret": "icq.test.token",
+          "sourcePrivateKeySecret": "icq.test.source-private",
+          "sourceAuthority": "nova:icq-synthetic",
+          "stateRoot": "${CASE_ROOT}/registered-gate",
+          "allowedRepositoryRoots": [
+            "${CASE_ROOT}/repository"
+          ],
+          "storeLockWaitSeconds": 1
+        },
+        "scope": "complete synthetic existing-author fixture with proposed lock extension; NOT deployed profile or all parent target-policy validation",
+        "materialization": "Only CASE_ROOT substitution after mkdtemp; fixedloopbackservice notconnected for lock case; secrets/key fixtures are testowned companion refs, never real credentials"
+      }
+    ],
+    "NovaRegisteredEvidence": [
+      {
+        "id": "A",
+        "completeConfig": {
+          "stateRoot": "${CASE_ROOT}/registered-gate",
+          "manifestStageId": "project-summary",
+          "gateStageId": "quality-final",
+          "storeLockWaitSeconds": 5
+        },
+        "scope": "complete synthetic existing-author fixture with proposed lock extension; NOT deployed profile or all parent target-policy validation",
+        "materialization": "Only CASE_ROOT substitution after mkdtemp; fixedloopbackservice notconnected for lock case; secrets/key fixtures are testowned companion refs, never real credentials"
+      },
+      {
+        "id": "B",
+        "completeConfig": {
+          "stateRoot": "${CASE_ROOT}/registered-gate",
+          "manifestStageId": "project-summary",
+          "gateStageId": "quality-final",
+          "storeLockWaitSeconds": 1
+        },
+        "scope": "complete synthetic existing-author fixture with proposed lock extension; NOT deployed profile or all parent target-policy validation",
+        "materialization": "Only CASE_ROOT substitution after mkdtemp; fixedloopbackservice notconnected for lock case; secrets/key fixtures are testowned companion refs, never real credentials"
+      }
+    ],
+    "DemoHandoff": [
+      {
+        "id": "A",
+        "completeConfig": {
+          "candidateStageId": "candidate",
+          "deliveryStageId": "delivery",
+          "readyStageId": "ready",
+          "manifestStageId": "manifest",
+          "operatorTarget": "icq.test.operator",
+          "endpoint": "https://127.0.0.1:18443/v1/demo-ready",
+          "tokenPath": "${CASE_ROOT}/test.token",
+          "caPath": "${CASE_ROOT}/test.ca",
+          "stateRoot": "${CASE_ROOT}/demo",
+          "timeoutMs": 1000,
+          "storeLockWaitSeconds": 5
+        },
+        "scope": "complete synthetic existing-author fixture with proposed lock extension; NOT deployed profile or all parent target-policy validation",
+        "materialization": "Only CASE_ROOT substitution after mkdtemp; fixedloopbackservice notconnected for lock case; secrets/key fixtures are testowned companion refs, never real credentials"
+      },
+      {
+        "id": "B",
+        "completeConfig": {
+          "candidateStageId": "candidate",
+          "deliveryStageId": "delivery",
+          "readyStageId": "ready",
+          "manifestStageId": "manifest",
+          "operatorTarget": "icq.test.operator",
+          "endpoint": "https://127.0.0.1:18443/v1/demo-ready",
+          "tokenPath": "${CASE_ROOT}/test.token",
+          "caPath": "${CASE_ROOT}/test.ca",
+          "stateRoot": "${CASE_ROOT}/demo",
+          "timeoutMs": 1000,
+          "storeLockWaitSeconds": 1
+        },
+        "scope": "complete synthetic existing-author fixture with proposed lock extension; NOT deployed profile or all parent target-policy validation",
+        "materialization": "Only CASE_ROOT substitution after mkdtemp; fixedloopbackservice notconnected for lock case; secrets/key fixtures are testowned companion refs, never real credentials"
+      }
+    ],
+    "BusterComponent": [
+      {
+        "id": "A",
+        "scope": "complete existing Buster author with required proposed extensions, NOT currentloaderaccepted/physicaldeploymentprofile",
+        "author": {
+          "schemaVersion": "swarm-component.v1",
+          "owner": "buster-engine",
+          "settings": {
+            "preparation": {
+              "resourcePolicy": {
+                "cpuTimeMs": 120000,
+                "memoryBytes": 8589934592,
+                "tasks": 64
+              },
+              "timeoutMs": 300000,
+              "cleanupTimeoutMs": 10000,
+              "maximumActivePreparations": 2,
+              "maximumPendingAdmissions": 16,
+              "maximumRequestBytes": 100663296,
+              "maximumArchiveBytes": 67108864,
+              "maximumExtractedBytes": 536870912,
+              "maximumHeaderBytes": 3145728,
+              "maximumSourceBytes": 1073741824,
+              "maximumMetadataBytes": 67108864,
+              "maximumRecords": 10000,
+              "maximumOwnershipBytes": 16777216,
+              "maximumJournalBytes": 268435456,
+              "maximumInputBytes": 65536,
+              "maximumOutputBytes": 8388608,
+              "maximumResultBytes": 4194304,
+              "pollIntervalMs": 25,
+              "drainTimeoutMs": 5000,
+              "closeTimeoutMs": 10000,
+              "tarTimeoutMs": 120000,
+              "maximumArchiveEntries": 200000,
+              "maximumListingLineBytes": 1048576,
+              "maximumTarStderrBytes": 65536,
+              "maximumSourceEntries": 400014,
+              "sourceEntryReservationBytes": 256,
+              "maximumOpenFiles": 64,
+              "tarDiagnosticCodeUnits": 4096,
+              "storeLockWaitSeconds": 5
+            },
+            "admission": {
+              "maximumActiveJobs": 2,
+              "maximumQueuedJobs": 8,
+              "maximumConcurrentAttempts": 64
+            },
+            "dependencyReadiness": {
+              "maximumExecutionMs": 1000,
+              "maximumOutputBytes": 65536
+            },
+            "execution": {
+              "provider": {
+                "cleanupTimeoutMs": 30000,
+                "maximumResultBytes": 16777216,
+                "claimGraceMs": 60000,
+                "queueTimeoutMs": 60000,
+                "workerResultWrapperBytes": 4096,
+                "maximumProtocolBytes": 16777216,
+                "terminationGraceMs": 500,
+                "terminationTimeoutMs": 1000,
+                "capabilityDrainTimeoutMs": 1000,
+                "minimumHeapMiB": 16,
+                "heapFraction": 0.7,
+                "maximumPendingCapabilities": 32,
+                "minimumOpenFiles": 64,
+                "artifactFileDescriptorReserve": 32
+              },
+              "reports": {
+                "maximumAggregateResultBytes": 16777216,
+                "maximumSourceBytes": 67108864,
+                "maximumCases": 5000,
+                "maximumFindings": 5000,
+                "maximumCaseFindings": 100,
+                "maximumTimeoutMs": 300000,
+                "memoryBytes": 536870912,
+                "minimumCpuTimeMs": 1000,
+                "maximumOpenFiles": 64,
+                "minimumOpenFiles": 16,
+                "minimumHeapMiB": 16,
+                "heapFraction": 0.7,
+                "runtimeMemoryReserveBytes": 67108864
+              },
+              "observation": {
+                "resourceSampleIntervalMs": 10,
+                "processSampleIntervalMs": 50
+              },
+              "stores": {
+                "attempts": {
+                  "maximumEvidenceObjects": 10000,
+                  "maximumEvidenceBytes": 10737418240,
+                  "maximumEvidenceObjectBytes": 1073741824,
+                  "maximumResults": 10000,
+                  "maximumClosures": 10000,
+                  "maximumMetadataBytes": 268435456,
+                  "maximumPendingEvidenceAgeMs": 3600000,
+                  "lockWaitSeconds": 5
+                },
+                "admission": {
+                  "maximumIngressBytes": 16777216,
+                  "maximumRecords": 10000,
+                  "maximumBytes": 268435456,
+                  "maximumQuarantineRecords": 1000,
+                  "maximumQuarantineBytes": 67108864,
+                  "reasonThresholdCodeUnits": 256,
+                  "reasonPrefixCodeUnits": 180,
+                  "metadataReserveBytes": 8192,
+                  "lockWaitSeconds": 5
+                }
+              },
+              "processInput": {
+                "cleanupTimeoutMs": 1500,
+                "terminationGraceMs": 250,
+                "acknowledgementPollMs": 10
+              }
+            },
+            "clusterInvokers": {
+              "shared": {
+                "kubectlExecutable": "/usr/local/bin/kubectl",
+                "leaseApiGroup": "kubeclaw.forgestack.ai",
+                "leaseApiVersion": "v1alpha1"
+              },
+              "kubernetesFixture": {
+                "allowedNamespacePrefixes": [
+                  "test"
+                ],
+                "registryRepositoryPrefixes": [
+                  "kubeclaw"
+                ],
+                "allowedSecretReferences": [],
+                "allowedStorageClasses": [],
+                "allowDefaultStorageClass": true,
+                "runnerServiceAccount": "agent-buster",
+                "credentialReaderServiceAccount": "agent-nova",
+                "maximumManifestBytes": 1048576,
+                "maximumResources": 64,
+                "maximumPersistentVolumeClaimBytes": 10737418240,
+                "maximumPersistentVolumeTotalBytes": 21474836480,
+                "maximumRetentionSeconds": 604800,
+                "maximumExecutionMs": 900000,
+                "pollIntervalMs": 1000,
+                "shortCommandTimeoutMs": 15000,
+                "commandOutputManifestMultiplier": 2,
+                "diagnosticCodeUnits": 4096,
+                "manifest": {
+                  "maximumNodes": 100000,
+                  "maximumDepth": 64,
+                  "maximumAliases": 1000,
+                  "maximumFlattenVisits": 100000,
+                  "maximumFlattenPending": 100000
+                }
+              },
+              "tailscaleExposure": {
+                "allowedNamespacePrefixes": [
+                  "test"
+                ],
+                "allowedHostSuffixes": [
+                  ".ts.net"
+                ],
+                "maximumExecutionMs": 900000,
+                "pollIntervalMs": 1000,
+                "shortCommandTimeoutMs": 15000,
+                "maximumCommandOutputBytes": 1048576
+              },
+              "runtimeSecurity": {
+                "allowedNamespacePrefixes": [
+                  "test"
+                ],
+                "maximumExecutionMs": 300000,
+                "maximumOutputBytes": 16777216,
+                "pollIntervalMs": 1000,
+                "maximumObservationAgeMs": 10000,
+                "maximumFutureSkewMs": 5000,
+                "diagnosticCodeUnits": 1024,
+                "executableSearchPath": [
+                  "/usr/local/bin",
+                  "/usr/bin",
+                  "/bin"
+                ]
+              }
+            }
+          }
+        },
+        "tarRuntimeCompanion": {
+          "sameExistingRuntimeField": "runtime.tarExecutable",
+          "value": "/usr/bin/tar",
+          "BphysicalProvisioning": "genuineGNUtar in disposable approvedimage required, not assumedinstalled"
+        },
+        "kernelLockByRoot": "every owningBuster store receives selectedlockWaitSeconds; exactrootcaller map retained",
+        "generation": {
+          "owner": "buster-engine",
+          "profile": "A",
+          "generationId": "question-definition-A",
+          "digestRule": "SHA256 exactcanonical completeauthor+runtime+schema+source+imageprojection; generated in realharness beforeclaim"
+        },
+        "eval": "fixed complete profile noambient/latestlookup",
+        "bindingEnvelope": {
+          "schemaVersion": "admission-binding.v1",
+          "owner": "buster-engine",
+          "generationDigest": "sha256:80a7a04cf52113606bb8abbd57a2049ceb8de8cb902084d07c7f8548ebdf919a",
+          "profileDigest": "sha256:779b7c7006fcf13daf817a229c31299e40756f06e5304579b53d160180b7132d",
+          "policyDigest": "sha256:51d202e0a5abed93f879f12d63aecabea180f079b725fa3888d542f9e3e9fe69",
+          "schemaDigest": "sha256:fa051f8dacdda448303d5182374d7970b02e71a496bcd41d098cd1bfd58b028c",
+          "sourceDigest": "sha256:195fca717beffb64a5ec20c0aaa5d48ce4fd59ee281f044287d87efc209fb2a4"
+        }
+      },
+      {
+        "id": "B",
+        "scope": "complete existing Buster author with required proposed extensions, NOT currentloaderaccepted/physicaldeploymentprofile",
+        "author": {
+          "schemaVersion": "swarm-component.v1",
+          "owner": "buster-engine",
+          "settings": {
+            "preparation": {
+              "resourcePolicy": {
+                "cpuTimeMs": 120000,
+                "memoryBytes": 8589934592,
+                "tasks": 64
+              },
+              "timeoutMs": 300000,
+              "cleanupTimeoutMs": 10000,
+              "maximumActivePreparations": 2,
+              "maximumPendingAdmissions": 16,
+              "maximumRequestBytes": 100663296,
+              "maximumArchiveBytes": 67108864,
+              "maximumExtractedBytes": 536870912,
+              "maximumHeaderBytes": 3145728,
+              "maximumSourceBytes": 1073741824,
+              "maximumMetadataBytes": 67108864,
+              "maximumRecords": 10000,
+              "maximumOwnershipBytes": 16777216,
+              "maximumJournalBytes": 268435456,
+              "maximumInputBytes": 65536,
+              "maximumOutputBytes": 8388608,
+              "maximumResultBytes": 4194304,
+              "pollIntervalMs": 25,
+              "drainTimeoutMs": 5000,
+              "closeTimeoutMs": 10000,
+              "tarTimeoutMs": 120000,
+              "maximumArchiveEntries": 200000,
+              "maximumListingLineBytes": 1048576,
+              "maximumTarStderrBytes": 65536,
+              "maximumSourceEntries": 400014,
+              "sourceEntryReservationBytes": 256,
+              "maximumOpenFiles": 64,
+              "tarDiagnosticCodeUnits": 2048,
+              "storeLockWaitSeconds": 1
+            },
+            "admission": {
+              "maximumActiveJobs": 2,
+              "maximumQueuedJobs": 8,
+              "maximumConcurrentAttempts": 64
+            },
+            "dependencyReadiness": {
+              "maximumExecutionMs": 1000,
+              "maximumOutputBytes": 65536
+            },
+            "execution": {
+              "provider": {
+                "cleanupTimeoutMs": 30000,
+                "maximumResultBytes": 16777216,
+                "claimGraceMs": 60000,
+                "queueTimeoutMs": 60000,
+                "workerResultWrapperBytes": 4096,
+                "maximumProtocolBytes": 16777216,
+                "terminationGraceMs": 500,
+                "terminationTimeoutMs": 1000,
+                "capabilityDrainTimeoutMs": 1000,
+                "minimumHeapMiB": 16,
+                "heapFraction": 0.7,
+                "maximumPendingCapabilities": 32,
+                "minimumOpenFiles": 64,
+                "artifactFileDescriptorReserve": 32
+              },
+              "reports": {
+                "maximumAggregateResultBytes": 16777216,
+                "maximumSourceBytes": 67108864,
+                "maximumCases": 5000,
+                "maximumFindings": 5000,
+                "maximumCaseFindings": 100,
+                "maximumTimeoutMs": 300000,
+                "memoryBytes": 536870912,
+                "minimumCpuTimeMs": 1000,
+                "maximumOpenFiles": 64,
+                "minimumOpenFiles": 16,
+                "minimumHeapMiB": 16,
+                "heapFraction": 0.7,
+                "runtimeMemoryReserveBytes": 67108864
+              },
+              "observation": {
+                "resourceSampleIntervalMs": 10,
+                "processSampleIntervalMs": 50
+              },
+              "stores": {
+                "attempts": {
+                  "maximumEvidenceObjects": 10000,
+                  "maximumEvidenceBytes": 10737418240,
+                  "maximumEvidenceObjectBytes": 1073741824,
+                  "maximumResults": 10000,
+                  "maximumClosures": 10000,
+                  "maximumMetadataBytes": 268435456,
+                  "maximumPendingEvidenceAgeMs": 3600000,
+                  "lockWaitSeconds": 1
+                },
+                "admission": {
+                  "maximumIngressBytes": 16777216,
+                  "maximumRecords": 10000,
+                  "maximumBytes": 268435456,
+                  "maximumQuarantineRecords": 1000,
+                  "maximumQuarantineBytes": 67108864,
+                  "reasonThresholdCodeUnits": 128,
+                  "reasonPrefixCodeUnits": 56,
+                  "metadataReserveBytes": 16384,
+                  "lockWaitSeconds": 1
+                }
+              },
+              "processInput": {
+                "cleanupTimeoutMs": 1500,
+                "terminationGraceMs": 250,
+                "acknowledgementPollMs": 10
+              }
+            },
+            "clusterInvokers": {
+              "shared": {
+                "kubectlExecutable": "/usr/local/bin/kubectl",
+                "leaseApiGroup": "kubeclaw.forgestack.ai",
+                "leaseApiVersion": "v1alpha1"
+              },
+              "kubernetesFixture": {
+                "allowedNamespacePrefixes": [
+                  "test"
+                ],
+                "registryRepositoryPrefixes": [
+                  "kubeclaw"
+                ],
+                "allowedSecretReferences": [],
+                "allowedStorageClasses": [],
+                "allowDefaultStorageClass": true,
+                "runnerServiceAccount": "agent-buster",
+                "credentialReaderServiceAccount": "agent-nova",
+                "maximumManifestBytes": 1048576,
+                "maximumResources": 64,
+                "maximumPersistentVolumeClaimBytes": 10737418240,
+                "maximumPersistentVolumeTotalBytes": 21474836480,
+                "maximumRetentionSeconds": 604800,
+                "maximumExecutionMs": 900000,
+                "pollIntervalMs": 1000,
+                "shortCommandTimeoutMs": 15000,
+                "commandOutputManifestMultiplier": 2,
+                "diagnosticCodeUnits": 4096,
+                "manifest": {
+                  "maximumNodes": 100000,
+                  "maximumDepth": 64,
+                  "maximumAliases": 1000,
+                  "maximumFlattenVisits": 100000,
+                  "maximumFlattenPending": 100000
+                }
+              },
+              "tailscaleExposure": {
+                "allowedNamespacePrefixes": [
+                  "test"
+                ],
+                "allowedHostSuffixes": [
+                  ".ts.net"
+                ],
+                "maximumExecutionMs": 900000,
+                "pollIntervalMs": 1000,
+                "shortCommandTimeoutMs": 15000,
+                "maximumCommandOutputBytes": 1048576
+              },
+              "runtimeSecurity": {
+                "allowedNamespacePrefixes": [
+                  "test"
+                ],
+                "maximumExecutionMs": 300000,
+                "maximumOutputBytes": 16777216,
+                "pollIntervalMs": 1000,
+                "maximumObservationAgeMs": 10000,
+                "maximumFutureSkewMs": 5000,
+                "diagnosticCodeUnits": 1024,
+                "executableSearchPath": [
+                  "/usr/local/bin",
+                  "/usr/bin",
+                  "/bin"
+                ]
+              }
+            }
+          }
+        },
+        "tarRuntimeCompanion": {
+          "sameExistingRuntimeField": "runtime.tarExecutable",
+          "value": "/usr/local/libexec/kubeclaw/gnu-tar",
+          "BphysicalProvisioning": "genuineGNUtar in disposable approvedimage required, not assumedinstalled"
+        },
+        "kernelLockByRoot": "every owningBuster store receives selectedlockWaitSeconds; exactrootcaller map retained",
+        "generation": {
+          "owner": "buster-engine",
+          "profile": "B",
+          "generationId": "question-definition-B",
+          "digestRule": "SHA256 exactcanonical completeauthor+runtime+schema+source+imageprojection; generated in realharness beforeclaim"
+        },
+        "eval": "fixed complete profile noambient/latestlookup",
+        "bindingEnvelope": {
+          "schemaVersion": "admission-binding.v1",
+          "owner": "buster-engine",
+          "generationDigest": "sha256:edc400014d78efa294659121598b58241c94ab8b1b9a6f742f3b7157bf8864bb",
+          "profileDigest": "sha256:8e67847f9be23f92a7428d98473f4ed512a059e5f2ea3a2ed8b5c0a261e1c336",
+          "policyDigest": "sha256:091c6190abd04f5ac030d3d7a12796e4c4be6c09747984f6a2c633ea2a58ba8f",
+          "schemaDigest": "sha256:fa051f8dacdda448303d5182374d7970b02e71a496bcd41d098cd1bfd58b028c",
+          "sourceDigest": "sha256:195fca717beffb64a5ec20c0aaa5d48ce4fd59ee281f044287d87efc209fb2a4"
+        }
+      }
+    ],
+    "NovaPlatform": [
+      {
+        "id": "A",
+        "author": {
+          "schemaVersion": "pipeline-platform.v2",
+          "installationRoots": [
+            "${CASE_ROOT}/installed"
+          ],
+          "trustedBuiltinRoots": [
+            "${CASE_ROOT}/installed"
+          ],
+          "externalTrust": {
+            "allowedSourceDigests": {},
+            "verifiedAttestations": {}
+          },
+          "providers": {},
+          "grants": {},
+          "adapters": {},
+          "activeAdapters": [],
+          "observers": {},
+          "storageRoot": "${CASE_ROOT}/state",
+          "shutdownTimeoutMs": 1000,
+          "effectLockTtlMs": 300000,
+          "orchestratorIssuerId": "c0-question-fixture",
+          "administrativeDecisionIssuers": [],
+          "observability": {
+            "admission": {
+              "maximumIngressBytes": 16777216,
+              "maximumRecords": 1000000,
+              "maximumBytes": 4294967296,
+              "maximumQuarantineRecords": 10000,
+              "maximumQuarantineBytes": 1073741824,
+              "metadataReserveBytes": 8192,
+              "reasonThresholdCodeUnits": 256,
+              "reasonPrefixCodeUnits": 180,
+              "lockWaitSeconds": 5
+            },
+            "attempts": {
+              "maximumEvidenceObjects": 100000,
+              "maximumEvidenceBytes": 10737418240,
+              "maximumEvidenceObjectBytes": 1073741824,
+              "maximumResults": 100000,
+              "maximumClosures": 100000,
+              "maximumMetadataBytes": 1073741824,
+              "maximumPendingEvidenceAgeMs": 3600000,
+              "lockWaitSeconds": 5
+            }
+          },
+          "projectScaffold": {
+            "lockWaitSeconds": 5
+          }
+        },
+        "scope": "complete synthetic existingPlatformConfig companion plus proposed requiredextensions; no deployedauthority/profileclaim",
+        "materialization": "replace CASE_ROOT by fresh absolute temporary root; create installed/state directories; noexternalplugins/services",
+        "bindingEnvelope": {
+          "schemaVersion": "admission-binding.v1",
+          "owner": "nova-platform",
+          "generationDigest": "sha256:cdcb4aed651364b0fbac879afc2e2099feaa8116fc14a98b8c4e5fae0704515d",
+          "profileDigest": "sha256:7b7708a03544203ba67ca40164efd61982f2c0a9dccbc09f5b6b0f21d8ba7147",
+          "policyDigest": "sha256:72796efbfb2303c0cf22c12712a3d2b65ff91596b1a887794e0c6da0bd34759d",
+          "schemaDigest": "sha256:c7e358cb1688302961cc2fac61ca98e46feee2f06a1dbf48c114b6cbc8d9a847",
+          "sourceDigest": "sha256:195fca717beffb64a5ec20c0aaa5d48ce4fd59ee281f044287d87efc209fb2a4"
+        }
+      },
+      {
+        "id": "B",
+        "author": {
+          "schemaVersion": "pipeline-platform.v2",
+          "installationRoots": [
+            "${CASE_ROOT}/installed"
+          ],
+          "trustedBuiltinRoots": [
+            "${CASE_ROOT}/installed"
+          ],
+          "externalTrust": {
+            "allowedSourceDigests": {},
+            "verifiedAttestations": {}
+          },
+          "providers": {},
+          "grants": {},
+          "adapters": {},
+          "activeAdapters": [],
+          "observers": {},
+          "storageRoot": "${CASE_ROOT}/state",
+          "shutdownTimeoutMs": 1000,
+          "effectLockTtlMs": 300000,
+          "orchestratorIssuerId": "c0-question-fixture",
+          "administrativeDecisionIssuers": [],
+          "observability": {
+            "admission": {
+              "maximumIngressBytes": 16777216,
+              "maximumRecords": 1000000,
+              "maximumBytes": 4294967296,
+              "maximumQuarantineRecords": 10000,
+              "maximumQuarantineBytes": 1073741824,
+              "metadataReserveBytes": 16384,
+              "reasonThresholdCodeUnits": 128,
+              "reasonPrefixCodeUnits": 56,
+              "lockWaitSeconds": 1
+            },
+            "attempts": {
+              "maximumEvidenceObjects": 100000,
+              "maximumEvidenceBytes": 10737418240,
+              "maximumEvidenceObjectBytes": 1073741824,
+              "maximumResults": 100000,
+              "maximumClosures": 100000,
+              "maximumMetadataBytes": 1073741824,
+              "maximumPendingEvidenceAgeMs": 3600000,
+              "lockWaitSeconds": 1
+            }
+          },
+          "projectScaffold": {
+            "lockWaitSeconds": 1
+          }
+        },
+        "scope": "complete synthetic existingPlatformConfig companion plus proposed requiredextensions; no deployedauthority/profileclaim",
+        "materialization": "replace CASE_ROOT by fresh absolute temporary root; create installed/state directories; noexternalplugins/services",
+        "bindingEnvelope": {
+          "schemaVersion": "admission-binding.v1",
+          "owner": "nova-platform",
+          "generationDigest": "sha256:0ec0780e1c8289c53f098e1ffe7632e7ee50d61dca541f33c30c341cb236b99f",
+          "profileDigest": "sha256:1b6ea0a03aa37d82209f94c20c47c4f07841212ad71fec79c3905f9872a177ca",
+          "policyDigest": "sha256:6b408a9e3c08247f4ed6170852157a78f2fb2e1d796feedf410e117f082bba1b",
+          "schemaDigest": "sha256:c7e358cb1688302961cc2fac61ca98e46feee2f06a1dbf48c114b6cbc8d9a847",
+          "sourceDigest": "sha256:195fca717beffb64a5ec20c0aaa5d48ce4fd59ee281f044287d87efc209fb2a4"
+        }
+      }
+    ],
+    "RegisteredStores": [
+      {
+        "registration": "artifact-store",
+        "id": "A",
+        "completeConfigDefinition": {
+          "artifactRoot": "${CASE_ROOT}/artifact",
+          "maxArtifactBytes": 16777216,
+          "maximumRecords": 100000,
+          "maximumStoreBytes": 268435456,
+          "maximumRecordBytes": 65536,
+          "storeLockWaitSeconds": 5
+        },
+        "soleAuthor": "existing registryvalidated adapter config selected byNova wholeprofile; nosecondglobalfield",
+        "basePath": "docs/review/evidence/config-acceptance/runtime/common-complete-profiles.json#/artifact-store",
+        "newField": "config.storeLockWaitSeconds",
+        "currentFutureDifference": "currentregistration schema mayrejectnewfield; approvedschemaextension+callerprojectionmandatory",
+        "currentSchemaCompanionWithProposedLock": {
+          "artifactRoot": "/tmp/c0-definition-only/artifact",
+          "maxArtifactBytes": 16777216,
+          "maximumRecords": 100000,
+          "maximumStoreBytes": 268435456,
+          "storeLockWaitSeconds": 5
+        },
+        "priorTargetOnlyFieldsPreserved": [
+          "maximumRecordBytes"
+        ],
+        "proofLimits": "Schema control validates CURRENT-compatible COMPLETE companion + proposedlockextension, not the larger runtime target schema. completeConfigDefinition retains ALL parent target-only policies; those require parentruntime schemas/cases and are NOT waived by currentpositive."
+      },
+      {
+        "registration": "artifact-store",
+        "id": "B",
+        "completeConfigDefinition": {
+          "artifactRoot": "${CASE_ROOT}/artifact",
+          "maxArtifactBytes": 16777216,
+          "maximumRecords": 100000,
+          "maximumStoreBytes": 268435456,
+          "maximumRecordBytes": 65536,
+          "storeLockWaitSeconds": 1
+        },
+        "soleAuthor": "existing registryvalidated adapter config selected byNova wholeprofile; nosecondglobalfield",
+        "basePath": "docs/review/evidence/config-acceptance/runtime/common-complete-profiles.json#/artifact-store",
+        "newField": "config.storeLockWaitSeconds",
+        "currentFutureDifference": "currentregistration schema mayrejectnewfield; approvedschemaextension+callerprojectionmandatory",
+        "currentSchemaCompanionWithProposedLock": {
+          "artifactRoot": "/tmp/c0-definition-only/artifact",
+          "maxArtifactBytes": 16777216,
+          "maximumRecords": 100000,
+          "maximumStoreBytes": 268435456,
+          "storeLockWaitSeconds": 1
+        },
+        "priorTargetOnlyFieldsPreserved": [
+          "maximumRecordBytes"
+        ],
+        "proofLimits": "Schema control validates CURRENT-compatible COMPLETE companion + proposedlockextension, not the larger runtime target schema. completeConfigDefinition retains ALL parent target-only policies; those require parentruntime schemas/cases and are NOT waived by currentpositive."
+      },
+      {
+        "registration": "state-store",
+        "id": "A",
+        "completeConfigDefinition": {
+          "root": "${CASE_ROOT}/state",
+          "maxEntryBytes": 1048576,
+          "maximumRecords": 100000,
+          "maximumStoreBytes": 268435456,
+          "storeLockWaitSeconds": 5
+        },
+        "soleAuthor": "existing registryvalidated adapter config selected byNova wholeprofile; nosecondglobalfield",
+        "basePath": "docs/review/evidence/config-acceptance/runtime/common-complete-profiles.json#/state-store",
+        "newField": "config.storeLockWaitSeconds",
+        "currentFutureDifference": "currentregistration schema mayrejectnewfield; approvedschemaextension+callerprojectionmandatory",
+        "currentSchemaCompanionWithProposedLock": {
+          "root": "/tmp/c0-definition-only/state",
+          "maxEntryBytes": 1048576,
+          "maximumRecords": 100000,
+          "maximumStoreBytes": 268435456,
+          "storeLockWaitSeconds": 5
+        },
+        "priorTargetOnlyFieldsPreserved": [],
+        "proofLimits": "Schema control validates CURRENT-compatible COMPLETE companion + proposedlockextension, not the larger runtime target schema. completeConfigDefinition retains ALL parent target-only policies; those require parentruntime schemas/cases and are NOT waived by currentpositive."
+      },
+      {
+        "registration": "state-store",
+        "id": "B",
+        "completeConfigDefinition": {
+          "root": "${CASE_ROOT}/state",
+          "maxEntryBytes": 1048576,
+          "maximumRecords": 100000,
+          "maximumStoreBytes": 268435456,
+          "storeLockWaitSeconds": 1
+        },
+        "soleAuthor": "existing registryvalidated adapter config selected byNova wholeprofile; nosecondglobalfield",
+        "basePath": "docs/review/evidence/config-acceptance/runtime/common-complete-profiles.json#/state-store",
+        "newField": "config.storeLockWaitSeconds",
+        "currentFutureDifference": "currentregistration schema mayrejectnewfield; approvedschemaextension+callerprojectionmandatory",
+        "currentSchemaCompanionWithProposedLock": {
+          "root": "/tmp/c0-definition-only/state",
+          "maxEntryBytes": 1048576,
+          "maximumRecords": 100000,
+          "maximumStoreBytes": 268435456,
+          "storeLockWaitSeconds": 1
+        },
+        "priorTargetOnlyFieldsPreserved": [],
+        "proofLimits": "Schema control validates CURRENT-compatible COMPLETE companion + proposedlockextension, not the larger runtime target schema. completeConfigDefinition retains ALL parent target-only policies; those require parentruntime schemas/cases and are NOT waived by currentpositive."
+      },
+      {
+        "registration": "telemetry-store",
+        "id": "A",
+        "completeConfigDefinition": {
+          "root": "${CASE_ROOT}/telemetry",
+          "maxRecordBytes": 1048576,
+          "maximumRecords": 100000,
+          "maximumStoreBytes": 268435456,
+          "jsonMaximumDepth": 64,
+          "jsonMaximumNodes": 100000,
+          "storeLockWaitSeconds": 5
+        },
+        "soleAuthor": "existing registryvalidated adapter config selected byNova wholeprofile; nosecondglobalfield",
+        "basePath": "docs/review/evidence/config-acceptance/runtime/common-complete-profiles.json#/telemetry-store",
+        "newField": "config.storeLockWaitSeconds",
+        "currentFutureDifference": "currentregistration schema mayrejectnewfield; approvedschemaextension+callerprojectionmandatory",
+        "currentSchemaCompanionWithProposedLock": {
+          "root": "/tmp/c0-definition-only/telemetry",
+          "maxRecordBytes": 1048576,
+          "maximumRecords": 100000,
+          "maximumStoreBytes": 268435456,
+          "storeLockWaitSeconds": 5
+        },
+        "priorTargetOnlyFieldsPreserved": [
+          "jsonMaximumDepth",
+          "jsonMaximumNodes"
+        ],
+        "proofLimits": "Schema control validates CURRENT-compatible COMPLETE companion + proposedlockextension, not the larger runtime target schema. completeConfigDefinition retains ALL parent target-only policies; those require parentruntime schemas/cases and are NOT waived by currentpositive."
+      },
+      {
+        "registration": "telemetry-store",
+        "id": "B",
+        "completeConfigDefinition": {
+          "root": "${CASE_ROOT}/telemetry",
+          "maxRecordBytes": 1048576,
+          "maximumRecords": 100000,
+          "maximumStoreBytes": 268435456,
+          "jsonMaximumDepth": 64,
+          "jsonMaximumNodes": 100000,
+          "storeLockWaitSeconds": 1
+        },
+        "soleAuthor": "existing registryvalidated adapter config selected byNova wholeprofile; nosecondglobalfield",
+        "basePath": "docs/review/evidence/config-acceptance/runtime/common-complete-profiles.json#/telemetry-store",
+        "newField": "config.storeLockWaitSeconds",
+        "currentFutureDifference": "currentregistration schema mayrejectnewfield; approvedschemaextension+callerprojectionmandatory",
+        "currentSchemaCompanionWithProposedLock": {
+          "root": "/tmp/c0-definition-only/telemetry",
+          "maxRecordBytes": 1048576,
+          "maximumRecords": 100000,
+          "maximumStoreBytes": 268435456,
+          "storeLockWaitSeconds": 1
+        },
+        "priorTargetOnlyFieldsPreserved": [
+          "jsonMaximumDepth",
+          "jsonMaximumNodes"
+        ],
+        "proofLimits": "Schema control validates CURRENT-compatible COMPLETE companion + proposedlockextension, not the larger runtime target schema. completeConfigDefinition retains ALL parent target-only policies; those require parentruntime schemas/cases and are NOT waived by currentpositive."
+      },
+      {
+        "registration": "wait-store",
+        "id": "A",
+        "completeConfigDefinition": {
+          "root": "${CASE_ROOT}/wait",
+          "maxEntryBytes": 1048576,
+          "maximumRecords": 100000,
+          "maximumStoreBytes": 268435456,
+          "storeLockWaitSeconds": 5
+        },
+        "soleAuthor": "existing registryvalidated adapter config selected byNova wholeprofile; nosecondglobalfield",
+        "basePath": "docs/review/evidence/config-acceptance/runtime/common-complete-profiles.json#/wait-store",
+        "newField": "config.storeLockWaitSeconds",
+        "currentFutureDifference": "currentregistration schema mayrejectnewfield; approvedschemaextension+callerprojectionmandatory",
+        "currentSchemaCompanionWithProposedLock": {
+          "root": "/tmp/c0-definition-only/wait",
+          "maxEntryBytes": 1048576,
+          "maximumRecords": 100000,
+          "maximumStoreBytes": 268435456,
+          "storeLockWaitSeconds": 5
+        },
+        "priorTargetOnlyFieldsPreserved": [],
+        "proofLimits": "Schema control validates CURRENT-compatible COMPLETE companion + proposedlockextension, not the larger runtime target schema. completeConfigDefinition retains ALL parent target-only policies; those require parentruntime schemas/cases and are NOT waived by currentpositive."
+      },
+      {
+        "registration": "wait-store",
+        "id": "B",
+        "completeConfigDefinition": {
+          "root": "${CASE_ROOT}/wait",
+          "maxEntryBytes": 1048576,
+          "maximumRecords": 100000,
+          "maximumStoreBytes": 268435456,
+          "storeLockWaitSeconds": 1
+        },
+        "soleAuthor": "existing registryvalidated adapter config selected byNova wholeprofile; nosecondglobalfield",
+        "basePath": "docs/review/evidence/config-acceptance/runtime/common-complete-profiles.json#/wait-store",
+        "newField": "config.storeLockWaitSeconds",
+        "currentFutureDifference": "currentregistration schema mayrejectnewfield; approvedschemaextension+callerprojectionmandatory",
+        "currentSchemaCompanionWithProposedLock": {
+          "root": "/tmp/c0-definition-only/wait",
+          "maxEntryBytes": 1048576,
+          "maximumRecords": 100000,
+          "maximumStoreBytes": 268435456,
+          "storeLockWaitSeconds": 1
+        },
+        "priorTargetOnlyFieldsPreserved": [],
+        "proofLimits": "Schema control validates CURRENT-compatible COMPLETE companion + proposedlockextension, not the larger runtime target schema. completeConfigDefinition retains ALL parent target-only policies; those require parentruntime schemas/cases and are NOT waived by currentpositive."
+      },
+      {
+        "registration": "transport-publisher",
+        "id": "A",
+        "completeConfigDefinition": {
+          "deliveryRoot": "${CASE_ROOT}/transport",
+          "maximumDeliveryRecords": 100000,
+          "maximumDeliveryBytes": 268435456,
+          "targets": {
+            "case-target": {
+              "endpoint": "${HTTP_FIXTURE_ORIGIN}/publish",
+              "signingSecret": "case.signing",
+              "maxPayloadBytes": 262144
+            }
+          },
+          "terminalReservationBytes": 8192,
+          "deliveryMetadataAllowanceBytes": 65536,
+          "jsonMaximumDepth": 64,
+          "storeLockWaitSeconds": 5
+        },
+        "soleAuthor": "existing registryvalidated adapter config selected byNova wholeprofile; nosecondglobalfield",
+        "basePath": "docs/review/evidence/config-acceptance/runtime/common-complete-profiles.json#/transport-publisher",
+        "newField": "config.storeLockWaitSeconds",
+        "currentFutureDifference": "currentregistration schema mayrejectnewfield; approvedschemaextension+callerprojectionmandatory",
+        "currentSchemaCompanionWithProposedLock": {
+          "deliveryRoot": "/tmp/c0-definition-only/transport",
+          "maximumDeliveryRecords": 100000,
+          "maximumDeliveryBytes": 268435456,
+          "targets": {
+            "case-target": {
+              "endpoint": "http://127.0.0.1:19001/publish",
+              "signingSecret": "case.signing",
+              "maxPayloadBytes": 262144
+            }
+          },
+          "storeLockWaitSeconds": 5
+        },
+        "priorTargetOnlyFieldsPreserved": [
+          "terminalReservationBytes",
+          "deliveryMetadataAllowanceBytes",
+          "jsonMaximumDepth"
+        ],
+        "proofLimits": "Schema control validates CURRENT-compatible COMPLETE companion + proposedlockextension, not the larger runtime target schema. completeConfigDefinition retains ALL parent target-only policies; those require parentruntime schemas/cases and are NOT waived by currentpositive."
+      },
+      {
+        "registration": "transport-publisher",
+        "id": "B",
+        "completeConfigDefinition": {
+          "deliveryRoot": "${CASE_ROOT}/transport",
+          "maximumDeliveryRecords": 100000,
+          "maximumDeliveryBytes": 268435456,
+          "targets": {
+            "case-target": {
+              "endpoint": "${HTTP_FIXTURE_ORIGIN}/publish",
+              "signingSecret": "case.signing",
+              "maxPayloadBytes": 262144
+            }
+          },
+          "terminalReservationBytes": 8192,
+          "deliveryMetadataAllowanceBytes": 65536,
+          "jsonMaximumDepth": 64,
+          "storeLockWaitSeconds": 1
+        },
+        "soleAuthor": "existing registryvalidated adapter config selected byNova wholeprofile; nosecondglobalfield",
+        "basePath": "docs/review/evidence/config-acceptance/runtime/common-complete-profiles.json#/transport-publisher",
+        "newField": "config.storeLockWaitSeconds",
+        "currentFutureDifference": "currentregistration schema mayrejectnewfield; approvedschemaextension+callerprojectionmandatory",
+        "currentSchemaCompanionWithProposedLock": {
+          "deliveryRoot": "/tmp/c0-definition-only/transport",
+          "maximumDeliveryRecords": 100000,
+          "maximumDeliveryBytes": 268435456,
+          "targets": {
+            "case-target": {
+              "endpoint": "http://127.0.0.1:19001/publish",
+              "signingSecret": "case.signing",
+              "maxPayloadBytes": 262144
+            }
+          },
+          "storeLockWaitSeconds": 1
+        },
+        "priorTargetOnlyFieldsPreserved": [
+          "terminalReservationBytes",
+          "deliveryMetadataAllowanceBytes",
+          "jsonMaximumDepth"
+        ],
+        "proofLimits": "Schema control validates CURRENT-compatible COMPLETE companion + proposedlockextension, not the larger runtime target schema. completeConfigDefinition retains ALL parent target-only policies; those require parentruntime schemas/cases and are NOT waived by currentpositive."
+      },
+      {
+        "registration": "operator-messaging",
+        "id": "A",
+        "completeConfigDefinition": {
+          "deliveryRoot": "${CASE_ROOT}/operator",
+          "maximumDeliveryRecords": 100000,
+          "maximumDeliveryBytes": 268435456,
+          "targets": {
+            "case-target": {
+              "endpoint": "${HTTP_FIXTURE_ORIGIN}/publish",
+              "tokenSecret": "case.signing",
+              "maxPayloadBytes": 65536,
+              "format": "json",
+              "receiptMode": "disabled"
+            }
+          },
+          "terminalReservationBytes": 8192,
+          "deliveryMetadataAllowanceBytes": 65536,
+          "jsonMaximumDepth": 20,
+          "jsonMaximumContainerEntries": 1000,
+          "storeLockWaitSeconds": 5
+        },
+        "soleAuthor": "existing registryvalidated adapter config selected byNova wholeprofile; nosecondglobalfield",
+        "basePath": "docs/review/evidence/config-acceptance/runtime/common-complete-profiles.json#/operator-messaging",
+        "newField": "config.storeLockWaitSeconds",
+        "currentFutureDifference": "currentregistration schema mayrejectnewfield; approvedschemaextension+callerprojectionmandatory",
+        "currentSchemaCompanionWithProposedLock": {
+          "deliveryRoot": "/tmp/c0-definition-only/operator",
+          "maximumDeliveryRecords": 100000,
+          "maximumDeliveryBytes": 268435456,
+          "targets": {
+            "case-target": {
+              "endpoint": "http://127.0.0.1:19001/publish",
+              "tokenSecret": "case.signing",
+              "maxPayloadBytes": 65536,
+              "format": "json"
+            }
+          },
+          "storeLockWaitSeconds": 5
+        },
+        "priorTargetOnlyFieldsPreserved": [
+          "terminalReservationBytes",
+          "deliveryMetadataAllowanceBytes",
+          "jsonMaximumDepth",
+          "jsonMaximumContainerEntries",
+          "targets.receiptMode"
+        ],
+        "proofLimits": "Schema control validates CURRENT-compatible COMPLETE companion + proposedlockextension, not the larger runtime target schema. completeConfigDefinition retains ALL parent target-only policies; those require parentruntime schemas/cases and are NOT waived by currentpositive."
+      },
+      {
+        "registration": "operator-messaging",
+        "id": "B",
+        "completeConfigDefinition": {
+          "deliveryRoot": "${CASE_ROOT}/operator",
+          "maximumDeliveryRecords": 100000,
+          "maximumDeliveryBytes": 268435456,
+          "targets": {
+            "case-target": {
+              "endpoint": "${HTTP_FIXTURE_ORIGIN}/publish",
+              "tokenSecret": "case.signing",
+              "maxPayloadBytes": 65536,
+              "format": "json",
+              "receiptMode": "disabled"
+            }
+          },
+          "terminalReservationBytes": 8192,
+          "deliveryMetadataAllowanceBytes": 65536,
+          "jsonMaximumDepth": 20,
+          "jsonMaximumContainerEntries": 1000,
+          "storeLockWaitSeconds": 1
+        },
+        "soleAuthor": "existing registryvalidated adapter config selected byNova wholeprofile; nosecondglobalfield",
+        "basePath": "docs/review/evidence/config-acceptance/runtime/common-complete-profiles.json#/operator-messaging",
+        "newField": "config.storeLockWaitSeconds",
+        "currentFutureDifference": "currentregistration schema mayrejectnewfield; approvedschemaextension+callerprojectionmandatory",
+        "currentSchemaCompanionWithProposedLock": {
+          "deliveryRoot": "/tmp/c0-definition-only/operator",
+          "maximumDeliveryRecords": 100000,
+          "maximumDeliveryBytes": 268435456,
+          "targets": {
+            "case-target": {
+              "endpoint": "http://127.0.0.1:19001/publish",
+              "tokenSecret": "case.signing",
+              "maxPayloadBytes": 65536,
+              "format": "json"
+            }
+          },
+          "storeLockWaitSeconds": 1
+        },
+        "priorTargetOnlyFieldsPreserved": [
+          "terminalReservationBytes",
+          "deliveryMetadataAllowanceBytes",
+          "jsonMaximumDepth",
+          "jsonMaximumContainerEntries",
+          "targets.receiptMode"
+        ],
+        "proofLimits": "Schema control validates CURRENT-compatible COMPLETE companion + proposedlockextension, not the larger runtime target schema. completeConfigDefinition retains ALL parent target-only policies; those require parentruntime schemas/cases and are NOT waived by currentpositive."
+      }
+    ],
+    "CoreNative": [
+      {
+        "id": "A",
+        "completeExistingCompanions": {
+          "prism-worker": {
+            "schemaVersion": "swarm-component.v1",
+            "owner": "prism-worker",
+            "settings": {
+              "ingress": {
+                "port": 8080,
+                "maximumActiveRequests": 16,
+                "maximumProbeRequests": 4,
+                "maximumConnections": 128,
+                "requestTimeoutMs": 120000,
+                "shutdownTimeoutMs": 120000,
+                "maximumInputBytes": 16777216
+              },
+              "supervisor": {
+                "uid": 1000,
+                "gid": 1000,
+                "maximumOwnershipRecords": 65536,
+                "maximumOwnershipBytes": 67108864,
+                "maximumOutputBytes": 33554432,
+                "maximumJournalBytes": 68719476736,
+                "pollIntervalMs": 20,
+                "drainTimeoutMs": 10000,
+                "closeTimeoutMs": 105000
+              }
+            }
+          },
+          "worker-core": {
+            "schemaVersion": "swarm-component.v1",
+            "owner": "worker-core",
+            "settings": {
+              "localRuntime": {
+                "drainTimeoutMs": 300000,
+                "cancellationTimeoutMs": 30000,
+                "replayLimit": 65536
+              },
+              "runtime": {
+                "input_bytes": 16777216,
+                "json_nodes": 100000,
+                "json_depth": 64,
+                "log_parts": 10000,
+                "retain_logs": {
+                  "prism-native": true,
+                  "prism-agent": true,
+                  "buster-provider": false,
+                  "buster-preparation": false,
+                  "buster-historical-import": false,
+                  "buster-source-cleanup": false
+                },
+                "drain_poll_ms": 10,
+                "pool_file_bytes": 65536,
+                "runtime_identity_file_bytes": 4096,
+                "node_identity_file_bytes": 128,
+                "journal_record_bytes": 65536,
+                "journal_diagnostic_units": 4096,
+                "ownership_diagnostic_units": 4096,
+                "journalLockHexDigits": 2,
+                "native_store_lock_wait_seconds": 5
+              }
+            }
+          },
+          "prism-studio": {
+            "schemaVersion": "swarm-component.v1",
+            "owner": "prism-studio",
+            "settings": {
+              "port": 8080,
+              "controlTimeoutMs": 30000,
+              "controlUrl": "http://prism-control:8080"
+            }
+          },
+          "buster-engine": {
+            "schemaVersion": "swarm-component.v1",
+            "owner": "buster-engine",
+            "settings": {
+              "preparation": {
+                "resourcePolicy": {
+                  "cpuTimeMs": 120000,
+                  "memoryBytes": 8589934592,
+                  "tasks": 64
+                },
+                "timeoutMs": 300000,
+                "cleanupTimeoutMs": 10000,
+                "maximumActivePreparations": 2,
+                "maximumPendingAdmissions": 16,
+                "maximumRequestBytes": 100663296,
+                "maximumArchiveBytes": 67108864,
+                "maximumExtractedBytes": 536870912,
+                "maximumHeaderBytes": 3145728,
+                "maximumSourceBytes": 1073741824,
+                "maximumMetadataBytes": 67108864,
+                "maximumRecords": 10000,
+                "maximumOwnershipBytes": 16777216,
+                "maximumJournalBytes": 268435456,
+                "maximumInputBytes": 65536,
+                "maximumOutputBytes": 8388608,
+                "maximumResultBytes": 4194304,
+                "pollIntervalMs": 25,
+                "drainTimeoutMs": 5000,
+                "closeTimeoutMs": 10000,
+                "tarTimeoutMs": 120000,
+                "maximumArchiveEntries": 200000,
+                "maximumListingLineBytes": 1048576,
+                "maximumTarStderrBytes": 65536,
+                "maximumSourceEntries": 400014,
+                "sourceEntryReservationBytes": 256,
+                "maximumOpenFiles": 64
+              },
+              "admission": {
+                "maximumActiveJobs": 2,
+                "maximumQueuedJobs": 8,
+                "maximumConcurrentAttempts": 64
+              },
+              "dependencyReadiness": {
+                "maximumExecutionMs": 1000,
+                "maximumOutputBytes": 65536
+              },
+              "execution": {
+                "provider": {
+                  "cleanupTimeoutMs": 30000,
+                  "maximumResultBytes": 16777216,
+                  "claimGraceMs": 60000,
+                  "queueTimeoutMs": 60000,
+                  "workerResultWrapperBytes": 4096,
+                  "maximumProtocolBytes": 16777216,
+                  "terminationGraceMs": 500,
+                  "terminationTimeoutMs": 1000,
+                  "capabilityDrainTimeoutMs": 1000,
+                  "minimumHeapMiB": 16,
+                  "heapFraction": 0.7,
+                  "maximumPendingCapabilities": 32,
+                  "minimumOpenFiles": 64,
+                  "artifactFileDescriptorReserve": 32
+                },
+                "reports": {
+                  "maximumAggregateResultBytes": 16777216,
+                  "maximumSourceBytes": 67108864,
+                  "maximumCases": 5000,
+                  "maximumFindings": 5000,
+                  "maximumCaseFindings": 100,
+                  "maximumTimeoutMs": 300000,
+                  "memoryBytes": 536870912,
+                  "minimumCpuTimeMs": 1000,
+                  "maximumOpenFiles": 64,
+                  "minimumOpenFiles": 16,
+                  "minimumHeapMiB": 16,
+                  "heapFraction": 0.7,
+                  "runtimeMemoryReserveBytes": 67108864
+                },
+                "observation": {
+                  "resourceSampleIntervalMs": 10,
+                  "processSampleIntervalMs": 50
+                },
+                "stores": {
+                  "attempts": {
+                    "maximumEvidenceObjects": 10000,
+                    "maximumEvidenceBytes": 10737418240,
+                    "maximumEvidenceObjectBytes": 1073741824,
+                    "maximumResults": 10000,
+                    "maximumClosures": 10000,
+                    "maximumMetadataBytes": 268435456,
+                    "maximumPendingEvidenceAgeMs": 3600000
+                  },
+                  "admission": {
+                    "maximumIngressBytes": 16777216,
+                    "maximumRecords": 10000,
+                    "maximumBytes": 268435456,
+                    "maximumQuarantineRecords": 1000,
+                    "maximumQuarantineBytes": 67108864
+                  }
+                },
+                "processInput": {
+                  "cleanupTimeoutMs": 1500,
+                  "terminationGraceMs": 250,
+                  "acknowledgementPollMs": 10
+                }
+              },
+              "clusterInvokers": {
+                "shared": {
+                  "kubectlExecutable": "/usr/local/bin/kubectl",
+                  "leaseApiGroup": "kubeclaw.forgestack.ai",
+                  "leaseApiVersion": "v1alpha1"
+                },
+                "kubernetesFixture": {
+                  "allowedNamespacePrefixes": [
+                    "test"
+                  ],
+                  "registryRepositoryPrefixes": [
+                    "kubeclaw"
+                  ],
+                  "allowedSecretReferences": [],
+                  "allowedStorageClasses": [],
+                  "allowDefaultStorageClass": true,
+                  "runnerServiceAccount": "agent-buster",
+                  "credentialReaderServiceAccount": "agent-nova",
+                  "maximumManifestBytes": 1048576,
+                  "maximumResources": 64,
+                  "maximumPersistentVolumeClaimBytes": 10737418240,
+                  "maximumPersistentVolumeTotalBytes": 21474836480,
+                  "maximumRetentionSeconds": 604800,
+                  "maximumExecutionMs": 900000,
+                  "pollIntervalMs": 1000,
+                  "shortCommandTimeoutMs": 15000,
+                  "commandOutputManifestMultiplier": 2,
+                  "diagnosticCodeUnits": 4096,
+                  "manifest": {
+                    "maximumNodes": 100000,
+                    "maximumDepth": 64,
+                    "maximumAliases": 1000,
+                    "maximumFlattenVisits": 100000,
+                    "maximumFlattenPending": 100000
+                  }
+                },
+                "tailscaleExposure": {
+                  "allowedNamespacePrefixes": [
+                    "test"
+                  ],
+                  "allowedHostSuffixes": [
+                    ".ts.net"
+                  ],
+                  "maximumExecutionMs": 900000,
+                  "pollIntervalMs": 1000,
+                  "shortCommandTimeoutMs": 15000,
+                  "maximumCommandOutputBytes": 1048576
+                },
+                "runtimeSecurity": {
+                  "allowedNamespacePrefixes": [
+                    "test"
+                  ],
+                  "maximumExecutionMs": 300000,
+                  "maximumOutputBytes": 16777216,
+                  "pollIntervalMs": 1000,
+                  "maximumObservationAgeMs": 10000,
+                  "maximumFutureSkewMs": 5000,
+                  "diagnosticCodeUnits": 1024,
+                  "executableSearchPath": [
+                    "/usr/local/bin",
+                    "/usr/bin",
+                    "/bin"
+                  ]
+                }
+              }
+            }
+          },
+          "prism-control": {
+            "schemaVersion": "swarm-component.v1",
+            "owner": "prism-control",
+            "settings": {
+              "pipelinePreferenceSubject": null,
+              "artifactRoot": "/var/lib/prism/artifacts",
+              "studioPublicUrl": "https://prism-studio",
+              "port": 8080,
+              "dispatchTimeoutMs": 900000
+            }
+          },
+          "prism-execution": {
+            "schemaVersion": "swarm-component.v1",
+            "owner": "prism-execution",
+            "settings": {
+              "resourcePolicy": {
+                "cpuTimeMs": 60000,
+                "memoryBytes": 8589934592,
+                "tasks": 2048
+              },
+              "maximumResultBytes": 67108864
+            }
+          }
+        },
+        "scope": "same EXISTING worker-core author, extends native store lock behavior only; no global foundation author; verified13 originalfields copied unchanged fromprotectedA",
+        "source": "core-adjustable-profiles.json#/CMP-WCORE-INPUT-BYTES/A",
+        "originalSourceSHA256": "e67b9a96ee0737e99b03a20f5887034f40802d7f4d6a1df7ff46e10932283f43"
+      },
+      {
+        "id": "B",
+        "completeExistingCompanions": {
+          "prism-worker": {
+            "schemaVersion": "swarm-component.v1",
+            "owner": "prism-worker",
+            "settings": {
+              "ingress": {
+                "port": 8080,
+                "maximumActiveRequests": 16,
+                "maximumProbeRequests": 4,
+                "maximumConnections": 128,
+                "requestTimeoutMs": 120000,
+                "shutdownTimeoutMs": 120000,
+                "maximumInputBytes": 16777216
+              },
+              "supervisor": {
+                "uid": 1000,
+                "gid": 1000,
+                "maximumOwnershipRecords": 65536,
+                "maximumOwnershipBytes": 67108864,
+                "maximumOutputBytes": 33554432,
+                "maximumJournalBytes": 68719476736,
+                "pollIntervalMs": 20,
+                "drainTimeoutMs": 10000,
+                "closeTimeoutMs": 105000
+              }
+            }
+          },
+          "worker-core": {
+            "schemaVersion": "swarm-component.v1",
+            "owner": "worker-core",
+            "settings": {
+              "localRuntime": {
+                "drainTimeoutMs": 300000,
+                "cancellationTimeoutMs": 30000,
+                "replayLimit": 65536
+              },
+              "runtime": {
+                "input_bytes": 16777216,
+                "json_nodes": 100000,
+                "json_depth": 64,
+                "log_parts": 10000,
+                "retain_logs": {
+                  "prism-native": true,
+                  "prism-agent": true,
+                  "buster-provider": false,
+                  "buster-preparation": false,
+                  "buster-historical-import": false,
+                  "buster-source-cleanup": false
+                },
+                "drain_poll_ms": 10,
+                "pool_file_bytes": 65536,
+                "runtime_identity_file_bytes": 4096,
+                "node_identity_file_bytes": 128,
+                "journal_record_bytes": 65536,
+                "journal_diagnostic_units": 4096,
+                "ownership_diagnostic_units": 4096,
+                "journalLockHexDigits": 2,
+                "native_store_lock_wait_seconds": 1
+              }
+            }
+          },
+          "prism-studio": {
+            "schemaVersion": "swarm-component.v1",
+            "owner": "prism-studio",
+            "settings": {
+              "port": 8080,
+              "controlTimeoutMs": 30000,
+              "controlUrl": "http://prism-control:8080"
+            }
+          },
+          "buster-engine": {
+            "schemaVersion": "swarm-component.v1",
+            "owner": "buster-engine",
+            "settings": {
+              "preparation": {
+                "resourcePolicy": {
+                  "cpuTimeMs": 120000,
+                  "memoryBytes": 8589934592,
+                  "tasks": 64
+                },
+                "timeoutMs": 300000,
+                "cleanupTimeoutMs": 10000,
+                "maximumActivePreparations": 2,
+                "maximumPendingAdmissions": 16,
+                "maximumRequestBytes": 100663296,
+                "maximumArchiveBytes": 67108864,
+                "maximumExtractedBytes": 536870912,
+                "maximumHeaderBytes": 3145728,
+                "maximumSourceBytes": 1073741824,
+                "maximumMetadataBytes": 67108864,
+                "maximumRecords": 10000,
+                "maximumOwnershipBytes": 16777216,
+                "maximumJournalBytes": 268435456,
+                "maximumInputBytes": 65536,
+                "maximumOutputBytes": 8388608,
+                "maximumResultBytes": 4194304,
+                "pollIntervalMs": 25,
+                "drainTimeoutMs": 5000,
+                "closeTimeoutMs": 10000,
+                "tarTimeoutMs": 120000,
+                "maximumArchiveEntries": 200000,
+                "maximumListingLineBytes": 1048576,
+                "maximumTarStderrBytes": 65536,
+                "maximumSourceEntries": 400014,
+                "sourceEntryReservationBytes": 256,
+                "maximumOpenFiles": 64
+              },
+              "admission": {
+                "maximumActiveJobs": 2,
+                "maximumQueuedJobs": 8,
+                "maximumConcurrentAttempts": 64
+              },
+              "dependencyReadiness": {
+                "maximumExecutionMs": 1000,
+                "maximumOutputBytes": 65536
+              },
+              "execution": {
+                "provider": {
+                  "cleanupTimeoutMs": 30000,
+                  "maximumResultBytes": 16777216,
+                  "claimGraceMs": 60000,
+                  "queueTimeoutMs": 60000,
+                  "workerResultWrapperBytes": 4096,
+                  "maximumProtocolBytes": 16777216,
+                  "terminationGraceMs": 500,
+                  "terminationTimeoutMs": 1000,
+                  "capabilityDrainTimeoutMs": 1000,
+                  "minimumHeapMiB": 16,
+                  "heapFraction": 0.7,
+                  "maximumPendingCapabilities": 32,
+                  "minimumOpenFiles": 64,
+                  "artifactFileDescriptorReserve": 32
+                },
+                "reports": {
+                  "maximumAggregateResultBytes": 16777216,
+                  "maximumSourceBytes": 67108864,
+                  "maximumCases": 5000,
+                  "maximumFindings": 5000,
+                  "maximumCaseFindings": 100,
+                  "maximumTimeoutMs": 300000,
+                  "memoryBytes": 536870912,
+                  "minimumCpuTimeMs": 1000,
+                  "maximumOpenFiles": 64,
+                  "minimumOpenFiles": 16,
+                  "minimumHeapMiB": 16,
+                  "heapFraction": 0.7,
+                  "runtimeMemoryReserveBytes": 67108864
+                },
+                "observation": {
+                  "resourceSampleIntervalMs": 10,
+                  "processSampleIntervalMs": 50
+                },
+                "stores": {
+                  "attempts": {
+                    "maximumEvidenceObjects": 10000,
+                    "maximumEvidenceBytes": 10737418240,
+                    "maximumEvidenceObjectBytes": 1073741824,
+                    "maximumResults": 10000,
+                    "maximumClosures": 10000,
+                    "maximumMetadataBytes": 268435456,
+                    "maximumPendingEvidenceAgeMs": 3600000
+                  },
+                  "admission": {
+                    "maximumIngressBytes": 16777216,
+                    "maximumRecords": 10000,
+                    "maximumBytes": 268435456,
+                    "maximumQuarantineRecords": 1000,
+                    "maximumQuarantineBytes": 67108864
+                  }
+                },
+                "processInput": {
+                  "cleanupTimeoutMs": 1500,
+                  "terminationGraceMs": 250,
+                  "acknowledgementPollMs": 10
+                }
+              },
+              "clusterInvokers": {
+                "shared": {
+                  "kubectlExecutable": "/usr/local/bin/kubectl",
+                  "leaseApiGroup": "kubeclaw.forgestack.ai",
+                  "leaseApiVersion": "v1alpha1"
+                },
+                "kubernetesFixture": {
+                  "allowedNamespacePrefixes": [
+                    "test"
+                  ],
+                  "registryRepositoryPrefixes": [
+                    "kubeclaw"
+                  ],
+                  "allowedSecretReferences": [],
+                  "allowedStorageClasses": [],
+                  "allowDefaultStorageClass": true,
+                  "runnerServiceAccount": "agent-buster",
+                  "credentialReaderServiceAccount": "agent-nova",
+                  "maximumManifestBytes": 1048576,
+                  "maximumResources": 64,
+                  "maximumPersistentVolumeClaimBytes": 10737418240,
+                  "maximumPersistentVolumeTotalBytes": 21474836480,
+                  "maximumRetentionSeconds": 604800,
+                  "maximumExecutionMs": 900000,
+                  "pollIntervalMs": 1000,
+                  "shortCommandTimeoutMs": 15000,
+                  "commandOutputManifestMultiplier": 2,
+                  "diagnosticCodeUnits": 4096,
+                  "manifest": {
+                    "maximumNodes": 100000,
+                    "maximumDepth": 64,
+                    "maximumAliases": 1000,
+                    "maximumFlattenVisits": 100000,
+                    "maximumFlattenPending": 100000
+                  }
+                },
+                "tailscaleExposure": {
+                  "allowedNamespacePrefixes": [
+                    "test"
+                  ],
+                  "allowedHostSuffixes": [
+                    ".ts.net"
+                  ],
+                  "maximumExecutionMs": 900000,
+                  "pollIntervalMs": 1000,
+                  "shortCommandTimeoutMs": 15000,
+                  "maximumCommandOutputBytes": 1048576
+                },
+                "runtimeSecurity": {
+                  "allowedNamespacePrefixes": [
+                    "test"
+                  ],
+                  "maximumExecutionMs": 300000,
+                  "maximumOutputBytes": 16777216,
+                  "pollIntervalMs": 1000,
+                  "maximumObservationAgeMs": 10000,
+                  "maximumFutureSkewMs": 5000,
+                  "diagnosticCodeUnits": 1024,
+                  "executableSearchPath": [
+                    "/usr/local/bin",
+                    "/usr/bin",
+                    "/bin"
+                  ]
+                }
+              }
+            }
+          },
+          "prism-control": {
+            "schemaVersion": "swarm-component.v1",
+            "owner": "prism-control",
+            "settings": {
+              "pipelinePreferenceSubject": null,
+              "artifactRoot": "/var/lib/prism/artifacts",
+              "studioPublicUrl": "https://prism-studio",
+              "port": 8080,
+              "dispatchTimeoutMs": 900000
+            }
+          },
+          "prism-execution": {
+            "schemaVersion": "swarm-component.v1",
+            "owner": "prism-execution",
+            "settings": {
+              "resourcePolicy": {
+                "cpuTimeMs": 60000,
+                "memoryBytes": 8589934592,
+                "tasks": 2048
+              },
+              "maximumResultBytes": 67108864
+            }
+          }
+        },
+        "scope": "same EXISTING worker-core author, extends native store lock behavior only; no global foundation author; verified13 originalfields copied unchanged fromprotectedA",
+        "source": "core-adjustable-profiles.json#/CMP-WCORE-INPUT-BYTES/A",
+        "originalSourceSHA256": "e67b9a96ee0737e99b03a20f5887034f40802d7f4d6a1df7ff46e10932283f43"
+      }
+    ],
+    "PublicNativeFixture": [
+      {
+        "id": "A",
+        "completeInjectedConstructorLimits": {
+          "maximumRecords": 100,
+          "maximumStateBytes": 1048576,
+          "maximumBlobBytes": 4096,
+          "maximumTotalBytes": 10485760,
+          "lockWaitSeconds": 5
+        },
+        "owner": "public externalcaller constructor; no repository productive outer author proven",
+        "externalPrerequisite": "Real installed/deployed external caller identity remains external; source API control only"
+      },
+      {
+        "id": "B",
+        "completeInjectedConstructorLimits": {
+          "maximumRecords": 100,
+          "maximumStateBytes": 1048576,
+          "maximumBlobBytes": 4096,
+          "maximumTotalBytes": 10485760,
+          "lockWaitSeconds": 1
+        },
+        "owner": "public externalcaller constructor; no repository productive outer author proven",
+        "externalPrerequisite": "Real installed/deployed external caller identity remains external; source API control only"
+      }
+    ]
+  },
+  "callerMatrix": [
+    {
+      "coordinateIndex": 0,
+      "source": {
+        "path": "skills/common/plugins/state-store/src/adapter.ts",
+        "line": 35,
+        "sha256": "1805e68a4d478af60df925fb6c38204344d53e17a8134fafdd47732263c473c7",
+        "sourceText": "  const store = new FileDurableRecordStore(configured, {"
+      },
+      "owningCompanion": "RegisteredStores",
+      "targetField": "sameexisting registeredadapter config.storeLockWaitSeconds -> records/blob storeoptions; registration/schema projectionrequired",
+      "currentVsTarget": "scripts currentcommand/retainedconfig distinctions exactlyretirement-binding-contract.json; reusableclasses not deployedinstances",
+      "futureSteps": [
+        "capture exact originalA owner/profile/policy before firstwrite/lifetimehold",
+        "hold actual corresponding root lock in child; signal acquired then wait for releasepipe",
+        "publish complete compatibleB=1seconds without editing retainedA=5",
+        "contend using exact caller entry method/store constructor from source coordinate",
+        "confirm lock expiry -> source LOCKED/OBSERVABILITY_STORE_LOCK_FAILED and unchanged state",
+        "release child, retry same A history with capturedA5 ->success",
+        "recover A + fixedEvalA ->A5 unchanged; differentowner or swappedquota rejected beforewrite"
+      ],
+      "oracle": {
+        "retainedWaitSeconds": 5,
+        "newIndependentWaitSeconds": 1,
+        "stateSHAUnchangedOnTimeout": true,
+        "noDeleteBreakRenew": true,
+        "noLatest": true
+      },
+      "rootNamespace": "same case root perphysicalwriter; maintenance/lifetime originalownership retainsA; distinct newBroot permissible"
+    },
+    {
+      "coordinateIndex": 1,
+      "source": {
+        "path": "skills/common/plugins/wait-store/src/adapter.ts",
+        "line": 207,
+        "sha256": "9114197adde4307becd0d14548eef723804be8f051acef012abbcbf8c5b8b082",
+        "sourceText": "  const store = new FileDurableRecordStore(root, {"
+      },
+      "owningCompanion": "RegisteredStores",
+      "targetField": "sameexisting registeredadapter config.storeLockWaitSeconds -> records/blob storeoptions; registration/schema projectionrequired",
+      "currentVsTarget": "scripts currentcommand/retainedconfig distinctions exactlyretirement-binding-contract.json; reusableclasses not deployedinstances",
+      "futureSteps": [
+        "capture exact originalA owner/profile/policy before firstwrite/lifetimehold",
+        "hold actual corresponding root lock in child; signal acquired then wait for releasepipe",
+        "publish complete compatibleB=1seconds without editing retainedA=5",
+        "contend using exact caller entry method/store constructor from source coordinate",
+        "confirm lock expiry -> source LOCKED/OBSERVABILITY_STORE_LOCK_FAILED and unchanged state",
+        "release child, retry same A history with capturedA5 ->success",
+        "recover A + fixedEvalA ->A5 unchanged; differentowner or swappedquota rejected beforewrite"
+      ],
+      "oracle": {
+        "retainedWaitSeconds": 5,
+        "newIndependentWaitSeconds": 1,
+        "stateSHAUnchangedOnTimeout": true,
+        "noDeleteBreakRenew": true,
+        "noLatest": true
+      },
+      "rootNamespace": "same case root perphysicalwriter; maintenance/lifetime originalownership retainsA; distinct newBroot permissible"
+    },
+    {
+      "coordinateIndex": 2,
+      "source": {
+        "path": "skills/common/plugins/telemetry-store/src/adapter.ts",
+        "line": 14,
+        "sha256": "f5a3ff64dce028471c800e9a5da01bcc3a405f26b1e68ccdd8e78cd54e00fb13",
+        "sourceText": "  const store = new FileDurableRecordStore(root, {"
+      },
+      "owningCompanion": "RegisteredStores",
+      "targetField": "sameexisting registeredadapter config.storeLockWaitSeconds -> records/blob storeoptions; registration/schema projectionrequired",
+      "currentVsTarget": "scripts currentcommand/retainedconfig distinctions exactlyretirement-binding-contract.json; reusableclasses not deployedinstances",
+      "futureSteps": [
+        "capture exact originalA owner/profile/policy before firstwrite/lifetimehold",
+        "hold actual corresponding root lock in child; signal acquired then wait for releasepipe",
+        "publish complete compatibleB=1seconds without editing retainedA=5",
+        "contend using exact caller entry method/store constructor from source coordinate",
+        "confirm lock expiry -> source LOCKED/OBSERVABILITY_STORE_LOCK_FAILED and unchanged state",
+        "release child, retry same A history with capturedA5 ->success",
+        "recover A + fixedEvalA ->A5 unchanged; differentowner or swappedquota rejected beforewrite"
+      ],
+      "oracle": {
+        "retainedWaitSeconds": 5,
+        "newIndependentWaitSeconds": 1,
+        "stateSHAUnchangedOnTimeout": true,
+        "noDeleteBreakRenew": true,
+        "noLatest": true
+      },
+      "rootNamespace": "same case root perphysicalwriter; maintenance/lifetime originalownership retainsA; distinct newBroot permissible"
+    },
+    {
+      "coordinateIndex": 3,
+      "source": {
+        "path": "skills/common/plugins/operator-messaging/src/adapter.ts",
+        "line": 69,
+        "sha256": "a6d719a5e69b401a0696af9a74dcf358015cdc57bfa062cca0514c54410b3785",
+        "sourceText": "  const records = new FileDurableRecordStore(config.deliveryRoot, {"
+      },
+      "owningCompanion": "RegisteredStores",
+      "targetField": "sameexisting registeredadapter config.storeLockWaitSeconds -> records/blob storeoptions; registration/schema projectionrequired",
+      "currentVsTarget": "scripts currentcommand/retainedconfig distinctions exactlyretirement-binding-contract.json; reusableclasses not deployedinstances",
+      "futureSteps": [
+        "capture exact originalA owner/profile/policy before firstwrite/lifetimehold",
+        "hold actual corresponding root lock in child; signal acquired then wait for releasepipe",
+        "publish complete compatibleB=1seconds without editing retainedA=5",
+        "contend using exact caller entry method/store constructor from source coordinate",
+        "confirm lock expiry -> source LOCKED/OBSERVABILITY_STORE_LOCK_FAILED and unchanged state",
+        "release child, retry same A history with capturedA5 ->success",
+        "recover A + fixedEvalA ->A5 unchanged; differentowner or swappedquota rejected beforewrite"
+      ],
+      "oracle": {
+        "retainedWaitSeconds": 5,
+        "newIndependentWaitSeconds": 1,
+        "stateSHAUnchangedOnTimeout": true,
+        "noDeleteBreakRenew": true,
+        "noLatest": true
+      },
+      "rootNamespace": "same case root perphysicalwriter; maintenance/lifetime originalownership retainsA; distinct newBroot permissible"
+    },
+    {
+      "coordinateIndex": 4,
+      "source": {
+        "path": "skills/common/plugins/transport-publisher/src/adapter.ts",
+        "line": 197,
+        "sha256": "017501aea38f59ede67adf7249ed0bfa9c2d16430b2c7acf6380944350f2cd31",
+        "sourceText": "  const records = new FileDurableRecordStore(config.deliveryRoot, {"
+      },
+      "owningCompanion": "RegisteredStores",
+      "targetField": "sameexisting registeredadapter config.storeLockWaitSeconds -> records/blob storeoptions; registration/schema projectionrequired",
+      "currentVsTarget": "scripts currentcommand/retainedconfig distinctions exactlyretirement-binding-contract.json; reusableclasses not deployedinstances",
+      "futureSteps": [
+        "capture exact originalA owner/profile/policy before firstwrite/lifetimehold",
+        "hold actual corresponding root lock in child; signal acquired then wait for releasepipe",
+        "publish complete compatibleB=1seconds without editing retainedA=5",
+        "contend using exact caller entry method/store constructor from source coordinate",
+        "confirm lock expiry -> source LOCKED/OBSERVABILITY_STORE_LOCK_FAILED and unchanged state",
+        "release child, retry same A history with capturedA5 ->success",
+        "recover A + fixedEvalA ->A5 unchanged; differentowner or swappedquota rejected beforewrite"
+      ],
+      "oracle": {
+        "retainedWaitSeconds": 5,
+        "newIndependentWaitSeconds": 1,
+        "stateSHAUnchangedOnTimeout": true,
+        "noDeleteBreakRenew": true,
+        "noLatest": true
+      },
+      "rootNamespace": "same case root perphysicalwriter; maintenance/lifetime originalownership retainsA; distinct newBroot permissible"
+    },
+    {
+      "coordinateIndex": 5,
+      "source": {
+        "path": "skills/common/plugins/artifact-store/src/adapter.ts",
+        "line": 168,
+        "sha256": "12fa6150089d49da0a9065de560fb53436dc46e3f10f15da0f3fe8b112a50154",
+        "sourceText": "  const records = new FileDurableRecordStore(configured, {"
+      },
+      "owningCompanion": "RegisteredStores",
+      "targetField": "sameexisting registeredadapter config.storeLockWaitSeconds -> records/blob storeoptions; registration/schema projectionrequired",
+      "currentVsTarget": "scripts currentcommand/retainedconfig distinctions exactlyretirement-binding-contract.json; reusableclasses not deployedinstances",
+      "futureSteps": [
+        "capture exact originalA owner/profile/policy before firstwrite/lifetimehold",
+        "hold actual corresponding root lock in child; signal acquired then wait for releasepipe",
+        "publish complete compatibleB=1seconds without editing retainedA=5",
+        "contend using exact caller entry method/store constructor from source coordinate",
+        "confirm lock expiry -> source LOCKED/OBSERVABILITY_STORE_LOCK_FAILED and unchanged state",
+        "release child, retry same A history with capturedA5 ->success",
+        "recover A + fixedEvalA ->A5 unchanged; differentowner or swappedquota rejected beforewrite"
+      ],
+      "oracle": {
+        "retainedWaitSeconds": 5,
+        "newIndependentWaitSeconds": 1,
+        "stateSHAUnchangedOnTimeout": true,
+        "noDeleteBreakRenew": true,
+        "noLatest": true
+      },
+      "rootNamespace": "same case root perphysicalwriter; maintenance/lifetime originalownership retainsA; distinct newBroot permissible"
+    },
+    {
+      "coordinateIndex": 6,
+      "source": {
+        "path": "skills/common/plugins/artifact-store/src/adapter.ts",
+        "line": 173,
+        "sha256": "12fa6150089d49da0a9065de560fb53436dc46e3f10f15da0f3fe8b112a50154",
+        "sourceText": "  const blobs = new FileDurableBlobStore(configured, Number(maximum), Number(maximumStoreBytes));"
+      },
+      "owningCompanion": "RegisteredStores",
+      "targetField": "sameexisting registeredadapter config.storeLockWaitSeconds -> records/blob storeoptions; registration/schema projectionrequired",
+      "currentVsTarget": "scripts currentcommand/retainedconfig distinctions exactlyretirement-binding-contract.json; reusableclasses not deployedinstances",
+      "futureSteps": [
+        "capture exact originalA owner/profile/policy before firstwrite/lifetimehold",
+        "hold actual corresponding root lock in child; signal acquired then wait for releasepipe",
+        "publish complete compatibleB=1seconds without editing retainedA=5",
+        "contend using exact caller entry method/store constructor from source coordinate",
+        "confirm lock expiry -> source LOCKED/OBSERVABILITY_STORE_LOCK_FAILED and unchanged state",
+        "release child, retry same A history with capturedA5 ->success",
+        "recover A + fixedEvalA ->A5 unchanged; differentowner or swappedquota rejected beforewrite"
+      ],
+      "oracle": {
+        "retainedWaitSeconds": 5,
+        "newIndependentWaitSeconds": 1,
+        "stateSHAUnchangedOnTimeout": true,
+        "noDeleteBreakRenew": true,
+        "noLatest": true
+      },
+      "rootNamespace": "same case root perphysicalwriter; maintenance/lifetime originalownership retainsA; distinct newBroot permissible"
+    },
+    {
+      "coordinateIndex": 7,
+      "source": {
+        "path": "skills/common/plugin-runtime/foundation/config/published-pair.ts",
+        "line": 104,
+        "sha256": "c0c4fc08ae422962f201b4ec9f134ec03f8e3354c85316cb92657db18aafa27a",
+        "sourceText": "  await withDurableStoreLock(pointer,async()=>{"
+      },
+      "owningCompanion": "NovaPlatform",
+      "targetField": "soleentry selectedNova projectScaffold.lockWaitSeconds ->checkedgeneratedprojection->requiredpublishJsonPair policy argument",
+      "currentVsTarget": "scripts currentcommand/retainedconfig distinctions exactlyretirement-binding-contract.json; reusableclasses not deployedinstances",
+      "futureSteps": [
+        "capture exact originalA owner/profile/policy before firstwrite/lifetimehold",
+        "hold actual corresponding root lock in child; signal acquired then wait for releasepipe",
+        "publish complete compatibleB=1seconds without editing retainedA=5",
+        "contend using exact caller entry method/store constructor from source coordinate",
+        "confirm lock expiry -> source LOCKED/OBSERVABILITY_STORE_LOCK_FAILED and unchanged state",
+        "release child, retry same A history with capturedA5 ->success",
+        "recover A + fixedEvalA ->A5 unchanged; differentowner or swappedquota rejected beforewrite"
+      ],
+      "oracle": {
+        "retainedWaitSeconds": 5,
+        "newIndependentWaitSeconds": 1,
+        "stateSHAUnchangedOnTimeout": true,
+        "noDeleteBreakRenew": true,
+        "noLatest": true
+      },
+      "rootNamespace": "same case root perphysicalwriter; maintenance/lifetime originalownership retainsA; distinct newBroot permissible"
+    },
+    {
+      "coordinateIndex": 8,
+      "source": {
+        "path": "skills/common/plugin-runtime/foundation/observability/durable-blobs.ts",
+        "line": 48,
+        "sha256": "5e1af13ee56ba905355f7f84e58b25d6a8ea5a1c7e77f5863a1a1ad18506c2ea",
+        "sourceText": "    return withDurableStoreLock(path.join(this.#root, 'blob-budget'), () => this.#put(input));"
+      },
+      "owningCompanion": "ReusableCallerProjection",
+      "targetField": "requiredpassed lockWaitSeconds fromlisted concreteowner; no libraryfallback/sharedauthor",
+      "currentVsTarget": "scripts currentcommand/retainedconfig distinctions exactlyretirement-binding-contract.json; reusableclasses not deployedinstances",
+      "futureSteps": [
+        "capture exact originalA owner/profile/policy before firstwrite/lifetimehold",
+        "hold actual corresponding root lock in child; signal acquired then wait for releasepipe",
+        "publish complete compatibleB=1seconds without editing retainedA=5",
+        "contend using exact caller entry method/store constructor from source coordinate",
+        "confirm lock expiry -> source LOCKED/OBSERVABILITY_STORE_LOCK_FAILED and unchanged state",
+        "release child, retry same A history with capturedA5 ->success",
+        "recover A + fixedEvalA ->A5 unchanged; differentowner or swappedquota rejected beforewrite"
+      ],
+      "oracle": {
+        "retainedWaitSeconds": 5,
+        "newIndependentWaitSeconds": 1,
+        "stateSHAUnchangedOnTimeout": true,
+        "noDeleteBreakRenew": true,
+        "noLatest": true
+      },
+      "rootNamespace": "same case root perphysicalwriter; maintenance/lifetime originalownership retainsA; distinct newBroot permissible"
+    },
+    {
+      "coordinateIndex": 9,
+      "source": {
+        "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+        "line": 344,
+        "sha256": "5624aa2b5f980a373ab30fdf012dee1346418ac3b2537244475f2a496d3766a0",
+        "sourceText": "    const locked = () => withDurableStoreLock(this.#file, operation);"
+      },
+      "owningCompanion": "ReusableCallerProjection",
+      "targetField": "requiredpassed lockWaitSeconds fromlisted concreteowner; no libraryfallback/sharedauthor",
+      "currentVsTarget": "scripts currentcommand/retainedconfig distinctions exactlyretirement-binding-contract.json; reusableclasses not deployedinstances",
+      "futureSteps": [
+        "capture exact originalA owner/profile/policy before firstwrite/lifetimehold",
+        "hold actual corresponding root lock in child; signal acquired then wait for releasepipe",
+        "publish complete compatibleB=1seconds without editing retainedA=5",
+        "contend using exact caller entry method/store constructor from source coordinate",
+        "confirm lock expiry -> source LOCKED/OBSERVABILITY_STORE_LOCK_FAILED and unchanged state",
+        "release child, retry same A history with capturedA5 ->success",
+        "recover A + fixedEvalA ->A5 unchanged; differentowner or swappedquota rejected beforewrite"
+      ],
+      "oracle": {
+        "retainedWaitSeconds": 5,
+        "newIndependentWaitSeconds": 1,
+        "stateSHAUnchangedOnTimeout": true,
+        "noDeleteBreakRenew": true,
+        "noLatest": true
+      },
+      "rootNamespace": "same case root perphysicalwriter; maintenance/lifetime originalownership retainsA; distinct newBroot permissible"
+    },
+    {
+      "coordinateIndex": 10,
+      "source": {
+        "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+        "line": 458,
+        "sha256": "5624aa2b5f980a373ab30fdf012dee1346418ac3b2537244475f2a496d3766a0",
+        "sourceText": "    const locked = () => withDurableStoreLock(this.#file, operation);"
+      },
+      "owningCompanion": "ReusableCallerProjection",
+      "targetField": "requiredpassed lockWaitSeconds fromlisted concreteowner; no libraryfallback/sharedauthor",
+      "currentVsTarget": "scripts currentcommand/retainedconfig distinctions exactlyretirement-binding-contract.json; reusableclasses not deployedinstances",
+      "futureSteps": [
+        "capture exact originalA owner/profile/policy before firstwrite/lifetimehold",
+        "hold actual corresponding root lock in child; signal acquired then wait for releasepipe",
+        "publish complete compatibleB=1seconds without editing retainedA=5",
+        "contend using exact caller entry method/store constructor from source coordinate",
+        "confirm lock expiry -> source LOCKED/OBSERVABILITY_STORE_LOCK_FAILED and unchanged state",
+        "release child, retry same A history with capturedA5 ->success",
+        "recover A + fixedEvalA ->A5 unchanged; differentowner or swappedquota rejected beforewrite"
+      ],
+      "oracle": {
+        "retainedWaitSeconds": 5,
+        "newIndependentWaitSeconds": 1,
+        "stateSHAUnchangedOnTimeout": true,
+        "noDeleteBreakRenew": true,
+        "noLatest": true
+      },
+      "rootNamespace": "same case root perphysicalwriter; maintenance/lifetime originalownership retainsA; distinct newBroot permissible"
+    },
+    {
+      "coordinateIndex": 11,
+      "source": {
+        "path": "skills/common/plugin-runtime/foundation/observability/attempt-state.ts",
+        "line": 53,
+        "sha256": "392ad6e2a590c964cc0d8cd1fe0c75237f240798e6d99ee2ed2b33da8047fdca",
+        "sourceText": "      withDurableStoreLock(this.file, async () => {"
+      },
+      "owningCompanion": "ReusableCallerProjection",
+      "targetField": "requiredpassed lockWaitSeconds fromlisted concreteowner; no libraryfallback/sharedauthor",
+      "currentVsTarget": "scripts currentcommand/retainedconfig distinctions exactlyretirement-binding-contract.json; reusableclasses not deployedinstances",
+      "futureSteps": [
+        "capture exact originalA owner/profile/policy before firstwrite/lifetimehold",
+        "hold actual corresponding root lock in child; signal acquired then wait for releasepipe",
+        "publish complete compatibleB=1seconds without editing retainedA=5",
+        "contend using exact caller entry method/store constructor from source coordinate",
+        "confirm lock expiry -> source LOCKED/OBSERVABILITY_STORE_LOCK_FAILED and unchanged state",
+        "release child, retry same A history with capturedA5 ->success",
+        "recover A + fixedEvalA ->A5 unchanged; differentowner or swappedquota rejected beforewrite"
+      ],
+      "oracle": {
+        "retainedWaitSeconds": 5,
+        "newIndependentWaitSeconds": 1,
+        "stateSHAUnchangedOnTimeout": true,
+        "noDeleteBreakRenew": true,
+        "noLatest": true
+      },
+      "rootNamespace": "same case root perphysicalwriter; maintenance/lifetime originalownership retainsA; distinct newBroot permissible"
+    },
+    {
+      "coordinateIndex": 12,
+      "source": {
+        "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+        "line": 60,
+        "sha256": "ab407b028f3a22c96a436c3bdf2a9dd7bfee3b36d301de919669d2d1bf25c553",
+        "sourceText": "    const locked = () => withDurableStoreLock(this.#file, operation);"
+      },
+      "owningCompanion": "ReusableCallerProjection",
+      "targetField": "requiredpassed lockWaitSeconds fromlisted concreteowner; no libraryfallback/sharedauthor",
+      "currentVsTarget": "scripts currentcommand/retainedconfig distinctions exactlyretirement-binding-contract.json; reusableclasses not deployedinstances",
+      "futureSteps": [
+        "capture exact originalA owner/profile/policy before firstwrite/lifetimehold",
+        "hold actual corresponding root lock in child; signal acquired then wait for releasepipe",
+        "publish complete compatibleB=1seconds without editing retainedA=5",
+        "contend using exact caller entry method/store constructor from source coordinate",
+        "confirm lock expiry -> source LOCKED/OBSERVABILITY_STORE_LOCK_FAILED and unchanged state",
+        "release child, retry same A history with capturedA5 ->success",
+        "recover A + fixedEvalA ->A5 unchanged; differentowner or swappedquota rejected beforewrite"
+      ],
+      "oracle": {
+        "retainedWaitSeconds": 5,
+        "newIndependentWaitSeconds": 1,
+        "stateSHAUnchangedOnTimeout": true,
+        "noDeleteBreakRenew": true,
+        "noLatest": true
+      },
+      "rootNamespace": "same case root perphysicalwriter; maintenance/lifetime originalownership retainsA; distinct newBroot permissible"
+    },
+    {
+      "coordinateIndex": 13,
+      "source": {
+        "path": "skills/worker/core/worker/native-attempt-journal.ts",
+        "line": 32,
+        "sha256": "4c63283eb753d9840c4a6fce4126404a86df2e33dc357166531550059a57acf5",
+        "sourceText": "    this.#records = new FileDurableRecordStore(path.join(this.#root, 'metadata'), {"
+      },
+      "owningCompanion": "CoreNative",
+      "targetField": "existing worker-core settings.runtime.native_store_lock_wait_seconds ->Core constructoroption lockWaitSeconds ->helper; actualPrism/Buster role projects selectedwholeCoreprofile",
+      "currentVsTarget": "scripts currentcommand/retainedconfig distinctions exactlyretirement-binding-contract.json; reusableclasses not deployedinstances",
+      "futureSteps": [
+        "capture exact originalA owner/profile/policy before firstwrite/lifetimehold",
+        "hold actual corresponding root lock in child; signal acquired then wait for releasepipe",
+        "publish complete compatibleB=1seconds without editing retainedA=5",
+        "contend using exact caller entry method/store constructor from source coordinate",
+        "confirm lock expiry -> source LOCKED/OBSERVABILITY_STORE_LOCK_FAILED and unchanged state",
+        "release child, retry same A history with capturedA5 ->success",
+        "recover A + fixedEvalA ->A5 unchanged; differentowner or swappedquota rejected beforewrite"
+      ],
+      "oracle": {
+        "retainedWaitSeconds": 5,
+        "newIndependentWaitSeconds": 1,
+        "stateSHAUnchangedOnTimeout": true,
+        "noDeleteBreakRenew": true,
+        "noLatest": true
+      },
+      "rootNamespace": "same case root perphysicalwriter; maintenance/lifetime originalownership retainsA; distinct newBroot permissible"
+    },
+    {
+      "coordinateIndex": 14,
+      "source": {
+        "path": "skills/worker/core/worker/native-attempt-journal.ts",
+        "line": 35,
+        "sha256": "4c63283eb753d9840c4a6fce4126404a86df2e33dc357166531550059a57acf5",
+        "sourceText": "    this.#blobs = new FileDurableBlobStore(path.join(this.#root, 'data'), Math.max(limits.maximumInputBytes, limits.maximumResultBytes), limits.maximumTotalBytes);"
+      },
+      "owningCompanion": "CoreNative",
+      "targetField": "existing worker-core settings.runtime.native_store_lock_wait_seconds ->Core constructoroption lockWaitSeconds ->helper; actualPrism/Buster role projects selectedwholeCoreprofile",
+      "currentVsTarget": "scripts currentcommand/retainedconfig distinctions exactlyretirement-binding-contract.json; reusableclasses not deployedinstances",
+      "futureSteps": [
+        "capture exact originalA owner/profile/policy before firstwrite/lifetimehold",
+        "hold actual corresponding root lock in child; signal acquired then wait for releasepipe",
+        "publish complete compatibleB=1seconds without editing retainedA=5",
+        "contend using exact caller entry method/store constructor from source coordinate",
+        "confirm lock expiry -> source LOCKED/OBSERVABILITY_STORE_LOCK_FAILED and unchanged state",
+        "release child, retry same A history with capturedA5 ->success",
+        "recover A + fixedEvalA ->A5 unchanged; differentowner or swappedquota rejected beforewrite"
+      ],
+      "oracle": {
+        "retainedWaitSeconds": 5,
+        "newIndependentWaitSeconds": 1,
+        "stateSHAUnchangedOnTimeout": true,
+        "noDeleteBreakRenew": true,
+        "noLatest": true
+      },
+      "rootNamespace": "same case root perphysicalwriter; maintenance/lifetime originalownership retainsA; distinct newBroot permissible"
+    },
+    {
+      "coordinateIndex": 15,
+      "source": {
+        "path": "skills/worker/core/worker/native-attempt-journal.ts",
+        "line": 51,
+        "sha256": "4c63283eb753d9840c4a6fce4126404a86df2e33dc357166531550059a57acf5",
+        "sourceText": "      return await withDurableStoreLock(path.join(this.#root, 'fences', key.slice(-2), 'lifetime'), async () => {"
+      },
+      "owningCompanion": "CoreNative",
+      "targetField": "existing worker-core settings.runtime.native_store_lock_wait_seconds ->Core constructoroption lockWaitSeconds ->helper; actualPrism/Buster role projects selectedwholeCoreprofile",
+      "currentVsTarget": "scripts currentcommand/retainedconfig distinctions exactlyretirement-binding-contract.json; reusableclasses not deployedinstances",
+      "futureSteps": [
+        "capture exact originalA owner/profile/policy before firstwrite/lifetimehold",
+        "hold actual corresponding root lock in child; signal acquired then wait for releasepipe",
+        "publish complete compatibleB=1seconds without editing retainedA=5",
+        "contend using exact caller entry method/store constructor from source coordinate",
+        "confirm lock expiry -> source LOCKED/OBSERVABILITY_STORE_LOCK_FAILED and unchanged state",
+        "release child, retry same A history with capturedA5 ->success",
+        "recover A + fixedEvalA ->A5 unchanged; differentowner or swappedquota rejected beforewrite"
+      ],
+      "oracle": {
+        "retainedWaitSeconds": 5,
+        "newIndependentWaitSeconds": 1,
+        "stateSHAUnchangedOnTimeout": true,
+        "noDeleteBreakRenew": true,
+        "noLatest": true
+      },
+      "rootNamespace": "same case root perphysicalwriter; maintenance/lifetime originalownership retainsA; distinct newBroot permissible"
+    },
+    {
+      "coordinateIndex": 16,
+      "source": {
+        "path": "skills/worker/core/worker/native-attempt-journal.ts",
+        "line": 124,
+        "sha256": "4c63283eb753d9840c4a6fce4126404a86df2e33dc357166531550059a57acf5",
+        "sourceText": "    return withDurableStoreLock(path.join(this.#root, 'admission', 'lifetime'), async () => {"
+      },
+      "owningCompanion": "CoreNative",
+      "targetField": "existing worker-core settings.runtime.native_store_lock_wait_seconds ->Core constructoroption lockWaitSeconds ->helper; actualPrism/Buster role projects selectedwholeCoreprofile",
+      "currentVsTarget": "scripts currentcommand/retainedconfig distinctions exactlyretirement-binding-contract.json; reusableclasses not deployedinstances",
+      "futureSteps": [
+        "capture exact originalA owner/profile/policy before firstwrite/lifetimehold",
+        "hold actual corresponding root lock in child; signal acquired then wait for releasepipe",
+        "publish complete compatibleB=1seconds without editing retainedA=5",
+        "contend using exact caller entry method/store constructor from source coordinate",
+        "confirm lock expiry -> source LOCKED/OBSERVABILITY_STORE_LOCK_FAILED and unchanged state",
+        "release child, retry same A history with capturedA5 ->success",
+        "recover A + fixedEvalA ->A5 unchanged; differentowner or swappedquota rejected beforewrite"
+      ],
+      "oracle": {
+        "retainedWaitSeconds": 5,
+        "newIndependentWaitSeconds": 1,
+        "stateSHAUnchangedOnTimeout": true,
+        "noDeleteBreakRenew": true,
+        "noLatest": true
+      },
+      "rootNamespace": "same case root perphysicalwriter; maintenance/lifetime originalownership retainsA; distinct newBroot permissible"
+    },
+    {
+      "coordinateIndex": 17,
+      "source": {
+        "path": "skills/worker/core/worker/native-attempt-journal.ts",
+        "line": 165,
+        "sha256": "4c63283eb753d9840c4a6fce4126404a86df2e33dc357166531550059a57acf5",
+        "sourceText": "    return withDurableStoreLock(path.join(this.#root, 'admission', 'lifetime'), async () => {"
+      },
+      "owningCompanion": "CoreNative",
+      "targetField": "existing worker-core settings.runtime.native_store_lock_wait_seconds ->Core constructoroption lockWaitSeconds ->helper; actualPrism/Buster role projects selectedwholeCoreprofile",
+      "currentVsTarget": "scripts currentcommand/retainedconfig distinctions exactlyretirement-binding-contract.json; reusableclasses not deployedinstances",
+      "futureSteps": [
+        "capture exact originalA owner/profile/policy before firstwrite/lifetimehold",
+        "hold actual corresponding root lock in child; signal acquired then wait for releasepipe",
+        "publish complete compatibleB=1seconds without editing retainedA=5",
+        "contend using exact caller entry method/store constructor from source coordinate",
+        "confirm lock expiry -> source LOCKED/OBSERVABILITY_STORE_LOCK_FAILED and unchanged state",
+        "release child, retry same A history with capturedA5 ->success",
+        "recover A + fixedEvalA ->A5 unchanged; differentowner or swappedquota rejected beforewrite"
+      ],
+      "oracle": {
+        "retainedWaitSeconds": 5,
+        "newIndependentWaitSeconds": 1,
+        "stateSHAUnchangedOnTimeout": true,
+        "noDeleteBreakRenew": true,
+        "noLatest": true
+      },
+      "rootNamespace": "same case root perphysicalwriter; maintenance/lifetime originalownership retainsA; distinct newBroot permissible"
+    },
+    {
+      "coordinateIndex": 18,
+      "source": {
+        "path": "skills/worker/core/worker/ownership-store.ts",
+        "line": 75,
+        "sha256": "51c88ef050299cc54a2f6ea19ad64e0bfe528507f3a0dc8050f95ab4b3e46cf5",
+        "sourceText": "    return withDurableStoreLock(this.#file, async () => structuredClone((await this.#read()).records));"
+      },
+      "owningCompanion": "CoreNative",
+      "targetField": "existing worker-core settings.runtime.native_store_lock_wait_seconds ->Core constructoroption lockWaitSeconds ->helper; actualPrism/Buster role projects selectedwholeCoreprofile",
+      "currentVsTarget": "scripts currentcommand/retainedconfig distinctions exactlyretirement-binding-contract.json; reusableclasses not deployedinstances",
+      "futureSteps": [
+        "capture exact originalA owner/profile/policy before firstwrite/lifetimehold",
+        "hold actual corresponding root lock in child; signal acquired then wait for releasepipe",
+        "publish complete compatibleB=1seconds without editing retainedA=5",
+        "contend using exact caller entry method/store constructor from source coordinate",
+        "confirm lock expiry -> source LOCKED/OBSERVABILITY_STORE_LOCK_FAILED and unchanged state",
+        "release child, retry same A history with capturedA5 ->success",
+        "recover A + fixedEvalA ->A5 unchanged; differentowner or swappedquota rejected beforewrite"
+      ],
+      "oracle": {
+        "retainedWaitSeconds": 5,
+        "newIndependentWaitSeconds": 1,
+        "stateSHAUnchangedOnTimeout": true,
+        "noDeleteBreakRenew": true,
+        "noLatest": true
+      },
+      "rootNamespace": "same case root perphysicalwriter; maintenance/lifetime originalownership retainsA; distinct newBroot permissible"
+    },
+    {
+      "coordinateIndex": 19,
+      "source": {
+        "path": "skills/worker/core/worker/ownership-store.ts",
+        "line": 82,
+        "sha256": "51c88ef050299cc54a2f6ea19ad64e0bfe528507f3a0dc8050f95ab4b3e46cf5",
+        "sourceText": "    await withDurableStoreLock(this.#file, async () => {"
+      },
+      "owningCompanion": "CoreNative",
+      "targetField": "existing worker-core settings.runtime.native_store_lock_wait_seconds ->Core constructoroption lockWaitSeconds ->helper; actualPrism/Buster role projects selectedwholeCoreprofile",
+      "currentVsTarget": "scripts currentcommand/retainedconfig distinctions exactlyretirement-binding-contract.json; reusableclasses not deployedinstances",
+      "futureSteps": [
+        "capture exact originalA owner/profile/policy before firstwrite/lifetimehold",
+        "hold actual corresponding root lock in child; signal acquired then wait for releasepipe",
+        "publish complete compatibleB=1seconds without editing retainedA=5",
+        "contend using exact caller entry method/store constructor from source coordinate",
+        "confirm lock expiry -> source LOCKED/OBSERVABILITY_STORE_LOCK_FAILED and unchanged state",
+        "release child, retry same A history with capturedA5 ->success",
+        "recover A + fixedEvalA ->A5 unchanged; differentowner or swappedquota rejected beforewrite"
+      ],
+      "oracle": {
+        "retainedWaitSeconds": 5,
+        "newIndependentWaitSeconds": 1,
+        "stateSHAUnchangedOnTimeout": true,
+        "noDeleteBreakRenew": true,
+        "noLatest": true
+      },
+      "rootNamespace": "same case root perphysicalwriter; maintenance/lifetime originalownership retainsA; distinct newBroot permissible"
+    },
+    {
+      "coordinateIndex": 20,
+      "source": {
+        "path": "skills/worker/core/worker/ownership-store.ts",
+        "line": 98,
+        "sha256": "51c88ef050299cc54a2f6ea19ad64e0bfe528507f3a0dc8050f95ab4b3e46cf5",
+        "sourceText": "    return withDurableStoreLock(path.join(path.dirname(this.#file), 'supervisor', 'lifetime'), operation);"
+      },
+      "owningCompanion": "CoreNative",
+      "targetField": "existing worker-core settings.runtime.native_store_lock_wait_seconds ->Core constructoroption lockWaitSeconds ->helper; actualPrism/Buster role projects selectedwholeCoreprofile",
+      "currentVsTarget": "scripts currentcommand/retainedconfig distinctions exactlyretirement-binding-contract.json; reusableclasses not deployedinstances",
+      "futureSteps": [
+        "capture exact originalA owner/profile/policy before firstwrite/lifetimehold",
+        "hold actual corresponding root lock in child; signal acquired then wait for releasepipe",
+        "publish complete compatibleB=1seconds without editing retainedA=5",
+        "contend using exact caller entry method/store constructor from source coordinate",
+        "confirm lock expiry -> source LOCKED/OBSERVABILITY_STORE_LOCK_FAILED and unchanged state",
+        "release child, retry same A history with capturedA5 ->success",
+        "recover A + fixedEvalA ->A5 unchanged; differentowner or swappedquota rejected beforewrite"
+      ],
+      "oracle": {
+        "retainedWaitSeconds": 5,
+        "newIndependentWaitSeconds": 1,
+        "stateSHAUnchangedOnTimeout": true,
+        "noDeleteBreakRenew": true,
+        "noLatest": true
+      },
+      "rootNamespace": "same case root perphysicalwriter; maintenance/lifetime originalownership retainsA; distinct newBroot permissible"
+    },
+    {
+      "coordinateIndex": 21,
+      "source": {
+        "path": "skills/worker/core/worker/ownership-store.ts",
+        "line": 104,
+        "sha256": "51c88ef050299cc54a2f6ea19ad64e0bfe528507f3a0dc8050f95ab4b3e46cf5",
+        "sourceText": "    return withDurableStoreLock(this.#file, async () => {"
+      },
+      "owningCompanion": "CoreNative",
+      "targetField": "existing worker-core settings.runtime.native_store_lock_wait_seconds ->Core constructoroption lockWaitSeconds ->helper; actualPrism/Buster role projects selectedwholeCoreprofile",
+      "currentVsTarget": "scripts currentcommand/retainedconfig distinctions exactlyretirement-binding-contract.json; reusableclasses not deployedinstances",
+      "futureSteps": [
+        "capture exact originalA owner/profile/policy before firstwrite/lifetimehold",
+        "hold actual corresponding root lock in child; signal acquired then wait for releasepipe",
+        "publish complete compatibleB=1seconds without editing retainedA=5",
+        "contend using exact caller entry method/store constructor from source coordinate",
+        "confirm lock expiry -> source LOCKED/OBSERVABILITY_STORE_LOCK_FAILED and unchanged state",
+        "release child, retry same A history with capturedA5 ->success",
+        "recover A + fixedEvalA ->A5 unchanged; differentowner or swappedquota rejected beforewrite"
+      ],
+      "oracle": {
+        "retainedWaitSeconds": 5,
+        "newIndependentWaitSeconds": 1,
+        "stateSHAUnchangedOnTimeout": true,
+        "noDeleteBreakRenew": true,
+        "noLatest": true
+      },
+      "rootNamespace": "same case root perphysicalwriter; maintenance/lifetime originalownership retainsA; distinct newBroot permissible"
+    },
+    {
+      "coordinateIndex": 22,
+      "source": {
+        "path": "skills/worker/core/worker/ownership-store.ts",
+        "line": 134,
+        "sha256": "51c88ef050299cc54a2f6ea19ad64e0bfe528507f3a0dc8050f95ab4b3e46cf5",
+        "sourceText": "    return withDurableStoreLock(this.#file, async () => {"
+      },
+      "owningCompanion": "CoreNative",
+      "targetField": "existing worker-core settings.runtime.native_store_lock_wait_seconds ->Core constructoroption lockWaitSeconds ->helper; actualPrism/Buster role projects selectedwholeCoreprofile",
+      "currentVsTarget": "scripts currentcommand/retainedconfig distinctions exactlyretirement-binding-contract.json; reusableclasses not deployedinstances",
+      "futureSteps": [
+        "capture exact originalA owner/profile/policy before firstwrite/lifetimehold",
+        "hold actual corresponding root lock in child; signal acquired then wait for releasepipe",
+        "publish complete compatibleB=1seconds without editing retainedA=5",
+        "contend using exact caller entry method/store constructor from source coordinate",
+        "confirm lock expiry -> source LOCKED/OBSERVABILITY_STORE_LOCK_FAILED and unchanged state",
+        "release child, retry same A history with capturedA5 ->success",
+        "recover A + fixedEvalA ->A5 unchanged; differentowner or swappedquota rejected beforewrite"
+      ],
+      "oracle": {
+        "retainedWaitSeconds": 5,
+        "newIndependentWaitSeconds": 1,
+        "stateSHAUnchangedOnTimeout": true,
+        "noDeleteBreakRenew": true,
+        "noLatest": true
+      },
+      "rootNamespace": "same case root perphysicalwriter; maintenance/lifetime originalownership retainsA; distinct newBroot permissible"
+    },
+    {
+      "coordinateIndex": 23,
+      "source": {
+        "path": "skills/worker/core/worker/ownership-store.ts",
+        "line": 179,
+        "sha256": "51c88ef050299cc54a2f6ea19ad64e0bfe528507f3a0dc8050f95ab4b3e46cf5",
+        "sourceText": "    return withDurableStoreLock(this.#file, async () => {"
+      },
+      "owningCompanion": "CoreNative",
+      "targetField": "existing worker-core settings.runtime.native_store_lock_wait_seconds ->Core constructoroption lockWaitSeconds ->helper; actualPrism/Buster role projects selectedwholeCoreprofile",
+      "currentVsTarget": "scripts currentcommand/retainedconfig distinctions exactlyretirement-binding-contract.json; reusableclasses not deployedinstances",
+      "futureSteps": [
+        "capture exact originalA owner/profile/policy before firstwrite/lifetimehold",
+        "hold actual corresponding root lock in child; signal acquired then wait for releasepipe",
+        "publish complete compatibleB=1seconds without editing retainedA=5",
+        "contend using exact caller entry method/store constructor from source coordinate",
+        "confirm lock expiry -> source LOCKED/OBSERVABILITY_STORE_LOCK_FAILED and unchanged state",
+        "release child, retry same A history with capturedA5 ->success",
+        "recover A + fixedEvalA ->A5 unchanged; differentowner or swappedquota rejected beforewrite"
+      ],
+      "oracle": {
+        "retainedWaitSeconds": 5,
+        "newIndependentWaitSeconds": 1,
+        "stateSHAUnchangedOnTimeout": true,
+        "noDeleteBreakRenew": true,
+        "noLatest": true
+      },
+      "rootNamespace": "same case root perphysicalwriter; maintenance/lifetime originalownership retainsA; distinct newBroot permissible"
+    },
+    {
+      "coordinateIndex": 24,
+      "source": {
+        "path": "skills/nova/plugins/demo-handoff/src/adapter.ts",
+        "line": 45,
+        "sha256": "245bff96d5198426aa2bc73739fdc4976fb632b0a4737b923594efa052af0855",
+        "sourceText": "  const records=new FileDurableRecordStore(config.stateRoot,{maximumRecords:10000,maximumBytes:64*1024**2,maximumRecordBytes:65536});"
+      },
+      "owningCompanion": "DemoHandoff",
+      "targetField": "sameexisting registeredadapter config.storeLockWaitSeconds -> records/blob storeoptions; registration/schema projectionrequired",
+      "currentVsTarget": "scripts currentcommand/retainedconfig distinctions exactlyretirement-binding-contract.json; reusableclasses not deployedinstances",
+      "futureSteps": [
+        "capture exact originalA owner/profile/policy before firstwrite/lifetimehold",
+        "hold actual corresponding root lock in child; signal acquired then wait for releasepipe",
+        "publish complete compatibleB=1seconds without editing retainedA=5",
+        "contend using exact caller entry method/store constructor from source coordinate",
+        "confirm lock expiry -> source LOCKED/OBSERVABILITY_STORE_LOCK_FAILED and unchanged state",
+        "release child, retry same A history with capturedA5 ->success",
+        "recover A + fixedEvalA ->A5 unchanged; differentowner or swappedquota rejected beforewrite"
+      ],
+      "oracle": {
+        "retainedWaitSeconds": 5,
+        "newIndependentWaitSeconds": 1,
+        "stateSHAUnchangedOnTimeout": true,
+        "noDeleteBreakRenew": true,
+        "noLatest": true
+      },
+      "rootNamespace": "same case root perphysicalwriter; maintenance/lifetime originalownership retainsA; distinct newBroot permissible"
+    },
+    {
+      "coordinateIndex": 25,
+      "source": {
+        "path": "skills/nova/core/test-gates/remote-result-import.ts",
+        "line": 100,
+        "sha256": "ddb1e749086128083a295c15790a1e666a614000b4650055e3374c9bf7edcc81",
+        "sourceText": "    this.#records = new FileDurableRecordStore(root, options.recordLimits);"
+      },
+      "owningCompanion": "NovaStandaloneGate+NovaRegisteredGate+NovaRegisteredEvidence",
+      "targetField": "sameexisting standalone Nova runtime storeLockWaitSeconds OR registeredremote-test-gate config.storeLockWaitSeconds fromactualoutercaller; options.lockWaitSeconds",
+      "currentVsTarget": "scripts currentcommand/retainedconfig distinctions exactlyretirement-binding-contract.json; reusableclasses not deployedinstances",
+      "futureSteps": [
+        "capture exact originalA owner/profile/policy before firstwrite/lifetimehold",
+        "hold actual corresponding root lock in child; signal acquired then wait for releasepipe",
+        "publish complete compatibleB=1seconds without editing retainedA=5",
+        "contend using exact caller entry method/store constructor from source coordinate",
+        "confirm lock expiry -> source LOCKED/OBSERVABILITY_STORE_LOCK_FAILED and unchanged state",
+        "release child, retry same A history with capturedA5 ->success",
+        "recover A + fixedEvalA ->A5 unchanged; differentowner or swappedquota rejected beforewrite"
+      ],
+      "oracle": {
+        "retainedWaitSeconds": 5,
+        "newIndependentWaitSeconds": 1,
+        "stateSHAUnchangedOnTimeout": true,
+        "noDeleteBreakRenew": true,
+        "noLatest": true
+      },
+      "rootNamespace": "same case root perphysicalwriter; maintenance/lifetime originalownership retainsA; distinct newBroot permissible"
+    },
+    {
+      "coordinateIndex": 26,
+      "source": {
+        "path": "skills/nova/core/test-gates/remote-result-import.ts",
+        "line": 103,
+        "sha256": "ddb1e749086128083a295c15790a1e666a614000b4650055e3374c9bf7edcc81",
+        "sourceText": "    this.#blobs = new FileDurableBlobStore(root, options.maximumEvidenceStoreBytes, options.maximumEvidenceStoreBytes);"
+      },
+      "owningCompanion": "NovaStandaloneGate+NovaRegisteredGate+NovaRegisteredEvidence",
+      "targetField": "sameexisting standalone Nova runtime storeLockWaitSeconds OR registeredremote-test-gate config.storeLockWaitSeconds fromactualoutercaller; options.lockWaitSeconds",
+      "currentVsTarget": "scripts currentcommand/retainedconfig distinctions exactlyretirement-binding-contract.json; reusableclasses not deployedinstances",
+      "futureSteps": [
+        "capture exact originalA owner/profile/policy before firstwrite/lifetimehold",
+        "hold actual corresponding root lock in child; signal acquired then wait for releasepipe",
+        "publish complete compatibleB=1seconds without editing retainedA=5",
+        "contend using exact caller entry method/store constructor from source coordinate",
+        "confirm lock expiry -> source LOCKED/OBSERVABILITY_STORE_LOCK_FAILED and unchanged state",
+        "release child, retry same A history with capturedA5 ->success",
+        "recover A + fixedEvalA ->A5 unchanged; differentowner or swappedquota rejected beforewrite"
+      ],
+      "oracle": {
+        "retainedWaitSeconds": 5,
+        "newIndependentWaitSeconds": 1,
+        "stateSHAUnchangedOnTimeout": true,
+        "noDeleteBreakRenew": true,
+        "noLatest": true
+      },
+      "rootNamespace": "same case root perphysicalwriter; maintenance/lifetime originalownership retainsA; distinct newBroot permissible"
+    },
+    {
+      "coordinateIndex": 27,
+      "source": {
+        "path": "skills/nova/core/test-gates/remote-dispatch-store.ts",
+        "line": 24,
+        "sha256": "634dc70de20d811672f69f70b58a6b620e578ae7c1188fe10afec46d90bca069",
+        "sourceText": "    this.#records = new FileDurableRecordStore(root, options.recordLimits);"
+      },
+      "owningCompanion": "NovaStandaloneGate+NovaRegisteredGate+NovaRegisteredEvidence",
+      "targetField": "sameexisting standalone Nova runtime storeLockWaitSeconds OR registeredremote-test-gate config.storeLockWaitSeconds fromactualoutercaller; options.lockWaitSeconds",
+      "currentVsTarget": "scripts currentcommand/retainedconfig distinctions exactlyretirement-binding-contract.json; reusableclasses not deployedinstances",
+      "futureSteps": [
+        "capture exact originalA owner/profile/policy before firstwrite/lifetimehold",
+        "hold actual corresponding root lock in child; signal acquired then wait for releasepipe",
+        "publish complete compatibleB=1seconds without editing retainedA=5",
+        "contend using exact caller entry method/store constructor from source coordinate",
+        "confirm lock expiry -> source LOCKED/OBSERVABILITY_STORE_LOCK_FAILED and unchanged state",
+        "release child, retry same A history with capturedA5 ->success",
+        "recover A + fixedEvalA ->A5 unchanged; differentowner or swappedquota rejected beforewrite"
+      ],
+      "oracle": {
+        "retainedWaitSeconds": 5,
+        "newIndependentWaitSeconds": 1,
+        "stateSHAUnchangedOnTimeout": true,
+        "noDeleteBreakRenew": true,
+        "noLatest": true
+      },
+      "rootNamespace": "same case root perphysicalwriter; maintenance/lifetime originalownership retainsA; distinct newBroot permissible"
+    },
+    {
+      "coordinateIndex": 28,
+      "source": {
+        "path": "skills/nova/core/test-gates/remote-dispatch-store.ts",
+        "line": 25,
+        "sha256": "634dc70de20d811672f69f70b58a6b620e578ae7c1188fe10afec46d90bca069",
+        "sourceText": "    this.#blobs = new FileDurableBlobStore(root, options.maximumArchiveBytes, options.maximumArchiveStoreBytes);"
+      },
+      "owningCompanion": "NovaStandaloneGate+NovaRegisteredGate+NovaRegisteredEvidence",
+      "targetField": "sameexisting standalone Nova runtime storeLockWaitSeconds OR registeredremote-test-gate config.storeLockWaitSeconds fromactualoutercaller; options.lockWaitSeconds",
+      "currentVsTarget": "scripts currentcommand/retainedconfig distinctions exactlyretirement-binding-contract.json; reusableclasses not deployedinstances",
+      "futureSteps": [
+        "capture exact originalA owner/profile/policy before firstwrite/lifetimehold",
+        "hold actual corresponding root lock in child; signal acquired then wait for releasepipe",
+        "publish complete compatibleB=1seconds without editing retainedA=5",
+        "contend using exact caller entry method/store constructor from source coordinate",
+        "confirm lock expiry -> source LOCKED/OBSERVABILITY_STORE_LOCK_FAILED and unchanged state",
+        "release child, retry same A history with capturedA5 ->success",
+        "recover A + fixedEvalA ->A5 unchanged; differentowner or swappedquota rejected beforewrite"
+      ],
+      "oracle": {
+        "retainedWaitSeconds": 5,
+        "newIndependentWaitSeconds": 1,
+        "stateSHAUnchangedOnTimeout": true,
+        "noDeleteBreakRenew": true,
+        "noLatest": true
+      },
+      "rootNamespace": "same case root perphysicalwriter; maintenance/lifetime originalownership retainsA; distinct newBroot permissible"
+    },
+    {
+      "coordinateIndex": 29,
+      "source": {
+        "path": "skills/nova/core/observability/reconciler.ts",
+        "line": 384,
+        "sha256": "61c65951f07d04e1767fdc3114a473183ed5b968ef8d68f665b4ec5d0661dd71",
+        "sourceText": "    attemptStore: new FileDurableAttemptStore("
+      },
+      "owningCompanion": "NovaPlatform",
+      "targetField": "existing selectedNova observability.admission.lockWaitSeconds; attemptstore getsproposed observability.attempts.lockWaitSeconds completecompanion",
+      "currentVsTarget": "scripts currentcommand/retainedconfig distinctions exactlyretirement-binding-contract.json; reusableclasses not deployedinstances",
+      "futureSteps": [
+        "capture exact originalA owner/profile/policy before firstwrite/lifetimehold",
+        "hold actual corresponding root lock in child; signal acquired then wait for releasepipe",
+        "publish complete compatibleB=1seconds without editing retainedA=5",
+        "contend using exact caller entry method/store constructor from source coordinate",
+        "confirm lock expiry -> source LOCKED/OBSERVABILITY_STORE_LOCK_FAILED and unchanged state",
+        "release child, retry same A history with capturedA5 ->success",
+        "recover A + fixedEvalA ->A5 unchanged; differentowner or swappedquota rejected beforewrite"
+      ],
+      "oracle": {
+        "retainedWaitSeconds": 5,
+        "newIndependentWaitSeconds": 1,
+        "stateSHAUnchangedOnTimeout": true,
+        "noDeleteBreakRenew": true,
+        "noLatest": true
+      },
+      "rootNamespace": "same case root perphysicalwriter; maintenance/lifetime originalownership retainsA; distinct newBroot permissible"
+    },
+    {
+      "coordinateIndex": 30,
+      "source": {
+        "path": "skills/nova/core/observability/reconciler.ts",
+        "line": 388,
+        "sha256": "61c65951f07d04e1767fdc3114a473183ed5b968ef8d68f665b4ec5d0661dd71",
+        "sourceText": "    admissionStore: new FileObservabilityAdmissionStore("
+      },
+      "owningCompanion": "NovaPlatform",
+      "targetField": "existing selectedNova observability.admission.lockWaitSeconds; attemptstore getsproposed observability.attempts.lockWaitSeconds completecompanion",
+      "currentVsTarget": "scripts currentcommand/retainedconfig distinctions exactlyretirement-binding-contract.json; reusableclasses not deployedinstances",
+      "futureSteps": [
+        "capture exact originalA owner/profile/policy before firstwrite/lifetimehold",
+        "hold actual corresponding root lock in child; signal acquired then wait for releasepipe",
+        "publish complete compatibleB=1seconds without editing retainedA=5",
+        "contend using exact caller entry method/store constructor from source coordinate",
+        "confirm lock expiry -> source LOCKED/OBSERVABILITY_STORE_LOCK_FAILED and unchanged state",
+        "release child, retry same A history with capturedA5 ->success",
+        "recover A + fixedEvalA ->A5 unchanged; differentowner or swappedquota rejected beforewrite"
+      ],
+      "oracle": {
+        "retainedWaitSeconds": 5,
+        "newIndependentWaitSeconds": 1,
+        "stateSHAUnchangedOnTimeout": true,
+        "noDeleteBreakRenew": true,
+        "noLatest": true
+      },
+      "rootNamespace": "same case root perphysicalwriter; maintenance/lifetime originalownership retainsA; distinct newBroot permissible"
+    },
+    {
+      "coordinateIndex": 31,
+      "source": {
+        "path": "skills/buster/engine/test-gates/historical-plan-store.ts",
+        "line": 46,
+        "sha256": "87806c4a582a07d9ed749d973ca66e489d2b36ffd6ead0fbfa65e15502a74f8f",
+        "sourceText": "    this.#records = new FileDurableRecordStore(root, options.recordLimits);"
+      },
+      "owningCompanion": "BusterPreparedJob",
+      "targetField": "sameexisting Buster runtime author storeLockWaitSeconds ->options.lockWaitSeconds; historicalcompact usescapturedstoreoptions",
+      "currentVsTarget": "scripts currentcommand/retainedconfig distinctions exactlyretirement-binding-contract.json; reusableclasses not deployedinstances",
+      "futureSteps": [
+        "capture exact originalA owner/profile/policy before firstwrite/lifetimehold",
+        "hold actual corresponding root lock in child; signal acquired then wait for releasepipe",
+        "publish complete compatibleB=1seconds without editing retainedA=5",
+        "contend using exact caller entry method/store constructor from source coordinate",
+        "confirm lock expiry -> source LOCKED/OBSERVABILITY_STORE_LOCK_FAILED and unchanged state",
+        "release child, retry same A history with capturedA5 ->success",
+        "recover A + fixedEvalA ->A5 unchanged; differentowner or swappedquota rejected beforewrite"
+      ],
+      "oracle": {
+        "retainedWaitSeconds": 5,
+        "newIndependentWaitSeconds": 1,
+        "stateSHAUnchangedOnTimeout": true,
+        "noDeleteBreakRenew": true,
+        "noLatest": true
+      },
+      "rootNamespace": "same case root perphysicalwriter; maintenance/lifetime originalownership retainsA; distinct newBroot permissible"
+    },
+    {
+      "coordinateIndex": 32,
+      "source": {
+        "path": "skills/buster/engine/test-gates/historical-plan-store.ts",
+        "line": 47,
+        "sha256": "87806c4a582a07d9ed749d973ca66e489d2b36ffd6ead0fbfa65e15502a74f8f",
+        "sourceText": "    this.#results = new FileDurableBlobStore(path.join(root, 'results'), options.maximumResultBytes, options.maximumResultStoreBytes);"
+      },
+      "owningCompanion": "BusterPreparedJob",
+      "targetField": "sameexisting Buster runtime author storeLockWaitSeconds ->options.lockWaitSeconds; historicalcompact usescapturedstoreoptions",
+      "currentVsTarget": "scripts currentcommand/retainedconfig distinctions exactlyretirement-binding-contract.json; reusableclasses not deployedinstances",
+      "futureSteps": [
+        "capture exact originalA owner/profile/policy before firstwrite/lifetimehold",
+        "hold actual corresponding root lock in child; signal acquired then wait for releasepipe",
+        "publish complete compatibleB=1seconds without editing retainedA=5",
+        "contend using exact caller entry method/store constructor from source coordinate",
+        "confirm lock expiry -> source LOCKED/OBSERVABILITY_STORE_LOCK_FAILED and unchanged state",
+        "release child, retry same A history with capturedA5 ->success",
+        "recover A + fixedEvalA ->A5 unchanged; differentowner or swappedquota rejected beforewrite"
+      ],
+      "oracle": {
+        "retainedWaitSeconds": 5,
+        "newIndependentWaitSeconds": 1,
+        "stateSHAUnchangedOnTimeout": true,
+        "noDeleteBreakRenew": true,
+        "noLatest": true
+      },
+      "rootNamespace": "same case root perphysicalwriter; maintenance/lifetime originalownership retainsA; distinct newBroot permissible"
+    },
+    {
+      "coordinateIndex": 33,
+      "source": {
+        "path": "skills/buster/engine/test-gates/historical-plan-store.ts",
+        "line": 89,
+        "sha256": "87806c4a582a07d9ed749d973ca66e489d2b36ffd6ead0fbfa65e15502a74f8f",
+        "sourceText": "    return withDurableStoreLock(this.#admissionLock, () => this.#accept(job, now));"
+      },
+      "owningCompanion": "BusterPreparedJob",
+      "targetField": "sameexisting Buster runtime author storeLockWaitSeconds ->options.lockWaitSeconds; historicalcompact usescapturedstoreoptions",
+      "currentVsTarget": "scripts currentcommand/retainedconfig distinctions exactlyretirement-binding-contract.json; reusableclasses not deployedinstances",
+      "futureSteps": [
+        "capture exact originalA owner/profile/policy before firstwrite/lifetimehold",
+        "hold actual corresponding root lock in child; signal acquired then wait for releasepipe",
+        "publish complete compatibleB=1seconds without editing retainedA=5",
+        "contend using exact caller entry method/store constructor from source coordinate",
+        "confirm lock expiry -> source LOCKED/OBSERVABILITY_STORE_LOCK_FAILED and unchanged state",
+        "release child, retry same A history with capturedA5 ->success",
+        "recover A + fixedEvalA ->A5 unchanged; differentowner or swappedquota rejected beforewrite"
+      ],
+      "oracle": {
+        "retainedWaitSeconds": 5,
+        "newIndependentWaitSeconds": 1,
+        "stateSHAUnchangedOnTimeout": true,
+        "noDeleteBreakRenew": true,
+        "noLatest": true
+      },
+      "rootNamespace": "same case root perphysicalwriter; maintenance/lifetime originalownership retainsA; distinct newBroot permissible"
+    },
+    {
+      "coordinateIndex": 34,
+      "source": {
+        "path": "skills/buster/engine/test-gates/historical-plan-store.ts",
+        "line": 185,
+        "sha256": "87806c4a582a07d9ed749d973ca66e489d2b36ffd6ead0fbfa65e15502a74f8f",
+        "sourceText": "    return withDurableStoreLock(this.#admissionLock, () => this.#complete(jobId, result, now));"
+      },
+      "owningCompanion": "BusterPreparedJob",
+      "targetField": "sameexisting Buster runtime author storeLockWaitSeconds ->options.lockWaitSeconds; historicalcompact usescapturedstoreoptions",
+      "currentVsTarget": "scripts currentcommand/retainedconfig distinctions exactlyretirement-binding-contract.json; reusableclasses not deployedinstances",
+      "futureSteps": [
+        "capture exact originalA owner/profile/policy before firstwrite/lifetimehold",
+        "hold actual corresponding root lock in child; signal acquired then wait for releasepipe",
+        "publish complete compatibleB=1seconds without editing retainedA=5",
+        "contend using exact caller entry method/store constructor from source coordinate",
+        "confirm lock expiry -> source LOCKED/OBSERVABILITY_STORE_LOCK_FAILED and unchanged state",
+        "release child, retry same A history with capturedA5 ->success",
+        "recover A + fixedEvalA ->A5 unchanged; differentowner or swappedquota rejected beforewrite"
+      ],
+      "oracle": {
+        "retainedWaitSeconds": 5,
+        "newIndependentWaitSeconds": 1,
+        "stateSHAUnchangedOnTimeout": true,
+        "noDeleteBreakRenew": true,
+        "noLatest": true
+      },
+      "rootNamespace": "same case root perphysicalwriter; maintenance/lifetime originalownership retainsA; distinct newBroot permissible"
+    },
+    {
+      "coordinateIndex": 35,
+      "source": {
+        "path": "skills/buster/engine/test-gates/historical-plan-store.ts",
+        "line": 234,
+        "sha256": "87806c4a582a07d9ed749d973ca66e489d2b36ffd6ead0fbfa65e15502a74f8f",
+        "sourceText": "    return withDurableStoreLock(this.#admissionLock, async () => {"
+      },
+      "owningCompanion": "BusterPreparedJob",
+      "targetField": "sameexisting Buster runtime author storeLockWaitSeconds ->options.lockWaitSeconds; historicalcompact usescapturedstoreoptions",
+      "currentVsTarget": "scripts currentcommand/retainedconfig distinctions exactlyretirement-binding-contract.json; reusableclasses not deployedinstances",
+      "futureSteps": [
+        "capture exact originalA owner/profile/policy before firstwrite/lifetimehold",
+        "hold actual corresponding root lock in child; signal acquired then wait for releasepipe",
+        "publish complete compatibleB=1seconds without editing retainedA=5",
+        "contend using exact caller entry method/store constructor from source coordinate",
+        "confirm lock expiry -> source LOCKED/OBSERVABILITY_STORE_LOCK_FAILED and unchanged state",
+        "release child, retry same A history with capturedA5 ->success",
+        "recover A + fixedEvalA ->A5 unchanged; differentowner or swappedquota rejected beforewrite"
+      ],
+      "oracle": {
+        "retainedWaitSeconds": 5,
+        "newIndependentWaitSeconds": 1,
+        "stateSHAUnchangedOnTimeout": true,
+        "noDeleteBreakRenew": true,
+        "noLatest": true
+      },
+      "rootNamespace": "same case root perphysicalwriter; maintenance/lifetime originalownership retainsA; distinct newBroot permissible"
+    },
+    {
+      "coordinateIndex": 36,
+      "source": {
+        "path": "skills/buster/engine/test-gates/runner.ts",
+        "line": 64,
+        "sha256": "8db6fb069648014e1cfb2c63f33de1382219279b1358a76a15a1936e3b80732a",
+        "sourceText": "      new FileDurableAttemptStore(path.join(observabilityRoot, \"attempts\"), executionPolicy.stores.attempts);"
+      },
+      "owningCompanion": "BusterComponent",
+      "targetField": "settings.execution.stores.attempts.lockWaitSeconds or admission.lockWaitSeconds matching exact constructor",
+      "currentVsTarget": "scripts currentcommand/retainedconfig distinctions exactlyretirement-binding-contract.json; reusableclasses not deployedinstances",
+      "futureSteps": [
+        "capture exact originalA owner/profile/policy before firstwrite/lifetimehold",
+        "hold actual corresponding root lock in child; signal acquired then wait for releasepipe",
+        "publish complete compatibleB=1seconds without editing retainedA=5",
+        "contend using exact caller entry method/store constructor from source coordinate",
+        "confirm lock expiry -> source LOCKED/OBSERVABILITY_STORE_LOCK_FAILED and unchanged state",
+        "release child, retry same A history with capturedA5 ->success",
+        "recover A + fixedEvalA ->A5 unchanged; differentowner or swappedquota rejected beforewrite"
+      ],
+      "oracle": {
+        "retainedWaitSeconds": 5,
+        "newIndependentWaitSeconds": 1,
+        "stateSHAUnchangedOnTimeout": true,
+        "noDeleteBreakRenew": true,
+        "noLatest": true
+      },
+      "rootNamespace": "same case root perphysicalwriter; maintenance/lifetime originalownership retainsA; distinct newBroot permissible"
+    },
+    {
+      "coordinateIndex": 37,
+      "source": {
+        "path": "skills/buster/engine/test-gates/runner.ts",
+        "line": 67,
+        "sha256": "8db6fb069648014e1cfb2c63f33de1382219279b1358a76a15a1936e3b80732a",
+        "sourceText": "      new FileObservabilityAdmissionStore(path.join(observabilityRoot, \"admission\"), executionPolicy.stores.admission);"
+      },
+      "owningCompanion": "BusterComponent",
+      "targetField": "settings.execution.stores.attempts.lockWaitSeconds or admission.lockWaitSeconds matching exact constructor",
+      "currentVsTarget": "scripts currentcommand/retainedconfig distinctions exactlyretirement-binding-contract.json; reusableclasses not deployedinstances",
+      "futureSteps": [
+        "capture exact originalA owner/profile/policy before firstwrite/lifetimehold",
+        "hold actual corresponding root lock in child; signal acquired then wait for releasepipe",
+        "publish complete compatibleB=1seconds without editing retainedA=5",
+        "contend using exact caller entry method/store constructor from source coordinate",
+        "confirm lock expiry -> source LOCKED/OBSERVABILITY_STORE_LOCK_FAILED and unchanged state",
+        "release child, retry same A history with capturedA5 ->success",
+        "recover A + fixedEvalA ->A5 unchanged; differentowner or swappedquota rejected beforewrite"
+      ],
+      "oracle": {
+        "retainedWaitSeconds": 5,
+        "newIndependentWaitSeconds": 1,
+        "stateSHAUnchangedOnTimeout": true,
+        "noDeleteBreakRenew": true,
+        "noLatest": true
+      },
+      "rootNamespace": "same case root perphysicalwriter; maintenance/lifetime originalownership retainsA; distinct newBroot permissible"
+    },
+    {
+      "coordinateIndex": 38,
+      "source": {
+        "path": "skills/buster/engine/test-gates/preparation-historical-publication.ts",
+        "line": 144,
+        "sha256": "53147aef26b51b977f07d9ab46fcee9a356ba9acfa19e041f8c3b99d1cbc0f19",
+        "sourceText": "  return withDurableStoreLock(file, async () => {"
+      },
+      "owningCompanion": "BusterComponent",
+      "targetField": "existing buster-engine settings.preparation.storeLockWaitSeconds ->ledger/preparationhistorical roothelper; not Core native storealias",
+      "currentVsTarget": "scripts currentcommand/retainedconfig distinctions exactlyretirement-binding-contract.json; reusableclasses not deployedinstances",
+      "futureSteps": [
+        "capture exact originalA owner/profile/policy before firstwrite/lifetimehold",
+        "hold actual corresponding root lock in child; signal acquired then wait for releasepipe",
+        "publish complete compatibleB=1seconds without editing retainedA=5",
+        "contend using exact caller entry method/store constructor from source coordinate",
+        "confirm lock expiry -> source LOCKED/OBSERVABILITY_STORE_LOCK_FAILED and unchanged state",
+        "release child, retry same A history with capturedA5 ->success",
+        "recover A + fixedEvalA ->A5 unchanged; differentowner or swappedquota rejected beforewrite"
+      ],
+      "oracle": {
+        "retainedWaitSeconds": 5,
+        "newIndependentWaitSeconds": 1,
+        "stateSHAUnchangedOnTimeout": true,
+        "noDeleteBreakRenew": true,
+        "noLatest": true
+      },
+      "rootNamespace": "same case root perphysicalwriter; maintenance/lifetime originalownership retainsA; distinct newBroot permissible"
+    },
+    {
+      "coordinateIndex": 39,
+      "source": {
+        "path": "skills/buster/engine/test-gates/native-fixture-journal.ts",
+        "line": 31,
+        "sha256": "4c5fb76cb5d6a9f28c76338ccefd39f7bbb17e7607bb90a998a5a146f43237a7",
+        "sourceText": "    this.#records = new FileDurableRecordStore(path.join(this.#root, 'metadata'), {"
+      },
+      "owningCompanion": "PublicNativeFixture",
+      "targetField": "required publiclimits.lockWaitSeconds fromexternalownercaller; no inrepo outerconstructor",
+      "currentVsTarget": "scripts currentcommand/retainedconfig distinctions exactlyretirement-binding-contract.json; reusableclasses not deployedinstances",
+      "futureSteps": [
+        "capture exact originalA owner/profile/policy before firstwrite/lifetimehold",
+        "hold actual corresponding root lock in child; signal acquired then wait for releasepipe",
+        "publish complete compatibleB=1seconds without editing retainedA=5",
+        "contend using exact caller entry method/store constructor from source coordinate",
+        "confirm lock expiry -> source LOCKED/OBSERVABILITY_STORE_LOCK_FAILED and unchanged state",
+        "release child, retry same A history with capturedA5 ->success",
+        "recover A + fixedEvalA ->A5 unchanged; differentowner or swappedquota rejected beforewrite"
+      ],
+      "oracle": {
+        "retainedWaitSeconds": 5,
+        "newIndependentWaitSeconds": 1,
+        "stateSHAUnchangedOnTimeout": true,
+        "noDeleteBreakRenew": true,
+        "noLatest": true
+      },
+      "rootNamespace": "same case root perphysicalwriter; maintenance/lifetime originalownership retainsA; distinct newBroot permissible"
+    },
+    {
+      "coordinateIndex": 40,
+      "source": {
+        "path": "skills/buster/engine/test-gates/native-fixture-journal.ts",
+        "line": 34,
+        "sha256": "4c5fb76cb5d6a9f28c76338ccefd39f7bbb17e7607bb90a998a5a146f43237a7",
+        "sourceText": "    this.#blobs = new FileDurableBlobStore(path.join(this.#root, 'data'), limits.maximumBlobBytes, limits.maximumTotalBytes);"
+      },
+      "owningCompanion": "PublicNativeFixture",
+      "targetField": "required publiclimits.lockWaitSeconds fromexternalownercaller; no inrepo outerconstructor",
+      "currentVsTarget": "scripts currentcommand/retainedconfig distinctions exactlyretirement-binding-contract.json; reusableclasses not deployedinstances",
+      "futureSteps": [
+        "capture exact originalA owner/profile/policy before firstwrite/lifetimehold",
+        "hold actual corresponding root lock in child; signal acquired then wait for releasepipe",
+        "publish complete compatibleB=1seconds without editing retainedA=5",
+        "contend using exact caller entry method/store constructor from source coordinate",
+        "confirm lock expiry -> source LOCKED/OBSERVABILITY_STORE_LOCK_FAILED and unchanged state",
+        "release child, retry same A history with capturedA5 ->success",
+        "recover A + fixedEvalA ->A5 unchanged; differentowner or swappedquota rejected beforewrite"
+      ],
+      "oracle": {
+        "retainedWaitSeconds": 5,
+        "newIndependentWaitSeconds": 1,
+        "stateSHAUnchangedOnTimeout": true,
+        "noDeleteBreakRenew": true,
+        "noLatest": true
+      },
+      "rootNamespace": "same case root perphysicalwriter; maintenance/lifetime originalownership retainsA; distinct newBroot permissible"
+    },
+    {
+      "coordinateIndex": 41,
+      "source": {
+        "path": "skills/buster/engine/test-gates/native-fixture-journal.ts",
+        "line": 125,
+        "sha256": "4c5fb76cb5d6a9f28c76338ccefd39f7bbb17e7607bb90a998a5a146f43237a7",
+        "sourceText": "    return withDurableStoreLock(path.join(this.#root, 'phases', 'lifetime'), operation);"
+      },
+      "owningCompanion": "PublicNativeFixture",
+      "targetField": "required publiclimits.lockWaitSeconds fromexternalownercaller; no inrepo outerconstructor",
+      "currentVsTarget": "scripts currentcommand/retainedconfig distinctions exactlyretirement-binding-contract.json; reusableclasses not deployedinstances",
+      "futureSteps": [
+        "capture exact originalA owner/profile/policy before firstwrite/lifetimehold",
+        "hold actual corresponding root lock in child; signal acquired then wait for releasepipe",
+        "publish complete compatibleB=1seconds without editing retainedA=5",
+        "contend using exact caller entry method/store constructor from source coordinate",
+        "confirm lock expiry -> source LOCKED/OBSERVABILITY_STORE_LOCK_FAILED and unchanged state",
+        "release child, retry same A history with capturedA5 ->success",
+        "recover A + fixedEvalA ->A5 unchanged; differentowner or swappedquota rejected beforewrite"
+      ],
+      "oracle": {
+        "retainedWaitSeconds": 5,
+        "newIndependentWaitSeconds": 1,
+        "stateSHAUnchangedOnTimeout": true,
+        "noDeleteBreakRenew": true,
+        "noLatest": true
+      },
+      "rootNamespace": "same case root perphysicalwriter; maintenance/lifetime originalownership retainsA; distinct newBroot permissible"
+    },
+    {
+      "coordinateIndex": 42,
+      "source": {
+        "path": "skills/buster/engine/test-gates/prepared-plan-store.ts",
+        "line": 71,
+        "sha256": "d9bbee538cd87a917f1c22ef7d89fb0bb313a73cd2fe096b7bc3390f19922067",
+        "sourceText": "    this.#records = new FileDurableRecordStore(writableRoot, options.recordLimits);"
+      },
+      "owningCompanion": "BusterPreparedJob",
+      "targetField": "sameexisting Buster runtime author storeLockWaitSeconds ->options.lockWaitSeconds; historicalcompact usescapturedstoreoptions",
+      "currentVsTarget": "scripts currentcommand/retainedconfig distinctions exactlyretirement-binding-contract.json; reusableclasses not deployedinstances",
+      "futureSteps": [
+        "capture exact originalA owner/profile/policy before firstwrite/lifetimehold",
+        "hold actual corresponding root lock in child; signal acquired then wait for releasepipe",
+        "publish complete compatibleB=1seconds without editing retainedA=5",
+        "contend using exact caller entry method/store constructor from source coordinate",
+        "confirm lock expiry -> source LOCKED/OBSERVABILITY_STORE_LOCK_FAILED and unchanged state",
+        "release child, retry same A history with capturedA5 ->success",
+        "recover A + fixedEvalA ->A5 unchanged; differentowner or swappedquota rejected beforewrite"
+      ],
+      "oracle": {
+        "retainedWaitSeconds": 5,
+        "newIndependentWaitSeconds": 1,
+        "stateSHAUnchangedOnTimeout": true,
+        "noDeleteBreakRenew": true,
+        "noLatest": true
+      },
+      "rootNamespace": "same case root perphysicalwriter; maintenance/lifetime originalownership retainsA; distinct newBroot permissible"
+    },
+    {
+      "coordinateIndex": 43,
+      "source": {
+        "path": "skills/buster/engine/test-gates/prepared-plan-store.ts",
+        "line": 72,
+        "sha256": "d9bbee538cd87a917f1c22ef7d89fb0bb313a73cd2fe096b7bc3390f19922067",
+        "sourceText": "    this.#results = new FileDurableBlobStore(path.join(writableRoot, 'results'), options.maximumResultBytes, options.maximumResultStoreBytes);"
+      },
+      "owningCompanion": "BusterPreparedJob",
+      "targetField": "sameexisting Buster runtime author storeLockWaitSeconds ->options.lockWaitSeconds; historicalcompact usescapturedstoreoptions",
+      "currentVsTarget": "scripts currentcommand/retainedconfig distinctions exactlyretirement-binding-contract.json; reusableclasses not deployedinstances",
+      "futureSteps": [
+        "capture exact originalA owner/profile/policy before firstwrite/lifetimehold",
+        "hold actual corresponding root lock in child; signal acquired then wait for releasepipe",
+        "publish complete compatibleB=1seconds without editing retainedA=5",
+        "contend using exact caller entry method/store constructor from source coordinate",
+        "confirm lock expiry -> source LOCKED/OBSERVABILITY_STORE_LOCK_FAILED and unchanged state",
+        "release child, retry same A history with capturedA5 ->success",
+        "recover A + fixedEvalA ->A5 unchanged; differentowner or swappedquota rejected beforewrite"
+      ],
+      "oracle": {
+        "retainedWaitSeconds": 5,
+        "newIndependentWaitSeconds": 1,
+        "stateSHAUnchangedOnTimeout": true,
+        "noDeleteBreakRenew": true,
+        "noLatest": true
+      },
+      "rootNamespace": "same case root perphysicalwriter; maintenance/lifetime originalownership retainsA; distinct newBroot permissible"
+    },
+    {
+      "coordinateIndex": 44,
+      "source": {
+        "path": "skills/buster/engine/test-gates/prepared-plan-store.ts",
+        "line": 93,
+        "sha256": "d9bbee538cd87a917f1c22ef7d89fb0bb313a73cd2fe096b7bc3390f19922067",
+        "sourceText": "    return withDurableStoreLock(this.#admissionLock, () => this.#accept(prepared, now));"
+      },
+      "owningCompanion": "BusterPreparedJob",
+      "targetField": "sameexisting Buster runtime author storeLockWaitSeconds ->options.lockWaitSeconds; historicalcompact usescapturedstoreoptions",
+      "currentVsTarget": "scripts currentcommand/retainedconfig distinctions exactlyretirement-binding-contract.json; reusableclasses not deployedinstances",
+      "futureSteps": [
+        "capture exact originalA owner/profile/policy before firstwrite/lifetimehold",
+        "hold actual corresponding root lock in child; signal acquired then wait for releasepipe",
+        "publish complete compatibleB=1seconds without editing retainedA=5",
+        "contend using exact caller entry method/store constructor from source coordinate",
+        "confirm lock expiry -> source LOCKED/OBSERVABILITY_STORE_LOCK_FAILED and unchanged state",
+        "release child, retry same A history with capturedA5 ->success",
+        "recover A + fixedEvalA ->A5 unchanged; differentowner or swappedquota rejected beforewrite"
+      ],
+      "oracle": {
+        "retainedWaitSeconds": 5,
+        "newIndependentWaitSeconds": 1,
+        "stateSHAUnchangedOnTimeout": true,
+        "noDeleteBreakRenew": true,
+        "noLatest": true
+      },
+      "rootNamespace": "same case root perphysicalwriter; maintenance/lifetime originalownership retainsA; distinct newBroot permissible"
+    },
+    {
+      "coordinateIndex": 45,
+      "source": {
+        "path": "skills/buster/engine/test-gates/prepared-plan-store.ts",
+        "line": 155,
+        "sha256": "d9bbee538cd87a917f1c22ef7d89fb0bb313a73cd2fe096b7bc3390f19922067",
+        "sourceText": "    await withDurableStoreLock(this.#admissionLock, () => this.#attachSource(captured));"
+      },
+      "owningCompanion": "BusterPreparedJob",
+      "targetField": "sameexisting Buster runtime author storeLockWaitSeconds ->options.lockWaitSeconds; historicalcompact usescapturedstoreoptions",
+      "currentVsTarget": "scripts currentcommand/retainedconfig distinctions exactlyretirement-binding-contract.json; reusableclasses not deployedinstances",
+      "futureSteps": [
+        "capture exact originalA owner/profile/policy before firstwrite/lifetimehold",
+        "hold actual corresponding root lock in child; signal acquired then wait for releasepipe",
+        "publish complete compatibleB=1seconds without editing retainedA=5",
+        "contend using exact caller entry method/store constructor from source coordinate",
+        "confirm lock expiry -> source LOCKED/OBSERVABILITY_STORE_LOCK_FAILED and unchanged state",
+        "release child, retry same A history with capturedA5 ->success",
+        "recover A + fixedEvalA ->A5 unchanged; differentowner or swappedquota rejected beforewrite"
+      ],
+      "oracle": {
+        "retainedWaitSeconds": 5,
+        "newIndependentWaitSeconds": 1,
+        "stateSHAUnchangedOnTimeout": true,
+        "noDeleteBreakRenew": true,
+        "noLatest": true
+      },
+      "rootNamespace": "same case root perphysicalwriter; maintenance/lifetime originalownership retainsA; distinct newBroot permissible"
+    },
+    {
+      "coordinateIndex": 46,
+      "source": {
+        "path": "skills/buster/engine/test-gates/prepared-plan-store.ts",
+        "line": 173,
+        "sha256": "d9bbee538cd87a917f1c22ef7d89fb0bb313a73cd2fe096b7bc3390f19922067",
+        "sourceText": "    return withDurableStoreLock(this.#admissionLock, async () => {"
+      },
+      "owningCompanion": "BusterPreparedJob",
+      "targetField": "sameexisting Buster runtime author storeLockWaitSeconds ->options.lockWaitSeconds; historicalcompact usescapturedstoreoptions",
+      "currentVsTarget": "scripts currentcommand/retainedconfig distinctions exactlyretirement-binding-contract.json; reusableclasses not deployedinstances",
+      "futureSteps": [
+        "capture exact originalA owner/profile/policy before firstwrite/lifetimehold",
+        "hold actual corresponding root lock in child; signal acquired then wait for releasepipe",
+        "publish complete compatibleB=1seconds without editing retainedA=5",
+        "contend using exact caller entry method/store constructor from source coordinate",
+        "confirm lock expiry -> source LOCKED/OBSERVABILITY_STORE_LOCK_FAILED and unchanged state",
+        "release child, retry same A history with capturedA5 ->success",
+        "recover A + fixedEvalA ->A5 unchanged; differentowner or swappedquota rejected beforewrite"
+      ],
+      "oracle": {
+        "retainedWaitSeconds": 5,
+        "newIndependentWaitSeconds": 1,
+        "stateSHAUnchangedOnTimeout": true,
+        "noDeleteBreakRenew": true,
+        "noLatest": true
+      },
+      "rootNamespace": "same case root perphysicalwriter; maintenance/lifetime originalownership retainsA; distinct newBroot permissible"
+    },
+    {
+      "coordinateIndex": 47,
+      "source": {
+        "path": "skills/buster/engine/test-gates/prepared-plan-store.ts",
+        "line": 191,
+        "sha256": "d9bbee538cd87a917f1c22ef7d89fb0bb313a73cd2fe096b7bc3390f19922067",
+        "sourceText": "    return withDurableStoreLock(this.#admissionLock,"
+      },
+      "owningCompanion": "BusterPreparedJob",
+      "targetField": "sameexisting Buster runtime author storeLockWaitSeconds ->options.lockWaitSeconds; historicalcompact usescapturedstoreoptions",
+      "currentVsTarget": "scripts currentcommand/retainedconfig distinctions exactlyretirement-binding-contract.json; reusableclasses not deployedinstances",
+      "futureSteps": [
+        "capture exact originalA owner/profile/policy before firstwrite/lifetimehold",
+        "hold actual corresponding root lock in child; signal acquired then wait for releasepipe",
+        "publish complete compatibleB=1seconds without editing retainedA=5",
+        "contend using exact caller entry method/store constructor from source coordinate",
+        "confirm lock expiry -> source LOCKED/OBSERVABILITY_STORE_LOCK_FAILED and unchanged state",
+        "release child, retry same A history with capturedA5 ->success",
+        "recover A + fixedEvalA ->A5 unchanged; differentowner or swappedquota rejected beforewrite"
+      ],
+      "oracle": {
+        "retainedWaitSeconds": 5,
+        "newIndependentWaitSeconds": 1,
+        "stateSHAUnchangedOnTimeout": true,
+        "noDeleteBreakRenew": true,
+        "noLatest": true
+      },
+      "rootNamespace": "same case root perphysicalwriter; maintenance/lifetime originalownership retainsA; distinct newBroot permissible"
+    },
+    {
+      "coordinateIndex": 48,
+      "source": {
+        "path": "skills/buster/engine/test-gates/prepared-plan-store.ts",
+        "line": 238,
+        "sha256": "d9bbee538cd87a917f1c22ef7d89fb0bb313a73cd2fe096b7bc3390f19922067",
+        "sourceText": "    return withDurableStoreLock(this.#admissionLock, () => this.#complete(jobId, result, now));"
+      },
+      "owningCompanion": "BusterPreparedJob",
+      "targetField": "sameexisting Buster runtime author storeLockWaitSeconds ->options.lockWaitSeconds; historicalcompact usescapturedstoreoptions",
+      "currentVsTarget": "scripts currentcommand/retainedconfig distinctions exactlyretirement-binding-contract.json; reusableclasses not deployedinstances",
+      "futureSteps": [
+        "capture exact originalA owner/profile/policy before firstwrite/lifetimehold",
+        "hold actual corresponding root lock in child; signal acquired then wait for releasepipe",
+        "publish complete compatibleB=1seconds without editing retainedA=5",
+        "contend using exact caller entry method/store constructor from source coordinate",
+        "confirm lock expiry -> source LOCKED/OBSERVABILITY_STORE_LOCK_FAILED and unchanged state",
+        "release child, retry same A history with capturedA5 ->success",
+        "recover A + fixedEvalA ->A5 unchanged; differentowner or swappedquota rejected beforewrite"
+      ],
+      "oracle": {
+        "retainedWaitSeconds": 5,
+        "newIndependentWaitSeconds": 1,
+        "stateSHAUnchangedOnTimeout": true,
+        "noDeleteBreakRenew": true,
+        "noLatest": true
+      },
+      "rootNamespace": "same case root perphysicalwriter; maintenance/lifetime originalownership retainsA; distinct newBroot permissible"
+    },
+    {
+      "coordinateIndex": 49,
+      "source": {
+        "path": "skills/buster/engine/test-gates/preparation-ledger.ts",
+        "line": 32,
+        "sha256": "e0631a2ec68d28a2eddbb62d37727db2fd71378ae48c0d879ee3aaadc56c92c5",
+        "sourceText": "    return withDurableStoreLock(this.#file, async () => {"
+      },
+      "owningCompanion": "BusterComponent",
+      "targetField": "existing buster-engine settings.preparation.storeLockWaitSeconds ->ledger/preparationhistorical roothelper; not Core native storealias",
+      "currentVsTarget": "scripts currentcommand/retainedconfig distinctions exactlyretirement-binding-contract.json; reusableclasses not deployedinstances",
+      "futureSteps": [
+        "capture exact originalA owner/profile/policy before firstwrite/lifetimehold",
+        "hold actual corresponding root lock in child; signal acquired then wait for releasepipe",
+        "publish complete compatibleB=1seconds without editing retainedA=5",
+        "contend using exact caller entry method/store constructor from source coordinate",
+        "confirm lock expiry -> source LOCKED/OBSERVABILITY_STORE_LOCK_FAILED and unchanged state",
+        "release child, retry same A history with capturedA5 ->success",
+        "recover A + fixedEvalA ->A5 unchanged; differentowner or swappedquota rejected beforewrite"
+      ],
+      "oracle": {
+        "retainedWaitSeconds": 5,
+        "newIndependentWaitSeconds": 1,
+        "stateSHAUnchangedOnTimeout": true,
+        "noDeleteBreakRenew": true,
+        "noLatest": true
+      },
+      "rootNamespace": "same case root perphysicalwriter; maintenance/lifetime originalownership retainsA; distinct newBroot permissible"
+    },
+    {
+      "coordinateIndex": 50,
+      "source": {
+        "path": "skills/buster/engine/test-gates/preparation-ledger.ts",
+        "line": 52,
+        "sha256": "e0631a2ec68d28a2eddbb62d37727db2fd71378ae48c0d879ee3aaadc56c92c5",
+        "sourceText": "    return withDurableStoreLock(this.#file, async () => {"
+      },
+      "owningCompanion": "BusterComponent",
+      "targetField": "existing buster-engine settings.preparation.storeLockWaitSeconds ->ledger/preparationhistorical roothelper; not Core native storealias",
+      "currentVsTarget": "scripts currentcommand/retainedconfig distinctions exactlyretirement-binding-contract.json; reusableclasses not deployedinstances",
+      "futureSteps": [
+        "capture exact originalA owner/profile/policy before firstwrite/lifetimehold",
+        "hold actual corresponding root lock in child; signal acquired then wait for releasepipe",
+        "publish complete compatibleB=1seconds without editing retainedA=5",
+        "contend using exact caller entry method/store constructor from source coordinate",
+        "confirm lock expiry -> source LOCKED/OBSERVABILITY_STORE_LOCK_FAILED and unchanged state",
+        "release child, retry same A history with capturedA5 ->success",
+        "recover A + fixedEvalA ->A5 unchanged; differentowner or swappedquota rejected beforewrite"
+      ],
+      "oracle": {
+        "retainedWaitSeconds": 5,
+        "newIndependentWaitSeconds": 1,
+        "stateSHAUnchangedOnTimeout": true,
+        "noDeleteBreakRenew": true,
+        "noLatest": true
+      },
+      "rootNamespace": "same case root perphysicalwriter; maintenance/lifetime originalownership retainsA; distinct newBroot permissible"
+    },
+    {
+      "coordinateIndex": 51,
+      "source": {
+        "path": "skills/buster/engine/test-gates/preparation-ledger.ts",
+        "line": 138,
+        "sha256": "e0631a2ec68d28a2eddbb62d37727db2fd71378ae48c0d879ee3aaadc56c92c5",
+        "sourceText": "    return withDurableStoreLock(this.#file, async () => {"
+      },
+      "owningCompanion": "BusterComponent",
+      "targetField": "existing buster-engine settings.preparation.storeLockWaitSeconds ->ledger/preparationhistorical roothelper; not Core native storealias",
+      "currentVsTarget": "scripts currentcommand/retainedconfig distinctions exactlyretirement-binding-contract.json; reusableclasses not deployedinstances",
+      "futureSteps": [
+        "capture exact originalA owner/profile/policy before firstwrite/lifetimehold",
+        "hold actual corresponding root lock in child; signal acquired then wait for releasepipe",
+        "publish complete compatibleB=1seconds without editing retainedA=5",
+        "contend using exact caller entry method/store constructor from source coordinate",
+        "confirm lock expiry -> source LOCKED/OBSERVABILITY_STORE_LOCK_FAILED and unchanged state",
+        "release child, retry same A history with capturedA5 ->success",
+        "recover A + fixedEvalA ->A5 unchanged; differentowner or swappedquota rejected beforewrite"
+      ],
+      "oracle": {
+        "retainedWaitSeconds": 5,
+        "newIndependentWaitSeconds": 1,
+        "stateSHAUnchangedOnTimeout": true,
+        "noDeleteBreakRenew": true,
+        "noLatest": true
+      },
+      "rootNamespace": "same case root perphysicalwriter; maintenance/lifetime originalownership retainsA; distinct newBroot permissible"
+    },
+    {
+      "coordinateIndex": 52,
+      "source": {
+        "path": "skills/buster/engine/test-gates/preparation-ledger.ts",
+        "line": 289,
+        "sha256": "e0631a2ec68d28a2eddbb62d37727db2fd71378ae48c0d879ee3aaadc56c92c5",
+        "sourceText": "    return withDurableStoreLock(this.#file, async () => structuredClone((await this.#read()).reservations));"
+      },
+      "owningCompanion": "BusterComponent",
+      "targetField": "existing buster-engine settings.preparation.storeLockWaitSeconds ->ledger/preparationhistorical roothelper; not Core native storealias",
+      "currentVsTarget": "scripts currentcommand/retainedconfig distinctions exactlyretirement-binding-contract.json; reusableclasses not deployedinstances",
+      "futureSteps": [
+        "capture exact originalA owner/profile/policy before firstwrite/lifetimehold",
+        "hold actual corresponding root lock in child; signal acquired then wait for releasepipe",
+        "publish complete compatibleB=1seconds without editing retainedA=5",
+        "contend using exact caller entry method/store constructor from source coordinate",
+        "confirm lock expiry -> source LOCKED/OBSERVABILITY_STORE_LOCK_FAILED and unchanged state",
+        "release child, retry same A history with capturedA5 ->success",
+        "recover A + fixedEvalA ->A5 unchanged; differentowner or swappedquota rejected beforewrite"
+      ],
+      "oracle": {
+        "retainedWaitSeconds": 5,
+        "newIndependentWaitSeconds": 1,
+        "stateSHAUnchangedOnTimeout": true,
+        "noDeleteBreakRenew": true,
+        "noLatest": true
+      },
+      "rootNamespace": "same case root perphysicalwriter; maintenance/lifetime originalownership retainsA; distinct newBroot permissible"
+    },
+    {
+      "coordinateIndex": 53,
+      "source": {
+        "path": "skills/buster/engine/test-gates/preparation-ledger.ts",
+        "line": 293,
+        "sha256": "e0631a2ec68d28a2eddbb62d37727db2fd71378ae48c0d879ee3aaadc56c92c5",
+        "sourceText": "    await withDurableStoreLock(this.#file, async () => {"
+      },
+      "owningCompanion": "BusterComponent",
+      "targetField": "existing buster-engine settings.preparation.storeLockWaitSeconds ->ledger/preparationhistorical roothelper; not Core native storealias",
+      "currentVsTarget": "scripts currentcommand/retainedconfig distinctions exactlyretirement-binding-contract.json; reusableclasses not deployedinstances",
+      "futureSteps": [
+        "capture exact originalA owner/profile/policy before firstwrite/lifetimehold",
+        "hold actual corresponding root lock in child; signal acquired then wait for releasepipe",
+        "publish complete compatibleB=1seconds without editing retainedA=5",
+        "contend using exact caller entry method/store constructor from source coordinate",
+        "confirm lock expiry -> source LOCKED/OBSERVABILITY_STORE_LOCK_FAILED and unchanged state",
+        "release child, retry same A history with capturedA5 ->success",
+        "recover A + fixedEvalA ->A5 unchanged; differentowner or swappedquota rejected beforewrite"
+      ],
+      "oracle": {
+        "retainedWaitSeconds": 5,
+        "newIndependentWaitSeconds": 1,
+        "stateSHAUnchangedOnTimeout": true,
+        "noDeleteBreakRenew": true,
+        "noLatest": true
+      },
+      "rootNamespace": "same case root perphysicalwriter; maintenance/lifetime originalownership retainsA; distinct newBroot permissible"
+    },
+    {
+      "coordinateIndex": 54,
+      "source": {
+        "path": "scripts/retire-wait-value.mjs",
+        "line": 94,
+        "sha256": "7a62bff9b58dbb5d4dbb6af8cdd3b3b7b64b5cdc2b536f23ea0ba1c0bb489102",
+        "sourceText": "    const waits = new FileDurableRecordStore(scope.intent.waitRoot, config.waitLimits);"
+      },
+      "owningCompanion": "RetirementOriginalPolicy",
+      "targetField": "originalcapturedscope.*Limits.lockWaitSeconds /storeOptions.lockWaitSeconds; noCLIquotaoverride",
+      "currentVsTarget": "scripts currentcommand/retainedconfig distinctions exactlyretirement-binding-contract.json; reusableclasses not deployedinstances",
+      "futureSteps": [
+        "capture exact originalA owner/profile/policy before firstwrite/lifetimehold",
+        "hold actual corresponding root lock in child; signal acquired then wait for releasepipe",
+        "publish complete compatibleB=1seconds without editing retainedA=5",
+        "contend using exact caller entry method/store constructor from source coordinate",
+        "confirm lock expiry -> source LOCKED/OBSERVABILITY_STORE_LOCK_FAILED and unchanged state",
+        "release child, retry same A history with capturedA5 ->success",
+        "recover A + fixedEvalA ->A5 unchanged; differentowner or swappedquota rejected beforewrite"
+      ],
+      "oracle": {
+        "retainedWaitSeconds": 5,
+        "newIndependentWaitSeconds": 1,
+        "stateSHAUnchangedOnTimeout": true,
+        "noDeleteBreakRenew": true,
+        "noLatest": true
+      },
+      "rootNamespace": "same case root perphysicalwriter; maintenance/lifetime originalownership retainsA; distinct newBroot permissible"
+    },
+    {
+      "coordinateIndex": 55,
+      "source": {
+        "path": "scripts/retire-wait-value.mjs",
+        "line": 95,
+        "sha256": "7a62bff9b58dbb5d4dbb6af8cdd3b3b7b64b5cdc2b536f23ea0ba1c0bb489102",
+        "sourceText": "    const deliveries = new FileDurableRecordStore(scope.intent.deliveryRoot, config.deliveryLimits);"
+      },
+      "owningCompanion": "RetirementOriginalPolicy",
+      "targetField": "originalcapturedscope.*Limits.lockWaitSeconds /storeOptions.lockWaitSeconds; noCLIquotaoverride",
+      "currentVsTarget": "scripts currentcommand/retainedconfig distinctions exactlyretirement-binding-contract.json; reusableclasses not deployedinstances",
+      "futureSteps": [
+        "capture exact originalA owner/profile/policy before firstwrite/lifetimehold",
+        "hold actual corresponding root lock in child; signal acquired then wait for releasepipe",
+        "publish complete compatibleB=1seconds without editing retainedA=5",
+        "contend using exact caller entry method/store constructor from source coordinate",
+        "confirm lock expiry -> source LOCKED/OBSERVABILITY_STORE_LOCK_FAILED and unchanged state",
+        "release child, retry same A history with capturedA5 ->success",
+        "recover A + fixedEvalA ->A5 unchanged; differentowner or swappedquota rejected beforewrite"
+      ],
+      "oracle": {
+        "retainedWaitSeconds": 5,
+        "newIndependentWaitSeconds": 1,
+        "stateSHAUnchangedOnTimeout": true,
+        "noDeleteBreakRenew": true,
+        "noLatest": true
+      },
+      "rootNamespace": "same case root perphysicalwriter; maintenance/lifetime originalownership retainsA; distinct newBroot permissible"
+    },
+    {
+      "coordinateIndex": 56,
+      "source": {
+        "path": "scripts/retire-telemetry.mjs",
+        "line": 49,
+        "sha256": "050d770035a702a33e487ae06c7903aee6333cdbdf1f1e44dd4b5fcf7503c456",
+        "sourceText": "    const store = new FileDurableRecordStore(scope.telemetryRoot,scope.storeLimits);"
+      },
+      "owningCompanion": "RetirementOriginalPolicy",
+      "targetField": "originalcapturedscope.*Limits.lockWaitSeconds /storeOptions.lockWaitSeconds; noCLIquotaoverride",
+      "currentVsTarget": "scripts currentcommand/retainedconfig distinctions exactlyretirement-binding-contract.json; reusableclasses not deployedinstances",
+      "futureSteps": [
+        "capture exact originalA owner/profile/policy before firstwrite/lifetimehold",
+        "hold actual corresponding root lock in child; signal acquired then wait for releasepipe",
+        "publish complete compatibleB=1seconds without editing retainedA=5",
+        "contend using exact caller entry method/store constructor from source coordinate",
+        "confirm lock expiry -> source LOCKED/OBSERVABILITY_STORE_LOCK_FAILED and unchanged state",
+        "release child, retry same A history with capturedA5 ->success",
+        "recover A + fixedEvalA ->A5 unchanged; differentowner or swappedquota rejected beforewrite"
+      ],
+      "oracle": {
+        "retainedWaitSeconds": 5,
+        "newIndependentWaitSeconds": 1,
+        "stateSHAUnchangedOnTimeout": true,
+        "noDeleteBreakRenew": true,
+        "noLatest": true
+      },
+      "rootNamespace": "same case root perphysicalwriter; maintenance/lifetime originalownership retainsA; distinct newBroot permissible"
+    },
+    {
+      "coordinateIndex": 57,
+      "source": {
+        "path": "scripts/retire-operator-request.mjs",
+        "line": 65,
+        "sha256": "8aebd618c02dc8a898db323b99f7a0dee0abb27c470dda59a9bd3d7cde01dc21",
+        "sourceText": "    const waits = new FileDurableRecordStore(scope.intent.waitRoot, config.waitLimits);"
+      },
+      "owningCompanion": "RetirementOriginalPolicy",
+      "targetField": "originalcapturedscope.*Limits.lockWaitSeconds /storeOptions.lockWaitSeconds; noCLIquotaoverride",
+      "currentVsTarget": "scripts currentcommand/retainedconfig distinctions exactlyretirement-binding-contract.json; reusableclasses not deployedinstances",
+      "futureSteps": [
+        "capture exact originalA owner/profile/policy before firstwrite/lifetimehold",
+        "hold actual corresponding root lock in child; signal acquired then wait for releasepipe",
+        "publish complete compatibleB=1seconds without editing retainedA=5",
+        "contend using exact caller entry method/store constructor from source coordinate",
+        "confirm lock expiry -> source LOCKED/OBSERVABILITY_STORE_LOCK_FAILED and unchanged state",
+        "release child, retry same A history with capturedA5 ->success",
+        "recover A + fixedEvalA ->A5 unchanged; differentowner or swappedquota rejected beforewrite"
+      ],
+      "oracle": {
+        "retainedWaitSeconds": 5,
+        "newIndependentWaitSeconds": 1,
+        "stateSHAUnchangedOnTimeout": true,
+        "noDeleteBreakRenew": true,
+        "noLatest": true
+      },
+      "rootNamespace": "same case root perphysicalwriter; maintenance/lifetime originalownership retainsA; distinct newBroot permissible"
+    },
+    {
+      "coordinateIndex": 58,
+      "source": {
+        "path": "scripts/retire-operator-request.mjs",
+        "line": 66,
+        "sha256": "8aebd618c02dc8a898db323b99f7a0dee0abb27c470dda59a9bd3d7cde01dc21",
+        "sourceText": "    const deliveries = new FileDurableRecordStore(scope.intent.deliveryRoot, config.deliveryLimits);"
+      },
+      "owningCompanion": "RetirementOriginalPolicy",
+      "targetField": "originalcapturedscope.*Limits.lockWaitSeconds /storeOptions.lockWaitSeconds; noCLIquotaoverride",
+      "currentVsTarget": "scripts currentcommand/retainedconfig distinctions exactlyretirement-binding-contract.json; reusableclasses not deployedinstances",
+      "futureSteps": [
+        "capture exact originalA owner/profile/policy before firstwrite/lifetimehold",
+        "hold actual corresponding root lock in child; signal acquired then wait for releasepipe",
+        "publish complete compatibleB=1seconds without editing retainedA=5",
+        "contend using exact caller entry method/store constructor from source coordinate",
+        "confirm lock expiry -> source LOCKED/OBSERVABILITY_STORE_LOCK_FAILED and unchanged state",
+        "release child, retry same A history with capturedA5 ->success",
+        "recover A + fixedEvalA ->A5 unchanged; differentowner or swappedquota rejected beforewrite"
+      ],
+      "oracle": {
+        "retainedWaitSeconds": 5,
+        "newIndependentWaitSeconds": 1,
+        "stateSHAUnchangedOnTimeout": true,
+        "noDeleteBreakRenew": true,
+        "noLatest": true
+      },
+      "rootNamespace": "same case root perphysicalwriter; maintenance/lifetime originalownership retainsA; distinct newBroot permissible"
+    },
+    {
+      "coordinateIndex": 59,
+      "source": {
+        "path": "scripts/retire-admission.mjs",
+        "line": 53,
+        "sha256": "ac31444b3acdad697ec7317773fda4dfad48b4ee3a22a4eb2d329e73c5d30d96",
+        "sourceText": "    const attempts=new FileDurableAttemptStore(scope.attemptRoot,scope.attemptLimits);"
+      },
+      "owningCompanion": "RetirementOriginalPolicy",
+      "targetField": "originalcapturedscope.*Limits.lockWaitSeconds /storeOptions.lockWaitSeconds; noCLIquotaoverride",
+      "currentVsTarget": "scripts currentcommand/retainedconfig distinctions exactlyretirement-binding-contract.json; reusableclasses not deployedinstances",
+      "futureSteps": [
+        "capture exact originalA owner/profile/policy before firstwrite/lifetimehold",
+        "hold actual corresponding root lock in child; signal acquired then wait for releasepipe",
+        "publish complete compatibleB=1seconds without editing retainedA=5",
+        "contend using exact caller entry method/store constructor from source coordinate",
+        "confirm lock expiry -> source LOCKED/OBSERVABILITY_STORE_LOCK_FAILED and unchanged state",
+        "release child, retry same A history with capturedA5 ->success",
+        "recover A + fixedEvalA ->A5 unchanged; differentowner or swappedquota rejected beforewrite"
+      ],
+      "oracle": {
+        "retainedWaitSeconds": 5,
+        "newIndependentWaitSeconds": 1,
+        "stateSHAUnchangedOnTimeout": true,
+        "noDeleteBreakRenew": true,
+        "noLatest": true
+      },
+      "rootNamespace": "same case root perphysicalwriter; maintenance/lifetime originalownership retainsA; distinct newBroot permissible"
+    },
+    {
+      "coordinateIndex": 60,
+      "source": {
+        "path": "scripts/retire-admission.mjs",
+        "line": 54,
+        "sha256": "ac31444b3acdad697ec7317773fda4dfad48b4ee3a22a4eb2d329e73c5d30d96",
+        "sourceText": "    const admission=new FileObservabilityAdmissionStore(scope.admissionRoot,scope.admissionLimits);"
+      },
+      "owningCompanion": "RetirementOriginalPolicy",
+      "targetField": "originalcapturedscope.*Limits.lockWaitSeconds /storeOptions.lockWaitSeconds; noCLIquotaoverride",
+      "currentVsTarget": "scripts currentcommand/retainedconfig distinctions exactlyretirement-binding-contract.json; reusableclasses not deployedinstances",
+      "futureSteps": [
+        "capture exact originalA owner/profile/policy before firstwrite/lifetimehold",
+        "hold actual corresponding root lock in child; signal acquired then wait for releasepipe",
+        "publish complete compatibleB=1seconds without editing retainedA=5",
+        "contend using exact caller entry method/store constructor from source coordinate",
+        "confirm lock expiry -> source LOCKED/OBSERVABILITY_STORE_LOCK_FAILED and unchanged state",
+        "release child, retry same A history with capturedA5 ->success",
+        "recover A + fixedEvalA ->A5 unchanged; differentowner or swappedquota rejected beforewrite"
+      ],
+      "oracle": {
+        "retainedWaitSeconds": 5,
+        "newIndependentWaitSeconds": 1,
+        "stateSHAUnchangedOnTimeout": true,
+        "noDeleteBreakRenew": true,
+        "noLatest": true
+      },
+      "rootNamespace": "same case root perphysicalwriter; maintenance/lifetime originalownership retainsA; distinct newBroot permissible"
+    },
+    {
+      "coordinateIndex": 61,
+      "source": {
+        "path": "scripts/retire-attempt-result.mjs",
+        "line": 59,
+        "sha256": "c84c13e778070012ca005b272f0bc0875b3a587e8623ddf5aee827f9b90ae61a",
+        "sourceText": "    const attempts=new FileDurableAttemptStore(scope.attemptRoot,scope.attemptLimits);"
+      },
+      "owningCompanion": "RetirementOriginalPolicy",
+      "targetField": "originalcapturedscope.*Limits.lockWaitSeconds /storeOptions.lockWaitSeconds; noCLIquotaoverride",
+      "currentVsTarget": "scripts currentcommand/retainedconfig distinctions exactlyretirement-binding-contract.json; reusableclasses not deployedinstances",
+      "futureSteps": [
+        "capture exact originalA owner/profile/policy before firstwrite/lifetimehold",
+        "hold actual corresponding root lock in child; signal acquired then wait for releasepipe",
+        "publish complete compatibleB=1seconds without editing retainedA=5",
+        "contend using exact caller entry method/store constructor from source coordinate",
+        "confirm lock expiry -> source LOCKED/OBSERVABILITY_STORE_LOCK_FAILED and unchanged state",
+        "release child, retry same A history with capturedA5 ->success",
+        "recover A + fixedEvalA ->A5 unchanged; differentowner or swappedquota rejected beforewrite"
+      ],
+      "oracle": {
+        "retainedWaitSeconds": 5,
+        "newIndependentWaitSeconds": 1,
+        "stateSHAUnchangedOnTimeout": true,
+        "noDeleteBreakRenew": true,
+        "noLatest": true
+      },
+      "rootNamespace": "same case root perphysicalwriter; maintenance/lifetime originalownership retainsA; distinct newBroot permissible"
+    }
+  ],
+  "case": "QC-FOUNDATION-FLOCK-WAIT-HISTORY",
+  "safety": "No network/API/host execution; proposed harness exercises originalstore lock and bounded same-source reader only, not remote work. Bootstrap fullcurrentconfigminusnewlock may be locallyvalidated; future approved projection required. Native parents Prismsourceauthor handoff remains explicit.",
+  "testCredentials": "Known test-only token ICQ-NOT-A-REAL-CREDENTIAL; deterministic Ed25519 seed bytes00..1f rendered asPKCS8/SPKI by harness, only local definition. Do not deploy. Test TLS needsapproved localfixture for actualservice tests, not lock control.",
+  "exactReadOnlyOperations": {
+    "RegisteredStores": {
+      "outerBoundary": "activate complete registeredadapter config with generated Nova fullprofile; observe approved constructor projection (not mocked service) beforeinvoke",
+      "storeRead": "FileDurableRecordStore.read(\"icq/lock-probe\") -> [] on absent stream, originalrootlock path per constructor",
+      "blobRead": "existing FileDurableBlobStore metadata/root-budget lock scan via put(Uint8Array[0x61]) actualalreadyselected total/entryquota; bind originalA then readonlyget retained exactdigest; no network"
+    },
+    "BusterPreparedJob": {
+      "outerBoundary": "loadProductionBusterRemotePlanRuntime complete synthetic runtime+component+generated platform/keys, no start() or remote request",
+      "storeRead": "actual configured FileBusterPlanJobStore/PreparedBusterPlanJobStore.records() -> []; originalstateRoot/metadata records root",
+      "capturedLimits": "completeBusterRuntime.recordLimits+maximumResultStoreBytes; completeBusterComponent preparation fields exactlyexistingprojections"
+    },
+    "NovaStandaloneGate+NovaRegisteredGate+NovaRegisteredEvidence": {
+      "outerBoundary": "standalone loadProductionNovaTestGate complete fixture (no execute); registered remote-test-gate activate fullconfig -> execute constructor projection guard BEFORE any request; evidence-adapter activate fullconfig, no artifactsread",
+      "storeRead": "Actual FileNovaRemotePlanStore.interruptions() -> [] and FileNovaGateImportStore.readExecutionGraphs() -> [] on absent streams; actual standalone/registered configs project exactroot/options from production.ts/adapter/evidence-adapter. No private-method substitute or serviceAPI dispatch.",
+      "capturedLimits": "source-specific complete fixtureoptions; standalone recordLimits; registered existing fixed source limits unchanged; approved lockextension different authors remain distinct"
+    },
+    "BusterComponent": {
+      "preparationLedger": "new PreparationSourceLedger(CASE_ROOT/source, completeA.settings.preparation).reservations() -> []",
+      "attempts": "FileDurableAttemptStore(CASE_ROOT/attempts, completeA.settings.execution.stores.attempts).snapshot() -> {schemaVersion:\"durable-attempt-store.v1\",evidence:[],results:[],closures:[]} from actual source publicsnapshot at durable-attempts.ts:186; no unknownreader",
+      "admission": "FileObservabilityAdmissionStore(CASE_ROOT/admission, completeA.settings.execution.stores.admission).snapshot() -> EMPTY_ADMISSION binding future",
+      "historical": "HistoricalBusterPlanJobStore.records() -> []; constructor fulloptions from BusterPreparedJob sameowner and originalsource key/package fixtures, never inferred installedvalues"
+    },
+    "NovaPlatform": {
+      "recovery": "reconcileNovaObservabilityOnRecovery caller receives generated immutable selectedNovaPlatform A, projects observabilityattempt/admission options; nested actual snapshots as above",
+      "scaffold": "publishJsonPair(CASE_ROOT/project,[\"progress.json\",\"pipeline.json\"],[{schemaVersion:\"icq-progress.v1\",completed:[]},{schemaVersion:\"icq-project-graph.v1\",modules:[]}]) source published-pair.ts:95; solepipeline.config selectedNovaPlatform projects proposedwait5. Helperdir creation and membervalidation beforefence recorded separately, no member/current.json commits underheldlock. Progress/pipeline are project/work graph, not systemCONFIG."
+    },
+    "CoreNative": {
+      "attempt": "new NativeAttemptJournal(CASE_ROOT/native, complete captured nativejournal limits).withAttempt(originalV3Envelope,async()=>({probe:\"A\"})); originalV3Envelope exact immutable fixture generator tests/verification/reliability/native-journal-capacity-fixture.mts exported envelope(\"icq:A\"), nativeResourcePolicy pinned; no engine/cgroup execution. Holderkey actual journalKey(envelope).slice(-2) lifetime namespace. Callback0 whileheld, then1 afterrelease. Prioraccepted metadata retainedA, fixture is not realhost proof.",
+      "ownership": "FileWorkerOwnershipStore.records() -> []; withSupervisor(async()=>\"A\") callback0 whilelockheld then1 afterrelease; constructorlimits exact copiedCoreNative companion; no cgroup/host actions"
+    },
+    "DemoHandoff": {
+      "outerBoundary": "demo-handoff activate fullconfig; actual nestedrecords field receives proposedlock; invoke neither deliver nor commit/network",
+      "storeRead": "FileDurableRecordStore.read(\"demo-ready/intents\") -> [] underconfiguredstateRoot, realrootfence; no operatorrequest"
+    },
+    "PublicNativeFixture": {
+      "read": "FileBusterFixtureJournal(CASE_ROOT/fixtures, completeInjectedConstructorLimits).snapshot() -> [] at native-fixture-journal.ts:98, ownroot #locked and underlying buster-fixtures.v1 stream. No deployed external caller or cgroup proof inferred.",
+      "prior": "absent ownedroot/empty stream; valid reserve admission must use exact nativeFixtureAdmission schema approvedfixture if reserve path invoked; readonlylockprobe sufficient here"
+    },
+    "ReusableCallerProjection": {
+      "scope": "No separatedeployedowner fixture. Each listed original concrete constructor instantiates this primitive with above owningcompletecompanion; repeatreadonlyprimitive tests by origin, not fabricatedfoundationCONFIG."
+    },
+    "RetirementOriginalPolicy": {
+      "prior": "retirement-method-fixtures.json exactgenerator prior/sourceguard; scripts retain commandcurrentclassification",
+      "operation": "target loads originalbindingA and originalpolicy first, rejects mismatchedBscope unchanged, then exact retireAdmission scope or attemptProjection scope frompinnedgenerator; no latest/unverifiedmigration"
+    }
+  },
+  "priorStateBytes": {
+    "readOnlyAbsent": "no stream/snapshotfile; respective source EMPTY_* state determined by exact pinnedsource constants, canonicalbytes frozen onlyafterconsumer materializes it",
+    "holderInput": "withDurableStoreLock(exact root/lockNamespace fromconstructor, async()=>await releasePipe); signal acquired beforecontender; callback zero untilrelease",
+    "history": "first A bounded record append idempotencyKey icq:A payload {schemaVersion:\"icq-lock-probe.v1\",owner:\"A\"}, same originalroot; readrecoveryA returns same id/digest/recordsequence afterBpublished; boundoriginalstoreheader futurecountedquota; native/projection readonlyspecialstates staytheir own schema, never inject recordpayload into nativeownershipschema",
+    "snapshotOracle": "Before/after exact file tree inventorycontentSHA; lock auxiliary files only expected existinghelper durablelock artifacts; no mutation to retained payload whileblocked/rejected"
+  },
+  "exactImmutableFixtures": [
+    {
+      "path": "tests/verification/reliability/native-journal-capacity-fixture.mts",
+      "sha256": "73c86874ee6ba22a6ebc9e9682ae15ca8c2a718ce7c3111ac2162eef568222a3"
+    },
+    {
+      "path": "skills/prism/tests/native/resource-policy.mts",
+      "sha256": "87a51b65935045a98f9992ed8b6360f45100760d8cb4d9a8c05c123e2a718d1b"
+    },
+    {
+      "path": "tests/fixtures/buster-fixture-protocol.mts",
+      "sha256": "584317a1480e90be21b908f5c81cf20e4f9be8234546d8cdb9176f3f5d33cc6a"
+    },
+    {
+      "path": "skills/worker/core/worker/native-journal-state.ts",
+      "sha256": "ae5cca21eb24261fa5389c7081bc3534e8e12b411d5bda0e97a69a94ead424d2"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/published-pair.ts",
+      "sha256": "c0c4fc08ae422962f201b4ec9f134ec03f8e3354c85316cb92657db18aafa27a"
+    }
+  ],
+  "holderInitializationOrder": "Materialize original capturedA config and initialize actual empty store using publicreader BEFORE holder/contender baseline. For NativeAttemptJournal holder uses actual withAttempt(originalV3,async context=>{signalentered; awaitreleasePipe}); originalacceptance/metadata completes before acquiredsignal andbaseline. Contender sameA lifetime lock cannot enter callback or rewrite retainedA; directory/lock auxiliaries inventoried distinctly. No unchanged-initialization effect claim."
+}

@@ -1,0 +1,286 @@
+{
+  "scope": "13 exact code-resolvable residuals; reader pins not actual installed/deployed identity",
+  "records": [
+    {
+      "id": "DLV-OPS-MCP-KUBERNETES-API-URL",
+      "class": "generated-binding",
+      "domain": "new URL HTTPS origin only, no user/pass/path/search/hash; default https://kubernetes.default.svc when ENV undefined, empty fails URL",
+      "operation": "createKubeRequest startup validates origin; returned closure https.request GET with explicit ca rejectUnauthorized:true agent:false; rejects non2xx without returning API body, no redirect follow",
+      "errorContract": "HTTPS origin parameter does not attest peer/grants; no numeric model-policy inference",
+      "sourceReferences": [
+        {
+          "path": "tools/ops-mcp/src/kubernetes.mjs",
+          "sha256": "449e55709e017f53790539a83936f0471915850180ec9b08fc589251ab5e987b"
+        },
+        {
+          "path": "tools/ops-mcp/src/server.mjs",
+          "sha256": "a4fef1a5e66a45ea2885cc9a1715aba5835d77cb5219e39ac35a5f50b5bab65d"
+        }
+      ]
+    },
+    {
+      "id": "DLV-OPS-MCP-KUBERNETES-TOKEN-FILE",
+      "class": "secret-reference",
+      "domain": "ENV undefined default serviceaccount/token; path has no absolute/root schema; per-request UTF8 trim nonempty no whitespace token required",
+      "operation": "readFileSync before each GET; atomic rotation seen next request, unlike startup-owned Codex supervisor credential; file permissions/Secret grant native prerequisite",
+      "errorContract": "Invalid Kubernetes token file, file IO; API403 separate",
+      "sourceReferences": [
+        {
+          "path": "tools/ops-mcp/src/kubernetes.mjs",
+          "sha256": "449e55709e017f53790539a83936f0471915850180ec9b08fc589251ab5e987b"
+        },
+        {
+          "path": "charts/ops-pod/templates/workload.yaml",
+          "sha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58"
+        }
+      ]
+    },
+    {
+      "id": "DLV-OPS-MCP-KUBERNETES-CA-FILE",
+      "class": "secret-reference",
+      "domain": "ENV undefined default serviceaccount/ca.crt; no path schema; bytes read per request and passed explicit NodeTLS ca",
+      "operation": "per-GET CA rotation/peer chain verification rejectUnauthorized; not ambient NODE_EXTRA_CA_CERTS-only trust",
+      "errorContract": "file IO/TLS cert/hostname/CA failure separate native boundary",
+      "sourceReferences": [
+        {
+          "path": "tools/ops-mcp/src/kubernetes.mjs",
+          "sha256": "449e55709e017f53790539a83936f0471915850180ec9b08fc589251ab5e987b"
+        },
+        {
+          "path": "charts/ops-pod/templates/workload.yaml",
+          "sha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58"
+        }
+      ]
+    },
+    {
+      "id": "DLV-OPS-MCP-TIMEOUTMS",
+      "class": "operator-setting",
+      "domain": "function constructor default10000ms; no explicit integer/min/max validation; Node setTimeout coercion applies, code does not support universally guessed safe range",
+      "operation": "createKubeRequest() captures timeout at server startup; setTimeout destroy error, clears req close; pagination retries only oversized pages and preserves selectors/continuation with separate deadline",
+      "errorContract": "Kubernetes API request timed out; timeout option not ENV setting and server currently calls no options",
+      "sourceReferences": [
+        {
+          "path": "tools/ops-mcp/src/kubernetes.mjs",
+          "sha256": "449e55709e017f53790539a83936f0471915850180ec9b08fc589251ab5e987b"
+        },
+        {
+          "path": "tools/ops-mcp/src/server.mjs",
+          "sha256": "a4fef1a5e66a45ea2885cc9a1715aba5835d77cb5219e39ac35a5f50b5bab65d"
+        }
+      ]
+    },
+    {
+      "id": "DLV-OPS-MCP-HUBBLE-BIN",
+      "class": "generated-binding",
+      "domain": "getHubbleFlows per-call destructuring default ENV HUBBLE_BIN ?? /usr/local/bin/hubble; no path schema/executable identity preflight",
+      "operation": "spawn binary command argv, no shell; child env only PATH and HOME=/tmp; binary/version from locked Ops Go build independent from path",
+      "errorContract": "spawn error vs cli_failed partial flow result; authentic Hubble artifact prerequisite",
+      "sourceReferences": [
+        {
+          "path": "tools/ops-mcp/src/hubble.mjs",
+          "sha256": "d4e60f2801e3c66ded259f420c1a9faca0071fa084dc198a35433f8c9cb4f599"
+        },
+        {
+          "path": "tools/ops-mcp/src/server.mjs",
+          "sha256": "a4fef1a5e66a45ea2885cc9a1715aba5835d77cb5219e39ac35a5f50b5bab65d"
+        },
+        {
+          "path": "tools/ops-mcp/Dockerfile",
+          "sha256": "bfb97ef41bdd945c49e42db5d87ef878a0b8894bc9af32418027a956ce852e41"
+        },
+        {
+          "path": "tools/ops-mcp/hubble/go.mod",
+          "sha256": "d18d5bf7be502b9ac2d2a714a9004859b6f13dab981775f5cadbc2a9034d5fdb"
+        }
+      ]
+    },
+    {
+      "id": "DLV-OPS-MCP-HUBBLE-SERVER",
+      "class": "generated-binding",
+      "domain": "per-call ENV HUBBLE_SERVER ?? hubble-relay.cilium.svc.cluster.local:4245; no local URL/host grammar parser; argv --server actual CLI handles",
+      "operation": "getHubbleFlows observe --server; explicit args namespace/pod/verdict/time/limit; relay historical ring-buffer coverage unknown, empty not proof",
+      "errorContract": "bad relay/CLI may return partial cli_failed/stderr not startup rejection",
+      "sourceReferences": [
+        {
+          "path": "tools/ops-mcp/src/hubble.mjs",
+          "sha256": "d4e60f2801e3c66ded259f420c1a9faca0071fa084dc198a35433f8c9cb4f599"
+        },
+        {
+          "path": "tools/ops-mcp/src/server.mjs",
+          "sha256": "a4fef1a5e66a45ea2885cc9a1715aba5835d77cb5219e39ac35a5f50b5bab65d"
+        },
+        {
+          "path": "tools/ops-mcp/hubble/main.go",
+          "sha256": "df89cb21264c42c7bbc7a3b3b9501581e5877a2a50db2459c509329f7f2c52c4"
+        }
+      ]
+    },
+    {
+      "id": "DLV-OPS-MCP-TIMEOUT",
+      "class": "operator-setting",
+      "domain": "getHubbleFlows function default12000ms per invocation, no explicit integer/range schema; setTimeout native coercion; server passes no override",
+      "operation": "timer stop timeout adds partial reason and SIGKILL; 2active ceiling, raw2MiB/output192KiB limits separate current policies",
+      "errorContract": "timeout produces partial with unknown historical completeness, not throw/global API timeout",
+      "sourceReferences": [
+        {
+          "path": "tools/ops-mcp/src/hubble.mjs",
+          "sha256": "d4e60f2801e3c66ded259f420c1a9faca0071fa084dc198a35433f8c9cb4f599"
+        },
+        {
+          "path": "tools/ops-mcp/src/server.mjs",
+          "sha256": "a4fef1a5e66a45ea2885cc9a1715aba5835d77cb5219e39ac35a5f50b5bab65d"
+        }
+      ]
+    },
+    {
+      "id": "DLV-CHART-OPS-POD-RBAC-NAMESPACES",
+      "class": "operator-setting",
+      "domain": "current Chart range/string projection no namespace member validator unlike execNamespaces; selected API metadata.namespace DNS label/native existence separate; duplicate list emits duplicate objects",
+      "operation": "deployer discovers platform namespaces; RoleBindings namespaced source selected list; OPS_ALLOWED_NAMESPACES join comma; read observer scope distinct from execNames and cluster-scoped nodes read",
+      "errorContract": "Chart can emit invalid/nonexistent/duplicate namespace; API rejects malformed/missing namespace, observer allowedlist alone does not grant",
+      "sourceReferences": [
+        {
+          "path": "charts/ops-pod/templates/rbac.yaml",
+          "sha256": "103ed540a9b71ca0fdde5d693e5e4d07b2943910e79116bbd7206d528668874b"
+        },
+        {
+          "path": "charts/ops-pod/templates/workload.yaml",
+          "sha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58"
+        },
+        {
+          "path": "scripts/deploy-ops-pod.sh",
+          "sha256": "b7b114e886142185732eb285a59f5b2f8a5b509ffedfd23de2d1fbf67ea3e73e"
+        },
+        {
+          "path": "tools/ops-mcp/src/config.mjs",
+          "sha256": "3bb1b2b4caf43be233ad6fafaccf644702507442b93de1139e1be8babd9f529c"
+        }
+      ]
+    },
+    {
+      "id": "DLV-CHART-OPS-POD-NETWORKPOLICY-APISERVERCIDRS",
+      "class": "generated-binding",
+      "domain": "networkPolicy.enabled requires nonempty list, no Chart itemCIDR grammar; pinned ValidateIPBlock nonempty+legacy CIDR validator/ParseCIDRSloppy including legacy allowances, not universal strictcidr; actual API update grandfather options separate",
+      "operation": "discovered endpoints \u2192 ipBlock CIDR egress, selected Cilium entity rule additional; network admission does not guarantee traffic authorization/enforcement",
+      "errorContract": "exact Chart required-list diagnostic; API ipBlock cidr invalid; actual CNI/endpoint routing probe separate",
+      "sourceReferences": [
+        {
+          "path": "charts/ops-pod/templates/network.yaml",
+          "sha256": "1a96b733c35c853cf2064dd57caae1f061a94a023cc8637b4799464ad163e283"
+        },
+        {
+          "path": "scripts/deploy-ops-pod.sh",
+          "sha256": "b7b114e886142185732eb285a59f5b2f8a5b509ffedfd23de2d1fbf67ea3e73e"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/delivery/pinned-residual-bce3f075/v1.35.6/pkg/apis/networking/validation/validation.go",
+          "sha256": "b9c4bd763181048f81583d663f209dea3f3c7f8b9aa709c4bb7b365e1bdc0ed1"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/delivery/pinned-residual-bce3f075/v1.34.11/pkg/apis/networking/validation/validation.go",
+          "sha256": "f917efe3919db4da869eeedf66ff86552ceddb38981ffc85feb1f1077e1040b1"
+        }
+      ]
+    },
+    {
+      "id": "DLV-CHART-OPS-POD-NETWORKPOLICY-APISERVERPORT",
+      "class": "generated-binding",
+      "domain": "Chart raw YAML NetworkPolicy int-or-string port; API numeric1..65535 or valid named port; Cilium quoted port own installed CRD/agent domain, no fixed numeric-only Chart validator",
+      "operation": "TCP443 always emitted plus selected apiServerPort; Cilium kube-apiserver entity port string optional; real API endpoint/networkCNI authority distinct",
+      "errorContract": "invalid API port rejects native API, named port may schema-valid but not actual apiserver flow; duplicate443 permitted not extra author",
+      "sourceReferences": [
+        {
+          "path": "charts/ops-pod/templates/network.yaml",
+          "sha256": "1a96b733c35c853cf2064dd57caae1f061a94a023cc8637b4799464ad163e283"
+        },
+        {
+          "path": "scripts/deploy-ops-pod.sh",
+          "sha256": "b7b114e886142185732eb285a59f5b2f8a5b509ffedfd23de2d1fbf67ea3e73e"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/delivery/pinned-residual-bce3f075/v1.35.6/pkg/apis/networking/validation/validation.go",
+          "sha256": "b9c4bd763181048f81583d663f209dea3f3c7f8b9aa709c4bb7b365e1bdc0ed1"
+        }
+      ]
+    },
+    {
+      "id": "DLV-CHART-OPS-POD-TAILSCALE-IMAGE",
+      "class": "version",
+      "domain": "current unpinned ghcr.io/tailscale/tailscale:v1.102.3 accepted Chart string, no digest guard; version manifest pinned tailscaleProxy docker.io reference is separate identity, same tag is not equality",
+      "operation": "enabled tailscale container image current Pod selection/defaultpull semantics; primary v1.102.3 commit only reader reference, not deployed image equality",
+      "errorContract": "actual image pull/platform/ABI distinct; proposed strict receipt binds selected immutable OCI, no silently replacing registry",
+      "sourceReferences": [
+        {
+          "path": "charts/ops-pod/templates/workload.yaml",
+          "sha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58"
+        },
+        {
+          "path": "versions.json",
+          "sha256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d"
+        },
+        {
+          "path": "charts/ops-pod/values.yaml",
+          "sha256": "9f1d58dfe213f13169fdd9f983878b688d5f42fcf9f5283e31eed329e82b8c79"
+        }
+      ]
+    },
+    {
+      "id": "DLV-CHART-OPS-POD-TAILSCALE-HOSTNAME",
+      "class": "generated-binding",
+      "domain": "Chart string no validation; pinned containerboot TS_HOSTNAME nonempty \u2192 --hostname; cli up dnsname.ValidHostname, flags/prefs may also select config mode; actual tailnet allocation/collision/grant separate",
+      "operation": "getSettings env then tailscaleUp; cfg.Hostname adds argument before ExtraArgs, so repeated hostname flag can override same field; configured declarative mode can ignore env inputs",
+      "errorContract": "hostname invalid CLI diagnostic, no assumption simply Kubernetes DNS label; exact ValidHostname source bound",
+      "sourceReferences": [
+        {
+          "path": "charts/ops-pod/templates/workload.yaml",
+          "sha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/delivery/pinned-residual-bce3f075/tailscale/cmd/containerboot/settings.go",
+          "sha256": "df7f74d7645300831e6250597c9a3d439672a57b2448dc804c2911c6725491c5"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/delivery/pinned-residual-bce3f075/tailscale/cmd/containerboot/tailscaled.go",
+          "sha256": "4abc0a783e8eab4320f67df4f16bdd655f079910ffa4a17d1793eb13e0a349e8"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/delivery/pinned-residual-bce3f075/tailscale/cmd/tailscale/cli/up.go",
+          "sha256": "0078a92a967d42a601e9ed6622278ac1e0ab718fbb8506bc4785deabf4c69f40"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/delivery/pinned-residual-bce3f075/tailscale/util/dnsname/dnsname.go",
+          "sha256": "c6d9c12cb8820bf756cb6425eee81a294efce9adace8b95fa4672e3ac73e7f0d"
+        }
+      ]
+    },
+    {
+      "id": "DLV-CHART-OPS-POD-TAILSCALE-EXTRAARGS",
+      "class": "operator-setting",
+      "domain": "free string; strings.Fields whitespace split NOT shell quoting; parseAcceptDNS precedence removes --accept-dns and warns invalid/conflicting TS_ACCEPT_DNS; remaining real up CLI flags; duplicate flags/hostname/auth alteration possible",
+      "operation": "containerboot settings \u2192 tailscaleUp exec tailscale up; TS_AUTH_ONCE and persisted state decides tailscale set/auth flow, declarative configuration mode ignores ENV args; target selected explicit flags must not compete with refs/policy",
+      "errorContract": "unknown CLI flag rejects at actual CLI; malformed bool parse can log ignore, not universal config fail; native flag names/scopes pinned source not external blocker",
+      "sourceReferences": [
+        {
+          "path": "charts/ops-pod/templates/workload.yaml",
+          "sha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/delivery/pinned-residual-bce3f075/tailscale/cmd/containerboot/main.go",
+          "sha256": "6a446c99206b8fa1028d1b3ea0a04be83710d0f06c34d79b10edccab26303ba0"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/delivery/pinned-residual-bce3f075/tailscale/cmd/containerboot/settings.go",
+          "sha256": "df7f74d7645300831e6250597c9a3d439672a57b2448dc804c2911c6725491c5"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/delivery/pinned-residual-bce3f075/tailscale/cmd/containerboot/tailscaled.go",
+          "sha256": "4abc0a783e8eab4320f67df4f16bdd655f079910ffa4a17d1793eb13e0a349e8"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/delivery/pinned-residual-bce3f075/tailscale/cmd/tailscale/cli/up.go",
+          "sha256": "0078a92a967d42a601e9ed6622278ac1e0ab718fbb8506bc4785deabf4c69f40"
+        }
+      ]
+    }
+  ]
+}

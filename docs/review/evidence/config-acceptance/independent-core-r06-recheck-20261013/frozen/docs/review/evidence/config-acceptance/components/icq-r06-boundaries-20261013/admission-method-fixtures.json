@@ -1,0 +1,3076 @@
+{
+  "corrects": [
+    "ICQ-R06-01",
+    "ICQ-R06-02"
+  ],
+  "scope": "Superseding exact per-method original boundary selections; immutable prior/candidate snapshots no longer globalA-bound. Definition specimens only; no runtime/target projection executed.",
+  "policy": {
+    "reserve": 8192,
+    "threshold": 256,
+    "prefix": 180,
+    "quarantineCount": 1,
+    "maximumRecords": 10,
+    "maximumIngressBytes": 10000
+  },
+  "rawRecord": {
+    "schemaVersion": "producer-record.v1",
+    "recordId": "record:1",
+    "producer": {
+      "producerId": "worker:1",
+      "bootId": "boot:1",
+      "producerType": "buster"
+    },
+    "sequence": 1,
+    "recordType": "attempt.started",
+    "occurredAt": "2026-08-09T12:00:00Z",
+    "correlation": {
+      "pipelineRunId": "run:1",
+      "moduleId": "api",
+      "gateId": "final",
+      "attemptId": "attempt:1",
+      "claimId": "claim:1",
+      "claimGeneration": 1,
+      "traceId": "trace:1",
+      "parentEventId": null
+    },
+    "payload": {
+      "state": "started"
+    },
+    "recordDigest": "sha256:e6e35abdea7c6c24a809c03d541bfce0aa0da1553973d87990c5b67d42d79576"
+  },
+  "exactRawCanonical": "{\"correlation\":{\"attemptId\":\"attempt:1\",\"claimGeneration\":1,\"claimId\":\"claim:1\",\"gateId\":\"final\",\"moduleId\":\"api\",\"parentEventId\":null,\"pipelineRunId\":\"run:1\",\"traceId\":\"trace:1\"},\"occurredAt\":\"2026-08-09T12:00:00Z\",\"payload\":{\"state\":\"started\"},\"producer\":{\"bootId\":\"boot:1\",\"producerId\":\"worker:1\",\"producerType\":\"buster\"},\"recordDigest\":\"sha256:e6e35abdea7c6c24a809c03d541bfce0aa0da1553973d87990c5b67d42d79576\",\"recordId\":\"record:1\",\"recordType\":\"attempt.started\",\"schemaVersion\":\"producer-record.v1\",\"sequence\":1}",
+  "gap": {
+    "schemaVersion": "producer-gap-report.v1",
+    "producer": {
+      "producerId": "worker:1",
+      "bootId": "boot:1",
+      "producerType": "buster"
+    },
+    "pipelineRunId": "run:1",
+    "fromSequence": 2,
+    "toSequence": 2,
+    "state": "missing",
+    "reportedAt": "2026-08-09T12:01:00Z",
+    "reasonCode": "delivery-gap"
+  },
+  "observedCurrentStates": {
+    "normal": {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/admission-normal-current-state.json",
+      "sha256": "27791c560ba315d9d64e78ea00f82aa18c4c353f38746466e39b8a025c2db411",
+      "sizeBytes": 1409
+    },
+    "quarantine": {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/admission-quarantine-current-state.json",
+      "sha256": "640bf5263e53a85548176b9925400b27562f40c8e18944a01c8f4aa3ab095dd9",
+      "sizeBytes": 2550
+    },
+    "overflow": {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/admission-overflow-current-state.json",
+      "sha256": "63c5bd92bfb185d18b7cc8d0d8b77ff27f6c60d7984967b8485c1c48d3f990f6",
+      "sizeBytes": 3010
+    },
+    "gap": {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/admission-gap-current-state.json",
+      "sha256": "7f896cc031b73df420deea14e4fd62a06ba1d99596f9e27e0994a64259315e8c",
+      "sizeBytes": 3269
+    }
+  },
+  "targetStates": {
+    "classification": "No global reusableboundstate. See each subcase exactprior/candidate and matched manifest. Oldcatalog is historicalonly."
+  },
+  "subcases": [
+    {
+      "id": "normal-admit",
+      "method": "admit",
+      "prior": {
+        "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/normal-admit-positive-prior.json",
+        "sha256": "6a3c832dce2d58f7210baca59da72e560ac4b7fa164168685afc586d876bc378",
+        "sizeBytes": 707
+      },
+      "input": "{\"correlation\":{\"attemptId\":\"attempt:1\",\"claimGeneration\":1,\"claimId\":\"claim:1\",\"gateId\":\"final\",\"moduleId\":\"api\",\"parentEventId\":null,\"pipelineRunId\":\"run:1\",\"traceId\":\"trace:1\"},\"occurredAt\":\"2026-08-09T12:00:00Z\",\"payload\":{\"state\":\"started\"},\"producer\":{\"bootId\":\"boot:1\",\"producerId\":\"worker:1\",\"producerType\":\"buster\"},\"recordDigest\":\"sha256:e6e35abdea7c6c24a809c03d541bfce0aa0da1553973d87990c5b67d42d79576\",\"recordId\":\"record:1\",\"recordType\":\"attempt.started\",\"schemaVersion\":\"producer-record.v1\",\"sequence\":1}",
+      "candidate": {
+        "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/normal-admit-positive-candidate.json",
+        "sha256": "21d2be3dea74b915a4c505c212069a8cab2f1c96abf8b3ef0aa21cf0ca41106c",
+        "sizeBytes": 1934
+      },
+      "wholeCapFormula": "candidate.sizeBytes+8192",
+      "negativeCapFormula": "candidate.sizeBytes+8192-1",
+      "oracle": {
+        "cursor": 1,
+        "nextCursor": 2,
+        "entries": 1,
+        "quarantine": 0,
+        "bytes": 1934,
+        "bytesMeaning": "Whole persisted canonical admission snapshot INCLUDING binding; independent state readback, not an ACK/API byte field"
+      },
+      "adjacentNegative": "FULL state/hash unchanged, no ack",
+      "completeOwningAuthor": {
+        "schemaVersion": "swarm-component.v1",
+        "owner": "buster-engine",
+        "settings": {
+          "preparation": {
+            "resourcePolicy": {
+              "cpuTimeMs": 120000,
+              "memoryBytes": 8589934592,
+              "tasks": 64
+            },
+            "timeoutMs": 300000,
+            "cleanupTimeoutMs": 10000,
+            "maximumActivePreparations": 2,
+            "maximumPendingAdmissions": 16,
+            "maximumRequestBytes": 100663296,
+            "maximumArchiveBytes": 67108864,
+            "maximumExtractedBytes": 536870912,
+            "maximumHeaderBytes": 3145728,
+            "maximumSourceBytes": 1073741824,
+            "maximumMetadataBytes": 67108864,
+            "maximumRecords": 10000,
+            "maximumOwnershipBytes": 16777216,
+            "maximumJournalBytes": 268435456,
+            "maximumInputBytes": 65536,
+            "maximumOutputBytes": 8388608,
+            "maximumResultBytes": 4194304,
+            "pollIntervalMs": 25,
+            "drainTimeoutMs": 5000,
+            "closeTimeoutMs": 10000,
+            "tarTimeoutMs": 120000,
+            "maximumArchiveEntries": 200000,
+            "maximumListingLineBytes": 1048576,
+            "maximumTarStderrBytes": 65536,
+            "maximumSourceEntries": 400014,
+            "sourceEntryReservationBytes": 256,
+            "maximumOpenFiles": 64,
+            "tarDiagnosticCodeUnits": 4096,
+            "storeLockWaitSeconds": 5
+          },
+          "admission": {
+            "maximumActiveJobs": 2,
+            "maximumQueuedJobs": 8,
+            "maximumConcurrentAttempts": 64
+          },
+          "dependencyReadiness": {
+            "maximumExecutionMs": 1000,
+            "maximumOutputBytes": 65536
+          },
+          "execution": {
+            "provider": {
+              "cleanupTimeoutMs": 30000,
+              "maximumResultBytes": 16777216,
+              "claimGraceMs": 60000,
+              "queueTimeoutMs": 60000,
+              "workerResultWrapperBytes": 4096,
+              "maximumProtocolBytes": 16777216,
+              "terminationGraceMs": 500,
+              "terminationTimeoutMs": 1000,
+              "capabilityDrainTimeoutMs": 1000,
+              "minimumHeapMiB": 16,
+              "heapFraction": 0.7,
+              "maximumPendingCapabilities": 32,
+              "minimumOpenFiles": 64,
+              "artifactFileDescriptorReserve": 32
+            },
+            "reports": {
+              "maximumAggregateResultBytes": 16777216,
+              "maximumSourceBytes": 67108864,
+              "maximumCases": 5000,
+              "maximumFindings": 5000,
+              "maximumCaseFindings": 100,
+              "maximumTimeoutMs": 300000,
+              "memoryBytes": 536870912,
+              "minimumCpuTimeMs": 1000,
+              "maximumOpenFiles": 64,
+              "minimumOpenFiles": 16,
+              "minimumHeapMiB": 16,
+              "heapFraction": 0.7,
+              "runtimeMemoryReserveBytes": 67108864
+            },
+            "observation": {
+              "resourceSampleIntervalMs": 10,
+              "processSampleIntervalMs": 50
+            },
+            "stores": {
+              "attempts": {
+                "maximumEvidenceObjects": 10000,
+                "maximumEvidenceBytes": 10737418240,
+                "maximumEvidenceObjectBytes": 1073741824,
+                "maximumResults": 10000,
+                "maximumClosures": 10000,
+                "maximumMetadataBytes": 268435456,
+                "maximumPendingEvidenceAgeMs": 3600000,
+                "lockWaitSeconds": 5
+              },
+              "admission": {
+                "maximumIngressBytes": 10000,
+                "maximumRecords": 10,
+                "maximumBytes": 10126,
+                "maximumQuarantineRecords": 1,
+                "maximumQuarantineBytes": 1933,
+                "reasonThresholdCodeUnits": 256,
+                "reasonPrefixCodeUnits": 180,
+                "metadataReserveBytes": 8192,
+                "lockWaitSeconds": 5
+              }
+            },
+            "processInput": {
+              "cleanupTimeoutMs": 1500,
+              "terminationGraceMs": 250,
+              "acknowledgementPollMs": 10
+            }
+          },
+          "clusterInvokers": {
+            "shared": {
+              "kubectlExecutable": "/usr/local/bin/kubectl",
+              "leaseApiGroup": "kubeclaw.forgestack.ai",
+              "leaseApiVersion": "v1alpha1"
+            },
+            "kubernetesFixture": {
+              "allowedNamespacePrefixes": [
+                "test"
+              ],
+              "registryRepositoryPrefixes": [
+                "kubeclaw"
+              ],
+              "allowedSecretReferences": [],
+              "allowedStorageClasses": [],
+              "allowDefaultStorageClass": true,
+              "runnerServiceAccount": "agent-buster",
+              "credentialReaderServiceAccount": "agent-nova",
+              "maximumManifestBytes": 1048576,
+              "maximumResources": 64,
+              "maximumPersistentVolumeClaimBytes": 10737418240,
+              "maximumPersistentVolumeTotalBytes": 21474836480,
+              "maximumRetentionSeconds": 604800,
+              "maximumExecutionMs": 900000,
+              "pollIntervalMs": 1000,
+              "shortCommandTimeoutMs": 15000,
+              "commandOutputManifestMultiplier": 2,
+              "diagnosticCodeUnits": 4096,
+              "manifest": {
+                "maximumNodes": 100000,
+                "maximumDepth": 64,
+                "maximumAliases": 1000,
+                "maximumFlattenVisits": 100000,
+                "maximumFlattenPending": 100000
+              }
+            },
+            "tailscaleExposure": {
+              "allowedNamespacePrefixes": [
+                "test"
+              ],
+              "allowedHostSuffixes": [
+                ".ts.net"
+              ],
+              "maximumExecutionMs": 900000,
+              "pollIntervalMs": 1000,
+              "shortCommandTimeoutMs": 15000,
+              "maximumCommandOutputBytes": 1048576
+            },
+            "runtimeSecurity": {
+              "allowedNamespacePrefixes": [
+                "test"
+              ],
+              "maximumExecutionMs": 300000,
+              "maximumOutputBytes": 16777216,
+              "pollIntervalMs": 1000,
+              "maximumObservationAgeMs": 10000,
+              "maximumFutureSkewMs": 5000,
+              "diagnosticCodeUnits": 1024,
+              "executableSearchPath": [
+                "/usr/local/bin",
+                "/usr/bin",
+                "/bin"
+              ]
+            }
+          }
+        }
+      },
+      "wholeCap": 10126,
+      "negativeWholeCap": 10125,
+      "originalPolicyManifest": {
+        "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/manifests/normal-admit-positive-original.json",
+        "sha256": "22666cc88a25590b0ed0dfd394f89545a5be1c5b00abf2122f597ae5724ff322",
+        "sizeBytes": 8310
+      },
+      "originalBinding": {
+        "schemaVersion": "admission-binding.v1",
+        "owner": "buster-engine",
+        "generationDigest": "sha256:b3060de0f407e8102a348b3bdf55562fd97f4fe631f17f816946ebff1ca7ee1a",
+        "profileDigest": "sha256:f37d072a5c65ab303512c5942116683924f7f9c3a09313dfdeba876d7dfb079a",
+        "policyDigest": "sha256:fe0e448a21c707567e90aa0051811a096c2f5f8c7c086a3c846332ee345b81b7",
+        "schemaDigest": "sha256:fa051f8dacdda448303d5182374d7970b02e71a496bcd41d098cd1bfd58b028c",
+        "sourceDigest": "sha256:195fca717beffb64a5ec20c0aaa5d48ce4fd59ee281f044287d87efc209fb2a4"
+      },
+      "apiReturnFields": [
+        "acknowledgement"
+      ],
+      "baselineLifecycle": {
+        "selection": "fresh isolated stand selects this exact complete owner manifest before any setup write, source admission, binding persistence, baseline capture or tested method",
+        "preparation": "Materialize only the shape/data fields of old frozen specimen plus THIS originalbinding by canonicalJson. Refuse old globalA binding, authenticate synthetic fixture map in stand; source/profile/policy/schema/generation hashes checked before first effect. Seeded prior is explicit setup, not claimed emitted by unchanged current loader. Retained reference materialization/accounting remains same original quota prerequisite.",
+        "capture": "After deterministic preparation and bounded fullsnapshot validation, record exact prior SHA, source refs, policy/grants and immutable original generation; start tested method with no rebind/current-profile change. Native effects never run by this documentation package.",
+        "history": "recovery/retry/fixedEval retains this same original generation and wholeCap; wronglatest/globalA digest or commandlimits rejects before new write"
+      },
+      "negative": {
+        "completeOriginalAuthor": {
+          "schemaVersion": "swarm-component.v1",
+          "owner": "buster-engine",
+          "settings": {
+            "preparation": {
+              "resourcePolicy": {
+                "cpuTimeMs": 120000,
+                "memoryBytes": 8589934592,
+                "tasks": 64
+              },
+              "timeoutMs": 300000,
+              "cleanupTimeoutMs": 10000,
+              "maximumActivePreparations": 2,
+              "maximumPendingAdmissions": 16,
+              "maximumRequestBytes": 100663296,
+              "maximumArchiveBytes": 67108864,
+              "maximumExtractedBytes": 536870912,
+              "maximumHeaderBytes": 3145728,
+              "maximumSourceBytes": 1073741824,
+              "maximumMetadataBytes": 67108864,
+              "maximumRecords": 10000,
+              "maximumOwnershipBytes": 16777216,
+              "maximumJournalBytes": 268435456,
+              "maximumInputBytes": 65536,
+              "maximumOutputBytes": 8388608,
+              "maximumResultBytes": 4194304,
+              "pollIntervalMs": 25,
+              "drainTimeoutMs": 5000,
+              "closeTimeoutMs": 10000,
+              "tarTimeoutMs": 120000,
+              "maximumArchiveEntries": 200000,
+              "maximumListingLineBytes": 1048576,
+              "maximumTarStderrBytes": 65536,
+              "maximumSourceEntries": 400014,
+              "sourceEntryReservationBytes": 256,
+              "maximumOpenFiles": 64,
+              "tarDiagnosticCodeUnits": 4096,
+              "storeLockWaitSeconds": 5
+            },
+            "admission": {
+              "maximumActiveJobs": 2,
+              "maximumQueuedJobs": 8,
+              "maximumConcurrentAttempts": 64
+            },
+            "dependencyReadiness": {
+              "maximumExecutionMs": 1000,
+              "maximumOutputBytes": 65536
+            },
+            "execution": {
+              "provider": {
+                "cleanupTimeoutMs": 30000,
+                "maximumResultBytes": 16777216,
+                "claimGraceMs": 60000,
+                "queueTimeoutMs": 60000,
+                "workerResultWrapperBytes": 4096,
+                "maximumProtocolBytes": 16777216,
+                "terminationGraceMs": 500,
+                "terminationTimeoutMs": 1000,
+                "capabilityDrainTimeoutMs": 1000,
+                "minimumHeapMiB": 16,
+                "heapFraction": 0.7,
+                "maximumPendingCapabilities": 32,
+                "minimumOpenFiles": 64,
+                "artifactFileDescriptorReserve": 32
+              },
+              "reports": {
+                "maximumAggregateResultBytes": 16777216,
+                "maximumSourceBytes": 67108864,
+                "maximumCases": 5000,
+                "maximumFindings": 5000,
+                "maximumCaseFindings": 100,
+                "maximumTimeoutMs": 300000,
+                "memoryBytes": 536870912,
+                "minimumCpuTimeMs": 1000,
+                "maximumOpenFiles": 64,
+                "minimumOpenFiles": 16,
+                "minimumHeapMiB": 16,
+                "heapFraction": 0.7,
+                "runtimeMemoryReserveBytes": 67108864
+              },
+              "observation": {
+                "resourceSampleIntervalMs": 10,
+                "processSampleIntervalMs": 50
+              },
+              "stores": {
+                "attempts": {
+                  "maximumEvidenceObjects": 10000,
+                  "maximumEvidenceBytes": 10737418240,
+                  "maximumEvidenceObjectBytes": 1073741824,
+                  "maximumResults": 10000,
+                  "maximumClosures": 10000,
+                  "maximumMetadataBytes": 268435456,
+                  "maximumPendingEvidenceAgeMs": 3600000,
+                  "lockWaitSeconds": 5
+                },
+                "admission": {
+                  "maximumIngressBytes": 10000,
+                  "maximumRecords": 10,
+                  "maximumBytes": 10125,
+                  "maximumQuarantineRecords": 1,
+                  "maximumQuarantineBytes": 1933,
+                  "reasonThresholdCodeUnits": 256,
+                  "reasonPrefixCodeUnits": 180,
+                  "metadataReserveBytes": 8192,
+                  "lockWaitSeconds": 5
+                }
+              },
+              "processInput": {
+                "cleanupTimeoutMs": 1500,
+                "terminationGraceMs": 250,
+                "acknowledgementPollMs": 10
+              }
+            },
+            "clusterInvokers": {
+              "shared": {
+                "kubectlExecutable": "/usr/local/bin/kubectl",
+                "leaseApiGroup": "kubeclaw.forgestack.ai",
+                "leaseApiVersion": "v1alpha1"
+              },
+              "kubernetesFixture": {
+                "allowedNamespacePrefixes": [
+                  "test"
+                ],
+                "registryRepositoryPrefixes": [
+                  "kubeclaw"
+                ],
+                "allowedSecretReferences": [],
+                "allowedStorageClasses": [],
+                "allowDefaultStorageClass": true,
+                "runnerServiceAccount": "agent-buster",
+                "credentialReaderServiceAccount": "agent-nova",
+                "maximumManifestBytes": 1048576,
+                "maximumResources": 64,
+                "maximumPersistentVolumeClaimBytes": 10737418240,
+                "maximumPersistentVolumeTotalBytes": 21474836480,
+                "maximumRetentionSeconds": 604800,
+                "maximumExecutionMs": 900000,
+                "pollIntervalMs": 1000,
+                "shortCommandTimeoutMs": 15000,
+                "commandOutputManifestMultiplier": 2,
+                "diagnosticCodeUnits": 4096,
+                "manifest": {
+                  "maximumNodes": 100000,
+                  "maximumDepth": 64,
+                  "maximumAliases": 1000,
+                  "maximumFlattenVisits": 100000,
+                  "maximumFlattenPending": 100000
+                }
+              },
+              "tailscaleExposure": {
+                "allowedNamespacePrefixes": [
+                  "test"
+                ],
+                "allowedHostSuffixes": [
+                  ".ts.net"
+                ],
+                "maximumExecutionMs": 900000,
+                "pollIntervalMs": 1000,
+                "shortCommandTimeoutMs": 15000,
+                "maximumCommandOutputBytes": 1048576
+              },
+              "runtimeSecurity": {
+                "allowedNamespacePrefixes": [
+                  "test"
+                ],
+                "maximumExecutionMs": 300000,
+                "maximumOutputBytes": 16777216,
+                "pollIntervalMs": 1000,
+                "maximumObservationAgeMs": 10000,
+                "maximumFutureSkewMs": 5000,
+                "diagnosticCodeUnits": 1024,
+                "executableSearchPath": [
+                  "/usr/local/bin",
+                  "/usr/bin",
+                  "/bin"
+                ]
+              }
+            }
+          }
+        },
+        "originalBinding": {
+          "schemaVersion": "admission-binding.v1",
+          "owner": "buster-engine",
+          "generationDigest": "sha256:423d525bd877ca152cdbcd11bf5f8433862a5156f6813451fbe8deba8caf3135",
+          "profileDigest": "sha256:aef6c996b91c5c3a1110bd03b99d2f74018e3bc50f76126467f686fc443f5c39",
+          "policyDigest": "sha256:b4d9c3cff4224db7bcb0a1fc0e24ea9688a5b867bcc0a7071c8e14aee4136cf3",
+          "schemaDigest": "sha256:fa051f8dacdda448303d5182374d7970b02e71a496bcd41d098cd1bfd58b028c",
+          "sourceDigest": "sha256:195fca717beffb64a5ec20c0aaa5d48ce4fd59ee281f044287d87efc209fb2a4"
+        },
+        "originalPolicyManifest": {
+          "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/manifests/normal-admit-negative-original.json",
+          "sha256": "8a4bb7b4c2271d9a4280e717c2ed59baf0c6c85860199baaceae10364a2f2ada",
+          "sizeBytes": 8310
+        },
+        "prior": {
+          "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/normal-admit-negative-prior.json",
+          "sha256": "a8ec87b25a50a50352aabaafb667ed69e7a5c30425fd0aa614815de9b56f9cc4",
+          "sizeBytes": 707
+        },
+        "attemptedCandidate": {
+          "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/normal-admit-negative-attempted-candidate.json",
+          "sha256": "b7101f0f9c26a886347abbc7b30eb028cbe854482520e3ef9c534c9a5e6924ea",
+          "sizeBytes": 1934
+        },
+        "wholeCap": 10125,
+        "originalSelectionLifecycle": "SEPARATE fresh stand selects negativeoriginal complete profile and computes binding BEFORE any prior preparation/baseline/effect. Not publishB/changequota/rebind of positiveoriginal retained history. Negative prior is same data shape with its own authentic synthetic originalbinding, not same bytes as positiveprior.",
+        "input": "{\"correlation\":{\"attemptId\":\"attempt:1\",\"claimGeneration\":1,\"claimId\":\"claim:1\",\"gateId\":\"final\",\"moduleId\":\"api\",\"parentEventId\":null,\"pipelineRunId\":\"run:1\",\"traceId\":\"trace:1\"},\"occurredAt\":\"2026-08-09T12:00:00Z\",\"payload\":{\"state\":\"started\"},\"producer\":{\"bootId\":\"boot:1\",\"producerId\":\"worker:1\",\"producerType\":\"buster\"},\"recordDigest\":\"sha256:e6e35abdea7c6c24a809c03d541bfce0aa0da1553973d87990c5b67d42d79576\",\"recordId\":\"record:1\",\"recordType\":\"attempt.started\",\"schemaVersion\":\"producer-record.v1\",\"sequence\":1}",
+        "headroom": 8192,
+        "expected": "OBSERVABILITY_ADMISSION_FULL before ordinary admission/gap write; no ACK; prior exact bytes/hash unchanged"
+      },
+      "apiReturnOracle": {
+        "resultOwnKeys": [
+          "acknowledgement"
+        ],
+        "acknowledgement": {
+          "state": "admitted",
+          "canonicalCursor": 1,
+          "recordId": "record:1",
+          "recordDigest": "sha256:e6e35abdea7c6c24a809c03d541bfce0aa0da1553973d87990c5b67d42d79576"
+        },
+        "byteCountSource": "Read persisted canonical admission state in owned stand after method; no result.bytes or acknowledgement.bytes expectation"
+      }
+    },
+    {
+      "id": "normal-admitAndRead",
+      "method": "admitAndRead",
+      "prior": {
+        "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/normal-admitAndRead-positive-prior.json",
+        "sha256": "1460732c86063c2bf5cce72dabf36109b171e80f00c85360aa20e7c9083e637e",
+        "sizeBytes": 707
+      },
+      "input": "{\"correlation\":{\"attemptId\":\"attempt:1\",\"claimGeneration\":1,\"claimId\":\"claim:1\",\"gateId\":\"final\",\"moduleId\":\"api\",\"parentEventId\":null,\"pipelineRunId\":\"run:1\",\"traceId\":\"trace:1\"},\"occurredAt\":\"2026-08-09T12:00:00Z\",\"payload\":{\"state\":\"started\"},\"producer\":{\"bootId\":\"boot:1\",\"producerId\":\"worker:1\",\"producerType\":\"buster\"},\"recordDigest\":\"sha256:e6e35abdea7c6c24a809c03d541bfce0aa0da1553973d87990c5b67d42d79576\",\"recordId\":\"record:1\",\"recordType\":\"attempt.started\",\"schemaVersion\":\"producer-record.v1\",\"sequence\":1}",
+      "candidate": {
+        "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/normal-admitAndRead-positive-candidate.json",
+        "sha256": "cf8b0ae74e88652445634382e0c676614f87ff3bf4b9aaa1a10b42fd1b9cef3d",
+        "sizeBytes": 1934
+      },
+      "wholeCapFormula": "candidate.sizeBytes+8192",
+      "negativeCapFormula": "candidate.sizeBytes+8192-1",
+      "oracle": {
+        "records": [
+          {
+            "schemaVersion": "producer-record.v1",
+            "recordId": "record:1",
+            "producer": {
+              "producerId": "worker:1",
+              "bootId": "boot:1",
+              "producerType": "buster"
+            },
+            "sequence": 1,
+            "recordType": "attempt.started",
+            "occurredAt": "2026-08-09T12:00:00Z",
+            "correlation": {
+              "pipelineRunId": "run:1",
+              "moduleId": "api",
+              "gateId": "final",
+              "attemptId": "attempt:1",
+              "claimId": "claim:1",
+              "claimGeneration": 1,
+              "traceId": "trace:1",
+              "parentEventId": null
+            },
+            "payload": {
+              "state": "started"
+            },
+            "recordDigest": "sha256:e6e35abdea7c6c24a809c03d541bfce0aa0da1553973d87990c5b67d42d79576"
+          }
+        ],
+        "cursor": 1,
+        "bytes": 1934,
+        "bytesMeaning": "Whole persisted canonical admission snapshot INCLUDING binding; independent state readback, not an ACK/API byte field"
+      },
+      "completeOwningAuthor": {
+        "schemaVersion": "swarm-component.v1",
+        "owner": "buster-engine",
+        "settings": {
+          "preparation": {
+            "resourcePolicy": {
+              "cpuTimeMs": 120000,
+              "memoryBytes": 8589934592,
+              "tasks": 64
+            },
+            "timeoutMs": 300000,
+            "cleanupTimeoutMs": 10000,
+            "maximumActivePreparations": 2,
+            "maximumPendingAdmissions": 16,
+            "maximumRequestBytes": 100663296,
+            "maximumArchiveBytes": 67108864,
+            "maximumExtractedBytes": 536870912,
+            "maximumHeaderBytes": 3145728,
+            "maximumSourceBytes": 1073741824,
+            "maximumMetadataBytes": 67108864,
+            "maximumRecords": 10000,
+            "maximumOwnershipBytes": 16777216,
+            "maximumJournalBytes": 268435456,
+            "maximumInputBytes": 65536,
+            "maximumOutputBytes": 8388608,
+            "maximumResultBytes": 4194304,
+            "pollIntervalMs": 25,
+            "drainTimeoutMs": 5000,
+            "closeTimeoutMs": 10000,
+            "tarTimeoutMs": 120000,
+            "maximumArchiveEntries": 200000,
+            "maximumListingLineBytes": 1048576,
+            "maximumTarStderrBytes": 65536,
+            "maximumSourceEntries": 400014,
+            "sourceEntryReservationBytes": 256,
+            "maximumOpenFiles": 64,
+            "tarDiagnosticCodeUnits": 4096,
+            "storeLockWaitSeconds": 5
+          },
+          "admission": {
+            "maximumActiveJobs": 2,
+            "maximumQueuedJobs": 8,
+            "maximumConcurrentAttempts": 64
+          },
+          "dependencyReadiness": {
+            "maximumExecutionMs": 1000,
+            "maximumOutputBytes": 65536
+          },
+          "execution": {
+            "provider": {
+              "cleanupTimeoutMs": 30000,
+              "maximumResultBytes": 16777216,
+              "claimGraceMs": 60000,
+              "queueTimeoutMs": 60000,
+              "workerResultWrapperBytes": 4096,
+              "maximumProtocolBytes": 16777216,
+              "terminationGraceMs": 500,
+              "terminationTimeoutMs": 1000,
+              "capabilityDrainTimeoutMs": 1000,
+              "minimumHeapMiB": 16,
+              "heapFraction": 0.7,
+              "maximumPendingCapabilities": 32,
+              "minimumOpenFiles": 64,
+              "artifactFileDescriptorReserve": 32
+            },
+            "reports": {
+              "maximumAggregateResultBytes": 16777216,
+              "maximumSourceBytes": 67108864,
+              "maximumCases": 5000,
+              "maximumFindings": 5000,
+              "maximumCaseFindings": 100,
+              "maximumTimeoutMs": 300000,
+              "memoryBytes": 536870912,
+              "minimumCpuTimeMs": 1000,
+              "maximumOpenFiles": 64,
+              "minimumOpenFiles": 16,
+              "minimumHeapMiB": 16,
+              "heapFraction": 0.7,
+              "runtimeMemoryReserveBytes": 67108864
+            },
+            "observation": {
+              "resourceSampleIntervalMs": 10,
+              "processSampleIntervalMs": 50
+            },
+            "stores": {
+              "attempts": {
+                "maximumEvidenceObjects": 10000,
+                "maximumEvidenceBytes": 10737418240,
+                "maximumEvidenceObjectBytes": 1073741824,
+                "maximumResults": 10000,
+                "maximumClosures": 10000,
+                "maximumMetadataBytes": 268435456,
+                "maximumPendingEvidenceAgeMs": 3600000,
+                "lockWaitSeconds": 5
+              },
+              "admission": {
+                "maximumIngressBytes": 10000,
+                "maximumRecords": 10,
+                "maximumBytes": 10126,
+                "maximumQuarantineRecords": 1,
+                "maximumQuarantineBytes": 1933,
+                "reasonThresholdCodeUnits": 256,
+                "reasonPrefixCodeUnits": 180,
+                "metadataReserveBytes": 8192,
+                "lockWaitSeconds": 5
+              }
+            },
+            "processInput": {
+              "cleanupTimeoutMs": 1500,
+              "terminationGraceMs": 250,
+              "acknowledgementPollMs": 10
+            }
+          },
+          "clusterInvokers": {
+            "shared": {
+              "kubectlExecutable": "/usr/local/bin/kubectl",
+              "leaseApiGroup": "kubeclaw.forgestack.ai",
+              "leaseApiVersion": "v1alpha1"
+            },
+            "kubernetesFixture": {
+              "allowedNamespacePrefixes": [
+                "test"
+              ],
+              "registryRepositoryPrefixes": [
+                "kubeclaw"
+              ],
+              "allowedSecretReferences": [],
+              "allowedStorageClasses": [],
+              "allowDefaultStorageClass": true,
+              "runnerServiceAccount": "agent-buster",
+              "credentialReaderServiceAccount": "agent-nova",
+              "maximumManifestBytes": 1048576,
+              "maximumResources": 64,
+              "maximumPersistentVolumeClaimBytes": 10737418240,
+              "maximumPersistentVolumeTotalBytes": 21474836480,
+              "maximumRetentionSeconds": 604800,
+              "maximumExecutionMs": 900000,
+              "pollIntervalMs": 1000,
+              "shortCommandTimeoutMs": 15000,
+              "commandOutputManifestMultiplier": 2,
+              "diagnosticCodeUnits": 4096,
+              "manifest": {
+                "maximumNodes": 100000,
+                "maximumDepth": 64,
+                "maximumAliases": 1000,
+                "maximumFlattenVisits": 100000,
+                "maximumFlattenPending": 100000
+              }
+            },
+            "tailscaleExposure": {
+              "allowedNamespacePrefixes": [
+                "test"
+              ],
+              "allowedHostSuffixes": [
+                ".ts.net"
+              ],
+              "maximumExecutionMs": 900000,
+              "pollIntervalMs": 1000,
+              "shortCommandTimeoutMs": 15000,
+              "maximumCommandOutputBytes": 1048576
+            },
+            "runtimeSecurity": {
+              "allowedNamespacePrefixes": [
+                "test"
+              ],
+              "maximumExecutionMs": 300000,
+              "maximumOutputBytes": 16777216,
+              "pollIntervalMs": 1000,
+              "maximumObservationAgeMs": 10000,
+              "maximumFutureSkewMs": 5000,
+              "diagnosticCodeUnits": 1024,
+              "executableSearchPath": [
+                "/usr/local/bin",
+                "/usr/bin",
+                "/bin"
+              ]
+            }
+          }
+        }
+      },
+      "wholeCap": 10126,
+      "negativeWholeCap": 10125,
+      "originalPolicyManifest": {
+        "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/manifests/normal-admitAndRead-positive-original.json",
+        "sha256": "0ac6bda9b0ef1e8f876d7f26b975aff200661cea3f48993fc41a72189609ffb0",
+        "sizeBytes": 8324
+      },
+      "originalBinding": {
+        "schemaVersion": "admission-binding.v1",
+        "owner": "buster-engine",
+        "generationDigest": "sha256:4a0e5730e8ac912bbb0bae6fa599a105329759fa21034f651fe937c16900596b",
+        "profileDigest": "sha256:f37d072a5c65ab303512c5942116683924f7f9c3a09313dfdeba876d7dfb079a",
+        "policyDigest": "sha256:fe0e448a21c707567e90aa0051811a096c2f5f8c7c086a3c846332ee345b81b7",
+        "schemaDigest": "sha256:fa051f8dacdda448303d5182374d7970b02e71a496bcd41d098cd1bfd58b028c",
+        "sourceDigest": "sha256:195fca717beffb64a5ec20c0aaa5d48ce4fd59ee281f044287d87efc209fb2a4"
+      },
+      "apiReturnFields": [
+        "acknowledgement",
+        "records"
+      ],
+      "baselineLifecycle": {
+        "selection": "fresh isolated stand selects this exact complete owner manifest before any setup write, source admission, binding persistence, baseline capture or tested method",
+        "preparation": "Materialize only the shape/data fields of old frozen specimen plus THIS originalbinding by canonicalJson. Refuse old globalA binding, authenticate synthetic fixture map in stand; source/profile/policy/schema/generation hashes checked before first effect. Seeded prior is explicit setup, not claimed emitted by unchanged current loader. Retained reference materialization/accounting remains same original quota prerequisite.",
+        "capture": "After deterministic preparation and bounded fullsnapshot validation, record exact prior SHA, source refs, policy/grants and immutable original generation; start tested method with no rebind/current-profile change. Native effects never run by this documentation package.",
+        "history": "recovery/retry/fixedEval retains this same original generation and wholeCap; wronglatest/globalA digest or commandlimits rejects before new write"
+      },
+      "negative": {
+        "completeOriginalAuthor": {
+          "schemaVersion": "swarm-component.v1",
+          "owner": "buster-engine",
+          "settings": {
+            "preparation": {
+              "resourcePolicy": {
+                "cpuTimeMs": 120000,
+                "memoryBytes": 8589934592,
+                "tasks": 64
+              },
+              "timeoutMs": 300000,
+              "cleanupTimeoutMs": 10000,
+              "maximumActivePreparations": 2,
+              "maximumPendingAdmissions": 16,
+              "maximumRequestBytes": 100663296,
+              "maximumArchiveBytes": 67108864,
+              "maximumExtractedBytes": 536870912,
+              "maximumHeaderBytes": 3145728,
+              "maximumSourceBytes": 1073741824,
+              "maximumMetadataBytes": 67108864,
+              "maximumRecords": 10000,
+              "maximumOwnershipBytes": 16777216,
+              "maximumJournalBytes": 268435456,
+              "maximumInputBytes": 65536,
+              "maximumOutputBytes": 8388608,
+              "maximumResultBytes": 4194304,
+              "pollIntervalMs": 25,
+              "drainTimeoutMs": 5000,
+              "closeTimeoutMs": 10000,
+              "tarTimeoutMs": 120000,
+              "maximumArchiveEntries": 200000,
+              "maximumListingLineBytes": 1048576,
+              "maximumTarStderrBytes": 65536,
+              "maximumSourceEntries": 400014,
+              "sourceEntryReservationBytes": 256,
+              "maximumOpenFiles": 64,
+              "tarDiagnosticCodeUnits": 4096,
+              "storeLockWaitSeconds": 5
+            },
+            "admission": {
+              "maximumActiveJobs": 2,
+              "maximumQueuedJobs": 8,
+              "maximumConcurrentAttempts": 64
+            },
+            "dependencyReadiness": {
+              "maximumExecutionMs": 1000,
+              "maximumOutputBytes": 65536
+            },
+            "execution": {
+              "provider": {
+                "cleanupTimeoutMs": 30000,
+                "maximumResultBytes": 16777216,
+                "claimGraceMs": 60000,
+                "queueTimeoutMs": 60000,
+                "workerResultWrapperBytes": 4096,
+                "maximumProtocolBytes": 16777216,
+                "terminationGraceMs": 500,
+                "terminationTimeoutMs": 1000,
+                "capabilityDrainTimeoutMs": 1000,
+                "minimumHeapMiB": 16,
+                "heapFraction": 0.7,
+                "maximumPendingCapabilities": 32,
+                "minimumOpenFiles": 64,
+                "artifactFileDescriptorReserve": 32
+              },
+              "reports": {
+                "maximumAggregateResultBytes": 16777216,
+                "maximumSourceBytes": 67108864,
+                "maximumCases": 5000,
+                "maximumFindings": 5000,
+                "maximumCaseFindings": 100,
+                "maximumTimeoutMs": 300000,
+                "memoryBytes": 536870912,
+                "minimumCpuTimeMs": 1000,
+                "maximumOpenFiles": 64,
+                "minimumOpenFiles": 16,
+                "minimumHeapMiB": 16,
+                "heapFraction": 0.7,
+                "runtimeMemoryReserveBytes": 67108864
+              },
+              "observation": {
+                "resourceSampleIntervalMs": 10,
+                "processSampleIntervalMs": 50
+              },
+              "stores": {
+                "attempts": {
+                  "maximumEvidenceObjects": 10000,
+                  "maximumEvidenceBytes": 10737418240,
+                  "maximumEvidenceObjectBytes": 1073741824,
+                  "maximumResults": 10000,
+                  "maximumClosures": 10000,
+                  "maximumMetadataBytes": 268435456,
+                  "maximumPendingEvidenceAgeMs": 3600000,
+                  "lockWaitSeconds": 5
+                },
+                "admission": {
+                  "maximumIngressBytes": 10000,
+                  "maximumRecords": 10,
+                  "maximumBytes": 10125,
+                  "maximumQuarantineRecords": 1,
+                  "maximumQuarantineBytes": 1933,
+                  "reasonThresholdCodeUnits": 256,
+                  "reasonPrefixCodeUnits": 180,
+                  "metadataReserveBytes": 8192,
+                  "lockWaitSeconds": 5
+                }
+              },
+              "processInput": {
+                "cleanupTimeoutMs": 1500,
+                "terminationGraceMs": 250,
+                "acknowledgementPollMs": 10
+              }
+            },
+            "clusterInvokers": {
+              "shared": {
+                "kubectlExecutable": "/usr/local/bin/kubectl",
+                "leaseApiGroup": "kubeclaw.forgestack.ai",
+                "leaseApiVersion": "v1alpha1"
+              },
+              "kubernetesFixture": {
+                "allowedNamespacePrefixes": [
+                  "test"
+                ],
+                "registryRepositoryPrefixes": [
+                  "kubeclaw"
+                ],
+                "allowedSecretReferences": [],
+                "allowedStorageClasses": [],
+                "allowDefaultStorageClass": true,
+                "runnerServiceAccount": "agent-buster",
+                "credentialReaderServiceAccount": "agent-nova",
+                "maximumManifestBytes": 1048576,
+                "maximumResources": 64,
+                "maximumPersistentVolumeClaimBytes": 10737418240,
+                "maximumPersistentVolumeTotalBytes": 21474836480,
+                "maximumRetentionSeconds": 604800,
+                "maximumExecutionMs": 900000,
+                "pollIntervalMs": 1000,
+                "shortCommandTimeoutMs": 15000,
+                "commandOutputManifestMultiplier": 2,
+                "diagnosticCodeUnits": 4096,
+                "manifest": {
+                  "maximumNodes": 100000,
+                  "maximumDepth": 64,
+                  "maximumAliases": 1000,
+                  "maximumFlattenVisits": 100000,
+                  "maximumFlattenPending": 100000
+                }
+              },
+              "tailscaleExposure": {
+                "allowedNamespacePrefixes": [
+                  "test"
+                ],
+                "allowedHostSuffixes": [
+                  ".ts.net"
+                ],
+                "maximumExecutionMs": 900000,
+                "pollIntervalMs": 1000,
+                "shortCommandTimeoutMs": 15000,
+                "maximumCommandOutputBytes": 1048576
+              },
+              "runtimeSecurity": {
+                "allowedNamespacePrefixes": [
+                  "test"
+                ],
+                "maximumExecutionMs": 300000,
+                "maximumOutputBytes": 16777216,
+                "pollIntervalMs": 1000,
+                "maximumObservationAgeMs": 10000,
+                "maximumFutureSkewMs": 5000,
+                "diagnosticCodeUnits": 1024,
+                "executableSearchPath": [
+                  "/usr/local/bin",
+                  "/usr/bin",
+                  "/bin"
+                ]
+              }
+            }
+          }
+        },
+        "originalBinding": {
+          "schemaVersion": "admission-binding.v1",
+          "owner": "buster-engine",
+          "generationDigest": "sha256:b2af614cacece5fbe802e62bbb1ebe11128e0da792729874933ceec00dda47b8",
+          "profileDigest": "sha256:aef6c996b91c5c3a1110bd03b99d2f74018e3bc50f76126467f686fc443f5c39",
+          "policyDigest": "sha256:b4d9c3cff4224db7bcb0a1fc0e24ea9688a5b867bcc0a7071c8e14aee4136cf3",
+          "schemaDigest": "sha256:fa051f8dacdda448303d5182374d7970b02e71a496bcd41d098cd1bfd58b028c",
+          "sourceDigest": "sha256:195fca717beffb64a5ec20c0aaa5d48ce4fd59ee281f044287d87efc209fb2a4"
+        },
+        "originalPolicyManifest": {
+          "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/manifests/normal-admitAndRead-negative-original.json",
+          "sha256": "1d0b8f68c77fd1f8fa786d4ec786c749658d792f7d0dfa0b33ead4565c59be28",
+          "sizeBytes": 8324
+        },
+        "prior": {
+          "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/normal-admitAndRead-negative-prior.json",
+          "sha256": "db39ddec140ca93b29c069e934a3b50319372608f33f61d73bb01da523a39e94",
+          "sizeBytes": 707
+        },
+        "attemptedCandidate": {
+          "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/normal-admitAndRead-negative-attempted-candidate.json",
+          "sha256": "25621f0929f76566f4e3abc3eb966fb581cbdc6cca871e1ba77dbfa1a76c050d",
+          "sizeBytes": 1934
+        },
+        "wholeCap": 10125,
+        "originalSelectionLifecycle": "SEPARATE fresh stand selects negativeoriginal complete profile and computes binding BEFORE any prior preparation/baseline/effect. Not publishB/changequota/rebind of positiveoriginal retained history. Negative prior is same data shape with its own authentic synthetic originalbinding, not same bytes as positiveprior.",
+        "input": "{\"correlation\":{\"attemptId\":\"attempt:1\",\"claimGeneration\":1,\"claimId\":\"claim:1\",\"gateId\":\"final\",\"moduleId\":\"api\",\"parentEventId\":null,\"pipelineRunId\":\"run:1\",\"traceId\":\"trace:1\"},\"occurredAt\":\"2026-08-09T12:00:00Z\",\"payload\":{\"state\":\"started\"},\"producer\":{\"bootId\":\"boot:1\",\"producerId\":\"worker:1\",\"producerType\":\"buster\"},\"recordDigest\":\"sha256:e6e35abdea7c6c24a809c03d541bfce0aa0da1553973d87990c5b67d42d79576\",\"recordId\":\"record:1\",\"recordType\":\"attempt.started\",\"schemaVersion\":\"producer-record.v1\",\"sequence\":1}",
+        "headroom": 8192,
+        "expected": "OBSERVABILITY_ADMISSION_FULL before ordinary admission/gap write; no ACK; prior exact bytes/hash unchanged"
+      },
+      "apiReturnOracle": {
+        "resultOwnKeys": [
+          "acknowledgement",
+          "records"
+        ],
+        "acknowledgement": {
+          "state": "admitted",
+          "canonicalCursor": 1,
+          "recordId": "record:1",
+          "recordDigest": "sha256:e6e35abdea7c6c24a809c03d541bfce0aa0da1553973d87990c5b67d42d79576"
+        },
+        "byteCountSource": "Read persisted canonical admission state in owned stand after method; no result.bytes or acknowledgement.bytes expectation",
+        "recordComparison": "result.records.map(view=>view.record) equals exact rawRecord; views also carry canonicalCursor1 and admittedAt from accepted snapshot"
+      }
+    },
+    {
+      "id": "duplicate",
+      "method": "admit",
+      "prior": {
+        "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/duplicate-positive-prior.json",
+        "sha256": "a9248a57ef5877c31cd29527aadd9980ed93d7c9f595dafcfec9cf23f9738eb9",
+        "sizeBytes": 1934
+      },
+      "input": "{\"correlation\":{\"attemptId\":\"attempt:1\",\"claimGeneration\":1,\"claimId\":\"claim:1\",\"gateId\":\"final\",\"moduleId\":\"api\",\"parentEventId\":null,\"pipelineRunId\":\"run:1\",\"traceId\":\"trace:1\"},\"occurredAt\":\"2026-08-09T12:00:00Z\",\"payload\":{\"state\":\"started\"},\"producer\":{\"bootId\":\"boot:1\",\"producerId\":\"worker:1\",\"producerType\":\"buster\"},\"recordDigest\":\"sha256:e6e35abdea7c6c24a809c03d541bfce0aa0da1553973d87990c5b67d42d79576\",\"recordId\":\"record:1\",\"recordType\":\"attempt.started\",\"schemaVersion\":\"producer-record.v1\",\"sequence\":1}",
+      "wholeCapFormula": "prior.sizeBytes+8192",
+      "oracle": "duplicate cursor1; whole state/hash exactunchanged; no entry/nextCursor increment",
+      "completeOwningAuthor": {
+        "schemaVersion": "swarm-component.v1",
+        "owner": "buster-engine",
+        "settings": {
+          "preparation": {
+            "resourcePolicy": {
+              "cpuTimeMs": 120000,
+              "memoryBytes": 8589934592,
+              "tasks": 64
+            },
+            "timeoutMs": 300000,
+            "cleanupTimeoutMs": 10000,
+            "maximumActivePreparations": 2,
+            "maximumPendingAdmissions": 16,
+            "maximumRequestBytes": 100663296,
+            "maximumArchiveBytes": 67108864,
+            "maximumExtractedBytes": 536870912,
+            "maximumHeaderBytes": 3145728,
+            "maximumSourceBytes": 1073741824,
+            "maximumMetadataBytes": 67108864,
+            "maximumRecords": 10000,
+            "maximumOwnershipBytes": 16777216,
+            "maximumJournalBytes": 268435456,
+            "maximumInputBytes": 65536,
+            "maximumOutputBytes": 8388608,
+            "maximumResultBytes": 4194304,
+            "pollIntervalMs": 25,
+            "drainTimeoutMs": 5000,
+            "closeTimeoutMs": 10000,
+            "tarTimeoutMs": 120000,
+            "maximumArchiveEntries": 200000,
+            "maximumListingLineBytes": 1048576,
+            "maximumTarStderrBytes": 65536,
+            "maximumSourceEntries": 400014,
+            "sourceEntryReservationBytes": 256,
+            "maximumOpenFiles": 64,
+            "tarDiagnosticCodeUnits": 4096,
+            "storeLockWaitSeconds": 5
+          },
+          "admission": {
+            "maximumActiveJobs": 2,
+            "maximumQueuedJobs": 8,
+            "maximumConcurrentAttempts": 64
+          },
+          "dependencyReadiness": {
+            "maximumExecutionMs": 1000,
+            "maximumOutputBytes": 65536
+          },
+          "execution": {
+            "provider": {
+              "cleanupTimeoutMs": 30000,
+              "maximumResultBytes": 16777216,
+              "claimGraceMs": 60000,
+              "queueTimeoutMs": 60000,
+              "workerResultWrapperBytes": 4096,
+              "maximumProtocolBytes": 16777216,
+              "terminationGraceMs": 500,
+              "terminationTimeoutMs": 1000,
+              "capabilityDrainTimeoutMs": 1000,
+              "minimumHeapMiB": 16,
+              "heapFraction": 0.7,
+              "maximumPendingCapabilities": 32,
+              "minimumOpenFiles": 64,
+              "artifactFileDescriptorReserve": 32
+            },
+            "reports": {
+              "maximumAggregateResultBytes": 16777216,
+              "maximumSourceBytes": 67108864,
+              "maximumCases": 5000,
+              "maximumFindings": 5000,
+              "maximumCaseFindings": 100,
+              "maximumTimeoutMs": 300000,
+              "memoryBytes": 536870912,
+              "minimumCpuTimeMs": 1000,
+              "maximumOpenFiles": 64,
+              "minimumOpenFiles": 16,
+              "minimumHeapMiB": 16,
+              "heapFraction": 0.7,
+              "runtimeMemoryReserveBytes": 67108864
+            },
+            "observation": {
+              "resourceSampleIntervalMs": 10,
+              "processSampleIntervalMs": 50
+            },
+            "stores": {
+              "attempts": {
+                "maximumEvidenceObjects": 10000,
+                "maximumEvidenceBytes": 10737418240,
+                "maximumEvidenceObjectBytes": 1073741824,
+                "maximumResults": 10000,
+                "maximumClosures": 10000,
+                "maximumMetadataBytes": 268435456,
+                "maximumPendingEvidenceAgeMs": 3600000,
+                "lockWaitSeconds": 5
+              },
+              "admission": {
+                "maximumIngressBytes": 10000,
+                "maximumRecords": 10,
+                "maximumBytes": 10126,
+                "maximumQuarantineRecords": 1,
+                "maximumQuarantineBytes": 1933,
+                "reasonThresholdCodeUnits": 256,
+                "reasonPrefixCodeUnits": 180,
+                "metadataReserveBytes": 8192,
+                "lockWaitSeconds": 5
+              }
+            },
+            "processInput": {
+              "cleanupTimeoutMs": 1500,
+              "terminationGraceMs": 250,
+              "acknowledgementPollMs": 10
+            }
+          },
+          "clusterInvokers": {
+            "shared": {
+              "kubectlExecutable": "/usr/local/bin/kubectl",
+              "leaseApiGroup": "kubeclaw.forgestack.ai",
+              "leaseApiVersion": "v1alpha1"
+            },
+            "kubernetesFixture": {
+              "allowedNamespacePrefixes": [
+                "test"
+              ],
+              "registryRepositoryPrefixes": [
+                "kubeclaw"
+              ],
+              "allowedSecretReferences": [],
+              "allowedStorageClasses": [],
+              "allowDefaultStorageClass": true,
+              "runnerServiceAccount": "agent-buster",
+              "credentialReaderServiceAccount": "agent-nova",
+              "maximumManifestBytes": 1048576,
+              "maximumResources": 64,
+              "maximumPersistentVolumeClaimBytes": 10737418240,
+              "maximumPersistentVolumeTotalBytes": 21474836480,
+              "maximumRetentionSeconds": 604800,
+              "maximumExecutionMs": 900000,
+              "pollIntervalMs": 1000,
+              "shortCommandTimeoutMs": 15000,
+              "commandOutputManifestMultiplier": 2,
+              "diagnosticCodeUnits": 4096,
+              "manifest": {
+                "maximumNodes": 100000,
+                "maximumDepth": 64,
+                "maximumAliases": 1000,
+                "maximumFlattenVisits": 100000,
+                "maximumFlattenPending": 100000
+              }
+            },
+            "tailscaleExposure": {
+              "allowedNamespacePrefixes": [
+                "test"
+              ],
+              "allowedHostSuffixes": [
+                ".ts.net"
+              ],
+              "maximumExecutionMs": 900000,
+              "pollIntervalMs": 1000,
+              "shortCommandTimeoutMs": 15000,
+              "maximumCommandOutputBytes": 1048576
+            },
+            "runtimeSecurity": {
+              "allowedNamespacePrefixes": [
+                "test"
+              ],
+              "maximumExecutionMs": 300000,
+              "maximumOutputBytes": 16777216,
+              "pollIntervalMs": 1000,
+              "maximumObservationAgeMs": 10000,
+              "maximumFutureSkewMs": 5000,
+              "diagnosticCodeUnits": 1024,
+              "executableSearchPath": [
+                "/usr/local/bin",
+                "/usr/bin",
+                "/bin"
+              ]
+            }
+          }
+        }
+      },
+      "wholeCap": 10126,
+      "originalPolicyManifest": {
+        "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/manifests/duplicate-positive-original.json",
+        "sha256": "28bc43d9a21570e463aeacf4a4eac7eb2ee9d78bf71260ac7164c48d42e67ece",
+        "sizeBytes": 8304
+      },
+      "originalBinding": {
+        "schemaVersion": "admission-binding.v1",
+        "owner": "buster-engine",
+        "generationDigest": "sha256:1a20f5d87be96f47f18f066400525b85b2071842f3a96e62f891818b81447234",
+        "profileDigest": "sha256:f37d072a5c65ab303512c5942116683924f7f9c3a09313dfdeba876d7dfb079a",
+        "policyDigest": "sha256:fe0e448a21c707567e90aa0051811a096c2f5f8c7c086a3c846332ee345b81b7",
+        "schemaDigest": "sha256:fa051f8dacdda448303d5182374d7970b02e71a496bcd41d098cd1bfd58b028c",
+        "sourceDigest": "sha256:195fca717beffb64a5ec20c0aaa5d48ce4fd59ee281f044287d87efc209fb2a4"
+      },
+      "candidate": {
+        "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/duplicate-positive-candidate.json",
+        "sha256": "a9248a57ef5877c31cd29527aadd9980ed93d7c9f595dafcfec9cf23f9738eb9",
+        "sizeBytes": 1934
+      },
+      "baselineLifecycle": {
+        "selection": "fresh isolated stand selects this exact complete owner manifest before any setup write, source admission, binding persistence, baseline capture or tested method",
+        "preparation": "Materialize only the shape/data fields of old frozen specimen plus THIS originalbinding by canonicalJson. Refuse old globalA binding, authenticate synthetic fixture map in stand; source/profile/policy/schema/generation hashes checked before first effect. Seeded prior is explicit setup, not claimed emitted by unchanged current loader. Retained reference materialization/accounting remains same original quota prerequisite.",
+        "capture": "After deterministic preparation and bounded fullsnapshot validation, record exact prior SHA, source refs, policy/grants and immutable original generation; start tested method with no rebind/current-profile change. Native effects never run by this documentation package.",
+        "history": "recovery/retry/fixedEval retains this same original generation and wholeCap; wronglatest/globalA digest or commandlimits rejects before new write"
+      }
+    },
+    {
+      "id": "quarantine",
+      "method": "admit",
+      "prior": {
+        "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/quarantine-positive-prior.json",
+        "sha256": "fe21ed2dd211577b929d57bc6683f6ccd15a2ef6cf15e5dd3e6896a4b79a5d94",
+        "sizeBytes": 1934
+      },
+      "input": "{\"correlation\":{\"attemptId\":\"attempt:1\",\"claimGeneration\":1,\"claimId\":\"claim:1\",\"gateId\":\"final\",\"moduleId\":\"api\",\"parentEventId\":null,\"pipelineRunId\":\"run:1\",\"traceId\":\"trace:1\"},\"occurredAt\":\"2026-08-09T12:00:00Z\",\"payload\":{\"state\":\"started\"},\"producer\":{\"bootId\":\"boot:1\",\"producerId\":\"worker:1\",\"producerType\":\"buster\"},\"recordDigest\":\"sha256:e6e35abdea7c6c24a809c03d541bfce0aa0da1553973d87990c5b67d42d79576\",\"recordId\":\"record:1\",\"recordType\":\"attempt.started\",\"schemaVersion\":\"producer-record.v1\",\"sequence\":1}\n",
+      "candidate": {
+        "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/quarantine-positive-candidate.json",
+        "sha256": "220965e3467e87e5c6f7b98a20018e1125ddfbdbcdca888fe7cf399bff9da37b",
+        "sizeBytes": 3075
+      },
+      "wholeCapFormula": "candidate.sizeBytes+8192",
+      "negativeCapFormula": "candidate.sizeBytes+8192-1",
+      "oracle": "decodererror remains; accepted quarantine one attributed unresolved item; actual newUUID/time valid fixedwidth and computedbyteoracle, not injected clock; insufficient headroom falls into explicitly accounted overflow, not lostattribution",
+      "completeOwningAuthor": {
+        "schemaVersion": "swarm-component.v1",
+        "owner": "buster-engine",
+        "settings": {
+          "preparation": {
+            "resourcePolicy": {
+              "cpuTimeMs": 120000,
+              "memoryBytes": 8589934592,
+              "tasks": 64
+            },
+            "timeoutMs": 300000,
+            "cleanupTimeoutMs": 10000,
+            "maximumActivePreparations": 2,
+            "maximumPendingAdmissions": 16,
+            "maximumRequestBytes": 100663296,
+            "maximumArchiveBytes": 67108864,
+            "maximumExtractedBytes": 536870912,
+            "maximumHeaderBytes": 3145728,
+            "maximumSourceBytes": 1073741824,
+            "maximumMetadataBytes": 67108864,
+            "maximumRecords": 10000,
+            "maximumOwnershipBytes": 16777216,
+            "maximumJournalBytes": 268435456,
+            "maximumInputBytes": 65536,
+            "maximumOutputBytes": 8388608,
+            "maximumResultBytes": 4194304,
+            "pollIntervalMs": 25,
+            "drainTimeoutMs": 5000,
+            "closeTimeoutMs": 10000,
+            "tarTimeoutMs": 120000,
+            "maximumArchiveEntries": 200000,
+            "maximumListingLineBytes": 1048576,
+            "maximumTarStderrBytes": 65536,
+            "maximumSourceEntries": 400014,
+            "sourceEntryReservationBytes": 256,
+            "maximumOpenFiles": 64,
+            "tarDiagnosticCodeUnits": 4096,
+            "storeLockWaitSeconds": 5
+          },
+          "admission": {
+            "maximumActiveJobs": 2,
+            "maximumQueuedJobs": 8,
+            "maximumConcurrentAttempts": 64
+          },
+          "dependencyReadiness": {
+            "maximumExecutionMs": 1000,
+            "maximumOutputBytes": 65536
+          },
+          "execution": {
+            "provider": {
+              "cleanupTimeoutMs": 30000,
+              "maximumResultBytes": 16777216,
+              "claimGraceMs": 60000,
+              "queueTimeoutMs": 60000,
+              "workerResultWrapperBytes": 4096,
+              "maximumProtocolBytes": 16777216,
+              "terminationGraceMs": 500,
+              "terminationTimeoutMs": 1000,
+              "capabilityDrainTimeoutMs": 1000,
+              "minimumHeapMiB": 16,
+              "heapFraction": 0.7,
+              "maximumPendingCapabilities": 32,
+              "minimumOpenFiles": 64,
+              "artifactFileDescriptorReserve": 32
+            },
+            "reports": {
+              "maximumAggregateResultBytes": 16777216,
+              "maximumSourceBytes": 67108864,
+              "maximumCases": 5000,
+              "maximumFindings": 5000,
+              "maximumCaseFindings": 100,
+              "maximumTimeoutMs": 300000,
+              "memoryBytes": 536870912,
+              "minimumCpuTimeMs": 1000,
+              "maximumOpenFiles": 64,
+              "minimumOpenFiles": 16,
+              "minimumHeapMiB": 16,
+              "heapFraction": 0.7,
+              "runtimeMemoryReserveBytes": 67108864
+            },
+            "observation": {
+              "resourceSampleIntervalMs": 10,
+              "processSampleIntervalMs": 50
+            },
+            "stores": {
+              "attempts": {
+                "maximumEvidenceObjects": 10000,
+                "maximumEvidenceBytes": 10737418240,
+                "maximumEvidenceObjectBytes": 1073741824,
+                "maximumResults": 10000,
+                "maximumClosures": 10000,
+                "maximumMetadataBytes": 268435456,
+                "maximumPendingEvidenceAgeMs": 3600000,
+                "lockWaitSeconds": 5
+              },
+              "admission": {
+                "maximumIngressBytes": 10000,
+                "maximumRecords": 10,
+                "maximumBytes": 11267,
+                "maximumQuarantineRecords": 1,
+                "maximumQuarantineBytes": 3074,
+                "reasonThresholdCodeUnits": 256,
+                "reasonPrefixCodeUnits": 180,
+                "metadataReserveBytes": 8192,
+                "lockWaitSeconds": 5
+              }
+            },
+            "processInput": {
+              "cleanupTimeoutMs": 1500,
+              "terminationGraceMs": 250,
+              "acknowledgementPollMs": 10
+            }
+          },
+          "clusterInvokers": {
+            "shared": {
+              "kubectlExecutable": "/usr/local/bin/kubectl",
+              "leaseApiGroup": "kubeclaw.forgestack.ai",
+              "leaseApiVersion": "v1alpha1"
+            },
+            "kubernetesFixture": {
+              "allowedNamespacePrefixes": [
+                "test"
+              ],
+              "registryRepositoryPrefixes": [
+                "kubeclaw"
+              ],
+              "allowedSecretReferences": [],
+              "allowedStorageClasses": [],
+              "allowDefaultStorageClass": true,
+              "runnerServiceAccount": "agent-buster",
+              "credentialReaderServiceAccount": "agent-nova",
+              "maximumManifestBytes": 1048576,
+              "maximumResources": 64,
+              "maximumPersistentVolumeClaimBytes": 10737418240,
+              "maximumPersistentVolumeTotalBytes": 21474836480,
+              "maximumRetentionSeconds": 604800,
+              "maximumExecutionMs": 900000,
+              "pollIntervalMs": 1000,
+              "shortCommandTimeoutMs": 15000,
+              "commandOutputManifestMultiplier": 2,
+              "diagnosticCodeUnits": 4096,
+              "manifest": {
+                "maximumNodes": 100000,
+                "maximumDepth": 64,
+                "maximumAliases": 1000,
+                "maximumFlattenVisits": 100000,
+                "maximumFlattenPending": 100000
+              }
+            },
+            "tailscaleExposure": {
+              "allowedNamespacePrefixes": [
+                "test"
+              ],
+              "allowedHostSuffixes": [
+                ".ts.net"
+              ],
+              "maximumExecutionMs": 900000,
+              "pollIntervalMs": 1000,
+              "shortCommandTimeoutMs": 15000,
+              "maximumCommandOutputBytes": 1048576
+            },
+            "runtimeSecurity": {
+              "allowedNamespacePrefixes": [
+                "test"
+              ],
+              "maximumExecutionMs": 300000,
+              "maximumOutputBytes": 16777216,
+              "pollIntervalMs": 1000,
+              "maximumObservationAgeMs": 10000,
+              "maximumFutureSkewMs": 5000,
+              "diagnosticCodeUnits": 1024,
+              "executableSearchPath": [
+                "/usr/local/bin",
+                "/usr/bin",
+                "/bin"
+              ]
+            }
+          }
+        }
+      },
+      "wholeCap": 11267,
+      "negativeWholeCap": 11266,
+      "originalPolicyManifest": {
+        "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/manifests/quarantine-positive-original.json",
+        "sha256": "09460d174a29232aac137414cb8f3d0393d2504fb390c402c9b7eecb76799c4d",
+        "sizeBytes": 8306
+      },
+      "originalBinding": {
+        "schemaVersion": "admission-binding.v1",
+        "owner": "buster-engine",
+        "generationDigest": "sha256:4d66dbf49607fa392a3688a4e9e44fa0be65c1975e138af4c7d89e1c1c7916fd",
+        "profileDigest": "sha256:3e4fe412569c978d4c919a73baec2128d29412ddcce1919f56fb4d3911ba0d5c",
+        "policyDigest": "sha256:7444f9aa902cef00462674110d27b6952451bd9ff40c710193b90898567ca179",
+        "schemaDigest": "sha256:fa051f8dacdda448303d5182374d7970b02e71a496bcd41d098cd1bfd58b028c",
+        "sourceDigest": "sha256:195fca717beffb64a5ec20c0aaa5d48ce4fd59ee281f044287d87efc209fb2a4"
+      },
+      "baselineLifecycle": {
+        "selection": "fresh isolated stand selects this exact complete owner manifest before any setup write, source admission, binding persistence, baseline capture or tested method",
+        "preparation": "Materialize only the shape/data fields of old frozen specimen plus THIS originalbinding by canonicalJson. Refuse old globalA binding, authenticate synthetic fixture map in stand; source/profile/policy/schema/generation hashes checked before first effect. Seeded prior is explicit setup, not claimed emitted by unchanged current loader. Retained reference materialization/accounting remains same original quota prerequisite.",
+        "capture": "After deterministic preparation and bounded fullsnapshot validation, record exact prior SHA, source refs, policy/grants and immutable original generation; start tested method with no rebind/current-profile change. Native effects never run by this documentation package.",
+        "history": "recovery/retry/fixedEval retains this same original generation and wholeCap; wronglatest/globalA digest or commandlimits rejects before new write"
+      },
+      "negative": {
+        "completeOriginalAuthor": {
+          "schemaVersion": "swarm-component.v1",
+          "owner": "buster-engine",
+          "settings": {
+            "preparation": {
+              "resourcePolicy": {
+                "cpuTimeMs": 120000,
+                "memoryBytes": 8589934592,
+                "tasks": 64
+              },
+              "timeoutMs": 300000,
+              "cleanupTimeoutMs": 10000,
+              "maximumActivePreparations": 2,
+              "maximumPendingAdmissions": 16,
+              "maximumRequestBytes": 100663296,
+              "maximumArchiveBytes": 67108864,
+              "maximumExtractedBytes": 536870912,
+              "maximumHeaderBytes": 3145728,
+              "maximumSourceBytes": 1073741824,
+              "maximumMetadataBytes": 67108864,
+              "maximumRecords": 10000,
+              "maximumOwnershipBytes": 16777216,
+              "maximumJournalBytes": 268435456,
+              "maximumInputBytes": 65536,
+              "maximumOutputBytes": 8388608,
+              "maximumResultBytes": 4194304,
+              "pollIntervalMs": 25,
+              "drainTimeoutMs": 5000,
+              "closeTimeoutMs": 10000,
+              "tarTimeoutMs": 120000,
+              "maximumArchiveEntries": 200000,
+              "maximumListingLineBytes": 1048576,
+              "maximumTarStderrBytes": 65536,
+              "maximumSourceEntries": 400014,
+              "sourceEntryReservationBytes": 256,
+              "maximumOpenFiles": 64,
+              "tarDiagnosticCodeUnits": 4096,
+              "storeLockWaitSeconds": 5
+            },
+            "admission": {
+              "maximumActiveJobs": 2,
+              "maximumQueuedJobs": 8,
+              "maximumConcurrentAttempts": 64
+            },
+            "dependencyReadiness": {
+              "maximumExecutionMs": 1000,
+              "maximumOutputBytes": 65536
+            },
+            "execution": {
+              "provider": {
+                "cleanupTimeoutMs": 30000,
+                "maximumResultBytes": 16777216,
+                "claimGraceMs": 60000,
+                "queueTimeoutMs": 60000,
+                "workerResultWrapperBytes": 4096,
+                "maximumProtocolBytes": 16777216,
+                "terminationGraceMs": 500,
+                "terminationTimeoutMs": 1000,
+                "capabilityDrainTimeoutMs": 1000,
+                "minimumHeapMiB": 16,
+                "heapFraction": 0.7,
+                "maximumPendingCapabilities": 32,
+                "minimumOpenFiles": 64,
+                "artifactFileDescriptorReserve": 32
+              },
+              "reports": {
+                "maximumAggregateResultBytes": 16777216,
+                "maximumSourceBytes": 67108864,
+                "maximumCases": 5000,
+                "maximumFindings": 5000,
+                "maximumCaseFindings": 100,
+                "maximumTimeoutMs": 300000,
+                "memoryBytes": 536870912,
+                "minimumCpuTimeMs": 1000,
+                "maximumOpenFiles": 64,
+                "minimumOpenFiles": 16,
+                "minimumHeapMiB": 16,
+                "heapFraction": 0.7,
+                "runtimeMemoryReserveBytes": 67108864
+              },
+              "observation": {
+                "resourceSampleIntervalMs": 10,
+                "processSampleIntervalMs": 50
+              },
+              "stores": {
+                "attempts": {
+                  "maximumEvidenceObjects": 10000,
+                  "maximumEvidenceBytes": 10737418240,
+                  "maximumEvidenceObjectBytes": 1073741824,
+                  "maximumResults": 10000,
+                  "maximumClosures": 10000,
+                  "maximumMetadataBytes": 268435456,
+                  "maximumPendingEvidenceAgeMs": 3600000,
+                  "lockWaitSeconds": 5
+                },
+                "admission": {
+                  "maximumIngressBytes": 10000,
+                  "maximumRecords": 10,
+                  "maximumBytes": 11266,
+                  "maximumQuarantineRecords": 1,
+                  "maximumQuarantineBytes": 3074,
+                  "reasonThresholdCodeUnits": 256,
+                  "reasonPrefixCodeUnits": 180,
+                  "metadataReserveBytes": 8192,
+                  "lockWaitSeconds": 5
+                }
+              },
+              "processInput": {
+                "cleanupTimeoutMs": 1500,
+                "terminationGraceMs": 250,
+                "acknowledgementPollMs": 10
+              }
+            },
+            "clusterInvokers": {
+              "shared": {
+                "kubectlExecutable": "/usr/local/bin/kubectl",
+                "leaseApiGroup": "kubeclaw.forgestack.ai",
+                "leaseApiVersion": "v1alpha1"
+              },
+              "kubernetesFixture": {
+                "allowedNamespacePrefixes": [
+                  "test"
+                ],
+                "registryRepositoryPrefixes": [
+                  "kubeclaw"
+                ],
+                "allowedSecretReferences": [],
+                "allowedStorageClasses": [],
+                "allowDefaultStorageClass": true,
+                "runnerServiceAccount": "agent-buster",
+                "credentialReaderServiceAccount": "agent-nova",
+                "maximumManifestBytes": 1048576,
+                "maximumResources": 64,
+                "maximumPersistentVolumeClaimBytes": 10737418240,
+                "maximumPersistentVolumeTotalBytes": 21474836480,
+                "maximumRetentionSeconds": 604800,
+                "maximumExecutionMs": 900000,
+                "pollIntervalMs": 1000,
+                "shortCommandTimeoutMs": 15000,
+                "commandOutputManifestMultiplier": 2,
+                "diagnosticCodeUnits": 4096,
+                "manifest": {
+                  "maximumNodes": 100000,
+                  "maximumDepth": 64,
+                  "maximumAliases": 1000,
+                  "maximumFlattenVisits": 100000,
+                  "maximumFlattenPending": 100000
+                }
+              },
+              "tailscaleExposure": {
+                "allowedNamespacePrefixes": [
+                  "test"
+                ],
+                "allowedHostSuffixes": [
+                  ".ts.net"
+                ],
+                "maximumExecutionMs": 900000,
+                "pollIntervalMs": 1000,
+                "shortCommandTimeoutMs": 15000,
+                "maximumCommandOutputBytes": 1048576
+              },
+              "runtimeSecurity": {
+                "allowedNamespacePrefixes": [
+                  "test"
+                ],
+                "maximumExecutionMs": 300000,
+                "maximumOutputBytes": 16777216,
+                "pollIntervalMs": 1000,
+                "maximumObservationAgeMs": 10000,
+                "maximumFutureSkewMs": 5000,
+                "diagnosticCodeUnits": 1024,
+                "executableSearchPath": [
+                  "/usr/local/bin",
+                  "/usr/bin",
+                  "/bin"
+                ]
+              }
+            }
+          }
+        },
+        "originalBinding": {
+          "schemaVersion": "admission-binding.v1",
+          "owner": "buster-engine",
+          "generationDigest": "sha256:4f4be28a8a558c221420b658df4cc2c06e2a64e56801de2ec11fb3f5c5833c94",
+          "profileDigest": "sha256:23d05818dc6ac969ef8b9e3d5792cae37125bd5cec7fc22116354642b49707db",
+          "policyDigest": "sha256:5b51eaad84357d05bb760da532363c15ef64381fba451a315212d69868b609b0",
+          "schemaDigest": "sha256:fa051f8dacdda448303d5182374d7970b02e71a496bcd41d098cd1bfd58b028c",
+          "sourceDigest": "sha256:195fca717beffb64a5ec20c0aaa5d48ce4fd59ee281f044287d87efc209fb2a4"
+        },
+        "originalPolicyManifest": {
+          "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/manifests/quarantine-negative-original.json",
+          "sha256": "d1c94ca5c4b7f26f96d267d06daf10c18c50e6a0144b05b71d20ac25ced1e493",
+          "sizeBytes": 8306
+        },
+        "prior": {
+          "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/quarantine-negative-prior.json",
+          "sha256": "e414f4c469453980ea9aa23b95d4e152edee5209b3f7c5dda14b1f5c447a6b9a",
+          "sizeBytes": 1934
+        },
+        "attemptedCandidate": {
+          "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/quarantine-negative-attempted-candidate.json",
+          "sha256": "6dc3e6e2db3ea56437a2517cd735a8bd0a4f6da8667cad35c517663237a3f950",
+          "sizeBytes": 3075
+        },
+        "wholeCap": 11266,
+        "originalSelectionLifecycle": "SEPARATE fresh stand selects negativeoriginal complete profile and computes binding BEFORE any prior preparation/baseline/effect. Not publishB/changequota/rebind of positiveoriginal retained history. Negative prior is same data shape with its own authentic synthetic originalbinding, not same bytes as positiveprior.",
+        "input": "{\"correlation\":{\"attemptId\":\"attempt:1\",\"claimGeneration\":1,\"claimId\":\"claim:1\",\"gateId\":\"final\",\"moduleId\":\"api\",\"parentEventId\":null,\"pipelineRunId\":\"run:1\",\"traceId\":\"trace:1\"},\"occurredAt\":\"2026-08-09T12:00:00Z\",\"payload\":{\"state\":\"started\"},\"producer\":{\"bootId\":\"boot:1\",\"producerId\":\"worker:1\",\"producerType\":\"buster\"},\"recordDigest\":\"sha256:e6e35abdea7c6c24a809c03d541bfce0aa0da1553973d87990c5b67d42d79576\",\"recordId\":\"record:1\",\"recordType\":\"attempt.started\",\"schemaVersion\":\"producer-record.v1\",\"sequence\":1}\n",
+        "headroom": 8192,
+        "expected": "Decoder fault retained; insufficient normal quarantine headroom records explicit attributed overflow under same originalwholecap, not silent drop or unconditional FULL. Quarantine remains0, count1 and oneoverflowitem; candidate actualwholebytes<=negativeoriginalcap.",
+        "accountedOverflowCandidate": {
+          "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/quarantine-negative-overflow-candidate.json",
+          "sha256": "fc6ffb646ad7b7317754eb870278fd228c18c28ebe81dc00de3282bc06055019",
+          "sizeBytes": 2394
+        }
+      }
+    },
+    {
+      "id": "overflow",
+      "method": "admit",
+      "prior": {
+        "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/overflow-positive-prior.json",
+        "sha256": "c0e1ef388f03ca775a04086a37ccd42afc23a4bf2d8d958660d321b122f4193a",
+        "sizeBytes": 3075
+      },
+      "input": "{\"correlation\":{\"attemptId\":\"attempt:1\",\"claimGeneration\":1,\"claimId\":\"claim:1\",\"gateId\":\"final\",\"moduleId\":\"api\",\"parentEventId\":null,\"pipelineRunId\":\"run:1\",\"traceId\":\"trace:1\"},\"occurredAt\":\"2026-08-09T12:00:00Z\",\"payload\":{\"state\":\"started\"},\"producer\":{\"bootId\":\"boot:1\",\"producerId\":\"worker:1\",\"producerType\":\"buster\"},\"recordDigest\":\"sha256:e6e35abdea7c6c24a809c03d541bfce0aa0da1553973d87990c5b67d42d79576\",\"recordId\":\"record:1\",\"recordType\":\"attempt.started\",\"schemaVersion\":\"producer-record.v1\",\"sequence\":1}  ",
+      "candidate": {
+        "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/overflow-positive-candidate.json",
+        "sha256": "d013b261c1c588a2cd678df6ec35c2540830c9c35d7eaedcc48a85937c50a92b",
+        "sizeBytes": 3535
+      },
+      "oracle": "Existingquarantinecount1 routes tooverflow; decodererror retained; count1 andoneattributedoverflowitem, actual canonicalcandidate3535bytes under samecap100000. Negative same prior with overflowUnresolvedItems already tracking a different validrun at selectedcount1 rejects FULL unchanged; counterMAX_SAFE negative separatelyrequired. A cap candidateBytes-1 cannot be a valid ordinary-headroom history profile here and is NOT a genuine adjacentpositive/negative.",
+      "wholeCap": 100000,
+      "negativePrior": {
+        "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/overflow-negative-other-run-prior.json",
+        "sha256": "99753959507f8ec4fd40e23d3ae29af949573bcb423fbc1857ec9f0dc64e64ce",
+        "sizeBytes": 3547
+      },
+      "negativeInput": "{\"correlation\":{\"attemptId\":\"attempt:1\",\"claimGeneration\":1,\"claimId\":\"claim:1\",\"gateId\":\"final\",\"moduleId\":\"api\",\"parentEventId\":null,\"pipelineRunId\":\"run:1\",\"traceId\":\"trace:1\"},\"occurredAt\":\"2026-08-09T12:00:00Z\",\"payload\":{\"state\":\"started\"},\"producer\":{\"bootId\":\"boot:1\",\"producerId\":\"worker:1\",\"producerType\":\"buster\"},\"recordDigest\":\"sha256:e6e35abdea7c6c24a809c03d541bfce0aa0da1553973d87990c5b67d42d79576\",\"recordId\":\"record:1\",\"recordType\":\"attempt.started\",\"schemaVersion\":\"producer-record.v1\",\"sequence\":1}  ",
+      "negativeWholeCap": 100000,
+      "negativeOracle": "same selectedcount1 already tracks other validrun; attempting run:1 second distinctoverflow attribution FULL beforewrite; exact retainedbytes/hashunchanged",
+      "completeOwningAuthor": {
+        "schemaVersion": "swarm-component.v1",
+        "owner": "buster-engine",
+        "settings": {
+          "preparation": {
+            "resourcePolicy": {
+              "cpuTimeMs": 120000,
+              "memoryBytes": 8589934592,
+              "tasks": 64
+            },
+            "timeoutMs": 300000,
+            "cleanupTimeoutMs": 10000,
+            "maximumActivePreparations": 2,
+            "maximumPendingAdmissions": 16,
+            "maximumRequestBytes": 100663296,
+            "maximumArchiveBytes": 67108864,
+            "maximumExtractedBytes": 536870912,
+            "maximumHeaderBytes": 3145728,
+            "maximumSourceBytes": 1073741824,
+            "maximumMetadataBytes": 67108864,
+            "maximumRecords": 10000,
+            "maximumOwnershipBytes": 16777216,
+            "maximumJournalBytes": 268435456,
+            "maximumInputBytes": 65536,
+            "maximumOutputBytes": 8388608,
+            "maximumResultBytes": 4194304,
+            "pollIntervalMs": 25,
+            "drainTimeoutMs": 5000,
+            "closeTimeoutMs": 10000,
+            "tarTimeoutMs": 120000,
+            "maximumArchiveEntries": 200000,
+            "maximumListingLineBytes": 1048576,
+            "maximumTarStderrBytes": 65536,
+            "maximumSourceEntries": 400014,
+            "sourceEntryReservationBytes": 256,
+            "maximumOpenFiles": 64,
+            "tarDiagnosticCodeUnits": 4096,
+            "storeLockWaitSeconds": 5
+          },
+          "admission": {
+            "maximumActiveJobs": 2,
+            "maximumQueuedJobs": 8,
+            "maximumConcurrentAttempts": 64
+          },
+          "dependencyReadiness": {
+            "maximumExecutionMs": 1000,
+            "maximumOutputBytes": 65536
+          },
+          "execution": {
+            "provider": {
+              "cleanupTimeoutMs": 30000,
+              "maximumResultBytes": 16777216,
+              "claimGraceMs": 60000,
+              "queueTimeoutMs": 60000,
+              "workerResultWrapperBytes": 4096,
+              "maximumProtocolBytes": 16777216,
+              "terminationGraceMs": 500,
+              "terminationTimeoutMs": 1000,
+              "capabilityDrainTimeoutMs": 1000,
+              "minimumHeapMiB": 16,
+              "heapFraction": 0.7,
+              "maximumPendingCapabilities": 32,
+              "minimumOpenFiles": 64,
+              "artifactFileDescriptorReserve": 32
+            },
+            "reports": {
+              "maximumAggregateResultBytes": 16777216,
+              "maximumSourceBytes": 67108864,
+              "maximumCases": 5000,
+              "maximumFindings": 5000,
+              "maximumCaseFindings": 100,
+              "maximumTimeoutMs": 300000,
+              "memoryBytes": 536870912,
+              "minimumCpuTimeMs": 1000,
+              "maximumOpenFiles": 64,
+              "minimumOpenFiles": 16,
+              "minimumHeapMiB": 16,
+              "heapFraction": 0.7,
+              "runtimeMemoryReserveBytes": 67108864
+            },
+            "observation": {
+              "resourceSampleIntervalMs": 10,
+              "processSampleIntervalMs": 50
+            },
+            "stores": {
+              "attempts": {
+                "maximumEvidenceObjects": 10000,
+                "maximumEvidenceBytes": 10737418240,
+                "maximumEvidenceObjectBytes": 1073741824,
+                "maximumResults": 10000,
+                "maximumClosures": 10000,
+                "maximumMetadataBytes": 268435456,
+                "maximumPendingEvidenceAgeMs": 3600000,
+                "lockWaitSeconds": 5
+              },
+              "admission": {
+                "maximumIngressBytes": 10000,
+                "maximumRecords": 10,
+                "maximumBytes": 100000,
+                "maximumQuarantineRecords": 1,
+                "maximumQuarantineBytes": 10000,
+                "reasonThresholdCodeUnits": 256,
+                "reasonPrefixCodeUnits": 180,
+                "metadataReserveBytes": 8192,
+                "lockWaitSeconds": 5
+              }
+            },
+            "processInput": {
+              "cleanupTimeoutMs": 1500,
+              "terminationGraceMs": 250,
+              "acknowledgementPollMs": 10
+            }
+          },
+          "clusterInvokers": {
+            "shared": {
+              "kubectlExecutable": "/usr/local/bin/kubectl",
+              "leaseApiGroup": "kubeclaw.forgestack.ai",
+              "leaseApiVersion": "v1alpha1"
+            },
+            "kubernetesFixture": {
+              "allowedNamespacePrefixes": [
+                "test"
+              ],
+              "registryRepositoryPrefixes": [
+                "kubeclaw"
+              ],
+              "allowedSecretReferences": [],
+              "allowedStorageClasses": [],
+              "allowDefaultStorageClass": true,
+              "runnerServiceAccount": "agent-buster",
+              "credentialReaderServiceAccount": "agent-nova",
+              "maximumManifestBytes": 1048576,
+              "maximumResources": 64,
+              "maximumPersistentVolumeClaimBytes": 10737418240,
+              "maximumPersistentVolumeTotalBytes": 21474836480,
+              "maximumRetentionSeconds": 604800,
+              "maximumExecutionMs": 900000,
+              "pollIntervalMs": 1000,
+              "shortCommandTimeoutMs": 15000,
+              "commandOutputManifestMultiplier": 2,
+              "diagnosticCodeUnits": 4096,
+              "manifest": {
+                "maximumNodes": 100000,
+                "maximumDepth": 64,
+                "maximumAliases": 1000,
+                "maximumFlattenVisits": 100000,
+                "maximumFlattenPending": 100000
+              }
+            },
+            "tailscaleExposure": {
+              "allowedNamespacePrefixes": [
+                "test"
+              ],
+              "allowedHostSuffixes": [
+                ".ts.net"
+              ],
+              "maximumExecutionMs": 900000,
+              "pollIntervalMs": 1000,
+              "shortCommandTimeoutMs": 15000,
+              "maximumCommandOutputBytes": 1048576
+            },
+            "runtimeSecurity": {
+              "allowedNamespacePrefixes": [
+                "test"
+              ],
+              "maximumExecutionMs": 300000,
+              "maximumOutputBytes": 16777216,
+              "pollIntervalMs": 1000,
+              "maximumObservationAgeMs": 10000,
+              "maximumFutureSkewMs": 5000,
+              "diagnosticCodeUnits": 1024,
+              "executableSearchPath": [
+                "/usr/local/bin",
+                "/usr/bin",
+                "/bin"
+              ]
+            }
+          }
+        }
+      },
+      "originalPolicyManifest": {
+        "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/manifests/overflow-positive-original.json",
+        "sha256": "4260f6d01ef345481835bac5a0ad35cd9871f5141d5fa8b90a1bf90c44ee6c16",
+        "sizeBytes": 8306
+      },
+      "originalBinding": {
+        "schemaVersion": "admission-binding.v1",
+        "owner": "buster-engine",
+        "generationDigest": "sha256:10991ff344cfa1b4bb6d17ed8cc893b9280305ce762f3b93a074e085a46b07bf",
+        "profileDigest": "sha256:dd6c0de80c429ce7c4b3b276a4719591f46aa58f333c525cb7cf0ad90a7ae3c7",
+        "policyDigest": "sha256:9d82b5b9dcf52aa74d548b2b668c29bdea36203b5c5f0dc7e679092b8136fa05",
+        "schemaDigest": "sha256:fa051f8dacdda448303d5182374d7970b02e71a496bcd41d098cd1bfd58b028c",
+        "sourceDigest": "sha256:195fca717beffb64a5ec20c0aaa5d48ce4fd59ee281f044287d87efc209fb2a4"
+      },
+      "baselineLifecycle": {
+        "selection": "fresh isolated stand selects this exact complete owner manifest before any setup write, source admission, binding persistence, baseline capture or tested method",
+        "preparation": "Materialize only the shape/data fields of old frozen specimen plus THIS originalbinding by canonicalJson. Refuse old globalA binding, authenticate synthetic fixture map in stand; source/profile/policy/schema/generation hashes checked before first effect. Seeded prior is explicit setup, not claimed emitted by unchanged current loader. Retained reference materialization/accounting remains same original quota prerequisite.",
+        "capture": "After deterministic preparation and bounded fullsnapshot validation, record exact prior SHA, source refs, policy/grants and immutable original generation; start tested method with no rebind/current-profile change. Native effects never run by this documentation package.",
+        "history": "recovery/retry/fixedEval retains this same original generation and wholeCap; wronglatest/globalA digest or commandlimits rejects before new write"
+      },
+      "negativeOriginalPolicyManifest": {
+        "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/manifests/overflow-positive-original.json",
+        "sha256": "4260f6d01ef345481835bac5a0ad35cd9871f5141d5fa8b90a1bf90c44ee6c16",
+        "sizeBytes": 8306
+      },
+      "negativeOriginalBinding": {
+        "schemaVersion": "admission-binding.v1",
+        "owner": "buster-engine",
+        "generationDigest": "sha256:10991ff344cfa1b4bb6d17ed8cc893b9280305ce762f3b93a074e085a46b07bf",
+        "profileDigest": "sha256:dd6c0de80c429ce7c4b3b276a4719591f46aa58f333c525cb7cf0ad90a7ae3c7",
+        "policyDigest": "sha256:9d82b5b9dcf52aa74d548b2b668c29bdea36203b5c5f0dc7e679092b8136fa05",
+        "schemaDigest": "sha256:fa051f8dacdda448303d5182374d7970b02e71a496bcd41d098cd1bfd58b028c",
+        "sourceDigest": "sha256:195fca717beffb64a5ec20c0aaa5d48ce4fd59ee281f044287d87efc209fb2a4"
+      },
+      "negativeLifecycle": "Fresh separate stand captures same100000original policy BEFORE preparing other-run overflow history and baseline; sourceexact negativeInput unchanged. No quota edit/rebinding."
+    },
+    {
+      "id": "recordGap",
+      "method": "recordGap",
+      "prior": {
+        "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/recordGap-positive-prior.json",
+        "sha256": "1129cc37e95ffec6ef0a3943d0bc0797d993b2739d45fe7c25fad73b9da290c8",
+        "sizeBytes": 1934
+      },
+      "input": {
+        "schemaVersion": "producer-gap-report.v1",
+        "producer": {
+          "producerId": "worker:1",
+          "bootId": "boot:1",
+          "producerType": "buster"
+        },
+        "pipelineRunId": "run:1",
+        "fromSequence": 2,
+        "toSequence": 2,
+        "state": "missing",
+        "reportedAt": "2026-08-09T12:01:00Z",
+        "reasonCode": "delivery-gap"
+      },
+      "candidateFormula": "{...prior,gaps:[exact gap]} canonical bytes",
+      "wholeCapFormula": "candidate.sizeBytes+8192",
+      "negativeCapFormula": "candidate.sizeBytes+8192-1",
+      "oracle": "newgap consumes ordinary payload, must preserve8192 reserve under target; wholecap-only CURRENT guard insufficient; adjacent negative FULL unchanged",
+      "candidate": {
+        "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/recordGap-positive-candidate.json",
+        "sha256": "f3155e2045e692f9c102957016e742b0aec098136fb95117516c22da928ce7f9",
+        "sizeBytes": 2193
+      },
+      "wholeCap": 10385,
+      "negativeWholeCap": 10384,
+      "completeOwningAuthor": {
+        "schemaVersion": "swarm-component.v1",
+        "owner": "buster-engine",
+        "settings": {
+          "preparation": {
+            "resourcePolicy": {
+              "cpuTimeMs": 120000,
+              "memoryBytes": 8589934592,
+              "tasks": 64
+            },
+            "timeoutMs": 300000,
+            "cleanupTimeoutMs": 10000,
+            "maximumActivePreparations": 2,
+            "maximumPendingAdmissions": 16,
+            "maximumRequestBytes": 100663296,
+            "maximumArchiveBytes": 67108864,
+            "maximumExtractedBytes": 536870912,
+            "maximumHeaderBytes": 3145728,
+            "maximumSourceBytes": 1073741824,
+            "maximumMetadataBytes": 67108864,
+            "maximumRecords": 10000,
+            "maximumOwnershipBytes": 16777216,
+            "maximumJournalBytes": 268435456,
+            "maximumInputBytes": 65536,
+            "maximumOutputBytes": 8388608,
+            "maximumResultBytes": 4194304,
+            "pollIntervalMs": 25,
+            "drainTimeoutMs": 5000,
+            "closeTimeoutMs": 10000,
+            "tarTimeoutMs": 120000,
+            "maximumArchiveEntries": 200000,
+            "maximumListingLineBytes": 1048576,
+            "maximumTarStderrBytes": 65536,
+            "maximumSourceEntries": 400014,
+            "sourceEntryReservationBytes": 256,
+            "maximumOpenFiles": 64,
+            "tarDiagnosticCodeUnits": 4096,
+            "storeLockWaitSeconds": 5
+          },
+          "admission": {
+            "maximumActiveJobs": 2,
+            "maximumQueuedJobs": 8,
+            "maximumConcurrentAttempts": 64
+          },
+          "dependencyReadiness": {
+            "maximumExecutionMs": 1000,
+            "maximumOutputBytes": 65536
+          },
+          "execution": {
+            "provider": {
+              "cleanupTimeoutMs": 30000,
+              "maximumResultBytes": 16777216,
+              "claimGraceMs": 60000,
+              "queueTimeoutMs": 60000,
+              "workerResultWrapperBytes": 4096,
+              "maximumProtocolBytes": 16777216,
+              "terminationGraceMs": 500,
+              "terminationTimeoutMs": 1000,
+              "capabilityDrainTimeoutMs": 1000,
+              "minimumHeapMiB": 16,
+              "heapFraction": 0.7,
+              "maximumPendingCapabilities": 32,
+              "minimumOpenFiles": 64,
+              "artifactFileDescriptorReserve": 32
+            },
+            "reports": {
+              "maximumAggregateResultBytes": 16777216,
+              "maximumSourceBytes": 67108864,
+              "maximumCases": 5000,
+              "maximumFindings": 5000,
+              "maximumCaseFindings": 100,
+              "maximumTimeoutMs": 300000,
+              "memoryBytes": 536870912,
+              "minimumCpuTimeMs": 1000,
+              "maximumOpenFiles": 64,
+              "minimumOpenFiles": 16,
+              "minimumHeapMiB": 16,
+              "heapFraction": 0.7,
+              "runtimeMemoryReserveBytes": 67108864
+            },
+            "observation": {
+              "resourceSampleIntervalMs": 10,
+              "processSampleIntervalMs": 50
+            },
+            "stores": {
+              "attempts": {
+                "maximumEvidenceObjects": 10000,
+                "maximumEvidenceBytes": 10737418240,
+                "maximumEvidenceObjectBytes": 1073741824,
+                "maximumResults": 10000,
+                "maximumClosures": 10000,
+                "maximumMetadataBytes": 268435456,
+                "maximumPendingEvidenceAgeMs": 3600000,
+                "lockWaitSeconds": 5
+              },
+              "admission": {
+                "maximumIngressBytes": 10000,
+                "maximumRecords": 10,
+                "maximumBytes": 10385,
+                "maximumQuarantineRecords": 1,
+                "maximumQuarantineBytes": 2192,
+                "reasonThresholdCodeUnits": 256,
+                "reasonPrefixCodeUnits": 180,
+                "metadataReserveBytes": 8192,
+                "lockWaitSeconds": 5
+              }
+            },
+            "processInput": {
+              "cleanupTimeoutMs": 1500,
+              "terminationGraceMs": 250,
+              "acknowledgementPollMs": 10
+            }
+          },
+          "clusterInvokers": {
+            "shared": {
+              "kubectlExecutable": "/usr/local/bin/kubectl",
+              "leaseApiGroup": "kubeclaw.forgestack.ai",
+              "leaseApiVersion": "v1alpha1"
+            },
+            "kubernetesFixture": {
+              "allowedNamespacePrefixes": [
+                "test"
+              ],
+              "registryRepositoryPrefixes": [
+                "kubeclaw"
+              ],
+              "allowedSecretReferences": [],
+              "allowedStorageClasses": [],
+              "allowDefaultStorageClass": true,
+              "runnerServiceAccount": "agent-buster",
+              "credentialReaderServiceAccount": "agent-nova",
+              "maximumManifestBytes": 1048576,
+              "maximumResources": 64,
+              "maximumPersistentVolumeClaimBytes": 10737418240,
+              "maximumPersistentVolumeTotalBytes": 21474836480,
+              "maximumRetentionSeconds": 604800,
+              "maximumExecutionMs": 900000,
+              "pollIntervalMs": 1000,
+              "shortCommandTimeoutMs": 15000,
+              "commandOutputManifestMultiplier": 2,
+              "diagnosticCodeUnits": 4096,
+              "manifest": {
+                "maximumNodes": 100000,
+                "maximumDepth": 64,
+                "maximumAliases": 1000,
+                "maximumFlattenVisits": 100000,
+                "maximumFlattenPending": 100000
+              }
+            },
+            "tailscaleExposure": {
+              "allowedNamespacePrefixes": [
+                "test"
+              ],
+              "allowedHostSuffixes": [
+                ".ts.net"
+              ],
+              "maximumExecutionMs": 900000,
+              "pollIntervalMs": 1000,
+              "shortCommandTimeoutMs": 15000,
+              "maximumCommandOutputBytes": 1048576
+            },
+            "runtimeSecurity": {
+              "allowedNamespacePrefixes": [
+                "test"
+              ],
+              "maximumExecutionMs": 300000,
+              "maximumOutputBytes": 16777216,
+              "pollIntervalMs": 1000,
+              "maximumObservationAgeMs": 10000,
+              "maximumFutureSkewMs": 5000,
+              "diagnosticCodeUnits": 1024,
+              "executableSearchPath": [
+                "/usr/local/bin",
+                "/usr/bin",
+                "/bin"
+              ]
+            }
+          }
+        }
+      },
+      "originalPolicyManifest": {
+        "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/manifests/recordGap-positive-original.json",
+        "sha256": "7fb6125679ecf0b400b58da3f0137818177d2e581e76b6b370f4258f4126f0dd",
+        "sizeBytes": 8304
+      },
+      "originalBinding": {
+        "schemaVersion": "admission-binding.v1",
+        "owner": "buster-engine",
+        "generationDigest": "sha256:c618c16d38ce442b8ec4601ff7394722e180440931ec6b62431db9b94a41bd40",
+        "profileDigest": "sha256:e7b9c38894651ad9f56a1cca3a44ca10f04c9711e741748d6140158e00103a44",
+        "policyDigest": "sha256:8c278523774b9554c46dbbdcfb5dd95450a54cb0f6e27004b711870be05ef7f5",
+        "schemaDigest": "sha256:fa051f8dacdda448303d5182374d7970b02e71a496bcd41d098cd1bfd58b028c",
+        "sourceDigest": "sha256:195fca717beffb64a5ec20c0aaa5d48ce4fd59ee281f044287d87efc209fb2a4"
+      },
+      "baselineLifecycle": {
+        "selection": "fresh isolated stand selects this exact complete owner manifest before any setup write, source admission, binding persistence, baseline capture or tested method",
+        "preparation": "Materialize only the shape/data fields of old frozen specimen plus THIS originalbinding by canonicalJson. Refuse old globalA binding, authenticate synthetic fixture map in stand; source/profile/policy/schema/generation hashes checked before first effect. Seeded prior is explicit setup, not claimed emitted by unchanged current loader. Retained reference materialization/accounting remains same original quota prerequisite.",
+        "capture": "After deterministic preparation and bounded fullsnapshot validation, record exact prior SHA, source refs, policy/grants and immutable original generation; start tested method with no rebind/current-profile change. Native effects never run by this documentation package.",
+        "history": "recovery/retry/fixedEval retains this same original generation and wholeCap; wronglatest/globalA digest or commandlimits rejects before new write"
+      },
+      "negative": {
+        "completeOriginalAuthor": {
+          "schemaVersion": "swarm-component.v1",
+          "owner": "buster-engine",
+          "settings": {
+            "preparation": {
+              "resourcePolicy": {
+                "cpuTimeMs": 120000,
+                "memoryBytes": 8589934592,
+                "tasks": 64
+              },
+              "timeoutMs": 300000,
+              "cleanupTimeoutMs": 10000,
+              "maximumActivePreparations": 2,
+              "maximumPendingAdmissions": 16,
+              "maximumRequestBytes": 100663296,
+              "maximumArchiveBytes": 67108864,
+              "maximumExtractedBytes": 536870912,
+              "maximumHeaderBytes": 3145728,
+              "maximumSourceBytes": 1073741824,
+              "maximumMetadataBytes": 67108864,
+              "maximumRecords": 10000,
+              "maximumOwnershipBytes": 16777216,
+              "maximumJournalBytes": 268435456,
+              "maximumInputBytes": 65536,
+              "maximumOutputBytes": 8388608,
+              "maximumResultBytes": 4194304,
+              "pollIntervalMs": 25,
+              "drainTimeoutMs": 5000,
+              "closeTimeoutMs": 10000,
+              "tarTimeoutMs": 120000,
+              "maximumArchiveEntries": 200000,
+              "maximumListingLineBytes": 1048576,
+              "maximumTarStderrBytes": 65536,
+              "maximumSourceEntries": 400014,
+              "sourceEntryReservationBytes": 256,
+              "maximumOpenFiles": 64,
+              "tarDiagnosticCodeUnits": 4096,
+              "storeLockWaitSeconds": 5
+            },
+            "admission": {
+              "maximumActiveJobs": 2,
+              "maximumQueuedJobs": 8,
+              "maximumConcurrentAttempts": 64
+            },
+            "dependencyReadiness": {
+              "maximumExecutionMs": 1000,
+              "maximumOutputBytes": 65536
+            },
+            "execution": {
+              "provider": {
+                "cleanupTimeoutMs": 30000,
+                "maximumResultBytes": 16777216,
+                "claimGraceMs": 60000,
+                "queueTimeoutMs": 60000,
+                "workerResultWrapperBytes": 4096,
+                "maximumProtocolBytes": 16777216,
+                "terminationGraceMs": 500,
+                "terminationTimeoutMs": 1000,
+                "capabilityDrainTimeoutMs": 1000,
+                "minimumHeapMiB": 16,
+                "heapFraction": 0.7,
+                "maximumPendingCapabilities": 32,
+                "minimumOpenFiles": 64,
+                "artifactFileDescriptorReserve": 32
+              },
+              "reports": {
+                "maximumAggregateResultBytes": 16777216,
+                "maximumSourceBytes": 67108864,
+                "maximumCases": 5000,
+                "maximumFindings": 5000,
+                "maximumCaseFindings": 100,
+                "maximumTimeoutMs": 300000,
+                "memoryBytes": 536870912,
+                "minimumCpuTimeMs": 1000,
+                "maximumOpenFiles": 64,
+                "minimumOpenFiles": 16,
+                "minimumHeapMiB": 16,
+                "heapFraction": 0.7,
+                "runtimeMemoryReserveBytes": 67108864
+              },
+              "observation": {
+                "resourceSampleIntervalMs": 10,
+                "processSampleIntervalMs": 50
+              },
+              "stores": {
+                "attempts": {
+                  "maximumEvidenceObjects": 10000,
+                  "maximumEvidenceBytes": 10737418240,
+                  "maximumEvidenceObjectBytes": 1073741824,
+                  "maximumResults": 10000,
+                  "maximumClosures": 10000,
+                  "maximumMetadataBytes": 268435456,
+                  "maximumPendingEvidenceAgeMs": 3600000,
+                  "lockWaitSeconds": 5
+                },
+                "admission": {
+                  "maximumIngressBytes": 10000,
+                  "maximumRecords": 10,
+                  "maximumBytes": 10384,
+                  "maximumQuarantineRecords": 1,
+                  "maximumQuarantineBytes": 2192,
+                  "reasonThresholdCodeUnits": 256,
+                  "reasonPrefixCodeUnits": 180,
+                  "metadataReserveBytes": 8192,
+                  "lockWaitSeconds": 5
+                }
+              },
+              "processInput": {
+                "cleanupTimeoutMs": 1500,
+                "terminationGraceMs": 250,
+                "acknowledgementPollMs": 10
+              }
+            },
+            "clusterInvokers": {
+              "shared": {
+                "kubectlExecutable": "/usr/local/bin/kubectl",
+                "leaseApiGroup": "kubeclaw.forgestack.ai",
+                "leaseApiVersion": "v1alpha1"
+              },
+              "kubernetesFixture": {
+                "allowedNamespacePrefixes": [
+                  "test"
+                ],
+                "registryRepositoryPrefixes": [
+                  "kubeclaw"
+                ],
+                "allowedSecretReferences": [],
+                "allowedStorageClasses": [],
+                "allowDefaultStorageClass": true,
+                "runnerServiceAccount": "agent-buster",
+                "credentialReaderServiceAccount": "agent-nova",
+                "maximumManifestBytes": 1048576,
+                "maximumResources": 64,
+                "maximumPersistentVolumeClaimBytes": 10737418240,
+                "maximumPersistentVolumeTotalBytes": 21474836480,
+                "maximumRetentionSeconds": 604800,
+                "maximumExecutionMs": 900000,
+                "pollIntervalMs": 1000,
+                "shortCommandTimeoutMs": 15000,
+                "commandOutputManifestMultiplier": 2,
+                "diagnosticCodeUnits": 4096,
+                "manifest": {
+                  "maximumNodes": 100000,
+                  "maximumDepth": 64,
+                  "maximumAliases": 1000,
+                  "maximumFlattenVisits": 100000,
+                  "maximumFlattenPending": 100000
+                }
+              },
+              "tailscaleExposure": {
+                "allowedNamespacePrefixes": [
+                  "test"
+                ],
+                "allowedHostSuffixes": [
+                  ".ts.net"
+                ],
+                "maximumExecutionMs": 900000,
+                "pollIntervalMs": 1000,
+                "shortCommandTimeoutMs": 15000,
+                "maximumCommandOutputBytes": 1048576
+              },
+              "runtimeSecurity": {
+                "allowedNamespacePrefixes": [
+                  "test"
+                ],
+                "maximumExecutionMs": 300000,
+                "maximumOutputBytes": 16777216,
+                "pollIntervalMs": 1000,
+                "maximumObservationAgeMs": 10000,
+                "maximumFutureSkewMs": 5000,
+                "diagnosticCodeUnits": 1024,
+                "executableSearchPath": [
+                  "/usr/local/bin",
+                  "/usr/bin",
+                  "/bin"
+                ]
+              }
+            }
+          }
+        },
+        "originalBinding": {
+          "schemaVersion": "admission-binding.v1",
+          "owner": "buster-engine",
+          "generationDigest": "sha256:abe3861fb28390233a55d236222168f533f2eade976f62b95a5963ed92b16682",
+          "profileDigest": "sha256:2c054ee81e05b3b80ec4e091e1cbc7c5a9021b98d11f4df70d5c7ccfba396a6b",
+          "policyDigest": "sha256:f0cf3c6a0e2b0103c2f1ad0b3b5bbbe9bdf75be5e9ee72594f91722d0563bdf7",
+          "schemaDigest": "sha256:fa051f8dacdda448303d5182374d7970b02e71a496bcd41d098cd1bfd58b028c",
+          "sourceDigest": "sha256:195fca717beffb64a5ec20c0aaa5d48ce4fd59ee281f044287d87efc209fb2a4"
+        },
+        "originalPolicyManifest": {
+          "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/manifests/recordGap-negative-original.json",
+          "sha256": "bbb6922707d7a5b2302e0a6de331f604dc5e0ead56e6f9ef2d533584745451a4",
+          "sizeBytes": 8304
+        },
+        "prior": {
+          "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/recordGap-negative-prior.json",
+          "sha256": "65ddd966f56a2eac7af34a89e620fc43253eb070ea8ad68df653976a855de551",
+          "sizeBytes": 1934
+        },
+        "attemptedCandidate": {
+          "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/recordGap-negative-attempted-candidate.json",
+          "sha256": "02c6a91177b56b06e1a17d6d20b15547265c890fd5f7941583d7b55f42dacf5d",
+          "sizeBytes": 2193
+        },
+        "wholeCap": 10384,
+        "originalSelectionLifecycle": "SEPARATE fresh stand selects negativeoriginal complete profile and computes binding BEFORE any prior preparation/baseline/effect. Not publishB/changequota/rebind of positiveoriginal retained history. Negative prior is same data shape with its own authentic synthetic originalbinding, not same bytes as positiveprior.",
+        "input": {
+          "schemaVersion": "producer-gap-report.v1",
+          "producer": {
+            "producerId": "worker:1",
+            "bootId": "boot:1",
+            "producerType": "buster"
+          },
+          "pipelineRunId": "run:1",
+          "fromSequence": 2,
+          "toSequence": 2,
+          "state": "missing",
+          "reportedAt": "2026-08-09T12:01:00Z",
+          "reasonCode": "delivery-gap"
+        },
+        "headroom": 8192,
+        "expected": "OBSERVABILITY_ADMISSION_FULL before ordinary admission/gap write; no ACK; prior exact bytes/hash unchanged"
+      }
+    },
+    {
+      "id": "gap-restoration-unproved",
+      "method": "recordGap",
+      "input": {
+        "schemaVersion": "producer-gap-report.v1",
+        "producer": {
+          "producerId": "worker:1",
+          "bootId": "boot:1",
+          "producerType": "buster"
+        },
+        "pipelineRunId": "run:1",
+        "fromSequence": 2,
+        "toSequence": 2,
+        "state": "restored",
+        "reportedAt": "2026-08-09T12:02:00Z",
+        "reasonCode": "delivery-gap"
+      },
+      "oracle": "GAP_RESTORATION_UNPROVED exactstateunchanged because sequence2 absent",
+      "prior": {
+        "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/gap-restoration-unproved-positive-prior.json",
+        "sha256": "9b13ba9e7be48cb3d6269d0c801491212f609a2434dd6d3c73661e28ef4f7330",
+        "sizeBytes": 2193
+      },
+      "completeOwningAuthor": {
+        "schemaVersion": "swarm-component.v1",
+        "owner": "buster-engine",
+        "settings": {
+          "preparation": {
+            "resourcePolicy": {
+              "cpuTimeMs": 120000,
+              "memoryBytes": 8589934592,
+              "tasks": 64
+            },
+            "timeoutMs": 300000,
+            "cleanupTimeoutMs": 10000,
+            "maximumActivePreparations": 2,
+            "maximumPendingAdmissions": 16,
+            "maximumRequestBytes": 100663296,
+            "maximumArchiveBytes": 67108864,
+            "maximumExtractedBytes": 536870912,
+            "maximumHeaderBytes": 3145728,
+            "maximumSourceBytes": 1073741824,
+            "maximumMetadataBytes": 67108864,
+            "maximumRecords": 10000,
+            "maximumOwnershipBytes": 16777216,
+            "maximumJournalBytes": 268435456,
+            "maximumInputBytes": 65536,
+            "maximumOutputBytes": 8388608,
+            "maximumResultBytes": 4194304,
+            "pollIntervalMs": 25,
+            "drainTimeoutMs": 5000,
+            "closeTimeoutMs": 10000,
+            "tarTimeoutMs": 120000,
+            "maximumArchiveEntries": 200000,
+            "maximumListingLineBytes": 1048576,
+            "maximumTarStderrBytes": 65536,
+            "maximumSourceEntries": 400014,
+            "sourceEntryReservationBytes": 256,
+            "maximumOpenFiles": 64,
+            "tarDiagnosticCodeUnits": 4096,
+            "storeLockWaitSeconds": 5
+          },
+          "admission": {
+            "maximumActiveJobs": 2,
+            "maximumQueuedJobs": 8,
+            "maximumConcurrentAttempts": 64
+          },
+          "dependencyReadiness": {
+            "maximumExecutionMs": 1000,
+            "maximumOutputBytes": 65536
+          },
+          "execution": {
+            "provider": {
+              "cleanupTimeoutMs": 30000,
+              "maximumResultBytes": 16777216,
+              "claimGraceMs": 60000,
+              "queueTimeoutMs": 60000,
+              "workerResultWrapperBytes": 4096,
+              "maximumProtocolBytes": 16777216,
+              "terminationGraceMs": 500,
+              "terminationTimeoutMs": 1000,
+              "capabilityDrainTimeoutMs": 1000,
+              "minimumHeapMiB": 16,
+              "heapFraction": 0.7,
+              "maximumPendingCapabilities": 32,
+              "minimumOpenFiles": 64,
+              "artifactFileDescriptorReserve": 32
+            },
+            "reports": {
+              "maximumAggregateResultBytes": 16777216,
+              "maximumSourceBytes": 67108864,
+              "maximumCases": 5000,
+              "maximumFindings": 5000,
+              "maximumCaseFindings": 100,
+              "maximumTimeoutMs": 300000,
+              "memoryBytes": 536870912,
+              "minimumCpuTimeMs": 1000,
+              "maximumOpenFiles": 64,
+              "minimumOpenFiles": 16,
+              "minimumHeapMiB": 16,
+              "heapFraction": 0.7,
+              "runtimeMemoryReserveBytes": 67108864
+            },
+            "observation": {
+              "resourceSampleIntervalMs": 10,
+              "processSampleIntervalMs": 50
+            },
+            "stores": {
+              "attempts": {
+                "maximumEvidenceObjects": 10000,
+                "maximumEvidenceBytes": 10737418240,
+                "maximumEvidenceObjectBytes": 1073741824,
+                "maximumResults": 10000,
+                "maximumClosures": 10000,
+                "maximumMetadataBytes": 268435456,
+                "maximumPendingEvidenceAgeMs": 3600000,
+                "lockWaitSeconds": 5
+              },
+              "admission": {
+                "maximumIngressBytes": 10000,
+                "maximumRecords": 10,
+                "maximumBytes": 10385,
+                "maximumQuarantineRecords": 1,
+                "maximumQuarantineBytes": 2192,
+                "reasonThresholdCodeUnits": 256,
+                "reasonPrefixCodeUnits": 180,
+                "metadataReserveBytes": 8192,
+                "lockWaitSeconds": 5
+              }
+            },
+            "processInput": {
+              "cleanupTimeoutMs": 1500,
+              "terminationGraceMs": 250,
+              "acknowledgementPollMs": 10
+            }
+          },
+          "clusterInvokers": {
+            "shared": {
+              "kubectlExecutable": "/usr/local/bin/kubectl",
+              "leaseApiGroup": "kubeclaw.forgestack.ai",
+              "leaseApiVersion": "v1alpha1"
+            },
+            "kubernetesFixture": {
+              "allowedNamespacePrefixes": [
+                "test"
+              ],
+              "registryRepositoryPrefixes": [
+                "kubeclaw"
+              ],
+              "allowedSecretReferences": [],
+              "allowedStorageClasses": [],
+              "allowDefaultStorageClass": true,
+              "runnerServiceAccount": "agent-buster",
+              "credentialReaderServiceAccount": "agent-nova",
+              "maximumManifestBytes": 1048576,
+              "maximumResources": 64,
+              "maximumPersistentVolumeClaimBytes": 10737418240,
+              "maximumPersistentVolumeTotalBytes": 21474836480,
+              "maximumRetentionSeconds": 604800,
+              "maximumExecutionMs": 900000,
+              "pollIntervalMs": 1000,
+              "shortCommandTimeoutMs": 15000,
+              "commandOutputManifestMultiplier": 2,
+              "diagnosticCodeUnits": 4096,
+              "manifest": {
+                "maximumNodes": 100000,
+                "maximumDepth": 64,
+                "maximumAliases": 1000,
+                "maximumFlattenVisits": 100000,
+                "maximumFlattenPending": 100000
+              }
+            },
+            "tailscaleExposure": {
+              "allowedNamespacePrefixes": [
+                "test"
+              ],
+              "allowedHostSuffixes": [
+                ".ts.net"
+              ],
+              "maximumExecutionMs": 900000,
+              "pollIntervalMs": 1000,
+              "shortCommandTimeoutMs": 15000,
+              "maximumCommandOutputBytes": 1048576
+            },
+            "runtimeSecurity": {
+              "allowedNamespacePrefixes": [
+                "test"
+              ],
+              "maximumExecutionMs": 300000,
+              "maximumOutputBytes": 16777216,
+              "pollIntervalMs": 1000,
+              "maximumObservationAgeMs": 10000,
+              "maximumFutureSkewMs": 5000,
+              "diagnosticCodeUnits": 1024,
+              "executableSearchPath": [
+                "/usr/local/bin",
+                "/usr/bin",
+                "/bin"
+              ]
+            }
+          }
+        }
+      },
+      "wholeCap": 10385,
+      "originalPolicyManifest": {
+        "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/manifests/gap-restoration-unproved-positive-original.json",
+        "sha256": "a5d864c2c2cc023d6e2cfeb21b5a2fd7e99adfbdfe719b4e4cf8a6c32fb1cfb5",
+        "sizeBytes": 8334
+      },
+      "originalBinding": {
+        "schemaVersion": "admission-binding.v1",
+        "owner": "buster-engine",
+        "generationDigest": "sha256:79d3919ce6d7424def7217e1960a53c4250a3a21ffd00b175bf4c04e742c780f",
+        "profileDigest": "sha256:e7b9c38894651ad9f56a1cca3a44ca10f04c9711e741748d6140158e00103a44",
+        "policyDigest": "sha256:8c278523774b9554c46dbbdcfb5dd95450a54cb0f6e27004b711870be05ef7f5",
+        "schemaDigest": "sha256:fa051f8dacdda448303d5182374d7970b02e71a496bcd41d098cd1bfd58b028c",
+        "sourceDigest": "sha256:195fca717beffb64a5ec20c0aaa5d48ce4fd59ee281f044287d87efc209fb2a4"
+      },
+      "candidate": {
+        "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/gap-restoration-unproved-positive-candidate.json",
+        "sha256": "9b13ba9e7be48cb3d6269d0c801491212f609a2434dd6d3c73661e28ef4f7330",
+        "sizeBytes": 2193
+      },
+      "baselineLifecycle": {
+        "selection": "fresh isolated stand selects this exact complete owner manifest before any setup write, source admission, binding persistence, baseline capture or tested method",
+        "preparation": "Materialize only the shape/data fields of old frozen specimen plus THIS originalbinding by canonicalJson. Refuse old globalA binding, authenticate synthetic fixture map in stand; source/profile/policy/schema/generation hashes checked before first effect. Seeded prior is explicit setup, not claimed emitted by unchanged current loader. Retained reference materialization/accounting remains same original quota prerequisite.",
+        "capture": "After deterministic preparation and bounded fullsnapshot validation, record exact prior SHA, source refs, policy/grants and immutable original generation; start tested method with no rebind/current-profile change. Native effects never run by this documentation package.",
+        "history": "recovery/retry/fixedEval retains this same original generation and wholeCap; wronglatest/globalA digest or commandlimits rejects before new write"
+      }
+    },
+    {
+      "id": "oversized-history",
+      "method": "snapshot/admittedRecords/admit/recordGap",
+      "prior": {
+        "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/oversized-history-positive-prior.json",
+        "sha256": "9c1e7b00ae3fde46d5a68281122066a331fea92cfe879149bd961a485f9e82b9",
+        "sizeBytes": 1934
+      },
+      "mutation": "After capturing THIS original10126policy/priorbaseline, replace disposable snapshot with exact frozen10127bytes, same binding/data+padding. Test snapshot/admittedRecords/admit/recordGap independently; missingmetadataquota cannot authorize this tampering.",
+      "oracle": "bounded replay snapshot-size rejects exactbytesunchanged; no shrink/latest substitution",
+      "completeOwningAuthor": {
+        "schemaVersion": "swarm-component.v1",
+        "owner": "buster-engine",
+        "settings": {
+          "preparation": {
+            "resourcePolicy": {
+              "cpuTimeMs": 120000,
+              "memoryBytes": 8589934592,
+              "tasks": 64
+            },
+            "timeoutMs": 300000,
+            "cleanupTimeoutMs": 10000,
+            "maximumActivePreparations": 2,
+            "maximumPendingAdmissions": 16,
+            "maximumRequestBytes": 100663296,
+            "maximumArchiveBytes": 67108864,
+            "maximumExtractedBytes": 536870912,
+            "maximumHeaderBytes": 3145728,
+            "maximumSourceBytes": 1073741824,
+            "maximumMetadataBytes": 67108864,
+            "maximumRecords": 10000,
+            "maximumOwnershipBytes": 16777216,
+            "maximumJournalBytes": 268435456,
+            "maximumInputBytes": 65536,
+            "maximumOutputBytes": 8388608,
+            "maximumResultBytes": 4194304,
+            "pollIntervalMs": 25,
+            "drainTimeoutMs": 5000,
+            "closeTimeoutMs": 10000,
+            "tarTimeoutMs": 120000,
+            "maximumArchiveEntries": 200000,
+            "maximumListingLineBytes": 1048576,
+            "maximumTarStderrBytes": 65536,
+            "maximumSourceEntries": 400014,
+            "sourceEntryReservationBytes": 256,
+            "maximumOpenFiles": 64,
+            "tarDiagnosticCodeUnits": 4096,
+            "storeLockWaitSeconds": 5
+          },
+          "admission": {
+            "maximumActiveJobs": 2,
+            "maximumQueuedJobs": 8,
+            "maximumConcurrentAttempts": 64
+          },
+          "dependencyReadiness": {
+            "maximumExecutionMs": 1000,
+            "maximumOutputBytes": 65536
+          },
+          "execution": {
+            "provider": {
+              "cleanupTimeoutMs": 30000,
+              "maximumResultBytes": 16777216,
+              "claimGraceMs": 60000,
+              "queueTimeoutMs": 60000,
+              "workerResultWrapperBytes": 4096,
+              "maximumProtocolBytes": 16777216,
+              "terminationGraceMs": 500,
+              "terminationTimeoutMs": 1000,
+              "capabilityDrainTimeoutMs": 1000,
+              "minimumHeapMiB": 16,
+              "heapFraction": 0.7,
+              "maximumPendingCapabilities": 32,
+              "minimumOpenFiles": 64,
+              "artifactFileDescriptorReserve": 32
+            },
+            "reports": {
+              "maximumAggregateResultBytes": 16777216,
+              "maximumSourceBytes": 67108864,
+              "maximumCases": 5000,
+              "maximumFindings": 5000,
+              "maximumCaseFindings": 100,
+              "maximumTimeoutMs": 300000,
+              "memoryBytes": 536870912,
+              "minimumCpuTimeMs": 1000,
+              "maximumOpenFiles": 64,
+              "minimumOpenFiles": 16,
+              "minimumHeapMiB": 16,
+              "heapFraction": 0.7,
+              "runtimeMemoryReserveBytes": 67108864
+            },
+            "observation": {
+              "resourceSampleIntervalMs": 10,
+              "processSampleIntervalMs": 50
+            },
+            "stores": {
+              "attempts": {
+                "maximumEvidenceObjects": 10000,
+                "maximumEvidenceBytes": 10737418240,
+                "maximumEvidenceObjectBytes": 1073741824,
+                "maximumResults": 10000,
+                "maximumClosures": 10000,
+                "maximumMetadataBytes": 268435456,
+                "maximumPendingEvidenceAgeMs": 3600000,
+                "lockWaitSeconds": 5
+              },
+              "admission": {
+                "maximumIngressBytes": 10000,
+                "maximumRecords": 10,
+                "maximumBytes": 10126,
+                "maximumQuarantineRecords": 1,
+                "maximumQuarantineBytes": 1933,
+                "reasonThresholdCodeUnits": 256,
+                "reasonPrefixCodeUnits": 180,
+                "metadataReserveBytes": 8192,
+                "lockWaitSeconds": 5
+              }
+            },
+            "processInput": {
+              "cleanupTimeoutMs": 1500,
+              "terminationGraceMs": 250,
+              "acknowledgementPollMs": 10
+            }
+          },
+          "clusterInvokers": {
+            "shared": {
+              "kubectlExecutable": "/usr/local/bin/kubectl",
+              "leaseApiGroup": "kubeclaw.forgestack.ai",
+              "leaseApiVersion": "v1alpha1"
+            },
+            "kubernetesFixture": {
+              "allowedNamespacePrefixes": [
+                "test"
+              ],
+              "registryRepositoryPrefixes": [
+                "kubeclaw"
+              ],
+              "allowedSecretReferences": [],
+              "allowedStorageClasses": [],
+              "allowDefaultStorageClass": true,
+              "runnerServiceAccount": "agent-buster",
+              "credentialReaderServiceAccount": "agent-nova",
+              "maximumManifestBytes": 1048576,
+              "maximumResources": 64,
+              "maximumPersistentVolumeClaimBytes": 10737418240,
+              "maximumPersistentVolumeTotalBytes": 21474836480,
+              "maximumRetentionSeconds": 604800,
+              "maximumExecutionMs": 900000,
+              "pollIntervalMs": 1000,
+              "shortCommandTimeoutMs": 15000,
+              "commandOutputManifestMultiplier": 2,
+              "diagnosticCodeUnits": 4096,
+              "manifest": {
+                "maximumNodes": 100000,
+                "maximumDepth": 64,
+                "maximumAliases": 1000,
+                "maximumFlattenVisits": 100000,
+                "maximumFlattenPending": 100000
+              }
+            },
+            "tailscaleExposure": {
+              "allowedNamespacePrefixes": [
+                "test"
+              ],
+              "allowedHostSuffixes": [
+                ".ts.net"
+              ],
+              "maximumExecutionMs": 900000,
+              "pollIntervalMs": 1000,
+              "shortCommandTimeoutMs": 15000,
+              "maximumCommandOutputBytes": 1048576
+            },
+            "runtimeSecurity": {
+              "allowedNamespacePrefixes": [
+                "test"
+              ],
+              "maximumExecutionMs": 300000,
+              "maximumOutputBytes": 16777216,
+              "pollIntervalMs": 1000,
+              "maximumObservationAgeMs": 10000,
+              "maximumFutureSkewMs": 5000,
+              "diagnosticCodeUnits": 1024,
+              "executableSearchPath": [
+                "/usr/local/bin",
+                "/usr/bin",
+                "/bin"
+              ]
+            }
+          }
+        }
+      },
+      "wholeCap": 10126,
+      "originalPolicyManifest": {
+        "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/manifests/oversized-history-positive-original.json",
+        "sha256": "c215814d9ff4c2e5c6d0be784a9097a0861e3738729b5abf2d1f45a0e0959580",
+        "sizeBytes": 8320
+      },
+      "originalBinding": {
+        "schemaVersion": "admission-binding.v1",
+        "owner": "buster-engine",
+        "generationDigest": "sha256:e4fb105903b830cf1179c2b6cd61d17740180cf1a36491fd6b4b7188f6bb7649",
+        "profileDigest": "sha256:f37d072a5c65ab303512c5942116683924f7f9c3a09313dfdeba876d7dfb079a",
+        "policyDigest": "sha256:fe0e448a21c707567e90aa0051811a096c2f5f8c7c086a3c846332ee345b81b7",
+        "schemaDigest": "sha256:fa051f8dacdda448303d5182374d7970b02e71a496bcd41d098cd1bfd58b028c",
+        "sourceDigest": "sha256:195fca717beffb64a5ec20c0aaa5d48ce4fd59ee281f044287d87efc209fb2a4"
+      },
+      "baselineLifecycle": {
+        "selection": "fresh isolated stand selects this exact complete owner manifest before any setup write, source admission, binding persistence, baseline capture or tested method",
+        "preparation": "Materialize only the shape/data fields of old frozen specimen plus THIS originalbinding by canonicalJson. Refuse old globalA binding, authenticate synthetic fixture map in stand; source/profile/policy/schema/generation hashes checked before first effect. Seeded prior is explicit setup, not claimed emitted by unchanged current loader. Retained reference materialization/accounting remains same original quota prerequisite.",
+        "capture": "After deterministic preparation and bounded fullsnapshot validation, record exact prior SHA, source refs, policy/grants and immutable original generation; start tested method with no rebind/current-profile change. Native effects never run by this documentation package.",
+        "history": "recovery/retry/fixedEval retains this same original generation and wholeCap; wronglatest/globalA digest or commandlimits rejects before new write"
+      },
+      "tamperedSnapshot": {
+        "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/oversized-history-oversized-original.bytes",
+        "sha256": "ae4acf0d87d428546c118dc13df623d3191c9493d4ff1869965cccc00eb5710e",
+        "sizeBytes": 10127
+      }
+    },
+    {
+      "id": "counter-overflow",
+      "method": "admit oversized ingress",
+      "input": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "oracle": "target rejects safe increment before any rewrite; exactstateunchanged, original1024/history retained",
+      "prior": {
+        "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/counter-overflow-positive-prior.json",
+        "sha256": "e35b918f26f588a0c9596600b8153211486b216311511fa6113c64874527f759",
+        "sizeBytes": 3550
+      },
+      "completeOwningAuthor": {
+        "schemaVersion": "swarm-component.v1",
+        "owner": "buster-engine",
+        "settings": {
+          "preparation": {
+            "resourcePolicy": {
+              "cpuTimeMs": 120000,
+              "memoryBytes": 8589934592,
+              "tasks": 64
+            },
+            "timeoutMs": 300000,
+            "cleanupTimeoutMs": 10000,
+            "maximumActivePreparations": 2,
+            "maximumPendingAdmissions": 16,
+            "maximumRequestBytes": 100663296,
+            "maximumArchiveBytes": 67108864,
+            "maximumExtractedBytes": 536870912,
+            "maximumHeaderBytes": 3145728,
+            "maximumSourceBytes": 1073741824,
+            "maximumMetadataBytes": 67108864,
+            "maximumRecords": 10000,
+            "maximumOwnershipBytes": 16777216,
+            "maximumJournalBytes": 268435456,
+            "maximumInputBytes": 65536,
+            "maximumOutputBytes": 8388608,
+            "maximumResultBytes": 4194304,
+            "pollIntervalMs": 25,
+            "drainTimeoutMs": 5000,
+            "closeTimeoutMs": 10000,
+            "tarTimeoutMs": 120000,
+            "maximumArchiveEntries": 200000,
+            "maximumListingLineBytes": 1048576,
+            "maximumTarStderrBytes": 65536,
+            "maximumSourceEntries": 400014,
+            "sourceEntryReservationBytes": 256,
+            "maximumOpenFiles": 64,
+            "tarDiagnosticCodeUnits": 4096,
+            "storeLockWaitSeconds": 5
+          },
+          "admission": {
+            "maximumActiveJobs": 2,
+            "maximumQueuedJobs": 8,
+            "maximumConcurrentAttempts": 64
+          },
+          "dependencyReadiness": {
+            "maximumExecutionMs": 1000,
+            "maximumOutputBytes": 65536
+          },
+          "execution": {
+            "provider": {
+              "cleanupTimeoutMs": 30000,
+              "maximumResultBytes": 16777216,
+              "claimGraceMs": 60000,
+              "queueTimeoutMs": 60000,
+              "workerResultWrapperBytes": 4096,
+              "maximumProtocolBytes": 16777216,
+              "terminationGraceMs": 500,
+              "terminationTimeoutMs": 1000,
+              "capabilityDrainTimeoutMs": 1000,
+              "minimumHeapMiB": 16,
+              "heapFraction": 0.7,
+              "maximumPendingCapabilities": 32,
+              "minimumOpenFiles": 64,
+              "artifactFileDescriptorReserve": 32
+            },
+            "reports": {
+              "maximumAggregateResultBytes": 16777216,
+              "maximumSourceBytes": 67108864,
+              "maximumCases": 5000,
+              "maximumFindings": 5000,
+              "maximumCaseFindings": 100,
+              "maximumTimeoutMs": 300000,
+              "memoryBytes": 536870912,
+              "minimumCpuTimeMs": 1000,
+              "maximumOpenFiles": 64,
+              "minimumOpenFiles": 16,
+              "minimumHeapMiB": 16,
+              "heapFraction": 0.7,
+              "runtimeMemoryReserveBytes": 67108864
+            },
+            "observation": {
+              "resourceSampleIntervalMs": 10,
+              "processSampleIntervalMs": 50
+            },
+            "stores": {
+              "attempts": {
+                "maximumEvidenceObjects": 10000,
+                "maximumEvidenceBytes": 10737418240,
+                "maximumEvidenceObjectBytes": 1073741824,
+                "maximumResults": 10000,
+                "maximumClosures": 10000,
+                "maximumMetadataBytes": 268435456,
+                "maximumPendingEvidenceAgeMs": 3600000,
+                "lockWaitSeconds": 5
+              },
+              "admission": {
+                "maximumIngressBytes": 10000,
+                "maximumRecords": 10,
+                "maximumBytes": 100000,
+                "maximumQuarantineRecords": 1,
+                "maximumQuarantineBytes": 10000,
+                "reasonThresholdCodeUnits": 256,
+                "reasonPrefixCodeUnits": 180,
+                "metadataReserveBytes": 8192,
+                "lockWaitSeconds": 5
+              }
+            },
+            "processInput": {
+              "cleanupTimeoutMs": 1500,
+              "terminationGraceMs": 250,
+              "acknowledgementPollMs": 10
+            }
+          },
+          "clusterInvokers": {
+            "shared": {
+              "kubectlExecutable": "/usr/local/bin/kubectl",
+              "leaseApiGroup": "kubeclaw.forgestack.ai",
+              "leaseApiVersion": "v1alpha1"
+            },
+            "kubernetesFixture": {
+              "allowedNamespacePrefixes": [
+                "test"
+              ],
+              "registryRepositoryPrefixes": [
+                "kubeclaw"
+              ],
+              "allowedSecretReferences": [],
+              "allowedStorageClasses": [],
+              "allowDefaultStorageClass": true,
+              "runnerServiceAccount": "agent-buster",
+              "credentialReaderServiceAccount": "agent-nova",
+              "maximumManifestBytes": 1048576,
+              "maximumResources": 64,
+              "maximumPersistentVolumeClaimBytes": 10737418240,
+              "maximumPersistentVolumeTotalBytes": 21474836480,
+              "maximumRetentionSeconds": 604800,
+              "maximumExecutionMs": 900000,
+              "pollIntervalMs": 1000,
+              "shortCommandTimeoutMs": 15000,
+              "commandOutputManifestMultiplier": 2,
+              "diagnosticCodeUnits": 4096,
+              "manifest": {
+                "maximumNodes": 100000,
+                "maximumDepth": 64,
+                "maximumAliases": 1000,
+                "maximumFlattenVisits": 100000,
+                "maximumFlattenPending": 100000
+              }
+            },
+            "tailscaleExposure": {
+              "allowedNamespacePrefixes": [
+                "test"
+              ],
+              "allowedHostSuffixes": [
+                ".ts.net"
+              ],
+              "maximumExecutionMs": 900000,
+              "pollIntervalMs": 1000,
+              "shortCommandTimeoutMs": 15000,
+              "maximumCommandOutputBytes": 1048576
+            },
+            "runtimeSecurity": {
+              "allowedNamespacePrefixes": [
+                "test"
+              ],
+              "maximumExecutionMs": 300000,
+              "maximumOutputBytes": 16777216,
+              "pollIntervalMs": 1000,
+              "maximumObservationAgeMs": 10000,
+              "maximumFutureSkewMs": 5000,
+              "diagnosticCodeUnits": 1024,
+              "executableSearchPath": [
+                "/usr/local/bin",
+                "/usr/bin",
+                "/bin"
+              ]
+            }
+          }
+        }
+      },
+      "wholeCap": 100000,
+      "originalPolicyManifest": {
+        "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/manifests/counter-overflow-positive-original.json",
+        "sha256": "4ef205998f19d4ef7623885adaad5a4bc4ed3d01c58e5cf1771d0400312a8013",
+        "sizeBytes": 8322
+      },
+      "originalBinding": {
+        "schemaVersion": "admission-binding.v1",
+        "owner": "buster-engine",
+        "generationDigest": "sha256:3c3ca38e14276d6e54da92cc3614d17dd7b5cd56596d17b6077feca79c956cde",
+        "profileDigest": "sha256:dd6c0de80c429ce7c4b3b276a4719591f46aa58f333c525cb7cf0ad90a7ae3c7",
+        "policyDigest": "sha256:9d82b5b9dcf52aa74d548b2b668c29bdea36203b5c5f0dc7e679092b8136fa05",
+        "schemaDigest": "sha256:fa051f8dacdda448303d5182374d7970b02e71a496bcd41d098cd1bfd58b028c",
+        "sourceDigest": "sha256:195fca717beffb64a5ec20c0aaa5d48ce4fd59ee281f044287d87efc209fb2a4"
+      },
+      "baselineLifecycle": {
+        "selection": "fresh isolated stand selects this exact complete owner manifest before any setup write, source admission, binding persistence, baseline capture or tested method",
+        "preparation": "Materialize only the shape/data fields of old frozen specimen plus THIS originalbinding by canonicalJson. Refuse old globalA binding, authenticate synthetic fixture map in stand; source/profile/policy/schema/generation hashes checked before first effect. Seeded prior is explicit setup, not claimed emitted by unchanged current loader. Retained reference materialization/accounting remains same original quota prerequisite.",
+        "capture": "After deterministic preparation and bounded fullsnapshot validation, record exact prior SHA, source refs, policy/grants and immutable original generation; start tested method with no rebind/current-profile change. Native effects never run by this documentation package.",
+        "history": "recovery/retry/fixedEval retains this same original generation and wholeCap; wronglatest/globalA digest or commandlimits rejects before new write"
+      },
+      "priorFormula": "replaced by concrete prior reference; overflowcount MAX_SAFE integer under same original100000policy"
+    }
+  ],
+  "deltas": {
+    "normalDelta": 1227,
+    "quarantineDelta": 1141,
+    "overflowDelta": 460
+  },
+  "futureHeader": "inlineBinding v1 fixedschema accounted; newfield/version reject before allocation/write",
+  "retirement": "exact immutable source/argument generator and complete binding cases in retirement-method-fixtures.json",
+  "targetVariableOutputRule": "Frozen inputstatebytes exact; new admittedAt/receivedAt and quarantineUUID are actual consumer generated, not injectable measuredcounter/clock. Assert UTC24-byte format and UUID36; canonicalexpectedcandidate bytes recomputed including actualvalues; samefixed widths preserve specified byte/counter oracle. Retained inputfields must match exact priorbytes. No testhook in production.",
+  "targetHeaderField": "binding (7ASCII code units); exactly525growth with514byte object, not inlineBinding property531growth",
+  "bindingReferenceSpecimens": {
+    "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/boundary-owner-reference-specimens.json",
+    "sha256": "099c1c68e44a0931d854a4c4fd2e574450b1c63f5a8ebc310c0541f1488f5dfc",
+    "sizeBytes": 120620
+  },
+  "boundaryBindingRule": "Concrete per-subcase originalPolicyManifest and exact prior/candidate ownbinding replace generic substitution wording. Fullprofile/policy/generation digests must equal THIS selected boundary, not oldglobalA.",
+  "supersedes": {
+    "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/admission-method-fixtures.json",
+    "sha256": "d672235916533b74c9dbcc4733b2c3b630196d3036ce51ed5bc94b0ef053ab59",
+    "sizeBytes": 54923
+  },
+  "historicalGlobalSnapshots": {
+    "classification": "Frozen old globalA snapshots and byte1934/header525 evidence retained as historical shape inputs only, NEVER active boundary snapshots with mismatchingpolicy",
+    "oldTargetStates": {
+      "empty": {
+        "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/admission-empty-bound-target-state.json",
+        "sha256": "07c5a0565325b940161a968460b17925cb15258c553ad51c5959ab0b5c75508c",
+        "sizeBytes": 707
+      },
+      "normal": {
+        "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/admission-normal-bound-target-state.json",
+        "sha256": "655f7b6a28806b5a878853052a2471de49e81174fbd6b815bc247a07242edd5c",
+        "sizeBytes": 1934
+      },
+      "quarantine": {
+        "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/admission-quarantine-bound-target-state.json",
+        "sha256": "d57c078efcf7ed50b7bf8fe003a8f9cb8f9c123f83eb8f69fc312c3da8913426",
+        "sizeBytes": 3075
+      },
+      "overflow": {
+        "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/admission-overflow-bound-target-state.json",
+        "sha256": "6a3c7b0286b2fe47997fff366f7f81ed03d64b6e38615b6a67a5912b7e25ef06",
+        "sizeBytes": 3535
+      }
+    },
+    "historicalOracle1940": "Preserved in old97 snapshot; unsupported after531->525 header correction, not activeexpected"
+  }
+}

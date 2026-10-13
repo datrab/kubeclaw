@@ -1,0 +1,292 @@
+{
+  "scope": "actual full documentation checker + actual native helper virtual initial JSON loads only; no real inputs changed; not production F-MUT",
+  "checkerSha256": "3cc83e20934a33d83cecf98bb53b8b193d2a3c6853197047ea94b4643dc53e74",
+  "helperSha256": "d80331e4bed71af05302be8f040d95b49344efd6c7b76e44fb652bd7ae0b9f15",
+  "observations": [
+    {
+      "id": "real-baseline-positive",
+      "structuralExit": 0,
+      "errorCount": 0,
+      "matchingErrors": [],
+      "nativeHelper": {
+        "rejected": false
+      },
+      "intendedStructuralReject": null,
+      "helperRejectionRequired": false
+    },
+    {
+      "id": "matrix-package-only-omission",
+      "structuralExit": 1,
+      "errorCount": 5526,
+      "matchingErrors": [
+        "native package presence differs between inventory and matrix"
+      ],
+      "nativeHelper": {
+        "rejected": true,
+        "exception": "IndexError"
+      },
+      "intendedStructuralReject": "native package presence differs",
+      "helperRejectionRequired": true
+    },
+    {
+      "id": "both-package-and-advertisement-omission",
+      "structuralExit": 1,
+      "errorCount": 5525,
+      "matchingErrors": [
+        "required productive Runtime native specification package missing/wrong source"
+      ],
+      "nativeHelper": {
+        "rejected": true,
+        "exception": "IndexError"
+      },
+      "intendedStructuralReject": "required productive Runtime native specification package missing",
+      "helperRejectionRequired": true
+    },
+    {
+      "id": "inventory-advertisement-only-omission",
+      "structuralExit": 1,
+      "errorCount": 1,
+      "matchingErrors": [
+        "native package presence differs between inventory and matrix"
+      ],
+      "nativeHelper": {
+        "rejected": true,
+        "exception": "AssertionError"
+      },
+      "intendedStructuralReject": "native package presence differs",
+      "helperRejectionRequired": true
+    },
+    {
+      "id": "inventory-native-count-drift",
+      "structuralExit": 1,
+      "errorCount": 1,
+      "matchingErrors": [
+        "native RUNTIME-NATIVE-CASE-SPECIFICATIONS: advertised case counts drift"
+      ],
+      "nativeHelper": {
+        "rejected": true,
+        "exception": "AssertionError"
+      },
+      "intendedStructuralReject": "advertised case counts drift",
+      "helperRejectionRequired": true
+    },
+    {
+      "id": "inventory-unlinked-count-drift",
+      "structuralExit": 1,
+      "errorCount": 1,
+      "matchingErrors": [
+        "native RUNTIME-NATIVE-CASE-SPECIFICATIONS: advertised case counts drift"
+      ],
+      "nativeHelper": {
+        "rejected": true,
+        "exception": "AssertionError"
+      },
+      "intendedStructuralReject": "advertised case counts drift",
+      "helperRejectionRequired": true
+    },
+    {
+      "id": "inventory-source-path-drift",
+      "structuralExit": 1,
+      "errorCount": 1,
+      "matchingErrors": [
+        "native RUNTIME-NATIVE-CASE-SPECIFICATIONS: advertised sourcePath drift"
+      ],
+      "nativeHelper": {
+        "rejected": true,
+        "exception": "AssertionError"
+      },
+      "intendedStructuralReject": "advertised sourcePath drift",
+      "helperRejectionRequired": true
+    },
+    {
+      "id": "inventory-source-SHA-drift",
+      "structuralExit": 1,
+      "errorCount": 1,
+      "matchingErrors": [
+        "native RUNTIME-NATIVE-CASE-SPECIFICATIONS: advertised sourceSha256 drift"
+      ],
+      "nativeHelper": {
+        "rejected": true,
+        "exception": "AssertionError"
+      },
+      "intendedStructuralReject": "advertised sourceSha256 drift",
+      "helperRejectionRequired": true
+    },
+    {
+      "id": "inventory-matrix-location-drift",
+      "structuralExit": 1,
+      "errorCount": 1,
+      "matchingErrors": [
+        "native RUNTIME-NATIVE-CASE-SPECIFICATIONS: advertised matrix location drift"
+      ],
+      "nativeHelper": {
+        "rejected": false
+      },
+      "intendedStructuralReject": "advertised matrix location drift",
+      "helperRejectionRequired": null
+    },
+    {
+      "id": "duplicate-package-ID",
+      "structuralExit": 1,
+      "errorCount": 1,
+      "matchingErrors": [
+        "native package: duplicate ID RUNTIME-NATIVE-CASE-SPECIFICATIONS"
+      ],
+      "nativeHelper": {
+        "rejected": false
+      },
+      "intendedStructuralReject": "native package: duplicate ID",
+      "helperRejectionRequired": null
+    },
+    {
+      "id": "duplicate-advertisement-ID",
+      "structuralExit": 1,
+      "errorCount": 1,
+      "matchingErrors": [
+        "native package advertisement: duplicate ID RUNTIME-NATIVE-CASE-SPECIFICATIONS"
+      ],
+      "nativeHelper": {
+        "rejected": false
+      },
+      "intendedStructuralReject": "native package advertisement: duplicate ID",
+      "helperRejectionRequired": null
+    },
+    {
+      "id": "missing-canonical-reference",
+      "structuralExit": 1,
+      "errorCount": 1,
+      "matchingErrors": [
+        "native RT-351419f2c26e2696-CURRENT-SCHEMA-FIELD: missing/duplicate/exact canonical specification reference"
+      ],
+      "nativeHelper": {
+        "rejected": true,
+        "exception": "AssertionError"
+      },
+      "intendedStructuralReject": "missing/duplicate/exact canonical specification reference",
+      "helperRejectionRequired": true
+    },
+    {
+      "id": "canonical-reference-wrong-package",
+      "structuralExit": 1,
+      "errorCount": 2,
+      "matchingErrors": [
+        "case RT-351419f2c26e2696-CURRENT-SCHEMA-FIELD: native reference package missing"
+      ],
+      "nativeHelper": {
+        "rejected": true,
+        "exception": "AssertionError"
+      },
+      "intendedStructuralReject": "native reference package missing",
+      "helperRejectionRequired": true
+    },
+    {
+      "id": "canonical-reference-wrong-native-case",
+      "structuralExit": 1,
+      "errorCount": 2,
+      "matchingErrors": [
+        "case RT-351419f2c26e2696-CURRENT-SCHEMA-FIELD: native reference identity/case binding drift"
+      ],
+      "nativeHelper": {
+        "rejected": true,
+        "exception": "AssertionError"
+      },
+      "intendedStructuralReject": "native reference identity/case binding drift",
+      "helperRejectionRequired": true
+    },
+    {
+      "id": "canonical-reference-wrong-path",
+      "structuralExit": 1,
+      "errorCount": 2,
+      "matchingErrors": [
+        "case RT-351419f2c26e2696-CURRENT-SCHEMA-FIELD: native reference identity/case binding drift"
+      ],
+      "nativeHelper": {
+        "rejected": true,
+        "exception": "AssertionError"
+      },
+      "intendedStructuralReject": "native reference identity/case binding drift",
+      "helperRejectionRequired": true
+    },
+    {
+      "id": "canonical-reference-wrong-SHA",
+      "structuralExit": 1,
+      "errorCount": 2,
+      "matchingErrors": [
+        "case RT-351419f2c26e2696-CURRENT-SCHEMA-FIELD: native reference identity/case binding drift"
+      ],
+      "nativeHelper": {
+        "rejected": true,
+        "exception": "AssertionError"
+      },
+      "intendedStructuralReject": "native reference identity/case binding drift",
+      "helperRejectionRequired": true
+    },
+    {
+      "id": "duplicate-exact-canonical-reference",
+      "structuralExit": 1,
+      "errorCount": 1,
+      "matchingErrors": [
+        "native RT-351419f2c26e2696-CURRENT-SCHEMA-FIELD: missing/duplicate/exact canonical specification reference"
+      ],
+      "nativeHelper": {
+        "rejected": true,
+        "exception": "AssertionError"
+      },
+      "intendedStructuralReject": "missing/duplicate/exact canonical specification reference",
+      "helperRejectionRequired": true
+    },
+    {
+      "id": "unrelated-canonical-native-tuple",
+      "structuralExit": 1,
+      "errorCount": 1,
+      "matchingErrors": [
+        "case CMP-C1-VAL-prism-control: native reference identity/case binding drift"
+      ],
+      "nativeHelper": {
+        "rejected": true,
+        "exception": "AssertionError"
+      },
+      "intendedStructuralReject": "native reference identity/case binding drift",
+      "helperRejectionRequired": true
+    },
+    {
+      "id": "single-native-case-omission",
+      "structuralExit": 1,
+      "errorCount": 3,
+      "matchingErrors": [
+        "native RUNTIME-NATIVE-CASE-SPECIFICATIONS: original specification/requirement loss"
+      ],
+      "nativeHelper": {
+        "rejected": true,
+        "exception": "AssertionError"
+      },
+      "intendedStructuralReject": "original specification/requirement loss",
+      "helperRejectionRequired": true
+    },
+    {
+      "id": "single-native-requirement-loss",
+      "structuralExit": 1,
+      "errorCount": 1,
+      "matchingErrors": [
+        "native RT-COMPILER-REPAIRBUDGET-CATEGORIES-LINT-MISSING: mapping requirement loss"
+      ],
+      "nativeHelper": {
+        "rejected": true,
+        "exception": "AssertionError"
+      },
+      "intendedStructuralReject": "mapping requirement loss",
+      "helperRejectionRequired": true
+    },
+    {
+      "id": "real-restored-final-positive",
+      "structuralExit": 0,
+      "errorCount": 0,
+      "matchingErrors": [],
+      "nativeHelper": {
+        "rejected": false
+      },
+      "intendedStructuralReject": null,
+      "helperRejectionRequired": false
+    }
+  ]
+}

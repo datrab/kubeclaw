@@ -20,13 +20,19 @@ for c in cases:
   else:
    row=next(r for r in v['rows'] if r['id']==id)
    if c['id'] not in row['caseIds']:issues.append({'kind':'asymmetric-case-link','case':c['id'],'setting':id})
- for group in ['sourceDigests','testDigests']:
+ for group in ['sourceDigests','testDigests','specDigests']:
   for f,h in c.get(group,{}).items():
    if not (repo/f).is_file() or digest(f)!=h:issues.append({'kind':group+'-mismatch','case':c['id'],'path':f})
  if c['result']!='not-run':issues.append({'kind':'unexpected-implementation-result','case':c['id'],'result':c['result']})
 definitionCases=json.loads((out/'c0-definition-cases.json').read_text()) if (out/'c0-definition-cases.json').exists() else []
 if (out/'c0-kubernetes-boundary-cases.json').exists():definitionCases+=json.loads((out/'c0-kubernetes-boundary-cases.json').read_text())
 if (out/'c0-buster-build-definition-cases.json').exists():definitionCases+=json.loads((out/'c0-buster-build-definition-cases.json').read_text())
+if (out/'c0-residual-definition-cases-bce3f075.json').exists():definitionCases+=json.loads((out/'c0-residual-definition-cases-bce3f075.json').read_text())
+if (out/'c0-dls-pure-definition-cases-20261013.json').exists():definitionCases+=json.loads((out/'c0-dls-pure-definition-cases-20261013.json').read_text())
+for id,n in collections.Counter(c['id'] for c in definitionCases).items():
+ if n>1:issues.append({'kind':'duplicate-definition-case','id':id,'count':n})
+for r in v['rows']:
+ if r['class'] not in {'operator-setting','protocol-invariant','version','secret-reference','generated-binding','task-data'}:issues.append({'kind':'invalid-setting-class','id':r['id'],'class':r['class']})
 for c in definitionCases:
  for f,h in c['sourceDigests'].items():
   if not (repo/f).is_file() or digest(f)!=h:issues.append({'kind':'definition-source-digest-mismatch','case':c['id'],'path':f})

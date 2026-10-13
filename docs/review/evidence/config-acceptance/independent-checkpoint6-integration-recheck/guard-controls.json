@@ -1,0 +1,64 @@
+{
+  "scope": "virtual actual-source documentation guards, NOT F-MUT/runtime; downstream guards tested explicitly in isolation",
+  "observations": [
+    {
+      "id": "actual-positive-302-reviewed-inputs",
+      "passed": true,
+      "inputs": 304
+    },
+    {
+      "id": "unresolved-valid-hash-report",
+      "passed": true,
+      "intendedRejection": "CORE_R06_NAMED_FINDINGS_NOT_RESOLVED"
+    },
+    {
+      "id": "partial-valid-hash-report",
+      "passed": true,
+      "intendedRejection": "CORE_R06_NAMED_FINDINGS_NOT_RESOLVED"
+    },
+    {
+      "id": "wrong-id-valid-hash-report",
+      "passed": true,
+      "intendedRejection": "CORE_R06_NAMED_FINDINGS_NOT_RESOLVED"
+    },
+    {
+      "id": "resolved-but-unreviewed-report",
+      "passed": true,
+      "intendedRejection": "CORE_R06_REPORT_REVISION_REQUIRES_REVIEW"
+    },
+    {
+      "id": "altered-review-freeze",
+      "passed": true,
+      "intendedRejection": "CORE_R06_REVIEW_FREEZE_DRIFT"
+    },
+    {
+      "id": "selfconsistent-requirement-loss-updated-receipt",
+      "passed": true,
+      "intendedRejection": "CORE_R06_STALE_REVIEW_INPUT:docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/case-input-contracts.json"
+    },
+    {
+      "id": "receipt-only-postreview-change",
+      "passed": true,
+      "intendedRejection": "CORE_R06_STALE_REVIEW_RECEIPT"
+    },
+    {
+      "id": "required-case-loss-downstream-only",
+      "passed": true,
+      "intendedRejection": "CORE_SUPPLEMENTAL_BASELINE_REQUIREMENT_LOSS:QC-BUSTER-PROVIDER-MEASUREMENT-FALLBACKS-RECOVERY-EVAL"
+    },
+    {
+      "id": "required-obligation-loss-downstream-only",
+      "passed": true,
+      "intendedRejection": "CORE_SUPPLEMENTAL_BASELINE_REQUIREMENT_LOSS:QC-FOUNDATION-FLOCK-WAIT-VAL"
+    },
+    {
+      "id": "activecontract-disagreement-downstream-only",
+      "passed": true,
+      "intendedRejection": "CORE_SUPPLEMENTAL_ACTIVE_CASE_INPUT_CONFLICT"
+    },
+    {
+      "id": "restored-real-positive",
+      "passed": true
+    }
+  ]
+}

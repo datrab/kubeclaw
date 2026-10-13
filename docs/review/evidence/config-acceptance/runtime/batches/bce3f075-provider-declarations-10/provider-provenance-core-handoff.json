@@ -1,0 +1,43 @@
+{
+  "status": "material current-source/author crosslinks only; Core owns correction/proposed receipt schema and independent review; no duplicate policy author or acceptance",
+  "owner": "existing Buster component settings.execution.stores.attempts and execution.observation/provider, plus actual role/runtime/source/registry/claim authorities; not shared foundation umbrella",
+  "completeCurrentConfiguredAuthor": "charts/kubeclaw/files/config/buster-engine.config.json (exact SHA256 in contracts.json and observations.json)",
+  "currentQuotaPaths": {
+    "metadata": "settings.execution.stores.attempts.maximumMetadataBytes = 268435456 configured byte ceiling, not physical capacity",
+    "evidenceTotal": "settings.execution.stores.attempts.maximumEvidenceBytes = 10737418240 configured byte ceiling",
+    "evidenceObject": "settings.execution.stores.attempts.maximumEvidenceObjectBytes = 1073741824 configured byte ceiling",
+    "source": "runner.ts:64 constructor passes full executionPolicy.stores.attempts into existing FileDurableAttemptStore; no new receipt quota author"
+  },
+  "actualCurrentReaderChain": [
+    "runner-attempt-preparation.ts and runner-provider-operation.ts initializeProvider -> loader.load; RunnerProviderState.instance assigned only after fulfilled loadWork",
+    "provider-loader.ts creates isolated provider then handles abort/initialize/discard; post-spawn rejection can happen before runner state.instance assignment",
+    "provider-process-session.ts constructor/session owns child/sample snapshots, resources close behavior and optional child report max merge; not durable launch/measurement receipt today",
+    "runner-provider-operation.ts:99 terminate awaits state.instance or loadWork.catch null; measure104..107 uses only state.instance.resources or 0/0/0, can lose rejected load snapshot",
+    "worker/core/attempt-executor.ts measurement exceptions become undefined; strict resource-accounting.ts V1 invalid measurement remains error, not unrequested V2 budget waiver"
+  ],
+  "sourceEvidence": [
+    "docs/review/evidence/config-acceptance/independent-core-source-question-bce3f075-20261013/current-reader-controls.reproduced.log",
+    "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-declarations-10/complete-source-read.log.gz",
+    "docs/review/evidence/config-acceptance/components/question-closure-bce3f075/provider-measurement-definition.md"
+  ],
+  "requiredCoreDefinitionMaterial": [
+    "Exact fixed versioned launch receipt/metric provenance snapshot field schemas and full canonical serialized sizes plus existing attempt-store transition/header/array delta under SAME selected metadata quota",
+    "Genuine observed/not-launched/partial/unavailable source semantics; no discarded post-spawn load snapshot substituted as zero, count/session/PID-start/boot identity source bound",
+    "Near-quota same-boundary admitted complete receipt + one-byte over-bound negative, failed initialize/cancel/cleanup/crash/recovery transitions preserving original source/claim/generation/grants/spent budget and no latest",
+    "Actual Buster complete runtime/role/image/native sandbox/package provenance/permissions/grants remain physical/external inputs, not inferred from component numerical ceiling"
+  ],
+  "foundationCompatibility": "binding-seam-context.json preserves actual Nova v4 graph/config/package/grants and pre-lock activation ordering; parent D20 first-module carrier/view/membership/legacy contract OPEN. SDK dispatch/review profiles are codecs, not business module policy selectors.",
+  "locks": "Core flock target requested complete Buster prepared-store runtime companion belongs existing runtime JSON owner, source production.ts -> PreparedBusterPlanJobStore. This handoff supplies component quota paths only, not a fabricated complete deployed runtime/credential/host profile or independently accepted lock companion. Ask for exact caller field source input if needed.",
+  "implementation": "not implemented/not run; no source/test/API/image/nativehost edits or operations",
+  "sourceIdentities": {
+    "skills/buster/engine/test-gates/provider-loader.ts": "b48f69d93fe663d9266576567939775cc830b225923a65d85e87de343a1ee25e",
+    "skills/buster/engine/test-gates/provider-process-session.ts": "ea0ac4030fbcfb9428590bbc8f4a68c445596da9a56f6b4ad41c0df10cb7ca6d",
+    "skills/buster/engine/test-gates/runner-provider-state.ts": "f599ef7ca3920c4a0d8425c8892465034db7db94c592f32c53d9b72778f00f17",
+    "skills/buster/engine/test-gates/runner-attempt-preparation.ts": "b0f2a62cd1bd4179736bf2c9346a44bb946a1db28fdd661ad4ffee064814667d",
+    "skills/buster/engine/test-gates/runner-provider-operation.ts": "332e73e5e35b28800ab7ad70331adf8c2ed683f819a0ea6504eea0abbb61645c",
+    "skills/buster/engine/test-gates/runner.ts": "8db6fb069648014e1cfb2c63f33de1382219279b1358a76a15a1936e3b80732a",
+    "skills/worker/core/worker/attempt-executor.ts": "2ae7f5897a79042c601d58da5af682baba0e416e0c4ab302108386e3b619db42",
+    "skills/worker/core/worker/resource-accounting.ts": "eaed91f776bfdbf1daac4faa7b2e56848b5f1b1f83d2737622048cd4426837ef",
+    "charts/kubeclaw/files/config/buster-engine.config.json": "d43c96506287ade07e23a38bf3d24764e81c16a2ebe8e5bb8a347ac640a3aaa5"
+  }
+}

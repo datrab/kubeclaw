@@ -1,0 +1,82 @@
+tests/skills/nova/project_setup/scaffold-publication.test.mjs:8:import {publishJsonPair,readPublishedPair} from '../../../../skills/common/plugin-runtime/foundation/config/published-pair.ts';
+tests/skills/nova/project_setup/scaffold-publication.test.mjs:10:const cli=path.resolve(import.meta.dirname,'../../../../skills/nova/project_setup/tools/progress-scaffold.ts');
+tests/skills/nova/project_setup/scaffold-publication.test.mjs:77: await publishJsonPair(swarm,names,first);
+tests/skills/nova/project_setup/scaffold-publication.test.mjs:82: await Promise.all(variants.map(pair=>publishJsonPair(swarm,names,pair)));
+tests/skills/nova/project_setup/scaffold-regeneration.test.mjs:8:const cli = path.resolve(import.meta.dirname, '../../../../skills/nova/project_setup/tools/progress-scaffold.ts');
+tests/skills/nova/project_setup/progress-scaffold.test.mjs:10:const script = path.join(repoRoot, 'skills/nova/project_setup/tools/progress-scaffold.ts');
+tests/skills/nova/project_setup/progress-scaffold.test.mjs:18:  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'progress-scaffold-test-'));
+tests/skills/nova/project_setup/progress-scaffold.test.mjs:128:    _schema: 'progress-scaffold/v1',
+tests/skills/nova/project_setup/progress-scaffold.test.mjs:161:  writeFile(scaffoldPath, `${JSON.stringify({ _schema: 'progress-scaffold/v1', project: 'demo', version: 1,
+tests/skills/nova/project_setup/progress-scaffold.test.mjs:171:  writeFile(path.join(swarm, 'progress.scaffold.json'), `${JSON.stringify({ _schema: 'progress-scaffold/v1', project: 'demo', version: 1, description: 'Demo project', notes: [], policy: {}, execution_order: ['app'], modules: { app: { title: 'App', dir: 'app', depends_on: [], stages: ['buster'], test_suites: ['e2e'], test_config: { e2e: { tests_dir: 'tests/e2e', timeout_ms: 60000 } } } }, gates: {} }, null, 2)}\n`);
+tests/skills/nova/project_setup/progress-scaffold.test.mjs:177:  writeFile(path.join(swarm, 'progress.scaffold.json'), `${JSON.stringify({ _schema: 'progress-scaffold/v1', project: 'demo', version: 1, description: 'Demo project', notes: [], policy: {}, execution_order: ['app'], modules: { app: { title: 'App', dir: 'app', depends_on: [], stages: ['buster'], test_suites: [], test_config: { e2e: { tests_dir: 'tests/e2e' } } } }, gates: {} }, null, 2)}\n`);
+tests/skills/nova/project_setup/progress-scaffold.test.mjs:183:  writeFile(path.join(swarm, 'progress.scaffold.json'), `${JSON.stringify({ _schema: 'progress-scaffold/v1', project: 'demo', version: 1, description: 'Demo project', notes: [], policy: {}, execution_order: ['app'], modules: { app: { title: 'App', dir: 'app', depends_on: [], stages: ['buster'], test_suites: ['security'], test_config: { security: { paths: ['/'] } } } }, gates: {} }, null, 2)}\n`);
+tests/skills/nova/project_setup/progress-scaffold.test.mjs:191:  writeFile(path.join(swarm, 'progress.scaffold.json'), `${JSON.stringify({ _schema: 'progress-scaffold/v1', project: 'demo', version: 1, description: 'Demo project', notes: [], policy: {}, execution_order: ['app'], modules: { app: { title: 'App', dir: 'app', depends_on: [], stages: ['buster'], test_suites: [], test_config: { security: { paths: ['/'] } } } }, gates: {} }, null, 2)}\n`);
+tests/verification/contracts/check-pipeline-manifest-lint-cutover.mts:44:const scaffold = fs.readFileSync('skills/nova/project_setup/tools/progress-scaffold-discovery.ts', 'utf8');
+tests/verification/contracts/check-pipeline-manifest-lint-cutover.mts:48:const scaffoldProof = fs.readFileSync('tests/skills/nova/project_setup/progress-scaffold.test.mjs', 'utf8');
+tests/verification/contracts/check-pipeline-http-cutover.mts:18:  'skills/nova/project_setup/tools/progress-scaffold-discovery.ts',
+tests/verification/contracts/check-pipeline-http-cutover.mts:19:  'skills/nova/project_setup/tools/progress-scaffold-values.ts',
+tests/verification/contracts/check-pipeline-api-cutover.mts:10:const scaffold = fs.readFileSync('skills/nova/project_setup/tools/progress-scaffold-discovery.ts', 'utf8');
+tests/verification/contracts/check-pipeline-security-cutover.mts:4:const scaffold=fs.readFileSync('skills/nova/project_setup/tools/progress-scaffold-discovery.ts','utf8');assert.match(scaffold,/LEGACY_SECURITY_CONFIGURATION_RETIRED/u);const workspace=fs.readFileSync('tests/verification/e2e/real-run-workspace.mjs','utf8');for(const provider of ['security-headers','dependency-scan-trivy','image-scan-trivy','kubernetes-policy-security','kubernetes-runtime-security'])assert.match(workspace,new RegExp(`kubeclaw\\.${provider}@1`));
+tests/verification/contracts/check-pipeline-a11y-cutover.mts:8:const scaffold = fs.readFileSync('skills/nova/project_setup/tools/progress-scaffold-discovery.ts', 'utf8');
+tests/verification/contracts/check-pipeline-container-build-cutover.mts:21:const scaffold = read('skills/nova/project_setup/tools/progress-scaffold-discovery.ts');
+tests/verification/contracts/check-pipeline-visual-cutover.mts:7:const scaffold=fs.readFileSync('skills/nova/project_setup/tools/progress-scaffold-discovery.ts','utf8'); assert.match(scaffold,/LEGACY_VISUAL_CONFIGURATION_RETIRED/u);
+tests/verification/contracts/check-pipeline-size-budget-cutover.mts:8:const scaffoldValues = fs.readFileSync('skills/nova/project_setup/tools/progress-scaffold-values.ts', 'utf8');
+tests/verification/contracts/check-pipeline-size-budget-cutover.mts:9:const scaffoldDiscovery = fs.readFileSync('skills/nova/project_setup/tools/progress-scaffold-discovery.ts', 'utf8');
+tests/verification/contracts/check-pipeline-e2e-cutover.mts:5:const scaffold=fs.readFileSync('skills/nova/project_setup/tools/progress-scaffold-discovery.ts','utf8');assert.match(scaffold,/LEGACY_E2E_CONFIGURATION_RETIRED/u);
+tests/verification/contracts/check-pipeline-lighthouse-cutover.mts:13:const scaffold = fs.readFileSync('skills/nova/project_setup/tools/progress-scaffold-discovery.ts', 'utf8');
+tests/verification/contracts/check-pipeline-tailscale-exposure-cutover.mts:8:import { buildScaffold } from '../../../skills/nova/project_setup/tools/progress-scaffold-discovery.ts';
+tests/verification/contracts/check-pipeline-kubernetes-fixture-cutover.mts:8:import { buildScaffold } from '../../../skills/nova/project_setup/tools/progress-scaffold-discovery.ts';
+tests/verification/contracts/check-pipeline-kubernetes-fixture-cutover.mts:23:const scaffold = fs.readFileSync('skills/nova/project_setup/tools/progress-scaffold-discovery.ts', 'utf8');
+tests/verification/contracts/check-pipeline-phase10-cutover.mts:52:  'skills/nova/project_setup/tools/progress-scaffold-values.ts',
+tests/verification/contracts/check-pipeline-phase10-cutover.mts:53:  'skills/nova/project_setup/tools/progress-scaffold-discovery.ts',
+tests/verification/contracts/check-pipeline-phase10-cutover.mts:54:  'skills/nova/project_setup/tools/progress-scaffold-test-config.ts',
+tests/verification/contracts/check-pipeline-phase10-cutover.mts:61:const scaffold = fs.readFileSync('skills/nova/project_setup/tools/progress-scaffold-discovery.ts', 'utf8');
+skills/nova/project_setup/tools/progress-scaffold-values.ts:30:export const SCHEMA = 'progress-scaffold/v1';
+skills/nova/project_setup/tools/progress-scaffold-validation.ts:3:import { requireExistingSwarmFile, validateTestConfig } from './progress-scaffold-test-config.ts';
+skills/nova/project_setup/tools/progress-scaffold-validation.ts:18:} from './progress-scaffold-values.ts';
+skills/nova/project_setup/tools/progress-scaffold-validation.ts:19:import type { AnyRecord, Context, Diagnostic } from './progress-scaffold-values.ts';
+skills/nova/project_setup/tools/progress-scaffold-test-config.ts:3:import { diagnostic, isPlainObject, objectOrEmpty } from './progress-scaffold-values.ts';
+skills/nova/project_setup/tools/progress-scaffold-test-config.ts:4:import type { Context, Diagnostic } from './progress-scaffold-values.ts';
+skills/nova/project_setup/tools/progress-scaffold.ts:4:import {publishJsonPair} from '@kubeclaw/plugin-foundation/config/published-pair';
+skills/nova/project_setup/tools/progress-scaffold.ts:7:import { buildScaffold } from './progress-scaffold-discovery.ts';
+skills/nova/project_setup/tools/progress-scaffold.ts:8:import { scaffoldToProgress, validateScaffold } from './progress-scaffold-validation.ts';
+skills/nova/project_setup/tools/progress-scaffold.ts:14:} from './progress-scaffold-values.ts';
+skills/nova/project_setup/tools/progress-scaffold.ts:15:import type { Args, Context, Diagnostic } from './progress-scaffold-values.ts';
+skills/nova/project_setup/tools/progress-scaffold.ts:21:  node skills/nova/project_setup/tools/progress-scaffold.ts --project <name> [--repo <repo>]
+skills/nova/project_setup/tools/progress-scaffold.ts:22:  node skills/nova/project_setup/tools/progress-scaffold.ts --project <name> --apply [--repo <repo>]
+skills/nova/project_setup/tools/progress-scaffold.ts:23:  node skills/nova/project_setup/tools/progress-scaffold.ts --project <name> --check [--repo <repo>]
+skills/nova/project_setup/tools/progress-scaffold.ts:142:  await publishJsonPair(context.swarmDir,['progress.json','pipeline.json'],[progress,pipeline]);
+skills/nova/project_setup/tools/progress-scaffold-discovery.ts:28:} from './progress-scaffold-values.ts';
+skills/nova/project_setup/tools/progress-scaffold-discovery.ts:29:import type { AnyRecord, Context } from './progress-scaffold-values.ts';
+skills/common/plugin-runtime/foundation/config/published-pair.ts:95:export async function publishJsonPair(root:string,names:readonly [string,string],values:readonly [unknown,unknown]):Promise<void> {
+package.json:79:    "verify:test-gate:phase10": "npm run verify:test-gate:legacy-retirement && npm run plugin-system:sandbox:build && node tests/verification/contracts/check-pipeline-phase10-cutover.mts && node tests/verification/contracts/check-pipeline-phase10-vertical.mts && node --test tests/skills/nova/project_setup/progress-scaffold.test.mjs && npm test --prefix skills/nova/plugins/remote-test-gate && npm run verify:test-gate:phase9 && npm test --prefix skills/nova/plugins/buster-quality-gate",
+package.json:97:    "verify:test-gate:size-budget-cutover": "npm run verify:test-gate:size-budget-parity && npm run verify:test-gate:size-budget-production && node tests/verification/contracts/check-pipeline-size-budget-cutover.mts && node --test tests/skills/nova/project_setup/progress-scaffold.test.mjs",
+package.json:113:    "verify:test-gate:api-cutover": "npm run verify:test-gate:api-parity && node tests/verification/contracts/check-pipeline-api-cutover.mts && node --test tests/skills/nova/project_setup/progress-scaffold.test.mjs",
+package.json:117:    "verify:test-gate:a11y-cutover": "npm run verify:test-gate:a11y-parity && node tests/verification/contracts/check-pipeline-a11y-cutover.mts && node --test tests/skills/nova/project_setup/progress-scaffold.test.mjs",
+package.json:122:    "verify:test-gate:lighthouse-cutover": "npm run verify:test-gate:lighthouse-parity && node tests/verification/contracts/check-pipeline-lighthouse-cutover.mts && node --test tests/skills/nova/project_setup/progress-scaffold.test.mjs",
+package.json:127:    "verify:test-gate:visual-cutover": "npm run verify:test-gate:visual-parity && node tests/verification/contracts/check-pipeline-visual-cutover.mts && node --test tests/skills/nova/project_setup/progress-scaffold.test.mjs",
+package.json:132:    "verify:test-gate:e2e-cutover": "npm run verify:test-gate:e2e-parity && node tests/verification/contracts/check-pipeline-e2e-cutover.mts && node --test tests/skills/nova/project_setup/progress-scaffold.test.mjs",
+package.json:136:    "verify:test-gate:security-cutover": "npm run verify:test-gate:security-parity && node tests/verification/contracts/check-pipeline-security-cutover.mts && node --test tests/skills/nova/project_setup/progress-scaffold.test.mjs",
+package.json:198:    "progress:scaffold": "node skills/nova/project_setup/tools/progress-scaffold.ts",
+releases/gitops/runtime-35498048075-1/prism/resources.yaml:3268:      'skills/nova/project_setup/tools/progress-scaffold.ts',
+releases/gitops/ax41-adoption-35208467907-v2/buster/resources.yaml:846:      'skills/nova/project_setup/tools/progress-scaffold.ts',
+releases/gitops/runtime-35471064102-1/buster/resources.yaml:846:      'skills/nova/project_setup/tools/progress-scaffold.ts',
+releases/gitops/runtime-35498048075-1/buster/resources.yaml:846:      'skills/nova/project_setup/tools/progress-scaffold.ts',
+releases/gitops/runtime-35471064102-1/nova/resources.yaml:846:      'skills/nova/project_setup/tools/progress-scaffold.ts',
+releases/gitops/ax41-adoption-35208467907-v2/prism/resources.yaml:3265:      'skills/nova/project_setup/tools/progress-scaffold.ts',
+releases/gitops/runtime-35471064102-1/prism/resources.yaml:3265:      'skills/nova/project_setup/tools/progress-scaffold.ts',
+releases/gitops/ax41-adoption-35208467907-v2/nova/resources.yaml:811:      'skills/nova/project_setup/tools/progress-scaffold.ts',
+releases/gitops/runtime-35498048075-1/nova/resources.yaml:846:      'skills/nova/project_setup/tools/progress-scaffold.ts',
+releases/gitops/runtime-35490083727-1/prism/resources.yaml:3268:      'skills/nova/project_setup/tools/progress-scaffold.ts',
+releases/gitops/runtime-35231644743-1/buster/resources.yaml:846:      'skills/nova/project_setup/tools/progress-scaffold.ts',
+releases/gitops/runtime-35231644743-1/nova/resources.yaml:840:      'skills/nova/project_setup/tools/progress-scaffold.ts',
+releases/gitops/runtime-35490677835-1/nova/resources.yaml:846:      'skills/nova/project_setup/tools/progress-scaffold.ts',
+releases/gitops/runtime-35490677835-1/buster/resources.yaml:846:      'skills/nova/project_setup/tools/progress-scaffold.ts',
+releases/gitops/runtime-35490677835-1/prism/resources.yaml:3268:      'skills/nova/project_setup/tools/progress-scaffold.ts',
+releases/gitops/runtime-35231644743-1/prism/resources.yaml:3265:      'skills/nova/project_setup/tools/progress-scaffold.ts',
+releases/gitops/runtime-35490083727-1/buster/resources.yaml:846:      'skills/nova/project_setup/tools/progress-scaffold.ts',
+releases/gitops/runtime-35490083727-1/nova/resources.yaml:846:      'skills/nova/project_setup/tools/progress-scaffold.ts',
+releases/gitops/ax41-initial-35208467907/prism/resources.yaml:3220:      'skills/nova/project_setup/tools/progress-scaffold.ts',
+releases/gitops/ax41-initial-35208467907/buster/resources.yaml:846:      'skills/nova/project_setup/tools/progress-scaffold.ts',
+charts/kubeclaw/files/config/eslint-config.mjs:33:  'skills/nova/project_setup/tools/progress-scaffold.ts',
+releases/gitops/ax41-initial-35208467907/nova/resources.yaml:811:      'skills/nova/project_setup/tools/progress-scaffold.ts',

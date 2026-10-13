@@ -1,0 +1,307 @@
+{
+  "artifact-store": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "artifactRoot",
+      "storeLockWaitSeconds"
+    ],
+    "properties": {
+      "artifactRoot": {
+        "type": "string",
+        "minLength": 1
+      },
+      "maxArtifactBytes": {
+        "type": "integer",
+        "minimum": 1
+      },
+      "maximumRecords": {
+        "type": "integer",
+        "minimum": 1,
+        "default": 100000
+      },
+      "maximumStoreBytes": {
+        "type": "integer",
+        "minimum": 1,
+        "default": 268435456
+      },
+      "storeLockWaitSeconds": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 5
+      }
+    }
+  },
+  "state-store": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "root",
+      "storeLockWaitSeconds"
+    ],
+    "properties": {
+      "root": {
+        "type": "string",
+        "minLength": 1
+      },
+      "maxEntryBytes": {
+        "type": "integer",
+        "minimum": 1,
+        "default": 1048576
+      },
+      "maximumRecords": {
+        "type": "integer",
+        "minimum": 1,
+        "default": 100000
+      },
+      "maximumStoreBytes": {
+        "type": "integer",
+        "minimum": 1,
+        "default": 268435456
+      },
+      "storeLockWaitSeconds": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 5
+      }
+    }
+  },
+  "telemetry-store": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "root",
+      "storeLockWaitSeconds"
+    ],
+    "properties": {
+      "root": {
+        "type": "string",
+        "minLength": 1
+      },
+      "maxRecordBytes": {
+        "type": "integer",
+        "minimum": 1,
+        "default": 1048576
+      },
+      "maximumRecords": {
+        "type": "integer",
+        "minimum": 1,
+        "default": 100000
+      },
+      "maximumStoreBytes": {
+        "type": "integer",
+        "minimum": 1,
+        "default": 268435456
+      },
+      "storeLockWaitSeconds": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 5
+      }
+    }
+  },
+  "wait-store": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "root",
+      "storeLockWaitSeconds"
+    ],
+    "properties": {
+      "root": {
+        "type": "string",
+        "minLength": 1
+      },
+      "maxEntryBytes": {
+        "type": "integer",
+        "minimum": 1,
+        "default": 1048576
+      },
+      "maximumRecords": {
+        "type": "integer",
+        "minimum": 1,
+        "default": 100000
+      },
+      "maximumStoreBytes": {
+        "type": "integer",
+        "minimum": 1,
+        "default": 268435456
+      },
+      "storeLockWaitSeconds": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 5
+      }
+    }
+  },
+  "transport-publisher": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "targets",
+      "deliveryRoot",
+      "storeLockWaitSeconds"
+    ],
+    "properties": {
+      "deliveryRoot": {
+        "type": "string",
+        "minLength": 1
+      },
+      "maximumDeliveryRecords": {
+        "type": "integer",
+        "minimum": 1,
+        "default": 100000
+      },
+      "maximumDeliveryBytes": {
+        "type": "integer",
+        "minimum": 1,
+        "default": 268435456
+      },
+      "targets": {
+        "type": "object",
+        "minProperties": 1,
+        "propertyNames": {
+          "pattern": "^[a-z][a-z0-9._-]{0,127}$"
+        },
+        "additionalProperties": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "endpoint",
+            "signingSecret"
+          ],
+          "properties": {
+            "endpoint": {
+              "type": "string",
+              "format": "uri",
+              "pattern": "^https?://"
+            },
+            "signingSecret": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9._-]{0,127}$"
+            },
+            "maxPayloadBytes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1048576,
+              "default": 262144
+            }
+          }
+        }
+      },
+      "storeLockWaitSeconds": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 5
+      }
+    }
+  },
+  "operator-messaging": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "targets",
+      "deliveryRoot",
+      "storeLockWaitSeconds"
+    ],
+    "properties": {
+      "deliveryRoot": {
+        "type": "string",
+        "minLength": 1
+      },
+      "maximumDeliveryRecords": {
+        "type": "integer",
+        "minimum": 1,
+        "default": 100000
+      },
+      "maximumDeliveryBytes": {
+        "type": "integer",
+        "minimum": 1,
+        "default": 268435456
+      },
+      "targets": {
+        "type": "object",
+        "minProperties": 1,
+        "additionalProperties": false,
+        "patternProperties": {
+          "^[a-z0-9](?:[a-z0-9._:-]{0,126}[a-z0-9])?$": {
+            "type": "object",
+            "additionalProperties": false,
+            "anyOf": [
+              {
+                "properties": {
+                  "endpoint": {},
+                  "tokenSecret": {}
+                },
+                "required": [
+                  "endpoint",
+                  "tokenSecret"
+                ]
+              },
+              {
+                "properties": {
+                  "endpointOrigin": {},
+                  "endpointSecret": {}
+                },
+                "required": [
+                  "endpointOrigin",
+                  "endpointSecret"
+                ]
+              }
+            ],
+            "properties": {
+              "receiptEndpoint": {
+                "type": "string",
+                "format": "uri",
+                "pattern": "^https?://"
+              },
+              "endpoint": {
+                "type": "string",
+                "format": "uri",
+                "pattern": "^https?://"
+              },
+              "endpointOrigin": {
+                "type": "string",
+                "format": "uri",
+                "pattern": "^https?://[^/?#]+/?$"
+              },
+              "endpointSecret": {
+                "type": "string",
+                "pattern": "^[a-z0-9](?:[a-z0-9._:-]{0,126}[a-z0-9])?$"
+              },
+              "tokenSecret": {
+                "type": "string",
+                "pattern": "^[a-z0-9](?:[a-z0-9._:-]{0,126}[a-z0-9])?$"
+              },
+              "maxPayloadBytes": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 1048576,
+                "default": 65536
+              },
+              "format": {
+                "type": "string",
+                "enum": [
+                  "json",
+                  "discord_webhook"
+                ],
+                "default": "json"
+              }
+            }
+          }
+        }
+      },
+      "storeLockWaitSeconds": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 5
+      }
+    }
+  }
+}

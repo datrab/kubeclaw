@@ -1,0 +1,3976 @@
+{
+  "sourceCommit": "bce3f075156a86be345821499c04628cb35c2762",
+  "sourceTree": "a8b0adf641de573565360b0c4eb577d6bc7545c3",
+  "entries": [
+    {
+      "setting": "RT-351419f2c26e2696",
+      "provider": "api-flow",
+      "field": "flowFile",
+      "schemaPointer": "#/properties/flowFile",
+      "classification": "task-application-test-contract",
+      "currentSemantics": "task exact repositoryrelative flow source realpath/filesafety+1MiB bound, allflowkeys/schemaVersion and every setup/main/cleanup step validatedbeforeeffects. Task flow intent notCONFIG author; nested perstep timeouts/headers/expectations need exact supplemental dispositions.",
+      "readers": [
+        {
+          "path": "skills/buster/plugins/api-flow/src/provider.js",
+          "line": 45,
+          "text": "function readFlow(invocation, context, config) {",
+          "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+        },
+        {
+          "path": "skills/buster/plugins/api-flow/src/provider.js",
+          "line": 46,
+          "text": "  const workspace = fs.realpathSync(context.workspaceRoot); const repository = path.resolve(workspace, invocation.workspace.repository);",
+          "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+        },
+        {
+          "path": "skills/buster/plugins/api-flow/src/provider.js",
+          "line": 47,
+          "text": "  if (!repository.startsWith(`${workspace}${path.sep}`)) throw new Error('API_FLOW_WORKSPACE_INVALID');",
+          "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+        },
+        {
+          "path": "skills/buster/plugins/api-flow/src/provider.js",
+          "line": 48,
+          "text": "  const bytes = fs.readFileSync(inside(fs.realpathSync(repository), config.flowFile, 'API_FLOW_FILE_DENIED'));",
+          "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+        },
+        {
+          "path": "skills/buster/plugins/api-flow/src/provider.js",
+          "line": 49,
+          "text": "  if (bytes.byteLength > 1_048_576) throw new Error('API_FLOW_FILE_TOO_LARGE');",
+          "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+        },
+        {
+          "path": "skills/buster/plugins/api-flow/src/provider.js",
+          "line": 50,
+          "text": "  let flow; try { flow = JSON.parse(bytes.toString('utf8')); } catch { throw new Error('API_FLOW_FILE_INVALID'); }",
+          "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+        },
+        {
+          "path": "skills/buster/plugins/api-flow/src/provider.js",
+          "line": 51,
+          "text": "  exact(flow, FLOW_KEYS, 'API_FLOW_FILE_INVALID'); if (flow.schemaVersion !== 'kubeclaw.api-flow.v1') throw new Error('API_FLOW_VERSION_UNSUPPORTED'); return flow;",
+          "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+        }
+      ],
+      "completePreserved": {
+        "url": "$ORIGIN",
+        "flowFile": "flow-a.json",
+        "requestTimeoutMs": 1000,
+        "maximumResponseBytes": 2048,
+        "maximumSteps": 3
+      },
+      "completeA": {
+        "url": "$ORIGIN",
+        "flowFile": "flow-a.json",
+        "requestTimeoutMs": 1000,
+        "maximumResponseBytes": 2048,
+        "maximumSteps": 3
+      },
+      "completeB": {
+        "url": "$ORIGIN",
+        "flowFile": "flow-b.json",
+        "requestTimeoutMs": 1000,
+        "maximumResponseBytes": 2048,
+        "maximumSteps": 3
+      },
+      "completeNegative": {
+        "url": "$ORIGIN",
+        "flowFile": "../outside",
+        "requestTimeoutMs": 1000,
+        "maximumResponseBytes": 2048,
+        "maximumSteps": 3
+      },
+      "fixedNoIndependentB": false,
+      "targetAuthor": "existing pipeline/plan task application source/expectedcontract authority, NOT global CONFIG secondtaskintent writer; explicit absentassertion option encodedtask intent ratherthan implicit2xx fallback",
+      "externalRequired": "fullactualisolatedrole/registry/runtime/grant/currentoperatorprofile; auth real leaseUID/SecretUID/resourceVersion/exposureGeneration/image/manifest/trustedfixture provenance currently missing. Loopbackauthprovenance SYNTHETIC, notlivecredential/exposure/authority proof."
+    },
+    {
+      "setting": "RT-ecc6714a5d1b8270",
+      "provider": "api-flow",
+      "field": "url",
+      "schemaPointer": "#/properties/url",
+      "classification": "task-application-test-contract",
+      "currentSemantics": "task base endpoint; direct config coercedString andnewURL later, weaker than strictHTTPprovider; taskURL+fixture ambiguous, actualnative origin/ports deny incompatiblevalues. Target explicitcanonical validationbeforefirsteffect.",
+      "readers": [
+        {
+          "path": "skills/buster/plugins/api-flow/src/provider.js",
+          "line": 26,
+          "text": "function endpoint(invocation, config) {",
+          "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+        },
+        {
+          "path": "skills/buster/plugins/api-flow/src/provider.js",
+          "line": 27,
+          "text": "  if (invocation.inputs.some((input) => !['deployment', 'endpoint'].includes(input.name))) throw new Error('API_FLOW_INPUT_UNKNOWN');",
+          "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+        },
+        {
+          "path": "skills/buster/plugins/api-flow/src/provider.js",
+          "line": 28,
+          "text": "  const inputs = invocation.inputs.filter((input) => ['deployment', 'endpoint'].includes(input.name));",
+          "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+        },
+        {
+          "path": "skills/buster/plugins/api-flow/src/provider.js",
+          "line": 29,
+          "text": "  if (inputs.length > 1) throw new Error('API_FLOW_INPUT_INVALID');",
+          "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+        },
+        {
+          "path": "skills/buster/plugins/api-flow/src/provider.js",
+          "line": 30,
+          "text": "  if (config.url !== undefined && inputs.length) throw new Error('API_FLOW_TARGET_AMBIGUOUS');",
+          "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+        },
+        {
+          "path": "skills/buster/plugins/api-flow/src/provider.js",
+          "line": 31,
+          "text": "  if (config.url !== undefined) return String(config.url);",
+          "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+        },
+        {
+          "path": "skills/buster/plugins/api-flow/src/provider.js",
+          "line": 32,
+          "text": "  if (!inputs.length || inputs[0].kind !== 'value') throw new Error('API_FLOW_TARGET_REQUIRED');",
+          "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+        },
+        {
+          "path": "skills/buster/plugins/api-flow/src/provider.js",
+          "line": 33,
+          "text": "  const input = inputs[0]; const value = object(input.value, 'API_FLOW_INPUT_INVALID');",
+          "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+        },
+        {
+          "path": "skills/buster/plugins/api-flow/src/provider.js",
+          "line": 34,
+          "text": "  if (input.name === 'endpoint') {",
+          "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+        },
+        {
+          "path": "skills/buster/plugins/api-flow/src/provider.js",
+          "line": 35,
+          "text": "    if (input.schemaId !== 'kubeclaw.public-endpoint-fixture@1' || value.schemaVersion !== 'public-endpoint-fixture.v1'",
+          "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+        },
+        {
+          "path": "skills/buster/plugins/api-flow/src/provider.js",
+          "line": 36,
+          "text": "      || typeof value.url !== 'string') throw new Error('API_FLOW_INPUT_INVALID');",
+          "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+        },
+        {
+          "path": "skills/buster/plugins/api-flow/src/provider.js",
+          "line": 37,
+          "text": "    return value.url;",
+          "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+        },
+        {
+          "path": "skills/buster/plugins/api-flow/src/provider.js",
+          "line": 38,
+          "text": "  }",
+          "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+        },
+        {
+          "path": "skills/buster/plugins/api-flow/src/provider.js",
+          "line": 39,
+          "text": "  if (input.schemaId !== 'kubeclaw.kubernetes-deployment-fixture@1' || value.schemaVersion !== 'kubernetes-deployment-fixture.v1'",
+          "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+        },
+        {
+          "path": "skills/buster/plugins/api-flow/src/provider.js",
+          "line": 40,
+          "text": "    || !Array.isArray(value.endpoints) || value.endpoints.length < 1) throw new Error('API_FLOW_INPUT_INVALID');",
+          "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+        },
+        {
+          "path": "skills/buster/plugins/api-flow/src/provider.js",
+          "line": 41,
+          "text": "  const selected = config.endpointName === undefined ? (value.endpoints.length === 1 ? value.endpoints[0] : null)",
+          "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+        },
+        {
+          "path": "skills/buster/plugins/api-flow/src/provider.js",
+          "line": 42,
+          "text": "    : value.endpoints.find((item) => item?.name === config.endpointName);",
+          "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+        },
+        {
+          "path": "skills/buster/plugins/api-flow/src/provider.js",
+          "line": 43,
+          "text": "  if (!selected?.url) throw new Error('API_FLOW_ENDPOINT_NOT_FOUND'); return String(selected.url);",
+          "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+        },
+        {
+          "path": "skills/buster/plugins/api-flow/src/provider.js",
+          "line": 44,
+          "text": "}",
+          "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+        },
+        {
+          "path": "skills/buster/plugins/api-flow/src/provider.js",
+          "line": 102,
+          "text": "function stepUrl(base, rawPath) { const baseUrl = new URL(base); const url = new URL(rawPath, baseUrl); if (url.origin !== baseUrl.origin) throw new Error('API_FLOW_PATH_INVALID'); return url.href; }",
+          "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+        },
+        {
+          "path": "skills/buster/plugins/api-flow/src/provider.js",
+          "line": 125,
+          "text": "  const base = endpoint(invocation, config); const records = []; let executedMainSteps = 0;",
+          "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+        },
+        {
+          "path": "skills/buster/plugins/api-flow/src/provider.js",
+          "line": 137,
+          "text": "      const url = stepUrl(base, String(interpolate(step.path, flow.variables))); const timeoutMs = Math.min(integer(step.timeoutMs, config.requestTimeoutMs ?? 10_000, 1, 300_000, 'API_FLOW_TIMEOUT_INVALID'), invocation.timeoutMs); const maximumResponseBytes = integer(config.maximumResponseBytes, 1_048_576, 1, 16_777_216, 'API_FLOW_RESPONSE_LIMIT_INVALID');",
+          "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+        },
+        {
+          "path": "skills/buster/plugins/api-flow/src/provider.js",
+          "line": 138,
+          "text": "      if (step.protocol === 'websocket') response = await invoke({ operation: 'websocket', resource: { type: 'network.url', canonicalId: url }, payload: { headers: interpolate(step.headers ?? {}, flow.variables), messages: interpolate(step.messages ?? [], flow.variables).map((item) => typeof item === 'string' ? item : JSON.stringify(item)), minimumMessages: step.expect?.minimumMessages ?? 1, timeoutMs, maximumResponseBytes } });",
+          "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+        },
+        {
+          "path": "skills/buster/plugins/api-flow/src/provider.js",
+          "line": 139,
+          "text": "      else response = await invoke({ operation: 'request', resource: { type: 'network.url', canonicalId: url }, payload: { method: step.method, headers: interpolate(step.headers ?? {}, flow.variables), body: step.body === undefined ? undefined : JSON.stringify(interpolate(step.body, flow.variables)), responseHeaders: ['content-type'], timeoutMs, maximumResponseBytes } });",
+          "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+        }
+      ],
+      "completePreserved": {
+        "url": "$ORIGIN",
+        "flowFile": "flow-a.json",
+        "requestTimeoutMs": 1000,
+        "maximumResponseBytes": 2048,
+        "maximumSteps": 3
+      },
+      "completeA": {
+        "url": "$ORIGIN",
+        "flowFile": "flow-a.json",
+        "requestTimeoutMs": 1000,
+        "maximumResponseBytes": 2048,
+        "maximumSteps": 3
+      },
+      "completeB": {
+        "url": "$ORIGIN_B",
+        "flowFile": "flow-a.json",
+        "requestTimeoutMs": 1000,
+        "maximumResponseBytes": 2048,
+        "maximumSteps": 3
+      },
+      "completeNegative": {
+        "url": "http://user:pass@127.0.0.1/",
+        "flowFile": "flow-a.json",
+        "requestTimeoutMs": 1000,
+        "maximumResponseBytes": 2048,
+        "maximumSteps": 3
+      },
+      "fixedNoIndependentB": false,
+      "targetAuthor": "existing pipeline/plan task application source/expectedcontract authority, NOT global CONFIG secondtaskintent writer; explicit absentassertion option encodedtask intent ratherthan implicit2xx fallback",
+      "externalRequired": "fullactualisolatedrole/registry/runtime/grant/currentoperatorprofile; auth real leaseUID/SecretUID/resourceVersion/exposureGeneration/image/manifest/trustedfixture provenance currently missing. Loopbackauthprovenance SYNTHETIC, notlivecredential/exposure/authority proof."
+    },
+    {
+      "setting": "RT-98800e708ba4ebcc",
+      "provider": "api-flow",
+      "field": "endpointName",
+      "schemaPointer": "#/properties/endpointName",
+      "classification": "task-application-test-contract",
+      "currentSemantics": "task deployment selector exactlyone default, explicitfind; acceptedignored with explicitURL/publicendpoint; proposed unusedreject evenequal beforeeffects.",
+      "readers": [
+        {
+          "path": "skills/buster/plugins/api-flow/src/provider.js",
+          "line": 26,
+          "text": "function endpoint(invocation, config) {",
+          "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+        },
+        {
+          "path": "skills/buster/plugins/api-flow/src/provider.js",
+          "line": 27,
+          "text": "  if (invocation.inputs.some((input) => !['deployment', 'endpoint'].includes(input.name))) throw new Error('API_FLOW_INPUT_UNKNOWN');",
+          "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+        },
+        {
+          "path": "skills/buster/plugins/api-flow/src/provider.js",
+          "line": 28,
+          "text": "  const inputs = invocation.inputs.filter((input) => ['deployment', 'endpoint'].includes(input.name));",
+          "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+        },
+        {
+          "path": "skills/buster/plugins/api-flow/src/provider.js",
+          "line": 29,
+          "text": "  if (inputs.length > 1) throw new Error('API_FLOW_INPUT_INVALID');",
+          "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+        },
+        {
+          "path": "skills/buster/plugins/api-flow/src/provider.js",
+          "line": 30,
+          "text": "  if (config.url !== undefined && inputs.length) throw new Error('API_FLOW_TARGET_AMBIGUOUS');",
+          "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+        },
+        {
+          "path": "skills/buster/plugins/api-flow/src/provider.js",
+          "line": 31,
+          "text": "  if (config.url !== undefined) return String(config.url);",
+          "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+        },
+        {
+          "path": "skills/buster/plugins/api-flow/src/provider.js",
+          "line": 32,
+          "text": "  if (!inputs.length || inputs[0].kind !== 'value') throw new Error('API_FLOW_TARGET_REQUIRED');",
+          "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+        },
+        {
+          "path": "skills/buster/plugins/api-flow/src/provider.js",
+          "line": 33,
+          "text": "  const input = inputs[0]; const value = object(input.value, 'API_FLOW_INPUT_INVALID');",
+          "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+        },
+        {
+          "path": "skills/buster/plugins/api-flow/src/provider.js",
+          "line": 34,
+          "text": "  if (input.name === 'endpoint') {",
+          "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+        },
+        {
+          "path": "skills/buster/plugins/api-flow/src/provider.js",
+          "line": 35,
+          "text": "    if (input.schemaId !== 'kubeclaw.public-endpoint-fixture@1' || value.schemaVersion !== 'public-endpoint-fixture.v1'",
+          "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+        },
+        {
+          "path": "skills/buster/plugins/api-flow/src/provider.js",
+          "line": 36,
+          "text": "      || typeof value.url !== 'string') throw new Error('API_FLOW_INPUT_INVALID');",
+          "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+        },
+        {
+          "path": "skills/buster/plugins/api-flow/src/provider.js",
+          "line": 37,
+          "text": "    return value.url;",
+          "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+        },
+        {
+          "path": "skills/buster/plugins/api-flow/src/provider.js",
+          "line": 38,
+          "text": "  }",
+          "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+        },
+        {
+          "path": "skills/buster/plugins/api-flow/src/provider.js",
+          "line": 39,
+          "text": "  if (input.schemaId !== 'kubeclaw.kubernetes-deployment-fixture@1' || value.schemaVersion !== 'kubernetes-deployment-fixture.v1'",
+          "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+        },
+        {
+          "path": "skills/buster/plugins/api-flow/src/provider.js",
+          "line": 40,
+          "text": "    || !Array.isArray(value.endpoints) || value.endpoints.length < 1) throw new Error('API_FLOW_INPUT_INVALID');",
+          "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+        },
+        {
+          "path": "skills/buster/plugins/api-flow/src/provider.js",
+          "line": 41,
+          "text": "  const selected = config.endpointName === undefined ? (value.endpoints.length === 1 ? value.endpoints[0] : null)",
+          "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+        },
+        {
+          "path": "skills/buster/plugins/api-flow/src/provider.js",
+          "line": 42,
+          "text": "    : value.endpoints.find((item) => item?.name === config.endpointName);",
+          "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+        },
+        {
+          "path": "skills/buster/plugins/api-flow/src/provider.js",
+          "line": 43,
+          "text": "  if (!selected?.url) throw new Error('API_FLOW_ENDPOINT_NOT_FOUND'); return String(selected.url);",
+          "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+        },
+        {
+          "path": "skills/buster/plugins/api-flow/src/provider.js",
+          "line": 44,
+          "text": "}",
+          "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+        }
+      ],
+      "completePreserved": {
+        "url": "$ORIGIN",
+        "flowFile": "flow-a.json",
+        "requestTimeoutMs": 1000,
+        "maximumResponseBytes": 2048,
+        "maximumSteps": 3
+      },
+      "completeA": {
+        "flowFile": "flow-a.json",
+        "requestTimeoutMs": 1000,
+        "maximumResponseBytes": 2048,
+        "maximumSteps": 3,
+        "endpointName": "service-a"
+      },
+      "completeB": {
+        "flowFile": "flow-a.json",
+        "requestTimeoutMs": 1000,
+        "maximumResponseBytes": 2048,
+        "maximumSteps": 3,
+        "endpointName": "service-b"
+      },
+      "completeNegative": {
+        "flowFile": "flow-a.json",
+        "requestTimeoutMs": 1000,
+        "maximumResponseBytes": 2048,
+        "maximumSteps": 3,
+        "endpointName": "missing"
+      },
+      "fixedNoIndependentB": false,
+      "targetAuthor": "existing pipeline/plan task application source/expectedcontract authority, NOT global CONFIG secondtaskintent writer; explicit absentassertion option encodedtask intent ratherthan implicit2xx fallback",
+      "externalRequired": "fullactualisolatedrole/registry/runtime/grant/currentoperatorprofile; auth real leaseUID/SecretUID/resourceVersion/exposureGeneration/image/manifest/trustedfixture provenance currently missing. Loopbackauthprovenance SYNTHETIC, notlivecredential/exposure/authority proof."
+    },
+    {
+      "setting": "RT-b8eb5e344f496d7c",
+      "provider": "api-flow",
+      "field": "requestTimeoutMs",
+      "schemaPointer": "#/properties/requestTimeoutMs",
+      "classification": "operator-processing-policy",
+      "currentSemantics": "owned request milliseconds default10000 unless step.timeoutMs overrides! Each min(step orconfigfallback,invocation.timeoutMs); invalidconfig masked by validperstep override. Proposed one owned request policy rejects retired step.timeoutMs evenequal, task-specific deadline must not silentlybecomesecondpolicy author.",
+      "readers": [
+        {
+          "path": "skills/buster/plugins/api-flow/src/provider.js",
+          "line": 15,
+          "text": "function integer(value, fallback, minimum, maximum, code) { const result = value ?? fallback; if (!Number.isSafeInteger(result) || result < minimum || result > maximum) throw new Error(code); return result; }",
+          "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+        },
+        {
+          "path": "skills/buster/plugins/api-flow/src/provider.js",
+          "line": 61,
+          "text": "  if (step.timeoutMs !== undefined) integer(step.timeoutMs, null, 1, 300_000, 'API_FLOW_TIMEOUT_INVALID');",
+          "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+        },
+        {
+          "path": "skills/buster/plugins/api-flow/src/provider.js",
+          "line": 137,
+          "text": "      const url = stepUrl(base, String(interpolate(step.path, flow.variables))); const timeoutMs = Math.min(integer(step.timeoutMs, config.requestTimeoutMs ?? 10_000, 1, 300_000, 'API_FLOW_TIMEOUT_INVALID'), invocation.timeoutMs); const maximumResponseBytes = integer(config.maximumResponseBytes, 1_048_576, 1, 16_777_216, 'API_FLOW_RESPONSE_LIMIT_INVALID');",
+          "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+        },
+        {
+          "path": "skills/buster/plugins/api-flow/src/provider.js",
+          "line": 138,
+          "text": "      if (step.protocol === 'websocket') response = await invoke({ operation: 'websocket', resource: { type: 'network.url', canonicalId: url }, payload: { headers: interpolate(step.headers ?? {}, flow.variables), messages: interpolate(step.messages ?? [], flow.variables).map((item) => typeof item === 'string' ? item : JSON.stringify(item)), minimumMessages: step.expect?.minimumMessages ?? 1, timeoutMs, maximumResponseBytes } });",
+          "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+        },
+        {
+          "path": "skills/buster/plugins/api-flow/src/provider.js",
+          "line": 139,
+          "text": "      else response = await invoke({ operation: 'request', resource: { type: 'network.url', canonicalId: url }, payload: { method: step.method, headers: interpolate(step.headers ?? {}, flow.variables), body: step.body === undefined ? undefined : JSON.stringify(interpolate(step.body, flow.variables)), responseHeaders: ['content-type'], timeoutMs, maximumResponseBytes } });",
+          "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+        }
+      ],
+      "completePreserved": {
+        "url": "$ORIGIN",
+        "flowFile": "flow-a.json",
+        "requestTimeoutMs": 1000,
+        "maximumResponseBytes": 2048,
+        "maximumSteps": 3
+      },
+      "completeA": {
+        "url": "$ORIGIN",
+        "flowFile": "flow-a.json",
+        "requestTimeoutMs": 50,
+        "maximumResponseBytes": 2048,
+        "maximumSteps": 3
+      },
+      "completeB": {
+        "url": "$ORIGIN",
+        "flowFile": "flow-a.json",
+        "requestTimeoutMs": 500,
+        "maximumResponseBytes": 2048,
+        "maximumSteps": 3
+      },
+      "completeNegative": {
+        "url": "$ORIGIN",
+        "flowFile": "flow-a.json",
+        "requestTimeoutMs": 0,
+        "maximumResponseBytes": 2048,
+        "maximumSteps": 3
+      },
+      "fixedNoIndependentB": false,
+      "targetAuthor": "one existing plugin-owned requestprocessing policy, retired source/task/perstep timeout quotas reject evenequal",
+      "externalRequired": "fullactualisolatedrole/registry/runtime/grant/currentoperatorprofile; auth real leaseUID/SecretUID/resourceVersion/exposureGeneration/image/manifest/trustedfixture provenance currently missing. Loopbackauthprovenance SYNTHETIC, notlivecredential/exposure/authority proof."
+    },
+    {
+      "setting": "RT-98a5849759145124",
+      "provider": "api-flow",
+      "field": "maximumResponseBytes",
+      "schemaPointer": "#/properties/maximumResponseBytes",
+      "classification": "operator-processing-policy",
+      "currentSemantics": "owned perrequest responsebytes1..16777216 default1048576; actualruntime cap enforcement beforeeffect, provider invalidquota maybe recordedfailed rather thanthrown ifbeforeinvoke. Wholebudget/spentbytes notsameparameter.",
+      "readers": [
+        {
+          "path": "skills/buster/plugins/api-flow/src/provider.js",
+          "line": 15,
+          "text": "function integer(value, fallback, minimum, maximum, code) { const result = value ?? fallback; if (!Number.isSafeInteger(result) || result < minimum || result > maximum) throw new Error(code); return result; }",
+          "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+        },
+        {
+          "path": "skills/buster/plugins/api-flow/src/provider.js",
+          "line": 137,
+          "text": "      const url = stepUrl(base, String(interpolate(step.path, flow.variables))); const timeoutMs = Math.min(integer(step.timeoutMs, config.requestTimeoutMs ?? 10_000, 1, 300_000, 'API_FLOW_TIMEOUT_INVALID'), invocation.timeoutMs); const maximumResponseBytes = integer(config.maximumResponseBytes, 1_048_576, 1, 16_777_216, 'API_FLOW_RESPONSE_LIMIT_INVALID');",
+          "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+        },
+        {
+          "path": "skills/buster/plugins/api-flow/src/provider.js",
+          "line": 138,
+          "text": "      if (step.protocol === 'websocket') response = await invoke({ operation: 'websocket', resource: { type: 'network.url', canonicalId: url }, payload: { headers: interpolate(step.headers ?? {}, flow.variables), messages: interpolate(step.messages ?? [], flow.variables).map((item) => typeof item === 'string' ? item : JSON.stringify(item)), minimumMessages: step.expect?.minimumMessages ?? 1, timeoutMs, maximumResponseBytes } });",
+          "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+        },
+        {
+          "path": "skills/buster/plugins/api-flow/src/provider.js",
+          "line": 139,
+          "text": "      else response = await invoke({ operation: 'request', resource: { type: 'network.url', canonicalId: url }, payload: { method: step.method, headers: interpolate(step.headers ?? {}, flow.variables), body: step.body === undefined ? undefined : JSON.stringify(interpolate(step.body, flow.variables)), responseHeaders: ['content-type'], timeoutMs, maximumResponseBytes } });",
+          "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+        }
+      ],
+      "completePreserved": {
+        "url": "$ORIGIN",
+        "flowFile": "flow-a.json",
+        "requestTimeoutMs": 1000,
+        "maximumResponseBytes": 2048,
+        "maximumSteps": 3
+      },
+      "completeA": {
+        "url": "$ORIGIN",
+        "flowFile": "flow-a.json",
+        "requestTimeoutMs": 1000,
+        "maximumResponseBytes": 32,
+        "maximumSteps": 3
+      },
+      "completeB": {
+        "url": "$ORIGIN",
+        "flowFile": "flow-a.json",
+        "requestTimeoutMs": 1000,
+        "maximumResponseBytes": 2048,
+        "maximumSteps": 3
+      },
+      "completeNegative": {
+        "url": "$ORIGIN",
+        "flowFile": "flow-a.json",
+        "requestTimeoutMs": 1000,
+        "maximumResponseBytes": 0,
+        "maximumSteps": 3
+      },
+      "fixedNoIndependentB": false,
+      "targetAuthor": "one existing plugin-owned requestprocessing policy, retired source/task/perstep timeout quotas reject evenequal",
+      "externalRequired": "fullactualisolatedrole/registry/runtime/grant/currentoperatorprofile; auth real leaseUID/SecretUID/resourceVersion/exposureGeneration/image/manifest/trustedfixture provenance currently missing. Loopbackauthprovenance SYNTHETIC, notlivecredential/exposure/authority proof."
+    },
+    {
+      "setting": "RT-6e292c3c6f492f07",
+      "provider": "api-flow",
+      "field": "maximumSteps",
+      "schemaPointer": "#/properties/maximumSteps",
+      "classification": "operator-processing-policy",
+      "currentSemantics": "owned totaldeclared setup+main+cleanup stepcount1..256 default64; allvalidated beforeeffect, >=1 allowedbut zeroexecuted main emitscoveragefailure. Smallerquota rejectswholeflow, nevertrimssteps/cleanup/evidence. Cleanup stillattempted afterfirsttransportfailure thenoriginalerror rethrows.",
+      "readers": [
+        {
+          "path": "skills/buster/plugins/api-flow/src/provider.js",
+          "line": 79,
+          "text": "function validateFlow(flow, maximumSteps) {",
+          "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+        },
+        {
+          "path": "skills/buster/plugins/api-flow/src/provider.js",
+          "line": 80,
+          "text": "  const groups = [['setup', flow.setup ?? []], ['steps', flow.steps], ['cleanup', flow.cleanup ?? []]];",
+          "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+        },
+        {
+          "path": "skills/buster/plugins/api-flow/src/provider.js",
+          "line": 81,
+          "text": "  if (groups.some(([, items]) => !Array.isArray(items))) throw new Error('API_FLOW_STEPS_INVALID');",
+          "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+        },
+        {
+          "path": "skills/buster/plugins/api-flow/src/provider.js",
+          "line": 82,
+          "text": "  const count = groups.reduce((sum, [, items]) => sum + items.length, 0); if (count < 1 || count > maximumSteps) throw new Error('API_FLOW_STEP_LIMIT_EXCEEDED');",
+          "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+        },
+        {
+          "path": "skills/buster/plugins/api-flow/src/provider.js",
+          "line": 83,
+          "text": "  const variables = map(flow.variables, 'API_FLOW_VARIABLES_INVALID', 64);",
+          "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+        },
+        {
+          "path": "skills/buster/plugins/api-flow/src/provider.js",
+          "line": 84,
+          "text": "  if (Object.entries(variables).some(([name, value]) => !VARIABLE.test(name) || !['string', 'number', 'boolean'].includes(typeof value))) throw new Error('API_FLOW_VARIABLES_INVALID');",
+          "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+        },
+        {
+          "path": "skills/buster/plugins/api-flow/src/provider.js",
+          "line": 85,
+          "text": "  const seen = new Set(); return { variables: Object.fromEntries(Object.entries(variables).map(([key, value]) => [key, String(value)])), groups: groups.map(([name, items]) => [name, items.map((step) => validateStep(step, seen))]) };",
+          "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+        },
+        {
+          "path": "skills/buster/plugins/api-flow/src/provider.js",
+          "line": 123,
+          "text": "export function provider() { return { async execute(invocation, context) {",
+          "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+        },
+        {
+          "path": "skills/buster/plugins/api-flow/src/provider.js",
+          "line": 124,
+          "text": "  const config = object(invocation.configuration.values, 'API_FLOW_CONFIG_INVALID'); const flow = validateFlow(readFlow(invocation, context, config), integer(config.maximumSteps, 64, 1, 256, 'API_FLOW_STEP_LIMIT_INVALID'));",
+          "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+        }
+      ],
+      "completePreserved": {
+        "url": "$ORIGIN",
+        "flowFile": "flow-a.json",
+        "requestTimeoutMs": 1000,
+        "maximumResponseBytes": 2048,
+        "maximumSteps": 3
+      },
+      "completeA": {
+        "url": "$ORIGIN",
+        "flowFile": "flow-a.json",
+        "requestTimeoutMs": 1000,
+        "maximumResponseBytes": 2048,
+        "maximumSteps": 1
+      },
+      "completeB": {
+        "url": "$ORIGIN",
+        "flowFile": "flow-a.json",
+        "requestTimeoutMs": 1000,
+        "maximumResponseBytes": 2048,
+        "maximumSteps": 3
+      },
+      "completeNegative": {
+        "url": "$ORIGIN",
+        "flowFile": "flow-a.json",
+        "requestTimeoutMs": 1000,
+        "maximumResponseBytes": 2048,
+        "maximumSteps": 0
+      },
+      "fixedNoIndependentB": false,
+      "targetAuthor": "one existing plugin-owned requestprocessing policy, retired source/task/perstep timeout quotas reject evenequal",
+      "externalRequired": "fullactualisolatedrole/registry/runtime/grant/currentoperatorprofile; auth real leaseUID/SecretUID/resourceVersion/exposureGeneration/image/manifest/trustedfixture provenance currently missing. Loopbackauthprovenance SYNTHETIC, notlivecredential/exposure/authority proof."
+    },
+    {
+      "setting": "RT-374fc655646a9edc",
+      "provider": "demo-auth-smoke",
+      "field": "protocol",
+      "schemaPointer": "#/properties/protocol",
+      "classification": "protocol-invariant",
+      "currentSemantics": "protocol invariant json-session.v1 only; no distinctlegalB, reject json-session.v2. Not configurablefallback or CONFIG policy.",
+      "readers": [
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 23,
+          "text": "export function protocol(value) {",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 24,
+          "text": "  exact(value, ['protocol','loginPath','usernameKey','passwordKey','cookieName','protectedPath','usernamePointer','assertions']);",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 25,
+          "text": "  if (value.protocol !== 'json-session.v1') throw new Error('DEMO_AUTH_PROTOCOL_UNSUPPORTED');",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/provider.js",
+          "line": 43,
+          "text": "    const negative = await request(config.protectedPath,'GET',{});",
+          "sha256": "21e239a33d59c5849d8b9acef7ac0d6eba70b5652f885a430eefd82063f07c30"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/provider.js",
+          "line": 46,
+          "text": "    const login = await request(config.loginPath,'POST',{'content-type':'application/json'},JSON.stringify({[config.usernameKey]:credentials.username,[config.passwordKey]:credentials.password}));",
+          "sha256": "21e239a33d59c5849d8b9acef7ac0d6eba70b5652f885a430eefd82063f07c30"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/provider.js",
+          "line": 48,
+          "text": "    const cookie = sessionCookie(login.headers?.['set-cookie'],config,bound.url);",
+          "sha256": "21e239a33d59c5849d8b9acef7ac0d6eba70b5652f885a430eefd82063f07c30"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/provider.js",
+          "line": 49,
+          "text": "    const authenticated = await request(config.protectedPath,'GET',{cookie});",
+          "sha256": "21e239a33d59c5849d8b9acef7ac0d6eba70b5652f885a430eefd82063f07c30"
+        }
+      ],
+      "completePreserved": {
+        "protocol": "json-session.v1",
+        "loginPath": "/login-a",
+        "usernameKey": "username",
+        "passwordKey": "password",
+        "cookieName": "session",
+        "protectedPath": "/protected-a",
+        "usernamePointer": "/username",
+        "assertions": [
+          {
+            "pointer": "/business",
+            "equals": "C0-local"
+          }
+        ]
+      },
+      "completeA": {
+        "protocol": "json-session.v1",
+        "loginPath": "/login-a",
+        "usernameKey": "username",
+        "passwordKey": "password",
+        "cookieName": "session",
+        "protectedPath": "/protected-a",
+        "usernamePointer": "/username",
+        "assertions": [
+          {
+            "pointer": "/business",
+            "equals": "C0-local"
+          }
+        ]
+      },
+      "completeB": {
+        "protocol": "json-session.v1",
+        "loginPath": "/login-a",
+        "usernameKey": "username",
+        "passwordKey": "password",
+        "cookieName": "session",
+        "protectedPath": "/protected-a",
+        "usernamePointer": "/username",
+        "assertions": [
+          {
+            "pointer": "/business",
+            "equals": "C0-local"
+          }
+        ]
+      },
+      "completeNegative": {
+        "protocol": "json-session.v2",
+        "loginPath": "/login-a",
+        "usernameKey": "username",
+        "passwordKey": "password",
+        "cookieName": "session",
+        "protectedPath": "/protected-a",
+        "usernamePointer": "/username",
+        "assertions": [
+          {
+            "pointer": "/business",
+            "equals": "C0-local"
+          }
+        ]
+      },
+      "fixedNoIndependentB": true,
+      "targetAuthor": "existing pipeline/plan task application source/expectedcontract authority, NOT global CONFIG secondtaskintent writer; explicit absentassertion option encodedtask intent ratherthan implicit2xx fallback",
+      "externalRequired": "fullactualisolatedrole/registry/runtime/grant/currentoperatorprofile; auth real leaseUID/SecretUID/resourceVersion/exposureGeneration/image/manifest/trustedfixture provenance currently missing. Loopbackauthprovenance SYNTHETIC, notlivecredential/exposure/authority proof."
+    },
+    {
+      "setting": "RT-6eb2a289d5ca31e7",
+      "provider": "demo-auth-smoke",
+      "field": "loginPath",
+      "schemaPointer": "#/properties/loginPath",
+      "classification": "task-application-test-contract",
+      "currentSemantics": "task application canonical route noquery/hash/dotsegments/backslash/originchange; loginPOST body exactdeclaredapplicationkeys and realgeneratedcredentials.",
+      "readers": [
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 14,
+          "text": "function route(value) {",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 15,
+          "text": "  text(value);",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 16,
+          "text": "  const url = new URL(value, 'https://demo.invalid');",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 17,
+          "text": "  if (!value.startsWith('/') || value.startsWith('//') || value.includes('\\\\') || url.origin !== 'https://demo.invalid' || url.hash || url.search || url.pathname !== value) throw new Error('DEMO_AUTH_PATH_INVALID');",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 18,
+          "text": "}",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 26,
+          "text": "  route(value.loginPath); route(value.protectedPath); pointer(value.usernamePointer);",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/provider.js",
+          "line": 43,
+          "text": "    const negative = await request(config.protectedPath,'GET',{});",
+          "sha256": "21e239a33d59c5849d8b9acef7ac0d6eba70b5652f885a430eefd82063f07c30"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/provider.js",
+          "line": 46,
+          "text": "    const login = await request(config.loginPath,'POST',{'content-type':'application/json'},JSON.stringify({[config.usernameKey]:credentials.username,[config.passwordKey]:credentials.password}));",
+          "sha256": "21e239a33d59c5849d8b9acef7ac0d6eba70b5652f885a430eefd82063f07c30"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/provider.js",
+          "line": 48,
+          "text": "    const cookie = sessionCookie(login.headers?.['set-cookie'],config,bound.url);",
+          "sha256": "21e239a33d59c5849d8b9acef7ac0d6eba70b5652f885a430eefd82063f07c30"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/provider.js",
+          "line": 49,
+          "text": "    const authenticated = await request(config.protectedPath,'GET',{cookie});",
+          "sha256": "21e239a33d59c5849d8b9acef7ac0d6eba70b5652f885a430eefd82063f07c30"
+        }
+      ],
+      "completePreserved": {
+        "protocol": "json-session.v1",
+        "loginPath": "/login-a",
+        "usernameKey": "username",
+        "passwordKey": "password",
+        "cookieName": "session",
+        "protectedPath": "/protected-a",
+        "usernamePointer": "/username",
+        "assertions": [
+          {
+            "pointer": "/business",
+            "equals": "C0-local"
+          }
+        ]
+      },
+      "completeA": {
+        "protocol": "json-session.v1",
+        "loginPath": "/login-a",
+        "usernameKey": "username",
+        "passwordKey": "password",
+        "cookieName": "session",
+        "protectedPath": "/protected-a",
+        "usernamePointer": "/username",
+        "assertions": [
+          {
+            "pointer": "/business",
+            "equals": "C0-local"
+          }
+        ]
+      },
+      "completeB": {
+        "protocol": "json-session.v1",
+        "loginPath": "/login-b",
+        "usernameKey": "username",
+        "passwordKey": "password",
+        "cookieName": "session",
+        "protectedPath": "/protected-a",
+        "usernamePointer": "/username",
+        "assertions": [
+          {
+            "pointer": "/business",
+            "equals": "C0-local"
+          }
+        ]
+      },
+      "completeNegative": {
+        "protocol": "json-session.v1",
+        "loginPath": "//outside",
+        "usernameKey": "username",
+        "passwordKey": "password",
+        "cookieName": "session",
+        "protectedPath": "/protected-a",
+        "usernamePointer": "/username",
+        "assertions": [
+          {
+            "pointer": "/business",
+            "equals": "C0-local"
+          }
+        ]
+      },
+      "fixedNoIndependentB": false,
+      "targetAuthor": "existing pipeline/plan task application source/expectedcontract authority, NOT global CONFIG secondtaskintent writer; explicit absentassertion option encodedtask intent ratherthan implicit2xx fallback",
+      "externalRequired": "fullactualisolatedrole/registry/runtime/grant/currentoperatorprofile; auth real leaseUID/SecretUID/resourceVersion/exposureGeneration/image/manifest/trustedfixture provenance currently missing. Loopbackauthprovenance SYNTHETIC, notlivecredential/exposure/authority proof."
+    },
+    {
+      "setting": "RT-0a53494ecda4f6e6",
+      "provider": "demo-auth-smoke",
+      "field": "usernameKey",
+      "schemaPointer": "#/properties/usernameKey",
+      "classification": "task-application-test-contract",
+      "currentSemantics": "task application JSONcredential key1..64 regex anddifferentpasswordKey; do notstore credentials in CONFIG/evidence.",
+      "readers": [
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 27,
+          "text": "  for (const key of ['usernameKey','passwordKey','cookieName']) if (!/^[A-Za-z][A-Za-z0-9_-]{0,63}$/u.test(text(value[key]))) throw new Error('DEMO_AUTH_KEY_INVALID');",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 28,
+          "text": "  if (value.usernameKey === value.passwordKey) throw new Error('DEMO_AUTH_KEY_INVALID');",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/provider.js",
+          "line": 43,
+          "text": "    const negative = await request(config.protectedPath,'GET',{});",
+          "sha256": "21e239a33d59c5849d8b9acef7ac0d6eba70b5652f885a430eefd82063f07c30"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/provider.js",
+          "line": 46,
+          "text": "    const login = await request(config.loginPath,'POST',{'content-type':'application/json'},JSON.stringify({[config.usernameKey]:credentials.username,[config.passwordKey]:credentials.password}));",
+          "sha256": "21e239a33d59c5849d8b9acef7ac0d6eba70b5652f885a430eefd82063f07c30"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/provider.js",
+          "line": 48,
+          "text": "    const cookie = sessionCookie(login.headers?.['set-cookie'],config,bound.url);",
+          "sha256": "21e239a33d59c5849d8b9acef7ac0d6eba70b5652f885a430eefd82063f07c30"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/provider.js",
+          "line": 49,
+          "text": "    const authenticated = await request(config.protectedPath,'GET',{cookie});",
+          "sha256": "21e239a33d59c5849d8b9acef7ac0d6eba70b5652f885a430eefd82063f07c30"
+        }
+      ],
+      "completePreserved": {
+        "protocol": "json-session.v1",
+        "loginPath": "/login-a",
+        "usernameKey": "username",
+        "passwordKey": "password",
+        "cookieName": "session",
+        "protectedPath": "/protected-a",
+        "usernamePointer": "/username",
+        "assertions": [
+          {
+            "pointer": "/business",
+            "equals": "C0-local"
+          }
+        ]
+      },
+      "completeA": {
+        "protocol": "json-session.v1",
+        "loginPath": "/login-a",
+        "usernameKey": "username",
+        "passwordKey": "password",
+        "cookieName": "session",
+        "protectedPath": "/protected-a",
+        "usernamePointer": "/username",
+        "assertions": [
+          {
+            "pointer": "/business",
+            "equals": "C0-local"
+          }
+        ]
+      },
+      "completeB": {
+        "protocol": "json-session.v1",
+        "loginPath": "/login-a",
+        "usernameKey": "usernameB",
+        "passwordKey": "password",
+        "cookieName": "session",
+        "protectedPath": "/protected-a",
+        "usernamePointer": "/username",
+        "assertions": [
+          {
+            "pointer": "/business",
+            "equals": "C0-local"
+          }
+        ]
+      },
+      "completeNegative": {
+        "protocol": "json-session.v1",
+        "loginPath": "/login-a",
+        "usernameKey": "bad key",
+        "passwordKey": "password",
+        "cookieName": "session",
+        "protectedPath": "/protected-a",
+        "usernamePointer": "/username",
+        "assertions": [
+          {
+            "pointer": "/business",
+            "equals": "C0-local"
+          }
+        ]
+      },
+      "fixedNoIndependentB": false,
+      "targetAuthor": "existing pipeline/plan task application source/expectedcontract authority, NOT global CONFIG secondtaskintent writer; explicit absentassertion option encodedtask intent ratherthan implicit2xx fallback",
+      "externalRequired": "fullactualisolatedrole/registry/runtime/grant/currentoperatorprofile; auth real leaseUID/SecretUID/resourceVersion/exposureGeneration/image/manifest/trustedfixture provenance currently missing. Loopbackauthprovenance SYNTHETIC, notlivecredential/exposure/authority proof."
+    },
+    {
+      "setting": "RT-32f46486cd6c0cae",
+      "provider": "demo-auth-smoke",
+      "field": "passwordKey",
+      "schemaPointer": "#/properties/passwordKey",
+      "classification": "task-application-test-contract",
+      "currentSemantics": "task application JSONcredential key1..64 regex anddifferentusernameKey; actualpassword generatedfixture dependency, not CONFIG value.",
+      "readers": [
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 27,
+          "text": "  for (const key of ['usernameKey','passwordKey','cookieName']) if (!/^[A-Za-z][A-Za-z0-9_-]{0,63}$/u.test(text(value[key]))) throw new Error('DEMO_AUTH_KEY_INVALID');",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 28,
+          "text": "  if (value.usernameKey === value.passwordKey) throw new Error('DEMO_AUTH_KEY_INVALID');",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/provider.js",
+          "line": 43,
+          "text": "    const negative = await request(config.protectedPath,'GET',{});",
+          "sha256": "21e239a33d59c5849d8b9acef7ac0d6eba70b5652f885a430eefd82063f07c30"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/provider.js",
+          "line": 46,
+          "text": "    const login = await request(config.loginPath,'POST',{'content-type':'application/json'},JSON.stringify({[config.usernameKey]:credentials.username,[config.passwordKey]:credentials.password}));",
+          "sha256": "21e239a33d59c5849d8b9acef7ac0d6eba70b5652f885a430eefd82063f07c30"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/provider.js",
+          "line": 48,
+          "text": "    const cookie = sessionCookie(login.headers?.['set-cookie'],config,bound.url);",
+          "sha256": "21e239a33d59c5849d8b9acef7ac0d6eba70b5652f885a430eefd82063f07c30"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/provider.js",
+          "line": 49,
+          "text": "    const authenticated = await request(config.protectedPath,'GET',{cookie});",
+          "sha256": "21e239a33d59c5849d8b9acef7ac0d6eba70b5652f885a430eefd82063f07c30"
+        }
+      ],
+      "completePreserved": {
+        "protocol": "json-session.v1",
+        "loginPath": "/login-a",
+        "usernameKey": "username",
+        "passwordKey": "password",
+        "cookieName": "session",
+        "protectedPath": "/protected-a",
+        "usernamePointer": "/username",
+        "assertions": [
+          {
+            "pointer": "/business",
+            "equals": "C0-local"
+          }
+        ]
+      },
+      "completeA": {
+        "protocol": "json-session.v1",
+        "loginPath": "/login-a",
+        "usernameKey": "username",
+        "passwordKey": "password",
+        "cookieName": "session",
+        "protectedPath": "/protected-a",
+        "usernamePointer": "/username",
+        "assertions": [
+          {
+            "pointer": "/business",
+            "equals": "C0-local"
+          }
+        ]
+      },
+      "completeB": {
+        "protocol": "json-session.v1",
+        "loginPath": "/login-a",
+        "usernameKey": "username",
+        "passwordKey": "passwordB",
+        "cookieName": "session",
+        "protectedPath": "/protected-a",
+        "usernamePointer": "/username",
+        "assertions": [
+          {
+            "pointer": "/business",
+            "equals": "C0-local"
+          }
+        ]
+      },
+      "completeNegative": {
+        "protocol": "json-session.v1",
+        "loginPath": "/login-a",
+        "usernameKey": "username",
+        "passwordKey": "bad key",
+        "cookieName": "session",
+        "protectedPath": "/protected-a",
+        "usernamePointer": "/username",
+        "assertions": [
+          {
+            "pointer": "/business",
+            "equals": "C0-local"
+          }
+        ]
+      },
+      "fixedNoIndependentB": false,
+      "targetAuthor": "existing pipeline/plan task application source/expectedcontract authority, NOT global CONFIG secondtaskintent writer; explicit absentassertion option encodedtask intent ratherthan implicit2xx fallback",
+      "externalRequired": "fullactualisolatedrole/registry/runtime/grant/currentoperatorprofile; auth real leaseUID/SecretUID/resourceVersion/exposureGeneration/image/manifest/trustedfixture provenance currently missing. Loopbackauthprovenance SYNTHETIC, notlivecredential/exposure/authority proof."
+    },
+    {
+      "setting": "RT-dbe32a8d7d4a40b9",
+      "provider": "demo-auth-smoke",
+      "field": "cookieName",
+      "schemaPointer": "#/properties/cookieName",
+      "classification": "task-application-test-contract",
+      "currentSemantics": "task application cookie contract name regex; actualcookie musthostscoped/pathcoverbothroutes, HttpOnly, correctSecure/SameSite/maxAge. No arbitrarycookie fromoutsideboundorigin.",
+      "readers": [
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 27,
+          "text": "  for (const key of ['usernameKey','passwordKey','cookieName']) if (!/^[A-Za-z][A-Za-z0-9_-]{0,63}$/u.test(text(value[key]))) throw new Error('DEMO_AUTH_KEY_INVALID');",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 92,
+          "text": "export function sessionCookie(header, config, url) {",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 93,
+          "text": "  if (typeof header !== 'string' || header.length > 4096 || /[\\r\\n,]/u.test(header)) throw new Error('DEMO_AUTH_SESSION_COOKIE_INVALID');",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 94,
+          "text": "  const [pair,...attributes] = header.split(';').map(value => value.trim());",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 95,
+          "text": "  if (!pair.startsWith(`${config.cookieName}=`) || !/^[A-Za-z0-9!#$%&'*+.^_`|~-]+=[\\x21\\x23-\\x2B\\x2D-\\x3A\\x3C-\\x5B\\x5D-\\x7E]+$/u.test(pair)) throw new Error('DEMO_AUTH_SESSION_COOKIE_INVALID');",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 96,
+          "text": "  const attrs = cookieAttributes(attributes);",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 97,
+          "text": "  cookieScope(attrs,config,url);",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 98,
+          "text": "  return pair;",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/provider.js",
+          "line": 43,
+          "text": "    const negative = await request(config.protectedPath,'GET',{});",
+          "sha256": "21e239a33d59c5849d8b9acef7ac0d6eba70b5652f885a430eefd82063f07c30"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/provider.js",
+          "line": 46,
+          "text": "    const login = await request(config.loginPath,'POST',{'content-type':'application/json'},JSON.stringify({[config.usernameKey]:credentials.username,[config.passwordKey]:credentials.password}));",
+          "sha256": "21e239a33d59c5849d8b9acef7ac0d6eba70b5652f885a430eefd82063f07c30"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/provider.js",
+          "line": 48,
+          "text": "    const cookie = sessionCookie(login.headers?.['set-cookie'],config,bound.url);",
+          "sha256": "21e239a33d59c5849d8b9acef7ac0d6eba70b5652f885a430eefd82063f07c30"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/provider.js",
+          "line": 49,
+          "text": "    const authenticated = await request(config.protectedPath,'GET',{cookie});",
+          "sha256": "21e239a33d59c5849d8b9acef7ac0d6eba70b5652f885a430eefd82063f07c30"
+        }
+      ],
+      "completePreserved": {
+        "protocol": "json-session.v1",
+        "loginPath": "/login-a",
+        "usernameKey": "username",
+        "passwordKey": "password",
+        "cookieName": "session",
+        "protectedPath": "/protected-a",
+        "usernamePointer": "/username",
+        "assertions": [
+          {
+            "pointer": "/business",
+            "equals": "C0-local"
+          }
+        ]
+      },
+      "completeA": {
+        "protocol": "json-session.v1",
+        "loginPath": "/login-a",
+        "usernameKey": "username",
+        "passwordKey": "password",
+        "cookieName": "session",
+        "protectedPath": "/protected-a",
+        "usernamePointer": "/username",
+        "assertions": [
+          {
+            "pointer": "/business",
+            "equals": "C0-local"
+          }
+        ]
+      },
+      "completeB": {
+        "protocol": "json-session.v1",
+        "loginPath": "/login-a",
+        "usernameKey": "username",
+        "passwordKey": "password",
+        "cookieName": "sessionB",
+        "protectedPath": "/protected-a",
+        "usernamePointer": "/username",
+        "assertions": [
+          {
+            "pointer": "/business",
+            "equals": "C0-local"
+          }
+        ]
+      },
+      "completeNegative": {
+        "protocol": "json-session.v1",
+        "loginPath": "/login-a",
+        "usernameKey": "username",
+        "passwordKey": "password",
+        "cookieName": "bad key",
+        "protectedPath": "/protected-a",
+        "usernamePointer": "/username",
+        "assertions": [
+          {
+            "pointer": "/business",
+            "equals": "C0-local"
+          }
+        ]
+      },
+      "fixedNoIndependentB": false,
+      "targetAuthor": "existing pipeline/plan task application source/expectedcontract authority, NOT global CONFIG secondtaskintent writer; explicit absentassertion option encodedtask intent ratherthan implicit2xx fallback",
+      "externalRequired": "fullactualisolatedrole/registry/runtime/grant/currentoperatorprofile; auth real leaseUID/SecretUID/resourceVersion/exposureGeneration/image/manifest/trustedfixture provenance currently missing. Loopbackauthprovenance SYNTHETIC, notlivecredential/exposure/authority proof."
+    },
+    {
+      "setting": "RT-851b2948e1590b2c",
+      "provider": "demo-auth-smoke",
+      "field": "protectedPath",
+      "schemaPointer": "#/properties/protectedPath",
+      "classification": "task-application-test-contract",
+      "currentSemantics": "task application route for unauthenticatednegative thenauthenticatedpositive; both mustuse identicaldeclaredroute and boundexposureorigin.",
+      "readers": [
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 14,
+          "text": "function route(value) {",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 15,
+          "text": "  text(value);",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 16,
+          "text": "  const url = new URL(value, 'https://demo.invalid');",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 17,
+          "text": "  if (!value.startsWith('/') || value.startsWith('//') || value.includes('\\\\') || url.origin !== 'https://demo.invalid' || url.hash || url.search || url.pathname !== value) throw new Error('DEMO_AUTH_PATH_INVALID');",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 18,
+          "text": "}",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 26,
+          "text": "  route(value.loginPath); route(value.protectedPath); pointer(value.usernamePointer);",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/provider.js",
+          "line": 43,
+          "text": "    const negative = await request(config.protectedPath,'GET',{});",
+          "sha256": "21e239a33d59c5849d8b9acef7ac0d6eba70b5652f885a430eefd82063f07c30"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/provider.js",
+          "line": 46,
+          "text": "    const login = await request(config.loginPath,'POST',{'content-type':'application/json'},JSON.stringify({[config.usernameKey]:credentials.username,[config.passwordKey]:credentials.password}));",
+          "sha256": "21e239a33d59c5849d8b9acef7ac0d6eba70b5652f885a430eefd82063f07c30"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/provider.js",
+          "line": 48,
+          "text": "    const cookie = sessionCookie(login.headers?.['set-cookie'],config,bound.url);",
+          "sha256": "21e239a33d59c5849d8b9acef7ac0d6eba70b5652f885a430eefd82063f07c30"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/provider.js",
+          "line": 49,
+          "text": "    const authenticated = await request(config.protectedPath,'GET',{cookie});",
+          "sha256": "21e239a33d59c5849d8b9acef7ac0d6eba70b5652f885a430eefd82063f07c30"
+        }
+      ],
+      "completePreserved": {
+        "protocol": "json-session.v1",
+        "loginPath": "/login-a",
+        "usernameKey": "username",
+        "passwordKey": "password",
+        "cookieName": "session",
+        "protectedPath": "/protected-a",
+        "usernamePointer": "/username",
+        "assertions": [
+          {
+            "pointer": "/business",
+            "equals": "C0-local"
+          }
+        ]
+      },
+      "completeA": {
+        "protocol": "json-session.v1",
+        "loginPath": "/login-a",
+        "usernameKey": "username",
+        "passwordKey": "password",
+        "cookieName": "session",
+        "protectedPath": "/protected-a",
+        "usernamePointer": "/username",
+        "assertions": [
+          {
+            "pointer": "/business",
+            "equals": "C0-local"
+          }
+        ]
+      },
+      "completeB": {
+        "protocol": "json-session.v1",
+        "loginPath": "/login-a",
+        "usernameKey": "username",
+        "passwordKey": "password",
+        "cookieName": "session",
+        "protectedPath": "/protected-b",
+        "usernamePointer": "/username",
+        "assertions": [
+          {
+            "pointer": "/business",
+            "equals": "C0-local"
+          }
+        ]
+      },
+      "completeNegative": {
+        "protocol": "json-session.v1",
+        "loginPath": "/login-a",
+        "usernameKey": "username",
+        "passwordKey": "password",
+        "cookieName": "session",
+        "protectedPath": "//outside",
+        "usernamePointer": "/username",
+        "assertions": [
+          {
+            "pointer": "/business",
+            "equals": "C0-local"
+          }
+        ]
+      },
+      "fixedNoIndependentB": false,
+      "targetAuthor": "existing pipeline/plan task application source/expectedcontract authority, NOT global CONFIG secondtaskintent writer; explicit absentassertion option encodedtask intent ratherthan implicit2xx fallback",
+      "externalRequired": "fullactualisolatedrole/registry/runtime/grant/currentoperatorprofile; auth real leaseUID/SecretUID/resourceVersion/exposureGeneration/image/manifest/trustedfixture provenance currently missing. Loopbackauthprovenance SYNTHETIC, notlivecredential/exposure/authority proof."
+    },
+    {
+      "setting": "RT-38cd6ae00ba2b1d6",
+      "provider": "demo-auth-smoke",
+      "field": "usernamePointer",
+      "schemaPointer": "#/properties/usernamePointer",
+      "classification": "task-application-test-contract",
+      "currentSemantics": "task identity JSONpointer unescapes~0/~1 and own-property traversal; forbids prototype keys; actualauthenticatedusername mustmatch boundgeneratedusername, assertions cannotduplicateidentitypointer.",
+      "readers": [
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 19,
+          "text": "function pointer(value) {",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 20,
+          "text": "  text(value);",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 21,
+          "text": "  if (!value.startsWith('/') || /~(?:[^01]|$)/u.test(value) || value.split('/').some(key => ['__proto__','constructor','prototype'].includes(key))) throw new Error('DEMO_AUTH_POINTER_INVALID');",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 26,
+          "text": "  route(value.loginPath); route(value.protectedPath); pointer(value.usernamePointer);",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 38,
+          "text": "export function jsonPointer(value, pointerValue) {",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 39,
+          "text": "  return pointerValue.slice(1).split('/').reduce((current, key) => {",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 40,
+          "text": "    key = key.replaceAll('~1','/').replaceAll('~0','~');",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 41,
+          "text": "    if (!current || typeof current !== 'object' || !Object.hasOwn(current,key)) throw new Error('DEMO_AUTH_ASSERTION_MISSING');",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 42,
+          "text": "    return current[key];",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 43,
+          "text": "  }, value);",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/provider.js",
+          "line": 15,
+          "text": "  if (jsonPointer(body,config.usernamePointer) !== username) throw new Error('DEMO_AUTH_IDENTITY_MISMATCH');",
+          "sha256": "21e239a33d59c5849d8b9acef7ac0d6eba70b5652f885a430eefd82063f07c30"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/provider.js",
+          "line": 16,
+          "text": "  for (const assertion of config.assertions) if (jsonPointer(body,assertion.pointer) !== assertion.equals) throw new Error('DEMO_AUTH_BUSINESS_ASSERTION_FAILED');",
+          "sha256": "21e239a33d59c5849d8b9acef7ac0d6eba70b5652f885a430eefd82063f07c30"
+        }
+      ],
+      "completePreserved": {
+        "protocol": "json-session.v1",
+        "loginPath": "/login-a",
+        "usernameKey": "username",
+        "passwordKey": "password",
+        "cookieName": "session",
+        "protectedPath": "/protected-a",
+        "usernamePointer": "/username",
+        "assertions": [
+          {
+            "pointer": "/business",
+            "equals": "C0-local"
+          }
+        ]
+      },
+      "completeA": {
+        "protocol": "json-session.v1",
+        "loginPath": "/login-a",
+        "usernameKey": "username",
+        "passwordKey": "password",
+        "cookieName": "session",
+        "protectedPath": "/protected-a",
+        "usernamePointer": "/username",
+        "assertions": [
+          {
+            "pointer": "/business",
+            "equals": "C0-local"
+          }
+        ]
+      },
+      "completeB": {
+        "protocol": "json-session.v1",
+        "loginPath": "/login-a",
+        "usernameKey": "username",
+        "passwordKey": "password",
+        "cookieName": "session",
+        "protectedPath": "/protected-a",
+        "usernamePointer": "/otherUsername",
+        "assertions": [
+          {
+            "pointer": "/business",
+            "equals": "C0-local"
+          }
+        ]
+      },
+      "completeNegative": {
+        "protocol": "json-session.v1",
+        "loginPath": "/login-a",
+        "usernameKey": "username",
+        "passwordKey": "password",
+        "cookieName": "session",
+        "protectedPath": "/protected-a",
+        "usernamePointer": "/constructor",
+        "assertions": [
+          {
+            "pointer": "/business",
+            "equals": "C0-local"
+          }
+        ]
+      },
+      "fixedNoIndependentB": false,
+      "targetAuthor": "existing pipeline/plan task application source/expectedcontract authority, NOT global CONFIG secondtaskintent writer; explicit absentassertion option encodedtask intent ratherthan implicit2xx fallback",
+      "externalRequired": "fullactualisolatedrole/registry/runtime/grant/currentoperatorprofile; auth real leaseUID/SecretUID/resourceVersion/exposureGeneration/image/manifest/trustedfixture provenance currently missing. Loopbackauthprovenance SYNTHETIC, notlivecredential/exposure/authority proof."
+    },
+    {
+      "setting": "RT-6e3380a34038a8f3",
+      "provider": "demo-auth-smoke",
+      "field": "assertions",
+      "schemaPointer": "#/properties/assertions",
+      "classification": "task-application-test-contract",
+      "currentSemantics": "task application expectedbusiness contract1..16 exact{pointer,equals}; finite string<=2048/number/boolean, strict=== actualdecodedprotectedJSON; arrays/object/null unsupported, pointer mustdifferidentity. Alternatives oneOf notdifferentwriters. No businessassertion omission/trimming to pass.",
+      "readers": [
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 29,
+          "text": "  if (!Array.isArray(value.assertions) || !value.assertions.length || value.assertions.length > 16) throw new Error('DEMO_AUTH_BUSINESS_ASSERTION_REQUIRED');",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 30,
+          "text": "  for (const assertion of value.assertions) {",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 31,
+          "text": "    exact(assertion, ['pointer','equals']); pointer(assertion.pointer);",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 32,
+          "text": "    if (assertion.pointer === value.usernamePointer || !['string','number','boolean'].includes(typeof assertion.equals)",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 33,
+          "text": "      || (typeof assertion.equals === 'number' && !Number.isFinite(assertion.equals))",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 34,
+          "text": "      || (typeof assertion.equals === 'string' && assertion.equals.length > 2048)) throw new Error('DEMO_AUTH_ASSERTION_INVALID');",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 35,
+          "text": "  }",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 38,
+          "text": "export function jsonPointer(value, pointerValue) {",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 39,
+          "text": "  return pointerValue.slice(1).split('/').reduce((current, key) => {",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 40,
+          "text": "    key = key.replaceAll('~1','/').replaceAll('~0','~');",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 41,
+          "text": "    if (!current || typeof current !== 'object' || !Object.hasOwn(current,key)) throw new Error('DEMO_AUTH_ASSERTION_MISSING');",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 42,
+          "text": "    return current[key];",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 43,
+          "text": "  }, value);",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/provider.js",
+          "line": 15,
+          "text": "  if (jsonPointer(body,config.usernamePointer) !== username) throw new Error('DEMO_AUTH_IDENTITY_MISMATCH');",
+          "sha256": "21e239a33d59c5849d8b9acef7ac0d6eba70b5652f885a430eefd82063f07c30"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/provider.js",
+          "line": 16,
+          "text": "  for (const assertion of config.assertions) if (jsonPointer(body,assertion.pointer) !== assertion.equals) throw new Error('DEMO_AUTH_BUSINESS_ASSERTION_FAILED');",
+          "sha256": "21e239a33d59c5849d8b9acef7ac0d6eba70b5652f885a430eefd82063f07c30"
+        }
+      ],
+      "completePreserved": {
+        "protocol": "json-session.v1",
+        "loginPath": "/login-a",
+        "usernameKey": "username",
+        "passwordKey": "password",
+        "cookieName": "session",
+        "protectedPath": "/protected-a",
+        "usernamePointer": "/username",
+        "assertions": [
+          {
+            "pointer": "/business",
+            "equals": "C0-local"
+          }
+        ]
+      },
+      "completeA": {
+        "protocol": "json-session.v1",
+        "loginPath": "/login-a",
+        "usernameKey": "username",
+        "passwordKey": "password",
+        "cookieName": "session",
+        "protectedPath": "/protected-a",
+        "usernamePointer": "/username",
+        "assertions": [
+          {
+            "pointer": "/business",
+            "equals": "C0-local"
+          }
+        ]
+      },
+      "completeB": {
+        "protocol": "json-session.v1",
+        "loginPath": "/login-a",
+        "usernameKey": "username",
+        "passwordKey": "password",
+        "cookieName": "session",
+        "protectedPath": "/protected-a",
+        "usernamePointer": "/username",
+        "assertions": [
+          {
+            "pointer": "/business",
+            "equals": "missing"
+          }
+        ]
+      },
+      "completeNegative": {
+        "protocol": "json-session.v1",
+        "loginPath": "/login-a",
+        "usernameKey": "username",
+        "passwordKey": "password",
+        "cookieName": "session",
+        "protectedPath": "/protected-a",
+        "usernamePointer": "/username",
+        "assertions": []
+      },
+      "fixedNoIndependentB": false,
+      "targetAuthor": "existing pipeline/plan task application source/expectedcontract authority, NOT global CONFIG secondtaskintent writer; explicit absentassertion option encodedtask intent ratherthan implicit2xx fallback",
+      "externalRequired": "fullactualisolatedrole/registry/runtime/grant/currentoperatorprofile; auth real leaseUID/SecretUID/resourceVersion/exposureGeneration/image/manifest/trustedfixture provenance currently missing. Loopbackauthprovenance SYNTHETIC, notlivecredential/exposure/authority proof."
+    },
+    {
+      "setting": "RT-0bebcabef1e5db22",
+      "provider": "demo-auth-smoke",
+      "field": "assertions[]",
+      "schemaPointer": "#/properties/assertions/items",
+      "classification": "task-application-test-contract",
+      "currentSemantics": "task application expectedbusiness contract1..16 exact{pointer,equals}; finite string<=2048/number/boolean, strict=== actualdecodedprotectedJSON; arrays/object/null unsupported, pointer mustdifferidentity. Alternatives oneOf notdifferentwriters. No businessassertion omission/trimming to pass.",
+      "readers": [
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 29,
+          "text": "  if (!Array.isArray(value.assertions) || !value.assertions.length || value.assertions.length > 16) throw new Error('DEMO_AUTH_BUSINESS_ASSERTION_REQUIRED');",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 30,
+          "text": "  for (const assertion of value.assertions) {",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 31,
+          "text": "    exact(assertion, ['pointer','equals']); pointer(assertion.pointer);",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 32,
+          "text": "    if (assertion.pointer === value.usernamePointer || !['string','number','boolean'].includes(typeof assertion.equals)",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 33,
+          "text": "      || (typeof assertion.equals === 'number' && !Number.isFinite(assertion.equals))",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 34,
+          "text": "      || (typeof assertion.equals === 'string' && assertion.equals.length > 2048)) throw new Error('DEMO_AUTH_ASSERTION_INVALID');",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 35,
+          "text": "  }",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 38,
+          "text": "export function jsonPointer(value, pointerValue) {",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 39,
+          "text": "  return pointerValue.slice(1).split('/').reduce((current, key) => {",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 40,
+          "text": "    key = key.replaceAll('~1','/').replaceAll('~0','~');",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 41,
+          "text": "    if (!current || typeof current !== 'object' || !Object.hasOwn(current,key)) throw new Error('DEMO_AUTH_ASSERTION_MISSING');",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 42,
+          "text": "    return current[key];",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 43,
+          "text": "  }, value);",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/provider.js",
+          "line": 15,
+          "text": "  if (jsonPointer(body,config.usernamePointer) !== username) throw new Error('DEMO_AUTH_IDENTITY_MISMATCH');",
+          "sha256": "21e239a33d59c5849d8b9acef7ac0d6eba70b5652f885a430eefd82063f07c30"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/provider.js",
+          "line": 16,
+          "text": "  for (const assertion of config.assertions) if (jsonPointer(body,assertion.pointer) !== assertion.equals) throw new Error('DEMO_AUTH_BUSINESS_ASSERTION_FAILED');",
+          "sha256": "21e239a33d59c5849d8b9acef7ac0d6eba70b5652f885a430eefd82063f07c30"
+        }
+      ],
+      "completePreserved": {
+        "protocol": "json-session.v1",
+        "loginPath": "/login-a",
+        "usernameKey": "username",
+        "passwordKey": "password",
+        "cookieName": "session",
+        "protectedPath": "/protected-a",
+        "usernamePointer": "/username",
+        "assertions": [
+          {
+            "pointer": "/business",
+            "equals": "C0-local"
+          }
+        ]
+      },
+      "completeA": {
+        "protocol": "json-session.v1",
+        "loginPath": "/login-a",
+        "usernameKey": "username",
+        "passwordKey": "password",
+        "cookieName": "session",
+        "protectedPath": "/protected-a",
+        "usernamePointer": "/username",
+        "assertions": [
+          {
+            "pointer": "/business",
+            "equals": "C0-local"
+          }
+        ]
+      },
+      "completeB": {
+        "protocol": "json-session.v1",
+        "loginPath": "/login-a",
+        "usernameKey": "username",
+        "passwordKey": "password",
+        "cookieName": "session",
+        "protectedPath": "/protected-a",
+        "usernamePointer": "/username",
+        "assertions": [
+          {
+            "pointer": "/business",
+            "equals": "missing"
+          }
+        ]
+      },
+      "completeNegative": {
+        "protocol": "json-session.v1",
+        "loginPath": "/login-a",
+        "usernameKey": "username",
+        "passwordKey": "password",
+        "cookieName": "session",
+        "protectedPath": "/protected-a",
+        "usernamePointer": "/username",
+        "assertions": []
+      },
+      "fixedNoIndependentB": false,
+      "targetAuthor": "existing pipeline/plan task application source/expectedcontract authority, NOT global CONFIG secondtaskintent writer; explicit absentassertion option encodedtask intent ratherthan implicit2xx fallback",
+      "externalRequired": "fullactualisolatedrole/registry/runtime/grant/currentoperatorprofile; auth real leaseUID/SecretUID/resourceVersion/exposureGeneration/image/manifest/trustedfixture provenance currently missing. Loopbackauthprovenance SYNTHETIC, notlivecredential/exposure/authority proof."
+    },
+    {
+      "setting": "RT-c6558fe1affde8f0",
+      "provider": "demo-auth-smoke",
+      "field": "assertions[].pointer",
+      "schemaPointer": "#/properties/assertions/items/properties/pointer",
+      "classification": "task-application-test-contract",
+      "currentSemantics": "task application expectedbusiness contract1..16 exact{pointer,equals}; finite string<=2048/number/boolean, strict=== actualdecodedprotectedJSON; arrays/object/null unsupported, pointer mustdifferidentity. Alternatives oneOf notdifferentwriters. No businessassertion omission/trimming to pass.",
+      "readers": [
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 29,
+          "text": "  if (!Array.isArray(value.assertions) || !value.assertions.length || value.assertions.length > 16) throw new Error('DEMO_AUTH_BUSINESS_ASSERTION_REQUIRED');",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 30,
+          "text": "  for (const assertion of value.assertions) {",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 31,
+          "text": "    exact(assertion, ['pointer','equals']); pointer(assertion.pointer);",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 32,
+          "text": "    if (assertion.pointer === value.usernamePointer || !['string','number','boolean'].includes(typeof assertion.equals)",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 33,
+          "text": "      || (typeof assertion.equals === 'number' && !Number.isFinite(assertion.equals))",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 34,
+          "text": "      || (typeof assertion.equals === 'string' && assertion.equals.length > 2048)) throw new Error('DEMO_AUTH_ASSERTION_INVALID');",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 35,
+          "text": "  }",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 38,
+          "text": "export function jsonPointer(value, pointerValue) {",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 39,
+          "text": "  return pointerValue.slice(1).split('/').reduce((current, key) => {",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 40,
+          "text": "    key = key.replaceAll('~1','/').replaceAll('~0','~');",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 41,
+          "text": "    if (!current || typeof current !== 'object' || !Object.hasOwn(current,key)) throw new Error('DEMO_AUTH_ASSERTION_MISSING');",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 42,
+          "text": "    return current[key];",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 43,
+          "text": "  }, value);",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/provider.js",
+          "line": 15,
+          "text": "  if (jsonPointer(body,config.usernamePointer) !== username) throw new Error('DEMO_AUTH_IDENTITY_MISMATCH');",
+          "sha256": "21e239a33d59c5849d8b9acef7ac0d6eba70b5652f885a430eefd82063f07c30"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/provider.js",
+          "line": 16,
+          "text": "  for (const assertion of config.assertions) if (jsonPointer(body,assertion.pointer) !== assertion.equals) throw new Error('DEMO_AUTH_BUSINESS_ASSERTION_FAILED');",
+          "sha256": "21e239a33d59c5849d8b9acef7ac0d6eba70b5652f885a430eefd82063f07c30"
+        }
+      ],
+      "completePreserved": {
+        "protocol": "json-session.v1",
+        "loginPath": "/login-a",
+        "usernameKey": "username",
+        "passwordKey": "password",
+        "cookieName": "session",
+        "protectedPath": "/protected-a",
+        "usernamePointer": "/username",
+        "assertions": [
+          {
+            "pointer": "/business",
+            "equals": "C0-local"
+          }
+        ]
+      },
+      "completeA": {
+        "protocol": "json-session.v1",
+        "loginPath": "/login-a",
+        "usernameKey": "username",
+        "passwordKey": "password",
+        "cookieName": "session",
+        "protectedPath": "/protected-a",
+        "usernamePointer": "/username",
+        "assertions": [
+          {
+            "pointer": "/business",
+            "equals": "C0-local"
+          }
+        ]
+      },
+      "completeB": {
+        "protocol": "json-session.v1",
+        "loginPath": "/login-a",
+        "usernameKey": "username",
+        "passwordKey": "password",
+        "cookieName": "session",
+        "protectedPath": "/protected-a",
+        "usernamePointer": "/username",
+        "assertions": [
+          {
+            "pointer": "/otherBusiness",
+            "equals": "C0-local"
+          }
+        ]
+      },
+      "completeNegative": {
+        "protocol": "json-session.v1",
+        "loginPath": "/login-a",
+        "usernameKey": "username",
+        "passwordKey": "password",
+        "cookieName": "session",
+        "protectedPath": "/protected-a",
+        "usernamePointer": "/username",
+        "assertions": [
+          {
+            "pointer": "/username",
+            "equals": "C0-local"
+          }
+        ]
+      },
+      "fixedNoIndependentB": false,
+      "targetAuthor": "existing pipeline/plan task application source/expectedcontract authority, NOT global CONFIG secondtaskintent writer; explicit absentassertion option encodedtask intent ratherthan implicit2xx fallback",
+      "externalRequired": "fullactualisolatedrole/registry/runtime/grant/currentoperatorprofile; auth real leaseUID/SecretUID/resourceVersion/exposureGeneration/image/manifest/trustedfixture provenance currently missing. Loopbackauthprovenance SYNTHETIC, notlivecredential/exposure/authority proof."
+    },
+    {
+      "setting": "RT-a0cd7ed395eaca7e",
+      "provider": "demo-auth-smoke",
+      "field": "assertions[].equals",
+      "schemaPointer": "#/properties/assertions/items/properties/equals",
+      "classification": "task-application-test-contract",
+      "currentSemantics": "task application expectedbusiness contract1..16 exact{pointer,equals}; finite string<=2048/number/boolean, strict=== actualdecodedprotectedJSON; arrays/object/null unsupported, pointer mustdifferidentity. Alternatives oneOf notdifferentwriters. No businessassertion omission/trimming to pass.",
+      "readers": [
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 29,
+          "text": "  if (!Array.isArray(value.assertions) || !value.assertions.length || value.assertions.length > 16) throw new Error('DEMO_AUTH_BUSINESS_ASSERTION_REQUIRED');",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 30,
+          "text": "  for (const assertion of value.assertions) {",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 31,
+          "text": "    exact(assertion, ['pointer','equals']); pointer(assertion.pointer);",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 32,
+          "text": "    if (assertion.pointer === value.usernamePointer || !['string','number','boolean'].includes(typeof assertion.equals)",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 33,
+          "text": "      || (typeof assertion.equals === 'number' && !Number.isFinite(assertion.equals))",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 34,
+          "text": "      || (typeof assertion.equals === 'string' && assertion.equals.length > 2048)) throw new Error('DEMO_AUTH_ASSERTION_INVALID');",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 35,
+          "text": "  }",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 38,
+          "text": "export function jsonPointer(value, pointerValue) {",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 39,
+          "text": "  return pointerValue.slice(1).split('/').reduce((current, key) => {",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 40,
+          "text": "    key = key.replaceAll('~1','/').replaceAll('~0','~');",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 41,
+          "text": "    if (!current || typeof current !== 'object' || !Object.hasOwn(current,key)) throw new Error('DEMO_AUTH_ASSERTION_MISSING');",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 42,
+          "text": "    return current[key];",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 43,
+          "text": "  }, value);",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/provider.js",
+          "line": 15,
+          "text": "  if (jsonPointer(body,config.usernamePointer) !== username) throw new Error('DEMO_AUTH_IDENTITY_MISMATCH');",
+          "sha256": "21e239a33d59c5849d8b9acef7ac0d6eba70b5652f885a430eefd82063f07c30"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/provider.js",
+          "line": 16,
+          "text": "  for (const assertion of config.assertions) if (jsonPointer(body,assertion.pointer) !== assertion.equals) throw new Error('DEMO_AUTH_BUSINESS_ASSERTION_FAILED');",
+          "sha256": "21e239a33d59c5849d8b9acef7ac0d6eba70b5652f885a430eefd82063f07c30"
+        }
+      ],
+      "completePreserved": {
+        "protocol": "json-session.v1",
+        "loginPath": "/login-a",
+        "usernameKey": "username",
+        "passwordKey": "password",
+        "cookieName": "session",
+        "protectedPath": "/protected-a",
+        "usernamePointer": "/username",
+        "assertions": [
+          {
+            "pointer": "/business",
+            "equals": "C0-local"
+          }
+        ]
+      },
+      "completeA": {
+        "protocol": "json-session.v1",
+        "loginPath": "/login-a",
+        "usernameKey": "username",
+        "passwordKey": "password",
+        "cookieName": "session",
+        "protectedPath": "/protected-a",
+        "usernamePointer": "/username",
+        "assertions": [
+          {
+            "pointer": "/business",
+            "equals": "C0-local"
+          }
+        ]
+      },
+      "completeB": {
+        "protocol": "json-session.v1",
+        "loginPath": "/login-a",
+        "usernameKey": "username",
+        "passwordKey": "password",
+        "cookieName": "session",
+        "protectedPath": "/protected-a",
+        "usernamePointer": "/username",
+        "assertions": [
+          {
+            "pointer": "/business",
+            "equals": "missing"
+          }
+        ]
+      },
+      "completeNegative": {
+        "protocol": "json-session.v1",
+        "loginPath": "/login-a",
+        "usernameKey": "username",
+        "passwordKey": "password",
+        "cookieName": "session",
+        "protectedPath": "/protected-a",
+        "usernamePointer": "/username",
+        "assertions": [
+          {
+            "pointer": "/business",
+            "equals": null
+          }
+        ]
+      },
+      "fixedNoIndependentB": false,
+      "targetAuthor": "existing pipeline/plan task application source/expectedcontract authority, NOT global CONFIG secondtaskintent writer; explicit absentassertion option encodedtask intent ratherthan implicit2xx fallback",
+      "externalRequired": "fullactualisolatedrole/registry/runtime/grant/currentoperatorprofile; auth real leaseUID/SecretUID/resourceVersion/exposureGeneration/image/manifest/trustedfixture provenance currently missing. Loopbackauthprovenance SYNTHETIC, notlivecredential/exposure/authority proof."
+    },
+    {
+      "setting": "RT-a951ca501013f2bb",
+      "provider": "demo-auth-smoke",
+      "field": "assertions[].equals",
+      "schemaPointer": "#/properties/assertions/items/properties/equals/oneOf/0",
+      "classification": "task-application-test-contract",
+      "currentSemantics": "task application expectedbusiness contract1..16 exact{pointer,equals}; finite string<=2048/number/boolean, strict=== actualdecodedprotectedJSON; arrays/object/null unsupported, pointer mustdifferidentity. Alternatives oneOf notdifferentwriters. No businessassertion omission/trimming to pass.",
+      "readers": [
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 29,
+          "text": "  if (!Array.isArray(value.assertions) || !value.assertions.length || value.assertions.length > 16) throw new Error('DEMO_AUTH_BUSINESS_ASSERTION_REQUIRED');",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 30,
+          "text": "  for (const assertion of value.assertions) {",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 31,
+          "text": "    exact(assertion, ['pointer','equals']); pointer(assertion.pointer);",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 32,
+          "text": "    if (assertion.pointer === value.usernamePointer || !['string','number','boolean'].includes(typeof assertion.equals)",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 33,
+          "text": "      || (typeof assertion.equals === 'number' && !Number.isFinite(assertion.equals))",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 34,
+          "text": "      || (typeof assertion.equals === 'string' && assertion.equals.length > 2048)) throw new Error('DEMO_AUTH_ASSERTION_INVALID');",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 35,
+          "text": "  }",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 38,
+          "text": "export function jsonPointer(value, pointerValue) {",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 39,
+          "text": "  return pointerValue.slice(1).split('/').reduce((current, key) => {",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 40,
+          "text": "    key = key.replaceAll('~1','/').replaceAll('~0','~');",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 41,
+          "text": "    if (!current || typeof current !== 'object' || !Object.hasOwn(current,key)) throw new Error('DEMO_AUTH_ASSERTION_MISSING');",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 42,
+          "text": "    return current[key];",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 43,
+          "text": "  }, value);",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/provider.js",
+          "line": 15,
+          "text": "  if (jsonPointer(body,config.usernamePointer) !== username) throw new Error('DEMO_AUTH_IDENTITY_MISMATCH');",
+          "sha256": "21e239a33d59c5849d8b9acef7ac0d6eba70b5652f885a430eefd82063f07c30"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/provider.js",
+          "line": 16,
+          "text": "  for (const assertion of config.assertions) if (jsonPointer(body,assertion.pointer) !== assertion.equals) throw new Error('DEMO_AUTH_BUSINESS_ASSERTION_FAILED');",
+          "sha256": "21e239a33d59c5849d8b9acef7ac0d6eba70b5652f885a430eefd82063f07c30"
+        }
+      ],
+      "completePreserved": {
+        "protocol": "json-session.v1",
+        "loginPath": "/login-a",
+        "usernameKey": "username",
+        "passwordKey": "password",
+        "cookieName": "session",
+        "protectedPath": "/protected-a",
+        "usernamePointer": "/username",
+        "assertions": [
+          {
+            "pointer": "/business",
+            "equals": "C0-local"
+          }
+        ]
+      },
+      "completeA": {
+        "protocol": "json-session.v1",
+        "loginPath": "/login-a",
+        "usernameKey": "username",
+        "passwordKey": "password",
+        "cookieName": "session",
+        "protectedPath": "/protected-a",
+        "usernamePointer": "/username",
+        "assertions": [
+          {
+            "pointer": "/business",
+            "equals": "C0-local"
+          }
+        ]
+      },
+      "completeB": {
+        "protocol": "json-session.v1",
+        "loginPath": "/login-a",
+        "usernameKey": "username",
+        "passwordKey": "password",
+        "cookieName": "session",
+        "protectedPath": "/protected-a",
+        "usernamePointer": "/username",
+        "assertions": [
+          {
+            "pointer": "/business",
+            "equals": "missing"
+          }
+        ]
+      },
+      "completeNegative": {
+        "protocol": "json-session.v1",
+        "loginPath": "/login-a",
+        "usernameKey": "username",
+        "passwordKey": "password",
+        "cookieName": "session",
+        "protectedPath": "/protected-a",
+        "usernamePointer": "/username",
+        "assertions": [
+          {
+            "pointer": "/business",
+            "equals": null
+          }
+        ]
+      },
+      "fixedNoIndependentB": false,
+      "targetAuthor": "existing pipeline/plan task application source/expectedcontract authority, NOT global CONFIG secondtaskintent writer; explicit absentassertion option encodedtask intent ratherthan implicit2xx fallback",
+      "externalRequired": "fullactualisolatedrole/registry/runtime/grant/currentoperatorprofile; auth real leaseUID/SecretUID/resourceVersion/exposureGeneration/image/manifest/trustedfixture provenance currently missing. Loopbackauthprovenance SYNTHETIC, notlivecredential/exposure/authority proof."
+    },
+    {
+      "setting": "RT-9edb7cb283bb137b",
+      "provider": "demo-auth-smoke",
+      "field": "assertions[].equals",
+      "schemaPointer": "#/properties/assertions/items/properties/equals/oneOf/1",
+      "classification": "task-application-test-contract",
+      "currentSemantics": "task application expectedbusiness contract1..16 exact{pointer,equals}; finite string<=2048/number/boolean, strict=== actualdecodedprotectedJSON; arrays/object/null unsupported, pointer mustdifferidentity. Alternatives oneOf notdifferentwriters. No businessassertion omission/trimming to pass.",
+      "readers": [
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 29,
+          "text": "  if (!Array.isArray(value.assertions) || !value.assertions.length || value.assertions.length > 16) throw new Error('DEMO_AUTH_BUSINESS_ASSERTION_REQUIRED');",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 30,
+          "text": "  for (const assertion of value.assertions) {",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 31,
+          "text": "    exact(assertion, ['pointer','equals']); pointer(assertion.pointer);",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 32,
+          "text": "    if (assertion.pointer === value.usernamePointer || !['string','number','boolean'].includes(typeof assertion.equals)",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 33,
+          "text": "      || (typeof assertion.equals === 'number' && !Number.isFinite(assertion.equals))",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 34,
+          "text": "      || (typeof assertion.equals === 'string' && assertion.equals.length > 2048)) throw new Error('DEMO_AUTH_ASSERTION_INVALID');",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 35,
+          "text": "  }",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 38,
+          "text": "export function jsonPointer(value, pointerValue) {",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 39,
+          "text": "  return pointerValue.slice(1).split('/').reduce((current, key) => {",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 40,
+          "text": "    key = key.replaceAll('~1','/').replaceAll('~0','~');",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 41,
+          "text": "    if (!current || typeof current !== 'object' || !Object.hasOwn(current,key)) throw new Error('DEMO_AUTH_ASSERTION_MISSING');",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 42,
+          "text": "    return current[key];",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 43,
+          "text": "  }, value);",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/provider.js",
+          "line": 15,
+          "text": "  if (jsonPointer(body,config.usernamePointer) !== username) throw new Error('DEMO_AUTH_IDENTITY_MISMATCH');",
+          "sha256": "21e239a33d59c5849d8b9acef7ac0d6eba70b5652f885a430eefd82063f07c30"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/provider.js",
+          "line": 16,
+          "text": "  for (const assertion of config.assertions) if (jsonPointer(body,assertion.pointer) !== assertion.equals) throw new Error('DEMO_AUTH_BUSINESS_ASSERTION_FAILED');",
+          "sha256": "21e239a33d59c5849d8b9acef7ac0d6eba70b5652f885a430eefd82063f07c30"
+        }
+      ],
+      "completePreserved": {
+        "protocol": "json-session.v1",
+        "loginPath": "/login-a",
+        "usernameKey": "username",
+        "passwordKey": "password",
+        "cookieName": "session",
+        "protectedPath": "/protected-a",
+        "usernamePointer": "/username",
+        "assertions": [
+          {
+            "pointer": "/business",
+            "equals": "C0-local"
+          }
+        ]
+      },
+      "completeA": {
+        "protocol": "json-session.v1",
+        "loginPath": "/login-a",
+        "usernameKey": "username",
+        "passwordKey": "password",
+        "cookieName": "session",
+        "protectedPath": "/protected-a",
+        "usernamePointer": "/username",
+        "assertions": [
+          {
+            "pointer": "/number",
+            "equals": 7
+          }
+        ]
+      },
+      "completeB": {
+        "protocol": "json-session.v1",
+        "loginPath": "/login-a",
+        "usernameKey": "username",
+        "passwordKey": "password",
+        "cookieName": "session",
+        "protectedPath": "/protected-a",
+        "usernamePointer": "/username",
+        "assertions": [
+          {
+            "pointer": "/number",
+            "equals": 8
+          }
+        ]
+      },
+      "completeNegative": {
+        "protocol": "json-session.v1",
+        "loginPath": "/login-a",
+        "usernameKey": "username",
+        "passwordKey": "password",
+        "cookieName": "session",
+        "protectedPath": "/protected-a",
+        "usernamePointer": "/username",
+        "assertions": [
+          {
+            "pointer": "/business",
+            "equals": null
+          }
+        ]
+      },
+      "fixedNoIndependentB": false,
+      "targetAuthor": "existing pipeline/plan task application source/expectedcontract authority, NOT global CONFIG secondtaskintent writer; explicit absentassertion option encodedtask intent ratherthan implicit2xx fallback",
+      "externalRequired": "fullactualisolatedrole/registry/runtime/grant/currentoperatorprofile; auth real leaseUID/SecretUID/resourceVersion/exposureGeneration/image/manifest/trustedfixture provenance currently missing. Loopbackauthprovenance SYNTHETIC, notlivecredential/exposure/authority proof."
+    },
+    {
+      "setting": "RT-219d797be23e8434",
+      "provider": "demo-auth-smoke",
+      "field": "assertions[].equals",
+      "schemaPointer": "#/properties/assertions/items/properties/equals/oneOf/2",
+      "classification": "task-application-test-contract",
+      "currentSemantics": "task application expectedbusiness contract1..16 exact{pointer,equals}; finite string<=2048/number/boolean, strict=== actualdecodedprotectedJSON; arrays/object/null unsupported, pointer mustdifferidentity. Alternatives oneOf notdifferentwriters. No businessassertion omission/trimming to pass.",
+      "readers": [
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 29,
+          "text": "  if (!Array.isArray(value.assertions) || !value.assertions.length || value.assertions.length > 16) throw new Error('DEMO_AUTH_BUSINESS_ASSERTION_REQUIRED');",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 30,
+          "text": "  for (const assertion of value.assertions) {",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 31,
+          "text": "    exact(assertion, ['pointer','equals']); pointer(assertion.pointer);",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 32,
+          "text": "    if (assertion.pointer === value.usernamePointer || !['string','number','boolean'].includes(typeof assertion.equals)",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 33,
+          "text": "      || (typeof assertion.equals === 'number' && !Number.isFinite(assertion.equals))",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 34,
+          "text": "      || (typeof assertion.equals === 'string' && assertion.equals.length > 2048)) throw new Error('DEMO_AUTH_ASSERTION_INVALID');",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 35,
+          "text": "  }",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 38,
+          "text": "export function jsonPointer(value, pointerValue) {",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 39,
+          "text": "  return pointerValue.slice(1).split('/').reduce((current, key) => {",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 40,
+          "text": "    key = key.replaceAll('~1','/').replaceAll('~0','~');",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 41,
+          "text": "    if (!current || typeof current !== 'object' || !Object.hasOwn(current,key)) throw new Error('DEMO_AUTH_ASSERTION_MISSING');",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 42,
+          "text": "    return current[key];",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+          "line": 43,
+          "text": "  }, value);",
+          "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/provider.js",
+          "line": 15,
+          "text": "  if (jsonPointer(body,config.usernamePointer) !== username) throw new Error('DEMO_AUTH_IDENTITY_MISMATCH');",
+          "sha256": "21e239a33d59c5849d8b9acef7ac0d6eba70b5652f885a430eefd82063f07c30"
+        },
+        {
+          "path": "skills/buster/plugins/demo-auth-smoke/src/provider.js",
+          "line": 16,
+          "text": "  for (const assertion of config.assertions) if (jsonPointer(body,assertion.pointer) !== assertion.equals) throw new Error('DEMO_AUTH_BUSINESS_ASSERTION_FAILED');",
+          "sha256": "21e239a33d59c5849d8b9acef7ac0d6eba70b5652f885a430eefd82063f07c30"
+        }
+      ],
+      "completePreserved": {
+        "protocol": "json-session.v1",
+        "loginPath": "/login-a",
+        "usernameKey": "username",
+        "passwordKey": "password",
+        "cookieName": "session",
+        "protectedPath": "/protected-a",
+        "usernamePointer": "/username",
+        "assertions": [
+          {
+            "pointer": "/business",
+            "equals": "C0-local"
+          }
+        ]
+      },
+      "completeA": {
+        "protocol": "json-session.v1",
+        "loginPath": "/login-a",
+        "usernameKey": "username",
+        "passwordKey": "password",
+        "cookieName": "session",
+        "protectedPath": "/protected-a",
+        "usernamePointer": "/username",
+        "assertions": [
+          {
+            "pointer": "/boolean",
+            "equals": true
+          }
+        ]
+      },
+      "completeB": {
+        "protocol": "json-session.v1",
+        "loginPath": "/login-a",
+        "usernameKey": "username",
+        "passwordKey": "password",
+        "cookieName": "session",
+        "protectedPath": "/protected-a",
+        "usernamePointer": "/username",
+        "assertions": [
+          {
+            "pointer": "/boolean",
+            "equals": false
+          }
+        ]
+      },
+      "completeNegative": {
+        "protocol": "json-session.v1",
+        "loginPath": "/login-a",
+        "usernameKey": "username",
+        "passwordKey": "password",
+        "cookieName": "session",
+        "protectedPath": "/protected-a",
+        "usernamePointer": "/username",
+        "assertions": [
+          {
+            "pointer": "/business",
+            "equals": null
+          }
+        ]
+      },
+      "fixedNoIndependentB": false,
+      "targetAuthor": "existing pipeline/plan task application source/expectedcontract authority, NOT global CONFIG secondtaskintent writer; explicit absentassertion option encodedtask intent ratherthan implicit2xx fallback",
+      "externalRequired": "fullactualisolatedrole/registry/runtime/grant/currentoperatorprofile; auth real leaseUID/SecretUID/resourceVersion/exposureGeneration/image/manifest/trustedfixture provenance currently missing. Loopbackauthprovenance SYNTHETIC, notlivecredential/exposure/authority proof."
+    },
+    {
+      "setting": "RT-2089ad1c8390909b",
+      "provider": "http",
+      "field": "url",
+      "schemaPointer": "#/properties/url",
+      "classification": "task-application-test-contract",
+      "currentSemantics": "explicit canonical HTTP(S) root origin, no query/hash/userinfo; explicit+deployment ambiguous; canonical origin/ports additionally require actual captured runtime/grant. Task target, not model/CONFIG selector.",
+      "readers": [
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 75,
+          "text": "  if (value.url !== undefined && deployment) throw new Error('HTTP_TARGET_AMBIGUOUS');",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        },
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 76,
+          "text": "  if (value.endpointName !== undefined && (!deployment || typeof value.endpointName !== 'string' || !DNS_LABEL.test(value.endpointName))) {",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        },
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 77,
+          "text": "    throw new Error('HTTP_CONFIG_ENDPOINT_NAME_INVALID');",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        },
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 78,
+          "text": "  }",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        },
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 79,
+          "text": "  let base; let defaultPath = '/';",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        },
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 80,
+          "text": "  if (value.url !== undefined) base = explicitBase(value.url);",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        },
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 81,
+          "text": "  else if (deployment) {",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        },
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 82,
+          "text": "    const selected = value.endpointName === undefined",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        },
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 83,
+          "text": "      ? (deployment.length === 1 ? deployment[0] : null)",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        },
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 84,
+          "text": "      : deployment.find((endpoint) => endpoint.name === value.endpointName);",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        },
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 85,
+          "text": "    if (!selected) throw new Error('HTTP_TARGET_ENDPOINT_NOT_FOUND');",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        },
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 86,
+          "text": "    base = selected.url; defaultPath = selected.defaultPath;",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        },
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 87,
+          "text": "  } else throw new Error('HTTP_TARGET_REQUIRED');",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        }
+      ],
+      "completePreserved": {
+        "url": "$ORIGIN",
+        "path": "/ok",
+        "method": "GET",
+        "accept": "application/json",
+        "expectedStatuses": [
+          200
+        ],
+        "expectedText": "C0-local",
+        "expectedContentType": "application/json",
+        "maximumResponseBytes": 2048,
+        "requestTimeoutMs": 1000
+      },
+      "completeA": {
+        "url": "$ORIGIN",
+        "path": "/ok",
+        "method": "GET",
+        "accept": "application/json",
+        "expectedStatuses": [
+          200
+        ],
+        "expectedText": "C0-local",
+        "expectedContentType": "application/json",
+        "maximumResponseBytes": 2048,
+        "requestTimeoutMs": 1000
+      },
+      "completeB": {
+        "url": "$ORIGIN_B",
+        "path": "/ok",
+        "method": "GET",
+        "accept": "application/json",
+        "expectedStatuses": [
+          200
+        ],
+        "expectedText": "C0-local",
+        "expectedContentType": "application/json",
+        "maximumResponseBytes": 2048,
+        "requestTimeoutMs": 1000
+      },
+      "completeNegative": {
+        "url": "http://user:pass@127.0.0.1/",
+        "path": "/ok",
+        "method": "GET",
+        "accept": "application/json",
+        "expectedStatuses": [
+          200
+        ],
+        "expectedText": "C0-local",
+        "expectedContentType": "application/json",
+        "maximumResponseBytes": 2048,
+        "requestTimeoutMs": 1000
+      },
+      "fixedNoIndependentB": false,
+      "targetAuthor": "existing pipeline/plan task application source/expectedcontract authority, NOT global CONFIG secondtaskintent writer; explicit absentassertion option encodedtask intent ratherthan implicit2xx fallback",
+      "externalRequired": "fullactualisolatedrole/registry/runtime/grant/currentoperatorprofile; auth real leaseUID/SecretUID/resourceVersion/exposureGeneration/image/manifest/trustedfixture provenance currently missing. Loopbackauthprovenance SYNTHETIC, notlivecredential/exposure/authority proof."
+    },
+    {
+      "setting": "RT-e821665e0a2aedb9",
+      "provider": "http",
+      "field": "endpointName",
+      "schemaPointer": "#/properties/endpointName",
+      "classification": "task-application-test-contract",
+      "currentSemantics": "task deployment endpoint selector, exactlyone omitted default; ambiguous multiple requires explicit selection; selector with explicitURL or without deployment rejects.",
+      "readers": [
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 74,
+          "text": "  const deployment = deploymentInput(invocation);",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        },
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 75,
+          "text": "  if (value.url !== undefined && deployment) throw new Error('HTTP_TARGET_AMBIGUOUS');",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        },
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 76,
+          "text": "  if (value.endpointName !== undefined && (!deployment || typeof value.endpointName !== 'string' || !DNS_LABEL.test(value.endpointName))) {",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        },
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 77,
+          "text": "    throw new Error('HTTP_CONFIG_ENDPOINT_NAME_INVALID');",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        },
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 78,
+          "text": "  }",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        },
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 79,
+          "text": "  let base; let defaultPath = '/';",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        },
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 80,
+          "text": "  if (value.url !== undefined) base = explicitBase(value.url);",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        },
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 81,
+          "text": "  else if (deployment) {",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        },
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 82,
+          "text": "    const selected = value.endpointName === undefined",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        },
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 83,
+          "text": "      ? (deployment.length === 1 ? deployment[0] : null)",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        },
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 84,
+          "text": "      : deployment.find((endpoint) => endpoint.name === value.endpointName);",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        },
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 85,
+          "text": "    if (!selected) throw new Error('HTTP_TARGET_ENDPOINT_NOT_FOUND');",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        },
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 86,
+          "text": "    base = selected.url; defaultPath = selected.defaultPath;",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        },
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 87,
+          "text": "  } else throw new Error('HTTP_TARGET_REQUIRED');",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        }
+      ],
+      "completePreserved": {
+        "url": "$ORIGIN",
+        "path": "/ok",
+        "method": "GET",
+        "accept": "application/json",
+        "expectedStatuses": [
+          200
+        ],
+        "expectedText": "C0-local",
+        "expectedContentType": "application/json",
+        "maximumResponseBytes": 2048,
+        "requestTimeoutMs": 1000
+      },
+      "completeA": {
+        "path": "/ok",
+        "method": "GET",
+        "accept": "application/json",
+        "expectedStatuses": [
+          200
+        ],
+        "expectedText": "C0-local",
+        "expectedContentType": "application/json",
+        "maximumResponseBytes": 2048,
+        "requestTimeoutMs": 1000,
+        "endpointName": "service-a"
+      },
+      "completeB": {
+        "path": "/ok",
+        "method": "GET",
+        "accept": "application/json",
+        "expectedStatuses": [
+          200
+        ],
+        "expectedText": "C0-local",
+        "expectedContentType": "application/json",
+        "maximumResponseBytes": 2048,
+        "requestTimeoutMs": 1000,
+        "endpointName": "service-b"
+      },
+      "completeNegative": {
+        "path": "/ok",
+        "method": "GET",
+        "accept": "application/json",
+        "expectedStatuses": [
+          200
+        ],
+        "expectedText": "C0-local",
+        "expectedContentType": "application/json",
+        "maximumResponseBytes": 2048,
+        "requestTimeoutMs": 1000,
+        "endpointName": "missing"
+      },
+      "fixedNoIndependentB": false,
+      "targetAuthor": "existing pipeline/plan task application source/expectedcontract authority, NOT global CONFIG secondtaskintent writer; explicit absentassertion option encodedtask intent ratherthan implicit2xx fallback",
+      "externalRequired": "fullactualisolatedrole/registry/runtime/grant/currentoperatorprofile; auth real leaseUID/SecretUID/resourceVersion/exposureGeneration/image/manifest/trustedfixture provenance currently missing. Loopbackauthprovenance SYNTHETIC, notlivecredential/exposure/authority proof."
+    },
+    {
+      "setting": "RT-c66db038b75b910a",
+      "provider": "http",
+      "field": "path",
+      "schemaPointer": "#/properties/path",
+      "classification": "task-application-test-contract",
+      "currentSemantics": "task route null/absent fixture defaultPath or /, max2048 chars no // CRLF #; query allowed; canonical actual HTTP runtime origin remains enforced.",
+      "readers": [
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 108,
+          "text": "  const path = pathValue(value.path ?? defaultPath);",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        },
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 109,
+          "text": "  return { url: new URL(path, `${base}/`).href, method, accept, expectedStatuses, expectedText,",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        }
+      ],
+      "completePreserved": {
+        "url": "$ORIGIN",
+        "path": "/ok",
+        "method": "GET",
+        "accept": "application/json",
+        "expectedStatuses": [
+          200
+        ],
+        "expectedText": "C0-local",
+        "expectedContentType": "application/json",
+        "maximumResponseBytes": 2048,
+        "requestTimeoutMs": 1000
+      },
+      "completeA": {
+        "url": "$ORIGIN",
+        "path": "/ok",
+        "method": "GET",
+        "accept": "application/json",
+        "expectedStatuses": [
+          200
+        ],
+        "expectedText": "C0-local",
+        "expectedContentType": "application/json",
+        "maximumResponseBytes": 2048,
+        "requestTimeoutMs": 1000
+      },
+      "completeB": {
+        "url": "$ORIGIN",
+        "path": "/other",
+        "method": "GET",
+        "accept": "application/json",
+        "expectedStatuses": [
+          200
+        ],
+        "expectedText": "C0-local",
+        "expectedContentType": "application/json",
+        "maximumResponseBytes": 2048,
+        "requestTimeoutMs": 1000
+      },
+      "completeNegative": {
+        "url": "$ORIGIN",
+        "path": "//outside",
+        "method": "GET",
+        "accept": "application/json",
+        "expectedStatuses": [
+          200
+        ],
+        "expectedText": "C0-local",
+        "expectedContentType": "application/json",
+        "maximumResponseBytes": 2048,
+        "requestTimeoutMs": 1000
+      },
+      "fixedNoIndependentB": false,
+      "targetAuthor": "existing pipeline/plan task application source/expectedcontract authority, NOT global CONFIG secondtaskintent writer; explicit absentassertion option encodedtask intent ratherthan implicit2xx fallback",
+      "externalRequired": "fullactualisolatedrole/registry/runtime/grant/currentoperatorprofile; auth real leaseUID/SecretUID/resourceVersion/exposureGeneration/image/manifest/trustedfixture provenance currently missing. Loopbackauthprovenance SYNTHETIC, notlivecredential/exposure/authority proof."
+    },
+    {
+      "setting": "RT-a6feb259112b5574",
+      "provider": "http",
+      "field": "method",
+      "schemaPointer": "#/properties/method",
+      "classification": "task-application-test-contract",
+      "currentSemantics": "task test operation GET/HEAD; absent/null GET sourcefallback; HEAD+expectedText rejects. Runtime allowedMethods captured separately.",
+      "readers": [
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 88,
+          "text": "  const method = value.method ?? 'GET';",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        },
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 89,
+          "text": "  if (!['GET', 'HEAD'].includes(method)) throw new Error('HTTP_CONFIG_METHOD_INVALID');",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        },
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 164,
+          "text": "          headers: { accept: config.accept }, timeoutMs: Math.min(config.requestTimeoutMs, invocation.timeoutMs),",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        },
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 165,
+          "text": "          maximumResponseBytes: config.maximumResponseBytes } });",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        },
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 166,
+          "text": "      const checked = object(response, 'HTTP_RESPONSE_INVALID');",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        },
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 167,
+          "text": "      if (!Number.isSafeInteger(checked.status) || typeof checked.body !== 'string'",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        },
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 168,
+          "text": "        || !Number.isSafeInteger(checked.sizeBytes) || typeof checked.bodyDigest !== 'string'",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        },
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 169,
+          "text": "        || !Number.isSafeInteger(checked.durationMs)) throw new Error('HTTP_RESPONSE_INVALID');",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        }
+      ],
+      "completePreserved": {
+        "url": "$ORIGIN",
+        "path": "/ok",
+        "method": "GET",
+        "accept": "application/json",
+        "expectedStatuses": [
+          200
+        ],
+        "expectedText": "C0-local",
+        "expectedContentType": "application/json",
+        "maximumResponseBytes": 2048,
+        "requestTimeoutMs": 1000
+      },
+      "completeA": {
+        "url": "$ORIGIN",
+        "path": "/ok",
+        "method": "GET",
+        "accept": "application/json",
+        "expectedStatuses": [
+          200
+        ],
+        "expectedContentType": "application/json",
+        "maximumResponseBytes": 2048,
+        "requestTimeoutMs": 1000
+      },
+      "completeB": {
+        "url": "$ORIGIN",
+        "path": "/ok",
+        "method": "HEAD",
+        "accept": "application/json",
+        "expectedStatuses": [
+          200
+        ],
+        "expectedContentType": "application/json",
+        "maximumResponseBytes": 2048,
+        "requestTimeoutMs": 1000
+      },
+      "completeNegative": {
+        "url": "$ORIGIN",
+        "path": "/ok",
+        "method": "POST",
+        "accept": "application/json",
+        "expectedStatuses": [
+          200
+        ],
+        "expectedContentType": "application/json",
+        "maximumResponseBytes": 2048,
+        "requestTimeoutMs": 1000
+      },
+      "fixedNoIndependentB": false,
+      "targetAuthor": "existing pipeline/plan task application source/expectedcontract authority, NOT global CONFIG secondtaskintent writer; explicit absentassertion option encodedtask intent ratherthan implicit2xx fallback",
+      "externalRequired": "fullactualisolatedrole/registry/runtime/grant/currentoperatorprofile; auth real leaseUID/SecretUID/resourceVersion/exposureGeneration/image/manifest/trustedfixture provenance currently missing. Loopbackauthprovenance SYNTHETIC, notlivecredential/exposure/authority proof."
+    },
+    {
+      "setting": "RT-d9e562dd50c1f9b3",
+      "provider": "http",
+      "field": "accept",
+      "schemaPointer": "#/properties/accept",
+      "classification": "task-application-test-contract",
+      "currentSemantics": "task requested representation explicitheader, absent/null */*; <=512 nonempty/no CRLF; actual runtime allowedheader gate distinct.",
+      "readers": [
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 90,
+          "text": "  const accept = value.accept ?? '*/*';",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        },
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 91,
+          "text": "  if (typeof accept !== 'string' || accept.length < 1 || accept.length > 512 || /[\\r\\n]/u.test(accept)) {",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        },
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 92,
+          "text": "    throw new Error('HTTP_CONFIG_ACCEPT_INVALID');",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        },
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 93,
+          "text": "  }",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        },
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 164,
+          "text": "          headers: { accept: config.accept }, timeoutMs: Math.min(config.requestTimeoutMs, invocation.timeoutMs),",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        },
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 165,
+          "text": "          maximumResponseBytes: config.maximumResponseBytes } });",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        },
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 166,
+          "text": "      const checked = object(response, 'HTTP_RESPONSE_INVALID');",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        },
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 167,
+          "text": "      if (!Number.isSafeInteger(checked.status) || typeof checked.body !== 'string'",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        },
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 168,
+          "text": "        || !Number.isSafeInteger(checked.sizeBytes) || typeof checked.bodyDigest !== 'string'",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        },
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 169,
+          "text": "        || !Number.isSafeInteger(checked.durationMs)) throw new Error('HTTP_RESPONSE_INVALID');",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        }
+      ],
+      "completePreserved": {
+        "url": "$ORIGIN",
+        "path": "/ok",
+        "method": "GET",
+        "accept": "application/json",
+        "expectedStatuses": [
+          200
+        ],
+        "expectedText": "C0-local",
+        "expectedContentType": "application/json",
+        "maximumResponseBytes": 2048,
+        "requestTimeoutMs": 1000
+      },
+      "completeA": {
+        "url": "$ORIGIN",
+        "path": "/ok",
+        "method": "GET",
+        "accept": "application/json",
+        "expectedStatuses": [
+          200
+        ],
+        "expectedText": "C0-local",
+        "expectedContentType": "application/json",
+        "maximumResponseBytes": 2048,
+        "requestTimeoutMs": 1000
+      },
+      "completeB": {
+        "url": "$ORIGIN",
+        "path": "/ok",
+        "method": "GET",
+        "accept": "text/plain",
+        "expectedStatuses": [
+          200
+        ],
+        "expectedText": "C0-local",
+        "expectedContentType": "application/json",
+        "maximumResponseBytes": 2048,
+        "requestTimeoutMs": 1000
+      },
+      "completeNegative": {
+        "url": "$ORIGIN",
+        "path": "/ok",
+        "method": "GET",
+        "accept": "bad\r\nheader",
+        "expectedStatuses": [
+          200
+        ],
+        "expectedText": "C0-local",
+        "expectedContentType": "application/json",
+        "maximumResponseBytes": 2048,
+        "requestTimeoutMs": 1000
+      },
+      "fixedNoIndependentB": false,
+      "targetAuthor": "existing pipeline/plan task application source/expectedcontract authority, NOT global CONFIG secondtaskintent writer; explicit absentassertion option encodedtask intent ratherthan implicit2xx fallback",
+      "externalRequired": "fullactualisolatedrole/registry/runtime/grant/currentoperatorprofile; auth real leaseUID/SecretUID/resourceVersion/exposureGeneration/image/manifest/trustedfixture provenance currently missing. Loopbackauthprovenance SYNTHETIC, notlivecredential/exposure/authority proof."
+    },
+    {
+      "setting": "RT-fcc77b9c29ab0230",
+      "provider": "http",
+      "field": "expectedStatuses",
+      "schemaPointer": "#/properties/expectedStatuses",
+      "classification": "task-application-test-contract",
+      "currentSemantics": "task expected response contract explicitunique1..32 statuses100..599; absent/null CURRENT any2xx predicate. No test intent second CONFIG writer; targetexplicit expectation required to remove implicit business successpredicate.",
+      "readers": [
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 94,
+          "text": "  const expectedStatuses = value.expectedStatuses ?? null;",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        },
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 95,
+          "text": "  if (expectedStatuses !== null && (!Array.isArray(expectedStatuses) || expectedStatuses.length < 1",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        },
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 96,
+          "text": "    || expectedStatuses.length > 32 || new Set(expectedStatuses).size !== expectedStatuses.length",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        },
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 97,
+          "text": "    || expectedStatuses.some((status) => !Number.isSafeInteger(status) || status < 100 || status > 599))) {",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        },
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 98,
+          "text": "    throw new Error('HTTP_CONFIG_STATUSES_INVALID');",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        },
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 99,
+          "text": "  }",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        },
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 120,
+          "text": "function result(invocation, config, response) {",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        },
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 121,
+          "text": "  const statusPassed = config.expectedStatuses ? config.expectedStatuses.includes(response.status)",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        },
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 122,
+          "text": "    : response.status >= 200 && response.status < 300;",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        }
+      ],
+      "completePreserved": {
+        "url": "$ORIGIN",
+        "path": "/ok",
+        "method": "GET",
+        "accept": "application/json",
+        "expectedStatuses": [
+          200
+        ],
+        "expectedText": "C0-local",
+        "expectedContentType": "application/json",
+        "maximumResponseBytes": 2048,
+        "requestTimeoutMs": 1000
+      },
+      "completeA": {
+        "url": "$ORIGIN",
+        "path": "/ok",
+        "method": "GET",
+        "accept": "application/json",
+        "expectedStatuses": [
+          200
+        ],
+        "expectedText": "C0-local",
+        "expectedContentType": "application/json",
+        "maximumResponseBytes": 2048,
+        "requestTimeoutMs": 1000
+      },
+      "completeB": {
+        "url": "$ORIGIN",
+        "path": "/ok",
+        "method": "GET",
+        "accept": "application/json",
+        "expectedStatuses": [
+          201
+        ],
+        "expectedText": "C0-local",
+        "expectedContentType": "application/json",
+        "maximumResponseBytes": 2048,
+        "requestTimeoutMs": 1000
+      },
+      "completeNegative": {
+        "url": "$ORIGIN",
+        "path": "/ok",
+        "method": "GET",
+        "accept": "application/json",
+        "expectedStatuses": [
+          200,
+          200
+        ],
+        "expectedText": "C0-local",
+        "expectedContentType": "application/json",
+        "maximumResponseBytes": 2048,
+        "requestTimeoutMs": 1000
+      },
+      "fixedNoIndependentB": false,
+      "targetAuthor": "existing pipeline/plan task application source/expectedcontract authority, NOT global CONFIG secondtaskintent writer; explicit absentassertion option encodedtask intent ratherthan implicit2xx fallback",
+      "externalRequired": "fullactualisolatedrole/registry/runtime/grant/currentoperatorprofile; auth real leaseUID/SecretUID/resourceVersion/exposureGeneration/image/manifest/trustedfixture provenance currently missing. Loopbackauthprovenance SYNTHETIC, notlivecredential/exposure/authority proof."
+    },
+    {
+      "setting": "RT-259ec75a40f57a0b",
+      "provider": "http",
+      "field": "expectedStatuses[]",
+      "schemaPointer": "#/properties/expectedStatuses/items",
+      "classification": "task-application-test-contract",
+      "currentSemantics": "task expected response contract explicitunique1..32 statuses100..599; absent/null CURRENT any2xx predicate. No test intent second CONFIG writer; targetexplicit expectation required to remove implicit business successpredicate.",
+      "readers": [
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 94,
+          "text": "  const expectedStatuses = value.expectedStatuses ?? null;",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        },
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 95,
+          "text": "  if (expectedStatuses !== null && (!Array.isArray(expectedStatuses) || expectedStatuses.length < 1",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        },
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 96,
+          "text": "    || expectedStatuses.length > 32 || new Set(expectedStatuses).size !== expectedStatuses.length",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        },
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 97,
+          "text": "    || expectedStatuses.some((status) => !Number.isSafeInteger(status) || status < 100 || status > 599))) {",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        },
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 98,
+          "text": "    throw new Error('HTTP_CONFIG_STATUSES_INVALID');",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        },
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 99,
+          "text": "  }",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        },
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 120,
+          "text": "function result(invocation, config, response) {",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        },
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 121,
+          "text": "  const statusPassed = config.expectedStatuses ? config.expectedStatuses.includes(response.status)",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        },
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 122,
+          "text": "    : response.status >= 200 && response.status < 300;",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        }
+      ],
+      "completePreserved": {
+        "url": "$ORIGIN",
+        "path": "/ok",
+        "method": "GET",
+        "accept": "application/json",
+        "expectedStatuses": [
+          200
+        ],
+        "expectedText": "C0-local",
+        "expectedContentType": "application/json",
+        "maximumResponseBytes": 2048,
+        "requestTimeoutMs": 1000
+      },
+      "completeA": {
+        "url": "$ORIGIN",
+        "path": "/ok",
+        "method": "GET",
+        "accept": "application/json",
+        "expectedStatuses": [
+          200
+        ],
+        "expectedText": "C0-local",
+        "expectedContentType": "application/json",
+        "maximumResponseBytes": 2048,
+        "requestTimeoutMs": 1000
+      },
+      "completeB": {
+        "url": "$ORIGIN",
+        "path": "/ok",
+        "method": "GET",
+        "accept": "application/json",
+        "expectedStatuses": [
+          201
+        ],
+        "expectedText": "C0-local",
+        "expectedContentType": "application/json",
+        "maximumResponseBytes": 2048,
+        "requestTimeoutMs": 1000
+      },
+      "completeNegative": {
+        "url": "$ORIGIN",
+        "path": "/ok",
+        "method": "GET",
+        "accept": "application/json",
+        "expectedStatuses": [
+          200,
+          200
+        ],
+        "expectedText": "C0-local",
+        "expectedContentType": "application/json",
+        "maximumResponseBytes": 2048,
+        "requestTimeoutMs": 1000
+      },
+      "fixedNoIndependentB": false,
+      "targetAuthor": "existing pipeline/plan task application source/expectedcontract authority, NOT global CONFIG secondtaskintent writer; explicit absentassertion option encodedtask intent ratherthan implicit2xx fallback",
+      "externalRequired": "fullactualisolatedrole/registry/runtime/grant/currentoperatorprofile; auth real leaseUID/SecretUID/resourceVersion/exposureGeneration/image/manifest/trustedfixture provenance currently missing. Loopbackauthprovenance SYNTHETIC, notlivecredential/exposure/authority proof."
+    },
+    {
+      "setting": "RT-c7fdaab3e3e6c833",
+      "provider": "http",
+      "field": "expectedText",
+      "schemaPointer": "#/properties/expectedText",
+      "classification": "task-application-test-contract",
+      "currentSemantics": "task substring assertion1..4096 chars, absence/null disables; forbidden HEAD. Retain rawresponse and evidence even failed; no configurable fallbackfinding deletion.",
+      "readers": [
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 100,
+          "text": "  const expectedText = value.expectedText ?? null;",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        },
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 101,
+          "text": "  if (expectedText !== null && (typeof expectedText !== 'string' || expectedText.length < 1 || expectedText.length > 4096",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        },
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 102,
+          "text": "    || method === 'HEAD')) throw new Error('HTTP_CONFIG_EXPECTED_TEXT_INVALID');",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        },
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 120,
+          "text": "function result(invocation, config, response) {",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        },
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 121,
+          "text": "  const statusPassed = config.expectedStatuses ? config.expectedStatuses.includes(response.status)",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        },
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 122,
+          "text": "    : response.status >= 200 && response.status < 300;",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        },
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 123,
+          "text": "  const textPassed = config.expectedText === null || response.body.includes(config.expectedText);",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        }
+      ],
+      "completePreserved": {
+        "url": "$ORIGIN",
+        "path": "/ok",
+        "method": "GET",
+        "accept": "application/json",
+        "expectedStatuses": [
+          200
+        ],
+        "expectedText": "C0-local",
+        "expectedContentType": "application/json",
+        "maximumResponseBytes": 2048,
+        "requestTimeoutMs": 1000
+      },
+      "completeA": {
+        "url": "$ORIGIN",
+        "path": "/ok",
+        "method": "GET",
+        "accept": "application/json",
+        "expectedStatuses": [
+          200
+        ],
+        "expectedText": "C0-local",
+        "expectedContentType": "application/json",
+        "maximumResponseBytes": 2048,
+        "requestTimeoutMs": 1000
+      },
+      "completeB": {
+        "url": "$ORIGIN",
+        "path": "/ok",
+        "method": "GET",
+        "accept": "application/json",
+        "expectedStatuses": [
+          200
+        ],
+        "expectedText": "missing",
+        "expectedContentType": "application/json",
+        "maximumResponseBytes": 2048,
+        "requestTimeoutMs": 1000
+      },
+      "completeNegative": {
+        "url": "$ORIGIN",
+        "path": "/ok",
+        "method": "GET",
+        "accept": "application/json",
+        "expectedStatuses": [
+          200
+        ],
+        "expectedText": "",
+        "expectedContentType": "application/json",
+        "maximumResponseBytes": 2048,
+        "requestTimeoutMs": 1000
+      },
+      "fixedNoIndependentB": false,
+      "targetAuthor": "existing pipeline/plan task application source/expectedcontract authority, NOT global CONFIG secondtaskintent writer; explicit absentassertion option encodedtask intent ratherthan implicit2xx fallback",
+      "externalRequired": "fullactualisolatedrole/registry/runtime/grant/currentoperatorprofile; auth real leaseUID/SecretUID/resourceVersion/exposureGeneration/image/manifest/trustedfixture provenance currently missing. Loopbackauthprovenance SYNTHETIC, notlivecredential/exposure/authority proof."
+    },
+    {
+      "setting": "RT-b2f5e06d53448731",
+      "provider": "http",
+      "field": "expectedContentType",
+      "schemaPointer": "#/properties/expectedContentType",
+      "classification": "task-application-test-contract",
+      "currentSemantics": "task exact media type token, absence/null disables; native runtime stripsparameters/lowercases. Exact comparisons to normalized header, not rawserverformat.",
+      "readers": [
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 103,
+          "text": "  const expectedContentType = value.expectedContentType ?? null;",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        },
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 104,
+          "text": "  if (expectedContentType !== null && (typeof expectedContentType !== 'string' || expectedContentType.length > 128",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        },
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 105,
+          "text": "    || !/^[a-z0-9!#$&^_.+-]+\\/[a-z0-9!#$&^_.+-]+$/u.test(expectedContentType))) {",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        },
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 106,
+          "text": "    throw new Error('HTTP_CONFIG_CONTENT_TYPE_INVALID');",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        },
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 107,
+          "text": "  }",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        },
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 124,
+          "text": "  const contentType = response.headers?.['content-type'] ?? null;",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        },
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 125,
+          "text": "  const contentTypePassed = config.expectedContentType === null || contentType === config.expectedContentType;",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        }
+      ],
+      "completePreserved": {
+        "url": "$ORIGIN",
+        "path": "/ok",
+        "method": "GET",
+        "accept": "application/json",
+        "expectedStatuses": [
+          200
+        ],
+        "expectedText": "C0-local",
+        "expectedContentType": "application/json",
+        "maximumResponseBytes": 2048,
+        "requestTimeoutMs": 1000
+      },
+      "completeA": {
+        "url": "$ORIGIN",
+        "path": "/ok",
+        "method": "GET",
+        "accept": "application/json",
+        "expectedStatuses": [
+          200
+        ],
+        "expectedText": "C0-local",
+        "expectedContentType": "application/json",
+        "maximumResponseBytes": 2048,
+        "requestTimeoutMs": 1000
+      },
+      "completeB": {
+        "url": "$ORIGIN",
+        "path": "/ok",
+        "method": "GET",
+        "accept": "application/json",
+        "expectedStatuses": [
+          200
+        ],
+        "expectedText": "C0-local",
+        "expectedContentType": "text/plain",
+        "maximumResponseBytes": 2048,
+        "requestTimeoutMs": 1000
+      },
+      "completeNegative": {
+        "url": "$ORIGIN",
+        "path": "/ok",
+        "method": "GET",
+        "accept": "application/json",
+        "expectedStatuses": [
+          200
+        ],
+        "expectedText": "C0-local",
+        "expectedContentType": "invalid",
+        "maximumResponseBytes": 2048,
+        "requestTimeoutMs": 1000
+      },
+      "fixedNoIndependentB": false,
+      "targetAuthor": "existing pipeline/plan task application source/expectedcontract authority, NOT global CONFIG secondtaskintent writer; explicit absentassertion option encodedtask intent ratherthan implicit2xx fallback",
+      "externalRequired": "fullactualisolatedrole/registry/runtime/grant/currentoperatorprofile; auth real leaseUID/SecretUID/resourceVersion/exposureGeneration/image/manifest/trustedfixture provenance currently missing. Loopbackauthprovenance SYNTHETIC, notlivecredential/exposure/authority proof."
+    },
+    {
+      "setting": "RT-6b6f0761a77de324",
+      "provider": "http",
+      "field": "maximumResponseBytes",
+      "schemaPointer": "#/properties/maximumResponseBytes",
+      "classification": "operator-processing-policy",
+      "currentSemantics": "owned processing quota bytes1..16777216 default1048576 current; forwarded without clamping to runtime configuredmaximum; actualruntime rejects requestedquota above capturedcap beforeHTTP. Not artifactbyte quota inferred.",
+      "readers": [
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 109,
+          "text": "  return { url: new URL(path, `${base}/`).href, method, accept, expectedStatuses, expectedText,",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        },
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 110,
+          "text": "    expectedContentType, maximumResponseBytes: integer(value.maximumResponseBytes, 1_048_576, 1, 16_777_216,",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        },
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 111,
+          "text": "      'HTTP_CONFIG_RESPONSE_LIMIT_INVALID'),",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        },
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 164,
+          "text": "          headers: { accept: config.accept }, timeoutMs: Math.min(config.requestTimeoutMs, invocation.timeoutMs),",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        },
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 165,
+          "text": "          maximumResponseBytes: config.maximumResponseBytes } });",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        },
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 166,
+          "text": "      const checked = object(response, 'HTTP_RESPONSE_INVALID');",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        },
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 167,
+          "text": "      if (!Number.isSafeInteger(checked.status) || typeof checked.body !== 'string'",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        },
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 168,
+          "text": "        || !Number.isSafeInteger(checked.sizeBytes) || typeof checked.bodyDigest !== 'string'",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        },
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 169,
+          "text": "        || !Number.isSafeInteger(checked.durationMs)) throw new Error('HTTP_RESPONSE_INVALID');",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        },
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 170,
+          "text": "      return result(invocation, config, checked);",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        }
+      ],
+      "completePreserved": {
+        "url": "$ORIGIN",
+        "path": "/ok",
+        "method": "GET",
+        "accept": "application/json",
+        "expectedStatuses": [
+          200
+        ],
+        "expectedText": "C0-local",
+        "expectedContentType": "application/json",
+        "maximumResponseBytes": 2048,
+        "requestTimeoutMs": 1000
+      },
+      "completeA": {
+        "url": "$ORIGIN",
+        "path": "/ok",
+        "method": "GET",
+        "accept": "application/json",
+        "expectedStatuses": [
+          200
+        ],
+        "expectedText": "C0-local",
+        "expectedContentType": "application/json",
+        "maximumResponseBytes": 32,
+        "requestTimeoutMs": 1000
+      },
+      "completeB": {
+        "url": "$ORIGIN",
+        "path": "/ok",
+        "method": "GET",
+        "accept": "application/json",
+        "expectedStatuses": [
+          200
+        ],
+        "expectedText": "C0-local",
+        "expectedContentType": "application/json",
+        "maximumResponseBytes": 2048,
+        "requestTimeoutMs": 1000
+      },
+      "completeNegative": {
+        "url": "$ORIGIN",
+        "path": "/ok",
+        "method": "GET",
+        "accept": "application/json",
+        "expectedStatuses": [
+          200
+        ],
+        "expectedText": "C0-local",
+        "expectedContentType": "application/json",
+        "maximumResponseBytes": 0,
+        "requestTimeoutMs": 1000
+      },
+      "fixedNoIndependentB": false,
+      "targetAuthor": "one existing plugin-owned requestprocessing policy, retired source/task/perstep timeout quotas reject evenequal",
+      "externalRequired": "fullactualisolatedrole/registry/runtime/grant/currentoperatorprofile; auth real leaseUID/SecretUID/resourceVersion/exposureGeneration/image/manifest/trustedfixture provenance currently missing. Loopbackauthprovenance SYNTHETIC, notlivecredential/exposure/authority proof."
+    },
+    {
+      "setting": "RT-6a3cdfc223a3c24b",
+      "provider": "http",
+      "field": "requestTimeoutMs",
+      "schemaPointer": "#/properties/requestTimeoutMs",
+      "classification": "operator-processing-policy",
+      "currentSemantics": "owned request milliseconds1..300000 default10000 current; each request min(requested,invocation.timeoutMs); current native maxexec validates bounded requests; overall absolute deadline/cancellation distinct.",
+      "readers": [
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 112,
+          "text": "    requestTimeoutMs: integer(value.requestTimeoutMs, 10_000, 1, 300_000, 'HTTP_CONFIG_TIMEOUT_INVALID') };",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        },
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 164,
+          "text": "          headers: { accept: config.accept }, timeoutMs: Math.min(config.requestTimeoutMs, invocation.timeoutMs),",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        },
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 165,
+          "text": "          maximumResponseBytes: config.maximumResponseBytes } });",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        },
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 166,
+          "text": "      const checked = object(response, 'HTTP_RESPONSE_INVALID');",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        },
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 167,
+          "text": "      if (!Number.isSafeInteger(checked.status) || typeof checked.body !== 'string'",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        },
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 168,
+          "text": "        || !Number.isSafeInteger(checked.sizeBytes) || typeof checked.bodyDigest !== 'string'",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        },
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 169,
+          "text": "        || !Number.isSafeInteger(checked.durationMs)) throw new Error('HTTP_RESPONSE_INVALID');",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        },
+        {
+          "path": "skills/buster/plugins/http/src/provider.js",
+          "line": 170,
+          "text": "      return result(invocation, config, checked);",
+          "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+        }
+      ],
+      "completePreserved": {
+        "url": "$ORIGIN",
+        "path": "/ok",
+        "method": "GET",
+        "accept": "application/json",
+        "expectedStatuses": [
+          200
+        ],
+        "expectedText": "C0-local",
+        "expectedContentType": "application/json",
+        "maximumResponseBytes": 2048,
+        "requestTimeoutMs": 1000
+      },
+      "completeA": {
+        "url": "$ORIGIN",
+        "path": "/ok",
+        "method": "GET",
+        "accept": "application/json",
+        "expectedStatuses": [
+          200
+        ],
+        "expectedText": "C0-local",
+        "expectedContentType": "application/json",
+        "maximumResponseBytes": 2048,
+        "requestTimeoutMs": 50
+      },
+      "completeB": {
+        "url": "$ORIGIN",
+        "path": "/ok",
+        "method": "GET",
+        "accept": "application/json",
+        "expectedStatuses": [
+          200
+        ],
+        "expectedText": "C0-local",
+        "expectedContentType": "application/json",
+        "maximumResponseBytes": 2048,
+        "requestTimeoutMs": 500
+      },
+      "completeNegative": {
+        "url": "$ORIGIN",
+        "path": "/ok",
+        "method": "GET",
+        "accept": "application/json",
+        "expectedStatuses": [
+          200
+        ],
+        "expectedText": "C0-local",
+        "expectedContentType": "application/json",
+        "maximumResponseBytes": 2048,
+        "requestTimeoutMs": 0
+      },
+      "fixedNoIndependentB": false,
+      "targetAuthor": "one existing plugin-owned requestprocessing policy, retired source/task/perstep timeout quotas reject evenequal",
+      "externalRequired": "fullactualisolatedrole/registry/runtime/grant/currentoperatorprofile; auth real leaseUID/SecretUID/resourceVersion/exposureGeneration/image/manifest/trustedfixture provenance currently missing. Loopbackauthprovenance SYNTHETIC, notlivecredential/exposure/authority proof."
+    }
+  ]
+}

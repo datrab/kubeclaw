@@ -1,0 +1,299 @@
+{
+  "schemaVersion": "dlv-image-projection.v1",
+  "image": "nova",
+  "versionsManifest": {
+    "schemaVersion": 1,
+    "openclaw": {
+      "version": "2026.9.5",
+      "digest": "sha256:ea298b62be8955d3ef750e2004a610dd90c3a30e5f9886e5d654d78a0c573218"
+    },
+    "buildArgs": {
+      "ARCHVIEWER_BASE": "docker.io/library/nginx:1.29-alpine@sha256:5616878291a2eed594aee8db4dade5878cf7edcb475e59193904b198d9b830de",
+      "BUILDKIT_BASE": "moby/buildkit:v0.26.2-rootless@sha256:0ffa2fcf6b8757c47d569b3ef0f03f9d5eb3b9ff5ce68d858f994f89b749da0c",
+      "BUSTER_NODE_BASE": "node:24-bookworm-slim@sha256:ba849c60be29959425b8734d57b8b4b7d56f98edd9504c9af091d5281095a71e",
+      "CONTROLLER_GO_BASE": "golang:1.22-bookworm@sha256:3d699e4d15d0f8f13c9195c0632a16702b8cbdece2955af1c23b37ae5d55a253",
+      "CONTROLLER_RUNTIME_BASE": "gcr.io/distroless/static-debian12:nonroot@sha256:afa5c872c891853ca7fcf1f12c3edb23f7eeef36189728842dd51042ff57f7ab",
+      "DEBIAN_SNAPSHOT": "20260901T000000Z",
+      "GOCYCLO_VERSION": "v0.6.0",
+      "GOVULNCHECK_VERSION": "v1.1.4",
+      "GO_SHA256_AMD64": "5c2c3b16caefa1d968a94c1daca04a7ca301a496d9b086e17ad77bb81393f053",
+      "GO_SHA256_ARM64": "fe4789e92b1f33358680864bbe8704289e7bb5fc207d80623c308935bd696d49",
+      "GO_VERSION": "1.26.5",
+      "HADOLINT_VERSION": "2.12.0",
+      "HELM_VERSION": "3.18.4",
+      "KUBECONFORM_VERSION": "0.6.4",
+      "KUBECTL_SHA256_AMD64": "5d11e2ba01ea68ffd053f56e27738e2b4330013ee67f7e46c6da6c585d3c9926",
+      "KUBECTL_SHA256_ARM64": "c0f97f31c9ddc22d4951d543a1a7125a9af4b31e895ad4aa99899c4ba2a6ff0b",
+      "KUBECTL_VERSION": "1.35.6",
+      "KUBERNETES_JSON_SCHEMA_COMMIT": "c8f4e61c63bc529749125ac566bccc6986e08d45",
+      "MYPY_VERSION": "2.3.0",
+      "NODE_BASE": "node:24.15.0-bookworm-slim@sha256:4e6b70dd6cbfc88c8157ba19aa3d9f9cce6ba4703576d55459e45efcbc9c5f5d",
+      "OPS_MCP_NODE_BASE": "node:24.21.0-alpine3.24@sha256:be80f76cf40ec8e42b9bec49f60a55e0660f30af58d3e5a25530785b30ea67e2",
+      "OPS_NODE_BASE": "node:24.21.0-alpine3.24@sha256:be80f76cf40ec8e42b9bec49f60a55e0660f30af58d3e5a25530785b30ea67e2",
+      "PIP_AUDIT_VERSION": "2.10.1",
+      "RUFF_VERSION": "0.15.22",
+      "SEMGREP_VERSION": "1.170.0",
+      "SHFMT_SHA256_AMD64": "fb096c5d1ac6beabbdbaa2874d025badb03ee07929f0c9ff67563ce8c75398b1",
+      "SHFMT_SHA256_ARM64": "32d92acaa5cd8abb29fc49dac123dc412442d5713967819d8af2c29f1b3857c7",
+      "SHFMT_VERSION": "3.13.1",
+      "STATICCHECK_VERSION": "2026.1",
+      "TERRAFORM_SHA256_AMD64": "73bbb8f5188ad75d4fb853fd100ae4d7e146ef7af7db18776109642fdb7759d2",
+      "TERRAFORM_SHA256_ARM64": "7a9e92105ede978cf9049a2fbe53dfe67c6a8da4b4d7f613d89e7dd7c63ec40d",
+      "TERRAFORM_VERSION": "1.15.7",
+      "TFLINT_SHA256_AMD64": "cca9d13e2e1d7a2c627af60ff899a3c9b74212899416aeb96ec764d2ef954537",
+      "TFLINT_SHA256_ARM64": "560da89aacf59389d4eb029730dd5b109b7288096c32f2726a0d9e783a5ea8eb",
+      "TFLINT_VERSION": "0.64.0",
+      "TRIVY_SHA256_AMD64": "2ae6fe3ee734b7fdf11335663e18c75ea12dccc76062f09f164a3b0f8be4371a",
+      "TRIVY_SHA256_ARM64": "b94ce1976bbf3c15b514b605ee88be7c6d94a29be2302847ff01cb794d47aad5",
+      "TRIVY_VERSION": "0.74.0",
+      "HADOLINT_SHA256_AMD64": "56de6d5e5ec427e17b74fa48d51271c7fc0d61244bf5c90e828aab8362d55010",
+      "HELM_SHA256_AMD64": "f8180838c23d7c7d797b208861fecb591d9ce1690d8704ed1e4cb8e2add966c1",
+      "HADOLINT_SHA256_ARM64": "5798551bf19f33951881f15eb238f90aef023f11e7ec7e9f4c37961cb87c5df6",
+      "HELM_SHA256_ARM64": "c0a45e67eef0c7416a8a8c9e9d5d2d30d70e4f4d3f7bea5de28241fffa8f3b89",
+      "KUBECONFORM_SHA256_AMD64": "2b4ebeaa4d5ac4843cf8f7b7e66a8874252b6b71bc7cbfc4ef1cbf85acec7c07",
+      "KUBECONFORM_SHA256_ARM64": "582a8a3eb3c33feb065928728ddac6e544c4f0b1234fd78fc1e4c4175a422b22",
+      "GH_VERSION": "2.100.0",
+      "OPS_TOOLS_GO_BASE": "golang:1.26.8-alpine3.24@sha256:ce864e7223ac17b1775e6fd0b4c0db580c2eb50e7953a427916379e4b92a1628",
+      "GH_SOURCE_SHA256": "39d5123f08a553a6fa69e46de86c22d04d97a217e03d0e6584b66d0fea50f1fe",
+      "OPS_NPM_TAR_VERSION": "7.5.21",
+      "OPS_NPM_BRACE_VERSION": "5.0.9",
+      "OPS_NPM_IP_VERSION": "10.3.1"
+    },
+    "imageOverrides": {
+      "buster-runtime": {
+        "DEBIAN_SNAPSHOT": "20260713T000000Z",
+        "SEMGREP_VERSION": "1.170.1"
+      },
+      "ops-pod": {
+        "KUBECTL_VERSION": "v1.34.11",
+        "HELM_VERSION": "v3.22.0",
+        "HELM_SHA256_AMD64": "1e4ab49e429626cf6c6958d914248b78c9730803c2751b87627e171dc800e7bb",
+        "HELM_SHA256_ARM64": "f14e804dfee240f55525b667488fe9adca349e63e00c9af634c0beb1421ac310"
+      }
+    },
+    "infrastructure": {
+      "envoy": "envoyproxy/envoy:v1.39.0@sha256:d59f7f5fa10cff6d5892b6c5e7df5c9297ddfb2c3683e33fbfb82da24de4fa66",
+      "tailscaleOperator": "docker.io/tailscale/k8s-operator:v1.102.3@sha256:d86a8be7ad9d38714968f5d4e010ba8dad30c8f672736ef94eda9b250febeb12",
+      "tailscaleProxy": "docker.io/tailscale/tailscale:v1.102.3@sha256:8c42c4574ab066384fcb72f69e086a2ff1dd3652eb6f56856cee34bcf0d2f680",
+      "registryMirror": "docker.io/library/registry:2.8.3@sha256:a3d8aaa63ed8681a604f1dea0aa03f100d5895b6a58ace528858a7b332415373",
+      "redis": "registry-1.docker.io/bitnami/redis:latest@sha256:ffa455a3ad00bccc24dfde113ef55329dde687da242e9feb6ccd2b30eb93e8f3",
+      "postgresql": "registry-1.docker.io/bitnami/postgresql:latest@sha256:65d7506622ce2649914947b698d822d56c208295ba7ee80c1b34e48b251ba0c1"
+    },
+    "automation": {
+      "renovate": "renovate/renovate:44.65.5@sha256:4e10f76a79f1c597f427f83c788a9f5b14a6295784c4cb68307b89b0a954abce",
+      "testRegistry": "registry:3@sha256:1be55279f18a2fe1a74edf2664cac61c1bea305b7b4642dab412e7affdcb3e33",
+      "prismTestPostgres": "pgvector/pgvector:pg17@sha256:cf134a767f474095eeba57e0117be8e568e011a63f33fbf252f14c9b760f8e6f"
+    },
+    "infrastructureCharts": {
+      "tailscale": {
+        "name": "tailscale-operator",
+        "version": "1.102.3",
+        "url": "https://pkgs.tailscale.com/helmcharts/tailscale-operator-1.102.3-1787221603-c2440014df04fdf1b67b53daa4290d7b878584cf4702f9b1b50f51ba64499a6a.tgz",
+        "sha256": "c2440014df04fdf1b67b53daa4290d7b878584cf4702f9b1b50f51ba64499a6a"
+      },
+      "redis": {
+        "name": "redis",
+        "version": "28.1.0",
+        "appVersion": "8.10.1",
+        "sha256": "74bb9cfa3241fe401bd346c135427fe1e5a452483ffedf440038f0aae62ba386",
+        "url": "oci://registry-1.docker.io/bitnamicharts/redis@sha256:795df3b4dda22a86db62f511a62970fb547658b0d1349ec210783516b2e6157e"
+      },
+      "postgresql": {
+        "name": "postgresql",
+        "version": "18.11.1",
+        "appVersion": "18.6.0",
+        "sha256": "d85028c045d06707a852d58be85b025ce338d6dc92751a9db31d26c28155be5b",
+        "url": "oci://registry-1.docker.io/bitnamicharts/postgresql@sha256:4e3a4ec010437ba9a9def6306d6db0e1f687193769b51c3146e7608580744977"
+      }
+    },
+    "redisProduction": {
+      "chartVersion": "28.1.0",
+      "image": "registry-1.docker.io/bitnami/redis:latest@sha256:ffa455a3ad00bccc24dfde113ef55329dde687da242e9feb6ccd2b30eb93e8f3"
+    },
+    "monitoringCharts": {
+      "prometheus": {
+        "version": "91.4.0"
+      },
+      "loki": {
+        "version": "18.13.1"
+      },
+      "alloy": {
+        "version": "1.12.1"
+      },
+      "promtail": {
+        "version": "6.17.1"
+      }
+    },
+    "postgresqlProduction": {
+      "chartVersion": "18.11.3",
+      "image": "registry-1.docker.io/bitnami/postgresql:latest@sha256:b69d1fca390fb131639e86e820f248acfc5d911339dc884796f8009260c598d7"
+    },
+    "platformCharts": {
+      "spire": {
+        "version": "0.30.0"
+      },
+      "spire-crds": {
+        "version": "0.6.0"
+      },
+      "csi-driver-smb": {
+        "version": "1.20.0"
+      }
+    },
+    "litellmProduction": {
+      "image": "ghcr.io/berriai/litellm:main-latest@sha256:a79320760af8df488074ab3fbc830883856c7f952976aad00f039d3a43ffe4b2"
+    },
+    "trivyDatabases": {
+      "vulnerability": {
+        "repository": "ghcr.io/aquasecurity/trivy-db",
+        "manifest": {
+          "digest": "sha256:4d431c680d01e396a20899ec027c95e5736bed4294aeb40a1648c58aed5d1f7b",
+          "size": 616
+        },
+        "layer": {
+          "digest": "sha256:d42d90efdb7ecc49abcf2c796cf6478f3bab596e907fd74c786ec8070dbf6bca",
+          "size": 120435408
+        },
+        "files": {
+          "metadata.json": {
+            "digest": "sha256:0986f927c4f9f08ee08387dff92074f3cb64c652032ae6a3602179763f33b3d2",
+            "size": 143
+          },
+          "trivy.db": {
+            "digest": "sha256:e783fe142a8425c25c6e61be54f61698a405510057a94bfdd2253a4ded9ca0cc",
+            "size": 1413980160
+          }
+        }
+      },
+      "java": {
+        "repository": "ghcr.io/aquasecurity/trivy-java-db",
+        "manifest": {
+          "digest": "sha256:d83c6dd4d525be30ffecc92e5be679392be56547c29cf70f76a7478b08981c9c",
+          "size": 624
+        },
+        "layer": {
+          "digest": "sha256:cf45b46809a5759bf7b4478c52ea2b4e7f31d44ea35a2fd467cfd88af6ac3830",
+          "size": 968473554
+        },
+        "files": {
+          "metadata.json": {
+            "digest": "sha256:764a408240c9a1c6f26649eb4372624bdf95dcffb52f1314904bdb59707426c3",
+            "size": 143
+          },
+          "trivy-java.db": {
+            "digest": "sha256:1fce16f732df52f325d9922f5a8ff7221719a7819cdb5ba1dc76fe32b4a36e4c",
+            "size": 1529786368
+          }
+        }
+      }
+    },
+    "browserArchives": {
+      "amd64": [
+        {
+          "name": "chromium",
+          "url": "https://cdn.playwright.dev/builds/cft/151.0.7922.34/linux64/chrome-linux64.zip",
+          "directory": "chromium-1234",
+          "executable": "chrome-linux64/chrome",
+          "size": 193282658,
+          "sha256": "ae8736ac28bc69278551500f219fc749575648263c43ec5990749eff43b9fcf8"
+        },
+        {
+          "name": "chromium-headless-shell",
+          "url": "https://cdn.playwright.dev/builds/cft/151.0.7922.34/linux64/chrome-headless-shell-linux64.zip",
+          "directory": "chromium_headless_shell-1234",
+          "executable": "chrome-headless-shell-linux64/chrome-headless-shell",
+          "size": 120231126,
+          "sha256": "3cfc2bd00d1bafcf8a68dc74c9c92bb7150ddc8d26ade948a776316e1cec4f14"
+        },
+        {
+          "name": "firefox",
+          "url": "https://cdn.playwright.dev/dbazure/download/playwright/builds/firefox/1538/firefox-debian-12.zip",
+          "directory": "firefox-1538",
+          "executable": "firefox/firefox",
+          "size": 113411079,
+          "sha256": "04b0d3d86f7472bbbebce1b7c536900d05e0eb63bcfdb22cd1da932b5ea297e7"
+        },
+        {
+          "name": "webkit",
+          "url": "https://cdn.playwright.dev/dbazure/download/playwright/builds/webkit/2336/webkit-debian-12.zip",
+          "directory": "webkit-2336",
+          "executable": "pw_run.sh",
+          "size": 107153598,
+          "sha256": "95d87eedf554620015e392805be5d71aedbbdbb65dfa6c62c94753cf8e34406e"
+        },
+        {
+          "name": "ffmpeg",
+          "url": "https://cdn.playwright.dev/dbazure/download/playwright/builds/ffmpeg/1011/ffmpeg-linux.zip",
+          "directory": "ffmpeg-1011",
+          "executable": "ffmpeg-linux",
+          "size": 2376500,
+          "sha256": "ebc74fc5b94830176a3c2914ae96bd8bc7f6a91f4f33890230f84a172ee61ccc"
+        }
+      ],
+      "arm64": [
+        {
+          "name": "chromium",
+          "url": "https://cdn.playwright.dev/dbazure/download/playwright/builds/chromium/1234/chromium-linux-arm64.zip",
+          "directory": "chromium-1234",
+          "executable": "chrome-linux/chrome",
+          "size": 204732694,
+          "sha256": "b5ad7d8fe70f230b34198ddb5626d717c016db2f627cb44b922babbcaf3479b9"
+        },
+        {
+          "name": "chromium-headless-shell",
+          "url": "https://cdn.playwright.dev/dbazure/download/playwright/builds/chromium/1234/chromium-headless-shell-linux-arm64.zip",
+          "directory": "chromium_headless_shell-1234",
+          "executable": "chrome-linux/headless_shell",
+          "size": 116380215,
+          "sha256": "b03443e1e1a60d06e07b6cdfe650b8c2bfcbb3db497d2b652f73dc6912f4ae15"
+        },
+        {
+          "name": "firefox",
+          "url": "https://cdn.playwright.dev/dbazure/download/playwright/builds/firefox/1538/firefox-debian-12-arm64.zip",
+          "directory": "firefox-1538",
+          "executable": "firefox/firefox",
+          "size": 104187734,
+          "sha256": "3997819d57c9da40f34f7f9ccc81d3273907839e986ceb9645c4d08f71be10b2"
+        },
+        {
+          "name": "webkit",
+          "url": "https://cdn.playwright.dev/dbazure/download/playwright/builds/webkit/2336/webkit-debian-12-arm64.zip",
+          "directory": "webkit-2336",
+          "executable": "pw_run.sh",
+          "size": 100657649,
+          "sha256": "e12c703aac19046a8d7f815610a5bba0916313abf8243cfc7e7641b6a11231f4"
+        },
+        {
+          "name": "ffmpeg",
+          "url": "https://cdn.playwright.dev/dbazure/download/playwright/builds/ffmpeg/1011/ffmpeg-linux-arm64.zip",
+          "directory": "ffmpeg-1011",
+          "executable": "ffmpeg-linux",
+          "size": 1717234,
+          "sha256": "2628c03f05318ff812c8c9baaf207dea2ddf53e818c0dc936714b0fbe3afb009"
+        }
+      ]
+    }
+  },
+  "versionsManifestSource": {
+    "path": "versions.json",
+    "sha256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d"
+  },
+  "sourceDefinition": {
+    "path": "docker/Dockerfile.nova",
+    "field": "TARGETARCH",
+    "sha256": "34e54267a3cd0d7541315de3c6ec785206a0364b7ec76699d433c4a3ca341242",
+    "line": 96,
+    "lineKind": "productive Docker ARG"
+  },
+  "context": ".",
+  "dockerfile": "docker/Dockerfile.nova",
+  "targetPlatform": "linux/amd64",
+  "selectedSourceRevision": {
+    "ref": "actual immutable selected code-release commit bound to exact full context bytes; future fixture must provide actual value",
+    "notSoftwareVersion": true
+  },
+  "effectiveAuthor": {
+    "kind": "generated platform/source binding"
+  },
+  "alternativeMeaning": "A/B isolate supported generatedplatform projection with same current completeV selection. Do not fabricate a second supported software version or authentic artifact; future V-change case must supply complete alternate solemanifest+locked artifact source/install receipts. If image lacks actual platform reader, B is source/platform-support negative or pending fixture, NOT claimed positive build.",
+  "execution": "definition only; current actual workflows no explicit platforms; proposed same workflow selected platform/artifact generation contract before build; no image build/push/pull/native execution C0"
+}

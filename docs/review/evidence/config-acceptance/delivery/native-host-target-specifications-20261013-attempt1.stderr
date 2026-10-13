@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/define-native-host-target-20261013.py", line 29, in <module>
+    r['activationScope']['target']='H host maintenance: original node/runtime/pool/root/ownership identity retained; fence+quiesce before changing pool/reserve/node or native software. B cannot move active A records or cleanup, and Ready only after same-generation physical capacity/kernel readback. schemaVersion remains protocol.'
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+TypeError: 'str' object does not support item assignment

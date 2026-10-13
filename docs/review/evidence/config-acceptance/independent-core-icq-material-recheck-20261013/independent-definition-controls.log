@@ -1,0 +1,1156 @@
+{
+  "scope": "Independent documentation/source/serializer controls only; no target execution, F-EFFECT, F-MUT, physical capacity, global acceptance",
+  "results": [
+    {
+      "id": "header-object514",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "persisted-binding-growth525",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "historical-inlineBinding-growth531",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "fixed8900-admitted",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "fixed8899-rejected",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "all-six-env-callers",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "reader:BUSTER_PREPARATION_ASSIGNED_INPUT_BYTES",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "producer:BUSTER_PREPARATION_ASSIGNED_INPUT_BYTES",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "reader:BUSTER_PREPARATION_ASSIGNED_SOURCE_ROOT",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "producer:BUSTER_PREPARATION_ASSIGNED_SOURCE_ROOT",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "reader:KUBECLAW_NATIVE_SCOPE",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "producer:KUBECLAW_NATIVE_SCOPE",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "reader:BUSTER_PREPARATION_ASSIGNED_SOURCE_AUTHORITY",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "producer:BUSTER_PREPARATION_ASSIGNED_SOURCE_AUTHORITY",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "reader:BUSTER_PREPARATION_ASSIGNED_SOURCE_PUBLIC_KEY",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "producer:BUSTER_PREPARATION_ASSIGNED_SOURCE_PUBLIC_KEY",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "reader:BUSTER_PREPARATION_ASSIGNED_TAR",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "producer:BUSTER_PREPARATION_ASSIGNED_TAR",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "all14unique",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "all22unique",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "case-contract-mirror",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "notrun:QC-FOUNDATION-FLOCK-WAIT-VAL",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "notrun:QC-FOUNDATION-FLOCK-WAIT-REAL-LOCK",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "notrun:QC-FOUNDATION-FLOCK-WAIT-HISTORY",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "notrun:QC-ADMISSION-REASON-LIMITS-VAL",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "notrun:QC-ADMISSION-REASON-LIMITS-FORMAT",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "notrun:QC-ADMISSION-REASON-LIMITS-HISTORY",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "notrun:QC-ADMISSION-METADATA-RESERVE-VAL",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "notrun:QC-ADMISSION-METADATA-RESERVE-OVERFLOW",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "notrun:QC-ADMISSION-METADATA-RESERVE-ALL-WRITES",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "notrun:QC-OUTBOX-UNBOUNDED-READ-FOUR-METHODS",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "notrun:QC-OUTBOX-UNBOUNDED-READ-REPLAY",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "notrun:QC-LATENT-UNBOUNDED-BLOB-API-API-AND-SEVEN",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "notrun:QC-LATENT-UNBOUNDED-BLOB-API-HISTORY",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "notrun:QC-BUSTER-TAR-DIAGNOSTIC-VAL",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "notrun:QC-BUSTER-TAR-DIAGNOSTIC-REAL-TAR",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "notrun:QC-BUSTER-TAR-DIAGNOSTIC-BIND",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "notrun:QC-BUSTER-TAR-LOCATOR-UNUSED-PAIRED-PROVISION",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "notrun:QC-BUSTER-TAR-LOCATOR-UNUSED-HISTORY",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "notrun:QC-FIXTURE-STORAGE-EXPONENT-REPRESENTATION",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "notrun:QC-FIXTURE-STORAGE-EXPONENT-POLICY-BIND",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "notrun:QC-BUSTER-PROVIDER-MEASUREMENT-FALLBACKS-REAL-PROVENANCE",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "notrun:QC-BUSTER-PROVIDER-MEASUREMENT-FALLBACKS-RECOVERY-EVAL",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "question-case-links:CMP-SOURCE-FOUNDATION-FLOCK-WAIT",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "question-case-links:CMP-SOURCE-ADMISSION-REASON-LIMITS",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "question-case-links:CMP-SOURCE-ADMISSION-METADATA-RESERVE",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "question-case-links:CMP-SOURCE-OUTBOX-UNBOUNDED-READ",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "question-case-links:CMP-SOURCE-LATENT-UNBOUNDED-BLOB-API",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "question-case-links:CMP-SOURCE-BUSTER-TAR-DIAGNOSTIC",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "question-case-links:CMP-SOURCE-BUSTER-TAR-LOCATOR-UNUSED",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "question-case-links:CMP-SOURCE-FIXTURE-STORAGE-EXPONENT",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "question-case-links:CMP-SOURCE-BUSTER-PROVIDER-MEASUREMENT-FALLBACKS",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "question-case-links:CMP-SOURCE-FIXTURE-SECRET-REFERENCE-CARDINALITY",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "question-case-links:CMP-SOURCE-PRISM-DESIGN-CARDINALITY",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "question-case-links:CMP-SOURCE-PRISM-DEVELOPMENT-IDENTITY",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "question-case-links:CMP-SOURCE-BUSTER-KUBE-CREDENTIAL-ENV",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "question-case-links:CMP-SOURCE-GENERATED-HOST-SOURCE-PROVENANCE",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "immutable:buster-engine:A:profileDigest",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "immutable:buster-engine:A:policyDigest",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "immutable:buster-engine:A:generationDigest",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "immutable:buster-engine:A:sourceDigest",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "immutable-drift-negative:buster-engine:A",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "immutable-restored:buster-engine:A",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "immutable:buster-engine:B:profileDigest",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "immutable:buster-engine:B:policyDigest",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "immutable:buster-engine:B:generationDigest",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "immutable:buster-engine:B:sourceDigest",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "immutable-drift-negative:buster-engine:B",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "immutable-restored:buster-engine:B",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "immutable:nova-platform:A:profileDigest",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "immutable:nova-platform:A:policyDigest",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "immutable:nova-platform:A:generationDigest",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "immutable:nova-platform:A:sourceDigest",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "immutable-drift-negative:nova-platform:A",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "immutable-restored:nova-platform:A",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "immutable:nova-platform:B:profileDigest",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "immutable:nova-platform:B:policyDigest",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "immutable:nova-platform:B:generationDigest",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "immutable:nova-platform:B:sourceDigest",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "immutable-drift-negative:nova-platform:B",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "immutable-restored:nova-platform:B",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "fixed-provider1964-positive",
+      "passed": true,
+      "details": 1964
+    },
+    {
+      "id": "fixed-provider1963-negative",
+      "passed": true,
+      "details": 1964
+    },
+    {
+      "id": "retained-additional-snapshot-charged",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "restored-provider-bound",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "candidate-identity:normal-admit",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "candidate-canonical:normal-admit",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "candidate-identity:normal-admitAndRead",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "candidate-canonical:normal-admitAndRead",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "candidate-identity:quarantine",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "candidate-canonical:quarantine",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "candidate-identity:overflow",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "candidate-canonical:overflow",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "candidate-identity:recordGap",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "candidate-canonical:recordGap",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "stale-six-byte-oracles-reproduced",
+      "passed": true,
+      "details": [
+        {
+          "case": "normal-admit",
+          "publishedOracle": 1940,
+          "actualFrozenCandidateBytes": 1934,
+          "difference": 6
+        },
+        {
+          "case": "normal-admitAndRead",
+          "publishedOracle": 1940,
+          "actualFrozenCandidateBytes": 1934,
+          "difference": 6
+        }
+      ]
+    },
+    {
+      "id": "caller-coordinate:0",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-source-sha:0",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-coordinate:1",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-source-sha:1",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-coordinate:2",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-source-sha:2",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-coordinate:3",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-source-sha:3",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-coordinate:4",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-source-sha:4",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-coordinate:5",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-source-sha:5",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-coordinate:6",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-source-sha:6",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-coordinate:7",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-source-sha:7",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-coordinate:8",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-source-sha:8",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-coordinate:9",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-source-sha:9",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-coordinate:10",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-source-sha:10",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-coordinate:11",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-source-sha:11",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-coordinate:12",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-source-sha:12",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-coordinate:13",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-source-sha:13",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-coordinate:14",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-source-sha:14",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-coordinate:15",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-source-sha:15",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-coordinate:16",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-source-sha:16",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-coordinate:17",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-source-sha:17",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-coordinate:18",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-source-sha:18",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-coordinate:19",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-source-sha:19",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-coordinate:20",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-source-sha:20",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-coordinate:21",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-source-sha:21",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-coordinate:22",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-source-sha:22",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-coordinate:23",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-source-sha:23",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-coordinate:24",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-source-sha:24",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-coordinate:25",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-source-sha:25",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-coordinate:26",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-source-sha:26",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-coordinate:27",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-source-sha:27",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-coordinate:28",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-source-sha:28",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-coordinate:29",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-source-sha:29",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-coordinate:30",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-source-sha:30",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-coordinate:31",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-source-sha:31",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-coordinate:32",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-source-sha:32",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-coordinate:33",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-source-sha:33",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-coordinate:34",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-source-sha:34",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-coordinate:35",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-source-sha:35",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-coordinate:36",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-source-sha:36",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-coordinate:37",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-source-sha:37",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-coordinate:38",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-source-sha:38",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-coordinate:39",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-source-sha:39",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-coordinate:40",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-source-sha:40",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-coordinate:41",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-source-sha:41",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-coordinate:42",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-source-sha:42",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-coordinate:43",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-source-sha:43",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-coordinate:44",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-source-sha:44",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-coordinate:45",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-source-sha:45",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-coordinate:46",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-source-sha:46",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-coordinate:47",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-source-sha:47",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-coordinate:48",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-source-sha:48",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-coordinate:49",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-source-sha:49",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-coordinate:50",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-source-sha:50",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-coordinate:51",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-source-sha:51",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-coordinate:52",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-source-sha:52",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-coordinate:53",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-source-sha:53",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-coordinate:54",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-source-sha:54",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-coordinate:55",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-source-sha:55",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-coordinate:56",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-source-sha:56",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-coordinate:57",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-source-sha:57",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-coordinate:58",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-source-sha:58",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-coordinate:59",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-source-sha:59",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-coordinate:60",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-source-sha:60",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-coordinate:61",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "caller-source-sha:61",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "all62-caller-coordinates",
+      "passed": true,
+      "details": null
+    },
+    {
+      "id": "boundary-profile-binding-mismatch-reproduced",
+      "passed": true,
+      "details": {
+        "frozenGlobalProfileDigest": "sha256:779b7c7006fcf13daf817a229c31299e40756f06e5304579b53d160180b7132d",
+        "requiredBoundaryProfileDigest": "sha256:f37d072a5c65ab303512c5942116683924f7f9c3a09313dfdeba876d7dfb079a",
+        "globalMaximumBytes": 268435456,
+        "boundaryMaximumBytes": 10126
+      }
+    },
+    {
+      "id": "all356-frozen-inputs-zero-drift",
+      "passed": true,
+      "details": {
+        "count": 356,
+        "drift": []
+      }
+    }
+  ],
+  "passed": 223,
+  "contradictions": [
+    {
+      "case": "normal-admit",
+      "publishedOracle": 1940,
+      "actualFrozenCandidateBytes": 1934,
+      "difference": 6
+    },
+    {
+      "case": "normal-admitAndRead",
+      "publishedOracle": 1940,
+      "actualFrozenCandidateBytes": 1934,
+      "difference": 6
+    }
+  ]
+}

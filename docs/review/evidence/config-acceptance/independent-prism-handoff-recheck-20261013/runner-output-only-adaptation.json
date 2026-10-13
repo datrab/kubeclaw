@@ -1,0 +1,7 @@
+{
+  "originalScript": "docs/review/evidence/config-acceptance/author/check-prism-handoff-definitions.mjs",
+  "originalSHA256": "a50191abcfaeb8617acd978d005d9cd70f390d7f08100453fdbf1c90edc62456",
+  "adaptation": "Exact singlewriteFileSync destination replaced; no assertions/input/validator behavior changed. Parentdocuments notwritten.",
+  "adaptedScript": "docs/review/evidence/config-acceptance/independent-prism-handoff-recheck-20261013/check-prism-handoff-definitions-independent-output.mjs",
+  "adaptedSHA256": "d6ee8fa31f9bed7547087ea3e985a1efb80b103e3f46ee415a293ff21d000529"
+}

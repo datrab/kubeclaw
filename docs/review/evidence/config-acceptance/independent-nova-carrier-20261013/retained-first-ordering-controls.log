@@ -1,0 +1,20 @@
+{
+  "scope": "Logical temporal counterexample to written parentsteps1/2-before3 only; actual local journal used, no targetSDK/runtime/F-MUT implemented",
+  "cases": [
+    {
+      "id": "retained-A-invalid-current-B-written-order",
+      "passed": true,
+      "currentSelectionCalled": 1,
+      "originalLookupCalled": 0,
+      "retainedStateUnchanged": true
+    },
+    {
+      "id": "original-first-control-A",
+      "passed": true,
+      "currentSelectionAdditionalCalls": 0,
+      "originalGeneration": "A",
+      "retainedStateUnchanged": true
+    }
+  ],
+  "limitation": "Does not define complete future policyvalidation or execute productive Nova recovery; parent schema/manifests/quota obligations remainOPEN"
+}

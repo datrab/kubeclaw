@@ -1,0 +1,41 @@
+import json,pathlib,hashlib,collections,copy,re
+O=pathlib.Path(__file__).parent;P=O.parent;read=lambda p:json.loads(pathlib.Path(p).read_text());write=lambda p,x:pathlib.Path(p).write_text(json.dumps(x,indent=2)+'\n');sha=lambda p:hashlib.sha256(pathlib.Path(p).read_bytes()).hexdigest();input=read(O/'checkpoint-inputs.json');semantic=read(P/'semantic-fragment.json');residual=read(P/'residual-fragment.json');master=read('docs/review/remediation/config-semantic-inventory.json');syntax=read(O/'source-syntax-roster.json');files={s['path']:s for s in syntax['files']};primary={r['id']:r for d in [semantic,residual] for r in d['rows']};references=collections.defaultdict(list)
+def ref(path,line,pointer,kind,reason,settings=()):
+ if isinstance(line,int):references[(path,line)].append({'artifactPointer':pointer,'kind':kind,'currentAuthorityReason':reason,'settingIds':list(settings)})
+for r in primary.values():
+ for e in r['reader'].get('fieldAccessEvidence',[]):ref(e['path'],e['line'],str(P/'semantic-fragment.json')+'#/rows/'+r['id'],'component-setting-reader',r['migrationAction'],[r['id']])
+for i,a in enumerate(residual['apiFieldDispositions']):
+ ptr=str(P/'residual-fragment.json')+'#/apiFieldDispositions/'+str(i)
+ ref(a['path'],a['sourceLine'],ptr,'Core-interface-member',a['sourceField']+': '+a['currentAuthorityReason'],a['aliasOfSettingIds'])
+ for e in a['sourceAccessEvidence']:ref(e['path'],e['line'],ptr,'Core-member-actual-access',a['sourceField']+': '+a['currentAuthorityReason'],a['aliasOfSettingIds'])
+for i,a in enumerate(residual['parameterDefaultCandidates']):ref(a['file'],a['line'],str(P/'residual-fragment.json')+'#/parameterDefaultCandidates/'+str(i),'Core-parameter-default',a['disposition'])
+for r in master['rows']:
+ source=r.get('source',{})
+ if not isinstance(source,dict):continue
+ for ln in source.get('lines',[]):ref(source.get('path'),ln,'docs/review/remediation/config-semantic-inventory.json#/rows/'+r['id'],'existing-primary-source',r.get('migrationAction',str(r.get('class'))),[r['id']])
+ if source.get('lineKind') in ['exact authored leaf','productive input/read/consumer']:ref(source.get('path'),source.get('line'),'docs/review/remediation/config-semantic-inventory.json#/rows/'+r['id'],'existing-primary-source',r.get('migrationAction',str(r.get('class'))),[r['id']])
+# Curated literal definitions: semantic IDs are exact constants, not guessed same-value aliases.
+constantRows={'MAX_ATTEMPT_ENVELOPE_BYTES':'CMP-WCORE-INPUT-BYTES','MAX_ATTEMPT_LOG_BYTES':'CMP-WCORE-LOG-WIRE-BYTES','MAX_ATTEMPT_LOG_PARTS':'CMP-WCORE-LOG-PARTS','MAX_ATTEMPT_VALUE_DEPTH':'CMP-WCORE-JSON-DEPTH','MAX_ATTEMPT_VALUE_NODES':'CMP-WCORE-JSON-NODES','nativeJournalMaximumRecordBytes':'CMP-WCORE-JOURNAL-RECORD-BYTES','nativeJournalMaximumDiagnosticUnits':'CMP-WCORE-JOURNAL-DIAGNOSTIC-UNITS','maximumOwnershipDiagnosisUnits':'CMP-WCORE-OWNERSHIP-DIAGNOSTIC-UNITS','maximumOwnershipHostIdentityCharacters':'CMP-WCORE-OWNERSHIP-ID-DOMAIN','CGROUP2_SUPER_MAGIC':'CMP-WCORE-CGROUP2-MAGIC','MAX_TIMER_MS':'CMP-WCORE-JS-TIMER-MAX','nativeJournalStream':'CMP-WCORE-JOURNAL-PROTOCOL'}
+for lit in read(O/'literal-declarations-discovery.json'):
+ for name,sid in constantRows.items():
+  if lit['path'].startswith('skills/worker/core/') and re.search(r'\b'+re.escape(name)+r'\b',lit['text']):ref(lit['path'],lit['line'],str(P/'residual-fragment.json')+'#/rows/'+sid,'exact-named-Core-constant',primary[sid]['reader'].get('verifiedBoundary',str(primary[sid]['supportedDomain'])),[sid])
+# Each source candidate remains open unless linked to prior individual semantic evidence.
+allCandidates=[]
+for c in input['candidates']:
+ p=c['source'];ln=c['line'];text=pathlib.Path(p).read_text().splitlines()[ln-1];units=[u for u in files[p]['units'] if u['startLine']<=ln<=u['endLine']];unit=min(units,key=lambda u:u['endLine']-u['startLine']) if units else None;refs=references[(p,ln)]
+ allCandidates.append({**c,'exactText':text,'enclosingReader':unit,'status':'individual-existing-disposition-linked' if refs else 'open-semantic-disposition','existingReferences':refs,'reason':('; '.join(dict.fromkeys(x['currentAuthorityReason'] for x in refs)) if refs else 'Exact source candidate has no previous individual line/member disposition. '+(unit['name'] if unit else 'module/author definition')+' must be classified from actual value origin/consumer; source-wide class, lexical kind and counts do not close it.'),'scope':'Source/candidate definition only; links remain independently challengeable, never runtime acceptance'})
+# Supplement lexical discovery with every AST parameter default and real environment/CLI access,
+# including those absent in the global marker ledger. Do not mutate original global candidates.
+existing={(c['source'],c['line']) for c in allCandidates};extra=[]
+for file in files.values():
+ for kind,key in [('parameter-default','parameterDefaults'),('real-environment-access','environmentAccesses'),('CLI-access','cliAccesses')]:
+  for member in file[key]:
+   identity=file['path']+':'+str(member['line'])+':'+kind+':'+str(member)
+   refs=references[(file['path'],member['line'])]
+   extra.append({'id':'CMP-SOURCE-'+hashlib.sha256(identity.encode()).hexdigest()[:16],'source':file['path'],'sourceSha256':file['sha256'],'line':member['line'],'kind':kind,'member':member,'markerCoordinateAlreadyPresent':(file['path'],member['line']) in existing,'status':'individual-existing-disposition-linked' if refs else 'open-semantic-disposition','existingReferences':refs})
+sourceRows=[]
+for p in input['scopePaths']:
+ scopeCandidates=[c for c in allCandidates if c['source']==p];scopeSupplement=[c for c in extra if c['source']==p];settingIds=sorted(set(sid for d in [semantic,residual] for s in d['sources'] if s['path']==p for sid in s.get('settingIds',[])));api=[i for i,x in enumerate(residual['apiFieldDispositions']) if x['path']==p];schema=[i for i,x in enumerate(residual['schemaFieldDispositions']) if x['path']==p];add=[i for i,x in enumerate(residual['additionalProductiveSchemaDispositions']) if x['path']==p];openIds=[c['id'] for c in scopeCandidates+scopeSupplement if c['status']=='open-semantic-disposition'];sourceRows.append({'path':p,'sha256':sha(p),'lineCount':len(pathlib.Path(p).read_text().splitlines()),'markerCandidateIds':[c['id'] for c in scopeCandidates],'syntaxSupplementIds':[c['id'] for c in scopeSupplement],'existingPrimaryIds':settingIds,'existingCoreApiMemberIndices':api,'existingSchemaCoordinateIndices':schema,'additionalSchemaCoordinateIndices':add,'readerUnits':files[p]['units'],'dispositionStatus':'source has individually unresolved candidates' if openIds else 'all recorded candidates linked; whole-source semantic recheck required','unresolvedCandidateIds':openIds,'noMarkerLimit':'No lexical marker does not prove a source has no settings; complete source bytes and literal declaration roster retained','proofLimit':'Prior exact field/member references are reused, not broadened into a blanket source closure. Independent full source review still required.'})
+write(O/'candidate-dispositions.json',{'scope':'Exact per-candidate source/line/digest/reader+existing reference or honest open disposition; no lexical auto-pass','candidates':allCandidates,'syntaxSupplements':extra});write(O/'source-dispositions.json',{'sources':sourceRows,'coverageBasis':'Union173 original owned/shared source roster paths, all39Core files; full numbered reads retained; no sample substitutes; every open coordinate explicit','existingSemanticArtifacts':{'CoreApi173':str(P/'residual-fragment.json')+'#/apiFieldDispositions','schema640':str(P/'residual-fragment.json')+'#/schemaFieldDispositions + additionalProductiveSchemaDispositions'},'status':'Full source roster freeze, semantic closure still open where individually listed'})
+write(O/'unresolved-source-candidates.json',{'candidates':[c for c in allCandidates if c['status']=='open-semantic-disposition'],'syntaxSupplements':[c for c in extra if c['status']=='open-semantic-disposition'],'status':'Explicit obligations, not counts-based acceptance'})
+print('Sources',len(sourceRows),'markers',len(allCandidates),'linked',sum(c['status']=='individual-existing-disposition-linked' for c in allCandidates),'open',sum(c['status']=='open-semantic-disposition' for c in allCandidates),'syntax supplements',len(extra))

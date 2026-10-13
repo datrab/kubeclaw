@@ -119,15 +119,20 @@ writes `run-snapshot.v4`, then calls `executePrepared`. `engine-snapshots.ts`
 publishes by exclusive temp write, file fsync, no-replace hardlink and directory
 fsync. `executePrepared` verifies graph and checks uncertain effects before
 starting adapters and runner. Recovery verifies the stored package set/digests
-and whole runtime configuration, recovers lifecycle state and reconciles durable
+and the captured registry configuration (not every PlatformConfig field), recovers lifecycle state and reconciles durable
 observability. These existing checks must not simply be removed for dynamic config.
 
 `stage-executor.ts` passes `definition.config`, creates a lease and appends
 `attempt.created` / `attempt.dispatched` before plugin invocation. Its current
 attempt record contains retry/remediation usage and lease identity but no
 separate module generation closure. `state/journal.ts::FileJournal` provides
-mutex-serialized, hash-chained fsync append/transact and rejects rewind/drift;
-its append-lock timeout is itself a current hardcoded policy candidate.
+mutex-serialized, hash-chained fsync append/transact and rejects rewind/drift.
+This is synchronous exclusion, not multi-record rollback: a record appended
+before a callback throws remains committed. Fully validate before the one binding
+append; never await inside its callback. Seven
+[actual local persistence controls](../evidence/config-acceptance/author/nova-journal-binding-seam-identities-20261013.json)
+confirm these narrow current semantics, not future module binding.
+Its append-lock timeout is itself a current hardcoded policy candidate.
 
 ### Proposed durable pre-dispatch transition (C5, not implemented)
 
@@ -296,8 +301,12 @@ does not reject NaN/fractional numeric inputs. No target safe domain is inferred
 from these clamps, and no DB ranking/replay behavior has been executed.
 
 Session expiry and both cookie Max-Age copies must have one authoritative lifetime
-with explicit milliseconds-to-seconds projection. Changing default editor grants
-requires a defined security domain, not a generic numeric alternate profile.
+with explicit milliseconds-to-seconds projection. The current editor role default
+is signed token metadata, not a demonstrated permission grant: tracked Prism role
+predicates do not consume it; product access reads its separate user allowlist.
+Three current exported controls round-trip editor, empty and numeric-member arrays,
+exposing the current array-only check. Numeric members are not an approved target
+domain. Exact metadata consumers/domain remain open; do not invent role grants.
 The worker HMAC window and nonce maintenance belong to worker authentication,
 not an additional control-service author. Original acquisitions/cleanup and nonce
 history must retain their accepted closure; current policy cannot fill recovery.
@@ -311,7 +320,165 @@ API, replay storage or future runtime-binding proof. All sixteen future field
 cases remain explicitly incomplete/not-run pending supported adjustable domains,
 complete generations, real harnesses and independent review.
 
+## Prism design cardinality and image provenance — proposed, unaccepted
+
+The source guard is POST `/v1/agent/design-sets`, not `/v1/design-rounds`.
+Current HTTP, repository and advertised tool schema require exactly three designs;
+prompt and Studio completion/reject-all logic copy that policy. The separate
+pairwise diversity threshold/weights are not aliases of the count. Count three
+is a business workflow choice with generated schema/prompt/UI copies, not an
+immutable protocol identity merely because the current copies agree.
+
+The [cardinality proposal](../evidence/config-acceptance/author/prism-design-cardinality-proposal.json)
+describes a new required selected count domain of 2/3 in the existing Control
+owner, with complete current six-owner-plus-count-extension A/B documents. These
+are a **bounded proposal**, not complete profiles for every remaining target field
+or currently accepted loader/API inputs. The original three-design A obligations
+remain intact; a new explicitly two-design B task cannot partially complete an
+accepted three-design task. Independent business-domain/A6 review remains open.
+The captured R tool domain must permit the accepted M/J count; old exact-three
+registrations cannot silently execute two. Persist the typed count/config/intent
+binding in the **first design-round transaction**, before its start digest and
+before the later agent-job transaction. The retained round owns subsequent
+job/prompt/result/client projections. Validate original job/fence/round binding
+before document effects. Every client completion/removal path, including initial
+document loading and direct `completeRound`, uses the original count and digest.
+Missing old closure rejects/reconciles rather than filling count from latest.
+
+The [current image-binding controls](../evidence/config-acceptance/author/prism-image-binding-current-bce3f075.log)
+show production missing/malformed digest rejection and actual profile hashing of
+opaque valid A/B digest inputs. Chart `images.worker.digest` is an OCI image digest,
+not established package/code-tree content. The nonproduction fallback hashes a
+synthetic development descriptor. It is not authentic installed content or a
+replacement for missing production/recovery binding. Four import/hash controls
+and five unchanged diversity/tool-definition tests prove neither live SDK/model,
+two-design service execution, actual images nor deployed code provenance.
+
+The [independent bounded Prism report](independent-config-c0-prism-handoff-bce3f075-20261013.md)
+withheld target-definition completeness for PPRISM001–003. The proposed
+[corrected handoff contract](../evidence/config-acceptance/author/PRISM-HANDOFF-TARGET-20261013.md)
+now describes the first round binding, a restrictive new structured two-design
+task form (legacy/free-form/exact-three tasks cannot select two), and separate
+OCI/code/installed-manifest/config/role/grant provenance. Its
+[machine-readable inputs](../evidence/config-acceptance/author/prism-handoff-target-contracts-20261013.json)
+contain bounded complete A/B documents and 37 future cases, all not-run. Fifteen
+schema/hash controls validate documentation specimens, not task eligibility,
+real grants or installed bytes. The [first recheck](independent-config-c0-prism-handoff-recheck-bce3f075-20261013.md)
+verified the earlier corrections but found PPRISM004/005 temporal-boundary gaps.
+The proposed order now requires trusted immutable runtime verification before
+unverified Node/engine imports and first new input materialization, plus pure input
+identity/reservation/replay-before-write and original spool accounting. New temporal
+specifications were [independently rechecked](independent-config-c0-prism-temporal-recheck-bce3f075-20261013.md):
+no remaining scoped temporal contradiction, conditional on the mandatory separate
+actual store quota/grant definition, which remains open. No capacity or
+corpus/envelope/output limit is fabricated; this is not full C0 acceptance.
+The corrected current source trace proves only fresh-supervisor profile equality
+when `!recovered`; the dedicated host has no installed-profile equality guard.
+No target guard or C1–C6 implementation has been added.
+
+## Infrastructure coordinate discovery and immutable observations
+
+The independent Delivery source review found twenty infrastructure files absent
+from its subroster. All twenty exact source hashes already match the global
+source boundary. The additive [coordinate ledger](../evidence/config-acceptance/author/infra-coordinate-extension-20261013.json)
+preserves the original lexical candidate IDs and indexes 701 field coordinates,
+not 701 operator settings. None is independently accepted. Twelve image leaves
+have concrete current writer traces to `versions.json`; they must not acquire a
+second editable infrastructure author. LiteLLM config is snapshotted into the
+generated ConfigMap and rollout checksum by the current renderer, which does not
+validate that external application's field schema. Exact external readers,
+reachability, domains, bindings and cases remain open under DLS-002/004.
+Syntax-only mapping additionally identifies 38 current Kubernetes-shaped resource
+documents and 76 API/kind discriminator candidates; it does not validate their
+pinned API/CRD schemas or turn them into editable operator settings. All 701
+coordinate dispositions still require independent semantic review.
+
+The coordinate gate's five [controls](../evidence/config-acceptance/author/coordinate-extension-controls-20261013.json)
+reject duplicate IDs and source drift and require all 701 unresolved dispositions
+and independent reviews in strict mode. These are documentation-integrity checks,
+not runtime mutation evidence. Separately, all 775 normalized immutable runtime
+observation references reconstruct their original canonical value hashes; the
+twelve [reference controls](../evidence/config-acceptance/author/observation-reference-controls-20261013.json)
+also check damaged hashes, pointers and escaping boundaries. References stay
+compact in the published matrix; no historical observation bytes are discarded.
+
 ## Acceptance state
+
+Checkpoint 6 consolidation contains **2389 inventory rows, 6289 case IDs and
+30 registered open gaps**, plus native supplemental definitions and 701 infrastructure
+coordinate candidates. These are traceability counts, not settings accepted or
+runtime cases executed. The draft structural check reports zero integrity errors;
+the latest strict completion check rejects 98805 missing/open obligations. The existing
+148 canonical Core case refinements remain exact. The unchanged broad config
+suite remains 649 collected, 644 passed, five failed, zero skips; it has not been
+rerun or relabelled passed by this documentation checkpoint.
+
+The [checkpoint integration review](../evidence/config-acceptance/independent-checkpoint6-integration/README.md)
+found three guard/projection defects in the first snapshot; that original report
+and its 92743-obligation result remain historical. Current corrections require
+the exact named resolved R06 dispositions and independently reviewed input freeze,
+conserve each original Core case/requirement set, and retain all 5793 native
+Runtime specifications in an explicit unaccepted matrix package. Its 5524
+matching canonical IDs now retain native requirements; 269 unlinked IDs remain
+explicit unresolved obligations. All 2229 native observation references are
+validated in the published package, not silently omitted from the root check.
+The [first material recheck](../evidence/config-acceptance/independent-checkpoint6-integration-recheck/README.md)
+verifies C6-INTEGRATION-01/02 corrected and the complete current native projection,
+but identifies two additional guards: complete package omission and tampered
+canonical references. Current [cross-link corrections](../evidence/config-acceptance/author/checkpoint-6-crosslink-corrections.json)
+require the Runtime source package, exact inventory/matrix presence and counts,
+and bidirectional package/case/path/hash references. Structural checks still pass;
+strict completion remains open. The [bounded cross-link recheck](../evidence/config-acceptance/independent-checkpoint6-crosslink-recheck/README.md)
+verifies both additional guards corrected: 19 negative controls reject and both
+restored positives pass, with zero frozen-input drift. This validates the named
+integration mechanics, not unresolved field definitions or global C0 acceptance.
+
+The [fresh Core source/question review](../evidence/config-acceptance/independent-core-source-question-bce3f075-20261013/README.md)
+withheld acceptance for six specific ICQ findings. A separate
+[material correction batch](../evidence/config-acceptance/components/icq-corrections-20261013/README.md)
+preserves all historical inputs and protected Core13 definitions while supplying
+new source/caller/fixture/serializer specifications. Its corrected persisted field
+is `binding` (525-byte growth); a failed `inlineBinding` 531-byte attempt is
+historical, not a revised universal floor. The
+[independent material recheck](../evidence/config-acceptance/independent-core-icq-material-recheck-20261013/independent-material-review.json)
+supports ICQ01–05 at bounded definition scope but withholds acceptance for two
+ICQ06 residuals: active byte oracles still say 1940 while the frozen candidate
+is 1934 bytes, and boundary-author quota 10126 disagrees with the frozen global
+268435456 binding identity. The new
+[superseding package](../evidence/config-acceptance/components/icq-r06-boundaries-20261013/stable-material-correction-receipt.json)
+now supplies 1934-byte state-readback oracles and thirteen boundary-specific
+original manifests with matched snapshots and explicit positive/negative capture
+lifecycle. The [independent R06 recheck](../evidence/config-acceptance/independent-core-r06-recheck-20261013/independent-r06-review.json)
+verifies both named contradictions resolved at bounded proposed definition scope.
+It independently replayed 31 definition and two current API-shape controls and
+performed 250 additional definition/conservation controls. All 247 historical
+inputs and Runtime batch11 remain unchanged; no target runtime binding or global
+acceptance follows. Consolidator supersession guards retain both package
+identities, all 22 proposed cases and historical specifications; five bounded
+[integration controls](../evidence/config-acceptance/author/core-supersession-integration-attempt5-20261013.log)
+pass without regenerating a moving root matrix or claiming canonical field closure.
+Supplemental native questions/cases are explicitly retained during consolidation;
+they do not silently become canonical field coverage or independent acceptance.
+
+Nova's [current binding source map](../evidence/config-acceptance/author/nova-current-binding-seam-map-20261013.json)
+and [target constraints](../evidence/config-acceptance/author/NOVA-MODULE-BINDING-CONSTRAINTS-20261013.md)
+document existing snapshot/graph/config/package binding and pre-check activation
+ordering. A new [bounded carrier proposal](../evidence/config-acceptance/author/NOVA-MODULE-CARRIER-PROPOSAL-20261013.md)
+enumerates actual implementation/source/final/demo membership and proposes one
+complete typed binding in the existing events journal. Exact strict schemas,
+task/operator partition, authentic manifests/grants, accounting and executable
+cross-reader cases remain incomplete; no accepted universal alias is supplied.
+The [bounded independent Nova review](../evidence/config-acceptance/independent-nova-carrier-20261013/README.md)
+identified NOVA-CARRIER-01: original A lookup must precede any current B selection
+or validation. The [correction record](../evidence/config-acceptance/author/nova-carrier-01-correction-20261013.json)
+preserves the original proposal and makes original-first lookup explicit for
+every invocation. Its [independent material recheck](../evidence/config-acceptance/independent-nova-carrier-recheck-20261013/README.md)
+confirms NOVA-CARRIER-01 corrected at written proposal scope: 39 frozen inputs
+have zero drift, 13 history/source identity checks and seven logical ordering
+controls pass. These controls are not implemented Nova binding effects.
+SDK envelope sequence,
+first-file directory durability, original observer failure policy and async lease
+ownership remain explicit constraints, not proven future runtime effects.
 
 C0-A through C0-E remain open until the consolidated inventory has no unexplained
 candidate, unknown reader/default/validation or incomplete field-level case and

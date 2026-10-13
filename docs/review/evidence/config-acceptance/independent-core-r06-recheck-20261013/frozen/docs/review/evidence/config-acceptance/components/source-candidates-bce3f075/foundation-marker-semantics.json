@@ -1,0 +1,2154 @@
+{
+  "dispositions": [
+    {
+      "candidateId": "SRC-eae0884048431a50",
+      "source": "skills/common/plugin-runtime/foundation/observability/admission-retirement.ts",
+      "line": 106,
+      "sourceSha256": "134fa89160a8f7ddd309d482effc3d1db6ad3b0d559a2960fb9ab0fa0dfbcd12",
+      "exactText": "        if(bytes.length!==metadata.artifact.sizeBytes || `sha256:${createHash('sha256').update(bytes).digest('hex')}`!==metadata.artifact.contentDigest)throw new Error('OBSERVABILITY_RETIREMENT_EVIDENCE_CHANGED');",
+      "reader": {
+        "name": "assertCompletionEvidence",
+        "parents": [],
+        "startLine": 99,
+        "endLine": 108
+      },
+      "classification": "generated-binding",
+      "reason": "Retirement evidence bytes/digest and stored completion/owner intent/one-record closure must match genuine admitted result; no supplied configuration can invent completion or release uncertain references.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-dd7a58a4b4c53099",
+      "source": "skills/common/plugin-runtime/foundation/observability/admission-retirement.ts",
+      "line": 111,
+      "sourceSha256": "134fa89160a8f7ddd309d482effc3d1db6ad3b0d559a2960fb9ab0fa0dfbcd12",
+      "exactText": "      if(!result?.storedAt || !result.planId || !result.nodeId || !result.completionIntent)throw new Error('OBSERVABILITY_RETIREMENT_COMPLETION_REQUIRED');",
+      "reader": {
+        "name": "completionRetirementSource",
+        "parents": [],
+        "startLine": 109,
+        "endLine": 118
+      },
+      "classification": "generated-binding",
+      "reason": "Retirement evidence bytes/digest and stored completion/owner intent/one-record closure must match genuine admitted result; no supplied configuration can invent completion or release uncertain references.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-5ef8a9512d78244d",
+      "source": "skills/common/plugin-runtime/foundation/observability/admission-retirement.ts",
+      "line": 113,
+      "sourceSha256": "134fa89160a8f7ddd309d482effc3d1db6ad3b0d559a2960fb9ab0fa0dfbcd12",
+      "exactText": "      if(record.recordDigest!==scope.recordDigest || closure.recordCount!==1 || closure.firstSequence!==1 || closure.finalSequence!==1 || record.sequence!==1",
+      "reader": {
+        "name": "completionRetirementSource",
+        "parents": [],
+        "startLine": 109,
+        "endLine": 118
+      },
+      "classification": "generated-binding",
+      "reason": "Retirement evidence bytes/digest and stored completion/owner intent/one-record closure must match genuine admitted result; no supplied configuration can invent completion or release uncertain references.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-f6541f01147d56a4",
+      "source": "skills/common/plugin-runtime/foundation/observability/admission-retirement.ts",
+      "line": 114,
+      "sourceSha256": "134fa89160a8f7ddd309d482effc3d1db6ad3b0d559a2960fb9ab0fa0dfbcd12",
+      "exactText": "        || !state.closures.some(item=>canonicalJson(item)===canonicalJson(closure)))throw new Error('OBSERVABILITY_RETIREMENT_CLOSURE_REQUIRED');",
+      "reader": {
+        "name": "completionRetirementSource",
+        "parents": [],
+        "startLine": 109,
+        "endLine": 118
+      },
+      "classification": "generated-binding",
+      "reason": "Retirement evidence bytes/digest and stored completion/owner intent/one-record closure must match genuine admitted result; no supplied configuration can invent completion or release uncertain references.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-998e4337fe1b5ed5",
+      "source": "skills/common/plugin-runtime/foundation/observability/attempt-completeness.ts",
+      "line": 45,
+      "sourceSha256": "9e5c0582733ba97abfa21ea41dd3964d38fc5d8a93443368c8aa12e07777bbe2",
+      "exactText": "    records.length !== snapshot.recordCount ||",
+      "reader": {
+        "name": "storeClosureUnlocked",
+        "parents": [],
+        "startLine": 21,
+        "endLine": 73
+      },
+      "classification": "generated-binding",
+      "reason": "Required actual closure record count, absent/missing/unresolved reports and stored evidence byte-size match determine completeness; incomplete remains incomplete, not a fallback successful count.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-29c40abfb5307947",
+      "source": "skills/common/plugin-runtime/foundation/observability/attempt-completeness.ts",
+      "line": 175,
+      "sourceSha256": "9e5c0582733ba97abfa21ea41dd3964d38fc5d8a93443368c8aa12e07777bbe2",
+      "exactText": "      missingClosureIds.length || rangeSnapshot.length || allItems.length",
+      "reader": {
+        "name": "evaluateStoredClosures",
+        "parents": [],
+        "startLine": 132,
+        "endLine": 190
+      },
+      "classification": "generated-binding",
+      "reason": "Required actual closure record count, absent/missing/unresolved reports and stored evidence byte-size match determine completeness; incomplete remains incomplete, not a fallback successful count.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-5057afd007ea9b45",
+      "source": "skills/common/plugin-runtime/foundation/observability/attempt-completeness.ts",
+      "line": 255,
+      "sourceSha256": "9e5c0582733ba97abfa21ea41dd3964d38fc5d8a93443368c8aa12e07777bbe2",
+      "exactText": "        bytes.byteLength !== metadata.artifact.sizeBytes ||",
+      "reader": {
+        "name": "evidenceIssue",
+        "parents": [],
+        "startLine": 233,
+        "endLine": 271
+      },
+      "classification": "generated-binding",
+      "reason": "Required actual closure record count, absent/missing/unresolved reports and stored evidence byte-size match determine completeness; incomplete remains incomplete, not a fallback successful count.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-003505f0efcb8697",
+      "source": "skills/common/plugin-runtime/foundation/observability/attempt-evidence.ts",
+      "line": 21,
+      "sourceSha256": "e232178fab57c5f55742d9b8ccec88cdbccada7b77f6ec8a653ee1ad56972f95",
+      "exactText": "  if (typeof value !== \"string\" || value.length < 1 || value.length > 512)",
+      "reader": {
+        "name": "requireIdentity",
+        "parents": [],
+        "startLine": 20,
+        "endLine": 23
+      },
+      "classification": "generated-binding",
+      "reason": "Current metadata ID1..512 and content-addressed2hex directory, safe claim generation, exact digest/type/media identity duplicate checks. Actual evidence/source bytes and accepted run/attempt produce these fields; no independent quota in these predicates.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-cb463d309b5ed7e2",
+      "source": "skills/common/plugin-runtime/foundation/observability/attempt-evidence.ts",
+      "line": 115,
+      "sourceSha256": "e232178fab57c5f55742d9b8ccec88cdbccada7b77f6ec8a653ee1ad56972f95",
+      "exactText": "    if (!prefix.isDirectory() || !/^[0-9a-f]{2}$/.test(prefix.name)) continue;",
+      "reader": {
+        "name": "cleanupUnreferencedBlobs",
+        "parents": [],
+        "startLine": 96,
+        "endLine": 129
+      },
+      "classification": "generated-binding",
+      "reason": "Current metadata ID1..512 and content-addressed2hex directory, safe claim generation, exact digest/type/media identity duplicate checks. Actual evidence/source bytes and accepted run/attempt produce these fields; no independent quota in these predicates.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-cae456a60aa940b3",
+      "source": "skills/common/plugin-runtime/foundation/observability/attempt-evidence.ts",
+      "line": 164,
+      "sourceSha256": "e232178fab57c5f55742d9b8ccec88cdbccada7b77f6ec8a653ee1ad56972f95",
+      "exactText": "    !Number.isSafeInteger(snapshot.claimGeneration) ||",
+      "reader": {
+        "name": "validateEvidenceInput",
+        "parents": [],
+        "startLine": 151,
+        "endLine": 169
+      },
+      "classification": "generated-binding",
+      "reason": "Current metadata ID1..512 and content-addressed2hex directory, safe claim generation, exact digest/type/media identity duplicate checks. Actual evidence/source bytes and accepted run/attempt produce these fields; no independent quota in these predicates.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-25f1e0fa3a6f40ce",
+      "source": "skills/common/plugin-runtime/foundation/observability/attempt-evidence.ts",
+      "line": 189,
+      "sourceSha256": "e232178fab57c5f55742d9b8ccec88cdbccada7b77f6ec8a653ee1ad56972f95",
+      "exactText": "      existing.artifact.contentDigest !== contentDigest ||",
+      "reader": {
+        "name": "persistEvidence",
+        "parents": [],
+        "startLine": 171,
+        "endLine": 226
+      },
+      "classification": "generated-binding",
+      "reason": "Current metadata ID1..512 and content-addressed2hex directory, safe claim generation, exact digest/type/media identity duplicate checks. Actual evidence/source bytes and accepted run/attempt produce these fields; no independent quota in these predicates.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-e3b8ad199a74889f",
+      "source": "skills/common/plugin-runtime/foundation/observability/attempt-evidence.ts",
+      "line": 190,
+      "sourceSha256": "e232178fab57c5f55742d9b8ccec88cdbccada7b77f6ec8a653ee1ad56972f95",
+      "exactText": "      existing.type !== snapshot.type ||",
+      "reader": {
+        "name": "persistEvidence",
+        "parents": [],
+        "startLine": 171,
+        "endLine": 226
+      },
+      "classification": "generated-binding",
+      "reason": "Current metadata ID1..512 and content-addressed2hex directory, safe claim generation, exact digest/type/media identity duplicate checks. Actual evidence/source bytes and accepted run/attempt produce these fields; no independent quota in these predicates.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-145704fcf51a5513",
+      "source": "skills/common/plugin-runtime/foundation/observability/attempt-evidence.ts",
+      "line": 191,
+      "sourceSha256": "e232178fab57c5f55742d9b8ccec88cdbccada7b77f6ec8a653ee1ad56972f95",
+      "exactText": "      existing.mediaType !== snapshot.mediaType ||",
+      "reader": {
+        "name": "persistEvidence",
+        "parents": [],
+        "startLine": 171,
+        "endLine": 226
+      },
+      "classification": "generated-binding",
+      "reason": "Current metadata ID1..512 and content-addressed2hex directory, safe claim generation, exact digest/type/media identity duplicate checks. Actual evidence/source bytes and accepted run/attempt produce these fields; no independent quota in these predicates.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-722f1ba95a1210a0",
+      "source": "skills/common/plugin-runtime/foundation/observability/attempt-projection.ts",
+      "line": 78,
+      "sourceSha256": "5e59b793e4682e68a780952b2d15da28f9477611cd5041295517a111e21f6793",
+      "exactText": "    const stat=fs.fstatSync(fd),length=prefixBytes??stat.size;",
+      "reader": {
+        "name": "readAttemptJournalPrefix",
+        "parents": [],
+        "startLine": 73,
+        "endLine": 85
+      },
+      "classification": "generated-binding",
+      "reason": "Existing immutable journal prefix length may default to actual stat.size, still constrained by required maximumBytes and genuine prefix/file proof; largest retained prefix derived from actual projection references, not a policy/refill.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-52e7db6020ee17b8",
+      "source": "skills/common/plugin-runtime/foundation/observability/attempt-projection.ts",
+      "line": 128,
+      "sourceSha256": "5e59b793e4682e68a780952b2d15da28f9477611cd5041295517a111e21f6793",
+      "exactText": "  const maximumPrefix=projected.reduce((maximum,item)=>Math.max(maximum,item.resultReference.journalPrefixBytes),0);",
+      "reader": {
+        "name": "decodeAttemptState",
+        "parents": [],
+        "startLine": 119,
+        "endLine": 144
+      },
+      "classification": "generated-binding",
+      "reason": "Existing immutable journal prefix length may default to actual stat.size, still constrained by required maximumBytes and genuine prefix/file proof; largest retained prefix derived from actual projection references, not a policy/refill.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-b64f82c72b2d58e1",
+      "source": "skills/common/plugin-runtime/foundation/observability/attempt-replay.ts",
+      "line": 19,
+      "sourceSha256": "99b766563ae07230838fa85c4f60a3c6b0f9a4dde341885af679ce983ad8eb08",
+      "exactText": "  if (intent.record.recordType !== 'attempt.completed' || !payload || payload.resultDigest !== snapshot.resultDigest || payload.workerId !== snapshot.workerId",
+      "reader": {
+        "name": "assertCompletionIntent",
+        "parents": [],
+        "startLine": 11,
+        "endLine": 25
+      },
+      "classification": "generated-binding",
+      "reason": "Retained attempt completion record/closure producer/run/attempt/claim/digest/evidence and owner/null state validated; per-attempt generation strictly increases from initial0. Missing bytes remain completeness issue, not current-profile reconstruction or synthesized observation.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-3995b80886887fbf",
+      "source": "skills/common/plugin-runtime/foundation/observability/attempt-replay.ts",
+      "line": 20,
+      "sourceSha256": "99b766563ae07230838fa85c4f60a3c6b0f9a4dde341885af679ce983ad8eb08",
+      "exactText": "    || intent.record.correlation.pipelineRunId !== pipelineRunId || intent.record.correlation.attemptId !== snapshot.attemptId",
+      "reader": {
+        "name": "assertCompletionIntent",
+        "parents": [],
+        "startLine": 11,
+        "endLine": 25
+      },
+      "classification": "generated-binding",
+      "reason": "Retained attempt completion record/closure producer/run/attempt/claim/digest/evidence and owner/null state validated; per-attempt generation strictly increases from initial0. Missing bytes remain completeness issue, not current-profile reconstruction or synthesized observation.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-f8e41d6dc172a3e2",
+      "source": "skills/common/plugin-runtime/foundation/observability/attempt-replay.ts",
+      "line": 21,
+      "sourceSha256": "99b766563ae07230838fa85c4f60a3c6b0f9a4dde341885af679ce983ad8eb08",
+      "exactText": "    || intent.record.correlation.claimId !== snapshot.claimId || intent.record.correlation.claimGeneration !== snapshot.claimGeneration",
+      "reader": {
+        "name": "assertCompletionIntent",
+        "parents": [],
+        "startLine": 11,
+        "endLine": 25
+      },
+      "classification": "generated-binding",
+      "reason": "Retained attempt completion record/closure producer/run/attempt/claim/digest/evidence and owner/null state validated; per-attempt generation strictly increases from initial0. Missing bytes remain completeness issue, not current-profile reconstruction or synthesized observation.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-23d250d9639136c7",
+      "source": "skills/common/plugin-runtime/foundation/observability/attempt-replay.ts",
+      "line": 22,
+      "sourceSha256": "99b766563ae07230838fa85c4f60a3c6b0f9a4dde341885af679ce983ad8eb08",
+      "exactText": "    || intent.closure.pipelineRunId !== pipelineRunId || !sameProducer(intent.record.producer, intent.closure.producer) || !evidenceBound) {",
+      "reader": {
+        "name": "assertCompletionIntent",
+        "parents": [],
+        "startLine": 11,
+        "endLine": 25
+      },
+      "classification": "generated-binding",
+      "reason": "Retained attempt completion record/closure producer/run/attempt/claim/digest/evidence and owner/null state validated; per-attempt generation strictly increases from initial0. Missing bytes remain completeness issue, not current-profile reconstruction or synthesized observation.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-0d2c19a18f4015ef",
+      "source": "skills/common/plugin-runtime/foundation/observability/attempt-replay.ts",
+      "line": 42,
+      "sourceSha256": "99b766563ae07230838fa85c4f60a3c6b0f9a4dde341885af679ce983ad8eb08",
+      "exactText": "  replayAssert(replayIdentity(item.pipelineRunId) && (item.storedAt === null || replayTimestamp(item.storedAt)), 'attempt-result-metadata');",
+      "reader": {
+        "name": "resultReplay",
+        "parents": [],
+        "startLine": 40,
+        "endLine": 54
+      },
+      "classification": "generated-binding",
+      "reason": "Retained attempt completion record/closure producer/run/attempt/claim/digest/evidence and owner/null state validated; per-attempt generation strictly increases from initial0. Missing bytes remain completeness issue, not current-profile reconstruction or synthesized observation.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-d953506d63394446",
+      "source": "skills/common/plugin-runtime/foundation/observability/attempt-replay.ts",
+      "line": 43,
+      "sourceSha256": "99b766563ae07230838fa85c4f60a3c6b0f9a4dde341885af679ce983ad8eb08",
+      "exactText": "  replayAssert((item.planId === null && item.nodeId === null) || (replayIdentity(item.planId) && replayIdentity(item.nodeId)), 'attempt-result-owner');",
+      "reader": {
+        "name": "resultReplay",
+        "parents": [],
+        "startLine": 40,
+        "endLine": 54
+      },
+      "classification": "generated-binding",
+      "reason": "Retained attempt completion record/closure producer/run/attempt/claim/digest/evidence and owner/null state validated; per-attempt generation strictly increases from initial0. Missing bytes remain completeness issue, not current-profile reconstruction or synthesized observation.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-6955cd4f7dc6aa23",
+      "source": "skills/common/plugin-runtime/foundation/observability/attempt-replay.ts",
+      "line": 48,
+      "sourceSha256": "99b766563ae07230838fa85c4f60a3c6b0f9a4dde341885af679ce983ad8eb08",
+      "exactText": "  if (item.completionIntent !== null) closureEvidenceReplay(item.completionIntent.closure, evidence.values());",
+      "reader": {
+        "name": "resultReplay",
+        "parents": [],
+        "startLine": 40,
+        "endLine": 54
+      },
+      "classification": "generated-binding",
+      "reason": "Retained attempt completion record/closure producer/run/attempt/claim/digest/evidence and owner/null state validated; per-attempt generation strictly increases from initial0. Missing bytes remain completeness issue, not current-profile reconstruction or synthesized observation.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-6c4b095ff783fe64",
+      "source": "skills/common/plugin-runtime/foundation/observability/attempt-replay.ts",
+      "line": 62,
+      "sourceSha256": "99b766563ae07230838fa85c4f60a3c6b0f9a4dde341885af679ce983ad8eb08",
+      "exactText": "  // retention contract. Missing bytes/metadata remain a completeness issue;",
+      "reader": {
+        "name": "closureEvidenceReplay",
+        "parents": [],
+        "startLine": 55,
+        "endLine": 64
+      },
+      "classification": "generated-binding",
+      "reason": "Retained attempt completion record/closure producer/run/attempt/claim/digest/evidence and owner/null state validated; per-attempt generation strictly increases from initial0. Missing bytes remain completeness issue, not current-profile reconstruction or synthesized observation.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-6e8181fce04ee3bf",
+      "source": "skills/common/plugin-runtime/foundation/observability/attempt-replay.ts",
+      "line": 82,
+      "sourceSha256": "99b766563ae07230838fa85c4f60a3c6b0f9a4dde341885af679ce983ad8eb08",
+      "exactText": "    replayAssert(item.claimGeneration > (generations.get(attemptKey) ?? 0), 'attempt-generation-order');",
+      "reader": {
+        "name": "assertAttemptReplay",
+        "parents": [],
+        "startLine": 68,
+        "endLine": 93
+      },
+      "classification": "generated-binding",
+      "reason": "Retained attempt completion record/closure producer/run/attempt/claim/digest/evidence and owner/null state validated; per-attempt generation strictly increases from initial0. Missing bytes remain completeness issue, not current-profile reconstruction or synthesized observation.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-2857f1b074efd757",
+      "source": "skills/common/plugin-runtime/foundation/observability/attempt-results.ts",
+      "line": 141,
+      "sourceSha256": "8eb29b312f6dc332a597294589a3b7089650868853688fc45012b7cf70cef18c",
+      "exactText": "    existing.result.resultDigest !== snapshot.resultDigest ||",
+      "reader": {
+        "name": "resumeResultCommit",
+        "parents": [],
+        "startLine": 132,
+        "endLine": 153
+      },
+      "classification": "generated-binding",
+      "reason": "Store result duplicate/completion intent/source evidence must match retained digest and optional owner plan/node pair. Null owner explicitly represents unsupported/absent ownership, never configuration defaults.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-b6e8b1075ab02bcc",
+      "source": "skills/common/plugin-runtime/foundation/observability/attempt-results.ts",
+      "line": 142,
+      "sourceSha256": "8eb29b312f6dc332a597294589a3b7089650868853688fc45012b7cf70cef18c",
+      "exactText": "    canonicalJson(existing.completionIntent) !== canonicalJson(intent) ||",
+      "reader": {
+        "name": "resumeResultCommit",
+        "parents": [],
+        "startLine": 132,
+        "endLine": 153
+      },
+      "classification": "generated-binding",
+      "reason": "Store result duplicate/completion intent/source evidence must match retained digest and optional owner plan/node pair. Null owner explicitly represents unsupported/absent ownership, never configuration defaults.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-80659c3b214373c3",
+      "source": "skills/common/plugin-runtime/foundation/observability/attempt-results.ts",
+      "line": 143,
+      "sourceSha256": "8eb29b312f6dc332a597294589a3b7089650868853688fc45012b7cf70cef18c",
+      "exactText": "    existing.planId !== (ownerSnapshot?.planId ?? null) ||",
+      "reader": {
+        "name": "resumeResultCommit",
+        "parents": [],
+        "startLine": 132,
+        "endLine": 153
+      },
+      "classification": "generated-binding",
+      "reason": "Store result duplicate/completion intent/source evidence must match retained digest and optional owner plan/node pair. Null owner explicitly represents unsupported/absent ownership, never configuration defaults.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-38805bca1fdedc93",
+      "source": "skills/common/plugin-runtime/foundation/observability/attempt-results.ts",
+      "line": 144,
+      "sourceSha256": "8eb29b312f6dc332a597294589a3b7089650868853688fc45012b7cf70cef18c",
+      "exactText": "    existing.nodeId !== (ownerSnapshot?.nodeId ?? null)",
+      "reader": {
+        "name": "resumeResultCommit",
+        "parents": [],
+        "startLine": 132,
+        "endLine": 153
+      },
+      "classification": "generated-binding",
+      "reason": "Store result duplicate/completion intent/source evidence must match retained digest and optional owner plan/node pair. Null owner explicitly represents unsupported/absent ownership, never configuration defaults.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-a7eb61dcc47ebe59",
+      "source": "skills/common/plugin-runtime/foundation/observability/attempt-results.ts",
+      "line": 190,
+      "sourceSha256": "8eb29b312f6dc332a597294589a3b7089650868853688fc45012b7cf70cef18c",
+      "exactText": "      !metadata ||",
+      "reader": {
+        "name": "verifyResultEvidence",
+        "parents": [],
+        "startLine": 176,
+        "endLine": 206
+      },
+      "classification": "generated-binding",
+      "reason": "Store result duplicate/completion intent/source evidence must match retained digest and optional owner plan/node pair. Null owner explicitly represents unsupported/absent ownership, never configuration defaults.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-e770b25bb1564fd3",
+      "source": "skills/common/plugin-runtime/foundation/observability/attempt-results.ts",
+      "line": 199,
+      "sourceSha256": "8eb29b312f6dc332a597294589a3b7089650868853688fc45012b7cf70cef18c",
+      "exactText": "      evidenceBytes.byteLength !== metadata.artifact.sizeBytes ||",
+      "reader": {
+        "name": "verifyResultEvidence",
+        "parents": [],
+        "startLine": 176,
+        "endLine": 206
+      },
+      "classification": "generated-binding",
+      "reason": "Store result duplicate/completion intent/source evidence must match retained digest and optional owner plan/node pair. Null owner explicitly represents unsupported/absent ownership, never configuration defaults.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-04cf804bbbf2db96",
+      "source": "skills/common/plugin-runtime/foundation/observability/attempt-results.ts",
+      "line": 223,
+      "sourceSha256": "8eb29b312f6dc332a597294589a3b7089650868853688fc45012b7cf70cef18c",
+      "exactText": "    planId: ownerSnapshot?.planId ?? null,",
+      "reader": {
+        "name": "commitResult",
+        "parents": [],
+        "startLine": 208,
+        "endLine": 253
+      },
+      "classification": "generated-binding",
+      "reason": "Store result duplicate/completion intent/source evidence must match retained digest and optional owner plan/node pair. Null owner explicitly represents unsupported/absent ownership, never configuration defaults.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-c0cd0ed1f2b5e30d",
+      "source": "skills/common/plugin-runtime/foundation/observability/attempt-results.ts",
+      "line": 224,
+      "sourceSha256": "8eb29b312f6dc332a597294589a3b7089650868853688fc45012b7cf70cef18c",
+      "exactText": "    nodeId: ownerSnapshot?.nodeId ?? null,",
+      "reader": {
+        "name": "commitResult",
+        "parents": [],
+        "startLine": 208,
+        "endLine": 253
+      },
+      "classification": "generated-binding",
+      "reason": "Store result duplicate/completion intent/source evidence must match retained digest and optional owner plan/node pair. Null owner explicitly represents unsupported/absent ownership, never configuration defaults.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-032dd538a3d3400f",
+      "source": "skills/common/plugin-runtime/foundation/observability/attempt-retirement.ts",
+      "line": 55,
+      "sourceSha256": "669f438a9ebc092ac4b5334b030b574026981d8f5ae67b3a4eb70e2e38850327",
+      "exactText": "    if (issues.missingRanges.length || issues.unresolvedItems.length)",
+      "reader": {
+        "name": "retireAdmissionCompletion",
+        "parents": [],
+        "startLine": 29,
+        "endLine": 68
+      },
+      "classification": "generated-binding",
+      "reason": "Retire only actual complete result+closure/digest with no missing ranges/unresolved items. Required persisted intent and source identity are structural binding, not configurable success predicates.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-66e0805d964d53f7",
+      "source": "skills/common/plugin-runtime/foundation/observability/attempt-retirement.ts",
+      "line": 111,
+      "sourceSha256": "669f438a9ebc092ac4b5334b030b574026981d8f5ae67b3a4eb70e2e38850327",
+      "exactText": "    if (!result || !closure || closure.closureDigest !== closureDigest)",
+      "reader": {
+        "name": "retireImportedClosure",
+        "parents": [],
+        "startLine": 95,
+        "endLine": 134
+      },
+      "classification": "generated-binding",
+      "reason": "Retire only actual complete result+closure/digest with no missing ranges/unresolved items. Required persisted intent and source identity are structural binding, not configurable success predicates.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-86b36c68d2ab4b88",
+      "source": "skills/common/plugin-runtime/foundation/observability/attempt-retirement.ts",
+      "line": 170,
+      "sourceSha256": "669f438a9ebc092ac4b5334b030b574026981d8f5ae67b3a4eb70e2e38850327",
+      "exactText": "    !item ||",
+      "reader": {
+        "name": "commitImportedResult",
+        "parents": [],
+        "startLine": 144,
+        "endLine": 199
+      },
+      "classification": "generated-binding",
+      "reason": "Retire only actual complete result+closure/digest with no missing ranges/unresolved items. Required persisted intent and source identity are structural binding, not configurable success predicates.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-17a8827c747b6256",
+      "source": "skills/common/plugin-runtime/foundation/observability/attempt-retirement.ts",
+      "line": 171,
+      "sourceSha256": "669f438a9ebc092ac4b5334b030b574026981d8f5ae67b3a4eb70e2e38850327",
+      "exactText": "    item.result.resultDigest !== intent.resultDigest ||",
+      "reader": {
+        "name": "commitImportedResult",
+        "parents": [],
+        "startLine": 144,
+        "endLine": 199
+      },
+      "classification": "generated-binding",
+      "reason": "Retire only actual complete result+closure/digest with no missing ranges/unresolved items. Required persisted intent and source identity are structural binding, not configurable success predicates.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-0a709a75b71546c4",
+      "source": "skills/common/plugin-runtime/foundation/observability/attempt-state.ts",
+      "line": 45,
+      "sourceSha256": "392ad6e2a590c964cc0d8cd1fe0c75237f240798e6d99ee2ed2b33da8047fdca",
+      "exactText": "    if (Object.values(limits).some((value) => !validLimit(value)))",
+      "reader": {
+        "name": "constructor",
+        "parents": [],
+        "startLine": 42,
+        "endLine": 50
+      },
+      "classification": "duplicate",
+      "reason": "Required safe positive supplied DurableAttemptStoreLimits validated; actual Buster runner supplies executionPolicy.stores.attempts selected whole-owner fields. Constructor creates no independent quota defaults.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-e752991cacf60e28",
+      "source": "skills/common/plugin-runtime/foundation/observability/clawdeck-view.ts",
+      "line": 48,
+      "sourceSha256": "51264741ac619877d2154668d83aeedbb666d1dfeb524685936b2d90d3322c41",
+      "exactText": "  const fromCursor = options.fromCursor ?? 1;",
+      "reader": {
+        "name": "buildClawDeckObservationView",
+        "parents": [],
+        "startLine": 39,
+        "endLine": 111
+      },
+      "classification": "task-data",
+      "reason": "Public read view requested cursor defaults sequence origin1; missingRanges absent=>empty and attempt sorting are projection request controls, not storage budgets. Repository search proves current consumers verification tests only; no invented production/configured dashboard author.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-6c1b6ae854401b1a",
+      "source": "skills/common/plugin-runtime/foundation/observability/clawdeck-view.ts",
+      "line": 49,
+      "sourceSha256": "51264741ac619877d2154668d83aeedbb666d1dfeb524685936b2d90d3322c41",
+      "exactText": "  if (!Number.isSafeInteger(fromCursor) || fromCursor < 1)",
+      "reader": {
+        "name": "buildClawDeckObservationView",
+        "parents": [],
+        "startLine": 39,
+        "endLine": 111
+      },
+      "classification": "task-data",
+      "reason": "Public read view requested cursor defaults sequence origin1; missingRanges absent=>empty and attempt sorting are projection request controls, not storage budgets. Repository search proves current consumers verification tests only; no invented production/configured dashboard author.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-3969713c5a8abab1",
+      "source": "skills/common/plugin-runtime/foundation/observability/clawdeck-view.ts",
+      "line": 51,
+      "sourceSha256": "51264741ac619877d2154668d83aeedbb666d1dfeb524685936b2d90d3322c41",
+      "exactText": "  for (const gap of options.missingRanges ?? [])",
+      "reader": {
+        "name": "buildClawDeckObservationView",
+        "parents": [],
+        "startLine": 39,
+        "endLine": 111
+      },
+      "classification": "task-data",
+      "reason": "Public read view requested cursor defaults sequence origin1; missingRanges absent=>empty and attempt sorting are projection request controls, not storage budgets. Repository search proves current consumers verification tests only; no invented production/configured dashboard author.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-dfd7091ae95a861f",
+      "source": "skills/common/plugin-runtime/foundation/observability/clawdeck-view.ts",
+      "line": 93,
+      "sourceSha256": "51264741ac619877d2154668d83aeedbb666d1dfeb524685936b2d90d3322c41",
+      "exactText": "        left.attemptId.localeCompare(right.attemptId) ||",
+      "reader": {
+        "name": "buildClawDeckObservationView",
+        "parents": [],
+        "startLine": 39,
+        "endLine": 111
+      },
+      "classification": "task-data",
+      "reason": "Public read view requested cursor defaults sequence origin1; missingRanges absent=>empty and attempt sorting are projection request controls, not storage budgets. Repository search proves current consumers verification tests only; no invented production/configured dashboard author.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-13913e3327db814b",
+      "source": "skills/common/plugin-runtime/foundation/observability/durable-blob-read.ts",
+      "line": 22,
+      "sourceSha256": "5b736d337407890d27b547bc07bd514d378478589d4f56092ca9e5742fe2d285",
+      "exactText": "    if (!parent.isDirectory() || parent.isSymbolicLink()) throw new Error('DURABLE_BLOB_PATH_INVALID');",
+      "reader": {
+        "name": "parentsOf",
+        "parents": [],
+        "startLine": 16,
+        "endLine": 26
+      },
+      "classification": "generated-binding",
+      "reason": "Reader requires explicit maximum and actual regular no-symlink inode/device/path stability, stat.size and exact bounded read. Digest/path/byte observations not CONFIG data; no unbounded implicit quota in this API.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-2487a4df51129e0f",
+      "source": "skills/common/plugin-runtime/foundation/observability/durable-blob-read.ts",
+      "line": 32,
+      "sourceSha256": "5b736d337407890d27b547bc07bd514d378478589d4f56092ca9e5742fe2d285",
+      "exactText": "    if (!parent.isDirectory() || parent.isSymbolicLink() || `${parent.dev}:${parent.ino}` !== identity) {",
+      "reader": {
+        "name": "verifyParents",
+        "parents": [],
+        "startLine": 27,
+        "endLine": 36
+      },
+      "classification": "generated-binding",
+      "reason": "Reader requires explicit maximum and actual regular no-symlink inode/device/path stability, stat.size and exact bounded read. Digest/path/byte observations not CONFIG data; no unbounded implicit quota in this API.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-8ff13cf03cbc0a8c",
+      "source": "skills/common/plugin-runtime/foundation/observability/durable-blob-read.ts",
+      "line": 37,
+      "sourceSha256": "5b736d337407890d27b547bc07bd514d378478589d4f56092ca9e5742fe2d285",
+      "exactText": "async function boundedBytes(handle: Awaited<ReturnType<typeof fs.open>>, opened: Stats, maximum: number): Promise<Buffer> {",
+      "reader": {
+        "name": "boundedBytes",
+        "parents": [],
+        "startLine": 37,
+        "endLine": 50
+      },
+      "classification": "generated-binding",
+      "reason": "Reader requires explicit maximum and actual regular no-symlink inode/device/path stability, stat.size and exact bounded read. Digest/path/byte observations not CONFIG data; no unbounded implicit quota in this API.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-f8de696722f1ed2f",
+      "source": "skills/common/plugin-runtime/foundation/observability/durable-blob-read.ts",
+      "line": 38,
+      "sourceSha256": "5b736d337407890d27b547bc07bd514d378478589d4f56092ca9e5742fe2d285",
+      "exactText": "  if (!Number.isSafeInteger(opened.size) || opened.size < 0 || opened.size > maximum) {",
+      "reader": {
+        "name": "boundedBytes",
+        "parents": [],
+        "startLine": 37,
+        "endLine": 50
+      },
+      "classification": "generated-binding",
+      "reason": "Reader requires explicit maximum and actual regular no-symlink inode/device/path stability, stat.size and exact bounded read. Digest/path/byte observations not CONFIG data; no unbounded implicit quota in this API.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-9e9a90d755b162b4",
+      "source": "skills/common/plugin-runtime/foundation/observability/durable-blob-read.ts",
+      "line": 48,
+      "sourceSha256": "5b736d337407890d27b547bc07bd514d378478589d4f56092ca9e5742fe2d285",
+      "exactText": "  if (total !== opened.size || stamp(await handle.stat()) !== stamp(opened)) throw new Error('DURABLE_BLOB_PATH_CHANGED');",
+      "reader": {
+        "name": "boundedBytes",
+        "parents": [],
+        "startLine": 37,
+        "endLine": 50
+      },
+      "classification": "generated-binding",
+      "reason": "Reader requires explicit maximum and actual regular no-symlink inode/device/path stability, stat.size and exact bounded read. Digest/path/byte observations not CONFIG data; no unbounded implicit quota in this API.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-101b633feec34072",
+      "source": "skills/common/plugin-runtime/foundation/observability/durable-blob-read.ts",
+      "line": 52,
+      "sourceSha256": "5b736d337407890d27b547bc07bd514d378478589d4f56092ca9e5742fe2d285",
+      "exactText": "export async function readDurableBlob(file: string, digest: string, maximum: number): Promise<Buffer> {",
+      "reader": {
+        "name": "readDurableBlob",
+        "parents": [],
+        "startLine": 52,
+        "endLine": 67
+      },
+      "classification": "generated-binding",
+      "reason": "Reader requires explicit maximum and actual regular no-symlink inode/device/path stability, stat.size and exact bounded read. Digest/path/byte observations not CONFIG data; no unbounded implicit quota in this API.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-ca17605b386b126f",
+      "source": "skills/common/plugin-runtime/foundation/observability/durable-blob-read.ts",
+      "line": 54,
+      "sourceSha256": "5b736d337407890d27b547bc07bd514d378478589d4f56092ca9e5742fe2d285",
+      "exactText": "  if (!stat.isFile() || stat.isSymbolicLink()) throw new Error('DURABLE_BLOB_PATH_INVALID');",
+      "reader": {
+        "name": "readDurableBlob",
+        "parents": [],
+        "startLine": 52,
+        "endLine": 67
+      },
+      "classification": "generated-binding",
+      "reason": "Reader requires explicit maximum and actual regular no-symlink inode/device/path stability, stat.size and exact bounded read. Digest/path/byte observations not CONFIG data; no unbounded implicit quota in this API.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-fad63d4497327eed",
+      "source": "skills/common/plugin-runtime/foundation/observability/durable-blob-read.ts",
+      "line": 58,
+      "sourceSha256": "5b736d337407890d27b547bc07bd514d378478589d4f56092ca9e5742fe2d285",
+      "exactText": "    if (!opened.isFile() || stamp(opened) !== stamp(stat)) throw new Error('DURABLE_BLOB_PATH_CHANGED');",
+      "reader": {
+        "name": "readDurableBlob",
+        "parents": [],
+        "startLine": 52,
+        "endLine": 67
+      },
+      "classification": "generated-binding",
+      "reason": "Reader requires explicit maximum and actual regular no-symlink inode/device/path stability, stat.size and exact bounded read. Digest/path/byte observations not CONFIG data; no unbounded implicit quota in this API.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-c8ff3627495a823a",
+      "source": "skills/common/plugin-runtime/foundation/observability/durable-blob-read.ts",
+      "line": 59,
+      "sourceSha256": "5b736d337407890d27b547bc07bd514d378478589d4f56092ca9e5742fe2d285",
+      "exactText": "    const bytes = await boundedBytes(handle, opened, maximum);",
+      "reader": {
+        "name": "readDurableBlob",
+        "parents": [],
+        "startLine": 52,
+        "endLine": 67
+      },
+      "classification": "generated-binding",
+      "reason": "Reader requires explicit maximum and actual regular no-symlink inode/device/path stability, stat.size and exact bounded read. Digest/path/byte observations not CONFIG data; no unbounded implicit quota in this API.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-adf63c9ea152ab3a",
+      "source": "skills/common/plugin-runtime/foundation/observability/durable-blobs.ts",
+      "line": 18,
+      "sourceSha256": "5e1af13ee56ba905355f7f84e58b25d6a8ea5a1c7e77f5863a1a1ad18506c2ea",
+      "exactText": "  if (!Number.isSafeInteger(value) || value < 1) throw new Error(code);",
+      "reader": {
+        "name": "positiveInteger",
+        "parents": [],
+        "startLine": 17,
+        "endLine": 19
+      },
+      "classification": "duplicate",
+      "reason": "Per-object/total blob quotas require positive safe values, actual counters/stat files bound admission under real storage lock. Core native journal passes both selected quotas and all7productive repository constructor sites pass total cap; optional total remains latent exported API migration obligation, not claimed removed. ENOENT/digest collision and regular-file checks preserve content addressability.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-b4331910b4f04bb0",
+      "source": "skills/common/plugin-runtime/foundation/observability/durable-blobs.ts",
+      "line": 48,
+      "sourceSha256": "5e1af13ee56ba905355f7f84e58b25d6a8ea5a1c7e77f5863a1a1ad18506c2ea",
+      "exactText": "    return withDurableStoreLock(path.join(this.#root, 'blob-budget'), () => this.#put(input));",
+      "reader": {
+        "name": "put",
+        "parents": [],
+        "startLine": 45,
+        "endLine": 49
+      },
+      "classification": "duplicate",
+      "reason": "Per-object/total blob quotas require positive safe values, actual counters/stat files bound admission under real storage lock. Core native journal passes both selected quotas and all7productive repository constructor sites pass total cap; optional total remains latent exported API migration obligation, not claimed removed. ENOENT/digest collision and regular-file checks preserve content addressability.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-44d284df0b248d0a",
+      "source": "skills/common/plugin-runtime/foundation/observability/durable-blobs.ts",
+      "line": 62,
+      "sourceSha256": "5e1af13ee56ba905355f7f84e58b25d6a8ea5a1c7e77f5863a1a1ad18506c2ea",
+      "exactText": "      if (!Number.isSafeInteger(total) || total > this.#maximumTotalBytes!) throw new Error('DURABLE_BLOB_STORE_LIMIT_EXCEEDED');",
+      "reader": {
+        "name": "#usedBytes",
+        "parents": [],
+        "startLine": 51,
+        "endLine": 65
+      },
+      "classification": "duplicate",
+      "reason": "Per-object/total blob quotas require positive safe values, actual counters/stat files bound admission under real storage lock. Core native journal passes both selected quotas and all7productive repository constructor sites pass total cap; optional total remains latent exported API migration obligation, not claimed removed. ENOENT/digest collision and regular-file checks preserve content addressability.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-f064b5b0f3a9ea80",
+      "source": "skills/common/plugin-runtime/foundation/observability/durable-blobs.ts",
+      "line": 77,
+      "sourceSha256": "5e1af13ee56ba905355f7f84e58b25d6a8ea5a1c7e77f5863a1a1ad18506c2ea",
+      "exactText": "      if (!(error instanceof Error) || error.message !== 'DURABLE_BLOB_NOT_FOUND') throw error;",
+      "reader": {
+        "name": "#put",
+        "parents": [],
+        "startLine": 67,
+        "endLine": 100
+      },
+      "classification": "duplicate",
+      "reason": "Per-object/total blob quotas require positive safe values, actual counters/stat files bound admission under real storage lock. Core native journal passes both selected quotas and all7productive repository constructor sites pass total cap; optional total remains latent exported API migration obligation, not claimed removed. ENOENT/digest collision and regular-file checks preserve content addressability.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-6b5bb50667d5d0e2",
+      "source": "skills/common/plugin-runtime/foundation/observability/durable-blobs.ts",
+      "line": 92,
+      "sourceSha256": "5e1af13ee56ba905355f7f84e58b25d6a8ea5a1c7e77f5863a1a1ad18506c2ea",
+      "exactText": "        if (!stat.isFile() || stat.isSymbolicLink()) throw new Error(\"DURABLE_BLOB_PATH_INVALID\");",
+      "reader": {
+        "name": "#put",
+        "parents": [],
+        "startLine": 67,
+        "endLine": 100
+      },
+      "classification": "duplicate",
+      "reason": "Per-object/total blob quotas require positive safe values, actual counters/stat files bound admission under real storage lock. Core native journal passes both selected quotas and all7productive repository constructor sites pass total cap; optional total remains latent exported API migration obligation, not claimed removed. ENOENT/digest collision and regular-file checks preserve content addressability.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-46e8725d2a00830e",
+      "source": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+      "line": 254,
+      "sourceSha256": "5624aa2b5f980a373ab30fdf012dee1346418ac3b2537244475f2a496d3766a0",
+      "exactText": "    if (!stat.isFile() || stat.nlink !== 1)",
+      "reader": {
+        "name": "withDurableStoreLock",
+        "parents": [],
+        "startLine": 244,
+        "endLine": 273
+      },
+      "classification": "generated-binding",
+      "reason": "Actual lock file regular/single-link, quarantine attribution parses real producer IDs; acknowledgements match record digest, overflow counts increment real retained count, next cursor positive safe and requested cursor>=1; retired source/actor/authority/ack receipt exact CAS and v2 retained entries survive absent-v1 array normalization. These do not author capacities; uncovered5s lock wait/1024 reserve/omitted outbox read cap remain separate explicit obligations.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-e891f1a0d21af047",
+      "source": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+      "line": 305,
+      "sourceSha256": "5624aa2b5f980a373ab30fdf012dee1346418ac3b2537244475f2a496d3766a0",
+      "exactText": "      !decoded.producer ||",
+      "reader": {
+        "name": "quarantineAttribution",
+        "parents": [],
+        "startLine": 294,
+        "endLine": 331
+      },
+      "classification": "generated-binding",
+      "reason": "Actual lock file regular/single-link, quarantine attribution parses real producer IDs; acknowledgements match record digest, overflow counts increment real retained count, next cursor positive safe and requested cursor>=1; retired source/actor/authority/ack receipt exact CAS and v2 retained entries survive absent-v1 array normalization. These do not author capacities; uncovered5s lock wait/1024 reserve/omitted outbox read cap remain separate explicit obligations.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-940c9ab5e214a1ee",
+      "source": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+      "line": 306,
+      "sourceSha256": "5624aa2b5f980a373ab30fdf012dee1346418ac3b2537244475f2a496d3766a0",
+      "exactText": "      !validIdentityPart(decoded.producer.producerId) ||",
+      "reader": {
+        "name": "quarantineAttribution",
+        "parents": [],
+        "startLine": 294,
+        "endLine": 331
+      },
+      "classification": "generated-binding",
+      "reason": "Actual lock file regular/single-link, quarantine attribution parses real producer IDs; acknowledgements match record digest, overflow counts increment real retained count, next cursor positive safe and requested cursor>=1; retired source/actor/authority/ack receipt exact CAS and v2 retained entries survive absent-v1 array normalization. These do not author capacities; uncovered5s lock wait/1024 reserve/omitted outbox read cap remain separate explicit obligations.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-e0f4a25ae3b6d0d8",
+      "source": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+      "line": 307,
+      "sourceSha256": "5624aa2b5f980a373ab30fdf012dee1346418ac3b2537244475f2a496d3766a0",
+      "exactText": "      !validIdentityPart(decoded.producer.bootId) ||",
+      "reader": {
+        "name": "quarantineAttribution",
+        "parents": [],
+        "startLine": 294,
+        "endLine": 331
+      },
+      "classification": "generated-binding",
+      "reason": "Actual lock file regular/single-link, quarantine attribution parses real producer IDs; acknowledgements match record digest, overflow counts increment real retained count, next cursor positive safe and requested cursor>=1; retired source/actor/authority/ack receipt exact CAS and v2 retained entries survive absent-v1 array normalization. These do not author capacities; uncovered5s lock wait/1024 reserve/omitted outbox read cap remain separate explicit obligations.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-6ed2400f9d6d023f",
+      "source": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+      "line": 308,
+      "sourceSha256": "5624aa2b5f980a373ab30fdf012dee1346418ac3b2537244475f2a496d3766a0",
+      "exactText": "      !validIdentityPart(decoded.producer.producerType) ||",
+      "reader": {
+        "name": "quarantineAttribution",
+        "parents": [],
+        "startLine": 294,
+        "endLine": 331
+      },
+      "classification": "generated-binding",
+      "reason": "Actual lock file regular/single-link, quarantine attribution parses real producer IDs; acknowledgements match record digest, overflow counts increment real retained count, next cursor positive safe and requested cursor>=1; retired source/actor/authority/ack receipt exact CAS and v2 retained entries survive absent-v1 array normalization. These do not author capacities; uncovered5s lock wait/1024 reserve/omitted outbox read cap remain separate explicit obligations.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-4fd46d0279e397e3",
+      "source": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+      "line": 420,
+      "sourceSha256": "5624aa2b5f980a373ab30fdf012dee1346418ac3b2537244475f2a496d3766a0",
+      "exactText": "        !entry ||",
+      "reader": {
+        "name": "acknowledge",
+        "parents": [],
+        "startLine": 400,
+        "endLine": 429
+      },
+      "classification": "generated-binding",
+      "reason": "Actual lock file regular/single-link, quarantine attribution parses real producer IDs; acknowledgements match record digest, overflow counts increment real retained count, next cursor positive safe and requested cursor>=1; retired source/actor/authority/ack receipt exact CAS and v2 retained entries survive absent-v1 array normalization. These do not author capacities; uncovered5s lock wait/1024 reserve/omitted outbox read cap remain separate explicit obligations.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-ff5a267f92d4e5e6",
+      "source": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+      "line": 421,
+      "sourceSha256": "5624aa2b5f980a373ab30fdf012dee1346418ac3b2537244475f2a496d3766a0",
+      "exactText": "        entry.record.recordDigest !== snapshot.recordDigest ||",
+      "reader": {
+        "name": "acknowledge",
+        "parents": [],
+        "startLine": 400,
+        "endLine": 429
+      },
+      "classification": "generated-binding",
+      "reason": "Actual lock file regular/single-link, quarantine attribution parses real producer IDs; acknowledgements match record digest, overflow counts increment real retained count, next cursor positive safe and requested cursor>=1; retired source/actor/authority/ack receipt exact CAS and v2 retained entries survive absent-v1 array normalization. These do not author capacities; uncovered5s lock wait/1024 reserve/omitted outbox read cap remain separate explicit obligations.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-ffbf0ecf8c5bb071",
+      "source": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+      "line": 497,
+      "sourceSha256": "5624aa2b5f980a373ab30fdf012dee1346418ac3b2537244475f2a496d3766a0",
+      "exactText": "      count: (state.quarantineOverflow?.count ?? 0) + 1,",
+      "reader": {
+        "name": "#recordOverflow",
+        "parents": [],
+        "startLine": 471,
+        "endLine": 507
+      },
+      "classification": "generated-binding",
+      "reason": "Actual lock file regular/single-link, quarantine attribution parses real producer IDs; acknowledgements match record digest, overflow counts increment real retained count, next cursor positive safe and requested cursor>=1; retired source/actor/authority/ack receipt exact CAS and v2 retained entries survive absent-v1 array normalization. These do not author capacities; uncovered5s lock wait/1024 reserve/omitted outbox read cap remain separate explicit obligations.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-06a6b7498b74f001",
+      "source": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+      "line": 614,
+      "sourceSha256": "5624aa2b5f980a373ab30fdf012dee1346418ac3b2537244475f2a496d3766a0",
+      "exactText": "    if (!Number.isSafeInteger(state.nextCursor) || state.nextCursor < 1)",
+      "reader": {
+        "name": "#admitUnlocked",
+        "parents": [],
+        "startLine": 573,
+        "endLine": 638
+      },
+      "classification": "generated-binding",
+      "reason": "Actual lock file regular/single-link, quarantine attribution parses real producer IDs; acknowledgements match record digest, overflow counts increment real retained count, next cursor positive safe and requested cursor>=1; retired source/actor/authority/ack receipt exact CAS and v2 retained entries survive absent-v1 array normalization. These do not author capacities; uncovered5s lock wait/1024 reserve/omitted outbox read cap remain separate explicit obligations.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-13e5abf09f1c3557",
+      "source": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+      "line": 640,
+      "sourceSha256": "5624aa2b5f980a373ab30fdf012dee1346418ac3b2537244475f2a496d3766a0",
+      "exactText": "    const retired = await resolveAdmissionRetiredEntries(state.retiredEntries ?? []);",
+      "reader": {
+        "name": "#recordViews",
+        "parents": [],
+        "startLine": 639,
+        "endLine": 644
+      },
+      "classification": "generated-binding",
+      "reason": "Actual lock file regular/single-link, quarantine attribution parses real producer IDs; acknowledgements match record digest, overflow counts increment real retained count, next cursor positive safe and requested cursor>=1; retired source/actor/authority/ack receipt exact CAS and v2 retained entries survive absent-v1 array normalization. These do not author capacities; uncovered5s lock wait/1024 reserve/omitted outbox read cap remain separate explicit obligations.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-2eb75a0f54e39f7b",
+      "source": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+      "line": 652,
+      "sourceSha256": "5624aa2b5f980a373ab30fdf012dee1346418ac3b2537244475f2a496d3766a0",
+      "exactText": "        if(canonicalJson(prior.authority)!==canonicalJson(scope.authority) || prior.actor!==scope.actor || canonicalJson(prior.source)!==canonicalJson(scope.source) || prior.acknowledgement.recordDigest!==scope.recordDigest)throw new Error(\"OBSERVABILITY_RETIREMENT_OPERATION_CONFLICT\");",
+      "reader": {
+        "name": "retireCompletion",
+        "parents": [],
+        "startLine": 646,
+        "endLine": 672
+      },
+      "classification": "generated-binding",
+      "reason": "Actual lock file regular/single-link, quarantine attribution parses real producer IDs; acknowledgements match record digest, overflow counts increment real retained count, next cursor positive safe and requested cursor>=1; retired source/actor/authority/ack receipt exact CAS and v2 retained entries survive absent-v1 array normalization. These do not author capacities; uncovered5s lock wait/1024 reserve/omitted outbox read cap remain separate explicit obligations.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-6c12bed1751db81b",
+      "source": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+      "line": 664,
+      "sourceSha256": "5624aa2b5f980a373ab30fdf012dee1346418ac3b2537244475f2a496d3766a0",
+      "exactText": "      const candidate:AdmissionState={...state,schemaVersion:\"observability-admission-store.v2\",entries:state.entries.filter(item=>item!==entry),retiredEntries:[...(state.retiredEntries??[]),retired]};",
+      "reader": {
+        "name": "retireCompletion",
+        "parents": [],
+        "startLine": 646,
+        "endLine": 672
+      },
+      "classification": "generated-binding",
+      "reason": "Actual lock file regular/single-link, quarantine attribution parses real producer IDs; acknowledgements match record digest, overflow counts increment real retained count, next cursor positive safe and requested cursor>=1; retired source/actor/authority/ack receipt exact CAS and v2 retained entries survive absent-v1 array normalization. These do not author capacities; uncovered5s lock wait/1024 reserve/omitted outbox read cap remain separate explicit obligations.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-692105883fe13823",
+      "source": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+      "line": 733,
+      "sourceSha256": "5624aa2b5f980a373ab30fdf012dee1346418ac3b2537244475f2a496d3766a0",
+      "exactText": "    if (!Number.isSafeInteger(fromCursor) || fromCursor < 1)",
+      "reader": {
+        "name": "admittedTailSnapshot",
+        "parents": [],
+        "startLine": 729,
+        "endLine": 750
+      },
+      "classification": "generated-binding",
+      "reason": "Actual lock file regular/single-link, quarantine attribution parses real producer IDs; acknowledgements match record digest, overflow counts increment real retained count, next cursor positive safe and requested cursor>=1; retired source/actor/authority/ack receipt exact CAS and v2 retained entries survive absent-v1 array normalization. These do not author capacities; uncovered5s lock wait/1024 reserve/omitted outbox read cap remain separate explicit obligations.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-df42d7c32c1f4307",
+      "source": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+      "line": 768,
+      "sourceSha256": "5624aa2b5f980a373ab30fdf012dee1346418ac3b2537244475f2a496d3766a0",
+      "exactText": "        if (!existing || existing.state === \"restored\")",
+      "reader": {
+        "name": "recordGap",
+        "parents": [],
+        "startLine": 751,
+        "endLine": 798
+      },
+      "classification": "generated-binding",
+      "reason": "Actual lock file regular/single-link, quarantine attribution parses real producer IDs; acknowledgements match record digest, overflow counts increment real retained count, next cursor positive safe and requested cursor>=1; retired source/actor/authority/ack receipt exact CAS and v2 retained entries survive absent-v1 array normalization. These do not author capacities; uncovered5s lock wait/1024 reserve/omitted outbox read cap remain separate explicit obligations.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-9da9efd9497737de",
+      "source": "skills/common/plugin-runtime/foundation/observability/durable-record-dependency.ts",
+      "line": 9,
+      "sourceSha256": "b9d7866810eaa8b77681aa42c69b8f4651229317b0f73d0077b1866f97c1e73a",
+      "exactText": "  if (ownerPath !== ownerFile || dependencyPath !== dependencyFile || ownerPath === dependencyPath) {",
+      "reader": {
+        "name": "assertDistinctStoreFiles",
+        "parents": [],
+        "startLine": 6,
+        "endLine": 17
+      },
+      "classification": "generated-binding",
+      "reason": "Retirement dependency and owner realpaths must equal immutable requested files, distinct file identities/single links; source equality/alias rejection proves durable fence relationship, no extra configurable writer.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-3a605c9f5777683d",
+      "source": "skills/common/plugin-runtime/foundation/observability/durable-record-dependency.ts",
+      "line": 13,
+      "sourceSha256": "b9d7866810eaa8b77681aa42c69b8f4651229317b0f73d0077b1866f97c1e73a",
+      "exactText": "  if (!owner.isFile() || !dependency.isFile() || owner.nlink !== 1 || dependency.nlink !== 1",
+      "reader": {
+        "name": "assertDistinctStoreFiles",
+        "parents": [],
+        "startLine": 6,
+        "endLine": 17
+      },
+      "classification": "generated-binding",
+      "reason": "Retirement dependency and owner realpaths must equal immutable requested files, distinct file identities/single links; source equality/alias rejection proves durable fence relationship, no extra configurable writer.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-7586ccdb0bdd49fa",
+      "source": "skills/common/plugin-runtime/foundation/observability/durable-record-dependency.ts",
+      "line": 14,
+      "sourceSha256": "b9d7866810eaa8b77681aa42c69b8f4651229317b0f73d0077b1866f97c1e73a",
+      "exactText": "    || owner.dev === dependency.dev && owner.ino === dependency.ino) {",
+      "reader": {
+        "name": "assertDistinctStoreFiles",
+        "parents": [],
+        "startLine": 6,
+        "endLine": 17
+      },
+      "classification": "generated-binding",
+      "reason": "Retirement dependency and owner realpaths must equal immutable requested files, distinct file identities/single links; source equality/alias rejection proves durable fence relationship, no extra configurable writer.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-bf4b0631278899b6",
+      "source": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+      "line": 38,
+      "sourceSha256": "ab407b028f3a22c96a436c3bdf2a9dd7bfee3b36d301de919669d2d1bf25c553",
+      "exactText": "  if (!Number.isSafeInteger(value) || value < 1) throw new Error(code);",
+      "reader": {
+        "name": "positiveInteger",
+        "parents": [],
+        "startLine": 37,
+        "endLine": 39
+      },
+      "classification": "generated-binding",
+      "reason": "Required positive supplied store quotas, stream sequence including retained tombstones, versioned owned record and retirement digest source must match; absent-v1 arrays initialize empty only for historical schema. Record removal preserves tombstones/retirement proof, never resets source sequence/policy.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-073d60209c7e4adf",
+      "source": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+      "line": 88,
+      "sourceSha256": "ab407b028f3a22c96a436c3bdf2a9dd7bfee3b36d301de919669d2d1bf25c553",
+      "exactText": "        sequence: state.records.filter((entry) => entry.stream === stream).length + (state.tombstones?.filter(entry => entry.stream === stream).length ?? 0) + 1,",
+      "reader": {
+        "name": "append",
+        "parents": [],
+        "startLine": 66,
+        "endLine": 101
+      },
+      "classification": "generated-binding",
+      "reason": "Required positive supplied store quotas, stream sequence including retained tombstones, versioned owned record and retirement digest source must match; absent-v1 arrays initialize empty only for historical schema. Record removal preserves tombstones/retirement proof, never resets source sequence/policy.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-c75a0395991d21c3",
+      "source": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+      "line": 95,
+      "sourceSha256": "ab407b028f3a22c96a436c3bdf2a9dd7bfee3b36d301de919669d2d1bf25c553",
+      "exactText": "        : { ...state, schemaVersion: 'pipeline-durable-record-store.v2', records: [...state.records, record], tombstones: state.tombstones ?? [], retirements: state.retirements ?? [] };",
+      "reader": {
+        "name": "append",
+        "parents": [],
+        "startLine": 66,
+        "endLine": 101
+      },
+      "classification": "generated-binding",
+      "reason": "Required positive supplied store quotas, stream sequence including retained tombstones, versioned owned record and retirement digest source must match; absent-v1 arrays initialize empty only for historical schema. Record removal preserves tombstones/retirement proof, never resets source sequence/policy.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-abacf9fad03ddcff",
+      "source": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+      "line": 118,
+      "sourceSha256": "ab407b028f3a22c96a436c3bdf2a9dd7bfee3b36d301de919669d2d1bf25c553",
+      "exactText": "      return structuredClone((state.retirements ?? []).filter(entry => entry.intent.stream === stream));",
+      "reader": {
+        "name": "retirements",
+        "parents": [],
+        "startLine": 114,
+        "endLine": 120
+      },
+      "classification": "generated-binding",
+      "reason": "Required positive supplied store quotas, stream sequence including retained tombstones, versioned owned record and retirement digest source must match; absent-v1 arrays initialize empty only for historical schema. Record removal preserves tombstones/retirement proof, never resets source sequence/policy.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-74b000493be28392",
+      "source": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+      "line": 136,
+      "sourceSha256": "ab407b028f3a22c96a436c3bdf2a9dd7bfee3b36d301de919669d2d1bf25c553",
+      "exactText": "        if (!record || record.schemaVersion !== 'pipeline-durable-record.v2' || record.owner !== intent.owner",
+      "reader": {
+        "name": "retire",
+        "parents": [],
+        "startLine": 123,
+        "endLine": 160
+      },
+      "classification": "generated-binding",
+      "reason": "Required positive supplied store quotas, stream sequence including retained tombstones, versioned owned record and retirement digest source must match; absent-v1 arrays initialize empty only for historical schema. Record removal preserves tombstones/retirement proof, never resets source sequence/policy.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-9da491f28a8a5881",
+      "source": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+      "line": 137,
+      "sourceSha256": "ab407b028f3a22c96a436c3bdf2a9dd7bfee3b36d301de919669d2d1bf25c553",
+      "exactText": "          || record.payloadDigest !== item.payloadDigest) throw new Error('DURABLE_RETIREMENT_RECORD_CHANGED');",
+      "reader": {
+        "name": "retire",
+        "parents": [],
+        "startLine": 123,
+        "endLine": 160
+      },
+      "classification": "generated-binding",
+      "reason": "Required positive supplied store quotas, stream sequence including retained tombstones, versioned owned record and retirement digest source must match; absent-v1 arrays initialize empty only for historical schema. Record removal preserves tombstones/retirement proof, never resets source sequence/policy.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-d78166fb7deb57bc",
+      "source": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+      "line": 145,
+      "sourceSha256": "ab407b028f3a22c96a436c3bdf2a9dd7bfee3b36d301de919669d2d1bf25c553",
+      "exactText": "        records: state.records.filter(record => record.stream !== intent.stream || !selectedIds.has(record.idempotencyKey)),",
+      "reader": {
+        "name": "retire",
+        "parents": [],
+        "startLine": 123,
+        "endLine": 160
+      },
+      "classification": "generated-binding",
+      "reason": "Required positive supplied store quotas, stream sequence including retained tombstones, versioned owned record and retirement digest source must match; absent-v1 arrays initialize empty only for historical schema. Record removal preserves tombstones/retirement proof, never resets source sequence/policy.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-12e34f65b0f87857",
+      "source": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+      "line": 146,
+      "sourceSha256": "ab407b028f3a22c96a436c3bdf2a9dd7bfee3b36d301de919669d2d1bf25c553",
+      "exactText": "        tombstones: [...state.tombstones ?? [], ...selected.map(record => {",
+      "reader": {
+        "name": "retire",
+        "parents": [],
+        "startLine": 123,
+        "endLine": 160
+      },
+      "classification": "generated-binding",
+      "reason": "Required positive supplied store quotas, stream sequence including retained tombstones, versioned owned record and retirement digest source must match; absent-v1 arrays initialize empty only for historical schema. Record removal preserves tombstones/retirement proof, never resets source sequence/policy.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-55fa766533dde5d9",
+      "source": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+      "line": 148,
+      "sourceSha256": "ab407b028f3a22c96a436c3bdf2a9dd7bfee3b36d301de919669d2d1bf25c553",
+      "exactText": "        })], retirements: [...state.retirements ?? [], retirement],",
+      "reader": {
+        "name": "retire",
+        "parents": [],
+        "startLine": 123,
+        "endLine": 160
+      },
+      "classification": "generated-binding",
+      "reason": "Required positive supplied store quotas, stream sequence including retained tombstones, versioned owned record and retirement digest source must match; absent-v1 arrays initialize empty only for historical schema. Record removal preserves tombstones/retirement proof, never resets source sequence/policy.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-f42bc42915757b8c",
+      "source": "skills/common/plugin-runtime/foundation/observability/hash-journal.ts",
+      "line": 24,
+      "sourceSha256": "b00c2271bb662055d7250ca193f842d1e6346edf22dfa713b33df1b637ce957a",
+      "exactText": "    const previousHash=records.at(-1)?.hash??precedingHash;",
+      "reader": {
+        "name": "parseHashJournal",
+        "parents": [],
+        "startLine": 15,
+        "endLine": 30
+      },
+      "classification": "generated-binding",
+      "reason": "Hash chain sequence/priorHash must match actual caller-supplied retained preceding prefix. Nova state journal passes actual prior records/hash; retire-attempt-result starts complete journal0/null. No adjustable sequence/generation policy; source callsite search retained.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-abf528985985df75",
+      "source": "skills/common/plugin-runtime/foundation/observability/hash-journal.ts",
+      "line": 25,
+      "sourceSha256": "b00c2271bb662055d7250ca193f842d1e6346edf22dfa713b33df1b637ce957a",
+      "exactText": "    if(record.sequence!==sequence || record.previousHash!==previousHash)throw new Error(`JOURNAL_CHAIN_INVALID:${file}:${sequence}`);",
+      "reader": {
+        "name": "parseHashJournal",
+        "parents": [],
+        "startLine": 15,
+        "endLine": 30
+      },
+      "classification": "generated-binding",
+      "reason": "Hash chain sequence/priorHash must match actual caller-supplied retained preceding prefix. Nova state journal passes actual prior records/hash; retire-attempt-result starts complete journal0/null. No adjustable sequence/generation policy; source callsite search retained.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-473b2c2d0c901e96",
+      "source": "skills/common/plugin-runtime/foundation/observability/record-retirement.ts",
+      "line": 48,
+      "sourceSha256": "00a081bdccc917067eeabea36d6438615aada22c637e4d7f42e3852285647681",
+      "exactText": "    || record.schemaVersion === 'pipeline-durable-record.v2' && ownerValid(record.owner))",
+      "reader": {
+        "name": "recordHeaderValid",
+        "parents": [],
+        "startLine": 46,
+        "endLine": 52
+      },
+      "classification": "generated-binding",
+      "reason": "Current v1/v2 record/header/owner/retirement intent schemas and nonempty ID/digest formats, releasedBytesHex16 safe positive, payload digest and unique operation/record/stream sequence verified. Missing retired arrays only v1 compatibility; source tombstones must match actual actor/evidence/owner intent and payload digest. No capacity/cleanup success author hidden in boolean predicates.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-d3eb9e043a675702",
+      "source": "skills/common/plugin-runtime/foundation/observability/record-retirement.ts",
+      "line": 54,
+      "sourceSha256": "00a081bdccc917067eeabea36d6438615aada22c637e4d7f42e3852285647681",
+      "exactText": "  if (!intent || Object.keys(intent).sort().join(',') !== 'actor,evidence,operationId,owner,records,stream'",
+      "reader": {
+        "name": "assertRetirementIntent",
+        "parents": [],
+        "startLine": 53,
+        "endLine": 59
+      },
+      "classification": "generated-binding",
+      "reason": "Current v1/v2 record/header/owner/retirement intent schemas and nonempty ID/digest formats, releasedBytesHex16 safe positive, payload digest and unique operation/record/stream sequence verified. Missing retired arrays only v1 compatibility; source tombstones must match actual actor/evidence/owner intent and payload digest. No capacity/cleanup success author hidden in boolean predicates.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-cf014765ec79b165",
+      "source": "skills/common/plugin-runtime/foundation/observability/record-retirement.ts",
+      "line": 55,
+      "sourceSha256": "00a081bdccc917067eeabea36d6438615aada22c637e4d7f42e3852285647681",
+      "exactText": "    || !IDENTITY.test(intent.operationId) || !ownerValid(intent.actor) || !ownerValid(intent.owner)",
+      "reader": {
+        "name": "assertRetirementIntent",
+        "parents": [],
+        "startLine": 53,
+        "endLine": 59
+      },
+      "classification": "generated-binding",
+      "reason": "Current v1/v2 record/header/owner/retirement intent schemas and nonempty ID/digest formats, releasedBytesHex16 safe positive, payload digest and unique operation/record/stream sequence verified. Missing retired arrays only v1 compatibility; source tombstones must match actual actor/evidence/owner intent and payload digest. No capacity/cleanup success author hidden in boolean predicates.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-c4e5b39c1c8515e5",
+      "source": "skills/common/plugin-runtime/foundation/observability/record-retirement.ts",
+      "line": 56,
+      "sourceSha256": "00a081bdccc917067eeabea36d6438615aada22c637e4d7f42e3852285647681",
+      "exactText": "    || !IDENTITY.test(intent.stream) || !Array.isArray(intent.records) || !intent.records.length",
+      "reader": {
+        "name": "assertRetirementIntent",
+        "parents": [],
+        "startLine": 53,
+        "endLine": 59
+      },
+      "classification": "generated-binding",
+      "reason": "Current v1/v2 record/header/owner/retirement intent schemas and nonempty ID/digest formats, releasedBytesHex16 safe positive, payload digest and unique operation/record/stream sequence verified. Missing retired arrays only v1 compatibility; source tombstones must match actual actor/evidence/owner intent and payload digest. No capacity/cleanup success author hidden in boolean predicates.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-278b7b70e4c73209",
+      "source": "skills/common/plugin-runtime/foundation/observability/record-retirement.ts",
+      "line": 57,
+      "sourceSha256": "00a081bdccc917067eeabea36d6438615aada22c637e4d7f42e3852285647681",
+      "exactText": "    || !intent.evidence || typeof intent.evidence !== 'object' || Array.isArray(intent.evidence)) throw new Error('DURABLE_RETIREMENT_INTENT_INVALID');",
+      "reader": {
+        "name": "assertRetirementIntent",
+        "parents": [],
+        "startLine": 53,
+        "endLine": 59
+      },
+      "classification": "generated-binding",
+      "reason": "Current v1/v2 record/header/owner/retirement intent schemas and nonempty ID/digest formats, releasedBytesHex16 safe positive, payload digest and unique operation/record/stream sequence verified. Missing retired arrays only v1 compatibility; source tombstones must match actual actor/evidence/owner intent and payload digest. No capacity/cleanup success author hidden in boolean predicates.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-abc98e17f1c533bb",
+      "source": "skills/common/plugin-runtime/foundation/observability/record-retirement.ts",
+      "line": 63,
+      "sourceSha256": "00a081bdccc917067eeabea36d6438615aada22c637e4d7f42e3852285647681",
+      "exactText": "    if (!item || Object.keys(item).sort().join(',') !== 'idempotencyKey,payloadDigest'",
+      "reader": {
+        "name": "assertRetirementSelection",
+        "parents": [],
+        "startLine": 60,
+        "endLine": 67
+      },
+      "classification": "generated-binding",
+      "reason": "Current v1/v2 record/header/owner/retirement intent schemas and nonempty ID/digest formats, releasedBytesHex16 safe positive, payload digest and unique operation/record/stream sequence verified. Missing retired arrays only v1 compatibility; source tombstones must match actual actor/evidence/owner intent and payload digest. No capacity/cleanup success author hidden in boolean predicates.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-79b29132bfc5d0f4",
+      "source": "skills/common/plugin-runtime/foundation/observability/record-retirement.ts",
+      "line": 64,
+      "sourceSha256": "00a081bdccc917067eeabea36d6438615aada22c637e4d7f42e3852285647681",
+      "exactText": "      || !IDENTITY.test(item.idempotencyKey) || !DIGEST.test(item.payloadDigest) || ids.has(item.idempotencyKey)) throw new Error('DURABLE_RETIREMENT_INTENT_INVALID');",
+      "reader": {
+        "name": "assertRetirementSelection",
+        "parents": [],
+        "startLine": 60,
+        "endLine": 67
+      },
+      "classification": "generated-binding",
+      "reason": "Current v1/v2 record/header/owner/retirement intent schemas and nonempty ID/digest formats, releasedBytesHex16 safe positive, payload digest and unique operation/record/stream sequence verified. Missing retired arrays only v1 compatibility; source tombstones must match actual actor/evidence/owner intent and payload digest. No capacity/cleanup success author hidden in boolean predicates.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-b27736608a121883",
+      "source": "skills/common/plugin-runtime/foundation/observability/record-retirement.ts",
+      "line": 69,
+      "sourceSha256": "00a081bdccc917067eeabea36d6438615aada22c637e4d7f42e3852285647681",
+      "exactText": "  if (!state || !Array.isArray(state.records)) throw new Error('DURABLE_RECORD_STORE_INVALID');",
+      "reader": {
+        "name": "assertStoreFormat",
+        "parents": [],
+        "startLine": 68,
+        "endLine": 73
+      },
+      "classification": "generated-binding",
+      "reason": "Current v1/v2 record/header/owner/retirement intent schemas and nonempty ID/digest formats, releasedBytesHex16 safe positive, payload digest and unique operation/record/stream sequence verified. Missing retired arrays only v1 compatibility; source tombstones must match actual actor/evidence/owner intent and payload digest. No capacity/cleanup success author hidden in boolean predicates.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-199db468c085f1c0",
+      "source": "skills/common/plugin-runtime/foundation/observability/record-retirement.ts",
+      "line": 71,
+      "sourceSha256": "00a081bdccc917067eeabea36d6438615aada22c637e4d7f42e3852285647681",
+      "exactText": "  if (v2 ? !Array.isArray(state.tombstones) || !Array.isArray(state.retirements)",
+      "reader": {
+        "name": "assertStoreFormat",
+        "parents": [],
+        "startLine": 68,
+        "endLine": 73
+      },
+      "classification": "generated-binding",
+      "reason": "Current v1/v2 record/header/owner/retirement intent schemas and nonempty ID/digest formats, releasedBytesHex16 safe positive, payload digest and unique operation/record/stream sequence verified. Missing retired arrays only v1 compatibility; source tombstones must match actual actor/evidence/owner intent and payload digest. No capacity/cleanup success author hidden in boolean predicates.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-c57df26eedac16be",
+      "source": "skills/common/plugin-runtime/foundation/observability/record-retirement.ts",
+      "line": 72,
+      "sourceSha256": "00a081bdccc917067eeabea36d6438615aada22c637e4d7f42e3852285647681",
+      "exactText": "    : state.schemaVersion !== 'pipeline-durable-record-store.v1' || state.tombstones !== undefined || state.retirements !== undefined) throw new Error('DURABLE_RECORD_STORE_INVALID');",
+      "reader": {
+        "name": "assertStoreFormat",
+        "parents": [],
+        "startLine": 68,
+        "endLine": 73
+      },
+      "classification": "generated-binding",
+      "reason": "Current v1/v2 record/header/owner/retirement intent schemas and nonempty ID/digest formats, releasedBytesHex16 safe positive, payload digest and unique operation/record/stream sequence verified. Missing retired arrays only v1 compatibility; source tombstones must match actual actor/evidence/owner intent and payload digest. No capacity/cleanup success author hidden in boolean predicates.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-9df9b3065ce1420b",
+      "source": "skills/common/plugin-runtime/foundation/observability/record-retirement.ts",
+      "line": 77,
+      "sourceSha256": "00a081bdccc917067eeabea36d6438615aada22c637e4d7f42e3852285647681",
+      "exactText": "    if (!recordHeaderValid(record) || !Object.hasOwn(record, 'payload') || payloadDigest(record.payload) !== record.payloadDigest) throw new Error('DURABLE_RECORD_STORE_INVALID');",
+      "reader": {
+        "name": "assertDurableRecordReplay",
+        "parents": [],
+        "startLine": 74,
+        "endLine": 81
+      },
+      "classification": "generated-binding",
+      "reason": "Current v1/v2 record/header/owner/retirement intent schemas and nonempty ID/digest formats, releasedBytesHex16 safe positive, payload digest and unique operation/record/stream sequence verified. Missing retired arrays only v1 compatibility; source tombstones must match actual actor/evidence/owner intent and payload digest. No capacity/cleanup success author hidden in boolean predicates.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-bdc2887cbfc8242f",
+      "source": "skills/common/plugin-runtime/foundation/observability/record-retirement.ts",
+      "line": 84,
+      "sourceSha256": "00a081bdccc917067eeabea36d6438615aada22c637e4d7f42e3852285647681",
+      "exactText": "  for (const entry of state.retirements ?? []) {",
+      "reader": {
+        "name": "assertRetiredRecords",
+        "parents": [],
+        "startLine": 82,
+        "endLine": 94
+      },
+      "classification": "generated-binding",
+      "reason": "Current v1/v2 record/header/owner/retirement intent schemas and nonempty ID/digest formats, releasedBytesHex16 safe positive, payload digest and unique operation/record/stream sequence verified. Missing retired arrays only v1 compatibility; source tombstones must match actual actor/evidence/owner intent and payload digest. No capacity/cleanup success author hidden in boolean predicates.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-443329bce0375641",
+      "source": "skills/common/plugin-runtime/foundation/observability/record-retirement.ts",
+      "line": 86,
+      "sourceSha256": "00a081bdccc917067eeabea36d6438615aada22c637e4d7f42e3852285647681",
+      "exactText": "    if (entry.intentDigest !== payloadDigest(entry.intent) || retirements.has(entry.intent.operationId)",
+      "reader": {
+        "name": "assertRetiredRecords",
+        "parents": [],
+        "startLine": 82,
+        "endLine": 94
+      },
+      "classification": "generated-binding",
+      "reason": "Current v1/v2 record/header/owner/retirement intent schemas and nonempty ID/digest formats, releasedBytesHex16 safe positive, payload digest and unique operation/record/stream sequence verified. Missing retired arrays only v1 compatibility; source tombstones must match actual actor/evidence/owner intent and payload digest. No capacity/cleanup success author hidden in boolean predicates.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-85809285474a4ac8",
+      "source": "skills/common/plugin-runtime/foundation/observability/record-retirement.ts",
+      "line": 87,
+      "sourceSha256": "00a081bdccc917067eeabea36d6438615aada22c637e4d7f42e3852285647681",
+      "exactText": "      || !/^[a-f0-9]{16}$/u.test(entry.releasedBytesHex) || !Number.isSafeInteger(Number.parseInt(entry.releasedBytesHex,16)) || Number.parseInt(entry.releasedBytesHex,16) < 1) throw new Error('DURABLE_RETIREMENT_INVALID');",
+      "reader": {
+        "name": "assertRetiredRecords",
+        "parents": [],
+        "startLine": 82,
+        "endLine": 94
+      },
+      "classification": "generated-binding",
+      "reason": "Current v1/v2 record/header/owner/retirement intent schemas and nonempty ID/digest formats, releasedBytesHex16 safe positive, payload digest and unique operation/record/stream sequence verified. Missing retired arrays only v1 compatibility; source tombstones must match actual actor/evidence/owner intent and payload digest. No capacity/cleanup success author hidden in boolean predicates.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-08240b1fce6110c1",
+      "source": "skills/common/plugin-runtime/foundation/observability/record-retirement.ts",
+      "line": 90,
+      "sourceSha256": "00a081bdccc917067eeabea36d6438615aada22c637e4d7f42e3852285647681",
+      "exactText": "  for (const record of state.tombstones ?? []) assertTombstone(record, retirements);",
+      "reader": {
+        "name": "assertRetiredRecords",
+        "parents": [],
+        "startLine": 82,
+        "endLine": 94
+      },
+      "classification": "generated-binding",
+      "reason": "Current v1/v2 record/header/owner/retirement intent schemas and nonempty ID/digest formats, releasedBytesHex16 safe positive, payload digest and unique operation/record/stream sequence verified. Missing retired arrays only v1 compatibility; source tombstones must match actual actor/evidence/owner intent and payload digest. No capacity/cleanup success author hidden in boolean predicates.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-4c640cf9d4c1eb73",
+      "source": "skills/common/plugin-runtime/foundation/observability/record-retirement.ts",
+      "line": 91,
+      "sourceSha256": "00a081bdccc917067eeabea36d6438615aada22c637e4d7f42e3852285647681",
+      "exactText": "  for (const retirement of retirements.values()) {",
+      "reader": {
+        "name": "assertRetiredRecords",
+        "parents": [],
+        "startLine": 82,
+        "endLine": 94
+      },
+      "classification": "generated-binding",
+      "reason": "Current v1/v2 record/header/owner/retirement intent schemas and nonempty ID/digest formats, releasedBytesHex16 safe positive, payload digest and unique operation/record/stream sequence verified. Missing retired arrays only v1 compatibility; source tombstones must match actual actor/evidence/owner intent and payload digest. No capacity/cleanup success author hidden in boolean predicates.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-30896594413b4af0",
+      "source": "skills/common/plugin-runtime/foundation/observability/record-retirement.ts",
+      "line": 98,
+      "sourceSha256": "00a081bdccc917067eeabea36d6438615aada22c637e4d7f42e3852285647681",
+      "exactText": "    if (!recordHeaderValid(record) || record.schemaVersion !== 'pipeline-durable-record.v2' || Object.hasOwn(record, 'payload')",
+      "reader": {
+        "name": "assertTombstone",
+        "parents": [],
+        "startLine": 95,
+        "endLine": 101
+      },
+      "classification": "generated-binding",
+      "reason": "Current v1/v2 record/header/owner/retirement intent schemas and nonempty ID/digest formats, releasedBytesHex16 safe positive, payload digest and unique operation/record/stream sequence verified. Missing retired arrays only v1 compatibility; source tombstones must match actual actor/evidence/owner intent and payload digest. No capacity/cleanup success author hidden in boolean predicates.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-f41ac0af95b281ea",
+      "source": "skills/common/plugin-runtime/foundation/observability/record-retirement.ts",
+      "line": 99,
+      "sourceSha256": "00a081bdccc917067eeabea36d6438615aada22c637e4d7f42e3852285647681",
+      "exactText": "      || !retirement || record.stream !== retirement.intent.stream || record.owner !== retirement.intent.owner",
+      "reader": {
+        "name": "assertTombstone",
+        "parents": [],
+        "startLine": 95,
+        "endLine": 101
+      },
+      "classification": "generated-binding",
+      "reason": "Current v1/v2 record/header/owner/retirement intent schemas and nonempty ID/digest formats, releasedBytesHex16 safe positive, payload digest and unique operation/record/stream sequence verified. Missing retired arrays only v1 compatibility; source tombstones must match actual actor/evidence/owner intent and payload digest. No capacity/cleanup success author hidden in boolean predicates.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-3f781e5c16124122",
+      "source": "skills/common/plugin-runtime/foundation/observability/record-retirement.ts",
+      "line": 100,
+      "sourceSha256": "00a081bdccc917067eeabea36d6438615aada22c637e4d7f42e3852285647681",
+      "exactText": "      || !retirement.intent.records.some(item => item.idempotencyKey === record.idempotencyKey && item.payloadDigest === record.payloadDigest)) throw new Error('DURABLE_TOMBSTONE_INVALID');",
+      "reader": {
+        "name": "assertTombstone",
+        "parents": [],
+        "startLine": 95,
+        "endLine": 101
+      },
+      "classification": "generated-binding",
+      "reason": "Current v1/v2 record/header/owner/retirement intent schemas and nonempty ID/digest formats, releasedBytesHex16 safe positive, payload digest and unique operation/record/stream sequence verified. Missing retired arrays only v1 compatibility; source tombstones must match actual actor/evidence/owner intent and payload digest. No capacity/cleanup success author hidden in boolean predicates.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-fc38776378f8a4b5",
+      "source": "skills/common/plugin-runtime/foundation/observability/record-retirement.ts",
+      "line": 107,
+      "sourceSha256": "00a081bdccc917067eeabea36d6438615aada22c637e4d7f42e3852285647681",
+      "exactText": "    if (record.sequence <= (activeSequences.get(record.stream) ?? 0)) throw new Error('DURABLE_RECORD_SEQUENCE_INVALID');",
+      "reader": {
+        "name": "assertRecordSequences",
+        "parents": [],
+        "startLine": 102,
+        "endLine": 119
+      },
+      "classification": "generated-binding",
+      "reason": "Current v1/v2 record/header/owner/retirement intent schemas and nonempty ID/digest formats, releasedBytesHex16 safe positive, payload digest and unique operation/record/stream sequence verified. Missing retired arrays only v1 compatibility; source tombstones must match actual actor/evidence/owner intent and payload digest. No capacity/cleanup success author hidden in boolean predicates.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-ba4191aa9af0b654",
+      "source": "skills/common/plugin-runtime/foundation/observability/record-retirement.ts",
+      "line": 112,
+      "sourceSha256": "00a081bdccc917067eeabea36d6438615aada22c637e4d7f42e3852285647681",
+      "exactText": "    const expected = (sequences.get(record.stream) ?? 0) + 1;",
+      "reader": {
+        "name": "assertRecordSequences",
+        "parents": [],
+        "startLine": 102,
+        "endLine": 119
+      },
+      "classification": "generated-binding",
+      "reason": "Current v1/v2 record/header/owner/retirement intent schemas and nonempty ID/digest formats, releasedBytesHex16 safe positive, payload digest and unique operation/record/stream sequence verified. Missing retired arrays only v1 compatibility; source tombstones must match actual actor/evidence/owner intent and payload digest. No capacity/cleanup success author hidden in boolean predicates.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-25e9db965ea6d063",
+      "source": "skills/common/plugin-runtime/foundation/observability/record-retirement.ts",
+      "line": 126,
+      "sourceSha256": "00a081bdccc917067eeabea36d6438615aada22c637e4d7f42e3852285647681",
+      "exactText": "        if (existing.payloadDigest !== digest || (existing.schemaVersion === \"pipeline-durable-record.v2\" && existing.owner !== owner)) throw new Error(\"DURABLE_RECORD_IDEMPOTENCY_CONFLICT\");",
+      "reader": {
+        "name": "existingRecord",
+        "parents": [],
+        "startLine": 121,
+        "endLine": 136
+      },
+      "classification": "generated-binding",
+      "reason": "Current v1/v2 record/header/owner/retirement intent schemas and nonempty ID/digest formats, releasedBytesHex16 safe positive, payload digest and unique operation/record/stream sequence verified. Missing retired arrays only v1 compatibility; source tombstones must match actual actor/evidence/owner intent and payload digest. No capacity/cleanup success author hidden in boolean predicates.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-887c1261ccf4fa4e",
+      "source": "skills/common/plugin-runtime/foundation/observability/record-retirement.ts",
+      "line": 131,
+      "sourceSha256": "00a081bdccc917067eeabea36d6438615aada22c637e4d7f42e3852285647681",
+      "exactText": "        if (retired.payloadDigest !== digest || retired.owner !== owner) throw new Error('DURABLE_RECORD_IDEMPOTENCY_CONFLICT');",
+      "reader": {
+        "name": "existingRecord",
+        "parents": [],
+        "startLine": 121,
+        "endLine": 136
+      },
+      "classification": "generated-binding",
+      "reason": "Current v1/v2 record/header/owner/retirement intent schemas and nonempty ID/digest formats, releasedBytesHex16 safe positive, payload digest and unique operation/record/stream sequence verified. Missing retired arrays only v1 compatibility; source tombstones must match actual actor/evidence/owner intent and payload digest. No capacity/cleanup success author hidden in boolean predicates.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-27df0c4c2ee9e4cd",
+      "source": "skills/common/plugin-runtime/foundation/observability/replay-validation.ts",
+      "line": 60,
+      "sourceSha256": "8e11ae8d57a44f7a0947ee9f81a794630eab3c5cbdfcde38673ba1e41e62cbbc",
+      "exactText": "    const headers = [...state.entries.map(({record})=>record),...(state.retiredEntries??[]).map(({acknowledgement:a})=>({producer:a.producer,sequence:a.sequence,correlation:{pipelineRunId:a.pipelineRunId}}))];",
+      "reader": {
+        "name": "admissionGaps",
+        "parents": [],
+        "startLine": 54,
+        "endLine": 66
+      },
+      "classification": "generated-binding",
+      "reason": "Current admission v1/v2 schema/version, original+retired producer sequence/cursors monotonicity and required retired entries checked from persisted source; normalization of optional v1 entries is historical compatibility, not unbounded policy or invented measurements.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-089196e64af3cee0",
+      "source": "skills/common/plugin-runtime/foundation/observability/replay-validation.ts",
+      "line": 94,
+      "sourceSha256": "8e11ae8d57a44f7a0947ee9f81a794630eab3c5cbdfcde38673ba1e41e62cbbc",
+      "exactText": "  replayAssert(state.schemaVersion === 'observability-admission-store.v1' || state.schemaVersion === 'observability-admission-store.v2', 'admission-version');",
+      "reader": {
+        "name": "assertAdmissionReplay",
+        "parents": [],
+        "startLine": 92,
+        "endLine": 109
+      },
+      "classification": "generated-binding",
+      "reason": "Current admission v1/v2 schema/version, original+retired producer sequence/cursors monotonicity and required retired entries checked from persisted source; normalization of optional v1 entries is historical compatibility, not unbounded policy or invented measurements.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-25e885e93ee7c8bd",
+      "source": "skills/common/plugin-runtime/foundation/observability/replay-validation.ts",
+      "line": 96,
+      "sourceSha256": "8e11ae8d57a44f7a0947ee9f81a794630eab3c5cbdfcde38673ba1e41e62cbbc",
+      "exactText": "  replayAssert(state.schemaVersion !== 'observability-admission-store.v2' || Array.isArray(state.retiredEntries),'admission-retired-entries');",
+      "reader": {
+        "name": "assertAdmissionReplay",
+        "parents": [],
+        "startLine": 92,
+        "endLine": 109
+      },
+      "classification": "generated-binding",
+      "reason": "Current admission v1/v2 schema/version, original+retired producer sequence/cursors monotonicity and required retired entries checked from persisted source; normalization of optional v1 entries is historical compatibility, not unbounded policy or invented measurements.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-403484b0bad79c60",
+      "source": "skills/common/plugin-runtime/foundation/observability/replay-validation.ts",
+      "line": 97,
+      "sourceSha256": "8e11ae8d57a44f7a0947ee9f81a794630eab3c5cbdfcde38673ba1e41e62cbbc",
+      "exactText": "  const retired=state.retiredEntries??[];",
+      "reader": {
+        "name": "assertAdmissionReplay",
+        "parents": [],
+        "startLine": 92,
+        "endLine": 109
+      },
+      "classification": "generated-binding",
+      "reason": "Current admission v1/v2 schema/version, original+retired producer sequence/cursors monotonicity and required retired entries checked from persisted source; normalization of optional v1 entries is historical compatibility, not unbounded policy or invented measurements.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-0ea9b4e771b3771d",
+      "source": "skills/common/plugin-runtime/foundation/observability/replay-validation.ts",
+      "line": 102,
+      "sourceSha256": "8e11ae8d57a44f7a0947ee9f81a794630eab3c5cbdfcde38673ba1e41e62cbbc",
+      "exactText": "    replayAssert(index===0 || entry.canonicalCursor>state.entries[index-1]!.canonicalCursor,'admission-active-order');",
+      "reader": {
+        "name": "assertAdmissionReplay",
+        "parents": [],
+        "startLine": 92,
+        "endLine": 109
+      },
+      "classification": "generated-binding",
+      "reason": "Current admission v1/v2 schema/version, original+retired producer sequence/cursors monotonicity and required retired entries checked from persisted source; normalization of optional v1 entries is historical compatibility, not unbounded policy or invented measurements.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-c20a833f21f37bb9",
+      "source": "skills/common/plugin-runtime/foundation/observability/wait-projection.ts",
+      "line": 39,
+      "sourceSha256": "f999051f0bf3539e64172bf636a0f95141dd74643ff1738fda1a4f2a656ba656",
+      "exactText": "    || source.schemaVersion !== 'retained-core-wait-source.v1'",
+      "reader": {
+        "name": "assertRetainedWaitSource",
+        "parents": [],
+        "startLine": 37,
+        "endLine": 47
+      },
+      "classification": "generated-binding",
+      "reason": "retained-core-wait-source.v1 and projected receipt exact shapes; actual run/effect/wait digest-derived identity, journal roots/prefixes/inventory closure, actor/operator effect key, terminal payload, source/intent/authority digests and released bytes must match before projection/replay/retirement. inventoryLimits are captured original retained source limits, not new latest CONFIG refill; same-root alias forbidden. Fixed placeholder timestamp used only release-size projection, never actual stored operation time.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-ec0b76c8cc1eec6b",
+      "source": "skills/common/plugin-runtime/foundation/observability/wait-projection.ts",
+      "line": 40,
+      "sourceSha256": "f999051f0bf3539e64172bf636a0f95141dd74643ff1738fda1a4f2a656ba656",
+      "exactText": "    || ![source.runId, source.effectKey, source.waitId].every(id)",
+      "reader": {
+        "name": "assertRetainedWaitSource",
+        "parents": [],
+        "startLine": 37,
+        "endLine": 47
+      },
+      "classification": "generated-binding",
+      "reason": "retained-core-wait-source.v1 and projected receipt exact shapes; actual run/effect/wait digest-derived identity, journal roots/prefixes/inventory closure, actor/operator effect key, terminal payload, source/intent/authority digests and released bytes must match before projection/replay/retirement. inventoryLimits are captured original retained source limits, not new latest CONFIG refill; same-root alias forbidden. Fixed placeholder timestamp used only release-size projection, never actual stored operation time.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-f87603a39e97a0d9",
+      "source": "skills/common/plugin-runtime/foundation/observability/wait-projection.ts",
+      "line": 41,
+      "sourceSha256": "f999051f0bf3539e64172bf636a0f95141dd74643ff1738fda1a4f2a656ba656",
+      "exactText": "    || ![source.eventsDigest, source.effectsDigest, source.originalPayloadDigest, source.rootIdentityDigest, source.runJournalHead,",
+      "reader": {
+        "name": "assertRetainedWaitSource",
+        "parents": [],
+        "startLine": 37,
+        "endLine": 47
+      },
+      "classification": "generated-binding",
+      "reason": "retained-core-wait-source.v1 and projected receipt exact shapes; actual run/effect/wait digest-derived identity, journal roots/prefixes/inventory closure, actor/operator effect key, terminal payload, source/intent/authority digests and released bytes must match before projection/replay/retirement. inventoryLimits are captured original retained source limits, not new latest CONFIG refill; same-root alias forbidden. Fixed placeholder timestamp used only release-size projection, never actual stored operation time.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-e12e25944a754797",
+      "source": "skills/common/plugin-runtime/foundation/observability/wait-projection.ts",
+      "line": 43,
+      "sourceSha256": "f999051f0bf3539e64172bf636a0f95141dd74643ff1738fda1a4f2a656ba656",
+      "exactText": "    || ![source.eventsPrefixBytes, source.effectsPrefixBytes, source.signalsPrefixBytes].every(value => Number.isSafeInteger(value) && value > 0)",
+      "reader": {
+        "name": "assertRetainedWaitSource",
+        "parents": [],
+        "startLine": 37,
+        "endLine": 47
+      },
+      "classification": "generated-binding",
+      "reason": "retained-core-wait-source.v1 and projected receipt exact shapes; actual run/effect/wait digest-derived identity, journal roots/prefixes/inventory closure, actor/operator effect key, terminal payload, source/intent/authority digests and released bytes must match before projection/replay/retirement. inventoryLimits are captured original retained source limits, not new latest CONFIG refill; same-root alias forbidden. Fixed placeholder timestamp used only release-size projection, never actual stored operation time.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-51a65d1427ebc9b0",
+      "source": "skills/common/plugin-runtime/foundation/observability/wait-projection.ts",
+      "line": 44,
+      "sourceSha256": "f999051f0bf3539e64172bf636a0f95141dd74643ff1738fda1a4f2a656ba656",
+      "exactText": "    || !shape(source.inventoryLimits, 'maximumFiles,maximumSnapshotBytes,maximumTotalBytes')",
+      "reader": {
+        "name": "assertRetainedWaitSource",
+        "parents": [],
+        "startLine": 37,
+        "endLine": 47
+      },
+      "classification": "generated-binding",
+      "reason": "retained-core-wait-source.v1 and projected receipt exact shapes; actual run/effect/wait digest-derived identity, journal roots/prefixes/inventory closure, actor/operator effect key, terminal payload, source/intent/authority digests and released bytes must match before projection/replay/retirement. inventoryLimits are captured original retained source limits, not new latest CONFIG refill; same-root alias forbidden. Fixed placeholder timestamp used only release-size projection, never actual stored operation time.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-3f5c487a33f05203",
+      "source": "skills/common/plugin-runtime/foundation/observability/wait-projection.ts",
+      "line": 45,
+      "sourceSha256": "f999051f0bf3539e64172bf636a0f95141dd74643ff1738fda1a4f2a656ba656",
+      "exactText": "    || !Object.values(source.inventoryLimits).every(value => Number.isSafeInteger(value) && value > 0)",
+      "reader": {
+        "name": "assertRetainedWaitSource",
+        "parents": [],
+        "startLine": 37,
+        "endLine": 47
+      },
+      "classification": "generated-binding",
+      "reason": "retained-core-wait-source.v1 and projected receipt exact shapes; actual run/effect/wait digest-derived identity, journal roots/prefixes/inventory closure, actor/operator effect key, terminal payload, source/intent/authority digests and released bytes must match before projection/replay/retirement. inventoryLimits are captured original retained source limits, not new latest CONFIG refill; same-root alias forbidden. Fixed placeholder timestamp used only release-size projection, never actual stored operation time.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-68826ef672da80cc",
+      "source": "skills/common/plugin-runtime/foundation/observability/wait-projection.ts",
+      "line": 46,
+      "sourceSha256": "f999051f0bf3539e64172bf636a0f95141dd74643ff1738fda1a4f2a656ba656",
+      "exactText": "    || source.waitId !== `wait:${crypto.createHash('sha256').update(source.effectKey).digest('hex')}`) fail();",
+      "reader": {
+        "name": "assertRetainedWaitSource",
+        "parents": [],
+        "startLine": 37,
+        "endLine": 47
+      },
+      "classification": "generated-binding",
+      "reason": "retained-core-wait-source.v1 and projected receipt exact shapes; actual run/effect/wait digest-derived identity, journal roots/prefixes/inventory closure, actor/operator effect key, terminal payload, source/intent/authority digests and released bytes must match before projection/replay/retirement. inventoryLimits are captured original retained source limits, not new latest CONFIG refill; same-root alias forbidden. Fixed placeholder timestamp used only release-size projection, never actual stored operation time.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-dbff871f83eec03e",
+      "source": "skills/common/plugin-runtime/foundation/observability/wait-projection.ts",
+      "line": 50,
+      "sourceSha256": "f999051f0bf3539e64172bf636a0f95141dd74643ff1738fda1a4f2a656ba656",
+      "exactText": "    || ![intent.actor, intent.operationId, intent.operatorEffectKey].every(id)",
+      "reader": {
+        "name": "assertWaitProjectionIntent",
+        "parents": [],
+        "startLine": 48,
+        "endLine": 56
+      },
+      "classification": "generated-binding",
+      "reason": "retained-core-wait-source.v1 and projected receipt exact shapes; actual run/effect/wait digest-derived identity, journal roots/prefixes/inventory closure, actor/operator effect key, terminal payload, source/intent/authority digests and released bytes must match before projection/replay/retirement. inventoryLimits are captured original retained source limits, not new latest CONFIG refill; same-root alias forbidden. Fixed placeholder timestamp used only release-size projection, never actual stored operation time.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-ab7fb2ece8b0c161",
+      "source": "skills/common/plugin-runtime/foundation/observability/wait-projection.ts",
+      "line": 51,
+      "sourceSha256": "f999051f0bf3539e64172bf636a0f95141dd74643ff1738fda1a4f2a656ba656",
+      "exactText": "    || !digest(intent.terminalPayloadDigest)",
+      "reader": {
+        "name": "assertWaitProjectionIntent",
+        "parents": [],
+        "startLine": 48,
+        "endLine": 56
+      },
+      "classification": "generated-binding",
+      "reason": "retained-core-wait-source.v1 and projected receipt exact shapes; actual run/effect/wait digest-derived identity, journal roots/prefixes/inventory closure, actor/operator effect key, terminal payload, source/intent/authority digests and released bytes must match before projection/replay/retirement. inventoryLimits are captured original retained source limits, not new latest CONFIG refill; same-root alias forbidden. Fixed placeholder timestamp used only release-size projection, never actual stored operation time.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-f87b87539ad03f94",
+      "source": "skills/common/plugin-runtime/foundation/observability/wait-projection.ts",
+      "line": 52,
+      "sourceSha256": "f999051f0bf3539e64172bf636a0f95141dd74643ff1738fda1a4f2a656ba656",
+      "exactText": "    || ![intent.waitRoot, intent.deliveryRoot].every(value => typeof value === 'string'",
+      "reader": {
+        "name": "assertWaitProjectionIntent",
+        "parents": [],
+        "startLine": 48,
+        "endLine": 56
+      },
+      "classification": "generated-binding",
+      "reason": "retained-core-wait-source.v1 and projected receipt exact shapes; actual run/effect/wait digest-derived identity, journal roots/prefixes/inventory closure, actor/operator effect key, terminal payload, source/intent/authority digests and released bytes must match before projection/replay/retirement. inventoryLimits are captured original retained source limits, not new latest CONFIG refill; same-root alias forbidden. Fixed placeholder timestamp used only release-size projection, never actual stored operation time.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-de8e60c3df2839bd",
+      "source": "skills/common/plugin-runtime/foundation/observability/wait-projection.ts",
+      "line": 54,
+      "sourceSha256": "f999051f0bf3539e64172bf636a0f95141dd74643ff1738fda1a4f2a656ba656",
+      "exactText": "    || intent.waitRoot === intent.deliveryRoot) fail();",
+      "reader": {
+        "name": "assertWaitProjectionIntent",
+        "parents": [],
+        "startLine": 48,
+        "endLine": 56
+      },
+      "classification": "generated-binding",
+      "reason": "retained-core-wait-source.v1 and projected receipt exact shapes; actual run/effect/wait digest-derived identity, journal roots/prefixes/inventory closure, actor/operator effect key, terminal payload, source/intent/authority digests and released bytes must match before projection/replay/retirement. inventoryLimits are captured original retained source limits, not new latest CONFIG refill; same-root alias forbidden. Fixed placeholder timestamp used only release-size projection, never actual stored operation time.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-1ed2e9390fc2639c",
+      "source": "skills/common/plugin-runtime/foundation/observability/wait-projection.ts",
+      "line": 58,
+      "sourceSha256": "f999051f0bf3539e64172bf636a0f95141dd74643ff1738fda1a4f2a656ba656",
+      "exactText": "  if (!shape(value, 'originalDigest,projection,schemaVersion,source') || value.schemaVersion !== 'wait-value-projected.v1'",
+      "reader": {
+        "name": "assertWaitProjection",
+        "parents": [],
+        "startLine": 57,
+        "endLine": 69
+      },
+      "classification": "generated-binding",
+      "reason": "retained-core-wait-source.v1 and projected receipt exact shapes; actual run/effect/wait digest-derived identity, journal roots/prefixes/inventory closure, actor/operator effect key, terminal payload, source/intent/authority digests and released bytes must match before projection/replay/retirement. inventoryLimits are captured original retained source limits, not new latest CONFIG refill; same-root alias forbidden. Fixed placeholder timestamp used only release-size projection, never actual stored operation time.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-b05762211813c77d",
+      "source": "skills/common/plugin-runtime/foundation/observability/wait-projection.ts",
+      "line": 59,
+      "sourceSha256": "f999051f0bf3539e64172bf636a0f95141dd74643ff1738fda1a4f2a656ba656",
+      "exactText": "    || !shape(value.projection, 'authorityDigest,intent,intentDigest,releasedBytesHex,schemaVersion')) fail();",
+      "reader": {
+        "name": "assertWaitProjection",
+        "parents": [],
+        "startLine": 57,
+        "endLine": 69
+      },
+      "classification": "generated-binding",
+      "reason": "retained-core-wait-source.v1 and projected receipt exact shapes; actual run/effect/wait digest-derived identity, journal roots/prefixes/inventory closure, actor/operator effect key, terminal payload, source/intent/authority digests and released bytes must match before projection/replay/retirement. inventoryLimits are captured original retained source limits, not new latest CONFIG refill; same-root alias forbidden. Fixed placeholder timestamp used only release-size projection, never actual stored operation time.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-cb60022121d93242",
+      "source": "skills/common/plugin-runtime/foundation/observability/wait-projection.ts",
+      "line": 63,
+      "sourceSha256": "f999051f0bf3539e64172bf636a0f95141dd74643ff1738fda1a4f2a656ba656",
+      "exactText": "  if (receipt.schemaVersion !== 'wait-value-projection-receipt.v1' || !digest(receipt.authorityDigest)",
+      "reader": {
+        "name": "assertWaitProjection",
+        "parents": [],
+        "startLine": 57,
+        "endLine": 69
+      },
+      "classification": "generated-binding",
+      "reason": "retained-core-wait-source.v1 and projected receipt exact shapes; actual run/effect/wait digest-derived identity, journal roots/prefixes/inventory closure, actor/operator effect key, terminal payload, source/intent/authority digests and released bytes must match before projection/replay/retirement. inventoryLimits are captured original retained source limits, not new latest CONFIG refill; same-root alias forbidden. Fixed placeholder timestamp used only release-size projection, never actual stored operation time.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-860f567ae6a4820c",
+      "source": "skills/common/plugin-runtime/foundation/observability/wait-projection.ts",
+      "line": 64,
+      "sourceSha256": "f999051f0bf3539e64172bf636a0f95141dd74643ff1738fda1a4f2a656ba656",
+      "exactText": "    || receipt.intentDigest !== payloadDigest(receipt.intent) || payloadDigest(value.source) !== payloadDigest(receipt.intent.source)",
+      "reader": {
+        "name": "assertWaitProjection",
+        "parents": [],
+        "startLine": 57,
+        "endLine": 69
+      },
+      "classification": "generated-binding",
+      "reason": "retained-core-wait-source.v1 and projected receipt exact shapes; actual run/effect/wait digest-derived identity, journal roots/prefixes/inventory closure, actor/operator effect key, terminal payload, source/intent/authority digests and released bytes must match before projection/replay/retirement. inventoryLimits are captured original retained source limits, not new latest CONFIG refill; same-root alias forbidden. Fixed placeholder timestamp used only release-size projection, never actual stored operation time.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-7175b5f01788a2e4",
+      "source": "skills/common/plugin-runtime/foundation/observability/wait-projection.ts",
+      "line": 65,
+      "sourceSha256": "f999051f0bf3539e64172bf636a0f95141dd74643ff1738fda1a4f2a656ba656",
+      "exactText": "    || value.originalDigest !== value.source.originalPayloadDigest || key !== value.source.effectKey",
+      "reader": {
+        "name": "assertWaitProjection",
+        "parents": [],
+        "startLine": 57,
+        "endLine": 69
+      },
+      "classification": "generated-binding",
+      "reason": "retained-core-wait-source.v1 and projected receipt exact shapes; actual run/effect/wait digest-derived identity, journal roots/prefixes/inventory closure, actor/operator effect key, terminal payload, source/intent/authority digests and released bytes must match before projection/replay/retirement. inventoryLimits are captured original retained source limits, not new latest CONFIG refill; same-root alias forbidden. Fixed placeholder timestamp used only release-size projection, never actual stored operation time.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-e4742ab1f165af38",
+      "source": "skills/common/plugin-runtime/foundation/observability/wait-projection.ts",
+      "line": 66,
+      "sourceSha256": "f999051f0bf3539e64172bf636a0f95141dd74643ff1738fda1a4f2a656ba656",
+      "exactText": "    || typeof receipt.releasedBytesHex !== 'string' || !/^[a-f0-9]{16}$/u.test(receipt.releasedBytesHex)",
+      "reader": {
+        "name": "assertWaitProjection",
+        "parents": [],
+        "startLine": 57,
+        "endLine": 69
+      },
+      "classification": "generated-binding",
+      "reason": "retained-core-wait-source.v1 and projected receipt exact shapes; actual run/effect/wait digest-derived identity, journal roots/prefixes/inventory closure, actor/operator effect key, terminal payload, source/intent/authority digests and released bytes must match before projection/replay/retirement. inventoryLimits are captured original retained source limits, not new latest CONFIG refill; same-root alias forbidden. Fixed placeholder timestamp used only release-size projection, never actual stored operation time.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-658cbe7c82d62fa1",
+      "source": "skills/common/plugin-runtime/foundation/observability/wait-projection.ts",
+      "line": 67,
+      "sourceSha256": "f999051f0bf3539e64172bf636a0f95141dd74643ff1738fda1a4f2a656ba656",
+      "exactText": "    || !Number.isSafeInteger(Number.parseInt(receipt.releasedBytesHex, 16))",
+      "reader": {
+        "name": "assertWaitProjection",
+        "parents": [],
+        "startLine": 57,
+        "endLine": 69
+      },
+      "classification": "generated-binding",
+      "reason": "retained-core-wait-source.v1 and projected receipt exact shapes; actual run/effect/wait digest-derived identity, journal roots/prefixes/inventory closure, actor/operator effect key, terminal payload, source/intent/authority digests and released bytes must match before projection/replay/retirement. inventoryLimits are captured original retained source limits, not new latest CONFIG refill; same-root alias forbidden. Fixed placeholder timestamp used only release-size projection, never actual stored operation time.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-f9396e3a20be95ec",
+      "source": "skills/common/plugin-runtime/foundation/observability/wait-projection.ts",
+      "line": 68,
+      "sourceSha256": "f999051f0bf3539e64172bf636a0f95141dd74643ff1738fda1a4f2a656ba656",
+      "exactText": "    || Number.parseInt(receipt.releasedBytesHex, 16) < 1) fail();",
+      "reader": {
+        "name": "assertWaitProjection",
+        "parents": [],
+        "startLine": 57,
+        "endLine": 69
+      },
+      "classification": "generated-binding",
+      "reason": "retained-core-wait-source.v1 and projected receipt exact shapes; actual run/effect/wait digest-derived identity, journal roots/prefixes/inventory closure, actor/operator effect key, terminal payload, source/intent/authority digests and released bytes must match before projection/replay/retirement. inventoryLimits are captured original retained source limits, not new latest CONFIG refill; same-root alias forbidden. Fixed placeholder timestamp used only release-size projection, never actual stored operation time.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-b9cdace5821b15b3",
+      "source": "skills/common/plugin-runtime/foundation/observability/wait-projection.ts",
+      "line": 78,
+      "sourceSha256": "f999051f0bf3539e64172bf636a0f95141dd74643ff1738fda1a4f2a656ba656",
+      "exactText": "  if (wait.waitId !== value.source.waitId || payloadDigest(original) !== value.originalDigest) fail();",
+      "reader": {
+        "name": "resolveWaitValue",
+        "parents": [],
+        "startLine": 71,
+        "endLine": 80
+      },
+      "classification": "generated-binding",
+      "reason": "retained-core-wait-source.v1 and projected receipt exact shapes; actual run/effect/wait digest-derived identity, journal roots/prefixes/inventory closure, actor/operator effect key, terminal payload, source/intent/authority digests and released bytes must match before projection/replay/retirement. inventoryLimits are captured original retained source limits, not new latest CONFIG refill; same-root alias forbidden. Fixed placeholder timestamp used only release-size projection, never actual stored operation time.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-15f8bf26c9b0d9df",
+      "source": "skills/common/plugin-runtime/foundation/observability/wait-projection.ts",
+      "line": 89,
+      "sourceSha256": "f999051f0bf3539e64172bf636a0f95141dd74643ff1738fda1a4f2a656ba656",
+      "exactText": "  if (!digest(authorityDigest) || !deliveryStream.startsWith('notifications/')) fail();",
+      "reader": {
+        "name": "projectWaitValue",
+        "parents": [],
+        "startLine": 83,
+        "endLine": 120
+      },
+      "classification": "generated-binding",
+      "reason": "retained-core-wait-source.v1 and projected receipt exact shapes; actual run/effect/wait digest-derived identity, journal roots/prefixes/inventory closure, actor/operator effect key, terminal payload, source/intent/authority digests and released bytes must match before projection/replay/retirement. inventoryLimits are captured original retained source limits, not new latest CONFIG refill; same-root alias forbidden. Fixed placeholder timestamp used only release-size projection, never actual stored operation time.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-40ff218aa2c34d3a",
+      "source": "skills/common/plugin-runtime/foundation/observability/wait-projection.ts",
+      "line": 98,
+      "sourceSha256": "f999051f0bf3539e64172bf636a0f95141dd74643ff1738fda1a4f2a656ba656",
+      "exactText": "        if (!current || current.payload.schemaVersion !== 'wait-value-projected.v1') fail();",
+      "reader": {
+        "name": "projectWaitValue",
+        "parents": [],
+        "startLine": 83,
+        "endLine": 120
+      },
+      "classification": "generated-binding",
+      "reason": "retained-core-wait-source.v1 and projected receipt exact shapes; actual run/effect/wait digest-derived identity, journal roots/prefixes/inventory closure, actor/operator effect key, terminal payload, source/intent/authority digests and released bytes must match before projection/replay/retirement. inventoryLimits are captured original retained source limits, not new latest CONFIG refill; same-root alias forbidden. Fixed placeholder timestamp used only release-size projection, never actual stored operation time.",
+      "status": "manually-source-disposed; independent review pending"
+    },
+    {
+      "candidateId": "SRC-8b76282dcb2e4c90",
+      "source": "skills/common/plugin-runtime/foundation/observability/wait-projection.ts",
+      "line": 101,
+      "sourceSha256": "f999051f0bf3539e64172bf636a0f95141dd74643ff1738fda1a4f2a656ba656",
+      "exactText": "        if (payloadDigest(value.projection.intent) !== payloadDigest(intent) || value.projection.authorityDigest !== authorityDigest) fail();",
+      "reader": {
+        "name": "projectWaitValue",
+        "parents": [],
+        "startLine": 83,
+        "endLine": 120
+      },
+      "classification": "generated-binding",
+      "reason": "retained-core-wait-source.v1 and projected receipt exact shapes; actual run/effect/wait digest-derived identity, journal roots/prefixes/inventory closure, actor/operator effect key, terminal payload, source/intent/authority digests and released bytes must match before projection/replay/retirement. inventoryLimits are captured original retained source limits, not new latest CONFIG refill; same-root alias forbidden. Fixed placeholder timestamp used only release-size projection, never actual stored operation time.",
+      "status": "manually-source-disposed; independent review pending"
+    }
+  ],
+  "uncoveredProductivePolicyIds": [
+    "CMP-SOURCE-FOUNDATION-FLOCK-WAIT",
+    "CMP-SOURCE-ADMISSION-METADATA-RESERVE",
+    "CMP-SOURCE-OUTBOX-UNBOUNDED-READ"
+  ],
+  "noIndependentOwnerClaim": true
+}

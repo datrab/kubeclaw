@@ -1,0 +1,817 @@
+{
+  "scope": "11 exact native producer/provisioning contracts; no duplicate primary Core author or OCI=code equivalence claim",
+  "records": [
+    {
+      "id": "DLV-NATIVE-PRISM-ENGINE-DIGEST-PROJECTION",
+      "owner": "native-delivery-projection",
+      "scope": {
+        "instance": "prism standalone worker image/Chart/native execution",
+        "profile": "selected actual role/host generation; proposed isolated alternatives only"
+      },
+      "class": "generated-binding",
+      "source": {
+        "path": "charts/prism/templates/workloads.yaml",
+        "line": 88,
+        "field": "PRISM_ENGINE_CONTENT_DIGEST",
+        "sha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20"
+      },
+      "current": {
+        "valueOrDefault": "$.Values.images.worker.digest",
+        "precedence": "actual current source producer or literal; no alternate author or equality proof inferred"
+      },
+      "typeUnitDomain": "Chart emits OCI worker image digest into content-digest-named ENV; worker native execution envelope source uses named field. Current code does NOT establish packaged engine tree/contentDigest equivalence to OCI digest. Target must keep OCI receipt, engine package source/contentDigest and revision distinct, derive authentic package content receipt with same generation before native dispatch.",
+      "reader": {
+        "operation": "Chart emits OCI worker image digest into content-digest-named ENV; worker native execution envelope source uses named field. Current code does NOT establish packaged engine tree/contentDigest equivalence to OCI digest. Target must keep OCI receipt, engine package source/contentDigest and revision distinct, derive authentic package content receipt with same generation before native dispatch.",
+        "references": [
+          {
+            "path": "charts/prism/templates/workloads.yaml",
+            "sha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20"
+          },
+          {
+            "path": "skills/prism/engine/worker-envelope.ts",
+            "sha256": "56ddb558742228e8c828b98b83916dcdcd1c46f355f2061bfc0c4bdac0290941"
+          },
+          {
+            "path": "scripts/build-runtime-role-bundle.mjs",
+            "sha256": "0e20765fdcc03f09b884aba805e6733f42e63c494d39a11827b2fda5c9bd6ef9"
+          }
+        ],
+        "crossOwnerHandoff": "parent native engine contentDigest reader handoff; image version field remains sole V author, not same semantic author"
+      },
+      "productiveCallerChain": "Chart emits OCI worker image digest into content-digest-named ENV; worker native execution envelope source uses named field. Current code does NOT establish packaged engine tree/contentDigest equivalence to OCI digest. Target must keep OCI receipt, engine package source/contentDigest and revision distinct, derive authentic package content receipt with same generation before native dispatch.",
+      "validation": {
+        "schema": "exact described native source producer/guard; live authentic native dependencies not executed",
+        "semantic": "Chart emits OCI worker image digest into content-digest-named ENV; worker native execution envelope source uses named field. Current code does NOT establish packaged engine tree/contentDigest equivalence to OCI digest. Target must keep OCI receipt, engine package source/contentDigest and revision distinct, derive authentic package content receipt with same generation before native dispatch.",
+        "errorContract": "source-linked trusted-root/native policy/digest/identity/role/byte/CPU guards, not fabricated generic JSON rejection"
+      },
+      "target": {
+        "author": "parent native engine contentDigest reader handoff; image version field remains sole V author, not same semantic author",
+        "reference": "PRISM_ENGINE_CONTENT_DIGEST",
+        "slice": "C1 existing bindings; C3 same-owner supported policy extension only"
+      },
+      "activationScope": {
+        "current": "selected image/host/role/package generation then trusted parent/child startup; IPC auth/source/state bound per native admission",
+        "target": "same immutable selected generation before module dispatch; retained native identity/ownership records do not reset on B publication"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "native paths/uid/groups/grants/package/image/revision identity must remain mutually consistent; envelope content/source authority not replaceable by same-shaped OCI hash; resource/budget/recovery readers preserve started run authority",
+      "profileEvalSuitability": "A/B fixed native config/state/source locators retained; selected complete role image/host-policy/Core records, actual node/runtime identity and permissions supplied by isolated authentic fixture. Policy cap65536\u219232768 / period100000\u2192200000 correlated quota examples require serialized size/cgroup native prerequisites; no host probe",
+      "migrationAction": "bind actual source/package content digest, OCI image digest and source revision distinctly; native bootstrap refs generated from same existing selected owner/host policy. Do not create a second writer for Core native file caps or shared lease policy.",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-DELIVERY"
+      ],
+      "caseIds": [
+        "DLV-CASE-NATIVE-PROVISIONING-IDENTITY-CLOSURE"
+      ],
+      "evidence": [
+        "docs/review/evidence/config-acceptance/delivery/native-provisioning-contracts-bce3f075.json"
+      ],
+      "status": "source-traced"
+    },
+    {
+      "id": "DLV-NATIVE-BUSTER-ENGINE-DIGEST-PROJECTION",
+      "owner": "native-delivery-projection",
+      "scope": {
+        "instance": "buster native role/image/parent-child runtime",
+        "profile": "selected actual role/host generation; proposed isolated alternatives only"
+      },
+      "class": "generated-binding",
+      "source": {
+        "path": "charts/kubeclaw/templates/_buster-native.tpl",
+        "line": 17,
+        "field": "BUSTER_ENGINE_CONTENT_DIGEST",
+        "sha256": "06eaa44435684f2af9a14365b149ecef0c5cab1a0929413d5edbc2b73e8247e6"
+      },
+      "current": {
+        "valueOrDefault": "regexFind @sha256 suffix of buster-v2-runtime.image",
+        "precedence": "actual current source producer or literal; no alternate author or equality proof inferred"
+      },
+      "typeUnitDomain": "Native helper requires OCI digest-pinned sidecar and rejects competing ENV even equal; ENV naming does not attest engine packaged-code content digest. Preparation-config requires sha256 shape; native execution/registry/source revisions must remain independently bound. No new adjustable contentDigest field from image alias.",
+      "reader": {
+        "operation": "Native helper requires OCI digest-pinned sidecar and rejects competing ENV even equal; ENV naming does not attest engine packaged-code content digest. Preparation-config requires sha256 shape; native execution/registry/source revisions must remain independently bound. No new adjustable contentDigest field from image alias.",
+        "references": [
+          {
+            "path": "charts/kubeclaw/templates/_buster-native.tpl",
+            "sha256": "06eaa44435684f2af9a14365b149ecef0c5cab1a0929413d5edbc2b73e8247e6"
+          },
+          {
+            "path": "skills/buster/engine/test-gates/preparation-config.ts",
+            "sha256": "f2b088c3fef62010e6d867f6610ccc2392fdb7d6fa6be2bd43ad8e320d099835"
+          },
+          {
+            "path": "scripts/build-runtime-role-bundle.mjs",
+            "sha256": "0e20765fdcc03f09b884aba805e6733f42e63c494d39a11827b2fda5c9bd6ef9"
+          }
+        ],
+        "crossOwnerHandoff": "Core Buster package content identity source reader handoff"
+      },
+      "productiveCallerChain": "Native helper requires OCI digest-pinned sidecar and rejects competing ENV even equal; ENV naming does not attest engine packaged-code content digest. Preparation-config requires sha256 shape; native execution/registry/source revisions must remain independently bound. No new adjustable contentDigest field from image alias.",
+      "validation": {
+        "schema": "exact described native source producer/guard; live authentic native dependencies not executed",
+        "semantic": "Native helper requires OCI digest-pinned sidecar and rejects competing ENV even equal; ENV naming does not attest engine packaged-code content digest. Preparation-config requires sha256 shape; native execution/registry/source revisions must remain independently bound. No new adjustable contentDigest field from image alias.",
+        "errorContract": "source-linked trusted-root/native policy/digest/identity/role/byte/CPU guards, not fabricated generic JSON rejection"
+      },
+      "target": {
+        "author": "Core Buster package content identity source reader handoff",
+        "reference": "BUSTER_ENGINE_CONTENT_DIGEST",
+        "slice": "C1 existing bindings; C3 same-owner supported policy extension only"
+      },
+      "activationScope": {
+        "current": "selected image/host/role/package generation then trusted parent/child startup; IPC auth/source/state bound per native admission",
+        "target": "same immutable selected generation before module dispatch; retained native identity/ownership records do not reset on B publication"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "native paths/uid/groups/grants/package/image/revision identity must remain mutually consistent; envelope content/source authority not replaceable by same-shaped OCI hash; resource/budget/recovery readers preserve started run authority",
+      "profileEvalSuitability": "A/B fixed native config/state/source locators retained; selected complete role image/host-policy/Core records, actual node/runtime identity and permissions supplied by isolated authentic fixture. Policy cap65536\u219232768 / period100000\u2192200000 correlated quota examples require serialized size/cgroup native prerequisites; no host probe",
+      "migrationAction": "bind actual source/package content digest, OCI image digest and source revision distinctly; native bootstrap refs generated from same existing selected owner/host policy. Do not create a second writer for Core native file caps or shared lease policy.",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-DELIVERY"
+      ],
+      "caseIds": [
+        "DLV-CASE-NATIVE-PROVISIONING-IDENTITY-CLOSURE"
+      ],
+      "evidence": [
+        "docs/review/evidence/config-acceptance/delivery/native-provisioning-contracts-bce3f075.json"
+      ],
+      "status": "source-traced"
+    },
+    {
+      "id": "DLV-NATIVE-BUSTER-POOL-POLICY-LOCATOR",
+      "owner": "native-delivery-projection",
+      "scope": {
+        "instance": "buster native role/image/parent-child runtime",
+        "profile": "selected actual role/host generation; proposed isolated alternatives only"
+      },
+      "class": "generated-binding",
+      "source": {
+        "path": "charts/kubeclaw/templates/_buster-native.tpl",
+        "line": 16,
+        "field": "BUSTER_NATIVE_POOL_POLICY_FILE",
+        "sha256": "06eaa44435684f2af9a14365b149ecef0c5cab1a0929413d5edbc2b73e8247e6"
+      },
+      "current": {
+        "valueOrDefault": "/etc/kubeclaw/buster-pool.json",
+        "precedence": "actual current source producer or literal; no alternate author or equality proof inferred"
+      },
+      "typeUnitDomain": "Native role projects trusted readonly host pool policy; rejects old ENV/mount competition. Host renderer emits buster-pool.json selected role digest; pool reader validates actual owner/mode/node/runtime identity/cgroup bounds before launch. Locator is NOT an independent scheduler policy author.",
+      "reader": {
+        "operation": "Native role projects trusted readonly host pool policy; rejects old ENV/mount competition. Host renderer emits buster-pool.json selected role digest; pool reader validates actual owner/mode/node/runtime identity/cgroup bounds before launch. Locator is NOT an independent scheduler policy author.",
+        "references": [
+          {
+            "path": "charts/kubeclaw/templates/_buster-native.tpl",
+            "sha256": "06eaa44435684f2af9a14365b149ecef0c5cab1a0929413d5edbc2b73e8247e6"
+          },
+          {
+            "path": "skills/buster/engine/test-gates/preparation-config.ts",
+            "sha256": "f2b088c3fef62010e6d867f6610ccc2392fdb7d6fa6be2bd43ad8e320d099835"
+          },
+          {
+            "path": "scripts/render-native-worker-node.mjs",
+            "sha256": "b32571ac43e893783a87002d473ecc3d3b9dd76d996ea3b26f76ec6a2ed748fc"
+          },
+          {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1"
+          }
+        ],
+        "crossOwnerHandoff": "CMP-WCORE-HOST-* real native pool reader contracts; DLV-NATIVE-HOST-POOLS-BUSTER-* sole host policy fields"
+      },
+      "productiveCallerChain": "Native role projects trusted readonly host pool policy; rejects old ENV/mount competition. Host renderer emits buster-pool.json selected role digest; pool reader validates actual owner/mode/node/runtime identity/cgroup bounds before launch. Locator is NOT an independent scheduler policy author.",
+      "validation": {
+        "schema": "exact described native source producer/guard; live authentic native dependencies not executed",
+        "semantic": "Native role projects trusted readonly host pool policy; rejects old ENV/mount competition. Host renderer emits buster-pool.json selected role digest; pool reader validates actual owner/mode/node/runtime identity/cgroup bounds before launch. Locator is NOT an independent scheduler policy author.",
+        "errorContract": "source-linked trusted-root/native policy/digest/identity/role/byte/CPU guards, not fabricated generic JSON rejection"
+      },
+      "target": {
+        "author": "CMP-WCORE-HOST-* real native pool reader contracts; DLV-NATIVE-HOST-POOLS-BUSTER-* sole host policy fields",
+        "reference": "BUSTER_NATIVE_POOL_POLICY_FILE",
+        "slice": "C1 existing bindings; C3 same-owner supported policy extension only"
+      },
+      "activationScope": {
+        "current": "selected image/host/role/package generation then trusted parent/child startup; IPC auth/source/state bound per native admission",
+        "target": "same immutable selected generation before module dispatch; retained native identity/ownership records do not reset on B publication"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "native paths/uid/groups/grants/package/image/revision identity must remain mutually consistent; envelope content/source authority not replaceable by same-shaped OCI hash; resource/budget/recovery readers preserve started run authority",
+      "profileEvalSuitability": "A/B fixed native config/state/source locators retained; selected complete role image/host-policy/Core records, actual node/runtime identity and permissions supplied by isolated authentic fixture. Policy cap65536\u219232768 / period100000\u2192200000 correlated quota examples require serialized size/cgroup native prerequisites; no host probe",
+      "migrationAction": "bind actual source/package content digest, OCI image digest and source revision distinctly; native bootstrap refs generated from same existing selected owner/host policy. Do not create a second writer for Core native file caps or shared lease policy.",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-DELIVERY"
+      ],
+      "caseIds": [
+        "DLV-CASE-NATIVE-PROVISIONING-IDENTITY-CLOSURE"
+      ],
+      "evidence": [
+        "docs/review/evidence/config-acceptance/delivery/native-provisioning-contracts-bce3f075.json"
+      ],
+      "status": "source-traced"
+    },
+    {
+      "id": "DLV-NATIVE-PRISM-POOL-POLICY-LOCATOR",
+      "owner": "native-delivery-projection",
+      "scope": {
+        "instance": "prism standalone worker image/Chart/native execution",
+        "profile": "selected actual role/host generation; proposed isolated alternatives only"
+      },
+      "class": "generated-binding",
+      "source": {
+        "path": "docker/Dockerfile.prism-worker",
+        "line": 49,
+        "field": "PRISM_NATIVE_POOL_POLICY_FILE",
+        "sha256": "820d8c1b9cb0784113fbd4c2ceb206b40cb0e2381d3fad3df647d7dcc784bb80"
+      },
+      "current": {
+        "valueOrDefault": "/etc/kubeclaw/prism-pool.json",
+        "precedence": "actual current source producer or literal; no alternate author or equality proof inferred"
+      },
+      "typeUnitDomain": "Image ENV path plus standalone workload readonly native-policy host mount must agree; actual native worker reads selected Prism pool, not gateway sidecar caller. Target derived selected native deployment/image binding, no mutable transport locator allowed to bypass trusted root.",
+      "reader": {
+        "operation": "Image ENV path plus standalone workload readonly native-policy host mount must agree; actual native worker reads selected Prism pool, not gateway sidecar caller. Target derived selected native deployment/image binding, no mutable transport locator allowed to bypass trusted root.",
+        "references": [
+          {
+            "path": "docker/Dockerfile.prism-worker",
+            "sha256": "820d8c1b9cb0784113fbd4c2ceb206b40cb0e2381d3fad3df647d7dcc784bb80"
+          },
+          {
+            "path": "charts/prism/templates/workloads.yaml",
+            "sha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20"
+          },
+          {
+            "path": "scripts/render-native-worker-node.mjs",
+            "sha256": "b32571ac43e893783a87002d473ecc3d3b9dd76d996ea3b26f76ec6a2ed748fc"
+          }
+        ],
+        "crossOwnerHandoff": "AUTH-PRISM-NATIVE-POOL-POLICY-LOCATOR / CMP-WCORE-HOST-* reader aliases"
+      },
+      "productiveCallerChain": "Image ENV path plus standalone workload readonly native-policy host mount must agree; actual native worker reads selected Prism pool, not gateway sidecar caller. Target derived selected native deployment/image binding, no mutable transport locator allowed to bypass trusted root.",
+      "validation": {
+        "schema": "exact described native source producer/guard; live authentic native dependencies not executed",
+        "semantic": "Image ENV path plus standalone workload readonly native-policy host mount must agree; actual native worker reads selected Prism pool, not gateway sidecar caller. Target derived selected native deployment/image binding, no mutable transport locator allowed to bypass trusted root.",
+        "errorContract": "source-linked trusted-root/native policy/digest/identity/role/byte/CPU guards, not fabricated generic JSON rejection"
+      },
+      "target": {
+        "author": "AUTH-PRISM-NATIVE-POOL-POLICY-LOCATOR / CMP-WCORE-HOST-* reader aliases",
+        "reference": "PRISM_NATIVE_POOL_POLICY_FILE",
+        "slice": "C1 existing bindings; C3 same-owner supported policy extension only"
+      },
+      "activationScope": {
+        "current": "selected image/host/role/package generation then trusted parent/child startup; IPC auth/source/state bound per native admission",
+        "target": "same immutable selected generation before module dispatch; retained native identity/ownership records do not reset on B publication"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "native paths/uid/groups/grants/package/image/revision identity must remain mutually consistent; envelope content/source authority not replaceable by same-shaped OCI hash; resource/budget/recovery readers preserve started run authority",
+      "profileEvalSuitability": "A/B fixed native config/state/source locators retained; selected complete role image/host-policy/Core records, actual node/runtime identity and permissions supplied by isolated authentic fixture. Policy cap65536\u219232768 / period100000\u2192200000 correlated quota examples require serialized size/cgroup native prerequisites; no host probe",
+      "migrationAction": "bind actual source/package content digest, OCI image digest and source revision distinctly; native bootstrap refs generated from same existing selected owner/host policy. Do not create a second writer for Core native file caps or shared lease policy.",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-DELIVERY"
+      ],
+      "caseIds": [
+        "DLV-CASE-NATIVE-PROVISIONING-IDENTITY-CLOSURE"
+      ],
+      "evidence": [
+        "docs/review/evidence/config-acceptance/delivery/native-provisioning-contracts-bce3f075.json"
+      ],
+      "status": "source-traced"
+    },
+    {
+      "id": "DLV-NATIVE-BUSTER-CONFIG-LOCATOR",
+      "owner": "native-delivery-projection",
+      "scope": {
+        "instance": "buster native role/image/parent-child runtime",
+        "profile": "selected actual role/host generation; proposed isolated alternatives only"
+      },
+      "class": "generated-binding",
+      "source": {
+        "path": "skills/buster/engine/test-gates/preparation-config.ts",
+        "line": 11,
+        "field": "preparationRuntimeConfig",
+        "sha256": "f2b088c3fef62010e6d867f6610ccc2392fdb7d6fa6be2bd43ad8e320d099835"
+      },
+      "current": {
+        "valueOrDefault": "/run/kubeclaw-buster/config/runtime.json",
+        "precedence": "actual current source producer or literal; no alternate author or equality proof inferred"
+      },
+      "typeUnitDomain": "Fixed current trusted parent file locator; entrypoint buster-runtime-config-root provisions root-only ancestors/file, NOFOLLOW regularfile rootuid nlink1 no group/worldwrite and selected maximumInputBytes. Child --config argument set by supervisor; no invented BUSTER_RUNTIME_CONFIG_FILE ENV.",
+      "reader": {
+        "operation": "Fixed current trusted parent file locator; entrypoint buster-runtime-config-root provisions root-only ancestors/file, NOFOLLOW regularfile rootuid nlink1 no group/worldwrite and selected maximumInputBytes. Child --config argument set by supervisor; no invented BUSTER_RUNTIME_CONFIG_FILE ENV.",
+        "references": [
+          {
+            "path": "skills/buster/engine/test-gates/preparation-config.ts",
+            "sha256": "f2b088c3fef62010e6d867f6610ccc2392fdb7d6fa6be2bd43ad8e320d099835"
+          },
+          {
+            "path": "docker/buster-runtime-entrypoint.sh",
+            "sha256": "2630481f59214cd69d7cc09eeecea60ff06d4697a9f5d36b319847a21526f029"
+          },
+          {
+            "path": "scripts/buster-runtime-config-root.mjs",
+            "sha256": "a199f7bad7ee7d91205035588a7958c6d2b589d6be64f0c27f930c0ba0d51674"
+          },
+          {
+            "path": "skills/buster/engine/test-gates/preparation-supervisor.ts",
+            "sha256": "2a0c6e615d2b156ffad8be308613c7b16fa83daf8faf9ef393cc6e81b701f8ad"
+          }
+        ],
+        "crossOwnerHandoff": "Core exact preparation config reader handoff"
+      },
+      "productiveCallerChain": "Fixed current trusted parent file locator; entrypoint buster-runtime-config-root provisions root-only ancestors/file, NOFOLLOW regularfile rootuid nlink1 no group/worldwrite and selected maximumInputBytes. Child --config argument set by supervisor; no invented BUSTER_RUNTIME_CONFIG_FILE ENV.",
+      "validation": {
+        "schema": "exact described native source producer/guard; live authentic native dependencies not executed",
+        "semantic": "Fixed current trusted parent file locator; entrypoint buster-runtime-config-root provisions root-only ancestors/file, NOFOLLOW regularfile rootuid nlink1 no group/worldwrite and selected maximumInputBytes. Child --config argument set by supervisor; no invented BUSTER_RUNTIME_CONFIG_FILE ENV.",
+        "errorContract": "source-linked trusted-root/native policy/digest/identity/role/byte/CPU guards, not fabricated generic JSON rejection"
+      },
+      "target": {
+        "author": "Core exact preparation config reader handoff",
+        "reference": "preparationRuntimeConfig",
+        "slice": "C1 existing bindings; C3 same-owner supported policy extension only"
+      },
+      "activationScope": {
+        "current": "selected image/host/role/package generation then trusted parent/child startup; IPC auth/source/state bound per native admission",
+        "target": "same immutable selected generation before module dispatch; retained native identity/ownership records do not reset on B publication"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "native paths/uid/groups/grants/package/image/revision identity must remain mutually consistent; envelope content/source authority not replaceable by same-shaped OCI hash; resource/budget/recovery readers preserve started run authority",
+      "profileEvalSuitability": "A/B fixed native config/state/source locators retained; selected complete role image/host-policy/Core records, actual node/runtime identity and permissions supplied by isolated authentic fixture. Policy cap65536\u219232768 / period100000\u2192200000 correlated quota examples require serialized size/cgroup native prerequisites; no host probe",
+      "migrationAction": "bind actual source/package content digest, OCI image digest and source revision distinctly; native bootstrap refs generated from same existing selected owner/host policy. Do not create a second writer for Core native file caps or shared lease policy.",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-DELIVERY"
+      ],
+      "caseIds": [
+        "DLV-CASE-NATIVE-PROVISIONING-IDENTITY-CLOSURE"
+      ],
+      "evidence": [
+        "docs/review/evidence/config-acceptance/delivery/native-provisioning-contracts-bce3f075.json"
+      ],
+      "status": "source-traced"
+    },
+    {
+      "id": "DLV-NATIVE-BUSTER-SOURCE-ROOT-LOCATOR",
+      "owner": "native-delivery-projection",
+      "scope": {
+        "instance": "buster native role/image/parent-child runtime",
+        "profile": "selected actual role/host generation; proposed isolated alternatives only"
+      },
+      "class": "generated-binding",
+      "source": {
+        "path": "skills/buster/engine/test-gates/preparation-config.ts",
+        "line": 10,
+        "field": "preparationSourceRoot",
+        "sha256": "f2b088c3fef62010e6d867f6610ccc2392fdb7d6fa6be2bd43ad8e320d099835"
+      },
+      "current": {
+        "valueOrDefault": "/var/lib/buster-v2/native-sources",
+        "precedence": "actual current source producer or literal; no alternate author or equality proof inferred"
+      },
+      "typeUnitDomain": "Fixed native preparation staged-source root, distinct from plan-jobs/runs and workspace/result paths. Root owner/modes/native identity and per-admission isolation must be preserved through retained recovery; arbitrary alternative path is invalid current native contract.",
+      "reader": {
+        "operation": "Fixed native preparation staged-source root, distinct from plan-jobs/runs and workspace/result paths. Root owner/modes/native identity and per-admission isolation must be preserved through retained recovery; arbitrary alternative path is invalid current native contract.",
+        "references": [
+          {
+            "path": "skills/buster/engine/test-gates/preparation-config.ts",
+            "sha256": "f2b088c3fef62010e6d867f6610ccc2392fdb7d6fa6be2bd43ad8e320d099835"
+          },
+          {
+            "path": "scripts/buster-state-root.mjs",
+            "sha256": "ac4662fa2f41f448584669a05a5bbf1033df961187efbd2e8d866426e1bdf48f"
+          },
+          {
+            "path": "docker/buster-runtime-entrypoint.sh",
+            "sha256": "2630481f59214cd69d7cc09eeecea60ff06d4697a9f5d36b319847a21526f029"
+          },
+          {
+            "path": "skills/buster/engine/test-gates/preparation-source.ts",
+            "sha256": "dd165bec2ad71b1664b7bec6c5d48a7a1b1602bd3824f8735e09292eb9b6ef22"
+          }
+        ],
+        "crossOwnerHandoff": "Core prepared native source reader handoff, not same-value runtimeRoot alias"
+      },
+      "productiveCallerChain": "Fixed native preparation staged-source root, distinct from plan-jobs/runs and workspace/result paths. Root owner/modes/native identity and per-admission isolation must be preserved through retained recovery; arbitrary alternative path is invalid current native contract.",
+      "validation": {
+        "schema": "exact described native source producer/guard; live authentic native dependencies not executed",
+        "semantic": "Fixed native preparation staged-source root, distinct from plan-jobs/runs and workspace/result paths. Root owner/modes/native identity and per-admission isolation must be preserved through retained recovery; arbitrary alternative path is invalid current native contract.",
+        "errorContract": "source-linked trusted-root/native policy/digest/identity/role/byte/CPU guards, not fabricated generic JSON rejection"
+      },
+      "target": {
+        "author": "Core prepared native source reader handoff, not same-value runtimeRoot alias",
+        "reference": "preparationSourceRoot",
+        "slice": "C1 existing bindings; C3 same-owner supported policy extension only"
+      },
+      "activationScope": {
+        "current": "selected image/host/role/package generation then trusted parent/child startup; IPC auth/source/state bound per native admission",
+        "target": "same immutable selected generation before module dispatch; retained native identity/ownership records do not reset on B publication"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "native paths/uid/groups/grants/package/image/revision identity must remain mutually consistent; envelope content/source authority not replaceable by same-shaped OCI hash; resource/budget/recovery readers preserve started run authority",
+      "profileEvalSuitability": "A/B fixed native config/state/source locators retained; selected complete role image/host-policy/Core records, actual node/runtime identity and permissions supplied by isolated authentic fixture. Policy cap65536\u219232768 / period100000\u2192200000 correlated quota examples require serialized size/cgroup native prerequisites; no host probe",
+      "migrationAction": "bind actual source/package content digest, OCI image digest and source revision distinctly; native bootstrap refs generated from same existing selected owner/host policy. Do not create a second writer for Core native file caps or shared lease policy.",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-DELIVERY"
+      ],
+      "caseIds": [
+        "DLV-CASE-NATIVE-PROVISIONING-IDENTITY-CLOSURE"
+      ],
+      "evidence": [
+        "docs/review/evidence/config-acceptance/delivery/native-provisioning-contracts-bce3f075.json"
+      ],
+      "status": "source-traced"
+    },
+    {
+      "id": "DLV-NATIVE-BUSTER-SERVICE-IDENTITY",
+      "owner": "native-delivery-projection",
+      "scope": {
+        "instance": "buster native role/image/parent-child runtime",
+        "profile": "selected actual role/host generation; proposed isolated alternatives only"
+      },
+      "class": "generated-binding",
+      "source": {
+        "path": "skills/buster/engine/test-gates/preparation-supervisor.ts",
+        "line": 57,
+        "field": "setpriv --reuid/--regid/--groups",
+        "sha256": "2a0c6e615d2b156ffad8be308613c7b16fa83daf8faf9ef393cc6e81b701f8ad"
+      },
+      "current": {
+        "valueOrDefault": "executable=/usr/bin/setpriv; uid1000; gid1000; supplemental1000,1002",
+        "precedence": "actual current source producer or literal; no alternate author or equality proof inferred"
+      },
+      "typeUnitDomain": "Actual trusted parent spawns unprivileged remote-plan CLI with IPC fd3; Docker renames node user/group to builder (does not force uid1000) and creates buster-buildkit gid1002. Current base OCI user ABI must match exact setpriv contract; builder, suite uid/gid1001, preparation1003/1004 and browser runAs1001/gid1000 are DIFFERENT identities, not same-number policy aliases.",
+      "reader": {
+        "operation": "Actual trusted parent spawns unprivileged remote-plan CLI with IPC fd3; Docker renames node user/group to builder (does not force uid1000) and creates buster-buildkit gid1002. Current base OCI user ABI must match exact setpriv contract; builder, suite uid/gid1001, preparation1003/1004 and browser runAs1001/gid1000 are DIFFERENT identities, not same-number policy aliases.",
+        "references": [
+          {
+            "path": "skills/buster/engine/test-gates/preparation-supervisor.ts",
+            "sha256": "2a0c6e615d2b156ffad8be308613c7b16fa83daf8faf9ef393cc6e81b701f8ad"
+          },
+          {
+            "path": "docker/Dockerfile.buster-runtime",
+            "sha256": "c06483aca404d930853061f77537287f7855099d335a473a04475d5d88b7a8be"
+          },
+          {
+            "path": "docker/buster-runtime-entrypoint.sh",
+            "sha256": "2630481f59214cd69d7cc09eeecea60ff06d4697a9f5d36b319847a21526f029"
+          },
+          {
+            "path": "skills/buster/engine/test-gates/preparation-command.ts",
+            "sha256": "dfa5137629af252882f586de99c178c2c46b8fe660fdbdbec0468224fe814bc6"
+          }
+        ],
+        "crossOwnerHandoff": "Core service launch/role IPC reader handoff; UID provisioning current selected image binding"
+      },
+      "productiveCallerChain": "Actual trusted parent spawns unprivileged remote-plan CLI with IPC fd3; Docker renames node user/group to builder (does not force uid1000) and creates buster-buildkit gid1002. Current base OCI user ABI must match exact setpriv contract; builder, suite uid/gid1001, preparation1003/1004 and browser runAs1001/gid1000 are DIFFERENT identities, not same-number policy aliases.",
+      "validation": {
+        "schema": "exact described native source producer/guard; live authentic native dependencies not executed",
+        "semantic": "Actual trusted parent spawns unprivileged remote-plan CLI with IPC fd3; Docker renames node user/group to builder (does not force uid1000) and creates buster-buildkit gid1002. Current base OCI user ABI must match exact setpriv contract; builder, suite uid/gid1001, preparation1003/1004 and browser runAs1001/gid1000 are DIFFERENT identities, not same-number policy aliases.",
+        "errorContract": "source-linked trusted-root/native policy/digest/identity/role/byte/CPU guards, not fabricated generic JSON rejection"
+      },
+      "target": {
+        "author": "Core service launch/role IPC reader handoff; UID provisioning current selected image binding",
+        "reference": "setpriv --reuid/--regid/--groups",
+        "slice": "C1 existing bindings; C3 same-owner supported policy extension only"
+      },
+      "activationScope": {
+        "current": "selected image/host/role/package generation then trusted parent/child startup; IPC auth/source/state bound per native admission",
+        "target": "same immutable selected generation before module dispatch; retained native identity/ownership records do not reset on B publication"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "native paths/uid/groups/grants/package/image/revision identity must remain mutually consistent; envelope content/source authority not replaceable by same-shaped OCI hash; resource/budget/recovery readers preserve started run authority",
+      "profileEvalSuitability": "A/B fixed native config/state/source locators retained; selected complete role image/host-policy/Core records, actual node/runtime identity and permissions supplied by isolated authentic fixture. Policy cap65536\u219232768 / period100000\u2192200000 correlated quota examples require serialized size/cgroup native prerequisites; no host probe",
+      "migrationAction": "bind actual source/package content digest, OCI image digest and source revision distinctly; native bootstrap refs generated from same existing selected owner/host policy. Do not create a second writer for Core native file caps or shared lease policy.",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-DELIVERY"
+      ],
+      "caseIds": [
+        "DLV-CASE-NATIVE-PROVISIONING-IDENTITY-CLOSURE"
+      ],
+      "evidence": [
+        "docs/review/evidence/config-acceptance/delivery/native-provisioning-contracts-bce3f075.json"
+      ],
+      "status": "source-traced"
+    },
+    {
+      "id": "DLV-NATIVE-BUSTER-SANDBOX-CAPABILITY-PROVISION",
+      "owner": "native-delivery-projection",
+      "scope": {
+        "instance": "buster native role/image/parent-child runtime",
+        "profile": "selected actual role/host generation; proposed isolated alternatives only"
+      },
+      "class": "generated-binding",
+      "source": {
+        "path": "docker/Dockerfile.buster-runtime",
+        "line": 123,
+        "field": "plugin-sandbox file capabilities",
+        "sha256": "c06483aca404d930853061f77537287f7855099d335a473a04475d5d88b7a8be"
+      },
+      "current": {
+        "valueOrDefault": "cap_setuid,cap_setgid=ep on root:builder trusted plugin-sandbox",
+        "precedence": "actual current source producer or literal; no alternate author or equality proof inferred"
+      },
+      "typeUnitDomain": "Current readonly trusted launcher/sandbox byte ownership plus file capabilities and Pod declared SETUID/SETGID must be correlated; does not grant arbitrary root/NET_ADMIN to providers. Actual kernel/Landlock/seccomp/native launcher capability/readback requires isolated same native image fixture.",
+      "reader": {
+        "operation": "Current readonly trusted launcher/sandbox byte ownership plus file capabilities and Pod declared SETUID/SETGID must be correlated; does not grant arbitrary root/NET_ADMIN to providers. Actual kernel/Landlock/seccomp/native launcher capability/readback requires isolated same native image fixture.",
+        "references": [
+          {
+            "path": "docker/Dockerfile.buster-runtime",
+            "sha256": "c06483aca404d930853061f77537287f7855099d335a473a04475d5d88b7a8be"
+          },
+          {
+            "path": "charts/kubeclaw/templates/_buster-native.tpl",
+            "sha256": "06eaa44435684f2af9a14365b149ecef0c5cab1a0929413d5edbc2b73e8247e6"
+          },
+          {
+            "path": "scripts/build-native-worker-nri.mjs",
+            "sha256": "f74f19215dbf5a6f6fff57aa7444d47f0051f2c20fb50c85a09a459b888a54db"
+          },
+          {
+            "path": "skills/common/plugin-runtime/foundation/isolation/sandbox.c",
+            "sha256": "dd09a45754f51fbcd5a000565a48eeee5aa3d9e60a890ba5a3969026130508dc"
+          }
+        ],
+        "crossOwnerHandoff": "Core native sandbox/launcher/role capabilities reader aliases, not a version"
+      },
+      "productiveCallerChain": "Current readonly trusted launcher/sandbox byte ownership plus file capabilities and Pod declared SETUID/SETGID must be correlated; does not grant arbitrary root/NET_ADMIN to providers. Actual kernel/Landlock/seccomp/native launcher capability/readback requires isolated same native image fixture.",
+      "validation": {
+        "schema": "exact described native source producer/guard; live authentic native dependencies not executed",
+        "semantic": "Current readonly trusted launcher/sandbox byte ownership plus file capabilities and Pod declared SETUID/SETGID must be correlated; does not grant arbitrary root/NET_ADMIN to providers. Actual kernel/Landlock/seccomp/native launcher capability/readback requires isolated same native image fixture.",
+        "errorContract": "source-linked trusted-root/native policy/digest/identity/role/byte/CPU guards, not fabricated generic JSON rejection"
+      },
+      "target": {
+        "author": "Core native sandbox/launcher/role capabilities reader aliases, not a version",
+        "reference": "plugin-sandbox file capabilities",
+        "slice": "C1 existing bindings; C3 same-owner supported policy extension only"
+      },
+      "activationScope": {
+        "current": "selected image/host/role/package generation then trusted parent/child startup; IPC auth/source/state bound per native admission",
+        "target": "same immutable selected generation before module dispatch; retained native identity/ownership records do not reset on B publication"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "native paths/uid/groups/grants/package/image/revision identity must remain mutually consistent; envelope content/source authority not replaceable by same-shaped OCI hash; resource/budget/recovery readers preserve started run authority",
+      "profileEvalSuitability": "A/B fixed native config/state/source locators retained; selected complete role image/host-policy/Core records, actual node/runtime identity and permissions supplied by isolated authentic fixture. Policy cap65536\u219232768 / period100000\u2192200000 correlated quota examples require serialized size/cgroup native prerequisites; no host probe",
+      "migrationAction": "bind actual source/package content digest, OCI image digest and source revision distinctly; native bootstrap refs generated from same existing selected owner/host policy. Do not create a second writer for Core native file caps or shared lease policy.",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-DELIVERY"
+      ],
+      "caseIds": [
+        "DLV-CASE-NATIVE-PROVISIONING-IDENTITY-CLOSURE"
+      ],
+      "evidence": [
+        "docs/review/evidence/config-acceptance/delivery/native-provisioning-contracts-bce3f075.json"
+      ],
+      "status": "source-traced"
+    },
+    {
+      "id": "DLV-NATIVE-SETUP-POLICY-DOCUMENT-BYTES",
+      "owner": "native-delivery-projection",
+      "scope": {
+        "instance": "native host setup",
+        "profile": "selected actual role/host generation; proposed isolated alternatives only"
+      },
+      "class": "operator-setting",
+      "source": {
+        "path": "scripts/prepare-native-worker-pools.mjs",
+        "line": 14,
+        "field": "whole native-node-policy stat.size ceiling",
+        "sha256": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3"
+      },
+      "current": {
+        "valueOrDefault": 65536,
+        "precedence": "actual current source producer or literal; no alternate author or equality proof inferred"
+      },
+      "typeUnitDomain": "Whole native setup policy document byte cap in root-owned regularfile/no groupworldwrite reader. DISTINCT from Core role-pool-file cap65536; not justified equal-number alias. Proposed same existing host-policy owner documentLimits.maximumSetupPolicyBytes positive bounded explicit author, A65536/B32768 only if complete selected serialized document fits.",
+      "reader": {
+        "operation": "Whole native setup policy document byte cap in root-owned regularfile/no groupworldwrite reader. DISTINCT from Core role-pool-file cap65536; not justified equal-number alias. Proposed same existing host-policy owner documentLimits.maximumSetupPolicyBytes positive bounded explicit author, A65536/B32768 only if complete selected serialized document fits.",
+        "references": [
+          {
+            "path": "scripts/prepare-native-worker-pools.mjs",
+            "sha256": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3"
+          },
+          {
+            "path": "scripts/render-native-worker-node.mjs",
+            "sha256": "b32571ac43e893783a87002d473ecc3d3b9dd76d996ea3b26f76ec6a2ed748fc"
+          },
+          {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1"
+          }
+        ],
+        "crossOwnerHandoff": "same existing host node-policy physical author C3 extension; CMP-WCORE-POOL-FILE-BYTES deliberately NOT alias"
+      },
+      "productiveCallerChain": "Whole native setup policy document byte cap in root-owned regularfile/no groupworldwrite reader. DISTINCT from Core role-pool-file cap65536; not justified equal-number alias. Proposed same existing host-policy owner documentLimits.maximumSetupPolicyBytes positive bounded explicit author, A65536/B32768 only if complete selected serialized document fits.",
+      "validation": {
+        "schema": "exact described native source producer/guard; live authentic native dependencies not executed",
+        "semantic": "Whole native setup policy document byte cap in root-owned regularfile/no groupworldwrite reader. DISTINCT from Core role-pool-file cap65536; not justified equal-number alias. Proposed same existing host-policy owner documentLimits.maximumSetupPolicyBytes positive bounded explicit author, A65536/B32768 only if complete selected serialized document fits.",
+        "errorContract": "source-linked trusted-root/native policy/digest/identity/role/byte/CPU guards, not fabricated generic JSON rejection"
+      },
+      "target": {
+        "author": "same existing host node-policy physical author C3 extension; CMP-WCORE-POOL-FILE-BYTES deliberately NOT alias",
+        "reference": "whole native-node-policy stat.size ceiling",
+        "slice": "C1 existing bindings; C3 same-owner supported policy extension only"
+      },
+      "activationScope": {
+        "current": "selected image/host/role/package generation then trusted parent/child startup; IPC auth/source/state bound per native admission",
+        "target": "same immutable selected generation before module dispatch; retained native identity/ownership records do not reset on B publication"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "native paths/uid/groups/grants/package/image/revision identity must remain mutually consistent; envelope content/source authority not replaceable by same-shaped OCI hash; resource/budget/recovery readers preserve started run authority",
+      "profileEvalSuitability": "A/B fixed native config/state/source locators retained; selected complete role image/host-policy/Core records, actual node/runtime identity and permissions supplied by isolated authentic fixture. Policy cap65536\u219232768 / period100000\u2192200000 correlated quota examples require serialized size/cgroup native prerequisites; no host probe",
+      "migrationAction": "bind actual source/package content digest, OCI image digest and source revision distinctly; native bootstrap refs generated from same existing selected owner/host policy. Do not create a second writer for Core native file caps or shared lease policy.",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-DELIVERY"
+      ],
+      "caseIds": [
+        "DLV-CASE-NATIVE-PROVISIONING-IDENTITY-CLOSURE"
+      ],
+      "evidence": [
+        "docs/review/evidence/config-acceptance/delivery/native-provisioning-contracts-bce3f075.json"
+      ],
+      "status": "source-traced"
+    },
+    {
+      "id": "DLV-NATIVE-SETUP-RUNTIME-IDENTITY-BYTES",
+      "owner": "native-delivery-projection",
+      "scope": {
+        "instance": "native host setup",
+        "profile": "selected actual role/host generation; proposed isolated alternatives only"
+      },
+      "class": "generated-binding",
+      "source": {
+        "path": "scripts/prepare-native-worker-pools.mjs",
+        "line": 74,
+        "field": "runtime identity stat.size ceiling",
+        "sha256": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3"
+      },
+      "current": {
+        "valueOrDefault": 4096,
+        "precedence": "actual current source producer or literal; no alternate author or equality proof inferred"
+      },
+      "typeUnitDomain": "Duplicated reader of SAME runtime-identity physical file as Core runtime identity guard. Target sole CMP-WCORE-RUNTIME-IDENTITY-FILE-BYTES cap; host generation materializes selected reference, no second policy writer. Core proposed2048..4096 domains/complete record size apply, actual node/runtime attestation separate.",
+      "reader": {
+        "operation": "Duplicated reader of SAME runtime-identity physical file as Core runtime identity guard. Target sole CMP-WCORE-RUNTIME-IDENTITY-FILE-BYTES cap; host generation materializes selected reference, no second policy writer. Core proposed2048..4096 domains/complete record size apply, actual node/runtime attestation separate.",
+        "references": [
+          {
+            "path": "scripts/prepare-native-worker-pools.mjs",
+            "sha256": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3"
+          },
+          {
+            "path": "scripts/render-native-worker-node.mjs",
+            "sha256": "b32571ac43e893783a87002d473ecc3d3b9dd76d996ea3b26f76ec6a2ed748fc"
+          },
+          {
+            "path": "scripts/prepare-native-worker-pools.mjs",
+            "sha256": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3"
+          }
+        ],
+        "crossOwnerHandoff": "CMP-WCORE-RUNTIME-IDENTITY-FILE-BYTES"
+      },
+      "productiveCallerChain": "Duplicated reader of SAME runtime-identity physical file as Core runtime identity guard. Target sole CMP-WCORE-RUNTIME-IDENTITY-FILE-BYTES cap; host generation materializes selected reference, no second policy writer. Core proposed2048..4096 domains/complete record size apply, actual node/runtime attestation separate.",
+      "validation": {
+        "schema": "exact described native source producer/guard; live authentic native dependencies not executed",
+        "semantic": "Duplicated reader of SAME runtime-identity physical file as Core runtime identity guard. Target sole CMP-WCORE-RUNTIME-IDENTITY-FILE-BYTES cap; host generation materializes selected reference, no second policy writer. Core proposed2048..4096 domains/complete record size apply, actual node/runtime attestation separate.",
+        "errorContract": "source-linked trusted-root/native policy/digest/identity/role/byte/CPU guards, not fabricated generic JSON rejection"
+      },
+      "target": {
+        "author": "CMP-WCORE-RUNTIME-IDENTITY-FILE-BYTES",
+        "reference": "runtime identity stat.size ceiling",
+        "slice": "C1 existing bindings; C3 same-owner supported policy extension only"
+      },
+      "activationScope": {
+        "current": "selected image/host/role/package generation then trusted parent/child startup; IPC auth/source/state bound per native admission",
+        "target": "same immutable selected generation before module dispatch; retained native identity/ownership records do not reset on B publication"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "native paths/uid/groups/grants/package/image/revision identity must remain mutually consistent; envelope content/source authority not replaceable by same-shaped OCI hash; resource/budget/recovery readers preserve started run authority",
+      "profileEvalSuitability": "A/B fixed native config/state/source locators retained; selected complete role image/host-policy/Core records, actual node/runtime identity and permissions supplied by isolated authentic fixture. Policy cap65536\u219232768 / period100000\u2192200000 correlated quota examples require serialized size/cgroup native prerequisites; no host probe",
+      "migrationAction": "bind actual source/package content digest, OCI image digest and source revision distinctly; native bootstrap refs generated from same existing selected owner/host policy. Do not create a second writer for Core native file caps or shared lease policy.",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-DELIVERY"
+      ],
+      "caseIds": [
+        "DLV-CASE-NATIVE-PROVISIONING-IDENTITY-CLOSURE"
+      ],
+      "evidence": [
+        "docs/review/evidence/config-acceptance/delivery/native-provisioning-contracts-bce3f075.json"
+      ],
+      "status": "source-traced"
+    },
+    {
+      "id": "DLV-NATIVE-HOST-POOL-CPU-PERIOD-PROJECTION",
+      "owner": "native-delivery-projection",
+      "scope": {
+        "instance": "native host setup",
+        "profile": "selected actual role/host generation; proposed isolated alternatives only"
+      },
+      "class": "operator-setting",
+      "source": {
+        "path": "scripts/native-worker-node-policy.mjs",
+        "line": 48,
+        "field": "pool CPU period / quota relation",
+        "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1"
+      },
+      "current": {
+        "valueOrDefault": "period100000us; quota=cpuMillicores*100",
+        "precedence": "actual current source producer or literal; no alternate author or equality proof inferred"
+      },
+      "typeUnitDomain": "100ms is current literal scheduler policy, NOT fundamental invariant. Existing setup validates period1000..1000000us and quota>=1000us safe integers; selected millicores with period yields quota=millicores*period/1000, must be exact valid integer and real cgroup supported. Proposed same existing host pools.<role>.cpuPeriodMicroseconds C3 extension; period100000\u2192200000 with corresponding quota scaling and identical CPU rate A/B; memory multiple4096 and actual kernel/page/cgroup readback distinct.",
+      "reader": {
+        "operation": "100ms is current literal scheduler policy, NOT fundamental invariant. Existing setup validates period1000..1000000us and quota>=1000us safe integers; selected millicores with period yields quota=millicores*period/1000, must be exact valid integer and real cgroup supported. Proposed same existing host pools.<role>.cpuPeriodMicroseconds C3 extension; period100000\u2192200000 with corresponding quota scaling and identical CPU rate A/B; memory multiple4096 and actual kernel/page/cgroup readback distinct.",
+        "references": [
+          {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1"
+          },
+          {
+            "path": "scripts/prepare-native-worker-pools.mjs",
+            "sha256": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3"
+          },
+          {
+            "path": "scripts/render-native-worker-node.mjs",
+            "sha256": "b32571ac43e893783a87002d473ecc3d3b9dd76d996ea3b26f76ec6a2ed748fc"
+          }
+        ],
+        "crossOwnerHandoff": "CMP-WCORE-HOST-CPUPERIOD is generated reader alias; adjustable host period sole same host author"
+      },
+      "productiveCallerChain": "100ms is current literal scheduler policy, NOT fundamental invariant. Existing setup validates period1000..1000000us and quota>=1000us safe integers; selected millicores with period yields quota=millicores*period/1000, must be exact valid integer and real cgroup supported. Proposed same existing host pools.<role>.cpuPeriodMicroseconds C3 extension; period100000\u2192200000 with corresponding quota scaling and identical CPU rate A/B; memory multiple4096 and actual kernel/page/cgroup readback distinct.",
+      "validation": {
+        "schema": "exact described native source producer/guard; live authentic native dependencies not executed",
+        "semantic": "100ms is current literal scheduler policy, NOT fundamental invariant. Existing setup validates period1000..1000000us and quota>=1000us safe integers; selected millicores with period yields quota=millicores*period/1000, must be exact valid integer and real cgroup supported. Proposed same existing host pools.<role>.cpuPeriodMicroseconds C3 extension; period100000\u2192200000 with corresponding quota scaling and identical CPU rate A/B; memory multiple4096 and actual kernel/page/cgroup readback distinct.",
+        "errorContract": "source-linked trusted-root/native policy/digest/identity/role/byte/CPU guards, not fabricated generic JSON rejection"
+      },
+      "target": {
+        "author": "CMP-WCORE-HOST-CPUPERIOD is generated reader alias; adjustable host period sole same host author",
+        "reference": "pool CPU period / quota relation",
+        "slice": "C1 existing bindings; C3 same-owner supported policy extension only"
+      },
+      "activationScope": {
+        "current": "selected image/host/role/package generation then trusted parent/child startup; IPC auth/source/state bound per native admission",
+        "target": "same immutable selected generation before module dispatch; retained native identity/ownership records do not reset on B publication"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "native paths/uid/groups/grants/package/image/revision identity must remain mutually consistent; envelope content/source authority not replaceable by same-shaped OCI hash; resource/budget/recovery readers preserve started run authority",
+      "profileEvalSuitability": "A/B fixed native config/state/source locators retained; selected complete role image/host-policy/Core records, actual node/runtime identity and permissions supplied by isolated authentic fixture. Policy cap65536\u219232768 / period100000\u2192200000 correlated quota examples require serialized size/cgroup native prerequisites; no host probe",
+      "migrationAction": "bind actual source/package content digest, OCI image digest and source revision distinctly; native bootstrap refs generated from same existing selected owner/host policy. Do not create a second writer for Core native file caps or shared lease policy.",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-DELIVERY"
+      ],
+      "caseIds": [
+        "DLV-CASE-NATIVE-PROVISIONING-IDENTITY-CLOSURE"
+      ],
+      "evidence": [
+        "docs/review/evidence/config-acceptance/delivery/native-provisioning-contracts-bce3f075.json"
+      ],
+      "status": "source-traced"
+    }
+  ]
+}

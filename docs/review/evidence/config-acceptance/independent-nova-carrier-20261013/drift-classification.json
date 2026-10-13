@@ -1,0 +1,10 @@
+{
+  "path": "docs/review/remediation/config-definition-current.md",
+  "fileDrift": true,
+  "changedSection": "Excluded Core R06 status andintegrationlog link only; no Core substantive review performed",
+  "novaRelevantTailByteIdentical": true,
+  "frozenNovaSectionSha256": "e02a4ffe954bc1ae4efff97f4879ecc845d591c4824a89121e03430df2ef8121",
+  "scopeCriticalParentProposalSourcesDrift": 0,
+  "evidence": "end-input-drift.diff",
+  "conclusion": "Report adjudicates exactfrozenparentNova inputs; fullcriteriafile intentionallymutable andqualified, nofalsewholefreeze0driftclaim"
+}

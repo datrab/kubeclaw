@@ -1,0 +1,557 @@
+{
+  "scope": "five actual native Codex fields with complete TOML definitions, generated endpoint/provider distinctions and executable future specification; no native execution or acceptance",
+  "fields": [
+    {
+      "settingId": "DLV-OPS-CODEX-SANDBOX-MODE",
+      "field": "sandbox_mode",
+      "targetDomain": {
+        "domain": {
+          "enum": [
+            "read-only",
+            "workspace-write",
+            "danger-full-access"
+          ],
+          "semantic": "native SandboxMode serde enum; target explicit no native default. workspace-write requires exact declared writable roots, network/temporary exclusions and selected platform sandbox support. Pod nonroot/capability/RBAC/readonly boundaries are separate and never widened by this choice."
+        },
+        "required": true,
+        "proposedOnly": true,
+        "activation": "S immutable native policy/transport/provider selection before app-server startup; started A config/permissions/ENV/account/PVC provenance preserved. New B processes only, no policy rewrite or Latest cleanup."
+      },
+      "profileFiles": {
+        "A": {
+          "path": "docs/review/evidence/config-acceptance/delivery/codex-target-profiles-20261013/DLV-OPS-CODEX-SANDBOX-MODE.A.toml",
+          "sha256": "d02672481c4e989fe9985d46631d88d7c23f966a154e6d9e54f594ad75be4098",
+          "scope": "complete native TOML definition only; selected actual requirements/platform/MCP/provider/binary receipt prerequisites required before positive native proof"
+        },
+        "B": {
+          "path": "docs/review/evidence/config-acceptance/delivery/codex-target-profiles-20261013/DLV-OPS-CODEX-SANDBOX-MODE.B.toml",
+          "sha256": "4b38a924ffbcdc1640678868b2fa2554e8d06601e649830233cc89c5eb244a2c",
+          "scope": "complete native TOML definition only; selected actual requirements/platform/MCP/provider/binary receipt prerequisites required before positive native proof"
+        }
+      },
+      "source": {
+        "path": "ops/pod/config.toml",
+        "field": "sandbox_mode",
+        "sha256": "cb32e6807d5d48b12c7be4af875f33155142c2d389dee93cddf3083806bc6b0e",
+        "line": 4,
+        "lineKind": "first field-name occurrence; productive read evidence remains separately identified"
+      },
+      "primaryReaderReferences": [
+        {
+          "path": "ops/pod/config.toml",
+          "sha256": "cb32e6807d5d48b12c7be4af875f33155142c2d389dee93cddf3083806bc6b0e"
+        },
+        {
+          "path": "ops/pod/supervisor.py",
+          "sha256": "e8000383c5736777562bf805cfd9d3b4e1dce4f0e720be264231b0ab91e3cf99"
+        },
+        {
+          "path": "ops/pod/Dockerfile",
+          "sha256": "d55888e701ea0798c7c2a109f17977cc615442828e010f56e4f17871f6483eb0"
+        },
+        {
+          "path": "ops/pod/package.json",
+          "sha256": "394f5bf0cad23cb3cce8d598d463fd5ec07588eb5467e63035b7594e59695895"
+        },
+        {
+          "path": "ops/pod/package-lock.json",
+          "sha256": "9bc125a991652708a1ba9a19cbfc533cd223b17ec3b32e45f852db96a70327dd"
+        },
+        {
+          "path": "charts/ops-pod/templates/workload.yaml",
+          "sha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/delivery/pinned-codex-reader-bce3f075/codex-rs/protocol/src/config_types.rs",
+          "sha256": "96b4050a2498275ba5a11da0021bc75d5fb2fd2c50802f0930629aa7716a282a"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/delivery/pinned-codex-reader-bce3f075/codex-rs/config/src/config_toml.rs",
+          "sha256": "5ff36c12287c453d9421483c62da3377bd3fb9bc7de80defb80e215e0ccf3633"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/delivery/pinned-codex-reader-bce3f075/codex-rs/config/src/loader/mod.rs",
+          "sha256": "6fc44b60c64065994c9aa18df248eb521dba6b0e9917a8cf69fc60e0035ac56a"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/delivery/pinned-codex-reader-bce3f075/codex-rs/core/src/config/mod.rs",
+          "sha256": "b3eb0a9751522f7f6f7a7bd1b21253f2fcb4e669955819bfb6d0a7425e1fed9e"
+        }
+      ],
+      "nativeOracle": "native selected effective permission profile then permitted read and denied write on read-only fixture; full successful write under A only inside declared isolated scratch grant. Same Pod/kernel boundary receipt required; unsupported host sandbox is setup failure, not negative PASS.",
+      "futureInvocation": {
+        "argv": [
+          "node",
+          "--test",
+          "--test-name-pattern=^DLV-CASE-CODEX-NATIVE-PARSER-AUTH-TOPOLOGY$",
+          "tests/verification/config/delivery-codex-policy.test.mts"
+        ],
+        "env": {
+          "CONFIG_ACCEPTANCE_CASE_ID": "DLV-CASE-CODEX-NATIVE-PARSER-AUTH-TOPOLOGY",
+          "CONFIG_ACCEPTANCE_SPEC": "docs/review/evidence/config-acceptance/delivery/codex-target-case-specifications-20261013.json"
+        },
+        "status": "not-run; future harness absent, no test bytes invented"
+      },
+      "phases": [
+        "verify actual native binary/version/platform receipt against selected npm and pinned source before imports/start; source commit not installed binary proof",
+        "construct complete A with compatible actual native requirements, isolated auth/CODEX_HOME, declared streamableHTTP fixture and no paid/account/model calls; positive first",
+        "target missing/type/enum/unknown/old equal+different HOME/-c overrides rejects before spawn; native unsupported untrusted/incompatible MCP options and missing ENV exact boundary recorded separately",
+        "publish B selection while retaining A process/permission/account/provider/cleanup refs; new process consumes B and existing A never retargets",
+        "repeat failed setup with clean fixture diagnosis; no false semantic negative; cleanup only original captured fixture/process refs"
+      ],
+      "priorState": "original process/module/config/requirements/binary/authProvider/account-store/Pod-grant tuple captured before startup; universal parent originalModule/cleanupRefs/grant contract still pending, no fabricated alias",
+      "remainingExternalIdentity": "actual selected binary/ABI and supported requirements/fixture/provider revision necessary for eventual native execution; not a blocker to this source and future-spec definition"
+    },
+    {
+      "settingId": "DLV-OPS-CODEX-APPROVAL-POLICY",
+      "field": "approval_policy",
+      "targetDomain": {
+        "domain": {
+          "oneOf": [
+            {
+              "enum": [
+                "on-request",
+                "never"
+              ]
+            },
+            {
+              "type": "object",
+              "required": [
+                "granular"
+              ],
+              "properties": {
+                "granular": {
+                  "type": "object",
+                  "required": [
+                    "sandbox_approval",
+                    "rules",
+                    "mcp_elicitations",
+                    "skill_approval",
+                    "request_permissions"
+                  ],
+                  "additionalProperties": false,
+                  "properties": {
+                    "sandbox_approval": {
+                      "type": "boolean"
+                    },
+                    "rules": {
+                      "type": "boolean"
+                    },
+                    "mcp_elicitations": {
+                      "type": "boolean"
+                    },
+                    "skill_approval": {
+                      "type": "boolean"
+                    },
+                    "request_permissions": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              },
+              "additionalProperties": false
+            }
+          ],
+          "semantic": "pinned serde supports on-failure alias but target canonical on-request only; untrusted rejected by actual core config. Explicit granular booleans avoid false from native optional defaults. Actual requirements/execution-policy/higher-precedence restrictions may reject never; must select compatible isolated native fixture before positive. Approval is not a grant or Kubernetes RBAC."
+        },
+        "required": true,
+        "proposedOnly": true,
+        "activation": "S immutable native policy/transport/provider selection before app-server startup; started A config/permissions/ENV/account/PVC provenance preserved. New B processes only, no policy rewrite or Latest cleanup."
+      },
+      "profileFiles": {
+        "A": {
+          "path": "docs/review/evidence/config-acceptance/delivery/codex-target-profiles-20261013/DLV-OPS-CODEX-APPROVAL-POLICY.A.toml",
+          "sha256": "d02672481c4e989fe9985d46631d88d7c23f966a154e6d9e54f594ad75be4098",
+          "scope": "complete native TOML definition only; selected actual requirements/platform/MCP/provider/binary receipt prerequisites required before positive native proof"
+        },
+        "B": {
+          "path": "docs/review/evidence/config-acceptance/delivery/codex-target-profiles-20261013/DLV-OPS-CODEX-APPROVAL-POLICY.B.toml",
+          "sha256": "7c0703b66564e83315280e01c482b0b973c1bcc39d53c25f4053b00ef535e3d5",
+          "scope": "complete native TOML definition only; selected actual requirements/platform/MCP/provider/binary receipt prerequisites required before positive native proof"
+        }
+      },
+      "source": {
+        "path": "ops/pod/config.toml",
+        "field": "approval_policy",
+        "sha256": "cb32e6807d5d48b12c7be4af875f33155142c2d389dee93cddf3083806bc6b0e",
+        "line": 5,
+        "lineKind": "first field-name occurrence; productive read evidence remains separately identified"
+      },
+      "primaryReaderReferences": [
+        {
+          "path": "ops/pod/config.toml",
+          "sha256": "cb32e6807d5d48b12c7be4af875f33155142c2d389dee93cddf3083806bc6b0e"
+        },
+        {
+          "path": "ops/pod/supervisor.py",
+          "sha256": "e8000383c5736777562bf805cfd9d3b4e1dce4f0e720be264231b0ab91e3cf99"
+        },
+        {
+          "path": "ops/pod/Dockerfile",
+          "sha256": "d55888e701ea0798c7c2a109f17977cc615442828e010f56e4f17871f6483eb0"
+        },
+        {
+          "path": "ops/pod/package.json",
+          "sha256": "394f5bf0cad23cb3cce8d598d463fd5ec07588eb5467e63035b7594e59695895"
+        },
+        {
+          "path": "ops/pod/package-lock.json",
+          "sha256": "9bc125a991652708a1ba9a19cbfc533cd223b17ec3b32e45f852db96a70327dd"
+        },
+        {
+          "path": "charts/ops-pod/templates/workload.yaml",
+          "sha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/delivery/pinned-codex-reader-bce3f075/codex-rs/protocol/src/protocol.rs",
+          "sha256": "3882ad06c5a6312e5ed80d8870c473b6c18d14f2352ff6774d146813db39f20b"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/delivery/pinned-codex-reader-bce3f075/codex-rs/config/src/config_toml.rs",
+          "sha256": "5ff36c12287c453d9421483c62da3377bd3fb9bc7de80defb80e215e0ccf3633"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/delivery/pinned-codex-reader-bce3f075/codex-rs/config/src/loader/mod.rs",
+          "sha256": "6fc44b60c64065994c9aa18df248eb521dba6b0e9917a8cf69fc60e0035ac56a"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/delivery/pinned-codex-reader-bce3f075/codex-rs/core/src/config/mod.rs",
+          "sha256": "b3eb0a9751522f7f6f7a7bd1b21253f2fcb4e669955819bfb6d0a7425e1fed9e"
+        }
+      ],
+      "nativeOracle": "native effective canonical policy and real approval event/absence for same controlled command with fixed execution policy; untrusted fails native config, on-failure canonicalizes to on-request as counterexample; never must not bypass outer grants/requirements.",
+      "futureInvocation": {
+        "argv": [
+          "node",
+          "--test",
+          "--test-name-pattern=^DLV-CASE-CODEX-NATIVE-PARSER-AUTH-TOPOLOGY$",
+          "tests/verification/config/delivery-codex-policy.test.mts"
+        ],
+        "env": {
+          "CONFIG_ACCEPTANCE_CASE_ID": "DLV-CASE-CODEX-NATIVE-PARSER-AUTH-TOPOLOGY",
+          "CONFIG_ACCEPTANCE_SPEC": "docs/review/evidence/config-acceptance/delivery/codex-target-case-specifications-20261013.json"
+        },
+        "status": "not-run; future harness absent, no test bytes invented"
+      },
+      "phases": [
+        "verify actual native binary/version/platform receipt against selected npm and pinned source before imports/start; source commit not installed binary proof",
+        "construct complete A with compatible actual native requirements, isolated auth/CODEX_HOME, declared streamableHTTP fixture and no paid/account/model calls; positive first",
+        "target missing/type/enum/unknown/old equal+different HOME/-c overrides rejects before spawn; native unsupported untrusted/incompatible MCP options and missing ENV exact boundary recorded separately",
+        "publish B selection while retaining A process/permission/account/provider/cleanup refs; new process consumes B and existing A never retargets",
+        "repeat failed setup with clean fixture diagnosis; no false semantic negative; cleanup only original captured fixture/process refs"
+      ],
+      "priorState": "original process/module/config/requirements/binary/authProvider/account-store/Pod-grant tuple captured before startup; universal parent originalModule/cleanupRefs/grant contract still pending, no fabricated alias",
+      "remainingExternalIdentity": "actual selected binary/ABI and supported requirements/fixture/provider revision necessary for eventual native execution; not a blocker to this source and future-spec definition"
+    },
+    {
+      "settingId": "DLV-OPS-CODEX-CLI-AUTH-CREDENTIALS-STORE",
+      "field": "cli_auth_credentials_store",
+      "targetDomain": {
+        "domain": {
+          "enum": [
+            "file",
+            "keyring",
+            "auto",
+            "ephemeral"
+          ],
+          "semantic": "actual native enum. file uses selected isolated CODEX_HOME auth state, keyring requires authenticated supported backend; auto can fall back to file and shell/executor flows may force file: enum difference is NOT proof of different effect. ephemeral has process-local state; no fabricated account/login/keyring success."
+        },
+        "required": true,
+        "proposedOnly": true,
+        "activation": "S immutable native policy/transport/provider selection before app-server startup; started A config/permissions/ENV/account/PVC provenance preserved. New B processes only, no policy rewrite or Latest cleanup."
+      },
+      "profileFiles": {
+        "A": {
+          "path": "docs/review/evidence/config-acceptance/delivery/codex-target-profiles-20261013/DLV-OPS-CODEX-CLI-AUTH-CREDENTIALS-STORE.A.toml",
+          "sha256": "d02672481c4e989fe9985d46631d88d7c23f966a154e6d9e54f594ad75be4098",
+          "scope": "complete native TOML definition only; selected actual requirements/platform/MCP/provider/binary receipt prerequisites required before positive native proof"
+        },
+        "B": {
+          "path": "docs/review/evidence/config-acceptance/delivery/codex-target-profiles-20261013/DLV-OPS-CODEX-CLI-AUTH-CREDENTIALS-STORE.B.toml",
+          "sha256": "95f8a7f4a92dd5d64fa1754f39748130583aa9d06939ba2cff91491030dce68c",
+          "scope": "complete native TOML definition only; selected actual requirements/platform/MCP/provider/binary receipt prerequisites required before positive native proof"
+        }
+      },
+      "source": {
+        "path": "ops/pod/config.toml",
+        "field": "cli_auth_credentials_store",
+        "sha256": "cb32e6807d5d48b12c7be4af875f33155142c2d389dee93cddf3083806bc6b0e",
+        "line": 6,
+        "lineKind": "first field-name occurrence; productive read evidence remains separately identified"
+      },
+      "primaryReaderReferences": [
+        {
+          "path": "ops/pod/config.toml",
+          "sha256": "cb32e6807d5d48b12c7be4af875f33155142c2d389dee93cddf3083806bc6b0e"
+        },
+        {
+          "path": "ops/pod/supervisor.py",
+          "sha256": "e8000383c5736777562bf805cfd9d3b4e1dce4f0e720be264231b0ab91e3cf99"
+        },
+        {
+          "path": "ops/pod/Dockerfile",
+          "sha256": "d55888e701ea0798c7c2a109f17977cc615442828e010f56e4f17871f6483eb0"
+        },
+        {
+          "path": "ops/pod/package.json",
+          "sha256": "394f5bf0cad23cb3cce8d598d463fd5ec07588eb5467e63035b7594e59695895"
+        },
+        {
+          "path": "ops/pod/package-lock.json",
+          "sha256": "9bc125a991652708a1ba9a19cbfc533cd223b17ec3b32e45f852db96a70327dd"
+        },
+        {
+          "path": "charts/ops-pod/templates/workload.yaml",
+          "sha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/delivery/pinned-codex-reader-bce3f075/codex-rs/config/src/types.rs",
+          "sha256": "c5a81049a05861c6a8a4ca7384f410ebcd4438e3712d31a32a32f888e1bb1a7a"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/delivery/pinned-codex-reader-bce3f075/codex-rs/config/src/config_toml.rs",
+          "sha256": "5ff36c12287c453d9421483c62da3377bd3fb9bc7de80defb80e215e0ccf3633"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/delivery/pinned-codex-reader-bce3f075/codex-rs/core/src/config/mod.rs",
+          "sha256": "b3eb0a9751522f7f6f7a7bd1b21253f2fcb4e669955819bfb6d0a7425e1fed9e"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/delivery/pinned-codex-reader-bce3f075/codex-rs/login/src/auth/storage.rs",
+          "sha256": "2e95a8998687e926675d41b5d941c3c3546a652c03d9680e6c7385e59bf459af"
+        }
+      ],
+      "nativeOracle": "native load/save through chosen real AuthCredentialsStore implementation in isolated CODEX_HOME; file fixture persists test-only local record; ephemeral new process cannot retrieve it. No real account/model calls; auto file fallback and shell forced-file are explicit separate counterexamples, keyring availability cannot be invented.",
+      "futureInvocation": {
+        "argv": [
+          "node",
+          "--test",
+          "--test-name-pattern=^DLV-CASE-CODEX-NATIVE-PARSER-AUTH-TOPOLOGY$",
+          "tests/verification/config/delivery-codex-policy.test.mts"
+        ],
+        "env": {
+          "CONFIG_ACCEPTANCE_CASE_ID": "DLV-CASE-CODEX-NATIVE-PARSER-AUTH-TOPOLOGY",
+          "CONFIG_ACCEPTANCE_SPEC": "docs/review/evidence/config-acceptance/delivery/codex-target-case-specifications-20261013.json"
+        },
+        "status": "not-run; future harness absent, no test bytes invented"
+      },
+      "phases": [
+        "verify actual native binary/version/platform receipt against selected npm and pinned source before imports/start; source commit not installed binary proof",
+        "construct complete A with compatible actual native requirements, isolated auth/CODEX_HOME, declared streamableHTTP fixture and no paid/account/model calls; positive first",
+        "target missing/type/enum/unknown/old equal+different HOME/-c overrides rejects before spawn; native unsupported untrusted/incompatible MCP options and missing ENV exact boundary recorded separately",
+        "publish B selection while retaining A process/permission/account/provider/cleanup refs; new process consumes B and existing A never retargets",
+        "repeat failed setup with clean fixture diagnosis; no false semantic negative; cleanup only original captured fixture/process refs"
+      ],
+      "priorState": "original process/module/config/requirements/binary/authProvider/account-store/Pod-grant tuple captured before startup; universal parent originalModule/cleanupRefs/grant contract still pending, no fabricated alias",
+      "remainingExternalIdentity": "actual selected binary/ABI and supported requirements/fixture/provider revision necessary for eventual native execution; not a blocker to this source and future-spec definition"
+    },
+    {
+      "settingId": "DLV-OPS-CODEX-MCP-SERVERS-KUBECLAW-OPS-URL",
+      "field": "mcp_servers.kubeclaw_ops.url",
+      "targetDomain": {
+        "domain": {
+          "type": "string",
+          "constFrom": "selected same-Pod Ops service transport binding; current http://127.0.0.1:8080/mcp",
+          "semantic": "native streamable HTTP URL supports more than HTTPS origins; exact selected samePod loopback HTTP listener port/path derives from sole Ops deployment owner, never an independent editable Codex URL. Reject transport-incompatible args/env/env_vars/cwd/direct bearer_token. Remote topology would require a separate explicitly traced deployment/auth/TLS design, not arbitrary B URL."
+        },
+        "required": true,
+        "proposedOnly": true,
+        "activation": "S immutable native policy/transport/provider selection before app-server startup; started A config/permissions/ENV/account/PVC provenance preserved. New B processes only, no policy rewrite or Latest cleanup."
+      },
+      "profileFiles": {
+        "A": {
+          "path": "docs/review/evidence/config-acceptance/delivery/codex-target-profiles-20261013/DLV-OPS-CODEX-MCP-SERVERS-KUBECLAW-OPS-URL.A.toml",
+          "sha256": "d02672481c4e989fe9985d46631d88d7c23f966a154e6d9e54f594ad75be4098",
+          "scope": "complete native TOML definition only; selected actual requirements/platform/MCP/provider/binary receipt prerequisites required before positive native proof"
+        },
+        "B": {
+          "path": "docs/review/evidence/config-acceptance/delivery/codex-target-profiles-20261013/DLV-OPS-CODEX-MCP-SERVERS-KUBECLAW-OPS-URL.B.toml",
+          "sha256": "6c7b4b3eae598c203474def03fc46f1ab114a185d47c272e22fda3256ea3c54b",
+          "scope": "complete native TOML definition only; selected actual requirements/platform/MCP/provider/binary receipt prerequisites required before positive native proof"
+        }
+      },
+      "source": {
+        "path": "ops/pod/config.toml",
+        "field": "mcp_servers.kubeclaw_ops.url",
+        "sha256": "cb32e6807d5d48b12c7be4af875f33155142c2d389dee93cddf3083806bc6b0e",
+        "line": null
+      },
+      "primaryReaderReferences": [
+        {
+          "path": "ops/pod/config.toml",
+          "sha256": "cb32e6807d5d48b12c7be4af875f33155142c2d389dee93cddf3083806bc6b0e"
+        },
+        {
+          "path": "ops/pod/supervisor.py",
+          "sha256": "e8000383c5736777562bf805cfd9d3b4e1dce4f0e720be264231b0ab91e3cf99"
+        },
+        {
+          "path": "ops/pod/Dockerfile",
+          "sha256": "d55888e701ea0798c7c2a109f17977cc615442828e010f56e4f17871f6483eb0"
+        },
+        {
+          "path": "ops/pod/package.json",
+          "sha256": "394f5bf0cad23cb3cce8d598d463fd5ec07588eb5467e63035b7594e59695895"
+        },
+        {
+          "path": "ops/pod/package-lock.json",
+          "sha256": "9bc125a991652708a1ba9a19cbfc533cd223b17ec3b32e45f852db96a70327dd"
+        },
+        {
+          "path": "charts/ops-pod/templates/workload.yaml",
+          "sha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/delivery/pinned-codex-reader-bce3f075/codex-rs/config/src/mcp_types.rs",
+          "sha256": "b9939666f02b5c818053f3127412204be0190d6d66cf395a896ff01a851e3aba"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/delivery/pinned-codex-reader-bce3f075/codex-rs/core/src/config/mod.rs",
+          "sha256": "b3eb0a9751522f7f6f7a7bd1b21253f2fcb4e669955819bfb6d0a7425e1fed9e"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/delivery/pinned-codex-reader-bce3f075/codex-rs/codex-mcp/src/rmcp_client.rs",
+          "sha256": "b7ac2a82e39194390f5a8cc921449e33953f2a3c399fd6cd57faeb5ec27d42dc"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/delivery/pinned-codex-reader-bce3f075/codex-rs/codex-mcp/src/connection_manager.rs",
+          "sha256": "c06a910bf30d362b40511842edb62572ea41b2a5b7979393537e39de1f974a2d"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/delivery/pinned-codex-reader-bce3f075/codex-rs/rmcp-client/src/rmcp_client.rs",
+          "sha256": "e199d5265e814ef80f64e85d3188ecb4ae58299fc3d0fe9622bb93447da478b0"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/delivery/pinned-codex-reader-bce3f075/codex-rs/rmcp-client/src/http_client_adapter.rs",
+          "sha256": "cd59ccc64eb0bd8c966b8fc45a7d5487c421beb8fb13b15ebe3e7d366af4650d"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/delivery/pinned-codex-reader-bce3f075/codex-rs/rmcp-client/src/http_client_redirect.rs",
+          "sha256": "b09c1a1b507619c8c904bb23d32e5cd8b89664a04c10ce417502c9a0b04c93b5"
+        }
+      ],
+      "nativeOracle": "native initialize/list-tools request received by selected authenticated local streamableHTTP fixture at exact derived A/B port/path; B requires correlated Ops listener port8081 and workload readiness, not only changed TOML. Current supervisor forced8080 shows file B non-effect. No deployed Pod/network/grant proof from loopback fixture.",
+      "futureInvocation": {
+        "argv": [
+          "node",
+          "--test",
+          "--test-name-pattern=^DLV-CASE-CODEX-NATIVE-PARSER-AUTH-TOPOLOGY$",
+          "tests/verification/config/delivery-codex-policy.test.mts"
+        ],
+        "env": {
+          "CONFIG_ACCEPTANCE_CASE_ID": "DLV-CASE-CODEX-NATIVE-PARSER-AUTH-TOPOLOGY",
+          "CONFIG_ACCEPTANCE_SPEC": "docs/review/evidence/config-acceptance/delivery/codex-target-case-specifications-20261013.json"
+        },
+        "status": "not-run; future harness absent, no test bytes invented"
+      },
+      "phases": [
+        "verify actual native binary/version/platform receipt against selected npm and pinned source before imports/start; source commit not installed binary proof",
+        "construct complete A with compatible actual native requirements, isolated auth/CODEX_HOME, declared streamableHTTP fixture and no paid/account/model calls; positive first",
+        "target missing/type/enum/unknown/old equal+different HOME/-c overrides rejects before spawn; native unsupported untrusted/incompatible MCP options and missing ENV exact boundary recorded separately",
+        "publish B selection while retaining A process/permission/account/provider/cleanup refs; new process consumes B and existing A never retargets",
+        "repeat failed setup with clean fixture diagnosis; no false semantic negative; cleanup only original captured fixture/process refs"
+      ],
+      "priorState": "original process/module/config/requirements/binary/authProvider/account-store/Pod-grant tuple captured before startup; universal parent originalModule/cleanupRefs/grant contract still pending, no fabricated alias",
+      "remainingExternalIdentity": "actual selected binary/ABI and supported requirements/fixture/provider revision necessary for eventual native execution; not a blocker to this source and future-spec definition"
+    },
+    {
+      "settingId": "DLV-OPS-CODEX-MCP-SERVERS-KUBECLAW-OPS-BEARER-TOKEN-ENV-VAR",
+      "field": "mcp_servers.kubeclaw_ops.bearer_token_env_var",
+      "targetDomain": {
+        "domain": {
+          "type": "string",
+          "constFrom": "selected Ops bearer credential projection KUBECLAW_MCP_TOKEN",
+          "semantic": "serde Option<String> does not enforce uppercase regex. Target fixed generated provider binding. Native resolve rejects absent/empty/nonunicode; supervisor reads token once while MCP server reads every request. Provider rotation does not magically update started Codex ENV; bind admitted A credential revision and rotate through declared overlap/restart, never selectLatest."
+        },
+        "required": true,
+        "proposedOnly": true,
+        "activation": "S immutable native policy/transport/provider selection before app-server startup; started A config/permissions/ENV/account/PVC provenance preserved. New B processes only, no policy rewrite or Latest cleanup."
+      },
+      "profileFiles": {
+        "A": {
+          "path": "docs/review/evidence/config-acceptance/delivery/codex-target-profiles-20261013/DLV-OPS-CODEX-MCP-SERVERS-KUBECLAW-OPS-BEARER-TOKEN-ENV-VAR.A.toml",
+          "sha256": "d02672481c4e989fe9985d46631d88d7c23f966a154e6d9e54f594ad75be4098",
+          "scope": "complete native TOML definition only; selected actual requirements/platform/MCP/provider/binary receipt prerequisites required before positive native proof"
+        },
+        "B": {
+          "path": "docs/review/evidence/config-acceptance/delivery/codex-target-profiles-20261013/DLV-OPS-CODEX-MCP-SERVERS-KUBECLAW-OPS-BEARER-TOKEN-ENV-VAR.B.toml",
+          "sha256": "d02672481c4e989fe9985d46631d88d7c23f966a154e6d9e54f594ad75be4098",
+          "scope": "complete native TOML definition only; selected actual requirements/platform/MCP/provider/binary receipt prerequisites required before positive native proof"
+        }
+      },
+      "source": {
+        "path": "ops/pod/config.toml",
+        "field": "mcp_servers.kubeclaw_ops.bearer_token_env_var",
+        "sha256": "cb32e6807d5d48b12c7be4af875f33155142c2d389dee93cddf3083806bc6b0e",
+        "line": null
+      },
+      "primaryReaderReferences": [
+        {
+          "path": "ops/pod/config.toml",
+          "sha256": "cb32e6807d5d48b12c7be4af875f33155142c2d389dee93cddf3083806bc6b0e"
+        },
+        {
+          "path": "ops/pod/supervisor.py",
+          "sha256": "e8000383c5736777562bf805cfd9d3b4e1dce4f0e720be264231b0ab91e3cf99"
+        },
+        {
+          "path": "ops/pod/Dockerfile",
+          "sha256": "d55888e701ea0798c7c2a109f17977cc615442828e010f56e4f17871f6483eb0"
+        },
+        {
+          "path": "ops/pod/package.json",
+          "sha256": "394f5bf0cad23cb3cce8d598d463fd5ec07588eb5467e63035b7594e59695895"
+        },
+        {
+          "path": "ops/pod/package-lock.json",
+          "sha256": "9bc125a991652708a1ba9a19cbfc533cd223b17ec3b32e45f852db96a70327dd"
+        },
+        {
+          "path": "charts/ops-pod/templates/workload.yaml",
+          "sha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/delivery/pinned-codex-reader-bce3f075/codex-rs/config/src/mcp_types.rs",
+          "sha256": "b9939666f02b5c818053f3127412204be0190d6d66cf395a896ff01a851e3aba"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/delivery/pinned-codex-reader-bce3f075/codex-rs/core/src/config/mod.rs",
+          "sha256": "b3eb0a9751522f7f6f7a7bd1b21253f2fcb4e669955819bfb6d0a7425e1fed9e"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/delivery/pinned-codex-reader-bce3f075/codex-rs/codex-mcp/src/rmcp_client.rs",
+          "sha256": "b7ac2a82e39194390f5a8cc921449e33953f2a3c399fd6cd57faeb5ec27d42dc"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/delivery/pinned-codex-reader-bce3f075/codex-rs/rmcp-client/src/rmcp_client.rs",
+          "sha256": "e199d5265e814ef80f64e85d3188ecb4ae58299fc3d0fe9622bb93447da478b0"
+        }
+      ],
+      "nativeOracle": "native resolver obtains token only from selected generated ENV provider; isolated fixture logs authorized revision label not bytes/hash. Missing/empty/nonunicode fails before initialize. Rotating server provider after A spawn demonstrates A stale ENV until declared process transition; same name A/B is truthful projection, not fake alternative secret author.",
+      "futureInvocation": {
+        "argv": [
+          "node",
+          "--test",
+          "--test-name-pattern=^DLV-CASE-CODEX-NATIVE-PARSER-AUTH-TOPOLOGY$",
+          "tests/verification/config/delivery-codex-policy.test.mts"
+        ],
+        "env": {
+          "CONFIG_ACCEPTANCE_CASE_ID": "DLV-CASE-CODEX-NATIVE-PARSER-AUTH-TOPOLOGY",
+          "CONFIG_ACCEPTANCE_SPEC": "docs/review/evidence/config-acceptance/delivery/codex-target-case-specifications-20261013.json"
+        },
+        "status": "not-run; future harness absent, no test bytes invented"
+      },
+      "phases": [
+        "verify actual native binary/version/platform receipt against selected npm and pinned source before imports/start; source commit not installed binary proof",
+        "construct complete A with compatible actual native requirements, isolated auth/CODEX_HOME, declared streamableHTTP fixture and no paid/account/model calls; positive first",
+        "target missing/type/enum/unknown/old equal+different HOME/-c overrides rejects before spawn; native unsupported untrusted/incompatible MCP options and missing ENV exact boundary recorded separately",
+        "publish B selection while retaining A process/permission/account/provider/cleanup refs; new process consumes B and existing A never retargets",
+        "repeat failed setup with clean fixture diagnosis; no false semantic negative; cleanup only original captured fixture/process refs"
+      ],
+      "priorState": "original process/module/config/requirements/binary/authProvider/account-store/Pod-grant tuple captured before startup; universal parent originalModule/cleanupRefs/grant contract still pending, no fabricated alias",
+      "remainingExternalIdentity": "actual selected binary/ABI and supported requirements/fixture/provider revision necessary for eventual native execution; not a blocker to this source and future-spec definition"
+    }
+  ],
+  "physicalAuthor": "existing ops/pod/config.toml; same Ops deployment owner selectors/materializer, not new policy index",
+  "credentialPolicy": "retain auth/PVC account state, replace operator-config persistence seam only; no secret bytes or hashes in evidence"
+}

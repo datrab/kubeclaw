@@ -1,0 +1,455 @@
+{
+  "independentReview": "All ICQ01..06 corrected proposals require fresh Runtime review; author doesnotverify/accept findingclosure",
+  "activeFutureCases": [
+    {
+      "id": "QC-FOUNDATION-FLOCK-WAIT-VAL",
+      "status": "not-implemented/not-run",
+      "argv": [
+        "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/future-question-harness.mjs",
+        "--case",
+        "QC-FOUNDATION-FLOCK-WAIT-VAL",
+        "--profiles",
+        "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/complete-profiles.json",
+        "--stand",
+        "APPROVED_IMPLEMENTATION_COMMIT",
+        "--case-contracts",
+        "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/case-input-contracts.json"
+      ],
+      "requirements": [
+        "F-VAL"
+      ]
+    },
+    {
+      "id": "QC-FOUNDATION-FLOCK-WAIT-REAL-LOCK",
+      "status": "not-implemented/not-run",
+      "argv": [
+        "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/future-question-harness.mjs",
+        "--case",
+        "QC-FOUNDATION-FLOCK-WAIT-REAL-LOCK",
+        "--profiles",
+        "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/complete-profiles.json",
+        "--stand",
+        "APPROVED_IMPLEMENTATION_COMMIT",
+        "--case-contracts",
+        "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/case-input-contracts.json"
+      ],
+      "requirements": [
+        "F-VAL",
+        "F-BIND",
+        "F-EFFECT"
+      ]
+    },
+    {
+      "id": "QC-FOUNDATION-FLOCK-WAIT-HISTORY",
+      "status": "not-implemented/not-run",
+      "argv": [
+        "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/future-question-harness.mjs",
+        "--case",
+        "QC-FOUNDATION-FLOCK-WAIT-HISTORY",
+        "--profiles",
+        "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/complete-profiles.json",
+        "--stand",
+        "APPROVED_IMPLEMENTATION_COMMIT",
+        "--case-contracts",
+        "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/case-input-contracts.json"
+      ],
+      "requirements": [
+        "F-BIND",
+        "F-RECOVERY",
+        "F-EVAL"
+      ]
+    },
+    {
+      "id": "QC-ADMISSION-REASON-LIMITS-VAL",
+      "status": "not-implemented/not-run",
+      "argv": [
+        "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/future-question-harness.mjs",
+        "--case",
+        "QC-ADMISSION-REASON-LIMITS-VAL",
+        "--profiles",
+        "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/complete-profiles.json",
+        "--stand",
+        "APPROVED_IMPLEMENTATION_COMMIT",
+        "--case-contracts",
+        "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/case-input-contracts.json"
+      ],
+      "requirements": [
+        "F-VAL"
+      ]
+    },
+    {
+      "id": "QC-ADMISSION-REASON-LIMITS-FORMAT",
+      "status": "not-implemented/not-run",
+      "argv": [
+        "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/future-question-harness.mjs",
+        "--case",
+        "QC-ADMISSION-REASON-LIMITS-FORMAT",
+        "--profiles",
+        "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/complete-profiles.json",
+        "--stand",
+        "APPROVED_IMPLEMENTATION_COMMIT",
+        "--case-contracts",
+        "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/case-input-contracts.json"
+      ],
+      "requirements": [
+        "F-VAL",
+        "F-BIND",
+        "F-EFFECT"
+      ]
+    },
+    {
+      "id": "QC-ADMISSION-REASON-LIMITS-HISTORY",
+      "status": "not-implemented/not-run",
+      "argv": [
+        "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/future-question-harness.mjs",
+        "--case",
+        "QC-ADMISSION-REASON-LIMITS-HISTORY",
+        "--profiles",
+        "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/complete-profiles.json",
+        "--stand",
+        "APPROVED_IMPLEMENTATION_COMMIT",
+        "--case-contracts",
+        "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/case-input-contracts.json"
+      ],
+      "requirements": [
+        "F-BIND",
+        "F-RECOVERY",
+        "F-EVAL"
+      ]
+    },
+    {
+      "id": "QC-ADMISSION-METADATA-RESERVE-VAL",
+      "status": "not-implemented/not-run",
+      "argv": [
+        "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/future-question-harness.mjs",
+        "--case",
+        "QC-ADMISSION-METADATA-RESERVE-VAL",
+        "--profiles",
+        "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/complete-profiles.json",
+        "--stand",
+        "APPROVED_IMPLEMENTATION_COMMIT",
+        "--case-contracts",
+        "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/case-input-contracts.json"
+      ],
+      "requirements": [
+        "F-VAL"
+      ]
+    },
+    {
+      "id": "QC-ADMISSION-METADATA-RESERVE-OVERFLOW",
+      "status": "not-implemented/not-run",
+      "argv": [
+        "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/future-question-harness.mjs",
+        "--case",
+        "QC-ADMISSION-METADATA-RESERVE-OVERFLOW",
+        "--profiles",
+        "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/complete-profiles.json",
+        "--stand",
+        "APPROVED_IMPLEMENTATION_COMMIT",
+        "--case-contracts",
+        "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/case-input-contracts.json"
+      ],
+      "requirements": [
+        "F-VAL",
+        "F-BIND",
+        "F-EFFECT"
+      ]
+    },
+    {
+      "id": "QC-ADMISSION-METADATA-RESERVE-ALL-WRITES",
+      "status": "not-implemented/not-run",
+      "argv": [
+        "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/future-question-harness.mjs",
+        "--case",
+        "QC-ADMISSION-METADATA-RESERVE-ALL-WRITES",
+        "--profiles",
+        "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/complete-profiles.json",
+        "--stand",
+        "APPROVED_IMPLEMENTATION_COMMIT",
+        "--case-contracts",
+        "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/case-input-contracts.json"
+      ],
+      "requirements": [
+        "F-VAL",
+        "F-BIND",
+        "F-EFFECT",
+        "F-RECOVERY",
+        "F-EVAL"
+      ]
+    },
+    {
+      "id": "QC-OUTBOX-UNBOUNDED-READ-FOUR-METHODS",
+      "status": "not-implemented/not-run",
+      "argv": [
+        "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/future-question-harness.mjs",
+        "--case",
+        "QC-OUTBOX-UNBOUNDED-READ-FOUR-METHODS",
+        "--profiles",
+        "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/complete-profiles.json",
+        "--stand",
+        "APPROVED_IMPLEMENTATION_COMMIT",
+        "--case-contracts",
+        "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/case-input-contracts.json"
+      ],
+      "requirements": [
+        "F-VAL",
+        "F-EFFECT"
+      ]
+    },
+    {
+      "id": "QC-OUTBOX-UNBOUNDED-READ-REPLAY",
+      "status": "not-implemented/not-run",
+      "argv": [
+        "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/future-question-harness.mjs",
+        "--case",
+        "QC-OUTBOX-UNBOUNDED-READ-REPLAY",
+        "--profiles",
+        "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/complete-profiles.json",
+        "--stand",
+        "APPROVED_IMPLEMENTATION_COMMIT",
+        "--case-contracts",
+        "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/case-input-contracts.json"
+      ],
+      "requirements": [
+        "F-BIND",
+        "F-RECOVERY",
+        "F-EVAL"
+      ]
+    },
+    {
+      "id": "QC-LATENT-UNBOUNDED-BLOB-API-API-AND-SEVEN",
+      "status": "not-implemented/not-run",
+      "argv": [
+        "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/future-question-harness.mjs",
+        "--case",
+        "QC-LATENT-UNBOUNDED-BLOB-API-API-AND-SEVEN",
+        "--profiles",
+        "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/complete-profiles.json",
+        "--stand",
+        "APPROVED_IMPLEMENTATION_COMMIT",
+        "--case-contracts",
+        "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/case-input-contracts.json"
+      ],
+      "requirements": [
+        "F-VAL",
+        "F-BIND",
+        "F-EFFECT",
+        "F-RECOVERY",
+        "F-EVAL"
+      ]
+    },
+    {
+      "id": "QC-LATENT-UNBOUNDED-BLOB-API-HISTORY",
+      "status": "not-implemented/not-run",
+      "argv": [
+        "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/future-question-harness.mjs",
+        "--case",
+        "QC-LATENT-UNBOUNDED-BLOB-API-HISTORY",
+        "--profiles",
+        "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/complete-profiles.json",
+        "--stand",
+        "APPROVED_IMPLEMENTATION_COMMIT",
+        "--case-contracts",
+        "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/case-input-contracts.json"
+      ],
+      "requirements": [
+        "F-BIND",
+        "F-RECOVERY",
+        "F-EVAL"
+      ]
+    },
+    {
+      "id": "QC-BUSTER-TAR-DIAGNOSTIC-VAL",
+      "status": "not-implemented/not-run",
+      "argv": [
+        "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/future-question-harness.mjs",
+        "--case",
+        "QC-BUSTER-TAR-DIAGNOSTIC-VAL",
+        "--profiles",
+        "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/complete-profiles.json",
+        "--stand",
+        "APPROVED_IMPLEMENTATION_COMMIT",
+        "--case-contracts",
+        "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/case-input-contracts.json"
+      ],
+      "requirements": [
+        "F-VAL"
+      ]
+    },
+    {
+      "id": "QC-BUSTER-TAR-DIAGNOSTIC-REAL-TAR",
+      "status": "not-implemented/not-run",
+      "argv": [
+        "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/future-question-harness.mjs",
+        "--case",
+        "QC-BUSTER-TAR-DIAGNOSTIC-REAL-TAR",
+        "--profiles",
+        "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/complete-profiles.json",
+        "--stand",
+        "APPROVED_IMPLEMENTATION_COMMIT",
+        "--case-contracts",
+        "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/case-input-contracts.json"
+      ],
+      "requirements": [
+        "F-VAL",
+        "F-BIND",
+        "F-EFFECT"
+      ]
+    },
+    {
+      "id": "QC-BUSTER-TAR-DIAGNOSTIC-BIND",
+      "status": "not-implemented/not-run",
+      "argv": [
+        "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/future-question-harness.mjs",
+        "--case",
+        "QC-BUSTER-TAR-DIAGNOSTIC-BIND",
+        "--profiles",
+        "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/complete-profiles.json",
+        "--stand",
+        "APPROVED_IMPLEMENTATION_COMMIT",
+        "--case-contracts",
+        "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/case-input-contracts.json"
+      ],
+      "requirements": [
+        "F-BIND",
+        "F-RECOVERY",
+        "F-EVAL"
+      ]
+    },
+    {
+      "id": "QC-BUSTER-TAR-LOCATOR-UNUSED-PAIRED-PROVISION",
+      "status": "not-implemented/not-run",
+      "argv": [
+        "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/future-question-harness.mjs",
+        "--case",
+        "QC-BUSTER-TAR-LOCATOR-UNUSED-PAIRED-PROVISION",
+        "--profiles",
+        "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/complete-profiles.json",
+        "--stand",
+        "APPROVED_IMPLEMENTATION_COMMIT",
+        "--case-contracts",
+        "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/case-input-contracts.json"
+      ],
+      "requirements": [
+        "F-VAL",
+        "F-BIND",
+        "F-EFFECT"
+      ]
+    },
+    {
+      "id": "QC-BUSTER-TAR-LOCATOR-UNUSED-HISTORY",
+      "status": "not-implemented/not-run",
+      "argv": [
+        "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/future-question-harness.mjs",
+        "--case",
+        "QC-BUSTER-TAR-LOCATOR-UNUSED-HISTORY",
+        "--profiles",
+        "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/complete-profiles.json",
+        "--stand",
+        "APPROVED_IMPLEMENTATION_COMMIT",
+        "--case-contracts",
+        "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/case-input-contracts.json"
+      ],
+      "requirements": [
+        "F-BIND",
+        "F-RECOVERY",
+        "F-EVAL"
+      ]
+    },
+    {
+      "id": "QC-FIXTURE-STORAGE-EXPONENT-REPRESENTATION",
+      "status": "not-implemented/not-run",
+      "argv": [
+        "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/future-question-harness.mjs",
+        "--case",
+        "QC-FIXTURE-STORAGE-EXPONENT-REPRESENTATION",
+        "--profiles",
+        "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/complete-profiles.json",
+        "--stand",
+        "APPROVED_IMPLEMENTATION_COMMIT",
+        "--case-contracts",
+        "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/case-input-contracts.json"
+      ],
+      "requirements": [
+        "F-VAL",
+        "F-EFFECT"
+      ]
+    },
+    {
+      "id": "QC-FIXTURE-STORAGE-EXPONENT-POLICY-BIND",
+      "status": "not-implemented/not-run",
+      "argv": [
+        "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/future-question-harness.mjs",
+        "--case",
+        "QC-FIXTURE-STORAGE-EXPONENT-POLICY-BIND",
+        "--profiles",
+        "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/complete-profiles.json",
+        "--stand",
+        "APPROVED_IMPLEMENTATION_COMMIT",
+        "--case-contracts",
+        "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/case-input-contracts.json"
+      ],
+      "requirements": [
+        "F-BIND",
+        "F-RECOVERY",
+        "F-EVAL"
+      ]
+    },
+    {
+      "id": "QC-BUSTER-PROVIDER-MEASUREMENT-FALLBACKS-REAL-PROVENANCE",
+      "status": "not-implemented/not-run",
+      "argv": [
+        "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/future-question-harness.mjs",
+        "--case",
+        "QC-BUSTER-PROVIDER-MEASUREMENT-FALLBACKS-REAL-PROVENANCE",
+        "--profiles",
+        "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/complete-profiles.json",
+        "--stand",
+        "APPROVED_IMPLEMENTATION_COMMIT",
+        "--case-contracts",
+        "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/case-input-contracts.json"
+      ],
+      "requirements": [
+        "F-VAL",
+        "F-EFFECT",
+        "F-BIND"
+      ]
+    },
+    {
+      "id": "QC-BUSTER-PROVIDER-MEASUREMENT-FALLBACKS-RECOVERY-EVAL",
+      "status": "not-implemented/not-run",
+      "argv": [
+        "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/future-question-harness.mjs",
+        "--case",
+        "QC-BUSTER-PROVIDER-MEASUREMENT-FALLBACKS-RECOVERY-EVAL",
+        "--profiles",
+        "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/complete-profiles.json",
+        "--stand",
+        "APPROVED_IMPLEMENTATION_COMMIT",
+        "--case-contracts",
+        "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/case-input-contracts.json"
+      ],
+      "requirements": [
+        "F-BIND",
+        "F-RECOVERY",
+        "F-EVAL"
+      ]
+    }
+  ],
+  "externalInputs": [
+    "Authenticated genuine original selectedNova profile/source/schema evidence for legacy migration; do not treat command-supplied quotas or generatedsyntheticrefs as original proof",
+    "Real installed external/dynamic outbox/blob/nativefixture caller roster and same-owner bounds, if such callers exist; no repository productive outbox constructor proven",
+    "Approved genuine compiledsandbox/provider package and actual ownedprocess/clock-rate/measurement sources; structural typed specimens do not certify resources",
+    "Real paired tarimage/package/runtime/host/pool and source-attestation identity fixture observations before actual nativeexecution"
+  ],
+  "crossAuthorQuestions": [
+    "CMP-SOURCE-PRISM-DESIGN-CARDINALITY",
+    "CMP-SOURCE-PRISM-DEVELOPMENT-IDENTITY",
+    "CMP-SOURCE-BUSTER-KUBE-CREDENTIAL-ENV",
+    "CMP-SOURCE-GENERATED-HOST-SOURCE-PROVENANCE"
+  ],
+  "crossAuthorReferences": "crossauthor-handoffs.json exactsnapshots/IDs; no author acceptance; Delivery originalModule/cleanup/provider/grants and parentPrismspoolquota remainexplicit",
+  "wholeC0Accepted": false,
+  "runtimeAccepted": false,
+  "testImplementationRequiredToPassDefinitions": false
+}

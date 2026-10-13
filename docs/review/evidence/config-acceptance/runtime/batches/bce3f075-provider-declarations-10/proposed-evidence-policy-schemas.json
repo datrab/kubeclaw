@@ -1,0 +1,1876 @@
+{
+  "kubeclaw.api-flow:flow": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "registration",
+      "instance",
+      "evidencePolicy"
+    ],
+    "properties": {
+      "registration": {
+        "const": "kubeclaw.api-flow:flow"
+      },
+      "instance": {
+        "const": "c0-flow"
+      },
+      "evidencePolicy": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "onPass",
+          "onFail",
+          "onError"
+        ],
+        "properties": {
+          "onPass": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "log",
+                "test-report"
+              ]
+            },
+            "uniqueItems": true,
+            "maxItems": 2,
+            "allOf": [
+              {
+                "contains": {
+                  "const": "log"
+                },
+                "minContains": 1
+              },
+              {
+                "contains": {
+                  "const": "test-report"
+                },
+                "minContains": 1
+              }
+            ]
+          },
+          "onFail": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "log",
+                "test-report"
+              ]
+            },
+            "uniqueItems": true,
+            "maxItems": 2,
+            "allOf": [
+              {
+                "contains": {
+                  "const": "log"
+                },
+                "minContains": 1
+              },
+              {
+                "contains": {
+                  "const": "test-report"
+                },
+                "minContains": 1
+              }
+            ]
+          },
+          "onError": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "log",
+                "test-report"
+              ]
+            },
+            "uniqueItems": true,
+            "maxItems": 2,
+            "allOf": [
+              {
+                "contains": {
+                  "const": "log"
+                },
+                "minContains": 1
+              }
+            ]
+          }
+        }
+      }
+    }
+  },
+  "kubeclaw.axe:axe": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "registration",
+      "instance",
+      "evidencePolicy"
+    ],
+    "properties": {
+      "registration": {
+        "const": "kubeclaw.axe:axe"
+      },
+      "instance": {
+        "const": "c0-axe"
+      },
+      "evidencePolicy": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "onPass",
+          "onFail",
+          "onError"
+        ],
+        "properties": {
+          "onPass": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "log",
+                "test-report",
+                "screenshot"
+              ]
+            },
+            "uniqueItems": true,
+            "maxItems": 3,
+            "allOf": [
+              {
+                "contains": {
+                  "const": "log"
+                },
+                "minContains": 1
+              },
+              {
+                "contains": {
+                  "const": "test-report"
+                },
+                "minContains": 1
+              }
+            ]
+          },
+          "onFail": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "log",
+                "test-report",
+                "screenshot"
+              ]
+            },
+            "uniqueItems": true,
+            "maxItems": 3,
+            "allOf": [
+              {
+                "contains": {
+                  "const": "log"
+                },
+                "minContains": 1
+              },
+              {
+                "contains": {
+                  "const": "test-report"
+                },
+                "minContains": 1
+              },
+              {
+                "contains": {
+                  "const": "screenshot"
+                },
+                "minContains": 1
+              }
+            ]
+          },
+          "onError": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "log",
+                "test-report",
+                "screenshot"
+              ]
+            },
+            "uniqueItems": true,
+            "maxItems": 3,
+            "allOf": [
+              {
+                "contains": {
+                  "const": "log"
+                },
+                "minContains": 1
+              }
+            ]
+          }
+        }
+      }
+    }
+  },
+  "kubeclaw.container-build:buildkit": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "registration",
+      "instance",
+      "evidencePolicy"
+    ],
+    "properties": {
+      "registration": {
+        "const": "kubeclaw.container-build:buildkit"
+      },
+      "instance": {
+        "const": "c0-buildkit"
+      },
+      "evidencePolicy": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "onPass",
+          "onFail",
+          "onError"
+        ],
+        "properties": {
+          "onPass": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "log"
+              ]
+            },
+            "uniqueItems": true,
+            "maxItems": 1,
+            "allOf": [
+              {
+                "contains": {
+                  "const": "log"
+                },
+                "minContains": 1
+              }
+            ]
+          },
+          "onFail": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "log"
+              ]
+            },
+            "uniqueItems": true,
+            "maxItems": 1,
+            "allOf": [
+              {
+                "contains": {
+                  "const": "log"
+                },
+                "minContains": 1
+              }
+            ]
+          },
+          "onError": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "log"
+              ]
+            },
+            "uniqueItems": true,
+            "maxItems": 1,
+            "allOf": [
+              {
+                "contains": {
+                  "const": "log"
+                },
+                "minContains": 1
+              }
+            ]
+          }
+        }
+      }
+    }
+  },
+  "kubeclaw.coverage-budget:lcov": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "registration",
+      "instance",
+      "evidencePolicy"
+    ],
+    "properties": {
+      "registration": {
+        "const": "kubeclaw.coverage-budget:lcov"
+      },
+      "instance": {
+        "const": "c0-lcov"
+      },
+      "evidencePolicy": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "onPass",
+          "onFail",
+          "onError"
+        ],
+        "properties": {
+          "onPass": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "log"
+              ]
+            },
+            "uniqueItems": true,
+            "maxItems": 1,
+            "allOf": [
+              {
+                "contains": {
+                  "const": "log"
+                },
+                "minContains": 1
+              }
+            ]
+          },
+          "onFail": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "log"
+              ]
+            },
+            "uniqueItems": true,
+            "maxItems": 1,
+            "allOf": [
+              {
+                "contains": {
+                  "const": "log"
+                },
+                "minContains": 1
+              }
+            ]
+          },
+          "onError": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "log"
+              ]
+            },
+            "uniqueItems": true,
+            "maxItems": 1,
+            "allOf": [
+              {
+                "contains": {
+                  "const": "log"
+                },
+                "minContains": 1
+              }
+            ]
+          }
+        }
+      }
+    }
+  },
+  "kubeclaw.demo-auth-smoke:session": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "registration",
+      "instance",
+      "evidencePolicy"
+    ],
+    "properties": {
+      "registration": {
+        "const": "kubeclaw.demo-auth-smoke:session"
+      },
+      "instance": {
+        "const": "c0-session"
+      },
+      "evidencePolicy": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "onPass",
+          "onFail",
+          "onError"
+        ],
+        "properties": {
+          "onPass": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "log"
+              ]
+            },
+            "uniqueItems": true,
+            "maxItems": 1,
+            "allOf": [
+              {
+                "contains": {
+                  "const": "log"
+                },
+                "minContains": 1
+              }
+            ]
+          },
+          "onFail": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "log"
+              ]
+            },
+            "uniqueItems": true,
+            "maxItems": 1,
+            "allOf": [
+              {
+                "contains": {
+                  "const": "log"
+                },
+                "minContains": 1
+              }
+            ]
+          },
+          "onError": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "log"
+              ]
+            },
+            "uniqueItems": true,
+            "maxItems": 1,
+            "allOf": [
+              {
+                "contains": {
+                  "const": "log"
+                },
+                "minContains": 1
+              }
+            ]
+          }
+        }
+      }
+    }
+  },
+  "kubeclaw.direct-command:command": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "registration",
+      "instance",
+      "evidencePolicy"
+    ],
+    "properties": {
+      "registration": {
+        "const": "kubeclaw.direct-command:command"
+      },
+      "instance": {
+        "const": "c0-command"
+      },
+      "evidencePolicy": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "onPass",
+          "onFail",
+          "onError"
+        ],
+        "properties": {
+          "onPass": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "log",
+                "test-report",
+                "coverage",
+                "artifact"
+              ]
+            },
+            "uniqueItems": true,
+            "maxItems": 4,
+            "allOf": [
+              {
+                "contains": {
+                  "const": "log"
+                },
+                "minContains": 1
+              },
+              {
+                "contains": {
+                  "const": "test-report"
+                },
+                "minContains": 1
+              },
+              {
+                "contains": {
+                  "const": "coverage"
+                },
+                "minContains": 1
+              },
+              {
+                "contains": {
+                  "const": "artifact"
+                },
+                "minContains": 1
+              }
+            ]
+          },
+          "onFail": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "log",
+                "test-report",
+                "coverage",
+                "artifact"
+              ]
+            },
+            "uniqueItems": true,
+            "maxItems": 4,
+            "allOf": [
+              {
+                "contains": {
+                  "const": "log"
+                },
+                "minContains": 1
+              },
+              {
+                "contains": {
+                  "const": "test-report"
+                },
+                "minContains": 1
+              },
+              {
+                "contains": {
+                  "const": "coverage"
+                },
+                "minContains": 1
+              },
+              {
+                "contains": {
+                  "const": "artifact"
+                },
+                "minContains": 1
+              }
+            ]
+          },
+          "onError": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "log",
+                "test-report",
+                "coverage",
+                "artifact"
+              ]
+            },
+            "uniqueItems": true,
+            "maxItems": 4,
+            "allOf": [
+              {
+                "contains": {
+                  "const": "log"
+                },
+                "minContains": 1
+              },
+              {
+                "contains": {
+                  "const": "test-report"
+                },
+                "minContains": 1
+              },
+              {
+                "contains": {
+                  "const": "coverage"
+                },
+                "minContains": 1
+              },
+              {
+                "contains": {
+                  "const": "artifact"
+                },
+                "minContains": 1
+              }
+            ]
+          }
+        }
+      }
+    }
+  },
+  "kubeclaw.http:request": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "registration",
+      "instance",
+      "evidencePolicy"
+    ],
+    "properties": {
+      "registration": {
+        "const": "kubeclaw.http:request"
+      },
+      "instance": {
+        "const": "c0-request"
+      },
+      "evidencePolicy": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "onPass",
+          "onFail",
+          "onError"
+        ],
+        "properties": {
+          "onPass": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "log"
+              ]
+            },
+            "uniqueItems": true,
+            "maxItems": 1,
+            "allOf": [
+              {
+                "contains": {
+                  "const": "log"
+                },
+                "minContains": 1
+              }
+            ]
+          },
+          "onFail": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "log"
+              ]
+            },
+            "uniqueItems": true,
+            "maxItems": 1,
+            "allOf": [
+              {
+                "contains": {
+                  "const": "log"
+                },
+                "minContains": 1
+              }
+            ]
+          },
+          "onError": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "log"
+              ]
+            },
+            "uniqueItems": true,
+            "maxItems": 1,
+            "allOf": [
+              {
+                "contains": {
+                  "const": "log"
+                },
+                "minContains": 1
+              }
+            ]
+          }
+        }
+      }
+    }
+  },
+  "kubeclaw.kubernetes-fixture:deployment": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "registration",
+      "instance",
+      "evidencePolicy"
+    ],
+    "properties": {
+      "registration": {
+        "const": "kubeclaw.kubernetes-fixture:deployment"
+      },
+      "instance": {
+        "const": "c0-deployment"
+      },
+      "evidencePolicy": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "onPass",
+          "onFail",
+          "onError"
+        ],
+        "properties": {
+          "onPass": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "log"
+              ]
+            },
+            "uniqueItems": true,
+            "maxItems": 1,
+            "allOf": [
+              {
+                "contains": {
+                  "const": "log"
+                },
+                "minContains": 1
+              }
+            ]
+          },
+          "onFail": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "log"
+              ]
+            },
+            "uniqueItems": true,
+            "maxItems": 1,
+            "allOf": [
+              {
+                "contains": {
+                  "const": "log"
+                },
+                "minContains": 1
+              }
+            ]
+          },
+          "onError": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "log"
+              ]
+            },
+            "uniqueItems": true,
+            "maxItems": 1,
+            "allOf": [
+              {
+                "contains": {
+                  "const": "log"
+                },
+                "minContains": 1
+              }
+            ]
+          }
+        }
+      }
+    }
+  },
+  "kubeclaw.lighthouse:lighthouse": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "registration",
+      "instance",
+      "evidencePolicy"
+    ],
+    "properties": {
+      "registration": {
+        "const": "kubeclaw.lighthouse:lighthouse"
+      },
+      "instance": {
+        "const": "c0-lighthouse"
+      },
+      "evidencePolicy": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "onPass",
+          "onFail",
+          "onError"
+        ],
+        "properties": {
+          "onPass": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "log",
+                "performance-report",
+                "performance-report-representative"
+              ]
+            },
+            "uniqueItems": true,
+            "maxItems": 3,
+            "allOf": [
+              {
+                "contains": {
+                  "const": "log"
+                },
+                "minContains": 1
+              },
+              {
+                "contains": {
+                  "const": "performance-report"
+                },
+                "minContains": 1
+              },
+              {
+                "contains": {
+                  "const": "performance-report-representative"
+                },
+                "minContains": 1
+              }
+            ]
+          },
+          "onFail": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "log",
+                "performance-report",
+                "performance-report-representative"
+              ]
+            },
+            "uniqueItems": true,
+            "maxItems": 3,
+            "allOf": [
+              {
+                "contains": {
+                  "const": "log"
+                },
+                "minContains": 1
+              },
+              {
+                "contains": {
+                  "const": "performance-report"
+                },
+                "minContains": 1
+              },
+              {
+                "contains": {
+                  "const": "performance-report-representative"
+                },
+                "minContains": 1
+              }
+            ]
+          },
+          "onError": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "log",
+                "performance-report",
+                "performance-report-representative"
+              ]
+            },
+            "uniqueItems": true,
+            "maxItems": 3,
+            "allOf": [
+              {
+                "contains": {
+                  "const": "log"
+                },
+                "minContains": 1
+              }
+            ]
+          }
+        }
+      }
+    }
+  },
+  "kubeclaw.openapi:operations": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "registration",
+      "instance",
+      "evidencePolicy"
+    ],
+    "properties": {
+      "registration": {
+        "const": "kubeclaw.openapi:operations"
+      },
+      "instance": {
+        "const": "c0-operations"
+      },
+      "evidencePolicy": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "onPass",
+          "onFail",
+          "onError"
+        ],
+        "properties": {
+          "onPass": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "log",
+                "test-report"
+              ]
+            },
+            "uniqueItems": true,
+            "maxItems": 2,
+            "allOf": [
+              {
+                "contains": {
+                  "const": "log"
+                },
+                "minContains": 1
+              },
+              {
+                "contains": {
+                  "const": "test-report"
+                },
+                "minContains": 1
+              }
+            ]
+          },
+          "onFail": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "log",
+                "test-report"
+              ]
+            },
+            "uniqueItems": true,
+            "maxItems": 2,
+            "allOf": [
+              {
+                "contains": {
+                  "const": "log"
+                },
+                "minContains": 1
+              },
+              {
+                "contains": {
+                  "const": "test-report"
+                },
+                "minContains": 1
+              }
+            ]
+          },
+          "onError": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "log",
+                "test-report"
+              ]
+            },
+            "uniqueItems": true,
+            "maxItems": 2,
+            "allOf": [
+              {
+                "contains": {
+                  "const": "log"
+                },
+                "minContains": 1
+              }
+            ]
+          }
+        }
+      }
+    }
+  },
+  "kubeclaw.playwright:playwright": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "registration",
+      "instance",
+      "evidencePolicy"
+    ],
+    "properties": {
+      "registration": {
+        "const": "kubeclaw.playwright:playwright"
+      },
+      "instance": {
+        "const": "c0-playwright"
+      },
+      "evidencePolicy": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "onPass",
+          "onFail",
+          "onError"
+        ],
+        "properties": {
+          "onPass": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "log",
+                "test-report",
+                "screenshot",
+                "video",
+                "trace",
+                "test-artifact"
+              ]
+            },
+            "uniqueItems": true,
+            "maxItems": 6,
+            "allOf": [
+              {
+                "contains": {
+                  "const": "log"
+                },
+                "minContains": 1
+              },
+              {
+                "contains": {
+                  "const": "test-report"
+                },
+                "minContains": 1
+              },
+              {
+                "contains": {
+                  "const": "screenshot"
+                },
+                "minContains": 1
+              },
+              {
+                "contains": {
+                  "const": "video"
+                },
+                "minContains": 1
+              },
+              {
+                "contains": {
+                  "const": "trace"
+                },
+                "minContains": 1
+              },
+              {
+                "contains": {
+                  "const": "test-artifact"
+                },
+                "minContains": 1
+              }
+            ]
+          },
+          "onFail": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "log",
+                "test-report",
+                "screenshot",
+                "video",
+                "trace",
+                "test-artifact"
+              ]
+            },
+            "uniqueItems": true,
+            "maxItems": 6,
+            "allOf": [
+              {
+                "contains": {
+                  "const": "log"
+                },
+                "minContains": 1
+              },
+              {
+                "contains": {
+                  "const": "test-report"
+                },
+                "minContains": 1
+              },
+              {
+                "contains": {
+                  "const": "screenshot"
+                },
+                "minContains": 1
+              },
+              {
+                "contains": {
+                  "const": "video"
+                },
+                "minContains": 1
+              },
+              {
+                "contains": {
+                  "const": "trace"
+                },
+                "minContains": 1
+              },
+              {
+                "contains": {
+                  "const": "test-artifact"
+                },
+                "minContains": 1
+              }
+            ]
+          },
+          "onError": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "log",
+                "test-report",
+                "screenshot",
+                "video",
+                "trace",
+                "test-artifact"
+              ]
+            },
+            "uniqueItems": true,
+            "maxItems": 6,
+            "allOf": [
+              {
+                "contains": {
+                  "const": "log"
+                },
+                "minContains": 1
+              }
+            ]
+          }
+        }
+      }
+    }
+  },
+  "kubeclaw.security-providers:headers": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "registration",
+      "instance",
+      "evidencePolicy"
+    ],
+    "properties": {
+      "registration": {
+        "const": "kubeclaw.security-providers:headers"
+      },
+      "instance": {
+        "const": "c0-headers"
+      },
+      "evidencePolicy": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "onPass",
+          "onFail",
+          "onError"
+        ],
+        "properties": {
+          "onPass": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "log"
+              ]
+            },
+            "uniqueItems": true,
+            "maxItems": 1,
+            "allOf": [
+              {
+                "contains": {
+                  "const": "log"
+                },
+                "minContains": 1
+              }
+            ]
+          },
+          "onFail": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "log"
+              ]
+            },
+            "uniqueItems": true,
+            "maxItems": 1,
+            "allOf": [
+              {
+                "contains": {
+                  "const": "log"
+                },
+                "minContains": 1
+              }
+            ]
+          },
+          "onError": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "log"
+              ]
+            },
+            "uniqueItems": true,
+            "maxItems": 1,
+            "allOf": [
+              {
+                "contains": {
+                  "const": "log"
+                },
+                "minContains": 1
+              }
+            ]
+          }
+        }
+      }
+    }
+  },
+  "kubeclaw.security-providers:dependency-trivy": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "registration",
+      "instance",
+      "evidencePolicy"
+    ],
+    "properties": {
+      "registration": {
+        "const": "kubeclaw.security-providers:dependency-trivy"
+      },
+      "instance": {
+        "const": "c0-dependency-trivy"
+      },
+      "evidencePolicy": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "onPass",
+          "onFail",
+          "onError"
+        ],
+        "properties": {
+          "onPass": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "log"
+              ]
+            },
+            "uniqueItems": true,
+            "maxItems": 1,
+            "allOf": [
+              {
+                "contains": {
+                  "const": "log"
+                },
+                "minContains": 1
+              }
+            ]
+          },
+          "onFail": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "log"
+              ]
+            },
+            "uniqueItems": true,
+            "maxItems": 1,
+            "allOf": [
+              {
+                "contains": {
+                  "const": "log"
+                },
+                "minContains": 1
+              }
+            ]
+          },
+          "onError": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "log"
+              ]
+            },
+            "uniqueItems": true,
+            "maxItems": 1,
+            "allOf": [
+              {
+                "contains": {
+                  "const": "log"
+                },
+                "minContains": 1
+              }
+            ]
+          }
+        }
+      }
+    }
+  },
+  "kubeclaw.security-providers:image-trivy": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "registration",
+      "instance",
+      "evidencePolicy"
+    ],
+    "properties": {
+      "registration": {
+        "const": "kubeclaw.security-providers:image-trivy"
+      },
+      "instance": {
+        "const": "c0-image-trivy"
+      },
+      "evidencePolicy": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "onPass",
+          "onFail",
+          "onError"
+        ],
+        "properties": {
+          "onPass": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "log"
+              ]
+            },
+            "uniqueItems": true,
+            "maxItems": 1,
+            "allOf": [
+              {
+                "contains": {
+                  "const": "log"
+                },
+                "minContains": 1
+              }
+            ]
+          },
+          "onFail": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "log"
+              ]
+            },
+            "uniqueItems": true,
+            "maxItems": 1,
+            "allOf": [
+              {
+                "contains": {
+                  "const": "log"
+                },
+                "minContains": 1
+              }
+            ]
+          },
+          "onError": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "log"
+              ]
+            },
+            "uniqueItems": true,
+            "maxItems": 1,
+            "allOf": [
+              {
+                "contains": {
+                  "const": "log"
+                },
+                "minContains": 1
+              }
+            ]
+          }
+        }
+      }
+    }
+  },
+  "kubeclaw.security-providers:kubernetes-policy": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "registration",
+      "instance",
+      "evidencePolicy"
+    ],
+    "properties": {
+      "registration": {
+        "const": "kubeclaw.security-providers:kubernetes-policy"
+      },
+      "instance": {
+        "const": "c0-kubernetes-policy"
+      },
+      "evidencePolicy": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "onPass",
+          "onFail",
+          "onError"
+        ],
+        "properties": {
+          "onPass": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "log"
+              ]
+            },
+            "uniqueItems": true,
+            "maxItems": 1,
+            "allOf": [
+              {
+                "contains": {
+                  "const": "log"
+                },
+                "minContains": 1
+              }
+            ]
+          },
+          "onFail": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "log"
+              ]
+            },
+            "uniqueItems": true,
+            "maxItems": 1,
+            "allOf": [
+              {
+                "contains": {
+                  "const": "log"
+                },
+                "minContains": 1
+              }
+            ]
+          },
+          "onError": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "log"
+              ]
+            },
+            "uniqueItems": true,
+            "maxItems": 1,
+            "allOf": [
+              {
+                "contains": {
+                  "const": "log"
+                },
+                "minContains": 1
+              }
+            ]
+          }
+        }
+      }
+    }
+  },
+  "kubeclaw.security-providers:kubernetes-runtime": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "registration",
+      "instance",
+      "evidencePolicy"
+    ],
+    "properties": {
+      "registration": {
+        "const": "kubeclaw.security-providers:kubernetes-runtime"
+      },
+      "instance": {
+        "const": "c0-kubernetes-runtime"
+      },
+      "evidencePolicy": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "onPass",
+          "onFail",
+          "onError"
+        ],
+        "properties": {
+          "onPass": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "log"
+              ]
+            },
+            "uniqueItems": true,
+            "maxItems": 1,
+            "allOf": [
+              {
+                "contains": {
+                  "const": "log"
+                },
+                "minContains": 1
+              }
+            ]
+          },
+          "onFail": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "log"
+              ]
+            },
+            "uniqueItems": true,
+            "maxItems": 1,
+            "allOf": [
+              {
+                "contains": {
+                  "const": "log"
+                },
+                "minContains": 1
+              }
+            ]
+          },
+          "onError": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "log"
+              ]
+            },
+            "uniqueItems": true,
+            "maxItems": 1,
+            "allOf": [
+              {
+                "contains": {
+                  "const": "log"
+                },
+                "minContains": 1
+              }
+            ]
+          }
+        }
+      }
+    }
+  },
+  "kubeclaw.size-budget:artifact": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "registration",
+      "instance",
+      "evidencePolicy"
+    ],
+    "properties": {
+      "registration": {
+        "const": "kubeclaw.size-budget:artifact"
+      },
+      "instance": {
+        "const": "c0-artifact"
+      },
+      "evidencePolicy": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "onPass",
+          "onFail",
+          "onError"
+        ],
+        "properties": {
+          "onPass": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "log",
+                "size-budget-baseline"
+              ]
+            },
+            "uniqueItems": true,
+            "maxItems": 2,
+            "allOf": [
+              {
+                "contains": {
+                  "const": "log"
+                },
+                "minContains": 1
+              },
+              {
+                "contains": {
+                  "const": "size-budget-baseline"
+                },
+                "minContains": 1
+              }
+            ]
+          },
+          "onFail": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "log",
+                "size-budget-baseline"
+              ]
+            },
+            "uniqueItems": true,
+            "maxItems": 2,
+            "allOf": [
+              {
+                "contains": {
+                  "const": "log"
+                },
+                "minContains": 1
+              },
+              {
+                "contains": {
+                  "const": "size-budget-baseline"
+                },
+                "minContains": 1
+              }
+            ]
+          },
+          "onError": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "log",
+                "size-budget-baseline"
+              ]
+            },
+            "uniqueItems": true,
+            "maxItems": 2,
+            "allOf": [
+              {
+                "contains": {
+                  "const": "log"
+                },
+                "minContains": 1
+              }
+            ]
+          }
+        }
+      }
+    }
+  },
+  "kubeclaw.tailscale-exposure:exposure": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "registration",
+      "instance",
+      "evidencePolicy"
+    ],
+    "properties": {
+      "registration": {
+        "const": "kubeclaw.tailscale-exposure:exposure"
+      },
+      "instance": {
+        "const": "c0-exposure"
+      },
+      "evidencePolicy": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "onPass",
+          "onFail",
+          "onError"
+        ],
+        "properties": {
+          "onPass": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "log"
+              ]
+            },
+            "uniqueItems": true,
+            "maxItems": 1,
+            "allOf": [
+              {
+                "contains": {
+                  "const": "log"
+                },
+                "minContains": 1
+              }
+            ]
+          },
+          "onFail": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "log"
+              ]
+            },
+            "uniqueItems": true,
+            "maxItems": 1,
+            "allOf": [
+              {
+                "contains": {
+                  "const": "log"
+                },
+                "minContains": 1
+              }
+            ]
+          },
+          "onError": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "log"
+              ]
+            },
+            "uniqueItems": true,
+            "maxItems": 1,
+            "allOf": [
+              {
+                "contains": {
+                  "const": "log"
+                },
+                "minContains": 1
+              }
+            ]
+          }
+        }
+      }
+    }
+  },
+  "kubeclaw.visual:visual": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "registration",
+      "instance",
+      "evidencePolicy"
+    ],
+    "properties": {
+      "registration": {
+        "const": "kubeclaw.visual:visual"
+      },
+      "instance": {
+        "const": "c0-visual"
+      },
+      "evidencePolicy": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "onPass",
+          "onFail",
+          "onError"
+        ],
+        "properties": {
+          "onPass": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "log",
+                "visual-baseline",
+                "visual-current",
+                "visual-difference",
+                "test-report"
+              ]
+            },
+            "uniqueItems": true,
+            "maxItems": 5,
+            "allOf": [
+              {
+                "contains": {
+                  "const": "log"
+                },
+                "minContains": 1
+              },
+              {
+                "contains": {
+                  "const": "visual-baseline"
+                },
+                "minContains": 1
+              },
+              {
+                "contains": {
+                  "const": "visual-current"
+                },
+                "minContains": 1
+              },
+              {
+                "contains": {
+                  "const": "visual-difference"
+                },
+                "minContains": 1
+              },
+              {
+                "contains": {
+                  "const": "test-report"
+                },
+                "minContains": 1
+              }
+            ]
+          },
+          "onFail": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "log",
+                "visual-baseline",
+                "visual-current",
+                "visual-difference",
+                "test-report"
+              ]
+            },
+            "uniqueItems": true,
+            "maxItems": 5,
+            "allOf": [
+              {
+                "contains": {
+                  "const": "log"
+                },
+                "minContains": 1
+              },
+              {
+                "contains": {
+                  "const": "visual-baseline"
+                },
+                "minContains": 1
+              },
+              {
+                "contains": {
+                  "const": "visual-current"
+                },
+                "minContains": 1
+              },
+              {
+                "contains": {
+                  "const": "visual-difference"
+                },
+                "minContains": 1
+              },
+              {
+                "contains": {
+                  "const": "test-report"
+                },
+                "minContains": 1
+              }
+            ]
+          },
+          "onError": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "log",
+                "visual-baseline",
+                "visual-current",
+                "visual-difference",
+                "test-report"
+              ]
+            },
+            "uniqueItems": true,
+            "maxItems": 5,
+            "allOf": [
+              {
+                "contains": {
+                  "const": "log"
+                },
+                "minContains": 1
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+}

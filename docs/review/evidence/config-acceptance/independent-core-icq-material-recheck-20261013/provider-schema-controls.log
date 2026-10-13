@@ -1,0 +1,310 @@
+{
+  "passed": 8,
+  "results": [
+    {
+      "id": "receipt-structural-positive",
+      "accepted": true,
+      "expected": true,
+      "input": {
+        "schemaVersion": "buster-provider-launch.v1",
+        "launchBindingDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "sessionDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "envelopeDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "claimDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "sourceDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "policyDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "state": "reserved-not-launched",
+        "processIdentity": {
+          "bootId": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
+          "pid": 9007199254740991,
+          "startTicks": 9007199254740991
+        },
+        "createdAt": "9999-12-31T23:59:59.999Z",
+        "lastSnapshotDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      }
+    },
+    {
+      "id": "snapshot-structural-positive",
+      "accepted": true,
+      "expected": true,
+      "input": {
+        "schemaVersion": "buster-provider-measurement.v1",
+        "launchBindingDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "sessionDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "phase": "prepare",
+        "sequence": 9007199254740991,
+        "observedAt": "9999-12-31T23:59:59.999Z",
+        "ownership": "no-launch-proven",
+        "processIdentity": {
+          "bootId": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
+          "pid": 9007199254740991,
+          "startTicks": 9007199254740991
+        },
+        "clockTicksPerSecond": 9007199254740991,
+        "metrics": {
+          "cpuTimeMs": {
+            "status": "observed",
+            "source": "confirmed-no-launch",
+            "coverage": "complete-owned-contract",
+            "value": 9007199254740991
+          },
+          "maximumMemoryBytes": {
+            "status": "observed",
+            "source": "confirmed-no-launch",
+            "coverage": "complete-owned-contract",
+            "value": 9007199254740991
+          },
+          "maximumProcesses": {
+            "status": "observed",
+            "source": "confirmed-no-launch",
+            "coverage": "complete-owned-contract",
+            "value": 9007199254740991
+          }
+        },
+        "disposal": "not-started"
+      }
+    },
+    {
+      "id": "unknown-key",
+      "accepted": false,
+      "expected": false,
+      "input": {
+        "schemaVersion": "buster-provider-measurement.v1",
+        "launchBindingDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "sessionDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "phase": "prepare",
+        "sequence": 9007199254740991,
+        "observedAt": "9999-12-31T23:59:59.999Z",
+        "ownership": "no-launch-proven",
+        "processIdentity": {
+          "bootId": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
+          "pid": 9007199254740991,
+          "startTicks": 9007199254740991
+        },
+        "clockTicksPerSecond": 9007199254740991,
+        "metrics": {
+          "cpuTimeMs": {
+            "status": "observed",
+            "source": "confirmed-no-launch",
+            "coverage": "complete-owned-contract",
+            "value": 9007199254740991
+          },
+          "maximumMemoryBytes": {
+            "status": "observed",
+            "source": "confirmed-no-launch",
+            "coverage": "complete-owned-contract",
+            "value": 9007199254740991
+          },
+          "maximumProcesses": {
+            "status": "observed",
+            "source": "confirmed-no-launch",
+            "coverage": "complete-owned-contract",
+            "value": 9007199254740991
+          }
+        },
+        "disposal": "not-started",
+        "extra": 1
+      }
+    },
+    {
+      "id": "unsafe-value",
+      "accepted": false,
+      "expected": false,
+      "input": {
+        "schemaVersion": "buster-provider-measurement.v1",
+        "launchBindingDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "sessionDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "phase": "prepare",
+        "sequence": 9007199254740991,
+        "observedAt": "9999-12-31T23:59:59.999Z",
+        "ownership": "no-launch-proven",
+        "processIdentity": {
+          "bootId": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
+          "pid": 9007199254740991,
+          "startTicks": 9007199254740991
+        },
+        "clockTicksPerSecond": 9007199254740991,
+        "metrics": {
+          "cpuTimeMs": {
+            "status": "observed",
+            "source": "confirmed-no-launch",
+            "coverage": "complete-owned-contract",
+            "value": 9007199254740992
+          },
+          "maximumMemoryBytes": {
+            "status": "observed",
+            "source": "confirmed-no-launch",
+            "coverage": "complete-owned-contract",
+            "value": 9007199254740991
+          },
+          "maximumProcesses": {
+            "status": "observed",
+            "source": "confirmed-no-launch",
+            "coverage": "complete-owned-contract",
+            "value": 9007199254740991
+          }
+        },
+        "disposal": "not-started"
+      }
+    },
+    {
+      "id": "negative-value",
+      "accepted": false,
+      "expected": false,
+      "input": {
+        "schemaVersion": "buster-provider-measurement.v1",
+        "launchBindingDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "sessionDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "phase": "prepare",
+        "sequence": 9007199254740991,
+        "observedAt": "9999-12-31T23:59:59.999Z",
+        "ownership": "no-launch-proven",
+        "processIdentity": {
+          "bootId": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
+          "pid": 9007199254740991,
+          "startTicks": 9007199254740991
+        },
+        "clockTicksPerSecond": 9007199254740991,
+        "metrics": {
+          "cpuTimeMs": {
+            "status": "observed",
+            "source": "confirmed-no-launch",
+            "coverage": "complete-owned-contract",
+            "value": -1
+          },
+          "maximumMemoryBytes": {
+            "status": "observed",
+            "source": "confirmed-no-launch",
+            "coverage": "complete-owned-contract",
+            "value": 9007199254740991
+          },
+          "maximumProcesses": {
+            "status": "observed",
+            "source": "confirmed-no-launch",
+            "coverage": "complete-owned-contract",
+            "value": 9007199254740991
+          }
+        },
+        "disposal": "not-started"
+      }
+    },
+    {
+      "id": "missing-cpu",
+      "accepted": false,
+      "expected": false,
+      "input": {
+        "schemaVersion": "buster-provider-measurement.v1",
+        "launchBindingDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "sessionDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "phase": "prepare",
+        "sequence": 9007199254740991,
+        "observedAt": "9999-12-31T23:59:59.999Z",
+        "ownership": "no-launch-proven",
+        "processIdentity": {
+          "bootId": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
+          "pid": 9007199254740991,
+          "startTicks": 9007199254740991
+        },
+        "clockTicksPerSecond": 9007199254740991,
+        "metrics": {
+          "maximumMemoryBytes": {
+            "status": "observed",
+            "source": "confirmed-no-launch",
+            "coverage": "complete-owned-contract",
+            "value": 9007199254740991
+          },
+          "maximumProcesses": {
+            "status": "observed",
+            "source": "confirmed-no-launch",
+            "coverage": "complete-owned-contract",
+            "value": 9007199254740991
+          }
+        },
+        "disposal": "not-started"
+      }
+    },
+    {
+      "id": "unbounded-date",
+      "accepted": false,
+      "expected": false,
+      "input": {
+        "schemaVersion": "buster-provider-measurement.v1",
+        "launchBindingDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "sessionDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "phase": "prepare",
+        "sequence": 9007199254740991,
+        "observedAt": "9999-12-31T23:59:59.999Zx",
+        "ownership": "no-launch-proven",
+        "processIdentity": {
+          "bootId": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
+          "pid": 9007199254740991,
+          "startTicks": 9007199254740991
+        },
+        "clockTicksPerSecond": 9007199254740991,
+        "metrics": {
+          "cpuTimeMs": {
+            "status": "observed",
+            "source": "confirmed-no-launch",
+            "coverage": "complete-owned-contract",
+            "value": 9007199254740991
+          },
+          "maximumMemoryBytes": {
+            "status": "observed",
+            "source": "confirmed-no-launch",
+            "coverage": "complete-owned-contract",
+            "value": 9007199254740991
+          },
+          "maximumProcesses": {
+            "status": "observed",
+            "source": "confirmed-no-launch",
+            "coverage": "complete-owned-contract",
+            "value": 9007199254740991
+          }
+        },
+        "disposal": "not-started"
+      }
+    },
+    {
+      "id": "restored-snapshot",
+      "accepted": true,
+      "expected": true,
+      "input": {
+        "schemaVersion": "buster-provider-measurement.v1",
+        "launchBindingDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "sessionDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "phase": "prepare",
+        "sequence": 9007199254740991,
+        "observedAt": "9999-12-31T23:59:59.999Z",
+        "ownership": "no-launch-proven",
+        "processIdentity": {
+          "bootId": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
+          "pid": 9007199254740991,
+          "startTicks": 9007199254740991
+        },
+        "clockTicksPerSecond": 9007199254740991,
+        "metrics": {
+          "cpuTimeMs": {
+            "status": "observed",
+            "source": "confirmed-no-launch",
+            "coverage": "complete-owned-contract",
+            "value": 9007199254740991
+          },
+          "maximumMemoryBytes": {
+            "status": "observed",
+            "source": "confirmed-no-launch",
+            "coverage": "complete-owned-contract",
+            "value": 9007199254740991
+          },
+          "maximumProcesses": {
+            "status": "observed",
+            "source": "confirmed-no-launch",
+            "coverage": "complete-owned-contract",
+            "value": 9007199254740991
+          }
+        },
+        "disposal": "not-started"
+      }
+    }
+  ],
+  "scope": "Strict proposed typed provenance schema definitions only; no actual provider, measured coverage, target AttemptState extension, V1 outcome, F-EFFECT or acceptance"
+}

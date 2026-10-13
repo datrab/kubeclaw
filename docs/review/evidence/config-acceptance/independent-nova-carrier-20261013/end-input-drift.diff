@@ -1,0 +1,21 @@
+--- frozen/docs/review/remediation/config-definition-current.md
++++ current/docs/review/remediation/config-definition-current.md
+@@ -419,11 +419,14 @@
+ [superseding package](../evidence/config-acceptance/components/icq-r06-boundaries-20261013/stable-material-correction-receipt.json)
+ now supplies 1934-byte state-readback oracles and thirteen boundary-specific
+ original manifests with matched snapshots and explicit positive/negative capture
+-lifecycle. Its independent recheck is pending. All 247 preserved inputs remain
+-unchanged; 31 author definition controls and two current API-shape controls are
+-not independent acceptance. Consolidator supersession guards retain both package
++lifecycle. The [independent R06 recheck](../evidence/config-acceptance/independent-core-r06-recheck-20261013/independent-r06-review.json)
++verifies both named contradictions resolved at bounded proposed definition scope.
++It independently replayed 31 definition and two current API-shape controls and
++performed 250 additional definition/conservation controls. All 247 historical
++inputs and Runtime batch11 remain unchanged; no target runtime binding or global
++acceptance follows. Consolidator supersession guards retain both package
+ identities, all 22 proposed cases and historical specifications; five bounded
+-[integration controls](../evidence/config-acceptance/author/core-supersession-integration-attempt1-20261013.log)
++[integration controls](../evidence/config-acceptance/author/core-supersession-integration-attempt3-20261013.log)
+ pass without regenerating a moving root matrix or claiming canonical field closure.
+ Supplemental native questions/cases are explicitly retained during consolidation;
+ they do not silently become canonical field coverage or independent acceptance.

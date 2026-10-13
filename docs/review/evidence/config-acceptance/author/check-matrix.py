@@ -8,6 +8,7 @@ import json
 import pathlib
 import sys
 import argparse
+from observation_references import ObservationReferences
 
 root = pathlib.Path.cwd()
 remediation = root/'docs/review/remediation'
@@ -42,8 +43,132 @@ def identity(path, expected, label):
 row_ids=ids(inventory['rows'],'setting')
 case_ids=ids(matrix['cases'],'case')
 requirement_ids=ids(matrix['requirements'],'requirement')
+references = ObservationReferences(root)
+try:
+    references.resolve(matrix['cases'])
+except (ValueError,KeyError,TypeError,OSError,json.JSONDecodeError) as error:
+    reject(f'observation references: {error}')
 for entry in inventory.get('inputFragments',[]):
     identity(entry['path'],entry['sha256'],'fragment')
+for package in inventory.get('supplementalDefinitionPackages',[]):
+    identity(package['receipt'],package['receiptSha256'],'supplemental receipt')
+    for path, expected in package['inputIdentities'].items():
+        identity(path,expected,'supplemental definition input')
+    questions=ids(package['questions'],'supplemental question')
+    ids(package['caseSpecifications'],'supplemental case')
+    baseline=package.get('caseRequirementBaseline')
+    if not baseline:
+        reject(f"supplemental {package['id']}: missing case requirement baseline")
+    else:
+        identity(baseline['path'],baseline['sha256'],'supplemental case baseline')
+        actual_baseline=json.loads((root/baseline['path']).read_text())
+        expected={case['id']:case['requirements'] for case in actual_baseline['activeCases']}
+        if expected != baseline['requirementsByCaseId']:
+            reject(f"supplemental {package['id']}: baseline requirement metadata drift")
+        active_by_id={case['id']:case for case in package['caseSpecifications']}
+        for cid, required in expected.items():
+            if cid not in active_by_id or not set(required).issubset(active_by_id[cid].get('requirements',[])):
+                reject(f"supplemental {cid}: baseline case/requirement loss")
+    for case in package['caseSpecifications']:
+        if case.get('questionId') not in questions:
+            reject(f"supplemental {case['id']}: missing question definition")
+        if case.get('lifecycle',{}).get('status') != 'active-superseding-proposed-not-run':
+            reject(f"supplemental {case['id']}: unexpected acceptance/runtime lifecycle")
+    if not structural:
+        if not package.get('reviewerConfirmation'):
+            reject(f"supplemental {package['id']}: independent complete field/consumer/case closure required")
+        # A native question/specification is not a substitute for canonical
+        # field/case coverage. Require explicit independently checked links;
+        # neither a package count nor a bounded correction review supplies them.
+        for question in package['questions']:
+            links=package.get('canonicalFieldCaseLinks',{}).get(question['id'],{})
+            if not links.get('settingIds') or not links.get('caseIds'):
+                reject(f"supplemental {question['id']}: canonical field/case links incomplete")
+            for setting in links.get('settingIds',[]):
+                if setting not in row_ids:
+                    reject(f"supplemental {question['id']}: dangling canonical field {setting}")
+            for case_id in links.get('caseIds',[]):
+                if case_id not in case_ids:
+                    reject(f"supplemental {question['id']}: dangling canonical case {case_id}")
+native_packages=matrix.get('nativeCasePackages',[])
+native_advertisements=inventory.get('nativeCasePackageReferences',[])
+if ids(native_packages,'native package') != ids(native_advertisements,'native package advertisement'):
+    reject('native package presence differs between inventory and matrix')
+advertisements={item['id']:item for item in native_advertisements}
+native_by_id={item['id']:item for item in native_packages}
+runtime_native_source='docs/review/evidence/config-acceptance/runtime/case-proposals.json'
+if (root/runtime_native_source).is_file():
+    required_runtime=native_by_id.get('RUNTIME-NATIVE-CASE-SPECIFICATIONS')
+    if required_runtime is None or required_runtime.get('sourcePath') != runtime_native_source:
+        reject('required productive Runtime native specification package missing/wrong source')
+for package in native_packages:
+    advertised=advertisements.get(package['id'])
+    if advertised is not None:
+        if advertised.get('matrixLocation') != 'nativeCasePackages':
+            reject(f"native {package['id']}: advertised matrix location drift")
+        for key in ['sourcePath','sourceSha256']:
+            if advertised.get(key) != package.get(key):
+                reject(f"native {package['id']}: advertised {key} drift")
+        if advertised.get('nativeCaseCount') != len(package['caseSpecifications']) or advertised.get('unlinkedNativeCaseCount') != sum(link.get('canonicalCaseId') is None for link in package['canonicalCaseMapping']):
+            reject(f"native {package['id']}: advertised case counts drift")
+    identity(package['sourcePath'],package['sourceSha256'],'native case source')
+    original=json.loads((root/package['sourcePath']).read_text())
+    if original != package['caseSpecifications']:
+        reject(f"native {package['id']}: original specification/requirement loss")
+    native_ids=ids(package['caseSpecifications'],'native case')
+    try:
+        references.resolve(package['caseSpecifications'])
+    except (ValueError,KeyError,TypeError,OSError,json.JSONDecodeError) as error:
+        reject(f'native observation references: {error}')
+    links=package['canonicalCaseMapping']
+    if {item['nativeCaseId'] for item in links} != native_ids or len(links) != len(native_ids):
+        reject(f"native {package['id']}: missing/duplicate native mapping")
+    originals={case['id']:case for case in original}
+    canonicals={case['id']:case for case in matrix['cases']}
+    for link in links:
+        cid=link['nativeCaseId']
+        required=originals[cid].get('requirements',[])
+        if link['requirementIds'] != required:
+            reject(f'native {cid}: mapping requirement loss')
+        canonical=link.get('canonicalCaseId')
+        if canonical is not None:
+            if canonical not in canonicals or not set(required).issubset(canonicals[canonical].get('requirementIds',[])):
+                reject(f'native {cid}: canonical requirement loss/dangling link')
+            elif len([ref for ref in canonicals[canonical].get('nativeSpecificationReferences',[]) if ref.get('packageId') == package['id'] and ref.get('nativeCaseId') == cid and ref.get('sourcePath') == package['sourcePath'] and ref.get('sourceSha256') == package['sourceSha256']]) != 1:
+                reject(f'native {cid}: missing/duplicate/exact canonical specification reference')
+        if not structural:
+            if canonical is None:
+                reject(f'native {cid}: canonical field/case mapping unresolved')
+            if not link.get('mappingReview'):
+                reject(f'native {cid}: no independent mapping/specification review')
+    if not structural and not package.get('reviewerConfirmation'):
+        reject(f"native {package['id']}: no whole field/consumer/case acceptance")
+for canonical in matrix['cases']:
+    for ref in canonical.get('nativeSpecificationReferences',[]):
+        package=native_by_id.get(ref.get('packageId'))
+        if package is None:
+            reject(f"case {canonical['id']}: native reference package missing")
+        elif ref.get('sourcePath') != package['sourcePath'] or ref.get('sourceSha256') != package['sourceSha256'] or not any(link['nativeCaseId'] == ref.get('nativeCaseId') and link.get('canonicalCaseId') == canonical['id'] for link in package['canonicalCaseMapping']):
+            reject(f"case {canonical['id']}: native reference identity/case binding drift")
+for ledger_path in inventory.get('coordinateCandidateLedgers',[]):
+    ledger=json.loads((root/ledger_path).read_text())
+    ids(ledger['coordinateCandidates'],'coordinate candidate')
+    for source in ledger['records']:
+        identity(source['path'],source['sha256'],'coordinate source')
+    for candidate in ledger['coordinateCandidates']:
+        identity(candidate['source'],candidate['sourceSha256'],candidate['id'])
+        for setting in candidate.get('settingIds',[]):
+            if setting not in row_ids:
+                reject(f"coordinate {candidate['id']}: dangling setting {setting}")
+        if not structural:
+            if candidate.get('disposition') not in ['setting','duplicate','non-setting']:
+                reject(f"coordinate {candidate['id']}: unresolved field disposition")
+            elif candidate.get('disposition') in ['setting','duplicate'] and not candidate.get('settingIds'):
+                reject(f"coordinate {candidate['id']}: absent semantic setting link")
+            elif candidate.get('disposition')=='non-setting' and not candidate.get('reason'):
+                reject(f"coordinate {candidate['id']}: absent non-setting reason")
+            if not candidate.get('reviewerConfirmation'):
+                reject(f"coordinate {candidate['id']}: no independent semantic review")
 for row in inventory['rows']:
     label=row.get('id')
     source=row.get('source',{})

@@ -1,0 +1,313 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "installationRoots",
+    "trustedBuiltinRoots",
+    "externalTrust",
+    "providers",
+    "grants",
+    "adapters",
+    "activeAdapters",
+    "observers",
+    "storageRoot",
+    "shutdownTimeoutMs",
+    "effectLockTtlMs",
+    "orchestratorIssuerId",
+    "administrativeDecisionIssuers",
+    "observability",
+    "projectScaffold"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "pipeline-platform.v2"
+    },
+    "installationRoots": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "trustedBuiltinRoots": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "externalTrust": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "allowedSourceDigests",
+        "verifiedAttestations"
+      ],
+      "properties": {
+        "allowedSourceDigests": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "pattern": "^sha256:[a-f0-9]{64}$"
+            }
+          }
+        },
+        "verifiedAttestations": {
+          "type": "object",
+          "propertyNames": {
+            "pattern": "^sha256:[a-f0-9]{64}$"
+          },
+          "additionalProperties": {
+            "type": "string",
+            "pattern": "^sha256:[a-f0-9]{64}$"
+          }
+        }
+      }
+    },
+    "providers": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "grants": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    },
+    "adapters": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "activeAdapters": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "observers": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "isolation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "cgroupRoot"
+      ],
+      "properties": {
+        "cgroupRoot": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "storageRoot": {
+      "type": "string",
+      "minLength": 1
+    },
+    "shutdownTimeoutMs": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "effectLockTtlMs": {
+      "type": "integer",
+      "minimum": 60000,
+      "maximum": 86400000
+    },
+    "orchestratorIssuerId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "administrativeDecisionIssuers": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "type",
+          "id"
+        ],
+        "properties": {
+          "type": {
+            "enum": [
+              "operator",
+              "administrator"
+            ]
+          },
+          "id": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "observability": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "admission",
+        "attempts"
+      ],
+      "properties": {
+        "admission": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "maximumIngressBytes",
+            "maximumRecords",
+            "maximumBytes",
+            "maximumQuarantineRecords",
+            "maximumQuarantineBytes",
+            "reasonThresholdCodeUnits",
+            "reasonPrefixCodeUnits",
+            "metadataReserveBytes",
+            "lockWaitSeconds"
+          ],
+          "properties": {
+            "maximumIngressBytes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "maximumRecords": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "maximumBytes": {
+              "type": "integer",
+              "minimum": 1025,
+              "maximum": 9007199254740991
+            },
+            "maximumQuarantineRecords": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "maximumQuarantineBytes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "reasonThresholdCodeUnits": {
+              "type": "integer",
+              "minimum": 72,
+              "maximum": 256
+            },
+            "reasonPrefixCodeUnits": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 180
+            },
+            "metadataReserveBytes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "lockWaitSeconds": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 5
+            }
+          }
+        },
+        "attempts": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "maximumEvidenceObjects",
+            "maximumEvidenceBytes",
+            "maximumEvidenceObjectBytes",
+            "maximumResults",
+            "maximumClosures",
+            "maximumMetadataBytes",
+            "maximumPendingEvidenceAgeMs",
+            "lockWaitSeconds"
+          ],
+          "properties": {
+            "maximumEvidenceObjects": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "maximumEvidenceBytes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "maximumEvidenceObjectBytes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "maximumResults": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "maximumClosures": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "maximumMetadataBytes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "maximumPendingEvidenceAgeMs": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "lockWaitSeconds": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 5
+            }
+          }
+        }
+      }
+    },
+    "projectScaffold": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "lockWaitSeconds"
+      ],
+      "properties": {
+        "lockWaitSeconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 5
+        }
+      }
+    }
+  }
+}

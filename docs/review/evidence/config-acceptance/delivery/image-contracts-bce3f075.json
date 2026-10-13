@@ -1,0 +1,2782 @@
+{
+  "scope": "static exact field contracts; no image build/download/runtime action",
+  "records": [
+    {
+      "id": "DLV-IMAGE-ARCHVIEWER-ARCHVIEWER-BASE",
+      "domain": "managed string ending @sha256:lowercase64hex; OCI registry/reference/platform and base ABI/user/package manager contract validated by actual builder, not central suffix regex",
+      "reader": {
+        "path": "docker/Dockerfile.archviewer",
+        "operation": "FROM ${ARCHVIEWER_BASE}; exact current base supplies executable runtime, filesystem, distro/keyring/users and builder stages; actual manifest platform availability separate",
+        "references": [
+          {
+            "path": "docker/Dockerfile.archviewer",
+            "sha256": "3ec0c58abec0095d35a0bc6570ac65812cd55169836f45fa4928a0270deef5df"
+          },
+          {
+            "path": "versions.json",
+            "sha256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d"
+          },
+          {
+            "path": "scripts/versions.mjs",
+            "sha256": "a236f2da59fe129fd6b966f67635d1dfbd6bc4699001706fe564503436bcfc00"
+          },
+          {
+            "path": ".github/workflows/build-images.yaml",
+            "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+          }
+        ],
+        "fieldOccurrences": [
+          {
+            "line": 15,
+            "text": "FROM ${ARCHVIEWER_BASE}"
+          }
+        ]
+      },
+      "errorContract": "Unpinned base image at versions validator; actual registry/digest/platform resolution or later ABI/user/package-manager failures at build",
+      "completeProfileAlternatives": "complete current versions.json and per-image override manifest; A linux/amd64 and B linux/arm64, platform availability and real executable build prerequisite, not assumed",
+      "classification": "version"
+    },
+    {
+      "id": "DLV-IMAGE-BUSTER-GATEWAY-OPENCLAW-BASE",
+      "domain": "managed string ending @sha256:lowercase64hex; OCI registry/reference/platform and base ABI/user/package manager contract validated by actual builder, not central suffix regex",
+      "reader": {
+        "path": "docker/Dockerfile.buster-gateway",
+        "operation": "FROM ${OPENCLAW_BASE}; exact current base supplies executable runtime, filesystem, distro/keyring/users and builder stages; actual manifest platform availability separate",
+        "references": [
+          {
+            "path": "docker/Dockerfile.buster-gateway",
+            "sha256": "8e1123eca01126dab881223a88ec83a4efd902b03e9484ca80f5dfd2dc9bf452"
+          },
+          {
+            "path": "versions.json",
+            "sha256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d"
+          },
+          {
+            "path": "scripts/versions.mjs",
+            "sha256": "a236f2da59fe129fd6b966f67635d1dfbd6bc4699001706fe564503436bcfc00"
+          },
+          {
+            "path": ".github/workflows/build-images.yaml",
+            "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+          }
+        ],
+        "fieldOccurrences": [
+          {
+            "line": 8,
+            "text": "FROM ${OPENCLAW_BASE} AS gateway-assets"
+          },
+          {
+            "line": 62,
+            "text": "FROM ${OPENCLAW_BASE}"
+          }
+        ]
+      },
+      "errorContract": "Unpinned base image at versions validator; actual registry/digest/platform resolution or later ABI/user/package-manager failures at build",
+      "completeProfileAlternatives": "complete current versions.json and per-image override manifest; A linux/amd64 and B linux/arm64, platform availability and real executable build prerequisite, not assumed",
+      "classification": "version"
+    },
+    {
+      "id": "DLV-IMAGE-BUSTER-GATEWAY-OPENCLAW-PLUGIN-VERSION",
+      "domain": "derived solely from manifest.openclaw.version YYYY.M.D[-n]; buildArgs OPENCLAW fields prohibited and per-image OPENCLAW override prohibited; package versions are not installed OCI equality",
+      "reader": {
+        "path": "docker/Dockerfile.buster-gateway",
+        "operation": "openclaw plugins install npm:@openclaw/acpx@version and npm:@openclaw/discord@version --force --accept-capabilities; select architecture-specific ACP native packages, npm pack both, copy npm cache; pack count2 and aggregate byte hash",
+        "references": [
+          {
+            "path": "docker/Dockerfile.buster-gateway",
+            "sha256": "8e1123eca01126dab881223a88ec83a4efd902b03e9484ca80f5dfd2dc9bf452"
+          },
+          {
+            "path": "versions.json",
+            "sha256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d"
+          },
+          {
+            "path": "scripts/versions.mjs",
+            "sha256": "a236f2da59fe129fd6b966f67635d1dfbd6bc4699001706fe564503436bcfc00"
+          },
+          {
+            "path": ".github/workflows/build-images.yaml",
+            "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+          }
+        ],
+        "fieldOccurrences": [
+          {
+            "line": 37,
+            "text": "HOME=/tmp/openclaw-plugin-home NPM_CONFIG_CACHE=/tmp/openclaw-plugin-npm-cache openclaw plugins install \"npm:@openclaw/acpx@${OPENCLAW_PLUGIN_VERSION}\" --force --accept-capabilities; \\"
+          },
+          {
+            "line": 38,
+            "text": "HOME=/tmp/openclaw-plugin-home NPM_CONFIG_CACHE=/tmp/openclaw-plugin-npm-cache openclaw plugins install \"npm:@openclaw/discord@${OPENCLAW_PLUGIN_VERSION}\" --force --accept-capabilities; \\"
+          }
+        ]
+      },
+      "errorContract": "OpenClaw must have one authority / OpenClaw versions must match across roles; install/source/pack/cache/native architecture errors at actual build; pack count/hash alone not transitive identity validation",
+      "completeProfileAlternatives": "complete current versions.json and per-image override manifest; A linux/amd64 and B linux/arm64, platform availability and real executable build prerequisite, not assumed",
+      "classification": "version"
+    },
+    {
+      "id": "DLV-IMAGE-BUSTER-GATEWAY-TARGETARCH",
+      "domain": "generated BuildKit target-platform architecture, not a version number; supported current complete profiles explicit amd64|arm64 except hardcoded controller stage; independent Docker --build-arg remains competing binding",
+      "reader": {
+        "path": "docker/Dockerfile.buster-gateway",
+        "operation": "${TARGETARCH:-amd64} plugin package pruning: codex-acp-linux-x64/arm64, claude-agent-sdk-linux-x64/arm64, @esbuild linux-x64/arm64; unsupported exit1",
+        "references": [
+          {
+            "path": "docker/Dockerfile.buster-gateway",
+            "sha256": "8e1123eca01126dab881223a88ec83a4efd902b03e9484ca80f5dfd2dc9bf452"
+          },
+          {
+            "path": "versions.json",
+            "sha256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d"
+          },
+          {
+            "path": "scripts/versions.mjs",
+            "sha256": "a236f2da59fe129fd6b966f67635d1dfbd6bc4699001706fe564503436bcfc00"
+          },
+          {
+            "path": ".github/workflows/build-images.yaml",
+            "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+          }
+        ],
+        "fieldOccurrences": [
+          {
+            "line": 44,
+            "text": "case \"${TARGETARCH:-amd64}\" in \\"
+          }
+        ]
+      },
+      "errorContract": "unsupported architecture exits1 in binary/plugin selector or browser lock platform rejection; Go compiler supports more GOARCH but that does not extend complete image dependency graph",
+      "completeProfileAlternatives": "complete current versions.json and per-image override manifest; A linux/amd64 and B linux/arm64, platform availability and real executable build prerequisite, not assumed",
+      "classification": "generated-binding"
+    },
+    {
+      "id": "DLV-IMAGE-BUSTER-GATEWAY-DEBIAN-SNAPSHOT",
+      "domain": "central version-token grammar only, not date parser; exact snapshot URL token, suite bookworm/bookworm-updates/bookworm-security and base Debian archive signing keyring",
+      "reader": {
+        "path": "docker/Dockerfile.buster-gateway",
+        "operation": "https snapshot.debian.org/archive/debian and debian-security URLs; Deb822 Signed-By Debian archive keyring; Check-Valid-Until=false; APT update/install retries5 and Error-Mode=any; repository pin is not each package receipt",
+        "references": [
+          {
+            "path": "docker/Dockerfile.buster-gateway",
+            "sha256": "8e1123eca01126dab881223a88ec83a4efd902b03e9484ca80f5dfd2dc9bf452"
+          },
+          {
+            "path": "versions.json",
+            "sha256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d"
+          },
+          {
+            "path": "scripts/versions.mjs",
+            "sha256": "a236f2da59fe129fd6b966f67635d1dfbd6bc4699001706fe564503436bcfc00"
+          },
+          {
+            "path": ".github/workflows/build-images.yaml",
+            "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+          }
+        ],
+        "fieldOccurrences": [
+          {
+            "line": 71,
+            "text": "\"URIs: https://snapshot.debian.org/archive/debian/${DEBIAN_SNAPSHOT}\" \\"
+          },
+          {
+            "line": 77,
+            "text": "\"URIs: https://snapshot.debian.org/archive/debian-security/${DEBIAN_SNAPSHOT}\" \\"
+          }
+        ]
+      },
+      "errorContract": "invalid version token rejected centrally; nonexistent snapshot, transport or metadata signature/package failures reject APT build, no timestamp-only schema rejection",
+      "completeProfileAlternatives": "complete current versions.json and per-image override manifest; A linux/amd64 and B linux/arm64, platform availability and real executable build prerequisite, not assumed",
+      "classification": "version"
+    },
+    {
+      "id": "DLV-IMAGE-NAMESPACE-CONTROLLER-CONTROLLER-GO-BASE",
+      "domain": "managed string ending @sha256:lowercase64hex; OCI registry/reference/platform and base ABI/user/package manager contract validated by actual builder, not central suffix regex",
+      "reader": {
+        "path": "docker/Dockerfile.namespace-controller",
+        "operation": "FROM ${CONTROLLER_GO_BASE}; builder Go compiler and final nonroot static runtime are distinct stages; controller compiler hardcodes GOARCH=amd64, so arm64 build is NOT a supported complete positive",
+        "references": [
+          {
+            "path": "docker/Dockerfile.namespace-controller",
+            "sha256": "7d11f9ddce2ba3c5083645531a59b298a1996743306fbadb7f3b47819ab68384"
+          },
+          {
+            "path": "versions.json",
+            "sha256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d"
+          },
+          {
+            "path": "scripts/versions.mjs",
+            "sha256": "a236f2da59fe129fd6b966f67635d1dfbd6bc4699001706fe564503436bcfc00"
+          },
+          {
+            "path": ".github/workflows/build-images.yaml",
+            "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+          }
+        ],
+        "fieldOccurrences": [
+          {
+            "line": 9,
+            "text": "FROM ${CONTROLLER_GO_BASE} AS build"
+          }
+        ]
+      },
+      "errorContract": "Unpinned base image at versions validator; actual registry/digest/platform resolution or later ABI/user/package-manager failures at build",
+      "completeProfileAlternatives": "A unchanged complete versions manifest on linux/amd64; B alternate authentic digest-pinned Go+static Debian12-compatible base pair on linux/amd64 requires acquired ABI/availability receipts. Current hardcoded binary amd64 forbids asserting a supported arm64 positive.",
+      "classification": "version"
+    },
+    {
+      "id": "DLV-IMAGE-NAMESPACE-CONTROLLER-CONTROLLER-RUNTIME-BASE",
+      "domain": "managed string ending @sha256:lowercase64hex; OCI registry/reference/platform and base ABI/user/package manager contract validated by actual builder, not central suffix regex",
+      "reader": {
+        "path": "docker/Dockerfile.namespace-controller",
+        "operation": "FROM ${CONTROLLER_RUNTIME_BASE}; builder Go compiler and final nonroot static runtime are distinct stages; controller compiler hardcodes GOARCH=amd64, so arm64 build is NOT a supported complete positive",
+        "references": [
+          {
+            "path": "docker/Dockerfile.namespace-controller",
+            "sha256": "7d11f9ddce2ba3c5083645531a59b298a1996743306fbadb7f3b47819ab68384"
+          },
+          {
+            "path": "versions.json",
+            "sha256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d"
+          },
+          {
+            "path": "scripts/versions.mjs",
+            "sha256": "a236f2da59fe129fd6b966f67635d1dfbd6bc4699001706fe564503436bcfc00"
+          },
+          {
+            "path": ".github/workflows/build-images.yaml",
+            "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+          }
+        ],
+        "fieldOccurrences": [
+          {
+            "line": 19,
+            "text": "FROM ${CONTROLLER_RUNTIME_BASE}"
+          }
+        ]
+      },
+      "errorContract": "Unpinned base image at versions validator; actual registry/digest/platform resolution or later ABI/user/package-manager failures at build",
+      "completeProfileAlternatives": "A unchanged complete versions manifest on linux/amd64; B alternate authentic digest-pinned Go+static Debian12-compatible base pair on linux/amd64 requires acquired ABI/availability receipts. Current hardcoded binary amd64 forbids asserting a supported arm64 positive.",
+      "classification": "version"
+    },
+    {
+      "id": "DLV-IMAGE-NOVA-OPENCLAW-BASE",
+      "domain": "managed string ending @sha256:lowercase64hex; OCI registry/reference/platform and base ABI/user/package manager contract validated by actual builder, not central suffix regex",
+      "reader": {
+        "path": "docker/Dockerfile.nova",
+        "operation": "FROM ${OPENCLAW_BASE}; exact current base supplies executable runtime, filesystem, distro/keyring/users and builder stages; actual manifest platform availability separate",
+        "references": [
+          {
+            "path": "docker/Dockerfile.nova",
+            "sha256": "34e54267a3cd0d7541315de3c6ec785206a0364b7ec76699d433c4a3ca341242"
+          },
+          {
+            "path": "versions.json",
+            "sha256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d"
+          },
+          {
+            "path": "scripts/versions.mjs",
+            "sha256": "a236f2da59fe129fd6b966f67635d1dfbd6bc4699001706fe564503436bcfc00"
+          },
+          {
+            "path": ".github/workflows/build-images.yaml",
+            "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+          }
+        ],
+        "fieldOccurrences": [
+          {
+            "line": 11,
+            "text": "FROM ${OPENCLAW_BASE}"
+          }
+        ]
+      },
+      "errorContract": "Unpinned base image at versions validator; actual registry/digest/platform resolution or later ABI/user/package-manager failures at build",
+      "completeProfileAlternatives": "complete current versions.json and per-image override manifest; A linux/amd64 and B linux/arm64, platform availability and real executable build prerequisite, not assumed",
+      "classification": "version"
+    },
+    {
+      "id": "DLV-IMAGE-NOVA-DEBIAN-SNAPSHOT",
+      "domain": "central version-token grammar only, not date parser; exact snapshot URL token, suite bookworm/bookworm-updates/bookworm-security and base Debian archive signing keyring",
+      "reader": {
+        "path": "docker/Dockerfile.nova",
+        "operation": "https snapshot.debian.org/archive/debian and debian-security URLs; Deb822 Signed-By Debian archive keyring; Check-Valid-Until=false; APT update/install retries5 and Error-Mode=any; repository pin is not each package receipt",
+        "references": [
+          {
+            "path": "docker/Dockerfile.nova",
+            "sha256": "34e54267a3cd0d7541315de3c6ec785206a0364b7ec76699d433c4a3ca341242"
+          },
+          {
+            "path": "versions.json",
+            "sha256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d"
+          },
+          {
+            "path": "scripts/versions.mjs",
+            "sha256": "a236f2da59fe129fd6b966f67635d1dfbd6bc4699001706fe564503436bcfc00"
+          },
+          {
+            "path": ".github/workflows/build-images.yaml",
+            "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+          }
+        ],
+        "fieldOccurrences": [
+          {
+            "line": 26,
+            "text": "\"URIs: https://snapshot.debian.org/archive/debian/${DEBIAN_SNAPSHOT}\" \\"
+          },
+          {
+            "line": 32,
+            "text": "\"URIs: https://snapshot.debian.org/archive/debian-security/${DEBIAN_SNAPSHOT}\" \\"
+          },
+          {
+            "line": 41,
+            "text": "# Package resolution is pinned by DEBIAN_SNAPSHOT rather than per-package"
+          }
+        ]
+      },
+      "errorContract": "invalid version token rejected centrally; nonexistent snapshot, transport or metadata signature/package failures reject APT build, no timestamp-only schema rejection",
+      "completeProfileAlternatives": "complete current versions.json and per-image override manifest; A linux/amd64 and B linux/arm64, platform availability and real executable build prerequisite, not assumed",
+      "classification": "version"
+    },
+    {
+      "id": "DLV-IMAGE-NOVA-RUFF-VERSION",
+      "domain": "central token plus exact ruff==value SPACE membership in common.txt; actual binary wheel/platform hashes must resolve; not arbitrary valid SemVer",
+      "reader": {
+        "path": "docker/Dockerfile.nova",
+        "operation": "grep -F ruff==${RUFF_VERSION} lock, then pip --require-hashes --only-binary=:all:; system pip --break-system-packages; actual --version readback",
+        "references": [
+          {
+            "path": "docker/Dockerfile.nova",
+            "sha256": "34e54267a3cd0d7541315de3c6ec785206a0364b7ec76699d433c4a3ca341242"
+          },
+          {
+            "path": "versions.json",
+            "sha256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d"
+          },
+          {
+            "path": "scripts/versions.mjs",
+            "sha256": "a236f2da59fe129fd6b966f67635d1dfbd6bc4699001706fe564503436bcfc00"
+          },
+          {
+            "path": ".github/workflows/build-images.yaml",
+            "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+          },
+          {
+            "path": "docker/python-tools/common.txt",
+            "sha256": "ee0f07f1179ec73f5f06282794901bd8fb56b89227fbc613b64956f89d03cef9"
+          },
+          {
+            "path": "docker/runtime-tool-locks.json",
+            "sha256": "d31102688c2da95f7e70b29f63c937b41f5e116dab00f0224ba591b988f8417c"
+          },
+          {
+            "path": "scripts/runtime-tool-locks.mjs",
+            "sha256": "df643a11bbb1327b5502151002bb5b88c21d83d35922ba1fee4e0c38bf5a6c25"
+          }
+        ],
+        "fieldOccurrences": [
+          {
+            "line": 80,
+            "text": "RUN grep -F \"ruff==${RUFF_VERSION} \" /opt/kubeclaw-python-locks/common.txt \\"
+          }
+        ]
+      },
+      "errorContract": "grep mismatch exits1 before pip; pip hash/only-binary/wheel compatibility failures are separate from config grammar",
+      "completeProfileAlternatives": "complete current versions.json and per-image override manifest; A linux/amd64 and B linux/arm64, platform availability and real executable build prerequisite, not assumed",
+      "classification": "version"
+    },
+    {
+      "id": "DLV-IMAGE-NOVA-MYPY-VERSION",
+      "domain": "central token plus exact mypy==value SPACE membership in common.txt; actual binary wheel/platform hashes must resolve; not arbitrary valid SemVer",
+      "reader": {
+        "path": "docker/Dockerfile.nova",
+        "operation": "grep -F mypy==${MYPY_VERSION} lock, then pip --require-hashes --only-binary=:all:; system pip --break-system-packages; actual --version readback",
+        "references": [
+          {
+            "path": "docker/Dockerfile.nova",
+            "sha256": "34e54267a3cd0d7541315de3c6ec785206a0364b7ec76699d433c4a3ca341242"
+          },
+          {
+            "path": "versions.json",
+            "sha256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d"
+          },
+          {
+            "path": "scripts/versions.mjs",
+            "sha256": "a236f2da59fe129fd6b966f67635d1dfbd6bc4699001706fe564503436bcfc00"
+          },
+          {
+            "path": ".github/workflows/build-images.yaml",
+            "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+          },
+          {
+            "path": "docker/python-tools/common.txt",
+            "sha256": "ee0f07f1179ec73f5f06282794901bd8fb56b89227fbc613b64956f89d03cef9"
+          },
+          {
+            "path": "docker/runtime-tool-locks.json",
+            "sha256": "d31102688c2da95f7e70b29f63c937b41f5e116dab00f0224ba591b988f8417c"
+          },
+          {
+            "path": "scripts/runtime-tool-locks.mjs",
+            "sha256": "df643a11bbb1327b5502151002bb5b88c21d83d35922ba1fee4e0c38bf5a6c25"
+          }
+        ],
+        "fieldOccurrences": [
+          {
+            "line": 81,
+            "text": "&& grep -F \"mypy==${MYPY_VERSION} \" /opt/kubeclaw-python-locks/common.txt \\"
+          }
+        ]
+      },
+      "errorContract": "grep mismatch exits1 before pip; pip hash/only-binary/wheel compatibility failures are separate from config grammar",
+      "completeProfileAlternatives": "complete current versions.json and per-image override manifest; A linux/amd64 and B linux/arm64, platform availability and real executable build prerequisite, not assumed",
+      "classification": "version"
+    },
+    {
+      "id": "DLV-IMAGE-NOVA-PIP-AUDIT-VERSION",
+      "domain": "central token plus exact pip-audit==value SPACE membership in common.txt; actual binary wheel/platform hashes must resolve; not arbitrary valid SemVer",
+      "reader": {
+        "path": "docker/Dockerfile.nova",
+        "operation": "grep -F pip-audit==${PIP_AUDIT_VERSION} lock, then pip --require-hashes --only-binary=:all:; system pip --break-system-packages; actual --version readback",
+        "references": [
+          {
+            "path": "docker/Dockerfile.nova",
+            "sha256": "34e54267a3cd0d7541315de3c6ec785206a0364b7ec76699d433c4a3ca341242"
+          },
+          {
+            "path": "versions.json",
+            "sha256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d"
+          },
+          {
+            "path": "scripts/versions.mjs",
+            "sha256": "a236f2da59fe129fd6b966f67635d1dfbd6bc4699001706fe564503436bcfc00"
+          },
+          {
+            "path": ".github/workflows/build-images.yaml",
+            "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+          },
+          {
+            "path": "docker/python-tools/common.txt",
+            "sha256": "ee0f07f1179ec73f5f06282794901bd8fb56b89227fbc613b64956f89d03cef9"
+          },
+          {
+            "path": "docker/runtime-tool-locks.json",
+            "sha256": "d31102688c2da95f7e70b29f63c937b41f5e116dab00f0224ba591b988f8417c"
+          },
+          {
+            "path": "scripts/runtime-tool-locks.mjs",
+            "sha256": "df643a11bbb1327b5502151002bb5b88c21d83d35922ba1fee4e0c38bf5a6c25"
+          }
+        ],
+        "fieldOccurrences": [
+          {
+            "line": 82,
+            "text": "&& grep -F \"pip-audit==${PIP_AUDIT_VERSION} \" /opt/kubeclaw-python-locks/common.txt \\"
+          }
+        ]
+      },
+      "errorContract": "grep mismatch exits1 before pip; pip hash/only-binary/wheel compatibility failures are separate from config grammar",
+      "completeProfileAlternatives": "complete current versions.json and per-image override manifest; A linux/amd64 and B linux/arm64, platform availability and real executable build prerequisite, not assumed",
+      "classification": "version"
+    },
+    {
+      "id": "DLV-IMAGE-NOVA-SEMGREP-VERSION",
+      "domain": "central token plus exact semgrep==value SPACE membership in semgrep-nova.txt; actual binary wheel/platform hashes must resolve; not arbitrary valid SemVer",
+      "reader": {
+        "path": "docker/Dockerfile.nova",
+        "operation": "grep -F semgrep==${SEMGREP_VERSION} lock, then pip --require-hashes --only-binary=:all:; /opt/semgrep venv and symlink; actual --version readback",
+        "references": [
+          {
+            "path": "docker/Dockerfile.nova",
+            "sha256": "34e54267a3cd0d7541315de3c6ec785206a0364b7ec76699d433c4a3ca341242"
+          },
+          {
+            "path": "versions.json",
+            "sha256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d"
+          },
+          {
+            "path": "scripts/versions.mjs",
+            "sha256": "a236f2da59fe129fd6b966f67635d1dfbd6bc4699001706fe564503436bcfc00"
+          },
+          {
+            "path": ".github/workflows/build-images.yaml",
+            "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+          },
+          {
+            "path": "docker/python-tools/semgrep-nova.txt",
+            "sha256": "7ba7cb1f5369f6f07c0e30f36f45e13ee8377ea6c6a87d1d0344e5cb27f17e66"
+          },
+          {
+            "path": "docker/runtime-tool-locks.json",
+            "sha256": "d31102688c2da95f7e70b29f63c937b41f5e116dab00f0224ba591b988f8417c"
+          },
+          {
+            "path": "scripts/runtime-tool-locks.mjs",
+            "sha256": "df643a11bbb1327b5502151002bb5b88c21d83d35922ba1fee4e0c38bf5a6c25"
+          }
+        ],
+        "fieldOccurrences": [
+          {
+            "line": 83,
+            "text": "&& grep -F \"semgrep==${SEMGREP_VERSION} \" /opt/kubeclaw-python-locks/semgrep-nova.txt \\"
+          }
+        ]
+      },
+      "errorContract": "grep mismatch exits1 before pip; pip hash/only-binary/wheel compatibility failures are separate from config grammar",
+      "completeProfileAlternatives": "complete current versions.json and per-image override manifest; A linux/amd64 and B linux/arm64, platform availability and real executable build prerequisite, not assumed",
+      "classification": "version"
+    },
+    {
+      "id": "DLV-IMAGE-NOVA-TARGETARCH",
+      "domain": "generated BuildKit target-platform architecture, not a version number; supported current complete profiles explicit amd64|arm64 except hardcoded controller stage; independent Docker --build-arg remains competing binding",
+      "reader": {
+        "path": "docker/Dockerfile.nova",
+        "operation": "${TARGETARCH:-$(dpkg --print-architecture)} selects binary amd64|arm64; plugin pruning separately ${TARGETARCH:-amd64}; different absence semantics must bind one explicit platform",
+        "references": [
+          {
+            "path": "docker/Dockerfile.nova",
+            "sha256": "34e54267a3cd0d7541315de3c6ec785206a0364b7ec76699d433c4a3ca341242"
+          },
+          {
+            "path": "versions.json",
+            "sha256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d"
+          },
+          {
+            "path": "scripts/versions.mjs",
+            "sha256": "a236f2da59fe129fd6b966f67635d1dfbd6bc4699001706fe564503436bcfc00"
+          },
+          {
+            "path": ".github/workflows/build-images.yaml",
+            "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+          }
+        ],
+        "fieldOccurrences": [
+          {
+            "line": 113,
+            "text": "arch=\"${TARGETARCH:-$(dpkg --print-architecture)}\"; \\"
+          },
+          {
+            "line": 166,
+            "text": "arch=\"${TARGETARCH:-$(dpkg --print-architecture)}\"; \\"
+          },
+          {
+            "line": 277,
+            "text": "case \"${TARGETARCH:-amd64}\" in \\"
+          }
+        ]
+      },
+      "errorContract": "unsupported architecture exits1 in binary/plugin selector or browser lock platform rejection; Go compiler supports more GOARCH but that does not extend complete image dependency graph",
+      "completeProfileAlternatives": "complete current versions.json and per-image override manifest; A linux/amd64 and B linux/arm64, platform availability and real executable build prerequisite, not assumed",
+      "classification": "generated-binding"
+    },
+    {
+      "id": "DLV-IMAGE-NOVA-GO-SHA256-AMD64",
+      "domain": "managed lowercase64hex digest of exact GO selected platform downloaded bytes; opposite platform inactive during build but still required version author",
+      "reader": {
+        "path": "docker/Dockerfile.nova",
+        "operation": "https://go.dev/dl/go${GO_VERSION}.linux-${arch}.tar.gz \u2192 selected amd64/arm64 sha256sum -c BEFORE extraction/install \u2192 tar -C /usr/local; PATH /usr/local/go/bin; GOTOOLCHAIN=local",
+        "references": [
+          {
+            "path": "docker/Dockerfile.nova",
+            "sha256": "34e54267a3cd0d7541315de3c6ec785206a0364b7ec76699d433c4a3ca341242"
+          },
+          {
+            "path": "versions.json",
+            "sha256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d"
+          },
+          {
+            "path": "scripts/versions.mjs",
+            "sha256": "a236f2da59fe129fd6b966f67635d1dfbd6bc4699001706fe564503436bcfc00"
+          },
+          {
+            "path": ".github/workflows/build-images.yaml",
+            "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+          },
+          {
+            "path": "docker/go-tools/go.mod",
+            "sha256": "e596896028535f4fbd34e54d318cc84d63020b4d4d32dbd09b362a044e2a56db"
+          },
+          {
+            "path": "docker/go-tools/go.sum",
+            "sha256": "08eda4b375fcd8d33d7d4d21533f0fe4a308434d42e2fa56ca313cf8851fc9ab"
+          },
+          {
+            "path": "docker/go-tools/requirements.json",
+            "sha256": "8f403fa26ac90caec632138739384cb494901674dbc57f9651fadc475ce88d7c"
+          }
+        ],
+        "fieldOccurrences": [
+          {
+            "line": 115,
+            "text": "amd64) go_sha=\"${GO_SHA256_AMD64}\" ;; \\"
+          }
+        ]
+      },
+      "errorContract": "Invalid checksum centrally; curl/TLS/HTTP or selected SHA mismatch fails build before install; extraction and actual executable version/smoke failures are separate boundaries",
+      "completeProfileAlternatives": "complete current versions.json and per-image override manifest; A linux/amd64 and B linux/arm64, platform availability and real executable build prerequisite, not assumed",
+      "classification": "version"
+    },
+    {
+      "id": "DLV-IMAGE-NOVA-GO-SHA256-ARM64",
+      "domain": "managed lowercase64hex digest of exact GO selected platform downloaded bytes; opposite platform inactive during build but still required version author",
+      "reader": {
+        "path": "docker/Dockerfile.nova",
+        "operation": "https://go.dev/dl/go${GO_VERSION}.linux-${arch}.tar.gz \u2192 selected amd64/arm64 sha256sum -c BEFORE extraction/install \u2192 tar -C /usr/local; PATH /usr/local/go/bin; GOTOOLCHAIN=local",
+        "references": [
+          {
+            "path": "docker/Dockerfile.nova",
+            "sha256": "34e54267a3cd0d7541315de3c6ec785206a0364b7ec76699d433c4a3ca341242"
+          },
+          {
+            "path": "versions.json",
+            "sha256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d"
+          },
+          {
+            "path": "scripts/versions.mjs",
+            "sha256": "a236f2da59fe129fd6b966f67635d1dfbd6bc4699001706fe564503436bcfc00"
+          },
+          {
+            "path": ".github/workflows/build-images.yaml",
+            "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+          },
+          {
+            "path": "docker/go-tools/go.mod",
+            "sha256": "e596896028535f4fbd34e54d318cc84d63020b4d4d32dbd09b362a044e2a56db"
+          },
+          {
+            "path": "docker/go-tools/go.sum",
+            "sha256": "08eda4b375fcd8d33d7d4d21533f0fe4a308434d42e2fa56ca313cf8851fc9ab"
+          },
+          {
+            "path": "docker/go-tools/requirements.json",
+            "sha256": "8f403fa26ac90caec632138739384cb494901674dbc57f9651fadc475ce88d7c"
+          }
+        ],
+        "fieldOccurrences": [
+          {
+            "line": 116,
+            "text": "arm64) go_sha=\"${GO_SHA256_ARM64}\" ;; \\"
+          }
+        ]
+      },
+      "errorContract": "Invalid checksum centrally; curl/TLS/HTTP or selected SHA mismatch fails build before install; extraction and actual executable version/smoke failures are separate boundaries",
+      "completeProfileAlternatives": "complete current versions.json and per-image override manifest; A linux/amd64 and B linux/arm64, platform availability and real executable build prerequisite, not assumed",
+      "classification": "version"
+    },
+    {
+      "id": "DLV-IMAGE-NOVA-SHFMT-SHA256-AMD64",
+      "domain": "managed lowercase64hex digest of exact SHFMT selected platform downloaded bytes; opposite platform inactive during build but still required version author",
+      "reader": {
+        "path": "docker/Dockerfile.nova",
+        "operation": "https://github.com/mvdan/sh/releases/download/v${SHFMT_VERSION}/shfmt_v${SHFMT_VERSION}_linux_${arch} \u2192 selected amd64/arm64 sha256sum -c BEFORE extraction/install \u2192 install /usr/local/bin/shfmt; --version",
+        "references": [
+          {
+            "path": "docker/Dockerfile.nova",
+            "sha256": "34e54267a3cd0d7541315de3c6ec785206a0364b7ec76699d433c4a3ca341242"
+          },
+          {
+            "path": "versions.json",
+            "sha256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d"
+          },
+          {
+            "path": "scripts/versions.mjs",
+            "sha256": "a236f2da59fe129fd6b966f67635d1dfbd6bc4699001706fe564503436bcfc00"
+          },
+          {
+            "path": ".github/workflows/build-images.yaml",
+            "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+          }
+        ],
+        "fieldOccurrences": [
+          {
+            "line": 168,
+            "text": "amd64) hadolint_arch=\"x86_64\"; shfmt_sha=\"${SHFMT_SHA256_AMD64}\"; terraform_sha=\"${TERRAFORM_SHA256_AMD64}\"; tflint_sha=\"${TFLINT_SHA256_AMD64}\"; trivy_arch=\"64bit\"; trivy_sha=\"${TRIVY_SHA256_AMD64}\"; hadolint_sha=\"${HADOLINT_SHA256_AMD64}\"; helm_sha=\"${HELM_SHA256_AMD64}\"; kubeconform_sha=\"${KUBECONFORM_SHA256_AMD64}\"; kubectl_sha=\"${KUBECTL_SHA256_AMD64}\" ;; \\"
+          }
+        ]
+      },
+      "errorContract": "Invalid checksum centrally; curl/TLS/HTTP or selected SHA mismatch fails build before install; extraction and actual executable version/smoke failures are separate boundaries",
+      "completeProfileAlternatives": "complete current versions.json and per-image override manifest; A linux/amd64 and B linux/arm64, platform availability and real executable build prerequisite, not assumed",
+      "classification": "version"
+    },
+    {
+      "id": "DLV-IMAGE-NOVA-SHFMT-SHA256-ARM64",
+      "domain": "managed lowercase64hex digest of exact SHFMT selected platform downloaded bytes; opposite platform inactive during build but still required version author",
+      "reader": {
+        "path": "docker/Dockerfile.nova",
+        "operation": "https://github.com/mvdan/sh/releases/download/v${SHFMT_VERSION}/shfmt_v${SHFMT_VERSION}_linux_${arch} \u2192 selected amd64/arm64 sha256sum -c BEFORE extraction/install \u2192 install /usr/local/bin/shfmt; --version",
+        "references": [
+          {
+            "path": "docker/Dockerfile.nova",
+            "sha256": "34e54267a3cd0d7541315de3c6ec785206a0364b7ec76699d433c4a3ca341242"
+          },
+          {
+            "path": "versions.json",
+            "sha256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d"
+          },
+          {
+            "path": "scripts/versions.mjs",
+            "sha256": "a236f2da59fe129fd6b966f67635d1dfbd6bc4699001706fe564503436bcfc00"
+          },
+          {
+            "path": ".github/workflows/build-images.yaml",
+            "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+          }
+        ],
+        "fieldOccurrences": [
+          {
+            "line": 169,
+            "text": "arm64) hadolint_arch=\"arm64\"; shfmt_sha=\"${SHFMT_SHA256_ARM64}\"; terraform_sha=\"${TERRAFORM_SHA256_ARM64}\"; tflint_sha=\"${TFLINT_SHA256_ARM64}\"; trivy_arch=\"ARM64\"; trivy_sha=\"${TRIVY_SHA256_ARM64}\"; hadolint_sha=\"${HADOLINT_SHA256_ARM64}\"; helm_sha=\"${HELM_SHA256_ARM64}\"; kubeconform_sha=\"${KUBECONFORM_SHA256_ARM64}\"; kubectl_sha=\"${KUBECTL_SHA256_ARM64}\" ;; \\"
+          }
+        ]
+      },
+      "errorContract": "Invalid checksum centrally; curl/TLS/HTTP or selected SHA mismatch fails build before install; extraction and actual executable version/smoke failures are separate boundaries",
+      "completeProfileAlternatives": "complete current versions.json and per-image override manifest; A linux/amd64 and B linux/arm64, platform availability and real executable build prerequisite, not assumed",
+      "classification": "version"
+    },
+    {
+      "id": "DLV-IMAGE-NOVA-TERRAFORM-SHA256-AMD64",
+      "domain": "managed lowercase64hex digest of exact TERRAFORM selected platform downloaded bytes; opposite platform inactive during build but still required version author",
+      "reader": {
+        "path": "docker/Dockerfile.nova",
+        "operation": "https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_${arch}.zip \u2192 selected amd64/arm64 sha256sum -c BEFORE extraction/install \u2192 unzip; install /usr/local/bin/terraform; version -json; pre-provisioned provider mirror is separate",
+        "references": [
+          {
+            "path": "docker/Dockerfile.nova",
+            "sha256": "34e54267a3cd0d7541315de3c6ec785206a0364b7ec76699d433c4a3ca341242"
+          },
+          {
+            "path": "versions.json",
+            "sha256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d"
+          },
+          {
+            "path": "scripts/versions.mjs",
+            "sha256": "a236f2da59fe129fd6b966f67635d1dfbd6bc4699001706fe564503436bcfc00"
+          },
+          {
+            "path": ".github/workflows/build-images.yaml",
+            "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+          }
+        ],
+        "fieldOccurrences": [
+          {
+            "line": 168,
+            "text": "amd64) hadolint_arch=\"x86_64\"; shfmt_sha=\"${SHFMT_SHA256_AMD64}\"; terraform_sha=\"${TERRAFORM_SHA256_AMD64}\"; tflint_sha=\"${TFLINT_SHA256_AMD64}\"; trivy_arch=\"64bit\"; trivy_sha=\"${TRIVY_SHA256_AMD64}\"; hadolint_sha=\"${HADOLINT_SHA256_AMD64}\"; helm_sha=\"${HELM_SHA256_AMD64}\"; kubeconform_sha=\"${KUBECONFORM_SHA256_AMD64}\"; kubectl_sha=\"${KUBECTL_SHA256_AMD64}\" ;; \\"
+          }
+        ]
+      },
+      "errorContract": "Invalid checksum centrally; curl/TLS/HTTP or selected SHA mismatch fails build before install; extraction and actual executable version/smoke failures are separate boundaries",
+      "completeProfileAlternatives": "complete current versions.json and per-image override manifest; A linux/amd64 and B linux/arm64, platform availability and real executable build prerequisite, not assumed",
+      "classification": "version"
+    },
+    {
+      "id": "DLV-IMAGE-NOVA-TERRAFORM-SHA256-ARM64",
+      "domain": "managed lowercase64hex digest of exact TERRAFORM selected platform downloaded bytes; opposite platform inactive during build but still required version author",
+      "reader": {
+        "path": "docker/Dockerfile.nova",
+        "operation": "https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_${arch}.zip \u2192 selected amd64/arm64 sha256sum -c BEFORE extraction/install \u2192 unzip; install /usr/local/bin/terraform; version -json; pre-provisioned provider mirror is separate",
+        "references": [
+          {
+            "path": "docker/Dockerfile.nova",
+            "sha256": "34e54267a3cd0d7541315de3c6ec785206a0364b7ec76699d433c4a3ca341242"
+          },
+          {
+            "path": "versions.json",
+            "sha256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d"
+          },
+          {
+            "path": "scripts/versions.mjs",
+            "sha256": "a236f2da59fe129fd6b966f67635d1dfbd6bc4699001706fe564503436bcfc00"
+          },
+          {
+            "path": ".github/workflows/build-images.yaml",
+            "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+          }
+        ],
+        "fieldOccurrences": [
+          {
+            "line": 169,
+            "text": "arm64) hadolint_arch=\"arm64\"; shfmt_sha=\"${SHFMT_SHA256_ARM64}\"; terraform_sha=\"${TERRAFORM_SHA256_ARM64}\"; tflint_sha=\"${TFLINT_SHA256_ARM64}\"; trivy_arch=\"ARM64\"; trivy_sha=\"${TRIVY_SHA256_ARM64}\"; hadolint_sha=\"${HADOLINT_SHA256_ARM64}\"; helm_sha=\"${HELM_SHA256_ARM64}\"; kubeconform_sha=\"${KUBECONFORM_SHA256_ARM64}\"; kubectl_sha=\"${KUBECTL_SHA256_ARM64}\" ;; \\"
+          }
+        ]
+      },
+      "errorContract": "Invalid checksum centrally; curl/TLS/HTTP or selected SHA mismatch fails build before install; extraction and actual executable version/smoke failures are separate boundaries",
+      "completeProfileAlternatives": "complete current versions.json and per-image override manifest; A linux/amd64 and B linux/arm64, platform availability and real executable build prerequisite, not assumed",
+      "classification": "version"
+    },
+    {
+      "id": "DLV-IMAGE-NOVA-TFLINT-SHA256-AMD64",
+      "domain": "managed lowercase64hex digest of exact TFLINT selected platform downloaded bytes; opposite platform inactive during build but still required version author",
+      "reader": {
+        "path": "docker/Dockerfile.nova",
+        "operation": "https://github.com/terraform-linters/tflint/releases/download/v${TFLINT_VERSION}/tflint_linux_${arch}.zip \u2192 selected amd64/arm64 sha256sum -c BEFORE extraction/install \u2192 unzip; install /usr/local/bin/tflint; --version",
+        "references": [
+          {
+            "path": "docker/Dockerfile.nova",
+            "sha256": "34e54267a3cd0d7541315de3c6ec785206a0364b7ec76699d433c4a3ca341242"
+          },
+          {
+            "path": "versions.json",
+            "sha256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d"
+          },
+          {
+            "path": "scripts/versions.mjs",
+            "sha256": "a236f2da59fe129fd6b966f67635d1dfbd6bc4699001706fe564503436bcfc00"
+          },
+          {
+            "path": ".github/workflows/build-images.yaml",
+            "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+          }
+        ],
+        "fieldOccurrences": [
+          {
+            "line": 168,
+            "text": "amd64) hadolint_arch=\"x86_64\"; shfmt_sha=\"${SHFMT_SHA256_AMD64}\"; terraform_sha=\"${TERRAFORM_SHA256_AMD64}\"; tflint_sha=\"${TFLINT_SHA256_AMD64}\"; trivy_arch=\"64bit\"; trivy_sha=\"${TRIVY_SHA256_AMD64}\"; hadolint_sha=\"${HADOLINT_SHA256_AMD64}\"; helm_sha=\"${HELM_SHA256_AMD64}\"; kubeconform_sha=\"${KUBECONFORM_SHA256_AMD64}\"; kubectl_sha=\"${KUBECTL_SHA256_AMD64}\" ;; \\"
+          }
+        ]
+      },
+      "errorContract": "Invalid checksum centrally; curl/TLS/HTTP or selected SHA mismatch fails build before install; extraction and actual executable version/smoke failures are separate boundaries",
+      "completeProfileAlternatives": "complete current versions.json and per-image override manifest; A linux/amd64 and B linux/arm64, platform availability and real executable build prerequisite, not assumed",
+      "classification": "version"
+    },
+    {
+      "id": "DLV-IMAGE-NOVA-TFLINT-SHA256-ARM64",
+      "domain": "managed lowercase64hex digest of exact TFLINT selected platform downloaded bytes; opposite platform inactive during build but still required version author",
+      "reader": {
+        "path": "docker/Dockerfile.nova",
+        "operation": "https://github.com/terraform-linters/tflint/releases/download/v${TFLINT_VERSION}/tflint_linux_${arch}.zip \u2192 selected amd64/arm64 sha256sum -c BEFORE extraction/install \u2192 unzip; install /usr/local/bin/tflint; --version",
+        "references": [
+          {
+            "path": "docker/Dockerfile.nova",
+            "sha256": "34e54267a3cd0d7541315de3c6ec785206a0364b7ec76699d433c4a3ca341242"
+          },
+          {
+            "path": "versions.json",
+            "sha256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d"
+          },
+          {
+            "path": "scripts/versions.mjs",
+            "sha256": "a236f2da59fe129fd6b966f67635d1dfbd6bc4699001706fe564503436bcfc00"
+          },
+          {
+            "path": ".github/workflows/build-images.yaml",
+            "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+          }
+        ],
+        "fieldOccurrences": [
+          {
+            "line": 169,
+            "text": "arm64) hadolint_arch=\"arm64\"; shfmt_sha=\"${SHFMT_SHA256_ARM64}\"; terraform_sha=\"${TERRAFORM_SHA256_ARM64}\"; tflint_sha=\"${TFLINT_SHA256_ARM64}\"; trivy_arch=\"ARM64\"; trivy_sha=\"${TRIVY_SHA256_ARM64}\"; hadolint_sha=\"${HADOLINT_SHA256_ARM64}\"; helm_sha=\"${HELM_SHA256_ARM64}\"; kubeconform_sha=\"${KUBECONFORM_SHA256_ARM64}\"; kubectl_sha=\"${KUBECTL_SHA256_ARM64}\" ;; \\"
+          }
+        ]
+      },
+      "errorContract": "Invalid checksum centrally; curl/TLS/HTTP or selected SHA mismatch fails build before install; extraction and actual executable version/smoke failures are separate boundaries",
+      "completeProfileAlternatives": "complete current versions.json and per-image override manifest; A linux/amd64 and B linux/arm64, platform availability and real executable build prerequisite, not assumed",
+      "classification": "version"
+    },
+    {
+      "id": "DLV-IMAGE-NOVA-TRIVY-SHA256-AMD64",
+      "domain": "managed lowercase64hex digest of exact TRIVY selected platform downloaded bytes; opposite platform inactive during build but still required version author",
+      "reader": {
+        "path": "docker/Dockerfile.nova",
+        "operation": "https://github.com/aquasecurity/trivy/releases/download/v${TRIVY_VERSION}/trivy_${TRIVY_VERSION}_Linux-${trivy_arch}.tar.gz \u2192 selected amd64/arm64 sha256sum -c BEFORE extraction/install \u2192 tar to /usr/local/bin/trivy; --version; database scanner compatibility separate",
+        "references": [
+          {
+            "path": "docker/Dockerfile.nova",
+            "sha256": "34e54267a3cd0d7541315de3c6ec785206a0364b7ec76699d433c4a3ca341242"
+          },
+          {
+            "path": "versions.json",
+            "sha256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d"
+          },
+          {
+            "path": "scripts/versions.mjs",
+            "sha256": "a236f2da59fe129fd6b966f67635d1dfbd6bc4699001706fe564503436bcfc00"
+          },
+          {
+            "path": ".github/workflows/build-images.yaml",
+            "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+          }
+        ],
+        "fieldOccurrences": [
+          {
+            "line": 168,
+            "text": "amd64) hadolint_arch=\"x86_64\"; shfmt_sha=\"${SHFMT_SHA256_AMD64}\"; terraform_sha=\"${TERRAFORM_SHA256_AMD64}\"; tflint_sha=\"${TFLINT_SHA256_AMD64}\"; trivy_arch=\"64bit\"; trivy_sha=\"${TRIVY_SHA256_AMD64}\"; hadolint_sha=\"${HADOLINT_SHA256_AMD64}\"; helm_sha=\"${HELM_SHA256_AMD64}\"; kubeconform_sha=\"${KUBECONFORM_SHA256_AMD64}\"; kubectl_sha=\"${KUBECTL_SHA256_AMD64}\" ;; \\"
+          }
+        ]
+      },
+      "errorContract": "Invalid checksum centrally; curl/TLS/HTTP or selected SHA mismatch fails build before install; extraction and actual executable version/smoke failures are separate boundaries",
+      "completeProfileAlternatives": "complete current versions.json and per-image override manifest; A linux/amd64 and B linux/arm64, platform availability and real executable build prerequisite, not assumed",
+      "classification": "version"
+    },
+    {
+      "id": "DLV-IMAGE-NOVA-TRIVY-SHA256-ARM64",
+      "domain": "managed lowercase64hex digest of exact TRIVY selected platform downloaded bytes; opposite platform inactive during build but still required version author",
+      "reader": {
+        "path": "docker/Dockerfile.nova",
+        "operation": "https://github.com/aquasecurity/trivy/releases/download/v${TRIVY_VERSION}/trivy_${TRIVY_VERSION}_Linux-${trivy_arch}.tar.gz \u2192 selected amd64/arm64 sha256sum -c BEFORE extraction/install \u2192 tar to /usr/local/bin/trivy; --version; database scanner compatibility separate",
+        "references": [
+          {
+            "path": "docker/Dockerfile.nova",
+            "sha256": "34e54267a3cd0d7541315de3c6ec785206a0364b7ec76699d433c4a3ca341242"
+          },
+          {
+            "path": "versions.json",
+            "sha256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d"
+          },
+          {
+            "path": "scripts/versions.mjs",
+            "sha256": "a236f2da59fe129fd6b966f67635d1dfbd6bc4699001706fe564503436bcfc00"
+          },
+          {
+            "path": ".github/workflows/build-images.yaml",
+            "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+          }
+        ],
+        "fieldOccurrences": [
+          {
+            "line": 169,
+            "text": "arm64) hadolint_arch=\"arm64\"; shfmt_sha=\"${SHFMT_SHA256_ARM64}\"; terraform_sha=\"${TERRAFORM_SHA256_ARM64}\"; tflint_sha=\"${TFLINT_SHA256_ARM64}\"; trivy_arch=\"ARM64\"; trivy_sha=\"${TRIVY_SHA256_ARM64}\"; hadolint_sha=\"${HADOLINT_SHA256_ARM64}\"; helm_sha=\"${HELM_SHA256_ARM64}\"; kubeconform_sha=\"${KUBECONFORM_SHA256_ARM64}\"; kubectl_sha=\"${KUBECTL_SHA256_ARM64}\" ;; \\"
+          }
+        ]
+      },
+      "errorContract": "Invalid checksum centrally; curl/TLS/HTTP or selected SHA mismatch fails build before install; extraction and actual executable version/smoke failures are separate boundaries",
+      "completeProfileAlternatives": "complete current versions.json and per-image override manifest; A linux/amd64 and B linux/arm64, platform availability and real executable build prerequisite, not assumed",
+      "classification": "version"
+    },
+    {
+      "id": "DLV-IMAGE-NOVA-GO-VERSION",
+      "domain": "central version token, actual GO URL/version prefix/ABI below; arbitrary token syntactic acceptance is not a runnable dependency profile",
+      "reader": {
+        "path": "docker/Dockerfile.nova",
+        "operation": "https://go.dev/dl/go${GO_VERSION}.linux-${arch}.tar.gz \u2192 selected amd64/arm64 sha256sum -c BEFORE extraction/install \u2192 tar -C /usr/local; PATH /usr/local/go/bin; GOTOOLCHAIN=local",
+        "references": [
+          {
+            "path": "docker/Dockerfile.nova",
+            "sha256": "34e54267a3cd0d7541315de3c6ec785206a0364b7ec76699d433c4a3ca341242"
+          },
+          {
+            "path": "versions.json",
+            "sha256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d"
+          },
+          {
+            "path": "scripts/versions.mjs",
+            "sha256": "a236f2da59fe129fd6b966f67635d1dfbd6bc4699001706fe564503436bcfc00"
+          },
+          {
+            "path": ".github/workflows/build-images.yaml",
+            "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+          },
+          {
+            "path": "docker/go-tools/go.mod",
+            "sha256": "e596896028535f4fbd34e54d318cc84d63020b4d4d32dbd09b362a044e2a56db"
+          },
+          {
+            "path": "docker/go-tools/go.sum",
+            "sha256": "08eda4b375fcd8d33d7d4d21533f0fe4a308434d42e2fa56ca313cf8851fc9ab"
+          },
+          {
+            "path": "docker/go-tools/requirements.json",
+            "sha256": "8f403fa26ac90caec632138739384cb494901674dbc57f9651fadc475ce88d7c"
+          }
+        ],
+        "fieldOccurrences": [
+          {
+            "line": 119,
+            "text": "go_archive=\"go${GO_VERSION}.linux-${arch}.tar.gz\"; \\"
+          }
+        ]
+      },
+      "errorContract": "Invalid checksum centrally; curl/TLS/HTTP or selected SHA mismatch fails build before install; extraction and actual executable version/smoke failures are separate boundaries",
+      "completeProfileAlternatives": "complete current versions.json and per-image override manifest; A linux/amd64 and B linux/arm64, platform availability and real executable build prerequisite, not assumed",
+      "classification": "version"
+    },
+    {
+      "id": "DLV-IMAGE-NOVA-STATICCHECK-VERSION",
+      "domain": "central token must equal requirements.json key; actual readonly resolved Go module graph and go.sum, not free go install @latest/version",
+      "reader": {
+        "path": "docker/Dockerfile.nova",
+        "operation": "test ARG = jq requirements.json; go install -mod=readonly -trimpath honnef.co/go/tools/cmd/staticcheck; GOTOOLCHAIN=local, module/build cache mounts; installed version/smoke readback",
+        "references": [
+          {
+            "path": "docker/Dockerfile.nova",
+            "sha256": "34e54267a3cd0d7541315de3c6ec785206a0364b7ec76699d433c4a3ca341242"
+          },
+          {
+            "path": "versions.json",
+            "sha256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d"
+          },
+          {
+            "path": "scripts/versions.mjs",
+            "sha256": "a236f2da59fe129fd6b966f67635d1dfbd6bc4699001706fe564503436bcfc00"
+          },
+          {
+            "path": ".github/workflows/build-images.yaml",
+            "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+          },
+          {
+            "path": "docker/go-tools/requirements.json",
+            "sha256": "8f403fa26ac90caec632138739384cb494901674dbc57f9651fadc475ce88d7c"
+          },
+          {
+            "path": "docker/go-tools/go.mod",
+            "sha256": "e596896028535f4fbd34e54d318cc84d63020b4d4d32dbd09b362a044e2a56db"
+          },
+          {
+            "path": "docker/go-tools/go.sum",
+            "sha256": "08eda4b375fcd8d33d7d4d21533f0fe4a308434d42e2fa56ca313cf8851fc9ab"
+          }
+        ],
+        "fieldOccurrences": [
+          {
+            "line": 133,
+            "text": "&& test \"$STATICCHECK_VERSION\" = \"$(jq -r .STATICCHECK_VERSION requirements.json)\" \\"
+          }
+        ]
+      },
+      "errorContract": "test mismatch exits before compiler; locked Go graph/build/runtime compatibility may fail separately",
+      "completeProfileAlternatives": "complete current versions.json and per-image override manifest; A linux/amd64 and B linux/arm64, platform availability and real executable build prerequisite, not assumed",
+      "classification": "version"
+    },
+    {
+      "id": "DLV-IMAGE-NOVA-GOVULNCHECK-VERSION",
+      "domain": "central token must equal requirements.json key; actual readonly resolved Go module graph and go.sum, not free go install @latest/version",
+      "reader": {
+        "path": "docker/Dockerfile.nova",
+        "operation": "test ARG = jq requirements.json; go install -mod=readonly -trimpath golang.org/x/vuln/cmd/govulncheck; GOTOOLCHAIN=local, module/build cache mounts; installed version/smoke readback",
+        "references": [
+          {
+            "path": "docker/Dockerfile.nova",
+            "sha256": "34e54267a3cd0d7541315de3c6ec785206a0364b7ec76699d433c4a3ca341242"
+          },
+          {
+            "path": "versions.json",
+            "sha256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d"
+          },
+          {
+            "path": "scripts/versions.mjs",
+            "sha256": "a236f2da59fe129fd6b966f67635d1dfbd6bc4699001706fe564503436bcfc00"
+          },
+          {
+            "path": ".github/workflows/build-images.yaml",
+            "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+          },
+          {
+            "path": "docker/go-tools/requirements.json",
+            "sha256": "8f403fa26ac90caec632138739384cb494901674dbc57f9651fadc475ce88d7c"
+          },
+          {
+            "path": "docker/go-tools/go.mod",
+            "sha256": "e596896028535f4fbd34e54d318cc84d63020b4d4d32dbd09b362a044e2a56db"
+          },
+          {
+            "path": "docker/go-tools/go.sum",
+            "sha256": "08eda4b375fcd8d33d7d4d21533f0fe4a308434d42e2fa56ca313cf8851fc9ab"
+          }
+        ],
+        "fieldOccurrences": [
+          {
+            "line": 134,
+            "text": "&& test \"$GOVULNCHECK_VERSION\" = \"$(jq -r .GOVULNCHECK_VERSION requirements.json)\" \\"
+          }
+        ]
+      },
+      "errorContract": "test mismatch exits before compiler; locked Go graph/build/runtime compatibility may fail separately",
+      "completeProfileAlternatives": "complete current versions.json and per-image override manifest; A linux/amd64 and B linux/arm64, platform availability and real executable build prerequisite, not assumed",
+      "classification": "version"
+    },
+    {
+      "id": "DLV-IMAGE-NOVA-GOCYCLO-VERSION",
+      "domain": "central token must equal requirements.json key; actual readonly resolved Go module graph and go.sum, not free go install @latest/version",
+      "reader": {
+        "path": "docker/Dockerfile.nova",
+        "operation": "test ARG = jq requirements.json; go install -mod=readonly -trimpath github.com/fzipp/gocyclo/cmd/gocyclo; GOTOOLCHAIN=local, module/build cache mounts; installed version/smoke readback",
+        "references": [
+          {
+            "path": "docker/Dockerfile.nova",
+            "sha256": "34e54267a3cd0d7541315de3c6ec785206a0364b7ec76699d433c4a3ca341242"
+          },
+          {
+            "path": "versions.json",
+            "sha256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d"
+          },
+          {
+            "path": "scripts/versions.mjs",
+            "sha256": "a236f2da59fe129fd6b966f67635d1dfbd6bc4699001706fe564503436bcfc00"
+          },
+          {
+            "path": ".github/workflows/build-images.yaml",
+            "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+          },
+          {
+            "path": "docker/go-tools/requirements.json",
+            "sha256": "8f403fa26ac90caec632138739384cb494901674dbc57f9651fadc475ce88d7c"
+          },
+          {
+            "path": "docker/go-tools/go.mod",
+            "sha256": "e596896028535f4fbd34e54d318cc84d63020b4d4d32dbd09b362a044e2a56db"
+          },
+          {
+            "path": "docker/go-tools/go.sum",
+            "sha256": "08eda4b375fcd8d33d7d4d21533f0fe4a308434d42e2fa56ca313cf8851fc9ab"
+          }
+        ],
+        "fieldOccurrences": [
+          {
+            "line": 135,
+            "text": "&& test \"$GOCYCLO_VERSION\" = \"$(jq -r .GOCYCLO_VERSION requirements.json)\" \\"
+          }
+        ]
+      },
+      "errorContract": "test mismatch exits before compiler; locked Go graph/build/runtime compatibility may fail separately",
+      "completeProfileAlternatives": "complete current versions.json and per-image override manifest; A linux/amd64 and B linux/arm64, platform availability and real executable build prerequisite, not assumed",
+      "classification": "version"
+    },
+    {
+      "id": "DLV-IMAGE-NOVA-HADOLINT-VERSION",
+      "domain": "central version token, actual HADOLINT URL/version prefix/ABI below; arbitrary token syntactic acceptance is not a runnable dependency profile",
+      "reader": {
+        "path": "docker/Dockerfile.nova",
+        "operation": "https://github.com/hadolint/hadolint/releases/download/v${HADOLINT_VERSION}/hadolint-Linux-${hadolint_arch} \u2192 selected amd64/arm64 sha256sum -c BEFORE extraction/install \u2192 install /usr/local/bin/hadolint; --version",
+        "references": [
+          {
+            "path": "docker/Dockerfile.nova",
+            "sha256": "34e54267a3cd0d7541315de3c6ec785206a0364b7ec76699d433c4a3ca341242"
+          },
+          {
+            "path": "versions.json",
+            "sha256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d"
+          },
+          {
+            "path": "scripts/versions.mjs",
+            "sha256": "a236f2da59fe129fd6b966f67635d1dfbd6bc4699001706fe564503436bcfc00"
+          },
+          {
+            "path": ".github/workflows/build-images.yaml",
+            "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+          }
+        ],
+        "fieldOccurrences": [
+          {
+            "line": 174,
+            "text": "curl -fsSL \"https://github.com/hadolint/hadolint/releases/download/v${HADOLINT_VERSION}/${hadolint_file}\" -o \"$tmp/$hadolint_file\"; \\"
+          }
+        ]
+      },
+      "errorContract": "Invalid checksum centrally; curl/TLS/HTTP or selected SHA mismatch fails build before install; extraction and actual executable version/smoke failures are separate boundaries",
+      "completeProfileAlternatives": "complete current versions.json and per-image override manifest; A linux/amd64 and B linux/arm64, platform availability and real executable build prerequisite, not assumed",
+      "classification": "version"
+    },
+    {
+      "id": "DLV-IMAGE-NOVA-KUBECONFORM-VERSION",
+      "domain": "central version token, actual KUBECONFORM URL/version prefix/ABI below; arbitrary token syntactic acceptance is not a runnable dependency profile",
+      "reader": {
+        "path": "docker/Dockerfile.nova",
+        "operation": "https://github.com/yannh/kubeconform/releases/download/v${KUBECONFORM_VERSION}/kubeconform-linux-${arch}.tar.gz \u2192 selected amd64/arm64 sha256sum -c BEFORE extraction/install \u2192 tar to /usr/local/bin/kubeconform; -v; offline selected schema tree separate",
+        "references": [
+          {
+            "path": "docker/Dockerfile.nova",
+            "sha256": "34e54267a3cd0d7541315de3c6ec785206a0364b7ec76699d433c4a3ca341242"
+          },
+          {
+            "path": "versions.json",
+            "sha256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d"
+          },
+          {
+            "path": "scripts/versions.mjs",
+            "sha256": "a236f2da59fe129fd6b966f67635d1dfbd6bc4699001706fe564503436bcfc00"
+          },
+          {
+            "path": ".github/workflows/build-images.yaml",
+            "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+          }
+        ],
+        "fieldOccurrences": [
+          {
+            "line": 196,
+            "text": "curl -fsSL \"https://github.com/yannh/kubeconform/releases/download/v${KUBECONFORM_VERSION}/${kubeconform_archive}\" -o \"$tmp/$kubeconform_archive\"; \\"
+          }
+        ]
+      },
+      "errorContract": "Invalid checksum centrally; curl/TLS/HTTP or selected SHA mismatch fails build before install; extraction and actual executable version/smoke failures are separate boundaries",
+      "completeProfileAlternatives": "complete current versions.json and per-image override manifest; A linux/amd64 and B linux/arm64, platform availability and real executable build prerequisite, not assumed",
+      "classification": "version"
+    },
+    {
+      "id": "DLV-IMAGE-NOVA-KUBECTL-VERSION",
+      "domain": "central version token, actual KUBECTL URL/version prefix/ABI below; arbitrary token syntactic acceptance is not a runnable dependency profile",
+      "reader": {
+        "path": "docker/Dockerfile.nova",
+        "operation": "https://dl.k8s.io/release/v${KUBECTL_VERSION}/bin/linux/${arch}/kubectl \u2192 selected amd64/arm64 sha256sum -c BEFORE extraction/install \u2192 install /usr/local/bin/kubectl; version --client=true; pin is not deployed API identity",
+        "references": [
+          {
+            "path": "docker/Dockerfile.nova",
+            "sha256": "34e54267a3cd0d7541315de3c6ec785206a0364b7ec76699d433c4a3ca341242"
+          },
+          {
+            "path": "versions.json",
+            "sha256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d"
+          },
+          {
+            "path": "scripts/versions.mjs",
+            "sha256": "a236f2da59fe129fd6b966f67635d1dfbd6bc4699001706fe564503436bcfc00"
+          },
+          {
+            "path": ".github/workflows/build-images.yaml",
+            "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+          }
+        ],
+        "fieldOccurrences": [
+          {
+            "line": 200,
+            "text": "curl -fsSL \"https://dl.k8s.io/release/v${KUBECTL_VERSION}/bin/linux/${arch}/kubectl\" -o \"$tmp/$kubectl_file\"; \\"
+          },
+          {
+            "line": 220,
+            "text": "# tree that matches KUBECTL_VERSION. The legacy authoritative adapter remains"
+          },
+          {
+            "line": 228,
+            "text": "printf '%s\\n' \"v${KUBECTL_VERSION}-standalone-strict/\" > \"$schema_repo/.git/info/sparse-checkout\"; \\"
+          },
+          {
+            "line": 233,
+            "text": "cp -a \"$schema_repo/v${KUBECTL_VERSION}-standalone-strict\" /opt/kubeclaw-kubernetes-schemas/; \\"
+          },
+          {
+            "line": 234,
+            "text": "test -s \"/opt/kubeclaw-kubernetes-schemas/v${KUBECTL_VERSION}-standalone-strict/deployment-apps-v1.json\"; \\"
+          }
+        ]
+      },
+      "errorContract": "Invalid checksum centrally; curl/TLS/HTTP or selected SHA mismatch fails build before install; extraction and actual executable version/smoke failures are separate boundaries",
+      "completeProfileAlternatives": "complete current versions.json and per-image override manifest; A linux/amd64 and B linux/arm64, platform availability and real executable build prerequisite, not assumed",
+      "classification": "version"
+    },
+    {
+      "id": "DLV-IMAGE-NOVA-KUBERNETES-JSON-SCHEMA-COMMIT",
+      "domain": "central token grammar does not demand40hex, but git fetched commit must exactly equal requested value; selected v${KUBECTL_VERSION}-standalone-strict dir required",
+      "reader": {
+        "path": "docker/Dockerfile.nova",
+        "operation": "git sparse-checkout selected version strict directory, depth1 fetch exact commit, compare rev-parse FETCH_HEAD equality, detached checkout; copy strict tree offline; deployment-apps-v1 file required; actual whole-document no-skip schema obligations separate",
+        "references": [
+          {
+            "path": "docker/Dockerfile.nova",
+            "sha256": "34e54267a3cd0d7541315de3c6ec785206a0364b7ec76699d433c4a3ca341242"
+          },
+          {
+            "path": "versions.json",
+            "sha256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d"
+          },
+          {
+            "path": "scripts/versions.mjs",
+            "sha256": "a236f2da59fe129fd6b966f67635d1dfbd6bc4699001706fe564503436bcfc00"
+          },
+          {
+            "path": ".github/workflows/build-images.yaml",
+            "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+          }
+        ],
+        "fieldOccurrences": [
+          {
+            "line": 229,
+            "text": "git -C \"$schema_repo\" fetch --depth 1 --filter=blob:none origin \"$KUBERNETES_JSON_SCHEMA_COMMIT\"; \\"
+          },
+          {
+            "line": 230,
+            "text": "test \"$(git -C \"$schema_repo\" rev-parse FETCH_HEAD)\" = \"$KUBERNETES_JSON_SCHEMA_COMMIT\"; \\"
+          }
+        ]
+      },
+      "errorContract": "git transport/missing commit, exact commit mismatch, missing version directory or deployment schema reject build; no deployed API feature support inference",
+      "completeProfileAlternatives": "complete current versions.json and per-image override manifest; A linux/amd64 and B linux/arm64, platform availability and real executable build prerequisite, not assumed",
+      "classification": "version"
+    },
+    {
+      "id": "DLV-IMAGE-NOVA-HELM-VERSION",
+      "domain": "central version token, actual HELM URL/version prefix/ABI below; arbitrary token syntactic acceptance is not a runnable dependency profile",
+      "reader": {
+        "path": "docker/Dockerfile.nova",
+        "operation": "https://get.helm.sh/helm-v${HELM_VERSION}-linux-${arch}.tar.gz \u2192 selected amd64/arm64 sha256sum -c BEFORE extraction/install \u2192 extract linux-${arch}/helm; install; version --short",
+        "references": [
+          {
+            "path": "docker/Dockerfile.nova",
+            "sha256": "34e54267a3cd0d7541315de3c6ec785206a0364b7ec76699d433c4a3ca341242"
+          },
+          {
+            "path": "versions.json",
+            "sha256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d"
+          },
+          {
+            "path": "scripts/versions.mjs",
+            "sha256": "a236f2da59fe129fd6b966f67635d1dfbd6bc4699001706fe564503436bcfc00"
+          },
+          {
+            "path": ".github/workflows/build-images.yaml",
+            "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+          }
+        ],
+        "fieldOccurrences": [
+          {
+            "line": 203,
+            "text": "helm_archive=\"helm-v${HELM_VERSION}-linux-${arch}.tar.gz\"; \\"
+          }
+        ]
+      },
+      "errorContract": "Invalid checksum centrally; curl/TLS/HTTP or selected SHA mismatch fails build before install; extraction and actual executable version/smoke failures are separate boundaries",
+      "completeProfileAlternatives": "complete current versions.json and per-image override manifest; A linux/amd64 and B linux/arm64, platform availability and real executable build prerequisite, not assumed",
+      "classification": "version"
+    },
+    {
+      "id": "DLV-IMAGE-NOVA-HELM-SHA256-AMD64",
+      "domain": "managed lowercase64hex digest of exact HELM selected platform downloaded bytes; opposite platform inactive during build but still required version author",
+      "reader": {
+        "path": "docker/Dockerfile.nova",
+        "operation": "https://get.helm.sh/helm-v${HELM_VERSION}-linux-${arch}.tar.gz \u2192 selected amd64/arm64 sha256sum -c BEFORE extraction/install \u2192 extract linux-${arch}/helm; install; version --short",
+        "references": [
+          {
+            "path": "docker/Dockerfile.nova",
+            "sha256": "34e54267a3cd0d7541315de3c6ec785206a0364b7ec76699d433c4a3ca341242"
+          },
+          {
+            "path": "versions.json",
+            "sha256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d"
+          },
+          {
+            "path": "scripts/versions.mjs",
+            "sha256": "a236f2da59fe129fd6b966f67635d1dfbd6bc4699001706fe564503436bcfc00"
+          },
+          {
+            "path": ".github/workflows/build-images.yaml",
+            "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+          }
+        ],
+        "fieldOccurrences": [
+          {
+            "line": 168,
+            "text": "amd64) hadolint_arch=\"x86_64\"; shfmt_sha=\"${SHFMT_SHA256_AMD64}\"; terraform_sha=\"${TERRAFORM_SHA256_AMD64}\"; tflint_sha=\"${TFLINT_SHA256_AMD64}\"; trivy_arch=\"64bit\"; trivy_sha=\"${TRIVY_SHA256_AMD64}\"; hadolint_sha=\"${HADOLINT_SHA256_AMD64}\"; helm_sha=\"${HELM_SHA256_AMD64}\"; kubeconform_sha=\"${KUBECONFORM_SHA256_AMD64}\"; kubectl_sha=\"${KUBECTL_SHA256_AMD64}\" ;; \\"
+          }
+        ]
+      },
+      "errorContract": "Invalid checksum centrally; curl/TLS/HTTP or selected SHA mismatch fails build before install; extraction and actual executable version/smoke failures are separate boundaries",
+      "completeProfileAlternatives": "complete current versions.json and per-image override manifest; A linux/amd64 and B linux/arm64, platform availability and real executable build prerequisite, not assumed",
+      "classification": "version"
+    },
+    {
+      "id": "DLV-IMAGE-NOVA-HELM-SHA256-ARM64",
+      "domain": "managed lowercase64hex digest of exact HELM selected platform downloaded bytes; opposite platform inactive during build but still required version author",
+      "reader": {
+        "path": "docker/Dockerfile.nova",
+        "operation": "https://get.helm.sh/helm-v${HELM_VERSION}-linux-${arch}.tar.gz \u2192 selected amd64/arm64 sha256sum -c BEFORE extraction/install \u2192 extract linux-${arch}/helm; install; version --short",
+        "references": [
+          {
+            "path": "docker/Dockerfile.nova",
+            "sha256": "34e54267a3cd0d7541315de3c6ec785206a0364b7ec76699d433c4a3ca341242"
+          },
+          {
+            "path": "versions.json",
+            "sha256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d"
+          },
+          {
+            "path": "scripts/versions.mjs",
+            "sha256": "a236f2da59fe129fd6b966f67635d1dfbd6bc4699001706fe564503436bcfc00"
+          },
+          {
+            "path": ".github/workflows/build-images.yaml",
+            "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+          }
+        ],
+        "fieldOccurrences": [
+          {
+            "line": 169,
+            "text": "arm64) hadolint_arch=\"arm64\"; shfmt_sha=\"${SHFMT_SHA256_ARM64}\"; terraform_sha=\"${TERRAFORM_SHA256_ARM64}\"; tflint_sha=\"${TFLINT_SHA256_ARM64}\"; trivy_arch=\"ARM64\"; trivy_sha=\"${TRIVY_SHA256_ARM64}\"; hadolint_sha=\"${HADOLINT_SHA256_ARM64}\"; helm_sha=\"${HELM_SHA256_ARM64}\"; kubeconform_sha=\"${KUBECONFORM_SHA256_ARM64}\"; kubectl_sha=\"${KUBECTL_SHA256_ARM64}\" ;; \\"
+          }
+        ]
+      },
+      "errorContract": "Invalid checksum centrally; curl/TLS/HTTP or selected SHA mismatch fails build before install; extraction and actual executable version/smoke failures are separate boundaries",
+      "completeProfileAlternatives": "complete current versions.json and per-image override manifest; A linux/amd64 and B linux/arm64, platform availability and real executable build prerequisite, not assumed",
+      "classification": "version"
+    },
+    {
+      "id": "DLV-IMAGE-NOVA-HADOLINT-SHA256-AMD64",
+      "domain": "managed lowercase64hex digest of exact HADOLINT selected platform downloaded bytes; opposite platform inactive during build but still required version author",
+      "reader": {
+        "path": "docker/Dockerfile.nova",
+        "operation": "https://github.com/hadolint/hadolint/releases/download/v${HADOLINT_VERSION}/hadolint-Linux-${hadolint_arch} \u2192 selected amd64/arm64 sha256sum -c BEFORE extraction/install \u2192 install /usr/local/bin/hadolint; --version",
+        "references": [
+          {
+            "path": "docker/Dockerfile.nova",
+            "sha256": "34e54267a3cd0d7541315de3c6ec785206a0364b7ec76699d433c4a3ca341242"
+          },
+          {
+            "path": "versions.json",
+            "sha256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d"
+          },
+          {
+            "path": "scripts/versions.mjs",
+            "sha256": "a236f2da59fe129fd6b966f67635d1dfbd6bc4699001706fe564503436bcfc00"
+          },
+          {
+            "path": ".github/workflows/build-images.yaml",
+            "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+          }
+        ],
+        "fieldOccurrences": [
+          {
+            "line": 168,
+            "text": "amd64) hadolint_arch=\"x86_64\"; shfmt_sha=\"${SHFMT_SHA256_AMD64}\"; terraform_sha=\"${TERRAFORM_SHA256_AMD64}\"; tflint_sha=\"${TFLINT_SHA256_AMD64}\"; trivy_arch=\"64bit\"; trivy_sha=\"${TRIVY_SHA256_AMD64}\"; hadolint_sha=\"${HADOLINT_SHA256_AMD64}\"; helm_sha=\"${HELM_SHA256_AMD64}\"; kubeconform_sha=\"${KUBECONFORM_SHA256_AMD64}\"; kubectl_sha=\"${KUBECTL_SHA256_AMD64}\" ;; \\"
+          }
+        ]
+      },
+      "errorContract": "Invalid checksum centrally; curl/TLS/HTTP or selected SHA mismatch fails build before install; extraction and actual executable version/smoke failures are separate boundaries",
+      "completeProfileAlternatives": "complete current versions.json and per-image override manifest; A linux/amd64 and B linux/arm64, platform availability and real executable build prerequisite, not assumed",
+      "classification": "version"
+    },
+    {
+      "id": "DLV-IMAGE-NOVA-HADOLINT-SHA256-ARM64",
+      "domain": "managed lowercase64hex digest of exact HADOLINT selected platform downloaded bytes; opposite platform inactive during build but still required version author",
+      "reader": {
+        "path": "docker/Dockerfile.nova",
+        "operation": "https://github.com/hadolint/hadolint/releases/download/v${HADOLINT_VERSION}/hadolint-Linux-${hadolint_arch} \u2192 selected amd64/arm64 sha256sum -c BEFORE extraction/install \u2192 install /usr/local/bin/hadolint; --version",
+        "references": [
+          {
+            "path": "docker/Dockerfile.nova",
+            "sha256": "34e54267a3cd0d7541315de3c6ec785206a0364b7ec76699d433c4a3ca341242"
+          },
+          {
+            "path": "versions.json",
+            "sha256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d"
+          },
+          {
+            "path": "scripts/versions.mjs",
+            "sha256": "a236f2da59fe129fd6b966f67635d1dfbd6bc4699001706fe564503436bcfc00"
+          },
+          {
+            "path": ".github/workflows/build-images.yaml",
+            "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+          }
+        ],
+        "fieldOccurrences": [
+          {
+            "line": 169,
+            "text": "arm64) hadolint_arch=\"arm64\"; shfmt_sha=\"${SHFMT_SHA256_ARM64}\"; terraform_sha=\"${TERRAFORM_SHA256_ARM64}\"; tflint_sha=\"${TFLINT_SHA256_ARM64}\"; trivy_arch=\"ARM64\"; trivy_sha=\"${TRIVY_SHA256_ARM64}\"; hadolint_sha=\"${HADOLINT_SHA256_ARM64}\"; helm_sha=\"${HELM_SHA256_ARM64}\"; kubeconform_sha=\"${KUBECONFORM_SHA256_ARM64}\"; kubectl_sha=\"${KUBECTL_SHA256_ARM64}\" ;; \\"
+          }
+        ]
+      },
+      "errorContract": "Invalid checksum centrally; curl/TLS/HTTP or selected SHA mismatch fails build before install; extraction and actual executable version/smoke failures are separate boundaries",
+      "completeProfileAlternatives": "complete current versions.json and per-image override manifest; A linux/amd64 and B linux/arm64, platform availability and real executable build prerequisite, not assumed",
+      "classification": "version"
+    },
+    {
+      "id": "DLV-IMAGE-NOVA-KUBECONFORM-SHA256-AMD64",
+      "domain": "managed lowercase64hex digest of exact KUBECONFORM selected platform downloaded bytes; opposite platform inactive during build but still required version author",
+      "reader": {
+        "path": "docker/Dockerfile.nova",
+        "operation": "https://github.com/yannh/kubeconform/releases/download/v${KUBECONFORM_VERSION}/kubeconform-linux-${arch}.tar.gz \u2192 selected amd64/arm64 sha256sum -c BEFORE extraction/install \u2192 tar to /usr/local/bin/kubeconform; -v; offline selected schema tree separate",
+        "references": [
+          {
+            "path": "docker/Dockerfile.nova",
+            "sha256": "34e54267a3cd0d7541315de3c6ec785206a0364b7ec76699d433c4a3ca341242"
+          },
+          {
+            "path": "versions.json",
+            "sha256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d"
+          },
+          {
+            "path": "scripts/versions.mjs",
+            "sha256": "a236f2da59fe129fd6b966f67635d1dfbd6bc4699001706fe564503436bcfc00"
+          },
+          {
+            "path": ".github/workflows/build-images.yaml",
+            "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+          }
+        ],
+        "fieldOccurrences": [
+          {
+            "line": 168,
+            "text": "amd64) hadolint_arch=\"x86_64\"; shfmt_sha=\"${SHFMT_SHA256_AMD64}\"; terraform_sha=\"${TERRAFORM_SHA256_AMD64}\"; tflint_sha=\"${TFLINT_SHA256_AMD64}\"; trivy_arch=\"64bit\"; trivy_sha=\"${TRIVY_SHA256_AMD64}\"; hadolint_sha=\"${HADOLINT_SHA256_AMD64}\"; helm_sha=\"${HELM_SHA256_AMD64}\"; kubeconform_sha=\"${KUBECONFORM_SHA256_AMD64}\"; kubectl_sha=\"${KUBECTL_SHA256_AMD64}\" ;; \\"
+          }
+        ]
+      },
+      "errorContract": "Invalid checksum centrally; curl/TLS/HTTP or selected SHA mismatch fails build before install; extraction and actual executable version/smoke failures are separate boundaries",
+      "completeProfileAlternatives": "complete current versions.json and per-image override manifest; A linux/amd64 and B linux/arm64, platform availability and real executable build prerequisite, not assumed",
+      "classification": "version"
+    },
+    {
+      "id": "DLV-IMAGE-NOVA-KUBECONFORM-SHA256-ARM64",
+      "domain": "managed lowercase64hex digest of exact KUBECONFORM selected platform downloaded bytes; opposite platform inactive during build but still required version author",
+      "reader": {
+        "path": "docker/Dockerfile.nova",
+        "operation": "https://github.com/yannh/kubeconform/releases/download/v${KUBECONFORM_VERSION}/kubeconform-linux-${arch}.tar.gz \u2192 selected amd64/arm64 sha256sum -c BEFORE extraction/install \u2192 tar to /usr/local/bin/kubeconform; -v; offline selected schema tree separate",
+        "references": [
+          {
+            "path": "docker/Dockerfile.nova",
+            "sha256": "34e54267a3cd0d7541315de3c6ec785206a0364b7ec76699d433c4a3ca341242"
+          },
+          {
+            "path": "versions.json",
+            "sha256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d"
+          },
+          {
+            "path": "scripts/versions.mjs",
+            "sha256": "a236f2da59fe129fd6b966f67635d1dfbd6bc4699001706fe564503436bcfc00"
+          },
+          {
+            "path": ".github/workflows/build-images.yaml",
+            "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+          }
+        ],
+        "fieldOccurrences": [
+          {
+            "line": 169,
+            "text": "arm64) hadolint_arch=\"arm64\"; shfmt_sha=\"${SHFMT_SHA256_ARM64}\"; terraform_sha=\"${TERRAFORM_SHA256_ARM64}\"; tflint_sha=\"${TFLINT_SHA256_ARM64}\"; trivy_arch=\"ARM64\"; trivy_sha=\"${TRIVY_SHA256_ARM64}\"; hadolint_sha=\"${HADOLINT_SHA256_ARM64}\"; helm_sha=\"${HELM_SHA256_ARM64}\"; kubeconform_sha=\"${KUBECONFORM_SHA256_ARM64}\"; kubectl_sha=\"${KUBECTL_SHA256_ARM64}\" ;; \\"
+          }
+        ]
+      },
+      "errorContract": "Invalid checksum centrally; curl/TLS/HTTP or selected SHA mismatch fails build before install; extraction and actual executable version/smoke failures are separate boundaries",
+      "completeProfileAlternatives": "complete current versions.json and per-image override manifest; A linux/amd64 and B linux/arm64, platform availability and real executable build prerequisite, not assumed",
+      "classification": "version"
+    },
+    {
+      "id": "DLV-IMAGE-NOVA-KUBECTL-SHA256-AMD64",
+      "domain": "managed lowercase64hex digest of exact KUBECTL selected platform downloaded bytes; opposite platform inactive during build but still required version author",
+      "reader": {
+        "path": "docker/Dockerfile.nova",
+        "operation": "https://dl.k8s.io/release/v${KUBECTL_VERSION}/bin/linux/${arch}/kubectl \u2192 selected amd64/arm64 sha256sum -c BEFORE extraction/install \u2192 install /usr/local/bin/kubectl; version --client=true; pin is not deployed API identity",
+        "references": [
+          {
+            "path": "docker/Dockerfile.nova",
+            "sha256": "34e54267a3cd0d7541315de3c6ec785206a0364b7ec76699d433c4a3ca341242"
+          },
+          {
+            "path": "versions.json",
+            "sha256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d"
+          },
+          {
+            "path": "scripts/versions.mjs",
+            "sha256": "a236f2da59fe129fd6b966f67635d1dfbd6bc4699001706fe564503436bcfc00"
+          },
+          {
+            "path": ".github/workflows/build-images.yaml",
+            "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+          }
+        ],
+        "fieldOccurrences": [
+          {
+            "line": 168,
+            "text": "amd64) hadolint_arch=\"x86_64\"; shfmt_sha=\"${SHFMT_SHA256_AMD64}\"; terraform_sha=\"${TERRAFORM_SHA256_AMD64}\"; tflint_sha=\"${TFLINT_SHA256_AMD64}\"; trivy_arch=\"64bit\"; trivy_sha=\"${TRIVY_SHA256_AMD64}\"; hadolint_sha=\"${HADOLINT_SHA256_AMD64}\"; helm_sha=\"${HELM_SHA256_AMD64}\"; kubeconform_sha=\"${KUBECONFORM_SHA256_AMD64}\"; kubectl_sha=\"${KUBECTL_SHA256_AMD64}\" ;; \\"
+          }
+        ]
+      },
+      "errorContract": "Invalid checksum centrally; curl/TLS/HTTP or selected SHA mismatch fails build before install; extraction and actual executable version/smoke failures are separate boundaries",
+      "completeProfileAlternatives": "complete current versions.json and per-image override manifest; A linux/amd64 and B linux/arm64, platform availability and real executable build prerequisite, not assumed",
+      "classification": "version"
+    },
+    {
+      "id": "DLV-IMAGE-NOVA-KUBECTL-SHA256-ARM64",
+      "domain": "managed lowercase64hex digest of exact KUBECTL selected platform downloaded bytes; opposite platform inactive during build but still required version author",
+      "reader": {
+        "path": "docker/Dockerfile.nova",
+        "operation": "https://dl.k8s.io/release/v${KUBECTL_VERSION}/bin/linux/${arch}/kubectl \u2192 selected amd64/arm64 sha256sum -c BEFORE extraction/install \u2192 install /usr/local/bin/kubectl; version --client=true; pin is not deployed API identity",
+        "references": [
+          {
+            "path": "docker/Dockerfile.nova",
+            "sha256": "34e54267a3cd0d7541315de3c6ec785206a0364b7ec76699d433c4a3ca341242"
+          },
+          {
+            "path": "versions.json",
+            "sha256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d"
+          },
+          {
+            "path": "scripts/versions.mjs",
+            "sha256": "a236f2da59fe129fd6b966f67635d1dfbd6bc4699001706fe564503436bcfc00"
+          },
+          {
+            "path": ".github/workflows/build-images.yaml",
+            "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+          }
+        ],
+        "fieldOccurrences": [
+          {
+            "line": 169,
+            "text": "arm64) hadolint_arch=\"arm64\"; shfmt_sha=\"${SHFMT_SHA256_ARM64}\"; terraform_sha=\"${TERRAFORM_SHA256_ARM64}\"; tflint_sha=\"${TFLINT_SHA256_ARM64}\"; trivy_arch=\"ARM64\"; trivy_sha=\"${TRIVY_SHA256_ARM64}\"; hadolint_sha=\"${HADOLINT_SHA256_ARM64}\"; helm_sha=\"${HELM_SHA256_ARM64}\"; kubeconform_sha=\"${KUBECONFORM_SHA256_ARM64}\"; kubectl_sha=\"${KUBECTL_SHA256_ARM64}\" ;; \\"
+          }
+        ]
+      },
+      "errorContract": "Invalid checksum centrally; curl/TLS/HTTP or selected SHA mismatch fails build before install; extraction and actual executable version/smoke failures are separate boundaries",
+      "completeProfileAlternatives": "complete current versions.json and per-image override manifest; A linux/amd64 and B linux/arm64, platform availability and real executable build prerequisite, not assumed",
+      "classification": "version"
+    },
+    {
+      "id": "DLV-IMAGE-NOVA-SHFMT-VERSION",
+      "domain": "central version token, actual SHFMT URL/version prefix/ABI below; arbitrary token syntactic acceptance is not a runnable dependency profile",
+      "reader": {
+        "path": "docker/Dockerfile.nova",
+        "operation": "https://github.com/mvdan/sh/releases/download/v${SHFMT_VERSION}/shfmt_v${SHFMT_VERSION}_linux_${arch} \u2192 selected amd64/arm64 sha256sum -c BEFORE extraction/install \u2192 install /usr/local/bin/shfmt; --version",
+        "references": [
+          {
+            "path": "docker/Dockerfile.nova",
+            "sha256": "34e54267a3cd0d7541315de3c6ec785206a0364b7ec76699d433c4a3ca341242"
+          },
+          {
+            "path": "versions.json",
+            "sha256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d"
+          },
+          {
+            "path": "scripts/versions.mjs",
+            "sha256": "a236f2da59fe129fd6b966f67635d1dfbd6bc4699001706fe564503436bcfc00"
+          },
+          {
+            "path": ".github/workflows/build-images.yaml",
+            "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+          }
+        ],
+        "fieldOccurrences": [
+          {
+            "line": 177,
+            "text": "shfmt_file=\"shfmt_v${SHFMT_VERSION}_linux_${arch}\"; \\"
+          },
+          {
+            "line": 178,
+            "text": "curl -fsSL \"https://github.com/mvdan/sh/releases/download/v${SHFMT_VERSION}/${shfmt_file}\" -o \"$tmp/$shfmt_file\"; \\"
+          }
+        ]
+      },
+      "errorContract": "Invalid checksum centrally; curl/TLS/HTTP or selected SHA mismatch fails build before install; extraction and actual executable version/smoke failures are separate boundaries",
+      "completeProfileAlternatives": "complete current versions.json and per-image override manifest; A linux/amd64 and B linux/arm64, platform availability and real executable build prerequisite, not assumed",
+      "classification": "version"
+    },
+    {
+      "id": "DLV-IMAGE-NOVA-TERRAFORM-VERSION",
+      "domain": "central version token, actual TERRAFORM URL/version prefix/ABI below; arbitrary token syntactic acceptance is not a runnable dependency profile",
+      "reader": {
+        "path": "docker/Dockerfile.nova",
+        "operation": "https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_${arch}.zip \u2192 selected amd64/arm64 sha256sum -c BEFORE extraction/install \u2192 unzip; install /usr/local/bin/terraform; version -json; pre-provisioned provider mirror is separate",
+        "references": [
+          {
+            "path": "docker/Dockerfile.nova",
+            "sha256": "34e54267a3cd0d7541315de3c6ec785206a0364b7ec76699d433c4a3ca341242"
+          },
+          {
+            "path": "versions.json",
+            "sha256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d"
+          },
+          {
+            "path": "scripts/versions.mjs",
+            "sha256": "a236f2da59fe129fd6b966f67635d1dfbd6bc4699001706fe564503436bcfc00"
+          },
+          {
+            "path": ".github/workflows/build-images.yaml",
+            "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+          }
+        ],
+        "fieldOccurrences": [
+          {
+            "line": 181,
+            "text": "terraform_archive=\"terraform_${TERRAFORM_VERSION}_linux_${arch}.zip\"; \\"
+          },
+          {
+            "line": 182,
+            "text": "curl -fsSL \"https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/${terraform_archive}\" -o \"$tmp/$terraform_archive\"; \\"
+          }
+        ]
+      },
+      "errorContract": "Invalid checksum centrally; curl/TLS/HTTP or selected SHA mismatch fails build before install; extraction and actual executable version/smoke failures are separate boundaries",
+      "completeProfileAlternatives": "complete current versions.json and per-image override manifest; A linux/amd64 and B linux/arm64, platform availability and real executable build prerequisite, not assumed",
+      "classification": "version"
+    },
+    {
+      "id": "DLV-IMAGE-NOVA-TFLINT-VERSION",
+      "domain": "central version token, actual TFLINT URL/version prefix/ABI below; arbitrary token syntactic acceptance is not a runnable dependency profile",
+      "reader": {
+        "path": "docker/Dockerfile.nova",
+        "operation": "https://github.com/terraform-linters/tflint/releases/download/v${TFLINT_VERSION}/tflint_linux_${arch}.zip \u2192 selected amd64/arm64 sha256sum -c BEFORE extraction/install \u2192 unzip; install /usr/local/bin/tflint; --version",
+        "references": [
+          {
+            "path": "docker/Dockerfile.nova",
+            "sha256": "34e54267a3cd0d7541315de3c6ec785206a0364b7ec76699d433c4a3ca341242"
+          },
+          {
+            "path": "versions.json",
+            "sha256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d"
+          },
+          {
+            "path": "scripts/versions.mjs",
+            "sha256": "a236f2da59fe129fd6b966f67635d1dfbd6bc4699001706fe564503436bcfc00"
+          },
+          {
+            "path": ".github/workflows/build-images.yaml",
+            "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+          }
+        ],
+        "fieldOccurrences": [
+          {
+            "line": 187,
+            "text": "curl -fsSL \"https://github.com/terraform-linters/tflint/releases/download/v${TFLINT_VERSION}/${tflint_archive}\" -o \"$tmp/$tflint_archive\"; \\"
+          }
+        ]
+      },
+      "errorContract": "Invalid checksum centrally; curl/TLS/HTTP or selected SHA mismatch fails build before install; extraction and actual executable version/smoke failures are separate boundaries",
+      "completeProfileAlternatives": "complete current versions.json and per-image override manifest; A linux/amd64 and B linux/arm64, platform availability and real executable build prerequisite, not assumed",
+      "classification": "version"
+    },
+    {
+      "id": "DLV-IMAGE-NOVA-TRIVY-VERSION",
+      "domain": "central version token, actual TRIVY URL/version prefix/ABI below; arbitrary token syntactic acceptance is not a runnable dependency profile",
+      "reader": {
+        "path": "docker/Dockerfile.nova",
+        "operation": "https://github.com/aquasecurity/trivy/releases/download/v${TRIVY_VERSION}/trivy_${TRIVY_VERSION}_Linux-${trivy_arch}.tar.gz \u2192 selected amd64/arm64 sha256sum -c BEFORE extraction/install \u2192 tar to /usr/local/bin/trivy; --version; database scanner compatibility separate",
+        "references": [
+          {
+            "path": "docker/Dockerfile.nova",
+            "sha256": "34e54267a3cd0d7541315de3c6ec785206a0364b7ec76699d433c4a3ca341242"
+          },
+          {
+            "path": "versions.json",
+            "sha256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d"
+          },
+          {
+            "path": "scripts/versions.mjs",
+            "sha256": "a236f2da59fe129fd6b966f67635d1dfbd6bc4699001706fe564503436bcfc00"
+          },
+          {
+            "path": ".github/workflows/build-images.yaml",
+            "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+          }
+        ],
+        "fieldOccurrences": [
+          {
+            "line": 191,
+            "text": "trivy_archive=\"trivy_${TRIVY_VERSION}_Linux-${trivy_arch}.tar.gz\"; \\"
+          },
+          {
+            "line": 192,
+            "text": "curl -fsSL \"https://github.com/aquasecurity/trivy/releases/download/v${TRIVY_VERSION}/${trivy_archive}\" -o \"$tmp/$trivy_archive\"; \\"
+          }
+        ]
+      },
+      "errorContract": "Invalid checksum centrally; curl/TLS/HTTP or selected SHA mismatch fails build before install; extraction and actual executable version/smoke failures are separate boundaries",
+      "completeProfileAlternatives": "complete current versions.json and per-image override manifest; A linux/amd64 and B linux/arm64, platform availability and real executable build prerequisite, not assumed",
+      "classification": "version"
+    },
+    {
+      "id": "DLV-IMAGE-NOVA-OPENCLAW-PLUGIN-VERSION",
+      "domain": "derived solely from manifest.openclaw.version YYYY.M.D[-n]; buildArgs OPENCLAW fields prohibited and per-image OPENCLAW override prohibited; package versions are not installed OCI equality",
+      "reader": {
+        "path": "docker/Dockerfile.nova",
+        "operation": "openclaw plugins install npm:@openclaw/acpx@version and npm:@openclaw/discord@version --force --accept-capabilities; select architecture-specific ACP native packages, npm pack both, copy npm cache; pack count2 and aggregate byte hash",
+        "references": [
+          {
+            "path": "docker/Dockerfile.nova",
+            "sha256": "34e54267a3cd0d7541315de3c6ec785206a0364b7ec76699d433c4a3ca341242"
+          },
+          {
+            "path": "versions.json",
+            "sha256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d"
+          },
+          {
+            "path": "scripts/versions.mjs",
+            "sha256": "a236f2da59fe129fd6b966f67635d1dfbd6bc4699001706fe564503436bcfc00"
+          },
+          {
+            "path": ".github/workflows/build-images.yaml",
+            "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+          }
+        ],
+        "fieldOccurrences": [
+          {
+            "line": 270,
+            "text": "HOME=/tmp/openclaw-plugin-home NPM_CONFIG_CACHE=/tmp/openclaw-plugin-npm-cache openclaw plugins install \"npm:@openclaw/acpx@${OPENCLAW_PLUGIN_VERSION}\" --force --accept-capabilities; \\"
+          },
+          {
+            "line": 271,
+            "text": "HOME=/tmp/openclaw-plugin-home NPM_CONFIG_CACHE=/tmp/openclaw-plugin-npm-cache openclaw plugins install \"npm:@openclaw/discord@${OPENCLAW_PLUGIN_VERSION}\" --force --accept-capabilities; \\"
+          }
+        ]
+      },
+      "errorContract": "OpenClaw must have one authority / OpenClaw versions must match across roles; install/source/pack/cache/native architecture errors at actual build; pack count/hash alone not transitive identity validation",
+      "completeProfileAlternatives": "complete current versions.json and per-image override manifest; A linux/amd64 and B linux/arm64, platform availability and real executable build prerequisite, not assumed",
+      "classification": "version"
+    },
+    {
+      "id": "DLV-IMAGE-PRISM-AGENT-OPENCLAW-BASE",
+      "domain": "managed string ending @sha256:lowercase64hex; OCI registry/reference/platform and base ABI/user/package manager contract validated by actual builder, not central suffix regex",
+      "reader": {
+        "path": "docker/Dockerfile.prism-agent",
+        "operation": "FROM ${OPENCLAW_BASE}; exact current base supplies executable runtime, filesystem, distro/keyring/users and builder stages; actual manifest platform availability separate",
+        "references": [
+          {
+            "path": "docker/Dockerfile.prism-agent",
+            "sha256": "85209d0cb47ab3bca1e2a27acb50d4e554853adfa472fa7195c0468627a19a47"
+          },
+          {
+            "path": "versions.json",
+            "sha256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d"
+          },
+          {
+            "path": "scripts/versions.mjs",
+            "sha256": "a236f2da59fe129fd6b966f67635d1dfbd6bc4699001706fe564503436bcfc00"
+          },
+          {
+            "path": ".github/workflows/build-images.yaml",
+            "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+          }
+        ],
+        "fieldOccurrences": [
+          {
+            "line": 8,
+            "text": "FROM ${OPENCLAW_BASE} AS gateway-assets"
+          },
+          {
+            "line": 63,
+            "text": "FROM ${OPENCLAW_BASE} AS prism-bridge-dependencies"
+          },
+          {
+            "line": 71,
+            "text": "FROM ${OPENCLAW_BASE}"
+          }
+        ]
+      },
+      "errorContract": "Unpinned base image at versions validator; actual registry/digest/platform resolution or later ABI/user/package-manager failures at build",
+      "completeProfileAlternatives": "complete current versions.json and per-image override manifest; A linux/amd64 and B linux/arm64, platform availability and real executable build prerequisite, not assumed",
+      "classification": "version"
+    },
+    {
+      "id": "DLV-IMAGE-PRISM-AGENT-OPENCLAW-PLUGIN-VERSION",
+      "domain": "derived solely from manifest.openclaw.version YYYY.M.D[-n]; buildArgs OPENCLAW fields prohibited and per-image OPENCLAW override prohibited; package versions are not installed OCI equality",
+      "reader": {
+        "path": "docker/Dockerfile.prism-agent",
+        "operation": "openclaw plugins install npm:@openclaw/acpx@version and npm:@openclaw/discord@version --force --accept-capabilities; select architecture-specific ACP native packages, npm pack both, copy npm cache; pack count2 and aggregate byte hash",
+        "references": [
+          {
+            "path": "docker/Dockerfile.prism-agent",
+            "sha256": "85209d0cb47ab3bca1e2a27acb50d4e554853adfa472fa7195c0468627a19a47"
+          },
+          {
+            "path": "versions.json",
+            "sha256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d"
+          },
+          {
+            "path": "scripts/versions.mjs",
+            "sha256": "a236f2da59fe129fd6b966f67635d1dfbd6bc4699001706fe564503436bcfc00"
+          },
+          {
+            "path": ".github/workflows/build-images.yaml",
+            "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+          }
+        ],
+        "fieldOccurrences": [
+          {
+            "line": 37,
+            "text": "HOME=/tmp/openclaw-plugin-home NPM_CONFIG_CACHE=/tmp/openclaw-plugin-npm-cache openclaw plugins install \"npm:@openclaw/acpx@${OPENCLAW_PLUGIN_VERSION}\" --force --accept-capabilities; \\"
+          },
+          {
+            "line": 38,
+            "text": "HOME=/tmp/openclaw-plugin-home NPM_CONFIG_CACHE=/tmp/openclaw-plugin-npm-cache openclaw plugins install \"npm:@openclaw/discord@${OPENCLAW_PLUGIN_VERSION}\" --force --accept-capabilities; \\"
+          }
+        ]
+      },
+      "errorContract": "OpenClaw must have one authority / OpenClaw versions must match across roles; install/source/pack/cache/native architecture errors at actual build; pack count/hash alone not transitive identity validation",
+      "completeProfileAlternatives": "complete current versions.json and per-image override manifest; A linux/amd64 and B linux/arm64, platform availability and real executable build prerequisite, not assumed",
+      "classification": "version"
+    },
+    {
+      "id": "DLV-IMAGE-PRISM-AGENT-TARGETARCH",
+      "domain": "generated BuildKit target-platform architecture, not a version number; supported current complete profiles explicit amd64|arm64 except hardcoded controller stage; independent Docker --build-arg remains competing binding",
+      "reader": {
+        "path": "docker/Dockerfile.prism-agent",
+        "operation": "${TARGETARCH:-amd64} plugin package pruning: codex-acp-linux-x64/arm64, claude-agent-sdk-linux-x64/arm64, @esbuild linux-x64/arm64; unsupported exit1",
+        "references": [
+          {
+            "path": "docker/Dockerfile.prism-agent",
+            "sha256": "85209d0cb47ab3bca1e2a27acb50d4e554853adfa472fa7195c0468627a19a47"
+          },
+          {
+            "path": "versions.json",
+            "sha256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d"
+          },
+          {
+            "path": "scripts/versions.mjs",
+            "sha256": "a236f2da59fe129fd6b966f67635d1dfbd6bc4699001706fe564503436bcfc00"
+          },
+          {
+            "path": ".github/workflows/build-images.yaml",
+            "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+          }
+        ],
+        "fieldOccurrences": [
+          {
+            "line": 44,
+            "text": "case \"${TARGETARCH:-amd64}\" in \\"
+          }
+        ]
+      },
+      "errorContract": "unsupported architecture exits1 in binary/plugin selector or browser lock platform rejection; Go compiler supports more GOARCH but that does not extend complete image dependency graph",
+      "completeProfileAlternatives": "complete current versions.json and per-image override manifest; A linux/amd64 and B linux/arm64, platform availability and real executable build prerequisite, not assumed",
+      "classification": "generated-binding"
+    },
+    {
+      "id": "DLV-IMAGE-PRISM-AGENT-DEBIAN-SNAPSHOT",
+      "domain": "central version-token grammar only, not date parser; exact snapshot URL token, suite bookworm/bookworm-updates/bookworm-security and base Debian archive signing keyring",
+      "reader": {
+        "path": "docker/Dockerfile.prism-agent",
+        "operation": "https snapshot.debian.org/archive/debian and debian-security URLs; Deb822 Signed-By Debian archive keyring; Check-Valid-Until=false; APT update/install retries5 and Error-Mode=any; repository pin is not each package receipt",
+        "references": [
+          {
+            "path": "docker/Dockerfile.prism-agent",
+            "sha256": "85209d0cb47ab3bca1e2a27acb50d4e554853adfa472fa7195c0468627a19a47"
+          },
+          {
+            "path": "versions.json",
+            "sha256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d"
+          },
+          {
+            "path": "scripts/versions.mjs",
+            "sha256": "a236f2da59fe129fd6b966f67635d1dfbd6bc4699001706fe564503436bcfc00"
+          },
+          {
+            "path": ".github/workflows/build-images.yaml",
+            "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+          }
+        ],
+        "fieldOccurrences": [
+          {
+            "line": 80,
+            "text": "\"URIs: https://snapshot.debian.org/archive/debian/${DEBIAN_SNAPSHOT}\" \\"
+          },
+          {
+            "line": 86,
+            "text": "\"URIs: https://snapshot.debian.org/archive/debian-security/${DEBIAN_SNAPSHOT}\" \\"
+          }
+        ]
+      },
+      "errorContract": "invalid version token rejected centrally; nonexistent snapshot, transport or metadata signature/package failures reject APT build, no timestamp-only schema rejection",
+      "completeProfileAlternatives": "complete current versions.json and per-image override manifest; A linux/amd64 and B linux/arm64, platform availability and real executable build prerequisite, not assumed",
+      "classification": "version"
+    },
+    {
+      "id": "DLV-IMAGE-PRISM-CONTROL-NODE-BASE",
+      "domain": "managed string ending @sha256:lowercase64hex; OCI registry/reference/platform and base ABI/user/package manager contract validated by actual builder, not central suffix regex",
+      "reader": {
+        "path": "docker/Dockerfile.prism-control",
+        "operation": "FROM ${NODE_BASE}; exact current base supplies executable runtime, filesystem, distro/keyring/users and builder stages; actual manifest platform availability separate",
+        "references": [
+          {
+            "path": "docker/Dockerfile.prism-control",
+            "sha256": "ec29c4c71cbc374b4f15a100aeb7bb3181013b34a0ad9da6e07fcbee8227e853"
+          },
+          {
+            "path": "versions.json",
+            "sha256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d"
+          },
+          {
+            "path": "scripts/versions.mjs",
+            "sha256": "a236f2da59fe129fd6b966f67635d1dfbd6bc4699001706fe564503436bcfc00"
+          },
+          {
+            "path": ".github/workflows/build-images.yaml",
+            "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+          }
+        ],
+        "fieldOccurrences": [
+          {
+            "line": 3,
+            "text": "FROM ${NODE_BASE} AS build"
+          },
+          {
+            "line": 11,
+            "text": "FROM ${NODE_BASE}"
+          }
+        ]
+      },
+      "errorContract": "Unpinned base image at versions validator; actual registry/digest/platform resolution or later ABI/user/package-manager failures at build",
+      "completeProfileAlternatives": "complete current versions.json and per-image override manifest; A linux/amd64 and B linux/arm64, platform availability and real executable build prerequisite, not assumed",
+      "classification": "version"
+    },
+    {
+      "id": "DLV-IMAGE-PRISM-INGESTION-NODE-BASE",
+      "domain": "managed string ending @sha256:lowercase64hex; OCI registry/reference/platform and base ABI/user/package manager contract validated by actual builder, not central suffix regex",
+      "reader": {
+        "path": "docker/Dockerfile.prism-ingestion",
+        "operation": "FROM ${NODE_BASE}; exact current base supplies executable runtime, filesystem, distro/keyring/users and builder stages; actual manifest platform availability separate",
+        "references": [
+          {
+            "path": "docker/Dockerfile.prism-ingestion",
+            "sha256": "7562bbf083164dba931091011aa3d9e3178797fe51053a08c38afaf3ea2f2a88"
+          },
+          {
+            "path": "versions.json",
+            "sha256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d"
+          },
+          {
+            "path": "scripts/versions.mjs",
+            "sha256": "a236f2da59fe129fd6b966f67635d1dfbd6bc4699001706fe564503436bcfc00"
+          },
+          {
+            "path": ".github/workflows/build-images.yaml",
+            "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+          }
+        ],
+        "fieldOccurrences": [
+          {
+            "line": 3,
+            "text": "FROM ${NODE_BASE} AS build"
+          },
+          {
+            "line": 11,
+            "text": "FROM ${NODE_BASE}"
+          }
+        ]
+      },
+      "errorContract": "Unpinned base image at versions validator; actual registry/digest/platform resolution or later ABI/user/package-manager failures at build",
+      "completeProfileAlternatives": "complete current versions.json and per-image override manifest; A linux/amd64 and B linux/arm64, platform availability and real executable build prerequisite, not assumed",
+      "classification": "version"
+    },
+    {
+      "id": "DLV-IMAGE-PRISM-STUDIO-NODE-BASE",
+      "domain": "managed string ending @sha256:lowercase64hex; OCI registry/reference/platform and base ABI/user/package manager contract validated by actual builder, not central suffix regex",
+      "reader": {
+        "path": "docker/Dockerfile.prism-studio",
+        "operation": "FROM ${NODE_BASE}; exact current base supplies executable runtime, filesystem, distro/keyring/users and builder stages; actual manifest platform availability separate",
+        "references": [
+          {
+            "path": "docker/Dockerfile.prism-studio",
+            "sha256": "a2acdc718f9becd23c4f90bfc361c26115f67363677665248cc96647e7180d2f"
+          },
+          {
+            "path": "versions.json",
+            "sha256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d"
+          },
+          {
+            "path": "scripts/versions.mjs",
+            "sha256": "a236f2da59fe129fd6b966f67635d1dfbd6bc4699001706fe564503436bcfc00"
+          },
+          {
+            "path": ".github/workflows/build-images.yaml",
+            "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+          }
+        ],
+        "fieldOccurrences": [
+          {
+            "line": 3,
+            "text": "FROM ${NODE_BASE} AS build"
+          },
+          {
+            "line": 11,
+            "text": "FROM ${NODE_BASE}"
+          }
+        ]
+      },
+      "errorContract": "Unpinned base image at versions validator; actual registry/digest/platform resolution or later ABI/user/package-manager failures at build",
+      "completeProfileAlternatives": "complete current versions.json and per-image override manifest; A linux/amd64 and B linux/arm64, platform availability and real executable build prerequisite, not assumed",
+      "classification": "version"
+    },
+    {
+      "id": "DLV-IMAGE-PRISM-WORKER-NODE-BASE",
+      "domain": "managed string ending @sha256:lowercase64hex; OCI registry/reference/platform and base ABI/user/package manager contract validated by actual builder, not central suffix regex",
+      "reader": {
+        "path": "docker/Dockerfile.prism-worker",
+        "operation": "FROM ${NODE_BASE}; exact current base supplies executable runtime, filesystem, distro/keyring/users and builder stages; actual manifest platform availability separate",
+        "references": [
+          {
+            "path": "docker/Dockerfile.prism-worker",
+            "sha256": "820d8c1b9cb0784113fbd4c2ceb206b40cb0e2381d3fad3df647d7dcc784bb80"
+          },
+          {
+            "path": "versions.json",
+            "sha256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d"
+          },
+          {
+            "path": "scripts/versions.mjs",
+            "sha256": "a236f2da59fe129fd6b966f67635d1dfbd6bc4699001706fe564503436bcfc00"
+          },
+          {
+            "path": ".github/workflows/build-images.yaml",
+            "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+          }
+        ],
+        "fieldOccurrences": [
+          {
+            "line": 3,
+            "text": "FROM ${NODE_BASE} AS native-launcher"
+          },
+          {
+            "line": 28,
+            "text": "FROM ${NODE_BASE} AS build"
+          },
+          {
+            "line": 36,
+            "text": "FROM ${NODE_BASE}"
+          }
+        ]
+      },
+      "errorContract": "Unpinned base image at versions validator; actual registry/digest/platform resolution or later ABI/user/package-manager failures at build",
+      "completeProfileAlternatives": "complete current versions.json and per-image override manifest; A linux/amd64 and B linux/arm64, platform availability and real executable build prerequisite, not assumed",
+      "classification": "version"
+    },
+    {
+      "id": "DLV-IMAGE-PRISM-WORKER-DEBIAN-SNAPSHOT",
+      "domain": "central version-token grammar only, not date parser; exact snapshot URL token, suite bookworm/bookworm-updates/bookworm-security and base Debian archive signing keyring",
+      "reader": {
+        "path": "docker/Dockerfile.prism-worker",
+        "operation": "http snapshot.debian.org/archive/debian and debian-security URLs; Deb822 Signed-By Debian archive keyring; Check-Valid-Until=false; native gcc/libc launcher stage then copies sources into final Playwright install-deps",
+        "references": [
+          {
+            "path": "docker/Dockerfile.prism-worker",
+            "sha256": "820d8c1b9cb0784113fbd4c2ceb206b40cb0e2381d3fad3df647d7dcc784bb80"
+          },
+          {
+            "path": "versions.json",
+            "sha256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d"
+          },
+          {
+            "path": "scripts/versions.mjs",
+            "sha256": "a236f2da59fe129fd6b966f67635d1dfbd6bc4699001706fe564503436bcfc00"
+          },
+          {
+            "path": ".github/workflows/build-images.yaml",
+            "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+          }
+        ],
+        "fieldOccurrences": [
+          {
+            "line": 8,
+            "text": "      \"URIs: http://snapshot.debian.org/archive/debian/${DEBIAN_SNAPSHOT}\" \\"
+          },
+          {
+            "line": 14,
+            "text": "      \"URIs: http://snapshot.debian.org/archive/debian-security/${DEBIAN_SNAPSHOT}\" \\"
+          }
+        ]
+      },
+      "errorContract": "invalid version token rejected centrally; nonexistent snapshot, transport or metadata signature/package failures reject APT build, no timestamp-only schema rejection",
+      "completeProfileAlternatives": "complete current versions.json and per-image override manifest; A linux/amd64 and B linux/arm64, platform availability and real executable build prerequisite, not assumed",
+      "classification": "version"
+    },
+    {
+      "id": "DLV-IMAGE-PRISM-WORKER-TARGETARCH",
+      "domain": "generated BuildKit target-platform architecture, not a version number; supported current complete profiles explicit amd64|arm64 except hardcoded controller stage; independent Docker --build-arg remains competing binding",
+      "reader": {
+        "path": "docker/Dockerfile.prism-worker",
+        "operation": "browser-archive-lock.mjs --install raw TARGETARCH prism /ms-playwright; pinned lock platforms and actual browser executable graph; absent is not converted to native architecture",
+        "references": [
+          {
+            "path": "docker/Dockerfile.prism-worker",
+            "sha256": "820d8c1b9cb0784113fbd4c2ceb206b40cb0e2381d3fad3df647d7dcc784bb80"
+          },
+          {
+            "path": "versions.json",
+            "sha256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d"
+          },
+          {
+            "path": "scripts/versions.mjs",
+            "sha256": "a236f2da59fe129fd6b966f67635d1dfbd6bc4699001706fe564503436bcfc00"
+          },
+          {
+            "path": ".github/workflows/build-images.yaml",
+            "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+          },
+          {
+            "path": "scripts/browser-archive-lock.mjs",
+            "sha256": "ec668e5b4658ed819410a301b8c25320ace2c2e6c457aa2cf0e1dc5e084997e9"
+          },
+          {
+            "path": "docker/browser-archives.lock.json",
+            "sha256": "6f82ae5a8f399c89067cb49625d32db08b5d08b6eafb19fe7fd4376e625b578a"
+          }
+        ],
+        "fieldOccurrences": [
+          {
+            "line": 56,
+            "text": " && node scripts/browser-archive-lock.mjs --install \"$TARGETARCH\" prism /ms-playwright \\"
+          }
+        ]
+      },
+      "errorContract": "unsupported architecture exits1 in binary/plugin selector or browser lock platform rejection; Go compiler supports more GOARCH but that does not extend complete image dependency graph",
+      "completeProfileAlternatives": "complete current versions.json and per-image override manifest; A linux/amd64 and B linux/arm64, platform availability and real executable build prerequisite, not assumed",
+      "classification": "generated-binding"
+    },
+    {
+      "id": "DLV-IMAGE-OPS-POD-OPS-NODE-BASE",
+      "domain": "managed string ending @sha256:lowercase64hex; OCI registry/reference/platform and base ABI/user/package manager contract validated by actual builder, not central suffix regex",
+      "reader": {
+        "path": "ops/pod/Dockerfile",
+        "operation": "FROM ${OPS_NODE_BASE}; exact current base supplies executable runtime, filesystem, distro/keyring/users and builder stages; actual manifest platform availability separate",
+        "references": [
+          {
+            "path": "ops/pod/Dockerfile",
+            "sha256": "d55888e701ea0798c7c2a109f17977cc615442828e010f56e4f17871f6483eb0"
+          },
+          {
+            "path": "versions.json",
+            "sha256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d"
+          },
+          {
+            "path": "scripts/versions.mjs",
+            "sha256": "a236f2da59fe129fd6b966f67635d1dfbd6bc4699001706fe564503436bcfc00"
+          },
+          {
+            "path": ".github/workflows/build-images.yaml",
+            "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+          }
+        ],
+        "fieldOccurrences": [
+          {
+            "line": 39,
+            "text": "FROM ${OPS_NODE_BASE} AS tools"
+          },
+          {
+            "line": 54,
+            "text": "FROM ${OPS_NODE_BASE}"
+          }
+        ]
+      },
+      "errorContract": "Unpinned base image at versions validator; actual registry/digest/platform resolution or later ABI/user/package-manager failures at build",
+      "completeProfileAlternatives": "complete current versions.json and per-image override manifest; A linux/amd64 and B linux/arm64, platform availability and real executable build prerequisite, not assumed",
+      "classification": "version"
+    },
+    {
+      "id": "DLV-IMAGE-OPS-POD-OPS-TOOLS-GO-BASE",
+      "domain": "managed string ending @sha256:lowercase64hex; OCI registry/reference/platform and base ABI/user/package manager contract validated by actual builder, not central suffix regex",
+      "reader": {
+        "path": "ops/pod/Dockerfile",
+        "operation": "FROM ${OPS_TOOLS_GO_BASE}; exact current base supplies executable runtime, filesystem, distro/keyring/users and builder stages; actual manifest platform availability separate",
+        "references": [
+          {
+            "path": "ops/pod/Dockerfile",
+            "sha256": "d55888e701ea0798c7c2a109f17977cc615442828e010f56e4f17871f6483eb0"
+          },
+          {
+            "path": "versions.json",
+            "sha256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d"
+          },
+          {
+            "path": "scripts/versions.mjs",
+            "sha256": "a236f2da59fe129fd6b966f67635d1dfbd6bc4699001706fe564503436bcfc00"
+          },
+          {
+            "path": ".github/workflows/build-images.yaml",
+            "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+          }
+        ],
+        "fieldOccurrences": [
+          {
+            "line": 5,
+            "text": "FROM ${OPS_TOOLS_GO_BASE} AS gh-build"
+          },
+          {
+            "line": 23,
+            "text": "FROM ${OPS_TOOLS_GO_BASE} AS kubectl-build"
+          }
+        ]
+      },
+      "errorContract": "Unpinned base image at versions validator; actual registry/digest/platform resolution or later ABI/user/package-manager failures at build",
+      "completeProfileAlternatives": "complete current versions.json and per-image override manifest; A linux/amd64 and B linux/arm64, platform availability and real executable build prerequisite, not assumed",
+      "classification": "version"
+    },
+    {
+      "id": "DLV-IMAGE-OPS-POD-TARGETARCH",
+      "domain": "generated BuildKit target-platform architecture, not a version number; supported current complete profiles explicit amd64|arm64 except hardcoded controller stage; independent Docker --build-arg remains competing binding",
+      "reader": {
+        "path": "ops/pod/Dockerfile",
+        "operation": "Go GOOS=linux GOARCH=${TARGETARCH} CGO_ENABLED=0 builds selected gh/kubectl/Hubble; ops-pod Helm selector accepts only amd64|arm64, no fallback for explicit empty; ARG default amd64 but automatic BuildKit target can supply platform",
+        "references": [
+          {
+            "path": "ops/pod/Dockerfile",
+            "sha256": "d55888e701ea0798c7c2a109f17977cc615442828e010f56e4f17871f6483eb0"
+          },
+          {
+            "path": "versions.json",
+            "sha256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d"
+          },
+          {
+            "path": "scripts/versions.mjs",
+            "sha256": "a236f2da59fe129fd6b966f67635d1dfbd6bc4699001706fe564503436bcfc00"
+          },
+          {
+            "path": ".github/workflows/build-images.yaml",
+            "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+          }
+        ],
+        "fieldOccurrences": [
+          {
+            "line": 20,
+            "text": "RUN GOPROXY=off CGO_ENABLED=0 GOOS=linux GOARCH=${TARGETARCH} go build -mod=readonly -trimpath \\"
+          },
+          {
+            "line": 35,
+            "text": "RUN GOPROXY=off CGO_ENABLED=0 GOOS=linux GOARCH=${TARGETARCH} go build -mod=readonly -trimpath \\"
+          },
+          {
+            "line": 46,
+            "text": "RUN case \"$TARGETARCH\" in \\"
+          },
+          {
+            "line": 50,
+            "text": "    && curl -fsSLo helm.tar.gz \"https://get.helm.sh/helm-${HELM_VERSION}-linux-${TARGETARCH}.tar.gz\" \\"
+          },
+          {
+            "line": 52,
+            "text": "    && tar -xzf helm.tar.gz && mv \"linux-${TARGETARCH}/helm\" helm && chmod 0755 helm"
+          }
+        ]
+      },
+      "errorContract": "unsupported architecture exits1 in binary/plugin selector or browser lock platform rejection; Go compiler supports more GOARCH but that does not extend complete image dependency graph",
+      "completeProfileAlternatives": "complete current versions.json and per-image override manifest; A linux/amd64 and B linux/arm64, platform availability and real executable build prerequisite, not assumed",
+      "classification": "generated-binding"
+    },
+    {
+      "id": "DLV-IMAGE-OPS-POD-GH-VERSION",
+      "domain": "GH_VERSION token selects v-prefixed source tag and linker build.Version; GH_SOURCE_SHA256 required lowercase64hex authentic source archive digest",
+      "reader": {
+        "path": "ops/pod/Dockerfile",
+        "operation": "wget codeload.github.com/cli/cli/tar.gz/refs/tags/v${GH_VERSION}; selected source SHA before tar; COPY gh-build/go.mod/go.sum overwrites source dependency declarations; bounded module download; GOPROXY=off readonly Go build linker version",
+        "references": [
+          {
+            "path": "ops/pod/Dockerfile",
+            "sha256": "d55888e701ea0798c7c2a109f17977cc615442828e010f56e4f17871f6483eb0"
+          },
+          {
+            "path": "versions.json",
+            "sha256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d"
+          },
+          {
+            "path": "scripts/versions.mjs",
+            "sha256": "a236f2da59fe129fd6b966f67635d1dfbd6bc4699001706fe564503436bcfc00"
+          },
+          {
+            "path": ".github/workflows/build-images.yaml",
+            "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+          },
+          {
+            "path": "ops/pod/gh-build/go.mod",
+            "sha256": "7a26ea2ee5a1935373de74f9a1598ec1416ce6aaed3bf1f4ba3a0b9633c5c601"
+          },
+          {
+            "path": "ops/pod/gh-build/go.sum",
+            "sha256": "53c882d359a9df9c757864f704071e5893ea350ee76075872880f36f36cd41df"
+          }
+        ],
+        "fieldOccurrences": [
+          {
+            "line": 11,
+            "text": "RUN wget -O source.tar.gz \"https://codeload.github.com/cli/cli/tar.gz/refs/tags/v${GH_VERSION}\" \\"
+          },
+          {
+            "line": 21,
+            "text": "    -ldflags \"-X github.com/cli/cli/v2/internal/build.Version=${GH_VERSION}\" -o /out/gh ./cmd/gh"
+          }
+        ]
+      },
+      "errorContract": "source SHA mismatch before extraction; Go dependency/build failures separate; linker text does not attest upstream source or dependencies by itself",
+      "completeProfileAlternatives": "complete current versions.json and per-image override manifest; A linux/amd64 and B linux/arm64, platform availability and real executable build prerequisite, not assumed",
+      "classification": "version"
+    },
+    {
+      "id": "DLV-IMAGE-OPS-POD-GH-SOURCE-SHA256",
+      "domain": "GH_VERSION token selects v-prefixed source tag and linker build.Version; GH_SOURCE_SHA256 required lowercase64hex authentic source archive digest",
+      "reader": {
+        "path": "ops/pod/Dockerfile",
+        "operation": "wget codeload.github.com/cli/cli/tar.gz/refs/tags/v${GH_VERSION}; selected source SHA before tar; COPY gh-build/go.mod/go.sum overwrites source dependency declarations; bounded module download; GOPROXY=off readonly Go build linker version",
+        "references": [
+          {
+            "path": "ops/pod/Dockerfile",
+            "sha256": "d55888e701ea0798c7c2a109f17977cc615442828e010f56e4f17871f6483eb0"
+          },
+          {
+            "path": "versions.json",
+            "sha256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d"
+          },
+          {
+            "path": "scripts/versions.mjs",
+            "sha256": "a236f2da59fe129fd6b966f67635d1dfbd6bc4699001706fe564503436bcfc00"
+          },
+          {
+            "path": ".github/workflows/build-images.yaml",
+            "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+          },
+          {
+            "path": "ops/pod/gh-build/go.mod",
+            "sha256": "7a26ea2ee5a1935373de74f9a1598ec1416ce6aaed3bf1f4ba3a0b9633c5c601"
+          },
+          {
+            "path": "ops/pod/gh-build/go.sum",
+            "sha256": "53c882d359a9df9c757864f704071e5893ea350ee76075872880f36f36cd41df"
+          }
+        ],
+        "fieldOccurrences": [
+          {
+            "line": 12,
+            "text": "    && printf '%s  source.tar.gz\\n' \"$GH_SOURCE_SHA256\" | sha256sum -c - \\"
+          }
+        ]
+      },
+      "errorContract": "source SHA mismatch before extraction; Go dependency/build failures separate; linker text does not attest upstream source or dependencies by itself",
+      "completeProfileAlternatives": "complete current versions.json and per-image override manifest; A linux/amd64 and B linux/arm64, platform availability and real executable build prerequisite, not assumed",
+      "classification": "version"
+    },
+    {
+      "id": "DLV-IMAGE-OPS-POD-KUBECTL-VERSION",
+      "domain": "explicit v1.MINOR.PATCH regex; exact eight resolved Kubernetes modules must be corresponding v0.MINOR.PATCH with no Replace and count8",
+      "reader": {
+        "path": "ops/pod/Dockerfile",
+        "operation": "COPY local kubectl-build graph/source; go mod download all; verify-version.sh go list -mod=readonly -m all MVS graph; GOPROXY=off binary builds with two gitVersion ldflags",
+        "references": [
+          {
+            "path": "ops/pod/Dockerfile",
+            "sha256": "d55888e701ea0798c7c2a109f17977cc615442828e010f56e4f17871f6483eb0"
+          },
+          {
+            "path": "versions.json",
+            "sha256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d"
+          },
+          {
+            "path": "scripts/versions.mjs",
+            "sha256": "a236f2da59fe129fd6b966f67635d1dfbd6bc4699001706fe564503436bcfc00"
+          },
+          {
+            "path": ".github/workflows/build-images.yaml",
+            "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+          },
+          {
+            "path": "ops/pod/kubectl-build/verify-version.sh",
+            "sha256": "d42c721b4be37f0c34213ead1cabd95b4592cfe8efc1b709ed6263114b17ed1c"
+          },
+          {
+            "path": "ops/pod/kubectl-build/go.mod",
+            "sha256": "97f91cf2719772a0423c04abc76cf3641ba6c1ca1132b592abbaac4c0cd9487d"
+          },
+          {
+            "path": "ops/pod/kubectl-build/go.sum",
+            "sha256": "a7ddbcadec2959930f1d71c8996e039cbb590edda9f69bd266c88f0316bb0691"
+          }
+        ],
+        "fieldOccurrences": [
+          {
+            "line": 34,
+            "text": "RUN GOPROXY=off sh verify-version.sh \"${KUBECTL_VERSION}\""
+          },
+          {
+            "line": 36,
+            "text": "    -ldflags \"-X k8s.io/client-go/pkg/version.gitVersion=${KUBECTL_VERSION} -X k8s.io/component-base/version.gitVersion=${KUBECTL_VERSION}\" \\"
+          }
+        ]
+      },
+      "errorContract": "Invalid kubectl version / kubectl source/version mismatch / release module graph incomplete before build; linker version alone is not graph/source proof",
+      "completeProfileAlternatives": "complete current versions.json and per-image override manifest; A linux/amd64 and B linux/arm64, platform availability and real executable build prerequisite, not assumed",
+      "classification": "version"
+    },
+    {
+      "id": "DLV-IMAGE-OPS-POD-HELM-VERSION",
+      "domain": "central version token, actual HELM URL/version prefix/ABI below; arbitrary token syntactic acceptance is not a runnable dependency profile",
+      "reader": {
+        "path": "ops/pod/Dockerfile",
+        "operation": "https://get.helm.sh/helm-${HELM_VERSION}-linux-${TARGETARCH}.tar.gz \u2192 selected amd64/arm64 sha256sum -c BEFORE extraction/install \u2192 extract linux-${arch}/helm; install; version --short",
+        "references": [
+          {
+            "path": "ops/pod/Dockerfile",
+            "sha256": "d55888e701ea0798c7c2a109f17977cc615442828e010f56e4f17871f6483eb0"
+          },
+          {
+            "path": "versions.json",
+            "sha256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d"
+          },
+          {
+            "path": "scripts/versions.mjs",
+            "sha256": "a236f2da59fe129fd6b966f67635d1dfbd6bc4699001706fe564503436bcfc00"
+          },
+          {
+            "path": ".github/workflows/build-images.yaml",
+            "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+          }
+        ],
+        "fieldOccurrences": [
+          {
+            "line": 50,
+            "text": "    && curl -fsSLo helm.tar.gz \"https://get.helm.sh/helm-${HELM_VERSION}-linux-${TARGETARCH}.tar.gz\" \\"
+          }
+        ]
+      },
+      "errorContract": "Invalid checksum centrally; curl/TLS/HTTP or selected SHA mismatch fails build before install; extraction and actual executable version/smoke failures are separate boundaries",
+      "completeProfileAlternatives": "complete current versions.json and per-image override manifest; A linux/amd64 and B linux/arm64, platform availability and real executable build prerequisite, not assumed",
+      "classification": "version"
+    },
+    {
+      "id": "DLV-IMAGE-OPS-POD-HELM-SHA256-AMD64",
+      "domain": "managed lowercase64hex digest of exact HELM selected platform downloaded bytes; opposite platform inactive during build but still required version author",
+      "reader": {
+        "path": "ops/pod/Dockerfile",
+        "operation": "https://get.helm.sh/helm-${HELM_VERSION}-linux-${TARGETARCH}.tar.gz \u2192 selected amd64/arm64 sha256sum -c BEFORE extraction/install \u2192 extract linux-${arch}/helm; install; version --short",
+        "references": [
+          {
+            "path": "ops/pod/Dockerfile",
+            "sha256": "d55888e701ea0798c7c2a109f17977cc615442828e010f56e4f17871f6483eb0"
+          },
+          {
+            "path": "versions.json",
+            "sha256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d"
+          },
+          {
+            "path": "scripts/versions.mjs",
+            "sha256": "a236f2da59fe129fd6b966f67635d1dfbd6bc4699001706fe564503436bcfc00"
+          },
+          {
+            "path": ".github/workflows/build-images.yaml",
+            "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+          }
+        ],
+        "fieldOccurrences": [
+          {
+            "line": 47,
+            "text": "      amd64) helm_sha=\"$HELM_SHA256_AMD64\" ;; \\"
+          }
+        ]
+      },
+      "errorContract": "Invalid checksum centrally; curl/TLS/HTTP or selected SHA mismatch fails build before install; extraction and actual executable version/smoke failures are separate boundaries",
+      "completeProfileAlternatives": "complete current versions.json and per-image override manifest; A linux/amd64 and B linux/arm64, platform availability and real executable build prerequisite, not assumed",
+      "classification": "version"
+    },
+    {
+      "id": "DLV-IMAGE-OPS-POD-HELM-SHA256-ARM64",
+      "domain": "managed lowercase64hex digest of exact HELM selected platform downloaded bytes; opposite platform inactive during build but still required version author",
+      "reader": {
+        "path": "ops/pod/Dockerfile",
+        "operation": "https://get.helm.sh/helm-${HELM_VERSION}-linux-${TARGETARCH}.tar.gz \u2192 selected amd64/arm64 sha256sum -c BEFORE extraction/install \u2192 extract linux-${arch}/helm; install; version --short",
+        "references": [
+          {
+            "path": "ops/pod/Dockerfile",
+            "sha256": "d55888e701ea0798c7c2a109f17977cc615442828e010f56e4f17871f6483eb0"
+          },
+          {
+            "path": "versions.json",
+            "sha256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d"
+          },
+          {
+            "path": "scripts/versions.mjs",
+            "sha256": "a236f2da59fe129fd6b966f67635d1dfbd6bc4699001706fe564503436bcfc00"
+          },
+          {
+            "path": ".github/workflows/build-images.yaml",
+            "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+          }
+        ],
+        "fieldOccurrences": [
+          {
+            "line": 48,
+            "text": "      arm64) helm_sha=\"$HELM_SHA256_ARM64\" ;; \\"
+          }
+        ]
+      },
+      "errorContract": "Invalid checksum centrally; curl/TLS/HTTP or selected SHA mismatch fails build before install; extraction and actual executable version/smoke failures are separate boundaries",
+      "completeProfileAlternatives": "complete current versions.json and per-image override manifest; A linux/amd64 and B linux/arm64, platform availability and real executable build prerequisite, not assumed",
+      "classification": "version"
+    },
+    {
+      "id": "DLV-IMAGE-OPS-POD-OPS-NPM-TAR-VERSION",
+      "domain": "central token becomes exact npm package spec; no predeclared dedicated integrity lock for this npm self-dependency repair; registry/transitive bytes are an unresolved V receipt obligation",
+      "reader": {
+        "path": "ops/pod/Dockerfile",
+        "operation": "delete npm package devDependencies; npm install --prefix /usr/local/lib/node_modules/npm --omit=dev --ignore-scripts --no-audit --no-fund --save-exact tar@ARG; npm own runtime dependency graph, not Codex package lock",
+        "references": [
+          {
+            "path": "ops/pod/Dockerfile",
+            "sha256": "d55888e701ea0798c7c2a109f17977cc615442828e010f56e4f17871f6483eb0"
+          },
+          {
+            "path": "versions.json",
+            "sha256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d"
+          },
+          {
+            "path": "scripts/versions.mjs",
+            "sha256": "a236f2da59fe129fd6b966f67635d1dfbd6bc4699001706fe564503436bcfc00"
+          },
+          {
+            "path": ".github/workflows/build-images.yaml",
+            "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+          }
+        ],
+        "fieldOccurrences": [
+          {
+            "line": 62,
+            "text": "      \"tar@${OPS_NPM_TAR_VERSION}\" \"brace-expansion@${OPS_NPM_BRACE_VERSION}\" \"ip-address@${OPS_NPM_IP_VERSION}\""
+          }
+        ]
+      },
+      "errorContract": "npm spec/registry/resolution/integrity failures; current selected package version token is not immutable transitive closure",
+      "completeProfileAlternatives": "complete current versions.json and per-image override manifest; A linux/amd64 and B linux/arm64, platform availability and real executable build prerequisite, not assumed",
+      "classification": "version"
+    },
+    {
+      "id": "DLV-IMAGE-OPS-POD-OPS-NPM-BRACE-VERSION",
+      "domain": "central token becomes exact npm package spec; no predeclared dedicated integrity lock for this npm self-dependency repair; registry/transitive bytes are an unresolved V receipt obligation",
+      "reader": {
+        "path": "ops/pod/Dockerfile",
+        "operation": "delete npm package devDependencies; npm install --prefix /usr/local/lib/node_modules/npm --omit=dev --ignore-scripts --no-audit --no-fund --save-exact brace-expansion@ARG; npm own runtime dependency graph, not Codex package lock",
+        "references": [
+          {
+            "path": "ops/pod/Dockerfile",
+            "sha256": "d55888e701ea0798c7c2a109f17977cc615442828e010f56e4f17871f6483eb0"
+          },
+          {
+            "path": "versions.json",
+            "sha256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d"
+          },
+          {
+            "path": "scripts/versions.mjs",
+            "sha256": "a236f2da59fe129fd6b966f67635d1dfbd6bc4699001706fe564503436bcfc00"
+          },
+          {
+            "path": ".github/workflows/build-images.yaml",
+            "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+          }
+        ],
+        "fieldOccurrences": [
+          {
+            "line": 62,
+            "text": "      \"tar@${OPS_NPM_TAR_VERSION}\" \"brace-expansion@${OPS_NPM_BRACE_VERSION}\" \"ip-address@${OPS_NPM_IP_VERSION}\""
+          }
+        ]
+      },
+      "errorContract": "npm spec/registry/resolution/integrity failures; current selected package version token is not immutable transitive closure",
+      "completeProfileAlternatives": "complete current versions.json and per-image override manifest; A linux/amd64 and B linux/arm64, platform availability and real executable build prerequisite, not assumed",
+      "classification": "version"
+    },
+    {
+      "id": "DLV-IMAGE-OPS-POD-OPS-NPM-IP-VERSION",
+      "domain": "central token becomes exact npm package spec; no predeclared dedicated integrity lock for this npm self-dependency repair; registry/transitive bytes are an unresolved V receipt obligation",
+      "reader": {
+        "path": "ops/pod/Dockerfile",
+        "operation": "delete npm package devDependencies; npm install --prefix /usr/local/lib/node_modules/npm --omit=dev --ignore-scripts --no-audit --no-fund --save-exact ip-address@ARG; npm own runtime dependency graph, not Codex package lock",
+        "references": [
+          {
+            "path": "ops/pod/Dockerfile",
+            "sha256": "d55888e701ea0798c7c2a109f17977cc615442828e010f56e4f17871f6483eb0"
+          },
+          {
+            "path": "versions.json",
+            "sha256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d"
+          },
+          {
+            "path": "scripts/versions.mjs",
+            "sha256": "a236f2da59fe129fd6b966f67635d1dfbd6bc4699001706fe564503436bcfc00"
+          },
+          {
+            "path": ".github/workflows/build-images.yaml",
+            "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+          }
+        ],
+        "fieldOccurrences": [
+          {
+            "line": 62,
+            "text": "      \"tar@${OPS_NPM_TAR_VERSION}\" \"brace-expansion@${OPS_NPM_BRACE_VERSION}\" \"ip-address@${OPS_NPM_IP_VERSION}\""
+          }
+        ]
+      },
+      "errorContract": "npm spec/registry/resolution/integrity failures; current selected package version token is not immutable transitive closure",
+      "completeProfileAlternatives": "complete current versions.json and per-image override manifest; A linux/amd64 and B linux/arm64, platform availability and real executable build prerequisite, not assumed",
+      "classification": "version"
+    },
+    {
+      "id": "DLV-IMAGE-OPS-MCP-OPS-MCP-NODE-BASE",
+      "domain": "managed string ending @sha256:lowercase64hex; OCI registry/reference/platform and base ABI/user/package manager contract validated by actual builder, not central suffix regex",
+      "reader": {
+        "path": "tools/ops-mcp/Dockerfile",
+        "operation": "FROM ${OPS_MCP_NODE_BASE}; exact current base supplies executable runtime, filesystem, distro/keyring/users and builder stages; actual manifest platform availability separate",
+        "references": [
+          {
+            "path": "tools/ops-mcp/Dockerfile",
+            "sha256": "bfb97ef41bdd945c49e42db5d87ef878a0b8894bc9af32418027a956ce852e41"
+          },
+          {
+            "path": "versions.json",
+            "sha256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d"
+          },
+          {
+            "path": "scripts/versions.mjs",
+            "sha256": "a236f2da59fe129fd6b966f67635d1dfbd6bc4699001706fe564503436bcfc00"
+          },
+          {
+            "path": ".github/workflows/build-images.yaml",
+            "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+          }
+        ],
+        "fieldOccurrences": [
+          {
+            "line": 20,
+            "text": "FROM ${OPS_MCP_NODE_BASE}"
+          }
+        ]
+      },
+      "errorContract": "Unpinned base image at versions validator; actual registry/digest/platform resolution or later ABI/user/package-manager failures at build",
+      "completeProfileAlternatives": "complete current versions.json and per-image override manifest; A linux/amd64 and B linux/arm64, platform availability and real executable build prerequisite, not assumed",
+      "classification": "version"
+    },
+    {
+      "id": "DLV-IMAGE-OPS-MCP-OPS-TOOLS-GO-BASE",
+      "domain": "managed string ending @sha256:lowercase64hex; OCI registry/reference/platform and base ABI/user/package manager contract validated by actual builder, not central suffix regex",
+      "reader": {
+        "path": "tools/ops-mcp/Dockerfile",
+        "operation": "FROM ${OPS_TOOLS_GO_BASE}; exact current base supplies executable runtime, filesystem, distro/keyring/users and builder stages; actual manifest platform availability separate",
+        "references": [
+          {
+            "path": "tools/ops-mcp/Dockerfile",
+            "sha256": "bfb97ef41bdd945c49e42db5d87ef878a0b8894bc9af32418027a956ce852e41"
+          },
+          {
+            "path": "versions.json",
+            "sha256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d"
+          },
+          {
+            "path": "scripts/versions.mjs",
+            "sha256": "a236f2da59fe129fd6b966f67635d1dfbd6bc4699001706fe564503436bcfc00"
+          },
+          {
+            "path": ".github/workflows/build-images.yaml",
+            "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+          }
+        ],
+        "fieldOccurrences": [
+          {
+            "line": 6,
+            "text": "FROM ${OPS_TOOLS_GO_BASE} AS hubble-build"
+          }
+        ]
+      },
+      "errorContract": "Unpinned base image at versions validator; actual registry/digest/platform resolution or later ABI/user/package-manager failures at build",
+      "completeProfileAlternatives": "complete current versions.json and per-image override manifest; A linux/amd64 and B linux/arm64, platform availability and real executable build prerequisite, not assumed",
+      "classification": "version"
+    },
+    {
+      "id": "DLV-IMAGE-OPS-MCP-TARGETARCH",
+      "domain": "generated BuildKit target-platform architecture, not a version number; supported current complete profiles explicit amd64|arm64 except hardcoded controller stage; independent Docker --build-arg remains competing binding",
+      "reader": {
+        "path": "tools/ops-mcp/Dockerfile",
+        "operation": "Go GOOS=linux GOARCH=${TARGETARCH} CGO_ENABLED=0 builds selected gh/kubectl/Hubble; ops-pod Helm selector accepts only amd64|arm64, no fallback for explicit empty; ARG default amd64 but automatic BuildKit target can supply platform",
+        "references": [
+          {
+            "path": "tools/ops-mcp/Dockerfile",
+            "sha256": "bfb97ef41bdd945c49e42db5d87ef878a0b8894bc9af32418027a956ce852e41"
+          },
+          {
+            "path": "versions.json",
+            "sha256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d"
+          },
+          {
+            "path": "scripts/versions.mjs",
+            "sha256": "a236f2da59fe129fd6b966f67635d1dfbd6bc4699001706fe564503436bcfc00"
+          },
+          {
+            "path": ".github/workflows/build-images.yaml",
+            "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+          }
+        ],
+        "fieldOccurrences": [
+          {
+            "line": 18,
+            "text": "RUN GOPROXY=off CGO_ENABLED=0 GOOS=linux GOARCH=${TARGETARCH} go build -mod=readonly -trimpath -o /out/hubble ."
+          }
+        ]
+      },
+      "errorContract": "unsupported architecture exits1 in binary/plugin selector or browser lock platform rejection; Go compiler supports more GOARCH but that does not extend complete image dependency graph",
+      "completeProfileAlternatives": "complete current versions.json and per-image override manifest; A linux/amd64 and B linux/arm64, platform availability and real executable build prerequisite, not assumed",
+      "classification": "generated-binding"
+    }
+  ]
+}

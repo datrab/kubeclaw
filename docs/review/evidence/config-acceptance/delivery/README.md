@@ -1,5 +1,22 @@
 # Delivery / host / native-policy C0 evidence (incomplete)
 
+## DLS material correction continuation (13 October 2026)
+
+[DELIVERY-DLS-CORRECTIONS-20261013.md](DELIVERY-DLS-CORRECTIONS-20261013.md)
+records sole-version/Core-alias corrections, current reader versus target domains,
+complete definition profiles, exact future invocations, bounded pure observations,
+retained failed attempts and remaining per-field obligations. **NOT ACCEPTED**;
+DLS004 and material independent recheck remain open. Parent DLS002 infrastructure
+and universal originalModule/grant/cleanup contracts remain separate, not aliases
+invented by deployment profile filenames.
+
+The collector now invokes the original refiners, bce3f075 source closures and
+explicit DLS domain/case refiners in its literal listed order. The seven-command
+list below is historical partial navigation, **not** the whole current pipeline.
+Use `node docs/review/evidence/config-acceptance/delivery/collect-delivery.cjs`
+only with retained exact pinned source roots. It performs source/evidence generation,
+not any proposed native/API/host/image/account future command.
+
 ## Current checkpoint and reproducibility
 
 Work is confined to this evidence directory. No production/test edits, commit,
@@ -29,7 +46,7 @@ python3 docs/review/evidence/config-acceptance/delivery/refine-case-links.py
 python3 docs/review/evidence/config-acceptance/delivery/verify-semantic-closure.py
 ```
 
-`collect-delivery.cjs` invokes all seven refinements in that order (Kubernetes source
+`collect-delivery.cjs` originally invoked these seven refinements in that order (Kubernetes source
 refinement only when its acquisition record exists). Pinned
 refinement requires the exact integrity-checked acquisition's extracted source
 root; persisted snapshots permit review without `/tmp`, but not blind collector
@@ -358,3 +375,28 @@ C0 continuation is bounded by exact backlog IDs, not deferred out of scope:
 6. Fresh independent C0 review after material corrections. Parent consolidates
    inventory/matrix/definition and final dirty patch/untracked digests. No local
    source-status/count or zero dangling-link result discharges that gate.
+
+## bce3f075 continuation: exact reader contracts, not global closure
+
+See [DELIVERY-CONTRACTS-BCE3F075.md](DELIVERY-CONTRACTS-BCE3F075.md) for the current
+field corrections, actual observations, preserved diagnostics and exact remaining
+obligations. New refiners are in the existing collector chain; raw acquisition
+identities are retained for official Codex0.153.4, Tailscale1.102.3, Semgrep1.170.0
+and locked ESLint10.7.0 sources. Original source-open rows now have inspected
+contracts, but this is **not** exhaustive target/domain/profile/case closure.
+
+`c0-residual-definition-cases-bce3f075.json` contains actual bounded current cases,
+including all four initial observer failures. `proposed-cases.json` remains entirely
+`not-run`. `delivery-source-candidate-dispositions-bce3f075.json` exposes remaining
+exact authored/overlay/Docker/CI coordinates instead of accepting a source-marker
+count. `target-binding-proposals-bce3f075.json` is a justified physical proposal,
+not implementation approval. Stable checkpoint identity/limits are in
+`delivery-stable-completion-bce3f075-followup.json`; older receipts remain historical.
+
+## Current frozen incomplete milestone
+
+See [delivery-stable-milestone-dls004-20261013.json](delivery-stable-milestone-dls004-20261013.json)
+and [DELIVERY-DLS-CORRECTIONS-20261013.md](DELIVERY-DLS-CORRECTIONS-20261013.md).
+All 825 rows remain unaccepted; exact missing-domain and proposal-review
+obligations are in the current per-field backlog. The prior bce3f075 receipt is
+historical, not the identity of this expanded frozen milestone.

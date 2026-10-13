@@ -1,0 +1,22 @@
+{
+  "status": "stable bounded source/current consumer/schema definition milestone; NOT ACCEPTED",
+  "rows": 1248,
+  "cases": 5793,
+  "caseResults": {
+    "not-run": 4351,
+    "passed": 1442
+  },
+  "schemaRowsRefined": 16,
+  "newNarrowCurrentDefinitionCases": 16,
+  "newFutureNotRunCases": 64,
+  "oldCaseBodiesUnchanged": 5713,
+  "immutableObservationReferenceOccurrences": 2229,
+  "allC0ClosedFalse": true,
+  "remainingConsumerReviewRows": 61,
+  "remainingUntouchedOriginalSupplementalSourceTracedRows": 102,
+  "manualCandidatesThisBatch": 22,
+  "manualCandidatesCombined": 718,
+  "remainingUnreviewedCandidates": 3924,
+  "reviewedOpenCandidates": 131,
+  "remaining": "61 schema consumers;102 untouched original supplemental plus95 source-refined unaccepted declaration rows and prior refined semantic/genuine fixture obligations;3924 unreviewed candidates+131 reviewed-open. Full lint policy/tool/dependency/grant/source/CLI ENV batch remains separate backlog. Original expectedHead task pin, proposed root grants and immutable bundle identity not knobs/filename aliases. Parent Nova module carrier task/operator partition/quota/realmanifest/crossreaders OPEN. No C0 closure or approval."
+}

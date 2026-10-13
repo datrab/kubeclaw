@@ -1,0 +1,1402 @@
+[
+  {
+    "path": "contracts/pipeline-worker-core/v1/src/digest.ts",
+    "line": 32,
+    "text": "const items: string[] = [];"
+  },
+  {
+    "path": "contracts/pipeline-worker-core/v1/src/resource-validation-v2.ts",
+    "line": 9,
+    "text": "export const workerResourceMetrics:readonly WorkerResourceMetric[]=['cpuTimeMs','maximumMemoryBytes','maximumProcesses'];"
+  },
+  {
+    "path": "contracts/pipeline-worker-core/v1/src/resource-validation-v2.ts",
+    "line": 21,
+    "text": "const errors:string[]=[];const accounting=result.resourceAccounting;"
+  },
+  {
+    "path": "contracts/pipeline-worker-core/v1/src/resource-validation-v2.ts",
+    "line": 46,
+    "text": "const errors:string[]=[];"
+  },
+  {
+    "path": "contracts/pipeline-worker-core/v1/src/resource-validation-v2.ts",
+    "line": 62,
+    "text": "const errors=[...checkWorkerResourceContractV2('workerAttemptEnvelope',envelope).errors,...checkWorkerResourceContractV2('workerAttemptResult',result).errors];"
+  },
+  {
+    "path": "contracts/pipeline-worker-core/v1/src/resource-validation-v2.ts",
+    "line": 65,
+    "text": "const pairs=[['protocolVersion',envelope.protocolVersion,result.protocolVersion],['attemptId',envelope.attemptId,result.attemptId],['claimId',envelope.claim.claimId,result.claimId],['claimGeneration',envelope.claim.generation,result.claimGeneration],['workerId',envelope.claim.workerId,result.workerId],['profileDigest',envelope.profile.profileDigest,result.profileDigest],['attemptSpecDigest',envelope.attemptSpecDigest,result.attemptSpecDigest]];"
+  },
+  {
+    "path": "contracts/pipeline-worker-core/v1/src/resource-validation-v3.ts",
+    "line": 9,
+    "text": "export const workerNativeResourceMetrics: readonly WorkerNativeResourceMetric[] = ['cpuTimeMs', 'maximumMemoryBytes', 'maximumTasks'];"
+  },
+  {
+    "path": "contracts/pipeline-worker-core/v1/src/resource-validation-v3.ts",
+    "line": 20,
+    "text": "const errors: string[] = [];"
+  },
+  {
+    "path": "contracts/pipeline-worker-core/v1/src/resource-validation-v3.ts",
+    "line": 55,
+    "text": "const unavailable = { status: 'unavailable' as const, reason: 'Native attempt has not supplied final kernel observations' };"
+  },
+  {
+    "path": "contracts/pipeline-worker-core/v1/src/resource-validation-v3.ts",
+    "line": 63,
+    "text": "const errors = [...checkWorkerResourceContractV3('workerAttemptEnvelope', envelope).errors,"
+  },
+  {
+    "path": "contracts/pipeline-worker-core/v1/src/resource-validation-v3.ts",
+    "line": 66,
+    "text": "const expected = [envelope.protocolVersion, envelope.attemptId, envelope.claim.claimId, envelope.claim.generation,"
+  },
+  {
+    "path": "contracts/pipeline-worker-core/v1/src/resource-validation-v3.ts",
+    "line": 68,
+    "text": "const actual = [result.protocolVersion, result.attemptId, result.claimId, result.claimGeneration,"
+  },
+  {
+    "path": "contracts/pipeline-worker-core/v1/src/resource-validation-v3.ts",
+    "line": 78,
+    "text": "const errors: string[] = [];"
+  },
+  {
+    "path": "contracts/pipeline-worker-core/v1/src/validation.ts",
+    "line": 83,
+    "text": "const errors: string[] = [];"
+  },
+  {
+    "path": "contracts/pipeline-worker-core/v1/src/validation.ts",
+    "line": 111,
+    "text": "const errors: string[] = [];"
+  },
+  {
+    "path": "contracts/pipeline-worker-core/v1/src/validation.ts",
+    "line": 130,
+    "text": "const errors: string[] = [];"
+  },
+  {
+    "path": "contracts/pipeline-worker-core/v1/src/validation.ts",
+    "line": 180,
+    "text": "const errors: string[] = [];"
+  },
+  {
+    "path": "contracts/pipeline-worker-core/v1/src/validation.ts",
+    "line": 223,
+    "text": "const errors: string[] = [];"
+  },
+  {
+    "path": "contracts/pipeline-worker-core/v1/src/validation.ts",
+    "line": 238,
+    "text": "const errors: string[] = [];"
+  },
+  {
+    "path": "contracts/pipeline-worker-core/v1/src/validation.ts",
+    "line": 251,
+    "text": "const errors = [...checkPipelineWorkerCoreContract('workerAttemptEnvelope', candidate).errors];"
+  },
+  {
+    "path": "scripts/native-worker-node-policy.mjs",
+    "line": 5,
+    "text": "export const nativePoolRoot = '/sys/fs/cgroup/kubeclaw.slice/kubeclaw-native-pools.service';"
+  },
+  {
+    "path": "scripts/native-worker-node-policy.mjs",
+    "line": 53,
+    "text": "const system = { ...selected.systemReserve };"
+  },
+  {
+    "path": "scripts/prepare-native-worker-pools.mjs",
+    "line": 6,
+    "text": "const root = '/sys/fs/cgroup/kubeclaw.slice/kubeclaw-native-pools.service';"
+  },
+  {
+    "path": "scripts/prepare-native-worker-pools.mjs",
+    "line": 8,
+    "text": "const required = ['cpu', 'memory', 'pids'];"
+  },
+  {
+    "path": "scripts/prepare-native-worker-pools.mjs",
+    "line": 53,
+    "text": "const file = '/etc/kubeclaw/native-node-id';"
+  },
+  {
+    "path": "scripts/prepare-native-worker-pools.mjs",
+    "line": 69,
+    "text": "const value = { schemaVersion: 1, bootId: read('/proc/sys/kernel/random/boot_id'),"
+  },
+  {
+    "path": "scripts/prepare-native-worker-pools.mjs",
+    "line": 71,
+    "text": "const file = '/etc/kubeclaw/native-runtime-identity.json';"
+  },
+  {
+    "path": "scripts/prepare-native-worker-pools.mjs",
+    "line": 153,
+    "text": "const serve = process.argv.length === 4 && process.argv[3] === '--serve';"
+  },
+  {
+    "path": "scripts/prepare-native-worker-pools.mjs",
+    "line": 154,
+    "text": "const browserOnly = process.argv.length === 4 && process.argv[3] === '--browser-only';"
+  },
+  {
+    "path": "scripts/updates/release-configuration.mjs",
+    "line": 5,
+    "text": "const configurationPaths = {"
+  },
+  {
+    "path": "scripts/updates/release-configuration.mjs",
+    "line": 10,
+    "text": "const configurationAliases = {"
+  },
+  {
+    "path": "scripts/updates/release-configuration.mjs",
+    "line": 45,
+    "text": "const targets = [];"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/dependency-process.ts",
+    "line": 69,
+    "text": "const code = failure ?? (exitCode === 0 ? 'DEPENDENCY_OK' : 'DEPENDENCY_EXIT_FAILED');"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/kubernetes-fixture-inspection.ts",
+    "line": 46,
+    "text": "const state: InspectionState = { workloads: 0, matchedImage: false, matchedService: false,"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/kubernetes-fixture-manifest-files.ts",
+    "line": 46,
+    "text": "const out: JsonObject[] = [];"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/kubernetes-fixture-preparation.ts",
+    "line": 38,
+    "text": "const expiresAt = typeof status.expiresAt === 'string' ? status.expiresAt : new Date(Date.parse(createdAt) + retentionSeconds * 1_000).toISOString();"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/kubernetes-fixture-preparation.ts",
+    "line": 142,
+    "text": "const lease = {"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/kubernetes-fixture-readiness.ts",
+    "line": 37,
+    "text": "const phase = typeof status.phase === 'string' ? status.phase : 'Pending';"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/kubernetes-fixture-readiness.ts",
+    "line": 60,
+    "text": "const pending: string[] = [];"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/kubernetes-fixture-readiness.ts",
+    "line": 85,
+    "text": "const servicePortName = typeof servicePortEntry.name === 'string' ? servicePortEntry.name : null;"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/kubernetes-fixture-readiness.ts",
+    "line": 126,
+    "text": "const item = condition && typeof condition === 'object' && !Array.isArray(condition) ? condition as JsonObject : {};"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+    "line": 165,
+    "text": "const values = [options.shortCommandTimeoutMs, options.commandOutputManifestMultiplier,"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/kubernetes-fixture-values.ts",
+    "line": 5,
+    "text": "export const MAX_TIMER_MS = 2_147_483_647;"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/kubernetes-fixture-values.ts",
+    "line": 6,
+    "text": "export const MAX_NAMESPACE_PREFIX_LENGTH = 42;"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/kubernetes-manifest.ts",
+    "line": 7,
+    "text": "const values: unknown[] = [];"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+    "line": 54,
+    "text": "const payload = { findings: snapshot.findings, omittedFindingCount: snapshot.omittedFindingCount,"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+    "line": 89,
+    "text": "const stdout: Buffer[] = []; const stderr: Buffer[] = []; let bytes = 0; let settled = false;"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-cleanup-binding.ts",
+    "line": 27,
+    "text": "const maximum = {"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-cleanup-binding.ts",
+    "line": 36,
+    "text": "const bytes = 2 * maximumInputBytes + Buffer.byteLength(canonicalJson(maximum)) - 8 + 1;"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-cleanup-binding.ts",
+    "line": 55,
+    "text": "const integer = (item: unknown) => typeof item === 'number' && Number.isSafeInteger(item) && item >= 0;"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-cleanup-binding.ts",
+    "line": 66,
+    "text": "const integer = (item: unknown) => typeof item === 'number' && Number.isSafeInteger(item) && item >= 0;"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-cleanup-envelope.ts",
+    "line": 12,
+    "text": "const profile = { ...base, profileId: 'buster-native-source-cleanup-v1',"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-cleanup-envelope.ts",
+    "line": 23,
+    "text": "const unsigned = { ...base, nodeId: 'cleanup-source',"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-cleanup-envelope.ts",
+    "line": 25,
+    "text": "const envelope = { ...unsigned, attemptSpecDigest: workerAttemptSpecDigest(unsigned) };"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-cleanup-host.ts",
+    "line": 17,
+    "text": "const chunks: Buffer[] = [];"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-cleanup-host.ts",
+    "line": 76,
+    "text": "const operation: WorkerAttemptOperation<WorkerAttemptEnvelopeV3> = {"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-cleanup-validation.ts",
+    "line": 9,
+    "text": "const digest = (value: unknown) => typeof value === 'string' && /^sha256:[a-f0-9]{64}$/u.test(value);"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-cleanup-validation.ts",
+    "line": 34,
+    "text": "const expected = { envelopeDigest: preparationDigest(original), attemptId: original.attemptId,"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-cleanup.ts",
+    "line": 80,
+    "text": "const association: PreparationCleanupAssociation = {"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-command.ts",
+    "line": 24,
+    "text": "const hostFiles = { prepare: './preparation-host.ts', historical: './preparation-historical-host.ts',"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-command.ts",
+    "line": 28,
+    "text": "const readRoots = [app, '/usr', '/lib', '/lib64', '/etc/ssl', '/proc', config.cgroupRoot]"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-config.ts",
+    "line": 9,
+    "text": "export const preparationStateRoot = '/var/lib/buster-v2/plan-jobs';"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-config.ts",
+    "line": 10,
+    "text": "export const preparationSourceRoot = '/var/lib/buster-v2/native-sources';"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-config.ts",
+    "line": 11,
+    "text": "export const preparationRuntimeConfig = '/run/kubeclaw-buster/config/runtime.json';"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-config.ts",
+    "line": 23,
+    "text": "const launcher = '/usr/local/libexec/kubeclaw-native-worker-launcher';"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-envelope.ts",
+    "line": 11,
+    "text": "const profile = {"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-envelope.ts",
+    "line": 40,
+    "text": "const unsigned = {"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-envelope.ts",
+    "line": 63,
+    "text": "const envelope = { ...unsigned, attemptSpecDigest: workerAttemptSpecDigest(unsigned) };"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-header.ts",
+    "line": 87,
+    "text": "const keys = ['schemaVersion', 'admissionId', 'jobId', 'requestDigest', 'headerDigest',"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-historical-host.ts",
+    "line": 22,
+    "text": "const chunks: Buffer[] = [];"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-historical-host.ts",
+    "line": 72,
+    "text": "const operation: WorkerAttemptOperation<WorkerAttemptEnvelopeV3> = {"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-host.ts",
+    "line": 15,
+    "text": "const chunks: Buffer[] = [];"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-host.ts",
+    "line": 76,
+    "text": "const operation: WorkerAttemptOperation<WorkerAttemptEnvelopeV3> = {"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-ledger-state.ts",
+    "line": 62,
+    "text": "export const empty: SourceLedger = { schemaVersion: 'buster-preparation-ledger.v1', reservations: [] };"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-ledger-state.ts",
+    "line": 79,
+    "text": "const phases = ['historical-reserved', 'retained-historical', 'empty-gate-reclaiming', 'staging',"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-ledger-state.ts",
+    "line": 81,
+    "text": "const releasedSlotPhases = ['retained-historical', 'retained-input', 'published', 'repository-released', 'released'];"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-ledger-state.ts",
+    "line": 82,
+    "text": "const digest = (value: unknown) => typeof value === 'string' && /^sha256:[a-f0-9]{64}$/u.test(value);"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-ledger-state.ts",
+    "line": 83,
+    "text": "const nonnegative = (value: unknown) => typeof value === 'number' && Number.isSafeInteger(value) && value >= 0;"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-ledger-state.ts",
+    "line": 87,
+    "text": "const keys = ['admissionId', 'attemptSpecDigest', 'bytes', 'cleanup', 'emptyGateResultDigest', 'entries', 'envelope', 'extractionGeneration', 'gate',"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-ledger.ts",
+    "line": 66,
+    "text": "const reservation: SourceReservation = {"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-ledger.ts",
+    "line": 153,
+    "text": "const reservation: SourceReservation = {"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-ledger.ts",
+    "line": 282,
+    "text": "const cleanup = [...current.cleanup];"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-ledger.ts",
+    "line": 297,
+    "text": "const reservations = [...state.reservations];"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-native-phase.ts",
+    "line": 22,
+    "text": "const historical = phase?.kind === 'historical';"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-supervisor.ts",
+    "line": 41,
+    "text": "const execution: PreparationExecutionOptions = {"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-supervisor.ts",
+    "line": 57,
+    "text": "const child = spawn('/usr/bin/setpriv', ['--reuid=1000', '--regid=1000', '--groups', '1000,1002',"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/process-input-lifecycle.ts",
+    "line": 31,
+    "text": "const failures: unknown[] = [];"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/process-input.ts",
+    "line": 45,
+    "text": "const output = { stdout: [] as Buffer[], stderr: [] as Buffer[], stdoutBytes: 0, stderrBytes: 0 };"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/process-input.ts",
+    "line": 73,
+    "text": "const key = stream === 'stdout' ? 'stdoutBytes' : 'stderrBytes';"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/provider-process-session.ts",
+    "line": 85,
+    "text": "const artifactInputs = invocation.inputs.filter((input) => input.kind === 'artifact').map((input) => {"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/remote-plan-service.ts",
+    "line": 171,
+    "text": "const runtimeRoot = stored.payload.resultOrigin?.kind === 'historical'"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/remote-plan-service.ts",
+    "line": 252,
+    "text": "const used = [...this.#weights.values()].reduce((a, b) => a + b, 0);"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/report-adapter-runtime.ts",
+    "line": 66,
+    "text": "const selectedCeilings = {"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/report-adapter-runtime.ts",
+    "line": 87,
+    "text": "const result: ReportAdapterResultV1 = {"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/report-adapter-runtime.ts",
+    "line": 127,
+    "text": "const sticky = (parentStat.mode & 0o1000) !== 0;"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/report-adapter-runtime.ts",
+    "line": 128,
+    "text": "const writableByOthers = (parentStat.mode & 0o022) !== 0;"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/report-adapter-runtime.ts",
+    "line": 130,
+    "text": "const currentUid = typeof process.getuid === 'function' ? process.getuid() : undefined;"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/report-adapter-runtime.ts",
+    "line": 131,
+    "text": "const trustedOwner = currentUid === undefined || parentStat.uid === currentUid || parentStat.uid === 0;"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/runner-attempt-envelope.ts",
+    "line": 45,
+    "text": "const completionPhases = 3 + Number(Boolean(operation.cleanup)) + Number(Boolean(operation.collectEvidence)) + Number(Boolean(operation.finalizeResult));"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/runner-attempt-envelope.ts",
+    "line": 47,
+    "text": "const envelopeBase = {"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/runner-attempt-envelope.ts",
+    "line": 83,
+    "text": "const workerEnvelope: WorkerAttemptEnvelopeV1 = {"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/runner-attempt-execution.ts",
+    "line": 25,
+    "text": "const signals = ["
+  },
+  {
+    "path": "skills/buster/engine/test-gates/runner-attempt-result.ts",
+    "line": 40,
+    "text": "const mapped: Record<string, string> = {"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/runner-attempt-result.ts",
+    "line": 91,
+    "text": "const resources: ResourceUseV1 = {"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/runner-attempt-result.ts",
+    "line": 138,
+    "text": "const faulted = executionState !== \"completed\";"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/runner-attempt-result.ts",
+    "line": 139,
+    "text": "const unsigned = {"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/runner-attempt-result.ts",
+    "line": 189,
+    "text": "const result: AttemptResultV1 = {"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/runner-worker-profile.ts",
+    "line": 45,
+    "text": "const capabilities = [...new Set([\"provider.execute\", ...granted])].sort();"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/runner-worker-profile.ts",
+    "line": 47,
+    "text": "const base = {"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/runner.ts",
+    "line": 46,
+    "text": "readonly #cleanupErrors: { nodeId: string; message: string }[] = [];"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/runner.ts",
+    "line": 196,
+    "text": "const evidence: EvidenceRefV1[] = [];"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/specialist-report-finalization.ts",
+    "line": 33,
+    "text": "const entry = [...registry.reportAdapters.values()].find((candidate) =>"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/specialist-report-finalization.ts",
+    "line": 50,
+    "text": "const reports: ReportAdapterResultV1[] = [];"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+    "line": 11,
+    "text": "const MAX_TIMER_MS = 2_147_483_647;"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+    "line": 212,
+    "text": "const pending = payload.retentionMode === 'await-readiness' ? existingExposureHandoff(before,identity) : undefined;"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+    "line": 226,
+    "text": "const patch = { metadata: { resourceVersion, annotations: { [EXPOSURE_OWNER_ANNOTATION]: owner,"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/tailscale-operation-policy.ts",
+    "line": 3,
+    "text": "const MAX_TIMER_MS = 2_147_483_647;"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/swarm-bundle.ts",
+    "line": 6,
+    "text": "const owners = ['prism-control', 'prism-studio', 'prism-worker', 'prism-execution', 'buster-engine', 'worker-core'] as const;"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/swarm-bundle.ts",
+    "line": 19,
+    "text": "const settingsDefinitionNames = ['buster-preparation', 'buster-admission', 'buster-dependency-readiness',"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/swarm-bundle.ts",
+    "line": 86,
+    "text": "const observations: Observation[] = [];"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/swarm-bundle.ts",
+    "line": 91,
+    "text": "const components = {} as Record<Owner, Component>;"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/swarm-bundle.ts",
+    "line": 112,
+    "text": "const profile = { _doc: entryValues._doc, profile: entryValues.profile, features: entryValues.features,"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/swarm.ts",
+    "line": 113,
+    "text": "const migratedEnvironmentKeys = ["
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/swarm.ts",
+    "line": 251,
+    "text": "const projection: SwarmConfig = { operator: {"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/attempt-completeness.ts",
+    "line": 69,
+    "text": "const candidate = { ...state, closures: [...state.closures, snapshot] };"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/attempt-completeness.ts",
+    "line": 98,
+    "text": "const rangeSnapshot = ["
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/attempt-completeness.ts",
+    "line": 146,
+    "text": "const admittedClosureIds: string[] = [];"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/attempt-completeness.ts",
+    "line": 147,
+    "text": "const evidenceItems: UnresolvedObservabilityItemV1[] = [];"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/attempt-completeness.ts",
+    "line": 171,
+    "text": "const completeness: ObservabilityCompletenessV1 = {"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/attempt-completeness.ts",
+    "line": 198,
+    "text": "const evidenceItems: UnresolvedObservabilityItemV1[] = [];"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/attempt-evidence.ts",
+    "line": 204,
+    "text": "const artifact = {"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/attempt-evidence.ts",
+    "line": 212,
+    "text": "const metadata: DurableEvidenceMetadata = {"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/attempt-evidence.ts",
+    "line": 217,
+    "text": "const candidate = { ...state, evidence: [...state.evidence, metadata] };"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/attempt-projection.ts",
+    "line": 80,
+    "text": "const bytes=Buffer.alloc(length);let offset=0;"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/attempt-projection.ts",
+    "line": 113,
+    "text": "const ends:number[]=[];let at=-1;"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/attempt-projection.ts",
+    "line": 140,
+    "text": "const decoded=raw.schemaVersion==='durable-attempt-store.v3'?decodeClosures(raw.closures,projections):{closures:raw.closures,closureProjections:new Map()};"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/attempt-projection.ts",
+    "line": 141,
+    "text": "const state:DurableAttemptStoreSnapshot={...raw,schemaVersion:'durable-attempt-store.v1',results,closures:decoded.closures};"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/attempt-projection.ts",
+    "line": 166,
+    "text": "const projected:ProjectedResultMetadata={...metadata,resultReference:{schemaVersion:'attempt-result-reference.v1',intent:structuredClone(intent),journalPrefixBytes:end}};"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/attempt-results.ts",
+    "line": 221,
+    "text": "const metadata: DurableResultMetadata = {"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/attempt-results.ts",
+    "line": 232,
+    "text": "const pending = { ...state, results: [...state.results, metadata] };"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/attempt-results.ts",
+    "line": 233,
+    "text": "const reservedCommit: DurableResultMetadata = {"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/attempt-results.ts",
+    "line": 242,
+    "text": "const committed: DurableResultMetadata = {"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/attempt-results.ts",
+    "line": 246,
+    "text": "const committedState = {"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/attempt-retirement.ts",
+    "line": 222,
+    "text": "const reference: ClosureReference = {"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/attempt-state.ts",
+    "line": 24,
+    "text": "const EMPTY_STATE: DurableAttemptStoreSnapshot = {"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/clawdeck-view.ts",
+    "line": 67,
+    "text": "const rawRecords = [...admissionTail.records]"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+    "line": 90,
+    "text": "const EMPTY_OUTBOX: OutboxState = {"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+    "line": 94,
+    "text": "const EMPTY_ADMISSION: AdmissionState = {"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+    "line": 104,
+    "text": "const ADMISSION_METADATA_RESERVE = 1024;"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+    "line": 312,
+    "text": "const producer = {"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+    "line": 356,
+    "text": "const candidateRecord = {"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+    "line": 376,
+    "text": "const candidate = {"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+    "line": 479,
+    "text": "const overflowItem = {"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+    "line": 520,
+    "text": "const candidate = {"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+    "line": 616,
+    "text": "const entry: AdmissionEntry = {"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+    "line": 623,
+    "text": "const candidate = {"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+    "line": 658,
+    "text": "const retired:AdmissionRetiredEntry={key:entry.key,acknowledgement:this.#ack(entry,\"duplicate\"),source:scope.source,operationId:scope.operationId,actor:scope.actor,authority:scope.authority};"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+    "line": 664,
+    "text": "const candidate:AdmissionState={...state,schemaVersion:\"observability-admission-store.v2\",entries:state.entries.filter(item=>item!==entry),retiredEntries:[...(state.retiredEntries??[]),retired]};"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+    "line": 791,
+    "text": "const candidate = { ...state, gaps: [...gaps, snapshot] };"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+    "line": 30,
+    "text": "const EMPTY_STATE: DurableRecordState = {"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+    "line": 84,
+    "text": "const record: DurableRecord<T> = {"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+    "line": 142,
+    "text": "const retirement = { intent, intentDigest, releasedBytesHex: '0000000000000000' };"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+    "line": 143,
+    "text": "const candidate: DurableRecordState = {"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+    "line": 227,
+    "text": "const record: DurableRecord<T> = {"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+    "line": 233,
+    "text": "const next = [...state.records];"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+    "line": 235,
+    "text": "const candidate: DurableRecordState = { ...state, records: next };"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/hash-journal.ts",
+    "line": 19,
+    "text": "const records:HashJournalRecord<T>[]=[];"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/record-retirement.ts",
+    "line": 70,
+    "text": "const v2 = state.schemaVersion === 'pipeline-durable-record-store.v2';"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/record-retirement.ts",
+    "line": 104,
+    "text": "const v2 = state.schemaVersion === 'pipeline-durable-record-store.v2';"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/replay-validation.ts",
+    "line": 50,
+    "text": "const key = [producer.producerId, producer.bootId, producer.producerType, correlation.pipelineRunId, String(sequence)].join('|');"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/replay-validation.ts",
+    "line": 60,
+    "text": "const headers = [...state.entries.map(({record})=>record),...(state.retiredEntries??[]).map(({acknowledgement:a})=>({producer:a.producer,sequence:a.sequence,correlation:{pipelineRunId:a.pipelineRunId}}))];"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/replay-validation.ts",
+    "line": 106,
+    "text": "const cursors=[...state.entries.map(entry=>entry.canonicalCursor),...retired.map(entry=>entry.acknowledgement.canonicalCursor)].sort((a,b)=>a-b);"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/wait-projection.ts",
+    "line": 30,
+    "text": "const digest = (value: unknown): value is string => typeof value === 'string' && /^sha256:[a-f0-9]{64}$/u.test(value);"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/wait-projection.ts",
+    "line": 31,
+    "text": "const id = (value: unknown): value is string => typeof value === 'string' && value.length > 0 && value.length <= 256"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/wait-projection.ts",
+    "line": 33,
+    "text": "const shape = (value: unknown, keys: string): boolean => value !== null && typeof value === 'object'"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/wait-projection.ts",
+    "line": 77,
+    "text": "const original = { schemaVersion: 'wait-value.v1' as const, wait };"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/wait-projection.ts",
+    "line": 107,
+    "text": "const value: WaitValueProjection = { schemaVersion: 'wait-value-projected.v1', originalDigest: original.payloadDigest,"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/wait-projection.ts",
+    "line": 110,
+    "text": "const replacement = { ...original, committedAt: '2000-01-01T00:00:00.000Z', payloadDigest: payloadDigest(value), payload: value };"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/wait-projection.ts",
+    "line": 113,
+    "text": "const retained = { ...value, projection: { ...value.projection, releasedBytesHex: releasedBytes.toString(16).padStart(16, '0') } };"
+  },
+  {
+    "path": "skills/prism/config/native-worker.ts",
+    "line": 23,
+    "text": "const spiffeEnabled = environment.WORKER_TRUST_SPIFFE_ENABLED === 'true';"
+  },
+  {
+    "path": "skills/prism/control/agent-jobs.ts",
+    "line": 33,
+    "text": "const row=await db.query<AgentJob>(\"SELECT j.*,(SELECT blocked.id FROM prism.agent_job blocked WHERE blocked.session_key=j.session_key AND blocked.state='needs_nova' ORDER BY blocked.created_at,blocked.id LIMIT 1) AS blocked_by FROM prism.agent_job j WHERE j.id=$1\",[id]);"
+  },
+  {
+    "path": "skills/prism/control/agent-jobs.ts",
+    "line": 45,
+    "text": "const rows=await connection.query<AgentJob>(\"SELECT j.* FROM prism.agent_job j WHERE j.state='accepted' AND NOT EXISTS (SELECT 1 FROM prism.agent_job active WHERE active.session_key=j.session_key AND active.state IN ('running','needs_nova')) ORDER BY j.created_at,j.id LIMIT 1 FOR UPDATE OF j\");"
+  },
+  {
+    "path": "skills/prism/control/agent-jobs.ts",
+    "line": 51,
+    "text": "const claimed=await connection.query<AgentJob>(\"UPDATE prism.agent_job SET state='running',fence=$2,runner_id=$3,expires_at=$4,attempt_envelope=$5::jsonb,updated_at=clock_timestamp() WHERE id=$1 AND state='accepted' RETURNING *\",[source.id,fence,runnerId,expiresAt,JSON.stringify(envelope)]);"
+  },
+  {
+    "path": "skills/prism/control/agent-jobs.ts",
+    "line": 63,
+    "text": "const completed=outcome.schemaVersion==='worker-attempt-result.v2' && outcome.state==='completed' && job.result!==null;"
+  },
+  {
+    "path": "skills/prism/control/native-operation-store.ts",
+    "line": 66,
+    "text": "const changed = await database.query(\"UPDATE prism.engine_operation SET completed_at=COALESCE(completed_at,now()) WHERE idempotency_key=$1 AND attempt_id=$2 AND result->'workerResult'->>'state'='completed' RETURNING idempotency_key\", [key, executionId]);"
+  },
+  {
+    "path": "skills/prism/control/worker-operation-transport.ts",
+    "line": 24,
+    "text": "const chunks: Uint8Array[] = []; let size = 0;"
+  },
+  {
+    "path": "skills/prism/engine/worker-envelope.ts",
+    "line": 12,
+    "text": "const unsignedProfile = {"
+  },
+  {
+    "path": "skills/prism/engine/worker-envelope.ts",
+    "line": 25,
+    "text": "export const prismNativeWorkerProfile: WorkerProfileV3 = { ...unsignedProfile, profileDigest: workerProfileDigest(unsignedProfile) };"
+  },
+  {
+    "path": "skills/prism/engine/worker-envelope.ts",
+    "line": 29,
+    "text": "const ordered = { contractId: operation.contractId, inputSchemaId: operation.inputSchemaId, inputSchemaDigest: operation.inputSchemaDigest,"
+  },
+  {
+    "path": "skills/prism/engine/worker-envelope.ts",
+    "line": 37,
+    "text": "const unsigned = {"
+  },
+  {
+    "path": "skills/prism/server/agent-attempt.ts",
+    "line": 12,
+    "text": "const files=['agent-process.ts','agent-attempt.ts','agent-job-runner.mjs','agent-prompt.mjs','preference-prompt.mjs'];"
+  },
+  {
+    "path": "skills/prism/server/agent-attempt.ts",
+    "line": 14,
+    "text": "const unsignedProfile={schemaVersion:'worker-profile.v2' as const,profileId:'prism-openclaw-launcher-v2',workerType:'prism-agent',coreContractId:'kubeclaw.pipeline-worker-core@2',"
+  },
+  {
+    "path": "skills/prism/server/agent-attempt.ts",
+    "line": 19,
+    "text": "const profile:WorkerProfileV2={...unsignedProfile,profileDigest:workerProfileDigest(unsignedProfile)};"
+  },
+  {
+    "path": "skills/prism/server/agent-attempt.ts",
+    "line": 21,
+    "text": "const unsigned={schemaVersion:'worker-attempt-envelope.v2' as const,protocolVersion:'worker-protocol.v1' as const,"
+  },
+  {
+    "path": "skills/prism/server/control-config.ts",
+    "line": 27,
+    "text": "const spiffeEnabled = environment.WORKER_TRUST_SPIFFE_ENABLED === 'true';"
+  },
+  {
+    "path": "skills/prism/server/control-config.ts",
+    "line": 72,
+    "text": "const snapshot = {...environment};"
+  },
+  {
+    "path": "skills/prism/server/control-server.ts",
+    "line": 128,
+    "text": "const application = { ...context, actor };"
+  },
+  {
+    "path": "skills/prism/server/dispatch-route.ts",
+    "line": 123,
+    "text": "const chunks: Buffer[] = [];"
+  },
+  {
+    "path": "skills/prism/server/native-worker-host.ts",
+    "line": 14,
+    "text": "const chunks: Buffer[] = [];"
+  },
+  {
+    "path": "skills/prism/server/studio-request.ts",
+    "line": 20,
+    "text": "const types: Record<string, string> = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.svg': 'image/svg+xml' };"
+  },
+  {
+    "path": "skills/prism/server/studio-request.ts",
+    "line": 24,
+    "text": "const code = 'code' in error && typeof error.code === 'string' ? error.code : undefined;"
+  },
+  {
+    "path": "skills/prism/server/studio-request.ts",
+    "line": 29,
+    "text": "const causes = []; const seen = new Set<unknown>(); let current = error;"
+  },
+  {
+    "path": "skills/prism/server/studio-request.ts",
+    "line": 45,
+    "text": "const chunks: Buffer[] = []; let size = 0;"
+  },
+  {
+    "path": "skills/prism/server/studio-request.ts",
+    "line": 56,
+    "text": "const value = request.headers[name]; if (typeof value === 'string') headers.set(name, value);"
+  },
+  {
+    "path": "skills/prism/server/worker-config.ts",
+    "line": 7,
+    "text": "const spiffeEnabled = environment.WORKER_TRUST_SPIFFE_ENABLED === 'true';"
+  },
+  {
+    "path": "skills/prism/server/worker-lifecycle.ts",
+    "line": 47,
+    "text": "const probe = request.method === 'GET' && ['/health', '/bootstrap', '/ready'].includes(request.url ?? '')"
+  },
+  {
+    "path": "skills/prism/server/worker-operation.ts",
+    "line": 77,
+    "text": "const values={...specialistResult.values};const evidence=[];"
+  },
+  {
+    "path": "skills/prism/server/worker-operation.ts",
+    "line": 80,
+    "text": "const boundedResult={...specialistResult,values};"
+  },
+  {
+    "path": "skills/prism/server/worker-operation.ts",
+    "line": 94,
+    "text": "const declared = envelope.inputs.find((item) => item.name === inputName && item.kind === 'artifact');"
+  },
+  {
+    "path": "skills/prism/server/worker-service.ts",
+    "line": 47,
+    "text": "const chunks: Buffer[] = [];"
+  },
+  {
+    "path": "skills/worker/core/worker/attempt-executor.ts",
+    "line": 24,
+    "text": "const MAX_ATTEMPT_ENVELOPE_BYTES = 16 * 1024 * 1024;"
+  },
+  {
+    "path": "skills/worker/core/worker/attempt-executor.ts",
+    "line": 25,
+    "text": "const MAX_ATTEMPT_LOG_BYTES = 16 * 1024 * 1024;"
+  },
+  {
+    "path": "skills/worker/core/worker/attempt-executor.ts",
+    "line": 26,
+    "text": "const MAX_ATTEMPT_LOG_PARTS = 10_000;"
+  },
+  {
+    "path": "skills/worker/core/worker/attempt-executor.ts",
+    "line": 27,
+    "text": "const MAX_ATTEMPT_VALUE_DEPTH = 64;"
+  },
+  {
+    "path": "skills/worker/core/worker/attempt-executor.ts",
+    "line": 28,
+    "text": "const MAX_ATTEMPT_VALUE_NODES = 100_000;"
+  },
+  {
+    "path": "skills/worker/core/worker/attempt-executor.ts",
+    "line": 112,
+    "text": "const text = typeof value === 'string' && value.length > 0 ? value : fallback;"
+  },
+  {
+    "path": "skills/worker/core/worker/attempt-executor.ts",
+    "line": 145,
+    "text": "const pending: Array<{ value: unknown; depth: number }> = [{ value, depth: 0 }];"
+  },
+  {
+    "path": "skills/worker/core/worker/attempt-executor.ts",
+    "line": 263,
+    "text": "const completionPhases = 3 + Number(Boolean(operation.cleanup)) + Number(Boolean(operation.collectEvidence))"
+  },
+  {
+    "path": "skills/worker/core/worker/attempt-executor.ts",
+    "line": 279,
+    "text": "const logParts: WorkerLogPartV1[] = [];"
+  },
+  {
+    "path": "skills/worker/core/worker/attempt-executor.ts",
+    "line": 502,
+    "text": "const candidateEvidence = [...evidence, ...collected.evidence];"
+  },
+  {
+    "path": "skills/worker/core/worker/attempt-executor.ts",
+    "line": 529,
+    "text": "const candidateEvidence = [...evidence, stored];"
+  },
+  {
+    "path": "skills/worker/core/worker/attempt-executor.ts",
+    "line": 634,
+    "text": "const unsigned = {"
+  },
+  {
+    "path": "skills/worker/core/worker/attempt-executor.ts",
+    "line": 676,
+    "text": "const result: WorkerAttemptResult = {"
+  },
+  {
+    "path": "skills/worker/core/worker/local-runtime.ts",
+    "line": 11,
+    "text": "const MAX_TIMER_MS = 2_147_483_647;"
+  },
+  {
+    "path": "skills/worker/core/worker/local-runtime.ts",
+    "line": 239,
+    "text": "const initial = [...this.#active.values()].map((attempt) => attempt.completion);"
+  },
+  {
+    "path": "skills/worker/core/worker/local-runtime.ts",
+    "line": 242,
+    "text": "const cancelled = [...this.#active.values()].map((attempt) => attempt.completion);"
+  },
+  {
+    "path": "skills/worker/core/worker/native-attempt-executor.ts",
+    "line": 70,
+    "text": "const accepted = { cpuTimeMs: limits.cpuTimeMs, maximumMemoryBytes: limits.memoryBytes, maximumTasks: limits.tasks };"
+  },
+  {
+    "path": "skills/worker/core/worker/native-attempt-journal.ts",
+    "line": 114,
+    "text": "const payload = { ...record.payload, processCompletedAt: timestamp, process: { ...process, stdout: reference('stdout'), stderr: reference('stderr') } };"
+  },
+  {
+    "path": "skills/worker/core/worker/native-attempt-journal.ts",
+    "line": 176,
+    "text": "const payload: NativeAttemptJournalState = { schemaVersion: 'native-attempt-journal.v1', identity: journalIdentity(envelope),"
+  },
+  {
+    "path": "skills/worker/core/worker/native-attempt-recovery.ts",
+    "line": 16,
+    "text": "const deferred: Array<{ envelope: WorkerAttemptEnvelopeV3; result: WorkerAttemptResultV3 }> = [];"
+  },
+  {
+    "path": "skills/worker/core/worker/native-cleanup-reconciliation.ts",
+    "line": 11,
+    "text": "const contractId = 'kubeclaw.native-source-cleanup@1';"
+  },
+  {
+    "path": "skills/worker/core/worker/native-cleanup-reconciliation.ts",
+    "line": 12,
+    "text": "const inputSchemaId = 'native-source-cleanup-input.v1';"
+  },
+  {
+    "path": "skills/worker/core/worker/native-cleanup-reconciliation.ts",
+    "line": 90,
+    "text": "const expected = { ...nativeSourceCleanupResultSchema,"
+  },
+  {
+    "path": "skills/worker/core/worker/native-journal-capacity.ts",
+    "line": 6,
+    "text": "export const nativeJournalStream = 'native-worker-attempts.v1';"
+  },
+  {
+    "path": "skills/worker/core/worker/native-journal-capacity.ts",
+    "line": 7,
+    "text": "export const nativeJournalMaximumRecordBytes = 65536;"
+  },
+  {
+    "path": "skills/worker/core/worker/native-journal-capacity.ts",
+    "line": 9,
+    "text": "const maximumDate = '+275760-09-13T00:00:00.000Z';"
+  },
+  {
+    "path": "skills/worker/core/worker/native-journal-capacity.ts",
+    "line": 11,
+    "text": "const diagnostic = '\\u0000'.repeat(nativeJournalMaximumDiagnosticUnits);"
+  },
+  {
+    "path": "skills/worker/core/worker/native-journal-capacity.ts",
+    "line": 17,
+    "text": "const output = { digest, sizeBytes: limits.maximumOutputBytes };"
+  },
+  {
+    "path": "skills/worker/core/worker/native-journal-capacity.ts",
+    "line": 48,
+    "text": "const bytes = futureRecordBytes(record, limits) + (index === 0 ? 0 : 1);"
+  },
+  {
+    "path": "skills/worker/core/worker/native-journal-capacity.ts",
+    "line": 64,
+    "text": "const record: DurableRecord = { schemaVersion: 'pipeline-durable-record.v2', owner,"
+  },
+  {
+    "path": "skills/worker/core/worker/native-journal-state.ts",
+    "line": 9,
+    "text": "export const nativeJournalMaximumDiagnosticUnits = 4096;"
+  },
+  {
+    "path": "skills/worker/core/worker/native-journal-state.ts",
+    "line": 81,
+    "text": "const pending = [root];"
+  },
+  {
+    "path": "skills/worker/core/worker/native-output-spool.ts",
+    "line": 31,
+    "text": "const handles: FileHandle[] = [];"
+  },
+  {
+    "path": "skills/worker/core/worker/native-owned-children.ts",
+    "line": 19,
+    "text": "const parent = { memoryBytes: Number(fs.readFileSync(path.join(parentPath, 'memory.max'), 'utf8').trim()),"
+  },
+  {
+    "path": "skills/worker/core/worker/native-owned-children.ts",
+    "line": 69,
+    "text": "const paths: string[] = [];"
+  },
+  {
+    "path": "skills/worker/core/worker/native-process-launches.ts",
+    "line": 35,
+    "text": "const children = [...this.#children];"
+  },
+  {
+    "path": "skills/worker/core/worker/native-process-output.ts",
+    "line": 8,
+    "text": "const stdout: Buffer[] = [], stderr: Buffer[] = [];"
+  },
+  {
+    "path": "skills/worker/core/worker/native-resource-accounting.ts",
+    "line": 18,
+    "text": "for (const metric of workerNativeResourceMetrics) accounting.observations[metric] = {"
+  },
+  {
+    "path": "skills/worker/core/worker/native-resource-accounting.ts",
+    "line": 26,
+    "text": "const resources: NativeUse = {};"
+  },
+  {
+    "path": "skills/worker/core/worker/native-resource-accounting.ts",
+    "line": 28,
+    "text": "const codes = { cpuTimeMs: 'WORKER_CPU_LIMIT', maximumMemoryBytes: 'WORKER_MEMORY_LIMIT', maximumTasks: 'WORKER_TASK_LIMIT' };"
+  },
+  {
+    "path": "skills/worker/core/worker/native-resource-observation.ts",
+    "line": 18,
+    "text": "const counters = ['cpuTimeMicroseconds', 'maximumMemoryBytes', 'maximumTasks', 'oomKills', 'taskLimitHits'];"
+  },
+  {
+    "path": "skills/worker/core/worker/native-resource-observation.ts",
+    "line": 25,
+    "text": "const CGROUP2_SUPER_MAGIC = 0x63677270;"
+  },
+  {
+    "path": "skills/worker/core/worker/native-resource-pool.ts",
+    "line": 38,
+    "text": "const values: Record<string, string> = {"
+  },
+  {
+    "path": "skills/worker/core/worker/native-worker-ownership.ts",
+    "line": 124,
+    "text": "const errors: unknown[] = [];"
+  },
+  {
+    "path": "skills/worker/core/worker/native-worker-ownership.ts",
+    "line": 132,
+    "text": "const notLaunched = this.#record.phase === 'allocated' && !this.#started;"
+  },
+  {
+    "path": "skills/worker/core/worker/native-worker-ownership.ts",
+    "line": 217,
+    "text": "const captured = { ...options, poolLimits: { ...options.poolLimits }, cgroupRoot: fs.realpathSync(options.cgroupRoot) };"
+  },
+  {
+    "path": "skills/worker/core/worker/native-worker-ownership.ts",
+    "line": 222,
+    "text": "const errors: unknown[] = [];"
+  },
+  {
+    "path": "skills/worker/core/worker/native-worker-ownership.ts",
+    "line": 227,
+    "text": "for (const close of closed) if (close.status === 'rejected') errors.push(close.reason);"
+  },
+  {
+    "path": "skills/worker/core/worker/native-worker-ownership.ts",
+    "line": 242,
+    "text": "const requested = { ...limits };"
+  },
+  {
+    "path": "skills/worker/core/worker/native-worker-process.ts",
+    "line": 61,
+    "text": "const limits = { ...options.limits };"
+  },
+  {
+    "path": "skills/worker/core/worker/ownership-capacity.ts",
+    "line": 7,
+    "text": "const maximumDiagnosis = '\\u0000'.repeat(maximumOwnershipDiagnosisUnits);"
+  },
+  {
+    "path": "skills/worker/core/worker/ownership-capacity.ts",
+    "line": 8,
+    "text": "const maximumHostIdentity = 'h'.repeat(maximumOwnershipHostIdentityCharacters);"
+  },
+  {
+    "path": "skills/worker/core/worker/ownership-capacity.ts",
+    "line": 9,
+    "text": "const maximumObservation = { unit: 'linux-tasks', cpuTimeMicroseconds: maximumInteger,"
+  },
+  {
+    "path": "skills/worker/core/worker/ownership-capacity.ts",
+    "line": 37,
+    "text": "const bytes = Buffer.byteLength(canonicalJson(terminalRepresentation(record))) + (index === 0 ? 0 : 1);"
+  },
+  {
+    "path": "skills/worker/core/worker/ownership-state.ts",
+    "line": 6,
+    "text": "export const maximumOwnershipDiagnosisUnits = 4096;"
+  },
+  {
+    "path": "skills/worker/core/worker/ownership-state.ts",
+    "line": 7,
+    "text": "export const maximumOwnershipHostIdentityCharacters = 256;"
+  },
+  {
+    "path": "skills/worker/core/worker/ownership-state.ts",
+    "line": 20,
+    "text": "export const transitions: Record<WorkerOwnershipPhase, readonly WorkerOwnershipPhase[]> = {"
+  },
+  {
+    "path": "skills/worker/core/worker/ownership-state.ts",
+    "line": 118,
+    "text": "const legacy = typeof value === 'object' && value !== null && 'schemaVersion' in value && value.schemaVersion === 'worker-ownership-store.v1';"
+  },
+  {
+    "path": "skills/worker/core/worker/ownership-state.ts",
+    "line": 129,
+    "text": "const upgraded = value.schemaVersion === 'worker-ownership-store.v3' ? records : records.map(record => {"
+  },
+  {
+    "path": "skills/worker/core/worker/ownership-store.ts",
+    "line": 117,
+    "text": "const record: WorkerOwnershipRecord = {"
+  },
+  {
+    "path": "skills/worker/core/worker/ownership-store.ts",
+    "line": 141,
+    "text": "const updated: WorkerOwnershipRecord = {"
+  },
+  {
+    "path": "skills/worker/core/worker/ownership-store.ts",
+    "line": 157,
+    "text": "const child = { name, limits: { ...limits }, binding: null };"
+  },
+  {
+    "path": "skills/worker/core/worker/ownership-store.ts",
+    "line": 167,
+    "text": "const captured = { ...binding };"
+  },
+  {
+    "path": "skills/worker/core/worker/ownership-store.ts",
+    "line": 185,
+    "text": "const updated = { ...current, revision: current.revision + 1,"
+  },
+  {
+    "path": "skills/worker/core/worker/resource-accounting.ts",
+    "line": 6,
+    "text": "const positiveObservation=(value:unknown):value is number=>Number.isSafeInteger(value)&&Number(value)>=0;"
+  },
+  {
+    "path": "skills/worker/core/worker/resource-accounting.ts",
+    "line": 8,
+    "text": "if(accounting)for(const metric of workerResourceMetrics)accounting.observations[metric]={status:'unavailable',reason:message};"
+  },
+  {
+    "path": "skills/worker/core/worker/resource-accounting.ts",
+    "line": 22,
+    "text": "const limits={cpuTimeMs:envelope.limits.cpuMillis,maximumMemoryBytes:envelope.limits.memoryBytes,maximumProcesses:envelope.limits.processes};"
+  },
+  {
+    "path": "skills/worker/core/worker/resource-accounting.ts",
+    "line": 23,
+    "text": "const codes={cpuTimeMs:'WORKER_CPU_LIMIT',maximumMemoryBytes:'WORKER_MEMORY_LIMIT',maximumProcesses:'WORKER_PROCESS_LIMIT'};"
+  },
+  {
+    "path": "skills/worker/core/worker/resource-accounting.ts",
+    "line": 49,
+    "text": "const resources:Partial<WorkerResourceUseV1>={};let error:ResourceCheck['error'];"
+  },
+  {
+    "path": "skills/worker/core/worker/resource-result-fields.ts",
+    "line": 7,
+    "text": "const identity = { profileDigest: envelope.profile.profileDigest, attemptSpecDigest: envelope.attemptSpecDigest };"
+  }
+]

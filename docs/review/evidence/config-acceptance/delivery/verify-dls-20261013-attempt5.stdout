@@ -1,0 +1,430 @@
+Command: python3 docs/review/evidence/config-acceptance/delivery/verify-semantic-closure.py
+{
+  "method": "static JSON/reference/SHA256 consistency checks; no production/test/package/cluster/host execution",
+  "settingRows": 825,
+  "caseSpecifications": 199,
+  "issues": [
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-BUSTER-GENERATED-ALLOWEDCAPABILITIES",
+      "path": "docs/review/evidence/config-acceptance/delivery/image-projection-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-BUSTER-GENERATED-BROWSERAXE",
+      "path": "docs/review/evidence/config-acceptance/delivery/image-projection-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-BUSTER-GENERATED-BROWSERLIGHTHOUSE",
+      "path": "docs/review/evidence/config-acceptance/delivery/image-projection-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-BUSTER-GENERATED-BROWSERPLAYWRIGHT",
+      "path": "docs/review/evidence/config-acceptance/delivery/image-projection-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-BUSTER-GENERATED-BROWSERVISUAL",
+      "path": "docs/review/evidence/config-acceptance/delivery/image-projection-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-BUSTER-GENERATED-CLUSTERBINDINGS",
+      "path": "docs/review/evidence/config-acceptance/delivery/image-projection-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-BUSTER-GENERATED-CONTAINERBUILD",
+      "path": "docs/review/evidence/config-acceptance/delivery/image-projection-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-BUSTER-GENERATED-DIRECTCOMMAND",
+      "path": "docs/review/evidence/config-acceptance/delivery/image-projection-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-BUSTER-GENERATED-HOST",
+      "path": "docs/review/evidence/config-acceptance/delivery/image-projection-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-BUSTER-GENERATED-MAXIMUMRESPONSEBYTES",
+      "path": "docs/review/evidence/config-acceptance/delivery/image-projection-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-BUSTER-GENERATED-MAXIMUMRESULTBYTES",
+      "path": "docs/review/evidence/config-acceptance/delivery/image-projection-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-BUSTER-GENERATED-MAXIMUMRESULTSTOREBYTES",
+      "path": "docs/review/evidence/config-acceptance/delivery/image-projection-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-BUSTER-GENERATED-NETWORKHTTP",
+      "path": "docs/review/evidence/config-acceptance/delivery/image-projection-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-BUSTER-GENERATED-PLATFORM",
+      "path": "docs/review/evidence/config-acceptance/delivery/image-projection-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-BUSTER-GENERATED-PLATFORMCONFIG",
+      "path": "docs/review/evidence/config-acceptance/delivery/image-projection-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-BUSTER-GENERATED-PORT",
+      "path": "docs/review/evidence/config-acceptance/delivery/image-projection-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-BUSTER-GENERATED-RECORDLIMITS",
+      "path": "docs/review/evidence/config-acceptance/delivery/image-projection-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-BUSTER-GENERATED-RUNTIMEROOT",
+      "path": "docs/review/evidence/config-acceptance/delivery/image-projection-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-BUSTER-GENERATED-SCHEMAVERSION",
+      "path": "docs/review/evidence/config-acceptance/delivery/image-projection-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-BUSTER-GENERATED-SECURITYSCAN",
+      "path": "docs/review/evidence/config-acceptance/delivery/image-projection-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-BUSTER-GENERATED-SHUTDOWNTIMEOUTMS",
+      "path": "docs/review/evidence/config-acceptance/delivery/image-projection-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-BUSTER-GENERATED-SOURCEATTESTATIONPUBLICKEYENVIRONMENTVARIABLE",
+      "path": "docs/review/evidence/config-acceptance/delivery/image-projection-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-BUSTER-GENERATED-STATEROOT",
+      "path": "docs/review/evidence/config-acceptance/delivery/image-projection-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-BUSTER-GENERATED-TAREXECUTABLE",
+      "path": "docs/review/evidence/config-acceptance/delivery/image-projection-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-BUSTER-GENERATED-TRUSTEDSOURCEAUTHORITY",
+      "path": "docs/review/evidence/config-acceptance/delivery/image-projection-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-OPS-RESIDUAL-API-NETWORK",
+      "path": "docs/review/evidence/config-acceptance/delivery/image-projection-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-OPS-RESIDUAL-CLIENTS",
+      "path": "docs/review/evidence/config-acceptance/delivery/image-projection-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-OPS-RESIDUAL-TAILSCALE",
+      "path": "docs/review/evidence/config-acceptance/delivery/image-projection-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-AGENT",
+      "path": "docs/review/evidence/config-acceptance/delivery/image-projection-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-AGENTROLE",
+      "path": "docs/review/evidence/config-acceptance/delivery/image-projection-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-AUTH",
+      "path": "docs/review/evidence/config-acceptance/delivery/image-projection-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-BUSTERCOMPONENTFILE",
+      "path": "docs/review/evidence/config-acceptance/delivery/image-projection-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-BUSTERNAMESPACEBROKER",
+      "path": "docs/review/evidence/config-acceptance/delivery/image-projection-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-BUSTERNATIVE",
+      "path": "docs/review/evidence/config-acceptance/delivery/image-projection-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-CAPABILITYPROVIDERS",
+      "path": "docs/review/evidence/config-acceptance/delivery/image-projection-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-CODEBUNDLE",
+      "path": "docs/review/evidence/config-acceptance/delivery/image-projection-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-COMMANDS",
+      "path": "docs/review/evidence/config-acceptance/delivery/image-projection-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-CUSTOMSKILLS",
+      "path": "docs/review/evidence/config-acceptance/delivery/image-projection-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-DISCORD",
+      "path": "docs/review/evidence/config-acceptance/delivery/image-projection-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-ESLINTCONFIGMJS",
+      "path": "docs/review/evidence/config-acceptance/delivery/image-projection-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-IMAGE",
+      "path": "docs/review/evidence/config-acceptance/delivery/image-projection-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-LITELLM",
+      "path": "docs/review/evidence/config-acceptance/delivery/image-projection-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-PLUGINSEED",
+      "path": "docs/review/evidence/config-acceptance/delivery/image-projection-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-PROBES",
+      "path": "docs/review/evidence/config-acceptance/delivery/image-projection-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-REPLICACOUNT",
+      "path": "docs/review/evidence/config-acceptance/delivery/image-projection-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-RUNASROOT",
+      "path": "docs/review/evidence/config-acceptance/delivery/image-projection-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-RUNTIMEINFRASTRUCTURE",
+      "path": "docs/review/evidence/config-acceptance/delivery/image-projection-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-SEMGREPCONFIGYAML",
+      "path": "docs/review/evidence/config-acceptance/delivery/image-projection-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-SERVICE",
+      "path": "docs/review/evidence/config-acceptance/delivery/image-projection-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-SERVICEACCOUNT",
+      "path": "docs/review/evidence/config-acceptance/delivery/image-projection-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-SHUTDOWN",
+      "path": "docs/review/evidence/config-acceptance/delivery/image-projection-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-SWARMCONFIG",
+      "path": "docs/review/evidence/config-acceptance/delivery/image-projection-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-WORKERTRUST",
+      "path": "docs/review/evidence/config-acceptance/delivery/image-projection-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-WORKSPACE",
+      "path": "docs/review/evidence/config-acceptance/delivery/image-projection-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-CHART-RESIDUAL-CHART-PRISM-BUSTERCOMPONENTFILE",
+      "path": "docs/review/evidence/config-acceptance/delivery/image-projection-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-CHART-RESIDUAL-CHART-PRISM-CONTROL",
+      "path": "docs/review/evidence/config-acceptance/delivery/image-projection-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-CHART-RESIDUAL-CHART-PRISM-POSTGRESQL",
+      "path": "docs/review/evidence/config-acceptance/delivery/image-projection-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-CHART-RESIDUAL-CHART-PRISM-STUDIO",
+      "path": "docs/review/evidence/config-acceptance/delivery/image-projection-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-CHART-RESIDUAL-CHART-PRISM-TAILSCALE",
+      "path": "docs/review/evidence/config-acceptance/delivery/image-projection-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-CHART-RESIDUAL-CHART-PRISM-WORKERTRUST",
+      "path": "docs/review/evidence/config-acceptance/delivery/image-projection-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-CHART-LAST-CHART-GITOPS-CLUSTERRESOURCEWHITELIST",
+      "path": "docs/review/evidence/config-acceptance/delivery/image-projection-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-CHART-LAST-CHART-GITOPS-DESTINATIONS",
+      "path": "docs/review/evidence/config-acceptance/delivery/image-projection-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-CHART-LAST-CHART-GITOPS-GROUPS",
+      "path": "docs/review/evidence/config-acceptance/delivery/image-projection-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-CHART-LAST-CHART-GITOPS-NAMESPACERESOURCEWHITELIST",
+      "path": "docs/review/evidence/config-acceptance/delivery/image-projection-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-CHART-LAST-CHART-GITOPS-PROJECT",
+      "path": "docs/review/evidence/config-acceptance/delivery/image-projection-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-CHART-LAST-CHART-GITOPS-REPOSITORY",
+      "path": "docs/review/evidence/config-acceptance/delivery/image-projection-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-CHART-LAST-CHART-GITOPS-REVISION",
+      "path": "docs/review/evidence/config-acceptance/delivery/image-projection-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-CHART-LAST-CHART-GITOPS-ROOTNAME",
+      "path": "docs/review/evidence/config-acceptance/delivery/image-projection-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-CHART-LAST-CHART-KUBECLAW-AGENT",
+      "path": "docs/review/evidence/config-acceptance/delivery/image-projection-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-CHART-LAST-CHART-KUBECLAW-ARCHVIEWER",
+      "path": "docs/review/evidence/config-acceptance/delivery/image-projection-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-CHART-LAST-CHART-KUBECLAW-BUSTERNAMESPACEBROKER",
+      "path": "docs/review/evidence/config-acceptance/delivery/image-projection-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-CHART-LAST-CHART-KUBECLAW-EXTRACONTAINERS",
+      "path": "docs/review/evidence/config-acceptance/delivery/image-projection-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-CHART-LAST-CHART-KUBECLAW-EXTRAENV",
+      "path": "docs/review/evidence/config-acceptance/delivery/image-projection-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-CHART-LAST-CHART-KUBECLAW-EXTRAVOLUMEMOUNTS",
+      "path": "docs/review/evidence/config-acceptance/delivery/image-projection-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-CHART-LAST-CHART-KUBECLAW-EXTRAVOLUMES",
+      "path": "docs/review/evidence/config-acceptance/delivery/image-projection-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-CHART-LAST-CHART-KUBECLAW-GATEWAY",
+      "path": "docs/review/evidence/config-acceptance/delivery/image-projection-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-CHART-LAST-CHART-KUBECLAW-NODESELECTOR",
+      "path": "docs/review/evidence/config-acceptance/delivery/image-projection-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-CHART-LAST-CHART-KUBECLAW-PODANNOTATIONS",
+      "path": "docs/review/evidence/config-acceptance/delivery/image-projection-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-CHART-LAST-CHART-KUBECLAW-REDIS",
+      "path": "docs/review/evidence/config-acceptance/delivery/image-projection-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-CHART-LAST-CHART-KUBECLAW-TOLERATIONS",
+      "path": "docs/review/evidence/config-acceptance/delivery/image-projection-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-CODEX-NATIVE-PARSER-AUTH-TOPOLOGY",
+      "path": "docs/review/evidence/config-acceptance/delivery/image-projection-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-LINT-EXTENSION-PERSISTED-DELIVERY",
+      "path": "docs/review/evidence/config-acceptance/delivery/image-projection-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-BUSTER-CONDITIONAL-AUTH-REGISTRY-MEMBERS",
+      "path": "docs/review/evidence/config-acceptance/delivery/image-projection-target-case-specifications-20261013.json"
+    }
+  ],
+  "consistencyResult": "failed",
+  "c0Acceptance": "incomplete",
+  "implementationResults": {
+    "not-run": 199
+  }
+}
+Exit: 1
+

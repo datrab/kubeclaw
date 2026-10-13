@@ -1,0 +1,180 @@
+{
+  "productiveConstructors": [
+    {
+      "path": "skills/common/plugins/artifact-store/src/adapter.ts",
+      "line": 173,
+      "sha256": "12fa6150089d49da0a9065de560fb53436dc46e3f10f15da0f3fe8b112a50154",
+      "sourceText": "  const blobs = new FileDurableBlobStore(configured, Number(maximum), Number(maximumStoreBytes));",
+      "context": [
+        "    maximumBytes: Number(maximumStoreBytes),",
+        "    maximumRecordBytes: 64 * 1024,",
+        "  });",
+        "  const blobs = new FileDurableBlobStore(configured, Number(maximum), Number(maximumStoreBytes));",
+        "  return {",
+        "    async ready() { await records.read<ArtifactRef>('artifacts/readiness'); },",
+        "    async invoke(invocation) { return invokeArtifact(records, blobs, Number(maximum), invocation); },"
+      ],
+      "scope": "productive-source",
+      "soleOwningAuthority": "existing registered artifact-store adapter config",
+      "targetField": "owning store.lockWaitSeconds (projectScaffold.lockWaitSeconds for pair)",
+      "rootBinding": "one physical root/lock namespace one captured owner/generation; conflictingopenreject",
+      "caseIds": [
+        "QC-FOUNDATION-FLOCK-WAIT-VAL",
+        "QC-FOUNDATION-FLOCK-WAIT-REAL-LOCK",
+        "QC-FOUNDATION-FLOCK-WAIT-HISTORY"
+      ]
+    },
+    {
+      "path": "skills/worker/core/worker/native-attempt-journal.ts",
+      "line": 35,
+      "sha256": "4c63283eb753d9840c4a6fce4126404a86df2e33dc357166531550059a57acf5",
+      "sourceText": "    this.#blobs = new FileDurableBlobStore(path.join(this.#root, 'data'), Math.max(limits.maximumInputBytes, limits.maximumResultBytes), limits.maximumTotalBytes);",
+      "context": [
+        "    this.#records = new FileDurableRecordStore(path.join(this.#root, 'metadata'), {",
+        "      maximumRecords: limits.maximumRecords, maximumBytes: limits.maximumStateBytes, maximumRecordBytes: nativeJournalMaximumRecordBytes,",
+        "    });",
+        "    this.#blobs = new FileDurableBlobStore(path.join(this.#root, 'data'), Math.max(limits.maximumInputBytes, limits.maximumResultBytes), limits.maximumTotalBytes);",
+        "  }",
+        "",
+        "  async withAttempt<T>(input: WorkerAttemptEnvelopeV3,"
+      ],
+      "scope": "productive-source",
+      "soleOwningAuthority": "Reusable Corestore implementation; actual outercaller is parent Prism worker or Buster preparation, EACH ownexistingroleauthor; generated rootpolicy projection, no new globalCoreauthor",
+      "targetField": "owning store.lockWaitSeconds (projectScaffold.lockWaitSeconds for pair)",
+      "rootBinding": "one physical root/lock namespace one captured owner/generation; conflictingopenreject",
+      "caseIds": [
+        "QC-FOUNDATION-FLOCK-WAIT-VAL",
+        "QC-FOUNDATION-FLOCK-WAIT-REAL-LOCK",
+        "QC-FOUNDATION-FLOCK-WAIT-HISTORY"
+      ]
+    },
+    {
+      "path": "skills/nova/core/test-gates/remote-result-import.ts",
+      "line": 103,
+      "sha256": "ddb1e749086128083a295c15790a1e666a614000b4650055e3374c9bf7edcc81",
+      "sourceText": "    this.#blobs = new FileDurableBlobStore(root, options.maximumEvidenceStoreBytes, options.maximumEvidenceStoreBytes);",
+      "context": [
+        "    this.#records = new FileDurableRecordStore(root, options.recordLimits);",
+        "    // The importer enforces the per-job evidence limit; no blob can exceed the",
+        "    // store quota, and the third argument enforces that quota across all jobs.",
+        "    this.#blobs = new FileDurableBlobStore(root, options.maximumEvidenceStoreBytes, options.maximumEvidenceStoreBytes);",
+        "  }",
+        "  /** Read only a completed import under an exact caller-independent execution binding. */",
+        "  async readVerifiedResult(binding: { readonly jobId: string; readonly runId: string; readonly pipelineStageId: string;"
+      ],
+      "scope": "productive-source",
+      "soleOwningAuthority": "Reusable Nova gate store; source-specific standalone runtime-config author OR registered remote-test-gate adapter config determined by actual outercaller; same physicalroot requires identicalcapturedowner",
+      "targetField": "owning store.lockWaitSeconds (projectScaffold.lockWaitSeconds for pair)",
+      "rootBinding": "one physical root/lock namespace one captured owner/generation; conflictingopenreject",
+      "caseIds": [
+        "QC-FOUNDATION-FLOCK-WAIT-VAL",
+        "QC-FOUNDATION-FLOCK-WAIT-REAL-LOCK",
+        "QC-FOUNDATION-FLOCK-WAIT-HISTORY"
+      ]
+    },
+    {
+      "path": "skills/nova/core/test-gates/remote-dispatch-store.ts",
+      "line": 25,
+      "sha256": "634dc70de20d811672f69f70b58a6b620e578ae7c1188fe10afec46d90bca069",
+      "sourceText": "    this.#blobs = new FileDurableBlobStore(root, options.maximumArchiveBytes, options.maximumArchiveStoreBytes);",
+      "context": [
+        "      throw new Error('NOVA_REMOTE_PLAN_ARCHIVE_LIMIT_INVALID');",
+        "    }",
+        "    this.#records = new FileDurableRecordStore(root, options.recordLimits);",
+        "    this.#blobs = new FileDurableBlobStore(root, options.maximumArchiveBytes, options.maximumArchiveStoreBytes);",
+        "    this.#maximumArchiveBytes = options.maximumArchiveBytes;",
+        "  }",
+        ""
+      ],
+      "scope": "productive-source",
+      "soleOwningAuthority": "Reusable Nova gate store; source-specific standalone runtime-config author OR registered remote-test-gate adapter config determined by actual outercaller; same physicalroot requires identicalcapturedowner",
+      "targetField": "owning store.lockWaitSeconds (projectScaffold.lockWaitSeconds for pair)",
+      "rootBinding": "one physical root/lock namespace one captured owner/generation; conflictingopenreject",
+      "caseIds": [
+        "QC-FOUNDATION-FLOCK-WAIT-VAL",
+        "QC-FOUNDATION-FLOCK-WAIT-REAL-LOCK",
+        "QC-FOUNDATION-FLOCK-WAIT-HISTORY"
+      ]
+    },
+    {
+      "path": "skills/buster/engine/test-gates/historical-plan-store.ts",
+      "line": 47,
+      "sha256": "87806c4a582a07d9ed749d973ca66e489d2b36ffd6ead0fbfa65e15502a74f8f",
+      "sourceText": "    this.#results = new FileDurableBlobStore(path.join(root, 'results'), options.maximumResultBytes, options.maximumResultStoreBytes);",
+      "context": [
+        "    this.#admissionLock = path.join(path.resolve(root), 'job-admission');",
+        "    this.#maximumResultStoreBytes = options.maximumResultStoreBytes;",
+        "    this.#records = new FileDurableRecordStore(root, options.recordLimits);",
+        "    this.#results = new FileDurableBlobStore(path.join(root, 'results'), options.maximumResultBytes, options.maximumResultStoreBytes);",
+        "    this.#maximumArchiveBytes = options.maximumArchiveBytes;",
+        "    this.#maximumResultBytes = options.maximumResultBytes;",
+        "    let sourcePublicKey: crypto.KeyObject;"
+      ],
+      "scope": "productive-source",
+      "soleOwningAuthority": "existing buster-engine selected config/runtime store policy",
+      "targetField": "owning store.lockWaitSeconds (projectScaffold.lockWaitSeconds for pair)",
+      "rootBinding": "one physical root/lock namespace one captured owner/generation; conflictingopenreject",
+      "caseIds": [
+        "QC-FOUNDATION-FLOCK-WAIT-VAL",
+        "QC-FOUNDATION-FLOCK-WAIT-REAL-LOCK",
+        "QC-FOUNDATION-FLOCK-WAIT-HISTORY"
+      ]
+    },
+    {
+      "path": "skills/buster/engine/test-gates/native-fixture-journal.ts",
+      "line": 34,
+      "sha256": "4c5fb76cb5d6a9f28c76338ccefd39f7bbb17e7607bb90a998a5a146f43237a7",
+      "sourceText": "    this.#blobs = new FileDurableBlobStore(path.join(this.#root, 'data'), limits.maximumBlobBytes, limits.maximumTotalBytes);",
+      "context": [
+        "    this.#records = new FileDurableRecordStore(path.join(this.#root, 'metadata'), {",
+        "      maximumRecords: limits.maximumRecords, maximumBytes: limits.maximumStateBytes, maximumRecordBytes: 4096,",
+        "    });",
+        "    this.#blobs = new FileDurableBlobStore(path.join(this.#root, 'data'), limits.maximumBlobBytes, limits.maximumTotalBytes);",
+        "  }",
+        "",
+        "  async reserve(input: BusterFixtureAdmission): Promise<BusterFixtureState> {"
+      ],
+      "scope": "productive-source",
+      "soleOwningAuthority": "existing buster-engine selected config/runtime store policy",
+      "targetField": "owning store.lockWaitSeconds (projectScaffold.lockWaitSeconds for pair)",
+      "rootBinding": "one physical root/lock namespace one captured owner/generation; conflictingopenreject",
+      "caseIds": [
+        "QC-FOUNDATION-FLOCK-WAIT-VAL",
+        "QC-FOUNDATION-FLOCK-WAIT-REAL-LOCK",
+        "QC-FOUNDATION-FLOCK-WAIT-HISTORY"
+      ]
+    },
+    {
+      "path": "skills/buster/engine/test-gates/prepared-plan-store.ts",
+      "line": 72,
+      "sha256": "d9bbee538cd87a917f1c22ef7d89fb0bb313a73cd2fe096b7bc3390f19922067",
+      "sourceText": "    this.#results = new FileDurableBlobStore(path.join(writableRoot, 'results'), options.maximumResultBytes, options.maximumResultStoreBytes);",
+      "context": [
+        "    this.#admissionLock = path.join(writableRoot, 'job-admission');",
+        "    this.#maximumResultStoreBytes = options.maximumResultStoreBytes;",
+        "    this.#records = new FileDurableRecordStore(writableRoot, options.recordLimits);",
+        "    this.#results = new FileDurableBlobStore(path.join(writableRoot, 'results'), options.maximumResultBytes, options.maximumResultStoreBytes);",
+        "    this.#maximumResultBytes = options.maximumResultBytes;",
+        "    let sourcePublicKey: crypto.KeyObject;",
+        "    try { sourcePublicKey = crypto.createPublicKey(options.sourceAttestationPublicKey); }"
+      ],
+      "scope": "productive-source",
+      "soleOwningAuthority": "existing buster-engine selected config/runtime store policy",
+      "targetField": "owning store.lockWaitSeconds (projectScaffold.lockWaitSeconds for pair)",
+      "rootBinding": "one physical root/lock namespace one captured owner/generation; conflictingopenreject",
+      "caseIds": [
+        "QC-FOUNDATION-FLOCK-WAIT-VAL",
+        "QC-FOUNDATION-FLOCK-WAIT-REAL-LOCK",
+        "QC-FOUNDATION-FLOCK-WAIT-HISTORY"
+      ]
+    }
+  ],
+  "allSevenBounded": true,
+  "currentAPIOptionality": "Public/test-only latent; not a productive quota bypass instance",
+  "caseIds": [
+    "QC-LATENT-UNBOUNDED-BLOB-API-API-AND-SEVEN",
+    "QC-LATENT-UNBOUNDED-BLOB-API-HISTORY"
+  ],
+  "deployedInstancesClaim": false,
+  "outerCallerChains": "outer-constructor-and-alias-chains.json"
+}

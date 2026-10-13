@@ -1,0 +1,27 @@
+{
+  "status": "not-accepted; actual current runtimepolicy/nativebytes/hash/age source evidence only; not genuine installedDB/scanner/role/effect acceptance, future cases notrun",
+  "rows": 1228,
+  "cases": 4394,
+  "results": {
+    "not-run": 3251,
+    "passed": 1143
+  },
+  "trivy03NewRuntimePolicyRows": 3,
+  "trivy03CurrentDefinitions": 3,
+  "trivy03FutureCases": 12,
+  "allC0ClosedFalse": true,
+  "remainingConsumerReviewRows": 221,
+  "remainingSupplementalSourceTracedRows": 197,
+  "originalCandidates": 4642,
+  "manualCandidateRecordsThisBatch": 15,
+  "manualCandidateRecordsCombined": 164,
+  "remainingUnreviewedCandidates": 4478,
+  "explicitOpenCandidateGuards": 28,
+  "unmatchedGuardBusinessDefaultsNotInOriginalSyntaxRoster": [
+    "trivy-database.ts inspectTrivyDatabases fingerprintmetadata16KiB beforeparse separate resourcepolicy",
+    "native metadataread/fingerprint/size/quota trustworthy sourceformat vs actual scannerDB compatibility and execution/grants remain separateunknowns",
+    "CURRENT capturedRconstructorpolicy cannotnextMtakeB via payload; target typedmodule/newruntimeinstance dependency+grants C5 unimplemented"
+  ],
+  "integrityErrors": [],
+  "remaining": "221 schema consumers,197 original supplemental source-traced rows,4478 unreviewed candidates plus explicit open guard/trust/runtime-owner and absent-syntax obligations. Three runtimeDBpolicy fields mapped, actual nativefilesystem/hash/age controls passed narrowly; genuineDB/actualoperator/runtimeprofile/grant/capabilityfixture and module-to-newR dependency C5 remainunresolved; metadata16KiB and timestamp64chars policyguards stillopen. Existing codec/context/A6 scope and historical case requirements retained."
+}

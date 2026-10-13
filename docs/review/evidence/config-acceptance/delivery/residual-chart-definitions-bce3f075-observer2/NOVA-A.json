@@ -1,0 +1,183 @@
+{
+  "image": {
+    "digest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  },
+  "imagePullSecrets": [
+    {
+      "name": "delivery-pull-a"
+    }
+  ],
+  "auth": {
+    "existingSecret": "delivery-auth-a",
+    "existingSecretKey": "gateway-token"
+  },
+  "litellm": {
+    "existingSecret": "delivery-litellm-a",
+    "existingSecretKey": "api-key"
+  },
+  "discord": {
+    "enabled": true,
+    "existingSecret": "delivery-discord-a",
+    "existingSecretKey": "discord-token"
+  },
+  "agent": {
+    "git": {
+      "enabled": false
+    },
+    "model": {
+      "primary": "openai/gpt-5.6-sol",
+      "fallbacks": [
+        "openai/gpt-5.5"
+      ]
+    }
+  },
+  "gateway": {
+    "startupDoctor": {
+      "resources": {
+        "requests": {
+          "cpu": "100m",
+          "memory": "128Mi"
+        },
+        "limits": {
+          "cpu": "1",
+          "memory": "1Gi"
+        }
+      }
+    },
+    "port": 18781,
+    "bridgePort": 18791,
+    "url": "http://127.0.0.1:18781"
+  },
+  "initSetup": {
+    "resources": {
+      "requests": {
+        "cpu": "100m",
+        "memory": "128Mi"
+      },
+      "limits": {
+        "cpu": "1",
+        "memory": "1Gi"
+      }
+    }
+  },
+  "resources": {
+    "requests": {
+      "cpu": "100m",
+      "memory": "128Mi"
+    },
+    "limits": {
+      "cpu": "1",
+      "memory": "1Gi"
+    }
+  },
+  "workerTrust": {
+    "spiffe": {
+      "enabled": true,
+      "envoy": {
+        "resources": {
+          "requests": {
+            "cpu": "100m",
+            "memory": "128Mi"
+          },
+          "limits": {
+            "cpu": "1",
+            "memory": "1Gi"
+          }
+        }
+      }
+    }
+  },
+  "persistence": {
+    "config": {
+      "enabled": true,
+      "size": "10Gi",
+      "storageClass": "delivery-storage-a",
+      "accessModes": [
+        "ReadWriteOnce"
+      ]
+    },
+    "workspace": {
+      "enabled": true,
+      "size": "20Gi",
+      "storageClass": "delivery-storage-a",
+      "accessModes": [
+        "ReadWriteOnce"
+      ]
+    }
+  },
+  "serviceAccount": {
+    "create": true
+  },
+  "agentRole": "nova",
+  "service": {
+    "type": "ClusterIP",
+    "gatewayPort": 18781,
+    "gatewayTargetPort": 18781,
+    "bridgeEnabled": false,
+    "bridgePort": 18791,
+    "nodePort": 0,
+    "bridgeNodePort": 0,
+    "extraPorts": []
+  },
+  "probes": {
+    "startup": {
+      "enabled": true,
+      "initialDelaySeconds": 1,
+      "periodSeconds": 6,
+      "timeoutSeconds": 4,
+      "failureThreshold": 21
+    },
+    "readiness": {
+      "enabled": true,
+      "initialDelaySeconds": 1,
+      "periodSeconds": 7,
+      "timeoutSeconds": 5,
+      "failureThreshold": 4
+    },
+    "dependencies": {
+      "gateway": {
+        "enabled": true
+      },
+      "redis": {
+        "enabled": true
+      },
+      "redisStream": {
+        "enabled": true,
+        "stream": "dlv:health:a",
+        "maxLen": 500
+      },
+      "litellm": {
+        "enabled": false
+      },
+      "registries": {
+        "enabled": true,
+        "endpoints": [
+          "https://registry-a.delivery.invalid"
+        ]
+      }
+    }
+  },
+  "shutdown": {
+    "terminationGracePeriodSeconds": 190,
+    "preStopDrainSeconds": 6,
+    "drainFile": "/tmp/dlv-a-draining"
+  },
+  "workspace": {
+    "enabled": true,
+    "overrideOnRestart": false,
+    "soul": "Delivery definition A",
+    "agents": "",
+    "user": "",
+    "tools": "",
+    "memory": "",
+    "identity": "",
+    "bootstrap": ""
+  },
+  "pluginSeed": {
+    "installMode": "external-official",
+    "specs": [
+      "npm:@openclaw/acpx@2026.9.5",
+      "npm:@openclaw/discord@2026.9.5"
+    ]
+  }
+}

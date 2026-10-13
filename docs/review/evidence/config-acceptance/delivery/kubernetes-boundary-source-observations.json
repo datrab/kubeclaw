@@ -504,6 +504,24 @@
       "line": 577,
       "endLine": 604,
       "excerpt": "func (m *managerImpl) containerEphemeralStorageLimitEviction(podStats statsapi.PodStats, pod *v1.Pod) bool {\n\tthresholdsMap := make(map[string]*resource.Quantity)\n\tfor _, container := range pod.Spec.Containers {\n\t\tephemeralLimit := container.Resources.Limits.StorageEphemeral()\n\t\tif ephemeralLimit != nil && ephemeralLimit.Value() != 0 {\n\t\t\tthresholdsMap[container.Name] = ephemeralLimit\n\t\t}\n\t}\n\n\tfor _, containerStat := range podStats.Containers {\n\t\tcontainerUsed := diskUsage(containerStat.Logs)\n\t\tif !*m.dedicatedImageFs {\n\t\t\tcontainerUsed.Add(*diskUsage(containerStat.Rootfs))\n\t\t}\n\n\t\tif ephemeralStorageThreshold, ok := thresholdsMap[containerStat.Name]; ok {\n\t\t\tif ephemeralStorageThreshold.Cmp(*containerUsed) < 0 {\n\t\t\t\tif m.evictPod(pod, immediateEvictionGracePeriodSeconds, fmt.Sprintf(containerEphemeralStorageMessageFmt, containerStat.Name, ephemeralStorageThreshold.String()), nil, nil) {\n\t\t\t\t\tmetrics.Evictions.WithLabelValues(signalEphemeralContainerFsLimit).Inc()\n\t\t\t\t\treturn true\n\t\t\t\t}\n\t\t\t\treturn false\n\t\t\t}\n\t\t}\n\t}\n\treturn false\n}\n"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.35.6/pkg/apis/batch/validation/validation.go",
+      "sha256": "84de54a1606bfa5aeeb39bab21b9c3978c41f7f9488a9704f14765f10130ef0d",
+      "version": "v1.35.6",
+      "function": "validateTimeZone",
+      "line": 859,
+      "endLine": 888,
+      "excerpt": "func validateTimeZone(timeZone *string, fldPath *field.Path) field.ErrorList {\n\tallErrs := field.ErrorList{}\n\tif timeZone == nil {\n\t\treturn allErrs\n\t}\n\n\tif len(*timeZone) == 0 {\n\t\tallErrs = append(allErrs, field.Invalid(fldPath, timeZone, \"timeZone must be nil or non-empty string\"))\n\t\treturn allErrs\n\t}\n\n\tfor _, part := range strings.Split(*timeZone, \"/\") {\n\t\tif part == \".\" || part == \"..\" || strings.HasPrefix(part, \"-\") || !validTimeZoneCharacters.MatchString(part) {\n\t\t\tallErrs = append(allErrs, field.Invalid(fldPath, timeZone, fmt.Sprintf(\"unknown time zone %s\", *timeZone)))\n\t\t\treturn allErrs\n\t\t}\n\t}\n\n\tif strings.EqualFold(*timeZone, \"Local\") {\n\t\tallErrs = append(allErrs, field.Invalid(fldPath, timeZone, \"timeZone must be an explicit time zone as defined in https://www.iana.org/time-zones\"))\n\t}\n\n\tif _, err := time.LoadLocation(*timeZone); err != nil {\n\t\tallErrs = append(allErrs, field.Invalid(fldPath, timeZone, err.Error()))\n\t}\n\n\treturn allErrs\n}\n\n// ValidateJobTemplateSpec validates a JobTemplateSpec and returns an ErrorList with any errors."
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.34.11/pkg/apis/batch/validation/validation.go",
+      "sha256": "455918a16de1c14d7b1513d704255fcfd86b0476cc10eb8c90bb055d31fafe9d",
+      "version": "v1.34.11",
+      "function": "validateTimeZone",
+      "line": 816,
+      "endLine": 845,
+      "excerpt": "func validateTimeZone(timeZone *string, fldPath *field.Path) field.ErrorList {\n\tallErrs := field.ErrorList{}\n\tif timeZone == nil {\n\t\treturn allErrs\n\t}\n\n\tif len(*timeZone) == 0 {\n\t\tallErrs = append(allErrs, field.Invalid(fldPath, timeZone, \"timeZone must be nil or non-empty string\"))\n\t\treturn allErrs\n\t}\n\n\tfor _, part := range strings.Split(*timeZone, \"/\") {\n\t\tif part == \".\" || part == \"..\" || strings.HasPrefix(part, \"-\") || !validTimeZoneCharacters.MatchString(part) {\n\t\t\tallErrs = append(allErrs, field.Invalid(fldPath, timeZone, fmt.Sprintf(\"unknown time zone %s\", *timeZone)))\n\t\t\treturn allErrs\n\t\t}\n\t}\n\n\tif strings.EqualFold(*timeZone, \"Local\") {\n\t\tallErrs = append(allErrs, field.Invalid(fldPath, timeZone, \"timeZone must be an explicit time zone as defined in https://www.iana.org/time-zones\"))\n\t}\n\n\tif _, err := time.LoadLocation(*timeZone); err != nil {\n\t\tallErrs = append(allErrs, field.Invalid(fldPath, timeZone, err.Error()))\n\t}\n\n\treturn allErrs\n}\n\n// ValidateJobTemplateSpec validates a JobTemplateSpec and returns an ErrorList with any errors."
     }
   ]
 }

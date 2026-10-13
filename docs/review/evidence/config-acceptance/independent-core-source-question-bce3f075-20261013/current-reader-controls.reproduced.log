@@ -1,0 +1,131 @@
+{
+  "command": "node docs/review/evidence/config-acceptance/components/question-closure-bce3f075/current-reader-controls.mjs",
+  "node": "v24.21.0",
+  "identities": {
+    "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts": "5624aa2b5f980a373ab30fdf012dee1346418ac3b2537244475f2a496d3766a0",
+    "skills/common/plugin-runtime/foundation/observability/durable-blobs.ts": "5e1af13ee56ba905355f7f84e58b25d6a8ea5a1c7e77f5863a1a1ad18506c2ea",
+    "skills/buster/engine/test-gates/preparation-archive.ts": "a3f47267addf5e371faff3896521eb3aac35b49523275a7766ed29c8d1d42f6a",
+    "skills/buster/engine/test-gates/kubernetes-fixture-storage.ts": "da2858e192df14fc5d457ebd1f3414696c5a3be116f611216c214c0b6b194f1f",
+    "skills/buster/engine/test-gates/provider-process-observation.ts": "eca305796cc719a34e1d8707db0c3a8b5421815ce092c6b12f136e6003762e92",
+    "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/question-closure-bce3f075/current-reader-controls.mjs": "f04ba76e553c4cb09ef0ead47328fc8d47f169c54afdf9e13d48768f5870a6ca",
+    "package-lock.json": "c7b124ab4de93c983eebfd13f859cd328b7e7a823fe7dc662f9b6e0cf0ed736b"
+  },
+  "results": [
+    {
+      "id": "QC-REASON-RESERVE-SERIALIZED-BOUND",
+      "result": "passed",
+      "observed": {
+        "A": {
+          "itemBytes": 1745,
+          "overflowBytes": 1744,
+          "requiredIncrementalBytes": 3486
+        },
+        "B": {
+          "itemBytes": 1745,
+          "overflowBytes": 976,
+          "requiredIncrementalBytes": 2718
+        },
+        "sourceIdentityLimit": 256,
+        "JSONWorstPerUTF16Unit": 6,
+        "suffixUnits": 72,
+        "scope": "Exact real canonical serializer projection; not future formatter implementation or general capacity guarantee. One new attributed overflow item and null-to-object overflow replacement."
+      }
+    },
+    {
+      "id": "QC-BLOB-BOUND-A-B",
+      "result": "passed",
+      "observed": {
+        "observations": [
+          {
+            "maximumBlobBytes": 8,
+            "maximumTotalBytes": 16,
+            "secondDifferentBlob": "admitted",
+            "duplicate": true
+          },
+          {
+            "maximumBlobBytes": 8,
+            "maximumTotalBytes": 8,
+            "secondDifferentBlob": "rejected",
+            "duplicate": true
+          }
+        ],
+        "omittedTotalCurrentAPI": "admits both 8-byte blobs",
+        "scope": "Real bounded API A/B and latent optional API witness; not changing seven deployed quota authors."
+      }
+    },
+    {
+      "id": "QC-ADMISSION-ATTRIBUTED-OVERFLOW",
+      "result": "passed",
+      "observed": {
+        "stateBytes": 5728,
+        "lastReason": "OBSERVABILITY_WIRE_NOT_RFC8785_CANONICAL",
+        "overflowItem": {
+          "itemId": "quarantine-overflow:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+          "kind": "quarantined-record",
+          "pipelineRunId": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+          "producer": {
+            "bootId": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+            "producerId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "producerType": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+          },
+          "reasonCode": "quarantine-overflow",
+          "subjectId": "quarantine-overflow:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+        },
+        "scope": "Actual current admission/decoder/formatter/attribution/flock controls only; no adjustable future fields consumed."
+      }
+    },
+    {
+      "id": "QC-OUTBOX-FOUR-READ-SITES",
+      "result": "passed",
+      "observed": {
+        "bytes": 2099,
+        "selectedMaximumBytes": 1024,
+        "pendingCurrent": "reads above cap",
+        "target": "all four reads must supply SAME existing maximumBytes and reject before JSON parse; retained oversized file unchanged",
+        "remainingMethodControls": "append/acknowledge/compact target harness cases required separately; not implied by pending"
+      }
+    },
+    {
+      "id": "QC-TAR-DIAGNOSTIC-REAL-GNU-TAR",
+      "result": "passed",
+      "observed": {
+        "diagnosticUTF16Units": 4096,
+        "errorPrefix": "BUSTER_REMOTE_TAR_FAILED:2::",
+        "errorTail": "g\ntar (child): Error is not recoverable: exiting now\n\ngzip: stdin: unexpected end of file\n/usr/bin/tar: Child returned status 2\n/usr/bin/tar: Error is not recoverable: exiting now\n",
+        "tarExecutable": "/usr/bin/tar",
+        "archiveInputUnits": 6001,
+        "scope": "Real unchanged safeExtract spawns genuine tar, overlong filename fails before extraction; no fake executable/error stream."
+      }
+    },
+    {
+      "id": "QC-STORAGE-REPRESENTATION-CURRENT",
+      "result": "passed",
+      "observed": {
+        "e63": "accepted mathematically exact BigInt",
+        "e64": "rejected before quota even tiny normalized quantity",
+        "normalizedTinyE64Bytes": "100000000",
+        "scope": "Current exponent63 is parser complexity envelope, NOT Kubernetes universal magnitude/representation invariant; quota remains sole allowed storage bytes author."
+      }
+    },
+    {
+      "id": "QC-PROVIDER-OBSERVATION-PROVENANCE",
+      "result": "passed",
+      "observed": {
+        "self": {
+          "cpuTimeMs": 590,
+          "memoryBytes": 113106944,
+          "processes": 1
+        },
+        "vanished": {
+          "cpuTimeMs": 0,
+          "memoryBytes": 0,
+          "processes": 1
+        },
+        "scope": "Actual procfs readers. Vanished root returns synthetic process count1, not confirmed live process/resource zero; requires target validity/provenance treatment, not operator knob."
+      }
+    }
+  ],
+  "passed": 7,
+  "failed": 0,
+  "scope": "C0 actual source controls only; no implementation, F-EFFECT or acceptance"
+}

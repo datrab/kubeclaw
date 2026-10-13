@@ -1,0 +1,927 @@
+{
+  "originalCount": 4642,
+  "thisBatchCount": 41,
+  "remainingUnreviewed": 4143,
+  "records": [
+    {
+      "id": "RT-CANDIDATE-4f566ffa847d851f",
+      "source": {
+        "path": "skills/buster/plugins/container-build/src/provider.js",
+        "line": 30,
+        "text": "if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error(`CONTAINER_BUILD_CONFIG_INVALID:${label}`);",
+        "sha256": "1204d07c75942e9def8b703748bf97510e933b2cfb33b85f84c485d42b89c847",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "1204d07c75942e9def8b703748bf97510e933b2cfb33b85f84c485d42b89c847",
+      "explicitReviewedReason": "currentconfiguration/definition objecttype guard",
+      "settings": [
+        "RT-a2ede916c5f3a88f",
+        "RT-789ceac52757ccbc",
+        "RT-eb6aa0fbaefdfbfc",
+        "RT-e2f994744ac26e00",
+        "RT-c41b8c07ceeaacf5",
+        "RT-93a6b376714825cf",
+        "RT-9eb9d2cba21c2be1",
+        "RT-b36b8b81fcef0f78",
+        "RT-0e152ca9597094d8",
+        "RT-61257ff55ff06b04"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/contracts.json",
+      "status": "explicit narrow source/task/protocol/generatedbinding or existing-ownedpolicy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-a54d580a52c70803",
+      "source": {
+        "path": "skills/buster/plugins/container-build/src/provider.js",
+        "line": 35,
+        "text": "if (typeof value !== 'string' || value.length < 1 || value.length > 1024 || value.includes('\\0') || path.isAbsolute(value)",
+        "sha256": "1204d07c75942e9def8b703748bf97510e933b2cfb33b85f84c485d42b89c847",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "1204d07c75942e9def8b703748bf97510e933b2cfb33b85f84c485d42b89c847",
+      "explicitReviewedReason": "OPEN1024relativepath character processingguard, absolute/NUL containment separatelymandatory",
+      "settings": [
+        "RT-b3b2f0374a518a17"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/contracts.json",
+      "status": "precise open processingquota/security-policy/genuineproducer coverage obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-708e7628e884e621",
+      "source": {
+        "path": "skills/buster/plugins/container-build/src/provider.js",
+        "line": 36,
+        "text": "|| value.split(/[\\\\/]/u).some((part) => part === '' || part === '..')) throw new Error(`CONTAINER_BUILD_PATH_INVALID:${label}`);",
+        "sha256": "1204d07c75942e9def8b703748bf97510e933b2cfb33b85f84c485d42b89c847",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "1204d07c75942e9def8b703748bf97510e933b2cfb33b85f84c485d42b89c847",
+      "explicitReviewedReason": "taskdescendant noempty/parent path security, dotlegalcurrentbuildcontext",
+      "settings": [
+        "RT-b3b2f0374a518a17"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/contracts.json",
+      "status": "explicit narrow source/task/protocol/generatedbinding or existing-ownedpolicy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-d7f374409f8a01eb",
+      "source": {
+        "path": "skills/buster/plugins/container-build/src/provider.js",
+        "line": 64,
+        "text": "if (definition.target !== undefined && (typeof definition.target !== 'string' || !NAME.test(definition.target))) {",
+        "sha256": "1204d07c75942e9def8b703748bf97510e933b2cfb33b85f84c485d42b89c847",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "1204d07c75942e9def8b703748bf97510e933b2cfb33b85f84c485d42b89c847",
+      "explicitReviewedReason": "taskbuild stage targetgrammar, fixedactualDockerfile source needed",
+      "settings": [
+        "RT-a2ede916c5f3a88f",
+        "RT-789ceac52757ccbc",
+        "RT-eb6aa0fbaefdfbfc",
+        "RT-e2f994744ac26e00",
+        "RT-c41b8c07ceeaacf5",
+        "RT-93a6b376714825cf",
+        "RT-9eb9d2cba21c2be1",
+        "RT-b36b8b81fcef0f78",
+        "RT-0e152ca9597094d8",
+        "RT-61257ff55ff06b04"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/contracts.json",
+      "status": "explicit narrow source/task/protocol/generatedbinding or existing-ownedpolicy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-c9958ed9b20300a4",
+      "source": {
+        "path": "skills/buster/plugins/container-build/src/provider.js",
+        "line": 71,
+        "text": "if (entries.length > 32 || entries.some(([name, item]) => !ARG_NAME.test(name) || PROTECTED_ARGUMENT.test(name)",
+        "sha256": "1204d07c75942e9def8b703748bf97510e933b2cfb33b85f84c485d42b89c847",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "1204d07c75942e9def8b703748bf97510e933b2cfb33b85f84c485d42b89c847",
+      "explicitReviewedReason": "OPEN32buildArg count processingquota duplicatednativevalidator; ARG grammar andPROTECTED regex security baseline owner/domain needs exactreview, not lexicallyprotocol",
+      "settings": [
+        "RT-a2ede916c5f3a88f",
+        "RT-789ceac52757ccbc",
+        "RT-eb6aa0fbaefdfbfc",
+        "RT-e2f994744ac26e00",
+        "RT-c41b8c07ceeaacf5",
+        "RT-93a6b376714825cf",
+        "RT-9eb9d2cba21c2be1",
+        "RT-b36b8b81fcef0f78",
+        "RT-0e152ca9597094d8",
+        "RT-61257ff55ff06b04"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/contracts.json",
+      "status": "precise open processingquota/security-policy/genuineproducer coverage obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-4693eb7a83113062",
+      "source": {
+        "path": "skills/buster/plugins/container-build/src/provider.js",
+        "line": 72,
+        "text": "|| typeof item !== 'string' || item.length > 4096 || item.includes('\\0'))) throw new Error('CONTAINER_BUILD_ARGUMENT_INVALID');",
+        "sha256": "1204d07c75942e9def8b703748bf97510e933b2cfb33b85f84c485d42b89c847",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "1204d07c75942e9def8b703748bf97510e933b2cfb33b85f84c485d42b89c847",
+      "explicitReviewedReason": "OPEN4096buildArg value chars processingguard, NUL unsupportedwire/execution",
+      "settings": [
+        "RT-a2ede916c5f3a88f",
+        "RT-789ceac52757ccbc",
+        "RT-eb6aa0fbaefdfbfc",
+        "RT-e2f994744ac26e00",
+        "RT-c41b8c07ceeaacf5",
+        "RT-93a6b376714825cf",
+        "RT-9eb9d2cba21c2be1",
+        "RT-b36b8b81fcef0f78",
+        "RT-0e152ca9597094d8",
+        "RT-61257ff55ff06b04"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/contracts.json",
+      "status": "precise open processingquota/security-policy/genuineproducer coverage obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-856c58dd923383e3",
+      "source": {
+        "path": "skills/buster/plugins/container-build/src/provider.js",
+        "line": 84,
+        "text": "const outputName = value.outputName ?? String(invocation.moduleId ?? invocation.nodeId).toLowerCase().replace(/[^a-z0-9._-]/gu, '-');",
+        "sha256": "1204d07c75942e9def8b703748bf97510e933b2cfb33b85f84c485d42b89c847",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "1204d07c75942e9def8b703748bf97510e933b2cfb33b85f84c485d42b89c847",
+      "explicitReviewedReason": "taskoutputname generatedmodule/node sanitizedbinding (notCONFIG writer), exactattempt resource/tag identity",
+      "settings": [
+        "RT-f62121c4ef5a8d9b"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/contracts.json",
+      "status": "explicit narrow source/task/protocol/generatedbinding or existing-ownedpolicy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-e6077918642433f5",
+      "source": {
+        "path": "skills/buster/plugins/container-build/src/provider.js",
+        "line": 85,
+        "text": "if (typeof outputName !== 'string' || !NAME.test(outputName)) throw new Error('CONTAINER_BUILD_OUTPUT_NAME_INVALID');",
+        "sha256": "1204d07c75942e9def8b703748bf97510e933b2cfb33b85f84c485d42b89c847",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "1204d07c75942e9def8b703748bf97510e933b2cfb33b85f84c485d42b89c847",
+      "explicitReviewedReason": "taskoutput stableNAME supportedgrammar; source manifestidentity/registrygrants separate",
+      "settings": [
+        "RT-f62121c4ef5a8d9b"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/contracts.json",
+      "status": "explicit narrow source/task/protocol/generatedbinding or existing-ownedpolicy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-4efc5f2351b24a09",
+      "source": {
+        "path": "skills/buster/plugins/container-build/src/provider.js",
+        "line": 86,
+        "text": "const platform = value.platform ?? 'linux/amd64';",
+        "sha256": "1204d07c75942e9def8b703748bf97510e933b2cfb33b85f84c485d42b89c847",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "1204d07c75942e9def8b703748bf97510e933b2cfb33b85f84c485d42b89c847",
+      "explicitReviewedReason": "currentimplicit linux/amd64 businesschoice retiredin targetexplicitrequiredtaskplatform; notallregex platformssupportedbackend",
+      "settings": [
+        "RT-417086b522da33d6"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/contracts.json",
+      "status": "explicit narrow source/task/protocol/generatedbinding or existing-ownedpolicy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-28c2babf869018d8",
+      "source": {
+        "path": "skills/buster/plugins/container-build/src/provider.js",
+        "line": 87,
+        "text": "if (typeof platform !== 'string' || !PLATFORM.test(platform)) throw new Error('CONTAINER_BUILD_PLATFORM_INVALID');",
+        "sha256": "1204d07c75942e9def8b703748bf97510e933b2cfb33b85f84c485d42b89c847",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "1204d07c75942e9def8b703748bf97510e933b2cfb33b85f84c485d42b89c847",
+      "explicitReviewedReason": "Linuxplatformtasksyntax narrowerrealnativecapturedallowedPlatforms",
+      "settings": [
+        "RT-417086b522da33d6"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/contracts.json",
+      "status": "explicit narrow source/task/protocol/generatedbinding or existing-ownedpolicy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-4cf709069ea402fb",
+      "source": {
+        "path": "skills/buster/plugins/container-build/src/provider.js",
+        "line": 113,
+        "text": "limits: { maximumLogBytes: invocation.limits.logBytes, maximumExecutionMs: invocation.timeoutMs },",
+        "sha256": "1204d07c75942e9def8b703748bf97510e933b2cfb33b85f84c485d42b89c847",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "1204d07c75942e9def8b703748bf97510e933b2cfb33b85f84c485d42b89c847",
+      "explicitReviewedReason": "actualexistinginvocation log/time requestprojection tostrictercapturednative caps; no independentproviderfallback",
+      "settings": [
+        "RT-b3b2f0374a518a17"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/contracts.json",
+      "status": "explicit narrow source/task/protocol/generatedbinding or existing-ownedpolicy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-1530da374d724b82",
+      "source": {
+        "path": "skills/buster/plugins/container-build/src/provider.js",
+        "line": 120,
+        "text": "rule: String(result.errorCode ?? 'CONTAINER_BUILD_FAILED'), message: String(result.message ?? 'Container build failed.') }];",
+        "sha256": "1204d07c75942e9def8b703748bf97510e933b2cfb33b85f84c485d42b89c847",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "1204d07c75942e9def8b703748bf97510e933b2cfb33b85f84c485d42b89c847",
+      "explicitReviewedReason": "failedexternaloperation errorcode/message diagnosticabsence representation, notbusinessowner fallback; OPENhighfindingseverity policy source119 needs owner/rationale",
+      "settings": [
+        "RT-a2ede916c5f3a88f",
+        "RT-789ceac52757ccbc",
+        "RT-eb6aa0fbaefdfbfc",
+        "RT-e2f994744ac26e00",
+        "RT-c41b8c07ceeaacf5",
+        "RT-93a6b376714825cf",
+        "RT-9eb9d2cba21c2be1",
+        "RT-b36b8b81fcef0f78",
+        "RT-0e152ca9597094d8",
+        "RT-61257ff55ff06b04"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/contracts.json",
+      "status": "precise open processingquota/security-policy/genuineproducer coverage obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-62154f8f16a6649c",
+      "source": {
+        "path": "skills/buster/plugins/container-build/src/provider.js",
+        "line": 132,
+        "text": "summary: passed ? `Built and verified ${String(result.immutableImage)}.` : String(result.message ?? 'Container build failed.'),",
+        "sha256": "1204d07c75942e9def8b703748bf97510e933b2cfb33b85f84c485d42b89c847",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "1204d07c75942e9def8b703748bf97510e933b2cfb33b85f84c485d42b89c847",
+      "explicitReviewedReason": "failedresultdiagnostic fallback text, notconfigauthor",
+      "settings": [
+        "RT-a2ede916c5f3a88f",
+        "RT-789ceac52757ccbc",
+        "RT-eb6aa0fbaefdfbfc",
+        "RT-e2f994744ac26e00",
+        "RT-c41b8c07ceeaacf5",
+        "RT-93a6b376714825cf",
+        "RT-9eb9d2cba21c2be1",
+        "RT-b36b8b81fcef0f78",
+        "RT-0e152ca9597094d8",
+        "RT-61257ff55ff06b04"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/contracts.json",
+      "status": "explicit narrow source/task/protocol/generatedbinding or existing-ownedpolicy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-b08fe81fcba1577a",
+      "source": {
+        "path": "skills/buster/plugins/container-build/src/provider.js",
+        "line": 141,
+        "text": "registryImage: result.registryImage ?? null, immutableImage: result.immutableImage ?? null, digest: result.digest ?? null }),",
+        "sha256": "1204d07c75942e9def8b703748bf97510e933b2cfb33b85f84c485d42b89c847",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "1204d07c75942e9def8b703748bf97510e933b2cfb33b85f84c485d42b89c847",
+      "explicitReviewedReason": "optionaloperation image/digest disclosure null absence, notgeneration/profileinput",
+      "settings": [
+        "RT-a2ede916c5f3a88f",
+        "RT-789ceac52757ccbc",
+        "RT-eb6aa0fbaefdfbfc",
+        "RT-e2f994744ac26e00",
+        "RT-c41b8c07ceeaacf5",
+        "RT-93a6b376714825cf",
+        "RT-9eb9d2cba21c2be1",
+        "RT-b36b8b81fcef0f78",
+        "RT-0e152ca9597094d8",
+        "RT-61257ff55ff06b04"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/contracts.json",
+      "status": "explicit narrow source/task/protocol/generatedbinding or existing-ownedpolicy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-a19bd6e35b6c666c",
+      "source": {
+        "path": "skills/buster/plugins/kubernetes-fixture/src/provider.js",
+        "line": 13,
+        "text": "if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error(`KUBERNETES_FIXTURE_CONFIG_INVALID:${label}`);",
+        "sha256": "79c67271de4e528a9dc62d97522ea6484c9bb92dcdf67999266dfec57a7aaaf2",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "79c67271de4e528a9dc62d97522ea6484c9bb92dcdf67999266dfec57a7aaaf2",
+      "explicitReviewedReason": "actualconfiguration objects type",
+      "settings": [
+        "RT-1ee19ae5cf389f34",
+        "RT-0d9d1844afc64a69",
+        "RT-dc1999676fe1f2dc"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/contracts.json",
+      "status": "explicit narrow source/task/protocol/generatedbinding or existing-ownedpolicy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-3de90cf750828b36",
+      "source": {
+        "path": "skills/buster/plugins/kubernetes-fixture/src/provider.js",
+        "line": 31,
+        "text": "if (imageInputs.length > 1 || imageInputs.some((item) => item.kind !== 'value'",
+        "sha256": "79c67271de4e528a9dc62d97522ea6484c9bb92dcdf67999266dfec57a7aaaf2",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "79c67271de4e528a9dc62d97522ea6484c9bb92dcdf67999266dfec57a7aaaf2",
+      "explicitReviewedReason": "atmostoneexactvalueimagefixture sourceinput",
+      "settings": [
+        "RT-cf28691eea301584",
+        "RT-5d82d8cd07793c3d",
+        "RT-82c3b46b26e4c39d"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/contracts.json",
+      "status": "explicit narrow source/task/protocol/generatedbinding or existing-ownedpolicy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-b3388870aedd6140",
+      "source": {
+        "path": "skills/buster/plugins/kubernetes-fixture/src/provider.js",
+        "line": 32,
+        "text": "|| item.schemaId !== 'kubeclaw.container-image@1')) throw new Error('KUBERNETES_FIXTURE_IMAGE_INPUT_INVALID');",
+        "sha256": "79c67271de4e528a9dc62d97522ea6484c9bb92dcdf67999266dfec57a7aaaf2",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "79c67271de4e528a9dc62d97522ea6484c9bb92dcdf67999266dfec57a7aaaf2",
+      "explicitReviewedReason": "fixedcontainerimage schema identity",
+      "settings": [
+        "RT-cf28691eea301584",
+        "RT-5d82d8cd07793c3d",
+        "RT-82c3b46b26e4c39d"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/contracts.json",
+      "status": "explicit narrow source/task/protocol/generatedbinding or existing-ownedpolicy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-ee5daf426a52e324",
+      "source": {
+        "path": "skills/buster/plugins/kubernetes-fixture/src/provider.js",
+        "line": 37,
+        "text": "if (!matched || typeof image.digest !== 'string' || !DIGEST.test(image.digest) || matched[1] !== image.digest) {",
+        "sha256": "79c67271de4e528a9dc62d97522ea6484c9bb92dcdf67999266dfec57a7aaaf2",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "79c67271de4e528a9dc62d97522ea6484c9bb92dcdf67999266dfec57a7aaaf2",
+      "explicitReviewedReason": "immutableimage ref@sha256 equalsdigest, protocol SHA25664hex notnumericquota",
+      "settings": [
+        "RT-cf28691eea301584",
+        "RT-5d82d8cd07793c3d",
+        "RT-82c3b46b26e4c39d"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/contracts.json",
+      "status": "explicit narrow source/task/protocol/generatedbinding or existing-ownedpolicy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-73258a350f7a03c4",
+      "source": {
+        "path": "skills/buster/plugins/kubernetes-fixture/src/provider.js",
+        "line": 44,
+        "text": "if (typeof value.serviceName !== 'string' || !DNS_LABEL.test(value.serviceName)) throw new Error('KUBERNETES_FIXTURE_SERVICE_NAME_INVALID');",
+        "sha256": "79c67271de4e528a9dc62d97522ea6484c9bb92dcdf67999266dfec57a7aaaf2",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "79c67271de4e528a9dc62d97522ea6484c9bb92dcdf67999266dfec57a7aaaf2",
+      "explicitReviewedReason": "taskservice DNSname interface source/nativecheckedmanifest identity",
+      "settings": [
+        "RT-2d3bd84c488588ec"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/contracts.json",
+      "status": "explicit narrow source/task/protocol/generatedbinding or existing-ownedpolicy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-06018ee4acf56648",
+      "source": {
+        "path": "skills/buster/plugins/kubernetes-fixture/src/provider.js",
+        "line": 45,
+        "text": "if (!Number.isSafeInteger(value.servicePort) || value.servicePort < 1 || value.servicePort > 65535) throw new Error('KUBERNETES_FIXTURE_SERVICE_PORT_INVALID');",
+        "sha256": "79c67271de4e528a9dc62d97522ea6484c9bb92dcdf67999266dfec57a7aaaf2",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "79c67271de4e528a9dc62d97522ea6484c9bb92dcdf67999266dfec57a7aaaf2",
+      "explicitReviewedReason": "finite TCPport1..65535 taskprotocol domain notprocessingquota",
+      "settings": [
+        "RT-08d10b1dca5afa53"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/contracts.json",
+      "status": "explicit narrow source/task/protocol/generatedbinding or existing-ownedpolicy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-61873a83c2efcafb",
+      "source": {
+        "path": "skills/buster/plugins/kubernetes-fixture/src/provider.js",
+        "line": 47,
+        "text": "if (serviceTargetPort !== undefined && (!Number.isSafeInteger(serviceTargetPort) || serviceTargetPort < 1 || serviceTargetPort > 65535)) throw new Error('KUBERNETES_FIXTURE_SERVICE_TARGET_PORT_INVALID');",
+        "sha256": "79c67271de4e528a9dc62d97522ea6484c9bb92dcdf67999266dfec57a7aaaf2",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "79c67271de4e528a9dc62d97522ea6484c9bb92dcdf67999266dfec57a7aaaf2",
+      "explicitReviewedReason": "optionaltasktargetport exactfiniteprotocol1..65535; nativeactualmanifest inference separate",
+      "settings": [
+        "RT-85b1243b34cbf6df"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/contracts.json",
+      "status": "explicit narrow source/task/protocol/generatedbinding or existing-ownedpolicy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-487ab41a91e0c2ef",
+      "source": {
+        "path": "skills/buster/plugins/kubernetes-fixture/src/provider.js",
+        "line": 48,
+        "text": "const namespacePrefix = value.namespacePrefix ?? 'test';",
+        "sha256": "79c67271de4e528a9dc62d97522ea6484c9bb92dcdf67999266dfec57a7aaaf2",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "79c67271de4e528a9dc62d97522ea6484c9bb92dcdf67999266dfec57a7aaaf2",
+      "explicitReviewedReason": "mappedrequestedprefix owner implicittest currentfallback retiredtarget",
+      "settings": [
+        "RT-eb41e2cf5ad440a2"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/contracts.json",
+      "status": "explicit narrow source/task/protocol/generatedbinding or existing-ownedpolicy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-1e56a656a758e620",
+      "source": {
+        "path": "skills/buster/plugins/kubernetes-fixture/src/provider.js",
+        "line": 49,
+        "text": "if (typeof namespacePrefix !== 'string' || namespacePrefix.length > MAX_NAMESPACE_PREFIX_LENGTH || !DNS_LABEL.test(namespacePrefix)) {",
+        "sha256": "79c67271de4e528a9dc62d97522ea6484c9bb92dcdf67999266dfec57a7aaaf2",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "79c67271de4e528a9dc62d97522ea6484c9bb92dcdf67999266dfec57a7aaaf2",
+      "explicitReviewedReason": "prefix<=42 sourcegeneratednamespace63 chars minus dash+20shahex; exactbinding algorithm consumerrelease identity/version constraints separate, not arbitrarycapacityalias",
+      "settings": [
+        "RT-eb41e2cf5ad440a2"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/contracts.json",
+      "status": "explicit narrow source/task/protocol/generatedbinding or existing-ownedpolicy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-b992c2ca77855412",
+      "source": {
+        "path": "skills/buster/plugins/kubernetes-fixture/src/provider.js",
+        "line": 58,
+        "text": "const retentionMode = retention.mode ?? 'delete';",
+        "sha256": "79c67271de4e528a9dc62d97522ea6484c9bb92dcdf67999266dfec57a7aaaf2",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "79c67271de4e528a9dc62d97522ea6484c9bb92dcdf67999266dfec57a7aaaf2",
+      "explicitReviewedReason": "mappedownedcleanup mode defaultdelete current, targetrequired",
+      "settings": [
+        "RT-1ee19ae5cf389f34",
+        "RT-0d9d1844afc64a69",
+        "RT-dc1999676fe1f2dc"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/contracts.json",
+      "status": "explicit narrow source/task/protocol/generatedbinding or existing-ownedpolicy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-1fdb6134550882d3",
+      "source": {
+        "path": "skills/buster/plugins/kubernetes-fixture/src/provider.js",
+        "line": 59,
+        "text": "const retentionSeconds = retention.seconds ?? 1800;",
+        "sha256": "79c67271de4e528a9dc62d97522ea6484c9bb92dcdf67999266dfec57a7aaaf2",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "79c67271de4e528a9dc62d97522ea6484c9bb92dcdf67999266dfec57a7aaaf2",
+      "explicitReviewedReason": "mappedownedTTLseconds default1800 current, targetrequired",
+      "settings": [
+        "RT-1ee19ae5cf389f34",
+        "RT-0d9d1844afc64a69",
+        "RT-dc1999676fe1f2dc"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/contracts.json",
+      "status": "explicit narrow source/task/protocol/generatedbinding or existing-ownedpolicy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-836e1fe19ee7c9dc",
+      "source": {
+        "path": "skills/buster/plugins/kubernetes-fixture/src/provider.js",
+        "line": 60,
+        "text": "if (!['delete', 'retain'].includes(retentionMode) || !Number.isSafeInteger(retentionSeconds)",
+        "sha256": "79c67271de4e528a9dc62d97522ea6484c9bb92dcdf67999266dfec57a7aaaf2",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "79c67271de4e528a9dc62d97522ea6484c9bb92dcdf67999266dfec57a7aaaf2",
+      "explicitReviewedReason": "finite delete/retain supportedcleanup policy andsafeTTL",
+      "settings": [
+        "RT-1ee19ae5cf389f34",
+        "RT-0d9d1844afc64a69",
+        "RT-dc1999676fe1f2dc"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/contracts.json",
+      "status": "explicit narrow source/task/protocol/generatedbinding or existing-ownedpolicy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-40c61c42484f15d5",
+      "source": {
+        "path": "skills/buster/plugins/kubernetes-fixture/src/provider.js",
+        "line": 61,
+        "text": "|| retentionSeconds < 60 || retentionSeconds > 604800) throw new Error('KUBERNETES_FIXTURE_RETENTION_INVALID');",
+        "sha256": "79c67271de4e528a9dc62d97522ea6484c9bb92dcdf67999266dfec57a7aaaf2",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "79c67271de4e528a9dc62d97522ea6484c9bb92dcdf67999266dfec57a7aaaf2",
+      "explicitReviewedReason": "ownedTTL60..604800 source domain intersectsnative maxretention/currentcontroller actualexpiry unknown",
+      "settings": [
+        "RT-1ee19ae5cf389f34",
+        "RT-0d9d1844afc64a69",
+        "RT-dc1999676fe1f2dc"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/contracts.json",
+      "status": "explicit narrow source/task/protocol/generatedbinding or existing-ownedpolicy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-72ba872d8b9e1ed8",
+      "source": {
+        "path": "skills/buster/plugins/kubernetes-fixture/src/provider.js",
+        "line": 62,
+        "text": "const readinessTimeoutSeconds = value.readinessTimeoutSeconds ?? 120;",
+        "sha256": "79c67271de4e528a9dc62d97522ea6484c9bb92dcdf67999266dfec57a7aaaf2",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "79c67271de4e528a9dc62d97522ea6484c9bb92dcdf67999266dfec57a7aaaf2",
+      "explicitReviewedReason": "mappedownedrequestedreadiness default120seconds current",
+      "settings": [
+        "RT-b9c9d3bbf01598db"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/contracts.json",
+      "status": "explicit narrow source/task/protocol/generatedbinding or existing-ownedpolicy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-795123ce787042be",
+      "source": {
+        "path": "skills/buster/plugins/kubernetes-fixture/src/provider.js",
+        "line": 63,
+        "text": "if (!Number.isSafeInteger(readinessTimeoutSeconds) || readinessTimeoutSeconds < 1 || readinessTimeoutSeconds > 3600) {",
+        "sha256": "79c67271de4e528a9dc62d97522ea6484c9bb92dcdf67999266dfec57a7aaaf2",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "79c67271de4e528a9dc62d97522ea6484c9bb92dcdf67999266dfec57a7aaaf2",
+      "explicitReviewedReason": "requestedseconds1..3600 intersectsactualnative min1000ms/maxexec +overallJrunner deadlines; perphase reset semantics notglobalbudget proof",
+      "settings": [
+        "RT-b9c9d3bbf01598db"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/contracts.json",
+      "status": "explicit narrow source/task/protocol/generatedbinding or existing-ownedpolicy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-408531cad7197a0f",
+      "source": {
+        "path": "skills/buster/plugins/kubernetes-fixture/src/provider.js",
+        "line": 70,
+        "text": "const secretReferences = value.secretReferences ?? [];",
+        "sha256": "79c67271de4e528a9dc62d97522ea6484c9bb92dcdf67999266dfec57a7aaaf2",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "79c67271de4e528a9dc62d97522ea6484c9bb92dcdf67999266dfec57a7aaaf2",
+      "explicitReviewedReason": "optional externalSecretlogicalreferences[] taskabsence, notbytesinCONFIG",
+      "settings": [
+        "RT-de063770a9b7f161",
+        "RT-201d60e7b7b19735"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/contracts.json",
+      "status": "explicit narrow source/task/protocol/generatedbinding or existing-ownedpolicy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-ab674e0be0524360",
+      "source": {
+        "path": "skills/buster/plugins/kubernetes-fixture/src/provider.js",
+        "line": 71,
+        "text": "if (!Array.isArray(secretReferences) || secretReferences.length > 32",
+        "sha256": "79c67271de4e528a9dc62d97522ea6484c9bb92dcdf67999266dfec57a7aaaf2",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "79c67271de4e528a9dc62d97522ea6484c9bb92dcdf67999266dfec57a7aaaf2",
+      "explicitReviewedReason": "OPEN32secret refs processingcount; currentproviderdedups buttargetowningtaskschema duplicate rejects",
+      "settings": [
+        "RT-de063770a9b7f161",
+        "RT-201d60e7b7b19735"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/contracts.json",
+      "status": "precise open processingquota/security-policy/genuineproducer coverage obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-919f0bdd13d19dc3",
+      "source": {
+        "path": "skills/buster/plugins/kubernetes-fixture/src/provider.js",
+        "line": 72,
+        "text": "|| secretReferences.some((item) => typeof item !== 'string' || !SECRET.test(item))) {",
+        "sha256": "79c67271de4e528a9dc62d97522ea6484c9bb92dcdf67999266dfec57a7aaaf2",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "79c67271de4e528a9dc62d97522ea6484c9bb92dcdf67999266dfec57a7aaaf2",
+      "explicitReviewedReason": "logicalSecret name supportedwire grammar, nativeallowlist andrealrevision/UID sourceprovenance stronger",
+      "settings": [
+        "RT-de063770a9b7f161",
+        "RT-201d60e7b7b19735"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/contracts.json",
+      "status": "explicit narrow source/task/protocol/generatedbinding or existing-ownedpolicy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-300abaeebfc18e89",
+      "source": {
+        "path": "skills/buster/plugins/kubernetes-fixture/src/provider.js",
+        "line": 77,
+        "text": "|| typeof testCredentials.secretName !== 'string' || !DNS_LABEL.test(testCredentials.secretName))) {",
+        "sha256": "79c67271de4e528a9dc62d97522ea6484c9bb92dcdf67999266dfec57a7aaaf2",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "79c67271de4e528a9dc62d97522ea6484c9bb92dcdf67999266dfec57a7aaaf2",
+      "explicitReviewedReason": "generateonlytaskprotocol/name, nativecontroller genuineUID/resourceVersion/credentialdigest/reader subjects mandatory",
+      "settings": [
+        "RT-49dcddd1fe59408c",
+        "RT-18785a40ca314d20",
+        "RT-0b6088c53bf3323f"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/contracts.json",
+      "status": "explicit narrow source/task/protocol/generatedbinding or existing-ownedpolicy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-9172ee94bf6ea662",
+      "source": {
+        "path": "skills/buster/plugins/kubernetes-fixture/src/provider.js",
+        "line": 86,
+        "text": "if (inputs.length !== 1 || inputs[0].kind !== 'artifact') throw new Error('KUBERNETES_FIXTURE_INPUT_REQUIRED');",
+        "sha256": "79c67271de4e528a9dc62d97522ea6484c9bb92dcdf67999266dfec57a7aaaf2",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "79c67271de4e528a9dc62d97522ea6484c9bb92dcdf67999266dfec57a7aaaf2",
+      "explicitReviewedReason": "exactonechecked-manifestartifact input cardinality; priorgenuineapprovedproducer notprovedbydeclaredMIME",
+      "settings": [
+        "RT-cf28691eea301584",
+        "RT-5d82d8cd07793c3d",
+        "RT-82c3b46b26e4c39d"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/contracts.json",
+      "status": "explicit narrow source/task/protocol/generatedbinding or existing-ownedpolicy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-4ab9522f8d9fa51d",
+      "source": {
+        "path": "skills/buster/plugins/kubernetes-fixture/src/provider.js",
+        "line": 89,
+        "text": "if (!DIGEST.test(artifact.contentDigest) || !Number.isSafeInteger(artifact.sizeBytes) || artifact.sizeBytes < 1) {",
+        "sha256": "79c67271de4e528a9dc62d97522ea6484c9bb92dcdf67999266dfec57a7aaaf2",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "79c67271de4e528a9dc62d97522ea6484c9bb92dcdf67999266dfec57a7aaaf2",
+      "explicitReviewedReason": "descriptor cryptodigest+nonempty artifactbytes currentmetadata; native lateractualfilehash/manifest parse notprovider here",
+      "settings": [
+        "RT-cf28691eea301584",
+        "RT-5d82d8cd07793c3d",
+        "RT-82c3b46b26e4c39d"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/contracts.json",
+      "status": "explicit narrow source/task/protocol/generatedbinding or existing-ownedpolicy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-821ee454453107fa",
+      "source": {
+        "path": "skills/buster/plugins/kubernetes-fixture/src/provider.js",
+        "line": 92,
+        "text": "if (typeof artifact.storageUrl !== 'string' || !artifact.storageUrl.startsWith('file:')) throw new Error('KUBERNETES_FIXTURE_INPUT_URL_INVALID');",
+        "sha256": "79c67271de4e528a9dc62d97522ea6484c9bb92dcdf67999266dfec57a7aaaf2",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "79c67271de4e528a9dc62d97522ea6484c9bb92dcdf67999266dfec57a7aaaf2",
+      "explicitReviewedReason": "file artifactsource URL finiteprotocol",
+      "settings": [
+        "RT-cf28691eea301584",
+        "RT-5d82d8cd07793c3d",
+        "RT-82c3b46b26e4c39d"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/contracts.json",
+      "status": "explicit narrow source/task/protocol/generatedbinding or existing-ownedpolicy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-e3fa1bfab34356ab",
+      "source": {
+        "path": "skills/buster/plugins/kubernetes-fixture/src/provider.js",
+        "line": 108,
+        "text": "payload: { ...names, namespacePrefix: config.namespacePrefix, project: invocation.moduleId ?? invocation.runId,",
+        "sha256": "79c67271de4e528a9dc62d97522ea6484c9bb92dcdf67999266dfec57a7aaaf2",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "79c67271de4e528a9dc62d97522ea6484c9bb92dcdf67999266dfec57a7aaaf2",
+      "explicitReviewedReason": "generatedlease/namespace identity plusmodule/run projecttask binding, not CONFIGprofile generation selector",
+      "settings": [
+        "RT-eb41e2cf5ad440a2"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/contracts.json",
+      "status": "explicit narrow source/task/protocol/generatedbinding or existing-ownedpolicy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-0c21c472c702e05c",
+      "source": {
+        "path": "skills/buster/plugins/kubernetes-fixture/src/provider.js",
+        "line": 126,
+        "text": "const config = configuration(invocation);",
+        "sha256": "79c67271de4e528a9dc62d97522ea6484c9bb92dcdf67999266dfec57a7aaaf2",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "79c67271de4e528a9dc62d97522ea6484c9bb92dcdf67999266dfec57a7aaaf2",
+      "explicitReviewedReason": "actualproviderconfiguration beforemanifest/capability; exportedconfig schema API unusedproductive planboundary",
+      "settings": [
+        "RT-1ee19ae5cf389f34",
+        "RT-0d9d1844afc64a69",
+        "RT-dc1999676fe1f2dc"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/contracts.json",
+      "status": "explicit narrow source/task/protocol/generatedbinding or existing-ownedpolicy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-cf49acfa331f1f50",
+      "source": {
+        "path": "skills/buster/plugins/kubernetes-fixture/src/provider.js",
+        "line": 140,
+        "text": "metrics: [{ name: 'kubernetes_fixture_resources', value: Number(result.resourceCount ?? 0) },",
+        "sha256": "79c67271de4e528a9dc62d97522ea6484c9bb92dcdf67999266dfec57a7aaaf2",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "79c67271de4e528a9dc62d97522ea6484c9bb92dcdf67999266dfec57a7aaaf2",
+      "explicitReviewedReason": "OPENactualnative resourceCount disclosure0fallback notfullproducer/coverage evidence; C0neverfakesokprepare response",
+      "settings": [
+        "RT-cf28691eea301584",
+        "RT-5d82d8cd07793c3d",
+        "RT-82c3b46b26e4c39d"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/contracts.json",
+      "status": "precise open processingquota/security-policy/genuineproducer coverage obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-455e8cc2743325e4",
+      "source": {
+        "path": "skills/buster/plugins/kubernetes-fixture/src/provider.js",
+        "line": 141,
+        "text": "{ name: 'kubernetes_fixture_pods', value: Number(result.podCount ?? 0) }], evidenceFiles: [], reports: [],",
+        "sha256": "79c67271de4e528a9dc62d97522ea6484c9bb92dcdf67999266dfec57a7aaaf2",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "79c67271de4e528a9dc62d97522ea6484c9bb92dcdf67999266dfec57a7aaaf2",
+      "explicitReviewedReason": "OPENnative podCount0fallback sourceflow mustprove real readiness/coverage; noemptyfakefixturePASS",
+      "settings": [
+        "RT-cf28691eea301584",
+        "RT-5d82d8cd07793c3d",
+        "RT-82c3b46b26e4c39d"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/contracts.json",
+      "status": "precise open processingquota/security-policy/genuineproducer coverage obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-844cefa96387b2eb",
+      "source": {
+        "path": "skills/buster/plugins/kubernetes-fixture/src/provider.js",
+        "line": 154,
+        "text": "const config = configuration(invocation);",
+        "sha256": "79c67271de4e528a9dc62d97522ea6484c9bb92dcdf67999266dfec57a7aaaf2",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "79c67271de4e528a9dc62d97522ea6484c9bb92dcdf67999266dfec57a7aaaf2",
+      "explicitReviewedReason": "cleanup reads same config; retaincompleted skips/incomplete releases exactproductivepolicy source",
+      "settings": [
+        "RT-1ee19ae5cf389f34",
+        "RT-0d9d1844afc64a69",
+        "RT-dc1999676fe1f2dc"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/contracts.json",
+      "status": "explicit narrow source/task/protocol/generatedbinding or existing-ownedpolicy linkage; independent review pending",
+      "countsTowardAcceptance": false
+    }
+  ],
+  "unmatchedGuardBusinessDefaultsNotInOriginalSyntaxRoster": [
+    {
+      "path": "skills/buster/plugins/container-build/src/provider.js",
+      "lines": [
+        10,
+        15,
+        21,
+        75,
+        77,
+        80,
+        119
+      ],
+      "reason": "versionedpackagednode-static@1 generatescompleteapplicationDockerfile/sourcepins/Node/Nginx; source catalog not protocol excludebypins literal, true source/image/buildtool/platform/generation binding mustverify. Currentunknown/unusedtemplate fields ignored andwxwritebeforelaterplatform/namechecks; highseverity source businesspolicy stillopen",
+      "sourceSha256": "1204d07c75942e9def8b703748bf97510e933b2cfb33b85f84c485d42b89c847"
+    },
+    {
+      "path": "skills/buster/plugins/kubernetes-fixture/src/provider.js",
+      "lines": [
+        10,
+        84,
+        98,
+        99,
+        112,
+        129,
+        130,
+        155,
+        156
+      ],
+      "reason": "generatednamespaceSHA20 contract actualproducer/release consumers mustretainoriginalidentity/package algorithm; prefix42 derivednotfreecapacity. native1000msmin/perphase readiness/cleanupmaxexec vswholemodulebudget distinct, currentproviderdoesnotdigestcheckedmanifest here butnative hashes/inspects beforefirstkubectl, actualcontroller/Secretstore provenance required",
+      "sourceSha256": "79c67271de4e528a9dc62d97522ea6484c9bb92dcdf67999266dfec57a7aaaf2"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/remote-prepared-execution.ts",
+      "lines": [
+        29,
+        32,
+        39
+      ],
+      "reason": "currentnativeinvokers constructedperpreparedplan J fromserviceoptions thenfinallyshutdown, notwholeR ctorlifetimes; exactadditional sourcecandidates/servicemutability/historicaloptions/recovery review stillneeded",
+      "sourceSha256": "832631872e86addc6ae98516f63c191e403675b679c795ad3d47a2fdb8350dde"
+    }
+  ],
+  "status": "manual exactsource only, no lexicalautomaticclosure oracceptance"
+}

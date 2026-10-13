@@ -1,0 +1,285 @@
+{
+  "corrects": "ICQ-04",
+  "supersedesSelected1024Positive": true,
+  "existingQuota": 2048,
+  "maximumRecords": 3,
+  "exactUnsignedRecord": {
+    "schemaVersion": "producer-record.v1",
+    "recordId": "record:1",
+    "producer": {
+      "producerId": "worker:1",
+      "bootId": "boot:1",
+      "producerType": "buster"
+    },
+    "sequence": 1,
+    "recordType": "attempt.started",
+    "occurredAt": "2026-08-09T12:00:00Z",
+    "correlation": {
+      "pipelineRunId": "run:1",
+      "moduleId": "api",
+      "gateId": "final",
+      "attemptId": "attempt:1",
+      "claimId": "claim:1",
+      "claimGeneration": 1,
+      "traceId": "trace:1",
+      "parentEventId": null
+    },
+    "payload": {
+      "state": "started"
+    }
+  },
+  "exactRecord": {
+    "schemaVersion": "producer-record.v1",
+    "recordId": "record:1",
+    "producer": {
+      "producerId": "worker:1",
+      "bootId": "boot:1",
+      "producerType": "buster"
+    },
+    "sequence": 1,
+    "recordType": "attempt.started",
+    "occurredAt": "2026-08-09T12:00:00Z",
+    "correlation": {
+      "pipelineRunId": "run:1",
+      "moduleId": "api",
+      "gateId": "final",
+      "attemptId": "attempt:1",
+      "claimId": "claim:1",
+      "claimGeneration": 1,
+      "traceId": "trace:1",
+      "parentEventId": null
+    },
+    "payload": {
+      "state": "started"
+    },
+    "recordDigest": "sha256:e6e35abdea7c6c24a809c03d541bfce0aa0da1553973d87990c5b67d42d79576"
+  },
+  "exactAcknowledgement": {
+    "schemaVersion": "admission-acknowledgement.v1",
+    "recordId": "record:1",
+    "producer": {
+      "producerId": "worker:1",
+      "bootId": "boot:1",
+      "producerType": "buster"
+    },
+    "pipelineRunId": "run:1",
+    "sequence": 1,
+    "state": "admitted",
+    "admittedAt": "2026-08-09T12:00:01Z",
+    "canonicalCursor": 1,
+    "recordDigest": "sha256:e6e35abdea7c6c24a809c03d541bfce0aa0da1553973d87990c5b67d42d79576"
+  },
+  "wholeStateBytes": 1223,
+  "positive": [
+    {
+      "method": "append",
+      "prior": "absent file/EMPTY_OUTBOX",
+      "input": {
+        "schemaVersion": "producer-record.v1",
+        "recordId": "record:1",
+        "producer": {
+          "producerId": "worker:1",
+          "bootId": "boot:1",
+          "producerType": "buster"
+        },
+        "sequence": 1,
+        "recordType": "attempt.started",
+        "occurredAt": "2026-08-09T12:00:00Z",
+        "correlation": {
+          "pipelineRunId": "run:1",
+          "moduleId": "api",
+          "gateId": "final",
+          "attemptId": "attempt:1",
+          "claimId": "claim:1",
+          "claimGeneration": 1,
+          "traceId": "trace:1",
+          "parentEventId": null
+        },
+        "payload": {
+          "state": "started"
+        }
+      },
+      "expectedState": {
+        "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/outbox-pending-state.json",
+        "sha256": "4bcbc555fec72bec1dd15f963ba8da00d08642e14c37072ddb879fa4f635ee79",
+        "sizeBytes": 1223
+      }
+    },
+    {
+      "method": "pending",
+      "prior": {
+        "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/outbox-pending-state.json",
+        "sha256": "4bcbc555fec72bec1dd15f963ba8da00d08642e14c37072ddb879fa4f635ee79",
+        "sizeBytes": 1223
+      },
+      "input": [],
+      "expectedRecords": [
+        {
+          "schemaVersion": "producer-record.v1",
+          "recordId": "record:1",
+          "producer": {
+            "producerId": "worker:1",
+            "bootId": "boot:1",
+            "producerType": "buster"
+          },
+          "sequence": 1,
+          "recordType": "attempt.started",
+          "occurredAt": "2026-08-09T12:00:00Z",
+          "correlation": {
+            "pipelineRunId": "run:1",
+            "moduleId": "api",
+            "gateId": "final",
+            "attemptId": "attempt:1",
+            "claimId": "claim:1",
+            "claimGeneration": 1,
+            "traceId": "trace:1",
+            "parentEventId": null
+          },
+          "payload": {
+            "state": "started"
+          },
+          "recordDigest": "sha256:e6e35abdea7c6c24a809c03d541bfce0aa0da1553973d87990c5b67d42d79576"
+        }
+      ],
+      "expectedStateUnchanged": {
+        "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/outbox-pending-state.json",
+        "sha256": "4bcbc555fec72bec1dd15f963ba8da00d08642e14c37072ddb879fa4f635ee79",
+        "sizeBytes": 1223
+      }
+    },
+    {
+      "method": "acknowledge",
+      "prior": {
+        "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/outbox-pending-state.json",
+        "sha256": "4bcbc555fec72bec1dd15f963ba8da00d08642e14c37072ddb879fa4f635ee79",
+        "sizeBytes": 1223
+      },
+      "input": {
+        "schemaVersion": "admission-acknowledgement.v1",
+        "recordId": "record:1",
+        "producer": {
+          "producerId": "worker:1",
+          "bootId": "boot:1",
+          "producerType": "buster"
+        },
+        "pipelineRunId": "run:1",
+        "sequence": 1,
+        "state": "admitted",
+        "admittedAt": "2026-08-09T12:00:01Z",
+        "canonicalCursor": 1,
+        "recordDigest": "sha256:e6e35abdea7c6c24a809c03d541bfce0aa0da1553973d87990c5b67d42d79576"
+      },
+      "expectedState": {
+        "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/outbox-acknowledged-state.json",
+        "sha256": "d60220088241a334e56829da09f99ffb553fa730cb2fc8d1c6d1365ef8a1590b",
+        "sizeBytes": 1219
+      }
+    },
+    {
+      "method": "compact",
+      "prior": {
+        "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/outbox-acknowledged-state.json",
+        "sha256": "d60220088241a334e56829da09f99ffb553fa730cb2fc8d1c6d1365ef8a1590b",
+        "sizeBytes": 1219
+      },
+      "input": [],
+      "return": 1,
+      "expectedState": {
+        "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/outbox-compacted-state.json",
+        "sha256": "e6fe093599557c1e1071ff00c6284830c16f8d5998065c04e3dcc6e497828ae7",
+        "sizeBytes": 51
+      }
+    }
+  ],
+  "negative": [
+    {
+      "method": "append",
+      "prior": {
+        "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/outbox-oversized-2049.bytes",
+        "sha256": "4b7787594928d92fd11386a9210a7322cd2d1d30bddcabb4611274f547272101",
+        "sizeBytes": 2049
+      },
+      "input": {
+        "schemaVersion": "producer-record.v1",
+        "recordId": "record:1",
+        "producer": {
+          "producerId": "worker:1",
+          "bootId": "boot:1",
+          "producerType": "buster"
+        },
+        "sequence": 1,
+        "recordType": "attempt.started",
+        "occurredAt": "2026-08-09T12:00:00Z",
+        "correlation": {
+          "pipelineRunId": "run:1",
+          "moduleId": "api",
+          "gateId": "final",
+          "attemptId": "attempt:1",
+          "claimId": "claim:1",
+          "claimGeneration": 1,
+          "traceId": "trace:1",
+          "parentEventId": null
+        },
+        "payload": {
+          "state": "started"
+        }
+      },
+      "expected": "OBSERVABILITY_REPLAY_INVALID:snapshot-size at bounded reader; no parse/mutation; exact bytes/hash unchanged",
+      "requireIndependentFreshCopy": true
+    },
+    {
+      "method": "pending",
+      "prior": {
+        "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/outbox-oversized-2049.bytes",
+        "sha256": "4b7787594928d92fd11386a9210a7322cd2d1d30bddcabb4611274f547272101",
+        "sizeBytes": 2049
+      },
+      "input": [],
+      "expected": "OBSERVABILITY_REPLAY_INVALID:snapshot-size at bounded reader; no parse/mutation; exact bytes/hash unchanged",
+      "requireIndependentFreshCopy": true
+    },
+    {
+      "method": "acknowledge",
+      "prior": {
+        "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/outbox-oversized-2049.bytes",
+        "sha256": "4b7787594928d92fd11386a9210a7322cd2d1d30bddcabb4611274f547272101",
+        "sizeBytes": 2049
+      },
+      "input": {
+        "schemaVersion": "admission-acknowledgement.v1",
+        "recordId": "record:1",
+        "producer": {
+          "producerId": "worker:1",
+          "bootId": "boot:1",
+          "producerType": "buster"
+        },
+        "pipelineRunId": "run:1",
+        "sequence": 1,
+        "state": "admitted",
+        "admittedAt": "2026-08-09T12:00:01Z",
+        "canonicalCursor": 1,
+        "recordDigest": "sha256:e6e35abdea7c6c24a809c03d541bfce0aa0da1553973d87990c5b67d42d79576"
+      },
+      "expected": "OBSERVABILITY_REPLAY_INVALID:snapshot-size at bounded reader; no parse/mutation; exact bytes/hash unchanged",
+      "requireIndependentFreshCopy": true
+    },
+    {
+      "method": "compact",
+      "prior": {
+        "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/outbox-oversized-2049.bytes",
+        "sha256": "4b7787594928d92fd11386a9210a7322cd2d1d30bddcabb4611274f547272101",
+        "sizeBytes": 2049
+      },
+      "input": [],
+      "expected": "OBSERVABILITY_REPLAY_INVALID:snapshot-size at bounded reader; no parse/mutation; exact bytes/hash unchanged",
+      "requireIndependentFreshCopy": true
+    }
+  ],
+  "historical1024": {
+    "fixtureBytes": 1223,
+    "expected": "OBSERVABILITY_OUTBOX_FULL",
+    "notClaimed": "No assertion every smaller valid record cannot fit"
+  },
+  "observedCurrentPositiveControls": 4,
+  "futureBoundedReadNegatives": "not implemented/not run; current four readers still omit cap"
+}

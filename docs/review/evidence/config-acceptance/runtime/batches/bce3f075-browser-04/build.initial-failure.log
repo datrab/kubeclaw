@@ -1,0 +1,4 @@
+  File "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/build.py", line 27
+    key=f.split('.')[-1]if'.'in f else'maximumDifferencePercent';BB[root][key]=1 if key!='pixelThreshold'else0.5;N[root][key]=-1
+                                                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+SyntaxError: expected 'else' after 'if' expression

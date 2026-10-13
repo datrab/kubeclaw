@@ -1,0 +1,29 @@
+{
+  "scope": [
+    "AUTH-PRISM-DESIGN-CARDINALITY",
+    "AUTH-PRISM-ENGINE-DEVELOPMENT-IDENTITY"
+  ],
+  "originalFindings": {
+    "PPRISM001": "corrected-proposed-definition",
+    "PPRISM002": "corrected-current-source-description",
+    "PPRISM003": "typed-record-and-case-coverage-corrected; sequencing-gaps remain"
+  },
+  "remaining": [
+    {
+      "id": "PPRISM004",
+      "severity": "blocking-C0-definition",
+      "source": "skills/prism/server/native-worker-host.ts:3 and engine/index.ts:4",
+      "contract": "trusted byte/identity gate BEFORE unverified module imports/initializers; pin immutable verified code through use",
+      "case": "AUTH-PRISM-NATIVE-PROVENANCE-CODE-MISMATCH plus exact preimport/restoredpositive oracle"
+    },
+    {
+      "id": "PPRISM005",
+      "severity": "blocking-C0-definition",
+      "source": "skills/prism/control/native-operation.ts:14 -> storage/artifacts.ts:43 BEFORE reserveNativePrismOperation:18",
+      "contract": "explicit original-bound/accounted inputspool admission or pureidentity+reservation-beforewrite; replay and rejects do not ignore pendingfile/directory IO",
+      "cases": "samekey/conflict/spool-crash/verification-failure/cachedreplay/originalbudget recovery exact writer oracles"
+    }
+  ],
+  "verdict": "MATERIAL_CORRECTIONS_VERIFIED_TARGET_NATIVE_SEQUENCING_NOT_ACCEPTED",
+  "noCoreSelfReviewOrGlobalC0Acceptance": true
+}

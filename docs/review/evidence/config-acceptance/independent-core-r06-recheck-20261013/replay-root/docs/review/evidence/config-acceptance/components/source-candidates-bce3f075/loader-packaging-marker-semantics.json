@@ -1,0 +1,1559 @@
+{
+  "dispositions": [
+    {
+      "candidateId": "SRC-ae3c2b0bb81275f6",
+      "source": "charts/kubeclaw/templates/_swarm-config.tpl",
+      "line": 52,
+      "sourceSha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472",
+      "exactText": "{{- $maximum := ternary (float64 1000000) (float64 2147483647) (eq $key \"replayLimit\") -}}",
+      "reader": null,
+      "classification": "duplicate-domain-validator",
+      "reason": "ActualHelm componentvalidator replicates required selectedwhole-owner schemas and realsemanticrelations (replay<=1000000, timer<=signed32, port<=65535, journal<=MAX_SAFE, integer/positive, providergrace<termination/reportmemoryfit, source/result/storage/connection/close budgets). It authors no fallbackeffectivepolicy. Existing148 setting/domainrows + strictloader/canonicalprofile evidence remain source refs. FourhistoricalHelm diagnostic test failures preserved, no newHelmPASS claimed.",
+      "settingIds": [],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-eac5ec66c49e4c61",
+      "source": "charts/kubeclaw/templates/_swarm-config.tpl",
+      "line": 54,
+      "sourceSha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472",
+      "exactText": "{{- if or (lt $value (float64 1)) (gt $value $maximum) (ne $value (floor $value)) -}}{{- fail (printf \"worker-core.config.json localRuntime.%s is out of range\" $key) -}}{{- end -}}",
+      "reader": null,
+      "classification": "duplicate-domain-validator",
+      "reason": "ActualHelm componentvalidator replicates required selectedwhole-owner schemas and realsemanticrelations (replay<=1000000, timer<=signed32, port<=65535, journal<=MAX_SAFE, integer/positive, providergrace<termination/reportmemoryfit, source/result/storage/connection/close budgets). It authors no fallbackeffectivepolicy. Existing148 setting/domainrows + strictloader/canonicalprofile evidence remain source refs. FourhistoricalHelm diagnostic test failures preserved, no newHelmPASS claimed.",
+      "settingIds": [],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-4531f56429cdcc26",
+      "source": "charts/kubeclaw/templates/_swarm-config.tpl",
+      "line": 91,
+      "sourceSha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472",
+      "exactText": "{{- if or (and (hasKey $limit \"minimum\") (lt $value (float64 $limit.minimum))) (gt $value (float64 $limit.maximum)) (and (eq $limit.type \"integer\") (ne $value (floor $value))) -}}{{- fail (printf \"buster execution %s.%s is outside its numeric bounds\" $section $key) -}}{{- end -}}",
+      "reader": null,
+      "classification": "duplicate-domain-validator",
+      "reason": "ActualHelm componentvalidator replicates required selectedwhole-owner schemas and realsemanticrelations (replay<=1000000, timer<=signed32, port<=65535, journal<=MAX_SAFE, integer/positive, providergrace<termination/reportmemoryfit, source/result/storage/connection/close budgets). It authors no fallbackeffectivepolicy. Existing148 setting/domainrows + strictloader/canonicalprofile evidence remain source refs. FourhistoricalHelm diagnostic test failures preserved, no newHelmPASS claimed.",
+      "settingIds": [],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-fa5d875cf1fc1453",
+      "source": "charts/kubeclaw/templates/_swarm-config.tpl",
+      "line": 99,
+      "sourceSha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472",
+      "exactText": "{{- if ge $execution.provider.terminationGraceMs $execution.provider.terminationTimeoutMs -}}{{- fail \"buster execution termination grace must precede termination timeout\" -}}{{- end -}}",
+      "reader": null,
+      "classification": "duplicate-domain-validator",
+      "reason": "ActualHelm componentvalidator replicates required selectedwhole-owner schemas and realsemanticrelations (replay<=1000000, timer<=signed32, port<=65535, journal<=MAX_SAFE, integer/positive, providergrace<termination/reportmemoryfit, source/result/storage/connection/close budgets). It authors no fallbackeffectivepolicy. Existing148 setting/domainrows + strictloader/canonicalprofile evidence remain source refs. FourhistoricalHelm diagnostic test failures preserved, no newHelmPASS claimed.",
+      "settingIds": [],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-e95d781b7945c3ca",
+      "source": "charts/kubeclaw/templates/_swarm-config.tpl",
+      "line": 103,
+      "sourceSha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472",
+      "exactText": "{{- if lt $execution.reports.memoryBytes $reportMemory -}}{{- fail \"buster execution report memory cannot hold the maximum selected report profile\" -}}{{- end -}}",
+      "reader": null,
+      "classification": "duplicate-domain-validator",
+      "reason": "ActualHelm componentvalidator replicates required selectedwhole-owner schemas and realsemanticrelations (replay<=1000000, timer<=signed32, port<=65535, journal<=MAX_SAFE, integer/positive, providergrace<termination/reportmemoryfit, source/result/storage/connection/close budgets). It authors no fallbackeffectivepolicy. Existing148 setting/domainrows + strictloader/canonicalprofile evidence remain source refs. FourhistoricalHelm diagnostic test failures preserved, no newHelmPASS claimed.",
+      "settingIds": [],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-fd03cb740079506d",
+      "source": "charts/kubeclaw/templates/_swarm-config.tpl",
+      "line": 117,
+      "sourceSha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472",
+      "exactText": "{{- if or (lt $value (float64 $limit.minimum)) (gt $value (float64 $limit.maximum)) (ne $value (floor $value)) -}}{{- fail (printf \"buster %s %s is outside its integer bounds\" $section $key) -}}{{- end -}}",
+      "reader": null,
+      "classification": "duplicate-domain-validator",
+      "reason": "ActualHelm componentvalidator replicates required selectedwhole-owner schemas and realsemanticrelations (replay<=1000000, timer<=signed32, port<=65535, journal<=MAX_SAFE, integer/positive, providergrace<termination/reportmemoryfit, source/result/storage/connection/close budgets). It authors no fallbackeffectivepolicy. Existing148 setting/domainrows + strictloader/canonicalprofile evidence remain source refs. FourhistoricalHelm diagnostic test failures preserved, no newHelmPASS claimed.",
+      "settingIds": [],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-ea5d74692fd5fcdd",
+      "source": "charts/kubeclaw/templates/_swarm-config.tpl",
+      "line": 130,
+      "sourceSha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472",
+      "exactText": "{{- if or (lt $value (float64 $limit.minimum)) (gt $value (float64 $limit.maximum)) (ne $value (floor $value)) -}}{{- fail (printf \"buster preparation %s is outside its integer bounds\" $key) -}}{{- end -}}",
+      "reader": null,
+      "classification": "duplicate-domain-validator",
+      "reason": "ActualHelm componentvalidator replicates required selectedwhole-owner schemas and realsemanticrelations (replay<=1000000, timer<=signed32, port<=65535, journal<=MAX_SAFE, integer/positive, providergrace<termination/reportmemoryfit, source/result/storage/connection/close budgets). It authors no fallbackeffectivepolicy. Existing148 setting/domainrows + strictloader/canonicalprofile evidence remain source refs. FourhistoricalHelm diagnostic test failures preserved, no newHelmPASS claimed.",
+      "settingIds": [],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-3b4dfcac94af3ad0",
+      "source": "charts/kubeclaw/templates/_swarm-config.tpl",
+      "line": 147,
+      "sourceSha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472",
+      "exactText": "{{- range $key, $maximum := dict \"port\" 65535 \"controlTimeoutMs\" 2147483647 -}}",
+      "reader": null,
+      "classification": "duplicate-domain-validator",
+      "reason": "ActualHelm componentvalidator replicates required selectedwhole-owner schemas and realsemanticrelations (replay<=1000000, timer<=signed32, port<=65535, journal<=MAX_SAFE, integer/positive, providergrace<termination/reportmemoryfit, source/result/storage/connection/close budgets). It authors no fallbackeffectivepolicy. Existing148 setting/domainrows + strictloader/canonicalprofile evidence remain source refs. FourhistoricalHelm diagnostic test failures preserved, no newHelmPASS claimed.",
+      "settingIds": [],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-13c8327678d63641",
+      "source": "charts/kubeclaw/templates/_swarm-config.tpl",
+      "line": 150,
+      "sourceSha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472",
+      "exactText": "{{- if or (lt $value (float64 1)) (gt $value (float64 $maximum)) (ne $value (floor $value)) -}}{{- fail (printf \"swarm studio %s is outside its integer bounds\" $key) -}}{{- end -}}",
+      "reader": null,
+      "classification": "duplicate-domain-validator",
+      "reason": "ActualHelm componentvalidator replicates required selectedwhole-owner schemas and realsemanticrelations (replay<=1000000, timer<=signed32, port<=65535, journal<=MAX_SAFE, integer/positive, providergrace<termination/reportmemoryfit, source/result/storage/connection/close budgets). It authors no fallbackeffectivepolicy. Existing148 setting/domainrows + strictloader/canonicalprofile evidence remain source refs. FourhistoricalHelm diagnostic test failures preserved, no newHelmPASS claimed.",
+      "settingIds": [],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-c63f4f93fa7cdd5c",
+      "source": "charts/kubeclaw/templates/_swarm-config.tpl",
+      "line": 195,
+      "sourceSha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472",
+      "exactText": "{{- $maximum := ternary (float64 9007199254740991) (float64 2147483647) (eq $key \"maximumJournalBytes\") -}}",
+      "reader": null,
+      "classification": "duplicate-domain-validator",
+      "reason": "ActualHelm componentvalidator replicates required selectedwhole-owner schemas and realsemanticrelations (replay<=1000000, timer<=signed32, port<=65535, journal<=MAX_SAFE, integer/positive, providergrace<termination/reportmemoryfit, source/result/storage/connection/close budgets). It authors no fallbackeffectivepolicy. Existing148 setting/domainrows + strictloader/canonicalprofile evidence remain source refs. FourhistoricalHelm diagnostic test failures preserved, no newHelmPASS claimed.",
+      "settingIds": [],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-a9734a7cd38b3ac8",
+      "source": "charts/kubeclaw/templates/_swarm-config.tpl",
+      "line": 197,
+      "sourceSha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472",
+      "exactText": "{{- if or (lt $value (float64 1)) (gt $value $maximum) (ne $value (floor $value)) -}}{{- fail (printf \"swarm supervisor %s exceeds its positive integer bound\" $key) -}}{{- end -}}",
+      "reader": null,
+      "classification": "duplicate-domain-validator",
+      "reason": "ActualHelm componentvalidator replicates required selectedwhole-owner schemas and realsemanticrelations (replay<=1000000, timer<=signed32, port<=65535, journal<=MAX_SAFE, integer/positive, providergrace<termination/reportmemoryfit, source/result/storage/connection/close budgets). It authors no fallbackeffectivepolicy. Existing148 setting/domainrows + strictloader/canonicalprofile evidence remain source refs. FourhistoricalHelm diagnostic test failures preserved, no newHelmPASS claimed.",
+      "settingIds": [],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-b56d3dbbda2be12a",
+      "source": "charts/kubeclaw/templates/_swarm-config.tpl",
+      "line": 211,
+      "sourceSha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472",
+      "exactText": "{{- fail \"swarm worker connection budget is too small\" -}}",
+      "reader": null,
+      "classification": "duplicate-domain-validator",
+      "reason": "ActualHelm componentvalidator replicates required selectedwhole-owner schemas and realsemanticrelations (replay<=1000000, timer<=signed32, port<=65535, journal<=MAX_SAFE, integer/positive, providergrace<termination/reportmemoryfit, source/result/storage/connection/close budgets). It authors no fallbackeffectivepolicy. Existing148 setting/domainrows + strictloader/canonicalprofile evidence remain source refs. FourhistoricalHelm diagnostic test failures preserved, no newHelmPASS claimed.",
+      "settingIds": [],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-e6907369daeea5f0",
+      "source": "charts/kubeclaw/templates/_swarm-config.tpl",
+      "line": 217,
+      "sourceSha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472",
+      "exactText": "{{- if or (gt $b.maximumArchiveBytes $b.maximumRequestBytes) (ge $b.maximumHeaderBytes $b.maximumMetadataBytes) (gt $b.maximumInputBytes $b.maximumJournalBytes) (gt (addf $b.maximumResultBytes (mulf 4 $b.maximumInputBytes)) $b.maximumOutputBytes) (gt (addf $b.maximumHeaderBytes (mulf 4 $b.maximumInputBytes)) $b.maximumResultBytes) (gt $b.maximumOutputBytes $b.maximumJournalBytes) -}}{{- fail \"swarm Buster storage budget invalid\" -}}{{- end -}}",
+      "reader": null,
+      "classification": "duplicate-domain-validator",
+      "reason": "ActualHelm componentvalidator replicates required selectedwhole-owner schemas and realsemanticrelations (replay<=1000000, timer<=signed32, port<=65535, journal<=MAX_SAFE, integer/positive, providergrace<termination/reportmemoryfit, source/result/storage/connection/close budgets). It authors no fallbackeffectivepolicy. Existing148 setting/domainrows + strictloader/canonicalprofile evidence remain source refs. FourhistoricalHelm diagnostic test failures preserved, no newHelmPASS claimed.",
+      "settingIds": [],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-bd47d110c9c2cd08",
+      "source": "charts/kubeclaw/templates/_swarm-config.tpl",
+      "line": 218,
+      "sourceSha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472",
+      "exactText": "{{- if le $b.closeTimeoutMs $b.drainTimeoutMs -}}{{- fail \"swarm Buster close budget invalid\" -}}{{- end -}}",
+      "reader": null,
+      "classification": "duplicate-domain-validator",
+      "reason": "ActualHelm componentvalidator replicates required selectedwhole-owner schemas and realsemanticrelations (replay<=1000000, timer<=signed32, port<=65535, journal<=MAX_SAFE, integer/positive, providergrace<termination/reportmemoryfit, source/result/storage/connection/close budgets). It authors no fallbackeffectivepolicy. Existing148 setting/domainrows + strictloader/canonicalprofile evidence remain source refs. FourhistoricalHelm diagnostic test failures preserved, no newHelmPASS claimed.",
+      "settingIds": [],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-a366c6559124018b",
+      "source": "charts/kubeclaw/templates/_swarm-config.tpl",
+      "line": 225,
+      "sourceSha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472",
+      "exactText": "{{- if hasKey .Values \"swarmConfigJson\" -}}{{- fail \"swarmConfigJson duplicates the component bundle author\" -}}{{- end -}}",
+      "reader": null,
+      "classification": "duplicate-domain-validator",
+      "reason": "ActualHelm componentvalidator replicates required selectedwhole-owner schemas and realsemanticrelations (replay<=1000000, timer<=signed32, port<=65535, journal<=MAX_SAFE, integer/positive, providergrace<termination/reportmemoryfit, source/result/storage/connection/close budgets). It authors no fallbackeffectivepolicy. Existing148 setting/domainrows + strictloader/canonicalprofile evidence remain source refs. FourhistoricalHelm diagnostic test failures preserved, no newHelmPASS claimed.",
+      "settingIds": [],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-2ca0c163bfd57e6a",
+      "source": "charts/kubeclaw/templates/_swarm-config.tpl",
+      "line": 260,
+      "sourceSha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472",
+      "exactText": "{{- if or (ne $value (floor $value)) (lt $value (float64 $schema.minimum)) (gt $value (float64 $schema.maximum)) -}}{{- fail (printf \"%s integer bounds invalid\" $name) -}}{{- end -}}",
+      "reader": null,
+      "classification": "duplicate-domain-validator",
+      "reason": "ActualHelm componentvalidator replicates required selectedwhole-owner schemas and realsemanticrelations (replay<=1000000, timer<=signed32, port<=65535, journal<=MAX_SAFE, integer/positive, providergrace<termination/reportmemoryfit, source/result/storage/connection/close budgets). It authors no fallbackeffectivepolicy. Existing148 setting/domainrows + strictloader/canonicalprofile evidence remain source refs. FourhistoricalHelm diagnostic test failures preserved, no newHelmPASS claimed.",
+      "settingIds": [],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-a33bbe84d92a0346",
+      "source": "charts/kubeclaw/templates/_swarm-config.tpl",
+      "line": 265,
+      "sourceSha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472",
+      "exactText": "{{- if not (hasKey .Values \"busterComponentFile\") -}}{{- fail \"busterComponentFile is required\" -}}{{- end -}}",
+      "reader": null,
+      "classification": "delivery-owned-current-projection",
+      "reason": "WholeBuster componentfile selection required, referenceddocument canonicalized on packaging; retiredbusterNamespaceBroker keys rejectpresence and cannot become secondauthor. Exactexisting DLV-BUSTER componentselection fields linked, no keywiseoverride/newsettingscopy.",
+      "settingIds": [
+        "DLV-CHART-KUBECLAW-BUSTERCOMPONENTFILE",
+        "DLV-CHART-PRISM-BUSTERCOMPONENTFILE"
+      ],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-3b703d3eda783cd9",
+      "source": "charts/kubeclaw/templates/_swarm-config.tpl",
+      "line": 266,
+      "sourceSha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472",
+      "exactText": "{{- $file := .Values.busterComponentFile -}}",
+      "reader": null,
+      "classification": "delivery-owned-current-projection",
+      "reason": "WholeBuster componentfile selection required, referenceddocument canonicalized on packaging; retiredbusterNamespaceBroker keys rejectpresence and cannot become secondauthor. Exactexisting DLV-BUSTER componentselection fields linked, no keywiseoverride/newsettingscopy.",
+      "settingIds": [
+        "DLV-CHART-KUBECLAW-BUSTERCOMPONENTFILE",
+        "DLV-CHART-PRISM-BUSTERCOMPONENTFILE"
+      ],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-34575fbfcf7ce405",
+      "source": "charts/kubeclaw/templates/_swarm-config.tpl",
+      "line": 269,
+      "sourceSha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472",
+      "exactText": "{{- if hasKey .Values \"busterNamespaceBroker\" -}}",
+      "reader": null,
+      "classification": "delivery-owned-current-projection",
+      "reason": "WholeBuster componentfile selection required, referenceddocument canonicalized on packaging; retiredbusterNamespaceBroker keys rejectpresence and cannot become secondauthor. Exactexisting DLV-BUSTER componentselection fields linked, no keywiseoverride/newsettingscopy.",
+      "settingIds": [
+        "DLV-CHART-KUBECLAW-BUSTERCOMPONENTFILE",
+        "DLV-CHART-PRISM-BUSTERCOMPONENTFILE"
+      ],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-4281f12995569fb2",
+      "source": "charts/kubeclaw/templates/_swarm-config.tpl",
+      "line": 271,
+      "sourceSha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472",
+      "exactText": "{{- if hasKey $.Values.busterNamespaceBroker $key -}}{{- fail (printf \"retired busterNamespaceBroker.%s; use selected Buster component\" $key) -}}{{- end -}}",
+      "reader": null,
+      "classification": "delivery-owned-current-projection",
+      "reason": "WholeBuster componentfile selection required, referenceddocument canonicalized on packaging; retiredbusterNamespaceBroker keys rejectpresence and cannot become secondauthor. Exactexisting DLV-BUSTER componentselection fields linked, no keywiseoverride/newsettingscopy.",
+      "settingIds": [
+        "DLV-CHART-KUBECLAW-BUSTERCOMPONENTFILE",
+        "DLV-CHART-PRISM-BUSTERCOMPONENTFILE"
+      ],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-320f80921ac3c9b9",
+      "source": "charts/kubeclaw/values.yaml",
+      "line": 96,
+      "sourceSha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1",
+      "exactText": "# Resource budget for setup work such as the offline OpenClaw plugin install.",
+      "reader": null,
+      "classification": "nonsetting",
+      "reason": "Exact markerhit is YAMLcomment/resourcebudgetdescription/CURRENT_PROJECT description/commented shebang; comments do notreadENV/execute/selectactualpolicy. Actual adjacent authoredvalues remain delivery-owned separateleafrows, comments cannot close those.",
+      "settingIds": [],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-64a8c0296a1d7928",
+      "source": "charts/kubeclaw/values.yaml",
+      "line": 209,
+      "sourceSha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1",
+      "exactText": "  # Active project name \u2014 sets CURRENT_PROJECT env for memory scoping",
+      "reader": null,
+      "classification": "nonsetting",
+      "reason": "Exact markerhit is YAMLcomment/resourcebudgetdescription/CURRENT_PROJECT description/commented shebang; comments do notreadENV/execute/selectactualpolicy. Actual adjacent authoredvalues remain delivery-owned separateleafrows, comments cannot close those.",
+      "settingIds": [],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-8444cce4182b20be",
+      "source": "charts/kubeclaw/values.yaml",
+      "line": 211,
+      "sourceSha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1",
+      "exactText": "  model:",
+      "reader": null,
+      "classification": "delivery-current-author",
+      "reason": "Actual Chart agent.model objectauthor covered exact DLV primary/fallback leafIDs and generatedOpenClaw projection; this parentobject is not additionalcopy/independentcomponentwriter.",
+      "settingIds": [
+        "DLV-CHART-KUBECLAW-AGENT-MODEL-PRIMARY",
+        "DLV-CHART-KUBECLAW-AGENT-MODEL-FALLBACKS"
+      ],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-3426294151aeb6ec",
+      "source": "charts/kubeclaw/values.yaml",
+      "line": 501,
+      "sourceSha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1",
+      "exactText": "#       #!/usr/bin/env node",
+      "reader": null,
+      "classification": "nonsetting",
+      "reason": "Exact markerhit is YAMLcomment/resourcebudgetdescription/CURRENT_PROJECT description/commented shebang; comments do notreadENV/execute/selectactualpolicy. Actual adjacent authoredvalues remain delivery-owned separateleafrows, comments cannot close those.",
+      "settingIds": [],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-d2d674b2b40f10c8",
+      "source": "scripts/native-worker-node-policy.mjs",
+      "line": 8,
+      "sourceSha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+      "exactText": "  if (!Number.isSafeInteger(value) || value < 1) throw new Error('NATIVE_NODE_POLICY_LIMIT_INVALID');",
+      "reader": {
+        "name": "positive",
+        "parents": [],
+        "startLine": 7,
+        "endLine": 9
+      },
+      "classification": "delivery-current-generated-binding",
+      "reason": "Wholephysicalnativehostpolicy requirespositive safequantities/exactbuster+prism roles/DNSnamespace; selectedactualnode allocatable/reserve sums useBigInt, rolepool generation derives actualresource budgets/identities. Hostauthor remains DLV-NATIVE-HOST perfield, Coregeneratedbindings consumeronly. CPUperiod100000/quota100*millicores remains separate operator/physicalscheduler handoff, not an immutableinvariant.",
+      "settingIds": [],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-bf75aadf6f1293e4",
+      "source": "scripts/native-worker-node-policy.mjs",
+      "line": 21,
+      "sourceSha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+      "exactText": "  if (Object.keys(policy.pools ?? {}).sort().join(',') !== 'buster,prism') throw new Error('NATIVE_NODE_ROLE_SET_INVALID');",
+      "reader": {
+        "name": "validateNativeNodePolicy",
+        "parents": [],
+        "startLine": 16,
+        "endLine": 34
+      },
+      "classification": "delivery-current-generated-binding",
+      "reason": "Wholephysicalnativehostpolicy requirespositive safequantities/exactbuster+prism roles/DNSnamespace; selectedactualnode allocatable/reserve sums useBigInt, rolepool generation derives actualresource budgets/identities. Hostauthor remains DLV-NATIVE-HOST perfield, Coregeneratedbindings consumeronly. CPUperiod100000/quota100*millicores remains separate operator/physicalscheduler handoff, not an immutableinvariant.",
+      "settingIds": [],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-b126090f88def1b4",
+      "source": "scripts/native-worker-node-policy.mjs",
+      "line": 22,
+      "sourceSha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+      "exactText": "  for (const pool of Object.values(policy.pools)) {",
+      "reader": {
+        "name": "validateNativeNodePolicy",
+        "parents": [],
+        "startLine": 16,
+        "endLine": 34
+      },
+      "classification": "delivery-current-generated-binding",
+      "reason": "Wholephysicalnativehostpolicy requirespositive safequantities/exactbuster+prism roles/DNSnamespace; selectedactualnode allocatable/reserve sums useBigInt, rolepool generation derives actualresource budgets/identities. Hostauthor remains DLV-NATIVE-HOST perfield, Coregeneratedbindings consumeronly. CPUperiod100000/quota100*millicores remains separate operator/physicalscheduler handoff, not an immutableinvariant.",
+      "settingIds": [],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-925663eccdd8ca24",
+      "source": "scripts/native-worker-node-policy.mjs",
+      "line": 23,
+      "sourceSha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+      "exactText": "    if (typeof pool.namespace !== 'string' || !/^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/.test(pool.namespace)) throw new Error('NATIVE_NODE_NAMESPACE_REQUIRED');",
+      "reader": {
+        "name": "validateNativeNodePolicy",
+        "parents": [],
+        "startLine": 16,
+        "endLine": 34
+      },
+      "classification": "delivery-current-generated-binding",
+      "reason": "Wholephysicalnativehostpolicy requirespositive safequantities/exactbuster+prism roles/DNSnamespace; selectedactualnode allocatable/reserve sums useBigInt, rolepool generation derives actualresource budgets/identities. Hostauthor remains DLV-NATIVE-HOST perfield, Coregeneratedbindings consumeronly. CPUperiod100000/quota100*millicores remains separate operator/physicalscheduler handoff, not an immutableinvariant.",
+      "settingIds": [],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-3d8c10cd3713dd96",
+      "source": "scripts/native-worker-node-policy.mjs",
+      "line": 29,
+      "sourceSha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+      "exactText": "    const total = Object.values(result.pools).reduce((sum, pool) => sum + BigInt(pool[key]), 0n)",
+      "reader": {
+        "name": "validateNativeNodePolicy",
+        "parents": [],
+        "startLine": 16,
+        "endLine": 34
+      },
+      "classification": "delivery-current-generated-binding",
+      "reason": "Wholephysicalnativehostpolicy requirespositive safequantities/exactbuster+prism roles/DNSnamespace; selectedactualnode allocatable/reserve sums useBigInt, rolepool generation derives actualresource budgets/identities. Hostauthor remains DLV-NATIVE-HOST perfield, Coregeneratedbindings consumeronly. CPUperiod100000/quota100*millicores remains separate operator/physicalscheduler handoff, not an immutableinvariant.",
+      "settingIds": [],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-5f56fb930b1db9a2",
+      "source": "scripts/native-worker-node-policy.mjs",
+      "line": 54,
+      "sourceSha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+      "exactText": "  for (const pool of Object.values(selected.pools)) {",
+      "reader": {
+        "name": "nativeNodeReservation",
+        "parents": [],
+        "startLine": 51,
+        "endLine": 59
+      },
+      "classification": "delivery-current-generated-binding",
+      "reason": "Wholephysicalnativehostpolicy requirespositive safequantities/exactbuster+prism roles/DNSnamespace; selectedactualnode allocatable/reserve sums useBigInt, rolepool generation derives actualresource budgets/identities. Hostauthor remains DLV-NATIVE-HOST perfield, Coregeneratedbindings consumeronly. CPUperiod100000/quota100*millicores remains separate operator/physicalscheduler handoff, not an immutableinvariant.",
+      "settingIds": [],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-b96a9744111b14ce",
+      "source": "scripts/prepare-native-worker-pools.mjs",
+      "line": 16,
+      "sourceSha256": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3",
+      "exactText": "    if (policy.schemaVersion !== 1 || policy.nodeVersion !== process.versions.node",
+      "reader": {
+        "name": "configuration",
+        "parents": [],
+        "startLine": 10,
+        "endLine": 21
+      },
+      "classification": "delivery-current-generated-binding",
+      "reason": "Actualrootsetup checks nodeversion/schema/rolepool set, positiveactualquotavalues, realcgroup2/devices/cgroup.procs empty, sameactualmachineId/rootnamespace andrunningdelegatedSystemd unitmainPid/membership beforepublishing/usingpool. FDwrite+fsync serialization is notENV read. Currentformat/safety predicates notoperatorcapacityauthors; filecaps/physicalperiod/alignment/readers separate exacthandoffs.",
+      "settingIds": [],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-2883067f9ab4249e",
+      "source": "scripts/prepare-native-worker-pools.mjs",
+      "line": 17,
+      "sourceSha256": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3",
+      "exactText": "      || Object.keys(policy.pools ?? {}).sort().join(',') !== 'buster,prism') throw new Error('NATIVE_SETUP_POLICY_RUNTIME_INVALID');",
+      "reader": {
+        "name": "configuration",
+        "parents": [],
+        "startLine": 10,
+        "endLine": 21
+      },
+      "classification": "delivery-current-generated-binding",
+      "reason": "Actualrootsetup checks nodeversion/schema/rolepool set, positiveactualquotavalues, realcgroup2/devices/cgroup.procs empty, sameactualmachineId/rootnamespace andrunningdelegatedSystemd unitmainPid/membership beforepublishing/usingpool. FDwrite+fsync serialization is notENV read. Currentformat/safety predicates notoperatorcapacityauthors; filecaps/physicalperiod/alignment/readers separate exacthandoffs.",
+      "settingIds": [],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-47379f36070f2752",
+      "source": "scripts/prepare-native-worker-pools.mjs",
+      "line": 18,
+      "sourceSha256": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3",
+      "exactText": "    for (const pool of Object.values(policy.pools)) validatePool(pool);",
+      "reader": {
+        "name": "configuration",
+        "parents": [],
+        "startLine": 10,
+        "endLine": 21
+      },
+      "classification": "delivery-current-generated-binding",
+      "reason": "Actualrootsetup checks nodeversion/schema/rolepool set, positiveactualquotavalues, realcgroup2/devices/cgroup.procs empty, sameactualmachineId/rootnamespace andrunningdelegatedSystemd unitmainPid/membership beforepublishing/usingpool. FDwrite+fsync serialization is notENV read. Currentformat/safety predicates notoperatorcapacityauthors; filecaps/physicalperiod/alignment/readers separate exacthandoffs.",
+      "settingIds": [],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-c6e04c71405ea187",
+      "source": "scripts/prepare-native-worker-pools.mjs",
+      "line": 25,
+      "sourceSha256": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3",
+      "exactText": "    if (!Number.isSafeInteger(pool[key]) || pool[key] < 1) throw new Error('NATIVE_SETUP_LIMIT_INVALID');",
+      "reader": {
+        "name": "validatePool",
+        "parents": [],
+        "startLine": 23,
+        "endLine": 29
+      },
+      "classification": "delivery-current-generated-binding",
+      "reason": "Actualrootsetup checks nodeversion/schema/rolepool set, positiveactualquotavalues, realcgroup2/devices/cgroup.procs empty, sameactualmachineId/rootnamespace andrunningdelegatedSystemd unitmainPid/membership beforepublishing/usingpool. FDwrite+fsync serialization is notENV read. Currentformat/safety predicates notoperatorcapacityauthors; filecaps/physicalperiod/alignment/readers separate exacthandoffs.",
+      "settingIds": [],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-d78ed9bf7703d9db",
+      "source": "scripts/prepare-native-worker-pools.mjs",
+      "line": 39,
+      "sourceSha256": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3",
+      "exactText": "  if (!fs.lstatSync(directory).isDirectory() || fs.statfsSync(directory).type !== 0x63677270",
+      "reader": {
+        "name": "verifyExisting",
+        "parents": [],
+        "startLine": 36,
+        "endLine": 48
+      },
+      "classification": "delivery-current-generated-binding",
+      "reason": "Actualrootsetup checks nodeversion/schema/rolepool set, positiveactualquotavalues, realcgroup2/devices/cgroup.procs empty, sameactualmachineId/rootnamespace andrunningdelegatedSystemd unitmainPid/membership beforepublishing/usingpool. FDwrite+fsync serialization is notENV read. Currentformat/safety predicates notoperatorcapacityauthors; filecaps/physicalperiod/alignment/readers separate exacthandoffs.",
+      "settingIds": [],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-bd9aa0bcc31729c1",
+      "source": "scripts/prepare-native-worker-pools.mjs",
+      "line": 40,
+      "sourceSha256": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3",
+      "exactText": "    || read(`${directory}/cgroup.procs`)) throw new Error('NATIVE_SETUP_EXISTING_POOL_INVALID');",
+      "reader": {
+        "name": "verifyExisting",
+        "parents": [],
+        "startLine": 36,
+        "endLine": 48
+      },
+      "classification": "delivery-current-generated-binding",
+      "reason": "Actualrootsetup checks nodeversion/schema/rolepool set, positiveactualquotavalues, realcgroup2/devices/cgroup.procs empty, sameactualmachineId/rootnamespace andrunningdelegatedSystemd unitmainPid/membership beforepublishing/usingpool. FDwrite+fsync serialization is notENV read. Currentformat/safety predicates notoperatorcapacityauthors; filecaps/physicalperiod/alignment/readers separate exacthandoffs.",
+      "settingIds": [],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-54fc721bedaa2ebc",
+      "source": "scripts/prepare-native-worker-pools.mjs",
+      "line": 56,
+      "sourceSha256": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3",
+      "exactText": "    if (!stat.isFile() || stat.uid !== 0 || (stat.mode & 0o022) !== 0 || read(file) !== machineId) throw new Error('NATIVE_SETUP_NODE_IDENTITY_CONFLICT');",
+      "reader": {
+        "name": "identity",
+        "parents": [],
+        "startLine": 50,
+        "endLine": 63
+      },
+      "classification": "delivery-current-generated-binding",
+      "reason": "Actualrootsetup checks nodeversion/schema/rolepool set, positiveactualquotavalues, realcgroup2/devices/cgroup.procs empty, sameactualmachineId/rootnamespace andrunningdelegatedSystemd unitmainPid/membership beforepublishing/usingpool. FDwrite+fsync serialization is notENV read. Currentformat/safety predicates notoperatorcapacityauthors; filecaps/physicalperiod/alignment/readers separate exacthandoffs.",
+      "settingIds": [],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-d004f9836608bece",
+      "source": "scripts/prepare-native-worker-pools.mjs",
+      "line": 68,
+      "sourceSha256": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3",
+      "exactText": "  if (own.dev !== host.dev || own.ino !== host.ino) throw new Error('NATIVE_SETUP_HOST_NAMESPACE_REQUIRED');",
+      "reader": {
+        "name": "runtimeIdentity",
+        "parents": [],
+        "startLine": 65,
+        "endLine": 87
+      },
+      "classification": "delivery-current-generated-binding",
+      "reason": "Actualrootsetup checks nodeversion/schema/rolepool set, positiveactualquotavalues, realcgroup2/devices/cgroup.procs empty, sameactualmachineId/rootnamespace andrunningdelegatedSystemd unitmainPid/membership beforepublishing/usingpool. FDwrite+fsync serialization is notENV read. Currentformat/safety predicates notoperatorcapacityauthors; filecaps/physicalperiod/alignment/readers separate exacthandoffs.",
+      "settingIds": [],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-e1a35f2f2665334e",
+      "source": "scripts/prepare-native-worker-pools.mjs",
+      "line": 83,
+      "sourceSha256": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3",
+      "exactText": "  try { fs.writeFileSync(fd, `${JSON.stringify(value)}\\n`); fs.fsyncSync(fd); } finally { fs.closeSync(fd); }",
+      "reader": {
+        "name": "runtimeIdentity",
+        "parents": [],
+        "startLine": 65,
+        "endLine": 87
+      },
+      "classification": "delivery-current-generated-binding",
+      "reason": "Actualrootsetup checks nodeversion/schema/rolepool set, positiveactualquotavalues, realcgroup2/devices/cgroup.procs empty, sameactualmachineId/rootnamespace andrunningdelegatedSystemd unitmainPid/membership beforepublishing/usingpool. FDwrite+fsync serialization is notENV read. Currentformat/safety predicates notoperatorcapacityauthors; filecaps/physicalperiod/alignment/readers separate exacthandoffs.",
+      "settingIds": [],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-96de922579951934",
+      "source": "scripts/prepare-native-worker-pools.mjs",
+      "line": 90,
+      "sourceSha256": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3",
+      "exactText": "  if (process.getuid() !== 0 || fs.statfsSync(root).type !== 0x63677270",
+      "reader": {
+        "name": "prepare",
+        "parents": [],
+        "startLine": 89,
+        "endLine": 113
+      },
+      "classification": "delivery-current-generated-binding",
+      "reason": "Actualrootsetup checks nodeversion/schema/rolepool set, positiveactualquotavalues, realcgroup2/devices/cgroup.procs empty, sameactualmachineId/rootnamespace andrunningdelegatedSystemd unitmainPid/membership beforepublishing/usingpool. FDwrite+fsync serialization is notENV read. Currentformat/safety predicates notoperatorcapacityauthors; filecaps/physicalperiod/alignment/readers separate exacthandoffs.",
+      "settingIds": [],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-24837b2d52dfe6f5",
+      "source": "scripts/prepare-native-worker-pools.mjs",
+      "line": 91,
+      "sourceSha256": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3",
+      "exactText": "    || !read('/proc/self/cgroup').split('\\n').includes(`0::${root.slice('/sys/fs/cgroup'.length)}/setup`)",
+      "reader": {
+        "name": "prepare",
+        "parents": [],
+        "startLine": 89,
+        "endLine": 113
+      },
+      "classification": "delivery-current-generated-binding",
+      "reason": "Actualrootsetup checks nodeversion/schema/rolepool set, positiveactualquotavalues, realcgroup2/devices/cgroup.procs empty, sameactualmachineId/rootnamespace andrunningdelegatedSystemd unitmainPid/membership beforepublishing/usingpool. FDwrite+fsync serialization is notENV read. Currentformat/safety predicates notoperatorcapacityauthors; filecaps/physicalperiod/alignment/readers separate exacthandoffs.",
+      "settingIds": [],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-eab2072be2b585ce",
+      "source": "scripts/prepare-native-worker-pools.mjs",
+      "line": 92,
+      "sourceSha256": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3",
+      "exactText": "    || read(`${root}/cgroup.procs`)) throw new Error('NATIVE_SETUP_DELEGATED_UNIT_REQUIRED');",
+      "reader": {
+        "name": "prepare",
+        "parents": [],
+        "startLine": 89,
+        "endLine": 113
+      },
+      "classification": "delivery-current-generated-binding",
+      "reason": "Actualrootsetup checks nodeversion/schema/rolepool set, positiveactualquotavalues, realcgroup2/devices/cgroup.procs empty, sameactualmachineId/rootnamespace andrunningdelegatedSystemd unitmainPid/membership beforepublishing/usingpool. FDwrite+fsync serialization is notENV read. Currentformat/safety predicates notoperatorcapacityauthors; filecaps/physicalperiod/alignment/readers separate exacthandoffs.",
+      "settingIds": [],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-6b44fa4d110882a8",
+      "source": "scripts/prepare-native-worker-pools.mjs",
+      "line": 120,
+      "sourceSha256": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3",
+      "exactText": "  if (fs.lstatSync(browser).isSymbolicLink() || fs.statfsSync(browser).type !== 0x63677270",
+      "reader": {
+        "name": "prepareBrowser",
+        "parents": [],
+        "startLine": 115,
+        "endLine": 123
+      },
+      "classification": "delivery-current-generated-binding",
+      "reason": "Actualrootsetup checks nodeversion/schema/rolepool set, positiveactualquotavalues, realcgroup2/devices/cgroup.procs empty, sameactualmachineId/rootnamespace andrunningdelegatedSystemd unitmainPid/membership beforepublishing/usingpool. FDwrite+fsync serialization is notENV read. Currentformat/safety predicates notoperatorcapacityauthors; filecaps/physicalperiod/alignment/readers separate exacthandoffs.",
+      "settingIds": [],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-cebd8bd3836afb11",
+      "source": "scripts/prepare-native-worker-pools.mjs",
+      "line": 121,
+      "sourceSha256": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3",
+      "exactText": "    || read(`${browser}/cgroup.procs`)) throw new Error('NATIVE_BROWSER_SUBTREE_INVALID');",
+      "reader": {
+        "name": "prepareBrowser",
+        "parents": [],
+        "startLine": 115,
+        "endLine": 123
+      },
+      "classification": "delivery-current-generated-binding",
+      "reason": "Actualrootsetup checks nodeversion/schema/rolepool set, positiveactualquotavalues, realcgroup2/devices/cgroup.procs empty, sameactualmachineId/rootnamespace andrunningdelegatedSystemd unitmainPid/membership beforepublishing/usingpool. FDwrite+fsync serialization is notENV read. Currentformat/safety predicates notoperatorcapacityauthors; filecaps/physicalperiod/alignment/readers separate exacthandoffs.",
+      "settingIds": [],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-befd3c7370a11202",
+      "source": "scripts/prepare-native-worker-pools.mjs",
+      "line": 126,
+      "sourceSha256": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3",
+      "exactText": "  if (facts.uid !== 0 || facts.subState !== 'running'",
+      "reader": {
+        "name": "requireRunningPoolService",
+        "parents": [],
+        "startLine": 125,
+        "endLine": 131
+      },
+      "classification": "delivery-current-generated-binding",
+      "reason": "Actualrootsetup checks nodeversion/schema/rolepool set, positiveactualquotavalues, realcgroup2/devices/cgroup.procs empty, sameactualmachineId/rootnamespace andrunningdelegatedSystemd unitmainPid/membership beforepublishing/usingpool. FDwrite+fsync serialization is notENV read. Currentformat/safety predicates notoperatorcapacityauthors; filecaps/physicalperiod/alignment/readers separate exacthandoffs.",
+      "settingIds": [],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-9a7aefc8d73b406d",
+      "source": "scripts/prepare-native-worker-pools.mjs",
+      "line": 127,
+      "sourceSha256": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3",
+      "exactText": "    || facts.controlGroup !== root.slice('/sys/fs/cgroup'.length)",
+      "reader": {
+        "name": "requireRunningPoolService",
+        "parents": [],
+        "startLine": 125,
+        "endLine": 131
+      },
+      "classification": "delivery-current-generated-binding",
+      "reason": "Actualrootsetup checks nodeversion/schema/rolepool set, positiveactualquotavalues, realcgroup2/devices/cgroup.procs empty, sameactualmachineId/rootnamespace andrunningdelegatedSystemd unitmainPid/membership beforepublishing/usingpool. FDwrite+fsync serialization is notENV read. Currentformat/safety predicates notoperatorcapacityauthors; filecaps/physicalperiod/alignment/readers separate exacthandoffs.",
+      "settingIds": [],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-b1088ee4dd750b49",
+      "source": "scripts/prepare-native-worker-pools.mjs",
+      "line": 128,
+      "sourceSha256": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3",
+      "exactText": "    || !Number.isSafeInteger(facts.mainPid) || facts.mainPid <= 0",
+      "reader": {
+        "name": "requireRunningPoolService",
+        "parents": [],
+        "startLine": 125,
+        "endLine": 131
+      },
+      "classification": "delivery-current-generated-binding",
+      "reason": "Actualrootsetup checks nodeversion/schema/rolepool set, positiveactualquotavalues, realcgroup2/devices/cgroup.procs empty, sameactualmachineId/rootnamespace andrunningdelegatedSystemd unitmainPid/membership beforepublishing/usingpool. FDwrite+fsync serialization is notENV read. Currentformat/safety predicates notoperatorcapacityauthors; filecaps/physicalperiod/alignment/readers separate exacthandoffs.",
+      "settingIds": [],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-ecf1191a92f7ac14",
+      "source": "scripts/prepare-native-worker-pools.mjs",
+      "line": 129,
+      "sourceSha256": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3",
+      "exactText": "    || !facts.mainCgroup.split('\\n').includes(`0::${root.slice('/sys/fs/cgroup'.length)}/setup`)",
+      "reader": {
+        "name": "requireRunningPoolService",
+        "parents": [],
+        "startLine": 125,
+        "endLine": 131
+      },
+      "classification": "delivery-current-generated-binding",
+      "reason": "Actualrootsetup checks nodeversion/schema/rolepool set, positiveactualquotavalues, realcgroup2/devices/cgroup.procs empty, sameactualmachineId/rootnamespace andrunningdelegatedSystemd unitmainPid/membership beforepublishing/usingpool. FDwrite+fsync serialization is notENV read. Currentformat/safety predicates notoperatorcapacityauthors; filecaps/physicalperiod/alignment/readers separate exacthandoffs.",
+      "settingIds": [],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-bfd8bded54369d2e",
+      "source": "scripts/prepare-native-worker-pools.mjs",
+      "line": 130,
+      "sourceSha256": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3",
+      "exactText": "    || !facts.hostNamespaceMatches) throw new Error('NATIVE_BROWSER_RUNNING_POOL_REQUIRED');",
+      "reader": {
+        "name": "requireRunningPoolService",
+        "parents": [],
+        "startLine": 125,
+        "endLine": 131
+      },
+      "classification": "delivery-current-generated-binding",
+      "reason": "Actualrootsetup checks nodeversion/schema/rolepool set, positiveactualquotavalues, realcgroup2/devices/cgroup.procs empty, sameactualmachineId/rootnamespace andrunningdelegatedSystemd unitmainPid/membership beforepublishing/usingpool. FDwrite+fsync serialization is notENV read. Currentformat/safety predicates notoperatorcapacityauthors; filecaps/physicalperiod/alignment/readers separate exacthandoffs.",
+      "settingIds": [],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-abe6cfb036a517fc",
+      "source": "scripts/prepare-native-worker-pools.mjs",
+      "line": 136,
+      "sourceSha256": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3",
+      "exactText": "  if (!Number.isSafeInteger(mainPid) || mainPid <= 0) throw new Error('NATIVE_BROWSER_RUNNING_POOL_REQUIRED');",
+      "reader": {
+        "name": "prepareBrowserOnly",
+        "parents": [],
+        "startLine": 133,
+        "endLine": 150
+      },
+      "classification": "delivery-current-generated-binding",
+      "reason": "Actualrootsetup checks nodeversion/schema/rolepool set, positiveactualquotavalues, realcgroup2/devices/cgroup.procs empty, sameactualmachineId/rootnamespace andrunningdelegatedSystemd unitmainPid/membership beforepublishing/usingpool. FDwrite+fsync serialization is notENV read. Currentformat/safety predicates notoperatorcapacityauthors; filecaps/physicalperiod/alignment/readers separate exacthandoffs.",
+      "settingIds": [],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-25b674c5951feeca",
+      "source": "scripts/prepare-native-worker-pools.mjs",
+      "line": 143,
+      "sourceSha256": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3",
+      "exactText": "  if (fs.statfsSync(root).type !== 0x63677270 || fs.realpathSync(root)!==root",
+      "reader": {
+        "name": "prepareBrowserOnly",
+        "parents": [],
+        "startLine": 133,
+        "endLine": 150
+      },
+      "classification": "delivery-current-generated-binding",
+      "reason": "Actualrootsetup checks nodeversion/schema/rolepool set, positiveactualquotavalues, realcgroup2/devices/cgroup.procs empty, sameactualmachineId/rootnamespace andrunningdelegatedSystemd unitmainPid/membership beforepublishing/usingpool. FDwrite+fsync serialization is notENV read. Currentformat/safety predicates notoperatorcapacityauthors; filecaps/physicalperiod/alignment/readers separate exacthandoffs.",
+      "settingIds": [],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-abccb40a80c45648",
+      "source": "scripts/prepare-native-worker-pools.mjs",
+      "line": 144,
+      "sourceSha256": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3",
+      "exactText": "    || read(`${root}/cgroup.procs`)) throw new Error('NATIVE_BROWSER_RUNNING_POOL_REQUIRED');",
+      "reader": {
+        "name": "prepareBrowserOnly",
+        "parents": [],
+        "startLine": 133,
+        "endLine": 150
+      },
+      "classification": "delivery-current-generated-binding",
+      "reason": "Actualrootsetup checks nodeversion/schema/rolepool set, positiveactualquotavalues, realcgroup2/devices/cgroup.procs empty, sameactualmachineId/rootnamespace andrunningdelegatedSystemd unitmainPid/membership beforepublishing/usingpool. FDwrite+fsync serialization is notENV read. Currentformat/safety predicates notoperatorcapacityauthors; filecaps/physicalperiod/alignment/readers separate exacthandoffs.",
+      "settingIds": [],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-e4ce93fa6cd2747d",
+      "source": "scripts/updates/release-configuration.mjs",
+      "line": 49,
+      "sourceSha256": "25913c0267162ddb0c89b36cf6c141061431bd9ead08990ff195cc9808a23fc6",
+      "exactText": "    if (!target || git(['cat-file', 'blob', entry.digest]) !== target) throw new Error(`RELEASE_CONFIGURATION_SOURCE_FILE_INVALID: ${entry.name}`);",
+      "reader": {
+        "name": "sourceAliasTargets",
+        "parents": [],
+        "startLine": 44,
+        "endLine": 56
+      },
+      "classification": "delivery-current-generated-binding",
+      "reason": "RealGit tree blobs/modes/canonicalsource count and exactsymlinktarget releasealiases verify immutable selectedconfiginstallation; sourcecommit40hex allowedfamily andblob/file/symlinkmodes enforced. Fixedaliases are identity/projection, not editablecomponentvalueauthor; sourceavailability/deployvisibility not proved by localvalidation.",
+      "settingIds": [],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-2ce070c768a2b0e8",
+      "source": "scripts/updates/release-configuration.mjs",
+      "line": 52,
+      "sourceSha256": "25913c0267162ddb0c89b36cf6c141061431bd9ead08990ff195cc9808a23fc6",
+      "exactText": "    if (source.length !== 1 || source[0].name !== canonical || source[0].mode === '120000') throw new Error(`RELEASE_CONFIGURATION_SOURCE_FILE_INVALID: ${canonical}`);",
+      "reader": {
+        "name": "sourceAliasTargets",
+        "parents": [],
+        "startLine": 44,
+        "endLine": 56
+      },
+      "classification": "delivery-current-generated-binding",
+      "reason": "RealGit tree blobs/modes/canonicalsource count and exactsymlinktarget releasealiases verify immutable selectedconfiginstallation; sourcecommit40hex allowedfamily andblob/file/symlinkmodes enforced. Fixedaliases are identity/projection, not editablecomponentvalueauthor; sourceavailability/deployvisibility not proved by localvalidation.",
+      "settingIds": [],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-fe1009d6b8b14c88",
+      "source": "scripts/updates/release-configuration.mjs",
+      "line": 63,
+      "sourceSha256": "25913c0267162ddb0c89b36cf6c141061431bd9ead08990ff195cc9808a23fc6",
+      "exactText": "      if (!stat.isSymbolicLink() || fs.readlinkSync(path.join(root, name)) !== configurationAliases[name]) throw new Error(`RELEASE_CONFIGURATION_ALIAS_CHANGED: ${name}`);",
+      "reader": {
+        "name": "verifyWorkingFiles",
+        "parents": [],
+        "startLine": 58,
+        "endLine": 70
+      },
+      "classification": "delivery-current-generated-binding",
+      "reason": "RealGit tree blobs/modes/canonicalsource count and exactsymlinktarget releasealiases verify immutable selectedconfiginstallation; sourcecommit40hex allowedfamily andblob/file/symlinkmodes enforced. Fixedaliases are identity/projection, not editablecomponentvalueauthor; sourceavailability/deployvisibility not proved by localvalidation.",
+      "settingIds": [],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-88a5fbf34f91bed8",
+      "source": "scripts/updates/release-configuration.mjs",
+      "line": 75,
+      "sourceSha256": "25913c0267162ddb0c89b36cf6c141061431bd9ead08990ff195cc9808a23fc6",
+      "exactText": "  if (!/^[a-f0-9]{40}$/u.test(commit) || !configurationPaths[family]) throw new Error('RELEASE_CONFIGURATION_IDENTITY_INVALID');",
+      "reader": {
+        "name": "verifyReleaseConfiguration",
+        "parents": [],
+        "startLine": 74,
+        "endLine": 95
+      },
+      "classification": "delivery-current-generated-binding",
+      "reason": "RealGit tree blobs/modes/canonicalsource count and exactsymlinktarget releasealiases verify immutable selectedconfiginstallation; sourcecommit40hex allowedfamily andblob/file/symlinkmodes enforced. Fixedaliases are identity/projection, not editablecomponentvalueauthor; sourceavailability/deployvisibility not proved by localvalidation.",
+      "settingIds": [],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-0d33b13504e38b24",
+      "source": "scripts/updates/release-configuration.mjs",
+      "line": 84,
+      "sourceSha256": "25913c0267162ddb0c89b36cf6c141061431bd9ead08990ff195cc9808a23fc6",
+      "exactText": "      if (type !== 'blob' || !['100644', '100755', '120000'].includes(mode)) throw new Error(`RELEASE_CONFIGURATION_SOURCE_FILE_INVALID: ${name}`);",
+      "reader": {
+        "name": "verifyReleaseConfiguration",
+        "parents": [],
+        "startLine": 74,
+        "endLine": 95
+      },
+      "classification": "delivery-current-generated-binding",
+      "reason": "RealGit tree blobs/modes/canonicalsource count and exactsymlinktarget releasealiases verify immutable selectedconfiginstallation; sourcecommit40hex allowedfamily andblob/file/symlinkmodes enforced. Fixedaliases are identity/projection, not editablecomponentvalueauthor; sourceavailability/deployvisibility not proved by localvalidation.",
+      "settingIds": [],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-9908d9c1afef532d",
+      "source": "skills/buster/engine/remote-plan-cli.ts",
+      "line": 1,
+      "sourceSha256": "2f5e47619915feede36cf8909c860b9cd7e4dd4378eeaf2f9b8b72a61a8d5670",
+      "exactText": "#!/usr/bin/env node",
+      "reader": null,
+      "classification": "generated-binding",
+      "reason": "Actualimage Node CLI entry takes EXACT --config filename pair; this is existing Buster runtime descriptor, not workflow --pipeline or new globalindex. Startup reads selectedSWARM_CONFIG/workerCorePolicy/runtimephysicalprofile beforeconstructing service; ready/error JSON is diagnostic, notENV setter. Service UID/GID1000 requirement separatedelivery rolebinding.",
+      "settingIds": [
+        "DLV-BUSTER-ENTRYPOINT-RUNTIME-SCHEMAVERSION"
+      ],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-de9b95e10cdf23d6",
+      "source": "skills/buster/engine/remote-plan-cli.ts",
+      "line": 13,
+      "sourceSha256": "2f5e47619915feede36cf8909c860b9cd7e4dd4378eeaf2f9b8b72a61a8d5670",
+      "exactText": "  if (values.length !== 2 || values[0] !== '--config' || !values[1]) {",
+      "reader": {
+        "name": "configArgument",
+        "parents": [],
+        "startLine": 12,
+        "endLine": 17
+      },
+      "classification": "generated-binding",
+      "reason": "Actualimage Node CLI entry takes EXACT --config filename pair; this is existing Buster runtime descriptor, not workflow --pipeline or new globalindex. Startup reads selectedSWARM_CONFIG/workerCorePolicy/runtimephysicalprofile beforeconstructing service; ready/error JSON is diagnostic, notENV setter. Service UID/GID1000 requirement separatedelivery rolebinding.",
+      "settingIds": [
+        "DLV-BUSTER-ENTRYPOINT-RUNTIME-SCHEMAVERSION"
+      ],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-117801707bc7783b",
+      "source": "skills/buster/engine/remote-plan-cli.ts",
+      "line": 21,
+      "sourceSha256": "2f5e47619915feede36cf8909c860b9cd7e4dd4378eeaf2f9b8b72a61a8d5670",
+      "exactText": "  const snapshot = loadSwarmSettings(process.env);",
+      "reader": null,
+      "classification": "generated-binding",
+      "reason": "Actualimage Node CLI entry takes EXACT --config filename pair; this is existing Buster runtime descriptor, not workflow --pipeline or new globalindex. Startup reads selectedSWARM_CONFIG/workerCorePolicy/runtimephysicalprofile beforeconstructing service; ready/error JSON is diagnostic, notENV setter. Service UID/GID1000 requirement separatedelivery rolebinding.",
+      "settingIds": [
+        "DLV-BUSTER-ENTRYPOINT-RUNTIME-SCHEMAVERSION"
+      ],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-14bec191f18c0261",
+      "source": "skills/buster/engine/remote-plan-cli.ts",
+      "line": 26,
+      "sourceSha256": "2f5e47619915feede36cf8909c860b9cd7e4dd4378eeaf2f9b8b72a61a8d5670",
+      "exactText": "  const runtime = loadProductionBusterRemotePlanRuntime(configArgument(process.argv.slice(2)), client, settings, snapshot.workerCore.localRuntime, process.env);",
+      "reader": null,
+      "classification": "generated-binding",
+      "reason": "Actualimage Node CLI entry takes EXACT --config filename pair; this is existing Buster runtime descriptor, not workflow --pipeline or new globalindex. Startup reads selectedSWARM_CONFIG/workerCorePolicy/runtimephysicalprofile beforeconstructing service; ready/error JSON is diagnostic, notENV setter. Service UID/GID1000 requirement separatedelivery rolebinding.",
+      "settingIds": [
+        "DLV-BUSTER-ENTRYPOINT-RUNTIME-SCHEMAVERSION"
+      ],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-178fe8c04e2f91e3",
+      "source": "skills/buster/engine/remote-plan-cli.ts",
+      "line": 28,
+      "sourceSha256": "2f5e47619915feede36cf8909c860b9cd7e4dd4378eeaf2f9b8b72a61a8d5670",
+      "exactText": "  process.stdout.write(`${JSON.stringify({ schemaVersion: 'buster-remote-runtime-ready.v1',",
+      "reader": null,
+      "classification": "generated-binding",
+      "reason": "Actualimage Node CLI entry takes EXACT --config filename pair; this is existing Buster runtime descriptor, not workflow --pipeline or new globalindex. Startup reads selectedSWARM_CONFIG/workerCorePolicy/runtimephysicalprofile beforeconstructing service; ready/error JSON is diagnostic, notENV setter. Service UID/GID1000 requirement separatedelivery rolebinding.",
+      "settingIds": [
+        "DLV-BUSTER-ENTRYPOINT-RUNTIME-SCHEMAVERSION"
+      ],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-79859ad12b21c9ef",
+      "source": "skills/buster/engine/remote-plan-cli.ts",
+      "line": 40,
+      "sourceSha256": "2f5e47619915feede36cf8909c860b9cd7e4dd4378eeaf2f9b8b72a61a8d5670",
+      "exactText": "  process.stderr.write(`${JSON.stringify({ status: 'error', error: error instanceof Error ? error.message : String(error) })}\\n`);",
+      "reader": null,
+      "classification": "generated-binding",
+      "reason": "Actualimage Node CLI entry takes EXACT --config filename pair; this is existing Buster runtime descriptor, not workflow --pipeline or new globalindex. Startup reads selectedSWARM_CONFIG/workerCorePolicy/runtimephysicalprofile beforeconstructing service; ready/error JSON is diagnostic, notENV setter. Service UID/GID1000 requirement separatedelivery rolebinding.",
+      "settingIds": [
+        "DLV-BUSTER-ENTRYPOINT-RUNTIME-SCHEMAVERSION"
+      ],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-fabc811c00c0d5a8",
+      "source": "skills/buster/engine/test-gates/preparation-config.ts",
+      "line": 31,
+      "sourceSha256": "f2b088c3fef62010e6d867f6610ccc2392fdb7d6fa6be2bd43ad8e320d099835",
+      "exactText": "  const sourceAttestationPublicKey = environment[publicKeyName];",
+      "reader": {
+        "name": "nativeBusterPreparationConfig",
+        "parents": [],
+        "startLine": 14,
+        "endLine": 39
+      },
+      "classification": "delivery-current-author-consumer",
+      "reason": "Actualroot runtime descriptor sourceAttestationPublicKeyEnvironmentVariable selects requiredreal ed25519 publickey (no secretcontentrecorded), stateRoot/runtimeRoot exactcomparefixed nativepaths; explicitSWARM_CONFIG selectedgeneration trustedread. Actual existing DLV fields source crosslink; tarExecutable is declaredunused and cannot serve actualtar hardcodedreader alias.",
+      "settingIds": [
+        "DLV-BUSTER-ENTRYPOINT-RUNTIME-SOURCEATTESTATIONPUBLICKEYENVIRONMENTVARIABLE",
+        "DLV-BUSTER-ENTRYPOINT-RUNTIME-TRUSTEDSOURCEAUTHORITY",
+        "DLV-BUSTER-ENTRYPOINT-RUNTIME-STATEROOT",
+        "DLV-BUSTER-ENTRYPOINT-RUNTIME-RUNTIMEROOT"
+      ],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-b40d099b9dfb2dd4",
+      "source": "skills/buster/engine/test-gates/preparation-config.ts",
+      "line": 35,
+      "sourceSha256": "f2b088c3fef62010e6d867f6610ccc2392fdb7d6fa6be2bd43ad8e320d099835",
+      "exactText": "  if ((runtime.stateRoot !== preparationStateRoot || runtime.runtimeRoot !== '/var/lib/buster-v2/runs')) throw new Error('BUSTER_NATIVE_STATE_ROOT_INVALID');",
+      "reader": {
+        "name": "nativeBusterPreparationConfig",
+        "parents": [],
+        "startLine": 14,
+        "endLine": 39
+      },
+      "classification": "delivery-current-author-consumer",
+      "reason": "Actualroot runtime descriptor sourceAttestationPublicKeyEnvironmentVariable selects requiredreal ed25519 publickey (no secretcontentrecorded), stateRoot/runtimeRoot exactcomparefixed nativepaths; explicitSWARM_CONFIG selectedgeneration trustedread. Actual existing DLV fields source crosslink; tarExecutable is declaredunused and cannot serve actualtar hardcodedreader alias.",
+      "settingIds": [
+        "DLV-BUSTER-ENTRYPOINT-RUNTIME-SOURCEATTESTATIONPUBLICKEYENVIRONMENTVARIABLE",
+        "DLV-BUSTER-ENTRYPOINT-RUNTIME-TRUSTEDSOURCEAUTHORITY",
+        "DLV-BUSTER-ENTRYPOINT-RUNTIME-STATEROOT",
+        "DLV-BUSTER-ENTRYPOINT-RUNTIME-RUNTIMEROOT"
+      ],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-072db49d45d6ec00",
+      "source": "skills/buster/engine/test-gates/preparation-config.ts",
+      "line": 62,
+      "sourceSha256": "f2b088c3fef62010e6d867f6610ccc2392fdb7d6fa6be2bd43ad8e320d099835",
+      "exactText": "  const file = environment.SWARM_CONFIG;",
+      "reader": {
+        "name": "requireRootBusterSettings",
+        "parents": [],
+        "startLine": 61,
+        "endLine": 78
+      },
+      "classification": "delivery-current-author-consumer",
+      "reason": "Actualroot runtime descriptor sourceAttestationPublicKeyEnvironmentVariable selects requiredreal ed25519 publickey (no secretcontentrecorded), stateRoot/runtimeRoot exactcomparefixed nativepaths; explicitSWARM_CONFIG selectedgeneration trustedread. Actual existing DLV fields source crosslink; tarExecutable is declaredunused and cannot serve actualtar hardcodedreader alias.",
+      "settingIds": [
+        "DLV-BUSTER-ENTRYPOINT-RUNTIME-SOURCEATTESTATIONPUBLICKEYENVIRONMENTVARIABLE",
+        "DLV-BUSTER-ENTRYPOINT-RUNTIME-TRUSTEDSOURCEAUTHORITY",
+        "DLV-BUSTER-ENTRYPOINT-RUNTIME-STATEROOT",
+        "DLV-BUSTER-ENTRYPOINT-RUNTIME-RUNTIMEROOT"
+      ],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-6b7b7c4b8d9bef51",
+      "source": "skills/buster/engine/test-gates/production.ts",
+      "line": 26,
+      "sourceSha256": "73a9e23f3744f0a7bbbb1cba440300fd32c8f32e4233b32a38aebd9b84a43005",
+      "exactText": "  const workerRevision = environment.KUBECLAW_BUILD_REVISION;",
+      "reader": {
+        "name": "loadProductionBusterRemotePlanRuntime",
+        "parents": [],
+        "startLine": 15,
+        "endLine": 36
+      },
+      "classification": "delivery-current-generated-binding",
+      "reason": "Actual KUBECLAW_BUILD_REVISION regex40..64hex required then workerrevision captured in service; producerGitHub.sha\u2192Docker ARG/ENV traced by exact existing DLV row. No fixedsha default or Coreauthor.",
+      "settingIds": [
+        "DLV-IMAGE-BUSTER-RUNTIME-KUBECLAW-BUILD-REVISION"
+      ],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-43aaf536b4767918",
+      "source": "skills/buster/engine/test-gates/production.ts",
+      "line": 27,
+      "sourceSha256": "73a9e23f3744f0a7bbbb1cba440300fd32c8f32e4233b32a38aebd9b84a43005",
+      "exactText": "  if (!workerRevision || !/^[a-f0-9]{40,64}$/u.test(workerRevision)) {",
+      "reader": {
+        "name": "loadProductionBusterRemotePlanRuntime",
+        "parents": [],
+        "startLine": 15,
+        "endLine": 36
+      },
+      "classification": "delivery-current-generated-binding",
+      "reason": "Actual KUBECLAW_BUILD_REVISION regex40..64hex required then workerrevision captured in service; producerGitHub.sha\u2192Docker ARG/ENV traced by exact existing DLV row. No fixedsha default or Coreauthor.",
+      "settingIds": [
+        "DLV-IMAGE-BUSTER-RUNTIME-KUBECLAW-BUILD-REVISION"
+      ],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-9a8629c5180b7b1a",
+      "source": "skills/common/plugin-runtime/foundation/config/buster-cluster-invokers.ts",
+      "line": 75,
+      "sourceSha256": "00196a2592b3c32eaf156a74993e58a9aecfa361d577577184d2fd14f6d1f057",
+      "exactText": "    || kube.maximumPersistentVolumeTotalBytes < kube.maximumPersistentVolumeClaimBytes",
+      "reader": {
+        "name": "validateBusterClusterInvokerSettings",
+        "parents": [],
+        "startLine": 69,
+        "endLine": 91
+      },
+      "classification": "duplicate",
+      "reason": "Whole selected cluster settings actualsemanticrelations: totalPVC>=singlePVC, manifest*outputmultiplier safe, poll<=execution, suffix no doubledot; dynamic retiredENV keys rejectpresence, notdefaultvalues. Real namespace/registry/secret/storage/timer/byte fields remain individual148ownersettings/disjoint productive capability readers.",
+      "settingIds": [],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-42d1aa1fdc56a06f",
+      "source": "skills/common/plugin-runtime/foundation/config/buster-cluster-invokers.ts",
+      "line": 76,
+      "sourceSha256": "00196a2592b3c32eaf156a74993e58a9aecfa361d577577184d2fd14f6d1f057",
+      "exactText": "    || !Number.isSafeInteger(kube.maximumManifestBytes * kube.commandOutputManifestMultiplier)",
+      "reader": {
+        "name": "validateBusterClusterInvokerSettings",
+        "parents": [],
+        "startLine": 69,
+        "endLine": 91
+      },
+      "classification": "duplicate",
+      "reason": "Whole selected cluster settings actualsemanticrelations: totalPVC>=singlePVC, manifest*outputmultiplier safe, poll<=execution, suffix no doubledot; dynamic retiredENV keys rejectpresence, notdefaultvalues. Real namespace/registry/secret/storage/timer/byte fields remain individual148ownersettings/disjoint productive capability readers.",
+      "settingIds": [],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-08404fcd77fe7077",
+      "source": "skills/common/plugin-runtime/foundation/config/buster-cluster-invokers.ts",
+      "line": 77,
+      "sourceSha256": "00196a2592b3c32eaf156a74993e58a9aecfa361d577577184d2fd14f6d1f057",
+      "exactText": "    || tail.pollIntervalMs > tail.maximumExecutionMs",
+      "reader": {
+        "name": "validateBusterClusterInvokerSettings",
+        "parents": [],
+        "startLine": 69,
+        "endLine": 91
+      },
+      "classification": "duplicate",
+      "reason": "Whole selected cluster settings actualsemanticrelations: totalPVC>=singlePVC, manifest*outputmultiplier safe, poll<=execution, suffix no doubledot; dynamic retiredENV keys rejectpresence, notdefaultvalues. Real namespace/registry/secret/storage/timer/byte fields remain individual148ownersettings/disjoint productive capability readers.",
+      "settingIds": [],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-330a94ab4ed5dd7e",
+      "source": "skills/common/plugin-runtime/foundation/config/buster-cluster-invokers.ts",
+      "line": 78,
+      "sourceSha256": "00196a2592b3c32eaf156a74993e58a9aecfa361d577577184d2fd14f6d1f057",
+      "exactText": "    || tail.allowedHostSuffixes.some(suffix => suffix.includes('..'))) {",
+      "reader": {
+        "name": "validateBusterClusterInvokerSettings",
+        "parents": [],
+        "startLine": 69,
+        "endLine": 91
+      },
+      "classification": "duplicate",
+      "reason": "Whole selected cluster settings actualsemanticrelations: totalPVC>=singlePVC, manifest*outputmultiplier safe, poll<=execution, suffix no doubledot; dynamic retiredENV keys rejectpresence, notdefaultvalues. Real namespace/registry/secret/storage/timer/byte fields remain individual148ownersettings/disjoint productive capability readers.",
+      "settingIds": [],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-182b813bc2dc7897",
+      "source": "skills/common/plugin-runtime/foundation/config/buster-cluster-invokers.ts",
+      "line": 95,
+      "sourceSha256": "00196a2592b3c32eaf156a74993e58a9aecfa361d577577184d2fd14f6d1f057",
+      "exactText": "    if (environment[key] !== undefined) throw new Error(`SWARM_CONFIG_LEGACY_OVERRIDE:${key}`);",
+      "reader": {
+        "name": "rejectLegacyClusterEnvironment",
+        "parents": [],
+        "startLine": 93,
+        "endLine": 97
+      },
+      "classification": "duplicate",
+      "reason": "Whole selected cluster settings actualsemanticrelations: totalPVC>=singlePVC, manifest*outputmultiplier safe, poll<=execution, suffix no doubledot; dynamic retiredENV keys rejectpresence, notdefaultvalues. Real namespace/registry/secret/storage/timer/byte fields remain individual148ownersettings/disjoint productive capability readers.",
+      "settingIds": [],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-93c1805b7dad5828",
+      "source": "skills/common/plugin-runtime/foundation/config/buster-execution.ts",
+      "line": 125,
+      "sourceSha256": "5d6b78d0ab9da185827f35d25c5f2c6da68a4f7e1de8e815b48641b935c298d5",
+      "exactText": "  if (policy.terminationGraceMs >= policy.cleanupTimeoutMs || policy.acknowledgementPollMs > policy.cleanupTimeoutMs) {",
+      "reader": {
+        "name": "validateBusterProcessInputSettings",
+        "parents": [],
+        "startLine": 122,
+        "endLine": 129
+      },
+      "classification": "duplicate",
+      "reason": "Selected processInput grace mustprecede cleanup, acknowledgementPoll<=cleanup. ExistingBuster processInput fields enforce actual childcleanup phase, no additional arbitrarymax/fallback policy.",
+      "settingIds": [
+        "CMP-buster-engine-execution.processInput.cleanupTimeoutMs",
+        "CMP-buster-engine-execution.processInput.terminationGraceMs",
+        "CMP-buster-engine-execution.processInput.acknowledgementPollMs"
+      ],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-b4bf51c9a5799e46",
+      "source": "skills/common/plugin-runtime/foundation/config/swarm-bundle.ts",
+      "line": 45,
+      "sourceSha256": "8f29590beaa082f4bdb51741aebefca4f917c280e4fdbf153b7aca0f92d434b3",
+      "exactText": "  if (!validate || !validate(value)) throw new Error(error);",
+      "reader": {
+        "name": "validateComponentSettings",
+        "parents": [],
+        "startLine": 43,
+        "endLine": 46
+      },
+      "classification": "generated-binding",
+      "reason": "ActualAjv schema mustexist+strictvalidate; freezecompleteJSON, required absolute explicitentry path, exact owner envelope and unchangedbefore/afterFD/stat/realpath. Source fileidentity andvalidatedselectedgeneration areactualinstallationbinding; no optionalDEFAULT_CONFIG, partialreturn, keywiseoverride, CONFIG authored through validationlogic.",
+      "settingIds": [],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-9eb8a17f0d729047",
+      "source": "skills/common/plugin-runtime/foundation/config/swarm-bundle.ts",
+      "line": 49,
+      "sourceSha256": "8f29590beaa082f4bdb51741aebefca4f917c280e4fdbf153b7aca0f92d434b3",
+      "exactText": "  if (value === null || typeof value !== 'object') return;",
+      "reader": {
+        "name": "freezeJson",
+        "parents": [],
+        "startLine": 48,
+        "endLine": 52
+      },
+      "classification": "generated-binding",
+      "reason": "ActualAjv schema mustexist+strictvalidate; freezecompleteJSON, required absolute explicitentry path, exact owner envelope and unchangedbefore/afterFD/stat/realpath. Source fileidentity andvalidatedselectedgeneration areactualinstallationbinding; no optionalDEFAULT_CONFIG, partialreturn, keywiseoverride, CONFIG authored through validationlogic.",
+      "settingIds": [],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-85e48f43afac7650",
+      "source": "skills/common/plugin-runtime/foundation/config/swarm-bundle.ts",
+      "line": 50,
+      "sourceSha256": "8f29590beaa082f4bdb51741aebefca4f917c280e4fdbf153b7aca0f92d434b3",
+      "exactText": "  for (const child of Object.values(value)) freezeJson(child);",
+      "reader": {
+        "name": "freezeJson",
+        "parents": [],
+        "startLine": 48,
+        "endLine": 52
+      },
+      "classification": "generated-binding",
+      "reason": "ActualAjv schema mustexist+strictvalidate; freezecompleteJSON, required absolute explicitentry path, exact owner envelope and unchangedbefore/afterFD/stat/realpath. Source fileidentity andvalidatedselectedgeneration areactualinstallationbinding; no optionalDEFAULT_CONFIG, partialreturn, keywiseoverride, CONFIG authored through validationlogic.",
+      "settingIds": [],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-06d4b335a8a70787",
+      "source": "skills/common/plugin-runtime/foundation/config/swarm-bundle.ts",
+      "line": 81,
+      "sourceSha256": "8f29590beaa082f4bdb51741aebefca4f917c280e4fdbf153b7aca0f92d434b3",
+      "exactText": "  if (typeof file !== 'string' || file.length === 0 || !path.isAbsolute(file)) {",
+      "reader": {
+        "name": "readSwarmBundle",
+        "parents": [],
+        "startLine": 76,
+        "endLine": 119
+      },
+      "classification": "generated-binding",
+      "reason": "ActualAjv schema mustexist+strictvalidate; freezecompleteJSON, required absolute explicitentry path, exact owner envelope and unchangedbefore/afterFD/stat/realpath. Source fileidentity andvalidatedselectedgeneration areactualinstallationbinding; no optionalDEFAULT_CONFIG, partialreturn, keywiseoverride, CONFIG authored through validationlogic.",
+      "settingIds": [],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-f1e59f2fc4a9f558",
+      "source": "skills/common/plugin-runtime/foundation/config/swarm-bundle.ts",
+      "line": 89,
+      "sourceSha256": "8f29590beaa082f4bdb51741aebefca4f917c280e4fdbf153b7aca0f92d434b3",
+      "exactText": "    if (!validateEntry(document)) throw new Error(`SWARM_CONFIG_INVALID:${JSON.stringify(validateEntry.errors)}`);",
+      "reader": {
+        "name": "readSwarmBundle",
+        "parents": [],
+        "startLine": 76,
+        "endLine": 119
+      },
+      "classification": "generated-binding",
+      "reason": "ActualAjv schema mustexist+strictvalidate; freezecompleteJSON, required absolute explicitentry path, exact owner envelope and unchangedbefore/afterFD/stat/realpath. Source fileidentity andvalidatedselectedgeneration areactualinstallationbinding; no optionalDEFAULT_CONFIG, partialreturn, keywiseoverride, CONFIG authored through validationlogic.",
+      "settingIds": [],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-540e62b74777e6fd",
+      "source": "skills/common/plugin-runtime/foundation/config/swarm-bundle.ts",
+      "line": 95,
+      "sourceSha256": "8f29590beaa082f4bdb51741aebefca4f917c280e4fdbf153b7aca0f92d434b3",
+      "exactText": "      if (!validateComponent(value) || (value as Component).owner !== owner) {",
+      "reader": {
+        "name": "readSwarmBundle",
+        "parents": [],
+        "startLine": 76,
+        "endLine": 119
+      },
+      "classification": "generated-binding",
+      "reason": "ActualAjv schema mustexist+strictvalidate; freezecompleteJSON, required absolute explicitentry path, exact owner envelope and unchangedbefore/afterFD/stat/realpath. Source fileidentity andvalidatedselectedgeneration areactualinstallationbinding; no optionalDEFAULT_CONFIG, partialreturn, keywiseoverride, CONFIG authored through validationlogic.",
+      "settingIds": [],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-bf465151d6d9b7ab",
+      "source": "skills/common/plugin-runtime/foundation/config/swarm-bundle.ts",
+      "line": 103,
+      "sourceSha256": "8f29590beaa082f4bdb51741aebefca4f917c280e4fdbf153b7aca0f92d434b3",
+      "exactText": "        || !unchanged(observation.before, fs.lstatSync(observation.file, { bigint: true }))) {",
+      "reader": {
+        "name": "readSwarmBundle",
+        "parents": [],
+        "startLine": 76,
+        "endLine": 119
+      },
+      "classification": "generated-binding",
+      "reason": "ActualAjv schema mustexist+strictvalidate; freezecompleteJSON, required absolute explicitentry path, exact owner envelope and unchangedbefore/afterFD/stat/realpath. Source fileidentity andvalidatedselectedgeneration areactualinstallationbinding; no optionalDEFAULT_CONFIG, partialreturn, keywiseoverride, CONFIG authored through validationlogic.",
+      "settingIds": [],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-8e1da2e8365afa9b",
+      "source": "skills/common/plugin-runtime/foundation/config/swarm.schema.json",
+      "line": 30,
+      "sourceSha256": "2269b97277a5a24ccd14434c942cdf4ea83c43d1c6a8e048083add782140ae20",
+      "exactText": "        \"retention\": \"high\",",
+      "reader": null,
+      "classification": "declared-unused-compatibility-domain",
+      "reason": "Entry tuning.retention const high is currentschemacompatibilityidentity, not a readretentiontime/independentquotaauthor. ActualloadSwarmSettings projectsowners, not tuningretention into stores; parent systementry evolution must preserve/retire legacydomain intentionally, no replacementindex/profile override inferred.",
+      "settingIds": [],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-32bffbb9777ebefd",
+      "source": "skills/common/plugin-runtime/foundation/config/swarm.ts",
+      "line": 135,
+      "sourceSha256": "55a38e42b869c27d831dfd9ee5392aa0177f7fc98e2e74e1b13f273f9f476de1",
+      "exactText": "  if (path.resolve(control.artifactRoot) !== control.artifactRoot || control.artifactRoot === '/') {",
+      "reader": {
+        "name": "prismSettingsFromConfig",
+        "parents": [],
+        "startLine": 133,
+        "endLine": 154
+      },
+      "classification": "duplicate",
+      "reason": "Current strictselectedowner validation: artifactRoot normalizedabsolute/nonroot; upstream origin HTTP(S) nouserinfo/search/hash/path/controls; preparation archive/header/input/output/result/journal, aggregate source/reservation/entries7 relationships exactlyvalidate actualbounded serializations and requiredselectedvalues. Systementry read via explicitSWARM_CONFIG; every listedretiredENV rejects presenceevenequal. Literal4 conservative representationrelation/7 retainedsourceentries are currentsourcevalidator obligations, not newlyinventedlimits or targeteffect acceptance; actualformula refinement remains existingper-field cases.",
+      "settingIds": [],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-2c53a6584b709d50",
+      "source": "skills/common/plugin-runtime/foundation/config/swarm.ts",
+      "line": 159,
+      "sourceSha256": "55a38e42b869c27d831dfd9ee5392aa0177f7fc98e2e74e1b13f273f9f476de1",
+      "exactText": "    if (!['http:', 'https:'].includes(url.protocol) || url.username || url.password",
+      "reader": {
+        "name": "validateStudioOrigin",
+        "parents": [],
+        "startLine": 156,
+        "endLine": 162
+      },
+      "classification": "duplicate",
+      "reason": "Current strictselectedowner validation: artifactRoot normalizedabsolute/nonroot; upstream origin HTTP(S) nouserinfo/search/hash/path/controls; preparation archive/header/input/output/result/journal, aggregate source/reservation/entries7 relationships exactlyvalidate actualbounded serializations and requiredselectedvalues. Systementry read via explicitSWARM_CONFIG; every listedretiredENV rejects presenceevenequal. Literal4 conservative representationrelation/7 retainedsourceentries are currentsourcevalidator obligations, not newlyinventedlimits or targeteffect acceptance; actualformula refinement remains existingper-field cases.",
+      "settingIds": [],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-394271cca7131b1c",
+      "source": "skills/common/plugin-runtime/foundation/config/swarm.ts",
+      "line": 160,
+      "sourceSha256": "55a38e42b869c27d831dfd9ee5392aa0177f7fc98e2e74e1b13f273f9f476de1",
+      "exactText": "      || url.pathname !== '/' || url.search || url.hash || /[\\\\\\x00-\\x20\\x7f]/u.test(value)) throw new Error('origin');",
+      "reader": {
+        "name": "validateStudioOrigin",
+        "parents": [],
+        "startLine": 156,
+        "endLine": 162
+      },
+      "classification": "duplicate",
+      "reason": "Current strictselectedowner validation: artifactRoot normalizedabsolute/nonroot; upstream origin HTTP(S) nouserinfo/search/hash/path/controls; preparation archive/header/input/output/result/journal, aggregate source/reservation/entries7 relationships exactlyvalidate actualbounded serializations and requiredselectedvalues. Systementry read via explicitSWARM_CONFIG; every listedretiredENV rejects presenceevenequal. Literal4 conservative representationrelation/7 retainedsourceentries are currentsourcevalidator obligations, not newlyinventedlimits or targeteffect acceptance; actualformula refinement remains existingper-field cases.",
+      "settingIds": [],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-ea04fd6098ff2dc0",
+      "source": "skills/common/plugin-runtime/foundation/config/swarm.ts",
+      "line": 214,
+      "sourceSha256": "55a38e42b869c27d831dfd9ee5392aa0177f7fc98e2e74e1b13f273f9f476de1",
+      "exactText": "    || settings.maximumHeaderBytes >= settings.maximumMetadataBytes",
+      "reader": {
+        "name": "validateBusterPreparationSettings",
+        "parents": [],
+        "startLine": 206,
+        "endLine": 228
+      },
+      "classification": "duplicate",
+      "reason": "Current strictselectedowner validation: artifactRoot normalizedabsolute/nonroot; upstream origin HTTP(S) nouserinfo/search/hash/path/controls; preparation archive/header/input/output/result/journal, aggregate source/reservation/entries7 relationships exactlyvalidate actualbounded serializations and requiredselectedvalues. Systementry read via explicitSWARM_CONFIG; every listedretiredENV rejects presenceevenequal. Literal4 conservative representationrelation/7 retainedsourceentries are currentsourcevalidator obligations, not newlyinventedlimits or targeteffect acceptance; actualformula refinement remains existingper-field cases.",
+      "settingIds": [],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-3144933f17a07e33",
+      "source": "skills/common/plugin-runtime/foundation/config/swarm.ts",
+      "line": 215,
+      "sourceSha256": "55a38e42b869c27d831dfd9ee5392aa0177f7fc98e2e74e1b13f273f9f476de1",
+      "exactText": "    || settings.maximumInputBytes > settings.maximumJournalBytes",
+      "reader": {
+        "name": "validateBusterPreparationSettings",
+        "parents": [],
+        "startLine": 206,
+        "endLine": 228
+      },
+      "classification": "duplicate",
+      "reason": "Current strictselectedowner validation: artifactRoot normalizedabsolute/nonroot; upstream origin HTTP(S) nouserinfo/search/hash/path/controls; preparation archive/header/input/output/result/journal, aggregate source/reservation/entries7 relationships exactlyvalidate actualbounded serializations and requiredselectedvalues. Systementry read via explicitSWARM_CONFIG; every listedretiredENV rejects presenceevenequal. Literal4 conservative representationrelation/7 retainedsourceentries are currentsourcevalidator obligations, not newlyinventedlimits or targeteffect acceptance; actualformula refinement remains existingper-field cases.",
+      "settingIds": [],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-17f26fdc5445e00b",
+      "source": "skills/common/plugin-runtime/foundation/config/swarm.ts",
+      "line": 216,
+      "sourceSha256": "55a38e42b869c27d831dfd9ee5392aa0177f7fc98e2e74e1b13f273f9f476de1",
+      "exactText": "    || settings.maximumResultBytes + 4 * settings.maximumInputBytes > settings.maximumOutputBytes",
+      "reader": {
+        "name": "validateBusterPreparationSettings",
+        "parents": [],
+        "startLine": 206,
+        "endLine": 228
+      },
+      "classification": "duplicate",
+      "reason": "Current strictselectedowner validation: artifactRoot normalizedabsolute/nonroot; upstream origin HTTP(S) nouserinfo/search/hash/path/controls; preparation archive/header/input/output/result/journal, aggregate source/reservation/entries7 relationships exactlyvalidate actualbounded serializations and requiredselectedvalues. Systementry read via explicitSWARM_CONFIG; every listedretiredENV rejects presenceevenequal. Literal4 conservative representationrelation/7 retainedsourceentries are currentsourcevalidator obligations, not newlyinventedlimits or targeteffect acceptance; actualformula refinement remains existingper-field cases.",
+      "settingIds": [],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-18b9323280f1f865",
+      "source": "skills/common/plugin-runtime/foundation/config/swarm.ts",
+      "line": 217,
+      "sourceSha256": "55a38e42b869c27d831dfd9ee5392aa0177f7fc98e2e74e1b13f273f9f476de1",
+      "exactText": "    || settings.maximumHeaderBytes + 4 * settings.maximumInputBytes > settings.maximumResultBytes",
+      "reader": {
+        "name": "validateBusterPreparationSettings",
+        "parents": [],
+        "startLine": 206,
+        "endLine": 228
+      },
+      "classification": "duplicate",
+      "reason": "Current strictselectedowner validation: artifactRoot normalizedabsolute/nonroot; upstream origin HTTP(S) nouserinfo/search/hash/path/controls; preparation archive/header/input/output/result/journal, aggregate source/reservation/entries7 relationships exactlyvalidate actualbounded serializations and requiredselectedvalues. Systementry read via explicitSWARM_CONFIG; every listedretiredENV rejects presenceevenequal. Literal4 conservative representationrelation/7 retainedsourceentries are currentsourcevalidator obligations, not newlyinventedlimits or targeteffect acceptance; actualformula refinement remains existingper-field cases.",
+      "settingIds": [],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-0dbd7bad54971939",
+      "source": "skills/common/plugin-runtime/foundation/config/swarm.ts",
+      "line": 218,
+      "sourceSha256": "55a38e42b869c27d831dfd9ee5392aa0177f7fc98e2e74e1b13f273f9f476de1",
+      "exactText": "    || settings.maximumOutputBytes > settings.maximumJournalBytes) {",
+      "reader": {
+        "name": "validateBusterPreparationSettings",
+        "parents": [],
+        "startLine": 206,
+        "endLine": 228
+      },
+      "classification": "duplicate",
+      "reason": "Current strictselectedowner validation: artifactRoot normalizedabsolute/nonroot; upstream origin HTTP(S) nouserinfo/search/hash/path/controls; preparation archive/header/input/output/result/journal, aggregate source/reservation/entries7 relationships exactlyvalidate actualbounded serializations and requiredselectedvalues. Systementry read via explicitSWARM_CONFIG; every listedretiredENV rejects presenceevenequal. Literal4 conservative representationrelation/7 retainedsourceentries are currentsourcevalidator obligations, not newlyinventedlimits or targeteffect acceptance; actualformula refinement remains existingper-field cases.",
+      "settingIds": [],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-512408dd2dc6442e",
+      "source": "skills/common/plugin-runtime/foundation/config/swarm.ts",
+      "line": 224,
+      "sourceSha256": "55a38e42b869c27d831dfd9ee5392aa0177f7fc98e2e74e1b13f273f9f476de1",
+      "exactText": "    || settings.maximumRequestBytes + settings.maximumArchiveBytes + settings.maximumExtractedBytes > settings.maximumSourceBytes) {",
+      "reader": {
+        "name": "validateBusterPreparationSettings",
+        "parents": [],
+        "startLine": 206,
+        "endLine": 228
+      },
+      "classification": "duplicate",
+      "reason": "Current strictselectedowner validation: artifactRoot normalizedabsolute/nonroot; upstream origin HTTP(S) nouserinfo/search/hash/path/controls; preparation archive/header/input/output/result/journal, aggregate source/reservation/entries7 relationships exactlyvalidate actualbounded serializations and requiredselectedvalues. Systementry read via explicitSWARM_CONFIG; every listedretiredENV rejects presenceevenequal. Literal4 conservative representationrelation/7 retainedsourceentries are currentsourcevalidator obligations, not newlyinventedlimits or targeteffect acceptance; actualformula refinement remains existingper-field cases.",
+      "settingIds": [],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-2932508b1ff1f8ba",
+      "source": "skills/common/plugin-runtime/foundation/config/swarm.ts",
+      "line": 233,
+      "sourceSha256": "55a38e42b869c27d831dfd9ee5392aa0177f7fc98e2e74e1b13f273f9f476de1",
+      "exactText": "  if (!Number.isSafeInteger(sourceReservation) || sourceReservation > settings.maximumSourceBytes",
+      "reader": {
+        "name": "validateBusterSourceReservation",
+        "parents": [],
+        "startLine": 230,
+        "endLine": 235
+      },
+      "classification": "duplicate",
+      "reason": "Current strictselectedowner validation: artifactRoot normalizedabsolute/nonroot; upstream origin HTTP(S) nouserinfo/search/hash/path/controls; preparation archive/header/input/output/result/journal, aggregate source/reservation/entries7 relationships exactlyvalidate actualbounded serializations and requiredselectedvalues. Systementry read via explicitSWARM_CONFIG; every listedretiredENV rejects presenceevenequal. Literal4 conservative representationrelation/7 retainedsourceentries are currentsourcevalidator obligations, not newlyinventedlimits or targeteffect acceptance; actualformula refinement remains existingper-field cases.",
+      "settingIds": [],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-b0b3ce27f16e9ff4",
+      "source": "skills/common/plugin-runtime/foundation/config/swarm.ts",
+      "line": 234,
+      "sourceSha256": "55a38e42b869c27d831dfd9ee5392aa0177f7fc98e2e74e1b13f273f9f476de1",
+      "exactText": "    || settings.maximumArchiveEntries + 7 > settings.maximumSourceEntries) throw new Error('SWARM_CONFIG_BUSTER_SOURCE_RESERVATION_INVALID');",
+      "reader": {
+        "name": "validateBusterSourceReservation",
+        "parents": [],
+        "startLine": 230,
+        "endLine": 235
+      },
+      "classification": "duplicate",
+      "reason": "Current strictselectedowner validation: artifactRoot normalizedabsolute/nonroot; upstream origin HTTP(S) nouserinfo/search/hash/path/controls; preparation archive/header/input/output/result/journal, aggregate source/reservation/entries7 relationships exactlyvalidate actualbounded serializations and requiredselectedvalues. Systementry read via explicitSWARM_CONFIG; every listedretiredENV rejects presenceevenequal. Literal4 conservative representationrelation/7 retainedsourceentries are currentsourcevalidator obligations, not newlyinventedlimits or targeteffect acceptance; actualformula refinement remains existingper-field cases.",
+      "settingIds": [],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-db0e4b61308dfc9a",
+      "source": "skills/common/plugin-runtime/foundation/config/swarm.ts",
+      "line": 246,
+      "sourceSha256": "55a38e42b869c27d831dfd9ee5392aa0177f7fc98e2e74e1b13f273f9f476de1",
+      "exactText": "  const bundle = readSwarmBundle(environment.SWARM_CONFIG);",
+      "reader": {
+        "name": "loadSwarmSettings",
+        "parents": [],
+        "startLine": 238,
+        "endLine": 265
+      },
+      "classification": "duplicate",
+      "reason": "Current strictselectedowner validation: artifactRoot normalizedabsolute/nonroot; upstream origin HTTP(S) nouserinfo/search/hash/path/controls; preparation archive/header/input/output/result/journal, aggregate source/reservation/entries7 relationships exactlyvalidate actualbounded serializations and requiredselectedvalues. Systementry read via explicitSWARM_CONFIG; every listedretiredENV rejects presenceevenequal. Literal4 conservative representationrelation/7 retainedsourceentries are currentsourcevalidator obligations, not newlyinventedlimits or targeteffect acceptance; actualformula refinement remains existingper-field cases.",
+      "settingIds": [],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-a14dcee3a0534e23",
+      "source": "skills/common/plugin-runtime/foundation/config/swarm.ts",
+      "line": 272,
+      "sourceSha256": "55a38e42b869c27d831dfd9ee5392aa0177f7fc98e2e74e1b13f273f9f476de1",
+      "exactText": "    if (environment[key] !== undefined) throw new Error(`SWARM_CONFIG_LEGACY_OVERRIDE:${key}`);",
+      "reader": {
+        "name": "rejectLegacyAuthors",
+        "parents": [],
+        "startLine": 267,
+        "endLine": 274
+      },
+      "classification": "duplicate",
+      "reason": "Current strictselectedowner validation: artifactRoot normalizedabsolute/nonroot; upstream origin HTTP(S) nouserinfo/search/hash/path/controls; preparation archive/header/input/output/result/journal, aggregate source/reservation/entries7 relationships exactlyvalidate actualbounded serializations and requiredselectedvalues. Systementry read via explicitSWARM_CONFIG; every listedretiredENV rejects presenceevenequal. Literal4 conservative representationrelation/7 retainedsourceentries are currentsourcevalidator obligations, not newlyinventedlimits or targeteffect acceptance; actualformula refinement remains existingper-field cases.",
+      "settingIds": [],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-c35ae370214c31f8",
+      "source": "skills/prism/config/native-worker.ts",
+      "line": 21,
+      "sourceSha256": "c2a0722a4a938830529d5f60ff5fb4533984a0f8e38c37c693be79c0674141a6",
+      "exactText": "  const controlInternalUrl = new URL(environment.PRISM_CONTROL_INTERNAL_URL!);",
+      "reader": {
+        "name": "nativePrismHostConfig",
+        "parents": [],
+        "startLine": 15,
+        "endLine": 26
+      },
+      "classification": "parent-current-author-consumer",
+      "reason": "Native closedchild controlInternalUrl required from parentControl startup endpointprojection, no localhostdefault inhost; exactparent AUTH-PRISM-ENDPOINT-CONTROL-INTERNAL; workerrootfallbacksameconcept source next line17 explicitlylinked.",
+      "settingIds": [
+        "AUTH-PRISM-ENDPOINT-CONTROL-INTERNAL"
+      ],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    },
+    {
+      "candidateId": "SRC-4e73632b9cd30026",
+      "source": "skills/prism/server/worker-config.ts",
+      "line": 17,
+      "sourceSha256": "f74aa34451583c1df785eaf21006b056b55791277f4731c9360f1ee5db0f5b0e",
+      "exactText": "    controlInternalUrl: new URL(environment.PRISM_CONTROL_INTERNAL_URL ?? 'http://prism-control:8080'),",
+      "reader": {
+        "name": "loadWorkerConfig",
+        "parents": [],
+        "startLine": 5,
+        "endLine": 20
+      },
+      "classification": "parent-current-author-consumer",
+      "reason": "Actualworker controlInternalUrl fallback current http://prism-control:8080 is sameControlendpoint role obligation; parent owns AUTH-PRISM-ENDPOINT-CONTROL-INTERNAL and wholeclosedchildprojection. Domain/freshprofile validation stillparentopen, no extra Coreendpointauthor.",
+      "settingIds": [
+        "AUTH-PRISM-ENDPOINT-CONTROL-INTERNAL"
+      ],
+      "status": "source-disposed; perfield upstreamhandoff/independentreview remains"
+    }
+  ],
+  "packagingProofLimit": "Current sourcefieldrelationships only, no Helm/deployedruntimePASS or blanketphysicalproducercoverage",
+  "sameNumericValueNotAnAlias": true
+}

@@ -1,0 +1,2645 @@
+{
+  "sourceCommit": "bce3f075156a86be345821499c04628cb35c2762",
+  "sourceTree": "a8b0adf641de573565360b0c4eb577d6bc7545c3",
+  "originalCount": 4642,
+  "originalArtifactSha256": "9f925682048ea9976e6dab177f4d5363727b429483b7855a34930d5a0d5facfc",
+  "explicitReviewedCandidateRecords": [
+    {
+      "id": "RT-CANDIDATE-43d515c92a4597c2",
+      "source": {
+        "path": "skills/buster/plugins/axe/src/provider.js",
+        "line": 12,
+        "text": "function object(value, code) { if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error(code); return value; }",
+        "sha256": "3943f787c2d7fc1f2215268c043135f0a6d6425fd6e09b26d48bb2171e87c472",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-ce85d1e95781cb1b",
+        "RT-735e529045f176ca"
+      ],
+      "disposition": "nonsetting-input-shape",
+      "explicitReviewedReason": "plainobjectguard",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-f2b60fc4c7466a25",
+      "source": {
+        "path": "skills/buster/plugins/axe/src/provider.js",
+        "line": 14,
+        "text": "if (typeof relative !== 'string' || path.isAbsolute(relative) || relative.includes('\\0')) throw new Error('AXE_PROFILE_FILE_DENIED');",
+        "sha256": "3943f787c2d7fc1f2215268c043135f0a6d6425fd6e09b26d48bb2171e87c472",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-6053515db8e5f294"
+      ],
+      "disposition": "nonsetting-path-containment",
+      "explicitReviewedReason": "relative/NUL/absolute denial",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-3e858401085ebc9d",
+      "source": {
+        "path": "skills/buster/plugins/axe/src/provider.js",
+        "line": 17,
+        "text": "if (!real.startsWith(`${root}${path.sep}`) || !fs.statSync(real).isFile()) throw new Error('AXE_PROFILE_FILE_DENIED'); return real;",
+        "sha256": "3943f787c2d7fc1f2215268c043135f0a6d6425fd6e09b26d48bb2171e87c472",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-6053515db8e5f294"
+      ],
+      "disposition": "nonsetting-path-containment",
+      "explicitReviewedReason": "canonicalrepo descendant regularfile",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-a90cadd5bac4a41f",
+      "source": {
+        "path": "skills/buster/plugins/axe/src/provider.js",
+        "line": 23,
+        "text": "if (invocation.inputs.length !== 1 || invocation.inputs[0].kind !== 'value') throw new Error('AXE_TARGET_REQUIRED');",
+        "sha256": "3943f787c2d7fc1f2215268c043135f0a6d6425fd6e09b26d48bb2171e87c472",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-dab100380f6a024f"
+      ],
+      "disposition": "nonsetting-fixture-cardinality",
+      "explicitReviewedReason": "one endpoint/deploymentfixture",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-f896e72de171e032",
+      "source": {
+        "path": "skills/buster/plugins/axe/src/provider.js",
+        "line": 26,
+        "text": "if (input.schemaId !== 'kubeclaw.public-endpoint-fixture@1' || value.schemaVersion !== 'public-endpoint-fixture.v1'",
+        "sha256": "3943f787c2d7fc1f2215268c043135f0a6d6425fd6e09b26d48bb2171e87c472",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-dab100380f6a024f"
+      ],
+      "disposition": "nonsetting-finite-fixture-identity",
+      "explicitReviewedReason": "public endpoint v1/schema identity",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-1cc23df91e3f0ea6",
+      "source": {
+        "path": "skills/buster/plugins/axe/src/provider.js",
+        "line": 27,
+        "text": "|| typeof value.url !== 'string') throw new Error('AXE_INPUT_INVALID'); return new URL(value.url).origin;",
+        "sha256": "3943f787c2d7fc1f2215268c043135f0a6d6425fd6e09b26d48bb2171e87c472",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-dab100380f6a024f"
+      ],
+      "disposition": "nonsetting-task-origin-projection",
+      "explicitReviewedReason": "providerURL.origin dropspath/userinfo currentbehavior; truegrants/originboundary stronger",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-2f9ad2e5fe22919e",
+      "source": {
+        "path": "skills/buster/plugins/axe/src/provider.js",
+        "line": 29,
+        "text": "if (input.name !== 'deployment' || input.schemaId !== 'kubeclaw.kubernetes-deployment-fixture@1'",
+        "sha256": "3943f787c2d7fc1f2215268c043135f0a6d6425fd6e09b26d48bb2171e87c472",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-6776ec7160ea0036"
+      ],
+      "disposition": "nonsetting-finite-fixture-identity",
+      "explicitReviewedReason": "deploymentv1/schemaidentity",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-25fe418a0cc36425",
+      "source": {
+        "path": "skills/buster/plugins/axe/src/provider.js",
+        "line": 30,
+        "text": "|| value.schemaVersion !== 'kubernetes-deployment-fixture.v1' || !Array.isArray(value.endpoints)) throw new Error('AXE_INPUT_INVALID');",
+        "sha256": "3943f787c2d7fc1f2215268c043135f0a6d6425fd6e09b26d48bb2171e87c472",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-6776ec7160ea0036"
+      ],
+      "disposition": "nonsetting-fixture-shape",
+      "explicitReviewedReason": "deploymentendpoint list, omittedFIRST notunique",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-1c8d0c7563fcfc16",
+      "source": {
+        "path": "skills/buster/plugins/axe/src/provider.js",
+        "line": 33,
+        "text": "if (!selected || typeof selected.url !== 'string') throw new Error('AXE_ENDPOINT_NOT_FOUND'); return new URL(selected.url).origin;",
+        "sha256": "3943f787c2d7fc1f2215268c043135f0a6d6425fd6e09b26d48bb2171e87c472",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-6776ec7160ea0036"
+      ],
+      "disposition": "existing-setting-task-selection",
+      "explicitReviewedReason": "selected URL exists, dormanturl/public endpointselection",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-017fd99e3d004fc3",
+      "source": {
+        "path": "skills/buster/plugins/axe/src/provider.js",
+        "line": 53,
+        "text": "const selected = config.profiles ?? ['desktop', 'mobile'];",
+        "sha256": "3943f787c2d7fc1f2215268c043135f0a6d6425fd6e09b26d48bb2171e87c472",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-ce85d1e95781cb1b",
+        "RT-735e529045f176ca"
+      ],
+      "disposition": "existing-setting-business-default",
+      "explicitReviewedReason": "null/absentdesktop+mobile sourcebuiltin businesspresets notprotocol; exact20builtin leaves mapped AST+forwarding+realruntime reader",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-611f276f2edc8074",
+      "source": {
+        "path": "skills/buster/plugins/axe/src/provider.js",
+        "line": 54,
+        "text": "return selected.map((name) => profiles[name] ?? (() => { throw new Error(`AXE_PROFILE_NOT_FOUND:${name}`); })());",
+        "sha256": "3943f787c2d7fc1f2215268c043135f0a6d6425fd6e09b26d48bb2171e87c472",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-ce85d1e95781cb1b",
+        "RT-735e529045f176ca"
+      ],
+      "disposition": "existing-setting-profile-reference",
+      "explicitReviewedReason": "unknownnamedprofile throws, customfile samekey overrideswholebuiltin",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-3a6d7ba87ab4a871",
+      "source": {
+        "path": "skills/buster/plugins/axe/src/provider.js",
+        "line": 57,
+        "text": "const acceptance = (config.acceptances ?? []).find((item) => item.rule === rule && item.route === route && item.selector === selector);",
+        "sha256": "3943f787c2d7fc1f2215268c043135f0a6d6425fd6e09b26d48bb2171e87c472",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-ea6c994234263250",
+        "RT-3d366b22c4baadb6",
+        "RT-ace0dff341a51674",
+        "RT-e2d010126067fa17",
+        "RT-36d7d882e2bd6da2",
+        "RT-a31018709bf73a5c",
+        "RT-3eeda647e60d7d1b"
+      ],
+      "disposition": "existing-setting-waiver-key",
+      "explicitReviewedReason": "first matchingrule/route/firstnode selector (evenexpired) chosen, no laterfallback; targetduplicate semantic rejects",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-17a75f53bf26854b",
+      "source": {
+        "path": "skills/buster/plugins/axe/src/provider.js",
+        "line": 63,
+        "text": "if (!exact || expiry < Date.now()) return null;",
+        "sha256": "3943f787c2d7fc1f2215268c043135f0a6d6425fd6e09b26d48bb2171e87c472",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-ea6c994234263250",
+        "RT-3d366b22c4baadb6",
+        "RT-ace0dff341a51674",
+        "RT-e2d010126067fa17",
+        "RT-36d7d882e2bd6da2",
+        "RT-a31018709bf73a5c",
+        "RT-3eeda647e60d7d1b"
+      ],
+      "disposition": "existing-setting-expiry-clock",
+      "explicitReviewedReason": "calendarcheckedinclusiveendUTC against Date.now, advancesonrecovery, no frozenCONFIGclock",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-6522e9d8395c2571",
+      "source": {
+        "path": "skills/buster/plugins/axe/src/provider.js",
+        "line": 70,
+        "text": "const config = object(invocation.configuration.values, 'AXE_CONFIG_INVALID'); const workspace = fs.realpathSync(context.workspaceRoot);",
+        "sha256": "3943f787c2d7fc1f2215268c043135f0a6d6425fd6e09b26d48bb2171e87c472",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-ce85d1e95781cb1b",
+        "RT-735e529045f176ca"
+      ],
+      "disposition": "nonsetting-productive-caller",
+      "explicitReviewedReason": "actualexecute reads taskconfig andcanonicalworkspace; owningAPI enforcementseparate",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-e0c1d5b2ee8ce046",
+      "source": {
+        "path": "skills/buster/plugins/axe/src/provider.js",
+        "line": 76,
+        "text": "combinations, tags: config.tags ?? ['wcag2a', 'wcag2aa'], exclude: config.exclude ?? [], timeoutMs: config.timeoutMs ?? 30000,",
+        "sha256": "3943f787c2d7fc1f2215268c043135f0a6d6425fd6e09b26d48bb2171e87c472",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-b523246a8e584359",
+        "RT-0f8819569bb41402"
+      ],
+      "disposition": "existing-setting-business-default",
+      "explicitReviewedReason": "tags defaultwcag2a+wcag2aa/exclude[]/timeout30000 sourcebusinessdefaults; targetcompleteownedexplicit, actual tag/CSSengine supportexternal",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-284d9e05109a2aa0",
+      "source": {
+        "path": "skills/buster/plugins/axe/src/provider.js",
+        "line": 78,
+        "text": "if (response.schemaVersion !== 'browser-axe-result.v1' || !Array.isArray(response.results)) throw new Error('AXE_CAPABILITY_RESULT_INVALID');",
+        "sha256": "3943f787c2d7fc1f2215268c043135f0a6d6425fd6e09b26d48bb2171e87c472",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-ce85d1e95781cb1b",
+        "RT-735e529045f176ca"
+      ],
+      "disposition": "nonsetting-finite-result-contract",
+      "explicitReviewedReason": "browser-axe v1 andresultsarray; no expected cardinality checkhere unlikeLighthouse/visual, trueproducer scopecoverage external obligation",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-7324ac3578d7ad32",
+      "source": {
+        "path": "skills/buster/plugins/axe/src/provider.js",
+        "line": 84,
+        "text": "violations += 1; const selector = String(node?.target?.[0] ?? '<unknown>'); const acceptedFinding = acceptanceFor(config, route, String(violation.id), selector);",
+        "sha256": "3943f787c2d7fc1f2215268c043135f0a6d6425fd6e09b26d48bb2171e87c472",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-ea6c994234263250",
+        "RT-3d366b22c4baadb6",
+        "RT-ace0dff341a51674",
+        "RT-e2d010126067fa17",
+        "RT-36d7d882e2bd6da2",
+        "RT-a31018709bf73a5c",
+        "RT-3eeda647e60d7d1b"
+      ],
+      "disposition": "open-evidence-identity-obligation",
+      "explicitReviewedReason": "firstnodeselector undefined becomesunknown label; cannot certifyactualnode/coverage fromfallback, C0fabricatednodesnotproducerproof",
+      "status": "precise open sourceguard/leaf/evidence obligation",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-0f69ff2f71204803",
+      "source": {
+        "path": "skills/buster/plugins/axe/src/provider.js",
+        "line": 86,
+        "text": "const viewport = result.context?.viewport; const conditions = `${result.browser} ${viewport?.width ?? '?'}x${viewport?.height ?? '?'}`;",
+        "sha256": "3943f787c2d7fc1f2215268c043135f0a6d6425fd6e09b26d48bb2171e87c472",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-ce85d1e95781cb1b",
+        "RT-735e529045f176ca"
+      ],
+      "disposition": "nonsetting-diagnostic-absence",
+      "explicitReviewedReason": "viewportunknown ->? displayfallback only, cannot infer actualviewport/renderer identity; realstructuredresult required",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-be9a620463841af5",
+      "source": {
+        "path": "skills/buster/plugins/lighthouse/src/provider.js",
+        "line": 5,
+        "text": "function object(value, code) { if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error(code); return value; }",
+        "sha256": "8858c30f362574414d16d8dcd99b963382b79e3195a670145c2e67d63dfa85a5",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-b8fe49d2862e13fe"
+      ],
+      "disposition": "nonsetting-input-shape",
+      "explicitReviewedReason": "plainobjectguard",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-673f934618792fd6",
+      "source": {
+        "path": "skills/buster/plugins/lighthouse/src/provider.js",
+        "line": 9,
+        "text": "if (typeof relative !== 'string' || path.isAbsolute(relative) || relative.includes('\\0')) throw new Error('LIGHTHOUSE_SETTINGS_FILE_DENIED');",
+        "sha256": "8858c30f362574414d16d8dcd99b963382b79e3195a670145c2e67d63dfa85a5",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-b8fe49d2862e13fe"
+      ],
+      "disposition": "nonsetting-path-containment",
+      "explicitReviewedReason": "relative/NUL/absolute denied before canonicalrepo file",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-4a4cbd773122d5dd",
+      "source": {
+        "path": "skills/buster/plugins/lighthouse/src/provider.js",
+        "line": 12,
+        "text": "if (!real.startsWith(`${root}${path.sep}`) || !fs.statSync(real).isFile()) throw new Error('LIGHTHOUSE_SETTINGS_FILE_DENIED'); return real;",
+        "sha256": "8858c30f362574414d16d8dcd99b963382b79e3195a670145c2e67d63dfa85a5",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-b8fe49d2862e13fe"
+      ],
+      "disposition": "nonsetting-path-containment",
+      "explicitReviewedReason": "realcanonicaldescendant regularfile only",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-b1677477341c6baf",
+      "source": {
+        "path": "skills/buster/plugins/lighthouse/src/provider.js",
+        "line": 18,
+        "text": "if (invocation.inputs.length !== 1 || invocation.inputs[0].kind !== 'value') throw new Error('LIGHTHOUSE_TARGET_REQUIRED');",
+        "sha256": "8858c30f362574414d16d8dcd99b963382b79e3195a670145c2e67d63dfa85a5",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-c5c2b774e067d6c3"
+      ],
+      "disposition": "nonsetting-fixture-cardinality",
+      "explicitReviewedReason": "exactonevaluefixture if no expliciturl",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-dee16b31e65b8910",
+      "source": {
+        "path": "skills/buster/plugins/lighthouse/src/provider.js",
+        "line": 21,
+        "text": "if (input.schemaId !== 'kubeclaw.public-endpoint-fixture@1' || value.schemaVersion !== 'public-endpoint-fixture.v1'",
+        "sha256": "8858c30f362574414d16d8dcd99b963382b79e3195a670145c2e67d63dfa85a5",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-c5c2b774e067d6c3"
+      ],
+      "disposition": "nonsetting-finite-fixture-identity",
+      "explicitReviewedReason": "public endpointv1/schemaID discriminants",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-da02b7a84e470a62",
+      "source": {
+        "path": "skills/buster/plugins/lighthouse/src/provider.js",
+        "line": 22,
+        "text": "|| typeof value.url !== 'string') throw new Error('LIGHTHOUSE_INPUT_INVALID'); return new URL(value.url).origin;",
+        "sha256": "8858c30f362574414d16d8dcd99b963382b79e3195a670145c2e67d63dfa85a5",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-c5c2b774e067d6c3"
+      ],
+      "disposition": "nonsetting-task-origin-projection",
+      "explicitReviewedReason": "stringURL ->origin discards path/userinfo inprovider; realruntime/targetstricter requirement",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-a8aa3623450ecf14",
+      "source": {
+        "path": "skills/buster/plugins/lighthouse/src/provider.js",
+        "line": 24,
+        "text": "if (input.name !== 'deployment' || input.schemaId !== 'kubeclaw.kubernetes-deployment-fixture@1'",
+        "sha256": "8858c30f362574414d16d8dcd99b963382b79e3195a670145c2e67d63dfa85a5",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-f513e45a2c34c183"
+      ],
+      "disposition": "nonsetting-finite-fixture-identity",
+      "explicitReviewedReason": "deployment v1/schema ID",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-ef5f44f073c92d95",
+      "source": {
+        "path": "skills/buster/plugins/lighthouse/src/provider.js",
+        "line": 25,
+        "text": "|| value.schemaVersion !== 'kubernetes-deployment-fixture.v1' || !Array.isArray(value.endpoints)) throw new Error('LIGHTHOUSE_INPUT_INVALID');",
+        "sha256": "8858c30f362574414d16d8dcd99b963382b79e3195a670145c2e67d63dfa85a5",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-f513e45a2c34c183"
+      ],
+      "disposition": "nonsetting-fixture-shape",
+      "explicitReviewedReason": "deploymentendpoints array beforefirstorname selection",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-0e0d598ca8b0a8e5",
+      "source": {
+        "path": "skills/buster/plugins/lighthouse/src/provider.js",
+        "line": 27,
+        "text": "if (!selected || typeof selected.url !== 'string') throw new Error('LIGHTHOUSE_ENDPOINT_NOT_FOUND'); return new URL(selected.url).origin;",
+        "sha256": "8858c30f362574414d16d8dcd99b963382b79e3195a670145c2e67d63dfa85a5",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-f513e45a2c34c183"
+      ],
+      "disposition": "existing-setting-task-selection",
+      "explicitReviewedReason": "selectedendpointurl string, omittedfirst whenmultiple, unknown rejects",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-b5f76725777af46e",
+      "source": {
+        "path": "skills/buster/plugins/lighthouse/src/provider.js",
+        "line": 37,
+        "text": "if (profileNames.length < 1 || profileNames.length > 32",
+        "sha256": "8858c30f362574414d16d8dcd99b963382b79e3195a670145c2e67d63dfa85a5",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-c245ed3eed7a76c8"
+      ],
+      "disposition": "open-processing-quota",
+      "explicitReviewedReason": "namedprofile min1/max32 numericcountquota",
+      "status": "precise open sourceguard/leaf/evidence obligation",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-f7e65a412813f53d",
+      "source": {
+        "path": "skills/buster/plugins/lighthouse/src/provider.js",
+        "line": 38,
+        "text": "|| profileNames.some((name) => !/^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$/u.test(name))) throw new Error('LIGHTHOUSE_SETTINGS_FILE_INVALID');",
+        "sha256": "8858c30f362574414d16d8dcd99b963382b79e3195a670145c2e67d63dfa85a5",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-c245ed3eed7a76c8"
+      ],
+      "disposition": "nonsetting-reference-name-shape",
+      "explicitReviewedReason": "symbolicnamedprofile grammar64, not actualrenderer/version",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-aee8d58f302e217c",
+      "source": {
+        "path": "skills/buster/plugins/lighthouse/src/provider.js",
+        "line": 44,
+        "text": "if (!Number.isSafeInteger(screen.width) || screen.width < 240 || screen.width > 3840",
+        "sha256": "8858c30f362574414d16d8dcd99b963382b79e3195a670145c2e67d63dfa85a5",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-c245ed3eed7a76c8"
+      ],
+      "disposition": "open-owned-profile-leaf-inventory",
+      "explicitReviewedReason": "exact source .screen.width safeinteger240..3840px, independentlyauthoreddatafileleaf +actualruntime relation; wholeprofile/strictownerdata mapped, individualgenericfileleaf settingID/currentdomaincase stillnecessary",
+      "status": "precise open sourceguard/leaf/evidence obligation",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-bc7e7e5a86c29fc3",
+      "source": {
+        "path": "skills/buster/plugins/lighthouse/src/provider.js",
+        "line": 45,
+        "text": "|| !Number.isSafeInteger(screen.height) || screen.height < 240 || screen.height > 2160",
+        "sha256": "8858c30f362574414d16d8dcd99b963382b79e3195a670145c2e67d63dfa85a5",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-c245ed3eed7a76c8"
+      ],
+      "disposition": "open-owned-profile-leaf-inventory",
+      "explicitReviewedReason": "screen.height safeinteger240..2160px genericfilebusinessfield, not automaticnonsetting",
+      "status": "precise open sourceguard/leaf/evidence obligation",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-f77facf3727fbe56",
+      "source": {
+        "path": "skills/buster/plugins/lighthouse/src/provider.js",
+        "line": 46,
+        "text": "|| !bounded(screen.deviceScaleFactor, 0.5, 4) || typeof screen.mobile !== 'boolean'",
+        "sha256": "8858c30f362574414d16d8dcd99b963382b79e3195a670145c2e67d63dfa85a5",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-c245ed3eed7a76c8"
+      ],
+      "disposition": "open-owned-profile-leaf-inventory",
+      "explicitReviewedReason": "screen.deviceScaleFactor finite.5..4 andmobileboolean actualprofile business leaves, no physicaldevicecapacity inferred",
+      "status": "precise open sourceguard/leaf/evidence obligation",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-b9a3e1afb0431f81",
+      "source": {
+        "path": "skills/buster/plugins/lighthouse/src/provider.js",
+        "line": 47,
+        "text": "|| !bounded(throttling.rttMs, 0, 5000) || !bounded(throttling.throughputKbps, Number.MIN_VALUE, 1000000)",
+        "sha256": "8858c30f362574414d16d8dcd99b963382b79e3195a670145c2e67d63dfa85a5",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-c245ed3eed7a76c8"
+      ],
+      "disposition": "open-owned-profile-leaf-inventory",
+      "explicitReviewedReason": "throttling.rttMs0..5000ms/throughput>0..1e6Kbps simulation business fields, exact source; do not infer physicalCPU/networkcap",
+      "status": "precise open sourceguard/leaf/evidence obligation",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-2796bff2e3e4b1bf",
+      "source": {
+        "path": "skills/buster/plugins/lighthouse/src/provider.js",
+        "line": 48,
+        "text": "|| !bounded(throttling.cpuSlowdownMultiplier, 1, 32)) throw new Error('LIGHTHOUSE_PROFILE_INVALID');",
+        "sha256": "8858c30f362574414d16d8dcd99b963382b79e3195a670145c2e67d63dfa85a5",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-c245ed3eed7a76c8"
+      ],
+      "disposition": "open-owned-profile-leaf-inventory",
+      "explicitReviewedReason": "throttling.cpuSlowdownMultiplier1..32 actual simulationbusinessleaf",
+      "status": "precise open sourceguard/leaf/evidence obligation",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-b276a66e02c1ea0e",
+      "source": {
+        "path": "skills/buster/plugins/lighthouse/src/provider.js",
+        "line": 51,
+        "text": "const budgets = object(document.budgets, 'LIGHTHOUSE_SETTINGS_FILE_INVALID');",
+        "sha256": "8858c30f362574414d16d8dcd99b963382b79e3195a670145c2e67d63dfa85a5",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-858b7c0d83228aea"
+      ],
+      "disposition": "existing-setting-owned-map",
+      "explicitReviewedReason": "budgets ownbusinessmap, names refs to ONEauthor map, no duplicatedselectedbudgetcopy",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-435a32f701a326e7",
+      "source": {
+        "path": "skills/buster/plugins/lighthouse/src/provider.js",
+        "line": 52,
+        "text": "const budgetNames = Object.keys(budgets);",
+        "sha256": "8858c30f362574414d16d8dcd99b963382b79e3195a670145c2e67d63dfa85a5",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-858b7c0d83228aea"
+      ],
+      "disposition": "nonsetting-name-iteration",
+      "explicitReviewedReason": "collectbudgetkeys forvalidation/lookup",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-261ee5225efda945",
+      "source": {
+        "path": "skills/buster/plugins/lighthouse/src/provider.js",
+        "line": 53,
+        "text": "if (budgetNames.length > 32 || budgetNames.some((name) => !/^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$/u.test(name))) {",
+        "sha256": "8858c30f362574414d16d8dcd99b963382b79e3195a670145c2e67d63dfa85a5",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-858b7c0d83228aea"
+      ],
+      "disposition": "open-processing-quota",
+      "explicitReviewedReason": "budgetmaxnames32 numericadmissionquota +refnamegrammar",
+      "status": "precise open sourceguard/leaf/evidence obligation",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-048b3de062b299d7",
+      "source": {
+        "path": "skills/buster/plugins/lighthouse/src/provider.js",
+        "line": 59,
+        "text": "if (!Object.keys(candidate).length || (candidate.minimumScore !== undefined && !bounded(candidate.minimumScore, 0, 100))",
+        "sha256": "8858c30f362574414d16d8dcd99b963382b79e3195a670145c2e67d63dfa85a5",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-858b7c0d83228aea"
+      ],
+      "disposition": "open-owned-budget-leaf-inventory",
+      "explicitReviewedReason": "minimumScore0..100 optionalCURRENTsource absence disablesmetric; proposed all4 explicitstricter/unapproved, originalA6coverage/disable semantics review required",
+      "status": "precise open sourceguard/leaf/evidence obligation",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-0169270b7261bc2f",
+      "source": {
+        "path": "skills/buster/plugins/lighthouse/src/provider.js",
+        "line": 60,
+        "text": "|| (candidate.maximumLcpMs !== undefined && !bounded(candidate.maximumLcpMs, 0, 120000))",
+        "sha256": "8858c30f362574414d16d8dcd99b963382b79e3195a670145c2e67d63dfa85a5",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-858b7c0d83228aea"
+      ],
+      "disposition": "open-owned-budget-leaf-inventory",
+      "explicitReviewedReason": "maximumLcpMs0..120000 per-ownedbudget leaf; actual max comparator, requiredtargetleafcase/sourceID incomplete",
+      "status": "precise open sourceguard/leaf/evidence obligation",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-0d1c5f7da3f77163",
+      "source": {
+        "path": "skills/buster/plugins/lighthouse/src/provider.js",
+        "line": 61,
+        "text": "|| (candidate.maximumCls !== undefined && !bounded(candidate.maximumCls, 0, 10))",
+        "sha256": "8858c30f362574414d16d8dcd99b963382b79e3195a670145c2e67d63dfa85a5",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-858b7c0d83228aea"
+      ],
+      "disposition": "open-owned-budget-leaf-inventory",
+      "explicitReviewedReason": "maximumCls0..10 dimensionless cumulative layoutshift leaf",
+      "status": "precise open sourceguard/leaf/evidence obligation",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-bb5a29952a93dacd",
+      "source": {
+        "path": "skills/buster/plugins/lighthouse/src/provider.js",
+        "line": 62,
+        "text": "|| (candidate.maximumTbtMs !== undefined && !bounded(candidate.maximumTbtMs, 0, 120000))) throw new Error('LIGHTHOUSE_BUDGET_INVALID');",
+        "sha256": "8858c30f362574414d16d8dcd99b963382b79e3195a670145c2e67d63dfa85a5",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-858b7c0d83228aea"
+      ],
+      "disposition": "open-owned-budget-leaf-inventory",
+      "explicitReviewedReason": "maximumTbtMs0..120000ms threshold leaf",
+      "status": "precise open sourceguard/leaf/evidence obligation",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-78f5fe1788a2ee2c",
+      "source": {
+        "path": "skills/buster/plugins/lighthouse/src/provider.js",
+        "line": 64,
+        "text": "let budget = null;",
+        "sha256": "8858c30f362574414d16d8dcd99b963382b79e3195a670145c2e67d63dfa85a5",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-858b7c0d83228aea"
+      ],
+      "disposition": "existing-setting-optional-budget-absence",
+      "explicitReviewedReason": "CURRENT unselectednull budget means no performance budget checks; proposedrequiredperformancebudget strengthened/unapproved domain review, notcurrentrejectPASS",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-d824fb9e0b9cf075",
+      "source": {
+        "path": "skills/buster/plugins/lighthouse/src/provider.js",
+        "line": 66,
+        "text": "budget = object(budgets[config.budget], 'LIGHTHOUSE_BUDGET_NOT_FOUND');",
+        "sha256": "8858c30f362574414d16d8dcd99b963382b79e3195a670145c2e67d63dfa85a5",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-858b7c0d83228aea"
+      ],
+      "disposition": "existing-setting-reference-consumer",
+      "explicitReviewedReason": "selectedbudget mustownmapmember, no codefallback ifunknown",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-b5172740bb82d4fc",
+      "source": {
+        "path": "skills/buster/plugins/lighthouse/src/provider.js",
+        "line": 75,
+        "text": "function accepted(config, route, audit) { return (config.acceptances ?? []).find((item) => item.route === route && item.audit === audit && expiryValid(item.expiresAt)) ?? null; }",
+        "sha256": "8858c30f362574414d16d8dcd99b963382b79e3195a670145c2e67d63dfa85a5",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-91b918f8698f70dd",
+        "RT-8138a8b093bfc06d",
+        "RT-323256cac3d5065d",
+        "RT-398b1cee6b5ad261",
+        "RT-1412bca48fc1b08d",
+        "RT-bfc739d422a140ce"
+      ],
+      "disposition": "existing-setting-absolute-waiver",
+      "explicitReviewedReason": "optional[] waivers; matchingaudit/route/dateinclusiveUTC realclock, no model/configgeneration selection",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-f7f6f89548a6efda",
+      "source": {
+        "path": "skills/buster/plugins/lighthouse/src/provider.js",
+        "line": 83,
+        "text": "const config = object(invocation.configuration.values, 'LIGHTHOUSE_CONFIG_INVALID'); const workspace = fs.realpathSync(context.workspaceRoot);",
+        "sha256": "8858c30f362574414d16d8dcd99b963382b79e3195a670145c2e67d63dfa85a5",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-b8fe49d2862e13fe"
+      ],
+      "disposition": "nonsetting-productive-caller",
+      "explicitReviewedReason": "actualproviderexecute configuration+canonicalworkspace beforefieldread/file/actualcap",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-77d5914f2511d588",
+      "source": {
+        "path": "skills/buster/plugins/lighthouse/src/provider.js",
+        "line": 87,
+        "text": "const runCount = config.runs ?? (config.purpose === 'performance' ? 3 : 1);",
+        "sha256": "8858c30f362574414d16d8dcd99b963382b79e3195a670145c2e67d63dfa85a5",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-d1ed31f756f931f4",
+        "RT-14d3d815490102e1",
+        "RT-480d76acac6850a9"
+      ],
+      "disposition": "existing-setting-business-default",
+      "explicitReviewedReason": "null/absent3performance/1other, owningAPIconditional narrower than directproducer Array.from; fulltarget explicit and conditional rows projections",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-c0f02f180879f5de",
+      "source": {
+        "path": "skills/buster/plugins/lighthouse/src/provider.js",
+        "line": 90,
+        "text": "payload: { runs, timeoutMs: config.timeoutMs ?? 120000 } });",
+        "sha256": "8858c30f362574414d16d8dcd99b963382b79e3195a670145c2e67d63dfa85a5",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-088d813a8d6ff7ca"
+      ],
+      "disposition": "existing-setting-business-default",
+      "explicitReviewedReason": "null/absent120000 requestedms forwarded; actualretainedruntime deadline/perrun scopes required, notactualbrowserproof",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-0427a419dfa25e4b",
+      "source": {
+        "path": "skills/buster/plugins/lighthouse/src/provider.js",
+        "line": 91,
+        "text": "if (response.schemaVersion !== 'browser-lighthouse-result.v1' || !Array.isArray(response.results)",
+        "sha256": "8858c30f362574414d16d8dcd99b963382b79e3195a670145c2e67d63dfa85a5",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-45cbcce6c9a8143a",
+        "RT-a8b0c90a7a729d20",
+        "RT-97dfffc2083d51ea"
+      ],
+      "disposition": "nonsetting-finite-result-contract",
+      "explicitReviewedReason": "browser-lighthouse v1 +resultsarray, C0fakecapture not genuineproducer",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-d2402395dbf32efb",
+      "source": {
+        "path": "skills/buster/plugins/lighthouse/src/provider.js",
+        "line": 92,
+        "text": "|| response.results.length !== runs.length) throw new Error('LIGHTHOUSE_CAPABILITY_RESULT_INVALID');",
+        "sha256": "8858c30f362574414d16d8dcd99b963382b79e3195a670145c2e67d63dfa85a5",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-d1ed31f756f931f4",
+        "RT-14d3d815490102e1",
+        "RT-480d76acac6850a9"
+      ],
+      "disposition": "nonsetting-result-cardinality",
+      "explicitReviewedReason": "numberresults equalsrequestedruns, source fullreports/evidence stillrequiresactualbrowser",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-ecdf7faec2ca877a",
+      "source": {
+        "path": "skills/buster/plugins/lighthouse/src/provider.js",
+        "line": 108,
+        "text": "const budget = resolved.budget;",
+        "sha256": "8858c30f362574414d16d8dcd99b963382b79e3195a670145c2e67d63dfa85a5",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-858b7c0d83228aea"
+      ],
+      "disposition": "existing-setting-business-consumer",
+      "explicitReviewedReason": "resolvedbudget conditional admission inactualperformance branch",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-ee705d678be4a1f9",
+      "source": {
+        "path": "skills/buster/plugins/lighthouse/src/provider.js",
+        "line": 115,
+        "text": "total += 1; const violation = comparison === 'minimum' ? actual < limit : actual > limit;",
+        "sha256": "8858c30f362574414d16d8dcd99b963382b79e3195a670145c2e67d63dfa85a5",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-858b7c0d83228aea"
+      ],
+      "disposition": "existing-setting-business-consumer",
+      "explicitReviewedReason": "actualmetric thresholdmin/max comparison, fabricatedreport sourceproof notrenderer",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-9c3aa66f067e428b",
+      "source": {
+        "path": "skills/buster/plugins/playwright/src/provider.js",
+        "line": 6,
+        "text": "function object(value, code) { if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error(code); return value; }",
+        "sha256": "7a380ecfc9dd2b42751ecd451222779f606f82668274cdc66e7b9136f1f988e8",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-c226799a77c2da3b"
+      ],
+      "disposition": "nonsetting-input-shape",
+      "explicitReviewedReason": "configobject",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-8af7af5114c3845a",
+      "source": {
+        "path": "skills/buster/plugins/playwright/src/provider.js",
+        "line": 7,
+        "text": "function relative(value, code) { if (typeof value !== 'string' || !value || value.length > 1024 || value.includes('\\0') || path.isAbsolute(value) || value.split(/[\\\\/]/u).some((part) => part === '..' || part === '')) throw new Error(code); return value; }",
+        "sha256": "7a380ecfc9dd2b42751ecd451222779f606f82668274cdc66e7b9136f1f988e8",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-c226799a77c2da3b"
+      ],
+      "disposition": "open-processing-quota",
+      "explicitReviewedReason": "source relativepath chars1024 numericquota and containment/NUL security guards, project/configfile taskauthority",
+      "status": "precise open sourceguard/leaf/evidence obligation",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-80ae76bbd38be899",
+      "source": {
+        "path": "skills/buster/plugins/playwright/src/provider.js",
+        "line": 9,
+        "text": "function origin(value, code) { let url; try { url = new URL(value); } catch { throw new Error(code); } if (!['http:', 'https:'].includes(url.protocol) || url.username || url.password || url.pathname !== '/' || url.search || url.hash) throw new Error(code); return url.origin; }",
+        "sha256": "7a380ecfc9dd2b42751ecd451222779f606f82668274cdc66e7b9136f1f988e8",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-f6fd1dec2d2c6b35"
+      ],
+      "disposition": "nonsetting-authorized-origin-shape",
+      "explicitReviewedReason": "exact HTTProot/no credentials/query/fragment",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-3492a1eb60bb621e",
+      "source": {
+        "path": "skills/buster/plugins/playwright/src/provider.js",
+        "line": 14,
+        "text": "if (invocation.inputs.length !== 1 || invocation.inputs[0].kind !== 'value') throw new Error('PLAYWRIGHT_TARGET_REQUIRED');",
+        "sha256": "7a380ecfc9dd2b42751ecd451222779f606f82668274cdc66e7b9136f1f988e8",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-f6fd1dec2d2c6b35"
+      ],
+      "disposition": "nonsetting-fixture-cardinality",
+      "explicitReviewedReason": "one endpoint/deploymentfixture",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-501dc4cc2b40e52d",
+      "source": {
+        "path": "skills/buster/plugins/playwright/src/provider.js",
+        "line": 16,
+        "text": "if (input.name === 'endpoint') { if (input.schemaId !== 'kubeclaw.public-endpoint-fixture@1' || value.schemaVersion !== 'public-endpoint-fixture.v1' || typeof value.url !== 'string') throw new Error('PLAYWRIGHT_INPUT_INVALID'); return origin(value.url, 'PLAYWRIGHT_INPUT_INVALID'); }",
+        "sha256": "7a380ecfc9dd2b42751ecd451222779f606f82668274cdc66e7b9136f1f988e8",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-f6fd1dec2d2c6b35"
+      ],
+      "disposition": "nonsetting-finite-fixture-identity",
+      "explicitReviewedReason": "publicendpointv1/schemaID",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-1f95be87a9409875",
+      "source": {
+        "path": "skills/buster/plugins/playwright/src/provider.js",
+        "line": 17,
+        "text": "if (input.name !== 'deployment' || input.schemaId !== 'kubeclaw.kubernetes-deployment-fixture@1' || value.schemaVersion !== 'kubernetes-deployment-fixture.v1' || !Array.isArray(value.endpoints)) throw new Error('PLAYWRIGHT_INPUT_INVALID');",
+        "sha256": "7a380ecfc9dd2b42751ecd451222779f606f82668274cdc66e7b9136f1f988e8",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-d17ed366e09f9e72"
+      ],
+      "disposition": "nonsetting-finite-fixture-identity",
+      "explicitReviewedReason": "deploymentv1/schemaID/list beforeFIRST/namedendpoint",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-7bea79cf3d7f26ac",
+      "source": {
+        "path": "skills/buster/plugins/playwright/src/provider.js",
+        "line": 19,
+        "text": "if (!selected || typeof selected.url !== 'string') throw new Error('PLAYWRIGHT_ENDPOINT_NOT_FOUND'); return origin(selected.url, 'PLAYWRIGHT_INPUT_INVALID');",
+        "sha256": "7a380ecfc9dd2b42751ecd451222779f606f82668274cdc66e7b9136f1f988e8",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-d17ed366e09f9e72"
+      ],
+      "disposition": "existing-setting-task-selection",
+      "explicitReviewedReason": "selectedname exists or error, currentdormant withurl/publicendpoint",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-9e005a4287f942f0",
+      "source": {
+        "path": "skills/buster/plugins/playwright/src/provider.js",
+        "line": 21,
+        "text": "function allTests(report) { const result = []; const visit = (suite, titles = []) => { const next = suite.title ? [...titles, suite.title] : titles; for (const spec of suite.specs ?? []) for (const test of spec.tests ?? []) result.push({ title: [...next, spec.title, test.projectName].filter(Boolean).join(' > '), spec, test }); for (const child of suite.suites ?? []) visit(child, next); }; for (const suite of report.suites ?? []) visit(suite); return result; }",
+        "sha256": "7a380ecfc9dd2b42751ecd451222779f606f82668274cdc66e7b9136f1f988e8",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-28f9b2da06d59a77",
+        "RT-d348d41c2ab35c8b"
+      ],
+      "disposition": "nonsetting-task-report-title",
+      "explicitReviewedReason": "actualtestreport traversal carries suitename/spec/project exacttitle, no minpolicy default",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-10b1a484d572db82",
+      "source": {
+        "path": "skills/buster/plugins/playwright/src/provider.js",
+        "line": 22,
+        "text": "function attachmentType(name, contentType) { const lower = String(name).toLowerCase(); if (contentType === 'image/png' || lower.includes('screenshot')) return 'screenshot'; if (contentType === 'application/zip' && lower.includes('trace')) return 'trace'; if (String(contentType).startsWith('video/') || lower.includes('video')) return 'video'; return 'test-artifact'; }",
+        "sha256": "7a380ecfc9dd2b42751ecd451222779f606f82668274cdc66e7b9136f1f988e8",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-c226799a77c2da3b"
+      ],
+      "disposition": "nonsetting-finite-evidence-type",
+      "explicitReviewedReason": "attachmentMIME/name determines screenshot/trace/video/artifact, sourcepluginmedia codec notbusinessselector",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-2ba0cb5056296df7",
+      "source": {
+        "path": "skills/buster/plugins/playwright/src/provider.js",
+        "line": 25,
+        "text": "if (!raw || typeof raw !== 'object' || typeof raw.data !== 'string') return null;",
+        "sha256": "7a380ecfc9dd2b42751ecd451222779f606f82668274cdc66e7b9136f1f988e8",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-c226799a77c2da3b"
+      ],
+      "disposition": "open-evidence-shape-obligation",
+      "explicitReviewedReason": "malformed attachment data silentlyreturnsnull; actualrenderer/request pipeline schema/coverage/retention case necessary, not acceptedcleanartifactreceipt",
+      "status": "precise open sourceguard/leaf/evidence obligation",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-44dc8760763cec95",
+      "source": {
+        "path": "skills/buster/plugins/playwright/src/provider.js",
+        "line": 26,
+        "text": "if (raw.data.length % 4 !== 0 || !/^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/u.test(raw.data)) throw new Error('PLAYWRIGHT_ARTIFACT_INVALID');",
+        "sha256": "7a380ecfc9dd2b42751ecd451222779f606f82668274cdc66e7b9136f1f988e8",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-c226799a77c2da3b"
+      ],
+      "disposition": "nonsetting-finite-evidence-codec",
+      "explicitReviewedReason": "base64canonicalformat guard",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-c5d27036c209e8db",
+      "source": {
+        "path": "skills/buster/plugins/playwright/src/provider.js",
+        "line": 27,
+        "text": "const bytes = Buffer.from(raw.data, 'base64'); if (bytes.toString('base64') !== raw.data || bytes.byteLength > budget.bytes) throw new Error('PLAYWRIGHT_ARTIFACT_BYTES_EXCEEDED');",
+        "sha256": "7a380ecfc9dd2b42751ecd451222779f606f82668274cdc66e7b9136f1f988e8",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-c226799a77c2da3b"
+      ],
+      "disposition": "existing-input-resource-consumer",
+      "explicitReviewedReason": "actualbase64 bytes canonical +remaininginvocation artifactBytes, no independentprovider bytefallback",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-4905b171a54a1b57",
+      "source": {
+        "path": "skills/buster/plugins/playwright/src/provider.js",
+        "line": 41,
+        "text": "if (status === 'unexpected') { failed += 1; const last = results.at(-1); findings.push(finding(String(testIndex), entry.title, last?.error?.message ?? last?.error?.value ?? 'Test failed after retries.')); }",
+        "sha256": "7a380ecfc9dd2b42751ecd451222779f606f82668274cdc66e7b9136f1f988e8",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-28f9b2da06d59a77",
+        "RT-d348d41c2ab35c8b"
+      ],
+      "disposition": "nonsetting-task-report-finding",
+      "explicitReviewedReason": "unexpectedstatus withlast error message/valueelse constant explanatorytext, noCONFIGbudget fallback",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-5b9845e1604f6e81",
+      "source": {
+        "path": "skills/buster/plugins/playwright/src/provider.js",
+        "line": 45,
+        "text": "testCases.push({ id: `sha256:${crypto.createHash('sha256').update(`${testIndex}\\0${entry.title}\\0${project ?? ''}`).digest('hex')}`,",
+        "sha256": "7a380ecfc9dd2b42751ecd451222779f606f82668274cdc66e7b9136f1f988e8",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-28f9b2da06d59a77",
+        "RT-d348d41c2ab35c8b"
+      ],
+      "disposition": "nonsetting-task-report-identity",
+      "explicitReviewedReason": "actualtitle/project derives testIDsha256; sourceC0 fabricatedreport nottrueproducer/testsourceproof",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-c5680277a3a4a910",
+      "source": {
+        "path": "skills/buster/plugins/playwright/src/provider.js",
+        "line": 50,
+        "text": "const minimumExecuted = Math.max(mode === 'blocking' ? 1 : 0, config.minimumExecutedTests ?? 1);",
+        "sha256": "7a380ecfc9dd2b42751ecd451222779f606f82668274cdc66e7b9136f1f988e8",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-e4dcfff9aa6b1ef0"
+      ],
+      "disposition": "existing-setting-coverage-business-default",
+      "explicitReviewedReason": "sourcefallback1 effective max(blocking1, configured), blocking0cannotwaive realcoverage; zeroactualtestsreject always",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-ab12b440140a4641",
+      "source": {
+        "path": "skills/buster/plugins/playwright/src/provider.js",
+        "line": 52,
+        "text": "for (const title of config.requiredTests ?? []) {",
+        "sha256": "7a380ecfc9dd2b42751ecd451222779f606f82668274cdc66e7b9136f1f988e8",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-28f9b2da06d59a77",
+        "RT-d348d41c2ab35c8b"
+      ],
+      "disposition": "existing-setting-business-absence",
+      "explicitReviewedReason": "null/absentrequiredlistempty, targetcomplete explicittaskscopedownedpolicy withtrueactualtitles",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-dd09bababd111f96",
+      "source": {
+        "path": "skills/buster/plugins/playwright/src/provider.js",
+        "line": 54,
+        "text": "if (matches.length !== 1 || !['passed', 'failed'].includes(matches[0].status)) findings.push(finding('required', title, 'Required test is missing, ambiguous, skipped or unexecuted.'));",
+        "sha256": "7a380ecfc9dd2b42751ecd451222779f606f82668274cdc66e7b9136f1f988e8",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-28f9b2da06d59a77",
+        "RT-d348d41c2ab35c8b"
+      ],
+      "disposition": "existing-setting-coverage-consumer",
+      "explicitReviewedReason": "exactone matchingactualpassed/failed test, skipped/missing/ambiguous/unexecuted finding; nobusinessscope trim",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-bc0cc221f8f70258",
+      "source": {
+        "path": "skills/buster/plugins/playwright/src/provider.js",
+        "line": 57,
+        "text": "const outcome = failed > 0 || findings.length > 0 ? 'failed' : 'passed';",
+        "sha256": "7a380ecfc9dd2b42751ecd451222779f606f82668274cdc66e7b9136f1f988e8",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-e4dcfff9aa6b1ef0"
+      ],
+      "disposition": "nonsetting-verdict-reduction",
+      "explicitReviewedReason": "outcome anyfailure/finding fails, sourceA6 coverage findings kept",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-3a65dc8163099718",
+      "source": {
+        "path": "skills/buster/plugins/playwright/src/provider.js",
+        "line": 62,
+        "text": "const config = object(invocation.configuration.values, 'PLAYWRIGHT_CONFIG_INVALID'); const workspace = fs.realpathSync(context.workspaceRoot);",
+        "sha256": "7a380ecfc9dd2b42751ecd451222779f606f82668274cdc66e7b9136f1f988e8",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-c226799a77c2da3b"
+      ],
+      "disposition": "nonsetting-productive-caller",
+      "explicitReviewedReason": "actualproviderexecute config/canonicalworkspace before command",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-f0a3af67d3b7d0ab",
+      "source": {
+        "path": "skills/buster/plugins/playwright/src/provider.js",
+        "line": 65,
+        "text": "const configFile = inside(projectDirectory, relative(config.configFile, 'PLAYWRIGHT_CONFIG_FILE_INVALID'), 'PLAYWRIGHT_CONFIG_FILE_INVALID');",
+        "sha256": "7a380ecfc9dd2b42751ecd451222779f606f82668274cdc66e7b9136f1f988e8",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-c226799a77c2da3b"
+      ],
+      "disposition": "existing-setting-task-source-reader",
+      "explicitReviewedReason": "trueconfigfilepath canonicalinsideproject; sourceJScontent scheduling/hooks/testtimeouts remains per-source externaltask/policy obligations",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-7bf6bd2cf3f89b4b",
+      "source": {
+        "path": "skills/buster/plugins/playwright/src/provider.js",
+        "line": 69,
+        "text": "repository: path.relative(workspace, repository), projectDirectory: path.relative(repository, projectDirectory), configFile: path.relative(projectDirectory, configFile), workers,",
+        "sha256": "7a380ecfc9dd2b42751ecd451222779f606f82668274cdc66e7b9136f1f988e8",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-fbdecaab60720898"
+      ],
+      "disposition": "existing-setting-business-wire",
+      "explicitReviewedReason": "requestedworker countclampedinvocationprocesses-4, exactproject/config/task URL forwarded; 4headroom separateopen numericpolicy absent originalsyntax",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-2a80930eedf91093",
+      "source": {
+        "path": "skills/buster/plugins/playwright/src/provider.js",
+        "line": 70,
+        "text": "timeoutMs: Math.min(config.timeoutMs ?? invocation.timeoutMs, invocation.timeoutMs), limits: {",
+        "sha256": "7a380ecfc9dd2b42751ecd451222779f606f82668274cdc66e7b9136f1f988e8",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-d46f4334df4967fa"
+      ],
+      "disposition": "existing-setting-business-domain",
+      "explicitReviewedReason": "min config??invocation withinvocation, owningAPIdefault600000 separate unusedAPI selection, retainedactualruntimecaps/cgroup stronger",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-942f04a8452a3097",
+      "source": {
+        "path": "skills/buster/plugins/playwright/src/provider.js",
+        "line": 75,
+        "text": "if (command.schemaVersion !== 'browser-playwright-result.v1' || command.targetOrigin !== target || !Number.isSafeInteger(command.workers) || command.workers < 1 || command.workers > workers || !Array.isArray(command.artifacts) || !['cgroup-v2', 'sampled'].includes(command.resources?.enforcement)) throw new Error('PLAYWRIGHT_CAPABILITY_RESULT_INVALID');",
+        "sha256": "7a380ecfc9dd2b42751ecd451222779f606f82668274cdc66e7b9136f1f988e8",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-fbdecaab60720898"
+      ],
+      "disposition": "nonsetting-finite-runtime-result-contract",
+      "explicitReviewedReason": "browser-playwrightv1/targetorigin/returned workers\u2264requested/enforcement cgroup-v2 orsampled, actualruntimeidentity/effectrequired",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-3f1978174779c210",
+      "source": {
+        "path": "skills/buster/plugins/playwright/src/provider.js",
+        "line": 79,
+        "text": "const report = object(command.report, 'PLAYWRIGHT_REPORT_INVALID'); const reportBytes = Buffer.from(`${JSON.stringify(report)}\\n`); if (!reportBytes.length || reportBytes.byteLength > invocation.limits.artifactBytes) throw new Error('PLAYWRIGHT_REPORT_BYTES_EXCEEDED');",
+        "sha256": "7a380ecfc9dd2b42751ecd451222779f606f82668274cdc66e7b9136f1f988e8",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-c226799a77c2da3b"
+      ],
+      "disposition": "existing-input-artifact-budget",
+      "explicitReviewedReason": "rawreportbytes positive<=invocation artifactBytes before evidencecopy, no producerformat proof fromshape",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-03ad2498ebc0bba9",
+      "source": {
+        "path": "skills/buster/plugins/playwright/src/provider.js",
+        "line": 80,
+        "text": "if (!Array.isArray(report.suites) || !report.stats || typeof report.stats !== 'object') throw new Error('PLAYWRIGHT_REPORT_INVALID');",
+        "sha256": "7a380ecfc9dd2b42751ecd451222779f606f82668274cdc66e7b9136f1f988e8",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-c226799a77c2da3b"
+      ],
+      "disposition": "nonsetting-task-report-shape",
+      "explicitReviewedReason": "report suitesarray/statsobject beforeassess, no zero/skipcoverage exemption",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-5907a752ac3902f5",
+      "source": {
+        "path": "skills/buster/plugins/playwright/src/provider.js",
+        "line": 84,
+        "text": "const budget = { bytes: invocation.limits.artifactBytes - reportBytes.byteLength, files: invocation.limits.artifactFiles - 1 }; const evidenceFiles = [];",
+        "sha256": "7a380ecfc9dd2b42751ecd451222779f606f82668274cdc66e7b9136f1f988e8",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-c226799a77c2da3b"
+      ],
+      "disposition": "existing-input-artifact-budget",
+      "explicitReviewedReason": "remainingartifactbytes=invocationbytes-report bytes andremainingfiles-1, real stager quotas separate",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-8f82a0eac1615ccb",
+      "source": {
+        "path": "skills/buster/plugins/visual/src/browser-identity.js",
+        "line": 10,
+        "text": "if (typeof value !== 'string' || value.length === 0 || value.length > 256",
+        "sha256": "44ab23cb793d764710dae28b0a3a4c340ae57aeeb6e36dc7bfae192c05c265d3",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-7055bd224779ebc9"
+      ],
+      "disposition": "open-processing-quota",
+      "explicitReviewedReason": "actualbrowserVersion stringlength1..256 metadataidentitycap, not style/profile claimofobservedbrowser; baselinecaptureowner actualversion provenance remains external",
+      "status": "precise open sourceguard/leaf/evidence obligation",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-f5fe9d31d8b9ce9a",
+      "source": {
+        "path": "skills/buster/plugins/visual/src/browser-identity.js",
+        "line": 11,
+        "text": "|| value.trim() !== value || /[\\u0000-\\u001f\\u007f]/u.test(value)) {",
+        "sha256": "44ab23cb793d764710dae28b0a3a4c340ae57aeeb6e36dc7bfae192c05c265d3",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-7055bd224779ebc9"
+      ],
+      "disposition": "nonsetting-browser-version-shape",
+      "explicitReviewedReason": "no surroundingwhitespace/control characters, realversionstring fromtrueobservedbrowser required; C0fictitious string shape alone notprovenance",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-558dc02d89b01a01",
+      "source": {
+        "path": "skills/buster/plugins/visual/src/provider.js",
+        "line": 10,
+        "text": "function object(value, code) { if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error(code); return value; }",
+        "sha256": "1a321386019f583561a20297bf8ad1ff57599aac2e906ed1f48bada2f08419b1",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-e044f6419f72c0e0"
+      ],
+      "disposition": "nonsetting-input-shape",
+      "explicitReviewedReason": "plainobject",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-38b8314c7df40c6a",
+      "source": {
+        "path": "skills/buster/plugins/visual/src/provider.js",
+        "line": 12,
+        "text": "function number(value, minimum, maximum, code) { if (typeof value !== 'number' || !Number.isFinite(value) || value < minimum || value > maximum) throw new Error(code); return value; }",
+        "sha256": "1a321386019f583561a20297bf8ad1ff57599aac2e906ed1f48bada2f08419b1",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-e747f65a9f069ccd",
+        "RT-9bc4832efb4988b7",
+        "RT-fe646415d23cc642",
+        "RT-6e3cc348f44734f5"
+      ],
+      "disposition": "existing-setting-numeric-domain",
+      "explicitReviewedReason": "actual finite/min/max guard parameters forcomparisons",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-de32165151d26138",
+      "source": {
+        "path": "skills/buster/plugins/visual/src/provider.js",
+        "line": 14,
+        "text": "if (typeof relative !== 'string' || path.isAbsolute(relative) || relative.includes('\\0')) throw new Error(code);",
+        "sha256": "1a321386019f583561a20297bf8ad1ff57599aac2e906ed1f48bada2f08419b1",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-7055bd224779ebc9"
+      ],
+      "disposition": "nonsetting-path-containment",
+      "explicitReviewedReason": "relative/NUL/absolute denied",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-479f0a7282ca023f",
+      "source": {
+        "path": "skills/buster/plugins/visual/src/provider.js",
+        "line": 17,
+        "text": "if (!real.startsWith(`${repository}${path.sep}`) || !fs.statSync(real).isFile()) throw new Error(code); return real;",
+        "sha256": "1a321386019f583561a20297bf8ad1ff57599aac2e906ed1f48bada2f08419b1",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-7055bd224779ebc9"
+      ],
+      "disposition": "nonsetting-path-containment",
+      "explicitReviewedReason": "realcanonicaldescendant/file",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-74bb02fc0f4f40f5",
+      "source": {
+        "path": "skills/buster/plugins/visual/src/provider.js",
+        "line": 25,
+        "text": "const expected = { colorScheme: profile.colorScheme ?? null, reducedMotion: profile.reducedMotion ?? null,",
+        "sha256": "1a321386019f583561a20297bf8ad1ff57599aac2e906ed1f48bada2f08419b1",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-e044f6419f72c0e0"
+      ],
+      "disposition": "open-owned-profile-leaf-inventory",
+      "explicitReviewedReason": "optional colorscheme/reducedMotion null pagecondition placeholders; actualgenericfilebusinessfields/realruntime semantics remaingranular sourceinventory obligation",
+      "status": "precise open sourceguard/leaf/evidence obligation",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-e16634e4a3631e08",
+      "source": {
+        "path": "skills/buster/plugins/visual/src/provider.js",
+        "line": 26,
+        "text": "locale: profile.locale ?? null, timezoneId: profile.timezoneId ?? null, deviceScaleFactor: profile.deviceScaleFactor ?? 1,",
+        "sha256": "1a321386019f583561a20297bf8ad1ff57599aac2e906ed1f48bada2f08419b1",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-e044f6419f72c0e0"
+      ],
+      "disposition": "open-owned-profile-leaf-inventory",
+      "explicitReviewedReason": "locale/timezone null, DSFdefault1 expectedpageconditions; typedtargetexplicit, actualICU/runtimecompatibility required notmetadata proof",
+      "status": "precise open sourceguard/leaf/evidence obligation",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-3a6627c2947aaaaf",
+      "source": {
+        "path": "skills/buster/plugins/visual/src/provider.js",
+        "line": 27,
+        "text": "hasTouch: profile.hasTouch ?? false, isMobile: profile.isMobile ?? false, fullPage: true };",
+        "sha256": "1a321386019f583561a20297bf8ad1ff57599aac2e906ed1f48bada2f08419b1",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-e044f6419f72c0e0"
+      ],
+      "disposition": "open-owned-profile-leaf-inventory",
+      "explicitReviewedReason": "hasTouch/isMobile defaultfalse pagecondition metadata; fullPage true actualcapturecontract invariant reviewedwithoriginalfullframecoverage, not guessed physicaldevice",
+      "status": "precise open sourceguard/leaf/evidence obligation",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-1e447bf86103cf13",
+      "source": {
+        "path": "skills/buster/plugins/visual/src/provider.js",
+        "line": 33,
+        "text": "if (!['http:', 'https:'].includes(url.protocol) || url.username || url.password || url.pathname !== '/'",
+        "sha256": "1a321386019f583561a20297bf8ad1ff57599aac2e906ed1f48bada2f08419b1",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-42fd37c34f097e2d"
+      ],
+      "disposition": "nonsetting-authorized-origin-shape",
+      "explicitReviewedReason": "actualproviderHTTProot/no credentials/path",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-7e336eb207a9e544",
+      "source": {
+        "path": "skills/buster/plugins/visual/src/provider.js",
+        "line": 34,
+        "text": "|| url.search || url.hash) throw new Error(code);",
+        "sha256": "1a321386019f583561a20297bf8ad1ff57599aac2e906ed1f48bada2f08419b1",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-42fd37c34f097e2d"
+      ],
+      "disposition": "nonsetting-authorized-origin-shape",
+      "explicitReviewedReason": "noquery/fragment, actualruntimeorigin/grants remainindependent",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-9f55f1a4b1576ba5",
+      "source": {
+        "path": "skills/buster/plugins/visual/src/provider.js",
+        "line": 38,
+        "text": "if (typeof value !== 'string' || !value.length || value.length % 4 !== 0",
+        "sha256": "1a321386019f583561a20297bf8ad1ff57599aac2e906ed1f48bada2f08419b1",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-7055bd224779ebc9"
+      ],
+      "disposition": "nonsetting-finite-image-encoding",
+      "explicitReviewedReason": "strict nonempty paddedbase64canonicalencoding",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-ba4316586cb29356",
+      "source": {
+        "path": "skills/buster/plugins/visual/src/provider.js",
+        "line": 39,
+        "text": "|| !/^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/u.test(value)) throw new Error(code);",
+        "sha256": "1a321386019f583561a20297bf8ad1ff57599aac2e906ed1f48bada2f08419b1",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-7055bd224779ebc9"
+      ],
+      "disposition": "nonsetting-finite-image-encoding",
+      "explicitReviewedReason": "base64 wire grammar/canonicalbytes, not PNGproducer identity",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-63f67188381ecc53",
+      "source": {
+        "path": "skills/buster/plugins/visual/src/provider.js",
+        "line": 43,
+        "text": "if (bytes.byteLength < 24 || !bytes.subarray(0, 8).equals(Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]))",
+        "sha256": "1a321386019f583561a20297bf8ad1ff57599aac2e906ed1f48bada2f08419b1",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-7055bd224779ebc9"
+      ],
+      "disposition": "nonsetting-finite-image-codec",
+      "explicitReviewedReason": "PNG signature bytes andminimumIHDRformat; not businessquota or actualrendererproof",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-b4f711ac23e5f8b8",
+      "source": {
+        "path": "skills/buster/plugins/visual/src/provider.js",
+        "line": 44,
+        "text": "|| bytes.toString('ascii', 12, 16) !== 'IHDR') throw new Error(code);",
+        "sha256": "1a321386019f583561a20297bf8ad1ff57599aac2e906ed1f48bada2f08419b1",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-7055bd224779ebc9"
+      ],
+      "disposition": "nonsetting-finite-image-codec",
+      "explicitReviewedReason": "IHDR header discrimination",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-1422f35d9478595c",
+      "source": {
+        "path": "skills/buster/plugins/visual/src/provider.js",
+        "line": 46,
+        "text": "if (!width || !height || width > 16384 || height > 16384 || width * height > Math.floor(maximumDecodedBytes / 4)) {",
+        "sha256": "1a321386019f583561a20297bf8ad1ff57599aac2e906ed1f48bada2f08419b1",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-7055bd224779ebc9"
+      ],
+      "disposition": "open-decoded-image-resource-policy",
+      "explicitReviewedReason": "axis16384 numericimageguard and decoded4bytes/pixel budget projection; 4channels codecshape vs16384 admissionquota distinct, sharednativecompare/provider duplicateguard ownerreview",
+      "status": "precise open sourceguard/leaf/evidence obligation",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-81548a22a20e957e",
+      "source": {
+        "path": "skills/buster/plugins/visual/src/provider.js",
+        "line": 54,
+        "text": "if (invocation.inputs.length !== 1 || invocation.inputs[0].kind !== 'value') throw new Error('VISUAL_TARGET_REQUIRED');",
+        "sha256": "1a321386019f583561a20297bf8ad1ff57599aac2e906ed1f48bada2f08419b1",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-42fd37c34f097e2d"
+      ],
+      "disposition": "nonsetting-fixture-cardinality",
+      "explicitReviewedReason": "one endpoint/deploymentfixture",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-d9c6338d695c8fcb",
+      "source": {
+        "path": "skills/buster/plugins/visual/src/provider.js",
+        "line": 57,
+        "text": "if (input.schemaId !== 'kubeclaw.public-endpoint-fixture@1' || value.schemaVersion !== 'public-endpoint-fixture.v1'",
+        "sha256": "1a321386019f583561a20297bf8ad1ff57599aac2e906ed1f48bada2f08419b1",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-42fd37c34f097e2d"
+      ],
+      "disposition": "nonsetting-finite-fixture-identity",
+      "explicitReviewedReason": "publicendpointv1/schemaID",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-3bf8f21d74d820ff",
+      "source": {
+        "path": "skills/buster/plugins/visual/src/provider.js",
+        "line": 58,
+        "text": "|| typeof value.url !== 'string') throw new Error('VISUAL_INPUT_INVALID'); return origin(value.url, 'VISUAL_INPUT_INVALID');",
+        "sha256": "1a321386019f583561a20297bf8ad1ff57599aac2e906ed1f48bada2f08419b1",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-42fd37c34f097e2d"
+      ],
+      "disposition": "nonsetting-task-origin-projection",
+      "explicitReviewedReason": "explicit/fixtureorigin validatedexactroot",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-3236a4a64b663d2a",
+      "source": {
+        "path": "skills/buster/plugins/visual/src/provider.js",
+        "line": 60,
+        "text": "if (input.name !== 'deployment' || input.schemaId !== 'kubeclaw.kubernetes-deployment-fixture@1'",
+        "sha256": "1a321386019f583561a20297bf8ad1ff57599aac2e906ed1f48bada2f08419b1",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-4003eb10ed91148b"
+      ],
+      "disposition": "nonsetting-finite-fixture-identity",
+      "explicitReviewedReason": "deploymentversion/schemaID",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-10b6c00207f84714",
+      "source": {
+        "path": "skills/buster/plugins/visual/src/provider.js",
+        "line": 61,
+        "text": "|| value.schemaVersion !== 'kubernetes-deployment-fixture.v1' || !Array.isArray(value.endpoints)) throw new Error('VISUAL_INPUT_INVALID');",
+        "sha256": "1a321386019f583561a20297bf8ad1ff57599aac2e906ed1f48bada2f08419b1",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-4003eb10ed91148b"
+      ],
+      "disposition": "nonsetting-fixture-shape",
+      "explicitReviewedReason": "deploymentendpoints array",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-c327582c0caf7bc8",
+      "source": {
+        "path": "skills/buster/plugins/visual/src/provider.js",
+        "line": 63,
+        "text": "if (!selected || typeof selected.url !== 'string') throw new Error('VISUAL_ENDPOINT_NOT_FOUND'); return origin(selected.url, 'VISUAL_INPUT_INVALID');",
+        "sha256": "1a321386019f583561a20297bf8ad1ff57599aac2e906ed1f48bada2f08419b1",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-4003eb10ed91148b"
+      ],
+      "disposition": "existing-setting-task-selection",
+      "explicitReviewedReason": "nameorFIRST, unknownerror; dormantwithurl/publicendpoint",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-add23bf2908418d1",
+      "source": {
+        "path": "skills/buster/plugins/visual/src/provider.js",
+        "line": 69,
+        "text": "if (!Object.keys(values).length || Object.keys(values).length > 32) throw new Error('VISUAL_PROFILE_FILE_INVALID');",
+        "sha256": "1a321386019f583561a20297bf8ad1ff57599aac2e906ed1f48bada2f08419b1",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-e044f6419f72c0e0"
+      ],
+      "disposition": "open-processing-quota",
+      "explicitReviewedReason": "namedprofiles1..32 numericadmissionquota",
+      "status": "precise open sourceguard/leaf/evidence obligation",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-5695630cd31b1e3c",
+      "source": {
+        "path": "skills/buster/plugins/visual/src/provider.js",
+        "line": 75,
+        "text": "if (!['chromium', 'firefox', 'webkit'].includes(value.browser) || !Number.isSafeInteger(viewport.width) || viewport.width < 240 || viewport.width > 3840",
+        "sha256": "1a321386019f583561a20297bf8ad1ff57599aac2e906ed1f48bada2f08419b1",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-e044f6419f72c0e0"
+      ],
+      "disposition": "open-owned-profile-leaf-inventory",
+      "explicitReviewedReason": "browserenum+viewportwidth240..3840 truefilepolicy fields; sourceNode refs mappedouterselector, individualgenericfileleaf IDs/cases stillnecessary",
+      "status": "precise open sourceguard/leaf/evidence obligation",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-51a701c5b27513f9",
+      "source": {
+        "path": "skills/buster/plugins/visual/src/provider.js",
+        "line": 76,
+        "text": "|| !Number.isSafeInteger(viewport.height) || viewport.height < 240 || viewport.height > 2160) throw new Error('VISUAL_PROFILE_INVALID');",
+        "sha256": "1a321386019f583561a20297bf8ad1ff57599aac2e906ed1f48bada2f08419b1",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-e044f6419f72c0e0"
+      ],
+      "disposition": "open-owned-profile-leaf-inventory",
+      "explicitReviewedReason": "viewportheight240..2160px genericfilepolicy leaf",
+      "status": "precise open sourceguard/leaf/evidence obligation",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-0d6d53163f59c608",
+      "source": {
+        "path": "skills/buster/plugins/visual/src/provider.js",
+        "line": 85,
+        "text": "if (!Array.isArray(document.entries) || !document.entries.length || document.entries.length > 128) throw new Error('VISUAL_MANIFEST_INVALID');",
+        "sha256": "1a321386019f583561a20297bf8ad1ff57599aac2e906ed1f48bada2f08419b1",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-7055bd224779ebc9"
+      ],
+      "disposition": "open-processing-quota",
+      "explicitReviewedReason": "baselineentries1..128 numericguard quota +requireddeclaredartifactshape",
+      "status": "precise open sourceguard/leaf/evidence obligation",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-2a8ecaf75457c5df",
+      "source": {
+        "path": "skills/buster/plugins/visual/src/provider.js",
+        "line": 90,
+        "text": "if (typeof entry.id !== 'string' || !/^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$/u.test(entry.id) || ids.has(entry.id)",
+        "sha256": "1a321386019f583561a20297bf8ad1ff57599aac2e906ed1f48bada2f08419b1",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-7055bd224779ebc9"
+      ],
+      "disposition": "nonsetting-task-artifact-identity",
+      "explicitReviewedReason": "entryid grammar128 unique, truebaseline artifactroleidentity notconfiguredbackendselector",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-4351c347be676f7f",
+      "source": {
+        "path": "skills/buster/plugins/visual/src/provider.js",
+        "line": 91,
+        "text": "|| typeof entry.route !== 'string' || entry.route.length > 1024 || !entry.route.startsWith('/') || entry.route.startsWith('//') || /[?#\\r\\n]/u.test(entry.route)",
+        "sha256": "1a321386019f583561a20297bf8ad1ff57599aac2e906ed1f48bada2f08419b1",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-7055bd224779ebc9"
+      ],
+      "disposition": "open-processing-quota",
+      "explicitReviewedReason": "routechars1024 numericbound+route securityshape, baseline/source artifact taskauthor preserved",
+      "status": "precise open sourceguard/leaf/evidence obligation",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-03a6680bde5ea344",
+      "source": {
+        "path": "skills/buster/plugins/visual/src/provider.js",
+        "line": 92,
+        "text": "|| typeof entry.profile !== 'string' || !profileMap[entry.profile] || typeof entry.baselineFile !== 'string'",
+        "sha256": "1a321386019f583561a20297bf8ad1ff57599aac2e906ed1f48bada2f08419b1",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-7055bd224779ebc9"
+      ],
+      "disposition": "nonsetting-task-profile-reference",
+      "explicitReviewedReason": "profile name exists in sameprofilemap and baselinefile pathstring",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-48948949198f2dec",
+      "source": {
+        "path": "skills/buster/plugins/visual/src/provider.js",
+        "line": 93,
+        "text": "|| typeof entry.sha256 !== 'string' || !/^sha256:[a-f0-9]{64}$/u.test(entry.sha256)) throw new Error('VISUAL_MANIFEST_INVALID');",
+        "sha256": "1a321386019f583561a20297bf8ad1ff57599aac2e906ed1f48bada2f08419b1",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-7055bd224779ebc9"
+      ],
+      "disposition": "nonsetting-digest-wire-identity",
+      "explicitReviewedReason": "baseline digestsha256hex grammar, actualbytes independentlyhashchecked",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-12bf5478ef9fb344",
+      "source": {
+        "path": "skills/buster/plugins/visual/src/provider.js",
+        "line": 95,
+        "text": "if (entry.browser !== profile.browser || viewport.width !== profile.viewport.width || viewport.height !== profile.viewport.height",
+        "sha256": "1a321386019f583561a20297bf8ad1ff57599aac2e906ed1f48bada2f08419b1",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-7055bd224779ebc9"
+      ],
+      "disposition": "nonsetting-frame-identity-integrity",
+      "explicitReviewedReason": "baselinebrowser+viewport equalsownedprofile beforecapture; observedactualversion separate",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-3125acc955e89d10",
+      "source": {
+        "path": "skills/buster/plugins/visual/src/provider.js",
+        "line": 96,
+        "text": "|| !samePageConditions(entry.pageConditions, profile)) {",
+        "sha256": "1a321386019f583561a20297bf8ad1ff57599aac2e906ed1f48bada2f08419b1",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-7055bd224779ebc9"
+      ],
+      "disposition": "nonsetting-frame-identity-integrity",
+      "explicitReviewedReason": "pageconditions equality usesfullownedproperties/dependency identity, not fakeversion proof",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-7182b71cbaf9f0bd",
+      "source": {
+        "path": "skills/buster/plugins/visual/src/provider.js",
+        "line": 101,
+        "text": "if (stat.size <= 0 || stat.size > maximumBytes) throw new Error('VISUAL_BASELINE_BYTES_EXCEEDED');",
+        "sha256": "1a321386019f583561a20297bf8ad1ff57599aac2e906ed1f48bada2f08419b1",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-7055bd224779ebc9"
+      ],
+      "disposition": "existing-input-resource-bound",
+      "explicitReviewedReason": "baseline filesize>0<=min(current64MiBguard,invocation.artifactBytes); separate64MiBmaxpolicy outside originalsyntax remainsopen, actualstrongercapdriver",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-6a91c638ac229d13",
+      "source": {
+        "path": "skills/buster/plugins/visual/src/provider.js",
+        "line": 113,
+        "text": "const name = config.comparisonProfile ?? 'strict-v1'; const base = COMPARISON_PROFILES[name];",
+        "sha256": "1a321386019f583561a20297bf8ad1ff57599aac2e906ed1f48bada2f08419b1",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-1ef5ab4a60156159"
+      ],
+      "disposition": "existing-setting-business-default",
+      "explicitReviewedReason": "null/absentstrict-v1 businesspreset notprotocol, actualcomplete3numeric policyretiredsourcefallback",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-d9e310ca8da79165",
+      "source": {
+        "path": "skills/buster/plugins/visual/src/provider.js",
+        "line": 114,
+        "text": "if (!base) throw new Error('VISUAL_COMPARISON_PROFILE_INVALID'); const overrides = config.overrides ?? {};",
+        "sha256": "1a321386019f583561a20297bf8ad1ff57599aac2e906ed1f48bada2f08419b1",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-e747f65a9f069ccd",
+        "RT-9bc4832efb4988b7",
+        "RT-fe646415d23cc642",
+        "RT-6e3cc348f44734f5"
+      ],
+      "disposition": "existing-setting-business-default",
+      "explicitReviewedReason": "unknownpresetreject, null/absentoverrides{}, nullableleafs fallbacks current; targetcompleteexplicit rejectslegacyduplicates",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-78572e3970ba3f40",
+      "source": {
+        "path": "skills/buster/plugins/visual/src/provider.js",
+        "line": 117,
+        "text": "maximumDifferencePercent: overrides.maximumDifferencePercent ?? base.maximumDifferencePercent,",
+        "sha256": "1a321386019f583561a20297bf8ad1ff57599aac2e906ed1f48bada2f08419b1",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-9bc4832efb4988b7"
+      ],
+      "disposition": "existing-setting-business-consumer",
+      "explicitReviewedReason": "maxdifference override??preset0/.5 finite0..100percent trueadmission",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-8f411ca64493ad19",
+      "source": {
+        "path": "skills/buster/plugins/visual/src/provider.js",
+        "line": 118,
+        "text": "pixelThreshold: overrides.pixelThreshold ?? base.pixelThreshold,",
+        "sha256": "1a321386019f583561a20297bf8ad1ff57599aac2e906ed1f48bada2f08419b1",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-fe646415d23cc642"
+      ],
+      "disposition": "existing-setting-business-consumer",
+      "explicitReviewedReason": "pixelthreshold override??preset.1 finite0..1 realnativepixelmatch source branch, no renderingclaim",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-a523ff0d8b76f2b6",
+      "source": {
+        "path": "skills/buster/plugins/visual/src/provider.js",
+        "line": 119,
+        "text": "uncertaintyMarginPercent: overrides.uncertaintyMarginPercent ?? base.uncertaintyMarginPercent,",
+        "sha256": "1a321386019f583561a20297bf8ad1ff57599aac2e906ed1f48bada2f08419b1",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-6e3cc348f44734f5"
+      ],
+      "disposition": "existing-setting-business-consumer",
+      "explicitReviewedReason": "margin override??preset0/.25; onlyhigh/medium uncertainty classification STILLFAILED",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-ebe20cfc0c37525b",
+      "source": {
+        "path": "skills/buster/plugins/visual/src/provider.js",
+        "line": 129,
+        "text": "const config = object(invocation.configuration.values, 'VISUAL_CONFIG_INVALID'); const workspace = fs.realpathSync(context.workspaceRoot);",
+        "sha256": "1a321386019f583561a20297bf8ad1ff57599aac2e906ed1f48bada2f08419b1",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-e044f6419f72c0e0"
+      ],
+      "disposition": "nonsetting-productive-caller",
+      "explicitReviewedReason": "actualproviderexecute config/canonicalworkspace",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-267e97233908f06b",
+      "source": {
+        "path": "skills/buster/plugins/visual/src/provider.js",
+        "line": 133,
+        "text": "if (!Array.isArray(config.targets) || !config.targets.length || config.targets.length > 64 || new Set(config.targets).size !== config.targets.length) throw new Error('VISUAL_TARGETS_INVALID');",
+        "sha256": "1a321386019f583561a20297bf8ad1ff57599aac2e906ed1f48bada2f08419b1",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-bf905e47ed35863a",
+        "RT-165dd3d0da855565"
+      ],
+      "disposition": "open-processing-quota",
+      "explicitReviewedReason": "tasktargets1..64 uniqueness +numericguard, nothiddenfullscope exclusion",
+      "status": "precise open sourceguard/leaf/evidence obligation",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-3627610a904e4797",
+      "source": {
+        "path": "skills/buster/plugins/visual/src/provider.js",
+        "line": 135,
+        "text": "const selected = config.targets.map((id) => baselineManifest.entries.get(id) ?? (() => { throw new Error(`VISUAL_TARGET_NOT_FOUND:${id}`); })());",
+        "sha256": "1a321386019f583561a20297bf8ad1ff57599aac2e906ed1f48bada2f08419b1",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-bf905e47ed35863a",
+        "RT-165dd3d0da855565"
+      ],
+      "disposition": "existing-setting-task-selection",
+      "explicitReviewedReason": "manifestentrylookupselected IDs, unknownreject",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-df9048b85c10e162",
+      "source": {
+        "path": "skills/buster/plugins/visual/src/provider.js",
+        "line": 136,
+        "text": "const masks = new Map(); for (const raw of config.masks ?? []) {",
+        "sha256": "1a321386019f583561a20297bf8ad1ff57599aac2e906ed1f48bada2f08419b1",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-be3717baf421a9dd",
+        "RT-fa24eda72114411c",
+        "RT-d57032dd890b6f18",
+        "RT-3f0dfb808c23e5e0",
+        "RT-086164702f20b582"
+      ],
+      "disposition": "existing-setting-business-absence",
+      "explicitReviewedReason": "null/absent masks[], componentownedbusinessmaskscope target IDs remaintaskreferences",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-672de76f2c08f6e5",
+      "source": {
+        "path": "skills/buster/plugins/visual/src/provider.js",
+        "line": 137,
+        "text": "const value = object(raw, 'VISUAL_MASK_INVALID'); if (!config.targets.includes(value.target) || !Array.isArray(value.selectors)) throw new Error('VISUAL_MASK_INVALID');",
+        "sha256": "1a321386019f583561a20297bf8ad1ff57599aac2e906ed1f48bada2f08419b1",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-be3717baf421a9dd",
+        "RT-fa24eda72114411c",
+        "RT-d57032dd890b6f18",
+        "RT-3f0dfb808c23e5e0",
+        "RT-086164702f20b582"
+      ],
+      "disposition": "existing-setting-business-integrity",
+      "explicitReviewedReason": "masktarget selected, selectorsarray, duplicate-target separateline138; ownschema+realCSSengine validatesmostselector details",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-da5235cc672e864e",
+      "source": {
+        "path": "skills/buster/plugins/visual/src/provider.js",
+        "line": 142,
+        "text": "combinations: selected.map((entry) => ({ id: entry.id, route: entry.route, profile: entry.profile, masks: masks.get(entry.id) ?? [] })),",
+        "sha256": "1a321386019f583561a20297bf8ad1ff57599aac2e906ed1f48bada2f08419b1",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-be3717baf421a9dd",
+        "RT-fa24eda72114411c",
+        "RT-d57032dd890b6f18",
+        "RT-3f0dfb808c23e5e0",
+        "RT-086164702f20b582"
+      ],
+      "disposition": "existing-setting-business-wire",
+      "explicitReviewedReason": "selectedentries/profile/maskarray copied to actualbrowser.capture; C0fakecapturereply not maskrender proof",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-7f7bd1ffa590528e",
+      "source": {
+        "path": "skills/buster/plugins/visual/src/provider.js",
+        "line": 143,
+        "text": "timeoutMs: config.timeoutMs ?? 30000,",
+        "sha256": "1a321386019f583561a20297bf8ad1ff57599aac2e906ed1f48bada2f08419b1",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-b1bebfd3aa463e09"
+      ],
+      "disposition": "existing-setting-business-default",
+      "explicitReviewedReason": "requestedms default30000, realretainedruntimecapturedeadline stronger",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-18a0d49fe8f51e7c",
+      "source": {
+        "path": "skills/buster/plugins/visual/src/provider.js",
+        "line": 145,
+        "text": "if (response.schemaVersion !== 'browser-visual-result.v1' || !Array.isArray(response.results)",
+        "sha256": "1a321386019f583561a20297bf8ad1ff57599aac2e906ed1f48bada2f08419b1",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-bf905e47ed35863a",
+        "RT-165dd3d0da855565"
+      ],
+      "disposition": "nonsetting-finite-result-contract",
+      "explicitReviewedReason": "browservisual v1 andresultsarray",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-9c43abb979bf8210",
+      "source": {
+        "path": "skills/buster/plugins/visual/src/provider.js",
+        "line": 146,
+        "text": "|| response.results.length !== selected.length) throw new Error('VISUAL_CAPABILITY_RESULT_INVALID');",
+        "sha256": "1a321386019f583561a20297bf8ad1ff57599aac2e906ed1f48bada2f08419b1",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-bf905e47ed35863a",
+        "RT-165dd3d0da855565"
+      ],
+      "disposition": "nonsetting-result-cardinality",
+      "explicitReviewedReason": "count equalsselected targets, ensure actualindividualframeidentity checksafter",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-884b362c52f91a8f",
+      "source": {
+        "path": "skills/buster/plugins/visual/src/provider.js",
+        "line": 150,
+        "text": "if (!current || current.route !== entry.route || current.profile !== entry.profile.name || current.browser !== entry.profile.browser",
+        "sha256": "1a321386019f583561a20297bf8ad1ff57599aac2e906ed1f48bada2f08419b1",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-e044f6419f72c0e0"
+      ],
+      "disposition": "nonsetting-frame-result-integrity",
+      "explicitReviewedReason": "truecaptureentryid/route/profile/browser matches baselineownedselection",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-0f8c0a4981c21f4d",
+      "source": {
+        "path": "skills/buster/plugins/visual/src/provider.js",
+        "line": 151,
+        "text": "|| current.viewport?.width !== entry.viewport.width || current.viewport?.height !== entry.viewport.height",
+        "sha256": "1a321386019f583561a20297bf8ad1ff57599aac2e906ed1f48bada2f08419b1",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-e044f6419f72c0e0"
+      ],
+      "disposition": "nonsetting-frame-result-integrity",
+      "explicitReviewedReason": "viewportmatchesbaseline exactly",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-4abd4609b928b525",
+      "source": {
+        "path": "skills/buster/plugins/visual/src/provider.js",
+        "line": 152,
+        "text": "|| !samePageConditions(current.pageConditions, entry.profile)",
+        "sha256": "1a321386019f583561a20297bf8ad1ff57599aac2e906ed1f48bada2f08419b1",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-e044f6419f72c0e0"
+      ],
+      "disposition": "nonsetting-frame-result-integrity",
+      "explicitReviewedReason": "fullpageconditions equality, missing/unknown fieldreject",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-8ab8f37d6d4689cc",
+      "source": {
+        "path": "skills/buster/plugins/visual/src/provider.js",
+        "line": 153,
+        "text": "|| JSON.stringify(current.masks) !== JSON.stringify(masks.get(entry.id) ?? [])) throw new Error('VISUAL_CAPABILITY_RESULT_INVALID');",
+        "sha256": "1a321386019f583561a20297bf8ad1ff57599aac2e906ed1f48bada2f08419b1",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-be3717baf421a9dd",
+        "RT-fa24eda72114411c",
+        "RT-d57032dd890b6f18",
+        "RT-3f0dfb808c23e5e0",
+        "RT-086164702f20b582"
+      ],
+      "disposition": "nonsetting-mask-result-integrity",
+      "explicitReviewedReason": "returnedordered masks same actualdeclaredpolicy array; not itself realpixelmask evidence",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-d9a11fd5e2d61276",
+      "source": {
+        "path": "skills/buster/plugins/visual/src/provider.js",
+        "line": 160,
+        "text": "if (compared.schemaVersion !== 'browser-visual-comparison.v1' || !Number.isSafeInteger(compared.width)",
+        "sha256": "1a321386019f583561a20297bf8ad1ff57599aac2e906ed1f48bada2f08419b1",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-e747f65a9f069ccd",
+        "RT-9bc4832efb4988b7",
+        "RT-fe646415d23cc642",
+        "RT-6e3cc348f44734f5"
+      ],
+      "disposition": "nonsetting-finite-comparison-contract",
+      "explicitReviewedReason": "nativecomparisonv1/result widthsafeint",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-7cf10ea978556c17",
+      "source": {
+        "path": "skills/buster/plugins/visual/src/provider.js",
+        "line": 161,
+        "text": "|| !Number.isSafeInteger(compared.height) || !Number.isSafeInteger(compared.diffCount)",
+        "sha256": "1a321386019f583561a20297bf8ad1ff57599aac2e906ed1f48bada2f08419b1",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-e747f65a9f069ccd",
+        "RT-9bc4832efb4988b7",
+        "RT-fe646415d23cc642",
+        "RT-6e3cc348f44734f5"
+      ],
+      "disposition": "nonsetting-comparison-shape",
+      "explicitReviewedReason": "heightsafe/diffcountsafeinteger, actualPNG/image algorithm stillindependent",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-c8fbb436de806627",
+      "source": {
+        "path": "skills/buster/plugins/visual/src/provider.js",
+        "line": 162,
+        "text": "|| typeof compared.diffPercent !== 'number' || !Number.isFinite(compared.diffPercent) || typeof compared.difference !== 'string') throw new Error('VISUAL_CAPABILITY_RESULT_INVALID');",
+        "sha256": "1a321386019f583561a20297bf8ad1ff57599aac2e906ed1f48bada2f08419b1",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-e747f65a9f069ccd",
+        "RT-9bc4832efb4988b7",
+        "RT-fe646415d23cc642",
+        "RT-6e3cc348f44734f5"
+      ],
+      "disposition": "nonsetting-comparison-shape",
+      "explicitReviewedReason": "diffpercentfinite/differencebase64 string, bodyhash/canonicalimage checked after",
+      "status": "exact currentsetting/nonsetting source rationale; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "ownedDomainProposal": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-observations.json",
+      "countsTowardAcceptance": false
+    }
+  ],
+  "thisBatchCount": 131,
+  "combinedReviewedCount": 295,
+  "remainingUnreviewed": 4347,
+  "dispositions": {
+    "nonsetting-input-shape": 4,
+    "nonsetting-path-containment": 6,
+    "nonsetting-fixture-cardinality": 4,
+    "nonsetting-finite-fixture-identity": 8,
+    "nonsetting-task-origin-projection": 3,
+    "nonsetting-fixture-shape": 3,
+    "existing-setting-task-selection": 5,
+    "existing-setting-business-default": 7,
+    "existing-setting-profile-reference": 1,
+    "existing-setting-waiver-key": 1,
+    "existing-setting-expiry-clock": 1,
+    "nonsetting-productive-caller": 4,
+    "nonsetting-finite-result-contract": 3,
+    "open-evidence-identity-obligation": 1,
+    "nonsetting-diagnostic-absence": 1,
+    "open-processing-quota": 8,
+    "nonsetting-reference-name-shape": 1,
+    "open-owned-profile-leaf-inventory": 10,
+    "existing-setting-owned-map": 1,
+    "nonsetting-name-iteration": 1,
+    "open-owned-budget-leaf-inventory": 4,
+    "existing-setting-optional-budget-absence": 1,
+    "existing-setting-reference-consumer": 1,
+    "existing-setting-absolute-waiver": 1,
+    "nonsetting-result-cardinality": 2,
+    "existing-setting-business-consumer": 5,
+    "nonsetting-authorized-origin-shape": 3,
+    "nonsetting-task-report-title": 1,
+    "nonsetting-finite-evidence-type": 1,
+    "open-evidence-shape-obligation": 1,
+    "nonsetting-finite-evidence-codec": 1,
+    "existing-input-resource-consumer": 1,
+    "nonsetting-task-report-finding": 1,
+    "nonsetting-task-report-identity": 1,
+    "existing-setting-coverage-business-default": 1,
+    "existing-setting-business-absence": 2,
+    "existing-setting-coverage-consumer": 1,
+    "nonsetting-verdict-reduction": 1,
+    "existing-setting-task-source-reader": 1,
+    "existing-setting-business-wire": 2,
+    "existing-setting-business-domain": 1,
+    "nonsetting-finite-runtime-result-contract": 1,
+    "existing-input-artifact-budget": 2,
+    "nonsetting-task-report-shape": 1,
+    "nonsetting-browser-version-shape": 1,
+    "existing-setting-numeric-domain": 1,
+    "nonsetting-finite-image-encoding": 2,
+    "nonsetting-finite-image-codec": 2,
+    "open-decoded-image-resource-policy": 1,
+    "nonsetting-task-artifact-identity": 1,
+    "nonsetting-task-profile-reference": 1,
+    "nonsetting-digest-wire-identity": 1,
+    "nonsetting-frame-identity-integrity": 2,
+    "existing-input-resource-bound": 1,
+    "existing-setting-business-integrity": 1,
+    "nonsetting-frame-result-integrity": 3,
+    "nonsetting-mask-result-integrity": 1,
+    "nonsetting-finite-comparison-contract": 1,
+    "nonsetting-comparison-shape": 2
+  },
+  "unmatchedGuardBusinessDefaultsNotInOriginalSyntaxRoster": [
+    "actualLighthousefile262144bytes, profilecount/budgetcount32, scoregap severitythresholds30/15/5; innerprofile/budget12genericbusiness fields stillneedleafIDs/exactconsumerpairs (wholeownedprofiles and bounds known, notclosedbyselector)",
+    "AXEbusinessbuiltin20leaves nowmapped; currentcustomprofilefile262144byteguard/namedprofile32, incompleteRulesnonblocking policy, screenshotbase64/type/size receipt/output evidence rules needwhole-source dispositions",
+    "visual jsonfile1MiB, baseline64MiB intersectartifactbytes, PNGaxis16384/decoded4bytespixel, manifest128/profiles32/targets64, evidence count3N+1, profilepagecondition genericfileleaves stillneeded; no C0fakebrowserVersion\u2192rendererproof",
+    "Playwrightworkerheadroom4/defaultworkers4, derivedresultbytes2*artifact+log, finding2048/error4096 truncation, max-failures0 fullcoverage and projectConfig imported/spread retries/timeout/hook business/task boundaries needexactsource/futurecases; not blanketJSconfignonsettings",
+    "browser runtime perrun/percombination deadline resets/currentPromise.race vsactualcancel/close, allretainedinstance caps/backend/installedimage/ICU/role/grant/staging/frame dependencies remain whole-source review"
+  ],
+  "status": "manual exactper-candidate reasons only; reviewedopen records notclosed, no lexicalautoclosure/actualEFFECT/acceptance"
+}

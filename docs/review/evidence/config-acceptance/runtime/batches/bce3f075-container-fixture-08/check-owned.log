@@ -1,0 +1,55 @@
+{
+  "caseId": "RT-C0-BCE3F075-CONTAINERFIXTURE08-OWNED-DOMAIN",
+  "command": "node docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/check-owned.mjs",
+  "node": "v24.21.0",
+  "sourceDigests": {
+    "skills/common/plugin-runtime/foundation/registry/schema.ts": "eb665b9db83e0d0d1bd15fbe5c6f916f479bf8a9c049de6d90b2d6f9f59cc557"
+  },
+  "testDigests": {
+    "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/check-owned.mjs": "94f6e999fbd98093cd6057fc442c458e18473bff4e61d7dcba126a803c0a5c76"
+  },
+  "inputDigests": {
+    "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/owned-policy-controls.json": "60735dc179672825b30c1e25e3ad056790f3383a73b790c8f2f9acb50f25eea1",
+    "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/fixture-owned.schema.json": "e23032e0b7a7607360d3719120f600c776c52b39086a6cb3ff484aba045048a7"
+  },
+  "observations": [
+    {
+      "setting": "RT-eb41e2cf5ad440a2",
+      "completeA": "valid proposeddefinition",
+      "completeB": "valid proposeddefinition",
+      "allMissingNullUnknownTaskFieldReject": true,
+      "result": "passed"
+    },
+    {
+      "setting": "RT-1ee19ae5cf389f34",
+      "completeA": "valid proposeddefinition",
+      "completeB": "valid proposeddefinition",
+      "allMissingNullUnknownTaskFieldReject": true,
+      "result": "passed"
+    },
+    {
+      "setting": "RT-0d9d1844afc64a69",
+      "completeA": "valid proposeddefinition",
+      "completeB": "valid proposeddefinition",
+      "allMissingNullUnknownTaskFieldReject": true,
+      "result": "passed"
+    },
+    {
+      "setting": "RT-dc1999676fe1f2dc",
+      "completeA": "valid proposeddefinition",
+      "completeB": "valid proposeddefinition",
+      "allMissingNullUnknownTaskFieldReject": true,
+      "result": "passed"
+    },
+    {
+      "setting": "RT-b9c9d3bbf01598db",
+      "completeA": "valid proposeddefinition",
+      "completeB": "valid proposeddefinition",
+      "allMissingNullUnknownTaskFieldReject": true,
+      "result": "passed"
+    }
+  ],
+  "result": "passed",
+  "scope": "proposed requestedpolicy fullschema domains only; actualS/serviceallowedprefix/retention/maxexec/controller/RBAC/manifest/role/grant compatibility, productivebeforeeffectloader/physicalauthor notimplemented/unapproved; legalBprefixstage sourceC0 Rtestonlyreject separate control, not fullactualcompatibleBfixture",
+  "reviewerConfirmation": "pending"
+}
