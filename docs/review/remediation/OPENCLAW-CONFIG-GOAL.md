@@ -1,5 +1,11 @@
 # OpenClaw /goal: CONFIG inventory, definition and gated implementation
 
+Copyable start objective, current readiness, concrete next work, implementation
+transition and later-phase resume rules: [GOAL-START.md](GOAL-START.md).
+The whole CONFIG migration is the intended outcome; current C0 gaps are autonomous
+work, not inventory tasks delegated back to the user. Package authorization below
+remains explicit; bounded evidence fixes alone do not make implementation ready.
+
 ## Current C0 work checkpoint
 
 Active work branch: `codex/config-c0-semantic-inventory-20261012`, based on the
