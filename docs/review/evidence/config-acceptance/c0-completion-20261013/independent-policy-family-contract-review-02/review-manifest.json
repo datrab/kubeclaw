@@ -1,0 +1,21 @@
+{
+  "reviewedInputsPriorAndBundleChanged": [],
+  "reviewArtifacts": [
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-policy-family-contract-review-02/README.md",
+      "sha256": "31ce46e7dfbe1391b9240bd6596f66f67887b2865750788c57e755772d594322"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-policy-family-contract-review-02/git-status.txt",
+      "sha256": "1035360c77dd636fd400fc84e2d8f2265512b3915a35e5edb7d84f39d455b8fd"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-policy-family-contract-review-02/observations.json",
+      "sha256": "008cad3b00f31e37ca58c5bb43d90c836dc6a0a44f8d36163471da47de44942a"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-policy-family-contract-review-02/worktree.patch",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ]
+}

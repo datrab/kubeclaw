@@ -1,0 +1,108 @@
+diff --git a/docs/review/evidence/config-acceptance/c0-completion-20261013/WORK-STATE.json b/docs/review/evidence/config-acceptance/c0-completion-20261013/WORK-STATE.json
+index 75502f68f..a04effa5e 100644
+--- a/docs/review/evidence/config-acceptance/c0-completion-20261013/WORK-STATE.json
++++ b/docs/review/evidence/config-acceptance/c0-completion-20261013/WORK-STATE.json
+@@ -45,13 +45,12 @@
+     "implementationAuthorized": false
+   },
+   "lastPushedCheckpoint": {
+-    "checkpoint": 17,
+-    "commit": "2db2156a2ad8c64fad0a812b9c90bee040d41423",
++    "checkpoint": 18,
++    "commit": "06bb0b0b8f9253029c260cd3cb59458cd0c02fff",
+     "pr": "https://github.com/datrab/kubeclaw/pull/18",
+     "pushed": true,
+     "remoteHeadVerified": true,
+-    "productionOrExistingTestsChanged": false,
+-    "autoreview": "Codex CLI unavailable; no clean claim"
++    "productionOrExistingTestsChanged": false
+   },
+   "checkpoint9Prepared": {
+     "baseCommit": "263277b0014de5f056c019307c40dc83f0201ef5",
+@@ -78,18 +77,18 @@
+   "sourceSupplementIndex": "docs/review/remediation/config-source-supplement-current.md",
+   "activeNativeWork": [
+     {
+-      "task": "/root/source_concordance_layout_recheck",
+-      "scope": "delivery03 R02residual exacthandoff/fence correction",
++      "task": "/root/delivery_module_contract_review",
++      "scope": "delivery03 materialrecheck; emerging nonreentrant finalreceiver guard ownership defect",
+       "status": "running"
+     },
+     {
+-      "task": "/root/case_fixture_definition_review",
+-      "scope": "fresh04/localfixture/entrytuple03 substantive review",
++      "task": "/root/c0_canonical_source_join_review",
++      "scope": "policy02 four recipecorrections",
+       "status": "running"
+     },
+     {
+-      "task": "/root/policy_family_contract_review",
+-      "scope": "fresh fourpolicy/10fixture/26control substantive review",
++      "task": "/root/whole_c0_readiness_review",
++      "scope": "fresh wholefield/case/sourceuniverse readiness and finite remaining noncovereddefinition work",
+       "status": "running"
+     }
+   ],
+@@ -133,11 +132,11 @@
+     "G1": "586 current-source associations to308 original fields integrated; original roots conserved; bounded source reviews not global acceptance",
+     "G2": "one physical original-aligned component layout independently bounded verified",
+     "G3": "proposed entry/profile wire/domain/lifecycle independently bounded verified; implementation delivery/caller ABI still open",
+-    "G4": "four concrete sameownerpolicycontracts10fullChartfixtures26controls authored; freshreviewrunning with emergingP1timing/probetunability and P4actualcaller findings",
+-    "G5": "58familycontracts+guard-only04correction/localparser/archive/result/groupfixtures authored; actualfuture201NOTRUN preserved; fresh substantive reviewrunning",
+-    "G6": "delivery02 recheck NOTACCEPTED residualR02-01tupletranslation,parent03provided; R02-02fd9lifetimegap delivery03beingauthored",
+-    "G7": "delivery02 recheck NOTACCEPTED R02-03 downstreamrunepoch handoff, delivery03beingauthored",
+-    "G8": "wholeC0review remainsnotrun/notaccepted"
++    "G4": "policy01 freshreview NOTACCEPTED PFCR01..04 timing/probe/callsite/finitebudgetcontrolrecipe; policy02 beingauthored",
++    "G5": "Explicit reportbehavior two-group mapping independentlysupported underGOAL; scalarrequirements/notrun preserved, exactAS4\u21923GiB/heap358\u2192268MiB futureobservers integrated. OtherwholeG5 localcausal/deliverycases stillopen.",
++    "G6": "delivery03 authored activecontract overlay+pairtranslation03+fd9parentchild lifetime/quiescence ABI, materialrecheckrunning",
++    "G7": "delivery03 authored typed internal runauthority handoff to actual durable/confidential receivers and originalfence/reconciliation boundaries; materialrecheckrunning",
++    "G8": "Fresh independent whole-C0readiness review running against actual2409field6845case50requirements/sourceuniverse; knownpolicy/deliverymaterialblocks remainopen, no globalacceptance."
+   },
+   "checkpoint17Prepared": {
+     "pushed": true,
+@@ -150,7 +149,7 @@
+     "globalC0Accepted": false
+   },
+   "checkpoint18Prepared": {
+-    "pushed": false,
++    "pushed": true,
+     "scope": "Frozen proposals/actualboundeddefinition observations and originalrejections; ongoingreviews/corrections remainopen",
+     "largeFixtureStorage": "checkpoint18-fixture-storage.json",
+     "implementationAuthorization": null,
+diff --git a/docs/review/evidence/config-acceptance/c0-completion-20261013/c1-package-draft/scope.json b/docs/review/evidence/config-acceptance/c0-completion-20261013/c1-package-draft/scope.json
+index 189dcef1b..d9eea0ce8 100644
+--- a/docs/review/evidence/config-acceptance/c0-completion-20261013/c1-package-draft/scope.json
++++ b/docs/review/evidence/config-acceptance/c0-completion-20261013/c1-package-draft/scope.json
+@@ -1135,7 +1135,29 @@
+       "sha256": "f0ed2e7dd5bf8d22fe24af6b1a60ed090c22e4213b26f3150a3243fd6c1f7e25"
+     },
+     "meaning": "148 complete typed A/B translations; C0 schema/current-wire loader checks only, no future case result or v3/native acceptance",
+-    "remaining": "Two guard-only report native-effect classification obligations plus finite family fixture/domain/delivery/module contracts still open",
+-    "globalC0Accepted": false
++    "remaining": "Exact remaining caller/delivery/policy corrections and complete causal fixture/native/delivery contracts remain open; proposed report behavior grouping is under recheck, not per-scalar native evidence.",
++    "globalC0Accepted": false,
++    "entrySelectionBindingSupersession": {
++      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/pair-entry-selection-translation-03/entry-selections.json",
++      "sha256": "1ebac33ae079ef85c52ef58b5002bb9a1712facc6848e1ece46cf1010c5ddafe",
++      "meaning": "Only proposed local caller binding tuples/projections supersede complete-pairs02 entry fixtures;296 whole-setting maps unchanged. No authentic bootreceipt provided."
++    },
++    "independentFixtureDefinitionReview": {
++      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-case-fixture-definition-review-01/README.md",
++      "sha256": "bfd13f801a72aaed294439d3373ff665a4ebaab9d0018a368b6552b47b749cbd"
++    },
++    "reportBehaviorGroupingProposal": {
++      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/report-resource-grouping-decision-01/decision.json",
++      "sha256": "fae4aa15f8f5e5a6611449725b2d12b758c7be4201e7c831bc3993ff5d4a8d5c",
++      "status": "independently supported normative future behavior grouping; all original requirements/results unchanged, native observations not-run"
++    },
++    "reportBehaviorGroupingReview": {
++      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-case-fixture-definition-review-01/grouping-addendum-02/README.md",
++      "sha256": "1b3f1bd4e7fd5d3ff23c44cb3788c54a235bc67e3cfe6898a6557c656fc3d637"
++    },
++    "reportObserverPrecision": {
++      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/report-resource-grouping-decision-01/observer-precision.json",
++      "sha256": "ec0939086a59ffb299a8991268b64d570a2919cefed7b3e6c5310d93bae5683e"
++    }
+   }
+ }

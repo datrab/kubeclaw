@@ -1,0 +1,51 @@
+{
+  "status": "proposed active-reference overlay; original root contract/scope/pairs/history unchanged; independent review pending",
+  "baseEntryContract": {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c1-package-draft/entry-profile-contract.json",
+    "sha256": "324898891188e6ac833b76e1924ba663f67be0f47cf7c9a6d63b2ce9254fd8b4"
+  },
+  "baseScope": {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c1-package-draft/scope.json",
+    "sha256": "86edcbc5500f69d603765fa1dd6682534cd41692c3ab446906cae675ab21159c"
+  },
+  "bindingInstanceInterpretation": "Exact explicitly supplied consuming-service composition identity for each owner contribution, not separately installed configuration owner. No discovered/default identities.",
+  "entryContractClausesRefined": [
+    "instanceIdDomain",
+    "selectionRule",
+    "publication"
+  ],
+  "activeSelectionDefinition": {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery-module-contracts-02/README.md",
+    "sha256": "5f48d2873e83b35d0473dddeb9f591818672562b98bfa9166cce58a0a75f0421"
+  },
+  "scopeReferenceResolution": {
+    "pointer": "/currentCaseDefinitionEvidence/entrySelections",
+    "historicalRefPreserved": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c1-complete-profile-pairs-02/entry-selections.json",
+      "sha256": "38d6f712642a4107449d1100f5259282c819b535aade0f401748eb5b3c720e79"
+    },
+    "effectiveRef": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/pair-entry-selection-translation-03/entry-selections.json",
+      "sha256": "1ebac33ae079ef85c52ef58b5002bb9a1712facc6848e1ece46cf1010c5ddafe"
+    },
+    "supersessionMeaning": "Only prospective owner-centric fixture tuple/projection interpretation superseded. Full profile files/settings/old observations unchanged; no current result promotion."
+  },
+  "completeProfilePairs": {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c1-complete-profile-pairs-02/pairs.json",
+    "sha256": "55fac37975c7666be266c861be4e4509ab96d65258b196370abaa3bbbea99948"
+  },
+  "activeCallerRoster": {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/pair-entry-selection-translation-03/caller-roster.json",
+    "sha256": "e9b53618d933cc446fa487d153000f3ff26b2b77e523c5e7bf0c16883c992592"
+  },
+  "activeRootTemplate": {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/pair-entry-selection-translation-03/pipeline.config.json",
+    "sha256": "3f954947196dc14eec00d5d96a1118b53a6ded731164b25c9aa82213c9918cbc"
+  },
+  "expectedBootReceipts": {
+    "status": "missing authentic package/image/release/installation receipts",
+    "fixtureProjectionNotBootReceipt": true,
+    "fabricatedInstalledRoster": false
+  },
+  "implementationAuthorization": null
+}

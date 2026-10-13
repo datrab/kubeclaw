@@ -1,0 +1,18 @@
+{
+  "time": "2026-10-13T22:36:55.155557+00:00",
+  "head": "06bb0b0b8f9253029c260cd3cb59458cd0c02fff",
+  "changedCapturedInputs": [
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/WORK-STATE.json",
+      "frozenSha256": "05b6ecec28e7c927b5ae61ebea637b0b68dc049088408b0c1d48fab556ed8bed",
+      "currentSha256": "c0c07163d7d2e226e0b2d2b161779c51571e2cd0652f0468e65069fccba48568"
+    }
+  ],
+  "snapshotRoundtripErrors": [],
+  "qualification": "Only frozen captured bytes reviewed; later new files/material corrections require fresh affected-scope review. No global semantic acceptance.",
+  "additionalGroupingRead": {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-case-fixture-definition-review-01/grouping-addendum-02/README.md",
+    "sha256": "1b3f1bd4e7fd5d3ff23c44cb3788c54a235bc67e3cfe6898a6557c656fc3d637",
+    "snapshotRoundtripVerified": true
+  }
+}

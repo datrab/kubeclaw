@@ -1,0 +1,1261 @@
+{
+  "head": "06bb0b0b8f9253029c260cd3cb59458cd0c02fff",
+  "reviewer": "/root/policy_family_contract_review",
+  "counts": {
+    "families": 4,
+    "fixtures": 17,
+    "controls": 31,
+    "inputs": 34,
+    "pins": 102
+  },
+  "inputs": [
+    {
+      "path": "charts/kubeclaw/templates/_worker-trust-readiness.tpl",
+      "sha256": "f2a66ef5c8228675daa1ad16d29ffd71e298d9c65fefde19aa6588e457e4b67c",
+      "actualSha256": "f2a66ef5c8228675daa1ad16d29ffd71e298d9c65fefde19aa6588e457e4b67c",
+      "matches": true
+    },
+    {
+      "path": "charts/kubeclaw/templates/configmap-worker-trust.yaml",
+      "sha256": "23ccc1eca6b30efcc57f32e0689a06a5be1ad4fbee967b3632750a95e5d6e7be",
+      "actualSha256": "23ccc1eca6b30efcc57f32e0689a06a5be1ad4fbee967b3632750a95e5d6e7be",
+      "matches": true
+    },
+    {
+      "path": "charts/kubeclaw/templates/deployment.yaml",
+      "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041",
+      "actualSha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041",
+      "matches": true
+    },
+    {
+      "path": "charts/kubeclaw/values.yaml",
+      "sha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1",
+      "actualSha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1",
+      "matches": true
+    },
+    {
+      "path": "charts/ops-pod/templates/workload.yaml",
+      "sha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58",
+      "actualSha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58",
+      "matches": true
+    },
+    {
+      "path": "charts/ops-pod/values.yaml",
+      "sha256": "9f1d58dfe213f13169fdd9f983878b688d5f42fcf9f5283e31eed329e82b8c79",
+      "actualSha256": "9f1d58dfe213f13169fdd9f983878b688d5f42fcf9f5283e31eed329e82b8c79",
+      "matches": true
+    },
+    {
+      "path": "charts/prism/templates/_worker-trust-readiness.tpl",
+      "sha256": "9240a98b2ae24fa5002147972c6aa4eb8c11b89fab7f4ac392b692e4705fccd7",
+      "actualSha256": "9240a98b2ae24fa5002147972c6aa4eb8c11b89fab7f4ac392b692e4705fccd7",
+      "matches": true
+    },
+    {
+      "path": "charts/prism/templates/configmap-worker-trust.yaml",
+      "sha256": "7f84362f9d9c0d5fa08962e33e0c231621c4600ce52b9a6aa822334f81f3a1fc",
+      "actualSha256": "7f84362f9d9c0d5fa08962e33e0c231621c4600ce52b9a6aa822334f81f3a1fc",
+      "matches": true
+    },
+    {
+      "path": "charts/prism/templates/workloads.yaml",
+      "sha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20",
+      "actualSha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20",
+      "matches": true
+    },
+    {
+      "path": "charts/prism/values.yaml",
+      "sha256": "8b13da5c725b9eff02d1e12dae6f799ca74a6b01a83cb714a2777a915e98cee8",
+      "actualSha256": "8b13da5c725b9eff02d1e12dae6f799ca74a6b01a83cb714a2777a915e98cee8",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-canonical-source-join/boundary-dispositions-02/boundary-dispositions.json",
+      "sha256": "8ef92a93aec328559446f160d148b64904aea533114c431708d120348a345f12",
+      "actualSha256": "8ef92a93aec328559446f160d148b64904aea533114c431708d120348a345f12",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/profiles/kubeclaw-A.json",
+      "sha256": "f99fa2ab20b4e92683f4e4b486156b3b7f6a6bb548e4682596b9c47f9165116a",
+      "actualSha256": "f99fa2ab20b4e92683f4e4b486156b3b7f6a6bb548e4682596b9c47f9165116a",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/profiles/kubeclaw-buster-A.json",
+      "sha256": "d2f3b268804059c4031df798b28cde913b30680825112165774471e52cb7857a",
+      "actualSha256": "d2f3b268804059c4031df798b28cde913b30680825112165774471e52cb7857a",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/profiles/prism-A.json",
+      "sha256": "8c811a238f6d6bde7de5d9416aac902eb2c08e56b1fa3c90fe8fba206d350f86",
+      "actualSha256": "8c811a238f6d6bde7de5d9416aac902eb2c08e56b1fa3c90fe8fba206d350f86",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/chart-secret-target-profiles-20261013/DLV-CHART-OPS-POD-BEARERSECRET.A.json",
+      "sha256": "d32e059fe790d1be85f368e97219823e95765f94252c0cec81d41e6c54416689",
+      "actualSha256": "d32e059fe790d1be85f368e97219823e95765f94252c0cec81d41e6c54416689",
+      "matches": true
+    },
+    {
+      "path": "docs/review/remediation/config-acceptance-matrix.json",
+      "sha256": "1867bdae578f47d19e558db024203f3bf0b39210081df40f19d68c2a98288992",
+      "actualSha256": "1867bdae578f47d19e558db024203f3bf0b39210081df40f19d68c2a98288992",
+      "matches": true
+    },
+    {
+      "path": "docs/review/remediation/config-semantic-inventory.json",
+      "sha256": "9d5e7372f87f6b4e79809cbcd29f239f34cdea3e8020b3c6dda19b17044dae7a",
+      "actualSha256": "9d5e7372f87f6b4e79809cbcd29f239f34cdea3e8020b3c6dda19b17044dae7a",
+      "matches": true
+    },
+    {
+      "path": "my-values/prism-agent-values.yaml",
+      "sha256": "5ff81cee48e035c74e67694c57dea8a2ee66ce5ca5015c6b15cd6ae352c2936a",
+      "actualSha256": "5ff81cee48e035c74e67694c57dea8a2ee66ce5ca5015c6b15cd6ae352c2936a",
+      "matches": true
+    },
+    {
+      "path": "ops/pod/bootstrap.py",
+      "sha256": "f12b2fdf8b87c5a0ee1f6a643acfd6110a12698dfb908ea713a79f71f2bd990e",
+      "actualSha256": "f12b2fdf8b87c5a0ee1f6a643acfd6110a12698dfb908ea713a79f71f2bd990e",
+      "matches": true
+    },
+    {
+      "path": "ops/pod/supervisor.py",
+      "sha256": "e8000383c5736777562bf805cfd9d3b4e1dce4f0e720be264231b0ab91e3cf99",
+      "actualSha256": "e8000383c5736777562bf805cfd9d3b4e1dce4f0e720be264231b0ab91e3cf99",
+      "matches": true
+    },
+    {
+      "path": "releases/values/prism-agent.yaml",
+      "sha256": "b02bfe6b0d132edbfd8487b466da487680186cf139b721936bcc0adb4f1485a0",
+      "actualSha256": "b02bfe6b0d132edbfd8487b466da487680186cf139b721936bcc0adb4f1485a0",
+      "matches": true
+    },
+    {
+      "path": "tools/ops-mcp/src/authentication.mjs",
+      "sha256": "d816c6dd9354166a009ffdfc5db423f030345b94a16c4009e2aec639d57d0049",
+      "actualSha256": "d816c6dd9354166a009ffdfc5db423f030345b94a16c4009e2aec639d57d0049",
+      "matches": true
+    },
+    {
+      "path": "tools/ops-mcp/src/config.mjs",
+      "sha256": "3bb1b2b4caf43be233ad6fafaccf644702507442b93de1139e1be8babd9f529c",
+      "actualSha256": "3bb1b2b4caf43be233ad6fafaccf644702507442b93de1139e1be8babd9f529c",
+      "matches": true
+    },
+    {
+      "path": "tools/ops-mcp/src/hubble.mjs",
+      "sha256": "d4e60f2801e3c66ded259f420c1a9faca0071fa084dc198a35433f8c9cb4f599",
+      "actualSha256": "d4e60f2801e3c66ded259f420c1a9faca0071fa084dc198a35433f8c9cb4f599",
+      "matches": true
+    },
+    {
+      "path": "tools/ops-mcp/src/kubernetes.mjs",
+      "sha256": "449e55709e017f53790539a83936f0471915850180ec9b08fc589251ab5e987b",
+      "actualSha256": "449e55709e017f53790539a83936f0471915850180ec9b08fc589251ab5e987b",
+      "matches": true
+    },
+    {
+      "path": "tools/ops-mcp/src/server.mjs",
+      "sha256": "a4fef1a5e66a45ea2885cc9a1715aba5835d77cb5219e39ac35a5f50b5bab65d",
+      "actualSha256": "a4fef1a5e66a45ea2885cc9a1715aba5835d77cb5219e39ac35a5f50b5bab65d",
+      "matches": true
+    },
+    {
+      "path": "tests/verification/deployment/worker-trust-readiness.test.mjs",
+      "sha256": "816aaa185e47add870731b5dcded1e6f13352d7e1f2c767dd99b9f939f6afb25",
+      "actualSha256": "816aaa185e47add870731b5dcded1e6f13352d7e1f2c767dd99b9f939f6afb25",
+      "matches": true
+    },
+    {
+      "path": "tests/verification/deployment/check-worker-trust-envoy-native.mjs",
+      "sha256": "8288e489e4e5d8e656ff5469daabb0a3b1373bc024138d3f4e5bcd8a1b6c6fbb",
+      "actualSha256": "8288e489e4e5d8e656ff5469daabb0a3b1373bc024138d3f4e5bcd8a1b6c6fbb",
+      "matches": true
+    },
+    {
+      "path": "tools/ops-mcp/test/authentication.test.mjs",
+      "sha256": "db57428e5650e4c7b2a95c4317a2534297629397a02852d121482f7cf96f2a6c",
+      "actualSha256": "db57428e5650e4c7b2a95c4317a2534297629397a02852d121482f7cf96f2a6c",
+      "matches": true
+    },
+    {
+      "path": "tools/ops-mcp/test/bootstrap.test.mjs",
+      "sha256": "02bef640d4bc3353200fceff556505298dda0a523a2485ca0e0f272e51d3119a",
+      "actualSha256": "02bef640d4bc3353200fceff556505298dda0a523a2485ca0e0f272e51d3119a",
+      "matches": true
+    },
+    {
+      "path": "tools/ops-mcp/test/http.test.mjs",
+      "sha256": "243134916fb002781c7736565f6efc8786cae7c73fbbee5d5cdd5b9fd9725ec9",
+      "actualSha256": "243134916fb002781c7736565f6efc8786cae7c73fbbee5d5cdd5b9fd9725ec9",
+      "matches": true
+    },
+    {
+      "path": "tools/ops-mcp/test/hubble.test.mjs",
+      "sha256": "881a3a38a30c0cdab1a4b1e723fc01fca87ddb5a072bedaf606f489fb62f322e",
+      "actualSha256": "881a3a38a30c0cdab1a4b1e723fc01fca87ddb5a072bedaf606f489fb62f322e",
+      "matches": true
+    },
+    {
+      "path": "tools/ops-mcp/test/kubernetes.test.mjs",
+      "sha256": "8e33058e60ae3646ac61133ed77573912271418f9996c73deba9f8b8f1ec997b",
+      "actualSha256": "8e33058e60ae3646ac61133ed77573912271418f9996c73deba9f8b8f1ec997b",
+      "matches": true
+    },
+    {
+      "path": "releases/values/ops.yaml",
+      "sha256": "3b3aed1c7bfecd96dbc107bd373815adf72e962012f837497c25d259276f2964",
+      "actualSha256": "3b3aed1c7bfecd96dbc107bd373815adf72e962012f837497c25d259276f2964",
+      "matches": true
+    }
+  ],
+  "pins": [
+    {
+      "ref": "charts/kubeclaw/templates/_worker-trust-readiness.tpl:11",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "charts/kubeclaw/templates/_worker-trust-readiness.tpl:12",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "charts/kubeclaw/templates/_worker-trust-readiness.tpl:16",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "charts/kubeclaw/templates/_worker-trust-readiness.tpl:26",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "charts/prism/templates/_worker-trust-readiness.tpl:11",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "charts/prism/templates/_worker-trust-readiness.tpl:12",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "charts/prism/templates/_worker-trust-readiness.tpl:16",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "charts/prism/templates/_worker-trust-readiness.tpl:26",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "charts/kubeclaw/templates/configmap-worker-trust.yaml:22",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "charts/prism/templates/configmap-worker-trust.yaml:14",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "charts/prism/templates/configmap-worker-trust.yaml:140",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "charts/kubeclaw/templates/deployment.yaml:1554",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "charts/kubeclaw/templates/deployment.yaml:1558",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "charts/kubeclaw/templates/deployment.yaml:1562",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "charts/prism/templates/workloads.yaml:174",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "charts/prism/templates/workloads.yaml:178",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "charts/prism/templates/workloads.yaml:182",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "ops/pod/bootstrap.py:57",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "ops/pod/bootstrap.py:58",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "ops/pod/supervisor.py:79",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "ops/pod/supervisor.py:80",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "ops/pod/supervisor.py:85",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "ops/pod/supervisor.py:86",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "tools/ops-mcp/src/authentication.mjs:5",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "tools/ops-mcp/src/authentication.mjs:6",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "tools/ops-mcp/src/authentication.mjs:12",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "tools/ops-mcp/src/authentication.mjs:16",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "tools/ops-mcp/src/authentication.mjs:17",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "tools/ops-mcp/src/authentication.mjs:18",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "tools/ops-mcp/src/authentication.mjs:23",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "charts/ops-pod/templates/workload.yaml:73",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "charts/ops-pod/templates/workload.yaml:93",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "charts/ops-pod/templates/workload.yaml:101",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "charts/ops-pod/templates/workload.yaml:143",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "charts/ops-pod/templates/workload.yaml:145",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "tools/ops-mcp/src/hubble.mjs:10",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "tools/ops-mcp/src/hubble.mjs:11",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "tools/ops-mcp/src/hubble.mjs:26",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "tools/ops-mcp/src/hubble.mjs:27",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "tools/ops-mcp/src/hubble.mjs:28",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "tools/ops-mcp/src/hubble.mjs:30",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "tools/ops-mcp/src/hubble.mjs:31",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "tools/ops-mcp/src/hubble.mjs:32",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "tools/ops-mcp/src/hubble.mjs:33",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "tools/ops-mcp/src/hubble.mjs:34",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "tools/ops-mcp/src/hubble.mjs:35",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "tools/ops-mcp/src/hubble.mjs:41",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "tools/ops-mcp/src/hubble.mjs:108",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "tools/ops-mcp/src/hubble.mjs:110",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "tools/ops-mcp/src/hubble.mjs:111",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "tools/ops-mcp/src/hubble.mjs:112",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "tools/ops-mcp/src/server.mjs:477",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "tools/ops-mcp/src/kubernetes.mjs:9",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "tools/ops-mcp/src/kubernetes.mjs:12",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "tools/ops-mcp/src/kubernetes.mjs:13",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "tools/ops-mcp/src/kubernetes.mjs:22",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "tools/ops-mcp/src/kubernetes.mjs:24",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "tools/ops-mcp/src/kubernetes.mjs:48",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "tools/ops-mcp/src/kubernetes.mjs:55",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "tools/ops-mcp/src/kubernetes.mjs:66",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "tools/ops-mcp/src/kubernetes.mjs:67",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "tools/ops-mcp/src/kubernetes.mjs:69",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "tools/ops-mcp/src/kubernetes.mjs:86",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "tools/ops-mcp/src/kubernetes.mjs:87",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "tools/ops-mcp/src/kubernetes.mjs:91",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "tools/ops-mcp/src/kubernetes.mjs:93",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "tools/ops-mcp/src/kubernetes.mjs:96",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "tools/ops-mcp/src/server.mjs:19",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "tools/ops-mcp/src/server.mjs:119",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "tools/ops-mcp/src/server.mjs:127",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "tools/ops-mcp/src/server.mjs:129",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "tools/ops-mcp/src/server.mjs:212",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "tools/ops-mcp/src/server.mjs:231",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "tools/ops-mcp/src/server.mjs:244",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "tools/ops-mcp/src/server.mjs:258",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "tools/ops-mcp/src/server.mjs:301",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "tools/ops-mcp/src/server.mjs:302",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "tools/ops-mcp/src/server.mjs:303",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "tools/ops-mcp/src/server.mjs:304",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "tools/ops-mcp/src/server.mjs:313",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "tools/ops-mcp/src/server.mjs:321",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "charts/kubeclaw/templates/_worker-trust-readiness.tpl:75",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "charts/kubeclaw/templates/_worker-trust-readiness.tpl:76",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "charts/kubeclaw/templates/_worker-trust-readiness.tpl:79",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "charts/kubeclaw/templates/_worker-trust-readiness.tpl:84",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "charts/prism/templates/_worker-trust-readiness.tpl:75",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "charts/prism/templates/_worker-trust-readiness.tpl:76",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "charts/prism/templates/_worker-trust-readiness.tpl:79",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "charts/prism/templates/_worker-trust-readiness.tpl:84",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "tools/ops-mcp/src/server.mjs:205",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "tools/ops-mcp/src/server.mjs:219",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "tools/ops-mcp/src/server.mjs:107",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "tools/ops-mcp/src/server.mjs:117",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "tools/ops-mcp/src/server.mjs:396",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "tools/ops-mcp/src/server.mjs:397",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "tools/ops-mcp/src/kubernetes.mjs:20",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "tools/ops-mcp/src/kubernetes.mjs:21",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "tools/ops-mcp/src/kubernetes.mjs:23",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "tools/ops-mcp/src/kubernetes.mjs:26",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "tools/ops-mcp/src/kubernetes.mjs:27",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "tools/ops-mcp/src/kubernetes.mjs:34",
+      "matchesFile": true,
+      "matchesLine": true
+    },
+    {
+      "ref": "tools/ops-mcp/src/kubernetes.mjs:94",
+      "matchesFile": true,
+      "matchesLine": true
+    }
+  ],
+  "preservedPriorArtifacts": [
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-policy-family-contract-review-01/README.md",
+      "sha256": "40fbcb7f5c82978063b6f5c618586fcb38b7b4b8ea648dcc73242d27bb85579c",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-policy-family-contract-review-01/git-status.txt",
+      "sha256": "2bc724a3703ec74152e23c402498352ed826bbe7a24a7dfe1c0af6bc6efb3f25",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-policy-family-contract-review-01/observations.json",
+      "sha256": "6c61a9db510233341d96bbf88eb810784328cbca26f32b4b3b936f21db0013a7",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-policy-family-contract-review-01/review-manifest.json",
+      "sha256": "c3fdd26621771a5cd1086d8447bd6c61aca403e6d895742d22a5ba90afb5bc34",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-policy-family-contract-review-01/worktree.patch",
+      "sha256": "4a2f692394b5cfdd1e843bef21bd2857494b27ae288ec7636b7a8e55b4d0068f",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-01/README.md",
+      "sha256": "37ec773fc3b536ff93f96f98ee5e2d97d26535c8012f978584bcc8e423e201ea",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-01/artifact-manifest.json",
+      "sha256": "416c152e7f97a37700fc7128f85cb2bba7b6a0dfa6427c8334c74ea9e91100ff",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-01/author-consistency.json",
+      "sha256": "4066090685e377815a640141781a3922ed57509f42bae2641838b6d6520a330e",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-01/case-specifications.json",
+      "sha256": "26b2257330bb58c20a7291f40482c576381dbaf23ac3b8f471cf22f8125948d3",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-01/contracts.json",
+      "sha256": "324c833354d44604f5d37c8f170f96cfbac012b1e1a6bd5023262bda1ad87c78",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-01/fixtures/kubeclaw-buster-A-values.json",
+      "sha256": "9b0540df5e4c88df4a6942322e445fa2ab97ced874760440222649f7dd80f655",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-01/fixtures/kubeclaw-buster-B-values.json",
+      "sha256": "bfa230985c9aa84f3ee7b82ebcfcaeebca09118d609831aea3a353df72985c2f",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-01/fixtures/kubeclaw-nova-A-values.json",
+      "sha256": "67b4edc9b263c96bb6079370d9eb5dd9980b9e47fef207fa042b2223ed2e08a2",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-01/fixtures/kubeclaw-nova-B-values.json",
+      "sha256": "3eebc221a5e6e0b7f586ffca45bdbd36a49dda3d5a7dcd59520c01c6a2ca3b23",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-01/fixtures/kubeclaw-prism-agent-A-values.json",
+      "sha256": "1c42465b5a4a70df00fc083dc1b9a5e059e89f2741070b34cc1e6dc9742ede3e",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-01/fixtures/kubeclaw-prism-agent-B-values.json",
+      "sha256": "a09b23385ea082cf686c8f3955759331e8b9a1a31bd5c120566622a3ab71cd5d",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-01/fixtures/ops-A-values.json",
+      "sha256": "e3679d55a72a4ba28667514bd986da3cabbbdf2eb371638cac60cc04500e4e56",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-01/fixtures/ops-B-values.json",
+      "sha256": "cbecf3f0224ddb6195bacf2e298592c1764dae834a243f1fa2b0ea5400aecb1a",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-01/fixtures/prism-A-values.json",
+      "sha256": "5f80f5821dc3ccc0208b5721d1cf2e971ffeeb145b0b8bd30f4b16187616fb99",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-01/fixtures/prism-B-values.json",
+      "sha256": "7a34ff75257a4ac5d0a646b0ff89eaa16b4744f597f5d95580ca5c6a4f0432f6",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-01/policy-block-domains.json",
+      "sha256": "eaeed2bc89b9c783f1989ad9afbc7edf578f758c8106bc2a92e05c3291dbe4c0",
+      "matches": true
+    }
+  ],
+  "domainsIdentical": true,
+  "P2P3BodiesIdentical": [
+    true,
+    true
+  ],
+  "fixtures": [
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-02/fixtures/kubeclaw-nova-A-values.json",
+      "sha256": "67b4edc9b263c96bb6079370d9eb5dd9980b9e47fef207fa042b2223ed2e08a2",
+      "matches": true,
+      "keys": 43
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-02/fixtures/kubeclaw-nova-B-values.json",
+      "sha256": "35d53213ef2cf77b1a001a05915de77590666ea2e7162b084155adea1629b7bd",
+      "matches": true,
+      "keys": 43
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-02/fixtures/kubeclaw-buster-A-values.json",
+      "sha256": "9b0540df5e4c88df4a6942322e445fa2ab97ced874760440222649f7dd80f655",
+      "matches": true,
+      "keys": 43
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-02/fixtures/kubeclaw-buster-B-values.json",
+      "sha256": "d201a8d30c239b4b5277fbf222477c514292579dcf09b14a136e537de384a83d",
+      "matches": true,
+      "keys": 43
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-02/fixtures/prism-A-values.json",
+      "sha256": "5f80f5821dc3ccc0208b5721d1cf2e971ffeeb145b0b8bd30f4b16187616fb99",
+      "matches": true,
+      "keys": 13
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-02/fixtures/prism-B-values.json",
+      "sha256": "118f8b96c252b2d9395224eb0be56aa28abe078e94c78d108f944056d9122705",
+      "matches": true,
+      "keys": 13
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-02/fixtures/ops-A-values.json",
+      "sha256": "e3679d55a72a4ba28667514bd986da3cabbbdf2eb371638cac60cc04500e4e56",
+      "matches": true,
+      "keys": 14
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-02/fixtures/ops-B-values.json",
+      "sha256": "cbecf3f0224ddb6195bacf2e298592c1764dae834a243f1fa2b0ea5400aecb1a",
+      "matches": true,
+      "keys": 14
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-02/fixtures/kubeclaw-prism-agent-A-values.json",
+      "sha256": "1c42465b5a4a70df00fc083dc1b9a5e059e89f2741070b34cc1e6dc9742ede3e",
+      "matches": true,
+      "keys": 43
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-02/fixtures/kubeclaw-prism-agent-B-values.json",
+      "sha256": "3b43f7b874894cfd903127616b1d4f35c49280d73240846b36baa44beead447d",
+      "matches": true,
+      "keys": 43
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-02/fixtures/ops-single-page-A-values.json",
+      "sha256": "5c5cdad3ba695db2fa2613acfa2d183c2b5324ed002a45d7243998f1d90cd452",
+      "matches": true,
+      "keys": 14,
+      "actualChangedPointers": [
+        "/mcp/server/localOnly",
+        "/mcp/server/host",
+        "/rbac/namespaces",
+        "/defaultNamespace"
+      ],
+      "changesDeclared": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-02/fixtures/ops-single-page-B-values.json",
+      "sha256": "22eaa6f68745551ec9b11d83ee4b4960c9e2223146327b7f60bf30deeaebde6e",
+      "matches": true,
+      "keys": 14,
+      "actualChangedPointers": [
+        "/mcp/server/localOnly",
+        "/mcp/server/host",
+        "/mcp/kubernetes/pagination/singlePageSize",
+        "/rbac/namespaces",
+        "/defaultNamespace"
+      ],
+      "changesDeclared": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-02/fixtures/ops-finite-call-A-values.json",
+      "sha256": "a90244c5059c500ea20831beadceb9aab3cc0a2f66d52799af696d3ecb2b87a9",
+      "matches": true,
+      "keys": 14,
+      "actualChangedPointers": [
+        "/mcp/server/localOnly",
+        "/mcp/server/host",
+        "/mcp/kubernetes/maxBytes",
+        "/mcp/kubernetes/pagination/singlePageSize",
+        "/rbac/namespaces",
+        "/defaultNamespace"
+      ],
+      "changesDeclared": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-02/fixtures/ops-finite-call-B-values.json",
+      "sha256": "9365964b473a500653b1d238d636b6dc891a842213e66a04d1885245405cf2d6",
+      "matches": true,
+      "keys": 14,
+      "actualChangedPointers": [
+        "/mcp/server/localOnly",
+        "/mcp/server/host",
+        "/mcp/kubernetes/maxBytes",
+        "/mcp/kubernetes/pagination/singlePageSize",
+        "/mcp/kubernetes/pagination/finiteCallDeadlineMs",
+        "/rbac/namespaces",
+        "/defaultNamespace"
+      ],
+      "changesDeclared": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-02/fixtures/ops-fifo-values.json",
+      "sha256": "276653b9ad87c84b00360959ef594d2ec8cfbfaa69b2df5e82313812753c61a1",
+      "matches": true,
+      "keys": 14,
+      "actualChangedPointers": [
+        "/mcp/kubernetes/pagination/defaultPageSize",
+        "/mcp/kubernetes/pagination/aggregateScan/mode",
+        "/mcp/kubernetes/pagination/aggregateScan/deadlineMs",
+        "/mcp/kubernetes/pagination/aggregateScan/maximumAttempts",
+        "/mcp/kubernetes/pagination/aggregateScan/maximumPages"
+      ],
+      "changesDeclared": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-02/fixtures/ops-attempt-cap-values.json",
+      "sha256": "d1a4fcd8f8413972304ef3121820d32a3edd1e1aaa042748822d04ae8d60078b",
+      "matches": true,
+      "keys": 14,
+      "actualChangedPointers": [
+        "/mcp/kubernetes/maxBytes",
+        "/mcp/kubernetes/pagination/eventPageSize",
+        "/mcp/kubernetes/pagination/defaultPageSize",
+        "/mcp/kubernetes/pagination/aggregateScan/mode",
+        "/mcp/kubernetes/pagination/aggregateScan/deadlineMs",
+        "/mcp/kubernetes/pagination/aggregateScan/maximumAttempts",
+        "/mcp/kubernetes/pagination/aggregateScan/maximumPages"
+      ],
+      "changesDeclared": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-02/fixtures/ops-post-credential-values.json",
+      "sha256": "9e43e6e7e5911c3a35d7541a50334b9e2c9980659305142992e1603b454112a8",
+      "matches": true,
+      "keys": 14,
+      "actualChangedPointers": [
+        "/mcp/kubernetes/pagination/defaultPageSize",
+        "/mcp/kubernetes/pagination/aggregateScan/mode",
+        "/mcp/kubernetes/pagination/aggregateScan/deadlineMs",
+        "/mcp/kubernetes/pagination/aggregateScan/maximumAttempts",
+        "/mcp/kubernetes/pagination/aggregateScan/maximumPages"
+      ],
+      "changesDeclared": true
+    }
+  ],
+  "allControlsNotRun": true,
+  "reviewedArtifacts": [
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-02/README.md",
+      "sha256": "a29dae2f1bd16648fccfc5d623eb328b2052ea91809c9c50005092f2ca11ec0a"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-02/author-consistency.json",
+      "sha256": "666a4c11a6970880171355fb3ce616db8db89e14767ea3960316e54a5aa20433"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-02/case-specifications.json",
+      "sha256": "43af31ed02ba66c29698c207925809540c464bcbd0bfead6dee69e089ded43dd"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-02/contracts.json",
+      "sha256": "46ec35d8da23cb8f5ccea0d28d192c11944d72feb0e1326ed95be3e288f27ebf"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-02/correction-receipt.json",
+      "sha256": "06e7efc3bb2c569782ad8d4d5f7535e49c267f3a377bd702a17826ea9ab336c0"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-02/fixtures/kubeclaw-buster-A-values.json",
+      "sha256": "9b0540df5e4c88df4a6942322e445fa2ab97ced874760440222649f7dd80f655"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-02/fixtures/kubeclaw-buster-B-values.json",
+      "sha256": "d201a8d30c239b4b5277fbf222477c514292579dcf09b14a136e537de384a83d"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-02/fixtures/kubeclaw-nova-A-values.json",
+      "sha256": "67b4edc9b263c96bb6079370d9eb5dd9980b9e47fef207fa042b2223ed2e08a2"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-02/fixtures/kubeclaw-nova-B-values.json",
+      "sha256": "35d53213ef2cf77b1a001a05915de77590666ea2e7162b084155adea1629b7bd"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-02/fixtures/kubeclaw-prism-agent-A-values.json",
+      "sha256": "1c42465b5a4a70df00fc083dc1b9a5e059e89f2741070b34cc1e6dc9742ede3e"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-02/fixtures/kubeclaw-prism-agent-B-values.json",
+      "sha256": "3b43f7b874894cfd903127616b1d4f35c49280d73240846b36baa44beead447d"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-02/fixtures/ops-A-values.json",
+      "sha256": "e3679d55a72a4ba28667514bd986da3cabbbdf2eb371638cac60cc04500e4e56"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-02/fixtures/ops-B-values.json",
+      "sha256": "cbecf3f0224ddb6195bacf2e298592c1764dae834a243f1fa2b0ea5400aecb1a"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-02/fixtures/ops-attempt-cap-values.json",
+      "sha256": "d1a4fcd8f8413972304ef3121820d32a3edd1e1aaa042748822d04ae8d60078b"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-02/fixtures/ops-fifo-values.json",
+      "sha256": "276653b9ad87c84b00360959ef594d2ec8cfbfaa69b2df5e82313812753c61a1"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-02/fixtures/ops-finite-call-A-values.json",
+      "sha256": "a90244c5059c500ea20831beadceb9aab3cc0a2f66d52799af696d3ecb2b87a9"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-02/fixtures/ops-finite-call-B-values.json",
+      "sha256": "9365964b473a500653b1d238d636b6dc891a842213e66a04d1885245405cf2d6"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-02/fixtures/ops-post-credential-values.json",
+      "sha256": "9e43e6e7e5911c3a35d7541a50334b9e2c9980659305142992e1603b454112a8"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-02/fixtures/ops-single-page-A-values.json",
+      "sha256": "5c5cdad3ba695db2fa2613acfa2d183c2b5324ed002a45d7243998f1d90cd452"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-02/fixtures/ops-single-page-B-values.json",
+      "sha256": "22eaa6f68745551ec9b11d83ee4b4960c9e2223146327b7f60bf30deeaebde6e"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-02/fixtures/prism-A-values.json",
+      "sha256": "5f80f5821dc3ccc0208b5721d1cf2e971ffeeb145b0b8bd30f4b16187616fb99"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-02/fixtures/prism-B-values.json",
+      "sha256": "118f8b96c252b2d9395224eb0be56aa28abe078e94c78d108f944056d9122705"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-02/p1-response-phase-fault.json",
+      "sha256": "a747d0ad46c994b087605e83dfaf93394a0db2dde230226f89817abe21c7ef9d"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-02/policy-block-domains.json",
+      "sha256": "eaeed2bc89b9c783f1989ad9afbc7edf578f758c8106bc2a92e05c3291dbe4c0"
+    }
+  ],
+  "canonicalControls": [
+    {
+      "id": "P1-D1",
+      "joinsExist": true,
+      "harnessExists": true
+    },
+    {
+      "id": "P1-L1",
+      "joinsExist": true,
+      "harnessExists": true
+    },
+    {
+      "id": "P1-X1",
+      "joinsExist": true,
+      "harnessExists": true
+    },
+    {
+      "id": "P1-N1",
+      "joinsExist": true,
+      "harnessExists": true
+    },
+    {
+      "id": "P1-N2",
+      "joinsExist": true,
+      "harnessExists": true
+    },
+    {
+      "id": "P1-S1",
+      "joinsExist": true,
+      "harnessExists": true
+    },
+    {
+      "id": "P2-D1",
+      "joinsExist": true,
+      "harnessExists": true
+    },
+    {
+      "id": "P2-L1",
+      "joinsExist": true,
+      "harnessExists": true
+    },
+    {
+      "id": "P2-N1",
+      "joinsExist": true,
+      "harnessExists": true
+    },
+    {
+      "id": "P2-X1",
+      "joinsExist": true,
+      "harnessExists": true
+    },
+    {
+      "id": "P2-S1",
+      "joinsExist": true,
+      "harnessExists": true
+    },
+    {
+      "id": "P2-M1",
+      "joinsExist": true,
+      "harnessExists": true
+    },
+    {
+      "id": "P3-D1",
+      "joinsExist": true,
+      "harnessExists": true
+    },
+    {
+      "id": "P3-X1",
+      "joinsExist": true,
+      "harnessExists": true
+    },
+    {
+      "id": "P3-L1",
+      "joinsExist": true,
+      "harnessExists": true
+    },
+    {
+      "id": "P3-N1",
+      "joinsExist": true,
+      "harnessExists": true
+    },
+    {
+      "id": "P3-S1",
+      "joinsExist": true,
+      "harnessExists": true
+    },
+    {
+      "id": "P3-M1",
+      "joinsExist": true,
+      "harnessExists": true
+    },
+    {
+      "id": "P4-D1",
+      "joinsExist": true,
+      "harnessExists": true
+    },
+    {
+      "id": "P4-X1",
+      "joinsExist": true,
+      "harnessExists": true
+    },
+    {
+      "id": "P4-L1",
+      "joinsExist": true,
+      "harnessExists": true
+    },
+    {
+      "id": "P4-N1",
+      "joinsExist": true,
+      "harnessExists": true
+    },
+    {
+      "id": "P4-N2",
+      "joinsExist": true,
+      "harnessExists": true
+    },
+    {
+      "id": "P4-N3",
+      "joinsExist": true,
+      "harnessExists": true
+    },
+    {
+      "id": "P4-S1",
+      "joinsExist": true,
+      "harnessExists": true
+    },
+    {
+      "id": "P4-M1",
+      "joinsExist": true,
+      "harnessExists": true
+    },
+    {
+      "id": "P4-L2",
+      "joinsExist": true,
+      "harnessExists": true
+    },
+    {
+      "id": "P4-L3",
+      "joinsExist": true,
+      "harnessExists": true
+    },
+    {
+      "id": "P4-L4",
+      "joinsExist": true,
+      "harnessExists": true
+    },
+    {
+      "id": "P4-L5",
+      "joinsExist": true,
+      "harnessExists": true
+    },
+    {
+      "id": "P4-L6",
+      "joinsExist": true,
+      "harnessExists": true
+    }
+  ]
+}

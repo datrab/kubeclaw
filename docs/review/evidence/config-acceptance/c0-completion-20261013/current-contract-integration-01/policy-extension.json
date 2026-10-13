@@ -1,0 +1,19 @@
+{
+  "scope": "Four sameowner C3policy proposals and finite source-specific controls; boundedindependentmaterialcorrections verified notnative/wholeprofile/globalapproval",
+  "latestDefinition": {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-03/README.md",
+    "sha256": "930bdf49e7224f0d4cc8ea4067edf32376e0804ba30d29e101a5f8b15ea5b76c"
+  },
+  "review": {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-policy-family-contract-review-03/README.md",
+    "sha256": "77e02105bcad57c713c8f03a02c39faf65f2f78c2de87e820aa759677d68c530"
+  },
+  "counts": {
+    "families": 4,
+    "fullFixtures": 22,
+    "proposedControls": 33,
+    "sourcePins": 107
+  },
+  "futureExecution": "not-run",
+  "globalC0Accepted": false
+}

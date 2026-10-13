@@ -1,0 +1,25 @@
+{
+  "scope": "Exact future observer precision from independent grouping addendum; no native observation executed",
+  "descriptorGroup": {
+    "A_RLIMIT_NOFILE": 64,
+    "B_RLIMIT_NOFILE": 48
+  },
+  "memoryGroup": {
+    "A_requestedMemoryBytes": 536870912,
+    "B_requestedMemoryBytes": 402653184,
+    "A_RLIMIT_AS_bytes": 4294967296,
+    "B_RLIMIT_AS_bytes": 3221225472,
+    "A_V8_maxOldSpaceSizeMiB": 358,
+    "B_V8_maxOldSpaceSizeMiB": 268,
+    "meaning": "Address-space and derived heap limits, not RSS or cgroup memory.max; no cgroup argument supplied at this report launch"
+  },
+  "source": [
+    "skills/buster/engine/test-gates/report-adapter-runtime.ts:226-236",
+    "skills/common/plugin-runtime/foundation/isolation/sandbox.c:443-458"
+  ],
+  "reviewRef": {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-case-fixture-definition-review-01/grouping-addendum-02/README.md",
+    "sha256": "1b3f1bd4e7fd5d3ff23c44cb3788c54a235bc67e3cfe6898a6557c656fc3d637"
+  },
+  "futureExecution": "not-run"
+}

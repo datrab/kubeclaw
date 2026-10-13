@@ -1,0 +1,257 @@
+{
+  "supersedes": "policy-family-contracts-02 immutable",
+  "preservedReview": "independent-policy-family-contract-review-02 immutable",
+  "correctionScope": [
+    "PFCR05 fractional positive complete profiles +real render/native semantic oracle",
+    "PFCR06 successful first event page followed by oversized retries under carried cap; narrow L5/N3/S1 claims"
+  ],
+  "priorArtifacts": [
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-02/README.md",
+      "sha256": "a29dae2f1bd16648fccfc5d623eb328b2052ea91809c9c50005092f2ca11ec0a"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-02/author-consistency.json",
+      "sha256": "666a4c11a6970880171355fb3ce616db8db89e14767ea3960316e54a5aa20433"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-02/case-specifications.json",
+      "sha256": "43af31ed02ba66c29698c207925809540c464bcbd0bfead6dee69e089ded43dd"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-02/contracts.json",
+      "sha256": "46ec35d8da23cb8f5ccea0d28d192c11944d72feb0e1326ed95be3e288f27ebf"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-02/correction-receipt.json",
+      "sha256": "06e7efc3bb2c569782ad8d4d5f7535e49c267f3a377bd702a17826ea9ab336c0"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-02/fixtures/kubeclaw-buster-A-values.json",
+      "sha256": "9b0540df5e4c88df4a6942322e445fa2ab97ced874760440222649f7dd80f655"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-02/fixtures/kubeclaw-buster-B-values.json",
+      "sha256": "d201a8d30c239b4b5277fbf222477c514292579dcf09b14a136e537de384a83d"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-02/fixtures/kubeclaw-nova-A-values.json",
+      "sha256": "67b4edc9b263c96bb6079370d9eb5dd9980b9e47fef207fa042b2223ed2e08a2"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-02/fixtures/kubeclaw-nova-B-values.json",
+      "sha256": "35d53213ef2cf77b1a001a05915de77590666ea2e7162b084155adea1629b7bd"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-02/fixtures/kubeclaw-prism-agent-A-values.json",
+      "sha256": "1c42465b5a4a70df00fc083dc1b9a5e059e89f2741070b34cc1e6dc9742ede3e"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-02/fixtures/kubeclaw-prism-agent-B-values.json",
+      "sha256": "3b43f7b874894cfd903127616b1d4f35c49280d73240846b36baa44beead447d"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-02/fixtures/ops-A-values.json",
+      "sha256": "e3679d55a72a4ba28667514bd986da3cabbbdf2eb371638cac60cc04500e4e56"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-02/fixtures/ops-B-values.json",
+      "sha256": "cbecf3f0224ddb6195bacf2e298592c1764dae834a243f1fa2b0ea5400aecb1a"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-02/fixtures/ops-attempt-cap-values.json",
+      "sha256": "d1a4fcd8f8413972304ef3121820d32a3edd1e1aaa042748822d04ae8d60078b"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-02/fixtures/ops-fifo-values.json",
+      "sha256": "276653b9ad87c84b00360959ef594d2ec8cfbfaa69b2df5e82313812753c61a1"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-02/fixtures/ops-finite-call-A-values.json",
+      "sha256": "a90244c5059c500ea20831beadceb9aab3cc0a2f66d52799af696d3ecb2b87a9"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-02/fixtures/ops-finite-call-B-values.json",
+      "sha256": "9365964b473a500653b1d238d636b6dc891a842213e66a04d1885245405cf2d6"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-02/fixtures/ops-post-credential-values.json",
+      "sha256": "9e43e6e7e5911c3a35d7541a50334b9e2c9980659305142992e1603b454112a8"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-02/fixtures/ops-single-page-A-values.json",
+      "sha256": "5c5cdad3ba695db2fa2613acfa2d183c2b5324ed002a45d7243998f1d90cd452"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-02/fixtures/ops-single-page-B-values.json",
+      "sha256": "22eaa6f68745551ec9b11d83ee4b4960c9e2223146327b7f60bf30deeaebde6e"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-02/fixtures/prism-A-values.json",
+      "sha256": "5f80f5821dc3ccc0208b5721d1cf2e971ffeeb145b0b8bd30f4b16187616fb99"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-02/fixtures/prism-B-values.json",
+      "sha256": "118f8b96c252b2d9395224eb0be56aa28abe078e94c78d108f944056d9122705"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-02/p1-response-phase-fault.json",
+      "sha256": "a747d0ad46c994b087605e83dfaf93394a0db2dde230226f89817abe21c7ef9d"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-02/policy-block-domains.json",
+      "sha256": "eaeed2bc89b9c783f1989ad9afbc7edf578f758c8106bc2a92e05c3291dbe4c0"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-policy-family-contract-review-02/README.md",
+      "sha256": "31ce46e7dfbe1391b9240bd6596f66f67887b2865750788c57e755772d594322"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-policy-family-contract-review-02/git-status.txt",
+      "sha256": "1035360c77dd636fd400fc84e2d8f2265512b3915a35e5edb7d84f39d455b8fd"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-policy-family-contract-review-02/observations.json",
+      "sha256": "008cad3b00f31e37ca58c5bb43d90c836dc6a0a44f8d36163471da47de44942a"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-policy-family-contract-review-02/review-manifest.json",
+      "sha256": "1b0a1c97a9fe9bcb2c2c216212bdba21db7182edcb7bfd8c44f610b639d20428"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-policy-family-contract-review-02/worktree.patch",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "counts": {
+    "families": 4,
+    "baseWholeProjectionFixtures": 10,
+    "additionalFullDiagnosticFixtures": 12,
+    "finiteProposedControls": 33,
+    "sourceLineWitnesses": 107,
+    "unchangedPriorPackageAndReviewFiles": 29,
+    "unchangedCurrentInputIdentities": 34
+  },
+  "artifacts": [
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-03/README.md",
+      "sha256": "930bdf49e7224f0d4cc8ea4067edf32376e0804ba30d29e101a5f8b15ea5b76c"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-03/author-consistency.json",
+      "sha256": "960c276e59b8bac652fcb7c4e4e86d0d59cfd07f4d868751f9bfd856c0e40673"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-03/case-specifications.json",
+      "sha256": "4c06aa38e1df8f228c28a0ba0024065d771cc81af8cc59004cba36336aaf8814"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-03/contracts.json",
+      "sha256": "437eaf17b7790bc8b987e3eda8b59070b62f76cefb0a232dbad77182b41d6e02"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-03/event-carry-sequence.json",
+      "sha256": "aacf228d606f6f3464c96555ae8a9bef84f88760f8364a40b84aa6f63270512d"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-03/fixtures/kubeclaw-buster-A-values.json",
+      "sha256": "9b0540df5e4c88df4a6942322e445fa2ab97ced874760440222649f7dd80f655"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-03/fixtures/kubeclaw-buster-B-values.json",
+      "sha256": "d201a8d30c239b4b5277fbf222477c514292579dcf09b14a136e537de384a83d"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-03/fixtures/kubeclaw-buster-C-values.json",
+      "sha256": "bfa230985c9aa84f3ee7b82ebcfcaeebca09118d609831aea3a353df72985c2f"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-03/fixtures/kubeclaw-nova-A-values.json",
+      "sha256": "67b4edc9b263c96bb6079370d9eb5dd9980b9e47fef207fa042b2223ed2e08a2"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-03/fixtures/kubeclaw-nova-B-values.json",
+      "sha256": "35d53213ef2cf77b1a001a05915de77590666ea2e7162b084155adea1629b7bd"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-03/fixtures/kubeclaw-nova-C-values.json",
+      "sha256": "3eebc221a5e6e0b7f586ffca45bdbd36a49dda3d5a7dcd59520c01c6a2ca3b23"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-03/fixtures/kubeclaw-prism-agent-A-values.json",
+      "sha256": "1c42465b5a4a70df00fc083dc1b9a5e059e89f2741070b34cc1e6dc9742ede3e"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-03/fixtures/kubeclaw-prism-agent-B-values.json",
+      "sha256": "3b43f7b874894cfd903127616b1d4f35c49280d73240846b36baa44beead447d"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-03/fixtures/kubeclaw-prism-agent-C-values.json",
+      "sha256": "a09b23385ea082cf686c8f3955759331e8b9a1a31bd5c120566622a3ab71cd5d"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-03/fixtures/ops-A-values.json",
+      "sha256": "e3679d55a72a4ba28667514bd986da3cabbbdf2eb371638cac60cc04500e4e56"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-03/fixtures/ops-B-values.json",
+      "sha256": "cbecf3f0224ddb6195bacf2e298592c1764dae834a243f1fa2b0ea5400aecb1a"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-03/fixtures/ops-attempt-cap-values.json",
+      "sha256": "d1a4fcd8f8413972304ef3121820d32a3edd1e1aaa042748822d04ae8d60078b"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-03/fixtures/ops-event-carry-values.json",
+      "sha256": "eb5bcecb3cab5d6896def0ae6e295ac42a99a000262292daea6760a329fc6357"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-03/fixtures/ops-fifo-values.json",
+      "sha256": "276653b9ad87c84b00360959ef594d2ec8cfbfaa69b2df5e82313812753c61a1"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-03/fixtures/ops-finite-call-A-values.json",
+      "sha256": "a90244c5059c500ea20831beadceb9aab3cc0a2f66d52799af696d3ecb2b87a9"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-03/fixtures/ops-finite-call-B-values.json",
+      "sha256": "9365964b473a500653b1d238d636b6dc891a842213e66a04d1885245405cf2d6"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-03/fixtures/ops-post-credential-values.json",
+      "sha256": "9e43e6e7e5911c3a35d7541a50334b9e2c9980659305142992e1603b454112a8"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-03/fixtures/ops-single-page-A-values.json",
+      "sha256": "5c5cdad3ba695db2fa2613acfa2d183c2b5324ed002a45d7243998f1d90cd452"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-03/fixtures/ops-single-page-B-values.json",
+      "sha256": "22eaa6f68745551ec9b11d83ee4b4960c9e2223146327b7f60bf30deeaebde6e"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-03/fixtures/prism-A-values.json",
+      "sha256": "5f80f5821dc3ccc0208b5721d1cf2e971ffeeb145b0b8bd30f4b16187616fb99"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-03/fixtures/prism-B-values.json",
+      "sha256": "118f8b96c252b2d9395224eb0be56aa28abe078e94c78d108f944056d9122705"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-03/fixtures/prism-C-values.json",
+      "sha256": "7a34ff75257a4ac5d0a646b0ff89eaa16b4744f597f5d95580ca5c6a4f0432f6"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-03/p1-response-phase-fault.json",
+      "sha256": "a747d0ad46c994b087605e83dfaf93394a0db2dde230226f89817abe21c7ef9d"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-03/policy-block-domains.json",
+      "sha256": "eaeed2bc89b9c783f1989ad9afbc7edf578f758c8106bc2a92e05c3291dbe4c0"
+    }
+  ],
+  "boundedProposalAccepted": false,
+  "freshIndependentRecheck": "pending",
+  "implementationAuthorization": false,
+  "globalC0Accepted": false
+}

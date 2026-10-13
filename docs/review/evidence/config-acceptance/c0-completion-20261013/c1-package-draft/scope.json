@@ -1135,7 +1135,33 @@
       "sha256": "f0ed2e7dd5bf8d22fe24af6b1a60ed090c22e4213b26f3150a3243fd6c1f7e25"
     },
     "meaning": "148 complete typed A/B translations; C0 schema/current-wire loader checks only, no future case result or v3/native acceptance",
-    "remaining": "Two guard-only report native-effect classification obligations plus finite family fixture/domain/delivery/module contracts still open",
-    "globalC0Accepted": false
+    "remaining": "Exact remaining caller/delivery/policy corrections and complete causal fixture/native/delivery contracts remain open; proposed report behavior grouping is under recheck, not per-scalar native evidence.",
+    "globalC0Accepted": false,
+    "entrySelectionBindingSupersession": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/pair-entry-selection-translation-03/entry-selections.json",
+      "sha256": "1ebac33ae079ef85c52ef58b5002bb9a1712facc6848e1ece46cf1010c5ddafe",
+      "meaning": "Only proposed local caller binding tuples/projections supersede complete-pairs02 entry fixtures;296 whole-setting maps unchanged. No authentic bootreceipt provided."
+    },
+    "independentFixtureDefinitionReview": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-case-fixture-definition-review-01/README.md",
+      "sha256": "bfd13f801a72aaed294439d3373ff665a4ebaab9d0018a368b6552b47b749cbd"
+    },
+    "reportBehaviorGroupingProposal": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/report-resource-grouping-decision-01/decision.json",
+      "sha256": "fae4aa15f8f5e5a6611449725b2d12b758c7be4201e7c831bc3993ff5d4a8d5c",
+      "status": "independently supported normative future behavior grouping; all original requirements/results unchanged, native observations not-run"
+    },
+    "reportBehaviorGroupingReview": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-case-fixture-definition-review-01/grouping-addendum-02/README.md",
+      "sha256": "1b3f1bd4e7fd5d3ff23c44cb3788c54a235bc67e3cfe6898a6557c656fc3d637"
+    },
+    "reportObserverPrecision": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/report-resource-grouping-decision-01/observer-precision.json",
+      "sha256": "ec0939086a59ffb299a8991268b64d570a2919cefed7b3e6c5310d93bae5683e"
+    }
+  },
+  "activeContractIntegration": {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/current-contract-integration-01/references.json",
+    "sha256": "6764ab039a33aa0aff1b60069a2b3db3f52126bb22b04ab64f0bc7411cd6d4ac"
   }
 }

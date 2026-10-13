@@ -1,0 +1,81 @@
+{
+  "status": "Future proposed definition only, not run",
+  "localControlId": "P4-L7",
+  "namedControl": "CONFIG_P4_EVENTS_CARRIED_ATTEMPTS",
+  "fullProfile": "fixtures/ops-event-carry-values.json",
+  "fullProfileSha256": "eb5bcecb3cab5d6896def0ae6e295ac42a99a000262292daea6760a329fc6357",
+  "sameAuthor": "charts/ops-pod/values.yaml#/profiles/<selected>/settings/mcp/kubernetes/pagination",
+  "task": {
+    "namespace": "policy-c0-fixture",
+    "objectName": "policy-fixture-object",
+    "limit": 40
+  },
+  "URI": "/api/v1/namespaces/policy-c0-fixture/events",
+  "queryInvariant": {
+    "fieldSelector": "involvedObject.name=policy-fixture-object"
+  },
+  "isolation": {
+    "sharedDeadlineMs": 60000,
+    "finiteInnerDeadlineMs": 30000,
+    "perGetTimeoutMs": 10000,
+    "eachResponseUpperMs": 250,
+    "wholeSequenceUpperMs": 3000,
+    "pageCap": 2,
+    "attemptCap": 3,
+    "maximumResponseBytes": 8192,
+    "reason": "Immediate real transport oversize outcomes, high deadlines, no competing resource or page-cap exhaustion; elapsed evidence must confirm no timeout/deadline mask."
+  },
+  "peerResponseCorpus": {
+    "GET1": "UTF-8 serialized valid apiVersionv1/kindEventList, two real-shaped Event objects E1/E2 matching involvedObject.name and namespace, ordered public timestamp fixtures, metadata.continue=c1; premeasure exact bytes<8192. No response exceeds requestedlimit4.",
+    "GET2andGET3": "Valid serialized EventList continuation page for c1 with two real-shaped distinct E3/E4, each message5000 ASCII bytes so exact wire body>8192 even when limit2. Premeasure body bytes and record SHA256. Same objectName/namespace, no artificial error status; real Kube HTTPS response ceiling causes KUBERNETES_RESPONSE_TOO_LARGE before parse.",
+    "forbiddenGET4": "On c1/limit1 return valid one-event E3 EventList metadata.continue=\"\" (end of this controlled continuation stream), exact bytes<8192. This is armed only to expose mutant dispatch, never sent to correct code. Independent wire trace, not extra final event, is decisive."
+  },
+  "steps": [
+    {
+      "GET": 1,
+      "continue": null,
+      "limit": 4,
+      "outcome": "successful parsed EventList E1/E2 +c1",
+      "sharedAttemptsAfter": 1,
+      "committedPagesAfter": 1,
+      "outerIteration": 1
+    },
+    {
+      "GET": 2,
+      "continue": "c1",
+      "limit": 4,
+      "outcome": "oversized before parse",
+      "sharedAttemptsAfter": 2,
+      "committedPagesAfter": 1,
+      "outerIteration": 2,
+      "reservedPotentialPage": 1
+    },
+    {
+      "GET": 3,
+      "continue": "c1",
+      "limit": 2,
+      "outcome": "oversized before parse",
+      "sharedAttemptsAfter": 3,
+      "committedPagesAfter": 1,
+      "outerIteration": 2,
+      "reservedPotentialPage": 1
+    },
+    {
+      "GET": 4,
+      "continue": "c1",
+      "limit": 1,
+      "outcome": "MUST NOT START; carried attempt cap blocks before actual request construction and peer GET",
+      "committedPagesAfter": 1,
+      "correctSharedAttempts": 3,
+      "partialReason": "scan_attempt_limit",
+      "remainingCursor": "c1"
+    }
+  ],
+  "independentOracle": {
+    "primary": "Peer TLS HTTP server append-only per-operation received GET log with monotonic timestamp, URI, decoded selector/limit/cursor. Real https.request invocation observation separately records dispatch attempts; successful local transport means expected peer GET count exactly3. Peer count4 is decisive reset mutant failure even if local counter says3. No credential bytes logged.",
+    "secondary": "Implementation attempts/page counters cross-check against independent wire trace and parser/page identities, never used alone to infer GET count. Retained first-page E1/E2 and scannedEvents2 checked only as partial-result truth.",
+    "correctResult": "partialscan_attempt_limit, successful pages1, first page events preserved, c1 unresolved; API/auth/JSON error not converted to complete empty result.",
+    "cleanup": "Await transport/socket closure and record no fourth received GET after operation settles; future test watchdog5s solely cleanup, not policy deadline proof."
+  },
+  "currentProposedSplit": "Current recentEvents has no shared budget/cap output and returns only events/scanned/pages; partial metadata and carried operation-budget plumbing are proposed C3 changes, not observed existing behavior. Real native API/RBAC effect is a separate original case, never satisfied by this controlled peer definition."
+}
