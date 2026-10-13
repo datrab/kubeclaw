@@ -1,0 +1,1043 @@
+{
+  "entries": [
+    {
+      "setting": "RT-NOVA-REMOTE-SCHEMAVERSION",
+      "field": "schemaVersion",
+      "classification": "fixed-versioned-protocol-identity",
+      "current": "Exact root const nova-remote-test-gate-runtime.v1; unknown root keys rejected; no ENV/default. This selects loader representation only, not model/module author.",
+      "targetDomain": "Same versioned17field complete profile and strict mode/credential/record shape; fixed identity no independent B toggle; incompatible new format explicit versioned migration retaining original A.",
+      "effect": "Wrong/missing/null schemaVersion rejects NOVA_REMOTE_CONFIG_VERSION_INVALID before constructing any gate; complete A/B current version positively constructed.",
+      "unit": "dimensionless",
+      "profiles": {
+        "A": {
+          "schemaVersion": "nova-remote-test-gate-runtime.v1",
+          "endpoint": "https://fixture.invalid/plan",
+          "authentication": "bearer",
+          "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+          "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+          "sourceAuthority": "fixture-source-authority-A",
+          "stateRoot": "./state-A",
+          "pollMilliseconds": 500,
+          "maximumResponseBytes": 16777216,
+          "maximumResultBytes": 16777216,
+          "maximumArchiveBytes": 8388608,
+          "maximumArchiveStoreBytes": 67108864,
+          "maximumEvidenceBytes": 16777216,
+          "maximumEvidenceStoreBytes": 67108864,
+          "recordLimits": {
+            "maximumRecords": 1000,
+            "maximumBytes": 67108864,
+            "maximumRecordBytes": 33554432
+          }
+        },
+        "B": {
+          "schemaVersion": "nova-remote-test-gate-runtime.v1",
+          "endpoint": "http://localhost:18080/plan",
+          "authentication": "spiffe-proxy",
+          "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY_B",
+          "sourceAuthority": "fixture-source-authority-B",
+          "stateRoot": "./state-B",
+          "pollMilliseconds": 250,
+          "maximumResponseBytes": 8388608,
+          "maximumResultBytes": 8388608,
+          "maximumArchiveBytes": 4194304,
+          "maximumArchiveStoreBytes": 33554432,
+          "maximumEvidenceBytes": 8388608,
+          "maximumEvidenceStoreBytes": 33554432,
+          "recordLimits": {
+            "maximumRecords": 500,
+            "maximumBytes": 33554432,
+            "maximumRecordBytes": 16777216
+          }
+        }
+      },
+      "source": {
+        "path": "skills/nova/core/test-gates/runtime-config.ts",
+        "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a"
+      },
+      "productiveCaller": "Exported standalone remote-gate-cli --config file/--job/--timeout-ms -> loadProductionNovaTestGate explicit ENV loader -> factory -> Production.execute(one original finite deadline includes source archive+dispatch+import) -> actual persistent dispatch/poll/cancel/reconcile -> importer/full verification/retained store. CLI package export is real source path; NO in-repo configured deployed CLI invocation or installedauthentic provider/profile inferred. Registered remote adapter separately directfactory fixedvalues, not alias.",
+      "binding": "Current standalone loadercapturesselectedconfig/primitives/parsedkey atconstruct, no logicalmodule carrier/original persisted CONFIG closure implementedhere; actual storedjob/source/decision/import digests/grants retained. Current Nova v4 registry/wholegraph/package/config/grant pins+prelockactivation remain forengine, NOT allbindingsabsent andNOT proof standalonecompleteownercontext. Parentfirstlogicalmodule/D20/taskoperator/membership/view/metadataquota/legacy/crossreader/grants/cleanup OPEN; originalA history neverlatestB refill."
+    },
+    {
+      "setting": "RT-NOVA-REMOTE-ENDPOINT",
+      "field": "endpoint",
+      "classification": "operator-correlated-provider-locator",
+      "current": "Loader assertSecureRemoteEndpoint rejects userinfo/plaintext nonloopback beforefactory, AFTER injected ENV crypto.createPrivateKey; factory/transport repeat checks; SPIFFE exact host only. No default/ENV expansion in URI.",
+      "targetDomain": "Authorized HTTPS no userinfo or explicit approved local SPIFFE proxy exact localhost/127.0.0.1/[::1]; endpoint/path/real provider/version/grants/source verifier correlated, not installed fixture.invalid proof. Target complete validation before secret/crypto/backend effects; normal current source ordering distinguished.",
+      "effect": "Full actual provider A/B command dispatch same complete signed source/native coverage; wrong endpoint/userinfo/plaintext/mode/provider identity rejected before productive effects in proposed owning boundary.",
+      "unit": "URI",
+      "profiles": {
+        "A": {
+          "schemaVersion": "nova-remote-test-gate-runtime.v1",
+          "endpoint": "https://fixture.invalid/plan",
+          "authentication": "bearer",
+          "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+          "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+          "sourceAuthority": "fixture-source-authority-A",
+          "stateRoot": "./state-A",
+          "pollMilliseconds": 500,
+          "maximumResponseBytes": 16777216,
+          "maximumResultBytes": 16777216,
+          "maximumArchiveBytes": 8388608,
+          "maximumArchiveStoreBytes": 67108864,
+          "maximumEvidenceBytes": 16777216,
+          "maximumEvidenceStoreBytes": 67108864,
+          "recordLimits": {
+            "maximumRecords": 1000,
+            "maximumBytes": 67108864,
+            "maximumRecordBytes": 33554432
+          }
+        },
+        "B": {
+          "schemaVersion": "nova-remote-test-gate-runtime.v1",
+          "endpoint": "http://localhost:18080/plan",
+          "authentication": "spiffe-proxy",
+          "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY_B",
+          "sourceAuthority": "fixture-source-authority-B",
+          "stateRoot": "./state-B",
+          "pollMilliseconds": 250,
+          "maximumResponseBytes": 8388608,
+          "maximumResultBytes": 8388608,
+          "maximumArchiveBytes": 4194304,
+          "maximumArchiveStoreBytes": 33554432,
+          "maximumEvidenceBytes": 8388608,
+          "maximumEvidenceStoreBytes": 33554432,
+          "recordLimits": {
+            "maximumRecords": 500,
+            "maximumBytes": 33554432,
+            "maximumRecordBytes": 16777216
+          }
+        }
+      },
+      "source": {
+        "path": "skills/nova/core/test-gates/runtime-config.ts",
+        "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a"
+      },
+      "productiveCaller": "Exported standalone remote-gate-cli --config file/--job/--timeout-ms -> loadProductionNovaTestGate explicit ENV loader -> factory -> Production.execute(one original finite deadline includes source archive+dispatch+import) -> actual persistent dispatch/poll/cancel/reconcile -> importer/full verification/retained store. CLI package export is real source path; NO in-repo configured deployed CLI invocation or installedauthentic provider/profile inferred. Registered remote adapter separately directfactory fixedvalues, not alias.",
+      "binding": "Current standalone loadercapturesselectedconfig/primitives/parsedkey atconstruct, no logicalmodule carrier/original persisted CONFIG closure implementedhere; actual storedjob/source/decision/import digests/grants retained. Current Nova v4 registry/wholegraph/package/config/grant pins+prelockactivation remain forengine, NOT allbindingsabsent andNOT proof standalonecompleteownercontext. Parentfirstlogicalmodule/D20/taskoperator/membership/view/metadataquota/legacy/crossreader/grants/cleanup OPEN; originalA history neverlatestB refill."
+    },
+    {
+      "setting": "RT-NOVA-REMOTE-AUTHENTICATION",
+      "field": "authentication",
+      "classification": "operator-authentication-discriminant",
+      "current": "Only exact spiffe-proxy selects proxy; missing/null/unknown all fallback bearer; no enum requirement today. Proxy ignores supplied tokenEnvironmentVariable; source key variable stays required, real factory bearer token length>=32.",
+      "targetDomain": "Exactly bearer/spiffe-proxy required discriminant; bearer requires token ENV locator, proxy forbids token locator even if currentacceptedignored. Endpoint/proxy provider/authorization correlated; no second author/current physical grant inferred.",
+      "effect": "Full A bearer invokes expected authenticated provider and B proxy uses actual approved authenticated loopback without bearer secret; missing/invalid/unused token author rejects proposedpre-effect, no fallback.",
+      "unit": "enum",
+      "profiles": {
+        "A": {
+          "schemaVersion": "nova-remote-test-gate-runtime.v1",
+          "endpoint": "https://fixture.invalid/plan",
+          "authentication": "bearer",
+          "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+          "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+          "sourceAuthority": "fixture-source-authority-A",
+          "stateRoot": "./state-A",
+          "pollMilliseconds": 500,
+          "maximumResponseBytes": 16777216,
+          "maximumResultBytes": 16777216,
+          "maximumArchiveBytes": 8388608,
+          "maximumArchiveStoreBytes": 67108864,
+          "maximumEvidenceBytes": 16777216,
+          "maximumEvidenceStoreBytes": 67108864,
+          "recordLimits": {
+            "maximumRecords": 1000,
+            "maximumBytes": 67108864,
+            "maximumRecordBytes": 33554432
+          }
+        },
+        "B": {
+          "schemaVersion": "nova-remote-test-gate-runtime.v1",
+          "endpoint": "http://localhost:18080/plan",
+          "authentication": "spiffe-proxy",
+          "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY_B",
+          "sourceAuthority": "fixture-source-authority-B",
+          "stateRoot": "./state-B",
+          "pollMilliseconds": 250,
+          "maximumResponseBytes": 8388608,
+          "maximumResultBytes": 8388608,
+          "maximumArchiveBytes": 4194304,
+          "maximumArchiveStoreBytes": 33554432,
+          "maximumEvidenceBytes": 8388608,
+          "maximumEvidenceStoreBytes": 33554432,
+          "recordLimits": {
+            "maximumRecords": 500,
+            "maximumBytes": 33554432,
+            "maximumRecordBytes": 16777216
+          }
+        }
+      },
+      "source": {
+        "path": "skills/nova/core/test-gates/runtime-config.ts",
+        "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a"
+      },
+      "productiveCaller": "Exported standalone remote-gate-cli --config file/--job/--timeout-ms -> loadProductionNovaTestGate explicit ENV loader -> factory -> Production.execute(one original finite deadline includes source archive+dispatch+import) -> actual persistent dispatch/poll/cancel/reconcile -> importer/full verification/retained store. CLI package export is real source path; NO in-repo configured deployed CLI invocation or installedauthentic provider/profile inferred. Registered remote adapter separately directfactory fixedvalues, not alias.",
+      "binding": "Current standalone loadercapturesselectedconfig/primitives/parsedkey atconstruct, no logicalmodule carrier/original persisted CONFIG closure implementedhere; actual storedjob/source/decision/import digests/grants retained. Current Nova v4 registry/wholegraph/package/config/grant pins+prelockactivation remain forengine, NOT allbindingsabsent andNOT proof standalonecompleteownercontext. Parentfirstlogicalmodule/D20/taskoperator/membership/view/metadataquota/legacy/crossreader/grants/cleanup OPEN; originalA history neverlatestB refill."
+    },
+    {
+      "setting": "RT-NOVA-REMOTE-TOKENENVIRONMENTVARIABLE",
+      "field": "tokenEnvironmentVariable",
+      "classification": "operator-confidential-ENV-locator",
+      "current": "Bearer uppercase regex^[A-Z][A-Z0-9_]*$, environment[name] mandatory, source-key name distinct; later actual HttpTransport token>=32 chars. Proxy accepts any/absent tokenEnvironmentVariable and doesnotresolve; root unknown rejected. Actual HttpRemotePlanTransport captures resolved token STRING atconstruction; no execute-time ENV reread in standalone path (unlike registered adapter secret invocation).",
+      "targetDomain": "Only bearer exact assigned credential-provider variable name with actual original role grant/provisioning; uppercase nonempty and distinct source key name. Proxy MUST forbid acceptedignored field. Injected memory ENV is not authentic credential/rotation/history proof; Current standalone loaded instance captures token content; no later ENV reread. This is not authentic provisioning/immutable original-source proof; B rotation means new allowed instance, original A retains captured token.",
+      "effect": "Genuine original injected role token positively authenticates correct source/provider; absent/wrong/empty/short/wronggrant rejects. Proxy token locator presence must reject withoutresolution.",
+      "unit": "ENV variable name",
+      "profiles": {
+        "A": {
+          "schemaVersion": "nova-remote-test-gate-runtime.v1",
+          "endpoint": "https://fixture.invalid/plan",
+          "authentication": "bearer",
+          "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+          "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+          "sourceAuthority": "fixture-source-authority-A",
+          "stateRoot": "./state-A",
+          "pollMilliseconds": 500,
+          "maximumResponseBytes": 16777216,
+          "maximumResultBytes": 16777216,
+          "maximumArchiveBytes": 8388608,
+          "maximumArchiveStoreBytes": 67108864,
+          "maximumEvidenceBytes": 16777216,
+          "maximumEvidenceStoreBytes": 67108864,
+          "recordLimits": {
+            "maximumRecords": 1000,
+            "maximumBytes": 67108864,
+            "maximumRecordBytes": 33554432
+          }
+        },
+        "B": {
+          "schemaVersion": "nova-remote-test-gate-runtime.v1",
+          "endpoint": "http://localhost:18080/plan",
+          "authentication": "spiffe-proxy",
+          "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY_B",
+          "sourceAuthority": "fixture-source-authority-B",
+          "stateRoot": "./state-B",
+          "pollMilliseconds": 250,
+          "maximumResponseBytes": 8388608,
+          "maximumResultBytes": 8388608,
+          "maximumArchiveBytes": 4194304,
+          "maximumArchiveStoreBytes": 33554432,
+          "maximumEvidenceBytes": 8388608,
+          "maximumEvidenceStoreBytes": 33554432,
+          "recordLimits": {
+            "maximumRecords": 500,
+            "maximumBytes": 33554432,
+            "maximumRecordBytes": 16777216
+          }
+        }
+      },
+      "source": {
+        "path": "skills/nova/core/test-gates/runtime-config.ts",
+        "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a"
+      },
+      "productiveCaller": "Exported standalone remote-gate-cli --config file/--job/--timeout-ms -> loadProductionNovaTestGate explicit ENV loader -> factory -> Production.execute(one original finite deadline includes source archive+dispatch+import) -> actual persistent dispatch/poll/cancel/reconcile -> importer/full verification/retained store. CLI package export is real source path; NO in-repo configured deployed CLI invocation or installedauthentic provider/profile inferred. Registered remote adapter separately directfactory fixedvalues, not alias.",
+      "binding": "Current standalone loadercapturesselectedconfig/primitives/parsedkey atconstruct, no logicalmodule carrier/original persisted CONFIG closure implementedhere; actual storedjob/source/decision/import digests/grants retained. Current Nova v4 registry/wholegraph/package/config/grant pins+prelockactivation remain forengine, NOT allbindingsabsent andNOT proof standalonecompleteownercontext. Parentfirstlogicalmodule/D20/taskoperator/membership/view/metadataquota/legacy/crossreader/grants/cleanup OPEN; originalA history neverlatestB refill."
+    },
+    {
+      "setting": "RT-NOVA-REMOTE-SOURCEATTESTATIONPRIVATEKEYENVIRONMENTVARIABLE",
+      "field": "sourceAttestationPrivateKeyEnvironmentVariable",
+      "classification": "operator-confidential-ENV-locator",
+      "current": "Required uppercase variable, distinct tokenName ONLY bearer; injected environment value exists and createPrivateKey must be ed25519. Loader actually exports PKCS8 PEM internally into factory. No installed credential read/serialized evidence claimed. Actual ProductionNovaTestGate captures exported PEM STRING atconstruction; no later ENV reread. This doesnot prove authentic issuer/key/role/provisioning or installedoriginal history.",
+      "targetDomain": "Exact original provisioned signing-key ENV transport locator/source identity and actual backend trusted verifier+authority+grants; private bytes never evidence/log/hash. Keep authentic original A source/attestation/fingerprint/rotation binding, no latest B key reinterprets retained run.",
+      "effect": "Real Ed25519 source signing/verifier passes complete native plan; missing/malformed/non-Ed25519/mismatched authority/provisioner or source grant rejects before submission.",
+      "unit": "ENV variable name",
+      "profiles": {
+        "A": {
+          "schemaVersion": "nova-remote-test-gate-runtime.v1",
+          "endpoint": "https://fixture.invalid/plan",
+          "authentication": "bearer",
+          "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+          "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+          "sourceAuthority": "fixture-source-authority-A",
+          "stateRoot": "./state-A",
+          "pollMilliseconds": 500,
+          "maximumResponseBytes": 16777216,
+          "maximumResultBytes": 16777216,
+          "maximumArchiveBytes": 8388608,
+          "maximumArchiveStoreBytes": 67108864,
+          "maximumEvidenceBytes": 16777216,
+          "maximumEvidenceStoreBytes": 67108864,
+          "recordLimits": {
+            "maximumRecords": 1000,
+            "maximumBytes": 67108864,
+            "maximumRecordBytes": 33554432
+          }
+        },
+        "B": {
+          "schemaVersion": "nova-remote-test-gate-runtime.v1",
+          "endpoint": "http://localhost:18080/plan",
+          "authentication": "spiffe-proxy",
+          "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY_B",
+          "sourceAuthority": "fixture-source-authority-B",
+          "stateRoot": "./state-B",
+          "pollMilliseconds": 250,
+          "maximumResponseBytes": 8388608,
+          "maximumResultBytes": 8388608,
+          "maximumArchiveBytes": 4194304,
+          "maximumArchiveStoreBytes": 33554432,
+          "maximumEvidenceBytes": 8388608,
+          "maximumEvidenceStoreBytes": 33554432,
+          "recordLimits": {
+            "maximumRecords": 500,
+            "maximumBytes": 33554432,
+            "maximumRecordBytes": 16777216
+          }
+        }
+      },
+      "source": {
+        "path": "skills/nova/core/test-gates/runtime-config.ts",
+        "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a"
+      },
+      "productiveCaller": "Exported standalone remote-gate-cli --config file/--job/--timeout-ms -> loadProductionNovaTestGate explicit ENV loader -> factory -> Production.execute(one original finite deadline includes source archive+dispatch+import) -> actual persistent dispatch/poll/cancel/reconcile -> importer/full verification/retained store. CLI package export is real source path; NO in-repo configured deployed CLI invocation or installedauthentic provider/profile inferred. Registered remote adapter separately directfactory fixedvalues, not alias.",
+      "binding": "Current standalone loadercapturesselectedconfig/primitives/parsedkey atconstruct, no logicalmodule carrier/original persisted CONFIG closure implementedhere; actual storedjob/source/decision/import digests/grants retained. Current Nova v4 registry/wholegraph/package/config/grant pins+prelockactivation remain forengine, NOT allbindingsabsent andNOT proof standalonecompleteownercontext. Parentfirstlogicalmodule/D20/taskoperator/membership/view/metadataquota/legacy/crossreader/grants/cleanup OPEN; originalA history neverlatestB refill."
+    },
+    {
+      "setting": "RT-NOVA-REMOTE-SOURCEAUTHORITY",
+      "field": "sourceAuthority",
+      "classification": "source-attestation-authority-dependency",
+      "current": "Loader nonemptyrawtext; Production capturescreatorAuthority, actual buildCommittedSourceSnapshot ID regex^[A-Za-z0-9][A-Za-z0-9._:/-]{0,255}$ later AFTER root stat, before Git. No membership/approved source provider establishedby constructor.",
+      "targetDomain": "Actual ID grammar plus genuine original issuer/key/backend trust verifier profile/grants and source/plan scope; not second report orchestrator/SDK selection authority. Source-role capture/history must be authentic and generation-compatible; B only distinct new allowed execution.",
+      "effect": "Valid original signed source matches authentic verifier/authority; invalid string, forged/unknown/mismatched issuer/key/revision/tree/archive/grants fail before native submission, source history retained.",
+      "unit": "source identity",
+      "profiles": {
+        "A": {
+          "schemaVersion": "nova-remote-test-gate-runtime.v1",
+          "endpoint": "https://fixture.invalid/plan",
+          "authentication": "bearer",
+          "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+          "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+          "sourceAuthority": "fixture-source-authority-A",
+          "stateRoot": "./state-A",
+          "pollMilliseconds": 500,
+          "maximumResponseBytes": 16777216,
+          "maximumResultBytes": 16777216,
+          "maximumArchiveBytes": 8388608,
+          "maximumArchiveStoreBytes": 67108864,
+          "maximumEvidenceBytes": 16777216,
+          "maximumEvidenceStoreBytes": 67108864,
+          "recordLimits": {
+            "maximumRecords": 1000,
+            "maximumBytes": 67108864,
+            "maximumRecordBytes": 33554432
+          }
+        },
+        "B": {
+          "schemaVersion": "nova-remote-test-gate-runtime.v1",
+          "endpoint": "http://localhost:18080/plan",
+          "authentication": "spiffe-proxy",
+          "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY_B",
+          "sourceAuthority": "fixture-source-authority-B",
+          "stateRoot": "./state-B",
+          "pollMilliseconds": 250,
+          "maximumResponseBytes": 8388608,
+          "maximumResultBytes": 8388608,
+          "maximumArchiveBytes": 4194304,
+          "maximumArchiveStoreBytes": 33554432,
+          "maximumEvidenceBytes": 8388608,
+          "maximumEvidenceStoreBytes": 33554432,
+          "recordLimits": {
+            "maximumRecords": 500,
+            "maximumBytes": 33554432,
+            "maximumRecordBytes": 16777216
+          }
+        }
+      },
+      "source": {
+        "path": "skills/nova/core/test-gates/runtime-config.ts",
+        "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a"
+      },
+      "productiveCaller": "Exported standalone remote-gate-cli --config file/--job/--timeout-ms -> loadProductionNovaTestGate explicit ENV loader -> factory -> Production.execute(one original finite deadline includes source archive+dispatch+import) -> actual persistent dispatch/poll/cancel/reconcile -> importer/full verification/retained store. CLI package export is real source path; NO in-repo configured deployed CLI invocation or installedauthentic provider/profile inferred. Registered remote adapter separately directfactory fixedvalues, not alias.",
+      "binding": "Current standalone loadercapturesselectedconfig/primitives/parsedkey atconstruct, no logicalmodule carrier/original persisted CONFIG closure implementedhere; actual storedjob/source/decision/import digests/grants retained. Current Nova v4 registry/wholegraph/package/config/grant pins+prelockactivation remain forengine, NOT allbindingsabsent andNOT proof standalonecompleteownercontext. Parentfirstlogicalmodule/D20/taskoperator/membership/view/metadataquota/legacy/crossreader/grants/cleanup OPEN; originalA history neverlatestB refill."
+    },
+    {
+      "setting": "RT-NOVA-REMOTE-STATEROOT",
+      "field": "stateRoot",
+      "classification": "operator-original-durable-root-locator",
+      "current": "Loader requirednonempty, resolves relative to realpath(config file) directory; configpath symlink resolved, state path not realpath/no-symlink guarded here. Factory absolutecheck; constructs dispatch/import records/blobs no state I/O atconstructor.",
+      "targetDomain": "Existing owned canonical durable dispatch+imports root and original retained job/source/result/evidence/store role/capacity/grants, shared generated same author for theseCLI stores. No independent switch to empty root/latest store on retry; migration retention/quota required.",
+      "effect": "Actual A persisted dispatch/import/archive/evidence original identities survive restartB; missing/wrong/symlink/unauthorized root/original binding blocks ratherthan emptyreset; no constructor physicalproof.",
+      "unit": "filesystem path",
+      "profiles": {
+        "A": {
+          "schemaVersion": "nova-remote-test-gate-runtime.v1",
+          "endpoint": "https://fixture.invalid/plan",
+          "authentication": "bearer",
+          "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+          "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+          "sourceAuthority": "fixture-source-authority-A",
+          "stateRoot": "./state-A",
+          "pollMilliseconds": 500,
+          "maximumResponseBytes": 16777216,
+          "maximumResultBytes": 16777216,
+          "maximumArchiveBytes": 8388608,
+          "maximumArchiveStoreBytes": 67108864,
+          "maximumEvidenceBytes": 16777216,
+          "maximumEvidenceStoreBytes": 67108864,
+          "recordLimits": {
+            "maximumRecords": 1000,
+            "maximumBytes": 67108864,
+            "maximumRecordBytes": 33554432
+          }
+        },
+        "B": {
+          "schemaVersion": "nova-remote-test-gate-runtime.v1",
+          "endpoint": "http://localhost:18080/plan",
+          "authentication": "spiffe-proxy",
+          "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY_B",
+          "sourceAuthority": "fixture-source-authority-B",
+          "stateRoot": "./state-B",
+          "pollMilliseconds": 250,
+          "maximumResponseBytes": 8388608,
+          "maximumResultBytes": 8388608,
+          "maximumArchiveBytes": 4194304,
+          "maximumArchiveStoreBytes": 33554432,
+          "maximumEvidenceBytes": 8388608,
+          "maximumEvidenceStoreBytes": 33554432,
+          "recordLimits": {
+            "maximumRecords": 500,
+            "maximumBytes": 33554432,
+            "maximumRecordBytes": 16777216
+          }
+        }
+      },
+      "source": {
+        "path": "skills/nova/core/test-gates/runtime-config.ts",
+        "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a"
+      },
+      "productiveCaller": "Exported standalone remote-gate-cli --config file/--job/--timeout-ms -> loadProductionNovaTestGate explicit ENV loader -> factory -> Production.execute(one original finite deadline includes source archive+dispatch+import) -> actual persistent dispatch/poll/cancel/reconcile -> importer/full verification/retained store. CLI package export is real source path; NO in-repo configured deployed CLI invocation or installedauthentic provider/profile inferred. Registered remote adapter separately directfactory fixedvalues, not alias.",
+      "binding": "Current standalone loadercapturesselectedconfig/primitives/parsedkey atconstruct, no logicalmodule carrier/original persisted CONFIG closure implementedhere; actual storedjob/source/decision/import digests/grants retained. Current Nova v4 registry/wholegraph/package/config/grant pins+prelockactivation remain forengine, NOT allbindingsabsent andNOT proof standalonecompleteownercontext. Parentfirstlogicalmodule/D20/taskoperator/membership/view/metadataquota/legacy/crossreader/grants/cleanup OPEN; originalA history neverlatestB refill."
+    },
+    {
+      "setting": "RT-NOVA-REMOTE-POLLMILLISECONDS",
+      "field": "pollMilliseconds",
+      "classification": "operator-polling-policy",
+      "current": "Required safeinteger>=10, dispatcher captures; normalpoll and cleanup observe delays min(selectedpoll,deadline.remaining). cleanupMilliseconds optional library fallback10000 is distinct UNEXPOSED current policy, not thisfield. No source upperpoll check.",
+      "targetDomain": "Proposed10..2147483647 timer-representable milliseconds AND poll<=remaining bounded original operation/cleanup feasibility; realnative full required work unchanged. Technical timer cap != physical operation SLA. Complete actual source deadlines/cleanup policy need owning closure, no latest refill.",
+      "effect": "Actual provider status/submit sequence and original deadline/cancel/reconcile logs A500/B250 materially differ delays without extra submission or loss of native task coverage; missing/<10/unsafe/unsupported timer bound rejects proposedowning validator; no instrumented transport EFFECT claim.",
+      "unit": "milliseconds",
+      "profiles": {
+        "A": {
+          "schemaVersion": "nova-remote-test-gate-runtime.v1",
+          "endpoint": "https://fixture.invalid/plan",
+          "authentication": "bearer",
+          "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+          "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+          "sourceAuthority": "fixture-source-authority-A",
+          "stateRoot": "./state-A",
+          "pollMilliseconds": 500,
+          "maximumResponseBytes": 16777216,
+          "maximumResultBytes": 16777216,
+          "maximumArchiveBytes": 8388608,
+          "maximumArchiveStoreBytes": 67108864,
+          "maximumEvidenceBytes": 16777216,
+          "maximumEvidenceStoreBytes": 67108864,
+          "recordLimits": {
+            "maximumRecords": 1000,
+            "maximumBytes": 67108864,
+            "maximumRecordBytes": 33554432
+          }
+        },
+        "B": {
+          "schemaVersion": "nova-remote-test-gate-runtime.v1",
+          "endpoint": "http://localhost:18080/plan",
+          "authentication": "spiffe-proxy",
+          "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY_B",
+          "sourceAuthority": "fixture-source-authority-B",
+          "stateRoot": "./state-B",
+          "pollMilliseconds": 250,
+          "maximumResponseBytes": 8388608,
+          "maximumResultBytes": 8388608,
+          "maximumArchiveBytes": 4194304,
+          "maximumArchiveStoreBytes": 33554432,
+          "maximumEvidenceBytes": 8388608,
+          "maximumEvidenceStoreBytes": 33554432,
+          "recordLimits": {
+            "maximumRecords": 500,
+            "maximumBytes": 33554432,
+            "maximumRecordBytes": 16777216
+          }
+        }
+      },
+      "source": {
+        "path": "skills/nova/core/test-gates/runtime-config.ts",
+        "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a"
+      },
+      "productiveCaller": "Exported standalone remote-gate-cli --config file/--job/--timeout-ms -> loadProductionNovaTestGate explicit ENV loader -> factory -> Production.execute(one original finite deadline includes source archive+dispatch+import) -> actual persistent dispatch/poll/cancel/reconcile -> importer/full verification/retained store. CLI package export is real source path; NO in-repo configured deployed CLI invocation or installedauthentic provider/profile inferred. Registered remote adapter separately directfactory fixedvalues, not alias.",
+      "binding": "Current standalone loadercapturesselectedconfig/primitives/parsedkey atconstruct, no logicalmodule carrier/original persisted CONFIG closure implementedhere; actual storedjob/source/decision/import digests/grants retained. Current Nova v4 registry/wholegraph/package/config/grant pins+prelockactivation remain forengine, NOT allbindingsabsent andNOT proof standalonecompleteownercontext. Parentfirstlogicalmodule/D20/taskoperator/membership/view/metadataquota/legacy/crossreader/grants/cleanup OPEN; originalA history neverlatestB refill."
+    },
+    {
+      "setting": "RT-NOVA-REMOTE-MAXIMUMRESPONSEBYTES",
+      "field": "maximumResponseBytes",
+      "classification": "operator-whole-HTTP-response-quota",
+      "current": "RequiredpositiveSafe; HttpTransport#request status/submission/cancel uses thisfullrawstreamcap; evidence transport uses min(thiscap, artifact requested budget). readBody declaredcontentlength/accumulatedchunks>cap rejects, cancellation/releases in finally. JSON decode/schema after completebytebody.",
+      "targetDomain": "Whole raw response/evidence body boundary positiveSafe configured quota+actual Node Buffer/stream/chunk/header/concurrency/handler/runtime/container memory feasibility. Genuine typed status/error+allselected artifact bodies must fit, no dropping bytes/coverage. Larger than measuredcapacitynotdeclared safe; exact input b vs b-1 same reader.",
+      "effect": "Complete genuine signed job/provider status/evidence response exact rawUTF8 bytes b accepts atb/b-1 rejectsbeforedecode/import (current private reader syntheticstream not realHTTP). Wrongdeclaredsize/hashes alsoreject; originals retained.",
+      "unit": "raw bytes",
+      "profiles": {
+        "A": {
+          "schemaVersion": "nova-remote-test-gate-runtime.v1",
+          "endpoint": "https://fixture.invalid/plan",
+          "authentication": "bearer",
+          "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+          "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+          "sourceAuthority": "fixture-source-authority-A",
+          "stateRoot": "./state-A",
+          "pollMilliseconds": 500,
+          "maximumResponseBytes": 16777216,
+          "maximumResultBytes": 16777216,
+          "maximumArchiveBytes": 8388608,
+          "maximumArchiveStoreBytes": 67108864,
+          "maximumEvidenceBytes": 16777216,
+          "maximumEvidenceStoreBytes": 67108864,
+          "recordLimits": {
+            "maximumRecords": 1000,
+            "maximumBytes": 67108864,
+            "maximumRecordBytes": 33554432
+          }
+        },
+        "B": {
+          "schemaVersion": "nova-remote-test-gate-runtime.v1",
+          "endpoint": "http://localhost:18080/plan",
+          "authentication": "spiffe-proxy",
+          "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY_B",
+          "sourceAuthority": "fixture-source-authority-B",
+          "stateRoot": "./state-B",
+          "pollMilliseconds": 250,
+          "maximumResponseBytes": 8388608,
+          "maximumResultBytes": 8388608,
+          "maximumArchiveBytes": 4194304,
+          "maximumArchiveStoreBytes": 33554432,
+          "maximumEvidenceBytes": 8388608,
+          "maximumEvidenceStoreBytes": 33554432,
+          "recordLimits": {
+            "maximumRecords": 500,
+            "maximumBytes": 33554432,
+            "maximumRecordBytes": 16777216
+          }
+        }
+      },
+      "source": {
+        "path": "skills/nova/core/test-gates/runtime-config.ts",
+        "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a"
+      },
+      "productiveCaller": "Exported standalone remote-gate-cli --config file/--job/--timeout-ms -> loadProductionNovaTestGate explicit ENV loader -> factory -> Production.execute(one original finite deadline includes source archive+dispatch+import) -> actual persistent dispatch/poll/cancel/reconcile -> importer/full verification/retained store. CLI package export is real source path; NO in-repo configured deployed CLI invocation or installedauthentic provider/profile inferred. Registered remote adapter separately directfactory fixedvalues, not alias.",
+      "binding": "Current standalone loadercapturesselectedconfig/primitives/parsedkey atconstruct, no logicalmodule carrier/original persisted CONFIG closure implementedhere; actual storedjob/source/decision/import digests/grants retained. Current Nova v4 registry/wholegraph/package/config/grant pins+prelockactivation remain forengine, NOT allbindingsabsent andNOT proof standalonecompleteownercontext. Parentfirstlogicalmodule/D20/taskoperator/membership/view/metadataquota/legacy/crossreader/grants/cleanup OPEN; originalA history neverlatestB refill."
+    },
+    {
+      "setting": "RT-NOVA-REMOTE-MAXIMUMRESULTBYTES",
+      "field": "maximumResultBytes",
+      "classification": "operator-whole-result-serialization-quota",
+      "current": "RequiredpositiveSafe explicitloader; optional HttpTransport library fallback maxResponse distinctlatentAPI no loaderfallback. Importer passes min(status.result.sizeBytes,selectedresultcap); transportmin(configcap,requestedbudget), thenfullrawbyteSHA+JSONschema+verifyCompletedResult/job/decision.",
+      "targetDomain": "Full original remotePlanResult encodedbytes inclusiveallrequirednative results/evidence refs/metadata/digests, notresult payload-only bytes. Exactmatchingfulltypedresult +actual Buffer/parse/allocation/resource/other store quotas fit; no taskcoverage/result truncation.",
+      "effect": "Same full actual typed result b atcapb passes andb-1 rejects atreal transport before parse/nativeproof import; source/status content digest/revision/coverage/grants retained, no fake generatedresults substituted.",
+      "unit": "raw serialized bytes",
+      "profiles": {
+        "A": {
+          "schemaVersion": "nova-remote-test-gate-runtime.v1",
+          "endpoint": "https://fixture.invalid/plan",
+          "authentication": "bearer",
+          "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+          "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+          "sourceAuthority": "fixture-source-authority-A",
+          "stateRoot": "./state-A",
+          "pollMilliseconds": 500,
+          "maximumResponseBytes": 16777216,
+          "maximumResultBytes": 16777216,
+          "maximumArchiveBytes": 8388608,
+          "maximumArchiveStoreBytes": 67108864,
+          "maximumEvidenceBytes": 16777216,
+          "maximumEvidenceStoreBytes": 67108864,
+          "recordLimits": {
+            "maximumRecords": 1000,
+            "maximumBytes": 67108864,
+            "maximumRecordBytes": 33554432
+          }
+        },
+        "B": {
+          "schemaVersion": "nova-remote-test-gate-runtime.v1",
+          "endpoint": "http://localhost:18080/plan",
+          "authentication": "spiffe-proxy",
+          "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY_B",
+          "sourceAuthority": "fixture-source-authority-B",
+          "stateRoot": "./state-B",
+          "pollMilliseconds": 250,
+          "maximumResponseBytes": 8388608,
+          "maximumResultBytes": 8388608,
+          "maximumArchiveBytes": 4194304,
+          "maximumArchiveStoreBytes": 33554432,
+          "maximumEvidenceBytes": 8388608,
+          "maximumEvidenceStoreBytes": 33554432,
+          "recordLimits": {
+            "maximumRecords": 500,
+            "maximumBytes": 33554432,
+            "maximumRecordBytes": 16777216
+          }
+        }
+      },
+      "source": {
+        "path": "skills/nova/core/test-gates/runtime-config.ts",
+        "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a"
+      },
+      "productiveCaller": "Exported standalone remote-gate-cli --config file/--job/--timeout-ms -> loadProductionNovaTestGate explicit ENV loader -> factory -> Production.execute(one original finite deadline includes source archive+dispatch+import) -> actual persistent dispatch/poll/cancel/reconcile -> importer/full verification/retained store. CLI package export is real source path; NO in-repo configured deployed CLI invocation or installedauthentic provider/profile inferred. Registered remote adapter separately directfactory fixedvalues, not alias.",
+      "binding": "Current standalone loadercapturesselectedconfig/primitives/parsedkey atconstruct, no logicalmodule carrier/original persisted CONFIG closure implementedhere; actual storedjob/source/decision/import digests/grants retained. Current Nova v4 registry/wholegraph/package/config/grant pins+prelockactivation remain forengine, NOT allbindingsabsent andNOT proof standalonecompleteownercontext. Parentfirstlogicalmodule/D20/taskoperator/membership/view/metadataquota/legacy/crossreader/grants/cleanup OPEN; originalA history neverlatestB refill."
+    },
+    {
+      "setting": "RT-NOVA-REMOTE-MAXIMUMARCHIVEBYTES",
+      "field": "maximumArchiveBytes",
+      "classification": "operator-whole-source-archive-quota",
+      "current": "Loader/factory positiveSafe no128MiB max; buildCommittedSourceSnapshot actualassertArchiveLimit1..134217728 later (afterrootstat/ID) before Git reads. sourceGit bounds archive stdout; dispatch validates size+base64ceil(archive/3)*4 then full payload recordappend BEFOREblobput.",
+      "targetDomain": "1..134217728 current source technical cap PLUS full actual tar.gz committedtree bytes, base64expansion+complete plan/source/grants metadata in configured recordpayload/whole state; archive totalstore/originalcapacity feasibility. A6 worst-case/full task proof remains mandatory\u2014source cap64MiB vsrecordpayload64MiB is NOT worst-caseco-valid because base64 alone85MiB. No remove maxima relation/worstcase obligation or source trimming.",
+      "effect": "Genuine complete fixed committedarchive a passes actual source generation/dispatch atcap>=a; adjacenta-1 rejects before native submission withoriginal tree/source/grants unchanged. Prospective fullcanonicaljob+metadata exactb recordboundary separately tested; currentrecord-beforeblob partialpending state preserved/recovery addressed.",
+      "unit": "compressed tar.gz raw bytes",
+      "profiles": {
+        "A": {
+          "schemaVersion": "nova-remote-test-gate-runtime.v1",
+          "endpoint": "https://fixture.invalid/plan",
+          "authentication": "bearer",
+          "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+          "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+          "sourceAuthority": "fixture-source-authority-A",
+          "stateRoot": "./state-A",
+          "pollMilliseconds": 500,
+          "maximumResponseBytes": 16777216,
+          "maximumResultBytes": 16777216,
+          "maximumArchiveBytes": 8388608,
+          "maximumArchiveStoreBytes": 67108864,
+          "maximumEvidenceBytes": 16777216,
+          "maximumEvidenceStoreBytes": 67108864,
+          "recordLimits": {
+            "maximumRecords": 1000,
+            "maximumBytes": 67108864,
+            "maximumRecordBytes": 33554432
+          }
+        },
+        "B": {
+          "schemaVersion": "nova-remote-test-gate-runtime.v1",
+          "endpoint": "http://localhost:18080/plan",
+          "authentication": "spiffe-proxy",
+          "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY_B",
+          "sourceAuthority": "fixture-source-authority-B",
+          "stateRoot": "./state-B",
+          "pollMilliseconds": 250,
+          "maximumResponseBytes": 8388608,
+          "maximumResultBytes": 8388608,
+          "maximumArchiveBytes": 4194304,
+          "maximumArchiveStoreBytes": 33554432,
+          "maximumEvidenceBytes": 8388608,
+          "maximumEvidenceStoreBytes": 33554432,
+          "recordLimits": {
+            "maximumRecords": 500,
+            "maximumBytes": 33554432,
+            "maximumRecordBytes": 16777216
+          }
+        }
+      },
+      "source": {
+        "path": "skills/nova/core/test-gates/runtime-config.ts",
+        "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a"
+      },
+      "productiveCaller": "Exported standalone remote-gate-cli --config file/--job/--timeout-ms -> loadProductionNovaTestGate explicit ENV loader -> factory -> Production.execute(one original finite deadline includes source archive+dispatch+import) -> actual persistent dispatch/poll/cancel/reconcile -> importer/full verification/retained store. CLI package export is real source path; NO in-repo configured deployed CLI invocation or installedauthentic provider/profile inferred. Registered remote adapter separately directfactory fixedvalues, not alias.",
+      "binding": "Current standalone loadercapturesselectedconfig/primitives/parsedkey atconstruct, no logicalmodule carrier/original persisted CONFIG closure implementedhere; actual storedjob/source/decision/import digests/grants retained. Current Nova v4 registry/wholegraph/package/config/grant pins+prelockactivation remain forengine, NOT allbindingsabsent andNOT proof standalonecompleteownercontext. Parentfirstlogicalmodule/D20/taskoperator/membership/view/metadataquota/legacy/crossreader/grants/cleanup OPEN; originalA history neverlatestB refill."
+    },
+    {
+      "setting": "RT-NOVA-REMOTE-MAXIMUMARCHIVESTOREBYTES",
+      "field": "maximumArchiveStoreBytes",
+      "classification": "operator-original-archive-store-quota",
+      "current": "RequiredpositiveSafe; FileNovaRemotePlanStore FileDurableBlobStore perblob=archivecap,total=archiveStorecap. Total usedexistingfiles+newunique bytes underglobalblobbudgetlock; duplicatesget/reuse withoutdoublecharge. ConstructordoesNOTenforce perblob<=total andrecordappendprecedescapcheckedblobput.",
+      "targetDomain": "PositiveSafe total retained original distinctarchives+metadata/temp/durablelock/runtime/storage/grants feasible; archive perblob<=total in proposed profile pre-effect plus full retainedA state nevershrunk/deleted tofitB. Exactactual totalS andS-1 negative same ownedstore, unique-vsduplicate semantics.",
+      "effect": "Actual genuine fulloriginalarchives totalS admit S; new distinctoverS rejects no silentdiscard; duplicate accepted unchanged; failed blobput leavesexistingpendingrecord andmustrecover authenticoriginal policy, no dispatch beforefullsource retention.",
+      "unit": "aggregate raw blob bytes",
+      "profiles": {
+        "A": {
+          "schemaVersion": "nova-remote-test-gate-runtime.v1",
+          "endpoint": "https://fixture.invalid/plan",
+          "authentication": "bearer",
+          "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+          "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+          "sourceAuthority": "fixture-source-authority-A",
+          "stateRoot": "./state-A",
+          "pollMilliseconds": 500,
+          "maximumResponseBytes": 16777216,
+          "maximumResultBytes": 16777216,
+          "maximumArchiveBytes": 8388608,
+          "maximumArchiveStoreBytes": 67108864,
+          "maximumEvidenceBytes": 16777216,
+          "maximumEvidenceStoreBytes": 67108864,
+          "recordLimits": {
+            "maximumRecords": 1000,
+            "maximumBytes": 67108864,
+            "maximumRecordBytes": 33554432
+          }
+        },
+        "B": {
+          "schemaVersion": "nova-remote-test-gate-runtime.v1",
+          "endpoint": "http://localhost:18080/plan",
+          "authentication": "spiffe-proxy",
+          "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY_B",
+          "sourceAuthority": "fixture-source-authority-B",
+          "stateRoot": "./state-B",
+          "pollMilliseconds": 250,
+          "maximumResponseBytes": 8388608,
+          "maximumResultBytes": 8388608,
+          "maximumArchiveBytes": 4194304,
+          "maximumArchiveStoreBytes": 33554432,
+          "maximumEvidenceBytes": 8388608,
+          "maximumEvidenceStoreBytes": 33554432,
+          "recordLimits": {
+            "maximumRecords": 500,
+            "maximumBytes": 33554432,
+            "maximumRecordBytes": 16777216
+          }
+        }
+      },
+      "source": {
+        "path": "skills/nova/core/test-gates/runtime-config.ts",
+        "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a"
+      },
+      "productiveCaller": "Exported standalone remote-gate-cli --config file/--job/--timeout-ms -> loadProductionNovaTestGate explicit ENV loader -> factory -> Production.execute(one original finite deadline includes source archive+dispatch+import) -> actual persistent dispatch/poll/cancel/reconcile -> importer/full verification/retained store. CLI package export is real source path; NO in-repo configured deployed CLI invocation or installedauthentic provider/profile inferred. Registered remote adapter separately directfactory fixedvalues, not alias.",
+      "binding": "Current standalone loadercapturesselectedconfig/primitives/parsedkey atconstruct, no logicalmodule carrier/original persisted CONFIG closure implementedhere; actual storedjob/source/decision/import digests/grants retained. Current Nova v4 registry/wholegraph/package/config/grant pins+prelockactivation remain forengine, NOT allbindingsabsent andNOT proof standalonecompleteownercontext. Parentfirstlogicalmodule/D20/taskoperator/membership/view/metadataquota/legacy/crossreader/grants/cleanup OPEN; originalA history neverlatestB refill."
+    },
+    {
+      "setting": "RT-NOVA-REMOTE-MAXIMUMEVIDENCEBYTES",
+      "field": "maximumEvidenceBytes",
+      "classification": "operator-original-aggregate-evidence-quota",
+      "current": "Importer aggregateALL selected artifact.sizeBytes safeinteger total; rejects>cap BEFOREoverbudgetnextfetch; exactreturnedbytes/contentSHA verifiedthenretainedinarray. evidence HTTPcap additionally min(maxResponseBytes,artifactrequested). Per-job aggregate not evidence-storequota or count; allresults/Buffer held concurrent current.",
+      "targetDomain": "Full original mandatoryselectedartifact raw bytes totalS+typednative/source/role/grant proofs fits aggregate+response+whole importrecords+runtime memory, node Buffer and evidenceStoretotal. No pruning selected evidence/task or metadata tofitB; prospective singlemethod S vsS-1, actual source guards retained.",
+      "effect": "Real completed result fixed ALLrefs S accepts/S-1 rejects beforeoverbudgetnextfetch; exact stored bytes/digests/decision/nativecoverage remain; no synthetic status/helper grants acceptance.",
+      "unit": "aggregate per-job raw bytes",
+      "profiles": {
+        "A": {
+          "schemaVersion": "nova-remote-test-gate-runtime.v1",
+          "endpoint": "https://fixture.invalid/plan",
+          "authentication": "bearer",
+          "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+          "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+          "sourceAuthority": "fixture-source-authority-A",
+          "stateRoot": "./state-A",
+          "pollMilliseconds": 500,
+          "maximumResponseBytes": 16777216,
+          "maximumResultBytes": 16777216,
+          "maximumArchiveBytes": 8388608,
+          "maximumArchiveStoreBytes": 67108864,
+          "maximumEvidenceBytes": 16777216,
+          "maximumEvidenceStoreBytes": 67108864,
+          "recordLimits": {
+            "maximumRecords": 1000,
+            "maximumBytes": 67108864,
+            "maximumRecordBytes": 33554432
+          }
+        },
+        "B": {
+          "schemaVersion": "nova-remote-test-gate-runtime.v1",
+          "endpoint": "http://localhost:18080/plan",
+          "authentication": "spiffe-proxy",
+          "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY_B",
+          "sourceAuthority": "fixture-source-authority-B",
+          "stateRoot": "./state-B",
+          "pollMilliseconds": 250,
+          "maximumResponseBytes": 8388608,
+          "maximumResultBytes": 8388608,
+          "maximumArchiveBytes": 4194304,
+          "maximumArchiveStoreBytes": 33554432,
+          "maximumEvidenceBytes": 8388608,
+          "maximumEvidenceStoreBytes": 33554432,
+          "recordLimits": {
+            "maximumRecords": 500,
+            "maximumBytes": 33554432,
+            "maximumRecordBytes": 16777216
+          }
+        }
+      },
+      "source": {
+        "path": "skills/nova/core/test-gates/runtime-config.ts",
+        "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a"
+      },
+      "productiveCaller": "Exported standalone remote-gate-cli --config file/--job/--timeout-ms -> loadProductionNovaTestGate explicit ENV loader -> factory -> Production.execute(one original finite deadline includes source archive+dispatch+import) -> actual persistent dispatch/poll/cancel/reconcile -> importer/full verification/retained store. CLI package export is real source path; NO in-repo configured deployed CLI invocation or installedauthentic provider/profile inferred. Registered remote adapter separately directfactory fixedvalues, not alias.",
+      "binding": "Current standalone loadercapturesselectedconfig/primitives/parsedkey atconstruct, no logicalmodule carrier/original persisted CONFIG closure implementedhere; actual storedjob/source/decision/import digests/grants retained. Current Nova v4 registry/wholegraph/package/config/grant pins+prelockactivation remain forengine, NOT allbindingsabsent andNOT proof standalonecompleteownercontext. Parentfirstlogicalmodule/D20/taskoperator/membership/view/metadataquota/legacy/crossreader/grants/cleanup OPEN; originalA history neverlatestB refill."
+    },
+    {
+      "setting": "RT-NOVA-REMOTE-MAXIMUMEVIDENCESTOREBYTES",
+      "field": "maximumEvidenceStoreBytes",
+      "classification": "operator-original-evidence-store-quota",
+      "current": "FileNovaGateImportStore constructsblobstore with SAME perblob and total=selectedevidenceStorecap; importerperjobaggregatecap distinct. recordwrites pending_evidence BEFOREeachblobput thenrecordtransitioncomplete AFTERall; preserved originalretained refs and exactreadVerifiedResult required.",
+      "targetDomain": "PositiveSafe totalallretaineduniqueoriginalevidence withexistingauthor originalgrant/store/header/metadata/temp+runtimeallocation feasibility. Evidencejob aggregate<=store cap fornewcompleteprofile plus existingusage+newdistinct. Duplicateblobsno doublecharge, originals neverdelete/shrink/reset forB.",
+      "effect": "Genuine originalevidenceallrefs totalS sameownedstore+duplicatespositive; onebyte-overnewunique rejects whilependingoriginalrecords/refhistory retained; completedtransition/readVerifiedResult onlyafterall originaldigests valid; legacy/current policy absenceblocks.",
+      "unit": "aggregate retained raw blob bytes",
+      "profiles": {
+        "A": {
+          "schemaVersion": "nova-remote-test-gate-runtime.v1",
+          "endpoint": "https://fixture.invalid/plan",
+          "authentication": "bearer",
+          "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+          "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+          "sourceAuthority": "fixture-source-authority-A",
+          "stateRoot": "./state-A",
+          "pollMilliseconds": 500,
+          "maximumResponseBytes": 16777216,
+          "maximumResultBytes": 16777216,
+          "maximumArchiveBytes": 8388608,
+          "maximumArchiveStoreBytes": 67108864,
+          "maximumEvidenceBytes": 16777216,
+          "maximumEvidenceStoreBytes": 67108864,
+          "recordLimits": {
+            "maximumRecords": 1000,
+            "maximumBytes": 67108864,
+            "maximumRecordBytes": 33554432
+          }
+        },
+        "B": {
+          "schemaVersion": "nova-remote-test-gate-runtime.v1",
+          "endpoint": "http://localhost:18080/plan",
+          "authentication": "spiffe-proxy",
+          "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY_B",
+          "sourceAuthority": "fixture-source-authority-B",
+          "stateRoot": "./state-B",
+          "pollMilliseconds": 250,
+          "maximumResponseBytes": 8388608,
+          "maximumResultBytes": 8388608,
+          "maximumArchiveBytes": 4194304,
+          "maximumArchiveStoreBytes": 33554432,
+          "maximumEvidenceBytes": 8388608,
+          "maximumEvidenceStoreBytes": 33554432,
+          "recordLimits": {
+            "maximumRecords": 500,
+            "maximumBytes": 33554432,
+            "maximumRecordBytes": 16777216
+          }
+        }
+      },
+      "source": {
+        "path": "skills/nova/core/test-gates/runtime-config.ts",
+        "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a"
+      },
+      "productiveCaller": "Exported standalone remote-gate-cli --config file/--job/--timeout-ms -> loadProductionNovaTestGate explicit ENV loader -> factory -> Production.execute(one original finite deadline includes source archive+dispatch+import) -> actual persistent dispatch/poll/cancel/reconcile -> importer/full verification/retained store. CLI package export is real source path; NO in-repo configured deployed CLI invocation or installedauthentic provider/profile inferred. Registered remote adapter separately directfactory fixedvalues, not alias.",
+      "binding": "Current standalone loadercapturesselectedconfig/primitives/parsedkey atconstruct, no logicalmodule carrier/original persisted CONFIG closure implementedhere; actual storedjob/source/decision/import digests/grants retained. Current Nova v4 registry/wholegraph/package/config/grant pins+prelockactivation remain forengine, NOT allbindingsabsent andNOT proof standalonecompleteownercontext. Parentfirstlogicalmodule/D20/taskoperator/membership/view/metadataquota/legacy/crossreader/grants/cleanup OPEN; originalA history neverlatestB refill."
+    },
+    {
+      "setting": "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDS",
+      "field": "recordLimits.maximumRecords",
+      "classification": "operator-durable-record-count-quota",
+      "current": "Both CLI dispatch+imports receive SAME suppliedrecordLimits but EACH hasseparate physicalrecords/store.json; counts actual retainedrecords includinginterruptions/job/import, tombstones/retirements serializedseparately. Fullread boundedwholebytes; appendcountrejectafter duplicateidempotentreplay check.",
+      "targetDomain": "PositiveSafeinteger count EACHexactstore withfulloriginalretainedjob/import/interruption/recoveryrecords+metadata+bytes. Completefixedtask+history counts feasible; not permission toclear records or expectedexception fallback. maxrecords technicalpositive onlynot physicalmemoryguarantee.",
+      "effect": "Actualsamefulltypedstore N acceptsatN andnewdistinctN+1 rejects withsameallhistory; exactduplicatepositive evenfullcount; otherstore independence not global combined count alias; originalrole/grants/sourcehashes retained.",
+      "unit": "records per physical store",
+      "profiles": {
+        "A": {
+          "schemaVersion": "nova-remote-test-gate-runtime.v1",
+          "endpoint": "https://fixture.invalid/plan",
+          "authentication": "bearer",
+          "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+          "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+          "sourceAuthority": "fixture-source-authority-A",
+          "stateRoot": "./state-A",
+          "pollMilliseconds": 500,
+          "maximumResponseBytes": 16777216,
+          "maximumResultBytes": 16777216,
+          "maximumArchiveBytes": 8388608,
+          "maximumArchiveStoreBytes": 67108864,
+          "maximumEvidenceBytes": 16777216,
+          "maximumEvidenceStoreBytes": 67108864,
+          "recordLimits": {
+            "maximumRecords": 1000,
+            "maximumBytes": 67108864,
+            "maximumRecordBytes": 33554432
+          }
+        },
+        "B": {
+          "schemaVersion": "nova-remote-test-gate-runtime.v1",
+          "endpoint": "http://localhost:18080/plan",
+          "authentication": "spiffe-proxy",
+          "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY_B",
+          "sourceAuthority": "fixture-source-authority-B",
+          "stateRoot": "./state-B",
+          "pollMilliseconds": 250,
+          "maximumResponseBytes": 8388608,
+          "maximumResultBytes": 8388608,
+          "maximumArchiveBytes": 4194304,
+          "maximumArchiveStoreBytes": 33554432,
+          "maximumEvidenceBytes": 8388608,
+          "maximumEvidenceStoreBytes": 33554432,
+          "recordLimits": {
+            "maximumRecords": 500,
+            "maximumBytes": 33554432,
+            "maximumRecordBytes": 16777216
+          }
+        }
+      },
+      "source": {
+        "path": "skills/nova/core/test-gates/runtime-config.ts",
+        "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a"
+      },
+      "productiveCaller": "Exported standalone remote-gate-cli --config file/--job/--timeout-ms -> loadProductionNovaTestGate explicit ENV loader -> factory -> Production.execute(one original finite deadline includes source archive+dispatch+import) -> actual persistent dispatch/poll/cancel/reconcile -> importer/full verification/retained store. CLI package export is real source path; NO in-repo configured deployed CLI invocation or installedauthentic provider/profile inferred. Registered remote adapter separately directfactory fixedvalues, not alias.",
+      "binding": "Current standalone loadercapturesselectedconfig/primitives/parsedkey atconstruct, no logicalmodule carrier/original persisted CONFIG closure implementedhere; actual storedjob/source/decision/import digests/grants retained. Current Nova v4 registry/wholegraph/package/config/grant pins+prelockactivation remain forengine, NOT allbindingsabsent andNOT proof standalonecompleteownercontext. Parentfirstlogicalmodule/D20/taskoperator/membership/view/metadataquota/legacy/crossreader/grants/cleanup OPEN; originalA history neverlatestB refill."
+    },
+    {
+      "setting": "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMBYTES",
+      "field": "recordLimits.maximumBytes",
+      "classification": "operator-whole-durable-state-quota",
+      "current": "ExactcanonicalUTF8 whole candidate document including version/records/wrapper/stream/seq/time/idempotency/digest/owner/tombstones/retirement metadata EACHdispatch/import store; boundedreadsmaximumBytes; assertDurableRecordReplay, count cap, payloadcap thenwholecandidatecap beforewrite. Notpayloadsum, one sharednumericprofiledoesnotmerge physicalstores.",
+      "targetDomain": "PositiveSafewhole serializedstate withalloriginaltask/proofs/grants/header/refs/metadata canonicaldocument +runtime/temp/allocation capacity. Complete profile prospective fullcandidate b<=originalcap mandatorypre-effect; inline ANDreferenced originalmetadata accounted, no genericexternaluntrackedstore or worstcase exemption. A6/fixedfull-plan grant/evidence requirements preserved.",
+      "effect": "Same complete genuine dispatch/importstate canonicalb withactualcommitTime/revision/wrappers capturedbeforeboundary positiveb andnegativeb-1 rejectsnoatomicwrite/statecutting. Both separatestores, cancellation/crashpendingstate thenexactauthentic recovery mandatory; no payloaddigest-only stand-in.",
+      "unit": "canonical whole state UTF8 bytes",
+      "profiles": {
+        "A": {
+          "schemaVersion": "nova-remote-test-gate-runtime.v1",
+          "endpoint": "https://fixture.invalid/plan",
+          "authentication": "bearer",
+          "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+          "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+          "sourceAuthority": "fixture-source-authority-A",
+          "stateRoot": "./state-A",
+          "pollMilliseconds": 500,
+          "maximumResponseBytes": 16777216,
+          "maximumResultBytes": 16777216,
+          "maximumArchiveBytes": 8388608,
+          "maximumArchiveStoreBytes": 67108864,
+          "maximumEvidenceBytes": 16777216,
+          "maximumEvidenceStoreBytes": 67108864,
+          "recordLimits": {
+            "maximumRecords": 1000,
+            "maximumBytes": 67108864,
+            "maximumRecordBytes": 33554432
+          }
+        },
+        "B": {
+          "schemaVersion": "nova-remote-test-gate-runtime.v1",
+          "endpoint": "http://localhost:18080/plan",
+          "authentication": "spiffe-proxy",
+          "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY_B",
+          "sourceAuthority": "fixture-source-authority-B",
+          "stateRoot": "./state-B",
+          "pollMilliseconds": 250,
+          "maximumResponseBytes": 8388608,
+          "maximumResultBytes": 8388608,
+          "maximumArchiveBytes": 4194304,
+          "maximumArchiveStoreBytes": 33554432,
+          "maximumEvidenceBytes": 8388608,
+          "maximumEvidenceStoreBytes": 33554432,
+          "recordLimits": {
+            "maximumRecords": 500,
+            "maximumBytes": 33554432,
+            "maximumRecordBytes": 16777216
+          }
+        }
+      },
+      "source": {
+        "path": "skills/nova/core/test-gates/runtime-config.ts",
+        "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a"
+      },
+      "productiveCaller": "Exported standalone remote-gate-cli --config file/--job/--timeout-ms -> loadProductionNovaTestGate explicit ENV loader -> factory -> Production.execute(one original finite deadline includes source archive+dispatch+import) -> actual persistent dispatch/poll/cancel/reconcile -> importer/full verification/retained store. CLI package export is real source path; NO in-repo configured deployed CLI invocation or installedauthentic provider/profile inferred. Registered remote adapter separately directfactory fixedvalues, not alias.",
+      "binding": "Current standalone loadercapturesselectedconfig/primitives/parsedkey atconstruct, no logicalmodule carrier/original persisted CONFIG closure implementedhere; actual storedjob/source/decision/import digests/grants retained. Current Nova v4 registry/wholegraph/package/config/grant pins+prelockactivation remain forengine, NOT allbindingsabsent andNOT proof standalonecompleteownercontext. Parentfirstlogicalmodule/D20/taskoperator/membership/view/metadataquota/legacy/crossreader/grants/cleanup OPEN; originalA history neverlatestB refill."
+    },
+    {
+      "setting": "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDBYTES",
+      "field": "recordLimits.maximumRecordBytes",
+      "classification": "operator-full-canonical-payload-quota",
+      "current": "FileDurableRecordStore comparescanonicalJson(payload) UTF8 bytes BEFORErecordwrapping/count/storewrite; dispatchpayload containsWHOLEjob/base64sourcearchive/fullplan/grants+sourceattestation; importpayload containscompleteoriginalresult/decision/refs/source. Notencodedrecord or rawarchive/result cap.",
+      "targetDomain": "PositiveSafefull canonical payload fitswhole state/profile/resources and actualcompletejob/result nativecoverage/source/proof/grants/metadata. Exactb vsb-1 beforeappend; configuredarchive/result maxima require A6 worstcase/correlation proof includingbase64 andunbounded plan/metadata, not silent cutdown or claim everymax pairsafe. Source physicalallocation cannotbeprovedby MAX_SAFE.",
+      "effect": "Actual fullprospective job/import payloadb atb passes/b-1 rejectsbeforewrapping/write; archive rawcap a != base64jobcanonicalb andresult bytes != enclosingimportcanonicalb. Correct same task/full evidence/grants positive required atrealstore; no fake minimal projection.",
+      "unit": "canonical full payload UTF8 bytes",
+      "profiles": {
+        "A": {
+          "schemaVersion": "nova-remote-test-gate-runtime.v1",
+          "endpoint": "https://fixture.invalid/plan",
+          "authentication": "bearer",
+          "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+          "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+          "sourceAuthority": "fixture-source-authority-A",
+          "stateRoot": "./state-A",
+          "pollMilliseconds": 500,
+          "maximumResponseBytes": 16777216,
+          "maximumResultBytes": 16777216,
+          "maximumArchiveBytes": 8388608,
+          "maximumArchiveStoreBytes": 67108864,
+          "maximumEvidenceBytes": 16777216,
+          "maximumEvidenceStoreBytes": 67108864,
+          "recordLimits": {
+            "maximumRecords": 1000,
+            "maximumBytes": 67108864,
+            "maximumRecordBytes": 33554432
+          }
+        },
+        "B": {
+          "schemaVersion": "nova-remote-test-gate-runtime.v1",
+          "endpoint": "http://localhost:18080/plan",
+          "authentication": "spiffe-proxy",
+          "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY_B",
+          "sourceAuthority": "fixture-source-authority-B",
+          "stateRoot": "./state-B",
+          "pollMilliseconds": 250,
+          "maximumResponseBytes": 8388608,
+          "maximumResultBytes": 8388608,
+          "maximumArchiveBytes": 4194304,
+          "maximumArchiveStoreBytes": 33554432,
+          "maximumEvidenceBytes": 8388608,
+          "maximumEvidenceStoreBytes": 33554432,
+          "recordLimits": {
+            "maximumRecords": 500,
+            "maximumBytes": 33554432,
+            "maximumRecordBytes": 16777216
+          }
+        }
+      },
+      "source": {
+        "path": "skills/nova/core/test-gates/runtime-config.ts",
+        "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a"
+      },
+      "productiveCaller": "Exported standalone remote-gate-cli --config file/--job/--timeout-ms -> loadProductionNovaTestGate explicit ENV loader -> factory -> Production.execute(one original finite deadline includes source archive+dispatch+import) -> actual persistent dispatch/poll/cancel/reconcile -> importer/full verification/retained store. CLI package export is real source path; NO in-repo configured deployed CLI invocation or installedauthentic provider/profile inferred. Registered remote adapter separately directfactory fixedvalues, not alias.",
+      "binding": "Current standalone loadercapturesselectedconfig/primitives/parsedkey atconstruct, no logicalmodule carrier/original persisted CONFIG closure implementedhere; actual storedjob/source/decision/import digests/grants retained. Current Nova v4 registry/wholegraph/package/config/grant pins+prelockactivation remain forengine, NOT allbindingsabsent andNOT proof standalonecompleteownercontext. Parentfirstlogicalmodule/D20/taskoperator/membership/view/metadataquota/legacy/crossreader/grants/cleanup OPEN; originalA history neverlatestB refill."
+    }
+  ],
+  "profiles": {
+    "A": {
+      "schemaVersion": "nova-remote-test-gate-runtime.v1",
+      "endpoint": "https://fixture.invalid/plan",
+      "authentication": "bearer",
+      "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+      "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+      "sourceAuthority": "fixture-source-authority-A",
+      "stateRoot": "./state-A",
+      "pollMilliseconds": 500,
+      "maximumResponseBytes": 16777216,
+      "maximumResultBytes": 16777216,
+      "maximumArchiveBytes": 8388608,
+      "maximumArchiveStoreBytes": 67108864,
+      "maximumEvidenceBytes": 16777216,
+      "maximumEvidenceStoreBytes": 67108864,
+      "recordLimits": {
+        "maximumRecords": 1000,
+        "maximumBytes": 67108864,
+        "maximumRecordBytes": 33554432
+      }
+    },
+    "B": {
+      "schemaVersion": "nova-remote-test-gate-runtime.v1",
+      "endpoint": "http://localhost:18080/plan",
+      "authentication": "spiffe-proxy",
+      "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY_B",
+      "sourceAuthority": "fixture-source-authority-B",
+      "stateRoot": "./state-B",
+      "pollMilliseconds": 250,
+      "maximumResponseBytes": 8388608,
+      "maximumResultBytes": 8388608,
+      "maximumArchiveBytes": 4194304,
+      "maximumArchiveStoreBytes": 33554432,
+      "maximumEvidenceBytes": 8388608,
+      "maximumEvidenceStoreBytes": 33554432,
+      "recordLimits": {
+        "maximumRecords": 500,
+        "maximumBytes": 33554432,
+        "maximumRecordBytes": 16777216
+      }
+    },
+    "currentParserAcceptanceOnly": "Complete concrete synthetic loader/factory profiles; NOT deployed provider/secret/source authority/role/capacity. ENV values are injected throwaway-memory test values, never actual process.env or stored credentials. Actual constructor parser acceptance does NOT prove complete job/output fits configured archive/result/evidence/store maxima.",
+    "futurePrerequisites": "Exact genuine registered standalone CLI provider/proxy endpoint/source issuer verifier, committed source/job/full native coverage/role grants and artifact/store fixtures remain NOTRUN/user-roster prerequisites. Same task full originals fixed across A/B; archive <=4MiB, full canonical dispatch/import payload<=16MiB, full result/evidence <=8MiB, full encoded record states<=32MiB/count<=500 and authentic retained blobs<=32MiB are REQUIRED predicates to prove this proposed pair; these numbers are declared configured ceilings, NOT measured physical capacity. Prospective same-boundary admission/policy closure must preserve original A6/worst-case/full original evidence and grants; cannot trim source/task/native coverage/history to fit B.",
+    "distinctCallers": "Standalone remote-gate-cli --config reader owns these17 fields. Registered kubeclaw.remote-test-gate:plan does NOT call this loader: directly creates factory with poll500/64MiB/1GiB/10000 literals. Numeric equality or shared library is NOT same CONFIG author; distinct registered policies remain OPEN."
+  },
+  "separateOpenPolicies": [
+    "DispatchercleanupMilliseconds literal/default10000 unexposed byCLIandregistered adapter\u2014own distinct actual productivefield/correlation needed, notpoll alias.",
+    "sourceGit stdoutsmallcommands65536/stderr4096, SourceProcessLifecyclecleanup/termination and publicsource snapshottimeout30000/revisionHEAD defaults separately productive/latent classification obligations.",
+    "Registered remoteadapter poll500/64MiB/1GiB/10000 literals distinctowner/task projection; no alias to these17standalone CLIfields untilrealoneauthorproducermigration proved.",
+    "Records-before-blobs leaves pendingstate onblobquota/cancel; realpriorpendingrecord+blob/source/import/crashgrants/identity full recovery oracles NOTRUN, notatomictransactionclaim."
+  ],
+  "unapproved": true
+}

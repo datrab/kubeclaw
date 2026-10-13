@@ -1,0 +1,100 @@
+{
+  "settingId": "CMP-worker-core-localRuntime.replayLimit",
+  "owner": "worker-core",
+  "selectedField": "/settings/localRuntime/replayLimit",
+  "sourceRow": {
+    "commit": "21bf51bc2075abec1191fdc091952492b6cb484e",
+    "path": "docs/review/evidence/config-acceptance/components/semantic-fragment.json",
+    "sha256": "8375d00031f7cdc46099f30d459cf9f3b9830a4a788aa2d56b5061633f7140d1",
+    "gitBlob": "6ccfb1356f5bc20749be4981999f22c73b7a0dd1",
+    "rfc6901Pointer": "/rows/157"
+  },
+  "schema": {
+    "commit": "21bf51bc2075abec1191fdc091952492b6cb484e",
+    "path": "skills/common/plugin-runtime/foundation/config/swarm-components.schema.json",
+    "sha256": "51e7bc64a25fd6cc67d465ebe46bab170a6c9b7215423147ab3f15777dc58968",
+    "gitBlob": "21110b9c93b84785c75e6818e268a53992a6eba5",
+    "rfc6901Pointer": "/$defs/worker-core/properties/localRuntime/properties/replayLimit",
+    "localRefChain": [],
+    "resolvedCurrentScalarDomain": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 1000000
+    }
+  },
+  "reader": {
+    "loader": "loadSwarmSettings -> readSwarmBundle, both Prism and Buster validated before return",
+    "productiveCallerChain": [
+      "skills/buster/engine/remote-plan-cli.ts",
+      "skills/buster/engine/test-gates/production.ts",
+      "skills/buster/engine/test-gates/remote-plan-service.ts",
+      "skills/buster/engine/test-gates/runner-setup.ts",
+      "skills/worker/core/worker/local-runtime.ts"
+    ],
+    "fieldAccessEvidence": [
+      {
+        "path": "skills/buster/engine/test-gates/runner-setup.ts",
+        "line": 114,
+        "text": "replayLimit: workerLocalRuntime.replayLimit,"
+      },
+      {
+        "path": "skills/worker/core/worker/local-runtime.ts",
+        "line": 24,
+        "text": "const replayLimit = options.replayLimit;"
+      },
+      {
+        "path": "skills/worker/core/worker/local-runtime.ts",
+        "line": 25,
+        "text": "if (!Number.isSafeInteger(replayLimit) || replayLimit < 1 || replayLimit > 1_000_000) {"
+      },
+      {
+        "path": "skills/worker/core/worker/local-runtime.ts",
+        "line": 28,
+        "text": "return Object.freeze({ drainTimeoutMs, cancellationTimeoutMs, replayLimit });"
+      },
+      {
+        "path": "skills/worker/core/worker/local-runtime.ts",
+        "line": 108,
+        "text": "const { drainTimeoutMs, cancellationTimeoutMs, replayLimit } = validateLocalWorkerRuntimePolicy(options);"
+      },
+      {
+        "path": "skills/worker/core/worker/local-runtime.ts",
+        "line": 115,
+        "text": "coreVersion: options.coreVersion, capacity: options.capacity, drainTimeoutMs, cancellationTimeoutMs, replayLimit });"
+      },
+      {
+        "path": "skills/worker/core/worker/local-runtime.ts",
+        "line": 177,
+        "text": "if (this.#acceptedAttemptIds.size >= this.#options.replayLimit) {"
+      }
+    ],
+    "traceStatus": "productive-chain-correlated; independent semantic review pending",
+    "proofLimit": "Access excerpts belong to manually identified productive construction/call chain; lexical name similarity alone does not establish every downstream branch. Source-traced status does not mean runtime effect tested."
+  },
+  "caseIds": [
+    "CMP-C1-VAL-worker-core",
+    "CMP-C1-EFFECT-worker-core",
+    "CMP-C1-DELIVERY",
+    "CMP-C1-MUT",
+    "CMP-C5-BIND",
+    "CMP-C1-EFFECT-worker-core-localRuntime.replayLimit"
+  ],
+  "completeABProfile": {
+    "commit": "21bf51bc2075abec1191fdc091952492b6cb484e",
+    "path": "docs/review/evidence/config-acceptance/components/refined-case-profiles.json",
+    "sha256": "139f4f494bc8806d164b66c87f2b5cddc4e6f0a846fe6b2f979776987c558d87",
+    "gitBlob": "bce44ae83319dbbb0701e8fa8241248582b8b5a8",
+    "rfc6901Pointer": "/CMP-C1-EFFECT-worker-core-localRuntime.replayLimit"
+  },
+  "activationAndMigration": {
+    "activation": {
+      "current": "S: fully validated startup snapshot; no durable next-module selector",
+      "targetClass": "R",
+      "targetReason": "Local runtime replay identity capacity and shutdown drain/cancellation apply to captured runtime lifetime; cannot reset active run replay/accepted identities.",
+      "allowedTransition": "R remains run-bound; S requires validated new service/supervisor generation with existing durable-state reconciliation; M selects before dispatch and persists immutable full closure, never reloads started module",
+      "eval": "Fixed generation always; no implemented Eval runner inferred."
+    },
+    "migration": "C1 preserve selected current values and single-generation packaging; C5 durable module/Eval binding. Do not enact D18 worker changes."
+  },
+  "definitionResult": "existing profile definitions evidence only; future EFFECT and required mutation/recovery cases remain NOTRUN; no current Helm/native PASS"
+}

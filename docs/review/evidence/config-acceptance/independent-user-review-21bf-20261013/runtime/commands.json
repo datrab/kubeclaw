@@ -1,0 +1,33 @@
+[
+  {
+    "argv": [
+      "node",
+      "docs/review/evidence/config-acceptance/independent-user-review-21bf-20261013/runtime/check-output-isolated.mjs"
+    ],
+    "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+    "exitCode": 0,
+    "stdout": "replay.stdout",
+    "stderr": "replay.stderr"
+  },
+  {
+    "argv": [
+      "python3",
+      "docs/review/evidence/config-acceptance/independent-user-review-21bf-20261013/runtime/independent-integrity.py"
+    ],
+    "attempt": 1,
+    "exitCode": 1,
+    "stdout": "integrity-attempt1.stdout",
+    "stderr": "integrity-attempt1.stderr",
+    "scriptSnapshot": "independent-integrity-attempt1.py"
+  },
+  {
+    "argv": [
+      "python3",
+      "docs/review/evidence/config-acceptance/independent-user-review-21bf-20261013/runtime/independent-integrity.py"
+    ],
+    "attempt": 2,
+    "exitCode": 0,
+    "stdout": "integrity.stdout",
+    "stderr": "integrity.stderr"
+  }
+]

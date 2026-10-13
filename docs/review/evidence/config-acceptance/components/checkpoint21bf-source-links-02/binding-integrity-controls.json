@@ -1,0 +1,53 @@
+{
+  "scope": "Pure authored source/binding integrity, NOT semantic independent acceptance or consumer/runtime/Helm/native/emitter/F-MUT",
+  "observations": [
+    {
+      "id": "all105-current-schema-sourced-member-bindings",
+      "result": "passed-document-integrity-only"
+    },
+    {
+      "id": "coordinate-omitted",
+      "result": "intended-doc-integrity-rejection",
+      "boundary": "SCHEMA_SOURCE_BINDING:coordinate set lost/duplicate"
+    },
+    {
+      "id": "member-and-count-loss",
+      "result": "intended-doc-integrity-rejection",
+      "boundary": "SCHEMA_SOURCE_BINDING:enumerated source-derived member set drift"
+    },
+    {
+      "id": "maximum-reinterpreted",
+      "result": "intended-doc-integrity-rejection",
+      "boundary": "SCHEMA_SOURCE_BINDING:source domain value drift"
+    },
+    {
+      "id": "leaf-pointer-wrong",
+      "result": "intended-doc-integrity-rejection",
+      "boundary": "SCHEMA_SOURCE_BINDING:effective leaf drift"
+    },
+    {
+      "id": "current-reader-changed",
+      "result": "intended-doc-integrity-rejection",
+      "boundary": "SCHEMA_SOURCE_BINDING:member/current-reader drift"
+    },
+    {
+      "id": "case-obligations-removed",
+      "result": "intended-doc-integrity-rejection",
+      "boundary": "SCHEMA_SOURCE_BINDING:case loss"
+    },
+    {
+      "id": "second-author",
+      "result": "intended-doc-integrity-rejection",
+      "boundary": "SCHEMA_SOURCE_BINDING:second author"
+    },
+    {
+      "id": "named-validator-bridge-removed",
+      "result": "intended-doc-integrity-rejection",
+      "boundary": "SCHEMA_SOURCE_BINDING:unproved separate validator alias"
+    },
+    {
+      "id": "restored-source-bindings",
+      "result": "passed-document-integrity-only"
+    }
+  ]
+}

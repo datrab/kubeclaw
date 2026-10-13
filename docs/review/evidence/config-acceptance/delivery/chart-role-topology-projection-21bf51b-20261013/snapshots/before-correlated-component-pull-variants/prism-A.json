@@ -1,0 +1,184 @@
+{
+  "busterComponentFile": "files/config/buster-engine.config.json",
+  "images": {
+    "control": {
+      "repository": "ghcr.io/datrab/kubeclaw-prism-control",
+      "digest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "pullPolicy": "IfNotPresent"
+    },
+    "studio": {
+      "repository": "ghcr.io/datrab/kubeclaw-prism-studio",
+      "digest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "pullPolicy": "IfNotPresent"
+    },
+    "worker": {
+      "repository": "ghcr.io/datrab/kubeclaw-prism-worker",
+      "digest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "pullPolicy": "IfNotPresent"
+    },
+    "ingestion": {
+      "repository": "ghcr.io/datrab/kubeclaw-prism-ingestion",
+      "digest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "pullPolicy": "IfNotPresent"
+    }
+  },
+  "imagePullSecrets": [
+    {
+      "name": "delivery-pull-a"
+    }
+  ],
+  "control": {
+    "productDecisions": {
+      "enabled": true,
+      "issuer": "delivery-human-a",
+      "operators": [
+        "delivery-operator"
+      ],
+      "origin": "https://delivery.example.test",
+      "authorityRevision": "delivery-authority-a",
+      "signingSecretName": "delivery-signing-a",
+      "signingSecretKey": "private-key.pem",
+      "controllerUrl": "https://delivery-controller.example.test:8443",
+      "controllerNamespace": "default",
+      "controllerRelease": "delivery-controller",
+      "controllerCaSecretName": "delivery-ca-a",
+      "controllerCaSecretKey": "ca.crt",
+      "tokenAudience": "delivery-ready",
+      "tokenExpirationSeconds": 600
+    },
+    "replicas": 1,
+    "resources": {
+      "requests": {
+        "cpu": "100m",
+        "memory": "128Mi"
+      },
+      "limits": {
+        "cpu": "1",
+        "memory": "1Gi"
+      }
+    }
+  },
+  "studio": {
+    "replicas": 1,
+    "resources": {
+      "requests": {
+        "cpu": "100m",
+        "memory": "128Mi"
+      },
+      "limits": {
+        "cpu": "1",
+        "memory": "1Gi"
+      }
+    }
+  },
+  "worker": {
+    "native": {
+      "nodeName": "dlv-source-node-a",
+      "namespace": "kubeclaw",
+      "policyDigest": "fb291df6471c43a2487bbab16284ae15c2cc04fb8fa1e7fef54b9c6784ef5789"
+    },
+    "terminationGracePeriodSeconds": 150,
+    "replicas": 1,
+    "resources": {
+      "requests": {
+        "cpu": "100m",
+        "memory": "128Mi"
+      },
+      "limits": {
+        "cpu": "1",
+        "memory": "1Gi"
+      }
+    }
+  },
+  "ingestion": {
+    "enabled": true,
+    "replicas": 1,
+    "resources": {
+      "requests": {
+        "cpu": "100m",
+        "memory": "128Mi"
+      },
+      "limits": {
+        "cpu": "1",
+        "memory": "1Gi"
+      }
+    },
+    "quarantineTtlMs": 3600000
+  },
+  "postgresql": {
+    "enabled": true,
+    "image": "pgvector/pgvector:pg17@sha256:cf134a767f474095eeba57e0117be8e568e011a63f33fbf252f14c9b760f8e6f",
+    "storage": "100Gi",
+    "storageClass": "delivery-storage-a",
+    "existingSecret": "delivery-pg-a",
+    "resources": {
+      "requests": {
+        "cpu": "100m",
+        "memory": "128Mi"
+      },
+      "limits": {
+        "cpu": "1",
+        "memory": "1Gi"
+      }
+    }
+  },
+  "secrets": {
+    "runtime": "delivery-runtime-a",
+    "database": "delivery-database-a"
+  },
+  "artifactStorage": {
+    "storage": "100Gi",
+    "storageClass": "delivery-storage-a"
+  },
+  "backup": {
+    "schedule": "0 1 * * *",
+    "verificationSchedule": "0 2 * * 0",
+    "databaseProofSchedule": "0 3 * * 0",
+    "maximumBytes": "85899345920",
+    "maximumRetainedBytes": "96636764160",
+    "maximumDurationSeconds": 3600,
+    "resources": {
+      "requests": {
+        "cpu": "100m",
+        "memory": "128Mi"
+      },
+      "limits": {
+        "cpu": "1",
+        "memory": "1Gi"
+      }
+    }
+  },
+  "tailscale": {
+    "enabled": true,
+    "hostname": "dlv-prism-studio-a",
+    "operatorNamespace": "tailscale"
+  },
+  "workerTrust": {
+    "spiffe": {
+      "enabled": true,
+      "trustDomain": "kubeclaw.internal",
+      "novaNamespace": "kubeclaw",
+      "novaServiceAccount": "agent-nova",
+      "agentNamespace": "kubeclaw",
+      "agentServiceAccount": "agent-prism",
+      "socketPath": "/run/spire/sockets/spire-agent.sock",
+      "csiDriver": "csi.spiffe.io",
+      "envoy": {
+        "repository": "envoyproxy/envoy",
+        "tag": "v1.39.0",
+        "digest": "sha256:d59f7f5fa10cff6d5892b6c5e7df5c9297ddfb2c3683e33fbfb82da24de4fa66",
+        "pullPolicy": "IfNotPresent",
+        "resources": {
+          "requests": {
+            "cpu": "100m",
+            "memory": "128Mi"
+          },
+          "limits": {
+            "cpu": "1",
+            "memory": "1Gi"
+          }
+        }
+      }
+    }
+  }
+}

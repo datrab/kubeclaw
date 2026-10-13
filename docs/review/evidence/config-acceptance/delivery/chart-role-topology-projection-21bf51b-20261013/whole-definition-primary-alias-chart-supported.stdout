@@ -1,0 +1,7 @@
+{
+  "wholeDocuments": 6,
+  "failed": 0,
+  "initialMissingCRDSchemaFailuresRetained": 2,
+  "noSkip": true,
+  "scope": "primary structural only, not API acceptance"
+}

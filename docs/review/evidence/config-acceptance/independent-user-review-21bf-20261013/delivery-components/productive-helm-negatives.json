@@ -1,0 +1,74 @@
+[
+  {
+    "argv": [
+      "helm",
+      "template",
+      "independent",
+      "charts/kubeclaw",
+      "--namespace",
+      "kubeclaw",
+      "--kube-version",
+      "1.35.6",
+      "-f",
+      "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/profiles/kubeclaw-A.json",
+      "--set-string",
+      "swarmConfigJson={}"
+    ],
+    "exitCode": 1,
+    "stderr": "walk.go:75: found symbolic link in path: /home/node/.openclaw/workspace/kubeclaw-config-c0/charts/kubeclaw/files/config/swarm-components.schema.json resolves to /home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm-components.schema.json. Contents of linked file included and used\nwalk.go:75: found symbolic link in path: /home/node/.openclaw/workspace/kubeclaw-config-c0/charts/kubeclaw/files/config/swarm.schema.json resolves to /home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.schema.json. Contents of linked file included and used\nError: execution error at (kubeclaw/templates/deployment.yaml:32:34): swarmConfigJson duplicates the component bundle author\n\nUse --debug flag to render out invalid YAML\n"
+  },
+  {
+    "argv": [
+      "helm",
+      "template",
+      "independent",
+      "charts/kubeclaw",
+      "--namespace",
+      "kubeclaw",
+      "--kube-version",
+      "1.35.6",
+      "-f",
+      "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/profiles/kubeclaw-A.json",
+      "--set-string",
+      "busterComponentFile=files/config/../wrong.config.json"
+    ],
+    "exitCode": 1,
+    "stderr": "walk.go:75: found symbolic link in path: /home/node/.openclaw/workspace/kubeclaw-config-c0/charts/kubeclaw/files/config/swarm-components.schema.json resolves to /home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm-components.schema.json. Contents of linked file included and used\nwalk.go:75: found symbolic link in path: /home/node/.openclaw/workspace/kubeclaw-config-c0/charts/kubeclaw/files/config/swarm.schema.json resolves to /home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.schema.json. Contents of linked file included and used\nError: execution error at (kubeclaw/templates/rbac.yaml:1:23): busterComponentFile path invalid\n\nUse --debug flag to render out invalid YAML\n"
+  },
+  {
+    "argv": [
+      "helm",
+      "template",
+      "independent",
+      "charts/prism",
+      "--namespace",
+      "kubeclaw",
+      "--kube-version",
+      "1.35.6",
+      "-f",
+      "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/profiles/prism-A.json",
+      "--set-string",
+      "swarmConfigJson={}"
+    ],
+    "exitCode": 1,
+    "stderr": "walk.go:75: found symbolic link in path: /home/node/.openclaw/workspace/kubeclaw-config-c0/charts/prism/files/config/buster-engine.config.json resolves to /home/node/.openclaw/workspace/kubeclaw-config-c0/charts/kubeclaw/files/config/buster-engine.config.json. Contents of linked file included and used\nwalk.go:75: found symbolic link in path: /home/node/.openclaw/workspace/kubeclaw-config-c0/charts/prism/files/config/prism-control.config.json resolves to /home/node/.openclaw/workspace/kubeclaw-config-c0/charts/kubeclaw/files/config/prism-control.config.json. Contents of linked file included and used\nwalk.go:75: found symbolic link in path: /home/node/.openclaw/workspace/kubeclaw-config-c0/charts/prism/files/config/prism-execution.config.json resolves to /home/node/.openclaw/workspace/kubeclaw-config-c0/charts/kubeclaw/files/config/prism-execution.config.json. Contents of linked file included and used\nwalk.go:75: found symbolic link in path: /home/node/.openclaw/workspace/kubeclaw-config-c0/charts/prism/files/config/prism-studio.config.json resolves to /home/node/.openclaw/workspace/kubeclaw-config-c0/charts/kubeclaw/files/config/prism-studio.config.json. Contents of linked file included and used\nwalk.go:75: found symbolic link in path: /home/node/.openclaw/workspace/kubeclaw-config-c0/charts/prism/files/config/prism-worker.config.json resolves to /home/node/.openclaw/workspace/kubeclaw-config-c0/charts/kubeclaw/files/config/prism-worker.config.json. Contents of linked file included and used\nwalk.go:75: found symbolic link in path: /home/node/.openclaw/workspace/kubeclaw-config-c0/charts/prism/files/config/profiles/buster-engine.runtime.config.json resolves to /home/node/.openclaw/workspace/kubeclaw-config-c0/charts/kubeclaw/files/config/profiles/buster-engine.runtime.config.json. Contents of linked file included and used\nwalk.go:75: found symbolic link in path: /home/node/.openclaw/workspace/kubeclaw-config-c0/charts/prism/files/config/swarm-components.schema.json resolves to /home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm-components.schema.json. Contents of linked file included and used\nwalk.go:75: found symbolic link in path: /home/node/.openclaw/workspace/kubeclaw-config-c0/charts/prism/files/config/swarm.config.json resolves to /home/node/.openclaw/workspace/kubeclaw-config-c0/charts/kubeclaw/files/config/swarm.config.json. Contents of linked file included and used\nwalk.go:75: found symbolic link in path: /home/node/.openclaw/workspace/kubeclaw-config-c0/charts/prism/files/config/swarm.schema.json resolves to /home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.schema.json. Contents of linked file included and used\nwalk.go:75: found symbolic link in path: /home/node/.openclaw/workspace/kubeclaw-config-c0/charts/prism/files/config/worker-core.config.json resolves to /home/node/.openclaw/workspace/kubeclaw-config-c0/charts/kubeclaw/files/config/worker-core.config.json. Contents of linked file included and used\nwalk.go:75: found symbolic link in path: /home/node/.openclaw/workspace/kubeclaw-config-c0/charts/prism/templates/_swarm-bundle.tpl resolves to /home/node/.openclaw/workspace/kubeclaw-config-c0/charts/kubeclaw/templates/_swarm-config.tpl. Contents of linked file included and used\nError: values don't meet the specifications of the schema(s) in the following chart(s):\nprism:\n- (root): Additional property swarmConfigJson is not allowed\n\n"
+  },
+  {
+    "argv": [
+      "helm",
+      "template",
+      "independent",
+      "charts/prism",
+      "--namespace",
+      "kubeclaw",
+      "--kube-version",
+      "1.35.6",
+      "-f",
+      "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/profiles/prism-A.json",
+      "--set-string",
+      "busterComponentFile=files/config/../wrong.config.json"
+    ],
+    "exitCode": 1,
+    "stderr": "walk.go:75: found symbolic link in path: /home/node/.openclaw/workspace/kubeclaw-config-c0/charts/prism/files/config/buster-engine.config.json resolves to /home/node/.openclaw/workspace/kubeclaw-config-c0/charts/kubeclaw/files/config/buster-engine.config.json. Contents of linked file included and used\nwalk.go:75: found symbolic link in path: /home/node/.openclaw/workspace/kubeclaw-config-c0/charts/prism/files/config/prism-control.config.json resolves to /home/node/.openclaw/workspace/kubeclaw-config-c0/charts/kubeclaw/files/config/prism-control.config.json. Contents of linked file included and used\nwalk.go:75: found symbolic link in path: /home/node/.openclaw/workspace/kubeclaw-config-c0/charts/prism/files/config/prism-execution.config.json resolves to /home/node/.openclaw/workspace/kubeclaw-config-c0/charts/kubeclaw/files/config/prism-execution.config.json. Contents of linked file included and used\nwalk.go:75: found symbolic link in path: /home/node/.openclaw/workspace/kubeclaw-config-c0/charts/prism/files/config/prism-studio.config.json resolves to /home/node/.openclaw/workspace/kubeclaw-config-c0/charts/kubeclaw/files/config/prism-studio.config.json. Contents of linked file included and used\nwalk.go:75: found symbolic link in path: /home/node/.openclaw/workspace/kubeclaw-config-c0/charts/prism/files/config/prism-worker.config.json resolves to /home/node/.openclaw/workspace/kubeclaw-config-c0/charts/kubeclaw/files/config/prism-worker.config.json. Contents of linked file included and used\nwalk.go:75: found symbolic link in path: /home/node/.openclaw/workspace/kubeclaw-config-c0/charts/prism/files/config/profiles/buster-engine.runtime.config.json resolves to /home/node/.openclaw/workspace/kubeclaw-config-c0/charts/kubeclaw/files/config/profiles/buster-engine.runtime.config.json. Contents of linked file included and used\nwalk.go:75: found symbolic link in path: /home/node/.openclaw/workspace/kubeclaw-config-c0/charts/prism/files/config/swarm-components.schema.json resolves to /home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm-components.schema.json. Contents of linked file included and used\nwalk.go:75: found symbolic link in path: /home/node/.openclaw/workspace/kubeclaw-config-c0/charts/prism/files/config/swarm.config.json resolves to /home/node/.openclaw/workspace/kubeclaw-config-c0/charts/kubeclaw/files/config/swarm.config.json. Contents of linked file included and used\nwalk.go:75: found symbolic link in path: /home/node/.openclaw/workspace/kubeclaw-config-c0/charts/prism/files/config/swarm.schema.json resolves to /home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.schema.json. Contents of linked file included and used\nwalk.go:75: found symbolic link in path: /home/node/.openclaw/workspace/kubeclaw-config-c0/charts/prism/files/config/worker-core.config.json resolves to /home/node/.openclaw/workspace/kubeclaw-config-c0/charts/kubeclaw/files/config/worker-core.config.json. Contents of linked file included and used\nwalk.go:75: found symbolic link in path: /home/node/.openclaw/workspace/kubeclaw-config-c0/charts/prism/templates/_swarm-bundle.tpl resolves to /home/node/.openclaw/workspace/kubeclaw-config-c0/charts/kubeclaw/templates/_swarm-config.tpl. Contents of linked file included and used\nError: values don't meet the specifications of the schema(s) in the following chart(s):\nprism:\n- busterComponentFile: Does not match pattern '^files/config/(profiles/)?buster-engine([.][a-z0-9-]+)?[.]config[.]json$'\n\n"
+  }
+]

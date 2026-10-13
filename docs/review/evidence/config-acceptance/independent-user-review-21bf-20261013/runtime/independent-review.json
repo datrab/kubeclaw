@@ -1,0 +1,70 @@
+{
+  "reviewer": "fresh independent Runtime review, recovered and completed by separate native reviewer",
+  "head": "21bf51bc2075abec1191fdc091952492b6cb484e",
+  "frozenBaseline": "../baseline.json",
+  "scope": "Runtime dirty fragment, case dispositions and standalone remote batch19; bounded constructor/current-source and history/conservation review, not complete whole-runtime or module-binding approval",
+  "findings": [
+    {
+      "id": "URUNTIME-001",
+      "severity": "medium",
+      "status": "open",
+      "title": "Historical row digest hashes a modified row, not the preserved original",
+      "file": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/integrate.py",
+      "line": 5,
+      "affectedSettings": 17,
+      "evidence": [
+        "row-history-hash-mismatches.json",
+        "integrity-attempt1.stderr",
+        "recovery-verification.json"
+      ],
+      "description": "The setdefault call inserts sourceDefinitionHistory=[] before the append argument computes oldRowSHA256. For every one of the 17 amended rows, that digest is therefore over an enriched object rather than the immutable original row in changed-rows-before.json.gz. Exact original snapshots are retained and match checkpoint 21bf; no source data loss was observed. However oldRowSHA256 cannot authenticate the claimed original row and a strict provenance consumer fails.",
+      "recommendedCorrection": "Compute the canonical old-row digest before inserting/mutating any history property; preserve the currently recorded incorrect history as correction provenance, and add an exact-original digest checked against the preserved snapshot. Do not rewrite existing raw evidence silently.",
+      "reproduction": "Canonical sorted compact UTF-8 JSON SHA256 of each prior row differs from recorded oldRowSHA256; adding sourceDefinitionHistory=[] reproduces every recorded digest."
+    }
+  ],
+  "checks": {
+    "rows": 1248,
+    "cases": 6320,
+    "originalCaseBodiesUnchanged": 6201,
+    "results": {
+      "not-run": 4799,
+      "passed": 1521
+    },
+    "batch19NarrowCurrentReplayPassed": 17,
+    "batch19FutureCasesRemainNotRun": 102,
+    "historicalCasesConservedAndSuperseded": 51,
+    "immutableReferenceOccurrencesResolved": 2308,
+    "sourceIdentityFilesVerified": 18,
+    "rowHistoryDigestMismatches": 17,
+    "baselineFilesChecked": 286,
+    "baselineDrift": []
+  },
+  "acceptedKnownLimitations": [
+    "UCORE-001 canonical root integration remains open; not duplicated as a new Runtime finding",
+    "Constructor tests, private pure guards and cancelled technical timers do not prove dispatch/effect/recovery/native/provider/role/grants/physical-capacity acceptance",
+    "Original generic cases remain conserved; six future obligation cases per field remain not-run",
+    "Existing source behavior gaps including authentication fallback and large poll timer overflow are explicitly documented current behavior, not newly introduced productive changes"
+  ],
+  "rawArtifactsSHA256": {
+    "check-output-isolated.mjs": "f4add6e70683c13bb9f64bd31be70a75837b62d598cc0035263dee2fedbafa0a",
+    "commands.json": "0cfbf3574f22390a69bcaa3733d0a162b9d6dbc87329fed1511782ef552ee63a",
+    "freeze-before.json": "93a60aedaf1ae9af97e4839f48324099f6dde44e852eb865a1e75c4b9e2f6f8e",
+    "independent-integrity-attempt1.py": "a148eb56d351ad7a96418521dce6b545acb2b5e5137718e22a6ca3ad08c1a83b",
+    "independent-integrity.py": "4c75d92acd2ddf7b24744a96a113c38170c9172951eeac673cd3226bc458c5d2",
+    "integrity-attempt1.stderr": "2c1c7caf764ee886100b3cd962cc398bca072273201b6fb1997836673bf82b6d",
+    "integrity-attempt1.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "integrity-results.json": "47d4f9a302178dfd8b2ce2ab1a54e0f198327264174eef4b96af0b05035f960a",
+    "integrity.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "integrity.stdout": "47d4f9a302178dfd8b2ce2ab1a54e0f198327264174eef4b96af0b05035f960a",
+    "recovery-verification.json": "15c9af5ff1c93756536a406c663ddbd3c3e6bc1289474c0ae46c3802620bb7c4",
+    "replay-isolation.json": "6c7a49357ef9a8fbd804d8ab1e922913319311e0e3d57bd38212d5692a2750c6",
+    "replay-observations.json": "c1006fad98eccfa5114e6a9f11f8430770fd925d8245aeb7c23f372a7f1566a9",
+    "replay.stderr": "4ae9296414266795095919aa94662ca35cff32247abcb1d5e175447c0ad96929",
+    "replay.stdout": "c1006fad98eccfa5114e6a9f11f8430770fd925d8245aeb7c23f372a7f1566a9",
+    "row-history-hash-mismatches.json": "8646b55ded81acf4a813ecb0df88aaa659e828007244e7daf3e274b56a220bcc"
+  },
+  "authorOrRootInputsMutated": false,
+  "globalC0Accepted": false,
+  "nativeAccepted": false,
+  "moduleBindingAccepted": false
+}

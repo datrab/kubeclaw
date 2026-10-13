@@ -1,0 +1,10 @@
+{
+  "original": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/check.mjs",
+  "originalSHA256": "bc497116a0648178df12ef85d9e735ce36cfeea8a00786cb0815f5a07f64b1db",
+  "reviewerCopySHA256": "f4add6e70683c13bb9f64bd31be70a75837b62d598cc0035263dee2fedbafa0a",
+  "onlyChange": {
+    "from": "fs.writeFileSync(B+'observations.json',",
+    "to": "fs.writeFileSync('docs/review/evidence/config-acceptance/independent-user-review-21bf-20261013/runtime/replay-observations.json',"
+  },
+  "reason": "Keep author observation artifact frozen; test logic unchanged, copy identity differs and is recorded"
+}

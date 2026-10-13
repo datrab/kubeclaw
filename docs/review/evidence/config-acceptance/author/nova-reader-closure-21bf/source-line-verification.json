@@ -1,0 +1,10 @@
+{
+  "scope": "source identity and exact line conservation only",
+  "records": 10,
+  "uniqueSourceFiles": 5,
+  "sourceHashesAndLinesMatch": true,
+  "ledgerSha256": "2fcf61896eb201076587783e627e2c71360f584e11ce644ab9cecb5155728e42",
+  "behaviorExecuted": false,
+  "independentReview": "pending",
+  "correction": "Initial generation console said six files; actual unique source count is five, as measured here."
+}

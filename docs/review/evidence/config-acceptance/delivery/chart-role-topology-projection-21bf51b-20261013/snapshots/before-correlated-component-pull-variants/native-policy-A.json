@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "nodeName": "dlv-source-node-a",
+  "runtime": {
+    "containerdVersion": "2.3.4-k3s1.36"
+  },
+  "systemReserve": {
+    "cpuMillicores": 1000,
+    "memoryBytes": 3221225472,
+    "tasks": 2048
+  },
+  "kubernetesReserve": {
+    "cpuMillicores": 500,
+    "memoryBytes": 536870912,
+    "tasks": 2048
+  },
+  "pools": {
+    "buster": {
+      "namespace": "kubeclaw",
+      "cpuMillicores": 1500,
+      "memoryBytes": 8589934592,
+      "tasks": 4096,
+      "maximumActiveScopes": 1
+    },
+    "prism": {
+      "namespace": "kubeclaw",
+      "cpuMillicores": 2000,
+      "memoryBytes": 17179869184,
+      "tasks": 2048,
+      "maximumActiveScopes": 1
+    }
+  }
+}

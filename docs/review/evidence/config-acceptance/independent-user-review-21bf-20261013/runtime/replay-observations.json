@@ -1,0 +1,3066 @@
+{
+  "command": "node docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/check.mjs",
+  "node": "v24.21.0",
+  "results": [
+    {
+      "setting": "RT-NOVA-REMOTE-SCHEMAVERSION",
+      "field": "schemaVersion",
+      "currentFullAConstructorAccepted": {
+        "schemaVersion": "nova-remote-test-gate-runtime.v1",
+        "endpoint": "https://fixture.invalid/plan",
+        "authentication": "bearer",
+        "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+        "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+        "sourceAuthority": "fixture-source-authority-A",
+        "stateRoot": "./state-A",
+        "pollMilliseconds": 500,
+        "maximumResponseBytes": 16777216,
+        "maximumResultBytes": 16777216,
+        "maximumArchiveBytes": 8388608,
+        "maximumArchiveStoreBytes": 67108864,
+        "maximumEvidenceBytes": 16777216,
+        "maximumEvidenceStoreBytes": 67108864,
+        "recordLimits": {
+          "maximumRecords": 1000,
+          "maximumBytes": 67108864,
+          "maximumRecordBytes": 33554432
+        }
+      },
+      "currentFullBConstructorAccepted": {
+        "schemaVersion": "nova-remote-test-gate-runtime.v1",
+        "endpoint": "http://localhost:18080/plan",
+        "authentication": "spiffe-proxy",
+        "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY_B",
+        "sourceAuthority": "fixture-source-authority-B",
+        "stateRoot": "./state-B",
+        "pollMilliseconds": 250,
+        "maximumResponseBytes": 8388608,
+        "maximumResultBytes": 8388608,
+        "maximumArchiveBytes": 4194304,
+        "maximumArchiveStoreBytes": 33554432,
+        "maximumEvidenceBytes": 8388608,
+        "maximumEvidenceStoreBytes": 33554432,
+        "recordLimits": {
+          "maximumRecords": 500,
+          "maximumBytes": 33554432,
+          "maximumRecordBytes": 16777216
+        }
+      },
+      "missingInput": {
+        "endpoint": "https://fixture.invalid/plan",
+        "authentication": "bearer",
+        "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+        "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+        "sourceAuthority": "fixture-source-authority-A",
+        "stateRoot": "./state-A",
+        "pollMilliseconds": 500,
+        "maximumResponseBytes": 16777216,
+        "maximumResultBytes": 16777216,
+        "maximumArchiveBytes": 8388608,
+        "maximumArchiveStoreBytes": 67108864,
+        "maximumEvidenceBytes": 16777216,
+        "maximumEvidenceStoreBytes": 67108864,
+        "recordLimits": {
+          "maximumRecords": 1000,
+          "maximumBytes": 67108864,
+          "maximumRecordBytes": 33554432
+        }
+      },
+      "nullInput": {
+        "schemaVersion": null,
+        "endpoint": "https://fixture.invalid/plan",
+        "authentication": "bearer",
+        "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+        "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+        "sourceAuthority": "fixture-source-authority-A",
+        "stateRoot": "./state-A",
+        "pollMilliseconds": 500,
+        "maximumResponseBytes": 16777216,
+        "maximumResultBytes": 16777216,
+        "maximumArchiveBytes": 8388608,
+        "maximumArchiveStoreBytes": 67108864,
+        "maximumEvidenceBytes": 16777216,
+        "maximumEvidenceStoreBytes": 67108864,
+        "recordLimits": {
+          "maximumRecords": 1000,
+          "maximumBytes": 67108864,
+          "maximumRecordBytes": 33554432
+        }
+      },
+      "currentMissingRejected": true,
+      "currentNullRejected": true,
+      "unknownInput": {
+        "schemaVersion": "nova-remote-test-gate-runtime.v1",
+        "endpoint": "https://fixture.invalid/plan",
+        "authentication": "bearer",
+        "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+        "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+        "sourceAuthority": "fixture-source-authority-A",
+        "stateRoot": "./state-A",
+        "pollMilliseconds": 500,
+        "maximumResponseBytes": 16777216,
+        "maximumResultBytes": 16777216,
+        "maximumArchiveBytes": 8388608,
+        "maximumArchiveStoreBytes": 67108864,
+        "maximumEvidenceBytes": 16777216,
+        "maximumEvidenceStoreBytes": 67108864,
+        "recordLimits": {
+          "maximumRecords": 1000,
+          "maximumBytes": 67108864,
+          "maximumRecordBytes": 33554432
+        },
+        "unapprovedKnob": true
+      },
+      "currentRootUnknownRejected": true,
+      "numericNegativeInputs": [],
+      "scope": "Actual standalone public loader+production constructors ONLY, syntheticownedconfigfile and explicitly injected ephemeral in-memory credentials. No execute/dispatch/Git/network/artifact/storemethod/provider/installedcredential/grant/model/effect orphysicalcapacity acceptance",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-NOVA-REMOTE-ENDPOINT",
+      "field": "endpoint",
+      "currentFullAConstructorAccepted": {
+        "schemaVersion": "nova-remote-test-gate-runtime.v1",
+        "endpoint": "https://fixture.invalid/plan",
+        "authentication": "bearer",
+        "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+        "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+        "sourceAuthority": "fixture-source-authority-A",
+        "stateRoot": "./state-A",
+        "pollMilliseconds": 500,
+        "maximumResponseBytes": 16777216,
+        "maximumResultBytes": 16777216,
+        "maximumArchiveBytes": 8388608,
+        "maximumArchiveStoreBytes": 67108864,
+        "maximumEvidenceBytes": 16777216,
+        "maximumEvidenceStoreBytes": 67108864,
+        "recordLimits": {
+          "maximumRecords": 1000,
+          "maximumBytes": 67108864,
+          "maximumRecordBytes": 33554432
+        }
+      },
+      "currentFullBConstructorAccepted": {
+        "schemaVersion": "nova-remote-test-gate-runtime.v1",
+        "endpoint": "http://localhost:18080/plan",
+        "authentication": "spiffe-proxy",
+        "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY_B",
+        "sourceAuthority": "fixture-source-authority-B",
+        "stateRoot": "./state-B",
+        "pollMilliseconds": 250,
+        "maximumResponseBytes": 8388608,
+        "maximumResultBytes": 8388608,
+        "maximumArchiveBytes": 4194304,
+        "maximumArchiveStoreBytes": 33554432,
+        "maximumEvidenceBytes": 8388608,
+        "maximumEvidenceStoreBytes": 33554432,
+        "recordLimits": {
+          "maximumRecords": 500,
+          "maximumBytes": 33554432,
+          "maximumRecordBytes": 16777216
+        }
+      },
+      "missingInput": {
+        "schemaVersion": "nova-remote-test-gate-runtime.v1",
+        "authentication": "bearer",
+        "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+        "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+        "sourceAuthority": "fixture-source-authority-A",
+        "stateRoot": "./state-A",
+        "pollMilliseconds": 500,
+        "maximumResponseBytes": 16777216,
+        "maximumResultBytes": 16777216,
+        "maximumArchiveBytes": 8388608,
+        "maximumArchiveStoreBytes": 67108864,
+        "maximumEvidenceBytes": 16777216,
+        "maximumEvidenceStoreBytes": 67108864,
+        "recordLimits": {
+          "maximumRecords": 1000,
+          "maximumBytes": 67108864,
+          "maximumRecordBytes": 33554432
+        }
+      },
+      "nullInput": {
+        "schemaVersion": "nova-remote-test-gate-runtime.v1",
+        "endpoint": null,
+        "authentication": "bearer",
+        "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+        "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+        "sourceAuthority": "fixture-source-authority-A",
+        "stateRoot": "./state-A",
+        "pollMilliseconds": 500,
+        "maximumResponseBytes": 16777216,
+        "maximumResultBytes": 16777216,
+        "maximumArchiveBytes": 8388608,
+        "maximumArchiveStoreBytes": 67108864,
+        "maximumEvidenceBytes": 16777216,
+        "maximumEvidenceStoreBytes": 67108864,
+        "recordLimits": {
+          "maximumRecords": 1000,
+          "maximumBytes": 67108864,
+          "maximumRecordBytes": 33554432
+        }
+      },
+      "currentMissingRejected": true,
+      "currentNullRejected": true,
+      "unknownInput": {
+        "schemaVersion": "nova-remote-test-gate-runtime.v1",
+        "endpoint": "https://fixture.invalid/plan",
+        "authentication": "bearer",
+        "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+        "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+        "sourceAuthority": "fixture-source-authority-A",
+        "stateRoot": "./state-A",
+        "pollMilliseconds": 500,
+        "maximumResponseBytes": 16777216,
+        "maximumResultBytes": 16777216,
+        "maximumArchiveBytes": 8388608,
+        "maximumArchiveStoreBytes": 67108864,
+        "maximumEvidenceBytes": 16777216,
+        "maximumEvidenceStoreBytes": 67108864,
+        "recordLimits": {
+          "maximumRecords": 1000,
+          "maximumBytes": 67108864,
+          "maximumRecordBytes": 33554432
+        },
+        "unapprovedKnob": true
+      },
+      "currentRootUnknownRejected": true,
+      "numericNegativeInputs": [],
+      "scope": "Actual standalone public loader+production constructors ONLY, syntheticownedconfigfile and explicitly injected ephemeral in-memory credentials. No execute/dispatch/Git/network/artifact/storemethod/provider/installedcredential/grant/model/effect orphysicalcapacity acceptance",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-NOVA-REMOTE-AUTHENTICATION",
+      "field": "authentication",
+      "currentFullAConstructorAccepted": {
+        "schemaVersion": "nova-remote-test-gate-runtime.v1",
+        "endpoint": "https://fixture.invalid/plan",
+        "authentication": "bearer",
+        "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+        "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+        "sourceAuthority": "fixture-source-authority-A",
+        "stateRoot": "./state-A",
+        "pollMilliseconds": 500,
+        "maximumResponseBytes": 16777216,
+        "maximumResultBytes": 16777216,
+        "maximumArchiveBytes": 8388608,
+        "maximumArchiveStoreBytes": 67108864,
+        "maximumEvidenceBytes": 16777216,
+        "maximumEvidenceStoreBytes": 67108864,
+        "recordLimits": {
+          "maximumRecords": 1000,
+          "maximumBytes": 67108864,
+          "maximumRecordBytes": 33554432
+        }
+      },
+      "currentFullBConstructorAccepted": {
+        "schemaVersion": "nova-remote-test-gate-runtime.v1",
+        "endpoint": "http://localhost:18080/plan",
+        "authentication": "spiffe-proxy",
+        "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY_B",
+        "sourceAuthority": "fixture-source-authority-B",
+        "stateRoot": "./state-B",
+        "pollMilliseconds": 250,
+        "maximumResponseBytes": 8388608,
+        "maximumResultBytes": 8388608,
+        "maximumArchiveBytes": 4194304,
+        "maximumArchiveStoreBytes": 33554432,
+        "maximumEvidenceBytes": 8388608,
+        "maximumEvidenceStoreBytes": 33554432,
+        "recordLimits": {
+          "maximumRecords": 500,
+          "maximumBytes": 33554432,
+          "maximumRecordBytes": 16777216
+        }
+      },
+      "missingInput": {
+        "schemaVersion": "nova-remote-test-gate-runtime.v1",
+        "endpoint": "https://fixture.invalid/plan",
+        "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+        "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+        "sourceAuthority": "fixture-source-authority-A",
+        "stateRoot": "./state-A",
+        "pollMilliseconds": 500,
+        "maximumResponseBytes": 16777216,
+        "maximumResultBytes": 16777216,
+        "maximumArchiveBytes": 8388608,
+        "maximumArchiveStoreBytes": 67108864,
+        "maximumEvidenceBytes": 16777216,
+        "maximumEvidenceStoreBytes": 67108864,
+        "recordLimits": {
+          "maximumRecords": 1000,
+          "maximumBytes": 67108864,
+          "maximumRecordBytes": 33554432
+        }
+      },
+      "nullInput": {
+        "schemaVersion": "nova-remote-test-gate-runtime.v1",
+        "endpoint": "https://fixture.invalid/plan",
+        "authentication": null,
+        "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+        "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+        "sourceAuthority": "fixture-source-authority-A",
+        "stateRoot": "./state-A",
+        "pollMilliseconds": 500,
+        "maximumResponseBytes": 16777216,
+        "maximumResultBytes": 16777216,
+        "maximumArchiveBytes": 8388608,
+        "maximumArchiveStoreBytes": 67108864,
+        "maximumEvidenceBytes": 16777216,
+        "maximumEvidenceStoreBytes": 67108864,
+        "recordLimits": {
+          "maximumRecords": 1000,
+          "maximumBytes": 67108864,
+          "maximumRecordBytes": 33554432
+        }
+      },
+      "currentMissingRejected": false,
+      "currentNullRejected": false,
+      "unknownInput": {
+        "schemaVersion": "nova-remote-test-gate-runtime.v1",
+        "endpoint": "https://fixture.invalid/plan",
+        "authentication": "bearer",
+        "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+        "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+        "sourceAuthority": "fixture-source-authority-A",
+        "stateRoot": "./state-A",
+        "pollMilliseconds": 500,
+        "maximumResponseBytes": 16777216,
+        "maximumResultBytes": 16777216,
+        "maximumArchiveBytes": 8388608,
+        "maximumArchiveStoreBytes": 67108864,
+        "maximumEvidenceBytes": 16777216,
+        "maximumEvidenceStoreBytes": 67108864,
+        "recordLimits": {
+          "maximumRecords": 1000,
+          "maximumBytes": 67108864,
+          "maximumRecordBytes": 33554432
+        },
+        "unapprovedKnob": true
+      },
+      "currentRootUnknownRejected": true,
+      "numericNegativeInputs": [],
+      "scope": "Actual standalone public loader+production constructors ONLY, syntheticownedconfigfile and explicitly injected ephemeral in-memory credentials. No execute/dispatch/Git/network/artifact/storemethod/provider/installedcredential/grant/model/effect orphysicalcapacity acceptance",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-NOVA-REMOTE-TOKENENVIRONMENTVARIABLE",
+      "field": "tokenEnvironmentVariable",
+      "currentFullAConstructorAccepted": {
+        "schemaVersion": "nova-remote-test-gate-runtime.v1",
+        "endpoint": "https://fixture.invalid/plan",
+        "authentication": "bearer",
+        "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+        "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+        "sourceAuthority": "fixture-source-authority-A",
+        "stateRoot": "./state-A",
+        "pollMilliseconds": 500,
+        "maximumResponseBytes": 16777216,
+        "maximumResultBytes": 16777216,
+        "maximumArchiveBytes": 8388608,
+        "maximumArchiveStoreBytes": 67108864,
+        "maximumEvidenceBytes": 16777216,
+        "maximumEvidenceStoreBytes": 67108864,
+        "recordLimits": {
+          "maximumRecords": 1000,
+          "maximumBytes": 67108864,
+          "maximumRecordBytes": 33554432
+        }
+      },
+      "currentFullBConstructorAccepted": {
+        "schemaVersion": "nova-remote-test-gate-runtime.v1",
+        "endpoint": "http://localhost:18080/plan",
+        "authentication": "spiffe-proxy",
+        "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY_B",
+        "sourceAuthority": "fixture-source-authority-B",
+        "stateRoot": "./state-B",
+        "pollMilliseconds": 250,
+        "maximumResponseBytes": 8388608,
+        "maximumResultBytes": 8388608,
+        "maximumArchiveBytes": 4194304,
+        "maximumArchiveStoreBytes": 33554432,
+        "maximumEvidenceBytes": 8388608,
+        "maximumEvidenceStoreBytes": 33554432,
+        "recordLimits": {
+          "maximumRecords": 500,
+          "maximumBytes": 33554432,
+          "maximumRecordBytes": 16777216
+        }
+      },
+      "missingInput": {
+        "schemaVersion": "nova-remote-test-gate-runtime.v1",
+        "endpoint": "https://fixture.invalid/plan",
+        "authentication": "bearer",
+        "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+        "sourceAuthority": "fixture-source-authority-A",
+        "stateRoot": "./state-A",
+        "pollMilliseconds": 500,
+        "maximumResponseBytes": 16777216,
+        "maximumResultBytes": 16777216,
+        "maximumArchiveBytes": 8388608,
+        "maximumArchiveStoreBytes": 67108864,
+        "maximumEvidenceBytes": 16777216,
+        "maximumEvidenceStoreBytes": 67108864,
+        "recordLimits": {
+          "maximumRecords": 1000,
+          "maximumBytes": 67108864,
+          "maximumRecordBytes": 33554432
+        }
+      },
+      "nullInput": {
+        "schemaVersion": "nova-remote-test-gate-runtime.v1",
+        "endpoint": "https://fixture.invalid/plan",
+        "authentication": "bearer",
+        "tokenEnvironmentVariable": null,
+        "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+        "sourceAuthority": "fixture-source-authority-A",
+        "stateRoot": "./state-A",
+        "pollMilliseconds": 500,
+        "maximumResponseBytes": 16777216,
+        "maximumResultBytes": 16777216,
+        "maximumArchiveBytes": 8388608,
+        "maximumArchiveStoreBytes": 67108864,
+        "maximumEvidenceBytes": 16777216,
+        "maximumEvidenceStoreBytes": 67108864,
+        "recordLimits": {
+          "maximumRecords": 1000,
+          "maximumBytes": 67108864,
+          "maximumRecordBytes": 33554432
+        }
+      },
+      "currentMissingRejected": true,
+      "currentNullRejected": true,
+      "unknownInput": {
+        "schemaVersion": "nova-remote-test-gate-runtime.v1",
+        "endpoint": "https://fixture.invalid/plan",
+        "authentication": "bearer",
+        "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+        "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+        "sourceAuthority": "fixture-source-authority-A",
+        "stateRoot": "./state-A",
+        "pollMilliseconds": 500,
+        "maximumResponseBytes": 16777216,
+        "maximumResultBytes": 16777216,
+        "maximumArchiveBytes": 8388608,
+        "maximumArchiveStoreBytes": 67108864,
+        "maximumEvidenceBytes": 16777216,
+        "maximumEvidenceStoreBytes": 67108864,
+        "recordLimits": {
+          "maximumRecords": 1000,
+          "maximumBytes": 67108864,
+          "maximumRecordBytes": 33554432
+        },
+        "unapprovedKnob": true
+      },
+      "currentRootUnknownRejected": true,
+      "numericNegativeInputs": [],
+      "scope": "Actual standalone public loader+production constructors ONLY, syntheticownedconfigfile and explicitly injected ephemeral in-memory credentials. No execute/dispatch/Git/network/artifact/storemethod/provider/installedcredential/grant/model/effect orphysicalcapacity acceptance",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-NOVA-REMOTE-SOURCEATTESTATIONPRIVATEKEYENVIRONMENTVARIABLE",
+      "field": "sourceAttestationPrivateKeyEnvironmentVariable",
+      "currentFullAConstructorAccepted": {
+        "schemaVersion": "nova-remote-test-gate-runtime.v1",
+        "endpoint": "https://fixture.invalid/plan",
+        "authentication": "bearer",
+        "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+        "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+        "sourceAuthority": "fixture-source-authority-A",
+        "stateRoot": "./state-A",
+        "pollMilliseconds": 500,
+        "maximumResponseBytes": 16777216,
+        "maximumResultBytes": 16777216,
+        "maximumArchiveBytes": 8388608,
+        "maximumArchiveStoreBytes": 67108864,
+        "maximumEvidenceBytes": 16777216,
+        "maximumEvidenceStoreBytes": 67108864,
+        "recordLimits": {
+          "maximumRecords": 1000,
+          "maximumBytes": 67108864,
+          "maximumRecordBytes": 33554432
+        }
+      },
+      "currentFullBConstructorAccepted": {
+        "schemaVersion": "nova-remote-test-gate-runtime.v1",
+        "endpoint": "http://localhost:18080/plan",
+        "authentication": "spiffe-proxy",
+        "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY_B",
+        "sourceAuthority": "fixture-source-authority-B",
+        "stateRoot": "./state-B",
+        "pollMilliseconds": 250,
+        "maximumResponseBytes": 8388608,
+        "maximumResultBytes": 8388608,
+        "maximumArchiveBytes": 4194304,
+        "maximumArchiveStoreBytes": 33554432,
+        "maximumEvidenceBytes": 8388608,
+        "maximumEvidenceStoreBytes": 33554432,
+        "recordLimits": {
+          "maximumRecords": 500,
+          "maximumBytes": 33554432,
+          "maximumRecordBytes": 16777216
+        }
+      },
+      "missingInput": {
+        "schemaVersion": "nova-remote-test-gate-runtime.v1",
+        "endpoint": "https://fixture.invalid/plan",
+        "authentication": "bearer",
+        "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+        "sourceAuthority": "fixture-source-authority-A",
+        "stateRoot": "./state-A",
+        "pollMilliseconds": 500,
+        "maximumResponseBytes": 16777216,
+        "maximumResultBytes": 16777216,
+        "maximumArchiveBytes": 8388608,
+        "maximumArchiveStoreBytes": 67108864,
+        "maximumEvidenceBytes": 16777216,
+        "maximumEvidenceStoreBytes": 67108864,
+        "recordLimits": {
+          "maximumRecords": 1000,
+          "maximumBytes": 67108864,
+          "maximumRecordBytes": 33554432
+        }
+      },
+      "nullInput": {
+        "schemaVersion": "nova-remote-test-gate-runtime.v1",
+        "endpoint": "https://fixture.invalid/plan",
+        "authentication": "bearer",
+        "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+        "sourceAttestationPrivateKeyEnvironmentVariable": null,
+        "sourceAuthority": "fixture-source-authority-A",
+        "stateRoot": "./state-A",
+        "pollMilliseconds": 500,
+        "maximumResponseBytes": 16777216,
+        "maximumResultBytes": 16777216,
+        "maximumArchiveBytes": 8388608,
+        "maximumArchiveStoreBytes": 67108864,
+        "maximumEvidenceBytes": 16777216,
+        "maximumEvidenceStoreBytes": 67108864,
+        "recordLimits": {
+          "maximumRecords": 1000,
+          "maximumBytes": 67108864,
+          "maximumRecordBytes": 33554432
+        }
+      },
+      "currentMissingRejected": true,
+      "currentNullRejected": true,
+      "unknownInput": {
+        "schemaVersion": "nova-remote-test-gate-runtime.v1",
+        "endpoint": "https://fixture.invalid/plan",
+        "authentication": "bearer",
+        "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+        "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+        "sourceAuthority": "fixture-source-authority-A",
+        "stateRoot": "./state-A",
+        "pollMilliseconds": 500,
+        "maximumResponseBytes": 16777216,
+        "maximumResultBytes": 16777216,
+        "maximumArchiveBytes": 8388608,
+        "maximumArchiveStoreBytes": 67108864,
+        "maximumEvidenceBytes": 16777216,
+        "maximumEvidenceStoreBytes": 67108864,
+        "recordLimits": {
+          "maximumRecords": 1000,
+          "maximumBytes": 67108864,
+          "maximumRecordBytes": 33554432
+        },
+        "unapprovedKnob": true
+      },
+      "currentRootUnknownRejected": true,
+      "numericNegativeInputs": [],
+      "scope": "Actual standalone public loader+production constructors ONLY, syntheticownedconfigfile and explicitly injected ephemeral in-memory credentials. No execute/dispatch/Git/network/artifact/storemethod/provider/installedcredential/grant/model/effect orphysicalcapacity acceptance",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-NOVA-REMOTE-SOURCEAUTHORITY",
+      "field": "sourceAuthority",
+      "currentFullAConstructorAccepted": {
+        "schemaVersion": "nova-remote-test-gate-runtime.v1",
+        "endpoint": "https://fixture.invalid/plan",
+        "authentication": "bearer",
+        "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+        "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+        "sourceAuthority": "fixture-source-authority-A",
+        "stateRoot": "./state-A",
+        "pollMilliseconds": 500,
+        "maximumResponseBytes": 16777216,
+        "maximumResultBytes": 16777216,
+        "maximumArchiveBytes": 8388608,
+        "maximumArchiveStoreBytes": 67108864,
+        "maximumEvidenceBytes": 16777216,
+        "maximumEvidenceStoreBytes": 67108864,
+        "recordLimits": {
+          "maximumRecords": 1000,
+          "maximumBytes": 67108864,
+          "maximumRecordBytes": 33554432
+        }
+      },
+      "currentFullBConstructorAccepted": {
+        "schemaVersion": "nova-remote-test-gate-runtime.v1",
+        "endpoint": "http://localhost:18080/plan",
+        "authentication": "spiffe-proxy",
+        "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY_B",
+        "sourceAuthority": "fixture-source-authority-B",
+        "stateRoot": "./state-B",
+        "pollMilliseconds": 250,
+        "maximumResponseBytes": 8388608,
+        "maximumResultBytes": 8388608,
+        "maximumArchiveBytes": 4194304,
+        "maximumArchiveStoreBytes": 33554432,
+        "maximumEvidenceBytes": 8388608,
+        "maximumEvidenceStoreBytes": 33554432,
+        "recordLimits": {
+          "maximumRecords": 500,
+          "maximumBytes": 33554432,
+          "maximumRecordBytes": 16777216
+        }
+      },
+      "missingInput": {
+        "schemaVersion": "nova-remote-test-gate-runtime.v1",
+        "endpoint": "https://fixture.invalid/plan",
+        "authentication": "bearer",
+        "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+        "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+        "stateRoot": "./state-A",
+        "pollMilliseconds": 500,
+        "maximumResponseBytes": 16777216,
+        "maximumResultBytes": 16777216,
+        "maximumArchiveBytes": 8388608,
+        "maximumArchiveStoreBytes": 67108864,
+        "maximumEvidenceBytes": 16777216,
+        "maximumEvidenceStoreBytes": 67108864,
+        "recordLimits": {
+          "maximumRecords": 1000,
+          "maximumBytes": 67108864,
+          "maximumRecordBytes": 33554432
+        }
+      },
+      "nullInput": {
+        "schemaVersion": "nova-remote-test-gate-runtime.v1",
+        "endpoint": "https://fixture.invalid/plan",
+        "authentication": "bearer",
+        "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+        "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+        "sourceAuthority": null,
+        "stateRoot": "./state-A",
+        "pollMilliseconds": 500,
+        "maximumResponseBytes": 16777216,
+        "maximumResultBytes": 16777216,
+        "maximumArchiveBytes": 8388608,
+        "maximumArchiveStoreBytes": 67108864,
+        "maximumEvidenceBytes": 16777216,
+        "maximumEvidenceStoreBytes": 67108864,
+        "recordLimits": {
+          "maximumRecords": 1000,
+          "maximumBytes": 67108864,
+          "maximumRecordBytes": 33554432
+        }
+      },
+      "currentMissingRejected": true,
+      "currentNullRejected": true,
+      "unknownInput": {
+        "schemaVersion": "nova-remote-test-gate-runtime.v1",
+        "endpoint": "https://fixture.invalid/plan",
+        "authentication": "bearer",
+        "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+        "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+        "sourceAuthority": "fixture-source-authority-A",
+        "stateRoot": "./state-A",
+        "pollMilliseconds": 500,
+        "maximumResponseBytes": 16777216,
+        "maximumResultBytes": 16777216,
+        "maximumArchiveBytes": 8388608,
+        "maximumArchiveStoreBytes": 67108864,
+        "maximumEvidenceBytes": 16777216,
+        "maximumEvidenceStoreBytes": 67108864,
+        "recordLimits": {
+          "maximumRecords": 1000,
+          "maximumBytes": 67108864,
+          "maximumRecordBytes": 33554432
+        },
+        "unapprovedKnob": true
+      },
+      "currentRootUnknownRejected": true,
+      "numericNegativeInputs": [],
+      "scope": "Actual standalone public loader+production constructors ONLY, syntheticownedconfigfile and explicitly injected ephemeral in-memory credentials. No execute/dispatch/Git/network/artifact/storemethod/provider/installedcredential/grant/model/effect orphysicalcapacity acceptance",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-NOVA-REMOTE-STATEROOT",
+      "field": "stateRoot",
+      "currentFullAConstructorAccepted": {
+        "schemaVersion": "nova-remote-test-gate-runtime.v1",
+        "endpoint": "https://fixture.invalid/plan",
+        "authentication": "bearer",
+        "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+        "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+        "sourceAuthority": "fixture-source-authority-A",
+        "stateRoot": "./state-A",
+        "pollMilliseconds": 500,
+        "maximumResponseBytes": 16777216,
+        "maximumResultBytes": 16777216,
+        "maximumArchiveBytes": 8388608,
+        "maximumArchiveStoreBytes": 67108864,
+        "maximumEvidenceBytes": 16777216,
+        "maximumEvidenceStoreBytes": 67108864,
+        "recordLimits": {
+          "maximumRecords": 1000,
+          "maximumBytes": 67108864,
+          "maximumRecordBytes": 33554432
+        }
+      },
+      "currentFullBConstructorAccepted": {
+        "schemaVersion": "nova-remote-test-gate-runtime.v1",
+        "endpoint": "http://localhost:18080/plan",
+        "authentication": "spiffe-proxy",
+        "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY_B",
+        "sourceAuthority": "fixture-source-authority-B",
+        "stateRoot": "./state-B",
+        "pollMilliseconds": 250,
+        "maximumResponseBytes": 8388608,
+        "maximumResultBytes": 8388608,
+        "maximumArchiveBytes": 4194304,
+        "maximumArchiveStoreBytes": 33554432,
+        "maximumEvidenceBytes": 8388608,
+        "maximumEvidenceStoreBytes": 33554432,
+        "recordLimits": {
+          "maximumRecords": 500,
+          "maximumBytes": 33554432,
+          "maximumRecordBytes": 16777216
+        }
+      },
+      "missingInput": {
+        "schemaVersion": "nova-remote-test-gate-runtime.v1",
+        "endpoint": "https://fixture.invalid/plan",
+        "authentication": "bearer",
+        "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+        "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+        "sourceAuthority": "fixture-source-authority-A",
+        "pollMilliseconds": 500,
+        "maximumResponseBytes": 16777216,
+        "maximumResultBytes": 16777216,
+        "maximumArchiveBytes": 8388608,
+        "maximumArchiveStoreBytes": 67108864,
+        "maximumEvidenceBytes": 16777216,
+        "maximumEvidenceStoreBytes": 67108864,
+        "recordLimits": {
+          "maximumRecords": 1000,
+          "maximumBytes": 67108864,
+          "maximumRecordBytes": 33554432
+        }
+      },
+      "nullInput": {
+        "schemaVersion": "nova-remote-test-gate-runtime.v1",
+        "endpoint": "https://fixture.invalid/plan",
+        "authentication": "bearer",
+        "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+        "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+        "sourceAuthority": "fixture-source-authority-A",
+        "stateRoot": null,
+        "pollMilliseconds": 500,
+        "maximumResponseBytes": 16777216,
+        "maximumResultBytes": 16777216,
+        "maximumArchiveBytes": 8388608,
+        "maximumArchiveStoreBytes": 67108864,
+        "maximumEvidenceBytes": 16777216,
+        "maximumEvidenceStoreBytes": 67108864,
+        "recordLimits": {
+          "maximumRecords": 1000,
+          "maximumBytes": 67108864,
+          "maximumRecordBytes": 33554432
+        }
+      },
+      "currentMissingRejected": true,
+      "currentNullRejected": true,
+      "unknownInput": {
+        "schemaVersion": "nova-remote-test-gate-runtime.v1",
+        "endpoint": "https://fixture.invalid/plan",
+        "authentication": "bearer",
+        "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+        "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+        "sourceAuthority": "fixture-source-authority-A",
+        "stateRoot": "./state-A",
+        "pollMilliseconds": 500,
+        "maximumResponseBytes": 16777216,
+        "maximumResultBytes": 16777216,
+        "maximumArchiveBytes": 8388608,
+        "maximumArchiveStoreBytes": 67108864,
+        "maximumEvidenceBytes": 16777216,
+        "maximumEvidenceStoreBytes": 67108864,
+        "recordLimits": {
+          "maximumRecords": 1000,
+          "maximumBytes": 67108864,
+          "maximumRecordBytes": 33554432
+        },
+        "unapprovedKnob": true
+      },
+      "currentRootUnknownRejected": true,
+      "numericNegativeInputs": [],
+      "scope": "Actual standalone public loader+production constructors ONLY, syntheticownedconfigfile and explicitly injected ephemeral in-memory credentials. No execute/dispatch/Git/network/artifact/storemethod/provider/installedcredential/grant/model/effect orphysicalcapacity acceptance",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-NOVA-REMOTE-POLLMILLISECONDS",
+      "field": "pollMilliseconds",
+      "currentFullAConstructorAccepted": {
+        "schemaVersion": "nova-remote-test-gate-runtime.v1",
+        "endpoint": "https://fixture.invalid/plan",
+        "authentication": "bearer",
+        "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+        "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+        "sourceAuthority": "fixture-source-authority-A",
+        "stateRoot": "./state-A",
+        "pollMilliseconds": 500,
+        "maximumResponseBytes": 16777216,
+        "maximumResultBytes": 16777216,
+        "maximumArchiveBytes": 8388608,
+        "maximumArchiveStoreBytes": 67108864,
+        "maximumEvidenceBytes": 16777216,
+        "maximumEvidenceStoreBytes": 67108864,
+        "recordLimits": {
+          "maximumRecords": 1000,
+          "maximumBytes": 67108864,
+          "maximumRecordBytes": 33554432
+        }
+      },
+      "currentFullBConstructorAccepted": {
+        "schemaVersion": "nova-remote-test-gate-runtime.v1",
+        "endpoint": "http://localhost:18080/plan",
+        "authentication": "spiffe-proxy",
+        "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY_B",
+        "sourceAuthority": "fixture-source-authority-B",
+        "stateRoot": "./state-B",
+        "pollMilliseconds": 250,
+        "maximumResponseBytes": 8388608,
+        "maximumResultBytes": 8388608,
+        "maximumArchiveBytes": 4194304,
+        "maximumArchiveStoreBytes": 33554432,
+        "maximumEvidenceBytes": 8388608,
+        "maximumEvidenceStoreBytes": 33554432,
+        "recordLimits": {
+          "maximumRecords": 500,
+          "maximumBytes": 33554432,
+          "maximumRecordBytes": 16777216
+        }
+      },
+      "missingInput": {
+        "schemaVersion": "nova-remote-test-gate-runtime.v1",
+        "endpoint": "https://fixture.invalid/plan",
+        "authentication": "bearer",
+        "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+        "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+        "sourceAuthority": "fixture-source-authority-A",
+        "stateRoot": "./state-A",
+        "maximumResponseBytes": 16777216,
+        "maximumResultBytes": 16777216,
+        "maximumArchiveBytes": 8388608,
+        "maximumArchiveStoreBytes": 67108864,
+        "maximumEvidenceBytes": 16777216,
+        "maximumEvidenceStoreBytes": 67108864,
+        "recordLimits": {
+          "maximumRecords": 1000,
+          "maximumBytes": 67108864,
+          "maximumRecordBytes": 33554432
+        }
+      },
+      "nullInput": {
+        "schemaVersion": "nova-remote-test-gate-runtime.v1",
+        "endpoint": "https://fixture.invalid/plan",
+        "authentication": "bearer",
+        "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+        "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+        "sourceAuthority": "fixture-source-authority-A",
+        "stateRoot": "./state-A",
+        "pollMilliseconds": null,
+        "maximumResponseBytes": 16777216,
+        "maximumResultBytes": 16777216,
+        "maximumArchiveBytes": 8388608,
+        "maximumArchiveStoreBytes": 67108864,
+        "maximumEvidenceBytes": 16777216,
+        "maximumEvidenceStoreBytes": 67108864,
+        "recordLimits": {
+          "maximumRecords": 1000,
+          "maximumBytes": 67108864,
+          "maximumRecordBytes": 33554432
+        }
+      },
+      "currentMissingRejected": true,
+      "currentNullRejected": true,
+      "unknownInput": {
+        "schemaVersion": "nova-remote-test-gate-runtime.v1",
+        "endpoint": "https://fixture.invalid/plan",
+        "authentication": "bearer",
+        "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+        "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+        "sourceAuthority": "fixture-source-authority-A",
+        "stateRoot": "./state-A",
+        "pollMilliseconds": 500,
+        "maximumResponseBytes": 16777216,
+        "maximumResultBytes": 16777216,
+        "maximumArchiveBytes": 8388608,
+        "maximumArchiveStoreBytes": 67108864,
+        "maximumEvidenceBytes": 16777216,
+        "maximumEvidenceStoreBytes": 67108864,
+        "recordLimits": {
+          "maximumRecords": 1000,
+          "maximumBytes": 67108864,
+          "maximumRecordBytes": 33554432
+        },
+        "unapprovedKnob": true
+      },
+      "currentRootUnknownRejected": true,
+      "numericNegativeInputs": [
+        {
+          "schemaVersion": "nova-remote-test-gate-runtime.v1",
+          "endpoint": "https://fixture.invalid/plan",
+          "authentication": "bearer",
+          "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+          "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+          "sourceAuthority": "fixture-source-authority-A",
+          "stateRoot": "./state-A",
+          "pollMilliseconds": 0,
+          "maximumResponseBytes": 16777216,
+          "maximumResultBytes": 16777216,
+          "maximumArchiveBytes": 8388608,
+          "maximumArchiveStoreBytes": 67108864,
+          "maximumEvidenceBytes": 16777216,
+          "maximumEvidenceStoreBytes": 67108864,
+          "recordLimits": {
+            "maximumRecords": 1000,
+            "maximumBytes": 67108864,
+            "maximumRecordBytes": 33554432
+          }
+        },
+        {
+          "schemaVersion": "nova-remote-test-gate-runtime.v1",
+          "endpoint": "https://fixture.invalid/plan",
+          "authentication": "bearer",
+          "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+          "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+          "sourceAuthority": "fixture-source-authority-A",
+          "stateRoot": "./state-A",
+          "pollMilliseconds": -1,
+          "maximumResponseBytes": 16777216,
+          "maximumResultBytes": 16777216,
+          "maximumArchiveBytes": 8388608,
+          "maximumArchiveStoreBytes": 67108864,
+          "maximumEvidenceBytes": 16777216,
+          "maximumEvidenceStoreBytes": 67108864,
+          "recordLimits": {
+            "maximumRecords": 1000,
+            "maximumBytes": 67108864,
+            "maximumRecordBytes": 33554432
+          }
+        },
+        {
+          "schemaVersion": "nova-remote-test-gate-runtime.v1",
+          "endpoint": "https://fixture.invalid/plan",
+          "authentication": "bearer",
+          "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+          "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+          "sourceAuthority": "fixture-source-authority-A",
+          "stateRoot": "./state-A",
+          "pollMilliseconds": 1.5,
+          "maximumResponseBytes": 16777216,
+          "maximumResultBytes": 16777216,
+          "maximumArchiveBytes": 8388608,
+          "maximumArchiveStoreBytes": 67108864,
+          "maximumEvidenceBytes": 16777216,
+          "maximumEvidenceStoreBytes": 67108864,
+          "recordLimits": {
+            "maximumRecords": 1000,
+            "maximumBytes": 67108864,
+            "maximumRecordBytes": 33554432
+          }
+        },
+        {
+          "schemaVersion": "nova-remote-test-gate-runtime.v1",
+          "endpoint": "https://fixture.invalid/plan",
+          "authentication": "bearer",
+          "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+          "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+          "sourceAuthority": "fixture-source-authority-A",
+          "stateRoot": "./state-A",
+          "pollMilliseconds": "1",
+          "maximumResponseBytes": 16777216,
+          "maximumResultBytes": 16777216,
+          "maximumArchiveBytes": 8388608,
+          "maximumArchiveStoreBytes": 67108864,
+          "maximumEvidenceBytes": 16777216,
+          "maximumEvidenceStoreBytes": 67108864,
+          "recordLimits": {
+            "maximumRecords": 1000,
+            "maximumBytes": 67108864,
+            "maximumRecordBytes": 33554432
+          }
+        },
+        {
+          "schemaVersion": "nova-remote-test-gate-runtime.v1",
+          "endpoint": "https://fixture.invalid/plan",
+          "authentication": "bearer",
+          "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+          "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+          "sourceAuthority": "fixture-source-authority-A",
+          "stateRoot": "./state-A",
+          "pollMilliseconds": 9007199254740992,
+          "maximumResponseBytes": 16777216,
+          "maximumResultBytes": 16777216,
+          "maximumArchiveBytes": 8388608,
+          "maximumArchiveStoreBytes": 67108864,
+          "maximumEvidenceBytes": 16777216,
+          "maximumEvidenceStoreBytes": 67108864,
+          "recordLimits": {
+            "maximumRecords": 1000,
+            "maximumBytes": 67108864,
+            "maximumRecordBytes": 33554432
+          }
+        }
+      ],
+      "scope": "Actual standalone public loader+production constructors ONLY, syntheticownedconfigfile and explicitly injected ephemeral in-memory credentials. No execute/dispatch/Git/network/artifact/storemethod/provider/installedcredential/grant/model/effect orphysicalcapacity acceptance",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-NOVA-REMOTE-MAXIMUMRESPONSEBYTES",
+      "field": "maximumResponseBytes",
+      "currentFullAConstructorAccepted": {
+        "schemaVersion": "nova-remote-test-gate-runtime.v1",
+        "endpoint": "https://fixture.invalid/plan",
+        "authentication": "bearer",
+        "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+        "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+        "sourceAuthority": "fixture-source-authority-A",
+        "stateRoot": "./state-A",
+        "pollMilliseconds": 500,
+        "maximumResponseBytes": 16777216,
+        "maximumResultBytes": 16777216,
+        "maximumArchiveBytes": 8388608,
+        "maximumArchiveStoreBytes": 67108864,
+        "maximumEvidenceBytes": 16777216,
+        "maximumEvidenceStoreBytes": 67108864,
+        "recordLimits": {
+          "maximumRecords": 1000,
+          "maximumBytes": 67108864,
+          "maximumRecordBytes": 33554432
+        }
+      },
+      "currentFullBConstructorAccepted": {
+        "schemaVersion": "nova-remote-test-gate-runtime.v1",
+        "endpoint": "http://localhost:18080/plan",
+        "authentication": "spiffe-proxy",
+        "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY_B",
+        "sourceAuthority": "fixture-source-authority-B",
+        "stateRoot": "./state-B",
+        "pollMilliseconds": 250,
+        "maximumResponseBytes": 8388608,
+        "maximumResultBytes": 8388608,
+        "maximumArchiveBytes": 4194304,
+        "maximumArchiveStoreBytes": 33554432,
+        "maximumEvidenceBytes": 8388608,
+        "maximumEvidenceStoreBytes": 33554432,
+        "recordLimits": {
+          "maximumRecords": 500,
+          "maximumBytes": 33554432,
+          "maximumRecordBytes": 16777216
+        }
+      },
+      "missingInput": {
+        "schemaVersion": "nova-remote-test-gate-runtime.v1",
+        "endpoint": "https://fixture.invalid/plan",
+        "authentication": "bearer",
+        "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+        "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+        "sourceAuthority": "fixture-source-authority-A",
+        "stateRoot": "./state-A",
+        "pollMilliseconds": 500,
+        "maximumResultBytes": 16777216,
+        "maximumArchiveBytes": 8388608,
+        "maximumArchiveStoreBytes": 67108864,
+        "maximumEvidenceBytes": 16777216,
+        "maximumEvidenceStoreBytes": 67108864,
+        "recordLimits": {
+          "maximumRecords": 1000,
+          "maximumBytes": 67108864,
+          "maximumRecordBytes": 33554432
+        }
+      },
+      "nullInput": {
+        "schemaVersion": "nova-remote-test-gate-runtime.v1",
+        "endpoint": "https://fixture.invalid/plan",
+        "authentication": "bearer",
+        "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+        "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+        "sourceAuthority": "fixture-source-authority-A",
+        "stateRoot": "./state-A",
+        "pollMilliseconds": 500,
+        "maximumResponseBytes": null,
+        "maximumResultBytes": 16777216,
+        "maximumArchiveBytes": 8388608,
+        "maximumArchiveStoreBytes": 67108864,
+        "maximumEvidenceBytes": 16777216,
+        "maximumEvidenceStoreBytes": 67108864,
+        "recordLimits": {
+          "maximumRecords": 1000,
+          "maximumBytes": 67108864,
+          "maximumRecordBytes": 33554432
+        }
+      },
+      "currentMissingRejected": true,
+      "currentNullRejected": true,
+      "unknownInput": {
+        "schemaVersion": "nova-remote-test-gate-runtime.v1",
+        "endpoint": "https://fixture.invalid/plan",
+        "authentication": "bearer",
+        "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+        "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+        "sourceAuthority": "fixture-source-authority-A",
+        "stateRoot": "./state-A",
+        "pollMilliseconds": 500,
+        "maximumResponseBytes": 16777216,
+        "maximumResultBytes": 16777216,
+        "maximumArchiveBytes": 8388608,
+        "maximumArchiveStoreBytes": 67108864,
+        "maximumEvidenceBytes": 16777216,
+        "maximumEvidenceStoreBytes": 67108864,
+        "recordLimits": {
+          "maximumRecords": 1000,
+          "maximumBytes": 67108864,
+          "maximumRecordBytes": 33554432
+        },
+        "unapprovedKnob": true
+      },
+      "currentRootUnknownRejected": true,
+      "numericNegativeInputs": [
+        {
+          "schemaVersion": "nova-remote-test-gate-runtime.v1",
+          "endpoint": "https://fixture.invalid/plan",
+          "authentication": "bearer",
+          "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+          "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+          "sourceAuthority": "fixture-source-authority-A",
+          "stateRoot": "./state-A",
+          "pollMilliseconds": 500,
+          "maximumResponseBytes": 0,
+          "maximumResultBytes": 16777216,
+          "maximumArchiveBytes": 8388608,
+          "maximumArchiveStoreBytes": 67108864,
+          "maximumEvidenceBytes": 16777216,
+          "maximumEvidenceStoreBytes": 67108864,
+          "recordLimits": {
+            "maximumRecords": 1000,
+            "maximumBytes": 67108864,
+            "maximumRecordBytes": 33554432
+          }
+        },
+        {
+          "schemaVersion": "nova-remote-test-gate-runtime.v1",
+          "endpoint": "https://fixture.invalid/plan",
+          "authentication": "bearer",
+          "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+          "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+          "sourceAuthority": "fixture-source-authority-A",
+          "stateRoot": "./state-A",
+          "pollMilliseconds": 500,
+          "maximumResponseBytes": -1,
+          "maximumResultBytes": 16777216,
+          "maximumArchiveBytes": 8388608,
+          "maximumArchiveStoreBytes": 67108864,
+          "maximumEvidenceBytes": 16777216,
+          "maximumEvidenceStoreBytes": 67108864,
+          "recordLimits": {
+            "maximumRecords": 1000,
+            "maximumBytes": 67108864,
+            "maximumRecordBytes": 33554432
+          }
+        },
+        {
+          "schemaVersion": "nova-remote-test-gate-runtime.v1",
+          "endpoint": "https://fixture.invalid/plan",
+          "authentication": "bearer",
+          "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+          "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+          "sourceAuthority": "fixture-source-authority-A",
+          "stateRoot": "./state-A",
+          "pollMilliseconds": 500,
+          "maximumResponseBytes": 1.5,
+          "maximumResultBytes": 16777216,
+          "maximumArchiveBytes": 8388608,
+          "maximumArchiveStoreBytes": 67108864,
+          "maximumEvidenceBytes": 16777216,
+          "maximumEvidenceStoreBytes": 67108864,
+          "recordLimits": {
+            "maximumRecords": 1000,
+            "maximumBytes": 67108864,
+            "maximumRecordBytes": 33554432
+          }
+        },
+        {
+          "schemaVersion": "nova-remote-test-gate-runtime.v1",
+          "endpoint": "https://fixture.invalid/plan",
+          "authentication": "bearer",
+          "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+          "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+          "sourceAuthority": "fixture-source-authority-A",
+          "stateRoot": "./state-A",
+          "pollMilliseconds": 500,
+          "maximumResponseBytes": "1",
+          "maximumResultBytes": 16777216,
+          "maximumArchiveBytes": 8388608,
+          "maximumArchiveStoreBytes": 67108864,
+          "maximumEvidenceBytes": 16777216,
+          "maximumEvidenceStoreBytes": 67108864,
+          "recordLimits": {
+            "maximumRecords": 1000,
+            "maximumBytes": 67108864,
+            "maximumRecordBytes": 33554432
+          }
+        },
+        {
+          "schemaVersion": "nova-remote-test-gate-runtime.v1",
+          "endpoint": "https://fixture.invalid/plan",
+          "authentication": "bearer",
+          "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+          "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+          "sourceAuthority": "fixture-source-authority-A",
+          "stateRoot": "./state-A",
+          "pollMilliseconds": 500,
+          "maximumResponseBytes": 9007199254740992,
+          "maximumResultBytes": 16777216,
+          "maximumArchiveBytes": 8388608,
+          "maximumArchiveStoreBytes": 67108864,
+          "maximumEvidenceBytes": 16777216,
+          "maximumEvidenceStoreBytes": 67108864,
+          "recordLimits": {
+            "maximumRecords": 1000,
+            "maximumBytes": 67108864,
+            "maximumRecordBytes": 33554432
+          }
+        }
+      ],
+      "scope": "Actual standalone public loader+production constructors ONLY, syntheticownedconfigfile and explicitly injected ephemeral in-memory credentials. No execute/dispatch/Git/network/artifact/storemethod/provider/installedcredential/grant/model/effect orphysicalcapacity acceptance",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-NOVA-REMOTE-MAXIMUMRESULTBYTES",
+      "field": "maximumResultBytes",
+      "currentFullAConstructorAccepted": {
+        "schemaVersion": "nova-remote-test-gate-runtime.v1",
+        "endpoint": "https://fixture.invalid/plan",
+        "authentication": "bearer",
+        "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+        "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+        "sourceAuthority": "fixture-source-authority-A",
+        "stateRoot": "./state-A",
+        "pollMilliseconds": 500,
+        "maximumResponseBytes": 16777216,
+        "maximumResultBytes": 16777216,
+        "maximumArchiveBytes": 8388608,
+        "maximumArchiveStoreBytes": 67108864,
+        "maximumEvidenceBytes": 16777216,
+        "maximumEvidenceStoreBytes": 67108864,
+        "recordLimits": {
+          "maximumRecords": 1000,
+          "maximumBytes": 67108864,
+          "maximumRecordBytes": 33554432
+        }
+      },
+      "currentFullBConstructorAccepted": {
+        "schemaVersion": "nova-remote-test-gate-runtime.v1",
+        "endpoint": "http://localhost:18080/plan",
+        "authentication": "spiffe-proxy",
+        "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY_B",
+        "sourceAuthority": "fixture-source-authority-B",
+        "stateRoot": "./state-B",
+        "pollMilliseconds": 250,
+        "maximumResponseBytes": 8388608,
+        "maximumResultBytes": 8388608,
+        "maximumArchiveBytes": 4194304,
+        "maximumArchiveStoreBytes": 33554432,
+        "maximumEvidenceBytes": 8388608,
+        "maximumEvidenceStoreBytes": 33554432,
+        "recordLimits": {
+          "maximumRecords": 500,
+          "maximumBytes": 33554432,
+          "maximumRecordBytes": 16777216
+        }
+      },
+      "missingInput": {
+        "schemaVersion": "nova-remote-test-gate-runtime.v1",
+        "endpoint": "https://fixture.invalid/plan",
+        "authentication": "bearer",
+        "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+        "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+        "sourceAuthority": "fixture-source-authority-A",
+        "stateRoot": "./state-A",
+        "pollMilliseconds": 500,
+        "maximumResponseBytes": 16777216,
+        "maximumArchiveBytes": 8388608,
+        "maximumArchiveStoreBytes": 67108864,
+        "maximumEvidenceBytes": 16777216,
+        "maximumEvidenceStoreBytes": 67108864,
+        "recordLimits": {
+          "maximumRecords": 1000,
+          "maximumBytes": 67108864,
+          "maximumRecordBytes": 33554432
+        }
+      },
+      "nullInput": {
+        "schemaVersion": "nova-remote-test-gate-runtime.v1",
+        "endpoint": "https://fixture.invalid/plan",
+        "authentication": "bearer",
+        "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+        "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+        "sourceAuthority": "fixture-source-authority-A",
+        "stateRoot": "./state-A",
+        "pollMilliseconds": 500,
+        "maximumResponseBytes": 16777216,
+        "maximumResultBytes": null,
+        "maximumArchiveBytes": 8388608,
+        "maximumArchiveStoreBytes": 67108864,
+        "maximumEvidenceBytes": 16777216,
+        "maximumEvidenceStoreBytes": 67108864,
+        "recordLimits": {
+          "maximumRecords": 1000,
+          "maximumBytes": 67108864,
+          "maximumRecordBytes": 33554432
+        }
+      },
+      "currentMissingRejected": true,
+      "currentNullRejected": true,
+      "unknownInput": {
+        "schemaVersion": "nova-remote-test-gate-runtime.v1",
+        "endpoint": "https://fixture.invalid/plan",
+        "authentication": "bearer",
+        "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+        "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+        "sourceAuthority": "fixture-source-authority-A",
+        "stateRoot": "./state-A",
+        "pollMilliseconds": 500,
+        "maximumResponseBytes": 16777216,
+        "maximumResultBytes": 16777216,
+        "maximumArchiveBytes": 8388608,
+        "maximumArchiveStoreBytes": 67108864,
+        "maximumEvidenceBytes": 16777216,
+        "maximumEvidenceStoreBytes": 67108864,
+        "recordLimits": {
+          "maximumRecords": 1000,
+          "maximumBytes": 67108864,
+          "maximumRecordBytes": 33554432
+        },
+        "unapprovedKnob": true
+      },
+      "currentRootUnknownRejected": true,
+      "numericNegativeInputs": [
+        {
+          "schemaVersion": "nova-remote-test-gate-runtime.v1",
+          "endpoint": "https://fixture.invalid/plan",
+          "authentication": "bearer",
+          "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+          "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+          "sourceAuthority": "fixture-source-authority-A",
+          "stateRoot": "./state-A",
+          "pollMilliseconds": 500,
+          "maximumResponseBytes": 16777216,
+          "maximumResultBytes": 0,
+          "maximumArchiveBytes": 8388608,
+          "maximumArchiveStoreBytes": 67108864,
+          "maximumEvidenceBytes": 16777216,
+          "maximumEvidenceStoreBytes": 67108864,
+          "recordLimits": {
+            "maximumRecords": 1000,
+            "maximumBytes": 67108864,
+            "maximumRecordBytes": 33554432
+          }
+        },
+        {
+          "schemaVersion": "nova-remote-test-gate-runtime.v1",
+          "endpoint": "https://fixture.invalid/plan",
+          "authentication": "bearer",
+          "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+          "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+          "sourceAuthority": "fixture-source-authority-A",
+          "stateRoot": "./state-A",
+          "pollMilliseconds": 500,
+          "maximumResponseBytes": 16777216,
+          "maximumResultBytes": -1,
+          "maximumArchiveBytes": 8388608,
+          "maximumArchiveStoreBytes": 67108864,
+          "maximumEvidenceBytes": 16777216,
+          "maximumEvidenceStoreBytes": 67108864,
+          "recordLimits": {
+            "maximumRecords": 1000,
+            "maximumBytes": 67108864,
+            "maximumRecordBytes": 33554432
+          }
+        },
+        {
+          "schemaVersion": "nova-remote-test-gate-runtime.v1",
+          "endpoint": "https://fixture.invalid/plan",
+          "authentication": "bearer",
+          "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+          "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+          "sourceAuthority": "fixture-source-authority-A",
+          "stateRoot": "./state-A",
+          "pollMilliseconds": 500,
+          "maximumResponseBytes": 16777216,
+          "maximumResultBytes": 1.5,
+          "maximumArchiveBytes": 8388608,
+          "maximumArchiveStoreBytes": 67108864,
+          "maximumEvidenceBytes": 16777216,
+          "maximumEvidenceStoreBytes": 67108864,
+          "recordLimits": {
+            "maximumRecords": 1000,
+            "maximumBytes": 67108864,
+            "maximumRecordBytes": 33554432
+          }
+        },
+        {
+          "schemaVersion": "nova-remote-test-gate-runtime.v1",
+          "endpoint": "https://fixture.invalid/plan",
+          "authentication": "bearer",
+          "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+          "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+          "sourceAuthority": "fixture-source-authority-A",
+          "stateRoot": "./state-A",
+          "pollMilliseconds": 500,
+          "maximumResponseBytes": 16777216,
+          "maximumResultBytes": "1",
+          "maximumArchiveBytes": 8388608,
+          "maximumArchiveStoreBytes": 67108864,
+          "maximumEvidenceBytes": 16777216,
+          "maximumEvidenceStoreBytes": 67108864,
+          "recordLimits": {
+            "maximumRecords": 1000,
+            "maximumBytes": 67108864,
+            "maximumRecordBytes": 33554432
+          }
+        },
+        {
+          "schemaVersion": "nova-remote-test-gate-runtime.v1",
+          "endpoint": "https://fixture.invalid/plan",
+          "authentication": "bearer",
+          "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+          "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+          "sourceAuthority": "fixture-source-authority-A",
+          "stateRoot": "./state-A",
+          "pollMilliseconds": 500,
+          "maximumResponseBytes": 16777216,
+          "maximumResultBytes": 9007199254740992,
+          "maximumArchiveBytes": 8388608,
+          "maximumArchiveStoreBytes": 67108864,
+          "maximumEvidenceBytes": 16777216,
+          "maximumEvidenceStoreBytes": 67108864,
+          "recordLimits": {
+            "maximumRecords": 1000,
+            "maximumBytes": 67108864,
+            "maximumRecordBytes": 33554432
+          }
+        }
+      ],
+      "scope": "Actual standalone public loader+production constructors ONLY, syntheticownedconfigfile and explicitly injected ephemeral in-memory credentials. No execute/dispatch/Git/network/artifact/storemethod/provider/installedcredential/grant/model/effect orphysicalcapacity acceptance",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-NOVA-REMOTE-MAXIMUMARCHIVEBYTES",
+      "field": "maximumArchiveBytes",
+      "currentFullAConstructorAccepted": {
+        "schemaVersion": "nova-remote-test-gate-runtime.v1",
+        "endpoint": "https://fixture.invalid/plan",
+        "authentication": "bearer",
+        "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+        "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+        "sourceAuthority": "fixture-source-authority-A",
+        "stateRoot": "./state-A",
+        "pollMilliseconds": 500,
+        "maximumResponseBytes": 16777216,
+        "maximumResultBytes": 16777216,
+        "maximumArchiveBytes": 8388608,
+        "maximumArchiveStoreBytes": 67108864,
+        "maximumEvidenceBytes": 16777216,
+        "maximumEvidenceStoreBytes": 67108864,
+        "recordLimits": {
+          "maximumRecords": 1000,
+          "maximumBytes": 67108864,
+          "maximumRecordBytes": 33554432
+        }
+      },
+      "currentFullBConstructorAccepted": {
+        "schemaVersion": "nova-remote-test-gate-runtime.v1",
+        "endpoint": "http://localhost:18080/plan",
+        "authentication": "spiffe-proxy",
+        "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY_B",
+        "sourceAuthority": "fixture-source-authority-B",
+        "stateRoot": "./state-B",
+        "pollMilliseconds": 250,
+        "maximumResponseBytes": 8388608,
+        "maximumResultBytes": 8388608,
+        "maximumArchiveBytes": 4194304,
+        "maximumArchiveStoreBytes": 33554432,
+        "maximumEvidenceBytes": 8388608,
+        "maximumEvidenceStoreBytes": 33554432,
+        "recordLimits": {
+          "maximumRecords": 500,
+          "maximumBytes": 33554432,
+          "maximumRecordBytes": 16777216
+        }
+      },
+      "missingInput": {
+        "schemaVersion": "nova-remote-test-gate-runtime.v1",
+        "endpoint": "https://fixture.invalid/plan",
+        "authentication": "bearer",
+        "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+        "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+        "sourceAuthority": "fixture-source-authority-A",
+        "stateRoot": "./state-A",
+        "pollMilliseconds": 500,
+        "maximumResponseBytes": 16777216,
+        "maximumResultBytes": 16777216,
+        "maximumArchiveStoreBytes": 67108864,
+        "maximumEvidenceBytes": 16777216,
+        "maximumEvidenceStoreBytes": 67108864,
+        "recordLimits": {
+          "maximumRecords": 1000,
+          "maximumBytes": 67108864,
+          "maximumRecordBytes": 33554432
+        }
+      },
+      "nullInput": {
+        "schemaVersion": "nova-remote-test-gate-runtime.v1",
+        "endpoint": "https://fixture.invalid/plan",
+        "authentication": "bearer",
+        "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+        "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+        "sourceAuthority": "fixture-source-authority-A",
+        "stateRoot": "./state-A",
+        "pollMilliseconds": 500,
+        "maximumResponseBytes": 16777216,
+        "maximumResultBytes": 16777216,
+        "maximumArchiveBytes": null,
+        "maximumArchiveStoreBytes": 67108864,
+        "maximumEvidenceBytes": 16777216,
+        "maximumEvidenceStoreBytes": 67108864,
+        "recordLimits": {
+          "maximumRecords": 1000,
+          "maximumBytes": 67108864,
+          "maximumRecordBytes": 33554432
+        }
+      },
+      "currentMissingRejected": true,
+      "currentNullRejected": true,
+      "unknownInput": {
+        "schemaVersion": "nova-remote-test-gate-runtime.v1",
+        "endpoint": "https://fixture.invalid/plan",
+        "authentication": "bearer",
+        "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+        "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+        "sourceAuthority": "fixture-source-authority-A",
+        "stateRoot": "./state-A",
+        "pollMilliseconds": 500,
+        "maximumResponseBytes": 16777216,
+        "maximumResultBytes": 16777216,
+        "maximumArchiveBytes": 8388608,
+        "maximumArchiveStoreBytes": 67108864,
+        "maximumEvidenceBytes": 16777216,
+        "maximumEvidenceStoreBytes": 67108864,
+        "recordLimits": {
+          "maximumRecords": 1000,
+          "maximumBytes": 67108864,
+          "maximumRecordBytes": 33554432
+        },
+        "unapprovedKnob": true
+      },
+      "currentRootUnknownRejected": true,
+      "numericNegativeInputs": [
+        {
+          "schemaVersion": "nova-remote-test-gate-runtime.v1",
+          "endpoint": "https://fixture.invalid/plan",
+          "authentication": "bearer",
+          "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+          "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+          "sourceAuthority": "fixture-source-authority-A",
+          "stateRoot": "./state-A",
+          "pollMilliseconds": 500,
+          "maximumResponseBytes": 16777216,
+          "maximumResultBytes": 16777216,
+          "maximumArchiveBytes": 0,
+          "maximumArchiveStoreBytes": 67108864,
+          "maximumEvidenceBytes": 16777216,
+          "maximumEvidenceStoreBytes": 67108864,
+          "recordLimits": {
+            "maximumRecords": 1000,
+            "maximumBytes": 67108864,
+            "maximumRecordBytes": 33554432
+          }
+        },
+        {
+          "schemaVersion": "nova-remote-test-gate-runtime.v1",
+          "endpoint": "https://fixture.invalid/plan",
+          "authentication": "bearer",
+          "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+          "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+          "sourceAuthority": "fixture-source-authority-A",
+          "stateRoot": "./state-A",
+          "pollMilliseconds": 500,
+          "maximumResponseBytes": 16777216,
+          "maximumResultBytes": 16777216,
+          "maximumArchiveBytes": -1,
+          "maximumArchiveStoreBytes": 67108864,
+          "maximumEvidenceBytes": 16777216,
+          "maximumEvidenceStoreBytes": 67108864,
+          "recordLimits": {
+            "maximumRecords": 1000,
+            "maximumBytes": 67108864,
+            "maximumRecordBytes": 33554432
+          }
+        },
+        {
+          "schemaVersion": "nova-remote-test-gate-runtime.v1",
+          "endpoint": "https://fixture.invalid/plan",
+          "authentication": "bearer",
+          "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+          "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+          "sourceAuthority": "fixture-source-authority-A",
+          "stateRoot": "./state-A",
+          "pollMilliseconds": 500,
+          "maximumResponseBytes": 16777216,
+          "maximumResultBytes": 16777216,
+          "maximumArchiveBytes": 1.5,
+          "maximumArchiveStoreBytes": 67108864,
+          "maximumEvidenceBytes": 16777216,
+          "maximumEvidenceStoreBytes": 67108864,
+          "recordLimits": {
+            "maximumRecords": 1000,
+            "maximumBytes": 67108864,
+            "maximumRecordBytes": 33554432
+          }
+        },
+        {
+          "schemaVersion": "nova-remote-test-gate-runtime.v1",
+          "endpoint": "https://fixture.invalid/plan",
+          "authentication": "bearer",
+          "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+          "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+          "sourceAuthority": "fixture-source-authority-A",
+          "stateRoot": "./state-A",
+          "pollMilliseconds": 500,
+          "maximumResponseBytes": 16777216,
+          "maximumResultBytes": 16777216,
+          "maximumArchiveBytes": "1",
+          "maximumArchiveStoreBytes": 67108864,
+          "maximumEvidenceBytes": 16777216,
+          "maximumEvidenceStoreBytes": 67108864,
+          "recordLimits": {
+            "maximumRecords": 1000,
+            "maximumBytes": 67108864,
+            "maximumRecordBytes": 33554432
+          }
+        },
+        {
+          "schemaVersion": "nova-remote-test-gate-runtime.v1",
+          "endpoint": "https://fixture.invalid/plan",
+          "authentication": "bearer",
+          "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+          "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+          "sourceAuthority": "fixture-source-authority-A",
+          "stateRoot": "./state-A",
+          "pollMilliseconds": 500,
+          "maximumResponseBytes": 16777216,
+          "maximumResultBytes": 16777216,
+          "maximumArchiveBytes": 9007199254740992,
+          "maximumArchiveStoreBytes": 67108864,
+          "maximumEvidenceBytes": 16777216,
+          "maximumEvidenceStoreBytes": 67108864,
+          "recordLimits": {
+            "maximumRecords": 1000,
+            "maximumBytes": 67108864,
+            "maximumRecordBytes": 33554432
+          }
+        }
+      ],
+      "scope": "Actual standalone public loader+production constructors ONLY, syntheticownedconfigfile and explicitly injected ephemeral in-memory credentials. No execute/dispatch/Git/network/artifact/storemethod/provider/installedcredential/grant/model/effect orphysicalcapacity acceptance",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-NOVA-REMOTE-MAXIMUMARCHIVESTOREBYTES",
+      "field": "maximumArchiveStoreBytes",
+      "currentFullAConstructorAccepted": {
+        "schemaVersion": "nova-remote-test-gate-runtime.v1",
+        "endpoint": "https://fixture.invalid/plan",
+        "authentication": "bearer",
+        "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+        "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+        "sourceAuthority": "fixture-source-authority-A",
+        "stateRoot": "./state-A",
+        "pollMilliseconds": 500,
+        "maximumResponseBytes": 16777216,
+        "maximumResultBytes": 16777216,
+        "maximumArchiveBytes": 8388608,
+        "maximumArchiveStoreBytes": 67108864,
+        "maximumEvidenceBytes": 16777216,
+        "maximumEvidenceStoreBytes": 67108864,
+        "recordLimits": {
+          "maximumRecords": 1000,
+          "maximumBytes": 67108864,
+          "maximumRecordBytes": 33554432
+        }
+      },
+      "currentFullBConstructorAccepted": {
+        "schemaVersion": "nova-remote-test-gate-runtime.v1",
+        "endpoint": "http://localhost:18080/plan",
+        "authentication": "spiffe-proxy",
+        "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY_B",
+        "sourceAuthority": "fixture-source-authority-B",
+        "stateRoot": "./state-B",
+        "pollMilliseconds": 250,
+        "maximumResponseBytes": 8388608,
+        "maximumResultBytes": 8388608,
+        "maximumArchiveBytes": 4194304,
+        "maximumArchiveStoreBytes": 33554432,
+        "maximumEvidenceBytes": 8388608,
+        "maximumEvidenceStoreBytes": 33554432,
+        "recordLimits": {
+          "maximumRecords": 500,
+          "maximumBytes": 33554432,
+          "maximumRecordBytes": 16777216
+        }
+      },
+      "missingInput": {
+        "schemaVersion": "nova-remote-test-gate-runtime.v1",
+        "endpoint": "https://fixture.invalid/plan",
+        "authentication": "bearer",
+        "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+        "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+        "sourceAuthority": "fixture-source-authority-A",
+        "stateRoot": "./state-A",
+        "pollMilliseconds": 500,
+        "maximumResponseBytes": 16777216,
+        "maximumResultBytes": 16777216,
+        "maximumArchiveBytes": 8388608,
+        "maximumEvidenceBytes": 16777216,
+        "maximumEvidenceStoreBytes": 67108864,
+        "recordLimits": {
+          "maximumRecords": 1000,
+          "maximumBytes": 67108864,
+          "maximumRecordBytes": 33554432
+        }
+      },
+      "nullInput": {
+        "schemaVersion": "nova-remote-test-gate-runtime.v1",
+        "endpoint": "https://fixture.invalid/plan",
+        "authentication": "bearer",
+        "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+        "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+        "sourceAuthority": "fixture-source-authority-A",
+        "stateRoot": "./state-A",
+        "pollMilliseconds": 500,
+        "maximumResponseBytes": 16777216,
+        "maximumResultBytes": 16777216,
+        "maximumArchiveBytes": 8388608,
+        "maximumArchiveStoreBytes": null,
+        "maximumEvidenceBytes": 16777216,
+        "maximumEvidenceStoreBytes": 67108864,
+        "recordLimits": {
+          "maximumRecords": 1000,
+          "maximumBytes": 67108864,
+          "maximumRecordBytes": 33554432
+        }
+      },
+      "currentMissingRejected": true,
+      "currentNullRejected": true,
+      "unknownInput": {
+        "schemaVersion": "nova-remote-test-gate-runtime.v1",
+        "endpoint": "https://fixture.invalid/plan",
+        "authentication": "bearer",
+        "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+        "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+        "sourceAuthority": "fixture-source-authority-A",
+        "stateRoot": "./state-A",
+        "pollMilliseconds": 500,
+        "maximumResponseBytes": 16777216,
+        "maximumResultBytes": 16777216,
+        "maximumArchiveBytes": 8388608,
+        "maximumArchiveStoreBytes": 67108864,
+        "maximumEvidenceBytes": 16777216,
+        "maximumEvidenceStoreBytes": 67108864,
+        "recordLimits": {
+          "maximumRecords": 1000,
+          "maximumBytes": 67108864,
+          "maximumRecordBytes": 33554432
+        },
+        "unapprovedKnob": true
+      },
+      "currentRootUnknownRejected": true,
+      "numericNegativeInputs": [
+        {
+          "schemaVersion": "nova-remote-test-gate-runtime.v1",
+          "endpoint": "https://fixture.invalid/plan",
+          "authentication": "bearer",
+          "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+          "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+          "sourceAuthority": "fixture-source-authority-A",
+          "stateRoot": "./state-A",
+          "pollMilliseconds": 500,
+          "maximumResponseBytes": 16777216,
+          "maximumResultBytes": 16777216,
+          "maximumArchiveBytes": 8388608,
+          "maximumArchiveStoreBytes": 0,
+          "maximumEvidenceBytes": 16777216,
+          "maximumEvidenceStoreBytes": 67108864,
+          "recordLimits": {
+            "maximumRecords": 1000,
+            "maximumBytes": 67108864,
+            "maximumRecordBytes": 33554432
+          }
+        },
+        {
+          "schemaVersion": "nova-remote-test-gate-runtime.v1",
+          "endpoint": "https://fixture.invalid/plan",
+          "authentication": "bearer",
+          "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+          "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+          "sourceAuthority": "fixture-source-authority-A",
+          "stateRoot": "./state-A",
+          "pollMilliseconds": 500,
+          "maximumResponseBytes": 16777216,
+          "maximumResultBytes": 16777216,
+          "maximumArchiveBytes": 8388608,
+          "maximumArchiveStoreBytes": -1,
+          "maximumEvidenceBytes": 16777216,
+          "maximumEvidenceStoreBytes": 67108864,
+          "recordLimits": {
+            "maximumRecords": 1000,
+            "maximumBytes": 67108864,
+            "maximumRecordBytes": 33554432
+          }
+        },
+        {
+          "schemaVersion": "nova-remote-test-gate-runtime.v1",
+          "endpoint": "https://fixture.invalid/plan",
+          "authentication": "bearer",
+          "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+          "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+          "sourceAuthority": "fixture-source-authority-A",
+          "stateRoot": "./state-A",
+          "pollMilliseconds": 500,
+          "maximumResponseBytes": 16777216,
+          "maximumResultBytes": 16777216,
+          "maximumArchiveBytes": 8388608,
+          "maximumArchiveStoreBytes": 1.5,
+          "maximumEvidenceBytes": 16777216,
+          "maximumEvidenceStoreBytes": 67108864,
+          "recordLimits": {
+            "maximumRecords": 1000,
+            "maximumBytes": 67108864,
+            "maximumRecordBytes": 33554432
+          }
+        },
+        {
+          "schemaVersion": "nova-remote-test-gate-runtime.v1",
+          "endpoint": "https://fixture.invalid/plan",
+          "authentication": "bearer",
+          "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+          "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+          "sourceAuthority": "fixture-source-authority-A",
+          "stateRoot": "./state-A",
+          "pollMilliseconds": 500,
+          "maximumResponseBytes": 16777216,
+          "maximumResultBytes": 16777216,
+          "maximumArchiveBytes": 8388608,
+          "maximumArchiveStoreBytes": "1",
+          "maximumEvidenceBytes": 16777216,
+          "maximumEvidenceStoreBytes": 67108864,
+          "recordLimits": {
+            "maximumRecords": 1000,
+            "maximumBytes": 67108864,
+            "maximumRecordBytes": 33554432
+          }
+        },
+        {
+          "schemaVersion": "nova-remote-test-gate-runtime.v1",
+          "endpoint": "https://fixture.invalid/plan",
+          "authentication": "bearer",
+          "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+          "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+          "sourceAuthority": "fixture-source-authority-A",
+          "stateRoot": "./state-A",
+          "pollMilliseconds": 500,
+          "maximumResponseBytes": 16777216,
+          "maximumResultBytes": 16777216,
+          "maximumArchiveBytes": 8388608,
+          "maximumArchiveStoreBytes": 9007199254740992,
+          "maximumEvidenceBytes": 16777216,
+          "maximumEvidenceStoreBytes": 67108864,
+          "recordLimits": {
+            "maximumRecords": 1000,
+            "maximumBytes": 67108864,
+            "maximumRecordBytes": 33554432
+          }
+        }
+      ],
+      "scope": "Actual standalone public loader+production constructors ONLY, syntheticownedconfigfile and explicitly injected ephemeral in-memory credentials. No execute/dispatch/Git/network/artifact/storemethod/provider/installedcredential/grant/model/effect orphysicalcapacity acceptance",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-NOVA-REMOTE-MAXIMUMEVIDENCEBYTES",
+      "field": "maximumEvidenceBytes",
+      "currentFullAConstructorAccepted": {
+        "schemaVersion": "nova-remote-test-gate-runtime.v1",
+        "endpoint": "https://fixture.invalid/plan",
+        "authentication": "bearer",
+        "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+        "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+        "sourceAuthority": "fixture-source-authority-A",
+        "stateRoot": "./state-A",
+        "pollMilliseconds": 500,
+        "maximumResponseBytes": 16777216,
+        "maximumResultBytes": 16777216,
+        "maximumArchiveBytes": 8388608,
+        "maximumArchiveStoreBytes": 67108864,
+        "maximumEvidenceBytes": 16777216,
+        "maximumEvidenceStoreBytes": 67108864,
+        "recordLimits": {
+          "maximumRecords": 1000,
+          "maximumBytes": 67108864,
+          "maximumRecordBytes": 33554432
+        }
+      },
+      "currentFullBConstructorAccepted": {
+        "schemaVersion": "nova-remote-test-gate-runtime.v1",
+        "endpoint": "http://localhost:18080/plan",
+        "authentication": "spiffe-proxy",
+        "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY_B",
+        "sourceAuthority": "fixture-source-authority-B",
+        "stateRoot": "./state-B",
+        "pollMilliseconds": 250,
+        "maximumResponseBytes": 8388608,
+        "maximumResultBytes": 8388608,
+        "maximumArchiveBytes": 4194304,
+        "maximumArchiveStoreBytes": 33554432,
+        "maximumEvidenceBytes": 8388608,
+        "maximumEvidenceStoreBytes": 33554432,
+        "recordLimits": {
+          "maximumRecords": 500,
+          "maximumBytes": 33554432,
+          "maximumRecordBytes": 16777216
+        }
+      },
+      "missingInput": {
+        "schemaVersion": "nova-remote-test-gate-runtime.v1",
+        "endpoint": "https://fixture.invalid/plan",
+        "authentication": "bearer",
+        "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+        "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+        "sourceAuthority": "fixture-source-authority-A",
+        "stateRoot": "./state-A",
+        "pollMilliseconds": 500,
+        "maximumResponseBytes": 16777216,
+        "maximumResultBytes": 16777216,
+        "maximumArchiveBytes": 8388608,
+        "maximumArchiveStoreBytes": 67108864,
+        "maximumEvidenceStoreBytes": 67108864,
+        "recordLimits": {
+          "maximumRecords": 1000,
+          "maximumBytes": 67108864,
+          "maximumRecordBytes": 33554432
+        }
+      },
+      "nullInput": {
+        "schemaVersion": "nova-remote-test-gate-runtime.v1",
+        "endpoint": "https://fixture.invalid/plan",
+        "authentication": "bearer",
+        "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+        "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+        "sourceAuthority": "fixture-source-authority-A",
+        "stateRoot": "./state-A",
+        "pollMilliseconds": 500,
+        "maximumResponseBytes": 16777216,
+        "maximumResultBytes": 16777216,
+        "maximumArchiveBytes": 8388608,
+        "maximumArchiveStoreBytes": 67108864,
+        "maximumEvidenceBytes": null,
+        "maximumEvidenceStoreBytes": 67108864,
+        "recordLimits": {
+          "maximumRecords": 1000,
+          "maximumBytes": 67108864,
+          "maximumRecordBytes": 33554432
+        }
+      },
+      "currentMissingRejected": true,
+      "currentNullRejected": true,
+      "unknownInput": {
+        "schemaVersion": "nova-remote-test-gate-runtime.v1",
+        "endpoint": "https://fixture.invalid/plan",
+        "authentication": "bearer",
+        "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+        "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+        "sourceAuthority": "fixture-source-authority-A",
+        "stateRoot": "./state-A",
+        "pollMilliseconds": 500,
+        "maximumResponseBytes": 16777216,
+        "maximumResultBytes": 16777216,
+        "maximumArchiveBytes": 8388608,
+        "maximumArchiveStoreBytes": 67108864,
+        "maximumEvidenceBytes": 16777216,
+        "maximumEvidenceStoreBytes": 67108864,
+        "recordLimits": {
+          "maximumRecords": 1000,
+          "maximumBytes": 67108864,
+          "maximumRecordBytes": 33554432
+        },
+        "unapprovedKnob": true
+      },
+      "currentRootUnknownRejected": true,
+      "numericNegativeInputs": [
+        {
+          "schemaVersion": "nova-remote-test-gate-runtime.v1",
+          "endpoint": "https://fixture.invalid/plan",
+          "authentication": "bearer",
+          "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+          "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+          "sourceAuthority": "fixture-source-authority-A",
+          "stateRoot": "./state-A",
+          "pollMilliseconds": 500,
+          "maximumResponseBytes": 16777216,
+          "maximumResultBytes": 16777216,
+          "maximumArchiveBytes": 8388608,
+          "maximumArchiveStoreBytes": 67108864,
+          "maximumEvidenceBytes": 0,
+          "maximumEvidenceStoreBytes": 67108864,
+          "recordLimits": {
+            "maximumRecords": 1000,
+            "maximumBytes": 67108864,
+            "maximumRecordBytes": 33554432
+          }
+        },
+        {
+          "schemaVersion": "nova-remote-test-gate-runtime.v1",
+          "endpoint": "https://fixture.invalid/plan",
+          "authentication": "bearer",
+          "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+          "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+          "sourceAuthority": "fixture-source-authority-A",
+          "stateRoot": "./state-A",
+          "pollMilliseconds": 500,
+          "maximumResponseBytes": 16777216,
+          "maximumResultBytes": 16777216,
+          "maximumArchiveBytes": 8388608,
+          "maximumArchiveStoreBytes": 67108864,
+          "maximumEvidenceBytes": -1,
+          "maximumEvidenceStoreBytes": 67108864,
+          "recordLimits": {
+            "maximumRecords": 1000,
+            "maximumBytes": 67108864,
+            "maximumRecordBytes": 33554432
+          }
+        },
+        {
+          "schemaVersion": "nova-remote-test-gate-runtime.v1",
+          "endpoint": "https://fixture.invalid/plan",
+          "authentication": "bearer",
+          "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+          "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+          "sourceAuthority": "fixture-source-authority-A",
+          "stateRoot": "./state-A",
+          "pollMilliseconds": 500,
+          "maximumResponseBytes": 16777216,
+          "maximumResultBytes": 16777216,
+          "maximumArchiveBytes": 8388608,
+          "maximumArchiveStoreBytes": 67108864,
+          "maximumEvidenceBytes": 1.5,
+          "maximumEvidenceStoreBytes": 67108864,
+          "recordLimits": {
+            "maximumRecords": 1000,
+            "maximumBytes": 67108864,
+            "maximumRecordBytes": 33554432
+          }
+        },
+        {
+          "schemaVersion": "nova-remote-test-gate-runtime.v1",
+          "endpoint": "https://fixture.invalid/plan",
+          "authentication": "bearer",
+          "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+          "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+          "sourceAuthority": "fixture-source-authority-A",
+          "stateRoot": "./state-A",
+          "pollMilliseconds": 500,
+          "maximumResponseBytes": 16777216,
+          "maximumResultBytes": 16777216,
+          "maximumArchiveBytes": 8388608,
+          "maximumArchiveStoreBytes": 67108864,
+          "maximumEvidenceBytes": "1",
+          "maximumEvidenceStoreBytes": 67108864,
+          "recordLimits": {
+            "maximumRecords": 1000,
+            "maximumBytes": 67108864,
+            "maximumRecordBytes": 33554432
+          }
+        },
+        {
+          "schemaVersion": "nova-remote-test-gate-runtime.v1",
+          "endpoint": "https://fixture.invalid/plan",
+          "authentication": "bearer",
+          "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+          "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+          "sourceAuthority": "fixture-source-authority-A",
+          "stateRoot": "./state-A",
+          "pollMilliseconds": 500,
+          "maximumResponseBytes": 16777216,
+          "maximumResultBytes": 16777216,
+          "maximumArchiveBytes": 8388608,
+          "maximumArchiveStoreBytes": 67108864,
+          "maximumEvidenceBytes": 9007199254740992,
+          "maximumEvidenceStoreBytes": 67108864,
+          "recordLimits": {
+            "maximumRecords": 1000,
+            "maximumBytes": 67108864,
+            "maximumRecordBytes": 33554432
+          }
+        }
+      ],
+      "scope": "Actual standalone public loader+production constructors ONLY, syntheticownedconfigfile and explicitly injected ephemeral in-memory credentials. No execute/dispatch/Git/network/artifact/storemethod/provider/installedcredential/grant/model/effect orphysicalcapacity acceptance",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-NOVA-REMOTE-MAXIMUMEVIDENCESTOREBYTES",
+      "field": "maximumEvidenceStoreBytes",
+      "currentFullAConstructorAccepted": {
+        "schemaVersion": "nova-remote-test-gate-runtime.v1",
+        "endpoint": "https://fixture.invalid/plan",
+        "authentication": "bearer",
+        "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+        "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+        "sourceAuthority": "fixture-source-authority-A",
+        "stateRoot": "./state-A",
+        "pollMilliseconds": 500,
+        "maximumResponseBytes": 16777216,
+        "maximumResultBytes": 16777216,
+        "maximumArchiveBytes": 8388608,
+        "maximumArchiveStoreBytes": 67108864,
+        "maximumEvidenceBytes": 16777216,
+        "maximumEvidenceStoreBytes": 67108864,
+        "recordLimits": {
+          "maximumRecords": 1000,
+          "maximumBytes": 67108864,
+          "maximumRecordBytes": 33554432
+        }
+      },
+      "currentFullBConstructorAccepted": {
+        "schemaVersion": "nova-remote-test-gate-runtime.v1",
+        "endpoint": "http://localhost:18080/plan",
+        "authentication": "spiffe-proxy",
+        "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY_B",
+        "sourceAuthority": "fixture-source-authority-B",
+        "stateRoot": "./state-B",
+        "pollMilliseconds": 250,
+        "maximumResponseBytes": 8388608,
+        "maximumResultBytes": 8388608,
+        "maximumArchiveBytes": 4194304,
+        "maximumArchiveStoreBytes": 33554432,
+        "maximumEvidenceBytes": 8388608,
+        "maximumEvidenceStoreBytes": 33554432,
+        "recordLimits": {
+          "maximumRecords": 500,
+          "maximumBytes": 33554432,
+          "maximumRecordBytes": 16777216
+        }
+      },
+      "missingInput": {
+        "schemaVersion": "nova-remote-test-gate-runtime.v1",
+        "endpoint": "https://fixture.invalid/plan",
+        "authentication": "bearer",
+        "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+        "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+        "sourceAuthority": "fixture-source-authority-A",
+        "stateRoot": "./state-A",
+        "pollMilliseconds": 500,
+        "maximumResponseBytes": 16777216,
+        "maximumResultBytes": 16777216,
+        "maximumArchiveBytes": 8388608,
+        "maximumArchiveStoreBytes": 67108864,
+        "maximumEvidenceBytes": 16777216,
+        "recordLimits": {
+          "maximumRecords": 1000,
+          "maximumBytes": 67108864,
+          "maximumRecordBytes": 33554432
+        }
+      },
+      "nullInput": {
+        "schemaVersion": "nova-remote-test-gate-runtime.v1",
+        "endpoint": "https://fixture.invalid/plan",
+        "authentication": "bearer",
+        "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+        "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+        "sourceAuthority": "fixture-source-authority-A",
+        "stateRoot": "./state-A",
+        "pollMilliseconds": 500,
+        "maximumResponseBytes": 16777216,
+        "maximumResultBytes": 16777216,
+        "maximumArchiveBytes": 8388608,
+        "maximumArchiveStoreBytes": 67108864,
+        "maximumEvidenceBytes": 16777216,
+        "maximumEvidenceStoreBytes": null,
+        "recordLimits": {
+          "maximumRecords": 1000,
+          "maximumBytes": 67108864,
+          "maximumRecordBytes": 33554432
+        }
+      },
+      "currentMissingRejected": true,
+      "currentNullRejected": true,
+      "unknownInput": {
+        "schemaVersion": "nova-remote-test-gate-runtime.v1",
+        "endpoint": "https://fixture.invalid/plan",
+        "authentication": "bearer",
+        "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+        "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+        "sourceAuthority": "fixture-source-authority-A",
+        "stateRoot": "./state-A",
+        "pollMilliseconds": 500,
+        "maximumResponseBytes": 16777216,
+        "maximumResultBytes": 16777216,
+        "maximumArchiveBytes": 8388608,
+        "maximumArchiveStoreBytes": 67108864,
+        "maximumEvidenceBytes": 16777216,
+        "maximumEvidenceStoreBytes": 67108864,
+        "recordLimits": {
+          "maximumRecords": 1000,
+          "maximumBytes": 67108864,
+          "maximumRecordBytes": 33554432
+        },
+        "unapprovedKnob": true
+      },
+      "currentRootUnknownRejected": true,
+      "numericNegativeInputs": [
+        {
+          "schemaVersion": "nova-remote-test-gate-runtime.v1",
+          "endpoint": "https://fixture.invalid/plan",
+          "authentication": "bearer",
+          "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+          "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+          "sourceAuthority": "fixture-source-authority-A",
+          "stateRoot": "./state-A",
+          "pollMilliseconds": 500,
+          "maximumResponseBytes": 16777216,
+          "maximumResultBytes": 16777216,
+          "maximumArchiveBytes": 8388608,
+          "maximumArchiveStoreBytes": 67108864,
+          "maximumEvidenceBytes": 16777216,
+          "maximumEvidenceStoreBytes": 0,
+          "recordLimits": {
+            "maximumRecords": 1000,
+            "maximumBytes": 67108864,
+            "maximumRecordBytes": 33554432
+          }
+        },
+        {
+          "schemaVersion": "nova-remote-test-gate-runtime.v1",
+          "endpoint": "https://fixture.invalid/plan",
+          "authentication": "bearer",
+          "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+          "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+          "sourceAuthority": "fixture-source-authority-A",
+          "stateRoot": "./state-A",
+          "pollMilliseconds": 500,
+          "maximumResponseBytes": 16777216,
+          "maximumResultBytes": 16777216,
+          "maximumArchiveBytes": 8388608,
+          "maximumArchiveStoreBytes": 67108864,
+          "maximumEvidenceBytes": 16777216,
+          "maximumEvidenceStoreBytes": -1,
+          "recordLimits": {
+            "maximumRecords": 1000,
+            "maximumBytes": 67108864,
+            "maximumRecordBytes": 33554432
+          }
+        },
+        {
+          "schemaVersion": "nova-remote-test-gate-runtime.v1",
+          "endpoint": "https://fixture.invalid/plan",
+          "authentication": "bearer",
+          "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+          "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+          "sourceAuthority": "fixture-source-authority-A",
+          "stateRoot": "./state-A",
+          "pollMilliseconds": 500,
+          "maximumResponseBytes": 16777216,
+          "maximumResultBytes": 16777216,
+          "maximumArchiveBytes": 8388608,
+          "maximumArchiveStoreBytes": 67108864,
+          "maximumEvidenceBytes": 16777216,
+          "maximumEvidenceStoreBytes": 1.5,
+          "recordLimits": {
+            "maximumRecords": 1000,
+            "maximumBytes": 67108864,
+            "maximumRecordBytes": 33554432
+          }
+        },
+        {
+          "schemaVersion": "nova-remote-test-gate-runtime.v1",
+          "endpoint": "https://fixture.invalid/plan",
+          "authentication": "bearer",
+          "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+          "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+          "sourceAuthority": "fixture-source-authority-A",
+          "stateRoot": "./state-A",
+          "pollMilliseconds": 500,
+          "maximumResponseBytes": 16777216,
+          "maximumResultBytes": 16777216,
+          "maximumArchiveBytes": 8388608,
+          "maximumArchiveStoreBytes": 67108864,
+          "maximumEvidenceBytes": 16777216,
+          "maximumEvidenceStoreBytes": "1",
+          "recordLimits": {
+            "maximumRecords": 1000,
+            "maximumBytes": 67108864,
+            "maximumRecordBytes": 33554432
+          }
+        },
+        {
+          "schemaVersion": "nova-remote-test-gate-runtime.v1",
+          "endpoint": "https://fixture.invalid/plan",
+          "authentication": "bearer",
+          "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+          "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+          "sourceAuthority": "fixture-source-authority-A",
+          "stateRoot": "./state-A",
+          "pollMilliseconds": 500,
+          "maximumResponseBytes": 16777216,
+          "maximumResultBytes": 16777216,
+          "maximumArchiveBytes": 8388608,
+          "maximumArchiveStoreBytes": 67108864,
+          "maximumEvidenceBytes": 16777216,
+          "maximumEvidenceStoreBytes": 9007199254740992,
+          "recordLimits": {
+            "maximumRecords": 1000,
+            "maximumBytes": 67108864,
+            "maximumRecordBytes": 33554432
+          }
+        }
+      ],
+      "scope": "Actual standalone public loader+production constructors ONLY, syntheticownedconfigfile and explicitly injected ephemeral in-memory credentials. No execute/dispatch/Git/network/artifact/storemethod/provider/installedcredential/grant/model/effect orphysicalcapacity acceptance",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDS",
+      "field": "recordLimits.maximumRecords",
+      "currentFullAConstructorAccepted": {
+        "schemaVersion": "nova-remote-test-gate-runtime.v1",
+        "endpoint": "https://fixture.invalid/plan",
+        "authentication": "bearer",
+        "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+        "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+        "sourceAuthority": "fixture-source-authority-A",
+        "stateRoot": "./state-A",
+        "pollMilliseconds": 500,
+        "maximumResponseBytes": 16777216,
+        "maximumResultBytes": 16777216,
+        "maximumArchiveBytes": 8388608,
+        "maximumArchiveStoreBytes": 67108864,
+        "maximumEvidenceBytes": 16777216,
+        "maximumEvidenceStoreBytes": 67108864,
+        "recordLimits": {
+          "maximumRecords": 1000,
+          "maximumBytes": 67108864,
+          "maximumRecordBytes": 33554432
+        }
+      },
+      "currentFullBConstructorAccepted": {
+        "schemaVersion": "nova-remote-test-gate-runtime.v1",
+        "endpoint": "http://localhost:18080/plan",
+        "authentication": "spiffe-proxy",
+        "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY_B",
+        "sourceAuthority": "fixture-source-authority-B",
+        "stateRoot": "./state-B",
+        "pollMilliseconds": 250,
+        "maximumResponseBytes": 8388608,
+        "maximumResultBytes": 8388608,
+        "maximumArchiveBytes": 4194304,
+        "maximumArchiveStoreBytes": 33554432,
+        "maximumEvidenceBytes": 8388608,
+        "maximumEvidenceStoreBytes": 33554432,
+        "recordLimits": {
+          "maximumRecords": 500,
+          "maximumBytes": 33554432,
+          "maximumRecordBytes": 16777216
+        }
+      },
+      "missingInput": {
+        "schemaVersion": "nova-remote-test-gate-runtime.v1",
+        "endpoint": "https://fixture.invalid/plan",
+        "authentication": "bearer",
+        "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+        "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+        "sourceAuthority": "fixture-source-authority-A",
+        "stateRoot": "./state-A",
+        "pollMilliseconds": 500,
+        "maximumResponseBytes": 16777216,
+        "maximumResultBytes": 16777216,
+        "maximumArchiveBytes": 8388608,
+        "maximumArchiveStoreBytes": 67108864,
+        "maximumEvidenceBytes": 16777216,
+        "maximumEvidenceStoreBytes": 67108864,
+        "recordLimits": {
+          "maximumBytes": 67108864,
+          "maximumRecordBytes": 33554432
+        }
+      },
+      "nullInput": {
+        "schemaVersion": "nova-remote-test-gate-runtime.v1",
+        "endpoint": "https://fixture.invalid/plan",
+        "authentication": "bearer",
+        "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+        "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+        "sourceAuthority": "fixture-source-authority-A",
+        "stateRoot": "./state-A",
+        "pollMilliseconds": 500,
+        "maximumResponseBytes": 16777216,
+        "maximumResultBytes": 16777216,
+        "maximumArchiveBytes": 8388608,
+        "maximumArchiveStoreBytes": 67108864,
+        "maximumEvidenceBytes": 16777216,
+        "maximumEvidenceStoreBytes": 67108864,
+        "recordLimits": {
+          "maximumRecords": null,
+          "maximumBytes": 67108864,
+          "maximumRecordBytes": 33554432
+        }
+      },
+      "currentMissingRejected": true,
+      "currentNullRejected": true,
+      "unknownInput": {
+        "schemaVersion": "nova-remote-test-gate-runtime.v1",
+        "endpoint": "https://fixture.invalid/plan",
+        "authentication": "bearer",
+        "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+        "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+        "sourceAuthority": "fixture-source-authority-A",
+        "stateRoot": "./state-A",
+        "pollMilliseconds": 500,
+        "maximumResponseBytes": 16777216,
+        "maximumResultBytes": 16777216,
+        "maximumArchiveBytes": 8388608,
+        "maximumArchiveStoreBytes": 67108864,
+        "maximumEvidenceBytes": 16777216,
+        "maximumEvidenceStoreBytes": 67108864,
+        "recordLimits": {
+          "maximumRecords": 1000,
+          "maximumBytes": 67108864,
+          "maximumRecordBytes": 33554432
+        },
+        "unapprovedKnob": true
+      },
+      "currentRootUnknownRejected": true,
+      "numericNegativeInputs": [
+        {
+          "schemaVersion": "nova-remote-test-gate-runtime.v1",
+          "endpoint": "https://fixture.invalid/plan",
+          "authentication": "bearer",
+          "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+          "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+          "sourceAuthority": "fixture-source-authority-A",
+          "stateRoot": "./state-A",
+          "pollMilliseconds": 500,
+          "maximumResponseBytes": 16777216,
+          "maximumResultBytes": 16777216,
+          "maximumArchiveBytes": 8388608,
+          "maximumArchiveStoreBytes": 67108864,
+          "maximumEvidenceBytes": 16777216,
+          "maximumEvidenceStoreBytes": 67108864,
+          "recordLimits": {
+            "maximumRecords": 0,
+            "maximumBytes": 67108864,
+            "maximumRecordBytes": 33554432
+          }
+        },
+        {
+          "schemaVersion": "nova-remote-test-gate-runtime.v1",
+          "endpoint": "https://fixture.invalid/plan",
+          "authentication": "bearer",
+          "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+          "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+          "sourceAuthority": "fixture-source-authority-A",
+          "stateRoot": "./state-A",
+          "pollMilliseconds": 500,
+          "maximumResponseBytes": 16777216,
+          "maximumResultBytes": 16777216,
+          "maximumArchiveBytes": 8388608,
+          "maximumArchiveStoreBytes": 67108864,
+          "maximumEvidenceBytes": 16777216,
+          "maximumEvidenceStoreBytes": 67108864,
+          "recordLimits": {
+            "maximumRecords": -1,
+            "maximumBytes": 67108864,
+            "maximumRecordBytes": 33554432
+          }
+        },
+        {
+          "schemaVersion": "nova-remote-test-gate-runtime.v1",
+          "endpoint": "https://fixture.invalid/plan",
+          "authentication": "bearer",
+          "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+          "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+          "sourceAuthority": "fixture-source-authority-A",
+          "stateRoot": "./state-A",
+          "pollMilliseconds": 500,
+          "maximumResponseBytes": 16777216,
+          "maximumResultBytes": 16777216,
+          "maximumArchiveBytes": 8388608,
+          "maximumArchiveStoreBytes": 67108864,
+          "maximumEvidenceBytes": 16777216,
+          "maximumEvidenceStoreBytes": 67108864,
+          "recordLimits": {
+            "maximumRecords": 1.5,
+            "maximumBytes": 67108864,
+            "maximumRecordBytes": 33554432
+          }
+        },
+        {
+          "schemaVersion": "nova-remote-test-gate-runtime.v1",
+          "endpoint": "https://fixture.invalid/plan",
+          "authentication": "bearer",
+          "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+          "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+          "sourceAuthority": "fixture-source-authority-A",
+          "stateRoot": "./state-A",
+          "pollMilliseconds": 500,
+          "maximumResponseBytes": 16777216,
+          "maximumResultBytes": 16777216,
+          "maximumArchiveBytes": 8388608,
+          "maximumArchiveStoreBytes": 67108864,
+          "maximumEvidenceBytes": 16777216,
+          "maximumEvidenceStoreBytes": 67108864,
+          "recordLimits": {
+            "maximumRecords": "1",
+            "maximumBytes": 67108864,
+            "maximumRecordBytes": 33554432
+          }
+        },
+        {
+          "schemaVersion": "nova-remote-test-gate-runtime.v1",
+          "endpoint": "https://fixture.invalid/plan",
+          "authentication": "bearer",
+          "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+          "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+          "sourceAuthority": "fixture-source-authority-A",
+          "stateRoot": "./state-A",
+          "pollMilliseconds": 500,
+          "maximumResponseBytes": 16777216,
+          "maximumResultBytes": 16777216,
+          "maximumArchiveBytes": 8388608,
+          "maximumArchiveStoreBytes": 67108864,
+          "maximumEvidenceBytes": 16777216,
+          "maximumEvidenceStoreBytes": 67108864,
+          "recordLimits": {
+            "maximumRecords": 9007199254740992,
+            "maximumBytes": 67108864,
+            "maximumRecordBytes": 33554432
+          }
+        }
+      ],
+      "scope": "Actual standalone public loader+production constructors ONLY, syntheticownedconfigfile and explicitly injected ephemeral in-memory credentials. No execute/dispatch/Git/network/artifact/storemethod/provider/installedcredential/grant/model/effect orphysicalcapacity acceptance",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMBYTES",
+      "field": "recordLimits.maximumBytes",
+      "currentFullAConstructorAccepted": {
+        "schemaVersion": "nova-remote-test-gate-runtime.v1",
+        "endpoint": "https://fixture.invalid/plan",
+        "authentication": "bearer",
+        "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+        "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+        "sourceAuthority": "fixture-source-authority-A",
+        "stateRoot": "./state-A",
+        "pollMilliseconds": 500,
+        "maximumResponseBytes": 16777216,
+        "maximumResultBytes": 16777216,
+        "maximumArchiveBytes": 8388608,
+        "maximumArchiveStoreBytes": 67108864,
+        "maximumEvidenceBytes": 16777216,
+        "maximumEvidenceStoreBytes": 67108864,
+        "recordLimits": {
+          "maximumRecords": 1000,
+          "maximumBytes": 67108864,
+          "maximumRecordBytes": 33554432
+        }
+      },
+      "currentFullBConstructorAccepted": {
+        "schemaVersion": "nova-remote-test-gate-runtime.v1",
+        "endpoint": "http://localhost:18080/plan",
+        "authentication": "spiffe-proxy",
+        "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY_B",
+        "sourceAuthority": "fixture-source-authority-B",
+        "stateRoot": "./state-B",
+        "pollMilliseconds": 250,
+        "maximumResponseBytes": 8388608,
+        "maximumResultBytes": 8388608,
+        "maximumArchiveBytes": 4194304,
+        "maximumArchiveStoreBytes": 33554432,
+        "maximumEvidenceBytes": 8388608,
+        "maximumEvidenceStoreBytes": 33554432,
+        "recordLimits": {
+          "maximumRecords": 500,
+          "maximumBytes": 33554432,
+          "maximumRecordBytes": 16777216
+        }
+      },
+      "missingInput": {
+        "schemaVersion": "nova-remote-test-gate-runtime.v1",
+        "endpoint": "https://fixture.invalid/plan",
+        "authentication": "bearer",
+        "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+        "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+        "sourceAuthority": "fixture-source-authority-A",
+        "stateRoot": "./state-A",
+        "pollMilliseconds": 500,
+        "maximumResponseBytes": 16777216,
+        "maximumResultBytes": 16777216,
+        "maximumArchiveBytes": 8388608,
+        "maximumArchiveStoreBytes": 67108864,
+        "maximumEvidenceBytes": 16777216,
+        "maximumEvidenceStoreBytes": 67108864,
+        "recordLimits": {
+          "maximumRecords": 1000,
+          "maximumRecordBytes": 33554432
+        }
+      },
+      "nullInput": {
+        "schemaVersion": "nova-remote-test-gate-runtime.v1",
+        "endpoint": "https://fixture.invalid/plan",
+        "authentication": "bearer",
+        "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+        "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+        "sourceAuthority": "fixture-source-authority-A",
+        "stateRoot": "./state-A",
+        "pollMilliseconds": 500,
+        "maximumResponseBytes": 16777216,
+        "maximumResultBytes": 16777216,
+        "maximumArchiveBytes": 8388608,
+        "maximumArchiveStoreBytes": 67108864,
+        "maximumEvidenceBytes": 16777216,
+        "maximumEvidenceStoreBytes": 67108864,
+        "recordLimits": {
+          "maximumRecords": 1000,
+          "maximumBytes": null,
+          "maximumRecordBytes": 33554432
+        }
+      },
+      "currentMissingRejected": true,
+      "currentNullRejected": true,
+      "unknownInput": {
+        "schemaVersion": "nova-remote-test-gate-runtime.v1",
+        "endpoint": "https://fixture.invalid/plan",
+        "authentication": "bearer",
+        "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+        "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+        "sourceAuthority": "fixture-source-authority-A",
+        "stateRoot": "./state-A",
+        "pollMilliseconds": 500,
+        "maximumResponseBytes": 16777216,
+        "maximumResultBytes": 16777216,
+        "maximumArchiveBytes": 8388608,
+        "maximumArchiveStoreBytes": 67108864,
+        "maximumEvidenceBytes": 16777216,
+        "maximumEvidenceStoreBytes": 67108864,
+        "recordLimits": {
+          "maximumRecords": 1000,
+          "maximumBytes": 67108864,
+          "maximumRecordBytes": 33554432
+        },
+        "unapprovedKnob": true
+      },
+      "currentRootUnknownRejected": true,
+      "numericNegativeInputs": [
+        {
+          "schemaVersion": "nova-remote-test-gate-runtime.v1",
+          "endpoint": "https://fixture.invalid/plan",
+          "authentication": "bearer",
+          "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+          "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+          "sourceAuthority": "fixture-source-authority-A",
+          "stateRoot": "./state-A",
+          "pollMilliseconds": 500,
+          "maximumResponseBytes": 16777216,
+          "maximumResultBytes": 16777216,
+          "maximumArchiveBytes": 8388608,
+          "maximumArchiveStoreBytes": 67108864,
+          "maximumEvidenceBytes": 16777216,
+          "maximumEvidenceStoreBytes": 67108864,
+          "recordLimits": {
+            "maximumRecords": 1000,
+            "maximumBytes": 0,
+            "maximumRecordBytes": 33554432
+          }
+        },
+        {
+          "schemaVersion": "nova-remote-test-gate-runtime.v1",
+          "endpoint": "https://fixture.invalid/plan",
+          "authentication": "bearer",
+          "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+          "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+          "sourceAuthority": "fixture-source-authority-A",
+          "stateRoot": "./state-A",
+          "pollMilliseconds": 500,
+          "maximumResponseBytes": 16777216,
+          "maximumResultBytes": 16777216,
+          "maximumArchiveBytes": 8388608,
+          "maximumArchiveStoreBytes": 67108864,
+          "maximumEvidenceBytes": 16777216,
+          "maximumEvidenceStoreBytes": 67108864,
+          "recordLimits": {
+            "maximumRecords": 1000,
+            "maximumBytes": -1,
+            "maximumRecordBytes": 33554432
+          }
+        },
+        {
+          "schemaVersion": "nova-remote-test-gate-runtime.v1",
+          "endpoint": "https://fixture.invalid/plan",
+          "authentication": "bearer",
+          "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+          "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+          "sourceAuthority": "fixture-source-authority-A",
+          "stateRoot": "./state-A",
+          "pollMilliseconds": 500,
+          "maximumResponseBytes": 16777216,
+          "maximumResultBytes": 16777216,
+          "maximumArchiveBytes": 8388608,
+          "maximumArchiveStoreBytes": 67108864,
+          "maximumEvidenceBytes": 16777216,
+          "maximumEvidenceStoreBytes": 67108864,
+          "recordLimits": {
+            "maximumRecords": 1000,
+            "maximumBytes": 1.5,
+            "maximumRecordBytes": 33554432
+          }
+        },
+        {
+          "schemaVersion": "nova-remote-test-gate-runtime.v1",
+          "endpoint": "https://fixture.invalid/plan",
+          "authentication": "bearer",
+          "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+          "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+          "sourceAuthority": "fixture-source-authority-A",
+          "stateRoot": "./state-A",
+          "pollMilliseconds": 500,
+          "maximumResponseBytes": 16777216,
+          "maximumResultBytes": 16777216,
+          "maximumArchiveBytes": 8388608,
+          "maximumArchiveStoreBytes": 67108864,
+          "maximumEvidenceBytes": 16777216,
+          "maximumEvidenceStoreBytes": 67108864,
+          "recordLimits": {
+            "maximumRecords": 1000,
+            "maximumBytes": "1",
+            "maximumRecordBytes": 33554432
+          }
+        },
+        {
+          "schemaVersion": "nova-remote-test-gate-runtime.v1",
+          "endpoint": "https://fixture.invalid/plan",
+          "authentication": "bearer",
+          "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+          "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+          "sourceAuthority": "fixture-source-authority-A",
+          "stateRoot": "./state-A",
+          "pollMilliseconds": 500,
+          "maximumResponseBytes": 16777216,
+          "maximumResultBytes": 16777216,
+          "maximumArchiveBytes": 8388608,
+          "maximumArchiveStoreBytes": 67108864,
+          "maximumEvidenceBytes": 16777216,
+          "maximumEvidenceStoreBytes": 67108864,
+          "recordLimits": {
+            "maximumRecords": 1000,
+            "maximumBytes": 9007199254740992,
+            "maximumRecordBytes": 33554432
+          }
+        }
+      ],
+      "scope": "Actual standalone public loader+production constructors ONLY, syntheticownedconfigfile and explicitly injected ephemeral in-memory credentials. No execute/dispatch/Git/network/artifact/storemethod/provider/installedcredential/grant/model/effect orphysicalcapacity acceptance",
+      "result": "passed"
+    },
+    {
+      "setting": "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDBYTES",
+      "field": "recordLimits.maximumRecordBytes",
+      "currentFullAConstructorAccepted": {
+        "schemaVersion": "nova-remote-test-gate-runtime.v1",
+        "endpoint": "https://fixture.invalid/plan",
+        "authentication": "bearer",
+        "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+        "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+        "sourceAuthority": "fixture-source-authority-A",
+        "stateRoot": "./state-A",
+        "pollMilliseconds": 500,
+        "maximumResponseBytes": 16777216,
+        "maximumResultBytes": 16777216,
+        "maximumArchiveBytes": 8388608,
+        "maximumArchiveStoreBytes": 67108864,
+        "maximumEvidenceBytes": 16777216,
+        "maximumEvidenceStoreBytes": 67108864,
+        "recordLimits": {
+          "maximumRecords": 1000,
+          "maximumBytes": 67108864,
+          "maximumRecordBytes": 33554432
+        }
+      },
+      "currentFullBConstructorAccepted": {
+        "schemaVersion": "nova-remote-test-gate-runtime.v1",
+        "endpoint": "http://localhost:18080/plan",
+        "authentication": "spiffe-proxy",
+        "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY_B",
+        "sourceAuthority": "fixture-source-authority-B",
+        "stateRoot": "./state-B",
+        "pollMilliseconds": 250,
+        "maximumResponseBytes": 8388608,
+        "maximumResultBytes": 8388608,
+        "maximumArchiveBytes": 4194304,
+        "maximumArchiveStoreBytes": 33554432,
+        "maximumEvidenceBytes": 8388608,
+        "maximumEvidenceStoreBytes": 33554432,
+        "recordLimits": {
+          "maximumRecords": 500,
+          "maximumBytes": 33554432,
+          "maximumRecordBytes": 16777216
+        }
+      },
+      "missingInput": {
+        "schemaVersion": "nova-remote-test-gate-runtime.v1",
+        "endpoint": "https://fixture.invalid/plan",
+        "authentication": "bearer",
+        "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+        "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+        "sourceAuthority": "fixture-source-authority-A",
+        "stateRoot": "./state-A",
+        "pollMilliseconds": 500,
+        "maximumResponseBytes": 16777216,
+        "maximumResultBytes": 16777216,
+        "maximumArchiveBytes": 8388608,
+        "maximumArchiveStoreBytes": 67108864,
+        "maximumEvidenceBytes": 16777216,
+        "maximumEvidenceStoreBytes": 67108864,
+        "recordLimits": {
+          "maximumRecords": 1000,
+          "maximumBytes": 67108864
+        }
+      },
+      "nullInput": {
+        "schemaVersion": "nova-remote-test-gate-runtime.v1",
+        "endpoint": "https://fixture.invalid/plan",
+        "authentication": "bearer",
+        "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+        "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+        "sourceAuthority": "fixture-source-authority-A",
+        "stateRoot": "./state-A",
+        "pollMilliseconds": 500,
+        "maximumResponseBytes": 16777216,
+        "maximumResultBytes": 16777216,
+        "maximumArchiveBytes": 8388608,
+        "maximumArchiveStoreBytes": 67108864,
+        "maximumEvidenceBytes": 16777216,
+        "maximumEvidenceStoreBytes": 67108864,
+        "recordLimits": {
+          "maximumRecords": 1000,
+          "maximumBytes": 67108864,
+          "maximumRecordBytes": null
+        }
+      },
+      "currentMissingRejected": true,
+      "currentNullRejected": true,
+      "unknownInput": {
+        "schemaVersion": "nova-remote-test-gate-runtime.v1",
+        "endpoint": "https://fixture.invalid/plan",
+        "authentication": "bearer",
+        "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+        "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+        "sourceAuthority": "fixture-source-authority-A",
+        "stateRoot": "./state-A",
+        "pollMilliseconds": 500,
+        "maximumResponseBytes": 16777216,
+        "maximumResultBytes": 16777216,
+        "maximumArchiveBytes": 8388608,
+        "maximumArchiveStoreBytes": 67108864,
+        "maximumEvidenceBytes": 16777216,
+        "maximumEvidenceStoreBytes": 67108864,
+        "recordLimits": {
+          "maximumRecords": 1000,
+          "maximumBytes": 67108864,
+          "maximumRecordBytes": 33554432
+        },
+        "unapprovedKnob": true
+      },
+      "currentRootUnknownRejected": true,
+      "numericNegativeInputs": [
+        {
+          "schemaVersion": "nova-remote-test-gate-runtime.v1",
+          "endpoint": "https://fixture.invalid/plan",
+          "authentication": "bearer",
+          "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+          "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+          "sourceAuthority": "fixture-source-authority-A",
+          "stateRoot": "./state-A",
+          "pollMilliseconds": 500,
+          "maximumResponseBytes": 16777216,
+          "maximumResultBytes": 16777216,
+          "maximumArchiveBytes": 8388608,
+          "maximumArchiveStoreBytes": 67108864,
+          "maximumEvidenceBytes": 16777216,
+          "maximumEvidenceStoreBytes": 67108864,
+          "recordLimits": {
+            "maximumRecords": 1000,
+            "maximumBytes": 67108864,
+            "maximumRecordBytes": 0
+          }
+        },
+        {
+          "schemaVersion": "nova-remote-test-gate-runtime.v1",
+          "endpoint": "https://fixture.invalid/plan",
+          "authentication": "bearer",
+          "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+          "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+          "sourceAuthority": "fixture-source-authority-A",
+          "stateRoot": "./state-A",
+          "pollMilliseconds": 500,
+          "maximumResponseBytes": 16777216,
+          "maximumResultBytes": 16777216,
+          "maximumArchiveBytes": 8388608,
+          "maximumArchiveStoreBytes": 67108864,
+          "maximumEvidenceBytes": 16777216,
+          "maximumEvidenceStoreBytes": 67108864,
+          "recordLimits": {
+            "maximumRecords": 1000,
+            "maximumBytes": 67108864,
+            "maximumRecordBytes": -1
+          }
+        },
+        {
+          "schemaVersion": "nova-remote-test-gate-runtime.v1",
+          "endpoint": "https://fixture.invalid/plan",
+          "authentication": "bearer",
+          "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+          "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+          "sourceAuthority": "fixture-source-authority-A",
+          "stateRoot": "./state-A",
+          "pollMilliseconds": 500,
+          "maximumResponseBytes": 16777216,
+          "maximumResultBytes": 16777216,
+          "maximumArchiveBytes": 8388608,
+          "maximumArchiveStoreBytes": 67108864,
+          "maximumEvidenceBytes": 16777216,
+          "maximumEvidenceStoreBytes": 67108864,
+          "recordLimits": {
+            "maximumRecords": 1000,
+            "maximumBytes": 67108864,
+            "maximumRecordBytes": 1.5
+          }
+        },
+        {
+          "schemaVersion": "nova-remote-test-gate-runtime.v1",
+          "endpoint": "https://fixture.invalid/plan",
+          "authentication": "bearer",
+          "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+          "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+          "sourceAuthority": "fixture-source-authority-A",
+          "stateRoot": "./state-A",
+          "pollMilliseconds": 500,
+          "maximumResponseBytes": 16777216,
+          "maximumResultBytes": 16777216,
+          "maximumArchiveBytes": 8388608,
+          "maximumArchiveStoreBytes": 67108864,
+          "maximumEvidenceBytes": 16777216,
+          "maximumEvidenceStoreBytes": 67108864,
+          "recordLimits": {
+            "maximumRecords": 1000,
+            "maximumBytes": 67108864,
+            "maximumRecordBytes": "1"
+          }
+        },
+        {
+          "schemaVersion": "nova-remote-test-gate-runtime.v1",
+          "endpoint": "https://fixture.invalid/plan",
+          "authentication": "bearer",
+          "tokenEnvironmentVariable": "C0_SYNTHETIC_TOKEN",
+          "sourceAttestationPrivateKeyEnvironmentVariable": "C0_SYNTHETIC_SOURCE_KEY",
+          "sourceAuthority": "fixture-source-authority-A",
+          "stateRoot": "./state-A",
+          "pollMilliseconds": 500,
+          "maximumResponseBytes": 16777216,
+          "maximumResultBytes": 16777216,
+          "maximumArchiveBytes": 8388608,
+          "maximumArchiveStoreBytes": 67108864,
+          "maximumEvidenceBytes": 16777216,
+          "maximumEvidenceStoreBytes": 67108864,
+          "recordLimits": {
+            "maximumRecords": 1000,
+            "maximumBytes": 67108864,
+            "maximumRecordBytes": 9007199254740992
+          }
+        }
+      ],
+      "scope": "Actual standalone public loader+production constructors ONLY, syntheticownedconfigfile and explicitly injected ephemeral in-memory credentials. No execute/dispatch/Git/network/artifact/storemethod/provider/installedcredential/grant/model/effect orphysicalcapacity acceptance",
+      "result": "passed"
+    }
+  ],
+  "passed": 17,
+  "failed": 0,
+  "controls": {
+    "authUnknownMissingNullBearerFallback": true,
+    "spiffeUnusedTokenNameAcceptedIgnored": true,
+    "sourceAuthorityInvalidIDAcceptedByLoaderButLaterSourceRejects": true,
+    "archive134217729AcceptedByLoaderButActualSourceGuardRejects": true,
+    "perBlobGreaterThanTotalAcceptedByConstructor": true,
+    "recordUnknownRejected": true,
+    "currentPoll2147483648AcceptedButNodeTimerClamps": {
+      "currentNode": "v24.21.0",
+      "acceptedTimerDelay": 2147483647,
+      "overflowTimerDelay": 1,
+      "technicalTimerOnly": true
+    },
+    "actualPrivateReadBodySyntheticResponseCases": [
+      {
+        "rawBytes": 7,
+        "cap": 8,
+        "result": "accepted"
+      },
+      {
+        "rawBytes": 8,
+        "cap": 8,
+        "result": "accepted"
+      }
+    ],
+    "syntheticBodyAdjacent9AndDeclaredLength9RejectedAt8": true,
+    "scope": "Exact unmodified private readBody/assertArchiveLimit through TypeScript erasure; in-memory Response stream not realHTTP/current stage/proof acceptance. Timer constructors cancelled synchronously, no timer fired. No filesystemstate/Git/archive/HTTP/storemethods orCLI command executed.",
+    "standaloneVsRegistered": "Registered adapter directlyfactoryfixed500/64MiB/1GiB/10000; DOESNOT read this standaloneCLIfile, notsameauthoralias.",
+    "loaderConstructorCalls": 150,
+    "credentialsScope": "Only throwaway key generated and exported in memory; current actual loader internally exports PKCS8 PEM. No key/secret written/logged/hashed in evidence; environment explicitly injected, process.env untouched."
+  },
+  "sourceDigests": {
+    "skills/nova/core/test-gates/runtime-config.ts": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a",
+    "skills/nova/core/test-gates/remote-gate-cli.ts": "e40718d15fff2d21f7fe60e920b968677321b5c318bf18476e7c0b1569f4690c",
+    "skills/nova/core/test-gates/production.ts": "886c5898b90473ac1f547a40136ed43de2e40bd556bb1acde025fcd95c2a0be1",
+    "skills/nova/core/test-gates/secure-endpoint.ts": "788109a387b6dd67fad7e5695312198a6b65ca3c0bd43ce7deaf416a2d75ac5a",
+    "skills/nova/core/test-gates/remote-dispatch.ts": "18bcaabddd476609a44a2447d847f19524a110d001847e07a4e11edb94a254c5",
+    "skills/nova/core/test-gates/dispatch-operation.ts": "ba74467ce360528872aea28dd54822a1c2b936098447ba34d92e54ae0306f85a",
+    "skills/nova/core/test-gates/deadline.ts": "27bb55650cfa85943f64843b523b671460f86a93b173f2233ffe31cdf72d182b",
+    "skills/nova/core/test-gates/http-response.ts": "03da46c89c22facbf8970a363288f29addc6171cea2b65d0286696e8ff9da74b",
+    "skills/nova/core/test-gates/remote-dispatch-store.ts": "634dc70de20d811672f69f70b58a6b620e578ae7c1188fe10afec46d90bca069",
+    "skills/nova/core/test-gates/remote-result-import.ts": "ddb1e749086128083a295c15790a1e666a614000b4650055e3374c9bf7edcc81",
+    "skills/nova/core/test-gates/source-snapshot.ts": "dddba2b8b5d9be5a098108b85f5134f6a93b05bc560d0f1a3c318d60cae860f2",
+    "skills/nova/core/test-gates/source-git.ts": "869044fecd888a1e4ded10059c8f6a5ec4510d1ca9c277507de545538f1fb90c",
+    "skills/nova/plugins/remote-test-gate/src/adapter.ts": "41ae631fac290f59931c6243280b4991278cd0b1659bc70dee4898c16ed33237",
+    "skills/nova/plugins/remote-test-gate/src/evidence-adapter.ts": "6afbc4274b2cbffa9fff2ed3c32deb9af3a381e7d3400e253fc3b871e139bffe",
+    "skills/common/plugin-runtime/foundation/observability/durable-records.ts": "ab407b028f3a22c96a436c3bdf2a9dd7bfee3b36d301de919669d2d1bf25c553",
+    "skills/common/plugin-runtime/foundation/observability/durable-blobs.ts": "5e1af13ee56ba905355f7f84e58b25d6a8ea5a1c7e77f5863a1a1ad18506c2ea",
+    "skills/nova/core/execution/engine-runtime.ts": "96c8e5964977cc9287897a63db0f102ff915e9a2ebd3c3ca87ed47b7dde81613",
+    "skills/nova/core/execution/engine-snapshots.ts": "50dfe92e656875658b7604f30012f8493564729473f6ddd65b64960ecf9946fd"
+  },
+  "testDigests": {
+    "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/check.mjs": "f4add6e70683c13bb9f64bd31be70a75837b62d598cc0035263dee2fedbafa0a"
+  },
+  "inputDigests": {
+    "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/contracts-captured-content-corrected.json": "4a1b8f0bc9d4901c02a0b0a564f2cf007ccb13f922bedf72e60995fd7945b74a",
+    "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/complete-profiles.json": "34b9770d5281dbe90df5b434fef3367a37c5e67f8ce33b57067df0c4b0c2ef98",
+    "package-lock.json": "c7b124ab4de93c983eebfd13f859cd328b7e7a823fe7dc662f9b6e0cf0ed736b"
+  },
+  "scope": "Current standalone real configuration loader/constructors plus exact private pure raw-response/archive guards and synchronously cancelled technical timers only; no deployedauthor/role/native/provider/grant/EFFECT/physicalcapacity proof"
+}

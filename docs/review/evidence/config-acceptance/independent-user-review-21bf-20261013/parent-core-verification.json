@@ -1,0 +1,20 @@
+{
+  "command": ["python3", "docs/review/evidence/config-acceptance/author/check-matrix.py", "--structural"],
+  "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+  "exitCode": 1,
+  "output": {
+    "mode": "draft-structural",
+    "scope": "integrity only; independent semantic review remains mandatory",
+    "settings": 2409,
+    "cases": 6726,
+    "errorCount": 3,
+    "errors": [
+      "fragment: content drift docs/review/evidence/config-acceptance/runtime/inventory-fragment.json",
+      "native case source: content drift docs/review/evidence/config-acceptance/runtime/case-proposals.json",
+      "native RUNTIME-NATIVE-CASE-SPECIFICATIONS: original specification/requirement loss"
+    ]
+  },
+  "sourceRead": "author/check-matrix.py:165-195: identity checks and native specification deep equality",
+  "frozenDirtyPaths": 286,
+  "baselineDrift": []
+}

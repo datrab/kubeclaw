@@ -1,0 +1,1671 @@
+{
+  "records": [
+    {
+      "id": "RT-CANDIDATE-2c887bf818e6e894",
+      "source": {
+        "path": "skills/nova/core/test-gates/deadline.ts",
+        "line": 8,
+        "text": "if (Date.now() >= (expirations.get(signal) ?? Infinity)) throw new NovaGateTimeoutError();",
+        "sha256": "27bb55650cfa85943f64843b523b671460f86a93b173f2233ffe31cdf72d182b",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "27bb55650cfa85943f64843b523b671460f86a93b173f2233ffe31cdf72d182b",
+      "explicitReviewedReason": "OPEN public GateDeadline safepositive/time.Now+milliseconds/optionalInfinityonlyunknownsignal expiration predicate; timeroverflow2147483648 actualNodeclamps1. Realcallerselecteddeadline/context/source/cleanup policy+properremaining/originalcapture isnotnew universaltimeoutauthor orphysicalcapacity, no timersfire inprobe.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "OPEN public GateDeadline safepositive/time.Now+milliseconds/optionalInfinityonlyunknownsignal expiration predicate; timeroverflow2147483648 actualNodeclamps1. Realcallerselecteddeadline/context/source/cleanup policy+properremaining/originalcapture isnotnew universaltimeoutauthor orphysicalcapacity, no timersfire inprobe.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/contracts-captured-content-corrected.json",
+      "status": "precise open standalone/native policy/role/whole-source/owner/task/grant obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-48519f131653c585",
+      "source": {
+        "path": "skills/nova/core/test-gates/deadline.ts",
+        "line": 20,
+        "text": "if (!Number.isSafeInteger(milliseconds) || milliseconds < 1) throw new Error('NOVA_REMOTE_PLAN_TIMEOUT_INVALID');",
+        "sha256": "27bb55650cfa85943f64843b523b671460f86a93b173f2233ffe31cdf72d182b",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "27bb55650cfa85943f64843b523b671460f86a93b173f2233ffe31cdf72d182b",
+      "explicitReviewedReason": "OPEN public GateDeadline safepositive/time.Now+milliseconds/optionalInfinityonlyunknownsignal expiration predicate; timeroverflow2147483648 actualNodeclamps1. Realcallerselecteddeadline/context/source/cleanup policy+properremaining/originalcapture isnotnew universaltimeoutauthor orphysicalcapacity, no timersfire inprobe.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "OPEN public GateDeadline safepositive/time.Now+milliseconds/optionalInfinityonlyunknownsignal expiration predicate; timeroverflow2147483648 actualNodeclamps1. Realcallerselecteddeadline/context/source/cleanup policy+properremaining/originalcapture isnotnew universaltimeoutauthor orphysicalcapacity, no timersfire inprobe.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/contracts-captured-content-corrected.json",
+      "status": "precise open standalone/native policy/role/whole-source/owner/task/grant obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-42e07b11fbe835a5",
+      "source": {
+        "path": "skills/nova/core/test-gates/dispatch-operation.ts",
+        "line": 13,
+        "text": "if (status.jobId !== job.jobId || status.requestDigest !== job.requestDigest) throw new Error('NOVA_REMOTE_PLAN_STATUS_IDENTITY_MISMATCH');",
+        "sha256": "ba74467ce360528872aea28dd54822a1c2b936098447ba34d92e54ae0306f85a",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "ba74467ce360528872aea28dd54822a1c2b936098447ba34d92e54ae0306f85a",
+      "explicitReviewedReason": "Exact fullremotePlanStatus validated/jobID+requestdigest equality guards originalsource input authority; typedprotocol\u2014notconfigurableselector/defaultorgrantpermission. RealHTTP/native statusreceipts remainfutureNOTRUN.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exact fullremotePlanStatus validated/jobID+requestdigest equality guards originalsource input authority; typedprotocol\u2014notconfigurableselector/defaultorgrantpermission. RealHTTP/native statusreceipts remainfutureNOTRUN.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/contracts-captured-content-corrected.json",
+      "status": "explicit current standalonefield/protocol/source boundary; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-19693c1b4b8ce518",
+      "source": {
+        "path": "skills/nova/core/test-gates/dispatch-operation.ts",
+        "line": 16,
+        "text": "interface DispatchDependencies { store: FileNovaRemotePlanStore; transport: RemotePlanTransport; pollMilliseconds: number; cleanupMilliseconds: number }",
+        "sha256": "ba74467ce360528872aea28dd54822a1c2b936098447ba34d92e54ae0306f85a",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "ba74467ce360528872aea28dd54822a1c2b936098447ba34d92e54ae0306f85a",
+      "explicitReviewedReason": "Actual dependencies include poll+cleanup andfiniteoriginaltimeout, persistentfulljob beforestatusorPOST, absenceestablishedbefore submit. Multiplecaller/librarypolicy authorities distinct; cleanupunexposedOPEN, fullstatus/role/grants/recovery sourcefixtures notimplemented/accepted.",
+      "settings": [
+        "RT-NOVA-REMOTE-POLLMILLISECONDS"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/contracts-captured-content-corrected.json",
+      "status": "precise open standalone/native policy/role/whole-source/owner/task/grant obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-1f83b1b79423d98d",
+      "source": {
+        "path": "skills/nova/core/test-gates/dispatch-operation.ts",
+        "line": 18,
+        "text": "export async function dispatchOperation(dependencies: DispatchDependencies, job: RemotePlanJobV1, options: { timeoutMs: number; signal?: AbortSignal }): Promise<RemotePlanStatusV1> {",
+        "sha256": "ba74467ce360528872aea28dd54822a1c2b936098447ba34d92e54ae0306f85a",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "ba74467ce360528872aea28dd54822a1c2b936098447ba34d92e54ae0306f85a",
+      "explicitReviewedReason": "Actual dependencies include poll+cleanup andfiniteoriginaltimeout, persistentfulljob beforestatusorPOST, absenceestablishedbefore submit. Multiplecaller/librarypolicy authorities distinct; cleanupunexposedOPEN, fullstatus/role/grants/recovery sourcefixtures notimplemented/accepted.",
+      "settings": [
+        "RT-NOVA-REMOTE-POLLMILLISECONDS"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/contracts-captured-content-corrected.json",
+      "status": "precise open standalone/native policy/role/whole-source/owner/task/grant obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-8fa3fafe4a96dabe",
+      "source": {
+        "path": "skills/nova/core/test-gates/dispatch-operation.ts",
+        "line": 84,
+        "text": "catch (error) { return { remoteState: 'unknown', lastError: lastError ?? (error instanceof Error ? error.message : String(error)) }; }",
+        "sha256": "ba74467ce360528872aea28dd54822a1c2b936098447ba34d92e54ae0306f85a",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "ba74467ce360528872aea28dd54822a1c2b936098447ba34d92e54ae0306f85a",
+      "explicitReviewedReason": "Actual cancellation/timeout reconciliation returns remoteStateunknown whennoauthoritativeproof; neverclaimedcancelled orsuccessfulnative cleanup/PASS. Originaloperation error/lastError retained/persistinterruptions exact, fullpending/cancel/lostresponse/cleanupauthor cases OPEN.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Actual cancellation/timeout reconciliation returns remoteStateunknown whennoauthoritativeproof; neverclaimedcancelled orsuccessfulnative cleanup/PASS. Originaloperation error/lastError retained/persistinterruptions exact, fullpending/cancel/lostresponse/cleanupauthor cases OPEN.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/contracts-captured-content-corrected.json",
+      "status": "precise open standalone/native policy/role/whole-source/owner/task/grant obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-2323bedc867c20d9",
+      "source": {
+        "path": "skills/nova/core/test-gates/http-response.ts",
+        "line": 2,
+        "text": "export function retryableStatus(status: number): boolean { return status === 408 || status === 425 || status === 429 || status >= 500; }",
+        "sha256": "03da46c89c22facbf8970a363288f29addc6171cea2b65d0286696e8ff9da74b",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "03da46c89c22facbf8970a363288f29addc6171cea2b65d0286696e8ff9da74b",
+      "explicitReviewedReason": "OPEN actual transport retryable408/425/429/>=500 classifier with source finiteerror handling; externalprovider/protocol/cancellation/retryoriginaldeadline supportedcase roster distinctoperational policy/compat contract, notlexicalautomaticclosure.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "OPEN actual transport retryable408/425/429/>=500 classifier with source finiteerror handling; externalprovider/protocol/cancellation/retryoriginaldeadline supportedcase roster distinctoperational policy/compat contract, notlexicalautomaticclosure.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/contracts-captured-content-corrected.json",
+      "status": "precise open standalone/native policy/role/whole-source/owner/task/grant obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-57abea5947bd70aa",
+      "source": {
+        "path": "skills/nova/core/test-gates/remote-dispatch-store.ts",
+        "line": 21,
+        "text": "if (!Number.isSafeInteger(options.maximumArchiveBytes) || options.maximumArchiveBytes < 1) {",
+        "sha256": "634dc70de20d811672f69f70b58a6b620e578ae7c1188fe10afec46d90bca069",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "634dc70de20d811672f69f70b58a6b620e578ae7c1188fe10afec46d90bca069",
+      "explicitReviewedReason": "Actual archive raw+ceil(base64size/3)*4/fullJOBpayload andindependentwholecanonicalstate quotas, recordappendBEFOREblobput. Cannotcall configured64MiB archive +64MiBpayload A6worstcaseco-valid ortrimsource/native task/proofs tofit. Genuinefulljob+metadata/storememory/correlatedceilingandpendingrecordrecoverystillOPEN.",
+      "settings": [
+        "RT-NOVA-REMOTE-MAXIMUMARCHIVEBYTES",
+        "RT-NOVA-REMOTE-MAXIMUMARCHIVESTOREBYTES",
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMBYTES",
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDBYTES"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/contracts-captured-content-corrected.json",
+      "status": "precise open standalone/native policy/role/whole-source/owner/task/grant obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-bddce44376333f42",
+      "source": {
+        "path": "skills/nova/core/test-gates/remote-dispatch-store.ts",
+        "line": 34,
+        "text": "|| job.repositoryArchive.data.length > maximumEncodedBytes",
+        "sha256": "634dc70de20d811672f69f70b58a6b620e578ae7c1188fe10afec46d90bca069",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "634dc70de20d811672f69f70b58a6b620e578ae7c1188fe10afec46d90bca069",
+      "explicitReviewedReason": "Actual archive raw+ceil(base64size/3)*4/fullJOBpayload andindependentwholecanonicalstate quotas, recordappendBEFOREblobput. Cannotcall configured64MiB archive +64MiBpayload A6worstcaseco-valid ortrimsource/native task/proofs tofit. Genuinefulljob+metadata/storememory/correlatedceilingandpendingrecordrecoverystillOPEN.",
+      "settings": [
+        "RT-NOVA-REMOTE-MAXIMUMARCHIVEBYTES",
+        "RT-NOVA-REMOTE-MAXIMUMARCHIVESTOREBYTES",
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMBYTES",
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDBYTES"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/contracts-captured-content-corrected.json",
+      "status": "precise open standalone/native policy/role/whole-source/owner/task/grant obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-a3b8d78266b1e1be",
+      "source": {
+        "path": "skills/nova/core/test-gates/remote-dispatch-store.ts",
+        "line": 45,
+        "text": "if (!(error instanceof Error) || error.message !== 'DURABLE_RECORD_IDEMPOTENCY_CONFLICT') throw error;",
+        "sha256": "634dc70de20d811672f69f70b58a6b620e578ae7c1188fe10afec46d90bca069",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "634dc70de20d811672f69f70b58a6b620e578ae7c1188fe10afec46d90bca069",
+      "explicitReviewedReason": "Actual idempotencyconflict/load projection/nativeversion/rawblobdigest+size andretirementintent/result/decision digest checks retainoriginalcommit/source/proof. Dataprotocol/historyguard\u2014notarbitraryknob; no missing original CONFIG/module/grant closure inference fromhashchecks. Pendingrecordbeforeblob/retentionreal source proof futureNOTRUN.",
+      "settings": [
+        "RT-NOVA-REMOTE-STATEROOT",
+        "RT-NOVA-REMOTE-MAXIMUMARCHIVESTOREBYTES"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/contracts-captured-content-corrected.json",
+      "status": "explicit current standalonefield/protocol/source boundary; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-ff5657bfca159ef4",
+      "source": {
+        "path": "skills/nova/core/test-gates/remote-dispatch-store.ts",
+        "line": 52,
+        "text": "if (stored.digest !== job.repositoryArchive.contentDigest || stored.sizeBytes !== archive.byteLength) {",
+        "sha256": "634dc70de20d811672f69f70b58a6b620e578ae7c1188fe10afec46d90bca069",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "634dc70de20d811672f69f70b58a6b620e578ae7c1188fe10afec46d90bca069",
+      "explicitReviewedReason": "Actual idempotencyconflict/load projection/nativeversion/rawblobdigest+size andretirementintent/result/decision digest checks retainoriginalcommit/source/proof. Dataprotocol/historyguard\u2014notarbitraryknob; no missing original CONFIG/module/grant closure inference fromhashchecks. Pendingrecordbeforeblob/retentionreal source proof futureNOTRUN.",
+      "settings": [
+        "RT-NOVA-REMOTE-STATEROOT",
+        "RT-NOVA-REMOTE-MAXIMUMARCHIVESTOREBYTES"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/contracts-captured-content-corrected.json",
+      "status": "explicit current standalonefield/protocol/source boundary; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-9c54b3fbbb140cbd",
+      "source": {
+        "path": "skills/nova/core/test-gates/remote-dispatch-store.ts",
+        "line": 79,
+        "text": "if (!payload || !['nova-remote-plan-dispatch.v1', 'nova-remote-plan-dispatch-projected.v1'].includes(payload.schemaVersion)) {",
+        "sha256": "634dc70de20d811672f69f70b58a6b620e578ae7c1188fe10afec46d90bca069",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "634dc70de20d811672f69f70b58a6b620e578ae7c1188fe10afec46d90bca069",
+      "explicitReviewedReason": "Actual idempotencyconflict/load projection/nativeversion/rawblobdigest+size andretirementintent/result/decision digest checks retainoriginalcommit/source/proof. Dataprotocol/historyguard\u2014notarbitraryknob; no missing original CONFIG/module/grant closure inference fromhashchecks. Pendingrecordbeforeblob/retentionreal source proof futureNOTRUN.",
+      "settings": [
+        "RT-NOVA-REMOTE-STATEROOT",
+        "RT-NOVA-REMOTE-MAXIMUMARCHIVESTOREBYTES"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/contracts-captured-content-corrected.json",
+      "status": "explicit current standalonefield/protocol/source boundary; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-a496e0363560b6ed",
+      "source": {
+        "path": "skills/nova/core/test-gates/remote-dispatch-store.ts",
+        "line": 121,
+        "text": "if (record.idempotencyKey !== job.idempotencyKey || job.plan.runId !== intent.runId || job.requestDigest !== intent.requestDigest) {",
+        "sha256": "634dc70de20d811672f69f70b58a6b620e578ae7c1188fe10afec46d90bca069",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "634dc70de20d811672f69f70b58a6b620e578ae7c1188fe10afec46d90bca069",
+      "explicitReviewedReason": "Actual idempotencyconflict/load projection/nativeversion/rawblobdigest+size andretirementintent/result/decision digest checks retainoriginalcommit/source/proof. Dataprotocol/historyguard\u2014notarbitraryknob; no missing original CONFIG/module/grant closure inference fromhashchecks. Pendingrecordbeforeblob/retentionreal source proof futureNOTRUN.",
+      "settings": [
+        "RT-NOVA-REMOTE-STATEROOT",
+        "RT-NOVA-REMOTE-MAXIMUMARCHIVESTOREBYTES"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/contracts-captured-content-corrected.json",
+      "status": "explicit current standalonefield/protocol/source boundary; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-5604038621669389",
+      "source": {
+        "path": "skills/nova/core/test-gates/remote-dispatch-store.ts",
+        "line": 126,
+        "text": "if (receipt.intentDigest !== dispatchProjectionDigest(intent) || receipt.resultDigest !== authority.resultDigest",
+        "sha256": "634dc70de20d811672f69f70b58a6b620e578ae7c1188fe10afec46d90bca069",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "634dc70de20d811672f69f70b58a6b620e578ae7c1188fe10afec46d90bca069",
+      "explicitReviewedReason": "Actual idempotencyconflict/load projection/nativeversion/rawblobdigest+size andretirementintent/result/decision digest checks retainoriginalcommit/source/proof. Dataprotocol/historyguard\u2014notarbitraryknob; no missing original CONFIG/module/grant closure inference fromhashchecks. Pendingrecordbeforeblob/retentionreal source proof futureNOTRUN.",
+      "settings": [
+        "RT-NOVA-REMOTE-STATEROOT",
+        "RT-NOVA-REMOTE-MAXIMUMARCHIVESTOREBYTES"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/contracts-captured-content-corrected.json",
+      "status": "explicit current standalonefield/protocol/source boundary; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-52d0ee4dd5f8bcb1",
+      "source": {
+        "path": "skills/nova/core/test-gates/remote-dispatch-store.ts",
+        "line": 127,
+        "text": "|| receipt.decisionDigest !== authority.decisionDigest) throw new Error('NOVA_DISPATCH_RETENTION_CONFLICT');",
+        "sha256": "634dc70de20d811672f69f70b58a6b620e578ae7c1188fe10afec46d90bca069",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "634dc70de20d811672f69f70b58a6b620e578ae7c1188fe10afec46d90bca069",
+      "explicitReviewedReason": "Actual idempotencyconflict/load projection/nativeversion/rawblobdigest+size andretirementintent/result/decision digest checks retainoriginalcommit/source/proof. Dataprotocol/historyguard\u2014notarbitraryknob; no missing original CONFIG/module/grant closure inference fromhashchecks. Pendingrecordbeforeblob/retentionreal source proof futureNOTRUN.",
+      "settings": [
+        "RT-NOVA-REMOTE-STATEROOT",
+        "RT-NOVA-REMOTE-MAXIMUMARCHIVESTOREBYTES"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/contracts-captured-content-corrected.json",
+      "status": "explicit current standalonefield/protocol/source boundary; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-8c2b989ae4bb14e1",
+      "source": {
+        "path": "skills/nova/core/test-gates/remote-dispatch.ts",
+        "line": 37,
+        "text": "[...(input.grants.get(node.id) ?? [])].sort(),",
+        "sha256": "18bcaabddd476609a44a2447d847f19524a110d001847e07a4e11edb94a254c5",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "18bcaabddd476609a44a2447d847f19524a110d001847e07a4e11edb94a254c5",
+      "explicitReviewedReason": "OPEN actual createRemotePlanJob maps missingper-nodegrant toempty[], CLI onlychecksobject whereasregisteredadapter checks exactallnodes map. Derived fulltask/source authority input\u2014notsecondauthor or validcapabilitygrant inventedfromemptyarray. Exactproductivecaller/grant/domain/case needs explicitfullactualnode obligations; no nativegrant acceptance.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "OPEN actual createRemotePlanJob maps missingper-nodegrant toempty[], CLI onlychecksobject whereasregisteredadapter checks exactallnodes map. Derived fulltask/source authority input\u2014notsecondauthor or validcapabilitygrant inventedfromemptyarray. Exactproductivecaller/grant/domain/case needs explicitfullactualnode obligations; no nativegrant acceptance.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/contracts-captured-content-corrected.json",
+      "status": "precise open standalone/native policy/role/whole-source/owner/task/grant obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-9361cc69a92c081f",
+      "source": {
+        "path": "skills/nova/core/test-gates/remote-dispatch.ts",
+        "line": 73,
+        "text": "readonly #pollMilliseconds: number;",
+        "sha256": "18bcaabddd476609a44a2447d847f19524a110d001847e07a4e11edb94a254c5",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "18bcaabddd476609a44a2447d847f19524a110d001847e07a4e11edb94a254c5",
+      "explicitReviewedReason": "Actual capturedpoll>=10 passes to dispatchOperation ordinary+cleanup min(poll,deadline.remaining). CurrentSafeMAX poll accepted despite Node timer2147483648 clamp1 (safe constructor probe cancelled); proposedtimerrepresentabilityandactual originaltaskdeadline/provider/cancel feasibility distinct, no SLA/nativepoll acceptance.",
+      "settings": [
+        "RT-NOVA-REMOTE-POLLMILLISECONDS"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/contracts-captured-content-corrected.json",
+      "status": "explicit current standalonefield/protocol/source boundary; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-b619a9fb18b3464d",
+      "source": {
+        "path": "skills/nova/core/test-gates/remote-dispatch.ts",
+        "line": 79,
+        "text": "readonly pollMilliseconds: number;",
+        "sha256": "18bcaabddd476609a44a2447d847f19524a110d001847e07a4e11edb94a254c5",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "18bcaabddd476609a44a2447d847f19524a110d001847e07a4e11edb94a254c5",
+      "explicitReviewedReason": "Actual capturedpoll>=10 passes to dispatchOperation ordinary+cleanup min(poll,deadline.remaining). CurrentSafeMAX poll accepted despite Node timer2147483648 clamp1 (safe constructor probe cancelled); proposedtimerrepresentabilityandactual originaltaskdeadline/provider/cancel feasibility distinct, no SLA/nativepoll acceptance.",
+      "settings": [
+        "RT-NOVA-REMOTE-POLLMILLISECONDS"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/contracts-captured-content-corrected.json",
+      "status": "explicit current standalonefield/protocol/source boundary; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-d0b46a795ca317ab",
+      "source": {
+        "path": "skills/nova/core/test-gates/remote-dispatch.ts",
+        "line": 82,
+        "text": "if (!Number.isSafeInteger(options.pollMilliseconds) || options.pollMilliseconds < 10) {",
+        "sha256": "18bcaabddd476609a44a2447d847f19524a110d001847e07a4e11edb94a254c5",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "18bcaabddd476609a44a2447d847f19524a110d001847e07a4e11edb94a254c5",
+      "explicitReviewedReason": "Actual capturedpoll>=10 passes to dispatchOperation ordinary+cleanup min(poll,deadline.remaining). CurrentSafeMAX poll accepted despite Node timer2147483648 clamp1 (safe constructor probe cancelled); proposedtimerrepresentabilityandactual originaltaskdeadline/provider/cancel feasibility distinct, no SLA/nativepoll acceptance.",
+      "settings": [
+        "RT-NOVA-REMOTE-POLLMILLISECONDS"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/contracts-captured-content-corrected.json",
+      "status": "explicit current standalonefield/protocol/source boundary; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-be7b18284ce13822",
+      "source": {
+        "path": "skills/nova/core/test-gates/remote-dispatch.ts",
+        "line": 87,
+        "text": "this.#pollMilliseconds = options.pollMilliseconds;",
+        "sha256": "18bcaabddd476609a44a2447d847f19524a110d001847e07a4e11edb94a254c5",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "18bcaabddd476609a44a2447d847f19524a110d001847e07a4e11edb94a254c5",
+      "explicitReviewedReason": "Actual capturedpoll>=10 passes to dispatchOperation ordinary+cleanup min(poll,deadline.remaining). CurrentSafeMAX poll accepted despite Node timer2147483648 clamp1 (safe constructor probe cancelled); proposedtimerrepresentabilityandactual originaltaskdeadline/provider/cancel feasibility distinct, no SLA/nativepoll acceptance.",
+      "settings": [
+        "RT-NOVA-REMOTE-POLLMILLISECONDS"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/contracts-captured-content-corrected.json",
+      "status": "explicit current standalonefield/protocol/source boundary; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-a806ce8861f9d9ae",
+      "source": {
+        "path": "skills/nova/core/test-gates/remote-dispatch.ts",
+        "line": 88,
+        "text": "this.#cleanupMilliseconds = options.cleanupMilliseconds ?? 10_000;",
+        "sha256": "18bcaabddd476609a44a2447d847f19524a110d001847e07a4e11edb94a254c5",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "18bcaabddd476609a44a2447d847f19524a110d001847e07a4e11edb94a254c5",
+      "explicitReviewedReason": "OPEN actual optionalcleanupMilliseconds fallback10000 distinct productive interruption timeout, NOT poll/CLI perjobdeadline alias; CLI/factory/registeredcaller currently omit parameter. Needs specificexistingrole owner/correlations/futurelossresponse/cancel/reconcile/persist/fence cases, notsharedgenericfoundation/default setting.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "OPEN actual optionalcleanupMilliseconds fallback10000 distinct productive interruption timeout, NOT poll/CLI perjobdeadline alias; CLI/factory/registeredcaller currently omit parameter. Needs specificexistingrole owner/correlations/futurelossresponse/cancel/reconcile/persist/fence cases, notsharedgenericfoundation/default setting.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/contracts-captured-content-corrected.json",
+      "status": "precise open standalone/native policy/role/whole-source/owner/task/grant obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-1c0d818d2fbfa9cf",
+      "source": {
+        "path": "skills/nova/core/test-gates/remote-dispatch.ts",
+        "line": 89,
+        "text": "if (!Number.isSafeInteger(this.#cleanupMilliseconds) || this.#cleanupMilliseconds < 1) throw new Error('NOVA_REMOTE_CLEANUP_TIMEOUT_INVALID');",
+        "sha256": "18bcaabddd476609a44a2447d847f19524a110d001847e07a4e11edb94a254c5",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "18bcaabddd476609a44a2447d847f19524a110d001847e07a4e11edb94a254c5",
+      "explicitReviewedReason": "OPEN actual optionalcleanupMilliseconds fallback10000 distinct productive interruption timeout, NOT poll/CLI perjobdeadline alias; CLI/factory/registeredcaller currently omit parameter. Needs specificexistingrole owner/correlations/futurelossresponse/cancel/reconcile/persist/fence cases, notsharedgenericfoundation/default setting.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "OPEN actual optionalcleanupMilliseconds fallback10000 distinct productive interruption timeout, NOT poll/CLI perjobdeadline alias; CLI/factory/registeredcaller currently omit parameter. Needs specificexistingrole owner/correlations/futurelossresponse/cancel/reconcile/persist/fence cases, notsharedgenericfoundation/default setting.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/contracts-captured-content-corrected.json",
+      "status": "precise open standalone/native policy/role/whole-source/owner/task/grant obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-b11f3191944a2f23",
+      "source": {
+        "path": "skills/nova/core/test-gates/remote-dispatch.ts",
+        "line": 96,
+        "text": "return dispatchOperation({ store: this.#store, transport: this.#transport, pollMilliseconds: this.#pollMilliseconds,",
+        "sha256": "18bcaabddd476609a44a2447d847f19524a110d001847e07a4e11edb94a254c5",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "18bcaabddd476609a44a2447d847f19524a110d001847e07a4e11edb94a254c5",
+      "explicitReviewedReason": "Actual capturedpoll>=10 passes to dispatchOperation ordinary+cleanup min(poll,deadline.remaining). CurrentSafeMAX poll accepted despite Node timer2147483648 clamp1 (safe constructor probe cancelled); proposedtimerrepresentabilityandactual originaltaskdeadline/provider/cancel feasibility distinct, no SLA/nativepoll acceptance.",
+      "settings": [
+        "RT-NOVA-REMOTE-POLLMILLISECONDS"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/contracts-captured-content-corrected.json",
+      "status": "explicit current standalonefield/protocol/source boundary; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-ed45ed168ee3e18e",
+      "source": {
+        "path": "skills/nova/core/test-gates/remote-dispatch.ts",
+        "line": 103,
+        "text": "if (!['http:', 'https:'].includes(endpoint.protocol) || endpoint.username || endpoint.password) {",
+        "sha256": "18bcaabddd476609a44a2447d847f19524a110d001847e07a4e11edb94a254c5",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "18bcaabddd476609a44a2447d847f19524a110d001847e07a4e11edb94a254c5",
+      "explicitReviewedReason": "Actual HttpTransport secure endpoint/userinfo guard, exactsource auth/defaultbearer+minimum32 resolvedtoken atctor. Standaloneloaderclosedrootmode fallback remainscurrent mismatch; registeredsourceconfidentialinvocation differs, no sharednumeric/credentialcontext author proof.",
+      "settings": [
+        "RT-NOVA-REMOTE-ENDPOINT",
+        "RT-NOVA-REMOTE-AUTHENTICATION",
+        "RT-NOVA-REMOTE-TOKENENVIRONMENTVARIABLE"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/contracts-captured-content-corrected.json",
+      "status": "explicit current standalonefield/protocol/source boundary; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-6f46868acb99f886",
+      "source": {
+        "path": "skills/nova/core/test-gates/remote-dispatch.ts",
+        "line": 118,
+        "text": "const authentication = options.authentication ?? 'bearer';",
+        "sha256": "18bcaabddd476609a44a2447d847f19524a110d001847e07a4e11edb94a254c5",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "18bcaabddd476609a44a2447d847f19524a110d001847e07a4e11edb94a254c5",
+      "explicitReviewedReason": "Actual HttpTransport secure endpoint/userinfo guard, exactsource auth/defaultbearer+minimum32 resolvedtoken atctor. Standaloneloaderclosedrootmode fallback remainscurrent mismatch; registeredsourceconfidentialinvocation differs, no sharednumeric/credentialcontext author proof.",
+      "settings": [
+        "RT-NOVA-REMOTE-ENDPOINT",
+        "RT-NOVA-REMOTE-AUTHENTICATION",
+        "RT-NOVA-REMOTE-TOKENENVIRONMENTVARIABLE"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/contracts-captured-content-corrected.json",
+      "status": "explicit current standalonefield/protocol/source boundary; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-4f407cd3e0f57b7f",
+      "source": {
+        "path": "skills/nova/core/test-gates/remote-dispatch.ts",
+        "line": 119,
+        "text": "if (authentication === 'bearer' && (!options.token || options.token.length < 32)) {",
+        "sha256": "18bcaabddd476609a44a2447d847f19524a110d001847e07a4e11edb94a254c5",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "18bcaabddd476609a44a2447d847f19524a110d001847e07a4e11edb94a254c5",
+      "explicitReviewedReason": "Actual HttpTransport secure endpoint/userinfo guard, exactsource auth/defaultbearer+minimum32 resolvedtoken atctor. Standaloneloaderclosedrootmode fallback remainscurrent mismatch; registeredsourceconfidentialinvocation differs, no sharednumeric/credentialcontext author proof.",
+      "settings": [
+        "RT-NOVA-REMOTE-ENDPOINT",
+        "RT-NOVA-REMOTE-AUTHENTICATION",
+        "RT-NOVA-REMOTE-TOKENENVIRONMENTVARIABLE"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/contracts-captured-content-corrected.json",
+      "status": "explicit current standalonefield/protocol/source boundary; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-1cdc726ace2f9d3e",
+      "source": {
+        "path": "skills/nova/core/test-gates/remote-dispatch.ts",
+        "line": 126,
+        "text": "if (!Number.isSafeInteger(options.maximumResponseBytes) || options.maximumResponseBytes < 1) {",
+        "sha256": "18bcaabddd476609a44a2447d847f19524a110d001847e07a4e11edb94a254c5",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "18bcaabddd476609a44a2447d847f19524a110d001847e07a4e11edb94a254c5",
+      "explicitReviewedReason": "Actual positive response/resultcaps; publictransport optional resultlimit fallbackresponse islatentcompat API notloaderfallback. Per-call evidencebudget>=0/result>=1 checked, minconfigured/caller budgets, exactrawdigest thenwholeJSON schema. Realtypedcomplete/status/result/evidence/allocation/rolecapacity prerequisitesNOTRUN.",
+      "settings": [
+        "RT-NOVA-REMOTE-MAXIMUMRESPONSEBYTES",
+        "RT-NOVA-REMOTE-MAXIMUMRESULTBYTES"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/contracts-captured-content-corrected.json",
+      "status": "explicit current standalonefield/protocol/source boundary; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-6b4b43d94e586496",
+      "source": {
+        "path": "skills/nova/core/test-gates/remote-dispatch.ts",
+        "line": 132,
+        "text": "this.#maximumResultBytes = options.maximumResultBytes ?? options.maximumResponseBytes;",
+        "sha256": "18bcaabddd476609a44a2447d847f19524a110d001847e07a4e11edb94a254c5",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "18bcaabddd476609a44a2447d847f19524a110d001847e07a4e11edb94a254c5",
+      "explicitReviewedReason": "Actual positive response/resultcaps; publictransport optional resultlimit fallbackresponse islatentcompat API notloaderfallback. Per-call evidencebudget>=0/result>=1 checked, minconfigured/caller budgets, exactrawdigest thenwholeJSON schema. Realtypedcomplete/status/result/evidence/allocation/rolecapacity prerequisitesNOTRUN.",
+      "settings": [
+        "RT-NOVA-REMOTE-MAXIMUMRESPONSEBYTES",
+        "RT-NOVA-REMOTE-MAXIMUMRESULTBYTES"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/contracts-captured-content-corrected.json",
+      "status": "explicit current standalonefield/protocol/source boundary; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-856c07e6b59f1ff9",
+      "source": {
+        "path": "skills/nova/core/test-gates/remote-dispatch.ts",
+        "line": 133,
+        "text": "if (!Number.isSafeInteger(this.#maximumResultBytes) || this.#maximumResultBytes < 1) {",
+        "sha256": "18bcaabddd476609a44a2447d847f19524a110d001847e07a4e11edb94a254c5",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "18bcaabddd476609a44a2447d847f19524a110d001847e07a4e11edb94a254c5",
+      "explicitReviewedReason": "Actual positive response/resultcaps; publictransport optional resultlimit fallbackresponse islatentcompat API notloaderfallback. Per-call evidencebudget>=0/result>=1 checked, minconfigured/caller budgets, exactrawdigest thenwholeJSON schema. Realtypedcomplete/status/result/evidence/allocation/rolecapacity prerequisitesNOTRUN.",
+      "settings": [
+        "RT-NOVA-REMOTE-MAXIMUMRESPONSEBYTES",
+        "RT-NOVA-REMOTE-MAXIMUMRESULTBYTES"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/contracts-captured-content-corrected.json",
+      "status": "explicit current standalonefield/protocol/source boundary; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-9df67eaad317fc1d",
+      "source": {
+        "path": "skills/nova/core/test-gates/remote-dispatch.ts",
+        "line": 171,
+        "text": "if (!Number.isSafeInteger(maximumBytes) || maximumBytes < 0) throw new Error('NOVA_REMOTE_EVIDENCE_LIMIT_INVALID');",
+        "sha256": "18bcaabddd476609a44a2447d847f19524a110d001847e07a4e11edb94a254c5",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "18bcaabddd476609a44a2447d847f19524a110d001847e07a4e11edb94a254c5",
+      "explicitReviewedReason": "Actual positive response/resultcaps; publictransport optional resultlimit fallbackresponse islatentcompat API notloaderfallback. Per-call evidencebudget>=0/result>=1 checked, minconfigured/caller budgets, exactrawdigest thenwholeJSON schema. Realtypedcomplete/status/result/evidence/allocation/rolecapacity prerequisitesNOTRUN.",
+      "settings": [
+        "RT-NOVA-REMOTE-MAXIMUMRESPONSEBYTES",
+        "RT-NOVA-REMOTE-MAXIMUMRESULTBYTES"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/contracts-captured-content-corrected.json",
+      "status": "explicit current standalonefield/protocol/source boundary; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-7a47dfee8f8625f5",
+      "source": {
+        "path": "skills/nova/core/test-gates/remote-dispatch.ts",
+        "line": 184,
+        "text": "if (!Number.isSafeInteger(maximumBytes) || maximumBytes < 1) throw new Error('NOVA_REMOTE_RESULT_LIMIT_INVALID');",
+        "sha256": "18bcaabddd476609a44a2447d847f19524a110d001847e07a4e11edb94a254c5",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "18bcaabddd476609a44a2447d847f19524a110d001847e07a4e11edb94a254c5",
+      "explicitReviewedReason": "Actual positive response/resultcaps; publictransport optional resultlimit fallbackresponse islatentcompat API notloaderfallback. Per-call evidencebudget>=0/result>=1 checked, minconfigured/caller budgets, exactrawdigest thenwholeJSON schema. Realtypedcomplete/status/result/evidence/allocation/rolecapacity prerequisitesNOTRUN.",
+      "settings": [
+        "RT-NOVA-REMOTE-MAXIMUMRESPONSEBYTES",
+        "RT-NOVA-REMOTE-MAXIMUMRESULTBYTES"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/contracts-captured-content-corrected.json",
+      "status": "explicit current standalonefield/protocol/source boundary; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-ca985d1d8891006a",
+      "source": {
+        "path": "skills/nova/core/test-gates/remote-gate-cli.ts",
+        "line": 8,
+        "text": "function argumentsOf(values: readonly string[]): { config: string; job: string; timeoutMs: number } {",
+        "sha256": "e40718d15fff2d21f7fe60e920b968677321b5c318bf18476e7c0b1569f4690c",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "e40718d15fff2d21f7fe60e920b968677321b5c318bf18476e7c0b1569f4690c",
+      "explicitReviewedReason": "OPEN actual exported standaloneCLI pairparser accepts arbitraryflags/lastduplicated flag, --config/--job/--timeout-ms required safepositive; jobgrants onlyobject. CLI payload taskoperator/source/provider/history/timeoutoriginalseam andNode signed32 timer concern require exactexistingcaller field/projection/role authority, notschema marker closure/currentdeployedcaller inferred.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "OPEN actual exported standaloneCLI pairparser accepts arbitraryflags/lastduplicated flag, --config/--job/--timeout-ms required safepositive; jobgrants onlyobject. CLI payload taskoperator/source/provider/history/timeoutoriginalseam andNode signed32 timer concern require exactexistingcaller field/projection/role authority, notschema marker closure/currentdeployedcaller inferred.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/contracts-captured-content-corrected.json",
+      "status": "precise open standalone/native policy/role/whole-source/owner/task/grant obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-7d73cda46465b56f",
+      "source": {
+        "path": "skills/nova/core/test-gates/remote-gate-cli.ts",
+        "line": 12,
+        "text": "if (!flag?.startsWith('--') || !value) throw new Error('NOVA_REMOTE_GATE_CLI_ARGUMENTS_INVALID');",
+        "sha256": "e40718d15fff2d21f7fe60e920b968677321b5c318bf18476e7c0b1569f4690c",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "e40718d15fff2d21f7fe60e920b968677321b5c318bf18476e7c0b1569f4690c",
+      "explicitReviewedReason": "OPEN actual exported standaloneCLI pairparser accepts arbitraryflags/lastduplicated flag, --config/--job/--timeout-ms required safepositive; jobgrants onlyobject. CLI payload taskoperator/source/provider/history/timeoutoriginalseam andNode signed32 timer concern require exactexistingcaller field/projection/role authority, notschema marker closure/currentdeployedcaller inferred.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "OPEN actual exported standaloneCLI pairparser accepts arbitraryflags/lastduplicated flag, --config/--job/--timeout-ms required safepositive; jobgrants onlyobject. CLI payload taskoperator/source/provider/history/timeoutoriginalseam andNode signed32 timer concern require exactexistingcaller field/projection/role authority, notschema marker closure/currentdeployedcaller inferred.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/contracts-captured-content-corrected.json",
+      "status": "precise open standalone/native policy/role/whole-source/owner/task/grant obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-5f3be7f73e735561",
+      "source": {
+        "path": "skills/nova/core/test-gates/remote-gate-cli.ts",
+        "line": 15,
+        "text": "const timeoutMs = Number(parsed['timeout-ms']);",
+        "sha256": "e40718d15fff2d21f7fe60e920b968677321b5c318bf18476e7c0b1569f4690c",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "e40718d15fff2d21f7fe60e920b968677321b5c318bf18476e7c0b1569f4690c",
+      "explicitReviewedReason": "OPEN actual exported standaloneCLI pairparser accepts arbitraryflags/lastduplicated flag, --config/--job/--timeout-ms required safepositive; jobgrants onlyobject. CLI payload taskoperator/source/provider/history/timeoutoriginalseam andNode signed32 timer concern require exactexistingcaller field/projection/role authority, notschema marker closure/currentdeployedcaller inferred.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "OPEN actual exported standaloneCLI pairparser accepts arbitraryflags/lastduplicated flag, --config/--job/--timeout-ms required safepositive; jobgrants onlyobject. CLI payload taskoperator/source/provider/history/timeoutoriginalseam andNode signed32 timer concern require exactexistingcaller field/projection/role authority, notschema marker closure/currentdeployedcaller inferred.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/contracts-captured-content-corrected.json",
+      "status": "precise open standalone/native policy/role/whole-source/owner/task/grant obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-b7cd95a80a1c32e3",
+      "source": {
+        "path": "skills/nova/core/test-gates/remote-gate-cli.ts",
+        "line": 16,
+        "text": "if (!parsed.config || !parsed.job || !Number.isSafeInteger(timeoutMs) || timeoutMs < 1) {",
+        "sha256": "e40718d15fff2d21f7fe60e920b968677321b5c318bf18476e7c0b1569f4690c",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "e40718d15fff2d21f7fe60e920b968677321b5c318bf18476e7c0b1569f4690c",
+      "explicitReviewedReason": "OPEN actual exported standaloneCLI pairparser accepts arbitraryflags/lastduplicated flag, --config/--job/--timeout-ms required safepositive; jobgrants onlyobject. CLI payload taskoperator/source/provider/history/timeoutoriginalseam andNode signed32 timer concern require exactexistingcaller field/projection/role authority, notschema marker closure/currentdeployedcaller inferred.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "OPEN actual exported standaloneCLI pairparser accepts arbitraryflags/lastduplicated flag, --config/--job/--timeout-ms required safepositive; jobgrants onlyobject. CLI payload taskoperator/source/provider/history/timeoutoriginalseam andNode signed32 timer concern require exactexistingcaller field/projection/role authority, notschema marker closure/currentdeployedcaller inferred.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/contracts-captured-content-corrected.json",
+      "status": "precise open standalone/native policy/role/whole-source/owner/task/grant obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-3e97ca5ae045b13a",
+      "source": {
+        "path": "skills/nova/core/test-gates/remote-gate-cli.ts",
+        "line": 19,
+        "text": "return { config: path.resolve(parsed.config), job: path.resolve(parsed.job), timeoutMs };",
+        "sha256": "e40718d15fff2d21f7fe60e920b968677321b5c318bf18476e7c0b1569f4690c",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "e40718d15fff2d21f7fe60e920b968677321b5c318bf18476e7c0b1569f4690c",
+      "explicitReviewedReason": "OPEN actual exported standaloneCLI pairparser accepts arbitraryflags/lastduplicated flag, --config/--job/--timeout-ms required safepositive; jobgrants onlyobject. CLI payload taskoperator/source/provider/history/timeoutoriginalseam andNode signed32 timer concern require exactexistingcaller field/projection/role authority, notschema marker closure/currentdeployedcaller inferred.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "OPEN actual exported standaloneCLI pairparser accepts arbitraryflags/lastduplicated flag, --config/--job/--timeout-ms required safepositive; jobgrants onlyobject. CLI payload taskoperator/source/provider/history/timeoutoriginalseam andNode signed32 timer concern require exactexistingcaller field/projection/role authority, notschema marker closure/currentdeployedcaller inferred.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/contracts-captured-content-corrected.json",
+      "status": "precise open standalone/native policy/role/whole-source/owner/task/grant obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-61fbcdce0cd6d871",
+      "source": {
+        "path": "skills/nova/core/test-gates/remote-gate-cli.ts",
+        "line": 29,
+        "text": "if (!request.grants || typeof request.grants !== 'object' || Array.isArray(request.grants)) {",
+        "sha256": "e40718d15fff2d21f7fe60e920b968677321b5c318bf18476e7c0b1569f4690c",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "e40718d15fff2d21f7fe60e920b968677321b5c318bf18476e7c0b1569f4690c",
+      "explicitReviewedReason": "OPEN actual exported standaloneCLI pairparser accepts arbitraryflags/lastduplicated flag, --config/--job/--timeout-ms required safepositive; jobgrants onlyobject. CLI payload taskoperator/source/provider/history/timeoutoriginalseam andNode signed32 timer concern require exactexistingcaller field/projection/role authority, notschema marker closure/currentdeployedcaller inferred.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "OPEN actual exported standaloneCLI pairparser accepts arbitraryflags/lastduplicated flag, --config/--job/--timeout-ms required safepositive; jobgrants onlyobject. CLI payload taskoperator/source/provider/history/timeoutoriginalseam andNode signed32 timer concern require exactexistingcaller field/projection/role authority, notschema marker closure/currentdeployedcaller inferred.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/contracts-captured-content-corrected.json",
+      "status": "precise open standalone/native policy/role/whole-source/owner/task/grant obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-b35d3d0a5e3770b9",
+      "source": {
+        "path": "skills/nova/core/test-gates/remote-gate-cli.ts",
+        "line": 34,
+        "text": "timeoutMs: args.timeoutMs });",
+        "sha256": "e40718d15fff2d21f7fe60e920b968677321b5c318bf18476e7c0b1569f4690c",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "e40718d15fff2d21f7fe60e920b968677321b5c318bf18476e7c0b1569f4690c",
+      "explicitReviewedReason": "OPEN actual exported standaloneCLI pairparser accepts arbitraryflags/lastduplicated flag, --config/--job/--timeout-ms required safepositive; jobgrants onlyobject. CLI payload taskoperator/source/provider/history/timeoutoriginalseam andNode signed32 timer concern require exactexistingcaller field/projection/role authority, notschema marker closure/currentdeployedcaller inferred.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "OPEN actual exported standaloneCLI pairparser accepts arbitraryflags/lastduplicated flag, --config/--job/--timeout-ms required safepositive; jobgrants onlyobject. CLI payload taskoperator/source/provider/history/timeoutoriginalseam andNode signed32 timer concern require exactexistingcaller field/projection/role authority, notschema marker closure/currentdeployedcaller inferred.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/contracts-captured-content-corrected.json",
+      "status": "precise open standalone/native policy/role/whole-source/owner/task/grant obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-3f2f4026ede5bf74",
+      "source": {
+        "path": "skills/nova/core/test-gates/remote-result-import.ts",
+        "line": 48,
+        "text": "if (!stored || stored.schemaVersion !== 'nova-test-gate-import.v2' || stored.state !== 'complete'",
+        "sha256": "ddb1e749086128083a295c15790a1e666a614000b4650055e3374c9bf7edcc81",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "ddb1e749086128083a295c15790a1e666a614000b4650055e3374c9bf7edcc81",
+      "explicitReviewedReason": "Exact retained job/request/source/remoteResult/decision/evidence digest statecomplete andidempotentpendingrecords; verify allrefblobs andsourcegrants/native coverage beforevalidatedread/export. Actualpending_evidence record beforeblob writes thencomplete transition; notallatomic or CONFIG-header sourceproof. Originalauthenticquota/migration/role/grants/parentmoduleOPEN.",
+      "settings": [
+        "RT-NOVA-REMOTE-STATEROOT",
+        "RT-NOVA-REMOTE-MAXIMUMEVIDENCESTOREBYTES",
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMBYTES",
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDBYTES"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/contracts-captured-content-corrected.json",
+      "status": "precise open standalone/native policy/role/whole-source/owner/task/grant obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-2ff5ea345e792c99",
+      "source": {
+        "path": "skills/nova/core/test-gates/remote-result-import.ts",
+        "line": 49,
+        "text": "|| !stored.remoteResult || stored.jobId !== job.jobId || !same(stored.source, importSource(job))",
+        "sha256": "ddb1e749086128083a295c15790a1e666a614000b4650055e3374c9bf7edcc81",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "ddb1e749086128083a295c15790a1e666a614000b4650055e3374c9bf7edcc81",
+      "explicitReviewedReason": "Exact retained job/request/source/remoteResult/decision/evidence digest statecomplete andidempotentpendingrecords; verify allrefblobs andsourcegrants/native coverage beforevalidatedread/export. Actualpending_evidence record beforeblob writes thencomplete transition; notallatomic or CONFIG-header sourceproof. Originalauthenticquota/migration/role/grants/parentmoduleOPEN.",
+      "settings": [
+        "RT-NOVA-REMOTE-STATEROOT",
+        "RT-NOVA-REMOTE-MAXIMUMEVIDENCESTOREBYTES",
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMBYTES",
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDBYTES"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/contracts-captured-content-corrected.json",
+      "status": "precise open standalone/native policy/role/whole-source/owner/task/grant obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-a12078b07cd8fa9e",
+      "source": {
+        "path": "skills/nova/core/test-gates/remote-result-import.ts",
+        "line": 50,
+        "text": "|| stored.requestDigest !== job.requestDigest || stored.remoteResultDigest !== stored.remoteResult.resultDigest) {",
+        "sha256": "ddb1e749086128083a295c15790a1e666a614000b4650055e3374c9bf7edcc81",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "ddb1e749086128083a295c15790a1e666a614000b4650055e3374c9bf7edcc81",
+      "explicitReviewedReason": "Exact retained job/request/source/remoteResult/decision/evidence digest statecomplete andidempotentpendingrecords; verify allrefblobs andsourcegrants/native coverage beforevalidatedread/export. Actualpending_evidence record beforeblob writes thencomplete transition; notallatomic or CONFIG-header sourceproof. Originalauthenticquota/migration/role/grants/parentmoduleOPEN.",
+      "settings": [
+        "RT-NOVA-REMOTE-STATEROOT",
+        "RT-NOVA-REMOTE-MAXIMUMEVIDENCESTOREBYTES",
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMBYTES",
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDBYTES"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/contracts-captured-content-corrected.json",
+      "status": "precise open standalone/native policy/role/whole-source/owner/task/grant obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-599a77e1c755ab41",
+      "source": {
+        "path": "skills/nova/core/test-gates/remote-result-import.ts",
+        "line": 57,
+        "text": "if (existing.schemaVersion !== 'nova-test-gate-import.v2' || !same(existing.source, pending.source)",
+        "sha256": "ddb1e749086128083a295c15790a1e666a614000b4650055e3374c9bf7edcc81",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "ddb1e749086128083a295c15790a1e666a614000b4650055e3374c9bf7edcc81",
+      "explicitReviewedReason": "Exact retained job/request/source/remoteResult/decision/evidence digest statecomplete andidempotentpendingrecords; verify allrefblobs andsourcegrants/native coverage beforevalidatedread/export. Actualpending_evidence record beforeblob writes thencomplete transition; notallatomic or CONFIG-header sourceproof. Originalauthenticquota/migration/role/grants/parentmoduleOPEN.",
+      "settings": [
+        "RT-NOVA-REMOTE-STATEROOT",
+        "RT-NOVA-REMOTE-MAXIMUMEVIDENCESTOREBYTES",
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMBYTES",
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDBYTES"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/contracts-captured-content-corrected.json",
+      "status": "precise open standalone/native policy/role/whole-source/owner/task/grant obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-99fee82ed54bcf19",
+      "source": {
+        "path": "skills/nova/core/test-gates/remote-result-import.ts",
+        "line": 58,
+        "text": "|| existing.requestDigest !== pending.requestDigest || existing.remoteResultDigest !== pending.remoteResultDigest",
+        "sha256": "ddb1e749086128083a295c15790a1e666a614000b4650055e3374c9bf7edcc81",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "ddb1e749086128083a295c15790a1e666a614000b4650055e3374c9bf7edcc81",
+      "explicitReviewedReason": "Exact retained job/request/source/remoteResult/decision/evidence digest statecomplete andidempotentpendingrecords; verify allrefblobs andsourcegrants/native coverage beforevalidatedread/export. Actualpending_evidence record beforeblob writes thencomplete transition; notallatomic or CONFIG-header sourceproof. Originalauthenticquota/migration/role/grants/parentmoduleOPEN.",
+      "settings": [
+        "RT-NOVA-REMOTE-STATEROOT",
+        "RT-NOVA-REMOTE-MAXIMUMEVIDENCESTOREBYTES",
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMBYTES",
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDBYTES"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/contracts-captured-content-corrected.json",
+      "status": "precise open standalone/native policy/role/whole-source/owner/task/grant obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-ded7eec76309e408",
+      "source": {
+        "path": "skills/nova/core/test-gates/remote-result-import.ts",
+        "line": 59,
+        "text": "|| existing.decision.decisionDigest !== pending.decision.decisionDigest || !same(existing.evidenceDigests, pending.evidenceDigests)) {",
+        "sha256": "ddb1e749086128083a295c15790a1e666a614000b4650055e3374c9bf7edcc81",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "ddb1e749086128083a295c15790a1e666a614000b4650055e3374c9bf7edcc81",
+      "explicitReviewedReason": "Exact retained job/request/source/remoteResult/decision/evidence digest statecomplete andidempotentpendingrecords; verify allrefblobs andsourcegrants/native coverage beforevalidatedread/export. Actualpending_evidence record beforeblob writes thencomplete transition; notallatomic or CONFIG-header sourceproof. Originalauthenticquota/migration/role/grants/parentmoduleOPEN.",
+      "settings": [
+        "RT-NOVA-REMOTE-STATEROOT",
+        "RT-NOVA-REMOTE-MAXIMUMEVIDENCESTOREBYTES",
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMBYTES",
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDBYTES"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/contracts-captured-content-corrected.json",
+      "status": "precise open standalone/native policy/role/whole-source/owner/task/grant obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-6d0b109f21cd6e9c",
+      "source": {
+        "path": "skills/nova/core/test-gates/remote-result-import.ts",
+        "line": 88,
+        "text": "links: structuredClone(job.plan.links), attempts: structuredClone(result?.attempts ?? []),",
+        "sha256": "ddb1e749086128083a295c15790a1e666a614000b4650055e3374c9bf7edcc81",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "ddb1e749086128083a295c15790a1e666a614000b4650055e3374c9bf7edcc81",
+      "explicitReviewedReason": "Exact typed source graph/attempt/node/result structuralabsences onlywhenactualnoncompletedsource, jobID/requestdigest terminalstate+fullrefdigest checks. Structuralnull/[] NOT fabricatedobservednativecoverage/resourceSUCCESS ordefaultauthority; requiredresult/nativeproof andoriginal sourcemetadata remain.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exact typed source graph/attempt/node/result structuralabsences onlywhenactualnoncompletedsource, jobID/requestdigest terminalstate+fullrefdigest checks. Structuralnull/[] NOT fabricatedobservednativecoverage/resourceSUCCESS ordefaultauthority; requiredresult/nativeproof andoriginal sourcemetadata remain.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/contracts-captured-content-corrected.json",
+      "status": "explicit current standalonefield/protocol/source boundary; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-aff950b557a1a8f0",
+      "source": {
+        "path": "skills/nova/core/test-gates/remote-result-import.ts",
+        "line": 89,
+        "text": "results: structuredClone(result?.nodes ?? []), reviews: structuredClone(decision.reviews),",
+        "sha256": "ddb1e749086128083a295c15790a1e666a614000b4650055e3374c9bf7edcc81",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "ddb1e749086128083a295c15790a1e666a614000b4650055e3374c9bf7edcc81",
+      "explicitReviewedReason": "Exact typed source graph/attempt/node/result structuralabsences onlywhenactualnoncompletedsource, jobID/requestdigest terminalstate+fullrefdigest checks. Structuralnull/[] NOT fabricatedobservednativecoverage/resourceSUCCESS ordefaultauthority; requiredresult/nativeproof andoriginal sourcemetadata remain.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exact typed source graph/attempt/node/result structuralabsences onlywhenactualnoncompletedsource, jobID/requestdigest terminalstate+fullrefdigest checks. Structuralnull/[] NOT fabricatedobservednativecoverage/resourceSUCCESS ordefaultauthority; requiredresult/nativeproof andoriginal sourcemetadata remain.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/contracts-captured-content-corrected.json",
+      "status": "explicit current standalonefield/protocol/source boundary; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-54c1c4ae396e8dfa",
+      "source": {
+        "path": "skills/nova/core/test-gates/remote-result-import.ts",
+        "line": 124,
+        "text": "if (!record || record.payloadDigest !== expectedPayloadDigest || !stored) {",
+        "sha256": "ddb1e749086128083a295c15790a1e666a614000b4650055e3374c9bf7edcc81",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "ddb1e749086128083a295c15790a1e666a614000b4650055e3374c9bf7edcc81",
+      "explicitReviewedReason": "Exact retained job/request/source/remoteResult/decision/evidence digest statecomplete andidempotentpendingrecords; verify allrefblobs andsourcegrants/native coverage beforevalidatedread/export. Actualpending_evidence record beforeblob writes thencomplete transition; notallatomic or CONFIG-header sourceproof. Originalauthenticquota/migration/role/grants/parentmoduleOPEN.",
+      "settings": [
+        "RT-NOVA-REMOTE-STATEROOT",
+        "RT-NOVA-REMOTE-MAXIMUMEVIDENCESTOREBYTES",
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMBYTES",
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDBYTES"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/contracts-captured-content-corrected.json",
+      "status": "precise open standalone/native policy/role/whole-source/owner/task/grant obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-2f055ed8ff882a19",
+      "source": {
+        "path": "skills/nova/core/test-gates/remote-result-import.ts",
+        "line": 130,
+        "text": "if (!same(decision, stored.decision) || decision.state === 'review_required') {",
+        "sha256": "ddb1e749086128083a295c15790a1e666a614000b4650055e3374c9bf7edcc81",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "ddb1e749086128083a295c15790a1e666a614000b4650055e3374c9bf7edcc81",
+      "explicitReviewedReason": "Exact retained job/request/source/remoteResult/decision/evidence digest statecomplete andidempotentpendingrecords; verify allrefblobs andsourcegrants/native coverage beforevalidatedread/export. Actualpending_evidence record beforeblob writes thencomplete transition; notallatomic or CONFIG-header sourceproof. Originalauthenticquota/migration/role/grants/parentmoduleOPEN.",
+      "settings": [
+        "RT-NOVA-REMOTE-STATEROOT",
+        "RT-NOVA-REMOTE-MAXIMUMEVIDENCESTOREBYTES",
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMBYTES",
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDBYTES"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/contracts-captured-content-corrected.json",
+      "status": "precise open standalone/native policy/role/whole-source/owner/task/grant obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-d029cc8064892cf5",
+      "source": {
+        "path": "skills/nova/core/test-gates/remote-result-import.ts",
+        "line": 160,
+        "text": "requestDigest: job.requestDigest, remoteResultDigest: remoteResult?.resultDigest ?? null,",
+        "sha256": "ddb1e749086128083a295c15790a1e666a614000b4650055e3374c9bf7edcc81",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "ddb1e749086128083a295c15790a1e666a614000b4650055e3374c9bf7edcc81",
+      "explicitReviewedReason": "Exact typed source graph/attempt/node/result structuralabsences onlywhenactualnoncompletedsource, jobID/requestdigest terminalstate+fullrefdigest checks. Structuralnull/[] NOT fabricatedobservednativecoverage/resourceSUCCESS ordefaultauthority; requiredresult/nativeproof andoriginal sourcemetadata remain.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exact typed source graph/attempt/node/result structuralabsences onlywhenactualnoncompletedsource, jobID/requestdigest terminalstate+fullrefdigest checks. Structuralnull/[] NOT fabricatedobservednativecoverage/resourceSUCCESS ordefaultauthority; requiredresult/nativeproof andoriginal sourcemetadata remain.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/contracts-captured-content-corrected.json",
+      "status": "explicit current standalonefield/protocol/source boundary; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-2e304fa59e94b0e5",
+      "source": {
+        "path": "skills/nova/core/test-gates/remote-result-import.ts",
+        "line": 168,
+        "text": "if (!(error instanceof Error) || error.message !== 'DURABLE_RECORD_IDEMPOTENCY_CONFLICT') throw error;",
+        "sha256": "ddb1e749086128083a295c15790a1e666a614000b4650055e3374c9bf7edcc81",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "ddb1e749086128083a295c15790a1e666a614000b4650055e3374c9bf7edcc81",
+      "explicitReviewedReason": "Exact retained job/request/source/remoteResult/decision/evidence digest statecomplete andidempotentpendingrecords; verify allrefblobs andsourcegrants/native coverage beforevalidatedread/export. Actualpending_evidence record beforeblob writes thencomplete transition; notallatomic or CONFIG-header sourceproof. Originalauthenticquota/migration/role/grants/parentmoduleOPEN.",
+      "settings": [
+        "RT-NOVA-REMOTE-STATEROOT",
+        "RT-NOVA-REMOTE-MAXIMUMEVIDENCESTOREBYTES",
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMBYTES",
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDBYTES"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/contracts-captured-content-corrected.json",
+      "status": "precise open standalone/native policy/role/whole-source/owner/task/grant obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-5a5f704f8bd95fb1",
+      "source": {
+        "path": "skills/nova/core/test-gates/remote-result-import.ts",
+        "line": 188,
+        "text": "if (stored.digest !== item.artifact.contentDigest || stored.sizeBytes !== item.artifact.sizeBytes) {",
+        "sha256": "ddb1e749086128083a295c15790a1e666a614000b4650055e3374c9bf7edcc81",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "ddb1e749086128083a295c15790a1e666a614000b4650055e3374c9bf7edcc81",
+      "explicitReviewedReason": "Exact retained job/request/source/remoteResult/decision/evidence digest statecomplete andidempotentpendingrecords; verify allrefblobs andsourcegrants/native coverage beforevalidatedread/export. Actualpending_evidence record beforeblob writes thencomplete transition; notallatomic or CONFIG-header sourceproof. Originalauthenticquota/migration/role/grants/parentmoduleOPEN.",
+      "settings": [
+        "RT-NOVA-REMOTE-STATEROOT",
+        "RT-NOVA-REMOTE-MAXIMUMEVIDENCESTOREBYTES",
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMBYTES",
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDBYTES"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/contracts-captured-content-corrected.json",
+      "status": "precise open standalone/native policy/role/whole-source/owner/task/grant obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-6e5d4fe4ffe5b109",
+      "source": {
+        "path": "skills/nova/core/test-gates/remote-result-import.ts",
+        "line": 208,
+        "text": "if (!Number.isSafeInteger(options.maximumEvidenceBytes) || options.maximumEvidenceBytes < 1) throw new Error('NOVA_REMOTE_EVIDENCE_LIMIT_INVALID');",
+        "sha256": "ddb1e749086128083a295c15790a1e666a614000b4650055e3374c9bf7edcc81",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "ddb1e749086128083a295c15790a1e666a614000b4650055e3374c9bf7edcc81",
+      "explicitReviewedReason": "Actual importer result positiveSafe andALL artifact sizeBytes aggregate checkedsafe/total BEFORE nextfetch; perjob capdistinct HTTPrawresponse cap andretainedtotalstore cap. Fulloriginal nativecoverage+selected evidence/metadata/allocation constraintsnottrimmed, actualtransport fullfixtureNOTRUN.",
+      "settings": [
+        "RT-NOVA-REMOTE-MAXIMUMRESPONSEBYTES",
+        "RT-NOVA-REMOTE-MAXIMUMRESULTBYTES",
+        "RT-NOVA-REMOTE-MAXIMUMEVIDENCEBYTES",
+        "RT-NOVA-REMOTE-MAXIMUMEVIDENCESTOREBYTES"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/contracts-captured-content-corrected.json",
+      "status": "explicit current standalonefield/protocol/source boundary; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-ce063e08f24af707",
+      "source": {
+        "path": "skills/nova/core/test-gates/remote-result-import.ts",
+        "line": 209,
+        "text": "if (!Number.isSafeInteger(options.maximumResultBytes) || options.maximumResultBytes < 1) throw new Error('NOVA_REMOTE_RESULT_LIMIT_INVALID');",
+        "sha256": "ddb1e749086128083a295c15790a1e666a614000b4650055e3374c9bf7edcc81",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "ddb1e749086128083a295c15790a1e666a614000b4650055e3374c9bf7edcc81",
+      "explicitReviewedReason": "Actual importer result positiveSafe andALL artifact sizeBytes aggregate checkedsafe/total BEFORE nextfetch; perjob capdistinct HTTPrawresponse cap andretainedtotalstore cap. Fulloriginal nativecoverage+selected evidence/metadata/allocation constraintsnottrimmed, actualtransport fullfixtureNOTRUN.",
+      "settings": [
+        "RT-NOVA-REMOTE-MAXIMUMRESPONSEBYTES",
+        "RT-NOVA-REMOTE-MAXIMUMRESULTBYTES",
+        "RT-NOVA-REMOTE-MAXIMUMEVIDENCEBYTES",
+        "RT-NOVA-REMOTE-MAXIMUMEVIDENCESTOREBYTES"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/contracts-captured-content-corrected.json",
+      "status": "explicit current standalonefield/protocol/source boundary; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-dd7083a1bfd718d4",
+      "source": {
+        "path": "skills/nova/core/test-gates/remote-result-import.ts",
+        "line": 217,
+        "text": "if (status.jobId !== job.jobId || status.requestDigest !== job.requestDigest",
+        "sha256": "ddb1e749086128083a295c15790a1e666a614000b4650055e3374c9bf7edcc81",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "ddb1e749086128083a295c15790a1e666a614000b4650055e3374c9bf7edcc81",
+      "explicitReviewedReason": "Exact typed source graph/attempt/node/result structuralabsences onlywhenactualnoncompletedsource, jobID/requestdigest terminalstate+fullrefdigest checks. Structuralnull/[] NOT fabricatedobservednativecoverage/resourceSUCCESS ordefaultauthority; requiredresult/nativeproof andoriginal sourcemetadata remain.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exact typed source graph/attempt/node/result structuralabsences onlywhenactualnoncompletedsource, jobID/requestdigest terminalstate+fullrefdigest checks. Structuralnull/[] NOT fabricatedobservednativecoverage/resourceSUCCESS ordefaultauthority; requiredresult/nativeproof andoriginal sourcemetadata remain.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/contracts-captured-content-corrected.json",
+      "status": "explicit current standalonefield/protocol/source boundary; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-4977769160e77ffb",
+      "source": {
+        "path": "skills/nova/core/test-gates/remote-result-import.ts",
+        "line": 218,
+        "text": "|| !['completed', 'failed', 'cancelled'].includes(status.state)) throw new Error('NOVA_REMOTE_IMPORT_STATUS_INVALID');",
+        "sha256": "ddb1e749086128083a295c15790a1e666a614000b4650055e3374c9bf7edcc81",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "ddb1e749086128083a295c15790a1e666a614000b4650055e3374c9bf7edcc81",
+      "explicitReviewedReason": "Exact typed source graph/attempt/node/result structuralabsences onlywhenactualnoncompletedsource, jobID/requestdigest terminalstate+fullrefdigest checks. Structuralnull/[] NOT fabricatedobservednativecoverage/resourceSUCCESS ordefaultauthority; requiredresult/nativeproof andoriginal sourcemetadata remain.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exact typed source graph/attempt/node/result structuralabsences onlywhenactualnoncompletedsource, jobID/requestdigest terminalstate+fullrefdigest checks. Structuralnull/[] NOT fabricatedobservednativecoverage/resourceSUCCESS ordefaultauthority; requiredresult/nativeproof andoriginal sourcemetadata remain.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/contracts-captured-content-corrected.json",
+      "status": "explicit current standalonefield/protocol/source boundary; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-64d6d42a4e853f21",
+      "source": {
+        "path": "skills/nova/core/test-gates/remote-result-import.ts",
+        "line": 235,
+        "text": "if (!Number.isSafeInteger(total) || total > this.#maximumEvidenceBytes) throw new Error('NOVA_REMOTE_EVIDENCE_TOTAL_EXCEEDED');",
+        "sha256": "ddb1e749086128083a295c15790a1e666a614000b4650055e3374c9bf7edcc81",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "ddb1e749086128083a295c15790a1e666a614000b4650055e3374c9bf7edcc81",
+      "explicitReviewedReason": "Actual importer result positiveSafe andALL artifact sizeBytes aggregate checkedsafe/total BEFORE nextfetch; perjob capdistinct HTTPrawresponse cap andretainedtotalstore cap. Fulloriginal nativecoverage+selected evidence/metadata/allocation constraintsnottrimmed, actualtransport fullfixtureNOTRUN.",
+      "settings": [
+        "RT-NOVA-REMOTE-MAXIMUMRESPONSEBYTES",
+        "RT-NOVA-REMOTE-MAXIMUMRESULTBYTES",
+        "RT-NOVA-REMOTE-MAXIMUMEVIDENCEBYTES",
+        "RT-NOVA-REMOTE-MAXIMUMEVIDENCESTOREBYTES"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/contracts-captured-content-corrected.json",
+      "status": "explicit current standalonefield/protocol/source boundary; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-ccd0d57eb52935f6",
+      "source": {
+        "path": "skills/nova/core/test-gates/remote-result-import.ts",
+        "line": 240,
+        "text": "|| `sha256:${crypto.createHash('sha256').update(bytes).digest('hex')}` !== artifact.contentDigest) {",
+        "sha256": "ddb1e749086128083a295c15790a1e666a614000b4650055e3374c9bf7edcc81",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "ddb1e749086128083a295c15790a1e666a614000b4650055e3374c9bf7edcc81",
+      "explicitReviewedReason": "Exact typed source graph/attempt/node/result structuralabsences onlywhenactualnoncompletedsource, jobID/requestdigest terminalstate+fullrefdigest checks. Structuralnull/[] NOT fabricatedobservednativecoverage/resourceSUCCESS ordefaultauthority; requiredresult/nativeproof andoriginal sourcemetadata remain.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exact typed source graph/attempt/node/result structuralabsences onlywhenactualnoncompletedsource, jobID/requestdigest terminalstate+fullrefdigest checks. Structuralnull/[] NOT fabricatedobservednativecoverage/resourceSUCCESS ordefaultauthority; requiredresult/nativeproof andoriginal sourcemetadata remain.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/contracts-captured-content-corrected.json",
+      "status": "explicit current standalonefield/protocol/source boundary; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-ab882a891f588c6c",
+      "source": {
+        "path": "skills/nova/core/test-gates/remote-result-import.ts",
+        "line": 252,
+        "text": "dispatch(job: RemotePlanJobV1, options: { timeoutMs: number; signal?: AbortSignal }): Promise<RemotePlanStatusV1>;",
+        "sha256": "ddb1e749086128083a295c15790a1e666a614000b4650055e3374c9bf7edcc81",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "ddb1e749086128083a295c15790a1e666a614000b4650055e3374c9bf7edcc81",
+      "explicitReviewedReason": "Original finite caller timeout/Signal GateDeadline clips dispatchandimport, notnew deadlineforeachphase; exacttimers/librarycleanup originalscope remainsOPEN. No native/provider/action execution in safeconstructor probes.",
+      "settings": [
+        "RT-NOVA-REMOTE-POLLMILLISECONDS",
+        "RT-NOVA-REMOTE-MAXIMUMRESULTBYTES"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/contracts-captured-content-corrected.json",
+      "status": "precise open standalone/native policy/role/whole-source/owner/task/grant obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-afeb138b05ba2f3a",
+      "source": {
+        "path": "skills/nova/core/test-gates/remote-result-import.ts",
+        "line": 262,
+        "text": "async execute(job: RemotePlanJobV1, options: { timeoutMs: number; signal?: AbortSignal }): Promise<{",
+        "sha256": "ddb1e749086128083a295c15790a1e666a614000b4650055e3374c9bf7edcc81",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "ddb1e749086128083a295c15790a1e666a614000b4650055e3374c9bf7edcc81",
+      "explicitReviewedReason": "Original finite caller timeout/Signal GateDeadline clips dispatchandimport, notnew deadlineforeachphase; exacttimers/librarycleanup originalscope remainsOPEN. No native/provider/action execution in safeconstructor probes.",
+      "settings": [
+        "RT-NOVA-REMOTE-POLLMILLISECONDS",
+        "RT-NOVA-REMOTE-MAXIMUMRESULTBYTES"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/contracts-captured-content-corrected.json",
+      "status": "precise open standalone/native policy/role/whole-source/owner/task/grant obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-f617c757c285346b",
+      "source": {
+        "path": "skills/nova/core/test-gates/remote-result-import.ts",
+        "line": 268,
+        "text": "const status = await this.#dispatcher.dispatch(job, { timeoutMs: deadline.remaining(), signal: deadline.signal });",
+        "sha256": "ddb1e749086128083a295c15790a1e666a614000b4650055e3374c9bf7edcc81",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "ddb1e749086128083a295c15790a1e666a614000b4650055e3374c9bf7edcc81",
+      "explicitReviewedReason": "Original finite caller timeout/Signal GateDeadline clips dispatchandimport, notnew deadlineforeachphase; exacttimers/librarycleanup originalscope remainsOPEN. No native/provider/action execution in safeconstructor probes.",
+      "settings": [
+        "RT-NOVA-REMOTE-POLLMILLISECONDS",
+        "RT-NOVA-REMOTE-MAXIMUMRESULTBYTES"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/contracts-captured-content-corrected.json",
+      "status": "precise open standalone/native policy/role/whole-source/owner/task/grant obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-4c2a2aa6634ca047",
+      "source": {
+        "path": "skills/nova/core/test-gates/runtime-config.ts",
+        "line": 8,
+        "text": "if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error(`NOVA_REMOTE_CONFIG_INVALID:${label}`);",
+        "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a",
+      "explicitReviewedReason": "Actual standalone source strict knownroot/records, default process.env API input notperfieldfallback, injected resolver/Ed25519 validation/capturedtoken+PEM contents, authonlyexactspiffe elsebearer, pollminimum10 andsafeinteger. Existing17CLI fields genuineconfig owner; registeredadapter doesNOT readthisfile andcannotbe numeric author alias. Full role/grant/A6 wholequota/source/retainedmetadata/module proof stillOPEN.",
+      "settings": [
+        "RT-NOVA-REMOTE-SCHEMAVERSION",
+        "RT-NOVA-REMOTE-ENDPOINT",
+        "RT-NOVA-REMOTE-AUTHENTICATION",
+        "RT-NOVA-REMOTE-TOKENENVIRONMENTVARIABLE",
+        "RT-NOVA-REMOTE-SOURCEATTESTATIONPRIVATEKEYENVIRONMENTVARIABLE",
+        "RT-NOVA-REMOTE-SOURCEAUTHORITY",
+        "RT-NOVA-REMOTE-STATEROOT",
+        "RT-NOVA-REMOTE-POLLMILLISECONDS",
+        "RT-NOVA-REMOTE-MAXIMUMRESPONSEBYTES",
+        "RT-NOVA-REMOTE-MAXIMUMRESULTBYTES",
+        "RT-NOVA-REMOTE-MAXIMUMARCHIVEBYTES",
+        "RT-NOVA-REMOTE-MAXIMUMARCHIVESTOREBYTES",
+        "RT-NOVA-REMOTE-MAXIMUMEVIDENCEBYTES",
+        "RT-NOVA-REMOTE-MAXIMUMEVIDENCESTOREBYTES",
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDS",
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMBYTES",
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDBYTES"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/contracts-captured-content-corrected.json",
+      "status": "precise open standalone/native policy/role/whole-source/owner/task/grant obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-d3d8b3a910e1db65",
+      "source": {
+        "path": "skills/nova/core/test-gates/runtime-config.ts",
+        "line": 13,
+        "text": "if (!Number.isSafeInteger(value) || (value as number) < minimum) throw new Error(`NOVA_REMOTE_CONFIG_INVALID:${label}`);",
+        "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a",
+      "explicitReviewedReason": "Actual standalone source strict knownroot/records, default process.env API input notperfieldfallback, injected resolver/Ed25519 validation/capturedtoken+PEM contents, authonlyexactspiffe elsebearer, pollminimum10 andsafeinteger. Existing17CLI fields genuineconfig owner; registeredadapter doesNOT readthisfile andcannotbe numeric author alias. Full role/grant/A6 wholequota/source/retainedmetadata/module proof stillOPEN.",
+      "settings": [
+        "RT-NOVA-REMOTE-SCHEMAVERSION",
+        "RT-NOVA-REMOTE-ENDPOINT",
+        "RT-NOVA-REMOTE-AUTHENTICATION",
+        "RT-NOVA-REMOTE-TOKENENVIRONMENTVARIABLE",
+        "RT-NOVA-REMOTE-SOURCEATTESTATIONPRIVATEKEYENVIRONMENTVARIABLE",
+        "RT-NOVA-REMOTE-SOURCEAUTHORITY",
+        "RT-NOVA-REMOTE-STATEROOT",
+        "RT-NOVA-REMOTE-POLLMILLISECONDS",
+        "RT-NOVA-REMOTE-MAXIMUMRESPONSEBYTES",
+        "RT-NOVA-REMOTE-MAXIMUMRESULTBYTES",
+        "RT-NOVA-REMOTE-MAXIMUMARCHIVEBYTES",
+        "RT-NOVA-REMOTE-MAXIMUMARCHIVESTOREBYTES",
+        "RT-NOVA-REMOTE-MAXIMUMEVIDENCEBYTES",
+        "RT-NOVA-REMOTE-MAXIMUMEVIDENCESTOREBYTES",
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDS",
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMBYTES",
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDBYTES"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/contracts-captured-content-corrected.json",
+      "status": "precise open standalone/native policy/role/whole-source/owner/task/grant obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-109cf021e7b7b0c2",
+      "source": {
+        "path": "skills/nova/core/test-gates/runtime-config.ts",
+        "line": 25,
+        "text": "environment: Readonly<Record<string, string | undefined>> = process.env,",
+        "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a",
+      "explicitReviewedReason": "Actual standalone source strict knownroot/records, default process.env API input notperfieldfallback, injected resolver/Ed25519 validation/capturedtoken+PEM contents, authonlyexactspiffe elsebearer, pollminimum10 andsafeinteger. Existing17CLI fields genuineconfig owner; registeredadapter doesNOT readthisfile andcannotbe numeric author alias. Full role/grant/A6 wholequota/source/retainedmetadata/module proof stillOPEN.",
+      "settings": [
+        "RT-NOVA-REMOTE-SCHEMAVERSION",
+        "RT-NOVA-REMOTE-ENDPOINT",
+        "RT-NOVA-REMOTE-AUTHENTICATION",
+        "RT-NOVA-REMOTE-TOKENENVIRONMENTVARIABLE",
+        "RT-NOVA-REMOTE-SOURCEATTESTATIONPRIVATEKEYENVIRONMENTVARIABLE",
+        "RT-NOVA-REMOTE-SOURCEAUTHORITY",
+        "RT-NOVA-REMOTE-STATEROOT",
+        "RT-NOVA-REMOTE-POLLMILLISECONDS",
+        "RT-NOVA-REMOTE-MAXIMUMRESPONSEBYTES",
+        "RT-NOVA-REMOTE-MAXIMUMRESULTBYTES",
+        "RT-NOVA-REMOTE-MAXIMUMARCHIVEBYTES",
+        "RT-NOVA-REMOTE-MAXIMUMARCHIVESTOREBYTES",
+        "RT-NOVA-REMOTE-MAXIMUMEVIDENCEBYTES",
+        "RT-NOVA-REMOTE-MAXIMUMEVIDENCESTOREBYTES",
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDS",
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMBYTES",
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDBYTES"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/contracts-captured-content-corrected.json",
+      "status": "precise open standalone/native policy/role/whole-source/owner/task/grant obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-0b23ce58597b58ab",
+      "source": {
+        "path": "skills/nova/core/test-gates/runtime-config.ts",
+        "line": 37,
+        "text": "if (typeof value[name] !== 'string' || value[name].length === 0) throw new Error(`NOVA_REMOTE_CONFIG_INVALID:${name}`);",
+        "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a",
+      "explicitReviewedReason": "Actual standalone source strict knownroot/records, default process.env API input notperfieldfallback, injected resolver/Ed25519 validation/capturedtoken+PEM contents, authonlyexactspiffe elsebearer, pollminimum10 andsafeinteger. Existing17CLI fields genuineconfig owner; registeredadapter doesNOT readthisfile andcannotbe numeric author alias. Full role/grant/A6 wholequota/source/retainedmetadata/module proof stillOPEN.",
+      "settings": [
+        "RT-NOVA-REMOTE-SCHEMAVERSION",
+        "RT-NOVA-REMOTE-ENDPOINT",
+        "RT-NOVA-REMOTE-AUTHENTICATION",
+        "RT-NOVA-REMOTE-TOKENENVIRONMENTVARIABLE",
+        "RT-NOVA-REMOTE-SOURCEATTESTATIONPRIVATEKEYENVIRONMENTVARIABLE",
+        "RT-NOVA-REMOTE-SOURCEAUTHORITY",
+        "RT-NOVA-REMOTE-STATEROOT",
+        "RT-NOVA-REMOTE-POLLMILLISECONDS",
+        "RT-NOVA-REMOTE-MAXIMUMRESPONSEBYTES",
+        "RT-NOVA-REMOTE-MAXIMUMRESULTBYTES",
+        "RT-NOVA-REMOTE-MAXIMUMARCHIVEBYTES",
+        "RT-NOVA-REMOTE-MAXIMUMARCHIVESTOREBYTES",
+        "RT-NOVA-REMOTE-MAXIMUMEVIDENCEBYTES",
+        "RT-NOVA-REMOTE-MAXIMUMEVIDENCESTOREBYTES",
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDS",
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMBYTES",
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDBYTES"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/contracts-captured-content-corrected.json",
+      "status": "precise open standalone/native policy/role/whole-source/owner/task/grant obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-ec80508fb3d3b4e1",
+      "source": {
+        "path": "skills/nova/core/test-gates/runtime-config.ts",
+        "line": 44,
+        "text": "|| !/^[A-Z][A-Z0-9_]*$/u.test(value.tokenEnvironmentVariable)) {",
+        "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a",
+      "explicitReviewedReason": "Actual standalone source strict knownroot/records, default process.env API input notperfieldfallback, injected resolver/Ed25519 validation/capturedtoken+PEM contents, authonlyexactspiffe elsebearer, pollminimum10 andsafeinteger. Existing17CLI fields genuineconfig owner; registeredadapter doesNOT readthisfile andcannotbe numeric author alias. Full role/grant/A6 wholequota/source/retainedmetadata/module proof stillOPEN.",
+      "settings": [
+        "RT-NOVA-REMOTE-SCHEMAVERSION",
+        "RT-NOVA-REMOTE-ENDPOINT",
+        "RT-NOVA-REMOTE-AUTHENTICATION",
+        "RT-NOVA-REMOTE-TOKENENVIRONMENTVARIABLE",
+        "RT-NOVA-REMOTE-SOURCEATTESTATIONPRIVATEKEYENVIRONMENTVARIABLE",
+        "RT-NOVA-REMOTE-SOURCEAUTHORITY",
+        "RT-NOVA-REMOTE-STATEROOT",
+        "RT-NOVA-REMOTE-POLLMILLISECONDS",
+        "RT-NOVA-REMOTE-MAXIMUMRESPONSEBYTES",
+        "RT-NOVA-REMOTE-MAXIMUMRESULTBYTES",
+        "RT-NOVA-REMOTE-MAXIMUMARCHIVEBYTES",
+        "RT-NOVA-REMOTE-MAXIMUMARCHIVESTOREBYTES",
+        "RT-NOVA-REMOTE-MAXIMUMEVIDENCEBYTES",
+        "RT-NOVA-REMOTE-MAXIMUMEVIDENCESTOREBYTES",
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDS",
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMBYTES",
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDBYTES"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/contracts-captured-content-corrected.json",
+      "status": "precise open standalone/native policy/role/whole-source/owner/task/grant obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-28e61b46b1525826",
+      "source": {
+        "path": "skills/nova/core/test-gates/runtime-config.ts",
+        "line": 52,
+        "text": "if (!/^[A-Z][A-Z0-9_]*$/u.test(sourceKeyName) || sourceKeyName === tokenName) {",
+        "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a",
+      "explicitReviewedReason": "Actual standalone source strict knownroot/records, default process.env API input notperfieldfallback, injected resolver/Ed25519 validation/capturedtoken+PEM contents, authonlyexactspiffe elsebearer, pollminimum10 andsafeinteger. Existing17CLI fields genuineconfig owner; registeredadapter doesNOT readthisfile andcannotbe numeric author alias. Full role/grant/A6 wholequota/source/retainedmetadata/module proof stillOPEN.",
+      "settings": [
+        "RT-NOVA-REMOTE-SCHEMAVERSION",
+        "RT-NOVA-REMOTE-ENDPOINT",
+        "RT-NOVA-REMOTE-AUTHENTICATION",
+        "RT-NOVA-REMOTE-TOKENENVIRONMENTVARIABLE",
+        "RT-NOVA-REMOTE-SOURCEATTESTATIONPRIVATEKEYENVIRONMENTVARIABLE",
+        "RT-NOVA-REMOTE-SOURCEAUTHORITY",
+        "RT-NOVA-REMOTE-STATEROOT",
+        "RT-NOVA-REMOTE-POLLMILLISECONDS",
+        "RT-NOVA-REMOTE-MAXIMUMRESPONSEBYTES",
+        "RT-NOVA-REMOTE-MAXIMUMRESULTBYTES",
+        "RT-NOVA-REMOTE-MAXIMUMARCHIVEBYTES",
+        "RT-NOVA-REMOTE-MAXIMUMARCHIVESTOREBYTES",
+        "RT-NOVA-REMOTE-MAXIMUMEVIDENCEBYTES",
+        "RT-NOVA-REMOTE-MAXIMUMEVIDENCESTOREBYTES",
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDS",
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMBYTES",
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDBYTES"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/contracts-captured-content-corrected.json",
+      "status": "precise open standalone/native policy/role/whole-source/owner/task/grant obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-84d6bfde8f54de77",
+      "source": {
+        "path": "skills/nova/core/test-gates/runtime-config.ts",
+        "line": 71,
+        "text": "pollMilliseconds: integer(value.pollMilliseconds, 'pollMilliseconds', 10),",
+        "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a",
+      "explicitReviewedReason": "Actual standalone source strict knownroot/records, default process.env API input notperfieldfallback, injected resolver/Ed25519 validation/capturedtoken+PEM contents, authonlyexactspiffe elsebearer, pollminimum10 andsafeinteger. Existing17CLI fields genuineconfig owner; registeredadapter doesNOT readthisfile andcannotbe numeric author alias. Full role/grant/A6 wholequota/source/retainedmetadata/module proof stillOPEN.",
+      "settings": [
+        "RT-NOVA-REMOTE-SCHEMAVERSION",
+        "RT-NOVA-REMOTE-ENDPOINT",
+        "RT-NOVA-REMOTE-AUTHENTICATION",
+        "RT-NOVA-REMOTE-TOKENENVIRONMENTVARIABLE",
+        "RT-NOVA-REMOTE-SOURCEATTESTATIONPRIVATEKEYENVIRONMENTVARIABLE",
+        "RT-NOVA-REMOTE-SOURCEAUTHORITY",
+        "RT-NOVA-REMOTE-STATEROOT",
+        "RT-NOVA-REMOTE-POLLMILLISECONDS",
+        "RT-NOVA-REMOTE-MAXIMUMRESPONSEBYTES",
+        "RT-NOVA-REMOTE-MAXIMUMRESULTBYTES",
+        "RT-NOVA-REMOTE-MAXIMUMARCHIVEBYTES",
+        "RT-NOVA-REMOTE-MAXIMUMARCHIVESTOREBYTES",
+        "RT-NOVA-REMOTE-MAXIMUMEVIDENCEBYTES",
+        "RT-NOVA-REMOTE-MAXIMUMEVIDENCESTOREBYTES",
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDS",
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMBYTES",
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDBYTES"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/contracts-captured-content-corrected.json",
+      "status": "precise open standalone/native policy/role/whole-source/owner/task/grant obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-056481e3261bc056",
+      "source": {
+        "path": "skills/nova/core/test-gates/source-git.ts",
+        "line": 18,
+        "text": "`${failure?.message ?? 'NOVA_SOURCE_GIT_FAILED'}:NOVA_SOURCE_CLEANUP_UNCONFIRMED`, { cause: failure ?? cleanup }));",
+        "sha256": "869044fecd888a1e4ded10059c8f6a5ec4510d1ca9c277507de545538f1fb90c",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "869044fecd888a1e4ded10059c8f6a5ec4510d1ca9c277507de545538f1fb90c",
+      "explicitReviewedReason": "SourceProcessLifecycle cleanup failure aggregated andfirstfailure preserved; no abandonatomicdurablewrite or concealprimarysourceerror. OPEN actual fixed65536smallgitstdout/4096stderr andlifecyclepolicy authors/source/realGitcaller/waitgrants/domain/taskproof cases, no executedhostprocess.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "SourceProcessLifecycle cleanup failure aggregated andfirstfailure preserved; no abandonatomicdurablewrite or concealprimarysourceerror. OPEN actual fixed65536smallgitstdout/4096stderr andlifecyclepolicy authors/source/realGitcaller/waitgrants/domain/taskproof cases, no executedhostprocess.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/contracts-captured-content-corrected.json",
+      "status": "precise open standalone/native policy/role/whole-source/owner/task/grant obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-383f75e04f47084d",
+      "source": {
+        "path": "skills/nova/core/test-gates/source-git.ts",
+        "line": 28,
+        "text": "const fail = (error: Error): void => { failure ??= error; finish(); };",
+        "sha256": "869044fecd888a1e4ded10059c8f6a5ec4510d1ca9c277507de545538f1fb90c",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "869044fecd888a1e4ded10059c8f6a5ec4510d1ca9c277507de545538f1fb90c",
+      "explicitReviewedReason": "SourceProcessLifecycle cleanup failure aggregated andfirstfailure preserved; no abandonatomicdurablewrite or concealprimarysourceerror. OPEN actual fixed65536smallgitstdout/4096stderr andlifecyclepolicy authors/source/realGitcaller/waitgrants/domain/taskproof cases, no executedhostprocess.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "SourceProcessLifecycle cleanup failure aggregated andfirstfailure preserved; no abandonatomicdurablewrite or concealprimarysourceerror. OPEN actual fixed65536smallgitstdout/4096stderr andlifecyclepolicy authors/source/realGitcaller/waitgrants/domain/taskproof cases, no executedhostprocess.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/contracts-captured-content-corrected.json",
+      "status": "precise open standalone/native policy/role/whole-source/owner/task/grant obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-5bc05300a38ccf09",
+      "source": {
+        "path": "skills/nova/core/test-gates/source-snapshot.ts",
+        "line": 28,
+        "text": "const deadline = new GateDeadline(options.timeoutMs ?? 30_000, options.signal);",
+        "sha256": "dddba2b8b5d9be5a098108b85f5134f6a93b05bc560d0f1a3c318d60cae860f2",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "dddba2b8b5d9be5a098108b85f5134f6a93b05bc560d0f1a3c318d60cae860f2",
+      "explicitReviewedReason": "OPEN publicsnapshot timeout optional30000 usedstandaloneProductionexecute explicitremaining solatenthere; otherexportedcallers requireactualroster, notimplicitGLOBAL budget/author. Currentconstructor deadline timersigned32 mismatch andoriginalcleanup/setupdeadline originalclosurecases needed.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "OPEN publicsnapshot timeout optional30000 usedstandaloneProductionexecute explicitremaining solatenthere; otherexportedcallers requireactualroster, notimplicitGLOBAL budget/author. Currentconstructor deadline timersigned32 mismatch andoriginalcleanup/setupdeadline originalclosurecases needed.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/contracts-captured-content-corrected.json",
+      "status": "precise open standalone/native policy/role/whole-source/owner/task/grant obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-643747c238c5185c",
+      "source": {
+        "path": "skills/nova/core/test-gates/source-snapshot.ts",
+        "line": 31,
+        "text": "if (!path.isAbsolute(options.repositoryRoot) || !(await fs.stat(options.repositoryRoot)).isDirectory()) {",
+        "sha256": "dddba2b8b5d9be5a098108b85f5134f6a93b05bc560d0f1a3c318d60cae860f2",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "dddba2b8b5d9be5a098108b85f5134f6a93b05bc560d0f1a3c318d60cae860f2",
+      "explicitReviewedReason": "Actualcanonical repository directory andIDgrammar sourceauthority/repo/stage AFTER rootstat butBEFOREGit; loadonlynonemptyauthority acceptedinvalidspaces. Targetowningcompletevalidationbeforeeffects, genuineissuer/verifier/source/task/native/grants stillOPEN; notsourcecount/sourceproof acceptance.",
+      "settings": [
+        "RT-NOVA-REMOTE-SOURCEAUTHORITY"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/contracts-captured-content-corrected.json",
+      "status": "precise open standalone/native policy/role/whole-source/owner/task/grant obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-ee3814b3c49870aa",
+      "source": {
+        "path": "skills/nova/core/test-gates/source-snapshot.ts",
+        "line": 34,
+        "text": "if (!ID.test(options.repositoryId) || !ID.test(options.pipelineStageId)",
+        "sha256": "dddba2b8b5d9be5a098108b85f5134f6a93b05bc560d0f1a3c318d60cae860f2",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "dddba2b8b5d9be5a098108b85f5134f6a93b05bc560d0f1a3c318d60cae860f2",
+      "explicitReviewedReason": "Actualcanonical repository directory andIDgrammar sourceauthority/repo/stage AFTER rootstat butBEFOREGit; loadonlynonemptyauthority acceptedinvalidspaces. Targetowningcompletevalidationbeforeeffects, genuineissuer/verifier/source/task/native/grants stillOPEN; notsourcecount/sourceproof acceptance.",
+      "settings": [
+        "RT-NOVA-REMOTE-SOURCEAUTHORITY"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/contracts-captured-content-corrected.json",
+      "status": "precise open standalone/native policy/role/whole-source/owner/task/grant obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-9b6da7d38a6caa93",
+      "source": {
+        "path": "skills/nova/core/test-gates/source-snapshot.ts",
+        "line": 35,
+        "text": "|| !ID.test(options.creatorAuthority)) throw new Error('NOVA_SOURCE_IDENTITY_INVALID');",
+        "sha256": "dddba2b8b5d9be5a098108b85f5134f6a93b05bc560d0f1a3c318d60cae860f2",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "dddba2b8b5d9be5a098108b85f5134f6a93b05bc560d0f1a3c318d60cae860f2",
+      "explicitReviewedReason": "Actualcanonical repository directory andIDgrammar sourceauthority/repo/stage AFTER rootstat butBEFOREGit; loadonlynonemptyauthority acceptedinvalidspaces. Targetowningcompletevalidationbeforeeffects, genuineissuer/verifier/source/task/native/grants stillOPEN; notsourcecount/sourceproof acceptance.",
+      "settings": [
+        "RT-NOVA-REMOTE-SOURCEAUTHORITY"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/contracts-captured-content-corrected.json",
+      "status": "precise open standalone/native policy/role/whole-source/owner/task/grant obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-2b87aad5ab755c6a",
+      "source": {
+        "path": "skills/nova/core/test-gates/source-snapshot.ts",
+        "line": 40,
+        "text": "const requested = options.revision ?? 'HEAD';",
+        "sha256": "dddba2b8b5d9be5a098108b85f5134f6a93b05bc560d0f1a3c318d60cae860f2",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "dddba2b8b5d9be5a098108b85f5134f6a93b05bc560d0f1a3c318d60cae860f2",
+      "explicitReviewedReason": "OPEN revision optionalHEAD is sourceinput selector forcommittedtree, notconfigurabletime/cap fallback; actualresolved40/64hexcommit/tree pinned beforearchive. CLI allowsrevisionabsence but registeredrequiresstring; exacttaskoperator/role/currentR-vs-nextmoduleoriginal sourcecases needed, no fictionalM selector/profilefilename solve.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "OPEN revision optionalHEAD is sourceinput selector forcommittedtree, notconfigurabletime/cap fallback; actualresolved40/64hexcommit/tree pinned beforearchive. CLI allowsrevisionabsence but registeredrequiresstring; exacttaskoperator/role/currentR-vs-nextmoduleoriginal sourcecases needed, no fictionalM selector/profilefilename solve.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/contracts-captured-content-corrected.json",
+      "status": "precise open standalone/native policy/role/whole-source/owner/task/grant obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-16bbe9c77c7bee66",
+      "source": {
+        "path": "skills/nova/core/test-gates/source-snapshot.ts",
+        "line": 43,
+        "text": "if (!GIT_OBJECT.test(revision) || !GIT_OBJECT.test(tree)) throw new Error('NOVA_SOURCE_GIT_IDENTITY_INVALID');",
+        "sha256": "dddba2b8b5d9be5a098108b85f5134f6a93b05bc560d0f1a3c318d60cae860f2",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "dddba2b8b5d9be5a098108b85f5134f6a93b05bc560d0f1a3c318d60cae860f2",
+      "explicitReviewedReason": "OPEN revision optionalHEAD is sourceinput selector forcommittedtree, notconfigurabletime/cap fallback; actualresolved40/64hexcommit/tree pinned beforearchive. CLI allowsrevisionabsence but registeredrequiresstring; exacttaskoperator/role/currentR-vs-nextmoduleoriginal sourcecases needed, no fictionalM selector/profilefilename solve.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "OPEN revision optionalHEAD is sourceinput selector forcommittedtree, notconfigurabletime/cap fallback; actualresolved40/64hexcommit/tree pinned beforearchive. CLI allowsrevisionabsence but registeredrequiresstring; exacttaskoperator/role/currentR-vs-nextmoduleoriginal sourcecases needed, no fictionalM selector/profilefilename solve.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/contracts-captured-content-corrected.json",
+      "status": "precise open standalone/native policy/role/whole-source/owner/task/grant obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-142b5a4e936b6aa5",
+      "source": {
+        "path": "skills/nova/core/test-gates/source-snapshot.ts",
+        "line": 45,
+        "text": "if (repositoryArchive.byteLength < 1 || repositoryArchive.byteLength > options.maximumArchiveBytes) {",
+        "sha256": "dddba2b8b5d9be5a098108b85f5134f6a93b05bc560d0f1a3c318d60cae860f2",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "dddba2b8b5d9be5a098108b85f5134f6a93b05bc560d0f1a3c318d60cae860f2",
+      "explicitReviewedReason": "Actual complete compressedsource tar.gz1..selectedcap andtechnicalcurrentassertArchiveLimit<=128MiB, loaderacceptsbiggerbutlaterguardrejects. Noallocating128MiB/real Git/native proof inpureguard; configuredmax vsbase64fulljob/record/meta A6correlation andcapacityremainOPEN.",
+      "settings": [
+        "RT-NOVA-REMOTE-MAXIMUMARCHIVEBYTES"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/contracts-captured-content-corrected.json",
+      "status": "precise open standalone/native policy/role/whole-source/owner/task/grant obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-758ac9819090725f",
+      "source": {
+        "path": "skills/nova/core/test-gates/source-snapshot.ts",
+        "line": 64,
+        "text": "if (!Number.isSafeInteger(value) || value < 1 || value > 128 * 1024 * 1024) throw new Error('NOVA_SOURCE_ARCHIVE_LIMIT_INVALID');",
+        "sha256": "dddba2b8b5d9be5a098108b85f5134f6a93b05bc560d0f1a3c318d60cae860f2",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "dddba2b8b5d9be5a098108b85f5134f6a93b05bc560d0f1a3c318d60cae860f2",
+      "explicitReviewedReason": "Actual complete compressedsource tar.gz1..selectedcap andtechnicalcurrentassertArchiveLimit<=128MiB, loaderacceptsbiggerbutlaterguardrejects. Noallocating128MiB/real Git/native proof inpureguard; configuredmax vsbase64fulljob/record/meta A6correlation andcapacityremainOPEN.",
+      "settings": [
+        "RT-NOVA-REMOTE-MAXIMUMARCHIVEBYTES"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/contracts-captured-content-corrected.json",
+      "status": "precise open standalone/native policy/role/whole-source/owner/task/grant obligation",
+      "countsTowardAcceptance": false
+    }
+  ],
+  "thisBatchCount": 77,
+  "additionalNoLexicalClosure": true
+}

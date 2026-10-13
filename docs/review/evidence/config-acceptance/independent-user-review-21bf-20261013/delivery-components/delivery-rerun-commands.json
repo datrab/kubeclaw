@@ -1,0 +1,29 @@
+[
+  {
+    "command": [
+      "python3",
+      "docs/review/evidence/config-acceptance/independent-user-review-21bf-20261013/delivery-components/delivery-rerun/render-and-define.py"
+    ],
+    "exitCode": 0,
+    "stdout": "{\n  \"renders\": 6,\n  \"renderFailures\": 0,\n  \"schemaFailures\": 2,\n  \"scope\": \"offline structural/source only\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "python3",
+      "docs/review/evidence/config-acceptance/independent-user-review-21bf-20261013/delivery-components/delivery-rerun/check-buster-primary-definitions.py"
+    ],
+    "exitCode": 0,
+    "stdout": "{\n  \"wholeDocuments\": 6,\n  \"failed\": 0,\n  \"initialMissingCRDSchemaFailuresRetained\": 2,\n  \"noSkip\": true,\n  \"scope\": \"primary structural only, not API acceptance\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "node",
+      "docs/review/evidence/config-acceptance/independent-user-review-21bf-20261013/delivery-components/delivery-rerun/check-role-projections.mjs"
+    ],
+    "exitCode": 0,
+    "stdout": "{\n  \"controls\": 56,\n  \"result\": \"passed\",\n  \"failed\": []\n}\n",
+    "stderr": ""
+  }
+]

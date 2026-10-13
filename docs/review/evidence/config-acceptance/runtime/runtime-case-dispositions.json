@@ -16444,7 +16444,7 @@
     },
     {
       "id": "RT-NOVA-REMOTE-SCHEMAVERSION-MISSING",
-      "disposition": "active",
+      "disposition": "superseded",
       "evidenceResultPreserved": "not-run",
       "originalRequirementsPreserved": [
         "F-AUTH",
@@ -16455,13 +16455,36 @@
       "activeSettingLinks": [
         "RT-NOVA-REMOTE-SCHEMAVERSION"
       ],
-      "supersededBy": [],
+      "supersededBy": [
+        "RT-NOVA-REMOTE-SCHEMAVERSION-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-SCHEMAVERSION-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-SCHEMAVERSION-STANDALONE19-MUTANT"
+      ],
       "countsTowardAcceptance": false,
-      "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming.",
+      "dispositionHistory": [
+        {
+          "id": "RT-NOVA-REMOTE-SCHEMAVERSION-MISSING",
+          "disposition": "active",
+          "evidenceResultPreserved": "not-run",
+          "originalRequirementsPreserved": [
+            "F-AUTH",
+            "F-VAL",
+            "F-EFFECT",
+            "F-MUT"
+          ],
+          "activeSettingLinks": [
+            "RT-NOVA-REMOTE-SCHEMAVERSION"
+          ],
+          "supersededBy": [],
+          "countsTowardAcceptance": false,
+          "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+        }
+      ]
     },
     {
       "id": "RT-NOVA-REMOTE-SCHEMAVERSION-ALT",
-      "disposition": "active",
+      "disposition": "superseded",
       "evidenceResultPreserved": "not-run",
       "originalRequirementsPreserved": [
         "F-AUTH",
@@ -16472,13 +16495,36 @@
       "activeSettingLinks": [
         "RT-NOVA-REMOTE-SCHEMAVERSION"
       ],
-      "supersededBy": [],
+      "supersededBy": [
+        "RT-NOVA-REMOTE-SCHEMAVERSION-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-SCHEMAVERSION-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-SCHEMAVERSION-STANDALONE19-MUTANT"
+      ],
       "countsTowardAcceptance": false,
-      "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming.",
+      "dispositionHistory": [
+        {
+          "id": "RT-NOVA-REMOTE-SCHEMAVERSION-ALT",
+          "disposition": "active",
+          "evidenceResultPreserved": "not-run",
+          "originalRequirementsPreserved": [
+            "F-AUTH",
+            "F-VAL",
+            "F-EFFECT",
+            "F-MUT"
+          ],
+          "activeSettingLinks": [
+            "RT-NOVA-REMOTE-SCHEMAVERSION"
+          ],
+          "supersededBy": [],
+          "countsTowardAcceptance": false,
+          "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+        }
+      ]
     },
     {
       "id": "RT-NOVA-REMOTE-SCHEMAVERSION-MUTANT",
-      "disposition": "active",
+      "disposition": "superseded",
       "evidenceResultPreserved": "not-run",
       "originalRequirementsPreserved": [
         "F-AUTH",
@@ -16489,13 +16535,36 @@
       "activeSettingLinks": [
         "RT-NOVA-REMOTE-SCHEMAVERSION"
       ],
-      "supersededBy": [],
+      "supersededBy": [
+        "RT-NOVA-REMOTE-SCHEMAVERSION-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-SCHEMAVERSION-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-SCHEMAVERSION-STANDALONE19-MUTANT"
+      ],
       "countsTowardAcceptance": false,
-      "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming.",
+      "dispositionHistory": [
+        {
+          "id": "RT-NOVA-REMOTE-SCHEMAVERSION-MUTANT",
+          "disposition": "active",
+          "evidenceResultPreserved": "not-run",
+          "originalRequirementsPreserved": [
+            "F-AUTH",
+            "F-VAL",
+            "F-EFFECT",
+            "F-MUT"
+          ],
+          "activeSettingLinks": [
+            "RT-NOVA-REMOTE-SCHEMAVERSION"
+          ],
+          "supersededBy": [],
+          "countsTowardAcceptance": false,
+          "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+        }
+      ]
     },
     {
       "id": "RT-NOVA-REMOTE-ENDPOINT-MISSING",
-      "disposition": "active",
+      "disposition": "superseded",
       "evidenceResultPreserved": "not-run",
       "originalRequirementsPreserved": [
         "F-AUTH",
@@ -16506,13 +16575,36 @@
       "activeSettingLinks": [
         "RT-NOVA-REMOTE-ENDPOINT"
       ],
-      "supersededBy": [],
+      "supersededBy": [
+        "RT-NOVA-REMOTE-ENDPOINT-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-ENDPOINT-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-ENDPOINT-STANDALONE19-MUTANT"
+      ],
       "countsTowardAcceptance": false,
-      "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming.",
+      "dispositionHistory": [
+        {
+          "id": "RT-NOVA-REMOTE-ENDPOINT-MISSING",
+          "disposition": "active",
+          "evidenceResultPreserved": "not-run",
+          "originalRequirementsPreserved": [
+            "F-AUTH",
+            "F-VAL",
+            "F-EFFECT",
+            "F-MUT"
+          ],
+          "activeSettingLinks": [
+            "RT-NOVA-REMOTE-ENDPOINT"
+          ],
+          "supersededBy": [],
+          "countsTowardAcceptance": false,
+          "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+        }
+      ]
     },
     {
       "id": "RT-NOVA-REMOTE-ENDPOINT-ALT",
-      "disposition": "active",
+      "disposition": "superseded",
       "evidenceResultPreserved": "not-run",
       "originalRequirementsPreserved": [
         "F-AUTH",
@@ -16523,13 +16615,36 @@
       "activeSettingLinks": [
         "RT-NOVA-REMOTE-ENDPOINT"
       ],
-      "supersededBy": [],
+      "supersededBy": [
+        "RT-NOVA-REMOTE-ENDPOINT-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-ENDPOINT-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-ENDPOINT-STANDALONE19-MUTANT"
+      ],
       "countsTowardAcceptance": false,
-      "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming.",
+      "dispositionHistory": [
+        {
+          "id": "RT-NOVA-REMOTE-ENDPOINT-ALT",
+          "disposition": "active",
+          "evidenceResultPreserved": "not-run",
+          "originalRequirementsPreserved": [
+            "F-AUTH",
+            "F-VAL",
+            "F-EFFECT",
+            "F-MUT"
+          ],
+          "activeSettingLinks": [
+            "RT-NOVA-REMOTE-ENDPOINT"
+          ],
+          "supersededBy": [],
+          "countsTowardAcceptance": false,
+          "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+        }
+      ]
     },
     {
       "id": "RT-NOVA-REMOTE-ENDPOINT-MUTANT",
-      "disposition": "active",
+      "disposition": "superseded",
       "evidenceResultPreserved": "not-run",
       "originalRequirementsPreserved": [
         "F-AUTH",
@@ -16540,13 +16655,36 @@
       "activeSettingLinks": [
         "RT-NOVA-REMOTE-ENDPOINT"
       ],
-      "supersededBy": [],
+      "supersededBy": [
+        "RT-NOVA-REMOTE-ENDPOINT-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-ENDPOINT-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-ENDPOINT-STANDALONE19-MUTANT"
+      ],
       "countsTowardAcceptance": false,
-      "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming.",
+      "dispositionHistory": [
+        {
+          "id": "RT-NOVA-REMOTE-ENDPOINT-MUTANT",
+          "disposition": "active",
+          "evidenceResultPreserved": "not-run",
+          "originalRequirementsPreserved": [
+            "F-AUTH",
+            "F-VAL",
+            "F-EFFECT",
+            "F-MUT"
+          ],
+          "activeSettingLinks": [
+            "RT-NOVA-REMOTE-ENDPOINT"
+          ],
+          "supersededBy": [],
+          "countsTowardAcceptance": false,
+          "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+        }
+      ]
     },
     {
       "id": "RT-NOVA-REMOTE-AUTHENTICATION-MISSING",
-      "disposition": "active",
+      "disposition": "superseded",
       "evidenceResultPreserved": "not-run",
       "originalRequirementsPreserved": [
         "F-AUTH",
@@ -16557,13 +16695,36 @@
       "activeSettingLinks": [
         "RT-NOVA-REMOTE-AUTHENTICATION"
       ],
-      "supersededBy": [],
+      "supersededBy": [
+        "RT-NOVA-REMOTE-AUTHENTICATION-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-AUTHENTICATION-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-AUTHENTICATION-STANDALONE19-MUTANT"
+      ],
       "countsTowardAcceptance": false,
-      "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming.",
+      "dispositionHistory": [
+        {
+          "id": "RT-NOVA-REMOTE-AUTHENTICATION-MISSING",
+          "disposition": "active",
+          "evidenceResultPreserved": "not-run",
+          "originalRequirementsPreserved": [
+            "F-AUTH",
+            "F-VAL",
+            "F-EFFECT",
+            "F-MUT"
+          ],
+          "activeSettingLinks": [
+            "RT-NOVA-REMOTE-AUTHENTICATION"
+          ],
+          "supersededBy": [],
+          "countsTowardAcceptance": false,
+          "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+        }
+      ]
     },
     {
       "id": "RT-NOVA-REMOTE-AUTHENTICATION-ALT",
-      "disposition": "active",
+      "disposition": "superseded",
       "evidenceResultPreserved": "not-run",
       "originalRequirementsPreserved": [
         "F-AUTH",
@@ -16574,13 +16735,36 @@
       "activeSettingLinks": [
         "RT-NOVA-REMOTE-AUTHENTICATION"
       ],
-      "supersededBy": [],
+      "supersededBy": [
+        "RT-NOVA-REMOTE-AUTHENTICATION-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-AUTHENTICATION-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-AUTHENTICATION-STANDALONE19-MUTANT"
+      ],
       "countsTowardAcceptance": false,
-      "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming.",
+      "dispositionHistory": [
+        {
+          "id": "RT-NOVA-REMOTE-AUTHENTICATION-ALT",
+          "disposition": "active",
+          "evidenceResultPreserved": "not-run",
+          "originalRequirementsPreserved": [
+            "F-AUTH",
+            "F-VAL",
+            "F-EFFECT",
+            "F-MUT"
+          ],
+          "activeSettingLinks": [
+            "RT-NOVA-REMOTE-AUTHENTICATION"
+          ],
+          "supersededBy": [],
+          "countsTowardAcceptance": false,
+          "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+        }
+      ]
     },
     {
       "id": "RT-NOVA-REMOTE-AUTHENTICATION-MUTANT",
-      "disposition": "active",
+      "disposition": "superseded",
       "evidenceResultPreserved": "not-run",
       "originalRequirementsPreserved": [
         "F-AUTH",
@@ -16591,13 +16775,36 @@
       "activeSettingLinks": [
         "RT-NOVA-REMOTE-AUTHENTICATION"
       ],
-      "supersededBy": [],
+      "supersededBy": [
+        "RT-NOVA-REMOTE-AUTHENTICATION-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-AUTHENTICATION-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-AUTHENTICATION-STANDALONE19-MUTANT"
+      ],
       "countsTowardAcceptance": false,
-      "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming.",
+      "dispositionHistory": [
+        {
+          "id": "RT-NOVA-REMOTE-AUTHENTICATION-MUTANT",
+          "disposition": "active",
+          "evidenceResultPreserved": "not-run",
+          "originalRequirementsPreserved": [
+            "F-AUTH",
+            "F-VAL",
+            "F-EFFECT",
+            "F-MUT"
+          ],
+          "activeSettingLinks": [
+            "RT-NOVA-REMOTE-AUTHENTICATION"
+          ],
+          "supersededBy": [],
+          "countsTowardAcceptance": false,
+          "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+        }
+      ]
     },
     {
       "id": "RT-NOVA-REMOTE-TOKENENVIRONMENTVARIABLE-MISSING",
-      "disposition": "active",
+      "disposition": "superseded",
       "evidenceResultPreserved": "not-run",
       "originalRequirementsPreserved": [
         "F-AUTH",
@@ -16608,13 +16815,36 @@
       "activeSettingLinks": [
         "RT-NOVA-REMOTE-TOKENENVIRONMENTVARIABLE"
       ],
-      "supersededBy": [],
+      "supersededBy": [
+        "RT-NOVA-REMOTE-TOKENENVIRONMENTVARIABLE-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-TOKENENVIRONMENTVARIABLE-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-TOKENENVIRONMENTVARIABLE-STANDALONE19-MUTANT"
+      ],
       "countsTowardAcceptance": false,
-      "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming.",
+      "dispositionHistory": [
+        {
+          "id": "RT-NOVA-REMOTE-TOKENENVIRONMENTVARIABLE-MISSING",
+          "disposition": "active",
+          "evidenceResultPreserved": "not-run",
+          "originalRequirementsPreserved": [
+            "F-AUTH",
+            "F-VAL",
+            "F-EFFECT",
+            "F-MUT"
+          ],
+          "activeSettingLinks": [
+            "RT-NOVA-REMOTE-TOKENENVIRONMENTVARIABLE"
+          ],
+          "supersededBy": [],
+          "countsTowardAcceptance": false,
+          "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+        }
+      ]
     },
     {
       "id": "RT-NOVA-REMOTE-TOKENENVIRONMENTVARIABLE-ALT",
-      "disposition": "active",
+      "disposition": "superseded",
       "evidenceResultPreserved": "not-run",
       "originalRequirementsPreserved": [
         "F-AUTH",
@@ -16625,13 +16855,36 @@
       "activeSettingLinks": [
         "RT-NOVA-REMOTE-TOKENENVIRONMENTVARIABLE"
       ],
-      "supersededBy": [],
+      "supersededBy": [
+        "RT-NOVA-REMOTE-TOKENENVIRONMENTVARIABLE-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-TOKENENVIRONMENTVARIABLE-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-TOKENENVIRONMENTVARIABLE-STANDALONE19-MUTANT"
+      ],
       "countsTowardAcceptance": false,
-      "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming.",
+      "dispositionHistory": [
+        {
+          "id": "RT-NOVA-REMOTE-TOKENENVIRONMENTVARIABLE-ALT",
+          "disposition": "active",
+          "evidenceResultPreserved": "not-run",
+          "originalRequirementsPreserved": [
+            "F-AUTH",
+            "F-VAL",
+            "F-EFFECT",
+            "F-MUT"
+          ],
+          "activeSettingLinks": [
+            "RT-NOVA-REMOTE-TOKENENVIRONMENTVARIABLE"
+          ],
+          "supersededBy": [],
+          "countsTowardAcceptance": false,
+          "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+        }
+      ]
     },
     {
       "id": "RT-NOVA-REMOTE-TOKENENVIRONMENTVARIABLE-MUTANT",
-      "disposition": "active",
+      "disposition": "superseded",
       "evidenceResultPreserved": "not-run",
       "originalRequirementsPreserved": [
         "F-AUTH",
@@ -16642,13 +16895,36 @@
       "activeSettingLinks": [
         "RT-NOVA-REMOTE-TOKENENVIRONMENTVARIABLE"
       ],
-      "supersededBy": [],
+      "supersededBy": [
+        "RT-NOVA-REMOTE-TOKENENVIRONMENTVARIABLE-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-TOKENENVIRONMENTVARIABLE-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-TOKENENVIRONMENTVARIABLE-STANDALONE19-MUTANT"
+      ],
       "countsTowardAcceptance": false,
-      "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming.",
+      "dispositionHistory": [
+        {
+          "id": "RT-NOVA-REMOTE-TOKENENVIRONMENTVARIABLE-MUTANT",
+          "disposition": "active",
+          "evidenceResultPreserved": "not-run",
+          "originalRequirementsPreserved": [
+            "F-AUTH",
+            "F-VAL",
+            "F-EFFECT",
+            "F-MUT"
+          ],
+          "activeSettingLinks": [
+            "RT-NOVA-REMOTE-TOKENENVIRONMENTVARIABLE"
+          ],
+          "supersededBy": [],
+          "countsTowardAcceptance": false,
+          "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+        }
+      ]
     },
     {
       "id": "RT-NOVA-REMOTE-SOURCEATTESTATIONPRIVATEKEYENVIRONMENTVARIABLE-MISSING",
-      "disposition": "active",
+      "disposition": "superseded",
       "evidenceResultPreserved": "not-run",
       "originalRequirementsPreserved": [
         "F-AUTH",
@@ -16659,13 +16935,36 @@
       "activeSettingLinks": [
         "RT-NOVA-REMOTE-SOURCEATTESTATIONPRIVATEKEYENVIRONMENTVARIABLE"
       ],
-      "supersededBy": [],
+      "supersededBy": [
+        "RT-NOVA-REMOTE-SOURCEATTESTATIONPRIVATEKEYENVIRONMENTVARIABLE-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-SOURCEATTESTATIONPRIVATEKEYENVIRONMENTVARIABLE-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-SOURCEATTESTATIONPRIVATEKEYENVIRONMENTVARIABLE-STANDALONE19-MUTANT"
+      ],
       "countsTowardAcceptance": false,
-      "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming.",
+      "dispositionHistory": [
+        {
+          "id": "RT-NOVA-REMOTE-SOURCEATTESTATIONPRIVATEKEYENVIRONMENTVARIABLE-MISSING",
+          "disposition": "active",
+          "evidenceResultPreserved": "not-run",
+          "originalRequirementsPreserved": [
+            "F-AUTH",
+            "F-VAL",
+            "F-EFFECT",
+            "F-MUT"
+          ],
+          "activeSettingLinks": [
+            "RT-NOVA-REMOTE-SOURCEATTESTATIONPRIVATEKEYENVIRONMENTVARIABLE"
+          ],
+          "supersededBy": [],
+          "countsTowardAcceptance": false,
+          "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+        }
+      ]
     },
     {
       "id": "RT-NOVA-REMOTE-SOURCEATTESTATIONPRIVATEKEYENVIRONMENTVARIABLE-ALT",
-      "disposition": "active",
+      "disposition": "superseded",
       "evidenceResultPreserved": "not-run",
       "originalRequirementsPreserved": [
         "F-AUTH",
@@ -16676,13 +16975,36 @@
       "activeSettingLinks": [
         "RT-NOVA-REMOTE-SOURCEATTESTATIONPRIVATEKEYENVIRONMENTVARIABLE"
       ],
-      "supersededBy": [],
+      "supersededBy": [
+        "RT-NOVA-REMOTE-SOURCEATTESTATIONPRIVATEKEYENVIRONMENTVARIABLE-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-SOURCEATTESTATIONPRIVATEKEYENVIRONMENTVARIABLE-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-SOURCEATTESTATIONPRIVATEKEYENVIRONMENTVARIABLE-STANDALONE19-MUTANT"
+      ],
       "countsTowardAcceptance": false,
-      "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming.",
+      "dispositionHistory": [
+        {
+          "id": "RT-NOVA-REMOTE-SOURCEATTESTATIONPRIVATEKEYENVIRONMENTVARIABLE-ALT",
+          "disposition": "active",
+          "evidenceResultPreserved": "not-run",
+          "originalRequirementsPreserved": [
+            "F-AUTH",
+            "F-VAL",
+            "F-EFFECT",
+            "F-MUT"
+          ],
+          "activeSettingLinks": [
+            "RT-NOVA-REMOTE-SOURCEATTESTATIONPRIVATEKEYENVIRONMENTVARIABLE"
+          ],
+          "supersededBy": [],
+          "countsTowardAcceptance": false,
+          "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+        }
+      ]
     },
     {
       "id": "RT-NOVA-REMOTE-SOURCEATTESTATIONPRIVATEKEYENVIRONMENTVARIABLE-MUTANT",
-      "disposition": "active",
+      "disposition": "superseded",
       "evidenceResultPreserved": "not-run",
       "originalRequirementsPreserved": [
         "F-AUTH",
@@ -16693,13 +17015,36 @@
       "activeSettingLinks": [
         "RT-NOVA-REMOTE-SOURCEATTESTATIONPRIVATEKEYENVIRONMENTVARIABLE"
       ],
-      "supersededBy": [],
+      "supersededBy": [
+        "RT-NOVA-REMOTE-SOURCEATTESTATIONPRIVATEKEYENVIRONMENTVARIABLE-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-SOURCEATTESTATIONPRIVATEKEYENVIRONMENTVARIABLE-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-SOURCEATTESTATIONPRIVATEKEYENVIRONMENTVARIABLE-STANDALONE19-MUTANT"
+      ],
       "countsTowardAcceptance": false,
-      "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming.",
+      "dispositionHistory": [
+        {
+          "id": "RT-NOVA-REMOTE-SOURCEATTESTATIONPRIVATEKEYENVIRONMENTVARIABLE-MUTANT",
+          "disposition": "active",
+          "evidenceResultPreserved": "not-run",
+          "originalRequirementsPreserved": [
+            "F-AUTH",
+            "F-VAL",
+            "F-EFFECT",
+            "F-MUT"
+          ],
+          "activeSettingLinks": [
+            "RT-NOVA-REMOTE-SOURCEATTESTATIONPRIVATEKEYENVIRONMENTVARIABLE"
+          ],
+          "supersededBy": [],
+          "countsTowardAcceptance": false,
+          "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+        }
+      ]
     },
     {
       "id": "RT-NOVA-REMOTE-SOURCEAUTHORITY-MISSING",
-      "disposition": "active",
+      "disposition": "superseded",
       "evidenceResultPreserved": "not-run",
       "originalRequirementsPreserved": [
         "F-AUTH",
@@ -16710,13 +17055,36 @@
       "activeSettingLinks": [
         "RT-NOVA-REMOTE-SOURCEAUTHORITY"
       ],
-      "supersededBy": [],
+      "supersededBy": [
+        "RT-NOVA-REMOTE-SOURCEAUTHORITY-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-SOURCEAUTHORITY-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-SOURCEAUTHORITY-STANDALONE19-MUTANT"
+      ],
       "countsTowardAcceptance": false,
-      "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming.",
+      "dispositionHistory": [
+        {
+          "id": "RT-NOVA-REMOTE-SOURCEAUTHORITY-MISSING",
+          "disposition": "active",
+          "evidenceResultPreserved": "not-run",
+          "originalRequirementsPreserved": [
+            "F-AUTH",
+            "F-VAL",
+            "F-EFFECT",
+            "F-MUT"
+          ],
+          "activeSettingLinks": [
+            "RT-NOVA-REMOTE-SOURCEAUTHORITY"
+          ],
+          "supersededBy": [],
+          "countsTowardAcceptance": false,
+          "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+        }
+      ]
     },
     {
       "id": "RT-NOVA-REMOTE-SOURCEAUTHORITY-ALT",
-      "disposition": "active",
+      "disposition": "superseded",
       "evidenceResultPreserved": "not-run",
       "originalRequirementsPreserved": [
         "F-AUTH",
@@ -16727,13 +17095,36 @@
       "activeSettingLinks": [
         "RT-NOVA-REMOTE-SOURCEAUTHORITY"
       ],
-      "supersededBy": [],
+      "supersededBy": [
+        "RT-NOVA-REMOTE-SOURCEAUTHORITY-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-SOURCEAUTHORITY-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-SOURCEAUTHORITY-STANDALONE19-MUTANT"
+      ],
       "countsTowardAcceptance": false,
-      "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming.",
+      "dispositionHistory": [
+        {
+          "id": "RT-NOVA-REMOTE-SOURCEAUTHORITY-ALT",
+          "disposition": "active",
+          "evidenceResultPreserved": "not-run",
+          "originalRequirementsPreserved": [
+            "F-AUTH",
+            "F-VAL",
+            "F-EFFECT",
+            "F-MUT"
+          ],
+          "activeSettingLinks": [
+            "RT-NOVA-REMOTE-SOURCEAUTHORITY"
+          ],
+          "supersededBy": [],
+          "countsTowardAcceptance": false,
+          "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+        }
+      ]
     },
     {
       "id": "RT-NOVA-REMOTE-SOURCEAUTHORITY-MUTANT",
-      "disposition": "active",
+      "disposition": "superseded",
       "evidenceResultPreserved": "not-run",
       "originalRequirementsPreserved": [
         "F-AUTH",
@@ -16744,13 +17135,36 @@
       "activeSettingLinks": [
         "RT-NOVA-REMOTE-SOURCEAUTHORITY"
       ],
-      "supersededBy": [],
+      "supersededBy": [
+        "RT-NOVA-REMOTE-SOURCEAUTHORITY-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-SOURCEAUTHORITY-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-SOURCEAUTHORITY-STANDALONE19-MUTANT"
+      ],
       "countsTowardAcceptance": false,
-      "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming.",
+      "dispositionHistory": [
+        {
+          "id": "RT-NOVA-REMOTE-SOURCEAUTHORITY-MUTANT",
+          "disposition": "active",
+          "evidenceResultPreserved": "not-run",
+          "originalRequirementsPreserved": [
+            "F-AUTH",
+            "F-VAL",
+            "F-EFFECT",
+            "F-MUT"
+          ],
+          "activeSettingLinks": [
+            "RT-NOVA-REMOTE-SOURCEAUTHORITY"
+          ],
+          "supersededBy": [],
+          "countsTowardAcceptance": false,
+          "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+        }
+      ]
     },
     {
       "id": "RT-NOVA-REMOTE-STATEROOT-MISSING",
-      "disposition": "active",
+      "disposition": "superseded",
       "evidenceResultPreserved": "not-run",
       "originalRequirementsPreserved": [
         "F-AUTH",
@@ -16761,13 +17175,36 @@
       "activeSettingLinks": [
         "RT-NOVA-REMOTE-STATEROOT"
       ],
-      "supersededBy": [],
+      "supersededBy": [
+        "RT-NOVA-REMOTE-STATEROOT-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-STATEROOT-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-STATEROOT-STANDALONE19-MUTANT"
+      ],
       "countsTowardAcceptance": false,
-      "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming.",
+      "dispositionHistory": [
+        {
+          "id": "RT-NOVA-REMOTE-STATEROOT-MISSING",
+          "disposition": "active",
+          "evidenceResultPreserved": "not-run",
+          "originalRequirementsPreserved": [
+            "F-AUTH",
+            "F-VAL",
+            "F-EFFECT",
+            "F-MUT"
+          ],
+          "activeSettingLinks": [
+            "RT-NOVA-REMOTE-STATEROOT"
+          ],
+          "supersededBy": [],
+          "countsTowardAcceptance": false,
+          "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+        }
+      ]
     },
     {
       "id": "RT-NOVA-REMOTE-STATEROOT-ALT",
-      "disposition": "active",
+      "disposition": "superseded",
       "evidenceResultPreserved": "not-run",
       "originalRequirementsPreserved": [
         "F-AUTH",
@@ -16778,13 +17215,36 @@
       "activeSettingLinks": [
         "RT-NOVA-REMOTE-STATEROOT"
       ],
-      "supersededBy": [],
+      "supersededBy": [
+        "RT-NOVA-REMOTE-STATEROOT-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-STATEROOT-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-STATEROOT-STANDALONE19-MUTANT"
+      ],
       "countsTowardAcceptance": false,
-      "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming.",
+      "dispositionHistory": [
+        {
+          "id": "RT-NOVA-REMOTE-STATEROOT-ALT",
+          "disposition": "active",
+          "evidenceResultPreserved": "not-run",
+          "originalRequirementsPreserved": [
+            "F-AUTH",
+            "F-VAL",
+            "F-EFFECT",
+            "F-MUT"
+          ],
+          "activeSettingLinks": [
+            "RT-NOVA-REMOTE-STATEROOT"
+          ],
+          "supersededBy": [],
+          "countsTowardAcceptance": false,
+          "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+        }
+      ]
     },
     {
       "id": "RT-NOVA-REMOTE-STATEROOT-MUTANT",
-      "disposition": "active",
+      "disposition": "superseded",
       "evidenceResultPreserved": "not-run",
       "originalRequirementsPreserved": [
         "F-AUTH",
@@ -16795,13 +17255,36 @@
       "activeSettingLinks": [
         "RT-NOVA-REMOTE-STATEROOT"
       ],
-      "supersededBy": [],
+      "supersededBy": [
+        "RT-NOVA-REMOTE-STATEROOT-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-STATEROOT-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-STATEROOT-STANDALONE19-MUTANT"
+      ],
       "countsTowardAcceptance": false,
-      "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming.",
+      "dispositionHistory": [
+        {
+          "id": "RT-NOVA-REMOTE-STATEROOT-MUTANT",
+          "disposition": "active",
+          "evidenceResultPreserved": "not-run",
+          "originalRequirementsPreserved": [
+            "F-AUTH",
+            "F-VAL",
+            "F-EFFECT",
+            "F-MUT"
+          ],
+          "activeSettingLinks": [
+            "RT-NOVA-REMOTE-STATEROOT"
+          ],
+          "supersededBy": [],
+          "countsTowardAcceptance": false,
+          "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+        }
+      ]
     },
     {
       "id": "RT-NOVA-REMOTE-POLLMILLISECONDS-MISSING",
-      "disposition": "active",
+      "disposition": "superseded",
       "evidenceResultPreserved": "not-run",
       "originalRequirementsPreserved": [
         "F-AUTH",
@@ -16812,13 +17295,36 @@
       "activeSettingLinks": [
         "RT-NOVA-REMOTE-POLLMILLISECONDS"
       ],
-      "supersededBy": [],
+      "supersededBy": [
+        "RT-NOVA-REMOTE-POLLMILLISECONDS-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-POLLMILLISECONDS-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-POLLMILLISECONDS-STANDALONE19-MUTANT"
+      ],
       "countsTowardAcceptance": false,
-      "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming.",
+      "dispositionHistory": [
+        {
+          "id": "RT-NOVA-REMOTE-POLLMILLISECONDS-MISSING",
+          "disposition": "active",
+          "evidenceResultPreserved": "not-run",
+          "originalRequirementsPreserved": [
+            "F-AUTH",
+            "F-VAL",
+            "F-EFFECT",
+            "F-MUT"
+          ],
+          "activeSettingLinks": [
+            "RT-NOVA-REMOTE-POLLMILLISECONDS"
+          ],
+          "supersededBy": [],
+          "countsTowardAcceptance": false,
+          "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+        }
+      ]
     },
     {
       "id": "RT-NOVA-REMOTE-POLLMILLISECONDS-ALT",
-      "disposition": "active",
+      "disposition": "superseded",
       "evidenceResultPreserved": "not-run",
       "originalRequirementsPreserved": [
         "F-AUTH",
@@ -16829,13 +17335,36 @@
       "activeSettingLinks": [
         "RT-NOVA-REMOTE-POLLMILLISECONDS"
       ],
-      "supersededBy": [],
+      "supersededBy": [
+        "RT-NOVA-REMOTE-POLLMILLISECONDS-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-POLLMILLISECONDS-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-POLLMILLISECONDS-STANDALONE19-MUTANT"
+      ],
       "countsTowardAcceptance": false,
-      "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming.",
+      "dispositionHistory": [
+        {
+          "id": "RT-NOVA-REMOTE-POLLMILLISECONDS-ALT",
+          "disposition": "active",
+          "evidenceResultPreserved": "not-run",
+          "originalRequirementsPreserved": [
+            "F-AUTH",
+            "F-VAL",
+            "F-EFFECT",
+            "F-MUT"
+          ],
+          "activeSettingLinks": [
+            "RT-NOVA-REMOTE-POLLMILLISECONDS"
+          ],
+          "supersededBy": [],
+          "countsTowardAcceptance": false,
+          "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+        }
+      ]
     },
     {
       "id": "RT-NOVA-REMOTE-POLLMILLISECONDS-MUTANT",
-      "disposition": "active",
+      "disposition": "superseded",
       "evidenceResultPreserved": "not-run",
       "originalRequirementsPreserved": [
         "F-AUTH",
@@ -16846,13 +17375,36 @@
       "activeSettingLinks": [
         "RT-NOVA-REMOTE-POLLMILLISECONDS"
       ],
-      "supersededBy": [],
+      "supersededBy": [
+        "RT-NOVA-REMOTE-POLLMILLISECONDS-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-POLLMILLISECONDS-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-POLLMILLISECONDS-STANDALONE19-MUTANT"
+      ],
       "countsTowardAcceptance": false,
-      "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming.",
+      "dispositionHistory": [
+        {
+          "id": "RT-NOVA-REMOTE-POLLMILLISECONDS-MUTANT",
+          "disposition": "active",
+          "evidenceResultPreserved": "not-run",
+          "originalRequirementsPreserved": [
+            "F-AUTH",
+            "F-VAL",
+            "F-EFFECT",
+            "F-MUT"
+          ],
+          "activeSettingLinks": [
+            "RT-NOVA-REMOTE-POLLMILLISECONDS"
+          ],
+          "supersededBy": [],
+          "countsTowardAcceptance": false,
+          "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+        }
+      ]
     },
     {
       "id": "RT-NOVA-REMOTE-MAXIMUMRESPONSEBYTES-MISSING",
-      "disposition": "active",
+      "disposition": "superseded",
       "evidenceResultPreserved": "not-run",
       "originalRequirementsPreserved": [
         "F-AUTH",
@@ -16863,13 +17415,36 @@
       "activeSettingLinks": [
         "RT-NOVA-REMOTE-MAXIMUMRESPONSEBYTES"
       ],
-      "supersededBy": [],
+      "supersededBy": [
+        "RT-NOVA-REMOTE-MAXIMUMRESPONSEBYTES-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-MAXIMUMRESPONSEBYTES-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-MAXIMUMRESPONSEBYTES-STANDALONE19-MUTANT"
+      ],
       "countsTowardAcceptance": false,
-      "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming.",
+      "dispositionHistory": [
+        {
+          "id": "RT-NOVA-REMOTE-MAXIMUMRESPONSEBYTES-MISSING",
+          "disposition": "active",
+          "evidenceResultPreserved": "not-run",
+          "originalRequirementsPreserved": [
+            "F-AUTH",
+            "F-VAL",
+            "F-EFFECT",
+            "F-MUT"
+          ],
+          "activeSettingLinks": [
+            "RT-NOVA-REMOTE-MAXIMUMRESPONSEBYTES"
+          ],
+          "supersededBy": [],
+          "countsTowardAcceptance": false,
+          "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+        }
+      ]
     },
     {
       "id": "RT-NOVA-REMOTE-MAXIMUMRESPONSEBYTES-ALT",
-      "disposition": "active",
+      "disposition": "superseded",
       "evidenceResultPreserved": "not-run",
       "originalRequirementsPreserved": [
         "F-AUTH",
@@ -16880,13 +17455,36 @@
       "activeSettingLinks": [
         "RT-NOVA-REMOTE-MAXIMUMRESPONSEBYTES"
       ],
-      "supersededBy": [],
+      "supersededBy": [
+        "RT-NOVA-REMOTE-MAXIMUMRESPONSEBYTES-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-MAXIMUMRESPONSEBYTES-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-MAXIMUMRESPONSEBYTES-STANDALONE19-MUTANT"
+      ],
       "countsTowardAcceptance": false,
-      "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming.",
+      "dispositionHistory": [
+        {
+          "id": "RT-NOVA-REMOTE-MAXIMUMRESPONSEBYTES-ALT",
+          "disposition": "active",
+          "evidenceResultPreserved": "not-run",
+          "originalRequirementsPreserved": [
+            "F-AUTH",
+            "F-VAL",
+            "F-EFFECT",
+            "F-MUT"
+          ],
+          "activeSettingLinks": [
+            "RT-NOVA-REMOTE-MAXIMUMRESPONSEBYTES"
+          ],
+          "supersededBy": [],
+          "countsTowardAcceptance": false,
+          "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+        }
+      ]
     },
     {
       "id": "RT-NOVA-REMOTE-MAXIMUMRESPONSEBYTES-MUTANT",
-      "disposition": "active",
+      "disposition": "superseded",
       "evidenceResultPreserved": "not-run",
       "originalRequirementsPreserved": [
         "F-AUTH",
@@ -16897,13 +17495,36 @@
       "activeSettingLinks": [
         "RT-NOVA-REMOTE-MAXIMUMRESPONSEBYTES"
       ],
-      "supersededBy": [],
+      "supersededBy": [
+        "RT-NOVA-REMOTE-MAXIMUMRESPONSEBYTES-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-MAXIMUMRESPONSEBYTES-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-MAXIMUMRESPONSEBYTES-STANDALONE19-MUTANT"
+      ],
       "countsTowardAcceptance": false,
-      "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming.",
+      "dispositionHistory": [
+        {
+          "id": "RT-NOVA-REMOTE-MAXIMUMRESPONSEBYTES-MUTANT",
+          "disposition": "active",
+          "evidenceResultPreserved": "not-run",
+          "originalRequirementsPreserved": [
+            "F-AUTH",
+            "F-VAL",
+            "F-EFFECT",
+            "F-MUT"
+          ],
+          "activeSettingLinks": [
+            "RT-NOVA-REMOTE-MAXIMUMRESPONSEBYTES"
+          ],
+          "supersededBy": [],
+          "countsTowardAcceptance": false,
+          "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+        }
+      ]
     },
     {
       "id": "RT-NOVA-REMOTE-MAXIMUMRESULTBYTES-MISSING",
-      "disposition": "active",
+      "disposition": "superseded",
       "evidenceResultPreserved": "not-run",
       "originalRequirementsPreserved": [
         "F-AUTH",
@@ -16914,13 +17535,36 @@
       "activeSettingLinks": [
         "RT-NOVA-REMOTE-MAXIMUMRESULTBYTES"
       ],
-      "supersededBy": [],
+      "supersededBy": [
+        "RT-NOVA-REMOTE-MAXIMUMRESULTBYTES-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-MAXIMUMRESULTBYTES-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-MAXIMUMRESULTBYTES-STANDALONE19-MUTANT"
+      ],
       "countsTowardAcceptance": false,
-      "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming.",
+      "dispositionHistory": [
+        {
+          "id": "RT-NOVA-REMOTE-MAXIMUMRESULTBYTES-MISSING",
+          "disposition": "active",
+          "evidenceResultPreserved": "not-run",
+          "originalRequirementsPreserved": [
+            "F-AUTH",
+            "F-VAL",
+            "F-EFFECT",
+            "F-MUT"
+          ],
+          "activeSettingLinks": [
+            "RT-NOVA-REMOTE-MAXIMUMRESULTBYTES"
+          ],
+          "supersededBy": [],
+          "countsTowardAcceptance": false,
+          "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+        }
+      ]
     },
     {
       "id": "RT-NOVA-REMOTE-MAXIMUMRESULTBYTES-ALT",
-      "disposition": "active",
+      "disposition": "superseded",
       "evidenceResultPreserved": "not-run",
       "originalRequirementsPreserved": [
         "F-AUTH",
@@ -16931,13 +17575,36 @@
       "activeSettingLinks": [
         "RT-NOVA-REMOTE-MAXIMUMRESULTBYTES"
       ],
-      "supersededBy": [],
+      "supersededBy": [
+        "RT-NOVA-REMOTE-MAXIMUMRESULTBYTES-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-MAXIMUMRESULTBYTES-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-MAXIMUMRESULTBYTES-STANDALONE19-MUTANT"
+      ],
       "countsTowardAcceptance": false,
-      "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming.",
+      "dispositionHistory": [
+        {
+          "id": "RT-NOVA-REMOTE-MAXIMUMRESULTBYTES-ALT",
+          "disposition": "active",
+          "evidenceResultPreserved": "not-run",
+          "originalRequirementsPreserved": [
+            "F-AUTH",
+            "F-VAL",
+            "F-EFFECT",
+            "F-MUT"
+          ],
+          "activeSettingLinks": [
+            "RT-NOVA-REMOTE-MAXIMUMRESULTBYTES"
+          ],
+          "supersededBy": [],
+          "countsTowardAcceptance": false,
+          "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+        }
+      ]
     },
     {
       "id": "RT-NOVA-REMOTE-MAXIMUMRESULTBYTES-MUTANT",
-      "disposition": "active",
+      "disposition": "superseded",
       "evidenceResultPreserved": "not-run",
       "originalRequirementsPreserved": [
         "F-AUTH",
@@ -16948,13 +17615,36 @@
       "activeSettingLinks": [
         "RT-NOVA-REMOTE-MAXIMUMRESULTBYTES"
       ],
-      "supersededBy": [],
+      "supersededBy": [
+        "RT-NOVA-REMOTE-MAXIMUMRESULTBYTES-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-MAXIMUMRESULTBYTES-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-MAXIMUMRESULTBYTES-STANDALONE19-MUTANT"
+      ],
       "countsTowardAcceptance": false,
-      "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming.",
+      "dispositionHistory": [
+        {
+          "id": "RT-NOVA-REMOTE-MAXIMUMRESULTBYTES-MUTANT",
+          "disposition": "active",
+          "evidenceResultPreserved": "not-run",
+          "originalRequirementsPreserved": [
+            "F-AUTH",
+            "F-VAL",
+            "F-EFFECT",
+            "F-MUT"
+          ],
+          "activeSettingLinks": [
+            "RT-NOVA-REMOTE-MAXIMUMRESULTBYTES"
+          ],
+          "supersededBy": [],
+          "countsTowardAcceptance": false,
+          "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+        }
+      ]
     },
     {
       "id": "RT-NOVA-REMOTE-MAXIMUMARCHIVEBYTES-MISSING",
-      "disposition": "active",
+      "disposition": "superseded",
       "evidenceResultPreserved": "not-run",
       "originalRequirementsPreserved": [
         "F-AUTH",
@@ -16965,13 +17655,36 @@
       "activeSettingLinks": [
         "RT-NOVA-REMOTE-MAXIMUMARCHIVEBYTES"
       ],
-      "supersededBy": [],
+      "supersededBy": [
+        "RT-NOVA-REMOTE-MAXIMUMARCHIVEBYTES-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-MAXIMUMARCHIVEBYTES-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-MAXIMUMARCHIVEBYTES-STANDALONE19-MUTANT"
+      ],
       "countsTowardAcceptance": false,
-      "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming.",
+      "dispositionHistory": [
+        {
+          "id": "RT-NOVA-REMOTE-MAXIMUMARCHIVEBYTES-MISSING",
+          "disposition": "active",
+          "evidenceResultPreserved": "not-run",
+          "originalRequirementsPreserved": [
+            "F-AUTH",
+            "F-VAL",
+            "F-EFFECT",
+            "F-MUT"
+          ],
+          "activeSettingLinks": [
+            "RT-NOVA-REMOTE-MAXIMUMARCHIVEBYTES"
+          ],
+          "supersededBy": [],
+          "countsTowardAcceptance": false,
+          "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+        }
+      ]
     },
     {
       "id": "RT-NOVA-REMOTE-MAXIMUMARCHIVEBYTES-ALT",
-      "disposition": "active",
+      "disposition": "superseded",
       "evidenceResultPreserved": "not-run",
       "originalRequirementsPreserved": [
         "F-AUTH",
@@ -16982,13 +17695,36 @@
       "activeSettingLinks": [
         "RT-NOVA-REMOTE-MAXIMUMARCHIVEBYTES"
       ],
-      "supersededBy": [],
+      "supersededBy": [
+        "RT-NOVA-REMOTE-MAXIMUMARCHIVEBYTES-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-MAXIMUMARCHIVEBYTES-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-MAXIMUMARCHIVEBYTES-STANDALONE19-MUTANT"
+      ],
       "countsTowardAcceptance": false,
-      "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming.",
+      "dispositionHistory": [
+        {
+          "id": "RT-NOVA-REMOTE-MAXIMUMARCHIVEBYTES-ALT",
+          "disposition": "active",
+          "evidenceResultPreserved": "not-run",
+          "originalRequirementsPreserved": [
+            "F-AUTH",
+            "F-VAL",
+            "F-EFFECT",
+            "F-MUT"
+          ],
+          "activeSettingLinks": [
+            "RT-NOVA-REMOTE-MAXIMUMARCHIVEBYTES"
+          ],
+          "supersededBy": [],
+          "countsTowardAcceptance": false,
+          "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+        }
+      ]
     },
     {
       "id": "RT-NOVA-REMOTE-MAXIMUMARCHIVEBYTES-MUTANT",
-      "disposition": "active",
+      "disposition": "superseded",
       "evidenceResultPreserved": "not-run",
       "originalRequirementsPreserved": [
         "F-AUTH",
@@ -16999,13 +17735,36 @@
       "activeSettingLinks": [
         "RT-NOVA-REMOTE-MAXIMUMARCHIVEBYTES"
       ],
-      "supersededBy": [],
+      "supersededBy": [
+        "RT-NOVA-REMOTE-MAXIMUMARCHIVEBYTES-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-MAXIMUMARCHIVEBYTES-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-MAXIMUMARCHIVEBYTES-STANDALONE19-MUTANT"
+      ],
       "countsTowardAcceptance": false,
-      "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming.",
+      "dispositionHistory": [
+        {
+          "id": "RT-NOVA-REMOTE-MAXIMUMARCHIVEBYTES-MUTANT",
+          "disposition": "active",
+          "evidenceResultPreserved": "not-run",
+          "originalRequirementsPreserved": [
+            "F-AUTH",
+            "F-VAL",
+            "F-EFFECT",
+            "F-MUT"
+          ],
+          "activeSettingLinks": [
+            "RT-NOVA-REMOTE-MAXIMUMARCHIVEBYTES"
+          ],
+          "supersededBy": [],
+          "countsTowardAcceptance": false,
+          "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+        }
+      ]
     },
     {
       "id": "RT-NOVA-REMOTE-MAXIMUMARCHIVESTOREBYTES-MISSING",
-      "disposition": "active",
+      "disposition": "superseded",
       "evidenceResultPreserved": "not-run",
       "originalRequirementsPreserved": [
         "F-AUTH",
@@ -17016,13 +17775,36 @@
       "activeSettingLinks": [
         "RT-NOVA-REMOTE-MAXIMUMARCHIVESTOREBYTES"
       ],
-      "supersededBy": [],
+      "supersededBy": [
+        "RT-NOVA-REMOTE-MAXIMUMARCHIVESTOREBYTES-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-MAXIMUMARCHIVESTOREBYTES-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-MAXIMUMARCHIVESTOREBYTES-STANDALONE19-MUTANT"
+      ],
       "countsTowardAcceptance": false,
-      "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming.",
+      "dispositionHistory": [
+        {
+          "id": "RT-NOVA-REMOTE-MAXIMUMARCHIVESTOREBYTES-MISSING",
+          "disposition": "active",
+          "evidenceResultPreserved": "not-run",
+          "originalRequirementsPreserved": [
+            "F-AUTH",
+            "F-VAL",
+            "F-EFFECT",
+            "F-MUT"
+          ],
+          "activeSettingLinks": [
+            "RT-NOVA-REMOTE-MAXIMUMARCHIVESTOREBYTES"
+          ],
+          "supersededBy": [],
+          "countsTowardAcceptance": false,
+          "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+        }
+      ]
     },
     {
       "id": "RT-NOVA-REMOTE-MAXIMUMARCHIVESTOREBYTES-ALT",
-      "disposition": "active",
+      "disposition": "superseded",
       "evidenceResultPreserved": "not-run",
       "originalRequirementsPreserved": [
         "F-AUTH",
@@ -17033,13 +17815,36 @@
       "activeSettingLinks": [
         "RT-NOVA-REMOTE-MAXIMUMARCHIVESTOREBYTES"
       ],
-      "supersededBy": [],
+      "supersededBy": [
+        "RT-NOVA-REMOTE-MAXIMUMARCHIVESTOREBYTES-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-MAXIMUMARCHIVESTOREBYTES-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-MAXIMUMARCHIVESTOREBYTES-STANDALONE19-MUTANT"
+      ],
       "countsTowardAcceptance": false,
-      "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming.",
+      "dispositionHistory": [
+        {
+          "id": "RT-NOVA-REMOTE-MAXIMUMARCHIVESTOREBYTES-ALT",
+          "disposition": "active",
+          "evidenceResultPreserved": "not-run",
+          "originalRequirementsPreserved": [
+            "F-AUTH",
+            "F-VAL",
+            "F-EFFECT",
+            "F-MUT"
+          ],
+          "activeSettingLinks": [
+            "RT-NOVA-REMOTE-MAXIMUMARCHIVESTOREBYTES"
+          ],
+          "supersededBy": [],
+          "countsTowardAcceptance": false,
+          "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+        }
+      ]
     },
     {
       "id": "RT-NOVA-REMOTE-MAXIMUMARCHIVESTOREBYTES-MUTANT",
-      "disposition": "active",
+      "disposition": "superseded",
       "evidenceResultPreserved": "not-run",
       "originalRequirementsPreserved": [
         "F-AUTH",
@@ -17050,13 +17855,36 @@
       "activeSettingLinks": [
         "RT-NOVA-REMOTE-MAXIMUMARCHIVESTOREBYTES"
       ],
-      "supersededBy": [],
+      "supersededBy": [
+        "RT-NOVA-REMOTE-MAXIMUMARCHIVESTOREBYTES-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-MAXIMUMARCHIVESTOREBYTES-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-MAXIMUMARCHIVESTOREBYTES-STANDALONE19-MUTANT"
+      ],
       "countsTowardAcceptance": false,
-      "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming.",
+      "dispositionHistory": [
+        {
+          "id": "RT-NOVA-REMOTE-MAXIMUMARCHIVESTOREBYTES-MUTANT",
+          "disposition": "active",
+          "evidenceResultPreserved": "not-run",
+          "originalRequirementsPreserved": [
+            "F-AUTH",
+            "F-VAL",
+            "F-EFFECT",
+            "F-MUT"
+          ],
+          "activeSettingLinks": [
+            "RT-NOVA-REMOTE-MAXIMUMARCHIVESTOREBYTES"
+          ],
+          "supersededBy": [],
+          "countsTowardAcceptance": false,
+          "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+        }
+      ]
     },
     {
       "id": "RT-NOVA-REMOTE-MAXIMUMEVIDENCEBYTES-MISSING",
-      "disposition": "active",
+      "disposition": "superseded",
       "evidenceResultPreserved": "not-run",
       "originalRequirementsPreserved": [
         "F-AUTH",
@@ -17067,13 +17895,36 @@
       "activeSettingLinks": [
         "RT-NOVA-REMOTE-MAXIMUMEVIDENCEBYTES"
       ],
-      "supersededBy": [],
+      "supersededBy": [
+        "RT-NOVA-REMOTE-MAXIMUMEVIDENCEBYTES-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-MAXIMUMEVIDENCEBYTES-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-MAXIMUMEVIDENCEBYTES-STANDALONE19-MUTANT"
+      ],
       "countsTowardAcceptance": false,
-      "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming.",
+      "dispositionHistory": [
+        {
+          "id": "RT-NOVA-REMOTE-MAXIMUMEVIDENCEBYTES-MISSING",
+          "disposition": "active",
+          "evidenceResultPreserved": "not-run",
+          "originalRequirementsPreserved": [
+            "F-AUTH",
+            "F-VAL",
+            "F-EFFECT",
+            "F-MUT"
+          ],
+          "activeSettingLinks": [
+            "RT-NOVA-REMOTE-MAXIMUMEVIDENCEBYTES"
+          ],
+          "supersededBy": [],
+          "countsTowardAcceptance": false,
+          "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+        }
+      ]
     },
     {
       "id": "RT-NOVA-REMOTE-MAXIMUMEVIDENCEBYTES-ALT",
-      "disposition": "active",
+      "disposition": "superseded",
       "evidenceResultPreserved": "not-run",
       "originalRequirementsPreserved": [
         "F-AUTH",
@@ -17084,13 +17935,36 @@
       "activeSettingLinks": [
         "RT-NOVA-REMOTE-MAXIMUMEVIDENCEBYTES"
       ],
-      "supersededBy": [],
+      "supersededBy": [
+        "RT-NOVA-REMOTE-MAXIMUMEVIDENCEBYTES-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-MAXIMUMEVIDENCEBYTES-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-MAXIMUMEVIDENCEBYTES-STANDALONE19-MUTANT"
+      ],
       "countsTowardAcceptance": false,
-      "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming.",
+      "dispositionHistory": [
+        {
+          "id": "RT-NOVA-REMOTE-MAXIMUMEVIDENCEBYTES-ALT",
+          "disposition": "active",
+          "evidenceResultPreserved": "not-run",
+          "originalRequirementsPreserved": [
+            "F-AUTH",
+            "F-VAL",
+            "F-EFFECT",
+            "F-MUT"
+          ],
+          "activeSettingLinks": [
+            "RT-NOVA-REMOTE-MAXIMUMEVIDENCEBYTES"
+          ],
+          "supersededBy": [],
+          "countsTowardAcceptance": false,
+          "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+        }
+      ]
     },
     {
       "id": "RT-NOVA-REMOTE-MAXIMUMEVIDENCEBYTES-MUTANT",
-      "disposition": "active",
+      "disposition": "superseded",
       "evidenceResultPreserved": "not-run",
       "originalRequirementsPreserved": [
         "F-AUTH",
@@ -17101,13 +17975,36 @@
       "activeSettingLinks": [
         "RT-NOVA-REMOTE-MAXIMUMEVIDENCEBYTES"
       ],
-      "supersededBy": [],
+      "supersededBy": [
+        "RT-NOVA-REMOTE-MAXIMUMEVIDENCEBYTES-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-MAXIMUMEVIDENCEBYTES-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-MAXIMUMEVIDENCEBYTES-STANDALONE19-MUTANT"
+      ],
       "countsTowardAcceptance": false,
-      "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming.",
+      "dispositionHistory": [
+        {
+          "id": "RT-NOVA-REMOTE-MAXIMUMEVIDENCEBYTES-MUTANT",
+          "disposition": "active",
+          "evidenceResultPreserved": "not-run",
+          "originalRequirementsPreserved": [
+            "F-AUTH",
+            "F-VAL",
+            "F-EFFECT",
+            "F-MUT"
+          ],
+          "activeSettingLinks": [
+            "RT-NOVA-REMOTE-MAXIMUMEVIDENCEBYTES"
+          ],
+          "supersededBy": [],
+          "countsTowardAcceptance": false,
+          "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+        }
+      ]
     },
     {
       "id": "RT-NOVA-REMOTE-MAXIMUMEVIDENCESTOREBYTES-MISSING",
-      "disposition": "active",
+      "disposition": "superseded",
       "evidenceResultPreserved": "not-run",
       "originalRequirementsPreserved": [
         "F-AUTH",
@@ -17118,13 +18015,36 @@
       "activeSettingLinks": [
         "RT-NOVA-REMOTE-MAXIMUMEVIDENCESTOREBYTES"
       ],
-      "supersededBy": [],
+      "supersededBy": [
+        "RT-NOVA-REMOTE-MAXIMUMEVIDENCESTOREBYTES-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-MAXIMUMEVIDENCESTOREBYTES-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-MAXIMUMEVIDENCESTOREBYTES-STANDALONE19-MUTANT"
+      ],
       "countsTowardAcceptance": false,
-      "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming.",
+      "dispositionHistory": [
+        {
+          "id": "RT-NOVA-REMOTE-MAXIMUMEVIDENCESTOREBYTES-MISSING",
+          "disposition": "active",
+          "evidenceResultPreserved": "not-run",
+          "originalRequirementsPreserved": [
+            "F-AUTH",
+            "F-VAL",
+            "F-EFFECT",
+            "F-MUT"
+          ],
+          "activeSettingLinks": [
+            "RT-NOVA-REMOTE-MAXIMUMEVIDENCESTOREBYTES"
+          ],
+          "supersededBy": [],
+          "countsTowardAcceptance": false,
+          "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+        }
+      ]
     },
     {
       "id": "RT-NOVA-REMOTE-MAXIMUMEVIDENCESTOREBYTES-ALT",
-      "disposition": "active",
+      "disposition": "superseded",
       "evidenceResultPreserved": "not-run",
       "originalRequirementsPreserved": [
         "F-AUTH",
@@ -17135,13 +18055,36 @@
       "activeSettingLinks": [
         "RT-NOVA-REMOTE-MAXIMUMEVIDENCESTOREBYTES"
       ],
-      "supersededBy": [],
+      "supersededBy": [
+        "RT-NOVA-REMOTE-MAXIMUMEVIDENCESTOREBYTES-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-MAXIMUMEVIDENCESTOREBYTES-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-MAXIMUMEVIDENCESTOREBYTES-STANDALONE19-MUTANT"
+      ],
       "countsTowardAcceptance": false,
-      "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming.",
+      "dispositionHistory": [
+        {
+          "id": "RT-NOVA-REMOTE-MAXIMUMEVIDENCESTOREBYTES-ALT",
+          "disposition": "active",
+          "evidenceResultPreserved": "not-run",
+          "originalRequirementsPreserved": [
+            "F-AUTH",
+            "F-VAL",
+            "F-EFFECT",
+            "F-MUT"
+          ],
+          "activeSettingLinks": [
+            "RT-NOVA-REMOTE-MAXIMUMEVIDENCESTOREBYTES"
+          ],
+          "supersededBy": [],
+          "countsTowardAcceptance": false,
+          "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+        }
+      ]
     },
     {
       "id": "RT-NOVA-REMOTE-MAXIMUMEVIDENCESTOREBYTES-MUTANT",
-      "disposition": "active",
+      "disposition": "superseded",
       "evidenceResultPreserved": "not-run",
       "originalRequirementsPreserved": [
         "F-AUTH",
@@ -17152,13 +18095,36 @@
       "activeSettingLinks": [
         "RT-NOVA-REMOTE-MAXIMUMEVIDENCESTOREBYTES"
       ],
-      "supersededBy": [],
+      "supersededBy": [
+        "RT-NOVA-REMOTE-MAXIMUMEVIDENCESTOREBYTES-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-MAXIMUMEVIDENCESTOREBYTES-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-MAXIMUMEVIDENCESTOREBYTES-STANDALONE19-MUTANT"
+      ],
       "countsTowardAcceptance": false,
-      "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming.",
+      "dispositionHistory": [
+        {
+          "id": "RT-NOVA-REMOTE-MAXIMUMEVIDENCESTOREBYTES-MUTANT",
+          "disposition": "active",
+          "evidenceResultPreserved": "not-run",
+          "originalRequirementsPreserved": [
+            "F-AUTH",
+            "F-VAL",
+            "F-EFFECT",
+            "F-MUT"
+          ],
+          "activeSettingLinks": [
+            "RT-NOVA-REMOTE-MAXIMUMEVIDENCESTOREBYTES"
+          ],
+          "supersededBy": [],
+          "countsTowardAcceptance": false,
+          "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+        }
+      ]
     },
     {
       "id": "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDS-MISSING",
-      "disposition": "active",
+      "disposition": "superseded",
       "evidenceResultPreserved": "not-run",
       "originalRequirementsPreserved": [
         "F-AUTH",
@@ -17169,13 +18135,36 @@
       "activeSettingLinks": [
         "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDS"
       ],
-      "supersededBy": [],
+      "supersededBy": [
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDS-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDS-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDS-STANDALONE19-MUTANT"
+      ],
       "countsTowardAcceptance": false,
-      "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming.",
+      "dispositionHistory": [
+        {
+          "id": "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDS-MISSING",
+          "disposition": "active",
+          "evidenceResultPreserved": "not-run",
+          "originalRequirementsPreserved": [
+            "F-AUTH",
+            "F-VAL",
+            "F-EFFECT",
+            "F-MUT"
+          ],
+          "activeSettingLinks": [
+            "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDS"
+          ],
+          "supersededBy": [],
+          "countsTowardAcceptance": false,
+          "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+        }
+      ]
     },
     {
       "id": "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDS-ALT",
-      "disposition": "active",
+      "disposition": "superseded",
       "evidenceResultPreserved": "not-run",
       "originalRequirementsPreserved": [
         "F-AUTH",
@@ -17186,13 +18175,36 @@
       "activeSettingLinks": [
         "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDS"
       ],
-      "supersededBy": [],
+      "supersededBy": [
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDS-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDS-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDS-STANDALONE19-MUTANT"
+      ],
       "countsTowardAcceptance": false,
-      "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming.",
+      "dispositionHistory": [
+        {
+          "id": "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDS-ALT",
+          "disposition": "active",
+          "evidenceResultPreserved": "not-run",
+          "originalRequirementsPreserved": [
+            "F-AUTH",
+            "F-VAL",
+            "F-EFFECT",
+            "F-MUT"
+          ],
+          "activeSettingLinks": [
+            "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDS"
+          ],
+          "supersededBy": [],
+          "countsTowardAcceptance": false,
+          "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+        }
+      ]
     },
     {
       "id": "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDS-MUTANT",
-      "disposition": "active",
+      "disposition": "superseded",
       "evidenceResultPreserved": "not-run",
       "originalRequirementsPreserved": [
         "F-AUTH",
@@ -17203,13 +18215,36 @@
       "activeSettingLinks": [
         "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDS"
       ],
-      "supersededBy": [],
+      "supersededBy": [
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDS-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDS-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDS-STANDALONE19-MUTANT"
+      ],
       "countsTowardAcceptance": false,
-      "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming.",
+      "dispositionHistory": [
+        {
+          "id": "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDS-MUTANT",
+          "disposition": "active",
+          "evidenceResultPreserved": "not-run",
+          "originalRequirementsPreserved": [
+            "F-AUTH",
+            "F-VAL",
+            "F-EFFECT",
+            "F-MUT"
+          ],
+          "activeSettingLinks": [
+            "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDS"
+          ],
+          "supersededBy": [],
+          "countsTowardAcceptance": false,
+          "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+        }
+      ]
     },
     {
       "id": "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMBYTES-MISSING",
-      "disposition": "active",
+      "disposition": "superseded",
       "evidenceResultPreserved": "not-run",
       "originalRequirementsPreserved": [
         "F-AUTH",
@@ -17220,13 +18255,36 @@
       "activeSettingLinks": [
         "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMBYTES"
       ],
-      "supersededBy": [],
+      "supersededBy": [
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMBYTES-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMBYTES-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMBYTES-STANDALONE19-MUTANT"
+      ],
       "countsTowardAcceptance": false,
-      "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming.",
+      "dispositionHistory": [
+        {
+          "id": "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMBYTES-MISSING",
+          "disposition": "active",
+          "evidenceResultPreserved": "not-run",
+          "originalRequirementsPreserved": [
+            "F-AUTH",
+            "F-VAL",
+            "F-EFFECT",
+            "F-MUT"
+          ],
+          "activeSettingLinks": [
+            "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMBYTES"
+          ],
+          "supersededBy": [],
+          "countsTowardAcceptance": false,
+          "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+        }
+      ]
     },
     {
       "id": "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMBYTES-ALT",
-      "disposition": "active",
+      "disposition": "superseded",
       "evidenceResultPreserved": "not-run",
       "originalRequirementsPreserved": [
         "F-AUTH",
@@ -17237,13 +18295,36 @@
       "activeSettingLinks": [
         "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMBYTES"
       ],
-      "supersededBy": [],
+      "supersededBy": [
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMBYTES-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMBYTES-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMBYTES-STANDALONE19-MUTANT"
+      ],
       "countsTowardAcceptance": false,
-      "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming.",
+      "dispositionHistory": [
+        {
+          "id": "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMBYTES-ALT",
+          "disposition": "active",
+          "evidenceResultPreserved": "not-run",
+          "originalRequirementsPreserved": [
+            "F-AUTH",
+            "F-VAL",
+            "F-EFFECT",
+            "F-MUT"
+          ],
+          "activeSettingLinks": [
+            "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMBYTES"
+          ],
+          "supersededBy": [],
+          "countsTowardAcceptance": false,
+          "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+        }
+      ]
     },
     {
       "id": "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMBYTES-MUTANT",
-      "disposition": "active",
+      "disposition": "superseded",
       "evidenceResultPreserved": "not-run",
       "originalRequirementsPreserved": [
         "F-AUTH",
@@ -17254,13 +18335,36 @@
       "activeSettingLinks": [
         "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMBYTES"
       ],
-      "supersededBy": [],
+      "supersededBy": [
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMBYTES-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMBYTES-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMBYTES-STANDALONE19-MUTANT"
+      ],
       "countsTowardAcceptance": false,
-      "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming.",
+      "dispositionHistory": [
+        {
+          "id": "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMBYTES-MUTANT",
+          "disposition": "active",
+          "evidenceResultPreserved": "not-run",
+          "originalRequirementsPreserved": [
+            "F-AUTH",
+            "F-VAL",
+            "F-EFFECT",
+            "F-MUT"
+          ],
+          "activeSettingLinks": [
+            "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMBYTES"
+          ],
+          "supersededBy": [],
+          "countsTowardAcceptance": false,
+          "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+        }
+      ]
     },
     {
       "id": "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDBYTES-MISSING",
-      "disposition": "active",
+      "disposition": "superseded",
       "evidenceResultPreserved": "not-run",
       "originalRequirementsPreserved": [
         "F-AUTH",
@@ -17271,13 +18375,36 @@
       "activeSettingLinks": [
         "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDBYTES"
       ],
-      "supersededBy": [],
+      "supersededBy": [
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDBYTES-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDBYTES-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDBYTES-STANDALONE19-MUTANT"
+      ],
       "countsTowardAcceptance": false,
-      "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming.",
+      "dispositionHistory": [
+        {
+          "id": "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDBYTES-MISSING",
+          "disposition": "active",
+          "evidenceResultPreserved": "not-run",
+          "originalRequirementsPreserved": [
+            "F-AUTH",
+            "F-VAL",
+            "F-EFFECT",
+            "F-MUT"
+          ],
+          "activeSettingLinks": [
+            "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDBYTES"
+          ],
+          "supersededBy": [],
+          "countsTowardAcceptance": false,
+          "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+        }
+      ]
     },
     {
       "id": "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDBYTES-ALT",
-      "disposition": "active",
+      "disposition": "superseded",
       "evidenceResultPreserved": "not-run",
       "originalRequirementsPreserved": [
         "F-AUTH",
@@ -17288,13 +18415,36 @@
       "activeSettingLinks": [
         "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDBYTES"
       ],
-      "supersededBy": [],
+      "supersededBy": [
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDBYTES-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDBYTES-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDBYTES-STANDALONE19-MUTANT"
+      ],
       "countsTowardAcceptance": false,
-      "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming.",
+      "dispositionHistory": [
+        {
+          "id": "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDBYTES-ALT",
+          "disposition": "active",
+          "evidenceResultPreserved": "not-run",
+          "originalRequirementsPreserved": [
+            "F-AUTH",
+            "F-VAL",
+            "F-EFFECT",
+            "F-MUT"
+          ],
+          "activeSettingLinks": [
+            "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDBYTES"
+          ],
+          "supersededBy": [],
+          "countsTowardAcceptance": false,
+          "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+        }
+      ]
     },
     {
       "id": "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDBYTES-MUTANT",
-      "disposition": "active",
+      "disposition": "superseded",
       "evidenceResultPreserved": "not-run",
       "originalRequirementsPreserved": [
         "F-AUTH",
@@ -17305,9 +18455,32 @@
       "activeSettingLinks": [
         "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDBYTES"
       ],
-      "supersededBy": [],
+      "supersededBy": [
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDBYTES-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDBYTES-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDBYTES-STANDALONE19-MUTANT"
+      ],
       "countsTowardAcceptance": false,
-      "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming.",
+      "dispositionHistory": [
+        {
+          "id": "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDBYTES-MUTANT",
+          "disposition": "active",
+          "evidenceResultPreserved": "not-run",
+          "originalRequirementsPreserved": [
+            "F-AUTH",
+            "F-VAL",
+            "F-EFFECT",
+            "F-MUT"
+          ],
+          "activeSettingLinks": [
+            "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDBYTES"
+          ],
+          "supersededBy": [],
+          "countsTowardAcceptance": false,
+          "reason": "no semantic acceptance; historical narrow source checks remain evidence only; current exact future behavioral cases still notrun"
+        }
+      ]
     },
     {
       "id": "RT-PROVIDER-EVIDENCE-KUBECLAW-API-FLOW-FLOW-EVIDENCEDEFAULTS-ONPASS-MISSING",
@@ -162711,6 +163884,1757 @@
       "supersededBy": [],
       "countsTowardAcceptance": false,
       "reason": "Current schema/constructor/endpoint helper only; future real provider/credential/source trust/native coverage/import/manifest/role/quota/module proof remains OPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-SCHEMAVERSION-STANDALONE19-VAL",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-AUTH",
+        "F-VAL"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-SCHEMAVERSION"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-SCHEMAVERSION-STANDALONE19-AB",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-EFFECT"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-SCHEMAVERSION"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-SCHEMAVERSION-STANDALONE19-BINDING",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-BIND"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-SCHEMAVERSION"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-SCHEMAVERSION-STANDALONE19-RECOVERY",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-BIND",
+        "F-VAL",
+        "F-RECOVERY"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-SCHEMAVERSION"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-SCHEMAVERSION-STANDALONE19-EVAL",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-EVAL"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-SCHEMAVERSION"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-SCHEMAVERSION-STANDALONE19-MUTANT",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-MUT"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-SCHEMAVERSION"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-SCHEMAVERSION-STANDALONE19-CURRENT-DEFINITION",
+      "disposition": "active",
+      "evidenceResultPreserved": "passed",
+      "originalRequirementsPreserved": [
+        "C0-A",
+        "C0-B",
+        "C0-C"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-SCHEMAVERSION"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-ENDPOINT-STANDALONE19-VAL",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-AUTH",
+        "F-VAL"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-ENDPOINT"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-ENDPOINT-STANDALONE19-AB",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-EFFECT"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-ENDPOINT"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-ENDPOINT-STANDALONE19-BINDING",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-BIND"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-ENDPOINT"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-ENDPOINT-STANDALONE19-RECOVERY",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-BIND",
+        "F-VAL",
+        "F-RECOVERY"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-ENDPOINT"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-ENDPOINT-STANDALONE19-EVAL",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-EVAL"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-ENDPOINT"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-ENDPOINT-STANDALONE19-MUTANT",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-MUT"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-ENDPOINT"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-ENDPOINT-STANDALONE19-CURRENT-DEFINITION",
+      "disposition": "active",
+      "evidenceResultPreserved": "passed",
+      "originalRequirementsPreserved": [
+        "C0-A",
+        "C0-B",
+        "C0-C"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-ENDPOINT"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-AUTHENTICATION-STANDALONE19-VAL",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-AUTH",
+        "F-VAL"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-AUTHENTICATION"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-AUTHENTICATION-STANDALONE19-AB",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-EFFECT"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-AUTHENTICATION"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-AUTHENTICATION-STANDALONE19-BINDING",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-BIND"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-AUTHENTICATION"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-AUTHENTICATION-STANDALONE19-RECOVERY",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-BIND",
+        "F-VAL",
+        "F-RECOVERY"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-AUTHENTICATION"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-AUTHENTICATION-STANDALONE19-EVAL",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-EVAL"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-AUTHENTICATION"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-AUTHENTICATION-STANDALONE19-MUTANT",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-MUT"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-AUTHENTICATION"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-AUTHENTICATION-STANDALONE19-CURRENT-DEFINITION",
+      "disposition": "active",
+      "evidenceResultPreserved": "passed",
+      "originalRequirementsPreserved": [
+        "C0-A",
+        "C0-B",
+        "C0-C"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-AUTHENTICATION"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-TOKENENVIRONMENTVARIABLE-STANDALONE19-VAL",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-AUTH",
+        "F-VAL"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-TOKENENVIRONMENTVARIABLE"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-TOKENENVIRONMENTVARIABLE-STANDALONE19-AB",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-EFFECT"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-TOKENENVIRONMENTVARIABLE"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-TOKENENVIRONMENTVARIABLE-STANDALONE19-BINDING",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-BIND"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-TOKENENVIRONMENTVARIABLE"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-TOKENENVIRONMENTVARIABLE-STANDALONE19-RECOVERY",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-BIND",
+        "F-VAL",
+        "F-RECOVERY"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-TOKENENVIRONMENTVARIABLE"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-TOKENENVIRONMENTVARIABLE-STANDALONE19-EVAL",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-EVAL"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-TOKENENVIRONMENTVARIABLE"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-TOKENENVIRONMENTVARIABLE-STANDALONE19-MUTANT",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-MUT"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-TOKENENVIRONMENTVARIABLE"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-TOKENENVIRONMENTVARIABLE-STANDALONE19-CURRENT-DEFINITION",
+      "disposition": "active",
+      "evidenceResultPreserved": "passed",
+      "originalRequirementsPreserved": [
+        "C0-A",
+        "C0-B",
+        "C0-C"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-TOKENENVIRONMENTVARIABLE"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-SOURCEATTESTATIONPRIVATEKEYENVIRONMENTVARIABLE-STANDALONE19-VAL",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-AUTH",
+        "F-VAL"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-SOURCEATTESTATIONPRIVATEKEYENVIRONMENTVARIABLE"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-SOURCEATTESTATIONPRIVATEKEYENVIRONMENTVARIABLE-STANDALONE19-AB",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-EFFECT"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-SOURCEATTESTATIONPRIVATEKEYENVIRONMENTVARIABLE"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-SOURCEATTESTATIONPRIVATEKEYENVIRONMENTVARIABLE-STANDALONE19-BINDING",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-BIND"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-SOURCEATTESTATIONPRIVATEKEYENVIRONMENTVARIABLE"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-SOURCEATTESTATIONPRIVATEKEYENVIRONMENTVARIABLE-STANDALONE19-RECOVERY",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-BIND",
+        "F-VAL",
+        "F-RECOVERY"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-SOURCEATTESTATIONPRIVATEKEYENVIRONMENTVARIABLE"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-SOURCEATTESTATIONPRIVATEKEYENVIRONMENTVARIABLE-STANDALONE19-EVAL",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-EVAL"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-SOURCEATTESTATIONPRIVATEKEYENVIRONMENTVARIABLE"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-SOURCEATTESTATIONPRIVATEKEYENVIRONMENTVARIABLE-STANDALONE19-MUTANT",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-MUT"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-SOURCEATTESTATIONPRIVATEKEYENVIRONMENTVARIABLE"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-SOURCEATTESTATIONPRIVATEKEYENVIRONMENTVARIABLE-STANDALONE19-CURRENT-DEFINITION",
+      "disposition": "active",
+      "evidenceResultPreserved": "passed",
+      "originalRequirementsPreserved": [
+        "C0-A",
+        "C0-B",
+        "C0-C"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-SOURCEATTESTATIONPRIVATEKEYENVIRONMENTVARIABLE"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-SOURCEAUTHORITY-STANDALONE19-VAL",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-AUTH",
+        "F-VAL"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-SOURCEAUTHORITY"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-SOURCEAUTHORITY-STANDALONE19-AB",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-EFFECT"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-SOURCEAUTHORITY"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-SOURCEAUTHORITY-STANDALONE19-BINDING",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-BIND"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-SOURCEAUTHORITY"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-SOURCEAUTHORITY-STANDALONE19-RECOVERY",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-BIND",
+        "F-VAL",
+        "F-RECOVERY"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-SOURCEAUTHORITY"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-SOURCEAUTHORITY-STANDALONE19-EVAL",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-EVAL"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-SOURCEAUTHORITY"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-SOURCEAUTHORITY-STANDALONE19-MUTANT",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-MUT"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-SOURCEAUTHORITY"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-SOURCEAUTHORITY-STANDALONE19-CURRENT-DEFINITION",
+      "disposition": "active",
+      "evidenceResultPreserved": "passed",
+      "originalRequirementsPreserved": [
+        "C0-A",
+        "C0-B",
+        "C0-C"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-SOURCEAUTHORITY"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-STATEROOT-STANDALONE19-VAL",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-AUTH",
+        "F-VAL"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-STATEROOT"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-STATEROOT-STANDALONE19-AB",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-EFFECT"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-STATEROOT"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-STATEROOT-STANDALONE19-BINDING",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-BIND"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-STATEROOT"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-STATEROOT-STANDALONE19-RECOVERY",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-BIND",
+        "F-VAL",
+        "F-RECOVERY"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-STATEROOT"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-STATEROOT-STANDALONE19-EVAL",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-EVAL"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-STATEROOT"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-STATEROOT-STANDALONE19-MUTANT",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-MUT"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-STATEROOT"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-STATEROOT-STANDALONE19-CURRENT-DEFINITION",
+      "disposition": "active",
+      "evidenceResultPreserved": "passed",
+      "originalRequirementsPreserved": [
+        "C0-A",
+        "C0-B",
+        "C0-C"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-STATEROOT"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-POLLMILLISECONDS-STANDALONE19-VAL",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-AUTH",
+        "F-VAL"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-POLLMILLISECONDS"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-POLLMILLISECONDS-STANDALONE19-AB",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-EFFECT"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-POLLMILLISECONDS"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-POLLMILLISECONDS-STANDALONE19-BINDING",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-BIND"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-POLLMILLISECONDS"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-POLLMILLISECONDS-STANDALONE19-RECOVERY",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-BIND",
+        "F-VAL",
+        "F-RECOVERY"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-POLLMILLISECONDS"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-POLLMILLISECONDS-STANDALONE19-EVAL",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-EVAL"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-POLLMILLISECONDS"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-POLLMILLISECONDS-STANDALONE19-MUTANT",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-MUT"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-POLLMILLISECONDS"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-POLLMILLISECONDS-STANDALONE19-CURRENT-DEFINITION",
+      "disposition": "active",
+      "evidenceResultPreserved": "passed",
+      "originalRequirementsPreserved": [
+        "C0-A",
+        "C0-B",
+        "C0-C"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-POLLMILLISECONDS"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-MAXIMUMRESPONSEBYTES-STANDALONE19-VAL",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-AUTH",
+        "F-VAL"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-MAXIMUMRESPONSEBYTES"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-MAXIMUMRESPONSEBYTES-STANDALONE19-AB",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-EFFECT"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-MAXIMUMRESPONSEBYTES"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-MAXIMUMRESPONSEBYTES-STANDALONE19-BINDING",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-BIND"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-MAXIMUMRESPONSEBYTES"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-MAXIMUMRESPONSEBYTES-STANDALONE19-RECOVERY",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-BIND",
+        "F-VAL",
+        "F-RECOVERY"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-MAXIMUMRESPONSEBYTES"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-MAXIMUMRESPONSEBYTES-STANDALONE19-EVAL",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-EVAL"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-MAXIMUMRESPONSEBYTES"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-MAXIMUMRESPONSEBYTES-STANDALONE19-MUTANT",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-MUT"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-MAXIMUMRESPONSEBYTES"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-MAXIMUMRESPONSEBYTES-STANDALONE19-CURRENT-DEFINITION",
+      "disposition": "active",
+      "evidenceResultPreserved": "passed",
+      "originalRequirementsPreserved": [
+        "C0-A",
+        "C0-B",
+        "C0-C"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-MAXIMUMRESPONSEBYTES"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-MAXIMUMRESULTBYTES-STANDALONE19-VAL",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-AUTH",
+        "F-VAL"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-MAXIMUMRESULTBYTES"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-MAXIMUMRESULTBYTES-STANDALONE19-AB",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-EFFECT"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-MAXIMUMRESULTBYTES"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-MAXIMUMRESULTBYTES-STANDALONE19-BINDING",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-BIND"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-MAXIMUMRESULTBYTES"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-MAXIMUMRESULTBYTES-STANDALONE19-RECOVERY",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-BIND",
+        "F-VAL",
+        "F-RECOVERY"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-MAXIMUMRESULTBYTES"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-MAXIMUMRESULTBYTES-STANDALONE19-EVAL",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-EVAL"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-MAXIMUMRESULTBYTES"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-MAXIMUMRESULTBYTES-STANDALONE19-MUTANT",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-MUT"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-MAXIMUMRESULTBYTES"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-MAXIMUMRESULTBYTES-STANDALONE19-CURRENT-DEFINITION",
+      "disposition": "active",
+      "evidenceResultPreserved": "passed",
+      "originalRequirementsPreserved": [
+        "C0-A",
+        "C0-B",
+        "C0-C"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-MAXIMUMRESULTBYTES"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-MAXIMUMARCHIVEBYTES-STANDALONE19-VAL",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-AUTH",
+        "F-VAL"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-MAXIMUMARCHIVEBYTES"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-MAXIMUMARCHIVEBYTES-STANDALONE19-AB",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-EFFECT"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-MAXIMUMARCHIVEBYTES"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-MAXIMUMARCHIVEBYTES-STANDALONE19-BINDING",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-BIND"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-MAXIMUMARCHIVEBYTES"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-MAXIMUMARCHIVEBYTES-STANDALONE19-RECOVERY",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-BIND",
+        "F-VAL",
+        "F-RECOVERY"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-MAXIMUMARCHIVEBYTES"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-MAXIMUMARCHIVEBYTES-STANDALONE19-EVAL",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-EVAL"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-MAXIMUMARCHIVEBYTES"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-MAXIMUMARCHIVEBYTES-STANDALONE19-MUTANT",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-MUT"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-MAXIMUMARCHIVEBYTES"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-MAXIMUMARCHIVEBYTES-STANDALONE19-CURRENT-DEFINITION",
+      "disposition": "active",
+      "evidenceResultPreserved": "passed",
+      "originalRequirementsPreserved": [
+        "C0-A",
+        "C0-B",
+        "C0-C"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-MAXIMUMARCHIVEBYTES"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-MAXIMUMARCHIVESTOREBYTES-STANDALONE19-VAL",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-AUTH",
+        "F-VAL"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-MAXIMUMARCHIVESTOREBYTES"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-MAXIMUMARCHIVESTOREBYTES-STANDALONE19-AB",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-EFFECT"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-MAXIMUMARCHIVESTOREBYTES"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-MAXIMUMARCHIVESTOREBYTES-STANDALONE19-BINDING",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-BIND"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-MAXIMUMARCHIVESTOREBYTES"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-MAXIMUMARCHIVESTOREBYTES-STANDALONE19-RECOVERY",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-BIND",
+        "F-VAL",
+        "F-RECOVERY"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-MAXIMUMARCHIVESTOREBYTES"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-MAXIMUMARCHIVESTOREBYTES-STANDALONE19-EVAL",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-EVAL"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-MAXIMUMARCHIVESTOREBYTES"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-MAXIMUMARCHIVESTOREBYTES-STANDALONE19-MUTANT",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-MUT"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-MAXIMUMARCHIVESTOREBYTES"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-MAXIMUMARCHIVESTOREBYTES-STANDALONE19-CURRENT-DEFINITION",
+      "disposition": "active",
+      "evidenceResultPreserved": "passed",
+      "originalRequirementsPreserved": [
+        "C0-A",
+        "C0-B",
+        "C0-C"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-MAXIMUMARCHIVESTOREBYTES"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-MAXIMUMEVIDENCEBYTES-STANDALONE19-VAL",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-AUTH",
+        "F-VAL"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-MAXIMUMEVIDENCEBYTES"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-MAXIMUMEVIDENCEBYTES-STANDALONE19-AB",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-EFFECT"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-MAXIMUMEVIDENCEBYTES"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-MAXIMUMEVIDENCEBYTES-STANDALONE19-BINDING",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-BIND"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-MAXIMUMEVIDENCEBYTES"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-MAXIMUMEVIDENCEBYTES-STANDALONE19-RECOVERY",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-BIND",
+        "F-VAL",
+        "F-RECOVERY"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-MAXIMUMEVIDENCEBYTES"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-MAXIMUMEVIDENCEBYTES-STANDALONE19-EVAL",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-EVAL"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-MAXIMUMEVIDENCEBYTES"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-MAXIMUMEVIDENCEBYTES-STANDALONE19-MUTANT",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-MUT"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-MAXIMUMEVIDENCEBYTES"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-MAXIMUMEVIDENCEBYTES-STANDALONE19-CURRENT-DEFINITION",
+      "disposition": "active",
+      "evidenceResultPreserved": "passed",
+      "originalRequirementsPreserved": [
+        "C0-A",
+        "C0-B",
+        "C0-C"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-MAXIMUMEVIDENCEBYTES"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-MAXIMUMEVIDENCESTOREBYTES-STANDALONE19-VAL",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-AUTH",
+        "F-VAL"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-MAXIMUMEVIDENCESTOREBYTES"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-MAXIMUMEVIDENCESTOREBYTES-STANDALONE19-AB",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-EFFECT"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-MAXIMUMEVIDENCESTOREBYTES"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-MAXIMUMEVIDENCESTOREBYTES-STANDALONE19-BINDING",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-BIND"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-MAXIMUMEVIDENCESTOREBYTES"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-MAXIMUMEVIDENCESTOREBYTES-STANDALONE19-RECOVERY",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-BIND",
+        "F-VAL",
+        "F-RECOVERY"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-MAXIMUMEVIDENCESTOREBYTES"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-MAXIMUMEVIDENCESTOREBYTES-STANDALONE19-EVAL",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-EVAL"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-MAXIMUMEVIDENCESTOREBYTES"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-MAXIMUMEVIDENCESTOREBYTES-STANDALONE19-MUTANT",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-MUT"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-MAXIMUMEVIDENCESTOREBYTES"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-MAXIMUMEVIDENCESTOREBYTES-STANDALONE19-CURRENT-DEFINITION",
+      "disposition": "active",
+      "evidenceResultPreserved": "passed",
+      "originalRequirementsPreserved": [
+        "C0-A",
+        "C0-B",
+        "C0-C"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-MAXIMUMEVIDENCESTOREBYTES"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDS-STANDALONE19-VAL",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-AUTH",
+        "F-VAL"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDS"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDS-STANDALONE19-AB",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-EFFECT"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDS"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDS-STANDALONE19-BINDING",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-BIND"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDS"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDS-STANDALONE19-RECOVERY",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-BIND",
+        "F-VAL",
+        "F-RECOVERY"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDS"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDS-STANDALONE19-EVAL",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-EVAL"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDS"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDS-STANDALONE19-MUTANT",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-MUT"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDS"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDS-STANDALONE19-CURRENT-DEFINITION",
+      "disposition": "active",
+      "evidenceResultPreserved": "passed",
+      "originalRequirementsPreserved": [
+        "C0-A",
+        "C0-B",
+        "C0-C"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDS"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMBYTES-STANDALONE19-VAL",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-AUTH",
+        "F-VAL"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMBYTES"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMBYTES-STANDALONE19-AB",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-EFFECT"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMBYTES"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMBYTES-STANDALONE19-BINDING",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-BIND"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMBYTES"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMBYTES-STANDALONE19-RECOVERY",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-BIND",
+        "F-VAL",
+        "F-RECOVERY"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMBYTES"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMBYTES-STANDALONE19-EVAL",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-EVAL"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMBYTES"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMBYTES-STANDALONE19-MUTANT",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-MUT"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMBYTES"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMBYTES-STANDALONE19-CURRENT-DEFINITION",
+      "disposition": "active",
+      "evidenceResultPreserved": "passed",
+      "originalRequirementsPreserved": [
+        "C0-A",
+        "C0-B",
+        "C0-C"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMBYTES"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDBYTES-STANDALONE19-VAL",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-AUTH",
+        "F-VAL"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDBYTES"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDBYTES-STANDALONE19-AB",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-EFFECT"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDBYTES"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDBYTES-STANDALONE19-BINDING",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-BIND"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDBYTES"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDBYTES-STANDALONE19-RECOVERY",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-BIND",
+        "F-VAL",
+        "F-RECOVERY"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDBYTES"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDBYTES-STANDALONE19-EVAL",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-EVAL"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDBYTES"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDBYTES-STANDALONE19-MUTANT",
+      "disposition": "active",
+      "evidenceResultPreserved": "not-run",
+      "originalRequirementsPreserved": [
+        "F-MUT"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDBYTES"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
+    },
+    {
+      "id": "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDBYTES-STANDALONE19-CURRENT-DEFINITION",
+      "disposition": "active",
+      "evidenceResultPreserved": "passed",
+      "originalRequirementsPreserved": [
+        "C0-A",
+        "C0-B",
+        "C0-C"
+      ],
+      "activeSettingLinks": [
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDBYTES"
+      ],
+      "supersededBy": [],
+      "countsTowardAcceptance": false,
+      "reason": "Exact current source/loader/privatepurestream/timer narrow controls only; complete realprofile/provider/role/grants/A6-quota/task/module/recovery/Eval/mutation prerequisites and independentreviewOPEN."
     }
   ],
   "policy": "case-proposals original result and requirements are never rewritten as acceptance. Historical source links may inform current source tracing but do not execute active future behavior. Superseded grade case bodies retained; replacements preserve requirement union. Codec erratum supersedes contrary selector meaning, not all other current target/grant bindings.",

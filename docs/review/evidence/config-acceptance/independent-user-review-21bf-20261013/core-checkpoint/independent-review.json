@@ -1,0 +1,26 @@
+{
+  "reviewer": "/root/review_checkpoint_core_21bf",
+  "head": "21bf51bc2075abec1191fdc091952492b6cb484e",
+  "scope": "checkpoint7 GROOT01 conservation and Nova reader/carrier definition challenge",
+  "newCoreConservationFindings": [],
+  "findings": [
+    {
+      "id": "UCORE-001",
+      "severity": "medium",
+      "kind": "dirty-root-integration",
+      "paths": [
+        "docs/review/remediation/config-semantic-inventory.json:23",
+        "docs/review/remediation/config-semantic-inventory.json:647965"
+      ],
+      "proof": "frozen-dirty-structural.stdout",
+      "status": "open",
+      "notGrootRegression": true
+    }
+  ],
+  "grootVerdict": "bounded guard correction retained; six full-checker challenges independently rejected",
+  "globalC0Verdict": "not accepted",
+  "nativeAcceptance": false,
+  "novaModuleAcceptance": false,
+  "inputDrift": [],
+  "report": "README.md"
+}

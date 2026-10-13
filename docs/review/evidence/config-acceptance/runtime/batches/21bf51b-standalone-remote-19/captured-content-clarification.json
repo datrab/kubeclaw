@@ -1,0 +1,7 @@
+{
+  "materialSourceDistinction": "Standalone loadProductionNovaTestGate ENV lookup -> HttpTransport#token STRING + ProductionGate#sourceAttestationPrivateKey exported PEM STRING captured atconstruction; registered remote adapter instead invokes secrets.read at each productive invoke. No equality-based generation/author/content binding alias.",
+  "originalContractSHA256": "445af2e8c4ed9c5ab37edb949c400a8c4c86ad5bbd0f8ef7524dd1c2b453015d",
+  "originalObservationSHA256": "352a5c4fdeb2204aaccc19fbaeff315137386e971ad9eab01cd90c1ef07fb9e0",
+  "activeContract": "contracts-captured-content-corrected.json",
+  "scope": "No production/source change or effect acceptance; attempt1 raw observation/script preserved, corrective definitions regenerated before integration."
+}

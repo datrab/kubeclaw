@@ -1,0 +1,53 @@
+{
+  "refs": [
+    {
+      "commit": "21bf51bc2075abec1191fdc091952492b6cb484e",
+      "path": "docs/review/evidence/config-acceptance/components/semantic-fragment.json",
+      "sha256": "8375d00031f7cdc46099f30d459cf9f3b9830a4a788aa2d56b5061633f7140d1",
+      "gitBlob": "6ccfb1356f5bc20749be4981999f22c73b7a0dd1"
+    },
+    {
+      "commit": "21bf51bc2075abec1191fdc091952492b6cb484e",
+      "path": "docs/review/evidence/config-acceptance/components/refined-case-profiles.json",
+      "sha256": "139f4f494bc8806d164b66c87f2b5cddc4e6f0a846fe6b2f979776987c558d87",
+      "gitBlob": "bce44ae83319dbbb0701e8fa8241248582b8b5a8"
+    },
+    {
+      "commit": "21bf51bc2075abec1191fdc091952492b6cb484e",
+      "path": "skills/common/plugin-runtime/foundation/config/swarm.ts",
+      "sha256": "55a38e42b869c27d831dfd9ee5392aa0177f7fc98e2e74e1b13f273f9f476de1",
+      "gitBlob": "e50f3f34a09639873cdb1203eedcecf0ad1223f9"
+    },
+    {
+      "commit": "21bf51bc2075abec1191fdc091952492b6cb484e",
+      "path": "skills/common/plugin-runtime/foundation/config/swarm-bundle.ts",
+      "sha256": "8f29590beaa082f4bdb51741aebefca4f917c280e4fdbf153b7aca0f92d434b3",
+      "gitBlob": "0439cfd8ff330b650b5fbe85627945e69576a031"
+    },
+    {
+      "commit": "21bf51bc2075abec1191fdc091952492b6cb484e",
+      "path": "skills/common/plugin-runtime/foundation/config/swarm-components.schema.json",
+      "sha256": "51e7bc64a25fd6cc67d465ebe46bab170a6c9b7215423147ab3f15777dc58968",
+      "gitBlob": "21110b9c93b84785c75e6818e268a53992a6eba5"
+    },
+    {
+      "commit": "21bf51bc2075abec1191fdc091952492b6cb484e",
+      "path": "docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/source-json-coordinates.json",
+      "sha256": "65eeea3cf593d5287a1c0c62ea7e432abb0173170e08892f3ed52df5a83edfa8",
+      "gitBlob": "bd0b84c923c3300db22d7b0626bb84c061efeb00"
+    },
+    {
+      "commit": "21bf51bc2075abec1191fdc091952492b6cb484e",
+      "path": "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/source-marker-canonical-projection.json",
+      "sha256": "feb58321b8bafcccf9e825f4bdaf958f5f2daacfc944ebfc6d1fd72416a5df49",
+      "gitBlob": "3569b50613c4cfb3527c69e6efce773ba16d9896"
+    },
+    {
+      "commit": "21bf51bc2075abec1191fdc091952492b6cb484e",
+      "path": "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/remaining-backlog.json",
+      "sha256": "97da784dcd5286e389d25ef1fd72ac8a911feb512f7c45907aae5009183bac41",
+      "gitBlob": "e34d7aaa9ce712f2d999715fd6931bd6397fa47c"
+    }
+  ],
+  "scope": "Exact21bf Git blob/contents; no copied huge unchanged source artifacts"
+}

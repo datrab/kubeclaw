@@ -1,0 +1,40 @@
+{
+  "git": {
+    "argv": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "exitCode": 0,
+    "stdout": "21bf51bc2075abec1191fdc091952492b6cb484e\n",
+    "stderr": ""
+  },
+  "node": {
+    "argv": [
+      "node",
+      "--version"
+    ],
+    "exitCode": 0,
+    "stdout": "v24.21.0\n",
+    "stderr": ""
+  },
+  "helm": {
+    "argv": [
+      "helm",
+      "version",
+      "--short"
+    ],
+    "exitCode": 0,
+    "stdout": "v3.18.4+gd80839c\n",
+    "stderr": ""
+  },
+  "kubeconform": {
+    "argv": [
+      "kubeconform",
+      "-v"
+    ],
+    "exitCode": 0,
+    "stdout": "v0.6.4\n",
+    "stderr": ""
+  }
+}
