@@ -546,3 +546,8 @@ review and concrete C1–C6 package. Bounded green controls do not request or in
 implementation approval.
 
 Independent provider-domain review14 now verifies the three bounded corrections and all256 retained case IDs. This is not native effect, target loader or owner closure. Incremental case-phase integration has 34 generation,27 case and11 original-baseline controls passing; fresh review15 pending. Strict C0 still fails closed. User requests regular meaningful draft-PR checkpoints; no merge or C1-C6 permission is inferred. Bundled autoreview attempted but unavailable: Codex CLI executable missing; no clean autoreview result claimed.
+
+
+## C0 checkpoint9 — source inventory, 2026-10-13
+
+Checkpoint8 `263277b` is pushed to Draft PR18. Controller review16 is bounded; workload review17 retained two material attribution/reader findings and its failed runtime completion status. Additive delivery26 corrects exactly four definitions while preserving all23 original workload candidate bodies and old package bytes; [fresh independent18](../evidence/config-acceptance/c0-completion-20261013/independent-workload-correction-18/REPORT.md) verifies both corrections, not full inventory acceptance. Delivery27 now concretely enumerates20 Swarm template clauses, exact field members/schema bounds and storage/timing relations; independent19 pending. Structural integrity remains2409 settings/6845 cases/zero errors. No canonical obligations, production or existing tests changed. C0 and C1–C6 authorization remain open/null. Next: gateway template19 source/reader/authority definitions, whole profile/schema/case/binding joins. Autoreview CLI remains missing; no clean result claimed.

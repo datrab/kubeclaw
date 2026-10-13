@@ -522,3 +522,8 @@ Zusammenführung und C0-Gesamtprüfung bleiben offen. C1–C6 wurden weder umges
 noch freigegeben; keine historischen Produktionsfindings automatisch geschlossen.
 
 C0 checkpoint8: independent15 verifies corrected phase/history/scope metadata and fail-closed remaining gates (34/31/11 author controls,41 independent controls). All10,350 snapshot members losslessly verified; split gzip evidence retained. Existing draft PR18 checkpoint push authorized by user. Autoreview helper unavailable due missing Codex CLI, explicitly recorded; C0 remains unaccepted.
+
+
+## C0 checkpoint9 — source inventory, 2026-10-13
+
+Checkpoint8 `263277b` is pushed to Draft PR18. Controller review16 is bounded; workload review17 retained two material attribution/reader findings and its failed runtime completion status. Additive delivery26 corrects exactly four definitions while preserving all23 original workload candidate bodies and old package bytes; [fresh independent18](../evidence/config-acceptance/c0-completion-20261013/independent-workload-correction-18/REPORT.md) verifies both corrections, not full inventory acceptance. Delivery27 now concretely enumerates20 Swarm template clauses, exact field members/schema bounds and storage/timing relations; independent19 pending. Structural integrity remains2409 settings/6845 cases/zero errors. No canonical obligations, production or existing tests changed. C0 and C1–C6 authorization remain open/null. Next: gateway template19 source/reader/authority definitions, whole profile/schema/case/binding joins. Autoreview CLI remains missing; no clean result claimed.

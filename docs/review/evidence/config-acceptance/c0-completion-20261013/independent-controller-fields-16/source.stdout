@@ -1,0 +1,638 @@
+     1	{{- $clusterShared := (include "kubeclaw.swarmConfig" . | mustFromJson).operator.buster.clusterInvokers.shared -}}
+     2	{{- if and .Values.busterNamespaceBroker.enabled (eq .Values.agentRole "buster") -}}
+     3	---
+     4	apiVersion: v1
+     5	kind: ServiceAccount
+     6	metadata:
+     7	  name: {{ include "kubeclaw.fullname" . }}-namespace-controller
+     8	  namespace: {{ .Release.Namespace }}
+     9	  labels:
+    10	    {{- include "kubeclaw.labels" . | nindent 4 }}
+    11	automountServiceAccountToken: true
+    12	---
+    13	apiVersion: rbac.authorization.k8s.io/v1
+    14	kind: ClusterRole
+    15	metadata:
+    16	  name: {{ include "kubeclaw.fullname" . }}-controller-secrets
+    17	  labels:
+    18	    {{- include "kubeclaw.labels" . | nindent 4 }}
+    19	rules:
+    20	  - apiGroups: [""]
+    21	    resources: ["secrets"]
+    22	    verbs: ["get", "create", "patch"]
+    23	---
+    24	apiVersion: rbac.authorization.k8s.io/v1
+    25	kind: ClusterRole
+    26	metadata:
+    27	  name: {{ include "kubeclaw.fullname" . }}-namespace-deployer
+    28	rules:
+    29	  # Deployer subjects are explicitly allowlisted trusted agents. They need full
+    30	  # Service lifecycle access for Helm; external Service forms are rejected at
+    31	  # the broker manifest boundary because Kubernetes RBAC cannot filter spec.type.
+    32	  - apiGroups: [""]
+    33	    resources: ["pods", "pods/log", "services", "endpoints", "configmaps", "persistentvolumeclaims", "serviceaccounts"]
+    34	    verbs: ["create", "get", "list", "watch", "delete", "patch", "update"]
+    35	  # A deployer can already project any Secret into a Pod it creates. Direct
+    36	  # read access avoids that indirect path for copied, lease-scoped credentials.
+    37	  - apiGroups: [""]
+    38	    resources: ["secrets"]
+    39	    verbs: ["get", "list"]
+    40	  - apiGroups: ["apps"]
+    41	    resources: ["deployments", "replicasets", "statefulsets"]
+    42	    verbs: ["create", "get", "list", "watch", "delete", "patch", "update"]
+    43	  - apiGroups: ["batch"]
+    44	    resources: ["jobs", "cronjobs"]
+    45	    verbs: ["create", "get", "list", "watch", "delete", "patch", "update"]
+    46	---
+    47	apiVersion: rbac.authorization.k8s.io/v1
+    48	kind: ClusterRole
+    49	metadata:
+    50	  name: {{ include "kubeclaw.fullname" . }}-namespace-tester
+    51	rules:
+    52	  - apiGroups: [""]
+    53	    resources: ["pods", "pods/log", "services", "endpoints", "configmaps"]
+    54	    verbs: ["get", "list", "watch"]
+    55	  - apiGroups: ["batch"]
+    56	    resources: ["jobs"]
+    57	    verbs: ["create", "get", "list", "watch", "delete", "patch", "update"]
+    58	---
+    59	apiVersion: rbac.authorization.k8s.io/v1
+    60	kind: ClusterRole
+    61	metadata:
+    62	  name: {{ include "kubeclaw.fullname" . }}-namespace-controller
+    63	  labels:
+    64	    {{- include "kubeclaw.labels" . | nindent 4 }}
+    65	rules:
+    66	  {{- if .Values.busterNamespaceBroker.controller.readiness.enabled }}
+    67	  - apiGroups: ["authentication.k8s.io"]
+    68	    resources: ["tokenreviews"]
+    69	    verbs: ["create"]
+    70	  {{- end }}
+    71	  - apiGroups: ["{{ $clusterShared.leaseApiGroup }}"]
+    72	    resources: ["busternamespaceleases"]
+    73	    verbs: ["get", "list", "watch", "patch", "update"]
+    74	  - apiGroups: ["{{ $clusterShared.leaseApiGroup }}"]
+    75	    resources: ["busternamespaceleases/status"]
+    76	    verbs: ["get", "patch", "update"]
+    77	  - apiGroups: [""]
+    78	    resources: ["namespaces"]
+    79	    verbs: ["create", "get", "delete"]
+    80	  - apiGroups: [""]
+    81	    resources: ["pods", "services"]
+    82	    verbs: ["get", "list"]
+    83	  - apiGroups: [""]
+    84	    resources: ["endpoints"]
+    85	    verbs: ["get"]
+    86	  - apiGroups: [""]
+    87	    resources: ["resourcequotas", "limitranges"]
+    88	    verbs: ["create", "get", "delete", "patch"]
+    89	  - apiGroups: ["networking.k8s.io"]
+    90	    resources: ["ingresses"]
+    91	    verbs: ["create", "get", "list", "delete", "patch"]
+    92	  - apiGroups: ["networking.k8s.io"]
+    93	    resources: ["networkpolicies"]
+    94	    verbs: ["create", "get", "delete", "patch"]
+    95	  - apiGroups: ["rbac.authorization.k8s.io"]
+    96	    resources: ["roles", "rolebindings"]
+    97	    verbs: ["create", "get", "list", "delete", "patch"]
+    98	  - apiGroups: ["rbac.authorization.k8s.io"]
+    99	    resources: ["clusterroles"]
+   100	    resourceNames:
+   101	      - {{ include "kubeclaw.fullname" . }}-controller-secrets
+   102	      - {{ include "kubeclaw.fullname" . }}-namespace-deployer
+   103	      - {{ include "kubeclaw.fullname" . }}-namespace-tester
+   104	    verbs: ["bind"]
+   105	---
+   106	apiVersion: rbac.authorization.k8s.io/v1
+   107	kind: ClusterRoleBinding
+   108	metadata:
+   109	  name: {{ include "kubeclaw.fullname" . }}-namespace-controller
+   110	  labels:
+   111	    {{- include "kubeclaw.labels" . | nindent 4 }}
+   112	roleRef:
+   113	  apiGroup: rbac.authorization.k8s.io
+   114	  kind: ClusterRole
+   115	  name: {{ include "kubeclaw.fullname" . }}-namespace-controller
+   116	subjects:
+   117	  - kind: ServiceAccount
+   118	    name: {{ include "kubeclaw.fullname" . }}-namespace-controller
+   119	    namespace: {{ .Release.Namespace }}
+   120	---
+   121	{{- if .Values.busterNamespaceBroker.controller.allowedSourceSecrets }}
+   122	apiVersion: rbac.authorization.k8s.io/v1
+   123	kind: Role
+   124	metadata:
+   125	  name: {{ include "kubeclaw.fullname" . }}-namespace-controller-source-secrets
+   126	  namespace: {{ .Release.Namespace }}
+   127	rules:
+   128	  - apiGroups: [""]
+   129	    resources: ["secrets"]
+   130	    resourceNames:
+   131	      {{- toYaml .Values.busterNamespaceBroker.controller.allowedSourceSecrets | nindent 6 }}
+   132	    verbs: ["get"]
+   133	---
+   134	apiVersion: rbac.authorization.k8s.io/v1
+   135	kind: RoleBinding
+   136	metadata:
+   137	  name: {{ include "kubeclaw.fullname" . }}-namespace-controller-source-secrets
+   138	  namespace: {{ .Release.Namespace }}
+   139	roleRef:
+   140	  apiGroup: rbac.authorization.k8s.io
+   141	  kind: Role
+   142	  name: {{ include "kubeclaw.fullname" . }}-namespace-controller-source-secrets
+   143	subjects:
+   144	  - kind: ServiceAccount
+   145	    name: {{ include "kubeclaw.fullname" . }}-namespace-controller
+   146	    namespace: {{ .Release.Namespace }}
+   147	---
+   148	{{- end }}
+   149	apiVersion: apps/v1
+   150	kind: Deployment
+   151	metadata:
+   152	  name: {{ include "kubeclaw.fullname" . }}-namespace-controller
+   153	  namespace: {{ .Release.Namespace }}
+   154	  labels:
+   155	    {{- include "kubeclaw.labels" . | nindent 4 }}
+   156	    kubeclaw/controller: buster-namespace-controller
+   157	spec:
+   158	  replicas: 1
+   159	  selector:
+   160	    matchLabels:
+   161	      app.kubernetes.io/name: kubeclaw
+   162	      app.kubernetes.io/instance: {{ .Release.Name }}
+   163	      app.kubernetes.io/component: buster-namespace-controller
+   164	  template:
+   165	    metadata:
+   166	      labels:
+   167	        app.kubernetes.io/name: kubeclaw
+   168	        app.kubernetes.io/instance: {{ .Release.Name }}
+   169	        app.kubernetes.io/component: buster-namespace-controller
+   170	        kubeclaw/role: {{ .Values.agentRole }}
+   171	    spec:
+   172	      serviceAccountName: {{ include "kubeclaw.fullname" . }}-namespace-controller
+   173	      automountServiceAccountToken: true
+   174	      {{- with .Values.imagePullSecrets }}
+   175	      imagePullSecrets:
+   176	        {{- toYaml . | nindent 8 }}
+   177	      {{- end }}
+   178	      securityContext:
+   179	        runAsNonRoot: true
+   180	        runAsUser: 1000
+   181	        runAsGroup: 1000
+   182	        fsGroup: 1000
+   183	      containers:
+   184	        - name: controller
+   185	          image: {{ include "kubeclaw.image" .Values.busterNamespaceBroker.controller.image | quote }}
+   186	          imagePullPolicy: {{ .Values.busterNamespaceBroker.controller.image.pullPolicy }}
+   187	          command:
+   188	            - /app/buster-namespace-controller
+   189	          env:
+   190	            - name: KUBECLAW_NAMESPACE
+   191	              value: {{ .Release.Namespace | quote }}
+   192	            - name: BUSTER_CONTROLLER_SERVICE_ACCOUNT
+   193	              value: {{ printf "%s-namespace-controller" (include "kubeclaw.fullname" .) | quote }}
+   194	            - name: BUSTER_SECRET_ROLE_NAME
+   195	              value: {{ printf "%s-controller-secrets" (include "kubeclaw.fullname" .) | quote }}
+   196	            - name: BUSTER_DEPLOYER_ROLE_NAME
+   197	              value: {{ printf "%s-namespace-deployer" (include "kubeclaw.fullname" .) | quote }}
+   198	            - name: BUSTER_TESTER_ROLE_NAME
+   199	              value: {{ printf "%s-namespace-tester" (include "kubeclaw.fullname" .) | quote }}
+   200	            - name: BUSTER_ALLOWED_ACCESS_JSON
+   201	              {{- $allowedAccess := list -}}
+   202	              {{- range .Values.busterNamespaceBroker.controller.allowedAccess -}}
+   203	              {{- $subject := .subject -}}
+   204	              {{- if not (contains "/" $subject) -}}
+   205	              {{- $subject = printf "%s/%s" $.Release.Namespace $subject -}}
+   206	              {{- end -}}
+   207	              {{- $allowedAccess = append $allowedAccess (dict "subject" $subject "modes" .modes) -}}
+   208	              {{- end }}
+   209	              value: {{ toJson $allowedAccess | quote }}
+   210	            - name: BUSTER_ALLOWED_SOURCE_SECRETS
+   211	              value: {{ join "," .Values.busterNamespaceBroker.controller.allowedSourceSecrets | quote }}
+   212	            - name: BUSTER_LEASE_API_GROUP
+   213	              value: {{ $clusterShared.leaseApiGroup | quote }}
+   214	            - name: BUSTER_LEASE_API_VERSION
+   215	              value: {{ $clusterShared.leaseApiVersion | quote }}
+   216	            - name: BUSTER_ALLOWED_NAMESPACE_PREFIXES
+   217	              value: {{ join "," .Values.busterNamespaceBroker.allowedPrefixes | quote }}
+   218	            - name: BUSTER_DEFAULT_TTL_SECONDS
+   219	              value: {{ .Values.busterNamespaceBroker.defaultTtlSeconds | quote }}
+   220	            - name: BUSTER_MAX_TTL_SECONDS
+   221	              value: {{ .Values.busterNamespaceBroker.maxTtlSeconds | quote }}
+   222	            - name: BUSTER_CONTROLLER_POLL_MS
+   223	              value: {{ .Values.busterNamespaceBroker.controller.pollIntervalMs | quote }}
+   224	            {{- if .Values.busterNamespaceBroker.controller.readiness.enabled }}
+   225	            - name: BUSTER_READY_LISTEN
+   226	              value: ":8443"
+   227	            - name: BUSTER_READY_AUDIENCE
+   228	              value: {{ required "Ready audience is required" .Values.busterNamespaceBroker.controller.readiness.audience | quote }}
+   229	            - name: BUSTER_READY_PRODUCER
+   230	              value: {{ printf "system:serviceaccount:%s:%s" (required "Ready producer namespace is required" .Values.busterNamespaceBroker.controller.readiness.producerNamespace) (required "Ready producer ServiceAccount is required" .Values.busterNamespaceBroker.controller.readiness.producerServiceAccount) | quote }}
+   231	            - name: BUSTER_READY_TLS_CERT
+   232	              value: /var/run/kubeclaw/ready-server/tls.crt
+   233	            - name: BUSTER_READY_TLS_KEY
+   234	              value: /var/run/kubeclaw/ready-server/tls.key
+   235	            {{- end }}
+   236	            {{- if .Values.busterNamespaceBroker.controller.productDecisions.enabled }}
+   237	            {{- if not .Values.busterNamespaceBroker.controller.readiness.enabled }}
+   238	            {{- fail "Product decisions require the Ready TLS listener" }}
+   239	            {{- end }}
+   240	            - name: BUSTER_PRODUCT_ENABLED
+   241	              value: "true"
+   242	            - name: BUSTER_PRODUCT_AUDIENCE
+   243	              value: {{ required "Product audience is required" .Values.busterNamespaceBroker.controller.productDecisions.audience | quote }}
+   244	            - name: BUSTER_PRODUCT_PRODUCER
+   245	              value: {{ printf "system:serviceaccount:%s:%s" (required "Product producer namespace is required" .Values.busterNamespaceBroker.controller.productDecisions.producerNamespace) (required "Product producer ServiceAccount is required" .Values.busterNamespaceBroker.controller.productDecisions.producerServiceAccount) | quote }}
+   246	            - name: BUSTER_PRODUCT_ISSUER
+   247	              value: {{ required "Human product issuer is required" .Values.busterNamespaceBroker.controller.productDecisions.issuer | quote }}
+   248	            - name: BUSTER_PRODUCT_VERIFY_KEY
+   249	              value: {{ required "Human product issuer verify key is required" .Values.busterNamespaceBroker.controller.productDecisions.verifyKey | quote }}
+   250	            - name: BUSTER_PRODUCT_ACTORS_JSON
+   251	              value: {{ required "Human product actor allowlist is required" .Values.busterNamespaceBroker.controller.productDecisions.allowedActors | toJson | quote }}
+   252	            {{- end }}
+   253	          resources:
+   254	            {{- toYaml .Values.busterNamespaceBroker.controller.resources | nindent 12 }}
+   255	          {{- if .Values.busterNamespaceBroker.controller.readiness.enabled }}
+   256	          ports:
+   257	            - { name: demo-ready, containerPort: 8443, protocol: TCP }
+   258	          volumeMounts:
+   259	            - { name: demo-ready-server, mountPath: /var/run/kubeclaw/ready-server, readOnly: true }
+   260	          {{- end }}
+   261	      {{- if .Values.busterNamespaceBroker.controller.readiness.enabled }}
+   262	      volumes:
+   263	        - name: demo-ready-server
+   264	          secret:
+   265	            secretName: {{ required "Ready TLS Secret is required" .Values.busterNamespaceBroker.controller.readiness.tlsSecretName | quote }}
+   266	            defaultMode: 0440
+   267	      {{- end }}
+   268	{{- end }}
+   132	func newController() (*controller, error) {
+   133		namespace := getenvFile("KUBECLAW_NAMESPACE", serviceAccountNamespacePath, "kubeclaw")
+   134		token := readFile(serviceAccountTokenPath, "")
+   135		host := os.Getenv("KUBERNETES_SERVICE_HOST")
+   136		port := env("KUBERNETES_SERVICE_PORT", "443")
+   137		if host == "" || token == "" {
+   138			return nil, errors.New("kubernetes service host and ServiceAccount token are required")
+   139		}
+   140	
+   141		apiGroup := env("BUSTER_LEASE_API_GROUP", "kubeclaw.forgestack.ai")
+   142		apiVersion := env("BUSTER_LEASE_API_VERSION", "v1alpha1")
+   143		prefixes := splitCSV(env("BUSTER_ALLOWED_NAMESPACE_PREFIXES", "test"))
+   144		if len(prefixes) == 0 {
+   145			prefixes = []string{"test"}
+   146		}
+   147	
+   148		ttlSeconds := envInt("BUSTER_DEFAULT_TTL_SECONDS", 7200)
+   149		maxTTLSeconds := envInt("BUSTER_MAX_TTL_SECONDS", 86400)
+   150		pollInterval, err := controllerPollInterval()
+   151		if err != nil {
+   152			return nil, err
+   153		}
+   154	
+   155		ctrl := &controller{
+   156			namespace:          namespace,
+   157			apiGroup:           apiGroup,
+   158			apiVersion:         apiVersion,
+   159			allowedPrefixes:    prefixes,
+   160			defaultTTL:         time.Duration(ttlSeconds) * time.Second,
+   161			maxTTL:             time.Duration(maxTTLSeconds) * time.Second,
+   162			pollInterval:       pollInterval,
+   163			finalizer:          apiGroup + "/buster-namespace-cleanup",
+   164			apiURL:             "https://" + host + ":" + port,
+   165			tokenPath:          serviceAccountTokenPath,
+   166			serviceAccountName: env("BUSTER_CONTROLLER_SERVICE_ACCOUNT", "agent-buster-namespace-controller"),
+   167			secretRoleName:     env("BUSTER_SECRET_ROLE_NAME", "buster-controller-secrets"),
+   168			deployerRoleName:   env("BUSTER_DEPLOYER_ROLE_NAME", "buster-namespace-deployer"),
+   169			testerRoleName:     env("BUSTER_TESTER_ROLE_NAME", "buster-namespace-tester"),
+   170		}
+   171	
+   172		access, err := parseAllowedAccess(env("BUSTER_ALLOWED_ACCESS_JSON", `[{"subject":"kubeclaw/agent-buster","modes":["tester"]}]`))
+   173		if err != nil {
+   174			return nil, err
+   175		}
+   176		if err := ctrl.configureReadiness(); err != nil {
+   177			return nil, err
+   178		}
+   179		if err := ctrl.configureProduct(); err != nil {
+   180			return nil, err
+   181		}
+   182		ctrl.allowedAccess = access
+   183		ctrl.allowedSourceSecrets = map[string]bool{}
+   184		for _, name := range splitCSV(os.Getenv("BUSTER_ALLOWED_SOURCE_SECRETS")) {
+   185			if !validSecretRefName(name) {
+   186				return nil, fmt.Errorf("invalid BUSTER_ALLOWED_SOURCE_SECRETS entry: %s", name)
+   187			}
+   188			ctrl.allowedSourceSecrets[name] = true
+   189		}
+   190	
+   191		client, err := kubernetesHTTPClient()
+   192		if err != nil {
+   193			return nil, err
+   194		}
+   195		ctrl.httpClient = client
+   196		return ctrl, nil
+  1401	func (c *controller) copySecrets(ctx context.Context, names []string, targetNamespace string) error {
+  1402		for _, name := range names {
+  1403			if !c.allowedSourceSecrets[name] {
+  1404				return fmt.Errorf("source secret %s is not approved for test namespace copying", name)
+  1405			}
+  1406			var source map[string]interface{}
+  1407			if err := c.kube(ctx, http.MethodGet, "/api/v1/namespaces/"+c.namespace+"/secrets/"+name, nil, "application/json", &source); err != nil {
+  1408				return err
+  1409			}
+  1410			secret := sanitizeSecret(source, targetNamespace)
+  1411			if err := c.createOrPatch(ctx, "/api/v1/namespaces/"+targetNamespace+"/secrets", "/api/v1/namespaces/"+targetNamespace+"/secrets/"+name, secret, nil); err != nil {
+  1412				return err
+  1413			}
+  1414		}
+  1415		return nil
+  1580	func (c *controller) expiresAt(item *lease) time.Time {
+  1581		if deadline, ok := demoReadyDeadline(item); ok {
+  1582			return productDeadline(item, deadline)
+  1583		}
+  1584		ttl := c.defaultTTL
+  1585		if value := intValue(item.Spec["ttlSeconds"], 0); value > 0 {
+  1586			ttl = time.Duration(value) * time.Second
+  1587		}
+  1588		if c.maxTTL > 0 && ttl > c.maxTTL {
+  1589			ttl = c.maxTTL
+  1590		}
+  1591		createdAt, err := time.Parse(time.RFC3339, item.Metadata.CreationTimestamp)
+  1592		if err != nil {
+  1593			createdAt = time.Now()
+  1594		}
+  1595		return createdAt.Add(ttl)
+  1596	}
+  1597	
+  1598	func (c *controller) validateLeaseSpec(item *lease) error {
+  1599		ttlSeconds := intValue(item.Spec["ttlSeconds"], int(c.defaultTTL/time.Second))
+  1600		if ttlSeconds < 60 {
+  1601			return errors.New("ttlSeconds must be at least 60")
+  1602		}
+  1603		if time.Duration(ttlSeconds)*time.Second > c.maxTTL {
+  1604			return fmt.Errorf("ttlSeconds exceeds maximum %d", int(c.maxTTL/time.Second))
+  1605		}
+  1606		cleanup := stringValueDefault(item.Spec["cleanupPolicy"], "delete")
+  1607		if cleanup != "delete" && cleanup != "retain" {
+  1608			return errors.New("cleanupPolicy must be delete or retain")
+  1609		}
+  1610		if _, err := c.accessRequests(item); err != nil {
+  1611			return err
+  1612		}
+  1613		if _, err := c.credentialRequest(item); err != nil {
+  1614			return err
+  1615		}
+  1616		for _, name := range stringSlice(item.Spec["secretsToCopy"]) {
+  1617			if !c.allowedSourceSecrets[name] {
+  1618				return fmt.Errorf("source secret %s is not approved for test namespace copying", name)
+  1619			}
+  1620		}
+  1621		return nil
+  1685	func parseAllowedAccess(value string) (map[serviceAccountRef]map[string]bool, error) {
+  1686		var entries []map[string]interface{}
+  1687		if err := json.Unmarshal([]byte(value), &entries); err != nil {
+  1688			return nil, fmt.Errorf("invalid BUSTER_ALLOWED_ACCESS_JSON: %w", err)
+  1689		}
+  1690		allowed := map[serviceAccountRef]map[string]bool{}
+  1691		for _, entry := range entries {
+  1692			subject, err := parseServiceAccountRef(stringValue(entry["subject"]), "kubeclaw")
+  1693			if err != nil {
+  1694				return nil, err
+  1695			}
+  1696			if allowed[subject] == nil {
+  1697				allowed[subject] = map[string]bool{}
+  1698			}
+  1699			for _, mode := range stringSlice(entry["modes"]) {
+  1700				if mode != "deployer" && mode != "tester" {
+  1701					return nil, fmt.Errorf("invalid access mode %q for %s", mode, stringValue(entry["subject"]))
+  1702				}
+  1703				allowed[subject][mode] = true
+  1704			}
+  1705		}
+  1706		if len(allowed) == 0 {
+  1707			return nil, errors.New("BUSTER_ALLOWED_ACCESS_JSON must allow at least one subject")
+  1708		}
+  1709		return allowed, nil
+  1710	}
+  1711	
+  1712	func (c *controller) normalizeLeaseNamespaceName(requestedName string) string {
+  1713		sanitized := sanitizeDNSLabel(requestedName, "")
+  1714		if sanitized == "" {
+  1715			return ""
+  1716		}
+  1717		matchedPrefix := ""
+  1718		for _, prefix := range c.allowedPrefixes {
+  1719			if sanitized == prefix || strings.HasPrefix(sanitized, prefix+"-") {
+  1720				matchedPrefix = prefix
+  1721				break
+  1722			}
+  1723		}
+  1724		prefix := matchedPrefix
+  1725		if prefix == "" {
+  1726			prefix = c.preferredNamespacePrefix()
+  1727		}
+  1728		rawSegment := sanitized
+  1729		if matchedPrefix != "" {
+  1730			rawSegment = strings.TrimPrefix(sanitized, matchedPrefix)
+  1731			rawSegment = strings.TrimLeft(rawSegment, "-")
+  1732		}
+  1733		maxSegmentLength := 63 - len(prefix) - 1
+  1734		if maxSegmentLength < 1 {
+  1735			maxSegmentLength = 1
+  1736		}
+  1737		segment := trimTrailingDashes(sliceString(rawSegment, maxSegmentLength))
+  1738		if segment == "" {
+  1739			segment = "namespace"
+  1740		}
+  1741		return prefix + "-" + segment
+  1742	}
+  1743	
+  1744	func (c *controller) hasAllowedPrefix(namespaceName string) bool {
+  1745		for _, prefix := range c.allowedPrefixes {
+  1746			if namespaceName == prefix || strings.HasPrefix(namespaceName, prefix+"-") {
+  1747				return true
+  1748			}
+  1749		}
+  1750		return false
+  1751	}
+  1752	
+  1753	func (c *controller) preferredNamespacePrefix() string {
+  1754		for _, prefix := range c.allowedPrefixes {
+  1755			if prefix == "test" {
+  1756				return "test"
+  1757			}
+  1758		}
+  1759		if len(c.allowedPrefixes) > 0 {
+  1760			return c.allowedPrefixes[0]
+  1761		}
+  1762		return "test"
+  1763	}
+  1834	func validSecretRefName(value string) bool {
+  1835		return regexp.MustCompile(`^[A-Za-z0-9._-]+$`).MatchString(value)
+  1836	}
+  1837	
+  1838	func kubePath(path string) string {
+  1839		if strings.HasPrefix(path, "/") {
+  1840			return path
+  1841		}
+  1842		return "/" + path
+  1843	}
+  1844	
+  1845	func readFile(path string, fallback string) string {
+  1846		content, err := os.ReadFile(path)
+  1847		if err != nil {
+  1848			return fallback
+  1849		}
+  1850		trimmed := strings.TrimSpace(string(content))
+  1851		if trimmed == "" {
+  1852			return fallback
+  1853		}
+  1854		return trimmed
+  1855	}
+  1856	
+  1857	func getenvFile(envName string, filePath string, fallback string) string {
+  1858		if value := os.Getenv(envName); strings.TrimSpace(value) != "" {
+  1859			return strings.TrimSpace(value)
+  1860		}
+  1861		return readFile(filePath, fallback)
+  1862	}
+  1863	
+  1864	func env(name string, fallback string) string {
+  1865		value := strings.TrimSpace(os.Getenv(name))
+  1866		if value == "" {
+  1867			return fallback
+  1868		}
+  1869		return value
+  1870	}
+  1871	
+  1872	func envInt(name string, fallback int) int {
+  1873		value := strings.TrimSpace(os.Getenv(name))
+  1874		if value == "" {
+  1875			return fallback
+  1876		}
+  1877		parsed, err := strconv.Atoi(value)
+  1878		if err != nil {
+  1879			return fallback
+  1880		}
+  1881		return parsed
+  1882	}
+  1883	
+  1884	func controllerPollInterval() (time.Duration, error) {
+  1885		value := strings.TrimSpace(os.Getenv("BUSTER_CONTROLLER_POLL_MS"))
+  1886		if value == "" {
+  1887			value = "3000"
+  1888		}
+  1889		pollMs, err := strconv.ParseInt(value, 10, 64)
+  1890		if err != nil || pollMs <= 0 || pollMs > (1<<63-1)/int64(time.Millisecond) {
+  1891			return 0, errors.New("BUSTER_CONTROLLER_POLL_MS must be positive")
+  1892		}
+  1893		return time.Duration(pollMs) * time.Millisecond, nil
+  1894	}
+  1895	
+  1896	func splitCSV(value string) []string {
+  1897		parts := strings.Split(value, ",")
+  1898		out := []string{}
+  1899		for _, part := range parts {
+  1900			trimmed := strings.TrimSpace(part)
+  1901			if trimmed != "" {
+  1902				out = append(out, trimmed)
+  1903			}
+  1904		}
+  1905		return out
+    60	var readyDigest = regexp.MustCompile(`^sha256:[a-f0-9]{64}$`)
+    61	var readyName = regexp.MustCompile(`^[a-z0-9][a-z0-9.-]{0,252}$`)
+    62	
+    63	func readyText(s string) bool {
+    64		return len(s) > 0 && len(s) <= 1024 && !strings.ContainsAny(s, "\x00\r\n")
+    65	}
+    97	func (c *controller) authenticateReady(ctx context.Context, authorization string) error {
+    98		return c.authenticateTransport(ctx, authorization, c.readiness)
+    99	}
+   100	
+   101	func (c *controller) authenticateTransport(ctx context.Context, authorization string, cfg *readinessConfig) error {
+   102		if cfg == nil || !strings.HasPrefix(authorization, "Bearer ") || len(authorization) > 16384 {
+   103			return errors.New("DEMO_READY_UNAUTHORIZED")
+   104		}
+   105		token := strings.TrimPrefix(authorization, "Bearer ")
+   106		if token == "" || strings.ContainsAny(token, " \r\n\t") {
+   107			return errors.New("DEMO_READY_UNAUTHORIZED")
+   108		}
+   109		var review struct {
+   110			Status struct {
+   111				Authenticated bool     `json:"authenticated"`
+   112				Audiences     []string `json:"audiences"`
+   113				User          struct {
+   114					Username string `json:"username"`
+   115				} `json:"user"`
+   116			} `json:"status"`
+   117		}
+   118		err := c.kube(ctx, http.MethodPost, "/apis/authentication.k8s.io/v1/tokenreviews", map[string]interface{}{"apiVersion": "authentication.k8s.io/v1", "kind": "TokenReview", "spec": map[string]interface{}{"token": token, "audiences": []string{cfg.Audience}}}, "application/json", &review)
+   119		if err != nil || !review.Status.Authenticated || review.Status.User.Username != cfg.Producer || !contains(review.Status.Audiences, cfg.Audience) {
+   120			return errors.New("DEMO_READY_UNAUTHORIZED")
+   121		}
+   122		return nil
+   123	}
+    17	func (c *controller) configureReadiness() error {
+    18		if os.Getenv("BUSTER_READY_LISTEN") == "" {
+    19			return nil
+    20		}
+    21		config := &readinessConfig{Address: os.Getenv("BUSTER_READY_LISTEN"), Audience: os.Getenv("BUSTER_READY_AUDIENCE"), Producer: os.Getenv("BUSTER_READY_PRODUCER"), Certificate: os.Getenv("BUSTER_READY_TLS_CERT"), Key: os.Getenv("BUSTER_READY_TLS_KEY")}
+    22		parts := strings.Split(config.Producer, ":")
+    23		if len(parts) != 4 || parts[0] != "system" || parts[1] != "serviceaccount" || !readyName.MatchString(parts[2]) || !readyName.MatchString(parts[3]) || !readyText(config.Audience) || config.Certificate == "" || config.Key == "" {
+    24			return errors.New("Ready server requires explicit audience, ServiceAccount identity and TLS certificate")
+    25		}
+    26		if _, _, err := net.SplitHostPort(config.Address); err != nil {
+    27			return errors.New("invalid Ready listen address")
+    28		}
+    29		c.readiness = config
+    30		return nil
+    31	}
+    32	func (c *controller) startReadinessServer(ctx context.Context) error {
+    33		if c.readiness == nil {
+    34			return nil
+    35		}
+    36		certificate, err := tls.LoadX509KeyPair(c.readiness.Certificate, c.readiness.Key)
+    37		if err != nil {
+    38			return errors.New("Ready TLS certificate unavailable")
+    39		}
+    40		listener, err := tls.Listen("tcp", c.readiness.Address, &tls.Config{MinVersion: tls.VersionTLS12, Certificates: []tls.Certificate{certificate}})
+    58	func (c *controller) configureProduct() error {
+    59		enabled := os.Getenv("BUSTER_PRODUCT_ENABLED")
+    60		if enabled == "" || enabled == "false" {
+    61			return nil
+    62		}
+    63		if enabled != "true" || c.readiness == nil {
+    64			return errors.New("DEMO_PRODUCT_CONFIG_INVALID")
+    65		}
+    66		key, err := base64.StdEncoding.Strict().DecodeString(os.Getenv("BUSTER_PRODUCT_VERIFY_KEY"))
+    67		var actors []string
+    68		cfg := &productConfig{Audience: os.Getenv("BUSTER_PRODUCT_AUDIENCE"), Producer: os.Getenv("BUSTER_PRODUCT_PRODUCER"), Issuer: os.Getenv("BUSTER_PRODUCT_ISSUER"), PublicKey: key, Actors: map[string]bool{}}
+    69		parts := strings.Split(cfg.Producer, ":")
+    70		if err != nil || len(key) != ed25519.PublicKeySize || !readyText(cfg.Audience) || !readyText(cfg.Issuer) || len(parts) != 4 || parts[0] != "system" || parts[1] != "serviceaccount" || !readyName.MatchString(parts[2]) || !readyName.MatchString(parts[3]) || cfg.Producer == c.readiness.Producer || json.Unmarshal([]byte(os.Getenv("BUSTER_PRODUCT_ACTORS_JSON")), &actors) != nil || len(actors) == 0 {
+    71			return errors.New("DEMO_PRODUCT_CONFIG_INVALID")
+    72		}
+    73		for _, actor := range actors {
+    74			if !readyText(actor) || cfg.Actors[actor] {
+    75				return errors.New("DEMO_PRODUCT_CONFIG_INVALID")
+    76			}
+    77			cfg.Actors[actor] = true
+    78		}
+    79		c.product = cfg
+    80		return nil
+    81	}
+   163	func (c *controller) verifyProduct(envelope productEnvelope) (productDecision, string, error) {
+   164		var d productDecision
+   165		invalid := errors.New("DEMO_PRODUCT_SIGNATURE_INVALID")
+   166		if c.product == nil || envelope.SchemaVersion != "demo-product-decision-envelope.v1" {
+   167			return d, "", invalid
+   168		}
+   169		raw, e := base64.StdEncoding.Strict().DecodeString(envelope.Payload)
+   170		sig, se := base64.StdEncoding.Strict().DecodeString(envelope.Signature)
+   171		if e != nil || se != nil || len(raw) > 8192 || base64.StdEncoding.EncodeToString(raw) != envelope.Payload || base64.StdEncoding.EncodeToString(sig) != envelope.Signature || !ed25519.Verify(c.product.PublicKey, append([]byte(productDomain), raw...), sig) {
+   172			return d, "", invalid
+   173		}
+   174		if e = productJSON(raw, &d); e != nil {
+   175			return d, "", e
+   176		}
+   177		if d.SchemaVersion != "demo-product-decision.v1" || d.Issuer != c.product.Issuer || !c.product.Actors[d.ActorID] || !readyName.MatchString(d.LeaseName) || d.Generation < 1 || d.Generation > 9007199254740991 || !readyText(d.LeaseUID) || !productDecisionID.MatchString(d.DecisionID) || !readyText(d.ExpectedRevision) || len(strings.TrimSpace(d.Reason)) < 1 || len(d.Reason) > 2000 || strings.ContainsAny(d.Reason, "\x00") {
+   178			return d, "", errors.New("DEMO_PRODUCT_REQUEST_INVALID")

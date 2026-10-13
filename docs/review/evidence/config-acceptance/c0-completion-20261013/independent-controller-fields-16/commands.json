@@ -1,0 +1,50 @@
+[
+  {
+    "name": "head",
+    "argv": [
+      "git",
+      "rev-parse",
+      "HEAD",
+      "HEAD^{tree}"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "history",
+    "argv": [
+      "git",
+      "log",
+      "-5",
+      "--format=%H %s"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "source",
+    "argv": [
+      "bash",
+      "-c",
+      "nl -ba charts/kubeclaw/templates/buster-namespace-controller.yaml; nl -ba cmd/buster-namespace-controller/main.go | sed -n '132,196p;1401,1415p;1580,1621p;1685,1763p;1834,1905p'; nl -ba cmd/buster-namespace-controller/demo-readiness.go | sed -n '60,65p;97,123p'; nl -ba cmd/buster-namespace-controller/demo-readiness-lifecycle.go | sed -n '17,40p'; nl -ba cmd/buster-namespace-controller/demo-product.go | sed -n '58,81p;163,178p'"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "manifest",
+    "argv": [
+      "python3",
+      "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-24/check.py",
+      "--verify-manifest"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "prefix-domain-challenge",
+    "argv": [
+      "node",
+      "--input-type=module",
+      "-e",
+      "import fs from 'node:fs';import Ajv from 'ajv/dist/2020.js';\nconst b='docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-24/';const read=n=>JSON.parse(fs.readFileSync(b+n));const v=new Ajv({strict:true}).compile(read('operator-slices.schema.json'));\nfor(const size of [42,53,54,61,62,63]) {const p=read('operator-C1-A.json');const prefix='a'.repeat(size);p.namespaceBroker.allowedPrefixes=[prefix];const valid=v(p); const emitted=prefix+'-namespace';console.log(JSON.stringify({prefixLength:size,sliceValid:valid,request:prefix,sourceDerivedNormalizedName:emitted,normalizedNameLength:emitted.length,nativeDNSLabelLengthValid:emitted.length<=63,qualification:'source-derived exact matched-prefix fallback witness; not Go/native execution'}));}\n"
+    ],
+    "exit": 0
+  }
+]

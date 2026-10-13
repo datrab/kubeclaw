@@ -1,0 +1,152 @@
+{
+  "contracts": 26,
+  "candidates": 26,
+  "priorRemaining": 384,
+  "remaining": 358,
+  "removedExactlyOriginal26": true,
+  "noRemainingAdditions": true,
+  "stableJoinEdges": [
+    {
+      "contract": "DLV-B24-98ED32DCB6B926C9",
+      "originalId": "DLV-CHART-KUBECLAW-AGENTROLE",
+      "matchingOriginalDigest": true
+    },
+    {
+      "contract": "DLV-B24-98ED32DCB6B926C9",
+      "originalId": "DLV-CHART-KUBECLAW-BUSTERNAMESPACEBROKER-ENABLED",
+      "matchingOriginalDigest": true
+    },
+    {
+      "contract": "DLV-B24-A4FFF807820F43F0",
+      "originalId": "DLV-CHART-KUBECLAW-BUSTERNAMESPACEBROKER-CONTROLLER-READINESS-ENABLED",
+      "matchingOriginalDigest": true
+    },
+    {
+      "contract": "DLV-B24-70E52CB9471AA3D6",
+      "originalId": "DLV-CHART-KUBECLAW-BUSTERNAMESPACEBROKER-CONTROLLER-ALLOWEDSOURCESECRETS",
+      "matchingOriginalDigest": true
+    },
+    {
+      "contract": "DLV-B24-79264D86A0419BC9",
+      "originalId": "DLV-CHART-KUBECLAW-BUSTERNAMESPACEBROKER-CONTROLLER-ALLOWEDSOURCESECRETS",
+      "matchingOriginalDigest": true
+    },
+    {
+      "contract": "DLV-B24-DB022870573CA8D1",
+      "originalId": "DLV-CHART-KUBECLAW-AGENTROLE",
+      "matchingOriginalDigest": true
+    },
+    {
+      "contract": "DLV-B24-AB501D4F368322C0",
+      "originalId": "DLV-CHART-KUBECLAW-BUSTERNAMESPACEBROKER-CONTROLLER-IMAGE-PULLPOLICY",
+      "matchingOriginalDigest": true
+    },
+    {
+      "contract": "DLV-B24-059D32585853F09D",
+      "originalId": "DLV-CHART-KUBECLAW-BUSTERNAMESPACEBROKER-CONTROLLER-ALLOWEDACCESS",
+      "matchingOriginalDigest": true
+    },
+    {
+      "contract": "DLV-B24-9061F77EA75461FF",
+      "originalId": "DLV-CHART-KUBECLAW-BUSTERNAMESPACEBROKER-CONTROLLER-ALLOWEDSOURCESECRETS",
+      "matchingOriginalDigest": true
+    },
+    {
+      "contract": "DLV-B24-25B8B4DA4916F552",
+      "originalId": "DLV-CHART-KUBECLAW-BUSTERNAMESPACEBROKER-ALLOWEDPREFIXES",
+      "matchingOriginalDigest": true
+    },
+    {
+      "contract": "DLV-B24-04F6D16621616972",
+      "originalId": "DLV-CHART-KUBECLAW-BUSTERNAMESPACEBROKER-DEFAULTTTLSECONDS",
+      "matchingOriginalDigest": true
+    },
+    {
+      "contract": "DLV-B24-96284BF48C52FD06",
+      "originalId": "DLV-CHART-KUBECLAW-BUSTERNAMESPACEBROKER-MAXTTLSECONDS",
+      "matchingOriginalDigest": true
+    },
+    {
+      "contract": "DLV-B24-D77F4B2165EDBC28",
+      "originalId": "DLV-CHART-KUBECLAW-BUSTERNAMESPACEBROKER-CONTROLLER-POLLINTERVALMS",
+      "matchingOriginalDigest": true
+    },
+    {
+      "contract": "DLV-B24-1D2833C11AA4FCB1",
+      "originalId": "DLV-CHART-KUBECLAW-BUSTERNAMESPACEBROKER-CONTROLLER-READINESS-ENABLED",
+      "matchingOriginalDigest": true
+    },
+    {
+      "contract": "DLV-B24-F60FC7454F69EC16",
+      "originalId": "DLV-CHART-KUBECLAW-BUSTERNAMESPACEBROKER-CONTROLLER-READINESS-AUDIENCE",
+      "matchingOriginalDigest": true
+    },
+    {
+      "contract": "DLV-B24-6B5C58F659E20314",
+      "originalId": "DLV-CHART-KUBECLAW-BUSTERNAMESPACEBROKER-CONTROLLER-READINESS-PRODUCERNAMESPACE",
+      "matchingOriginalDigest": true
+    },
+    {
+      "contract": "DLV-B24-6B5C58F659E20314",
+      "originalId": "DLV-CHART-KUBECLAW-BUSTERNAMESPACEBROKER-CONTROLLER-READINESS-PRODUCERSERVICEACCOUNT",
+      "matchingOriginalDigest": true
+    },
+    {
+      "contract": "DLV-B24-0170EF6123327EB2",
+      "originalId": "DLV-CHART-KUBECLAW-BUSTERNAMESPACEBROKER-CONTROLLER-PRODUCTDECISIONS-ENABLED",
+      "matchingOriginalDigest": true
+    },
+    {
+      "contract": "DLV-B24-9ACB06BA0D90A1DF",
+      "originalId": "DLV-CHART-KUBECLAW-BUSTERNAMESPACEBROKER-CONTROLLER-READINESS-ENABLED",
+      "matchingOriginalDigest": true
+    },
+    {
+      "contract": "DLV-B24-9BF3E3CD04E0D9AF",
+      "originalId": "DLV-CHART-KUBECLAW-BUSTERNAMESPACEBROKER-CONTROLLER-PRODUCTDECISIONS-AUDIENCE",
+      "matchingOriginalDigest": true
+    },
+    {
+      "contract": "DLV-B24-F0D3696DC9F8F363",
+      "originalId": "DLV-CHART-KUBECLAW-BUSTERNAMESPACEBROKER-CONTROLLER-PRODUCTDECISIONS-PRODUCERNAMESPACE",
+      "matchingOriginalDigest": true
+    },
+    {
+      "contract": "DLV-B24-F0D3696DC9F8F363",
+      "originalId": "DLV-CHART-KUBECLAW-BUSTERNAMESPACEBROKER-CONTROLLER-PRODUCTDECISIONS-PRODUCERSERVICEACCOUNT",
+      "matchingOriginalDigest": true
+    },
+    {
+      "contract": "DLV-B24-8048ABAB80B60BF6",
+      "originalId": "DLV-CHART-KUBECLAW-BUSTERNAMESPACEBROKER-CONTROLLER-PRODUCTDECISIONS-ISSUER",
+      "matchingOriginalDigest": true
+    },
+    {
+      "contract": "DLV-B24-02E0A0C2FA89F527",
+      "originalId": "DLV-CHART-KUBECLAW-BUSTERNAMESPACEBROKER-CONTROLLER-PRODUCTDECISIONS-VERIFYKEY",
+      "matchingOriginalDigest": true
+    },
+    {
+      "contract": "DLV-B24-7C09F54FDEA3E155",
+      "originalId": "DLV-CHART-KUBECLAW-BUSTERNAMESPACEBROKER-CONTROLLER-PRODUCTDECISIONS-ALLOWEDACTORS",
+      "matchingOriginalDigest": true
+    },
+    {
+      "contract": "DLV-B24-B02117ACBC2FD4BB",
+      "originalId": "DLV-CHART-KUBECLAW-BUSTERNAMESPACEBROKER-CONTROLLER-READINESS-ENABLED",
+      "matchingOriginalDigest": true
+    },
+    {
+      "contract": "DLV-B24-A5237171B5435400",
+      "originalId": "DLV-CHART-KUBECLAW-BUSTERNAMESPACEBROKER-CONTROLLER-READINESS-ENABLED",
+      "matchingOriginalDigest": true
+    },
+    {
+      "contract": "DLV-B24-39C5A681A07A489A",
+      "originalId": "DLV-CHART-KUBECLAW-BUSTERNAMESPACEBROKER-CONTROLLER-READINESS-TLSSECRETNAME",
+      "matchingOriginalDigest": true
+    }
+  ],
+  "futureCases": 104,
+  "allFutureNotRun": true
+}
