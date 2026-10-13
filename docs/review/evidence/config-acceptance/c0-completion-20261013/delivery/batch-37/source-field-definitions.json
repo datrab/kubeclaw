@@ -1,0 +1,1908 @@
+{
+  "scope": "31 original Ops Chart/deployment source clauses; static definitions",
+  "rows": [
+    {
+      "candidateId": "SRC-7c4c6ffb286652d9",
+      "originalCandidate": {
+        "id": "SRC-7c4c6ffb286652d9",
+        "source": "charts/ops-pod/templates/kubeconfig.yaml",
+        "line": 1,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "af3152d6d912c4f7a53505902fe03925d35abfeaf4edfd465482bf3cfec42911",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "af3152d6d912c4f7a53505902fe03925d35abfeaf4edfd465482bf3cfec42911",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "charts/ops-pod/templates/kubeconfig.yaml",
+        "line": 1,
+        "expression": "{{- if .Values.rbac.execNamespaces }}",
+        "sha256": "af3152d6d912c4f7a53505902fe03925d35abfeaf4edfd465482bf3cfec42911"
+      },
+      "field": "exec kubeconfig applicability",
+      "classification": "generated-permission-applicability",
+      "currentDomainAndRelations": "Nonempty execNamespaces emits fixed in-cluster HTTPS/CA/tokenFile kubeconfig, current-contextops. It selects a client location/principal, not per-container different ServiceAccount or native authorization proof.",
+      "actualRendererOrVerificationSourceRef": {
+        "path": "charts/ops-pod/templates/kubeconfig.yaml",
+        "line": 1,
+        "expression": "{{- if .Values.rbac.execNamespaces }}",
+        "sha256": "af3152d6d912c4f7a53505902fe03925d35abfeaf4edfd465482bf3cfec42911"
+      },
+      "relatedConsumerRefs": [
+        {
+          "path": "charts/ops-pod/templates/workload.yaml",
+          "line": 57,
+          "expression": "            - {name: KUBECONFIG, value: /var/run/kubeclaw-ops/kubeconfig/config}",
+          "sha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58"
+        },
+        {
+          "path": "charts/ops-pod/templates/workload.yaml",
+          "line": 76,
+          "expression": "            - {name: kubeconfig, mountPath: /var/run/kubeclaw-ops/kubeconfig, readOnly: true}",
+          "sha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58"
+        },
+        {
+          "path": "charts/ops-pod/templates/workload.yaml",
+          "line": 139,
+          "expression": "        - name: kubeconfig",
+          "sha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58"
+        }
+      ],
+      "proposedAuthority": "Retain one selected Ops deployment/provider/permission/release/credential-reference policy owner; generatedENV/kubeconfig/RBAC/network/PVC objects are not independentauthors. Read/exec scope and actualsharedServiceAccount authority mustbeexplicit in completeprofiles, not inferredfrom container labels.",
+      "activation": "Validate complete image/namespace/rolegrants/provider/credential/location/storage generation and exactrealrelease inputs beforedeployment. Nativeexec/connectivity/authstate/effects unobserved; no task/module approval from a generatedrole.",
+      "recovery": "Preserveoriginal releaseServiceAccount/role/namespace/PVC/provider/credential revision andscope; keptstatecannotbereplacedwith newlyselected latest identity or emptyvolume. Fullmodule/run andcompatiblecredentialrotation contract remainsopen.",
+      "remaining": [
+        "whole schema/profile/setting/requirement/executable futurecase joins",
+        "authentic installedrole/provider/RBAC/CNI/API/credential/storage and real effect/rejection/recovery evidence",
+        "fresh independent source definition review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-4e56376a3147d0f0",
+      "originalCandidate": {
+        "id": "SRC-4e56376a3147d0f0",
+        "source": "charts/ops-pod/templates/kubeconfig.yaml",
+        "line": 24,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "af3152d6d912c4f7a53505902fe03925d35abfeaf4edfd465482bf3cfec42911",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "af3152d6d912c4f7a53505902fe03925d35abfeaf4edfd465482bf3cfec42911",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "charts/ops-pod/templates/kubeconfig.yaml",
+        "line": 24,
+        "expression": "          namespace: {{ .Values.defaultNamespace | quote }}",
+        "sha256": "af3152d6d912c4f7a53505902fe03925d35abfeaf4edfd465482bf3cfec42911"
+      },
+      "field": "exec default namespace context",
+      "classification": "generated-scope-projection",
+      "currentDomainAndRelations": "defaultNamespace projected as kubeconfig contextnamespace; independentexecNamespaces roleprofile determines granted namespaces and Codex tokenmount; default context doesnot itself prove membership/permission.",
+      "actualRendererOrVerificationSourceRef": {
+        "path": "charts/ops-pod/templates/kubeconfig.yaml",
+        "line": 24,
+        "expression": "          namespace: {{ .Values.defaultNamespace | quote }}",
+        "sha256": "af3152d6d912c4f7a53505902fe03925d35abfeaf4edfd465482bf3cfec42911"
+      },
+      "relatedConsumerRefs": [
+        {
+          "path": "charts/ops-pod/templates/workload.yaml",
+          "line": 57,
+          "expression": "            - {name: KUBECONFIG, value: /var/run/kubeclaw-ops/kubeconfig/config}",
+          "sha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58"
+        },
+        {
+          "path": "charts/ops-pod/templates/workload.yaml",
+          "line": 76,
+          "expression": "            - {name: kubeconfig, mountPath: /var/run/kubeclaw-ops/kubeconfig, readOnly: true}",
+          "sha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58"
+        },
+        {
+          "path": "charts/ops-pod/templates/workload.yaml",
+          "line": 139,
+          "expression": "        - name: kubeconfig",
+          "sha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58"
+        }
+      ],
+      "proposedAuthority": "Retain one selected Ops deployment/provider/permission/release/credential-reference policy owner; generatedENV/kubeconfig/RBAC/network/PVC objects are not independentauthors. Read/exec scope and actualsharedServiceAccount authority mustbeexplicit in completeprofiles, not inferredfrom container labels.",
+      "activation": "Validate complete image/namespace/rolegrants/provider/credential/location/storage generation and exactrealrelease inputs beforedeployment. Nativeexec/connectivity/authstate/effects unobserved; no task/module approval from a generatedrole.",
+      "recovery": "Preserveoriginal releaseServiceAccount/role/namespace/PVC/provider/credential revision andscope; keptstatecannotbereplacedwith newlyselected latest identity or emptyvolume. Fullmodule/run andcompatiblecredentialrotation contract remainsopen.",
+      "remaining": [
+        "whole schema/profile/setting/requirement/executable futurecase joins",
+        "authentic installedrole/provider/RBAC/CNI/API/credential/storage and real effect/rejection/recovery evidence",
+        "fresh independent source definition review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-34f1d43a2603ba64",
+      "originalCandidate": {
+        "id": "SRC-34f1d43a2603ba64",
+        "source": "charts/ops-pod/templates/network.yaml",
+        "line": 1,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "1a96b733c35c853cf2064dd57caae1f061a94a023cc8637b4799464ad163e283",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "1a96b733c35c853cf2064dd57caae1f061a94a023cc8637b4799464ad163e283",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "charts/ops-pod/templates/network.yaml",
+        "line": 1,
+        "expression": "{{- if .Values.networkPolicy.enabled }}",
+        "sha256": "1a96b733c35c853cf2064dd57caae1f061a94a023cc8637b4799464ad163e283"
+      },
+      "field": "Ops network policy applicability",
+      "classification": "generated-network-topology",
+      "currentDomainAndRelations": "Enabled gates BOTH ordinary NetworkPolicy andoptionalCilium policy; ingress[] andexactegresspeers/ports retained. No actual CNI effect/network denial proof.",
+      "actualRendererOrVerificationSourceRef": {
+        "path": "charts/ops-pod/templates/network.yaml",
+        "line": 1,
+        "expression": "{{- if .Values.networkPolicy.enabled }}",
+        "sha256": "1a96b733c35c853cf2064dd57caae1f061a94a023cc8637b4799464ad163e283"
+      },
+      "relatedConsumerRefs": [
+        {
+          "path": "ops/pod/bootstrap.py",
+          "line": 40,
+          "expression": "    cidrs = sorted({str(ipaddress.ip_network(ipaddress.ip_address(address))) for address in addresses})",
+          "sha256": "f12b2fdf8b87c5a0ee1f6a643acfd6110a12698dfb908ea713a79f71f2bd990e"
+        },
+        {
+          "path": "ops/pod/bootstrap.py",
+          "line": 41,
+          "expression": "    ports = {p['port'] for s in endpoints.get('subsets', []) for p in s.get('ports', []) if p.get('name') == 'https'}",
+          "sha256": "f12b2fdf8b87c5a0ee1f6a643acfd6110a12698dfb908ea713a79f71f2bd990e"
+        },
+        {
+          "path": "ops/pod/bootstrap.py",
+          "line": 54,
+          "expression": "            'networkPolicy': {'apiServerCIDRs': cidrs, 'apiServerPort': ports.pop(), 'cilium': cilium}}",
+          "sha256": "f12b2fdf8b87c5a0ee1f6a643acfd6110a12698dfb908ea713a79f71f2bd990e"
+        }
+      ],
+      "proposedAuthority": "Retain one selected Ops deployment/provider/permission/release/credential-reference policy owner; generatedENV/kubeconfig/RBAC/network/PVC objects are not independentauthors. Read/exec scope and actualsharedServiceAccount authority mustbeexplicit in completeprofiles, not inferredfrom container labels.",
+      "activation": "Validate complete image/namespace/rolegrants/provider/credential/location/storage generation and exactrealrelease inputs beforedeployment. Nativeexec/connectivity/authstate/effects unobserved; no task/module approval from a generatedrole.",
+      "recovery": "Preserveoriginal releaseServiceAccount/role/namespace/PVC/provider/credential revision andscope; keptstatecannotbereplacedwith newlyselected latest identity or emptyvolume. Fullmodule/run andcompatiblecredentialrotation contract remainsopen.",
+      "remaining": [
+        "whole schema/profile/setting/requirement/executable futurecase joins",
+        "authentic installedrole/provider/RBAC/CNI/API/credential/storage and real effect/rejection/recovery evidence",
+        "fresh independent source definition review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-c2ceafbe36110559",
+      "originalCandidate": {
+        "id": "SRC-c2ceafbe36110559",
+        "source": "charts/ops-pod/templates/network.yaml",
+        "line": 2,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "1a96b733c35c853cf2064dd57caae1f061a94a023cc8637b4799464ad163e283",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "1a96b733c35c853cf2064dd57caae1f061a94a023cc8637b4799464ad163e283",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "charts/ops-pod/templates/network.yaml",
+        "line": 2,
+        "expression": "{{- if not .Values.networkPolicy.apiServerCIDRs }}",
+        "sha256": "1a96b733c35c853cf2064dd57caae1f061a94a023cc8637b4799464ad163e283"
+      },
+      "field": "API endpoint CIDR prerequisite",
+      "classification": "installed-provider-reference",
+      "currentDomainAndRelations": "Enabled requiresnonemptyapiServerCIDRs regardlessofCiliumflag. Bootstrap derives hostCIDRs fromactual selectedcontext endpoint/serviceaddresses; syntax/referenceisnot authentic native endpointproof.",
+      "actualRendererOrVerificationSourceRef": {
+        "path": "charts/ops-pod/templates/network.yaml",
+        "line": 2,
+        "expression": "{{- if not .Values.networkPolicy.apiServerCIDRs }}",
+        "sha256": "1a96b733c35c853cf2064dd57caae1f061a94a023cc8637b4799464ad163e283"
+      },
+      "relatedConsumerRefs": [
+        {
+          "path": "ops/pod/bootstrap.py",
+          "line": 40,
+          "expression": "    cidrs = sorted({str(ipaddress.ip_network(ipaddress.ip_address(address))) for address in addresses})",
+          "sha256": "f12b2fdf8b87c5a0ee1f6a643acfd6110a12698dfb908ea713a79f71f2bd990e"
+        },
+        {
+          "path": "ops/pod/bootstrap.py",
+          "line": 41,
+          "expression": "    ports = {p['port'] for s in endpoints.get('subsets', []) for p in s.get('ports', []) if p.get('name') == 'https'}",
+          "sha256": "f12b2fdf8b87c5a0ee1f6a643acfd6110a12698dfb908ea713a79f71f2bd990e"
+        },
+        {
+          "path": "ops/pod/bootstrap.py",
+          "line": 54,
+          "expression": "            'networkPolicy': {'apiServerCIDRs': cidrs, 'apiServerPort': ports.pop(), 'cilium': cilium}}",
+          "sha256": "f12b2fdf8b87c5a0ee1f6a643acfd6110a12698dfb908ea713a79f71f2bd990e"
+        }
+      ],
+      "proposedAuthority": "Retain one selected Ops deployment/provider/permission/release/credential-reference policy owner; generatedENV/kubeconfig/RBAC/network/PVC objects are not independentauthors. Read/exec scope and actualsharedServiceAccount authority mustbeexplicit in completeprofiles, not inferredfrom container labels.",
+      "activation": "Validate complete image/namespace/rolegrants/provider/credential/location/storage generation and exactrealrelease inputs beforedeployment. Nativeexec/connectivity/authstate/effects unobserved; no task/module approval from a generatedrole.",
+      "recovery": "Preserveoriginal releaseServiceAccount/role/namespace/PVC/provider/credential revision andscope; keptstatecannotbereplacedwith newlyselected latest identity or emptyvolume. Fullmodule/run andcompatiblecredentialrotation contract remainsopen.",
+      "remaining": [
+        "whole schema/profile/setting/requirement/executable futurecase joins",
+        "authentic installedrole/provider/RBAC/CNI/API/credential/storage and real effect/rejection/recovery evidence",
+        "fresh independent source definition review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-b5c33c239a3f84da",
+      "originalCandidate": {
+        "id": "SRC-b5c33c239a3f84da",
+        "source": "charts/ops-pod/templates/network.yaml",
+        "line": 21,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "1a96b733c35c853cf2064dd57caae1f061a94a023cc8637b4799464ad163e283",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "1a96b733c35c853cf2064dd57caae1f061a94a023cc8637b4799464ad163e283",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "charts/ops-pod/templates/network.yaml",
+        "line": 21,
+        "expression": "        {{- range .Values.networkPolicy.apiServerCIDRs }}",
+        "sha256": "1a96b733c35c853cf2064dd57caae1f061a94a023cc8637b4799464ad163e283"
+      },
+      "field": "API endpoint CIDR members",
+      "classification": "installed-provider-reference",
+      "currentDomainAndRelations": "Individualselected CIDRs rendered into distinctipBlock entries; nativeKubernetesCIDRvalidity/addresscoverage/provideridentity remainsactualexternalfact.",
+      "actualRendererOrVerificationSourceRef": {
+        "path": "charts/ops-pod/templates/network.yaml",
+        "line": 21,
+        "expression": "        {{- range .Values.networkPolicy.apiServerCIDRs }}",
+        "sha256": "1a96b733c35c853cf2064dd57caae1f061a94a023cc8637b4799464ad163e283"
+      },
+      "relatedConsumerRefs": [
+        {
+          "path": "ops/pod/bootstrap.py",
+          "line": 40,
+          "expression": "    cidrs = sorted({str(ipaddress.ip_network(ipaddress.ip_address(address))) for address in addresses})",
+          "sha256": "f12b2fdf8b87c5a0ee1f6a643acfd6110a12698dfb908ea713a79f71f2bd990e"
+        },
+        {
+          "path": "ops/pod/bootstrap.py",
+          "line": 41,
+          "expression": "    ports = {p['port'] for s in endpoints.get('subsets', []) for p in s.get('ports', []) if p.get('name') == 'https'}",
+          "sha256": "f12b2fdf8b87c5a0ee1f6a643acfd6110a12698dfb908ea713a79f71f2bd990e"
+        },
+        {
+          "path": "ops/pod/bootstrap.py",
+          "line": 54,
+          "expression": "            'networkPolicy': {'apiServerCIDRs': cidrs, 'apiServerPort': ports.pop(), 'cilium': cilium}}",
+          "sha256": "f12b2fdf8b87c5a0ee1f6a643acfd6110a12698dfb908ea713a79f71f2bd990e"
+        }
+      ],
+      "proposedAuthority": "Retain one selected Ops deployment/provider/permission/release/credential-reference policy owner; generatedENV/kubeconfig/RBAC/network/PVC objects are not independentauthors. Read/exec scope and actualsharedServiceAccount authority mustbeexplicit in completeprofiles, not inferredfrom container labels.",
+      "activation": "Validate complete image/namespace/rolegrants/provider/credential/location/storage generation and exactrealrelease inputs beforedeployment. Nativeexec/connectivity/authstate/effects unobserved; no task/module approval from a generatedrole.",
+      "recovery": "Preserveoriginal releaseServiceAccount/role/namespace/PVC/provider/credential revision andscope; keptstatecannotbereplacedwith newlyselected latest identity or emptyvolume. Fullmodule/run andcompatiblecredentialrotation contract remainsopen.",
+      "remaining": [
+        "whole schema/profile/setting/requirement/executable futurecase joins",
+        "authentic installedrole/provider/RBAC/CNI/API/credential/storage and real effect/rejection/recovery evidence",
+        "fresh independent source definition review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-7f627304c3182a95",
+      "originalCandidate": {
+        "id": "SRC-7f627304c3182a95",
+        "source": "charts/ops-pod/templates/network.yaml",
+        "line": 24,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "1a96b733c35c853cf2064dd57caae1f061a94a023cc8637b4799464ad163e283",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "1a96b733c35c853cf2064dd57caae1f061a94a023cc8637b4799464ad163e283",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "charts/ops-pod/templates/network.yaml",
+        "line": 24,
+        "expression": "      ports: [{protocol: TCP, port: 443}, {protocol: TCP, port: {{ .Values.networkPolicy.apiServerPort }}}]",
+        "sha256": "1a96b733c35c853cf2064dd57caae1f061a94a023cc8637b4799464ad163e283"
+      },
+      "field": "API server network ports",
+      "classification": "generated-network-topology",
+      "currentDomainAndRelations": "Ordinarypolicy permitsTCP443 AND selectedapiServerPort toAPI CIDRpeers. This isnetworktransport projection, notalternateAPI/CA/tokenauthor or authenticatedidentity.",
+      "actualRendererOrVerificationSourceRef": {
+        "path": "charts/ops-pod/templates/network.yaml",
+        "line": 24,
+        "expression": "      ports: [{protocol: TCP, port: 443}, {protocol: TCP, port: {{ .Values.networkPolicy.apiServerPort }}}]",
+        "sha256": "1a96b733c35c853cf2064dd57caae1f061a94a023cc8637b4799464ad163e283"
+      },
+      "relatedConsumerRefs": [
+        {
+          "path": "ops/pod/bootstrap.py",
+          "line": 40,
+          "expression": "    cidrs = sorted({str(ipaddress.ip_network(ipaddress.ip_address(address))) for address in addresses})",
+          "sha256": "f12b2fdf8b87c5a0ee1f6a643acfd6110a12698dfb908ea713a79f71f2bd990e"
+        },
+        {
+          "path": "ops/pod/bootstrap.py",
+          "line": 41,
+          "expression": "    ports = {p['port'] for s in endpoints.get('subsets', []) for p in s.get('ports', []) if p.get('name') == 'https'}",
+          "sha256": "f12b2fdf8b87c5a0ee1f6a643acfd6110a12698dfb908ea713a79f71f2bd990e"
+        },
+        {
+          "path": "ops/pod/bootstrap.py",
+          "line": 54,
+          "expression": "            'networkPolicy': {'apiServerCIDRs': cidrs, 'apiServerPort': ports.pop(), 'cilium': cilium}}",
+          "sha256": "f12b2fdf8b87c5a0ee1f6a643acfd6110a12698dfb908ea713a79f71f2bd990e"
+        }
+      ],
+      "proposedAuthority": "Retain one selected Ops deployment/provider/permission/release/credential-reference policy owner; generatedENV/kubeconfig/RBAC/network/PVC objects are not independentauthors. Read/exec scope and actualsharedServiceAccount authority mustbeexplicit in completeprofiles, not inferredfrom container labels.",
+      "activation": "Validate complete image/namespace/rolegrants/provider/credential/location/storage generation and exactrealrelease inputs beforedeployment. Nativeexec/connectivity/authstate/effects unobserved; no task/module approval from a generatedrole.",
+      "recovery": "Preserveoriginal releaseServiceAccount/role/namespace/PVC/provider/credential revision andscope; keptstatecannotbereplacedwith newlyselected latest identity or emptyvolume. Fullmodule/run andcompatiblecredentialrotation contract remainsopen.",
+      "remaining": [
+        "whole schema/profile/setting/requirement/executable futurecase joins",
+        "authentic installedrole/provider/RBAC/CNI/API/credential/storage and real effect/rejection/recovery evidence",
+        "fresh independent source definition review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-1ba29ab50f7e02e0",
+      "originalCandidate": {
+        "id": "SRC-1ba29ab50f7e02e0",
+        "source": "charts/ops-pod/templates/network.yaml",
+        "line": 30,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "1a96b733c35c853cf2064dd57caae1f061a94a023cc8637b4799464ad163e283",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "1a96b733c35c853cf2064dd57caae1f061a94a023cc8637b4799464ad163e283",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "charts/ops-pod/templates/network.yaml",
+        "line": 30,
+        "expression": "    {{- if .Values.tailscale.enabled }}",
+        "sha256": "1a96b733c35c853cf2064dd57caae1f061a94a023cc8637b4799464ad163e283"
+      },
+      "field": "Tailscale UDP applicability",
+      "classification": "generated-provider-topology",
+      "currentDomainAndRelations": "Enabled emitsUDP3478/41641 publicipBlockwithownexceptlist; ordinaryHTTPSegress andDNS remainindependent. Do notassume identicalHTTPS/UDP private-range exclusions.",
+      "actualRendererOrVerificationSourceRef": {
+        "path": "charts/ops-pod/templates/network.yaml",
+        "line": 30,
+        "expression": "    {{- if .Values.tailscale.enabled }}",
+        "sha256": "1a96b733c35c853cf2064dd57caae1f061a94a023cc8637b4799464ad163e283"
+      },
+      "relatedConsumerRefs": [
+        {
+          "path": "ops/pod/bootstrap.py",
+          "line": 40,
+          "expression": "    cidrs = sorted({str(ipaddress.ip_network(ipaddress.ip_address(address))) for address in addresses})",
+          "sha256": "f12b2fdf8b87c5a0ee1f6a643acfd6110a12698dfb908ea713a79f71f2bd990e"
+        },
+        {
+          "path": "ops/pod/bootstrap.py",
+          "line": 41,
+          "expression": "    ports = {p['port'] for s in endpoints.get('subsets', []) for p in s.get('ports', []) if p.get('name') == 'https'}",
+          "sha256": "f12b2fdf8b87c5a0ee1f6a643acfd6110a12698dfb908ea713a79f71f2bd990e"
+        },
+        {
+          "path": "ops/pod/bootstrap.py",
+          "line": 54,
+          "expression": "            'networkPolicy': {'apiServerCIDRs': cidrs, 'apiServerPort': ports.pop(), 'cilium': cilium}}",
+          "sha256": "f12b2fdf8b87c5a0ee1f6a643acfd6110a12698dfb908ea713a79f71f2bd990e"
+        }
+      ],
+      "proposedAuthority": "Retain one selected Ops deployment/provider/permission/release/credential-reference policy owner; generatedENV/kubeconfig/RBAC/network/PVC objects are not independentauthors. Read/exec scope and actualsharedServiceAccount authority mustbeexplicit in completeprofiles, not inferredfrom container labels.",
+      "activation": "Validate complete image/namespace/rolegrants/provider/credential/location/storage generation and exactrealrelease inputs beforedeployment. Nativeexec/connectivity/authstate/effects unobserved; no task/module approval from a generatedrole.",
+      "recovery": "Preserveoriginal releaseServiceAccount/role/namespace/PVC/provider/credential revision andscope; keptstatecannotbereplacedwith newlyselected latest identity or emptyvolume. Fullmodule/run andcompatiblecredentialrotation contract remainsopen.",
+      "remaining": [
+        "whole schema/profile/setting/requirement/executable futurecase joins",
+        "authentic installedrole/provider/RBAC/CNI/API/credential/storage and real effect/rejection/recovery evidence",
+        "fresh independent source definition review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-3fb547cb5eb45eee",
+      "originalCandidate": {
+        "id": "SRC-3fb547cb5eb45eee",
+        "source": "charts/ops-pod/templates/network.yaml",
+        "line": 37,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "1a96b733c35c853cf2064dd57caae1f061a94a023cc8637b4799464ad163e283",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "1a96b733c35c853cf2064dd57caae1f061a94a023cc8637b4799464ad163e283",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "charts/ops-pod/templates/network.yaml",
+        "line": 37,
+        "expression": "{{- if .Values.networkPolicy.cilium }}",
+        "sha256": "1a96b733c35c853cf2064dd57caae1f061a94a023cc8637b4799464ad163e283"
+      },
+      "field": "Cilium API-server policy applicability",
+      "classification": "generated-provider-topology",
+      "currentDomainAndRelations": "Selectedcilium flag emitscilium.io/v2 policy tokube-apiserver entity onlyinside enabledouterpolicy. ActualCRD/provider/node enforcement mustexist; declaredflagdoesnotinstallprovider.",
+      "actualRendererOrVerificationSourceRef": {
+        "path": "charts/ops-pod/templates/network.yaml",
+        "line": 37,
+        "expression": "{{- if .Values.networkPolicy.cilium }}",
+        "sha256": "1a96b733c35c853cf2064dd57caae1f061a94a023cc8637b4799464ad163e283"
+      },
+      "relatedConsumerRefs": [
+        {
+          "path": "ops/pod/bootstrap.py",
+          "line": 40,
+          "expression": "    cidrs = sorted({str(ipaddress.ip_network(ipaddress.ip_address(address))) for address in addresses})",
+          "sha256": "f12b2fdf8b87c5a0ee1f6a643acfd6110a12698dfb908ea713a79f71f2bd990e"
+        },
+        {
+          "path": "ops/pod/bootstrap.py",
+          "line": 41,
+          "expression": "    ports = {p['port'] for s in endpoints.get('subsets', []) for p in s.get('ports', []) if p.get('name') == 'https'}",
+          "sha256": "f12b2fdf8b87c5a0ee1f6a643acfd6110a12698dfb908ea713a79f71f2bd990e"
+        },
+        {
+          "path": "ops/pod/bootstrap.py",
+          "line": 54,
+          "expression": "            'networkPolicy': {'apiServerCIDRs': cidrs, 'apiServerPort': ports.pop(), 'cilium': cilium}}",
+          "sha256": "f12b2fdf8b87c5a0ee1f6a643acfd6110a12698dfb908ea713a79f71f2bd990e"
+        }
+      ],
+      "proposedAuthority": "Retain one selected Ops deployment/provider/permission/release/credential-reference policy owner; generatedENV/kubeconfig/RBAC/network/PVC objects are not independentauthors. Read/exec scope and actualsharedServiceAccount authority mustbeexplicit in completeprofiles, not inferredfrom container labels.",
+      "activation": "Validate complete image/namespace/rolegrants/provider/credential/location/storage generation and exactrealrelease inputs beforedeployment. Nativeexec/connectivity/authstate/effects unobserved; no task/module approval from a generatedrole.",
+      "recovery": "Preserveoriginal releaseServiceAccount/role/namespace/PVC/provider/credential revision andscope; keptstatecannotbereplacedwith newlyselected latest identity or emptyvolume. Fullmodule/run andcompatiblecredentialrotation contract remainsopen.",
+      "remaining": [
+        "whole schema/profile/setting/requirement/executable futurecase joins",
+        "authentic installedrole/provider/RBAC/CNI/API/credential/storage and real effect/rejection/recovery evidence",
+        "fresh independent source definition review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-b141c7661145bbfb",
+      "originalCandidate": {
+        "id": "SRC-b141c7661145bbfb",
+        "source": "charts/ops-pod/templates/network.yaml",
+        "line": 50,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "1a96b733c35c853cf2064dd57caae1f061a94a023cc8637b4799464ad163e283",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "1a96b733c35c853cf2064dd57caae1f061a94a023cc8637b4799464ad163e283",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "charts/ops-pod/templates/network.yaml",
+        "line": 50,
+        "expression": "            - {port: {{ .Values.networkPolicy.apiServerPort | quote }}, protocol: TCP}",
+        "sha256": "1a96b733c35c853cf2064dd57caae1f061a94a023cc8637b4799464ad163e283"
+      },
+      "field": "Cilium API-server port projection",
+      "classification": "generated-network-topology",
+      "currentDomainAndRelations": "CiliumtoPortsTCP443 andselectedapiServerPort quotedstring, same selectedendpointport asordinarypolicy but different providerdocument. No nativeeffectiveunion/auth guarantee.",
+      "actualRendererOrVerificationSourceRef": {
+        "path": "charts/ops-pod/templates/network.yaml",
+        "line": 50,
+        "expression": "            - {port: {{ .Values.networkPolicy.apiServerPort | quote }}, protocol: TCP}",
+        "sha256": "1a96b733c35c853cf2064dd57caae1f061a94a023cc8637b4799464ad163e283"
+      },
+      "relatedConsumerRefs": [
+        {
+          "path": "ops/pod/bootstrap.py",
+          "line": 40,
+          "expression": "    cidrs = sorted({str(ipaddress.ip_network(ipaddress.ip_address(address))) for address in addresses})",
+          "sha256": "f12b2fdf8b87c5a0ee1f6a643acfd6110a12698dfb908ea713a79f71f2bd990e"
+        },
+        {
+          "path": "ops/pod/bootstrap.py",
+          "line": 41,
+          "expression": "    ports = {p['port'] for s in endpoints.get('subsets', []) for p in s.get('ports', []) if p.get('name') == 'https'}",
+          "sha256": "f12b2fdf8b87c5a0ee1f6a643acfd6110a12698dfb908ea713a79f71f2bd990e"
+        },
+        {
+          "path": "ops/pod/bootstrap.py",
+          "line": 54,
+          "expression": "            'networkPolicy': {'apiServerCIDRs': cidrs, 'apiServerPort': ports.pop(), 'cilium': cilium}}",
+          "sha256": "f12b2fdf8b87c5a0ee1f6a643acfd6110a12698dfb908ea713a79f71f2bd990e"
+        }
+      ],
+      "proposedAuthority": "Retain one selected Ops deployment/provider/permission/release/credential-reference policy owner; generatedENV/kubeconfig/RBAC/network/PVC objects are not independentauthors. Read/exec scope and actualsharedServiceAccount authority mustbeexplicit in completeprofiles, not inferredfrom container labels.",
+      "activation": "Validate complete image/namespace/rolegrants/provider/credential/location/storage generation and exactrealrelease inputs beforedeployment. Nativeexec/connectivity/authstate/effects unobserved; no task/module approval from a generatedrole.",
+      "recovery": "Preserveoriginal releaseServiceAccount/role/namespace/PVC/provider/credential revision andscope; keptstatecannotbereplacedwith newlyselected latest identity or emptyvolume. Fullmodule/run andcompatiblecredentialrotation contract remainsopen.",
+      "remaining": [
+        "whole schema/profile/setting/requirement/executable futurecase joins",
+        "authentic installedrole/provider/RBAC/CNI/API/credential/storage and real effect/rejection/recovery evidence",
+        "fresh independent source definition review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-21697197b83483b1",
+      "originalCandidate": {
+        "id": "SRC-21697197b83483b1",
+        "source": "charts/ops-pod/templates/rbac.yaml",
+        "line": 28,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "103ed540a9b71ca0fdde5d693e5e4d07b2943910e79116bbd7206d528668874b",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "103ed540a9b71ca0fdde5d693e5e4d07b2943910e79116bbd7206d528668874b",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "charts/ops-pod/templates/rbac.yaml",
+        "line": 28,
+        "expression": "{{- range .Values.rbac.namespaces }}",
+        "sha256": "103ed540a9b71ca0fdde5d693e5e4d07b2943910e79116bbd7206d528668874b"
+      },
+      "field": "observer namespace bindings",
+      "classification": "operator-permission-profile",
+      "currentDomainAndRelations": "For eachrbac.namespaces createRoleBinding inthatnamespace torelease readerClusterRole/get-listresources, originalsingleReleaseServiceAccount subject. Separate cluster-reader binding coversnodes/Ciliumcluster policies. Valuesnamespaces isnot an installed/native grantproof.",
+      "actualRendererOrVerificationSourceRef": {
+        "path": "charts/ops-pod/templates/rbac.yaml",
+        "line": 28,
+        "expression": "{{- range .Values.rbac.namespaces }}",
+        "sha256": "103ed540a9b71ca0fdde5d693e5e4d07b2943910e79116bbd7206d528668874b"
+      },
+      "relatedConsumerRefs": [
+        {
+          "path": "charts/ops-pod/templates/workload.yaml",
+          "line": 36,
+          "expression": "      serviceAccountName: {{ $name }}",
+          "sha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58"
+        },
+        {
+          "path": "charts/ops-pod/templates/workload.yaml",
+          "line": 91,
+          "expression": "            - {name: OPS_ALLOWED_NAMESPACES, value: {{ join \",\" .Values.rbac.namespaces | quote }}}",
+          "sha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58"
+        }
+      ],
+      "proposedAuthority": "Retain one selected Ops deployment/provider/permission/release/credential-reference policy owner; generatedENV/kubeconfig/RBAC/network/PVC objects are not independentauthors. Read/exec scope and actualsharedServiceAccount authority mustbeexplicit in completeprofiles, not inferredfrom container labels.",
+      "activation": "Validate complete image/namespace/rolegrants/provider/credential/location/storage generation and exactrealrelease inputs beforedeployment. Nativeexec/connectivity/authstate/effects unobserved; no task/module approval from a generatedrole.",
+      "recovery": "Preserveoriginal releaseServiceAccount/role/namespace/PVC/provider/credential revision andscope; keptstatecannotbereplacedwith newlyselected latest identity or emptyvolume. Fullmodule/run andcompatiblecredentialrotation contract remainsopen.",
+      "remaining": [
+        "whole schema/profile/setting/requirement/executable futurecase joins",
+        "authentic installedrole/provider/RBAC/CNI/API/credential/storage and real effect/rejection/recovery evidence",
+        "fresh independent source definition review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-266f9ee52581c76d",
+      "originalCandidate": {
+        "id": "SRC-266f9ee52581c76d",
+        "source": "charts/ops-pod/templates/rbac.yaml",
+        "line": 63,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "103ed540a9b71ca0fdde5d693e5e4d07b2943910e79116bbd7206d528668874b",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "103ed540a9b71ca0fdde5d693e5e4d07b2943910e79116bbd7206d528668874b",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "charts/ops-pod/templates/rbac.yaml",
+        "line": 63,
+        "expression": "{{- range .Values.rbac.execNamespaces }}",
+        "sha256": "103ed540a9b71ca0fdde5d693e5e4d07b2943910e79116bbd7206d528668874b"
+      },
+      "field": "explicit execution namespace permissions",
+      "classification": "operator-permission-profile",
+      "currentDomainAndRelations": "For eachexecNamespaces validate string/DNSregex/len<=63 then createRole andBinding: podsget/list andpods/execget/create. Explicit operator permission selection, not task data. SubjectsameReleaseServiceAccount usedby bothcontainers; Codexmountgate differsfrom sharedRBACprincipal.",
+      "actualRendererOrVerificationSourceRef": {
+        "path": "charts/ops-pod/templates/rbac.yaml",
+        "line": 63,
+        "expression": "{{- range .Values.rbac.execNamespaces }}",
+        "sha256": "103ed540a9b71ca0fdde5d693e5e4d07b2943910e79116bbd7206d528668874b"
+      },
+      "relatedConsumerRefs": [
+        {
+          "path": "charts/ops-pod/templates/workload.yaml",
+          "line": 36,
+          "expression": "      serviceAccountName: {{ $name }}",
+          "sha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58"
+        },
+        {
+          "path": "charts/ops-pod/templates/workload.yaml",
+          "line": 55,
+          "expression": "            - {name: OPS_EXEC_NAMESPACES, value: {{ join \",\" .Values.rbac.execNamespaces | quote }}}",
+          "sha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58"
+        }
+      ],
+      "proposedAuthority": "Retain one selected Ops deployment/provider/permission/release/credential-reference policy owner; generatedENV/kubeconfig/RBAC/network/PVC objects are not independentauthors. Read/exec scope and actualsharedServiceAccount authority mustbeexplicit in completeprofiles, not inferredfrom container labels.",
+      "activation": "Validate complete image/namespace/rolegrants/provider/credential/location/storage generation and exactrealrelease inputs beforedeployment. Nativeexec/connectivity/authstate/effects unobserved; no task/module approval from a generatedrole.",
+      "recovery": "Preserveoriginal releaseServiceAccount/role/namespace/PVC/provider/credential revision andscope; keptstatecannotbereplacedwith newlyselected latest identity or emptyvolume. Fullmodule/run andcompatiblecredentialrotation contract remainsopen.",
+      "remaining": [
+        "whole schema/profile/setting/requirement/executable futurecase joins",
+        "authentic installedrole/provider/RBAC/CNI/API/credential/storage and real effect/rejection/recovery evidence",
+        "fresh independent source definition review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-45c18f0785cee423",
+      "originalCandidate": {
+        "id": "SRC-45c18f0785cee423",
+        "source": "charts/ops-pod/templates/tailscale-storage.yaml",
+        "line": 1,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "1c040641f21fb057f454ad602bb7019802f31d06455d46850a84af5cdc669d2f",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "1c040641f21fb057f454ad602bb7019802f31d06455d46850a84af5cdc669d2f",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "charts/ops-pod/templates/tailscale-storage.yaml",
+        "line": 1,
+        "expression": "{{- if .Values.tailscale.enabled }}",
+        "sha256": "1c040641f21fb057f454ad602bb7019802f31d06455d46850a84af5cdc669d2f"
+      },
+      "field": "Tailscale persistent state applicability",
+      "classification": "generated-provider-storage",
+      "currentDomainAndRelations": "Enabled emitskeptrelease-tailscale PVC1Gi RWO, optional persistence.storageClass else clusterdefault. Actualretainedvolume/provider capacity/authidentity/recovery facts mustbepinned, notfreshdefault-state substitution.",
+      "actualRendererOrVerificationSourceRef": {
+        "path": "charts/ops-pod/templates/tailscale-storage.yaml",
+        "line": 1,
+        "expression": "{{- if .Values.tailscale.enabled }}",
+        "sha256": "1c040641f21fb057f454ad602bb7019802f31d06455d46850a84af5cdc669d2f"
+      },
+      "relatedConsumerRefs": [
+        {
+          "path": "charts/ops-pod/templates/workload.yaml",
+          "line": 163,
+          "expression": "          persistentVolumeClaim: {claimName: {{ $name }}-tailscale}",
+          "sha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58"
+        },
+        {
+          "path": "charts/ops-pod/templates/workload.yaml",
+          "line": 134,
+          "expression": "            - {name: tailscale-state, mountPath: /var/lib/tailscale}",
+          "sha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58"
+        }
+      ],
+      "proposedAuthority": "Retain one selected Ops deployment/provider/permission/release/credential-reference policy owner; generatedENV/kubeconfig/RBAC/network/PVC objects are not independentauthors. Read/exec scope and actualsharedServiceAccount authority mustbeexplicit in completeprofiles, not inferredfrom container labels.",
+      "activation": "Validate complete image/namespace/rolegrants/provider/credential/location/storage generation and exactrealrelease inputs beforedeployment. Nativeexec/connectivity/authstate/effects unobserved; no task/module approval from a generatedrole.",
+      "recovery": "Preserveoriginal releaseServiceAccount/role/namespace/PVC/provider/credential revision andscope; keptstatecannotbereplacedwith newlyselected latest identity or emptyvolume. Fullmodule/run andcompatiblecredentialrotation contract remainsopen.",
+      "remaining": [
+        "whole schema/profile/setting/requirement/executable futurecase joins",
+        "authentic installedrole/provider/RBAC/CNI/API/credential/storage and real effect/rejection/recovery evidence",
+        "fresh independent source definition review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-69904e673e784e4c",
+      "originalCandidate": {
+        "id": "SRC-69904e673e784e4c",
+        "source": "charts/ops-pod/templates/workload.yaml",
+        "line": 2,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "charts/ops-pod/templates/workload.yaml",
+        "line": 2,
+        "expression": "{{- if not (regexMatch \"^.+@sha256:[a-f0-9]{64}$\" .Values.codexImage) }}",
+        "sha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58"
+      },
+      "field": "Codex image identity guard",
+      "classification": "release-reference",
+      "currentDomainAndRelations": "Selected codexImage must match^.+@sha256:[a-f0-9]{64}$, separate from actual registry/compatibility/source identity proof.",
+      "actualRendererOrVerificationSourceRef": {
+        "path": "charts/ops-pod/templates/workload.yaml",
+        "line": 2,
+        "expression": "{{- if not (regexMatch \"^.+@sha256:[a-f0-9]{64}$\" .Values.codexImage) }}",
+        "sha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58"
+      },
+      "relatedConsumerRefs": [],
+      "proposedAuthority": "Retain one selected Ops deployment/provider/permission/release/credential-reference policy owner; generatedENV/kubeconfig/RBAC/network/PVC objects are not independentauthors. Read/exec scope and actualsharedServiceAccount authority mustbeexplicit in completeprofiles, not inferredfrom container labels.",
+      "activation": "Validate complete image/namespace/rolegrants/provider/credential/location/storage generation and exactrealrelease inputs beforedeployment. Nativeexec/connectivity/authstate/effects unobserved; no task/module approval from a generatedrole.",
+      "recovery": "Preserveoriginal releaseServiceAccount/role/namespace/PVC/provider/credential revision andscope; keptstatecannotbereplacedwith newlyselected latest identity or emptyvolume. Fullmodule/run andcompatiblecredentialrotation contract remainsopen.",
+      "remaining": [
+        "whole schema/profile/setting/requirement/executable futurecase joins",
+        "authentic installedrole/provider/RBAC/CNI/API/credential/storage and real effect/rejection/recovery evidence",
+        "fresh independent source definition review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-65f8a9acf356aceb",
+      "originalCandidate": {
+        "id": "SRC-65f8a9acf356aceb",
+        "source": "charts/ops-pod/templates/workload.yaml",
+        "line": 5,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "charts/ops-pod/templates/workload.yaml",
+        "line": 5,
+        "expression": "{{- if not (regexMatch \"^.+@sha256:[a-f0-9]{64}$\" .Values.mcpImage) }}",
+        "sha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58"
+      },
+      "field": "Ops MCP image identity guard",
+      "classification": "release-reference",
+      "currentDomainAndRelations": "Same exact digest-qualified reference guard for mcpImage; not every optional sidecar image is covered by these two guards.",
+      "actualRendererOrVerificationSourceRef": {
+        "path": "charts/ops-pod/templates/workload.yaml",
+        "line": 5,
+        "expression": "{{- if not (regexMatch \"^.+@sha256:[a-f0-9]{64}$\" .Values.mcpImage) }}",
+        "sha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58"
+      },
+      "relatedConsumerRefs": [],
+      "proposedAuthority": "Retain one selected Ops deployment/provider/permission/release/credential-reference policy owner; generatedENV/kubeconfig/RBAC/network/PVC objects are not independentauthors. Read/exec scope and actualsharedServiceAccount authority mustbeexplicit in completeprofiles, not inferredfrom container labels.",
+      "activation": "Validate complete image/namespace/rolegrants/provider/credential/location/storage generation and exactrealrelease inputs beforedeployment. Nativeexec/connectivity/authstate/effects unobserved; no task/module approval from a generatedrole.",
+      "recovery": "Preserveoriginal releaseServiceAccount/role/namespace/PVC/provider/credential revision andscope; keptstatecannotbereplacedwith newlyselected latest identity or emptyvolume. Fullmodule/run andcompatiblecredentialrotation contract remainsopen.",
+      "remaining": [
+        "whole schema/profile/setting/requirement/executable futurecase joins",
+        "authentic installedrole/provider/RBAC/CNI/API/credential/storage and real effect/rejection/recovery evidence",
+        "fresh independent source definition review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-8053b0c23491b214",
+      "originalCandidate": {
+        "id": "SRC-8053b0c23491b214",
+        "source": "charts/ops-pod/templates/workload.yaml",
+        "line": 51,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "charts/ops-pod/templates/workload.yaml",
+        "line": 51,
+        "expression": "          image: {{ .Values.codexImage | quote }}",
+        "sha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58"
+      },
+      "field": "Codex container image",
+      "classification": "generated-release-projection",
+      "currentDomainAndRelations": "Actual selected codexImage container field; image entrypoint/Docker supervisor/client/persistent authstate and real image receipt must agree.",
+      "actualRendererOrVerificationSourceRef": {
+        "path": "charts/ops-pod/templates/workload.yaml",
+        "line": 51,
+        "expression": "          image: {{ .Values.codexImage | quote }}",
+        "sha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58"
+      },
+      "relatedConsumerRefs": [],
+      "proposedAuthority": "Retain one selected Ops deployment/provider/permission/release/credential-reference policy owner; generatedENV/kubeconfig/RBAC/network/PVC objects are not independentauthors. Read/exec scope and actualsharedServiceAccount authority mustbeexplicit in completeprofiles, not inferredfrom container labels.",
+      "activation": "Validate complete image/namespace/rolegrants/provider/credential/location/storage generation and exactrealrelease inputs beforedeployment. Nativeexec/connectivity/authstate/effects unobserved; no task/module approval from a generatedrole.",
+      "recovery": "Preserveoriginal releaseServiceAccount/role/namespace/PVC/provider/credential revision andscope; keptstatecannotbereplacedwith newlyselected latest identity or emptyvolume. Fullmodule/run andcompatiblecredentialrotation contract remainsopen.",
+      "remaining": [
+        "whole schema/profile/setting/requirement/executable futurecase joins",
+        "authentic installedrole/provider/RBAC/CNI/API/credential/storage and real effect/rejection/recovery evidence",
+        "fresh independent source definition review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-9776051b9d49b47f",
+      "originalCandidate": {
+        "id": "SRC-9776051b9d49b47f",
+        "source": "charts/ops-pod/templates/workload.yaml",
+        "line": 54,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "charts/ops-pod/templates/workload.yaml",
+        "line": 54,
+        "expression": "            - {name: OPS_DEFAULT_NAMESPACE, value: {{ .Values.defaultNamespace | quote }}}",
+        "sha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58"
+      },
+      "field": "Codex default namespace projection",
+      "classification": "generated-scope-projection",
+      "currentDomainAndRelations": "OPS_DEFAULT_NAMESPACE from selected defaultNamespace; generated kubeconfig default context also uses it when exec enabled. Does not itself grant API access.",
+      "actualRendererOrVerificationSourceRef": {
+        "path": "charts/ops-pod/templates/workload.yaml",
+        "line": 54,
+        "expression": "            - {name: OPS_DEFAULT_NAMESPACE, value: {{ .Values.defaultNamespace | quote }}}",
+        "sha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58"
+      },
+      "relatedConsumerRefs": [
+        {
+          "path": "charts/ops-pod/templates/kubeconfig.yaml",
+          "line": 1,
+          "expression": "{{- if .Values.rbac.execNamespaces }}",
+          "sha256": "af3152d6d912c4f7a53505902fe03925d35abfeaf4edfd465482bf3cfec42911"
+        },
+        {
+          "path": "charts/ops-pod/templates/kubeconfig.yaml",
+          "line": 24,
+          "expression": "          namespace: {{ .Values.defaultNamespace | quote }}",
+          "sha256": "af3152d6d912c4f7a53505902fe03925d35abfeaf4edfd465482bf3cfec42911"
+        }
+      ],
+      "proposedAuthority": "Retain one selected Ops deployment/provider/permission/release/credential-reference policy owner; generatedENV/kubeconfig/RBAC/network/PVC objects are not independentauthors. Read/exec scope and actualsharedServiceAccount authority mustbeexplicit in completeprofiles, not inferredfrom container labels.",
+      "activation": "Validate complete image/namespace/rolegrants/provider/credential/location/storage generation and exactrealrelease inputs beforedeployment. Nativeexec/connectivity/authstate/effects unobserved; no task/module approval from a generatedrole.",
+      "recovery": "Preserveoriginal releaseServiceAccount/role/namespace/PVC/provider/credential revision andscope; keptstatecannotbereplacedwith newlyselected latest identity or emptyvolume. Fullmodule/run andcompatiblecredentialrotation contract remainsopen.",
+      "remaining": [
+        "whole schema/profile/setting/requirement/executable futurecase joins",
+        "authentic installedrole/provider/RBAC/CNI/API/credential/storage and real effect/rejection/recovery evidence",
+        "fresh independent source definition review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-f67e7899bad3575f",
+      "originalCandidate": {
+        "id": "SRC-f67e7899bad3575f",
+        "source": "charts/ops-pod/templates/workload.yaml",
+        "line": 55,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "charts/ops-pod/templates/workload.yaml",
+        "line": 55,
+        "expression": "            - {name: OPS_EXEC_NAMESPACES, value: {{ join \",\" .Values.rbac.execNamespaces | quote }}}",
+        "sha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58"
+      },
+      "field": "Codex execution namespace projection",
+      "classification": "generated-permission-projection",
+      "currentDomainAndRelations": "Comma join of explicit rbac.execNamespaces. Current in-pod verify.py reads this ENV to check token mount and can-i get/create pods/exec; it is NOT an independently proven per-command runtime grant enforcer.",
+      "actualRendererOrVerificationSourceRef": {
+        "path": "charts/ops-pod/templates/workload.yaml",
+        "line": 55,
+        "expression": "            - {name: OPS_EXEC_NAMESPACES, value: {{ join \",\" .Values.rbac.execNamespaces | quote }}}",
+        "sha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58"
+      },
+      "relatedConsumerRefs": [
+        {
+          "path": "ops/pod/verify.py",
+          "line": 25,
+          "expression": "exec_namespaces = [item for item in os.environ.get('OPS_EXEC_NAMESPACES', '').split(',') if item]",
+          "sha256": "8ab65fbcaf4fa7c381a3811eb594e7092d1a7d652934aa2e52205921910d2d71"
+        },
+        {
+          "path": "ops/pod/verify.py",
+          "line": 26,
+          "expression": "assert Path('/var/run/secrets/kubernetes.io/serviceaccount/token').exists() == bool(exec_namespaces), 'Codex API token mount must match exec configuration'",
+          "sha256": "8ab65fbcaf4fa7c381a3811eb594e7092d1a7d652934aa2e52205921910d2d71"
+        },
+        {
+          "path": "ops/pod/verify.py",
+          "line": 27,
+          "expression": "if exec_namespaces:",
+          "sha256": "8ab65fbcaf4fa7c381a3811eb594e7092d1a7d652934aa2e52205921910d2d71"
+        },
+        {
+          "path": "ops/pod/verify.py",
+          "line": 29,
+          "expression": "    for namespace in exec_namespaces:",
+          "sha256": "8ab65fbcaf4fa7c381a3811eb594e7092d1a7d652934aa2e52205921910d2d71"
+        },
+        {
+          "path": "ops/pod/verify.py",
+          "line": 31,
+          "expression": "            subprocess.run(['kubectl', 'auth', 'can-i', verb, 'pods', '--subresource=exec', '-n', namespace, '--quiet'], check=True)",
+          "sha256": "8ab65fbcaf4fa7c381a3811eb594e7092d1a7d652934aa2e52205921910d2d71"
+        }
+      ],
+      "proposedAuthority": "Retain one selected Ops deployment/provider/permission/release/credential-reference policy owner; generatedENV/kubeconfig/RBAC/network/PVC objects are not independentauthors. Read/exec scope and actualsharedServiceAccount authority mustbeexplicit in completeprofiles, not inferredfrom container labels.",
+      "activation": "Validate complete image/namespace/rolegrants/provider/credential/location/storage generation and exactrealrelease inputs beforedeployment. Nativeexec/connectivity/authstate/effects unobserved; no task/module approval from a generatedrole.",
+      "recovery": "Preserveoriginal releaseServiceAccount/role/namespace/PVC/provider/credential revision andscope; keptstatecannotbereplacedwith newlyselected latest identity or emptyvolume. Fullmodule/run andcompatiblecredentialrotation contract remainsopen.",
+      "remaining": [
+        "whole schema/profile/setting/requirement/executable futurecase joins",
+        "authentic installedrole/provider/RBAC/CNI/API/credential/storage and real effect/rejection/recovery evidence",
+        "fresh independent source definition review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-280c9765149dcced",
+      "originalCandidate": {
+        "id": "SRC-280c9765149dcced",
+        "source": "charts/ops-pod/templates/workload.yaml",
+        "line": 56,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "charts/ops-pod/templates/workload.yaml",
+        "line": 56,
+        "expression": "            {{- if .Values.rbac.execNamespaces }}",
+        "sha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58"
+      },
+      "field": "Codex kubeconfig ENV applicability",
+      "classification": "generated-permission-applicability",
+      "currentDomainAndRelations": "Nonempty execNamespaces emitsKUBECONFIG fixed selected mount path. Empty list suppresses env andCodex API/kubeconfig mounts, not MCP token projection.",
+      "actualRendererOrVerificationSourceRef": {
+        "path": "charts/ops-pod/templates/workload.yaml",
+        "line": 56,
+        "expression": "            {{- if .Values.rbac.execNamespaces }}",
+        "sha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58"
+      },
+      "relatedConsumerRefs": [
+        {
+          "path": "charts/ops-pod/templates/kubeconfig.yaml",
+          "line": 1,
+          "expression": "{{- if .Values.rbac.execNamespaces }}",
+          "sha256": "af3152d6d912c4f7a53505902fe03925d35abfeaf4edfd465482bf3cfec42911"
+        },
+        {
+          "path": "charts/ops-pod/templates/kubeconfig.yaml",
+          "line": 24,
+          "expression": "          namespace: {{ .Values.defaultNamespace | quote }}",
+          "sha256": "af3152d6d912c4f7a53505902fe03925d35abfeaf4edfd465482bf3cfec42911"
+        }
+      ],
+      "proposedAuthority": "Retain one selected Ops deployment/provider/permission/release/credential-reference policy owner; generatedENV/kubeconfig/RBAC/network/PVC objects are not independentauthors. Read/exec scope and actualsharedServiceAccount authority mustbeexplicit in completeprofiles, not inferredfrom container labels.",
+      "activation": "Validate complete image/namespace/rolegrants/provider/credential/location/storage generation and exactrealrelease inputs beforedeployment. Nativeexec/connectivity/authstate/effects unobserved; no task/module approval from a generatedrole.",
+      "recovery": "Preserveoriginal releaseServiceAccount/role/namespace/PVC/provider/credential revision andscope; keptstatecannotbereplacedwith newlyselected latest identity or emptyvolume. Fullmodule/run andcompatiblecredentialrotation contract remainsopen.",
+      "remaining": [
+        "whole schema/profile/setting/requirement/executable futurecase joins",
+        "authentic installedrole/provider/RBAC/CNI/API/credential/storage and real effect/rejection/recovery evidence",
+        "fresh independent source definition review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-b4679744db1fe484",
+      "originalCandidate": {
+        "id": "SRC-b4679744db1fe484",
+        "source": "charts/ops-pod/templates/workload.yaml",
+        "line": 74,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "charts/ops-pod/templates/workload.yaml",
+        "line": 74,
+        "expression": "            {{- if .Values.rbac.execNamespaces }}",
+        "sha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58"
+      },
+      "field": "Codex API credential/config mount applicability",
+      "classification": "generated-permission-applicability",
+      "currentDomainAndRelations": "Nonempty execNamespaces mounts projected kube-api and generated kubeconfig into Codex. MCP always mounts kube-api. Both use pod Release ServiceAccount, not separate container-specific RBAC principals.",
+      "actualRendererOrVerificationSourceRef": {
+        "path": "charts/ops-pod/templates/workload.yaml",
+        "line": 74,
+        "expression": "            {{- if .Values.rbac.execNamespaces }}",
+        "sha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58"
+      },
+      "relatedConsumerRefs": [
+        {
+          "path": "charts/ops-pod/templates/kubeconfig.yaml",
+          "line": 1,
+          "expression": "{{- if .Values.rbac.execNamespaces }}",
+          "sha256": "af3152d6d912c4f7a53505902fe03925d35abfeaf4edfd465482bf3cfec42911"
+        },
+        {
+          "path": "charts/ops-pod/templates/kubeconfig.yaml",
+          "line": 24,
+          "expression": "          namespace: {{ .Values.defaultNamespace | quote }}",
+          "sha256": "af3152d6d912c4f7a53505902fe03925d35abfeaf4edfd465482bf3cfec42911"
+        }
+      ],
+      "proposedAuthority": "Retain one selected Ops deployment/provider/permission/release/credential-reference policy owner; generatedENV/kubeconfig/RBAC/network/PVC objects are not independentauthors. Read/exec scope and actualsharedServiceAccount authority mustbeexplicit in completeprofiles, not inferredfrom container labels.",
+      "activation": "Validate complete image/namespace/rolegrants/provider/credential/location/storage generation and exactrealrelease inputs beforedeployment. Nativeexec/connectivity/authstate/effects unobserved; no task/module approval from a generatedrole.",
+      "recovery": "Preserveoriginal releaseServiceAccount/role/namespace/PVC/provider/credential revision andscope; keptstatecannotbereplacedwith newlyselected latest identity or emptyvolume. Fullmodule/run andcompatiblecredentialrotation contract remainsopen.",
+      "remaining": [
+        "whole schema/profile/setting/requirement/executable futurecase joins",
+        "authentic installedrole/provider/RBAC/CNI/API/credential/storage and real effect/rejection/recovery evidence",
+        "fresh independent source definition review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-92db5ba2e7cddfef",
+      "originalCandidate": {
+        "id": "SRC-92db5ba2e7cddfef",
+        "source": "charts/ops-pod/templates/workload.yaml",
+        "line": 86,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "charts/ops-pod/templates/workload.yaml",
+        "line": 86,
+        "expression": "          image: {{ .Values.mcpImage | quote }}",
+        "sha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58"
+      },
+      "field": "Ops MCP container image",
+      "classification": "generated-release-projection",
+      "currentDomainAndRelations": "Actual mcpImage container field with separate digest guard; HTTP/namespace/credential config and real installed loader/image identity require coherent generation.",
+      "actualRendererOrVerificationSourceRef": {
+        "path": "charts/ops-pod/templates/workload.yaml",
+        "line": 86,
+        "expression": "          image: {{ .Values.mcpImage | quote }}",
+        "sha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58"
+      },
+      "relatedConsumerRefs": [],
+      "proposedAuthority": "Retain one selected Ops deployment/provider/permission/release/credential-reference policy owner; generatedENV/kubeconfig/RBAC/network/PVC objects are not independentauthors. Read/exec scope and actualsharedServiceAccount authority mustbeexplicit in completeprofiles, not inferredfrom container labels.",
+      "activation": "Validate complete image/namespace/rolegrants/provider/credential/location/storage generation and exactrealrelease inputs beforedeployment. Nativeexec/connectivity/authstate/effects unobserved; no task/module approval from a generatedrole.",
+      "recovery": "Preserveoriginal releaseServiceAccount/role/namespace/PVC/provider/credential revision andscope; keptstatecannotbereplacedwith newlyselected latest identity or emptyvolume. Fullmodule/run andcompatiblecredentialrotation contract remainsopen.",
+      "remaining": [
+        "whole schema/profile/setting/requirement/executable futurecase joins",
+        "authentic installedrole/provider/RBAC/CNI/API/credential/storage and real effect/rejection/recovery evidence",
+        "fresh independent source definition review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-fb48f6f5e00fdb81",
+      "originalCandidate": {
+        "id": "SRC-fb48f6f5e00fdb81",
+        "source": "charts/ops-pod/templates/workload.yaml",
+        "line": 90,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "charts/ops-pod/templates/workload.yaml",
+        "line": 90,
+        "expression": "            - {name: OPS_DEFAULT_NAMESPACE, value: {{ .Values.defaultNamespace | quote }}}",
+        "sha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58"
+      },
+      "field": "MCP default namespace projection",
+      "classification": "generated-scope-projection",
+      "currentDomainAndRelations": "Selected defaultNamespace feeds actual MCP config loader. It must be included in parsed allowed list; names are references to existing scope, not new grants.",
+      "actualRendererOrVerificationSourceRef": {
+        "path": "charts/ops-pod/templates/workload.yaml",
+        "line": 90,
+        "expression": "            - {name: OPS_DEFAULT_NAMESPACE, value: {{ .Values.defaultNamespace | quote }}}",
+        "sha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58"
+      },
+      "relatedConsumerRefs": [
+        {
+          "path": "tools/ops-mcp/src/config.mjs",
+          "line": 1,
+          "expression": "function allowedNamespaces(value, defaultNamespace, argoNamespace) {",
+          "sha256": "3bb1b2b4caf43be233ad6fafaccf644702507442b93de1139e1be8babd9f529c"
+        },
+        {
+          "path": "tools/ops-mcp/src/config.mjs",
+          "line": 2,
+          "expression": "  const namespaces = (value ?? defaultNamespace).split(',');",
+          "sha256": "3bb1b2b4caf43be233ad6fafaccf644702507442b93de1139e1be8babd9f529c"
+        },
+        {
+          "path": "tools/ops-mcp/src/config.mjs",
+          "line": 4,
+          "expression": "  if (!validNamespace(argoNamespace) || !namespaces.includes(defaultNamespace) || !namespaces.every(validNamespace)) {",
+          "sha256": "3bb1b2b4caf43be233ad6fafaccf644702507442b93de1139e1be8babd9f529c"
+        },
+        {
+          "path": "tools/ops-mcp/src/config.mjs",
+          "line": 16,
+          "expression": "  const defaultNamespace = environment.OPS_DEFAULT_NAMESPACE ?? 'kubeclaw';",
+          "sha256": "3bb1b2b4caf43be233ad6fafaccf644702507442b93de1139e1be8babd9f529c"
+        },
+        {
+          "path": "tools/ops-mcp/src/config.mjs",
+          "line": 18,
+          "expression": "  return Object.freeze({ port, host, localOnly, defaultNamespace, argoNamespace,",
+          "sha256": "3bb1b2b4caf43be233ad6fafaccf644702507442b93de1139e1be8babd9f529c"
+        },
+        {
+          "path": "tools/ops-mcp/src/config.mjs",
+          "line": 19,
+          "expression": "    namespaces: allowedNamespaces(environment.OPS_ALLOWED_NAMESPACES, defaultNamespace, argoNamespace),",
+          "sha256": "3bb1b2b4caf43be233ad6fafaccf644702507442b93de1139e1be8babd9f529c"
+        },
+        {
+          "path": "tools/ops-mcp/src/config.mjs",
+          "line": 1,
+          "expression": "function allowedNamespaces(value, defaultNamespace, argoNamespace) {",
+          "sha256": "3bb1b2b4caf43be233ad6fafaccf644702507442b93de1139e1be8babd9f529c"
+        },
+        {
+          "path": "tools/ops-mcp/src/config.mjs",
+          "line": 4,
+          "expression": "  if (!validNamespace(argoNamespace) || !namespaces.includes(defaultNamespace) || !namespaces.every(validNamespace)) {",
+          "sha256": "3bb1b2b4caf43be233ad6fafaccf644702507442b93de1139e1be8babd9f529c"
+        },
+        {
+          "path": "tools/ops-mcp/src/config.mjs",
+          "line": 17,
+          "expression": "  const argoNamespace = environment.ARGOCD_NAMESPACE ?? 'argocd';",
+          "sha256": "3bb1b2b4caf43be233ad6fafaccf644702507442b93de1139e1be8babd9f529c"
+        },
+        {
+          "path": "tools/ops-mcp/src/config.mjs",
+          "line": 18,
+          "expression": "  return Object.freeze({ port, host, localOnly, defaultNamespace, argoNamespace,",
+          "sha256": "3bb1b2b4caf43be233ad6fafaccf644702507442b93de1139e1be8babd9f529c"
+        },
+        {
+          "path": "tools/ops-mcp/src/config.mjs",
+          "line": 19,
+          "expression": "    namespaces: allowedNamespaces(environment.OPS_ALLOWED_NAMESPACES, defaultNamespace, argoNamespace),",
+          "sha256": "3bb1b2b4caf43be233ad6fafaccf644702507442b93de1139e1be8babd9f529c"
+        }
+      ],
+      "proposedAuthority": "Retain one selected Ops deployment/provider/permission/release/credential-reference policy owner; generatedENV/kubeconfig/RBAC/network/PVC objects are not independentauthors. Read/exec scope and actualsharedServiceAccount authority mustbeexplicit in completeprofiles, not inferredfrom container labels.",
+      "activation": "Validate complete image/namespace/rolegrants/provider/credential/location/storage generation and exactrealrelease inputs beforedeployment. Nativeexec/connectivity/authstate/effects unobserved; no task/module approval from a generatedrole.",
+      "recovery": "Preserveoriginal releaseServiceAccount/role/namespace/PVC/provider/credential revision andscope; keptstatecannotbereplacedwith newlyselected latest identity or emptyvolume. Fullmodule/run andcompatiblecredentialrotation contract remainsopen.",
+      "remaining": [
+        "whole schema/profile/setting/requirement/executable futurecase joins",
+        "authentic installedrole/provider/RBAC/CNI/API/credential/storage and real effect/rejection/recovery evidence",
+        "fresh independent source definition review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-1885e83d3f76b091",
+      "originalCandidate": {
+        "id": "SRC-1885e83d3f76b091",
+        "source": "charts/ops-pod/templates/workload.yaml",
+        "line": 91,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "charts/ops-pod/templates/workload.yaml",
+        "line": 91,
+        "expression": "            - {name: OPS_ALLOWED_NAMESPACES, value: {{ join \",\" .Values.rbac.namespaces | quote }}}",
+        "sha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58"
+      },
+      "field": "MCP allowed namespace projection",
+      "classification": "generated-permission-projection",
+      "currentDomainAndRelations": "Comma join of rbac.namespaces, parsed withouttrim/dedup aftervalidation by actual MCP loader; RoleBindings forsame list separate from actual native scope/permissions.",
+      "actualRendererOrVerificationSourceRef": {
+        "path": "charts/ops-pod/templates/workload.yaml",
+        "line": 91,
+        "expression": "            - {name: OPS_ALLOWED_NAMESPACES, value: {{ join \",\" .Values.rbac.namespaces | quote }}}",
+        "sha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58"
+      },
+      "relatedConsumerRefs": [
+        {
+          "path": "tools/ops-mcp/src/config.mjs",
+          "line": 1,
+          "expression": "function allowedNamespaces(value, defaultNamespace, argoNamespace) {",
+          "sha256": "3bb1b2b4caf43be233ad6fafaccf644702507442b93de1139e1be8babd9f529c"
+        },
+        {
+          "path": "tools/ops-mcp/src/config.mjs",
+          "line": 2,
+          "expression": "  const namespaces = (value ?? defaultNamespace).split(',');",
+          "sha256": "3bb1b2b4caf43be233ad6fafaccf644702507442b93de1139e1be8babd9f529c"
+        },
+        {
+          "path": "tools/ops-mcp/src/config.mjs",
+          "line": 4,
+          "expression": "  if (!validNamespace(argoNamespace) || !namespaces.includes(defaultNamespace) || !namespaces.every(validNamespace)) {",
+          "sha256": "3bb1b2b4caf43be233ad6fafaccf644702507442b93de1139e1be8babd9f529c"
+        },
+        {
+          "path": "tools/ops-mcp/src/config.mjs",
+          "line": 16,
+          "expression": "  const defaultNamespace = environment.OPS_DEFAULT_NAMESPACE ?? 'kubeclaw';",
+          "sha256": "3bb1b2b4caf43be233ad6fafaccf644702507442b93de1139e1be8babd9f529c"
+        },
+        {
+          "path": "tools/ops-mcp/src/config.mjs",
+          "line": 18,
+          "expression": "  return Object.freeze({ port, host, localOnly, defaultNamespace, argoNamespace,",
+          "sha256": "3bb1b2b4caf43be233ad6fafaccf644702507442b93de1139e1be8babd9f529c"
+        },
+        {
+          "path": "tools/ops-mcp/src/config.mjs",
+          "line": 19,
+          "expression": "    namespaces: allowedNamespaces(environment.OPS_ALLOWED_NAMESPACES, defaultNamespace, argoNamespace),",
+          "sha256": "3bb1b2b4caf43be233ad6fafaccf644702507442b93de1139e1be8babd9f529c"
+        },
+        {
+          "path": "tools/ops-mcp/src/config.mjs",
+          "line": 1,
+          "expression": "function allowedNamespaces(value, defaultNamespace, argoNamespace) {",
+          "sha256": "3bb1b2b4caf43be233ad6fafaccf644702507442b93de1139e1be8babd9f529c"
+        },
+        {
+          "path": "tools/ops-mcp/src/config.mjs",
+          "line": 4,
+          "expression": "  if (!validNamespace(argoNamespace) || !namespaces.includes(defaultNamespace) || !namespaces.every(validNamespace)) {",
+          "sha256": "3bb1b2b4caf43be233ad6fafaccf644702507442b93de1139e1be8babd9f529c"
+        },
+        {
+          "path": "tools/ops-mcp/src/config.mjs",
+          "line": 17,
+          "expression": "  const argoNamespace = environment.ARGOCD_NAMESPACE ?? 'argocd';",
+          "sha256": "3bb1b2b4caf43be233ad6fafaccf644702507442b93de1139e1be8babd9f529c"
+        },
+        {
+          "path": "tools/ops-mcp/src/config.mjs",
+          "line": 18,
+          "expression": "  return Object.freeze({ port, host, localOnly, defaultNamespace, argoNamespace,",
+          "sha256": "3bb1b2b4caf43be233ad6fafaccf644702507442b93de1139e1be8babd9f529c"
+        },
+        {
+          "path": "tools/ops-mcp/src/config.mjs",
+          "line": 19,
+          "expression": "    namespaces: allowedNamespaces(environment.OPS_ALLOWED_NAMESPACES, defaultNamespace, argoNamespace),",
+          "sha256": "3bb1b2b4caf43be233ad6fafaccf644702507442b93de1139e1be8babd9f529c"
+        }
+      ],
+      "proposedAuthority": "Retain one selected Ops deployment/provider/permission/release/credential-reference policy owner; generatedENV/kubeconfig/RBAC/network/PVC objects are not independentauthors. Read/exec scope and actualsharedServiceAccount authority mustbeexplicit in completeprofiles, not inferredfrom container labels.",
+      "activation": "Validate complete image/namespace/rolegrants/provider/credential/location/storage generation and exactrealrelease inputs beforedeployment. Nativeexec/connectivity/authstate/effects unobserved; no task/module approval from a generatedrole.",
+      "recovery": "Preserveoriginal releaseServiceAccount/role/namespace/PVC/provider/credential revision andscope; keptstatecannotbereplacedwith newlyselected latest identity or emptyvolume. Fullmodule/run andcompatiblecredentialrotation contract remainsopen.",
+      "remaining": [
+        "whole schema/profile/setting/requirement/executable futurecase joins",
+        "authentic installedrole/provider/RBAC/CNI/API/credential/storage and real effect/rejection/recovery evidence",
+        "fresh independent source definition review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-7da5dbcaa8be2710",
+      "originalCandidate": {
+        "id": "SRC-7da5dbcaa8be2710",
+        "source": "charts/ops-pod/templates/workload.yaml",
+        "line": 92,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "charts/ops-pod/templates/workload.yaml",
+        "line": 92,
+        "expression": "            - {name: ARGOCD_NAMESPACE, value: {{ .Values.argoNamespace | quote }}}",
+        "sha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58"
+      },
+      "field": "MCP Argo namespace projection",
+      "classification": "installed-service-reference",
+      "currentDomainAndRelations": "Selected argoNamespace independently validatedDNS shape but not required in MCPallowedlist; actual Argo reader uses this separate namespace, whose real RoleBinding/provider availability is an unclosed join.",
+      "actualRendererOrVerificationSourceRef": {
+        "path": "charts/ops-pod/templates/workload.yaml",
+        "line": 92,
+        "expression": "            - {name: ARGOCD_NAMESPACE, value: {{ .Values.argoNamespace | quote }}}",
+        "sha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58"
+      },
+      "relatedConsumerRefs": [
+        {
+          "path": "tools/ops-mcp/src/config.mjs",
+          "line": 1,
+          "expression": "function allowedNamespaces(value, defaultNamespace, argoNamespace) {",
+          "sha256": "3bb1b2b4caf43be233ad6fafaccf644702507442b93de1139e1be8babd9f529c"
+        },
+        {
+          "path": "tools/ops-mcp/src/config.mjs",
+          "line": 2,
+          "expression": "  const namespaces = (value ?? defaultNamespace).split(',');",
+          "sha256": "3bb1b2b4caf43be233ad6fafaccf644702507442b93de1139e1be8babd9f529c"
+        },
+        {
+          "path": "tools/ops-mcp/src/config.mjs",
+          "line": 4,
+          "expression": "  if (!validNamespace(argoNamespace) || !namespaces.includes(defaultNamespace) || !namespaces.every(validNamespace)) {",
+          "sha256": "3bb1b2b4caf43be233ad6fafaccf644702507442b93de1139e1be8babd9f529c"
+        },
+        {
+          "path": "tools/ops-mcp/src/config.mjs",
+          "line": 16,
+          "expression": "  const defaultNamespace = environment.OPS_DEFAULT_NAMESPACE ?? 'kubeclaw';",
+          "sha256": "3bb1b2b4caf43be233ad6fafaccf644702507442b93de1139e1be8babd9f529c"
+        },
+        {
+          "path": "tools/ops-mcp/src/config.mjs",
+          "line": 18,
+          "expression": "  return Object.freeze({ port, host, localOnly, defaultNamespace, argoNamespace,",
+          "sha256": "3bb1b2b4caf43be233ad6fafaccf644702507442b93de1139e1be8babd9f529c"
+        },
+        {
+          "path": "tools/ops-mcp/src/config.mjs",
+          "line": 19,
+          "expression": "    namespaces: allowedNamespaces(environment.OPS_ALLOWED_NAMESPACES, defaultNamespace, argoNamespace),",
+          "sha256": "3bb1b2b4caf43be233ad6fafaccf644702507442b93de1139e1be8babd9f529c"
+        },
+        {
+          "path": "tools/ops-mcp/src/config.mjs",
+          "line": 1,
+          "expression": "function allowedNamespaces(value, defaultNamespace, argoNamespace) {",
+          "sha256": "3bb1b2b4caf43be233ad6fafaccf644702507442b93de1139e1be8babd9f529c"
+        },
+        {
+          "path": "tools/ops-mcp/src/config.mjs",
+          "line": 4,
+          "expression": "  if (!validNamespace(argoNamespace) || !namespaces.includes(defaultNamespace) || !namespaces.every(validNamespace)) {",
+          "sha256": "3bb1b2b4caf43be233ad6fafaccf644702507442b93de1139e1be8babd9f529c"
+        },
+        {
+          "path": "tools/ops-mcp/src/config.mjs",
+          "line": 17,
+          "expression": "  const argoNamespace = environment.ARGOCD_NAMESPACE ?? 'argocd';",
+          "sha256": "3bb1b2b4caf43be233ad6fafaccf644702507442b93de1139e1be8babd9f529c"
+        },
+        {
+          "path": "tools/ops-mcp/src/config.mjs",
+          "line": 18,
+          "expression": "  return Object.freeze({ port, host, localOnly, defaultNamespace, argoNamespace,",
+          "sha256": "3bb1b2b4caf43be233ad6fafaccf644702507442b93de1139e1be8babd9f529c"
+        },
+        {
+          "path": "tools/ops-mcp/src/config.mjs",
+          "line": 19,
+          "expression": "    namespaces: allowedNamespaces(environment.OPS_ALLOWED_NAMESPACES, defaultNamespace, argoNamespace),",
+          "sha256": "3bb1b2b4caf43be233ad6fafaccf644702507442b93de1139e1be8babd9f529c"
+        }
+      ],
+      "proposedAuthority": "Retain one selected Ops deployment/provider/permission/release/credential-reference policy owner; generatedENV/kubeconfig/RBAC/network/PVC objects are not independentauthors. Read/exec scope and actualsharedServiceAccount authority mustbeexplicit in completeprofiles, not inferredfrom container labels.",
+      "activation": "Validate complete image/namespace/rolegrants/provider/credential/location/storage generation and exactrealrelease inputs beforedeployment. Nativeexec/connectivity/authstate/effects unobserved; no task/module approval from a generatedrole.",
+      "recovery": "Preserveoriginal releaseServiceAccount/role/namespace/PVC/provider/credential revision andscope; keptstatecannotbereplacedwith newlyselected latest identity or emptyvolume. Fullmodule/run andcompatiblecredentialrotation contract remainsopen.",
+      "remaining": [
+        "whole schema/profile/setting/requirement/executable futurecase joins",
+        "authentic installedrole/provider/RBAC/CNI/API/credential/storage and real effect/rejection/recovery evidence",
+        "fresh independent source definition review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-81b313316a4b04a2",
+      "originalCandidate": {
+        "id": "SRC-81b313316a4b04a2",
+        "source": "charts/ops-pod/templates/workload.yaml",
+        "line": 113,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "charts/ops-pod/templates/workload.yaml",
+        "line": 113,
+        "expression": "        {{- if .Values.tailscale.enabled }}",
+        "sha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58"
+      },
+      "field": "Tailscale sidecar applicability",
+      "classification": "generated-provider-applicability",
+      "currentDomainAndRelations": "Selected tailscale.enabled emits userspace sidecar with own state PVC/mount, authSecret, localSOCKS1055, noNET_ADMIN. No login/connectivity/proxy availability proof from rendering.",
+      "actualRendererOrVerificationSourceRef": {
+        "path": "charts/ops-pod/templates/workload.yaml",
+        "line": 113,
+        "expression": "        {{- if .Values.tailscale.enabled }}",
+        "sha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58"
+      },
+      "relatedConsumerRefs": [
+        {
+          "path": "charts/ops-pod/templates/tailscale-storage.yaml",
+          "line": 1,
+          "expression": "{{- if .Values.tailscale.enabled }}",
+          "sha256": "1c040641f21fb057f454ad602bb7019802f31d06455d46850a84af5cdc669d2f"
+        },
+        {
+          "path": "charts/ops-pod/templates/network.yaml",
+          "line": 30,
+          "expression": "    {{- if .Values.tailscale.enabled }}",
+          "sha256": "1a96b733c35c853cf2064dd57caae1f061a94a023cc8637b4799464ad163e283"
+        }
+      ],
+      "proposedAuthority": "Retain one selected Ops deployment/provider/permission/release/credential-reference policy owner; generatedENV/kubeconfig/RBAC/network/PVC objects are not independentauthors. Read/exec scope and actualsharedServiceAccount authority mustbeexplicit in completeprofiles, not inferredfrom container labels.",
+      "activation": "Validate complete image/namespace/rolegrants/provider/credential/location/storage generation and exactrealrelease inputs beforedeployment. Nativeexec/connectivity/authstate/effects unobserved; no task/module approval from a generatedrole.",
+      "recovery": "Preserveoriginal releaseServiceAccount/role/namespace/PVC/provider/credential revision andscope; keptstatecannotbereplacedwith newlyselected latest identity or emptyvolume. Fullmodule/run andcompatiblecredentialrotation contract remainsopen.",
+      "remaining": [
+        "whole schema/profile/setting/requirement/executable futurecase joins",
+        "authentic installedrole/provider/RBAC/CNI/API/credential/storage and real effect/rejection/recovery evidence",
+        "fresh independent source definition review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-9036936df0643ada",
+      "originalCandidate": {
+        "id": "SRC-9036936df0643ada",
+        "source": "charts/ops-pod/templates/workload.yaml",
+        "line": 115,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "charts/ops-pod/templates/workload.yaml",
+        "line": 115,
+        "expression": "          image: {{ .Values.tailscale.image | quote }}",
+        "sha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58"
+      },
+      "field": "Tailscale sidecar image",
+      "classification": "release-reference",
+      "currentDomainAndRelations": "Direct selected tailscale.image string; current default istag-qualified, no immutable regex guard for this sidecar in workloadtemplate. Selected provider/version/digest compatibility remains separate approval/release definition.",
+      "actualRendererOrVerificationSourceRef": {
+        "path": "charts/ops-pod/templates/workload.yaml",
+        "line": 115,
+        "expression": "          image: {{ .Values.tailscale.image | quote }}",
+        "sha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58"
+      },
+      "relatedConsumerRefs": [],
+      "proposedAuthority": "Retain one selected Ops deployment/provider/permission/release/credential-reference policy owner; generatedENV/kubeconfig/RBAC/network/PVC objects are not independentauthors. Read/exec scope and actualsharedServiceAccount authority mustbeexplicit in completeprofiles, not inferredfrom container labels.",
+      "activation": "Validate complete image/namespace/rolegrants/provider/credential/location/storage generation and exactrealrelease inputs beforedeployment. Nativeexec/connectivity/authstate/effects unobserved; no task/module approval from a generatedrole.",
+      "recovery": "Preserveoriginal releaseServiceAccount/role/namespace/PVC/provider/credential revision andscope; keptstatecannotbereplacedwith newlyselected latest identity or emptyvolume. Fullmodule/run andcompatiblecredentialrotation contract remainsopen.",
+      "remaining": [
+        "whole schema/profile/setting/requirement/executable futurecase joins",
+        "authentic installedrole/provider/RBAC/CNI/API/credential/storage and real effect/rejection/recovery evidence",
+        "fresh independent source definition review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-d114e172addb9dac",
+      "originalCandidate": {
+        "id": "SRC-d114e172addb9dac",
+        "source": "charts/ops-pod/templates/workload.yaml",
+        "line": 123,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "charts/ops-pod/templates/workload.yaml",
+        "line": 123,
+        "expression": "            - {name: TS_HOSTNAME, value: {{ .Values.tailscale.hostname | quote }}}",
+        "sha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58"
+      },
+      "field": "Tailscale hostname projection",
+      "classification": "installed-provider-reference",
+      "currentDomainAndRelations": "TS_HOSTNAME selected reference, not newly authorized tailnet actor/domain/provider registration; authentic original tailnet identity required.",
+      "actualRendererOrVerificationSourceRef": {
+        "path": "charts/ops-pod/templates/workload.yaml",
+        "line": 123,
+        "expression": "            - {name: TS_HOSTNAME, value: {{ .Values.tailscale.hostname | quote }}}",
+        "sha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58"
+      },
+      "relatedConsumerRefs": [],
+      "proposedAuthority": "Retain one selected Ops deployment/provider/permission/release/credential-reference policy owner; generatedENV/kubeconfig/RBAC/network/PVC objects are not independentauthors. Read/exec scope and actualsharedServiceAccount authority mustbeexplicit in completeprofiles, not inferredfrom container labels.",
+      "activation": "Validate complete image/namespace/rolegrants/provider/credential/location/storage generation and exactrealrelease inputs beforedeployment. Nativeexec/connectivity/authstate/effects unobserved; no task/module approval from a generatedrole.",
+      "recovery": "Preserveoriginal releaseServiceAccount/role/namespace/PVC/provider/credential revision andscope; keptstatecannotbereplacedwith newlyselected latest identity or emptyvolume. Fullmodule/run andcompatiblecredentialrotation contract remainsopen.",
+      "remaining": [
+        "whole schema/profile/setting/requirement/executable futurecase joins",
+        "authentic installedrole/provider/RBAC/CNI/API/credential/storage and real effect/rejection/recovery evidence",
+        "fresh independent source definition review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-62bd6ced5c15a00e",
+      "originalCandidate": {
+        "id": "SRC-62bd6ced5c15a00e",
+        "source": "charts/ops-pod/templates/workload.yaml",
+        "line": 124,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "charts/ops-pod/templates/workload.yaml",
+        "line": 124,
+        "expression": "            - {name: TS_EXTRA_ARGS, value: {{ .Values.tailscale.extraArgs | quote }}}",
+        "sha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58"
+      },
+      "field": "Tailscale extra argument projection",
+      "classification": "provider-configuration-policy",
+      "currentDomainAndRelations": "TS_EXTRA_ARGS explicit selected string; current default--accept-dns=false. Exact supported CLI semantics/identity/proxy effects require selected installed provider, no arbitrary grant expansion.",
+      "actualRendererOrVerificationSourceRef": {
+        "path": "charts/ops-pod/templates/workload.yaml",
+        "line": 124,
+        "expression": "            - {name: TS_EXTRA_ARGS, value: {{ .Values.tailscale.extraArgs | quote }}}",
+        "sha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58"
+      },
+      "relatedConsumerRefs": [],
+      "proposedAuthority": "Retain one selected Ops deployment/provider/permission/release/credential-reference policy owner; generatedENV/kubeconfig/RBAC/network/PVC objects are not independentauthors. Read/exec scope and actualsharedServiceAccount authority mustbeexplicit in completeprofiles, not inferredfrom container labels.",
+      "activation": "Validate complete image/namespace/rolegrants/provider/credential/location/storage generation and exactrealrelease inputs beforedeployment. Nativeexec/connectivity/authstate/effects unobserved; no task/module approval from a generatedrole.",
+      "recovery": "Preserveoriginal releaseServiceAccount/role/namespace/PVC/provider/credential revision andscope; keptstatecannotbereplacedwith newlyselected latest identity or emptyvolume. Fullmodule/run andcompatiblecredentialrotation contract remainsopen.",
+      "remaining": [
+        "whole schema/profile/setting/requirement/executable futurecase joins",
+        "authentic installedrole/provider/RBAC/CNI/API/credential/storage and real effect/rejection/recovery evidence",
+        "fresh independent source definition review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-99d9389465e95b2c",
+      "originalCandidate": {
+        "id": "SRC-99d9389465e95b2c",
+        "source": "charts/ops-pod/templates/workload.yaml",
+        "line": 138,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "charts/ops-pod/templates/workload.yaml",
+        "line": 138,
+        "expression": "        {{- if .Values.rbac.execNamespaces }}",
+        "sha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58"
+      },
+      "field": "kubeconfig volume applicability",
+      "classification": "generated-permission-applicability",
+      "currentDomainAndRelations": "Nonempty execNamespaces emits release kubeconfigConfigMap volume; actual Codex mount and env gates independent source clauses withsame selection.",
+      "actualRendererOrVerificationSourceRef": {
+        "path": "charts/ops-pod/templates/workload.yaml",
+        "line": 138,
+        "expression": "        {{- if .Values.rbac.execNamespaces }}",
+        "sha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58"
+      },
+      "relatedConsumerRefs": [
+        {
+          "path": "charts/ops-pod/templates/kubeconfig.yaml",
+          "line": 1,
+          "expression": "{{- if .Values.rbac.execNamespaces }}",
+          "sha256": "af3152d6d912c4f7a53505902fe03925d35abfeaf4edfd465482bf3cfec42911"
+        },
+        {
+          "path": "charts/ops-pod/templates/kubeconfig.yaml",
+          "line": 24,
+          "expression": "          namespace: {{ .Values.defaultNamespace | quote }}",
+          "sha256": "af3152d6d912c4f7a53505902fe03925d35abfeaf4edfd465482bf3cfec42911"
+        }
+      ],
+      "proposedAuthority": "Retain one selected Ops deployment/provider/permission/release/credential-reference policy owner; generatedENV/kubeconfig/RBAC/network/PVC objects are not independentauthors. Read/exec scope and actualsharedServiceAccount authority mustbeexplicit in completeprofiles, not inferredfrom container labels.",
+      "activation": "Validate complete image/namespace/rolegrants/provider/credential/location/storage generation and exactrealrelease inputs beforedeployment. Nativeexec/connectivity/authstate/effects unobserved; no task/module approval from a generatedrole.",
+      "recovery": "Preserveoriginal releaseServiceAccount/role/namespace/PVC/provider/credential revision andscope; keptstatecannotbereplacedwith newlyselected latest identity or emptyvolume. Fullmodule/run andcompatiblecredentialrotation contract remainsopen.",
+      "remaining": [
+        "whole schema/profile/setting/requirement/executable futurecase joins",
+        "authentic installedrole/provider/RBAC/CNI/API/credential/storage and real effect/rejection/recovery evidence",
+        "fresh independent source definition review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-1ff41ec8f4ba187d",
+      "originalCandidate": {
+        "id": "SRC-1ff41ec8f4ba187d",
+        "source": "charts/ops-pod/templates/workload.yaml",
+        "line": 160,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "charts/ops-pod/templates/workload.yaml",
+        "line": 160,
+        "expression": "        {{- if .Values.tailscale.enabled }}",
+        "sha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58"
+      },
+      "field": "Tailscale state/temp volume applicability",
+      "classification": "generated-provider-applicability",
+      "currentDomainAndRelations": "Enabled creates64Mi ephemeral temp plus persistent release-tailscale PVC mount; false omitspod references. KeptPVC/authstate is not silently deleted or replaced by empty state on recovery.",
+      "actualRendererOrVerificationSourceRef": {
+        "path": "charts/ops-pod/templates/workload.yaml",
+        "line": 160,
+        "expression": "        {{- if .Values.tailscale.enabled }}",
+        "sha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58"
+      },
+      "relatedConsumerRefs": [
+        {
+          "path": "charts/ops-pod/templates/tailscale-storage.yaml",
+          "line": 1,
+          "expression": "{{- if .Values.tailscale.enabled }}",
+          "sha256": "1c040641f21fb057f454ad602bb7019802f31d06455d46850a84af5cdc669d2f"
+        },
+        {
+          "path": "charts/ops-pod/templates/network.yaml",
+          "line": 30,
+          "expression": "    {{- if .Values.tailscale.enabled }}",
+          "sha256": "1a96b733c35c853cf2064dd57caae1f061a94a023cc8637b4799464ad163e283"
+        }
+      ],
+      "proposedAuthority": "Retain one selected Ops deployment/provider/permission/release/credential-reference policy owner; generatedENV/kubeconfig/RBAC/network/PVC objects are not independentauthors. Read/exec scope and actualsharedServiceAccount authority mustbeexplicit in completeprofiles, not inferredfrom container labels.",
+      "activation": "Validate complete image/namespace/rolegrants/provider/credential/location/storage generation and exactrealrelease inputs beforedeployment. Nativeexec/connectivity/authstate/effects unobserved; no task/module approval from a generatedrole.",
+      "recovery": "Preserveoriginal releaseServiceAccount/role/namespace/PVC/provider/credential revision andscope; keptstatecannotbereplacedwith newlyselected latest identity or emptyvolume. Fullmodule/run andcompatiblecredentialrotation contract remainsopen.",
+      "remaining": [
+        "whole schema/profile/setting/requirement/executable futurecase joins",
+        "authentic installedrole/provider/RBAC/CNI/API/credential/storage and real effect/rejection/recovery evidence",
+        "fresh independent source definition review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-f421c09380c543cb",
+      "originalCandidate": {
+        "id": "SRC-f421c09380c543cb",
+        "source": "scripts/deploy-ops-pod.sh",
+        "line": 3,
+        "kinds": [
+          "environment"
+        ],
+        "sourceSha256": "b7b114e886142185732eb285a59f5b2f8a5b509ffedfd23de2d1fbf67ea3e73e",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "b7b114e886142185732eb285a59f5b2f8a5b509ffedfd23de2d1fbf67ea3e73e",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "scripts/deploy-ops-pod.sh",
+        "line": 3,
+        "expression": "repo=$(cd \"$(dirname \"${BASH_SOURCE[0]}\")/..\" && pwd)",
+        "sha256": "b7b114e886142185732eb285a59f5b2f8a5b509ffedfd23de2d1fbf67ea3e73e"
+      },
+      "field": "deployment repository location",
+      "classification": "generated-build-location",
+      "currentDomainAndRelations": "Derive absolute repositoryparentofscript; feeds release verifier/renderer/values/bootstrap sources, not user runtimeconfig author.",
+      "actualRendererOrVerificationSourceRef": {
+        "path": "scripts/deploy-ops-pod.sh",
+        "line": 3,
+        "expression": "repo=$(cd \"$(dirname \"${BASH_SOURCE[0]}\")/..\" && pwd)",
+        "sha256": "b7b114e886142185732eb285a59f5b2f8a5b509ffedfd23de2d1fbf67ea3e73e"
+      },
+      "relatedConsumerRefs": [],
+      "proposedAuthority": "Retain one selected Ops deployment/provider/permission/release/credential-reference policy owner; generatedENV/kubeconfig/RBAC/network/PVC objects are not independentauthors. Read/exec scope and actualsharedServiceAccount authority mustbeexplicit in completeprofiles, not inferredfrom container labels.",
+      "activation": "Validate complete image/namespace/rolegrants/provider/credential/location/storage generation and exactrealrelease inputs beforedeployment. Nativeexec/connectivity/authstate/effects unobserved; no task/module approval from a generatedrole.",
+      "recovery": "Preserveoriginal releaseServiceAccount/role/namespace/PVC/provider/credential revision andscope; keptstatecannotbereplacedwith newlyselected latest identity or emptyvolume. Fullmodule/run andcompatiblecredentialrotation contract remainsopen.",
+      "remaining": [
+        "whole schema/profile/setting/requirement/executable futurecase joins",
+        "authentic installedrole/provider/RBAC/CNI/API/credential/storage and real effect/rejection/recovery evidence",
+        "fresh independent source definition review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-389cc37ea840bade",
+      "originalCandidate": {
+        "id": "SRC-389cc37ea840bade",
+        "source": "scripts/deploy-ops-pod.sh",
+        "line": 53,
+        "kinds": [
+          "environment"
+        ],
+        "sourceSha256": "b7b114e886142185732eb285a59f5b2f8a5b509ffedfd23de2d1fbf67ea3e73e",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "b7b114e886142185732eb285a59f5b2f8a5b509ffedfd23de2d1fbf67ea3e73e",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "scripts/deploy-ops-pod.sh",
+        "line": 53,
+        "expression": "      'import {createKubeRequest} from \"/app/src/kubernetes.mjs\"; try {await createKubeRequest()(\"/api/v1/namespaces/\" + encodeURIComponent(process.env.OPS_DEFAULT_NAMESPACE) + \"/secrets\");process.exit(1)} catch(e) {if(!e.message.includes(\"Kubernetes API 403:\"))throw e; console.log(\"PASS: observer Secret access denied by API\");}'",
+        "sha256": "b7b114e886142185732eb285a59f5b2f8a5b509ffedfd23de2d1fbf67ea3e73e"
+      },
+      "field": "observer Secret denial verification source",
+      "classification": "future-native-verification-source",
+      "currentDomainAndRelations": "verify branch52\u201353 executes GET selecteddefaultNamespace/secrets with MCPmountedactualtoken. OnlyKubernetesAPI403countspositive; 401/missingfile/networkerror reject. It doesNOTverifyexecution-role denial, pairing, fullread-onlyprincipal or livepipelinehealth. Sourceisnot an executed result duringC0.",
+      "actualRendererOrVerificationSourceRef": {
+        "path": "scripts/deploy-ops-pod.sh",
+        "line": 53,
+        "expression": "      'import {createKubeRequest} from \"/app/src/kubernetes.mjs\"; try {await createKubeRequest()(\"/api/v1/namespaces/\" + encodeURIComponent(process.env.OPS_DEFAULT_NAMESPACE) + \"/secrets\");process.exit(1)} catch(e) {if(!e.message.includes(\"Kubernetes API 403:\"))throw e; console.log(\"PASS: observer Secret access denied by API\");}'",
+        "sha256": "b7b114e886142185732eb285a59f5b2f8a5b509ffedfd23de2d1fbf67ea3e73e"
+      },
+      "relatedConsumerRefs": [
+        {
+          "path": "tools/ops-mcp/src/kubernetes.mjs",
+          "line": 8,
+          "expression": "export function createKubeRequest({",
+          "sha256": "449e55709e017f53790539a83936f0471915850180ec9b08fc589251ab5e987b"
+        },
+        {
+          "path": "tools/ops-mcp/src/kubernetes.mjs",
+          "line": 49,
+          "expression": "            reject(new Error(`Kubernetes API ${res.statusCode}: ${path.split('?')[0]}`));",
+          "sha256": "449e55709e017f53790539a83936f0471915850180ec9b08fc589251ab5e987b"
+        }
+      ],
+      "proposedAuthority": "Retain one selected Ops deployment/provider/permission/release/credential-reference policy owner; generatedENV/kubeconfig/RBAC/network/PVC objects are not independentauthors. Read/exec scope and actualsharedServiceAccount authority mustbeexplicit in completeprofiles, not inferredfrom container labels.",
+      "activation": "Validate complete image/namespace/rolegrants/provider/credential/location/storage generation and exactrealrelease inputs beforedeployment. Nativeexec/connectivity/authstate/effects unobserved; no task/module approval from a generatedrole.",
+      "recovery": "Preserveoriginal releaseServiceAccount/role/namespace/PVC/provider/credential revision andscope; keptstatecannotbereplacedwith newlyselected latest identity or emptyvolume. Fullmodule/run andcompatiblecredentialrotation contract remainsopen.",
+      "remaining": [
+        "whole schema/profile/setting/requirement/executable futurecase joins",
+        "authentic installedrole/provider/RBAC/CNI/API/credential/storage and real effect/rejection/recovery evidence",
+        "fresh independent source definition review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    }
+  ],
+  "priorQueueRef": {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-24/remaining-batches.json",
+    "sha256": "c0fc9f0996ecdecab945ba7c8b9810d3211e8c418631fddc03ed91a71c4fefad"
+  },
+  "remainingQueueUnchanged": true,
+  "globalC0Accepted": false
+}

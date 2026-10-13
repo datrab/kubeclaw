@@ -1,0 +1,57 @@
+# Independent resumed Ops Chart source review
+
+Reviewer: native child `/root/ops_chart_review_resumed`, 2026-10-13. Task: independently challenge all 31 current batch-37 clauses against actual sources, at static definition scope. No prior reviewer report or author conclusion was used as proof. Read GOAL-START.md and OPENCLAW-CONFIG-GOAL.md first. No deploy, script sourcing, source-program execution, credentials, API calls, native runtime, test changes or production changes performed. Only this report directory was written.
+
+## Identity and method
+
+Observed HEAD `8deb37002f76866730b6c80574382e46a419221c`, tree `d7a961db81970b69815357273733c7e569b1f927`. Dirty checkout: tracked WORK-STATE plus numerous untracked evidence inputs; HEAD alone does not identify this package. `input-identities.json` records SHA-256 of every inspected input including all five batch files, criteria, templates, values and actual consumer sources. `tracked.patch` and `git-status.txt` retain observed dirty state. Batch source definitions SHA-256: `51bab5ee69d5dd7feb06b277a5444efdae725122333bfee70a46ec1d63d37814`.
+
+Actual commands: `rg --files` for criteria and Ops/deployment source discovery; `cat` of both criteria, batch README/JSON/manifest/local-check, five templates, chart values, deploy script, bootstrap.py, verify.py, Dockerfile, config.toml, supervisor.py and MCP config/kubernetes/server/diagnostics sources; `sed -n '1,260p' .../batch-37/define.py`; `sed -n '1,225p' scripts/updates/deployment-release.mjs`; `rg -n` for server namespace and release/render consumers; `git rev-parse HEAD HEAD^{tree}` and `git status --short`. Inline Python read-only JSON/source comparisons independently checked every primary/renderer/related reference, then wrote identities/pin observations and captured git diff/status into this directory. No batch generator was executed.
+
+Expected and inspected: all 31 distinct candidate IDs, six primary sources, all 147 nonblank reference expressions and hashes. All 147 match (`pin-checks.json`). These checks establish identity only; semantic conclusions below come from reading surrounding definitions and real consumers.
+
+## Finding OPS-RESUMED-001: namespace deduplication is misdescribed
+
+**Blocking for accepting batch-37 as semantically correct source definitions.** Candidate `SRC-1885e83d3f76b091` (row 22, workload.yaml:91) says namespaces are parsed “withouttrim/dedup aftervalidation”. Actual `tools/ops-mcp/src/config.mjs:2` splits without trimming, validates all members/default membership, then line 7 returns `[...new Set(namespaces)]`: duplicates ARE removed after validation. The same error is present in batch-37/define.py's workload line-91 description. Correct both the generating definition and generated clause, preserving distinction from Helm RoleBindings (which range the original list without dedup). Source pins passing cannot establish this claim. No finding correction made by reviewer.
+
+## Full clause review (row order, not a sample)
+
+1. `SRC-7c4c6ffb286652d9`: kubeconfig gated by nonempty execNamespaces; fixed HTTPS server, CA/token paths and current-context ops. Correct; it selects the same pod principal, not a new per-container grant.
+2. `SRC-4e56376a3147d0f0`: defaultNamespace enters kubeconfig context only. Correct; no requirement that it belongs to execNamespaces is enforced here.
+3. `SRC-34f1d43a2603ba64`: outer enabled gates ordinary and Cilium documents. Correct; selector is release-name app label, ingress empty, DNS requires combined kube-system namespace/kube-dns pod selectors on TCP/UDP53.
+4. `SRC-c2ceafbe36110559`: nonempty API CIDRs required even with Cilium. Correct; bootstrap reads selected-context default/kubernetes Endpoints and Service and requires ready addresses plus exactly one https port.
+5. `SRC-b5c33c239a3f84da`: CIDRs render separate ipBlocks. Correct; bootstrap derives /32 or /128 host networks using ipaddress, templates do not validate each CIDR themselves.
+6. `SRC-7f627304c3182a95`: TCP443 plus selected API port to API peers. Correct; no auth implication. Chart default port6443; discovery overrides it.
+7. `SRC-1ba29ab50f7e02e0`: Tailscale-enabled UDP3478/41641 public egress. Correct; HTTPS except list additionally excludes100.64/10, UDP list does not. Both exclude10/8,172.16/12,192.168/16,169.254/16,127/8; IPv4 public rule is not general IPv6 reachability.
+8. `SRC-3fb547cb5eb45eee`: Cilium flag only inside enabled, entity kube-apiserver. Correct; bootstrap checks CiliumNetworkPolicy CRD existence, not actual enforcement.
+9. `SRC-b141c7661145bbfb`: Cilium TCP443/quoted selected port. Correct; distinct entity selector/provider semantics, not demonstrated effective policy union.
+10. `SRC-21697197b83483b1`: read namespace RoleBindings use shared release SA; cluster-reader includes nodes and Cilium cluster-wide policies. Correct. Namespace reader grants get/list pods/log, services/events/PVCs, apps workloads, batch jobs/cronjobs, ingresses/networkpolicies, Cilium policies and Argo applications, not Secrets. Reader list is not namespace-DNS validated in this template.
+11. `SRC-266f9ee52581c76d`: exec list member string/regex/length validation; pods get/list, pods/exec get/create with shared SA. Correct. Neither duplicate elimination nor membership in observer list enforced by this template. MCP therefore receives the same exec authority when enabled, despite its GET-only exposed transport.
+12. `SRC-45c18f0785cee423`: conditional release-tailscale kept PVC,1Gi/RWO; storageClass omission means cluster default. Correct. Keep annotation and mount reference are declarations, not recovery/live identity proof.
+13. `SRC-69904e673e784e4c`: exact Codex digest regex guard. Correct; broad reference prefix is not image receipt validation.
+14. `SRC-65f8a9acf356aceb`: same MCP guard only. Correct; no sidecar guard.
+15. `SRC-8053b0c23491b214`: Codex image field. Correct; Docker ENTRYPOINT tini/CMD supervisor, supervisor preserves existing home config, injects local MCP CLI overrides and bearer ENV, starts app-server after login. Existing persistent config is an additional current author, not proven immutable selected config.
+16. `SRC-9776051b9d49b47f`: Codex default namespace projection. Correct; verify.py consumes it for namespace_overview, no independent grant.
+17. `SRC-f67e7899bad3575f`: comma exec list actual verifier consumer. Correct; it checks token presence and can-i get/create pods/exec, does not execute target commands or enforce each subsequent command.
+18. `SRC-280c9765149dcced`: KUBECONFIG gate. Correct; empty exec suppresses Codex token/kubeconfig mount, not MCP token.
+19. `SRC-b4679744db1fe484`: Codex API mounts conditional; MCP always mounted; same SA. Correct; SA and Pod both disable automatic token mount, manual projected token expiration3600 with namespace downwardAPI and kube-root-ca.crt, mode0440.
+20. `SRC-92db5ba2e7cddfef`: MCP selected image. Correct; server loads config once and creates transport; transport rereads mounted token/CA every request.
+21. `SRC-fb48f6f5e00fdb81`: MCP default included in allowed list. Correct; fallback default kubeclaw if ENV absent; namespaces default to that default; server's z.enum uses deduplicated config list and default namespace.
+22. `SRC-1885e83d3f76b091`: comma namespace projection correct; downstream no-trim claim correct, no-dedup claim FALSE (OPS-RESUMED-001).
+23. `SRC-7da5dbcaa8be2710`: Argo name DNS-valid independently, not required in allowed list. Correct; server's Argo applications reader uses separate ARGO_NAMESPACE; chart's namespace bindings need not include it. Fallback argocd remains current code default.
+24. `SRC-81b313316a4b04a2`: optional userspace Tailscale sidecar. Correct; TS_AUTH_ONCE=true, TS_KUBE_SECRET empty, state/socket dirs, localhost SOCKS1055, authkey Secret ref and all capabilities dropped. External provider ENV semantics not implemented by repo and remain unproved.
+25. `SRC-9036936df0643ada`: direct sidecar image, chart tag default ghcr.io/tailscale/tailscale:v1.102.3, no digest guard. Correct; release receipt protects two selected first-party slots, not Tailscale version.
+26. `SRC-d114e172addb9dac`: TS_HOSTNAME projection (default kubeclaw-ops). Correct as selected operator provider configuration; it does not prove existing registered tailnet identity.
+27. `SRC-62bd6ced5c15a00e`: TS_EXTRA_ARGS string default --accept-dns=false. Correct; supported provider argument domain and effects remain external.
+28. `SRC-99d9389465e95b2c`: conditional generated ConfigMap volume. Correct; mount/env/ConfigMap gate aligned.
+29. `SRC-1ff41ec8f4ba187d`: conditional64Mi temporary volume and persistent state claim. Correct as object declaration; claim not destroyed by absence of pod references, no actual recovery acceptance.
+30. `SRC-f421c09380c543cb`: repository location derived from BASH_SOURCE parent. Correct. Deploy chain verifies selected release, discovers (or render copies explicit discovery), merges discovered→release values→optional OPS_POD_VALUES→image/GitHub/Tailscale CLI flags; release renderer validates selected receipt/baseline/overlays before creating namespace/secrets and Helm install. No script execution by reviewer.
+31. `SRC-389cc37ea840bade`: source's negative check GETs defaultNamespace/secrets in MCP container; createKubeRequest produces exact Kubernetes API403 error for non2xx. Correct; 401/transport/file failure are not positive. The real principal also receives selected exec grants; “observer token” wording does not prove a read-only identity. No pairing, target exec denial or pipeline-health proof.
+
+## Defaults, scope and remaining gates
+
+Actual chart defaults relevant here: empty Codex/MCP image strings (guards require release inputs); read and exec lists both[kubeclaw]; defaultNamespace kubeclaw; Argo argocd; network enabled true/cilium false/CIDRs empty/port6443; Tailscale disabled, tag image, authSecret codex-ops-tailscale, hostname kubeclaw-ops, extraArgs above; storageClass empty. Helper defaults OPS_NAMESPACE kubeclaw-ops and OPS_RELEASE codex-ops, KUBE_CONTEXT required; discover read-list default kubeclaw,argocd,kube-system,cilium,tailscale,spire-server,spire-system plus deployment namespace, strips/deduplicates discovered names and includes only existing requested namespaces. execNamespaces is not discovery output. Overlay/CLI precedence is a real current authority chain, not a single proposed owner already implemented.
+
+Batch correctly retains all31 `definitionAccepted:false` / `runtimeResult:not-run` and globalC0Accepted:false. Broad shared proposed authority/activation/recovery text does NOT finish precise settings/profile/schema/case/module joins. No complete operator profile, native provider/credential revision, durable module binding, native RBAC/CNI/storage/image effect or executable acceptance set was established here. These remain explicitly open, not newly waived. Raw source pins and author local-check cannot satisfy C0-A–E globally.
+
+**Bounded verdict: NOT ACCEPTED as a fully correct batch-37 static definition set until OPS-RESUMED-001 is corrected and independently rechecked.** Other30 clauses' stated source relationships agree with inspected code subject to the enumerated declaration-versus-effect limits. C0-A/B/C evidence is partial; C0-D/E package closure not established by this batch. Runtime/live/implementation acceptance remains not-run/not granted. This is substantive full31-clause source review, not hash-only acceptance and not global C0 acceptance.

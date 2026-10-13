@@ -1,0 +1,1031 @@
+[
+  {
+    "candidateId": "SRC-7c4c6ffb286652d9",
+    "path": "charts/ops-pod/templates/kubeconfig.yaml",
+    "line": 1,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-7c4c6ffb286652d9",
+    "path": "charts/ops-pod/templates/kubeconfig.yaml",
+    "line": 1,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-7c4c6ffb286652d9",
+    "path": "charts/ops-pod/templates/workload.yaml",
+    "line": 57,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-7c4c6ffb286652d9",
+    "path": "charts/ops-pod/templates/workload.yaml",
+    "line": 76,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-7c4c6ffb286652d9",
+    "path": "charts/ops-pod/templates/workload.yaml",
+    "line": 139,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-4e56376a3147d0f0",
+    "path": "charts/ops-pod/templates/kubeconfig.yaml",
+    "line": 24,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-4e56376a3147d0f0",
+    "path": "charts/ops-pod/templates/kubeconfig.yaml",
+    "line": 24,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-4e56376a3147d0f0",
+    "path": "charts/ops-pod/templates/workload.yaml",
+    "line": 57,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-4e56376a3147d0f0",
+    "path": "charts/ops-pod/templates/workload.yaml",
+    "line": 76,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-4e56376a3147d0f0",
+    "path": "charts/ops-pod/templates/workload.yaml",
+    "line": 139,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-34f1d43a2603ba64",
+    "path": "charts/ops-pod/templates/network.yaml",
+    "line": 1,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-34f1d43a2603ba64",
+    "path": "charts/ops-pod/templates/network.yaml",
+    "line": 1,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-34f1d43a2603ba64",
+    "path": "ops/pod/bootstrap.py",
+    "line": 40,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-34f1d43a2603ba64",
+    "path": "ops/pod/bootstrap.py",
+    "line": 41,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-34f1d43a2603ba64",
+    "path": "ops/pod/bootstrap.py",
+    "line": 54,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-c2ceafbe36110559",
+    "path": "charts/ops-pod/templates/network.yaml",
+    "line": 2,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-c2ceafbe36110559",
+    "path": "charts/ops-pod/templates/network.yaml",
+    "line": 2,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-c2ceafbe36110559",
+    "path": "ops/pod/bootstrap.py",
+    "line": 40,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-c2ceafbe36110559",
+    "path": "ops/pod/bootstrap.py",
+    "line": 41,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-c2ceafbe36110559",
+    "path": "ops/pod/bootstrap.py",
+    "line": 54,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-b5c33c239a3f84da",
+    "path": "charts/ops-pod/templates/network.yaml",
+    "line": 21,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-b5c33c239a3f84da",
+    "path": "charts/ops-pod/templates/network.yaml",
+    "line": 21,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-b5c33c239a3f84da",
+    "path": "ops/pod/bootstrap.py",
+    "line": 40,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-b5c33c239a3f84da",
+    "path": "ops/pod/bootstrap.py",
+    "line": 41,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-b5c33c239a3f84da",
+    "path": "ops/pod/bootstrap.py",
+    "line": 54,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-7f627304c3182a95",
+    "path": "charts/ops-pod/templates/network.yaml",
+    "line": 24,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-7f627304c3182a95",
+    "path": "charts/ops-pod/templates/network.yaml",
+    "line": 24,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-7f627304c3182a95",
+    "path": "ops/pod/bootstrap.py",
+    "line": 40,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-7f627304c3182a95",
+    "path": "ops/pod/bootstrap.py",
+    "line": 41,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-7f627304c3182a95",
+    "path": "ops/pod/bootstrap.py",
+    "line": 54,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-1ba29ab50f7e02e0",
+    "path": "charts/ops-pod/templates/network.yaml",
+    "line": 30,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-1ba29ab50f7e02e0",
+    "path": "charts/ops-pod/templates/network.yaml",
+    "line": 30,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-1ba29ab50f7e02e0",
+    "path": "ops/pod/bootstrap.py",
+    "line": 40,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-1ba29ab50f7e02e0",
+    "path": "ops/pod/bootstrap.py",
+    "line": 41,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-1ba29ab50f7e02e0",
+    "path": "ops/pod/bootstrap.py",
+    "line": 54,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-3fb547cb5eb45eee",
+    "path": "charts/ops-pod/templates/network.yaml",
+    "line": 37,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-3fb547cb5eb45eee",
+    "path": "charts/ops-pod/templates/network.yaml",
+    "line": 37,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-3fb547cb5eb45eee",
+    "path": "ops/pod/bootstrap.py",
+    "line": 40,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-3fb547cb5eb45eee",
+    "path": "ops/pod/bootstrap.py",
+    "line": 41,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-3fb547cb5eb45eee",
+    "path": "ops/pod/bootstrap.py",
+    "line": 54,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-b141c7661145bbfb",
+    "path": "charts/ops-pod/templates/network.yaml",
+    "line": 50,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-b141c7661145bbfb",
+    "path": "charts/ops-pod/templates/network.yaml",
+    "line": 50,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-b141c7661145bbfb",
+    "path": "ops/pod/bootstrap.py",
+    "line": 40,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-b141c7661145bbfb",
+    "path": "ops/pod/bootstrap.py",
+    "line": 41,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-b141c7661145bbfb",
+    "path": "ops/pod/bootstrap.py",
+    "line": 54,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-21697197b83483b1",
+    "path": "charts/ops-pod/templates/rbac.yaml",
+    "line": 28,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-21697197b83483b1",
+    "path": "charts/ops-pod/templates/rbac.yaml",
+    "line": 28,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-21697197b83483b1",
+    "path": "charts/ops-pod/templates/workload.yaml",
+    "line": 36,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-21697197b83483b1",
+    "path": "charts/ops-pod/templates/workload.yaml",
+    "line": 91,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-266f9ee52581c76d",
+    "path": "charts/ops-pod/templates/rbac.yaml",
+    "line": 63,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-266f9ee52581c76d",
+    "path": "charts/ops-pod/templates/rbac.yaml",
+    "line": 63,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-266f9ee52581c76d",
+    "path": "charts/ops-pod/templates/workload.yaml",
+    "line": 36,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-266f9ee52581c76d",
+    "path": "charts/ops-pod/templates/workload.yaml",
+    "line": 55,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-45c18f0785cee423",
+    "path": "charts/ops-pod/templates/tailscale-storage.yaml",
+    "line": 1,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-45c18f0785cee423",
+    "path": "charts/ops-pod/templates/tailscale-storage.yaml",
+    "line": 1,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-45c18f0785cee423",
+    "path": "charts/ops-pod/templates/workload.yaml",
+    "line": 163,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-45c18f0785cee423",
+    "path": "charts/ops-pod/templates/workload.yaml",
+    "line": 134,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-69904e673e784e4c",
+    "path": "charts/ops-pod/templates/workload.yaml",
+    "line": 2,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-69904e673e784e4c",
+    "path": "charts/ops-pod/templates/workload.yaml",
+    "line": 2,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-65f8a9acf356aceb",
+    "path": "charts/ops-pod/templates/workload.yaml",
+    "line": 5,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-65f8a9acf356aceb",
+    "path": "charts/ops-pod/templates/workload.yaml",
+    "line": 5,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-8053b0c23491b214",
+    "path": "charts/ops-pod/templates/workload.yaml",
+    "line": 51,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-8053b0c23491b214",
+    "path": "charts/ops-pod/templates/workload.yaml",
+    "line": 51,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-9776051b9d49b47f",
+    "path": "charts/ops-pod/templates/workload.yaml",
+    "line": 54,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-9776051b9d49b47f",
+    "path": "charts/ops-pod/templates/workload.yaml",
+    "line": 54,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-9776051b9d49b47f",
+    "path": "charts/ops-pod/templates/kubeconfig.yaml",
+    "line": 1,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-9776051b9d49b47f",
+    "path": "charts/ops-pod/templates/kubeconfig.yaml",
+    "line": 24,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-f67e7899bad3575f",
+    "path": "charts/ops-pod/templates/workload.yaml",
+    "line": 55,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-f67e7899bad3575f",
+    "path": "charts/ops-pod/templates/workload.yaml",
+    "line": 55,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-f67e7899bad3575f",
+    "path": "ops/pod/verify.py",
+    "line": 25,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-f67e7899bad3575f",
+    "path": "ops/pod/verify.py",
+    "line": 26,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-f67e7899bad3575f",
+    "path": "ops/pod/verify.py",
+    "line": 27,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-f67e7899bad3575f",
+    "path": "ops/pod/verify.py",
+    "line": 29,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-f67e7899bad3575f",
+    "path": "ops/pod/verify.py",
+    "line": 31,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-280c9765149dcced",
+    "path": "charts/ops-pod/templates/workload.yaml",
+    "line": 56,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-280c9765149dcced",
+    "path": "charts/ops-pod/templates/workload.yaml",
+    "line": 56,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-280c9765149dcced",
+    "path": "charts/ops-pod/templates/kubeconfig.yaml",
+    "line": 1,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-280c9765149dcced",
+    "path": "charts/ops-pod/templates/kubeconfig.yaml",
+    "line": 24,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-b4679744db1fe484",
+    "path": "charts/ops-pod/templates/workload.yaml",
+    "line": 74,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-b4679744db1fe484",
+    "path": "charts/ops-pod/templates/workload.yaml",
+    "line": 74,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-b4679744db1fe484",
+    "path": "charts/ops-pod/templates/kubeconfig.yaml",
+    "line": 1,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-b4679744db1fe484",
+    "path": "charts/ops-pod/templates/kubeconfig.yaml",
+    "line": 24,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-92db5ba2e7cddfef",
+    "path": "charts/ops-pod/templates/workload.yaml",
+    "line": 86,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-92db5ba2e7cddfef",
+    "path": "charts/ops-pod/templates/workload.yaml",
+    "line": 86,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-fb48f6f5e00fdb81",
+    "path": "charts/ops-pod/templates/workload.yaml",
+    "line": 90,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-fb48f6f5e00fdb81",
+    "path": "charts/ops-pod/templates/workload.yaml",
+    "line": 90,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-fb48f6f5e00fdb81",
+    "path": "tools/ops-mcp/src/config.mjs",
+    "line": 1,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-fb48f6f5e00fdb81",
+    "path": "tools/ops-mcp/src/config.mjs",
+    "line": 2,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-fb48f6f5e00fdb81",
+    "path": "tools/ops-mcp/src/config.mjs",
+    "line": 4,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-fb48f6f5e00fdb81",
+    "path": "tools/ops-mcp/src/config.mjs",
+    "line": 16,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-fb48f6f5e00fdb81",
+    "path": "tools/ops-mcp/src/config.mjs",
+    "line": 18,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-fb48f6f5e00fdb81",
+    "path": "tools/ops-mcp/src/config.mjs",
+    "line": 19,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-fb48f6f5e00fdb81",
+    "path": "tools/ops-mcp/src/config.mjs",
+    "line": 1,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-fb48f6f5e00fdb81",
+    "path": "tools/ops-mcp/src/config.mjs",
+    "line": 4,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-fb48f6f5e00fdb81",
+    "path": "tools/ops-mcp/src/config.mjs",
+    "line": 17,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-fb48f6f5e00fdb81",
+    "path": "tools/ops-mcp/src/config.mjs",
+    "line": 18,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-fb48f6f5e00fdb81",
+    "path": "tools/ops-mcp/src/config.mjs",
+    "line": 19,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-1885e83d3f76b091",
+    "path": "charts/ops-pod/templates/workload.yaml",
+    "line": 91,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-1885e83d3f76b091",
+    "path": "charts/ops-pod/templates/workload.yaml",
+    "line": 91,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-1885e83d3f76b091",
+    "path": "tools/ops-mcp/src/config.mjs",
+    "line": 1,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-1885e83d3f76b091",
+    "path": "tools/ops-mcp/src/config.mjs",
+    "line": 2,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-1885e83d3f76b091",
+    "path": "tools/ops-mcp/src/config.mjs",
+    "line": 4,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-1885e83d3f76b091",
+    "path": "tools/ops-mcp/src/config.mjs",
+    "line": 16,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-1885e83d3f76b091",
+    "path": "tools/ops-mcp/src/config.mjs",
+    "line": 18,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-1885e83d3f76b091",
+    "path": "tools/ops-mcp/src/config.mjs",
+    "line": 19,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-1885e83d3f76b091",
+    "path": "tools/ops-mcp/src/config.mjs",
+    "line": 1,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-1885e83d3f76b091",
+    "path": "tools/ops-mcp/src/config.mjs",
+    "line": 4,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-1885e83d3f76b091",
+    "path": "tools/ops-mcp/src/config.mjs",
+    "line": 17,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-1885e83d3f76b091",
+    "path": "tools/ops-mcp/src/config.mjs",
+    "line": 18,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-1885e83d3f76b091",
+    "path": "tools/ops-mcp/src/config.mjs",
+    "line": 19,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-7da5dbcaa8be2710",
+    "path": "charts/ops-pod/templates/workload.yaml",
+    "line": 92,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-7da5dbcaa8be2710",
+    "path": "charts/ops-pod/templates/workload.yaml",
+    "line": 92,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-7da5dbcaa8be2710",
+    "path": "tools/ops-mcp/src/config.mjs",
+    "line": 1,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-7da5dbcaa8be2710",
+    "path": "tools/ops-mcp/src/config.mjs",
+    "line": 2,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-7da5dbcaa8be2710",
+    "path": "tools/ops-mcp/src/config.mjs",
+    "line": 4,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-7da5dbcaa8be2710",
+    "path": "tools/ops-mcp/src/config.mjs",
+    "line": 16,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-7da5dbcaa8be2710",
+    "path": "tools/ops-mcp/src/config.mjs",
+    "line": 18,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-7da5dbcaa8be2710",
+    "path": "tools/ops-mcp/src/config.mjs",
+    "line": 19,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-7da5dbcaa8be2710",
+    "path": "tools/ops-mcp/src/config.mjs",
+    "line": 1,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-7da5dbcaa8be2710",
+    "path": "tools/ops-mcp/src/config.mjs",
+    "line": 4,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-7da5dbcaa8be2710",
+    "path": "tools/ops-mcp/src/config.mjs",
+    "line": 17,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-7da5dbcaa8be2710",
+    "path": "tools/ops-mcp/src/config.mjs",
+    "line": 18,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-7da5dbcaa8be2710",
+    "path": "tools/ops-mcp/src/config.mjs",
+    "line": 19,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-81b313316a4b04a2",
+    "path": "charts/ops-pod/templates/workload.yaml",
+    "line": 113,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-81b313316a4b04a2",
+    "path": "charts/ops-pod/templates/workload.yaml",
+    "line": 113,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-81b313316a4b04a2",
+    "path": "charts/ops-pod/templates/tailscale-storage.yaml",
+    "line": 1,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-81b313316a4b04a2",
+    "path": "charts/ops-pod/templates/network.yaml",
+    "line": 30,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-9036936df0643ada",
+    "path": "charts/ops-pod/templates/workload.yaml",
+    "line": 115,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-9036936df0643ada",
+    "path": "charts/ops-pod/templates/workload.yaml",
+    "line": 115,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-d114e172addb9dac",
+    "path": "charts/ops-pod/templates/workload.yaml",
+    "line": 123,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-d114e172addb9dac",
+    "path": "charts/ops-pod/templates/workload.yaml",
+    "line": 123,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-62bd6ced5c15a00e",
+    "path": "charts/ops-pod/templates/workload.yaml",
+    "line": 124,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-62bd6ced5c15a00e",
+    "path": "charts/ops-pod/templates/workload.yaml",
+    "line": 124,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-99d9389465e95b2c",
+    "path": "charts/ops-pod/templates/workload.yaml",
+    "line": 138,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-99d9389465e95b2c",
+    "path": "charts/ops-pod/templates/workload.yaml",
+    "line": 138,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-99d9389465e95b2c",
+    "path": "charts/ops-pod/templates/kubeconfig.yaml",
+    "line": 1,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-99d9389465e95b2c",
+    "path": "charts/ops-pod/templates/kubeconfig.yaml",
+    "line": 24,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-1ff41ec8f4ba187d",
+    "path": "charts/ops-pod/templates/workload.yaml",
+    "line": 160,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-1ff41ec8f4ba187d",
+    "path": "charts/ops-pod/templates/workload.yaml",
+    "line": 160,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-1ff41ec8f4ba187d",
+    "path": "charts/ops-pod/templates/tailscale-storage.yaml",
+    "line": 1,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-1ff41ec8f4ba187d",
+    "path": "charts/ops-pod/templates/network.yaml",
+    "line": 30,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-f421c09380c543cb",
+    "path": "scripts/deploy-ops-pod.sh",
+    "line": 3,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-f421c09380c543cb",
+    "path": "scripts/deploy-ops-pod.sh",
+    "line": 3,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-389cc37ea840bade",
+    "path": "scripts/deploy-ops-pod.sh",
+    "line": 53,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-389cc37ea840bade",
+    "path": "scripts/deploy-ops-pod.sh",
+    "line": 53,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-389cc37ea840bade",
+    "path": "tools/ops-mcp/src/kubernetes.mjs",
+    "line": 8,
+    "shaMatches": true,
+    "expressionMatches": true
+  },
+  {
+    "candidateId": "SRC-389cc37ea840bade",
+    "path": "tools/ops-mcp/src/kubernetes.mjs",
+    "line": 49,
+    "shaMatches": true,
+    "expressionMatches": true
+  }
+]

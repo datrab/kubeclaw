@@ -1,0 +1,15 @@
+{
+  "originalIdsAndBodiesRetained": 31,
+  "unchangedRows": 30,
+  "changedCandidateIds": [
+    "SRC-1885e83d3f76b091"
+  ],
+  "original37FilesUnchanged": {
+    "README.md": "984b8f7d1b81a96bdefb9998dbb8472ed00652bfdfd7ed2dd286a629e3a3608a",
+    "local-check.json": "71665993beb024707cb5abe311145d11b3571b55fd6ec26412f7b656b05d2655",
+    "define.py": "e1ab97cb250d0c3727e17146fdc72c80438cdeb27ab537e97648761d9ccc35aa",
+    "source-field-definitions.json": "51bab5ee69d5dd7feb06b277a5444efdae725122333bfee70a46ec1d63d37814",
+    "package-manifest.json": "575e5344d35329e66d6a916f3f9d790027d588b59b6afa3e873b9d64a9882413"
+  },
+  "globalC0Accepted": false
+}
