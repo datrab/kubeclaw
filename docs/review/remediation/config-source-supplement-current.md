@@ -17,38 +17,20 @@ C0 remains open. This index brings together the latest additive definitions inst
 
 Ops deployment review originally rejected one namespace claim; [original report](../evidence/config-acceptance/c0-completion-20261013/independent-ops-chart-source-resumed/README.md) and batch37 remain preserved. The latest correction is validate-then-deduplicate, with no whitespace trimming; Helm ranges the original list. Recheck accepts that correction only.
 
-[Machine-readable candidate index](../evidence/config-acceptance/c0-completion-20261013/source-supplement-index.json) maps all 234 concrete rows to source coordinates and latest definitions.
+[Machine-readable candidate index](../evidence/config-acceptance/c0-completion-20261013/source-supplement-index.json) maps all 358 concrete rows to source coordinates and latest definitions.
 
-## Exact remaining source work
+## Remaining sources now enumerated
 
-124 original candidates in 24 sources still require concrete source definitions in this supplement. A fresh independent source enumeration is in progress; do not interpret it as completed review.
+[Independent remaining-source inventory](../evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md) supplies all124 remaining original bodies across24sources, with619 exact pins and51 input identities. Their current field/domain/default/precedence/consumer facts are recorded in [JSON](../evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json). The complete frozen358-candidate queue now has current-source definitions. This is not whole-project source completeness or target field/profile/case acceptance.
 
-| Source | Remaining candidates |
-|---|---:|
-| `charts/kubeclaw/files/config/swarm.config.json` | 1 |
-| `charts/kubeclaw/templates/NOTES.txt` | 11 |
-| `charts/kubeclaw/templates/_buster-native.tpl` | 7 |
-| `charts/kubeclaw/templates/archviewer.yaml` | 7 |
-| `charts/kubeclaw/templates/buster-namespace-fence.yaml` | 2 |
-| `charts/kubeclaw/templates/buster-runtime-pvc.yaml` | 1 |
-| `charts/kubeclaw/templates/configmap-skills.yaml` | 2 |
-| `charts/kubeclaw/templates/configmap-swarm-config.yaml` | 4 |
-| `charts/kubeclaw/templates/configmap-workspace.yaml` | 15 |
-| `charts/kubeclaw/templates/demo-ready-service.yaml` | 4 |
-| `charts/kubeclaw/templates/pvc.yaml` | 2 |
-| `charts/kubeclaw/templates/rbac.yaml` | 6 |
-| `charts/kubeclaw/templates/secret.yaml` | 3 |
-| `charts/kubeclaw/templates/service-extra-nodeports.yaml` | 2 |
-| `charts/kubeclaw/templates/service.yaml` | 11 |
-| `charts/kubeclaw/templates/serviceaccount.yaml` | 2 |
-| `charts/kubeclaw/values.yaml` | 1 |
-| `charts/prism/templates/_product-decisions.tpl` | 1 |
-| `charts/prism/templates/_swarm-config.tpl` | 1 |
-| `charts/prism/values.schema.json` | 4 |
-| `skills/buster/engine/test-gates/preparation-config.ts` | 17 |
-| `skills/buster/engine/test-gates/preparation-supervisor.ts` | 7 |
-| `skills/common/plugins/openclaw-agent-observer/src/config.ts` | 12 |
-| `skills/prism/openclaw-plugin/index.mjs` | 1 |
+Important current distinctions:
+
+- `test-gates/preparation-*` is production-reachable via native-parent, not excluded as tests.
+- NOTES are informational; `tuning.retention=high` is a fixed root marker, not an expiry duration.
+- KubeClaw has no values schema in the checked-in Chart; direct guards do not establish general schema validation.
+- Verification RBAC grants GET on one named OAuth Secret; it is not blanket Secret denial.
+- Observer config values override ENV when defined, including null/empty; normalization differs from manifest types. Status/selfTest scopes differ.
+- Prism plugin coding-profile metadata is not an execute-level authorization guard; actual control-side and gateway enforcement remain separate.
 
 ## Work still needed beyond source enumeration
 

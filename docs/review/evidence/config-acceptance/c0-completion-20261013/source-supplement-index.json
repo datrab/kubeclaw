@@ -1,6 +1,6 @@
 {
   "scope": "358 original delivery batch24 remaining source candidates ONLY; not entire C0 universe",
-  "status": "partial; no global C0 acceptance",
+  "status": "all original batch24 source candidates have current-source definitions; full C0 field/profile/case joins unaccepted",
   "latestDefinitions": [
     {
       "candidateId": "SRC-d0207096e9428f6e",
@@ -2341,258 +2341,1253 @@
       "definitionSha256": "20724626275b0da4d2d4e2aa3bdd7d3f79f52d875e23191a6f748c944fa29a52",
       "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-ops-dedup-recheck/README.md",
       "status": "bounded-static-source-definition; whole C0 joins open"
-    }
-  ],
-  "remainingSources": [
+    },
     {
+      "candidateId": "SRC-15f4cafe131dc43f",
       "source": "charts/kubeclaw/files/config/swarm.config.json",
-      "candidateIds": [
-        "SRC-15f4cafe131dc43f"
-      ]
+      "line": 11,
+      "field": "tuning.retention fixed marker",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
     },
     {
+      "candidateId": "SRC-8720d3127023a1b1",
       "source": "charts/kubeclaw/templates/NOTES.txt",
-      "candidateIds": [
-        "SRC-8720d3127023a1b1",
-        "SRC-1151cafaea71028a",
-        "SRC-0e454afe6feed12e",
-        "SRC-651bea5b67d63013",
-        "SRC-2e23beaf178a7927",
-        "SRC-b31582b49c0d80bb",
-        "SRC-fa45584a98c45d3f",
-        "SRC-f76d4ddd70b7c737",
-        "SRC-ec942754844edc3a",
-        "SRC-6c35b249fefb7900",
-        "SRC-b4c1e27a98059de1"
-      ]
+      "line": 2,
+      "field": "agentRole display",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
     },
     {
+      "candidateId": "SRC-1151cafaea71028a",
+      "source": "charts/kubeclaw/templates/NOTES.txt",
+      "line": 14,
+      "field": "NodePort display gate",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-0e454afe6feed12e",
+      "source": "charts/kubeclaw/templates/NOTES.txt",
+      "line": 15,
+      "field": "NodePort URL display",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-651bea5b67d63013",
+      "source": "charts/kubeclaw/templates/NOTES.txt",
+      "line": 17,
+      "field": "port-forward display",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-2e23beaf178a7927",
+      "source": "charts/kubeclaw/templates/NOTES.txt",
+      "line": 20,
+      "field": "workspace display gate",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-b31582b49c0d80bb",
+      "source": "charts/kubeclaw/templates/NOTES.txt",
+      "line": 23,
+      "field": "SOUL.md announcement",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-fa45584a98c45d3f",
+      "source": "charts/kubeclaw/templates/NOTES.txt",
+      "line": 24,
+      "field": "AGENTS.md announcement",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-f76d4ddd70b7c737",
+      "source": "charts/kubeclaw/templates/NOTES.txt",
+      "line": 25,
+      "field": "USER.md announcement",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-ec942754844edc3a",
+      "source": "charts/kubeclaw/templates/NOTES.txt",
+      "line": 26,
+      "field": "TOOLS.md announcement",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-6c35b249fefb7900",
+      "source": "charts/kubeclaw/templates/NOTES.txt",
+      "line": 27,
+      "field": "IDENTITY.md announcement",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-b4c1e27a98059de1",
+      "source": "charts/kubeclaw/templates/NOTES.txt",
+      "line": 28,
+      "field": "BOOTSTRAP.md announcement",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-60b5863ff1f3c54a",
       "source": "charts/kubeclaw/templates/_buster-native.tpl",
-      "candidateIds": [
-        "SRC-60b5863ff1f3c54a",
-        "SRC-f0ca2e983c5d89e3",
-        "SRC-93707e36eb25018e",
-        "SRC-a541216fcef537a2",
-        "SRC-f8588e047fbcfaf6",
-        "SRC-5ef58e91acf26a34",
-        "SRC-fb98f92838b245c1"
-      ]
+      "line": 4,
+      "field": "busterNative binding",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
     },
     {
+      "candidateId": "SRC-f0ca2e983c5d89e3",
+      "source": "charts/kubeclaw/templates/_buster-native.tpl",
+      "line": 5,
+      "field": "singlewriter/namespace/node/policy guard",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-93707e36eb25018e",
+      "source": "charts/kubeclaw/templates/_buster-native.tpl",
+      "line": 9,
+      "field": "input env default",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-a541216fcef537a2",
+      "source": "charts/kubeclaw/templates/_buster-native.tpl",
+      "line": 10,
+      "field": "reserved env rejection",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-f8588e047fbcfaf6",
+      "source": "charts/kubeclaw/templates/_buster-native.tpl",
+      "line": 15,
+      "field": "native authored env concat",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-5ef58e91acf26a34",
+      "source": "charts/kubeclaw/templates/_buster-native.tpl",
+      "line": 19,
+      "field": "input mounts default/rejection",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-fb98f92838b245c1",
+      "source": "charts/kubeclaw/templates/_buster-native.tpl",
+      "line": 32,
+      "field": "native env assignment",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-022a87d32985df19",
       "source": "charts/kubeclaw/templates/archviewer.yaml",
-      "candidateIds": [
-        "SRC-022a87d32985df19",
-        "SRC-d2619fb8f9419187",
-        "SRC-e962db81df06caf6",
-        "SRC-c19a258a942aa8e3",
-        "SRC-beb4f291bc767284",
-        "SRC-c03703aaf63f4146",
-        "SRC-b5ae37b2598dfc67"
-      ]
+      "line": 1,
+      "field": "archviewer.enabled",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
     },
     {
+      "candidateId": "SRC-d2619fb8f9419187",
+      "source": "charts/kubeclaw/templates/archviewer.yaml",
+      "line": 2,
+      "field": "Nova role guard",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-e962db81df06caf6",
+      "source": "charts/kubeclaw/templates/archviewer.yaml",
+      "line": 5,
+      "field": "networkPolicyProvider",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-c19a258a942aa8e3",
+      "source": "charts/kubeclaw/templates/archviewer.yaml",
+      "line": 9,
+      "field": "legacy service.extraPorts rejection",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-beb4f291bc767284",
+      "source": "charts/kubeclaw/templates/archviewer.yaml",
+      "line": 37,
+      "field": "archviewer.hostname",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-c03703aaf63f4146",
+      "source": "charts/kubeclaw/templates/archviewer.yaml",
+      "line": 53,
+      "field": "operatorNamespace ordinary selector",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-b5ae37b2598dfc67",
+      "source": "charts/kubeclaw/templates/archviewer.yaml",
+      "line": 74,
+      "field": "operatorNamespace Cilium selector",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-68080ef1ff0e6c71",
       "source": "charts/kubeclaw/templates/buster-namespace-fence.yaml",
-      "candidateIds": [
-        "SRC-68080ef1ff0e6c71",
-        "SRC-0720842bfcd51168"
-      ]
+      "line": 1,
+      "field": "{{- if and .Values.busterNamespaceBroker.enabled (eq .Values.agentRole \"buster\") -}}",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
     },
     {
+      "candidateId": "SRC-0720842bfcd51168",
+      "source": "charts/kubeclaw/templates/buster-namespace-fence.yaml",
+      "line": 31,
+      "field": "{{ toJson .Values.busterNamespaceBroker.allowedPrefixes }}.exists(prefix, variables.target.metadata.name.startsWith(prefix + \"-\")) &&",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-4d5dc53173e0925b",
       "source": "charts/kubeclaw/templates/buster-runtime-pvc.yaml",
-      "candidateIds": [
-        "SRC-4d5dc53173e0925b"
-      ]
+      "line": 2,
+      "field": "{{- if ne (int .Values.replicaCount) 1 }}",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
     },
     {
+      "candidateId": "SRC-088b1869ffa46305",
       "source": "charts/kubeclaw/templates/configmap-skills.yaml",
-      "candidateIds": [
-        "SRC-088b1869ffa46305",
-        "SRC-e95d9fa0836afe29"
-      ]
+      "line": 12,
+      "field": "{{- if .Values.customSkills }}",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
     },
     {
+      "candidateId": "SRC-e95d9fa0836afe29",
+      "source": "charts/kubeclaw/templates/configmap-skills.yaml",
+      "line": 20,
+      "field": "{{- range $name, $content := .Values.customSkills }}",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-e6bda8d7a7ad8049",
       "source": "charts/kubeclaw/templates/configmap-swarm-config.yaml",
-      "candidateIds": [
-        "SRC-e6bda8d7a7ad8049",
-        "SRC-c08822b7465b1cd9",
-        "SRC-90d371e27daff134",
-        "SRC-d145f7cb10d57db9"
-      ]
+      "line": 15,
+      "field": "{{- if .Values.semgrepConfigYaml }}",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
     },
     {
+      "candidateId": "SRC-c08822b7465b1cd9",
+      "source": "charts/kubeclaw/templates/configmap-swarm-config.yaml",
+      "line": 16,
+      "field": "{{ .Values.semgrepConfigYaml | indent 4 }}",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-90d371e27daff134",
+      "source": "charts/kubeclaw/templates/configmap-swarm-config.yaml",
+      "line": 21,
+      "field": "{{- if .Values.eslintConfigMjs }}",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-d145f7cb10d57db9",
+      "source": "charts/kubeclaw/templates/configmap-swarm-config.yaml",
+      "line": 22,
+      "field": "{{ .Values.eslintConfigMjs | indent 4 }}",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-d9e4c71bccb02648",
       "source": "charts/kubeclaw/templates/configmap-workspace.yaml",
-      "candidateIds": [
-        "SRC-d9e4c71bccb02648",
-        "SRC-ef58a353b91d2fbb",
-        "SRC-98dfe623dc910246",
-        "SRC-ce2a46277a9308cf",
-        "SRC-7c96750ec6508ec3",
-        "SRC-6ebcc7cc622ae4aa",
-        "SRC-deef03cd82734229",
-        "SRC-99245371818e117f",
-        "SRC-5848db9c3a4e5aff",
-        "SRC-f2ca5e58950f0c67",
-        "SRC-63c3ab015d976358",
-        "SRC-604956c9177802d9",
-        "SRC-3f967097d421f3ce",
-        "SRC-5492b82d34fe2b01",
-        "SRC-cabccd1d8c0fc37c"
-      ]
+      "line": 1,
+      "field": "workspace.enabled",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
     },
     {
+      "candidateId": "SRC-ef58a353b91d2fbb",
+      "source": "charts/kubeclaw/templates/configmap-workspace.yaml",
+      "line": 9,
+      "field": "workspace.soul gate",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-98dfe623dc910246",
+      "source": "charts/kubeclaw/templates/configmap-workspace.yaml",
+      "line": 11,
+      "field": "workspace.soul content",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-ce2a46277a9308cf",
+      "source": "charts/kubeclaw/templates/configmap-workspace.yaml",
+      "line": 13,
+      "field": "workspace.agents gate",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-7c96750ec6508ec3",
+      "source": "charts/kubeclaw/templates/configmap-workspace.yaml",
+      "line": 15,
+      "field": "workspace.agents content",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-6ebcc7cc622ae4aa",
+      "source": "charts/kubeclaw/templates/configmap-workspace.yaml",
+      "line": 17,
+      "field": "workspace.user gate",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-deef03cd82734229",
+      "source": "charts/kubeclaw/templates/configmap-workspace.yaml",
+      "line": 19,
+      "field": "workspace.user content",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-99245371818e117f",
+      "source": "charts/kubeclaw/templates/configmap-workspace.yaml",
+      "line": 21,
+      "field": "workspace.tools gate",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-5848db9c3a4e5aff",
+      "source": "charts/kubeclaw/templates/configmap-workspace.yaml",
+      "line": 23,
+      "field": "workspace.tools content",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-f2ca5e58950f0c67",
+      "source": "charts/kubeclaw/templates/configmap-workspace.yaml",
+      "line": 25,
+      "field": "workspace.memory gate",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-63c3ab015d976358",
+      "source": "charts/kubeclaw/templates/configmap-workspace.yaml",
+      "line": 27,
+      "field": "workspace.memory content",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-604956c9177802d9",
+      "source": "charts/kubeclaw/templates/configmap-workspace.yaml",
+      "line": 29,
+      "field": "workspace.identity gate",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-3f967097d421f3ce",
+      "source": "charts/kubeclaw/templates/configmap-workspace.yaml",
+      "line": 31,
+      "field": "workspace.identity content",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-5492b82d34fe2b01",
+      "source": "charts/kubeclaw/templates/configmap-workspace.yaml",
+      "line": 33,
+      "field": "workspace.bootstrap gate",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-cabccd1d8c0fc37c",
+      "source": "charts/kubeclaw/templates/configmap-workspace.yaml",
+      "line": 35,
+      "field": "workspace.bootstrap content",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-106f245846f69452",
       "source": "charts/kubeclaw/templates/demo-ready-service.yaml",
-      "candidateIds": [
-        "SRC-106f245846f69452",
-        "SRC-9b2c776f442c14a0",
-        "SRC-2d501cff14f53787",
-        "SRC-ee2555acd8ecc846"
-      ]
+      "line": 1,
+      "field": "{{- if and .Values.busterNamespaceBroker.enabled (eq .Values.agentRole \"buster\") .Values.busterNamespaceBroker.controller.readiness.enabled }}",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
     },
     {
+      "candidateId": "SRC-9b2c776f442c14a0",
+      "source": "charts/kubeclaw/templates/demo-ready-service.yaml",
+      "line": 32,
+      "field": "kubernetes.io/metadata.name: {{ required \"Ready producer namespace is required\" .Values.busterNamespaceBroker.controller.readiness.producerNamespace | quote }}",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-2d501cff14f53787",
+      "source": "charts/kubeclaw/templates/demo-ready-service.yaml",
+      "line": 36,
+      "field": "{{- if .Values.busterNamespaceBroker.controller.productDecisions.enabled }}",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-ee2555acd8ecc846",
+      "source": "charts/kubeclaw/templates/demo-ready-service.yaml",
+      "line": 39,
+      "field": "kubernetes.io/metadata.name: {{ required \"Product producer namespace is required\" .Values.busterNamespaceBroker.controller.productDecisions.producerNamespace | quote }}",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-e6142f939d54c545",
       "source": "charts/kubeclaw/templates/pvc.yaml",
-      "candidateIds": [
-        "SRC-e6142f939d54c545",
-        "SRC-153d0e1d6f157586"
-      ]
+      "line": 11,
+      "field": "{{- if eq .Values.agentRole \"prism\" }}",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
     },
     {
+      "candidateId": "SRC-153d0e1d6f157586",
+      "source": "charts/kubeclaw/templates/pvc.yaml",
+      "line": 37,
+      "field": "{{- if eq .Values.agentRole \"prism\" }}",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-581c36e0efa472c5",
       "source": "charts/kubeclaw/templates/rbac.yaml",
-      "candidateIds": [
-        "SRC-581c36e0efa472c5",
-        "SRC-a226014eba4c849d",
-        "SRC-c9f18e6ad7622aee",
-        "SRC-7dd0dfa97a2a5361",
-        "SRC-7c5366d15546f65a",
-        "SRC-8dded0f8a638779d"
-      ]
+      "line": 2,
+      "field": "leaseClient effective enabled",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
     },
     {
+      "candidateId": "SRC-a226014eba4c849d",
+      "source": "charts/kubeclaw/templates/rbac.yaml",
+      "line": 3,
+      "field": "verificationRead effective enabled",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-c9f18e6ad7622aee",
+      "source": "charts/kubeclaw/templates/rbac.yaml",
+      "line": 4,
+      "field": "lease role create-SA gate",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-7dd0dfa97a2a5361",
+      "source": "charts/kubeclaw/templates/rbac.yaml",
+      "line": 47,
+      "field": "verification role create-SA gate",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-7c5366d15546f65a",
+      "source": "charts/kubeclaw/templates/rbac.yaml",
+      "line": 81,
+      "field": "verificationRead.tailscaleOperatorNamespace",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-8dded0f8a638779d",
+      "source": "charts/kubeclaw/templates/rbac.yaml",
+      "line": 82,
+      "field": "verificationRead.tailscaleOAuthSecretName",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-3ffcbdfb6f7da73c",
       "source": "charts/kubeclaw/templates/secret.yaml",
-      "candidateIds": [
-        "SRC-3ffcbdfb6f7da73c",
-        "SRC-82a36227e267f9cd",
-        "SRC-d1199c275c9f717f"
-      ]
+      "line": 15,
+      "field": "auth.token -> gatewayToken",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
     },
     {
+      "candidateId": "SRC-82a36227e267f9cd",
+      "source": "charts/kubeclaw/templates/secret.yaml",
+      "line": 18,
+      "field": "litellm.apiKey -> litellmApiKey",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-d1199c275c9f717f",
+      "source": "charts/kubeclaw/templates/secret.yaml",
+      "line": 21,
+      "field": "discord.token -> discordToken",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-70b75982645d1867",
       "source": "charts/kubeclaw/templates/service-extra-nodeports.yaml",
-      "candidateIds": [
-        "SRC-70b75982645d1867",
-        "SRC-c8137aca810ff62a"
-      ]
+      "line": 1,
+      "field": "{{- range .Values.service.extraPorts }}",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
     },
     {
+      "candidateId": "SRC-c8137aca810ff62a",
+      "source": "charts/kubeclaw/templates/service-extra-nodeports.yaml",
+      "line": 2,
+      "field": "{{- if and .nodePort (ne $.Values.service.type \"NodePort\") }}",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-c4d47f62da003864",
       "source": "charts/kubeclaw/templates/service.yaml",
-      "candidateIds": [
-        "SRC-c4d47f62da003864",
-        "SRC-806b1511602a77b7",
-        "SRC-aef6d93c7aba06c4",
-        "SRC-dc738a39beb76ab8",
-        "SRC-db9d6a49527b7d4e",
-        "SRC-f2189412eedfd554",
-        "SRC-95edc6d7b83eaa1e",
-        "SRC-edb0b9baf433425e",
-        "SRC-a16a38d1b1f88844",
-        "SRC-2e75e7c775406d1a",
-        "SRC-c56126c89453dff2"
-      ]
+      "line": 8,
+      "field": "service.type",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
     },
     {
+      "candidateId": "SRC-806b1511602a77b7",
+      "source": "charts/kubeclaw/templates/service.yaml",
+      "line": 13,
+      "field": "service.gatewayPort",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-aef6d93c7aba06c4",
+      "source": "charts/kubeclaw/templates/service.yaml",
+      "line": 14,
+      "field": "service.gatewayTargetPort",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-dc738a39beb76ab8",
+      "source": "charts/kubeclaw/templates/service.yaml",
+      "line": 16,
+      "field": "gateway NodePort gate",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-db9d6a49527b7d4e",
+      "source": "charts/kubeclaw/templates/service.yaml",
+      "line": 17,
+      "field": "service.nodePort",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-f2189412eedfd554",
+      "source": "charts/kubeclaw/templates/service.yaml",
+      "line": 19,
+      "field": "service.bridgeEnabled",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-95edc6d7b83eaa1e",
+      "source": "charts/kubeclaw/templates/service.yaml",
+      "line": 21,
+      "field": "service.bridgePort",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-edb0b9baf433425e",
+      "source": "charts/kubeclaw/templates/service.yaml",
+      "line": 24,
+      "field": "bridge NodePort gate",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-a16a38d1b1f88844",
+      "source": "charts/kubeclaw/templates/service.yaml",
+      "line": 25,
+      "field": "service.bridgeNodePort",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-2e75e7c775406d1a",
+      "source": "charts/kubeclaw/templates/service.yaml",
+      "line": 28,
+      "field": "service.extraPorts",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-c56126c89453dff2",
+      "source": "charts/kubeclaw/templates/service.yaml",
+      "line": 33,
+      "field": "extra.nodePort gate",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-5f9ddf3532c43704",
       "source": "charts/kubeclaw/templates/serviceaccount.yaml",
-      "candidateIds": [
-        "SRC-5f9ddf3532c43704",
-        "SRC-5c2f9d3ee43ec8fb"
-      ]
+      "line": 1,
+      "field": "{{- if .Values.serviceAccount.create -}}",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
     },
     {
+      "candidateId": "SRC-5c2f9d3ee43ec8fb",
+      "source": "charts/kubeclaw/templates/serviceaccount.yaml",
+      "line": 9,
+      "field": "automountServiceAccountToken: {{ .Values.serviceAccount.automount | default false }}",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-8444cce4182b20be",
       "source": "charts/kubeclaw/values.yaml",
-      "candidateIds": [
-        "SRC-8444cce4182b20be"
-      ]
+      "line": 211,
+      "field": "agent.model primary and fallback list",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
     },
     {
+      "candidateId": "SRC-b6eecd6d74bd72d8",
       "source": "charts/prism/templates/_product-decisions.tpl",
-      "candidateIds": [
-        "SRC-b6eecd6d74bd72d8"
-      ]
+      "line": 4,
+      "field": "{{- if not .Values.tailscale.enabled -}}{{ fail \"Product decisions require the authenticated Tailscale Studio ingress\" }}{{- end -}}",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
     },
     {
+      "candidateId": "SRC-9dd6ec29d7fb8552",
       "source": "charts/prism/templates/_swarm-config.tpl",
-      "candidateIds": [
-        "SRC-9dd6ec29d7fb8552"
-      ]
+      "line": 5,
+      "field": "{{- fail \"Control result limit belongs to prism-execution.config.json settings.maximumResultBytes; dispatch timeout belongs to prism-control.config.json settings.dispatchTimeoutMs\" -}}",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
     },
     {
+      "candidateId": "SRC-798ca7ce75ef3ff9",
       "source": "charts/prism/values.schema.json",
-      "candidateIds": [
-        "SRC-798ca7ce75ef3ff9",
-        "SRC-f5742a25dee07f1d",
-        "SRC-84a61ea381a00ff6",
-        "SRC-a94186a55ce2431a"
-      ]
+      "line": 152,
+      "field": "control.productDecisions.tokenExpirationSeconds",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
     },
     {
+      "candidateId": "SRC-f5742a25dee07f1d",
+      "source": "charts/prism/values.schema.json",
+      "line": 300,
+      "field": "worker.terminationGracePeriodSeconds",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-84a61ea381a00ff6",
+      "source": "charts/prism/values.schema.json",
+      "line": 322,
+      "field": "ingestion.quarantineTtlMs",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-a94186a55ce2431a",
+      "source": "charts/prism/values.schema.json",
+      "line": 502,
+      "field": "backup.maximumDurationSeconds",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-629f4ce41bb89fee",
       "source": "skills/buster/engine/test-gates/preparation-config.ts",
-      "candidateIds": [
-        "SRC-629f4ce41bb89fee",
-        "SRC-9848c97c9319cd1d",
-        "SRC-be24b2094a6da316",
-        "SRC-26b849bed2e1ac82",
-        "SRC-3b38fdd30b9a8036",
-        "SRC-8845bb2071984c12",
-        "SRC-6a45c343c830ad4a",
-        "SRC-fabc811c00c0d5a8",
-        "SRC-4535ebc89579c7b7",
-        "SRC-b40d099b9dfb2dd4",
-        "SRC-526d02216524240a",
-        "SRC-e05b38090f34ff81",
-        "SRC-790ac7e299c2d55a",
-        "SRC-072db49d45d6ec00",
-        "SRC-e75cae6fdcc63e28",
-        "SRC-9cf8ad491c1f3a5c",
-        "SRC-545ecfc86f0702cf"
-      ]
+      "line": 15,
+      "field": "BUSTER_NATIVE_POOL_POLICY_FILE",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
     },
     {
+      "candidateId": "SRC-9848c97c9319cd1d",
+      "source": "skills/buster/engine/test-gates/preparation-config.ts",
+      "line": 19,
+      "field": "pool memory/tasks relation",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-be24b2094a6da316",
+      "source": "skills/buster/engine/test-gates/preparation-config.ts",
+      "line": 20,
+      "field": "pool active scopes relation",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-26b849bed2e1ac82",
+      "source": "skills/buster/engine/test-gates/preparation-config.ts",
+      "line": 21,
+      "field": "BUSTER_ENGINE_CONTENT_DIGEST",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-3b38fdd30b9a8036",
+      "source": "skills/buster/engine/test-gates/preparation-config.ts",
+      "line": 22,
+      "field": "engine digest validation",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-8845bb2071984c12",
+      "source": "skills/buster/engine/test-gates/preparation-config.ts",
+      "line": 29,
+      "field": "sourceAttestationPublicKeyEnvironmentVariable",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-6a45c343c830ad4a",
+      "source": "skills/buster/engine/test-gates/preparation-config.ts",
+      "line": 30,
+      "field": "trustedSourceAuthority",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-fabc811c00c0d5a8",
+      "source": "skills/buster/engine/test-gates/preparation-config.ts",
+      "line": 31,
+      "field": "publickey env lookup",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-4535ebc89579c7b7",
+      "source": "skills/buster/engine/test-gates/preparation-config.ts",
+      "line": 32,
+      "field": "Ed25519 publickey validation",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-b40d099b9dfb2dd4",
+      "source": "skills/buster/engine/test-gates/preparation-config.ts",
+      "line": 35,
+      "field": "fixed runtime.stateRoot/runtimeRoot",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-526d02216524240a",
+      "source": "skills/buster/engine/test-gates/preparation-config.ts",
+      "line": 46,
+      "field": "root config ancestor trust",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-e05b38090f34ff81",
+      "source": "skills/buster/engine/test-gates/preparation-config.ts",
+      "line": 51,
+      "field": "root config file/size trust",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-790ac7e299c2d55a",
+      "source": "skills/buster/engine/test-gates/preparation-config.ts",
+      "line": 55,
+      "field": "runtime JSON object validation",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-072db49d45d6ec00",
+      "source": "skills/buster/engine/test-gates/preparation-config.ts",
+      "line": 62,
+      "field": "SWARM_CONFIG entry",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-e75cae6fdcc63e28",
+      "source": "skills/buster/engine/test-gates/preparation-config.ts",
+      "line": 63,
+      "field": "absolute normalized SWARM_CONFIG",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-9cf8ad491c1f3a5c",
+      "source": "skills/buster/engine/test-gates/preparation-config.ts",
+      "line": 69,
+      "field": "swarm ancestor ownership/mode",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-545ecfc86f0702cf",
+      "source": "skills/buster/engine/test-gates/preparation-config.ts",
+      "line": 75,
+      "field": "swarm file ownership/mode",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-7d21714bd9c0c3c0",
       "source": "skills/buster/engine/test-gates/preparation-supervisor.ts",
-      "candidateIds": [
-        "SRC-7d21714bd9c0c3c0",
-        "SRC-c9a3ee1856722184",
-        "SRC-5a86d88ea3024390",
-        "SRC-b694464d9ec1e726",
-        "SRC-e3e643f388dc0cb0",
-        "SRC-91910217b57b4275",
-        "SRC-caccd385c4e2c876"
-      ]
+      "line": 24,
+      "field": "requireRootBusterSettings",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
     },
     {
+      "candidateId": "SRC-c9a3ee1856722184",
+      "source": "skills/buster/engine/test-gates/preparation-supervisor.ts",
+      "line": 25,
+      "field": "loadBusterPreparationSettings",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-5a86d88ea3024390",
+      "source": "skills/buster/engine/test-gates/preparation-supervisor.ts",
+      "line": 26,
+      "field": "nativeBusterPreparationConfig",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-b694464d9ec1e726",
+      "source": "skills/buster/engine/test-gates/preparation-supervisor.ts",
+      "line": 28,
+      "field": "sourceRoot directory/rootmode",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-e3e643f388dc0cb0",
+      "source": "skills/buster/engine/test-gates/preparation-supervisor.ts",
+      "line": 29,
+      "field": "sourceRoot realpath",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-91910217b57b4275",
+      "source": "skills/buster/engine/test-gates/preparation-supervisor.ts",
+      "line": 59,
+      "field": "child config/stdio/env",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-caccd385c4e2c876",
+      "source": "skills/buster/engine/test-gates/preparation-supervisor.ts",
+      "line": 69,
+      "field": "child success exit/signal",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-b18d453192c636f1",
       "source": "skills/common/plugins/openclaw-agent-observer/src/config.ts",
-      "candidateIds": [
-        "SRC-b18d453192c636f1",
-        "SRC-61e79582dd58b5de",
-        "SRC-2277817f41b02170",
-        "SRC-5f059f14d9cf8e7b",
-        "SRC-37abb9b52cba9698",
-        "SRC-1704d79e49a8b060",
-        "SRC-369080fae9e19cd9",
-        "SRC-2f8da6752cb54f5b",
-        "SRC-e02ba762a0c275a4",
-        "SRC-94c57fcae240f9a7",
-        "SRC-bbedb31ad3136731",
-        "SRC-d712743f85c8d350"
-      ]
+      "line": 35,
+      "field": "bool absent fallback",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
     },
     {
+      "candidateId": "SRC-61e79582dd58b5de",
+      "source": "skills/common/plugins/openclaw-agent-observer/src/config.ts",
+      "line": 41,
+      "field": "requiredBoolean absent error",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-2277817f41b02170",
+      "source": "skills/common/plugins/openclaw-agent-observer/src/config.ts",
+      "line": 48,
+      "field": "string trimming",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-5f059f14d9cf8e7b",
+      "source": "skills/common/plugins/openclaw-agent-observer/src/config.ts",
+      "line": 49,
+      "field": "empty string absent",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-37abb9b52cba9698",
+      "source": "skills/common/plugins/openclaw-agent-observer/src/config.ts",
+      "line": 53,
+      "field": "positiveInteger absent error",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-1704d79e49a8b060",
+      "source": "skills/common/plugins/openclaw-agent-observer/src/config.ts",
+      "line": 57,
+      "field": "positiveInteger Number domain",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-369080fae9e19cd9",
+      "source": "skills/common/plugins/openclaw-agent-observer/src/config.ts",
+      "line": 64,
+      "field": "port absent optional",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-2f8da6752cb54f5b",
+      "source": "skills/common/plugins/openclaw-agent-observer/src/config.ts",
+      "line": 66,
+      "field": "port1..65535",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-e02ba762a0c275a4",
+      "source": "skills/common/plugins/openclaw-agent-observer/src/config.ts",
+      "line": 73,
+      "field": "signed integer absent error",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-94c57fcae240f9a7",
+      "source": "skills/common/plugins/openclaw-agent-observer/src/config.ts",
+      "line": 89,
+      "field": "config-defined beats env",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-bbedb31ad3136731",
+      "source": "skills/common/plugins/openclaw-agent-observer/src/config.ts",
+      "line": 92,
+      "field": "production config resolver",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-d712743f85c8d350",
+      "source": "skills/common/plugins/openclaw-agent-observer/src/config.ts",
+      "line": 116,
+      "field": "process.env exposure",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
+    },
+    {
+      "candidateId": "SRC-863fc05ab283fecf",
       "source": "skills/prism/openclaw-plugin/index.mjs",
-      "candidateIds": [
-        "SRC-863fc05ab283fecf"
-      ]
+      "line": 18,
+      "field": "if (!response.ok) throw new Error(value.error || `Prism control returned HTTP ${response.status}`);",
+      "definitionPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/source-inventory.json",
+      "definitionSha256": "5d834f8bf39ac877a6ef84fee37528faccfb8dea4bb2eeaf64af6ee9561cdfd0",
+      "reviewPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-remaining-source-inventory/README.md",
+      "status": "independently observed current-source facts; target field/case integration and whole C0 review open"
     }
   ],
+  "remainingSources": [],
   "counts": {
     "originalQueue": 358,
-    "concreteStaticDefinitionRows": 234,
-    "remainingSourceCandidates": 124
+    "concreteStaticDefinitionRows": 358,
+    "remainingSourceCandidates": 0
   },
   "globalC0Accepted": false,
   "implementationAuthorization": null
