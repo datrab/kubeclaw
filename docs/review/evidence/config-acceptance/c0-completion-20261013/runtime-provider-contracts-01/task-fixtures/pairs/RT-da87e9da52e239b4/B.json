@@ -1,0 +1,19 @@
+{
+  "specFile": "spec-typed.json",
+  "url": "https://fixture.invalid",
+  "operations": [
+    {
+      "operationId": "submit",
+      "pathParameters": {},
+      "query": {},
+      "headers": {},
+      "cleanup": false,
+      "expectedStatuses": [
+        200
+      ],
+      "body": {
+        "business": "other-task-value"
+      }
+    }
+  ]
+}

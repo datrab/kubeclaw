@@ -1,0 +1,74 @@
+[
+  {
+    "path": "skills/prism/server/agent-job-runner.mjs",
+    "sha256": "f97926e67b1737be717db6a549ca60920232b7fbd2da23f73c0a15597c331bfb",
+    "bytes": 3187,
+    "scope": "actual repository source"
+  },
+  {
+    "path": "skills/prism/server/agent-attempt.ts",
+    "sha256": "3e27552ab5cbc3d1c357df81a3ba92b5928feaeb4df36d054c174b9c2f7d0de8",
+    "bytes": 3188,
+    "scope": "actual repository source"
+  },
+  {
+    "path": "skills/prism/server/agent-process.ts",
+    "sha256": "1d3486c1ada0851150257a4ef197d62f523924e2c01da3e7a7c53ad06fb1102b",
+    "bytes": 2917,
+    "scope": "actual repository source"
+  },
+  {
+    "path": "skills/prism/server/agent-bridge.mjs",
+    "sha256": "f908013330077103e3c8c37df76401c642737d245f361b4c6ff63d9161e9738c",
+    "bytes": 2631,
+    "scope": "actual repository source"
+  },
+  {
+    "path": "skills/prism/control/agent-jobs.ts",
+    "sha256": "ff62ef04432ebb67c700c4a25103a0477096f588c2cc3f34f3fab0b776860334",
+    "bytes": 8860,
+    "scope": "actual repository source"
+  },
+  {
+    "path": "skills/worker/core/worker/attempt-executor.ts",
+    "sha256": "2ae7f5897a79042c601d58da5af682baba0e416e0c4ab302108386e3b619db42",
+    "bytes": 35579,
+    "scope": "actual repository source"
+  },
+  {
+    "path": "skills/worker/core/worker/phase-deadline.ts",
+    "sha256": "13ead2817f0277f8bb7a45b09f42df228bc62e8a0d43e26eabbcbc4f2365e456",
+    "bytes": 4056,
+    "scope": "actual repository source"
+  },
+  {
+    "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v2.schema.json",
+    "sha256": "26e936fbd954562547e7c0548085ae65ceb22394061d956532730a17ced42f7c",
+    "bytes": 28248,
+    "scope": "actual repository source"
+  },
+  {
+    "path": "/app/dist/register.agent-turn-BI3P2wW6.mjs",
+    "sha256": "c19e4993adc80287d6ad7e4286fc6f2bedb7471554cd7e1eef30618b690dcdb1",
+    "bytes": 7285,
+    "scope": "installed-host software evidence; NOT deployed Prism parser identity"
+  },
+  {
+    "path": "/app/dist/agent-via-gateway-B72P8dV8.mjs",
+    "sha256": "f946dcaa9e695f74801fa431eab6274f0d1c50ed84e46179fb567045502612ff",
+    "bytes": 37566,
+    "scope": "installed-host software evidence; NOT deployed Prism parser identity"
+  },
+  {
+    "path": "/app/dist/number-coercion-Dq1l5muL.mjs",
+    "sha256": "8216506195f90a94dd6e4ea489ffbcafcfff0bf608867a0a4667d820c34191f3",
+    "bytes": 12409,
+    "scope": "installed-host software evidence; NOT deployed Prism parser identity"
+  },
+  {
+    "path": "/app/package.json",
+    "sha256": "09f313df5a3b93723c7f408bba1887e9978156bbcfd4fa0b3c3bccb61c4779c8",
+    "bytes": 145705,
+    "scope": "installed-host software evidence; NOT deployed Prism parser identity"
+  }
+]

@@ -1,0 +1,16 @@
+{
+  "specFile": "spec-b.json",
+  "url": "https://fixture.invalid",
+  "operations": [
+    {
+      "operationId": "checkOk",
+      "pathParameters": {},
+      "query": {},
+      "headers": {},
+      "cleanup": false,
+      "expectedStatuses": [
+        200
+      ]
+    }
+  ]
+}

@@ -1,0 +1,3243 @@
+{
+  "reviewer": "/root/policy_family_contract_review",
+  "head": "06bb0b0b8f9253029c260cd3cb59458cd0c02fff",
+  "ledgerIdentity": {
+    "path": "docs/review/evidence/config-acceptance/author/candidate-ledger.json",
+    "sha256": "a5066c74fe2dbd60c88c75d1e17264b98f05df352823cf3b6e39bc206fae09d1"
+  },
+  "packages": [
+    {
+      "name": "recovery-source-contracts-01",
+      "expectedCandidates": 81,
+      "actualCandidates": 81,
+      "exactExpectedIDs": true,
+      "inputs": [
+        {
+          "path": "scripts/postgresql-recovery.sh",
+          "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b",
+          "matches": true
+        },
+        {
+          "path": "scripts/render-postgresql-recovery.mjs",
+          "sha256": "3e0d30b0c0888c4039f176ddb80d19e00b7b7064ead979d5bb9122d4df19e14f",
+          "matches": true
+        },
+        {
+          "path": "scripts/postgresql-recovery-preflight.mjs",
+          "sha256": "fef2fed9b07fb7731c58d69c744a418130882cc5507d16616a3b516ff9485fd4",
+          "matches": true
+        },
+        {
+          "path": "scripts/deploy.sh",
+          "sha256": "c90cc9c082b3adba89c458a9e28853afa77682a6c7066a7641c70aac749d0960",
+          "matches": true
+        },
+        {
+          "path": "my-values/infra/postgresql-recovery.yaml",
+          "sha256": "5f0ffb0cdf5acdbd814da726060d5125c5cae912554f27de57251ea90ae8d438",
+          "matches": true
+        },
+        {
+          "path": "my-values/infra/postgresql-values.yaml",
+          "sha256": "b7c1445d47350c6fcae2fc7de901e930dec1f8309331bf0db69c70c1f3404994",
+          "matches": true
+        },
+        {
+          "path": "my-values/infra/litellm-deployment.yaml",
+          "sha256": "21136d7cc63b549db0d9e1f3a32d449c5bf3c2644790d144d47d476372c56bab",
+          "matches": true
+        },
+        {
+          "path": "scripts/stateful-database-service.mjs",
+          "sha256": "fd96f1a30f997d4a6a71a23b81cad2dc4ccca69b223e4945e22c9261819bbfa8",
+          "matches": true
+        },
+        {
+          "path": "versions.json",
+          "sha256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d",
+          "matches": true
+        }
+      ],
+      "candidateChecks": [
+        {
+          "id": "SRC-0d7abe28ee2e690b",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true
+        },
+        {
+          "id": "SRC-d3d1ffc3ae0c26c7",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true
+        },
+        {
+          "id": "SRC-b1bffe9417fac280",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true
+        },
+        {
+          "id": "SRC-a914f2f70a318ab5",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true
+        },
+        {
+          "id": "SRC-4472730422f8903e",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true
+        },
+        {
+          "id": "SRC-a6f7eb6d95952828",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true
+        },
+        {
+          "id": "SRC-07e60170641cef92",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true
+        },
+        {
+          "id": "SRC-ac0cb519fc2a19e1",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true
+        },
+        {
+          "id": "SRC-1526476da09be460",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true
+        },
+        {
+          "id": "SRC-b50fe9a568c67581",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true
+        },
+        {
+          "id": "SRC-e3332c8a75ad6cd7",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true
+        },
+        {
+          "id": "SRC-735ca02ea38021c2",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true
+        },
+        {
+          "id": "SRC-dcb04dba01d6251b",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true
+        },
+        {
+          "id": "SRC-2f8e248500f09f2c",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true
+        },
+        {
+          "id": "SRC-88e68616d9679bfe",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true
+        },
+        {
+          "id": "SRC-7f0cb736758934e3",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true
+        },
+        {
+          "id": "SRC-22c8ce8a9860718e",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true
+        },
+        {
+          "id": "SRC-a58ee8f4d998d8d7",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true
+        },
+        {
+          "id": "SRC-4d8c554cedefe7e3",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true
+        },
+        {
+          "id": "SRC-2cc6ae187b1c4620",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true
+        },
+        {
+          "id": "SRC-e143e45ac9f8cf1a",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true
+        },
+        {
+          "id": "SRC-1bd94f9eb8109fb8",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true
+        },
+        {
+          "id": "SRC-dc2aa0ceab92d18c",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true
+        },
+        {
+          "id": "SRC-865461bfc9850dcb",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true
+        },
+        {
+          "id": "SRC-bae98e10a68c4921",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true
+        },
+        {
+          "id": "SRC-3becce028d299daa",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true
+        },
+        {
+          "id": "SRC-c7dac0ae577ca91f",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true
+        },
+        {
+          "id": "SRC-22e707e25624bbbb",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true
+        },
+        {
+          "id": "SRC-c58e691b6958fd24",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true
+        },
+        {
+          "id": "SRC-c208a01d6410a6d1",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true
+        },
+        {
+          "id": "SRC-591a043efba571f6",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true
+        },
+        {
+          "id": "SRC-6fb43eec3cb1376e",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true
+        },
+        {
+          "id": "SRC-573a7e376fa91689",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true
+        },
+        {
+          "id": "SRC-06237b68508a983e",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true
+        },
+        {
+          "id": "SRC-479a13f29af54508",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true
+        },
+        {
+          "id": "SRC-fa55b1e389e16f99",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true
+        },
+        {
+          "id": "SRC-4e0f972de1f455c5",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true
+        },
+        {
+          "id": "SRC-baff595666850340",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true
+        },
+        {
+          "id": "SRC-f941d1df0b289d1c",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true
+        },
+        {
+          "id": "SRC-f81bf24a5b954742",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true
+        },
+        {
+          "id": "SRC-bc353b442b591d54",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true
+        },
+        {
+          "id": "SRC-69c73b6869554ffb",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true
+        },
+        {
+          "id": "SRC-a409eeca2cea8dc8",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true
+        },
+        {
+          "id": "SRC-3b41f4a9c95fa77f",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true
+        },
+        {
+          "id": "SRC-0cdaaeed65ae178c",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true
+        },
+        {
+          "id": "SRC-6531b764a135ea0e",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true
+        },
+        {
+          "id": "SRC-9c1504be3ba77b9b",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true
+        },
+        {
+          "id": "SRC-d3ed8066c34b7cb2",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true
+        },
+        {
+          "id": "SRC-ddd9a725360d052d",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true
+        },
+        {
+          "id": "SRC-8555ba38df7bf98d",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true
+        },
+        {
+          "id": "SRC-2312c1a2937988a8",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true
+        },
+        {
+          "id": "SRC-a4c0248736f03728",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true
+        },
+        {
+          "id": "SRC-2e6cada8b5f2f927",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true
+        },
+        {
+          "id": "SRC-c1379a7688011f88",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true
+        },
+        {
+          "id": "SRC-eb5e9cf6e8c8dcb9",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true
+        },
+        {
+          "id": "SRC-091a4feb13622f84",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true
+        },
+        {
+          "id": "SRC-cf05a9938c341d97",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true
+        },
+        {
+          "id": "SRC-518b8a2a0da00886",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true
+        },
+        {
+          "id": "SRC-2fe46bba23f39cba",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true
+        },
+        {
+          "id": "SRC-b1851f81d2d012d4",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true
+        },
+        {
+          "id": "SRC-08e68e7a6af91ab7",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true
+        },
+        {
+          "id": "SRC-4e9360fb95f76fb4",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true
+        },
+        {
+          "id": "SRC-f8c9c3db0d8dd8dd",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true
+        },
+        {
+          "id": "SRC-af92651c4e651180",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true
+        },
+        {
+          "id": "SRC-86e89035cd4d6766",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true
+        },
+        {
+          "id": "SRC-a5370b639ba30b4d",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true
+        },
+        {
+          "id": "SRC-123927521eb863e2",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true
+        },
+        {
+          "id": "SRC-f4abb1c717871125",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true
+        },
+        {
+          "id": "SRC-5fafd3145cb96392",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true
+        },
+        {
+          "id": "SRC-c9011c2cdd3229ec",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true
+        },
+        {
+          "id": "SRC-74e008a2790c0d8e",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true
+        },
+        {
+          "id": "SRC-ec863eb798302cfb",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true
+        },
+        {
+          "id": "SRC-534f90586b701d11",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true
+        },
+        {
+          "id": "SRC-7dcc343a4f45f583",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true
+        },
+        {
+          "id": "SRC-0669fe04356161b6",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true
+        },
+        {
+          "id": "SRC-c7da4365f24d1e9b",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true
+        },
+        {
+          "id": "SRC-dae6d50e7223a038",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true
+        },
+        {
+          "id": "SRC-e37b407a298a90f1",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true
+        },
+        {
+          "id": "SRC-fd778743a7bc40ac",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true
+        },
+        {
+          "id": "SRC-f27b77f6a2f38b7e",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true
+        },
+        {
+          "id": "SRC-12384df0dcc2708c",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true
+        }
+      ]
+    },
+    {
+      "name": "secret-provisioning-source-contracts-01",
+      "expectedCandidates": 237,
+      "actualCandidates": 237,
+      "exactExpectedIDs": true,
+      "inputs": [
+        {
+          "path": "my-values/setup-secrets.sh",
+          "sha256": "d417ee6bb8f6ba1008ad077f7cb4bf6172891aa9d8753681701aad4697e1834c",
+          "matches": true
+        },
+        {
+          "path": "scripts/deploy.sh",
+          "sha256": "c90cc9c082b3adba89c458a9e28853afa77682a6c7066a7641c70aac749d0960",
+          "matches": true
+        }
+      ],
+      "candidateChecks": [
+        {
+          "id": "SRC-e0dd63afb3b19b3c",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-a967b7b14d0bad4c",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-e20c578aec77e43f",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-763780617875cc1c",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-b6005cd3836d5b36",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-3a21857d884088f4",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-987e74f227dd0991",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-5824555e7b3db339",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-691cb77f9f69e773",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-cc4528bb72b3d81f",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-545ef1ef2ca2febf",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-58314f9b96a5af5e",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-bf26c3505bb2ad3c",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-e431f6ce4140a18b",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-7a6f90cd55a8595a",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-272ea6600f535808",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-e8584495bd49d6f9",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-1a4b64be43091d9e",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-880857a88d45e3cf",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-92cc58aedd7cb9a1",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-54798c954592679a",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-3e3859efce36df6e",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-5bbbf3147a82a985",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-fb0eaf25cf25af0b",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-3b06f257ff013b78",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-a496895b66a4d29d",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-c0cc523335587d49",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-a366c2755443a936",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-eff24b250477c690",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-d3dc58fba589a80d",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-e1117d85b3288e5c",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-4c1bb55e10fb8907",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-7cca812af0a6a92f",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-1ea1ac7b16ad05b8",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-1496180feabeb90a",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-eb919c970559ffcc",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-a5d01e43180336b3",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-cecad7c1d97f00fe",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-f1f4e5a3aa761ffb",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-fffa03e2cb1a55ca",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-a1da490e3173375d",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-97e52d545331d55a",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-b463c210a5673dfc",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-d7e8f84d0ac1e894",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-9f700526922540cd",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-e3b8f0252116df26",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-5acc71ff28a5c065",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-c5d5ad1ac27d1638",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-371758c12debc937",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-284b821f17c96e2b",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-c3c0c6d41e9f0237",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-b67ebff190f39863",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-905178150462cc09",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-87f38778609b3c44",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-936d223287fd307a",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-1e53eb95b6a26217",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-18f43dce7fcf8e69",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-ba6e1401e430e03f",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-5cdf21d5d201c9c4",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-d56c56cf56bd25fd",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-a2a61fcbe96151af",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-57ca7fdb2828abb3",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-536ece68135e9cbd",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-e08985c914305b3f",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-a09f565caaa8b872",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-fca2c8fed3d333d3",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-e20e279cd7829b5b",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-dd3de063f99001af",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-f4d10aa118e7c49a",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-90b10f5c545af5c9",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-33b1106565954e23",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-007c47a9825eada4",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-fc58aa556d94ebd6",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-4ff4a542f2a52f15",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-adede34e62bcddb7",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-811a205f6b932700",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-f8a9a145cd5cfb79",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-1840bfbb4e1d8c46",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-68acdb2920c68177",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-93c2da18fc68753d",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-42ef92df25111f8d",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-8ccfefd8fc7e51fe",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-9ab01af01ae4de52",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-b7830e27c939b6f3",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-d0078f4389fefb69",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-f8dc3fc05ae431ee",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-9a90869cee0b7b98",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-1a540cdc691ac080",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-efba0cd732944676",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-7802631d2b8e81c7",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-8392d7e145a138d2",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-67642688f2abf811",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-e4c292be97317b70",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-8666bfcbea80df3d",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-241b428b72c45efa",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-322cdc6cc84adc32",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-e2eb9c12011a68e7",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-4c280ea065cfbbdc",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-acd3689f3777f2a6",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-60809d74bf8815fe",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-74a297766697230e",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-27031326fb93e6d2",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-13ef5ab804d17522",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-d719d33ed9c10217",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-11f337be0abd4386",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-d5c4d8c405b03b4b",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-a35b44a3349ce3f1",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-1681a5a9bd76520d",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-a6025827ade8d240",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-e03590dcd6b863cd",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-4cc1027b63e44fd2",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-39f6dfc45ca28230",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-4d5568f936055887",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-1f48e3fc28586682",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-bc565ab3daffbf3e",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-818bc024e19c2897",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-710319f3edcbec7e",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-b716ef8e0ec92c5c",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-c6b352f3381fba8a",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-6a29de546aee9385",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-1c947166e66ff244",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-c4838d1b0cc6e079",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-1b8ff8744aec3384",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-e1ac6204e3b1348b",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-141f4f4f698833da",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-31b8d17768f01583",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-bf8b769d2367eb9c",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-d01e0c311cefdc9c",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-ea88e2126caab1fb",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-09c8cb6248432261",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-5e0bb0ef467cea83",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-22b4d864370efab1",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-cbb74a9daf4a759d",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-cd46b9704e53f3eb",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-f29087be035e61ce",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-569d41330bd7d408",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-6ddef0146cf082d2",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-68429da4f790292c",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-5a5855a5fc3ce848",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-69fe08bff8b4a049",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-8b9d5d72ebbe700a",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-d20ffc814f0d86a0",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-b8602f3ad103355e",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-d3c4d59fd3c61333",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-94f381664f48e342",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-f77f5f7b5eed95b9",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-656417a01cdcad8e",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-c90fed0c71f1fc08",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-1fbba7b8daac6cc4",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-e671180df459f137",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-06cf08293ea7966b",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-ad7f869f16f80e8b",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-c4672dc7e8423de4",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-2fcea68ee81049e9",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-e09a043c9e69f91d",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-9ed72ca44bd972a3",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-aa3e2208a7ec77e9",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-575ca10a3c9652c3",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-d4df325fc8bcd989",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-0680d056adc7fdff",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-771d4a420c246342",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-fe45e99492f86cbc",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-0e563a1cb3afd7ce",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-15d37a3688a0f927",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-94f16dc3bcb9ae96",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-037223278a31a15e",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-f1804cd6606be001",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-3a966ad0714e7153",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-acc26240219e6a44",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-932454c4a8810c66",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-8f879e70e4ec9b34",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-aaa101cfad5d9858",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-fec9f21c440153ba",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-469ec3adafd12215",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-3efeae118838d420",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-397f017ce531f908",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-8b97a2ae297738c4",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-5085b3596fcb523b",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-fbf8bccba16fd78e",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-0b6769ba82b96873",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-24b686aa9cdc008f",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-dae10aefc275c2d0",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-d48829d087767d7f",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-63344515c0b78e3e",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-aa975fab1b8203e3",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-952f1b3b858917b9",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-a50fa618528b7c9a",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-ade1c3a182445393",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-c1abefe5eb181dd2",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-6bd617248e761ecb",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-334e5ac2004118ad",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-63c7bebe320ea571",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-a0e02dc17d43c711",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-8afcdf16b2b1e7f3",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-df9f2668da59bb6b",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-46a11bc5265fd291",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-5d952a9d9bf26023",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-9e8b08fd98428954",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-00f26a6032bfba93",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-13dbf9404a5e2076",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-8131a64e3724ab00",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-8606a93a638d75ad",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-0c8642a93b8a0c65",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-28c32fdbf2f9d602",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-e1b048b1f83a8d8d",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-96e125d32b37d28d",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-709ed531bbda2b14",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-22f13414be62dc9a",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-1415189cecc29012",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-8e8f5c8248940fe9",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-82895961fd88c23d",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-f6efeda60d8d3bb1",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-95ec20919795d25d",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-9aa2e3578c82a065",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-b64958b8a89fd4ba",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-93232d51d748326b",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-a3f198f3dac70599",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-ff5d83cb58c43c67",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-aac4011f0a5f48be",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-5146a5824c123dbf",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-1495edcd72f64d26",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-c0111b8cb18f1be5",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-9311154922c5f6b6",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-e34331e2e62819c7",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-52c9efa0a7f43c92",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-c7d219ad588f5dd2",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-28dde62064ba58f2",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-b23514676cce2c4c",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-8a4d70f12c4733e5",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-29085dde2bbfde93",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-8845ff872dd8a451",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-c3cadf85a158c6db",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-5fd896881e816881",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-f8a515f926f8a205",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-5b29ee29f5a8f79d",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-4981e08b2210db6e",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        },
+        {
+          "id": "SRC-a9280a45e691bd1e",
+          "originalBodyMatches": true,
+          "originalPathLineMatch": true,
+          "originalSourceMatch": true,
+          "currentFileAndLineMatch": true,
+          "noInventedCanonicalJoin": true,
+          "definitionNotAccepted": true,
+          "functionMatches": true
+        }
+      ]
+    }
+  ],
+  "reviewedArtifacts": [
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-source-contracts-01/README.md",
+      "sha256": "15f0ecf19c9a804b01dff515dac42715249531d61b6c7db801fc013544ab643d"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-source-contracts-01/candidate-dispositions.json",
+      "sha256": "98893de074072657c6bb832f84fee88eefa9d35276c6ecaa5ac8fdbb1d814fc0"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-source-contracts-01/source-identities.json",
+      "sha256": "9c52de0a1310f68717deb418171d60a2153adcbc31dd1fd157e510942330349b"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/secret-provisioning-source-contracts-01/README.md",
+      "sha256": "c73cde9f679306d5bf61fedbb393a4c8b9589113cb4cd4e8b476921978f10c4b"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/secret-provisioning-source-contracts-01/candidate-dispositions.json",
+      "sha256": "a86678fa0ebed6c6e42a16aa874f22ea504e8f319828e1aed815addfb9d5958f"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/secret-provisioning-source-contracts-01/source-identities.json",
+      "sha256": "ead00cf5c50ce8a19906b4c17a98a24b3406ae416e1d8d712cf7e97d54c18bb3"
+    },
+    {
+      "path": "scripts/render-postgresql-recovery.mjs",
+      "sha256": "3e0d30b0c0888c4039f176ddb80d19e00b7b7064ead979d5bb9122d4df19e14f"
+    },
+    {
+      "path": "scripts/postgresql-recovery-preflight.mjs",
+      "sha256": "fef2fed9b07fb7731c58d69c744a418130882cc5507d16616a3b516ff9485fd4"
+    },
+    {
+      "path": "scripts/stateful-database-service.mjs",
+      "sha256": "fd96f1a30f997d4a6a71a23b81cad2dc4ccca69b223e4945e22c9261819bbfa8"
+    },
+    {
+      "path": "scripts/deploy.sh",
+      "sha256": "c90cc9c082b3adba89c458a9e28853afa77682a6c7066a7641c70aac749d0960"
+    },
+    {
+      "path": "my-values/infra/postgresql-recovery.yaml",
+      "sha256": "5f0ffb0cdf5acdbd814da726060d5125c5cae912554f27de57251ea90ae8d438"
+    },
+    {
+      "path": "my-values/infra/litellm-config.yaml",
+      "sha256": "70356ac84fef937d6cfad5ea54583a16342784d8299406e155524128542baa6d"
+    },
+    {
+      "path": "my-values/infra/litellm-deployment.yaml",
+      "sha256": "21136d7cc63b549db0d9e1f3a32d449c5bf3c2644790d144d47d476372c56bab"
+    },
+    {
+      "path": "my-values/infra/postgresql-values.yaml",
+      "sha256": "b7c1445d47350c6fcae2fc7de901e930dec1f8309331bf0db69c70c1f3404994"
+    }
+  ],
+  "noExecution": true
+}

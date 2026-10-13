@@ -1,0 +1,17 @@
+/home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/ajv/dist/compile/util.js:174
+        throw new Error(msg);
+              ^
+
+Error: strict mode: missing type "array" for keyword "contains" at "https://kubeclaw.invalid/proposed/c3-buster-complete-profile-02/generatedruntime#/allOf/0/if/properties/allowedCapabilities" (strictTypes)
+    at checkStrictMode (/home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/ajv/dist/compile/util.js:174:15)
+    at strictTypesError (/home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/ajv/dist/compile/validate/index.js:285:32)
+    at checkKeywordTypes (/home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/ajv/dist/compile/validate/index.js:261:17)
+    at checkStrictTypes (/home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/ajv/dist/compile/validate/index.js:233:5)
+    at schemaKeywords (/home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/ajv/dist/compile/validate/index.js:189:9)
+    at typeAndKeywords (/home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/ajv/dist/compile/validate/index.js:128:5)
+    at subSchemaObjCode (/home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/ajv/dist/compile/validate/index.js:115:5)
+    at subschemaCode (/home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/ajv/dist/compile/validate/index.js:91:13)
+    at KeywordCxt.subschema (/home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/ajv/dist/compile/validate/index.js:438:9)
+    at applyPropertySchema (/home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/ajv/dist/vocabularies/applicator/properties.js:45:17)
+
+Node.js v24.21.0

@@ -1,0 +1,111 @@
+{
+  "status": "source/proposal navigation, not semanticacceptance",
+  "inputs": [
+    {
+      "path": "skills/buster/engine/test-gates/production.ts",
+      "sha256": "73a9e23f3744f0a7bbbb1cba440300fd32c8f32e4233b32a38aebd9b84a43005"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production-config-values.ts",
+      "sha256": "8311e1cc957e0691fd904be4f042bb5003b58cfacf00992921f0873418cda63f"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production-capability-sources.ts",
+      "sha256": "2a99f596c2e6ecb38572c9e5ec2ab4f5dfbdc1f03451cb45c5c41b02ec0e299c"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production-command-options.ts",
+      "sha256": "70d70fa703f74f6411ae9de99e9f34fe734555a4311fc8f01d4bc6fd978e2c81"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production-browser-options.ts",
+      "sha256": "846a6488bf66ab4a84d8fb79db7cd88ddcaf69b77707bda9a116ed567fa38cdd"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/remote-plan-runtime.ts",
+      "sha256": "dae94180e4c734b9fbd853329c9fa8b8dcf6e90fa71fee96255123384e45ea8c"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/remote-plan-http.ts",
+      "sha256": "324de9b8f48e607819b1616c67090b32ada8950c3e1d11dcb653e36f8edf3ac2"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/remote-plan-service.ts",
+      "sha256": "e375000b0e256497409276093ad5375c32285475c87a33d337bef3124be456b7"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/prepared-plan-store.ts",
+      "sha256": "d9bbee538cd87a917f1c22ef7d89fb0bb313a73cd2fe096b7bc3390f19922067"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/registry-health-access.ts",
+      "sha256": "34f7cab5f360c415f5817ad0d5a0fcc76835c6046018d3779f185b2ad33c3f8c"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-config.ts",
+      "sha256": "f2b088c3fef62010e6d867f6610ccc2392fdb7d6fa6be2bd43ad8e320d099835"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-supervisor.ts",
+      "sha256": "2a0c6e615d2b156ffad8be308613c7b16fa83daf8faf9ef393cc6e81b701f8ad"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-extraction.ts",
+      "sha256": "10f495344bc139291bfd127662682bd35b601d9643b915b5016e49334a3523ca"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/remote-prepared-execution.ts",
+      "sha256": "832631872e86addc6ae98516f63c191e403675b679c795ad3d47a2fdb8350dde"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/capability-runtime.ts",
+      "sha256": "3615780a7c173fc3f43f0510e208378e276a9e34f71c8a7c1c643fde296ded11"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+      "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d"
+    },
+    {
+      "path": "docker/buster-runtime-entrypoint.sh",
+      "sha256": "2630481f59214cd69d7cc09eeecea60ff06d4697a9f5d36b319847a21526f029"
+    },
+    {
+      "path": "scripts/registry-client-config.mjs",
+      "sha256": "e67a3568c4a6a33ad23bd2b47b6479ed694b79d25e03fcc5dc461532a8cea1c2"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/build.ts",
+      "sha256": "c65248d6d4dc09dcfe762e9cddd6dd27d5864cbdab7cc421d87256e712873867"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+      "sha256": "ab407b028f3a22c96a436c3bdf2a9dd7bfee3b36d301de919669d2d1bf25c553"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-17/active-component-semantic-bodies.json",
+      "sha256": "d7d402e328eab25d1d61cbfd70861bdde8d700090d94aad63f35c3057bdc688b"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/provider-field-definitions.json",
+      "sha256": "6ecd92ce1994c16f1bde69bd99a37449086f04d4ef6bc41dcba3fe06398c77ec"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/provider-domain-corrections-21/C3-buster-engine.schema.json",
+      "sha256": "af815b3cdba9de16923a52904e9cae445f126dd96a1b5f15e926788cb37676ae"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime/batch-16-runtime-emitter-joins/active-emitter-definitions.json",
+      "sha256": "9886bedd78e2c9364e2c6eadc085e78a262d105c4c2e964a44e0a8bbc6ae8ba9"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-whole-c0-readiness-review-01/WCR02-physical-full-profile-author-task.json",
+      "sha256": "fdc977492a906337203a39bb29d26d20f601bdc4ec8b76b4eac3a4006338cb12"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/platform.schema.json",
+      "sha256": "c68af77b9afa7d1f52caad68c3a083cd8b9555c9fb2401ef14c2071a63aecc58"
+    }
+  ],
+  "generatedProfilesPinRule": "Reviewer must hash exact output config/schema/fixtures; no wholeC0counts asproof",
+  "canonicalOriginalsUnchanged": true
+}

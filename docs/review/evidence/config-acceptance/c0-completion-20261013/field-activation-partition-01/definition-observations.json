@@ -1,0 +1,15 @@
+{
+  "time": "2026-10-13T23:21:46.367515+00:00",
+  "originalSettingIDsExactlyPreserved": true,
+  "distinctOriginalSettingIDs": 2409,
+  "capturedInputDrift": [],
+  "snapshotRoundtripErrors": [],
+  "globalC0Accepted": false,
+  "semanticReviewPerformed": false,
+  "qualification": "Read/navigation/conservation only; no count-based scope correctness or implementation test PASS",
+  "finalTime": "2026-10-13T23:23:53.716630+00:00",
+  "finalCapturedInputDrift": [],
+  "finalSnapshotRoundtripErrors": [],
+  "finalActualNewDeclaredRecordsIncludingAliasesAndNestedCoordinates": 187,
+  "normativeFiles": "Final field-map and actual-new-policy-map with explicit source-specific joins; preliminary builder is not an accepted semantic generation"
+}

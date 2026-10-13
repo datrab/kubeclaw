@@ -1,0 +1,21 @@
+{
+  "reviewedInputsChanged": [],
+  "reviewArtifacts": [
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-provisioning-source-review-01/README.md",
+      "sha256": "8febd988fd2153a0bf49ea448ac07bb1d70e30df4155c8eef157c2e28e36ca9f"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-provisioning-source-review-01/git-status.txt",
+      "sha256": "e61e5e6008db0e8c2b9c51a52807b57bd62196363409ab12f4bcb296558a3ffb"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-provisioning-source-review-01/observations.json",
+      "sha256": "aa1f3c856129d2a47a36ed9f6442562c6c42997d5614c4d6900f29cc36b8e94f"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-provisioning-source-review-01/worktree.patch",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ]
+}

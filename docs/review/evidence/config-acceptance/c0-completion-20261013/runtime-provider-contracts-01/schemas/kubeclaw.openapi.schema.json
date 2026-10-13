@@ -1,0 +1,161 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "packageId",
+    "registrationId",
+    "instanceId",
+    "profiles"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "pipeline-registration-policy.v1"
+    },
+    "packageId": {
+      "const": "kubeclaw.openapi"
+    },
+    "registrationId": {
+      "const": "kubeclaw.openapi:operations"
+    },
+    "instanceId": {
+      "const": "fixture.openapi"
+    },
+    "profiles": {
+      "type": "object",
+      "minProperties": 2,
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "processing",
+          "declarations"
+        ],
+        "properties": {
+          "processing": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "requestTimeoutMs",
+              "maximumResponseBytes",
+              "maximumSpecFileBytes",
+              "maximumSelections",
+              "maximumSchemaDepth",
+              "maximumPatternCodeUnits",
+              "maximumPatternQuantifier"
+            ],
+            "properties": {
+              "requestTimeoutMs": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 300000
+              },
+              "maximumResponseBytes": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 16777216
+              },
+              "maximumSpecFileBytes": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 4194304
+              },
+              "maximumSelections": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 128
+              },
+              "maximumSchemaDepth": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 64
+              },
+              "maximumPatternCodeUnits": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 256
+              },
+              "maximumPatternQuantifier": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 1024
+              }
+            }
+          },
+          "declarations": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "evidenceDefaults",
+              "retrySafe",
+              "matrixFields"
+            ],
+            "properties": {
+              "evidenceDefaults": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "onPass",
+                  "onFail",
+                  "onError"
+                ],
+                "properties": {
+                  "onPass": {
+                    "type": "array",
+                    "uniqueItems": true,
+                    "items": {
+                      "enum": [
+                        "log",
+                        "test-report"
+                      ]
+                    }
+                  },
+                  "onFail": {
+                    "type": "array",
+                    "uniqueItems": true,
+                    "items": {
+                      "enum": [
+                        "log",
+                        "test-report"
+                      ]
+                    }
+                  },
+                  "onError": {
+                    "type": "array",
+                    "uniqueItems": true,
+                    "items": {
+                      "enum": [
+                        "log",
+                        "test-report"
+                      ]
+                    }
+                  }
+                }
+              },
+              "retrySafe": {
+                "type": "boolean",
+                "const": false,
+                "description": "Selected current native package contract is retrySafe:false; schema-specific no upward false->true permission. Generic original bool contract retained in history; different supported package/task contract must be explicitly adjudicated and rebound, not invented."
+              },
+              "matrixFields": {
+                "type": "array",
+                "uniqueItems": true,
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "specFile",
+                    "url",
+                    "endpointName",
+                    "operations",
+                    "tags"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,4325 @@
+{
+  "reviewerTask": "/root/delivery_module_contract_review",
+  "scope": "BC3-01..04 bounded source/proposal recheck + independent narrow pure collector replay",
+  "head": "367b4f88698a3db3e595eadf44f40a8f973cc932",
+  "tree": "7abb01f1508c55628605f261f94185e99e73db92",
+  "packageChecks": [
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/README.md",
+      "sha256": "4f309ab797ac3e19cc9e75461732e51f87bb1f8339a9311c2383668aec71f341",
+      "bytes": 13710,
+      "actualSha256": "4f309ab797ac3e19cc9e75461732e51f87bb1f8339a9311c2383668aec71f341",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/capability-activation-contract.json",
+      "sha256": "9636c49e38004379c27dfb2b02016b40c1d98388b7a3668159e9b7052c1cda47",
+      "bytes": 5257,
+      "actualSha256": "9636c49e38004379c27dfb2b02016b40c1d98388b7a3668159e9b7052c1cda47",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/checks-attempt-01.stderr",
+      "sha256": "ca4e5a66ce8821020eb4e20973ed5001688d8f0bd592f42042d4cc5e161460d5",
+      "bytes": 1150,
+      "actualSha256": "ca4e5a66ce8821020eb4e20973ed5001688d8f0bd592f42042d4cc5e161460d5",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/checks-attempt-01.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "actualSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/checks-attempt-02.stderr",
+      "sha256": "e01c5c1b08cfe9c3bed8d51f90d0570ba7e802d3ad94f0db8e8cd0f06a104f98",
+      "bytes": 1670,
+      "actualSha256": "e01c5c1b08cfe9c3bed8d51f90d0570ba7e802d3ad94f0db8e8cd0f06a104f98",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/checks-attempt-02.stdout",
+      "sha256": "61bcb7bd7ee98a3621e8a051bccf254a9ffbe4b2ce1d1404731837f8d3410528",
+      "bytes": 3141,
+      "actualSha256": "61bcb7bd7ee98a3621e8a051bccf254a9ffbe4b2ce1d1404731837f8d3410528",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/checks-attempt-03.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "actualSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/checks-attempt-03.stdout",
+      "sha256": "0f9891c56e8e09ccc316f589154e570182cbe6b90b1195d0307003f023765b66",
+      "bytes": 4607,
+      "actualSha256": "0f9891c56e8e09ccc316f589154e570182cbe6b90b1195d0307003f023765b66",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/checks-attempt-04.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "actualSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/checks-attempt-04.stdout",
+      "sha256": "0f9891c56e8e09ccc316f589154e570182cbe6b90b1195d0307003f023765b66",
+      "bytes": 4607,
+      "actualSha256": "0f9891c56e8e09ccc316f589154e570182cbe6b90b1195d0307003f023765b66",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/checks-final.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "actualSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/checks-final.stdout",
+      "sha256": "0f9891c56e8e09ccc316f589154e570182cbe6b90b1195d0307003f023765b66",
+      "bytes": 4607,
+      "actualSha256": "0f9891c56e8e09ccc316f589154e570182cbe6b90b1195d0307003f023765b66",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/collect-definition-checks.mjs",
+      "sha256": "b200dfbd2a59232a46e4a78ad7965429d044f64ae7f6554f38a635bd8ba0497f",
+      "bytes": 10310,
+      "actualSha256": "b200dfbd2a59232a46e4a78ad7965429d044f64ae7f6554f38a635bd8ba0497f",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/commands-and-exits.json",
+      "sha256": "cbf53e9e37e6ef79892bdbd3a02335fd4b84faf3266b161bd6b6cb9d72a10822",
+      "bytes": 1952,
+      "actualSha256": "cbf53e9e37e6ef79892bdbd3a02335fd4b84faf3266b161bd6b6cb9d72a10822",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/config/components/buster-engine.config.json",
+      "sha256": "6dc049adadb3f3627a7b8501a17553df8fc7702a2bfb0ab605007fefbb5472ab",
+      "bytes": 1127857,
+      "actualSha256": "6dc049adadb3f3627a7b8501a17553df8fc7702a2bfb0ab605007fefbb5472ab",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/config/components/prism-control.config.json",
+      "sha256": "524ca90d6b62c656b5f279c27b8b49250d93869636aa71f73d5891429e01e1e4",
+      "bytes": 4597,
+      "actualSha256": "524ca90d6b62c656b5f279c27b8b49250d93869636aa71f73d5891429e01e1e4",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/config/components/prism-execution.config.json",
+      "sha256": "225d2d31235f0996196da2f2b7d25a0605d59087427b997ab487d648ddf89ce3",
+      "bytes": 1606,
+      "actualSha256": "225d2d31235f0996196da2f2b7d25a0605d59087427b997ab487d648ddf89ce3",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/config/components/prism-studio.config.json",
+      "sha256": "b41a9113d26384ee0dd07d5defac180b8a52d67315c738d0a5459c49bead0fac",
+      "bytes": 976,
+      "actualSha256": "b41a9113d26384ee0dd07d5defac180b8a52d67315c738d0a5459c49bead0fac",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/config/components/prism-worker.config.json",
+      "sha256": "61da3c7b2b81033ed9c350f593cf1ab58f3630a39b109a9b251f1b2e0ba28220",
+      "bytes": 1581,
+      "actualSha256": "61da3c7b2b81033ed9c350f593cf1ab58f3630a39b109a9b251f1b2e0ba28220",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/config/components/worker-core.config.json",
+      "sha256": "f59c7ec6798e853f9fb87a494cdd245193c50d19f90275fe5b530706adcb8934",
+      "bytes": 1270,
+      "actualSha256": "f59c7ec6798e853f9fb87a494cdd245193c50d19f90275fe5b530706adcb8934",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/config/pipeline.config.json",
+      "sha256": "cada42fed522b74b554d77048b14288eef5af45bb10708f3650f0d03ac11b992",
+      "bytes": 2113,
+      "actualSha256": "cada42fed522b74b554d77048b14288eef5af45bb10708f3650f0d03ac11b992",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/definition-checks-02.json",
+      "sha256": "b1bbb59ef793ac23ea3f26966487f35c1de9a8101a4ca22589969f110968e1d9",
+      "bytes": 54606,
+      "actualSha256": "b1bbb59ef793ac23ea3f26966487f35c1de9a8101a4ca22589969f110968e1d9",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/emitted-current-public-structural.json",
+      "sha256": "f8e91230166d7daa7421feb9fcaee651d88c10653154e6fb0e8133ad903b0ec1",
+      "bytes": 8286,
+      "actualSha256": "f8e91230166d7daa7421feb9fcaee651d88c10653154e6fb0e8133ad903b0ec1",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/failed-attempt-01/buster-engine.config.json",
+      "sha256": "54f375077ccc22f060e2e3da4bb9ef213bc03f029d9ef32a2684878b41b0e672",
+      "bytes": 1127757,
+      "actualSha256": "54f375077ccc22f060e2e3da4bb9ef213bc03f029d9ef32a2684878b41b0e672",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/failed-attempt-01/collect-definition-checks.mjs",
+      "sha256": "78f6b25618eb7b848ba1c9d39ec7ca361010df47c52cd8537aa348762013c550",
+      "bytes": 9062,
+      "actualSha256": "78f6b25618eb7b848ba1c9d39ec7ca361010df47c52cd8537aa348762013c550",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/failed-attempt-02/generated-runtime.schema.json",
+      "sha256": "b351c7f34177e5600aef3c7f27d133a7c4f7e79af21932e52ac9dd878d825d56",
+      "bytes": 49049,
+      "actualSha256": "b351c7f34177e5600aef3c7f27d133a7c4f7e79af21932e52ac9dd878d825d56",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/final-run/definition-checks-02.json",
+      "sha256": "2796573d01103a43b0a9ab218e1c4b0bf236379b8479268755c74ce9256780ff",
+      "bytes": 54786,
+      "actualSha256": "2796573d01103a43b0a9ab218e1c4b0bf236379b8479268755c74ce9256780ff",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/final-run.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "actualSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/final-run.stdout",
+      "sha256": "0f9891c56e8e09ccc316f589154e570182cbe6b90b1195d0307003f023765b66",
+      "bytes": 4607,
+      "actualSha256": "0f9891c56e8e09ccc316f589154e570182cbe6b90b1195d0307003f023765b66",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/fixtures/generated-tls-runtime.json",
+      "sha256": "a97f4d3322c663831c362babbe8faa89b7bcf93d0564b2c244a29cf6fcde16a3",
+      "bytes": 6445,
+      "actualSha256": "a97f4d3322c663831c362babbe8faa89b7bcf93d0564b2c244a29cf6fcde16a3",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/fixtures/root-B.json",
+      "sha256": "0005a791f6088f500a3c8d6c9e6988a9b6bb64298afb9cbcec49e7136c01a49e",
+      "bytes": 2113,
+      "actualSha256": "0005a791f6088f500a3c8d6c9e6988a9b6bb64298afb9cbcec49e7136c01a49e",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/fixtures/roots/reasonThreshold-A.json",
+      "sha256": "d8ce536f37640c6de25d3b1153382c5f5f46b94e2e49cfb3833f0548aaed6e24",
+      "bytes": 2135,
+      "actualSha256": "d8ce536f37640c6de25d3b1153382c5f5f46b94e2e49cfb3833f0548aaed6e24",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/future-case-joins.json",
+      "sha256": "740834b2c6c16e35f5db2bf987d614c5d794a8bd8c4f1f46348edef80428fb2c",
+      "bytes": 374111,
+      "actualSha256": "740834b2c6c16e35f5db2bf987d614c5d794a8bd8c4f1f46348edef80428fb2c",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/generated-role-projections.json",
+      "sha256": "064c9c0a09a156ac9b7a6382a36054d6cabe0a639c6531580a48762454278071",
+      "bytes": 745114,
+      "actualSha256": "064c9c0a09a156ac9b7a6382a36054d6cabe0a639c6531580a48762454278071",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/historical-01-execution-summary.json",
+      "sha256": "16383850b1a8267eba694478a079dff2a41ca54916a440da8e53e90025ed3205",
+      "bytes": 458,
+      "actualSha256": "16383850b1a8267eba694478a079dff2a41ca54916a440da8e53e90025ed3205",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/public-fixtures/browser-read-marker.txt",
+      "sha256": "819e93b057d3c965f5b93a51155194def3385350c5b98682edc3bff5df908533",
+      "bytes": 72,
+      "actualSha256": "819e93b057d3c965f5b93a51155194def3385350c5b98682edc3bff5df908533",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/public-fixtures/direct-read-marker.txt",
+      "sha256": "819e93b057d3c965f5b93a51155194def3385350c5b98682edc3bff5df908533",
+      "bytes": 72,
+      "actualSha256": "819e93b057d3c965f5b93a51155194def3385350c5b98682edc3bff5df908533",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/public-role-inputs.json",
+      "sha256": "aca1a6f30f63fcaa91417e151c438e0c42b0aaf6d4bdafa54d8c9f8e13586d6b",
+      "bytes": 13209,
+      "actualSha256": "aca1a6f30f63fcaa91417e151c438e0c42b0aaf6d4bdafa54d8c9f8e13586d6b",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/schemas/buster-engine.schema.json",
+      "sha256": "115982f18efb75f7ea5e2e05a5dee7a574707400469aaf5de4b88721d3b9cb97",
+      "bytes": 97220,
+      "actualSha256": "115982f18efb75f7ea5e2e05a5dee7a574707400469aaf5de4b88721d3b9cb97",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/schemas/generated-platform-registry.schema.json",
+      "sha256": "da52233feab2a0981d1580056a2537aeff3af1b162082fe774f414f603351f87",
+      "bytes": 1516,
+      "actualSha256": "da52233feab2a0981d1580056a2537aeff3af1b162082fe774f414f603351f87",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/schemas/generated-runtime.schema.json",
+      "sha256": "04c9792b471810c1accaf9f3ec1684dd691fc428a784af2989fe0c35de557f6b",
+      "bytes": 50289,
+      "actualSha256": "04c9792b471810c1accaf9f3ec1684dd691fc428a784af2989fe0c35de557f6b",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/schemas/pipeline-entry.schema.json",
+      "sha256": "0cc304a9c5ccf13605fb683568d18dff403508c8d3aef529f0cc5751656cbbce",
+      "bytes": 2182,
+      "actualSha256": "0cc304a9c5ccf13605fb683568d18dff403508c8d3aef529f0cc5751656cbbce",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/schemas/prism-control.schema.json",
+      "sha256": "235717a7621de85c3933b095b0724c53eb27afa791ed5f094bf47a53bee39d85",
+      "bytes": 74117,
+      "actualSha256": "235717a7621de85c3933b095b0724c53eb27afa791ed5f094bf47a53bee39d85",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/schemas/prism-execution.schema.json",
+      "sha256": "c6dfe88a3518f6819f5840b7e6739796c6fc0e6a0711ab1fc42cf19df4e76cbe",
+      "bytes": 48715,
+      "actualSha256": "c6dfe88a3518f6819f5840b7e6739796c6fc0e6a0711ab1fc42cf19df4e76cbe",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/schemas/prism-studio.schema.json",
+      "sha256": "72921bb9de970f5eccec5b7889a26501c8614e96304179dc54a5eef0375abe7b",
+      "bytes": 44639,
+      "actualSha256": "72921bb9de970f5eccec5b7889a26501c8614e96304179dc54a5eef0375abe7b",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/schemas/prism-worker.schema.json",
+      "sha256": "5b7fca15563fb20ad2b5dcef67724b62c68648a67fa7e5b0d34276f5472faa5b",
+      "bytes": 49101,
+      "actualSha256": "5b7fca15563fb20ad2b5dcef67724b62c68648a67fa7e5b0d34276f5472faa5b",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/schemas/worker-core.schema.json",
+      "sha256": "22c665a659ae8af436b642ef8959e3f2ca6aebcefd1e9858ff718386dbd65630",
+      "bytes": 45730,
+      "actualSha256": "22c665a659ae8af436b642ef8959e3f2ca6aebcefd1e9858ff718386dbd65630",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/source-pins.json",
+      "sha256": "0c831d41b69a3269d994f10c34622a3bf5b91c84c9f8d651494a0714c38e7b07",
+      "bytes": 5943,
+      "actualSha256": "0c831d41b69a3269d994f10c34622a3bf5b91c84c9f8d651494a0714c38e7b07",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/source-target-supersession.json",
+      "sha256": "5fd39e47be3d632c9e54dff99aed4d6aa1c9ca0cf5deb0f0b67fa4f78d65fae1",
+      "bytes": 50948,
+      "actualSha256": "5fd39e47be3d632c9e54dff99aed4d6aa1c9ca0cf5deb0f0b67fa4f78d65fae1",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/tls-reference-contract.json",
+      "sha256": "c042f9ee2d05cbf25d67482344d44d12efccb9fcf22f011392e3007052b6fdf0",
+      "bytes": 1833,
+      "actualSha256": "c042f9ee2d05cbf25d67482344d44d12efccb9fcf22f011392e3007052b6fdf0",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/whole-profile-index.json",
+      "sha256": "d048dcd6399aa3bd47d8119d75b4dadf32bac4cb4e0d917afd297698c9a7958f",
+      "bytes": 54642,
+      "actualSha256": "d048dcd6399aa3bd47d8119d75b4dadf32bac4cb4e0d917afd297698c9a7958f",
+      "matches": true
+    }
+  ],
+  "old01ArtifactChecks": [
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/README.md",
+      "sha256": "51fa3046c640c4b99fce2e6771cb2a9f40591ecb5920fdfca35307a3fadc91cf",
+      "bytes": 18659,
+      "actualSha256": "51fa3046c640c4b99fce2e6771cb2a9f40591ecb5920fdfca35307a3fadc91cf",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/attempt-02-failure.log",
+      "sha256": "e86513e96af72013def36e25bf52bde19ed7bdb4e03a9822e33e111e480a0335",
+      "bytes": 237,
+      "actualSha256": "e86513e96af72013def36e25bf52bde19ed7bdb4e03a9822e33e111e480a0335",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/attempt-02-generated-runtime.schema.json",
+      "sha256": "1b4b4cc46c672d54a66072900f332f33f0c187cf0eb2391b72b69eb03b48458c",
+      "bytes": 20048,
+      "actualSha256": "1b4b4cc46c672d54a66072900f332f33f0c187cf0eb2391b72b69eb03b48458c",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/config/components/buster-engine.config.json",
+      "sha256": "d46add5f7d8dd148401a9d90bf1ad1be61ef0ce93e809012a0c9d3de2a9b2fc4",
+      "bytes": 1066620,
+      "actualSha256": "d46add5f7d8dd148401a9d90bf1ad1be61ef0ce93e809012a0c9d3de2a9b2fc4",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/config/components/prism-control.config.json",
+      "sha256": "524ca90d6b62c656b5f279c27b8b49250d93869636aa71f73d5891429e01e1e4",
+      "bytes": 4597,
+      "actualSha256": "524ca90d6b62c656b5f279c27b8b49250d93869636aa71f73d5891429e01e1e4",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/config/components/prism-execution.config.json",
+      "sha256": "225d2d31235f0996196da2f2b7d25a0605d59087427b997ab487d648ddf89ce3",
+      "bytes": 1606,
+      "actualSha256": "225d2d31235f0996196da2f2b7d25a0605d59087427b997ab487d648ddf89ce3",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/config/components/prism-studio.config.json",
+      "sha256": "b41a9113d26384ee0dd07d5defac180b8a52d67315c738d0a5459c49bead0fac",
+      "bytes": 976,
+      "actualSha256": "b41a9113d26384ee0dd07d5defac180b8a52d67315c738d0a5459c49bead0fac",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/config/components/prism-worker.config.json",
+      "sha256": "61da3c7b2b81033ed9c350f593cf1ab58f3630a39b109a9b251f1b2e0ba28220",
+      "bytes": 1581,
+      "actualSha256": "61da3c7b2b81033ed9c350f593cf1ab58f3630a39b109a9b251f1b2e0ba28220",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/config/components/worker-core.config.json",
+      "sha256": "f59c7ec6798e853f9fb87a494cdd245193c50d19f90275fe5b530706adcb8934",
+      "bytes": 1270,
+      "actualSha256": "f59c7ec6798e853f9fb87a494cdd245193c50d19f90275fe5b530706adcb8934",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/config/pipeline.config.json",
+      "sha256": "cada42fed522b74b554d77048b14288eef5af45bb10708f3650f0d03ac11b992",
+      "bytes": 2113,
+      "actualSha256": "cada42fed522b74b554d77048b14288eef5af45bb10708f3650f0d03ac11b992",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/definition-checks.json",
+      "sha256": "f9d14f9989decf8c753c99afcc0d243061a3711a941dfa84771762060837f115",
+      "bytes": 3525,
+      "actualSha256": "f9d14f9989decf8c753c99afcc0d243061a3711a941dfa84771762060837f115",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/emitted-current-public-structural.json",
+      "sha256": "f8e91230166d7daa7421feb9fcaee651d88c10653154e6fb0e8133ad903b0ec1",
+      "bytes": 8286,
+      "actualSha256": "f8e91230166d7daa7421feb9fcaee651d88c10653154e6fb0e8133ad903b0ec1",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/fixtures/root-B.json",
+      "sha256": "0005a791f6088f500a3c8d6c9e6988a9b6bb64298afb9cbcec49e7136c01a49e",
+      "bytes": 2113,
+      "actualSha256": "0005a791f6088f500a3c8d6c9e6988a9b6bb64298afb9cbcec49e7136c01a49e",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/future-case-joins.json",
+      "sha256": "ba40ae781c916ecf5ea7873fcb0615601d132f19644b32ac1dc54f902201d7a2",
+      "bytes": 342219,
+      "actualSha256": "ba40ae781c916ecf5ea7873fcb0615601d132f19644b32ac1dc54f902201d7a2",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/generated-role-projections.json",
+      "sha256": "5299415d8dd5938b991344b6a536fa15525d3547e40913323834c8de6ab69fc6",
+      "bytes": 674831,
+      "actualSha256": "5299415d8dd5938b991344b6a536fa15525d3547e40913323834c8de6ab69fc6",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/public-fixtures/browser-read-marker.txt",
+      "sha256": "819e93b057d3c965f5b93a51155194def3385350c5b98682edc3bff5df908533",
+      "bytes": 72,
+      "actualSha256": "819e93b057d3c965f5b93a51155194def3385350c5b98682edc3bff5df908533",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/public-fixtures/direct-read-marker.txt",
+      "sha256": "819e93b057d3c965f5b93a51155194def3385350c5b98682edc3bff5df908533",
+      "bytes": 72,
+      "actualSha256": "819e93b057d3c965f5b93a51155194def3385350c5b98682edc3bff5df908533",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/public-role-inputs.json",
+      "sha256": "aca1a6f30f63fcaa91417e151c438e0c42b0aaf6d4bdafa54d8c9f8e13586d6b",
+      "bytes": 13209,
+      "actualSha256": "aca1a6f30f63fcaa91417e151c438e0c42b0aaf6d4bdafa54d8c9f8e13586d6b",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/schemas/buster-engine.schema.json",
+      "sha256": "115982f18efb75f7ea5e2e05a5dee7a574707400469aaf5de4b88721d3b9cb97",
+      "bytes": 97220,
+      "actualSha256": "115982f18efb75f7ea5e2e05a5dee7a574707400469aaf5de4b88721d3b9cb97",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/schemas/generated-platform-registry.schema.json",
+      "sha256": "da52233feab2a0981d1580056a2537aeff3af1b162082fe774f414f603351f87",
+      "bytes": 1516,
+      "actualSha256": "da52233feab2a0981d1580056a2537aeff3af1b162082fe774f414f603351f87",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/schemas/generated-runtime.schema.json",
+      "sha256": "b4eb9062dd4a2fe118438b2c959e947555607470d4559a2d8280a290af54f1ea",
+      "bytes": 20928,
+      "actualSha256": "b4eb9062dd4a2fe118438b2c959e947555607470d4559a2d8280a290af54f1ea",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/schemas/pipeline-entry.schema.json",
+      "sha256": "0cc304a9c5ccf13605fb683568d18dff403508c8d3aef529f0cc5751656cbbce",
+      "bytes": 2182,
+      "actualSha256": "0cc304a9c5ccf13605fb683568d18dff403508c8d3aef529f0cc5751656cbbce",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/schemas/prism-control.schema.json",
+      "sha256": "235717a7621de85c3933b095b0724c53eb27afa791ed5f094bf47a53bee39d85",
+      "bytes": 74117,
+      "actualSha256": "235717a7621de85c3933b095b0724c53eb27afa791ed5f094bf47a53bee39d85",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/schemas/prism-execution.schema.json",
+      "sha256": "c6dfe88a3518f6819f5840b7e6739796c6fc0e6a0711ab1fc42cf19df4e76cbe",
+      "bytes": 48715,
+      "actualSha256": "c6dfe88a3518f6819f5840b7e6739796c6fc0e6a0711ab1fc42cf19df4e76cbe",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/schemas/prism-studio.schema.json",
+      "sha256": "72921bb9de970f5eccec5b7889a26501c8614e96304179dc54a5eef0375abe7b",
+      "bytes": 44639,
+      "actualSha256": "72921bb9de970f5eccec5b7889a26501c8614e96304179dc54a5eef0375abe7b",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/schemas/prism-worker.schema.json",
+      "sha256": "5b7fca15563fb20ad2b5dcef67724b62c68648a67fa7e5b0d34276f5472faa5b",
+      "bytes": 49101,
+      "actualSha256": "5b7fca15563fb20ad2b5dcef67724b62c68648a67fa7e5b0d34276f5472faa5b",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/schemas/worker-core.schema.json",
+      "sha256": "22c665a659ae8af436b642ef8959e3f2ca6aebcefd1e9858ff718386dbd65630",
+      "bytes": 45730,
+      "actualSha256": "22c665a659ae8af436b642ef8959e3f2ca6aebcefd1e9858ff718386dbd65630",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/source-pins.json",
+      "sha256": "ba5d16283101736a72c34f68c20c824d0c67929d8ef8050cf51ecddf03c9d4a0",
+      "bytes": 5007,
+      "actualSha256": "ba5d16283101736a72c34f68c20c824d0c67929d8ef8050cf51ecddf03c9d4a0",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/source-target-supersession.json",
+      "sha256": "5fd39e47be3d632c9e54dff99aed4d6aa1c9ca0cf5deb0f0b67fa4f78d65fae1",
+      "bytes": 50948,
+      "actualSha256": "5fd39e47be3d632c9e54dff99aed4d6aa1c9ca0cf5deb0f0b67fa4f78d65fae1",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/whole-profile-index.json",
+      "sha256": "bad813612d8936104c90316acab663939767ef2b14ad1f07353e8a830976ddfc",
+      "bytes": 53506,
+      "actualSha256": "bad813612d8936104c90316acab663939767ef2b14ad1f07353e8a830976ddfc",
+      "matches": true
+    }
+  ],
+  "sourceChecks": [
+    {
+      "path": "skills/buster/engine/test-gates/production.ts",
+      "sha256": "73a9e23f3744f0a7bbbb1cba440300fd32c8f32e4233b32a38aebd9b84a43005",
+      "actualSha256": "73a9e23f3744f0a7bbbb1cba440300fd32c8f32e4233b32a38aebd9b84a43005",
+      "matches": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production-config-values.ts",
+      "sha256": "8311e1cc957e0691fd904be4f042bb5003b58cfacf00992921f0873418cda63f",
+      "actualSha256": "8311e1cc957e0691fd904be4f042bb5003b58cfacf00992921f0873418cda63f",
+      "matches": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production-capability-sources.ts",
+      "sha256": "2a99f596c2e6ecb38572c9e5ec2ab4f5dfbdc1f03451cb45c5c41b02ec0e299c",
+      "actualSha256": "2a99f596c2e6ecb38572c9e5ec2ab4f5dfbdc1f03451cb45c5c41b02ec0e299c",
+      "matches": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production-command-options.ts",
+      "sha256": "70d70fa703f74f6411ae9de99e9f34fe734555a4311fc8f01d4bc6fd978e2c81",
+      "actualSha256": "70d70fa703f74f6411ae9de99e9f34fe734555a4311fc8f01d4bc6fd978e2c81",
+      "matches": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production-browser-options.ts",
+      "sha256": "846a6488bf66ab4a84d8fb79db7cd88ddcaf69b77707bda9a116ed567fa38cdd",
+      "actualSha256": "846a6488bf66ab4a84d8fb79db7cd88ddcaf69b77707bda9a116ed567fa38cdd",
+      "matches": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/remote-plan-runtime.ts",
+      "sha256": "dae94180e4c734b9fbd853329c9fa8b8dcf6e90fa71fee96255123384e45ea8c",
+      "actualSha256": "dae94180e4c734b9fbd853329c9fa8b8dcf6e90fa71fee96255123384e45ea8c",
+      "matches": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/remote-plan-http.ts",
+      "sha256": "324de9b8f48e607819b1616c67090b32ada8950c3e1d11dcb653e36f8edf3ac2",
+      "actualSha256": "324de9b8f48e607819b1616c67090b32ada8950c3e1d11dcb653e36f8edf3ac2",
+      "matches": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/remote-plan-service.ts",
+      "sha256": "e375000b0e256497409276093ad5375c32285475c87a33d337bef3124be456b7",
+      "actualSha256": "e375000b0e256497409276093ad5375c32285475c87a33d337bef3124be456b7",
+      "matches": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/prepared-plan-store.ts",
+      "sha256": "d9bbee538cd87a917f1c22ef7d89fb0bb313a73cd2fe096b7bc3390f19922067",
+      "actualSha256": "d9bbee538cd87a917f1c22ef7d89fb0bb313a73cd2fe096b7bc3390f19922067",
+      "matches": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/registry-health-access.ts",
+      "sha256": "34f7cab5f360c415f5817ad0d5a0fcc76835c6046018d3779f185b2ad33c3f8c",
+      "actualSha256": "34f7cab5f360c415f5817ad0d5a0fcc76835c6046018d3779f185b2ad33c3f8c",
+      "matches": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-config.ts",
+      "sha256": "f2b088c3fef62010e6d867f6610ccc2392fdb7d6fa6be2bd43ad8e320d099835",
+      "actualSha256": "f2b088c3fef62010e6d867f6610ccc2392fdb7d6fa6be2bd43ad8e320d099835",
+      "matches": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-supervisor.ts",
+      "sha256": "2a0c6e615d2b156ffad8be308613c7b16fa83daf8faf9ef393cc6e81b701f8ad",
+      "actualSha256": "2a0c6e615d2b156ffad8be308613c7b16fa83daf8faf9ef393cc6e81b701f8ad",
+      "matches": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-extraction.ts",
+      "sha256": "10f495344bc139291bfd127662682bd35b601d9643b915b5016e49334a3523ca",
+      "actualSha256": "10f495344bc139291bfd127662682bd35b601d9643b915b5016e49334a3523ca",
+      "matches": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/remote-prepared-execution.ts",
+      "sha256": "832631872e86addc6ae98516f63c191e403675b679c795ad3d47a2fdb8350dde",
+      "actualSha256": "832631872e86addc6ae98516f63c191e403675b679c795ad3d47a2fdb8350dde",
+      "matches": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/capability-runtime.ts",
+      "sha256": "3615780a7c173fc3f43f0510e208378e276a9e34f71c8a7c1c643fde296ded11",
+      "actualSha256": "3615780a7c173fc3f43f0510e208378e276a9e34f71c8a7c1c643fde296ded11",
+      "matches": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+      "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d",
+      "actualSha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d",
+      "matches": true
+    },
+    {
+      "path": "docker/buster-runtime-entrypoint.sh",
+      "sha256": "2630481f59214cd69d7cc09eeecea60ff06d4697a9f5d36b319847a21526f029",
+      "actualSha256": "2630481f59214cd69d7cc09eeecea60ff06d4697a9f5d36b319847a21526f029",
+      "matches": true
+    },
+    {
+      "path": "scripts/registry-client-config.mjs",
+      "sha256": "e67a3568c4a6a33ad23bd2b47b6479ed694b79d25e03fcc5dc461532a8cea1c2",
+      "actualSha256": "e67a3568c4a6a33ad23bd2b47b6479ed694b79d25e03fcc5dc461532a8cea1c2",
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/build.ts",
+      "sha256": "c65248d6d4dc09dcfe762e9cddd6dd27d5864cbdab7cc421d87256e712873867",
+      "actualSha256": "c65248d6d4dc09dcfe762e9cddd6dd27d5864cbdab7cc421d87256e712873867",
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+      "sha256": "ab407b028f3a22c96a436c3bdf2a9dd7bfee3b36d301de919669d2d1bf25c553",
+      "actualSha256": "ab407b028f3a22c96a436c3bdf2a9dd7bfee3b36d301de919669d2d1bf25c553",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-17/active-component-semantic-bodies.json",
+      "sha256": "d7d402e328eab25d1d61cbfd70861bdde8d700090d94aad63f35c3057bdc688b",
+      "actualSha256": "d7d402e328eab25d1d61cbfd70861bdde8d700090d94aad63f35c3057bdc688b",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/provider-field-definitions.json",
+      "sha256": "6ecd92ce1994c16f1bde69bd99a37449086f04d4ef6bc41dcba3fe06398c77ec",
+      "actualSha256": "6ecd92ce1994c16f1bde69bd99a37449086f04d4ef6bc41dcba3fe06398c77ec",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/provider-domain-corrections-21/C3-buster-engine.schema.json",
+      "sha256": "af815b3cdba9de16923a52904e9cae445f126dd96a1b5f15e926788cb37676ae",
+      "actualSha256": "af815b3cdba9de16923a52904e9cae445f126dd96a1b5f15e926788cb37676ae",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime/batch-16-runtime-emitter-joins/active-emitter-definitions.json",
+      "sha256": "9886bedd78e2c9364e2c6eadc085e78a262d105c4c2e964a44e0a8bbc6ae8ba9",
+      "actualSha256": "9886bedd78e2c9364e2c6eadc085e78a262d105c4c2e964a44e0a8bbc6ae8ba9",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-whole-c0-readiness-review-01/WCR02-physical-full-profile-author-task.json",
+      "sha256": "fdc977492a906337203a39bb29d26d20f601bdc4ec8b76b4eac3a4006338cb12",
+      "actualSha256": "fdc977492a906337203a39bb29d26d20f601bdc4ec8b76b4eac3a4006338cb12",
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/platform.schema.json",
+      "sha256": "c68af77b9afa7d1f52caad68c3a083cd8b9555c9fb2401ef14c2071a63aecc58",
+      "actualSha256": "c68af77b9afa7d1f52caad68c3a083cd8b9555c9fb2401ef14c2071a63aecc58",
+      "matches": true
+    }
+  ],
+  "frozenPriorChecks": [
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/package-manifest.json",
+      "sha256": "768207ea26d0591ad00da9f751ae65cd2505dc0f30032e64674ac90c0c0b6928",
+      "actualSha256": "768207ea26d0591ad00da9f751ae65cd2505dc0f30032e64674ac90c0c0b6928",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/README.md",
+      "sha256": "51fa3046c640c4b99fce2e6771cb2a9f40591ecb5920fdfca35307a3fadc91cf",
+      "actualSha256": "51fa3046c640c4b99fce2e6771cb2a9f40591ecb5920fdfca35307a3fadc91cf",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/definition-checks.json",
+      "sha256": "f9d14f9989decf8c753c99afcc0d243061a3711a941dfa84771762060837f115",
+      "actualSha256": "f9d14f9989decf8c753c99afcc0d243061a3711a941dfa84771762060837f115",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-c3-buster-complete-profile-review-01/README.md",
+      "sha256": "8b3725d60a2cd316ea121dbbd802f52d7d7bc3fd8f9c8dda62ff00b7fb800acf",
+      "actualSha256": "8b3725d60a2cd316ea121dbbd802f52d7d7bc3fd8f9c8dda62ff00b7fb800acf",
+      "matches": true
+    }
+  ],
+  "old86ProfileSettingsChecks": [
+    {
+      "profileId": "local-A",
+      "settingsUnchanged": true
+    },
+    {
+      "profileId": "v-a11483f8a7b64ced",
+      "settingsUnchanged": true
+    },
+    {
+      "profileId": "v-2046200c4587ce21",
+      "settingsUnchanged": true
+    },
+    {
+      "profileId": "v-c5d03b0768617a2f",
+      "settingsUnchanged": true
+    },
+    {
+      "profileId": "v-1b977533b3fb85b8",
+      "settingsUnchanged": true
+    },
+    {
+      "profileId": "v-1d34eb571422b5cc",
+      "settingsUnchanged": true
+    },
+    {
+      "profileId": "v-89df19445374a1bd",
+      "settingsUnchanged": true
+    },
+    {
+      "profileId": "v-c6c6a0ac00af67fc",
+      "settingsUnchanged": true
+    },
+    {
+      "profileId": "v-4a2b71e1a65662bd",
+      "settingsUnchanged": true
+    },
+    {
+      "profileId": "v-7c54fc03d9fbce5e",
+      "settingsUnchanged": true
+    },
+    {
+      "profileId": "v-384a4bc4a8eabb56",
+      "settingsUnchanged": true
+    },
+    {
+      "profileId": "v-622d026aa858b089",
+      "settingsUnchanged": true
+    },
+    {
+      "profileId": "v-dcc66494f2abd8f7",
+      "settingsUnchanged": true
+    },
+    {
+      "profileId": "v-61f4652426398e77",
+      "settingsUnchanged": true
+    },
+    {
+      "profileId": "v-4332bc8053894f53",
+      "settingsUnchanged": true
+    },
+    {
+      "profileId": "v-ab6c3c9a11207cae",
+      "settingsUnchanged": true
+    },
+    {
+      "profileId": "v-f67e8217e7b1ae16",
+      "settingsUnchanged": true
+    },
+    {
+      "profileId": "v-5a3c5a98191826c8",
+      "settingsUnchanged": true
+    },
+    {
+      "profileId": "v-97739e468086dbc1",
+      "settingsUnchanged": true
+    },
+    {
+      "profileId": "v-2ad8277b22a2d1dd",
+      "settingsUnchanged": true
+    },
+    {
+      "profileId": "v-51d27362f259b511",
+      "settingsUnchanged": true
+    },
+    {
+      "profileId": "v-7a6a65927f129867",
+      "settingsUnchanged": true
+    },
+    {
+      "profileId": "v-687de7ca84aef6f7",
+      "settingsUnchanged": true
+    },
+    {
+      "profileId": "v-8755828b499fa2be",
+      "settingsUnchanged": true
+    },
+    {
+      "profileId": "v-2ade35785f8a4570",
+      "settingsUnchanged": true
+    },
+    {
+      "profileId": "v-e41f7b45cbaf3110",
+      "settingsUnchanged": true
+    },
+    {
+      "profileId": "v-2386fd6854b381b0",
+      "settingsUnchanged": true
+    },
+    {
+      "profileId": "v-b6430dab7abad331",
+      "settingsUnchanged": true
+    },
+    {
+      "profileId": "v-22ea9e1109d1c758",
+      "settingsUnchanged": true
+    },
+    {
+      "profileId": "v-f2bfdbd2f5c926cc",
+      "settingsUnchanged": true
+    },
+    {
+      "profileId": "v-3fcd2e20e8f6a673",
+      "settingsUnchanged": true
+    },
+    {
+      "profileId": "v-1cadcb6d42fbd896",
+      "settingsUnchanged": true
+    },
+    {
+      "profileId": "v-24ae168bc0826351",
+      "settingsUnchanged": true
+    },
+    {
+      "profileId": "v-ae0fa5513821151f",
+      "settingsUnchanged": true
+    },
+    {
+      "profileId": "v-5840bb3016bd16ef",
+      "settingsUnchanged": true
+    },
+    {
+      "profileId": "v-a6ef90e7a3f2b9d6",
+      "settingsUnchanged": true
+    },
+    {
+      "profileId": "v-dbee72df867fc3d7",
+      "settingsUnchanged": true
+    },
+    {
+      "profileId": "v-97958117476b6c86",
+      "settingsUnchanged": true
+    },
+    {
+      "profileId": "v-3498a6a25c30d03f",
+      "settingsUnchanged": true
+    },
+    {
+      "profileId": "v-4e989d6c79a912c7",
+      "settingsUnchanged": true
+    },
+    {
+      "profileId": "v-ba3331347ca0f10e",
+      "settingsUnchanged": true
+    },
+    {
+      "profileId": "v-ae974a82a7697b02",
+      "settingsUnchanged": true
+    },
+    {
+      "profileId": "v-af3f1e55971f194f",
+      "settingsUnchanged": true
+    },
+    {
+      "profileId": "v-af7bbaf7bf7a0c31",
+      "settingsUnchanged": true
+    },
+    {
+      "profileId": "v-4e475918bb45e3b2",
+      "settingsUnchanged": true
+    },
+    {
+      "profileId": "v-d8900a81dc2d9334",
+      "settingsUnchanged": true
+    },
+    {
+      "profileId": "v-d3f101816519da62",
+      "settingsUnchanged": true
+    },
+    {
+      "profileId": "v-39c2255630b57c6f",
+      "settingsUnchanged": true
+    },
+    {
+      "profileId": "v-42bd7fef7538bcfc",
+      "settingsUnchanged": true
+    },
+    {
+      "profileId": "v-a9138ed0cbb17003",
+      "settingsUnchanged": true
+    },
+    {
+      "profileId": "v-53065d33d503920e",
+      "settingsUnchanged": true
+    },
+    {
+      "profileId": "v-f2d7db00f54176fc",
+      "settingsUnchanged": true
+    },
+    {
+      "profileId": "v-72ef2195fecc6b63",
+      "settingsUnchanged": true
+    },
+    {
+      "profileId": "v-7416bb3c4c0e1890",
+      "settingsUnchanged": true
+    },
+    {
+      "profileId": "v-0f5db76521280914",
+      "settingsUnchanged": true
+    },
+    {
+      "profileId": "v-55f1711a7356bf22",
+      "settingsUnchanged": true
+    },
+    {
+      "profileId": "v-d8806e38e9b347d6",
+      "settingsUnchanged": true
+    },
+    {
+      "profileId": "v-7a684888a2a928e6",
+      "settingsUnchanged": true
+    },
+    {
+      "profileId": "v-ab25056587262ee7",
+      "settingsUnchanged": true
+    },
+    {
+      "profileId": "v-cfceede020f18eea",
+      "settingsUnchanged": true
+    },
+    {
+      "profileId": "v-e8e774580bf8020a",
+      "settingsUnchanged": true
+    },
+    {
+      "profileId": "v-b866b7756703227a",
+      "settingsUnchanged": true
+    },
+    {
+      "profileId": "v-070e0920b3744575",
+      "settingsUnchanged": true
+    },
+    {
+      "profileId": "v-b3705c5f51c5b926",
+      "settingsUnchanged": true
+    },
+    {
+      "profileId": "v-bebf1354663e26be",
+      "settingsUnchanged": true
+    },
+    {
+      "profileId": "v-17fc819431b60ffa",
+      "settingsUnchanged": true
+    },
+    {
+      "profileId": "v-a8274d882bf9f1d2",
+      "settingsUnchanged": true
+    },
+    {
+      "profileId": "v-ffb5b6de976e8ca4",
+      "settingsUnchanged": true
+    },
+    {
+      "profileId": "v-3793be64b1eabf50",
+      "settingsUnchanged": true
+    },
+    {
+      "profileId": "v-dc6a0c6da1f41b40",
+      "settingsUnchanged": true
+    },
+    {
+      "profileId": "v-0ad84d217cc00c9e",
+      "settingsUnchanged": true
+    },
+    {
+      "profileId": "v-c3c56365fac260b8",
+      "settingsUnchanged": true
+    },
+    {
+      "profileId": "v-c562b552e52575e8",
+      "settingsUnchanged": true
+    },
+    {
+      "profileId": "v-2c12ac5d6634b127",
+      "settingsUnchanged": true
+    },
+    {
+      "profileId": "v-3add766f6af568cd",
+      "settingsUnchanged": true
+    },
+    {
+      "profileId": "local-B",
+      "settingsUnchanged": true
+    },
+    {
+      "profileId": "s-4740ae6347b0",
+      "settingsUnchanged": true
+    },
+    {
+      "profileId": "s-f8d397a33fcb",
+      "settingsUnchanged": true
+    },
+    {
+      "profileId": "s-648c6607853d",
+      "settingsUnchanged": true
+    },
+    {
+      "profileId": "s-f3335aafd745",
+      "settingsUnchanged": true
+    },
+    {
+      "profileId": "s-1092ebbb0c19",
+      "settingsUnchanged": true
+    },
+    {
+      "profileId": "s-7523b42a07dc",
+      "settingsUnchanged": true
+    },
+    {
+      "profileId": "s-897a04fc6ee2",
+      "settingsUnchanged": true
+    },
+    {
+      "profileId": "s-543bff474a49",
+      "settingsUnchanged": true
+    },
+    {
+      "profileId": "s-017eabfd0aa9",
+      "settingsUnchanged": true
+    },
+    {
+      "profileId": "s-fc64e2c51ca4",
+      "settingsUnchanged": true
+    }
+  ],
+  "all91ProjectionReceiptChecks": [
+    {
+      "profileId": "local-A",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    },
+    {
+      "profileId": "v-a11483f8a7b64ced",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    },
+    {
+      "profileId": "v-2046200c4587ce21",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    },
+    {
+      "profileId": "v-c5d03b0768617a2f",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    },
+    {
+      "profileId": "v-1b977533b3fb85b8",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    },
+    {
+      "profileId": "v-1d34eb571422b5cc",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    },
+    {
+      "profileId": "v-89df19445374a1bd",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    },
+    {
+      "profileId": "v-c6c6a0ac00af67fc",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    },
+    {
+      "profileId": "v-4a2b71e1a65662bd",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    },
+    {
+      "profileId": "v-7c54fc03d9fbce5e",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    },
+    {
+      "profileId": "v-384a4bc4a8eabb56",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    },
+    {
+      "profileId": "v-622d026aa858b089",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    },
+    {
+      "profileId": "v-dcc66494f2abd8f7",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    },
+    {
+      "profileId": "v-61f4652426398e77",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    },
+    {
+      "profileId": "v-4332bc8053894f53",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    },
+    {
+      "profileId": "v-ab6c3c9a11207cae",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    },
+    {
+      "profileId": "v-f67e8217e7b1ae16",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    },
+    {
+      "profileId": "v-5a3c5a98191826c8",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    },
+    {
+      "profileId": "v-97739e468086dbc1",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    },
+    {
+      "profileId": "v-2ad8277b22a2d1dd",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    },
+    {
+      "profileId": "v-51d27362f259b511",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    },
+    {
+      "profileId": "v-7a6a65927f129867",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    },
+    {
+      "profileId": "v-687de7ca84aef6f7",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    },
+    {
+      "profileId": "v-8755828b499fa2be",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    },
+    {
+      "profileId": "v-2ade35785f8a4570",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    },
+    {
+      "profileId": "v-e41f7b45cbaf3110",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    },
+    {
+      "profileId": "v-2386fd6854b381b0",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    },
+    {
+      "profileId": "v-b6430dab7abad331",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    },
+    {
+      "profileId": "v-22ea9e1109d1c758",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    },
+    {
+      "profileId": "v-f2bfdbd2f5c926cc",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    },
+    {
+      "profileId": "v-3fcd2e20e8f6a673",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    },
+    {
+      "profileId": "v-1cadcb6d42fbd896",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    },
+    {
+      "profileId": "v-24ae168bc0826351",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    },
+    {
+      "profileId": "v-ae0fa5513821151f",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    },
+    {
+      "profileId": "v-5840bb3016bd16ef",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    },
+    {
+      "profileId": "v-a6ef90e7a3f2b9d6",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    },
+    {
+      "profileId": "v-dbee72df867fc3d7",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    },
+    {
+      "profileId": "v-97958117476b6c86",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    },
+    {
+      "profileId": "v-3498a6a25c30d03f",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    },
+    {
+      "profileId": "v-4e989d6c79a912c7",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    },
+    {
+      "profileId": "v-ba3331347ca0f10e",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    },
+    {
+      "profileId": "v-ae974a82a7697b02",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    },
+    {
+      "profileId": "v-af3f1e55971f194f",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    },
+    {
+      "profileId": "v-af7bbaf7bf7a0c31",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    },
+    {
+      "profileId": "v-4e475918bb45e3b2",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    },
+    {
+      "profileId": "v-d8900a81dc2d9334",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    },
+    {
+      "profileId": "v-d3f101816519da62",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    },
+    {
+      "profileId": "v-39c2255630b57c6f",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    },
+    {
+      "profileId": "v-42bd7fef7538bcfc",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    },
+    {
+      "profileId": "v-a9138ed0cbb17003",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    },
+    {
+      "profileId": "v-53065d33d503920e",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    },
+    {
+      "profileId": "v-f2d7db00f54176fc",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    },
+    {
+      "profileId": "v-72ef2195fecc6b63",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    },
+    {
+      "profileId": "v-7416bb3c4c0e1890",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    },
+    {
+      "profileId": "v-0f5db76521280914",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    },
+    {
+      "profileId": "v-55f1711a7356bf22",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    },
+    {
+      "profileId": "v-d8806e38e9b347d6",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    },
+    {
+      "profileId": "v-7a684888a2a928e6",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    },
+    {
+      "profileId": "v-ab25056587262ee7",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    },
+    {
+      "profileId": "v-cfceede020f18eea",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    },
+    {
+      "profileId": "v-e8e774580bf8020a",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    },
+    {
+      "profileId": "v-b866b7756703227a",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    },
+    {
+      "profileId": "v-070e0920b3744575",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    },
+    {
+      "profileId": "v-b3705c5f51c5b926",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    },
+    {
+      "profileId": "v-bebf1354663e26be",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    },
+    {
+      "profileId": "v-17fc819431b60ffa",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    },
+    {
+      "profileId": "v-a8274d882bf9f1d2",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    },
+    {
+      "profileId": "v-ffb5b6de976e8ca4",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    },
+    {
+      "profileId": "v-3793be64b1eabf50",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    },
+    {
+      "profileId": "v-dc6a0c6da1f41b40",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    },
+    {
+      "profileId": "v-0ad84d217cc00c9e",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    },
+    {
+      "profileId": "v-c3c56365fac260b8",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    },
+    {
+      "profileId": "v-c562b552e52575e8",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    },
+    {
+      "profileId": "v-2c12ac5d6634b127",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    },
+    {
+      "profileId": "v-3add766f6af568cd",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    },
+    {
+      "profileId": "local-B",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    },
+    {
+      "profileId": "s-4740ae6347b0",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    },
+    {
+      "profileId": "s-f8d397a33fcb",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    },
+    {
+      "profileId": "s-648c6607853d",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    },
+    {
+      "profileId": "s-f3335aafd745",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    },
+    {
+      "profileId": "s-1092ebbb0c19",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    },
+    {
+      "profileId": "s-7523b42a07dc",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    },
+    {
+      "profileId": "s-897a04fc6ee2",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    },
+    {
+      "profileId": "s-543bff474a49",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    },
+    {
+      "profileId": "s-017eabfd0aa9",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    },
+    {
+      "profileId": "s-fc64e2c51ca4",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    },
+    {
+      "profileId": "reason-threshold-A",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    },
+    {
+      "profileId": "network-only",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    },
+    {
+      "profileId": "command-disabled",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    },
+    {
+      "profileId": "browser-disabled",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    },
+    {
+      "profileId": "network-only-health-disabled",
+      "settingsDigestMatches": true,
+      "serviceProjectionMatches": true
+    }
+  ],
+  "originalCaseBodyLifecycleChecks": [
+    {
+      "id": "DLV-B23-EMIT-9bc7dd684bcc0ac9-CMP18-VAL",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-9bc7dd684bcc0ac9-CMP18-EFFECT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-9bc7dd684bcc0ac9-CMP18-BIND",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-9bc7dd684bcc0ac9-CMP18-MUT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-e353921f59b947d2-CMP18-VAL",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-e353921f59b947d2-CMP18-EFFECT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-e353921f59b947d2-CMP18-BIND",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-e353921f59b947d2-CMP18-MUT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-f3e081a10a005c6d-CMP18-VAL",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-f3e081a10a005c6d-CMP18-EFFECT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-f3e081a10a005c6d-CMP18-BIND",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-f3e081a10a005c6d-CMP18-MUT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-8223d4f82ad78940-CMP18-VAL",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-8223d4f82ad78940-CMP18-EFFECT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-8223d4f82ad78940-CMP18-BIND",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-8223d4f82ad78940-CMP18-MUT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-15761fa4d74cfd14-CMP18-VAL",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-15761fa4d74cfd14-CMP18-EFFECT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-15761fa4d74cfd14-CMP18-BIND",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-15761fa4d74cfd14-CMP18-MUT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-9e703e930074d2d9-CMP18-VAL",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-9e703e930074d2d9-CMP18-EFFECT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-9e703e930074d2d9-CMP18-BIND",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-9e703e930074d2d9-CMP18-MUT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-c7b8d91c6e32ca8a-CMP18-VAL",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-c7b8d91c6e32ca8a-CMP18-EFFECT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-c7b8d91c6e32ca8a-CMP18-BIND",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-c7b8d91c6e32ca8a-CMP18-MUT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-3133d45344799df6-CMP18-VAL",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-3133d45344799df6-CMP18-EFFECT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-3133d45344799df6-CMP18-BIND",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-3133d45344799df6-CMP18-MUT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-45a77594a284944f-CMP18-VAL",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-45a77594a284944f-CMP18-EFFECT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-45a77594a284944f-CMP18-BIND",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-45a77594a284944f-CMP18-MUT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-61b8952807a6ae64-CMP18-VAL",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-61b8952807a6ae64-CMP18-EFFECT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-61b8952807a6ae64-CMP18-BIND",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-61b8952807a6ae64-CMP18-MUT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-32fdcf1249dece9d-CMP18-VAL",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-32fdcf1249dece9d-CMP18-EFFECT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-32fdcf1249dece9d-CMP18-BIND",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-32fdcf1249dece9d-CMP18-MUT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-e1dbc20e704941b2-CMP18-VAL",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-e1dbc20e704941b2-CMP18-EFFECT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-e1dbc20e704941b2-CMP18-BIND",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-e1dbc20e704941b2-CMP18-MUT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-e7411fa0b80cc0f9-CMP18-VAL",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-e7411fa0b80cc0f9-CMP18-EFFECT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-e7411fa0b80cc0f9-CMP18-BIND",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-e7411fa0b80cc0f9-CMP18-MUT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-d310fed664330657-CMP18-VAL",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-d310fed664330657-CMP18-EFFECT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-d310fed664330657-CMP18-BIND",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-d310fed664330657-CMP18-MUT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-e7c15e45c06e70a1-CMP18-VAL",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-e7c15e45c06e70a1-CMP18-EFFECT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-e7c15e45c06e70a1-CMP18-BIND",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-e7c15e45c06e70a1-CMP18-MUT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-154143b8310b9830-CMP18-VAL",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-154143b8310b9830-CMP18-EFFECT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-154143b8310b9830-CMP18-BIND",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-154143b8310b9830-CMP18-MUT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-111b291a945ce10c-CMP18-VAL",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-111b291a945ce10c-CMP18-EFFECT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-111b291a945ce10c-CMP18-BIND",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-111b291a945ce10c-CMP18-MUT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-b269fb17dbd3632a-CMP18-VAL",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-b269fb17dbd3632a-CMP18-EFFECT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-b269fb17dbd3632a-CMP18-BIND",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-b269fb17dbd3632a-CMP18-MUT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-0d6a21c1a0ffc5b0-CMP18-VAL",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-0d6a21c1a0ffc5b0-CMP18-EFFECT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-0d6a21c1a0ffc5b0-CMP18-BIND",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-0d6a21c1a0ffc5b0-CMP18-MUT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-9b6265411874b424-CMP18-VAL",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-9b6265411874b424-CMP18-EFFECT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-9b6265411874b424-CMP18-BIND",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-9b6265411874b424-CMP18-MUT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-0979d52b234d6325-CMP18-VAL",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-0979d52b234d6325-CMP18-EFFECT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-0979d52b234d6325-CMP18-BIND",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-0979d52b234d6325-CMP18-MUT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-d595fc8a40ee1046-CMP18-VAL",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-d595fc8a40ee1046-CMP18-EFFECT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-d595fc8a40ee1046-CMP18-BIND",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-d595fc8a40ee1046-CMP18-MUT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-1a0817aeebf4adf0-CMP18-VAL",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-1a0817aeebf4adf0-CMP18-EFFECT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-1a0817aeebf4adf0-CMP18-BIND",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-1a0817aeebf4adf0-CMP18-MUT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-65ef6291b92e8ef3-CMP18-VAL",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-65ef6291b92e8ef3-CMP18-EFFECT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-65ef6291b92e8ef3-CMP18-BIND",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-65ef6291b92e8ef3-CMP18-MUT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-012c80b3ee7c1ca9-CMP18-VAL",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-012c80b3ee7c1ca9-CMP18-EFFECT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-012c80b3ee7c1ca9-CMP18-BIND",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-012c80b3ee7c1ca9-CMP18-MUT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-8635b62d60b3554c-CMP18-VAL",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-8635b62d60b3554c-CMP18-EFFECT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-8635b62d60b3554c-CMP18-BIND",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-8635b62d60b3554c-CMP18-MUT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-20297db6672709e9-CMP18-VAL",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-20297db6672709e9-CMP18-EFFECT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-20297db6672709e9-CMP18-BIND",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-20297db6672709e9-CMP18-MUT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-e67fb33445d34a6c-CMP18-VAL",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-e67fb33445d34a6c-CMP18-EFFECT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-e67fb33445d34a6c-CMP18-BIND",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-e67fb33445d34a6c-CMP18-MUT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-034a34d6636f9f11-CMP18-VAL",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-034a34d6636f9f11-CMP18-EFFECT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-034a34d6636f9f11-CMP18-BIND",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-034a34d6636f9f11-CMP18-MUT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-9a99771bafcecf49-CMP18-VAL",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-9a99771bafcecf49-CMP18-EFFECT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-9a99771bafcecf49-CMP18-BIND",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-9a99771bafcecf49-CMP18-MUT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-7990b7f85c86658f-CMP18-VAL",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-7990b7f85c86658f-CMP18-EFFECT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-7990b7f85c86658f-CMP18-BIND",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-7990b7f85c86658f-CMP18-MUT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-41faa757cd9ee237-CMP18-VAL",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-41faa757cd9ee237-CMP18-EFFECT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-41faa757cd9ee237-CMP18-BIND",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-41faa757cd9ee237-CMP18-MUT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-d730bfee84950ebe-CMP18-VAL",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-d730bfee84950ebe-CMP18-EFFECT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-d730bfee84950ebe-CMP18-BIND",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-d730bfee84950ebe-CMP18-MUT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-6acadb04e08e5a37-CMP18-VAL",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-6acadb04e08e5a37-CMP18-EFFECT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-6acadb04e08e5a37-CMP18-BIND",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-6acadb04e08e5a37-CMP18-MUT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-ce4287919a2b4288-CMP18-VAL",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-ce4287919a2b4288-CMP18-EFFECT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-ce4287919a2b4288-CMP18-BIND",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-ce4287919a2b4288-CMP18-MUT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-aebb7dbfafeb369f-CMP18-VAL",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-aebb7dbfafeb369f-CMP18-EFFECT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-aebb7dbfafeb369f-CMP18-BIND",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-aebb7dbfafeb369f-CMP18-MUT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-ecb119b84d29252a-CMP18-VAL",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-ecb119b84d29252a-CMP18-EFFECT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-ecb119b84d29252a-CMP18-BIND",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-ecb119b84d29252a-CMP18-MUT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-b07c1207100f06b1-CMP18-VAL",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-b07c1207100f06b1-CMP18-EFFECT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-b07c1207100f06b1-CMP18-BIND",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-b07c1207100f06b1-CMP18-MUT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-e0d022fb56b5fbe8-CMP18-VAL",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-e0d022fb56b5fbe8-CMP18-EFFECT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-e0d022fb56b5fbe8-CMP18-BIND",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-e0d022fb56b5fbe8-CMP18-MUT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-79b0cc603f4fbf87-CMP18-VAL",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-79b0cc603f4fbf87-CMP18-EFFECT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-79b0cc603f4fbf87-CMP18-BIND",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-79b0cc603f4fbf87-CMP18-MUT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-f8ed7defa73c2402-CMP18-VAL",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-f8ed7defa73c2402-CMP18-EFFECT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-f8ed7defa73c2402-CMP18-BIND",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-f8ed7defa73c2402-CMP18-MUT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-d3499a44279d5bc2-CMP18-VAL",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-d3499a44279d5bc2-CMP18-EFFECT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-d3499a44279d5bc2-CMP18-BIND",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-d3499a44279d5bc2-CMP18-MUT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-37fafda2e058ba33-CMP18-VAL",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-37fafda2e058ba33-CMP18-EFFECT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-37fafda2e058ba33-CMP18-BIND",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-37fafda2e058ba33-CMP18-MUT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-a877dd2d2afaaf41-CMP18-VAL",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-a877dd2d2afaaf41-CMP18-EFFECT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-a877dd2d2afaaf41-CMP18-BIND",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-a877dd2d2afaaf41-CMP18-MUT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-47d280f3edb1cac9-CMP18-VAL",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-47d280f3edb1cac9-CMP18-EFFECT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-47d280f3edb1cac9-CMP18-BIND",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-47d280f3edb1cac9-CMP18-MUT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-54b9344ebe322dc9-CMP18-VAL",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-54b9344ebe322dc9-CMP18-EFFECT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-54b9344ebe322dc9-CMP18-BIND",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-54b9344ebe322dc9-CMP18-MUT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-502c39268e68e3ef-CMP18-VAL",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-502c39268e68e3ef-CMP18-EFFECT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-502c39268e68e3ef-CMP18-BIND",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-502c39268e68e3ef-CMP18-MUT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-54d350f9bfe13448-CMP18-VAL",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-54d350f9bfe13448-CMP18-EFFECT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-54d350f9bfe13448-CMP18-BIND",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-54d350f9bfe13448-CMP18-MUT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-a8aecf9105975603-CMP18-VAL",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-a8aecf9105975603-CMP18-EFFECT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-a8aecf9105975603-CMP18-BIND",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-a8aecf9105975603-CMP18-MUT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-ea96a0298d24e7b3-CMP18-VAL",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-ea96a0298d24e7b3-CMP18-EFFECT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-ea96a0298d24e7b3-CMP18-BIND",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-ea96a0298d24e7b3-CMP18-MUT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-ecf16c9b684e0347-CMP18-VAL",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-ecf16c9b684e0347-CMP18-EFFECT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-ecf16c9b684e0347-CMP18-BIND",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-ecf16c9b684e0347-CMP18-MUT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-b4e892429ff7af19-CMP18-VAL",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-b4e892429ff7af19-CMP18-EFFECT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-b4e892429ff7af19-CMP18-BIND",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-b4e892429ff7af19-CMP18-MUT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-abaf30c906eb3213-CMP18-VAL",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-abaf30c906eb3213-CMP18-EFFECT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-abaf30c906eb3213-CMP18-BIND",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-abaf30c906eb3213-CMP18-MUT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-c84c09092850dde5-CMP18-VAL",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-c84c09092850dde5-CMP18-EFFECT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-c84c09092850dde5-CMP18-BIND",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-c84c09092850dde5-CMP18-MUT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-5e12bfd1495232c2-CMP18-VAL",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-5e12bfd1495232c2-CMP18-EFFECT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-5e12bfd1495232c2-CMP18-BIND",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-5e12bfd1495232c2-CMP18-MUT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-b2bf013dd65b73e6-CMP18-VAL",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-b2bf013dd65b73e6-CMP18-EFFECT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-b2bf013dd65b73e6-CMP18-BIND",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-b2bf013dd65b73e6-CMP18-MUT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-b9f7dff563f12066-CMP18-VAL",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-b9f7dff563f12066-CMP18-EFFECT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-b9f7dff563f12066-CMP18-BIND",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-b9f7dff563f12066-CMP18-MUT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-7a9dc3364cb189d1-CMP18-VAL",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-7a9dc3364cb189d1-CMP18-EFFECT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-7a9dc3364cb189d1-CMP18-BIND",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-7a9dc3364cb189d1-CMP18-MUT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-ecb13abf6a54a6ec-CMP18-VAL",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-ecb13abf6a54a6ec-CMP18-EFFECT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-ecb13abf6a54a6ec-CMP18-BIND",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-ecb13abf6a54a6ec-CMP18-MUT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-c8482b736ed56522-CMP18-VAL",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-c8482b736ed56522-CMP18-EFFECT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-c8482b736ed56522-CMP18-BIND",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-c8482b736ed56522-CMP18-MUT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-6b7babe5458de645-CMP18-VAL",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-6b7babe5458de645-CMP18-EFFECT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-6b7babe5458de645-CMP18-BIND",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-6b7babe5458de645-CMP18-MUT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-a0b9c19a66131792-CMP18-VAL",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-a0b9c19a66131792-CMP18-EFFECT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-a0b9c19a66131792-CMP18-BIND",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-a0b9c19a66131792-CMP18-MUT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-f7874c1d6b49b6aa-CMP18-VAL",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-f7874c1d6b49b6aa-CMP18-EFFECT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-f7874c1d6b49b6aa-CMP18-BIND",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-f7874c1d6b49b6aa-CMP18-MUT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-7b7ab708c5208cf7-CMP18-VAL",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-7b7ab708c5208cf7-CMP18-EFFECT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-7b7ab708c5208cf7-CMP18-BIND",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-B23-EMIT-7b7ab708c5208cf7-CMP18-MUT",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "B16-FUTURE-DLV-B23-EMIT-2cdd4a3966ddf260",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "B16-FUTURE-DLV-B23-EMIT-c8692036a2bb0fdf",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "B16-FUTURE-DLV-B23-EMIT-8cc9d49e32aa42a3",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "B16-FUTURE-DLV-B23-EMIT-73221a0587afc14c",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "B16-FUTURE-DLV-B23-EMIT-2681a879cab253be",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "B16-FUTURE-DLV-B23-EMIT-e44c7d1b5bac1392",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "B16-FUTURE-DLV-B23-EMIT-79ef6be8518d4e88",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "B16-FUTURE-DLV-B23-EMIT-e300c5ab469bd2a8",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "B16-FUTURE-DLV-B23-EMIT-2fd7ebff664d0de0",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "B16-FUTURE-DLV-B23-EMIT-ba7e05a20d1167a7",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "B16-FUTURE-DLV-B23-EMIT-1e5a01172266913d",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "B16-FUTURE-DLV-B23-EMIT-c49d3f3ca3735d9a",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "B16-FUTURE-DLV-B23-EMIT-255b06196444899d",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "B16-FUTURE-DLV-B23-EMIT-8cceda8f254d80e2",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "B16-FUTURE-DLV-B23-EMIT-de9238bea6cfd2fe",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "B16-FUTURE-DLV-B23-EMIT-6256505c4337fc8c",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "B16-FUTURE-DLV-B23-EMIT-57d331d223535e59",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "B16-FUTURE-DLV-B23-EMIT-954f93682167b0ae",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "B16-FUTURE-DLV-B23-EMIT-5cabf96825e7427a",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "B16-FUTURE-DLV-B23-EMIT-d3009277c3a823f0",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "B16-FUTURE-DLV-B23-EMIT-413354ee8df19f41",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "B16-FUTURE-DLV-B23-EMIT-2e519b454317e335",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "B16-FUTURE-DLV-B23-EMIT-9d44e0bf17617907",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "B16-FUTURE-DLV-B23-EMIT-ad79a8742f8a4cef",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "B16-FUTURE-DLV-B23-EMIT-a0c3b98d8bfc696b",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "B16-FUTURE-DLV-B23-EMIT-15d02d130b8b88ec",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "B16-FUTURE-DLV-B23-EMIT-3b6c60a854df2161",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "B16-FUTURE-DLV-B23-EMIT-c29f7f526c45b1c2",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "B16-FUTURE-DLV-B23-EMIT-3bd167bc44b18ff9",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "B16-FUTURE-DLV-B23-EMIT-1f1cd453f52e795e",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "B16-FUTURE-DLV-B23-EMIT-c1ceb6ad909b0040",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "B16-FUTURE-DLV-B23-EMIT-79bfabc7597d7bcd",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "B16-FUTURE-DLV-B23-EMIT-def999cd63a86988",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "B16-FUTURE-DLV-B23-EMIT-da196725a2aa679e",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "B16-FUTURE-DLV-B23-EMIT-954f93682167b0ae",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-CASE-MISSING-OLD-AUTHOR",
+      "bodyMatch": true,
+      "requirementsMatch": true,
+      "resultMatch": true
+    },
+    {
+      "id": "DLV-CASE-ALTERNATE-PROFILES",
+      "bodyMatch": true,
+      "requirementsMatch": true,
+      "resultMatch": true
+    },
+    {
+      "id": "DLV-CASE-BUSTER-GENERATED-HOST",
+      "bodyMatch": true,
+      "requirementsMatch": true,
+      "resultMatch": true
+    },
+    {
+      "id": "B16-FUTURE-DLV-B23-EMIT-5cabf96825e7427a",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-CASE-MISSING-OLD-AUTHOR",
+      "bodyMatch": true,
+      "requirementsMatch": true,
+      "resultMatch": true
+    },
+    {
+      "id": "DLV-CASE-ALTERNATE-PROFILES",
+      "bodyMatch": true,
+      "requirementsMatch": true,
+      "resultMatch": true
+    },
+    {
+      "id": "DLV-CASE-BUSTER-GENERATED-PORT",
+      "bodyMatch": true,
+      "requirementsMatch": true,
+      "resultMatch": true
+    },
+    {
+      "id": "B16-FUTURE-DLV-B23-EMIT-15d02d130b8b88ec",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-CASE-MISSING-OLD-AUTHOR",
+      "bodyMatch": true,
+      "requirementsMatch": true,
+      "resultMatch": true
+    },
+    {
+      "id": "DLV-CASE-ALTERNATE-PROFILES",
+      "bodyMatch": true,
+      "requirementsMatch": true,
+      "resultMatch": true
+    },
+    {
+      "id": "DLV-CASE-BUSTER-GENERATED-RECORDLIMITS",
+      "bodyMatch": true,
+      "requirementsMatch": true,
+      "resultMatch": true
+    },
+    {
+      "id": "B16-FUTURE-DLV-B23-EMIT-3b6c60a854df2161",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-CASE-MISSING-OLD-AUTHOR",
+      "bodyMatch": true,
+      "requirementsMatch": true,
+      "resultMatch": true
+    },
+    {
+      "id": "DLV-CASE-ALTERNATE-PROFILES",
+      "bodyMatch": true,
+      "requirementsMatch": true,
+      "resultMatch": true
+    },
+    {
+      "id": "DLV-CASE-BUSTER-GENERATED-RECORDLIMITS",
+      "bodyMatch": true,
+      "requirementsMatch": true,
+      "resultMatch": true
+    },
+    {
+      "id": "B16-FUTURE-DLV-B23-EMIT-c29f7f526c45b1c2",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-CASE-MISSING-OLD-AUTHOR",
+      "bodyMatch": true,
+      "requirementsMatch": true,
+      "resultMatch": true
+    },
+    {
+      "id": "DLV-CASE-ALTERNATE-PROFILES",
+      "bodyMatch": true,
+      "requirementsMatch": true,
+      "resultMatch": true
+    },
+    {
+      "id": "DLV-CASE-BUSTER-GENERATED-RECORDLIMITS",
+      "bodyMatch": true,
+      "requirementsMatch": true,
+      "resultMatch": true
+    },
+    {
+      "id": "B16-FUTURE-DLV-B23-EMIT-3bd167bc44b18ff9",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-CASE-MISSING-OLD-AUTHOR",
+      "bodyMatch": true,
+      "requirementsMatch": true,
+      "resultMatch": true
+    },
+    {
+      "id": "DLV-CASE-ALTERNATE-PROFILES",
+      "bodyMatch": true,
+      "requirementsMatch": true,
+      "resultMatch": true
+    },
+    {
+      "id": "DLV-CASE-BUSTER-GENERATED-MAXIMUMRESULTBYTES",
+      "bodyMatch": true,
+      "requirementsMatch": true,
+      "resultMatch": true
+    },
+    {
+      "id": "B16-FUTURE-DLV-B23-EMIT-1f1cd453f52e795e",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-CASE-MISSING-OLD-AUTHOR",
+      "bodyMatch": true,
+      "requirementsMatch": true,
+      "resultMatch": true
+    },
+    {
+      "id": "DLV-CASE-ALTERNATE-PROFILES",
+      "bodyMatch": true,
+      "requirementsMatch": true,
+      "resultMatch": true
+    },
+    {
+      "id": "DLV-CASE-BUSTER-GENERATED-MAXIMUMRESULTSTOREBYTES",
+      "bodyMatch": true,
+      "requirementsMatch": true,
+      "resultMatch": true
+    },
+    {
+      "id": "B16-FUTURE-DLV-B23-EMIT-c1ceb6ad909b0040",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-CASE-MISSING-OLD-AUTHOR",
+      "bodyMatch": true,
+      "requirementsMatch": true,
+      "resultMatch": true
+    },
+    {
+      "id": "DLV-CASE-ALTERNATE-PROFILES",
+      "bodyMatch": true,
+      "requirementsMatch": true,
+      "resultMatch": true
+    },
+    {
+      "id": "DLV-CASE-BUSTER-GENERATED-MAXIMUMRESPONSEBYTES",
+      "bodyMatch": true,
+      "requirementsMatch": true,
+      "resultMatch": true
+    },
+    {
+      "id": "B16-FUTURE-DLV-B23-EMIT-79bfabc7597d7bcd",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-CASE-MISSING-OLD-AUTHOR",
+      "bodyMatch": true,
+      "requirementsMatch": true,
+      "resultMatch": true
+    },
+    {
+      "id": "DLV-CASE-ALTERNATE-PROFILES",
+      "bodyMatch": true,
+      "requirementsMatch": true,
+      "resultMatch": true
+    },
+    {
+      "id": "DLV-CASE-BUSTER-GENERATED-SHUTDOWNTIMEOUTMS",
+      "bodyMatch": true,
+      "requirementsMatch": true,
+      "resultMatch": true
+    },
+    {
+      "id": "B16-FUTURE-DLV-B23-EMIT-def999cd63a86988",
+      "bodyMatch": true,
+      "notRun": true
+    },
+    {
+      "id": "DLV-CASE-MISSING-OLD-AUTHOR",
+      "bodyMatch": true,
+      "requirementsMatch": true,
+      "resultMatch": true
+    },
+    {
+      "id": "DLV-CASE-ALTERNATE-PROFILES",
+      "bodyMatch": true,
+      "requirementsMatch": true,
+      "resultMatch": true
+    },
+    {
+      "id": "DLV-CASE-BUSTER-GENERATED-ALLOWEDCAPABILITIES",
+      "bodyMatch": true,
+      "requirementsMatch": true,
+      "resultMatch": true
+    }
+  ],
+  "pureReplay": {
+    "exitCode": 0,
+    "controls": [
+      {
+        "id": "full-owner-buster-engine",
+        "result": "passed",
+        "qualification": "actual narrowly scoped pure definition/current-source predicate, no target activation/native/credentials/IO"
+      },
+      {
+        "id": "full-owner-worker-core",
+        "result": "passed",
+        "qualification": "actual narrowly scoped pure definition/current-source predicate, no target activation/native/credentials/IO"
+      },
+      {
+        "id": "full-owner-prism-control",
+        "result": "passed",
+        "qualification": "actual narrowly scoped pure definition/current-source predicate, no target activation/native/credentials/IO"
+      },
+      {
+        "id": "full-owner-prism-worker",
+        "result": "passed",
+        "qualification": "actual narrowly scoped pure definition/current-source predicate, no target activation/native/credentials/IO"
+      },
+      {
+        "id": "full-owner-prism-studio",
+        "result": "passed",
+        "qualification": "actual narrowly scoped pure definition/current-source predicate, no target activation/native/credentials/IO"
+      },
+      {
+        "id": "full-owner-prism-execution",
+        "result": "passed",
+        "qualification": "actual narrowly scoped pure definition/current-source predicate, no target activation/native/credentials/IO"
+      },
+      {
+        "id": "full-owner-negative-missingremote",
+        "result": "passed",
+        "qualification": "actual narrowly scoped pure definition/current-source predicate, no target activation/native/credentials/IO"
+      },
+      {
+        "id": "full-owner-negative-oldalias",
+        "result": "passed",
+        "qualification": "actual narrowly scoped pure definition/current-source predicate, no target activation/native/credentials/IO"
+      },
+      {
+        "id": "full-owner-negative-timerOverflow",
+        "result": "passed",
+        "qualification": "actual narrowly scoped pure definition/current-source predicate, no target activation/native/credentials/IO"
+      },
+      {
+        "id": "full-owner-negative-tinyresponse",
+        "result": "passed",
+        "qualification": "actual narrowly scoped pure definition/current-source predicate, no target activation/native/credentials/IO"
+      },
+      {
+        "id": "full-owner-negative-unsupportedcapability",
+        "result": "passed",
+        "qualification": "actual narrowly scoped pure definition/current-source predicate, no target activation/native/credentials/IO"
+      },
+      {
+        "id": "full-owner-negative-wrongflag",
+        "result": "passed",
+        "qualification": "actual narrowly scoped pure definition/current-source predicate, no target activation/native/credentials/IO"
+      },
+      {
+        "id": "root-config/pipeline.config.json",
+        "result": "passed",
+        "qualification": "actual narrowly scoped pure definition/current-source predicate, no target activation/native/credentials/IO"
+      },
+      {
+        "id": "root-fixtures/root-B.json",
+        "result": "passed",
+        "qualification": "actual narrowly scoped pure definition/current-source predicate, no target activation/native/credentials/IO"
+      },
+      {
+        "id": "actual-current-network-mapper-constructor-noIO",
+        "result": "passed",
+        "qualification": "actual narrowly scoped pure definition/current-source predicate, no target activation/native/credentials/IO"
+      },
+      {
+        "id": "actual-current-registry-peer-predicate-noIO",
+        "result": "passed",
+        "qualification": "actual narrowly scoped pure definition/current-source predicate, no target activation/native/credentials/IO"
+      },
+      {
+        "id": "required-false-projects-native-omission",
+        "result": "passed",
+        "qualification": "actual narrowly scoped pure definition/current-source predicate, no target activation/native/credentials/IO"
+      },
+      {
+        "id": "all-generated-pairs-after-material-correction",
+        "result": "passed",
+        "qualification": "actual narrowly scoped pure definition/current-source predicate, no target activation/native/credentials/IO"
+      },
+      {
+        "id": "TLS-ref-shape-positive-no-private-key-read",
+        "result": "passed",
+        "qualification": "actual narrowly scoped pure definition/current-source predicate, no target activation/native/credentials/IO"
+      },
+      {
+        "id": "TLS-ref-missing-and-unknown-negatives",
+        "result": "passed",
+        "qualification": "actual narrowly scoped pure definition/current-source predicate, no target activation/native/credentials/IO"
+      },
+      {
+        "id": "inactive-capability-source-layer-and-current-decoder-noIO",
+        "result": "passed",
+        "qualification": "actual narrowly scoped pure definition/current-source predicate, no target activation/native/credentials/IO"
+      },
+      {
+        "id": "inactive-object-and-required-peer-negatives",
+        "result": "passed",
+        "qualification": "actual narrowly scoped pure definition/current-source predicate, no target activation/native/credentials/IO"
+      },
+      {
+        "id": "all13-original-full-A-B-couplings-preserved",
+        "result": "passed",
+        "qualification": "actual narrowly scoped pure definition/current-source predicate, no target activation/native/credentials/IO"
+      },
+      {
+        "id": "all64-original-provider-whole-A-B-couplings-preserved",
+        "result": "passed",
+        "qualification": "actual narrowly scoped pure definition/current-source predicate, no target activation/native/credentials/IO"
+      }
+    ],
+    "node": "v24.21.0",
+    "nodeExecutableSha256": "7fde7b8afa198da66257f42ee2001d874c7355631e6d1579a5fb5ef1f246df4c",
+    "ajvVersion": "8.20.0",
+    "ajvEntrySha256": "908e9670b478b2ba126802a221b7e47006f50cf467e2c5dd7935d3dbef10a20a",
+    "ownerProfiles": 96,
+    "generatedPairs": 91,
+    "command": "/usr/local/bin/node /home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/collect-definition-checks.mjs --output-dir docs/review/evidence/config-acceptance/c0-completion-20261013/independent-c3-buster-complete-profile-review-02/replay",
+    "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+    "rawStdoutSha256": "0f9891c56e8e09ccc316f589154e570182cbe6b90b1195d0307003f023765b66",
+    "rawStderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "summarySha256": "473926fd692acd31c2707e43c32d08fd992f6c4e5197e0de267ef2d307144e02"
+  },
+  "canonicalAcceptance": {
+    "C0-A": "not-run",
+    "C0-B": "not-run",
+    "C0-C": "not-run",
+    "C0-D": "not-run",
+    "C0-E": "not-run"
+  },
+  "implementationAuthorization": null,
+  "nativeRuntimeAcceptance": false,
+  "finalInputStability": [
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/README.md",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/capability-activation-contract.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/checks-attempt-01.stderr",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/checks-attempt-01.stdout",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/checks-attempt-02.stderr",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/checks-attempt-02.stdout",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/checks-attempt-03.stderr",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/checks-attempt-03.stdout",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/checks-attempt-04.stderr",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/checks-attempt-04.stdout",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/checks-final.stderr",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/checks-final.stdout",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/collect-definition-checks.mjs",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/commands-and-exits.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/config/components/buster-engine.config.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/config/components/prism-control.config.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/config/components/prism-execution.config.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/config/components/prism-studio.config.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/config/components/prism-worker.config.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/config/components/worker-core.config.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/config/pipeline.config.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/definition-checks-02.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/emitted-current-public-structural.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/failed-attempt-01/buster-engine.config.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/failed-attempt-01/collect-definition-checks.mjs",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/failed-attempt-02/generated-runtime.schema.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/final-run/definition-checks-02.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/final-run.stderr",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/final-run.stdout",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/fixtures/generated-tls-runtime.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/fixtures/root-B.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/fixtures/roots/reasonThreshold-A.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/future-case-joins.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/generated-role-projections.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/historical-01-execution-summary.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/public-fixtures/browser-read-marker.txt",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/public-fixtures/direct-read-marker.txt",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/public-role-inputs.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/schemas/buster-engine.schema.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/schemas/generated-platform-registry.schema.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/schemas/generated-runtime.schema.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/schemas/pipeline-entry.schema.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/schemas/prism-control.schema.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/schemas/prism-execution.schema.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/schemas/prism-studio.schema.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/schemas/prism-worker.schema.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/schemas/worker-core.schema.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/source-pins.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/source-target-supersession.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/tls-reference-contract.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/whole-profile-index.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/README.md",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/attempt-02-failure.log",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/attempt-02-generated-runtime.schema.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/config/components/buster-engine.config.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/config/components/prism-control.config.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/config/components/prism-execution.config.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/config/components/prism-studio.config.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/config/components/prism-worker.config.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/config/components/worker-core.config.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/config/pipeline.config.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/definition-checks.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/emitted-current-public-structural.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/fixtures/root-B.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/future-case-joins.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/generated-role-projections.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/public-fixtures/browser-read-marker.txt",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/public-fixtures/direct-read-marker.txt",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/public-role-inputs.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/schemas/buster-engine.schema.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/schemas/generated-platform-registry.schema.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/schemas/generated-runtime.schema.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/schemas/pipeline-entry.schema.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/schemas/prism-control.schema.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/schemas/prism-execution.schema.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/schemas/prism-studio.schema.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/schemas/prism-worker.schema.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/schemas/worker-core.schema.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/source-pins.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/source-target-supersession.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/whole-profile-index.json",
+      "unchanged": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production.ts",
+      "unchanged": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production-config-values.ts",
+      "unchanged": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production-capability-sources.ts",
+      "unchanged": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production-command-options.ts",
+      "unchanged": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production-browser-options.ts",
+      "unchanged": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/remote-plan-runtime.ts",
+      "unchanged": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/remote-plan-http.ts",
+      "unchanged": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/remote-plan-service.ts",
+      "unchanged": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/prepared-plan-store.ts",
+      "unchanged": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/registry-health-access.ts",
+      "unchanged": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-config.ts",
+      "unchanged": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-supervisor.ts",
+      "unchanged": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-extraction.ts",
+      "unchanged": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/remote-prepared-execution.ts",
+      "unchanged": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/capability-runtime.ts",
+      "unchanged": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+      "unchanged": true
+    },
+    {
+      "path": "docker/buster-runtime-entrypoint.sh",
+      "unchanged": true
+    },
+    {
+      "path": "scripts/registry-client-config.mjs",
+      "unchanged": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/build.ts",
+      "unchanged": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-17/active-component-semantic-bodies.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/provider-field-definitions.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/provider-domain-corrections-21/C3-buster-engine.schema.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime/batch-16-runtime-emitter-joins/active-emitter-definitions.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-whole-c0-readiness-review-01/WCR02-physical-full-profile-author-task.json",
+      "unchanged": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/platform.schema.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/package-manifest.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/README.md",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/definition-checks.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-c3-buster-complete-profile-review-01/README.md",
+      "unchanged": true
+    }
+  ],
+  "directMaterialReadIdentities": [
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/package-manifest.json",
+      "sha256": "740d15efcb1e6689a7dd73c023890b4b4f221cb9b5aed457786dbcf26f082f9c"
+    },
+    {
+      "path": "scripts/registry-client-config.mjs",
+      "sha256": "e67a3568c4a6a33ad23bd2b47b6479ed694b79d25e03fcc5dc461532a8cea1c2"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production-config-values.ts",
+      "sha256": "8311e1cc957e0691fd904be4f042bb5003b58cfacf00992921f0873418cda63f"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/tls-reference-contract.json",
+      "sha256": "c042f9ee2d05cbf25d67482344d44d12efccb9fcf22f011392e3007052b6fdf0"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/capability-activation-contract.json",
+      "sha256": "9636c49e38004379c27dfb2b02016b40c1d98388b7a3668159e9b7052c1cda47"
+    }
+  ],
+  "finalPostReportInputStability": [
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/README.md",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/capability-activation-contract.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/checks-attempt-01.stderr",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/checks-attempt-01.stdout",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/checks-attempt-02.stderr",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/checks-attempt-02.stdout",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/checks-attempt-03.stderr",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/checks-attempt-03.stdout",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/checks-attempt-04.stderr",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/checks-attempt-04.stdout",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/checks-final.stderr",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/checks-final.stdout",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/collect-definition-checks.mjs",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/commands-and-exits.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/config/components/buster-engine.config.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/config/components/prism-control.config.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/config/components/prism-execution.config.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/config/components/prism-studio.config.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/config/components/prism-worker.config.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/config/components/worker-core.config.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/config/pipeline.config.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/definition-checks-02.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/emitted-current-public-structural.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/failed-attempt-01/buster-engine.config.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/failed-attempt-01/collect-definition-checks.mjs",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/failed-attempt-02/generated-runtime.schema.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/final-run/definition-checks-02.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/final-run.stderr",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/final-run.stdout",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/fixtures/generated-tls-runtime.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/fixtures/root-B.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/fixtures/roots/reasonThreshold-A.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/future-case-joins.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/generated-role-projections.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/historical-01-execution-summary.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/public-fixtures/browser-read-marker.txt",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/public-fixtures/direct-read-marker.txt",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/public-role-inputs.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/schemas/buster-engine.schema.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/schemas/generated-platform-registry.schema.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/schemas/generated-runtime.schema.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/schemas/pipeline-entry.schema.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/schemas/prism-control.schema.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/schemas/prism-execution.schema.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/schemas/prism-studio.schema.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/schemas/prism-worker.schema.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/schemas/worker-core.schema.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/source-pins.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/source-target-supersession.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/tls-reference-contract.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/whole-profile-index.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/README.md",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/attempt-02-failure.log",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/attempt-02-generated-runtime.schema.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/config/components/buster-engine.config.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/config/components/prism-control.config.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/config/components/prism-execution.config.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/config/components/prism-studio.config.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/config/components/prism-worker.config.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/config/components/worker-core.config.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/config/pipeline.config.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/definition-checks.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/emitted-current-public-structural.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/fixtures/root-B.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/future-case-joins.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/generated-role-projections.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/public-fixtures/browser-read-marker.txt",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/public-fixtures/direct-read-marker.txt",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/public-role-inputs.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/schemas/buster-engine.schema.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/schemas/generated-platform-registry.schema.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/schemas/generated-runtime.schema.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/schemas/pipeline-entry.schema.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/schemas/prism-control.schema.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/schemas/prism-execution.schema.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/schemas/prism-studio.schema.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/schemas/prism-worker.schema.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/schemas/worker-core.schema.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/source-pins.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/source-target-supersession.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/whole-profile-index.json",
+      "unchanged": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production.ts",
+      "unchanged": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production-config-values.ts",
+      "unchanged": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production-capability-sources.ts",
+      "unchanged": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production-command-options.ts",
+      "unchanged": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production-browser-options.ts",
+      "unchanged": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/remote-plan-runtime.ts",
+      "unchanged": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/remote-plan-http.ts",
+      "unchanged": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/remote-plan-service.ts",
+      "unchanged": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/prepared-plan-store.ts",
+      "unchanged": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/registry-health-access.ts",
+      "unchanged": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-config.ts",
+      "unchanged": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-supervisor.ts",
+      "unchanged": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-extraction.ts",
+      "unchanged": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/remote-prepared-execution.ts",
+      "unchanged": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/capability-runtime.ts",
+      "unchanged": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+      "unchanged": true
+    },
+    {
+      "path": "docker/buster-runtime-entrypoint.sh",
+      "unchanged": true
+    },
+    {
+      "path": "scripts/registry-client-config.mjs",
+      "unchanged": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/build.ts",
+      "unchanged": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-17/active-component-semantic-bodies.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/provider-field-definitions.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/provider-domain-corrections-21/C3-buster-engine.schema.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime/batch-16-runtime-emitter-joins/active-emitter-definitions.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-whole-c0-readiness-review-01/WCR02-physical-full-profile-author-task.json",
+      "unchanged": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/platform.schema.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/package-manifest.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/README.md",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/definition-checks.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-c3-buster-complete-profile-review-01/README.md",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/package-manifest.json",
+      "unchanged": true
+    },
+    {
+      "path": "scripts/registry-client-config.mjs",
+      "unchanged": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production-config-values.ts",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/tls-reference-contract.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/capability-activation-contract.json",
+      "unchanged": true
+    }
+  ]
+}

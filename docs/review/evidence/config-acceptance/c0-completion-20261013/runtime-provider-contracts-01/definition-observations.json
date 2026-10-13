@@ -1,0 +1,562 @@
+{
+  "qualification": "Local pure schema/config/parser checks only; no provider.execute/network/adapter activation/native/API/credentials; no canonical case result promotion",
+  "nodeVersion": "v24.21.0",
+  "commands": [
+    "/usr/local/bin/node",
+    "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/check-definition.mjs"
+  ],
+  "observations": [
+    {
+      "check": "whole-typed-owner-schema",
+      "owner": "kubeclaw.api-flow:flow",
+      "profileCount": 8,
+      "valid": true,
+      "errors": null
+    },
+    {
+      "check": "missing-owned-required-policy",
+      "owner": "kubeclaw.api-flow:flow",
+      "profile": "A",
+      "field": "requestTimeoutMs",
+      "rejected": true,
+      "errors": [
+        {
+          "instancePath": "/profiles/A/processing",
+          "schemaPath": "#/properties/profiles/additionalProperties/properties/processing/required",
+          "keyword": "required",
+          "params": {
+            "missingProperty": "requestTimeoutMs"
+          },
+          "message": "must have required property 'requestTimeoutMs'"
+        }
+      ]
+    },
+    {
+      "check": "task-url-forbidden-in-policy",
+      "owner": "kubeclaw.api-flow:flow",
+      "rejected": true,
+      "errors": [
+        {
+          "instancePath": "/profiles/A/processing",
+          "schemaPath": "#/properties/profiles/additionalProperties/properties/processing/additionalProperties",
+          "keyword": "additionalProperties",
+          "params": {
+            "additionalProperty": "url"
+          },
+          "message": "must NOT have additional properties"
+        }
+      ]
+    },
+    {
+      "check": "pure-target-task-schema",
+      "owner": "kubeclaw.api-flow:flow",
+      "valid": true,
+      "errors": null
+    },
+    {
+      "check": "retired-equal-task-quota-rejected",
+      "owner": "kubeclaw.api-flow:flow",
+      "rejected": true,
+      "errors": [
+        {
+          "instancePath": "",
+          "schemaPath": "#/additionalProperties",
+          "keyword": "additionalProperties",
+          "params": {
+            "additionalProperty": "requestTimeoutMs"
+          },
+          "message": "must NOT have additional properties"
+        }
+      ]
+    },
+    {
+      "check": "current-config-schema-generated-task-policy-view",
+      "owner": "kubeclaw.api-flow:flow",
+      "profile": "A",
+      "valid": true
+    },
+    {
+      "check": "current-config-schema-generated-task-policy-view",
+      "owner": "kubeclaw.api-flow:flow",
+      "profile": "B",
+      "valid": true
+    },
+    {
+      "check": "current-config-schema-generated-task-policy-view",
+      "owner": "kubeclaw.api-flow:flow",
+      "profile": "RT-b8eb5e344f496d7c-A",
+      "valid": true
+    },
+    {
+      "check": "current-config-schema-generated-task-policy-view",
+      "owner": "kubeclaw.api-flow:flow",
+      "profile": "RT-b8eb5e344f496d7c-B",
+      "valid": true
+    },
+    {
+      "check": "current-config-schema-generated-task-policy-view",
+      "owner": "kubeclaw.api-flow:flow",
+      "profile": "RT-98a5849759145124-A",
+      "valid": true
+    },
+    {
+      "check": "current-config-schema-generated-task-policy-view",
+      "owner": "kubeclaw.api-flow:flow",
+      "profile": "RT-98a5849759145124-B",
+      "valid": true
+    },
+    {
+      "check": "current-config-schema-generated-task-policy-view",
+      "owner": "kubeclaw.api-flow:flow",
+      "profile": "RT-6e292c3c6f492f07-A",
+      "valid": true
+    },
+    {
+      "check": "current-config-schema-generated-task-policy-view",
+      "owner": "kubeclaw.api-flow:flow",
+      "profile": "RT-6e292c3c6f492f07-B",
+      "valid": true
+    },
+    {
+      "check": "whole-typed-owner-schema",
+      "owner": "kubeclaw.http:request",
+      "profileCount": 6,
+      "valid": true,
+      "errors": null
+    },
+    {
+      "check": "missing-owned-required-policy",
+      "owner": "kubeclaw.http:request",
+      "profile": "A",
+      "field": "requestTimeoutMs",
+      "rejected": true,
+      "errors": [
+        {
+          "instancePath": "/profiles/A/processing",
+          "schemaPath": "#/properties/profiles/additionalProperties/properties/processing/required",
+          "keyword": "required",
+          "params": {
+            "missingProperty": "requestTimeoutMs"
+          },
+          "message": "must have required property 'requestTimeoutMs'"
+        }
+      ]
+    },
+    {
+      "check": "task-url-forbidden-in-policy",
+      "owner": "kubeclaw.http:request",
+      "rejected": true,
+      "errors": [
+        {
+          "instancePath": "/profiles/A/processing",
+          "schemaPath": "#/properties/profiles/additionalProperties/properties/processing/additionalProperties",
+          "keyword": "additionalProperties",
+          "params": {
+            "additionalProperty": "url"
+          },
+          "message": "must NOT have additional properties"
+        }
+      ]
+    },
+    {
+      "check": "pure-target-task-schema",
+      "owner": "kubeclaw.http:request",
+      "valid": true,
+      "errors": null
+    },
+    {
+      "check": "retired-equal-task-quota-rejected",
+      "owner": "kubeclaw.http:request",
+      "rejected": true,
+      "errors": [
+        {
+          "instancePath": "",
+          "schemaPath": "#/additionalProperties",
+          "keyword": "additionalProperties",
+          "params": {
+            "additionalProperty": "requestTimeoutMs"
+          },
+          "message": "must NOT have additional properties"
+        }
+      ]
+    },
+    {
+      "check": "current-config-schema-generated-task-policy-view",
+      "owner": "kubeclaw.http:request",
+      "profile": "A",
+      "valid": true
+    },
+    {
+      "check": "actual-pure-current-HTTP-config-parser",
+      "owner": "kubeclaw.http:request",
+      "profile": "A",
+      "actual": {
+        "url": "https://fixture.invalid/ok",
+        "method": "GET",
+        "accept": "application/json",
+        "expectedStatuses": [
+          200
+        ],
+        "expectedText": "C0-local",
+        "expectedContentType": "application/json",
+        "maximumResponseBytes": 2048,
+        "requestTimeoutMs": 1000
+      },
+      "networkOrProviderExecute": false
+    },
+    {
+      "check": "current-config-schema-generated-task-policy-view",
+      "owner": "kubeclaw.http:request",
+      "profile": "B",
+      "valid": true
+    },
+    {
+      "check": "actual-pure-current-HTTP-config-parser",
+      "owner": "kubeclaw.http:request",
+      "profile": "B",
+      "actual": {
+        "url": "https://fixture.invalid/ok",
+        "method": "GET",
+        "accept": "application/json",
+        "expectedStatuses": [
+          200
+        ],
+        "expectedText": "C0-local",
+        "expectedContentType": "application/json",
+        "maximumResponseBytes": 1024,
+        "requestTimeoutMs": 500
+      },
+      "networkOrProviderExecute": false
+    },
+    {
+      "check": "current-config-schema-generated-task-policy-view",
+      "owner": "kubeclaw.http:request",
+      "profile": "RT-6b6f0761a77de324-A",
+      "valid": true
+    },
+    {
+      "check": "actual-pure-current-HTTP-config-parser",
+      "owner": "kubeclaw.http:request",
+      "profile": "RT-6b6f0761a77de324-A",
+      "actual": {
+        "url": "https://fixture.invalid/ok",
+        "method": "GET",
+        "accept": "application/json",
+        "expectedStatuses": [
+          200
+        ],
+        "expectedText": "C0-local",
+        "expectedContentType": "application/json",
+        "maximumResponseBytes": 32,
+        "requestTimeoutMs": 1000
+      },
+      "networkOrProviderExecute": false
+    },
+    {
+      "check": "current-config-schema-generated-task-policy-view",
+      "owner": "kubeclaw.http:request",
+      "profile": "RT-6b6f0761a77de324-B",
+      "valid": true
+    },
+    {
+      "check": "actual-pure-current-HTTP-config-parser",
+      "owner": "kubeclaw.http:request",
+      "profile": "RT-6b6f0761a77de324-B",
+      "actual": {
+        "url": "https://fixture.invalid/ok",
+        "method": "GET",
+        "accept": "application/json",
+        "expectedStatuses": [
+          200
+        ],
+        "expectedText": "C0-local",
+        "expectedContentType": "application/json",
+        "maximumResponseBytes": 2048,
+        "requestTimeoutMs": 1000
+      },
+      "networkOrProviderExecute": false
+    },
+    {
+      "check": "current-config-schema-generated-task-policy-view",
+      "owner": "kubeclaw.http:request",
+      "profile": "RT-6a3cdfc223a3c24b-A",
+      "valid": true
+    },
+    {
+      "check": "actual-pure-current-HTTP-config-parser",
+      "owner": "kubeclaw.http:request",
+      "profile": "RT-6a3cdfc223a3c24b-A",
+      "actual": {
+        "url": "https://fixture.invalid/ok",
+        "method": "GET",
+        "accept": "application/json",
+        "expectedStatuses": [
+          200
+        ],
+        "expectedText": "C0-local",
+        "expectedContentType": "application/json",
+        "maximumResponseBytes": 2048,
+        "requestTimeoutMs": 50
+      },
+      "networkOrProviderExecute": false
+    },
+    {
+      "check": "current-config-schema-generated-task-policy-view",
+      "owner": "kubeclaw.http:request",
+      "profile": "RT-6a3cdfc223a3c24b-B",
+      "valid": true
+    },
+    {
+      "check": "actual-pure-current-HTTP-config-parser",
+      "owner": "kubeclaw.http:request",
+      "profile": "RT-6a3cdfc223a3c24b-B",
+      "actual": {
+        "url": "https://fixture.invalid/ok",
+        "method": "GET",
+        "accept": "application/json",
+        "expectedStatuses": [
+          200
+        ],
+        "expectedText": "C0-local",
+        "expectedContentType": "application/json",
+        "maximumResponseBytes": 2048,
+        "requestTimeoutMs": 500
+      },
+      "networkOrProviderExecute": false
+    },
+    {
+      "check": "whole-typed-owner-schema",
+      "owner": "kubeclaw.openapi:operations",
+      "profileCount": 6,
+      "valid": true,
+      "errors": null
+    },
+    {
+      "check": "missing-owned-required-policy",
+      "owner": "kubeclaw.openapi:operations",
+      "profile": "A",
+      "field": "requestTimeoutMs",
+      "rejected": true,
+      "errors": [
+        {
+          "instancePath": "/profiles/A/processing",
+          "schemaPath": "#/properties/profiles/additionalProperties/properties/processing/required",
+          "keyword": "required",
+          "params": {
+            "missingProperty": "requestTimeoutMs"
+          },
+          "message": "must have required property 'requestTimeoutMs'"
+        }
+      ]
+    },
+    {
+      "check": "task-url-forbidden-in-policy",
+      "owner": "kubeclaw.openapi:operations",
+      "rejected": true,
+      "errors": [
+        {
+          "instancePath": "/profiles/A/processing",
+          "schemaPath": "#/properties/profiles/additionalProperties/properties/processing/additionalProperties",
+          "keyword": "additionalProperties",
+          "params": {
+            "additionalProperty": "url"
+          },
+          "message": "must NOT have additional properties"
+        }
+      ]
+    },
+    {
+      "check": "pure-target-task-schema",
+      "owner": "kubeclaw.openapi:operations",
+      "valid": true,
+      "errors": null
+    },
+    {
+      "check": "retired-equal-task-quota-rejected",
+      "owner": "kubeclaw.openapi:operations",
+      "rejected": true,
+      "errors": [
+        {
+          "instancePath": "",
+          "schemaPath": "#/additionalProperties",
+          "keyword": "additionalProperties",
+          "params": {
+            "additionalProperty": "requestTimeoutMs"
+          },
+          "message": "must NOT have additional properties"
+        }
+      ]
+    },
+    {
+      "check": "current-config-schema-generated-task-policy-view",
+      "owner": "kubeclaw.openapi:operations",
+      "profile": "A",
+      "valid": true
+    },
+    {
+      "check": "current-config-schema-generated-task-policy-view",
+      "owner": "kubeclaw.openapi:operations",
+      "profile": "B",
+      "valid": true
+    },
+    {
+      "check": "current-config-schema-generated-task-policy-view",
+      "owner": "kubeclaw.openapi:operations",
+      "profile": "RT-550d941bb663f8fc-A",
+      "valid": true
+    },
+    {
+      "check": "current-config-schema-generated-task-policy-view",
+      "owner": "kubeclaw.openapi:operations",
+      "profile": "RT-550d941bb663f8fc-B",
+      "valid": true
+    },
+    {
+      "check": "current-config-schema-generated-task-policy-view",
+      "owner": "kubeclaw.openapi:operations",
+      "profile": "RT-63d5aafbda9b5281-A",
+      "valid": true
+    },
+    {
+      "check": "current-config-schema-generated-task-policy-view",
+      "owner": "kubeclaw.openapi:operations",
+      "profile": "RT-63d5aafbda9b5281-B",
+      "valid": true
+    },
+    {
+      "check": "whole-typed-owner-schema",
+      "owner": "kubeclaw.network-http:http",
+      "profileCount": 14,
+      "valid": true,
+      "errors": null
+    },
+    {
+      "check": "missing-owned-required-policy",
+      "owner": "kubeclaw.network-http:http",
+      "profile": "A",
+      "field": "allowedOrigins",
+      "rejected": true,
+      "errors": [
+        {
+          "instancePath": "/profiles/A/processing",
+          "schemaPath": "#/properties/profiles/additionalProperties/properties/processing/required",
+          "keyword": "required",
+          "params": {
+            "missingProperty": "allowedOrigins"
+          },
+          "message": "must have required property 'allowedOrigins'"
+        }
+      ]
+    },
+    {
+      "check": "task-url-forbidden-in-policy",
+      "owner": "kubeclaw.network-http:http",
+      "rejected": true,
+      "errors": [
+        {
+          "instancePath": "/profiles/A/processing",
+          "schemaPath": "#/properties/profiles/additionalProperties/properties/processing/additionalProperties",
+          "keyword": "additionalProperties",
+          "params": {
+            "additionalProperty": "url"
+          },
+          "message": "must NOT have additional properties"
+        }
+      ]
+    },
+    {
+      "check": "target-pure-flow-schema",
+      "file": "flow-a.json",
+      "valid": true,
+      "errors": null
+    },
+    {
+      "check": "retired-equal-flow-step-quota-rejected",
+      "file": "flow-a.json",
+      "rejected": true,
+      "errors": [
+        {
+          "instancePath": "/steps/0",
+          "schemaPath": "#/$defs/step/additionalProperties",
+          "keyword": "additionalProperties",
+          "params": {
+            "additionalProperty": "timeoutMs"
+          },
+          "message": "must NOT have additional properties"
+        }
+      ]
+    },
+    {
+      "check": "target-pure-flow-schema",
+      "file": "flow-b.json",
+      "valid": true,
+      "errors": null
+    },
+    {
+      "check": "retired-equal-flow-step-quota-rejected",
+      "file": "flow-b.json",
+      "rejected": true,
+      "errors": [
+        {
+          "instancePath": "/steps/0",
+          "schemaPath": "#/$defs/step/additionalProperties",
+          "keyword": "additionalProperties",
+          "params": {
+            "additionalProperty": "timeoutMs"
+          },
+          "message": "must NOT have additional properties"
+        }
+      ]
+    },
+    {
+      "check": "target-pure-flow-schema",
+      "file": "flow-one.json",
+      "valid": true,
+      "errors": null
+    },
+    {
+      "check": "retired-equal-flow-step-quota-rejected",
+      "file": "flow-one.json",
+      "rejected": true,
+      "errors": [
+        {
+          "instancePath": "/steps/0",
+          "schemaPath": "#/$defs/step/additionalProperties",
+          "keyword": "additionalProperties",
+          "params": {
+            "additionalProperty": "timeoutMs"
+          },
+          "message": "must NOT have additional properties"
+        }
+      ]
+    },
+    {
+      "check": "complete-C3-network-block-proposal-schema",
+      "valid": true,
+      "errors": null,
+      "wholeBusterC3Claim": false
+    },
+    {
+      "check": "actual-task-file-byte-definition",
+      "file": "flow-a.json",
+      "bytes": 596,
+      "sourceQuota": 1048576,
+      "admittedBySelectedProposal": true,
+      "providerFileReaderExecuted": false
+    },
+    {
+      "check": "actual-task-file-byte-definition",
+      "file": "spec-a.json",
+      "bytes": 911,
+      "sourceQuota": 4194304,
+      "admittedBySelectedProposal": true,
+      "providerFileReaderExecuted": false
+    },
+    {
+      "check": "actual-pure-openapi-supported-response-schema",
+      "valid": true,
+      "providerExecute": false
+    }
+  ],
+  "futureImplementationResults": "not-run"
+}

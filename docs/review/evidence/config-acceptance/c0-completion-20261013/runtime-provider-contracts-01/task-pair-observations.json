@@ -1,0 +1,853 @@
+{
+  "qualification": "72actual pure task schema/current generated-view checks; HTTP configuration parser only; no provider.execute/activation/network/grants/credentials/provenance claim",
+  "observations": [
+    {
+      "originalSettingId": "RT-351419f2c26e2696",
+      "side": "A",
+      "targetTaskSchemaAccepted": true,
+      "currentTaskPolicySchemaViewAccepted": true,
+      "HTTPpureParser": null,
+      "unsignedInputMeaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+      "providerOrNetworkExecuted": false
+    },
+    {
+      "originalSettingId": "RT-351419f2c26e2696",
+      "side": "B",
+      "targetTaskSchemaAccepted": true,
+      "currentTaskPolicySchemaViewAccepted": true,
+      "HTTPpureParser": null,
+      "unsignedInputMeaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+      "providerOrNetworkExecuted": false
+    },
+    {
+      "originalSettingId": "RT-ecc6714a5d1b8270",
+      "side": "A",
+      "targetTaskSchemaAccepted": true,
+      "currentTaskPolicySchemaViewAccepted": true,
+      "HTTPpureParser": null,
+      "unsignedInputMeaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+      "providerOrNetworkExecuted": false
+    },
+    {
+      "originalSettingId": "RT-ecc6714a5d1b8270",
+      "side": "B",
+      "targetTaskSchemaAccepted": true,
+      "currentTaskPolicySchemaViewAccepted": true,
+      "HTTPpureParser": null,
+      "unsignedInputMeaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+      "providerOrNetworkExecuted": false
+    },
+    {
+      "originalSettingId": "RT-98800e708ba4ebcc",
+      "side": "A",
+      "targetTaskSchemaAccepted": true,
+      "currentTaskPolicySchemaViewAccepted": true,
+      "HTTPpureParser": null,
+      "unsignedInputMeaning": "Unsigned data-shape endpoint choice only. Authentic lease/owner/expiry/grant/image/manifest provenance NOT fabricated; inputs are NOT activation-ready.",
+      "providerOrNetworkExecuted": false
+    },
+    {
+      "originalSettingId": "RT-98800e708ba4ebcc",
+      "side": "B",
+      "targetTaskSchemaAccepted": true,
+      "currentTaskPolicySchemaViewAccepted": true,
+      "HTTPpureParser": null,
+      "unsignedInputMeaning": "Unsigned data-shape endpoint choice only. Authentic lease/owner/expiry/grant/image/manifest provenance NOT fabricated; inputs are NOT activation-ready.",
+      "providerOrNetworkExecuted": false
+    },
+    {
+      "originalSettingId": "RT-2089ad1c8390909b",
+      "side": "A",
+      "targetTaskSchemaAccepted": true,
+      "currentTaskPolicySchemaViewAccepted": true,
+      "HTTPpureParser": {
+        "url": "https://fixture.invalid/ok",
+        "method": "GET",
+        "accept": "application/json",
+        "expectedStatuses": [
+          200
+        ],
+        "expectedText": "C0-local",
+        "expectedContentType": "application/json",
+        "maximumResponseBytes": 2048,
+        "requestTimeoutMs": 1000
+      },
+      "unsignedInputMeaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+      "providerOrNetworkExecuted": false
+    },
+    {
+      "originalSettingId": "RT-2089ad1c8390909b",
+      "side": "B",
+      "targetTaskSchemaAccepted": true,
+      "currentTaskPolicySchemaViewAccepted": true,
+      "HTTPpureParser": {
+        "url": "https://alternate.fixture.invalid/ok",
+        "method": "GET",
+        "accept": "application/json",
+        "expectedStatuses": [
+          200
+        ],
+        "expectedText": "C0-local",
+        "expectedContentType": "application/json",
+        "maximumResponseBytes": 2048,
+        "requestTimeoutMs": 1000
+      },
+      "unsignedInputMeaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+      "providerOrNetworkExecuted": false
+    },
+    {
+      "originalSettingId": "RT-e821665e0a2aedb9",
+      "side": "A",
+      "targetTaskSchemaAccepted": true,
+      "currentTaskPolicySchemaViewAccepted": true,
+      "HTTPpureParser": {
+        "url": "https://fixture.invalid/ok",
+        "method": "GET",
+        "accept": "application/json",
+        "expectedStatuses": [
+          200
+        ],
+        "expectedText": "C0-local",
+        "expectedContentType": "application/json",
+        "maximumResponseBytes": 2048,
+        "requestTimeoutMs": 1000
+      },
+      "unsignedInputMeaning": "Unsigned data-shape endpoint choice only. Authentic lease/owner/expiry/grant/image/manifest provenance NOT fabricated; inputs are NOT activation-ready.",
+      "providerOrNetworkExecuted": false
+    },
+    {
+      "originalSettingId": "RT-e821665e0a2aedb9",
+      "side": "B",
+      "targetTaskSchemaAccepted": true,
+      "currentTaskPolicySchemaViewAccepted": true,
+      "HTTPpureParser": {
+        "url": "https://alternate.fixture.invalid/ok",
+        "method": "GET",
+        "accept": "application/json",
+        "expectedStatuses": [
+          200
+        ],
+        "expectedText": "C0-local",
+        "expectedContentType": "application/json",
+        "maximumResponseBytes": 2048,
+        "requestTimeoutMs": 1000
+      },
+      "unsignedInputMeaning": "Unsigned data-shape endpoint choice only. Authentic lease/owner/expiry/grant/image/manifest provenance NOT fabricated; inputs are NOT activation-ready.",
+      "providerOrNetworkExecuted": false
+    },
+    {
+      "originalSettingId": "RT-c66db038b75b910a",
+      "side": "A",
+      "targetTaskSchemaAccepted": true,
+      "currentTaskPolicySchemaViewAccepted": true,
+      "HTTPpureParser": {
+        "url": "https://fixture.invalid/ok",
+        "method": "GET",
+        "accept": "application/json",
+        "expectedStatuses": [
+          200
+        ],
+        "expectedText": "C0-local",
+        "expectedContentType": "application/json",
+        "maximumResponseBytes": 2048,
+        "requestTimeoutMs": 1000
+      },
+      "unsignedInputMeaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+      "providerOrNetworkExecuted": false
+    },
+    {
+      "originalSettingId": "RT-c66db038b75b910a",
+      "side": "B",
+      "targetTaskSchemaAccepted": true,
+      "currentTaskPolicySchemaViewAccepted": true,
+      "HTTPpureParser": {
+        "url": "https://fixture.invalid/other",
+        "method": "GET",
+        "accept": "application/json",
+        "expectedStatuses": [
+          200
+        ],
+        "expectedText": "C0-local",
+        "expectedContentType": "application/json",
+        "maximumResponseBytes": 2048,
+        "requestTimeoutMs": 1000
+      },
+      "unsignedInputMeaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+      "providerOrNetworkExecuted": false
+    },
+    {
+      "originalSettingId": "RT-a6feb259112b5574",
+      "side": "A",
+      "targetTaskSchemaAccepted": true,
+      "currentTaskPolicySchemaViewAccepted": true,
+      "HTTPpureParser": {
+        "url": "https://fixture.invalid/ok",
+        "method": "GET",
+        "accept": "application/json",
+        "expectedStatuses": [
+          200
+        ],
+        "expectedText": "C0-local",
+        "expectedContentType": "application/json",
+        "maximumResponseBytes": 2048,
+        "requestTimeoutMs": 1000
+      },
+      "unsignedInputMeaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution. HEAD task explicitly has no body-text assertion; coupled constraint, not isolated field transplant.",
+      "providerOrNetworkExecuted": false
+    },
+    {
+      "originalSettingId": "RT-a6feb259112b5574",
+      "side": "B",
+      "targetTaskSchemaAccepted": true,
+      "currentTaskPolicySchemaViewAccepted": true,
+      "HTTPpureParser": {
+        "url": "https://fixture.invalid/ok",
+        "method": "HEAD",
+        "accept": "application/json",
+        "expectedStatuses": [
+          200
+        ],
+        "expectedText": null,
+        "expectedContentType": "application/json",
+        "maximumResponseBytes": 2048,
+        "requestTimeoutMs": 1000
+      },
+      "unsignedInputMeaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution. HEAD task explicitly has no body-text assertion; coupled constraint, not isolated field transplant.",
+      "providerOrNetworkExecuted": false
+    },
+    {
+      "originalSettingId": "RT-d9e562dd50c1f9b3",
+      "side": "A",
+      "targetTaskSchemaAccepted": true,
+      "currentTaskPolicySchemaViewAccepted": true,
+      "HTTPpureParser": {
+        "url": "https://fixture.invalid/ok",
+        "method": "GET",
+        "accept": "application/json",
+        "expectedStatuses": [
+          200
+        ],
+        "expectedText": "C0-local",
+        "expectedContentType": "application/json",
+        "maximumResponseBytes": 2048,
+        "requestTimeoutMs": 1000
+      },
+      "unsignedInputMeaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+      "providerOrNetworkExecuted": false
+    },
+    {
+      "originalSettingId": "RT-d9e562dd50c1f9b3",
+      "side": "B",
+      "targetTaskSchemaAccepted": true,
+      "currentTaskPolicySchemaViewAccepted": true,
+      "HTTPpureParser": {
+        "url": "https://fixture.invalid/ok",
+        "method": "GET",
+        "accept": "text/plain",
+        "expectedStatuses": [
+          200
+        ],
+        "expectedText": "C0-local",
+        "expectedContentType": "application/json",
+        "maximumResponseBytes": 2048,
+        "requestTimeoutMs": 1000
+      },
+      "unsignedInputMeaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+      "providerOrNetworkExecuted": false
+    },
+    {
+      "originalSettingId": "RT-fcc77b9c29ab0230",
+      "side": "A",
+      "targetTaskSchemaAccepted": true,
+      "currentTaskPolicySchemaViewAccepted": true,
+      "HTTPpureParser": {
+        "url": "https://fixture.invalid/ok",
+        "method": "GET",
+        "accept": "application/json",
+        "expectedStatuses": [
+          200
+        ],
+        "expectedText": "C0-local",
+        "expectedContentType": "application/json",
+        "maximumResponseBytes": 2048,
+        "requestTimeoutMs": 1000
+      },
+      "unsignedInputMeaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+      "providerOrNetworkExecuted": false
+    },
+    {
+      "originalSettingId": "RT-fcc77b9c29ab0230",
+      "side": "B",
+      "targetTaskSchemaAccepted": true,
+      "currentTaskPolicySchemaViewAccepted": true,
+      "HTTPpureParser": {
+        "url": "https://fixture.invalid/ok",
+        "method": "GET",
+        "accept": "application/json",
+        "expectedStatuses": [
+          201
+        ],
+        "expectedText": "C0-local",
+        "expectedContentType": "application/json",
+        "maximumResponseBytes": 2048,
+        "requestTimeoutMs": 1000
+      },
+      "unsignedInputMeaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+      "providerOrNetworkExecuted": false
+    },
+    {
+      "originalSettingId": "RT-259ec75a40f57a0b",
+      "side": "A",
+      "targetTaskSchemaAccepted": true,
+      "currentTaskPolicySchemaViewAccepted": true,
+      "HTTPpureParser": {
+        "url": "https://fixture.invalid/ok",
+        "method": "GET",
+        "accept": "application/json",
+        "expectedStatuses": [
+          200
+        ],
+        "expectedText": "C0-local",
+        "expectedContentType": "application/json",
+        "maximumResponseBytes": 2048,
+        "requestTimeoutMs": 1000
+      },
+      "unsignedInputMeaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+      "providerOrNetworkExecuted": false
+    },
+    {
+      "originalSettingId": "RT-259ec75a40f57a0b",
+      "side": "B",
+      "targetTaskSchemaAccepted": true,
+      "currentTaskPolicySchemaViewAccepted": true,
+      "HTTPpureParser": {
+        "url": "https://fixture.invalid/ok",
+        "method": "GET",
+        "accept": "application/json",
+        "expectedStatuses": [
+          201
+        ],
+        "expectedText": "C0-local",
+        "expectedContentType": "application/json",
+        "maximumResponseBytes": 2048,
+        "requestTimeoutMs": 1000
+      },
+      "unsignedInputMeaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+      "providerOrNetworkExecuted": false
+    },
+    {
+      "originalSettingId": "RT-c7fdaab3e3e6c833",
+      "side": "A",
+      "targetTaskSchemaAccepted": true,
+      "currentTaskPolicySchemaViewAccepted": true,
+      "HTTPpureParser": {
+        "url": "https://fixture.invalid/ok",
+        "method": "GET",
+        "accept": "application/json",
+        "expectedStatuses": [
+          200
+        ],
+        "expectedText": "C0-local",
+        "expectedContentType": "application/json",
+        "maximumResponseBytes": 2048,
+        "requestTimeoutMs": 1000
+      },
+      "unsignedInputMeaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+      "providerOrNetworkExecuted": false
+    },
+    {
+      "originalSettingId": "RT-c7fdaab3e3e6c833",
+      "side": "B",
+      "targetTaskSchemaAccepted": true,
+      "currentTaskPolicySchemaViewAccepted": true,
+      "HTTPpureParser": {
+        "url": "https://fixture.invalid/ok",
+        "method": "GET",
+        "accept": "application/json",
+        "expectedStatuses": [
+          200
+        ],
+        "expectedText": "different-task-text",
+        "expectedContentType": "application/json",
+        "maximumResponseBytes": 2048,
+        "requestTimeoutMs": 1000
+      },
+      "unsignedInputMeaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+      "providerOrNetworkExecuted": false
+    },
+    {
+      "originalSettingId": "RT-b2f5e06d53448731",
+      "side": "A",
+      "targetTaskSchemaAccepted": true,
+      "currentTaskPolicySchemaViewAccepted": true,
+      "HTTPpureParser": {
+        "url": "https://fixture.invalid/ok",
+        "method": "GET",
+        "accept": "application/json",
+        "expectedStatuses": [
+          200
+        ],
+        "expectedText": "C0-local",
+        "expectedContentType": "application/json",
+        "maximumResponseBytes": 2048,
+        "requestTimeoutMs": 1000
+      },
+      "unsignedInputMeaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+      "providerOrNetworkExecuted": false
+    },
+    {
+      "originalSettingId": "RT-b2f5e06d53448731",
+      "side": "B",
+      "targetTaskSchemaAccepted": true,
+      "currentTaskPolicySchemaViewAccepted": true,
+      "HTTPpureParser": {
+        "url": "https://fixture.invalid/ok",
+        "method": "GET",
+        "accept": "application/json",
+        "expectedStatuses": [
+          200
+        ],
+        "expectedText": "C0-local",
+        "expectedContentType": "text/plain",
+        "maximumResponseBytes": 2048,
+        "requestTimeoutMs": 1000
+      },
+      "unsignedInputMeaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+      "providerOrNetworkExecuted": false
+    },
+    {
+      "originalSettingId": "RT-10f3f03208806c98",
+      "side": "A",
+      "targetTaskSchemaAccepted": true,
+      "currentTaskPolicySchemaViewAccepted": true,
+      "HTTPpureParser": null,
+      "unsignedInputMeaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+      "providerOrNetworkExecuted": false
+    },
+    {
+      "originalSettingId": "RT-10f3f03208806c98",
+      "side": "B",
+      "targetTaskSchemaAccepted": true,
+      "currentTaskPolicySchemaViewAccepted": true,
+      "HTTPpureParser": null,
+      "unsignedInputMeaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+      "providerOrNetworkExecuted": false
+    },
+    {
+      "originalSettingId": "RT-1609b6ce9dfde15b",
+      "side": "A",
+      "targetTaskSchemaAccepted": true,
+      "currentTaskPolicySchemaViewAccepted": true,
+      "HTTPpureParser": null,
+      "unsignedInputMeaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+      "providerOrNetworkExecuted": false
+    },
+    {
+      "originalSettingId": "RT-1609b6ce9dfde15b",
+      "side": "B",
+      "targetTaskSchemaAccepted": true,
+      "currentTaskPolicySchemaViewAccepted": true,
+      "HTTPpureParser": null,
+      "unsignedInputMeaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+      "providerOrNetworkExecuted": false
+    },
+    {
+      "originalSettingId": "RT-d2dfede67afe22ac",
+      "side": "A",
+      "targetTaskSchemaAccepted": true,
+      "currentTaskPolicySchemaViewAccepted": true,
+      "HTTPpureParser": null,
+      "unsignedInputMeaning": "Unsigned data-shape endpoint choice only. Authentic lease/owner/expiry/grant/image/manifest provenance NOT fabricated; inputs are NOT activation-ready.",
+      "providerOrNetworkExecuted": false
+    },
+    {
+      "originalSettingId": "RT-d2dfede67afe22ac",
+      "side": "B",
+      "targetTaskSchemaAccepted": true,
+      "currentTaskPolicySchemaViewAccepted": true,
+      "HTTPpureParser": null,
+      "unsignedInputMeaning": "Unsigned data-shape endpoint choice only. Authentic lease/owner/expiry/grant/image/manifest provenance NOT fabricated; inputs are NOT activation-ready.",
+      "providerOrNetworkExecuted": false
+    },
+    {
+      "originalSettingId": "RT-396eb59b11141a9a",
+      "side": "A",
+      "targetTaskSchemaAccepted": true,
+      "currentTaskPolicySchemaViewAccepted": true,
+      "HTTPpureParser": null,
+      "unsignedInputMeaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+      "providerOrNetworkExecuted": false
+    },
+    {
+      "originalSettingId": "RT-396eb59b11141a9a",
+      "side": "B",
+      "targetTaskSchemaAccepted": true,
+      "currentTaskPolicySchemaViewAccepted": true,
+      "HTTPpureParser": null,
+      "unsignedInputMeaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+      "providerOrNetworkExecuted": false
+    },
+    {
+      "originalSettingId": "RT-1d1c5da45ebf7a59",
+      "side": "A",
+      "targetTaskSchemaAccepted": true,
+      "currentTaskPolicySchemaViewAccepted": true,
+      "HTTPpureParser": null,
+      "unsignedInputMeaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+      "providerOrNetworkExecuted": false
+    },
+    {
+      "originalSettingId": "RT-1d1c5da45ebf7a59",
+      "side": "B",
+      "targetTaskSchemaAccepted": true,
+      "currentTaskPolicySchemaViewAccepted": true,
+      "HTTPpureParser": null,
+      "unsignedInputMeaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+      "providerOrNetworkExecuted": false
+    },
+    {
+      "originalSettingId": "RT-039cd17e18207028",
+      "side": "A",
+      "targetTaskSchemaAccepted": true,
+      "currentTaskPolicySchemaViewAccepted": true,
+      "HTTPpureParser": null,
+      "unsignedInputMeaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+      "providerOrNetworkExecuted": false
+    },
+    {
+      "originalSettingId": "RT-039cd17e18207028",
+      "side": "B",
+      "targetTaskSchemaAccepted": true,
+      "currentTaskPolicySchemaViewAccepted": true,
+      "HTTPpureParser": null,
+      "unsignedInputMeaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+      "providerOrNetworkExecuted": false
+    },
+    {
+      "originalSettingId": "RT-4ad5dd8a7cfccc1c",
+      "side": "A",
+      "targetTaskSchemaAccepted": true,
+      "currentTaskPolicySchemaViewAccepted": true,
+      "HTTPpureParser": null,
+      "unsignedInputMeaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+      "providerOrNetworkExecuted": false
+    },
+    {
+      "originalSettingId": "RT-4ad5dd8a7cfccc1c",
+      "side": "B",
+      "targetTaskSchemaAccepted": true,
+      "currentTaskPolicySchemaViewAccepted": true,
+      "HTTPpureParser": null,
+      "unsignedInputMeaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+      "providerOrNetworkExecuted": false
+    },
+    {
+      "originalSettingId": "RT-496f09de742b998e",
+      "side": "A",
+      "targetTaskSchemaAccepted": true,
+      "currentTaskPolicySchemaViewAccepted": true,
+      "HTTPpureParser": null,
+      "unsignedInputMeaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+      "providerOrNetworkExecuted": false
+    },
+    {
+      "originalSettingId": "RT-496f09de742b998e",
+      "side": "B",
+      "targetTaskSchemaAccepted": true,
+      "currentTaskPolicySchemaViewAccepted": true,
+      "HTTPpureParser": null,
+      "unsignedInputMeaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+      "providerOrNetworkExecuted": false
+    },
+    {
+      "originalSettingId": "RT-d077dd499ce84e1c",
+      "side": "A",
+      "targetTaskSchemaAccepted": true,
+      "currentTaskPolicySchemaViewAccepted": true,
+      "HTTPpureParser": null,
+      "unsignedInputMeaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+      "providerOrNetworkExecuted": false
+    },
+    {
+      "originalSettingId": "RT-d077dd499ce84e1c",
+      "side": "B",
+      "targetTaskSchemaAccepted": true,
+      "currentTaskPolicySchemaViewAccepted": true,
+      "HTTPpureParser": null,
+      "unsignedInputMeaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+      "providerOrNetworkExecuted": false
+    },
+    {
+      "originalSettingId": "RT-9cec05672cab2d0d",
+      "side": "A",
+      "targetTaskSchemaAccepted": true,
+      "currentTaskPolicySchemaViewAccepted": true,
+      "HTTPpureParser": null,
+      "unsignedInputMeaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+      "providerOrNetworkExecuted": false
+    },
+    {
+      "originalSettingId": "RT-9cec05672cab2d0d",
+      "side": "B",
+      "targetTaskSchemaAccepted": true,
+      "currentTaskPolicySchemaViewAccepted": true,
+      "HTTPpureParser": null,
+      "unsignedInputMeaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+      "providerOrNetworkExecuted": false
+    },
+    {
+      "originalSettingId": "RT-148251b72f4d24e0",
+      "side": "A",
+      "targetTaskSchemaAccepted": true,
+      "currentTaskPolicySchemaViewAccepted": true,
+      "HTTPpureParser": null,
+      "unsignedInputMeaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+      "providerOrNetworkExecuted": false
+    },
+    {
+      "originalSettingId": "RT-148251b72f4d24e0",
+      "side": "B",
+      "targetTaskSchemaAccepted": true,
+      "currentTaskPolicySchemaViewAccepted": true,
+      "HTTPpureParser": null,
+      "unsignedInputMeaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+      "providerOrNetworkExecuted": false
+    },
+    {
+      "originalSettingId": "RT-153e53cbf58a2c3b",
+      "side": "A",
+      "targetTaskSchemaAccepted": true,
+      "currentTaskPolicySchemaViewAccepted": true,
+      "HTTPpureParser": null,
+      "unsignedInputMeaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+      "providerOrNetworkExecuted": false
+    },
+    {
+      "originalSettingId": "RT-153e53cbf58a2c3b",
+      "side": "B",
+      "targetTaskSchemaAccepted": true,
+      "currentTaskPolicySchemaViewAccepted": true,
+      "HTTPpureParser": null,
+      "unsignedInputMeaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+      "providerOrNetworkExecuted": false
+    },
+    {
+      "originalSettingId": "RT-03b79ef05f21760b",
+      "side": "A",
+      "targetTaskSchemaAccepted": true,
+      "currentTaskPolicySchemaViewAccepted": true,
+      "HTTPpureParser": null,
+      "unsignedInputMeaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+      "providerOrNetworkExecuted": false
+    },
+    {
+      "originalSettingId": "RT-03b79ef05f21760b",
+      "side": "B",
+      "targetTaskSchemaAccepted": true,
+      "currentTaskPolicySchemaViewAccepted": true,
+      "HTTPpureParser": null,
+      "unsignedInputMeaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+      "providerOrNetworkExecuted": false
+    },
+    {
+      "originalSettingId": "RT-9d2b7832df8521b8",
+      "side": "A",
+      "targetTaskSchemaAccepted": true,
+      "currentTaskPolicySchemaViewAccepted": true,
+      "HTTPpureParser": null,
+      "unsignedInputMeaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+      "providerOrNetworkExecuted": false
+    },
+    {
+      "originalSettingId": "RT-9d2b7832df8521b8",
+      "side": "B",
+      "targetTaskSchemaAccepted": true,
+      "currentTaskPolicySchemaViewAccepted": true,
+      "HTTPpureParser": null,
+      "unsignedInputMeaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+      "providerOrNetworkExecuted": false
+    },
+    {
+      "originalSettingId": "RT-88373ef30a584869",
+      "side": "A",
+      "targetTaskSchemaAccepted": true,
+      "currentTaskPolicySchemaViewAccepted": true,
+      "HTTPpureParser": null,
+      "unsignedInputMeaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+      "providerOrNetworkExecuted": false
+    },
+    {
+      "originalSettingId": "RT-88373ef30a584869",
+      "side": "B",
+      "targetTaskSchemaAccepted": true,
+      "currentTaskPolicySchemaViewAccepted": true,
+      "HTTPpureParser": null,
+      "unsignedInputMeaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+      "providerOrNetworkExecuted": false
+    },
+    {
+      "originalSettingId": "RT-3168b8463b219872",
+      "side": "A",
+      "targetTaskSchemaAccepted": true,
+      "currentTaskPolicySchemaViewAccepted": true,
+      "HTTPpureParser": null,
+      "unsignedInputMeaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+      "providerOrNetworkExecuted": false
+    },
+    {
+      "originalSettingId": "RT-3168b8463b219872",
+      "side": "B",
+      "targetTaskSchemaAccepted": true,
+      "currentTaskPolicySchemaViewAccepted": true,
+      "HTTPpureParser": null,
+      "unsignedInputMeaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+      "providerOrNetworkExecuted": false
+    },
+    {
+      "originalSettingId": "RT-6c40eb311c36aa18",
+      "side": "A",
+      "targetTaskSchemaAccepted": true,
+      "currentTaskPolicySchemaViewAccepted": true,
+      "HTTPpureParser": null,
+      "unsignedInputMeaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+      "providerOrNetworkExecuted": false
+    },
+    {
+      "originalSettingId": "RT-6c40eb311c36aa18",
+      "side": "B",
+      "targetTaskSchemaAccepted": true,
+      "currentTaskPolicySchemaViewAccepted": true,
+      "HTTPpureParser": null,
+      "unsignedInputMeaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+      "providerOrNetworkExecuted": false
+    },
+    {
+      "originalSettingId": "RT-67427bf80b25f14f",
+      "side": "A",
+      "targetTaskSchemaAccepted": true,
+      "currentTaskPolicySchemaViewAccepted": true,
+      "HTTPpureParser": null,
+      "unsignedInputMeaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+      "providerOrNetworkExecuted": false
+    },
+    {
+      "originalSettingId": "RT-67427bf80b25f14f",
+      "side": "B",
+      "targetTaskSchemaAccepted": true,
+      "currentTaskPolicySchemaViewAccepted": true,
+      "HTTPpureParser": null,
+      "unsignedInputMeaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+      "providerOrNetworkExecuted": false
+    },
+    {
+      "originalSettingId": "RT-da87e9da52e239b4",
+      "side": "A",
+      "targetTaskSchemaAccepted": true,
+      "currentTaskPolicySchemaViewAccepted": true,
+      "HTTPpureParser": null,
+      "unsignedInputMeaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+      "providerOrNetworkExecuted": false
+    },
+    {
+      "originalSettingId": "RT-da87e9da52e239b4",
+      "side": "B",
+      "targetTaskSchemaAccepted": true,
+      "currentTaskPolicySchemaViewAccepted": true,
+      "HTTPpureParser": null,
+      "unsignedInputMeaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+      "providerOrNetworkExecuted": false
+    },
+    {
+      "originalSettingId": "RT-795b89c50339c532",
+      "side": "A",
+      "targetTaskSchemaAccepted": true,
+      "currentTaskPolicySchemaViewAccepted": true,
+      "HTTPpureParser": null,
+      "unsignedInputMeaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+      "providerOrNetworkExecuted": false
+    },
+    {
+      "originalSettingId": "RT-795b89c50339c532",
+      "side": "B",
+      "targetTaskSchemaAccepted": true,
+      "currentTaskPolicySchemaViewAccepted": true,
+      "HTTPpureParser": null,
+      "unsignedInputMeaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+      "providerOrNetworkExecuted": false
+    },
+    {
+      "originalSettingId": "RT-0dfdeb7fe789b20b",
+      "side": "A",
+      "targetTaskSchemaAccepted": true,
+      "currentTaskPolicySchemaViewAccepted": true,
+      "HTTPpureParser": null,
+      "unsignedInputMeaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+      "providerOrNetworkExecuted": false
+    },
+    {
+      "originalSettingId": "RT-0dfdeb7fe789b20b",
+      "side": "B",
+      "targetTaskSchemaAccepted": true,
+      "currentTaskPolicySchemaViewAccepted": true,
+      "HTTPpureParser": null,
+      "unsignedInputMeaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+      "providerOrNetworkExecuted": false
+    },
+    {
+      "originalSettingId": "RT-93fe557af6f46c3f",
+      "side": "A",
+      "targetTaskSchemaAccepted": true,
+      "currentTaskPolicySchemaViewAccepted": true,
+      "HTTPpureParser": null,
+      "unsignedInputMeaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+      "providerOrNetworkExecuted": false
+    },
+    {
+      "originalSettingId": "RT-93fe557af6f46c3f",
+      "side": "B",
+      "targetTaskSchemaAccepted": true,
+      "currentTaskPolicySchemaViewAccepted": true,
+      "HTTPpureParser": null,
+      "unsignedInputMeaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+      "providerOrNetworkExecuted": false
+    },
+    {
+      "originalSettingId": "RT-d67d1281071db148",
+      "side": "A",
+      "targetTaskSchemaAccepted": true,
+      "currentTaskPolicySchemaViewAccepted": true,
+      "HTTPpureParser": null,
+      "unsignedInputMeaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution. Selecting unmatched tag yields source OPENAPI_SELECTION_EMPTY; an alternative genuine tagged spec/task is required for positive alternate.",
+      "providerOrNetworkExecuted": false
+    },
+    {
+      "originalSettingId": "RT-d67d1281071db148",
+      "side": "B",
+      "targetTaskSchemaAccepted": true,
+      "currentTaskPolicySchemaViewAccepted": true,
+      "HTTPpureParser": null,
+      "unsignedInputMeaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution. Selecting unmatched tag yields source OPENAPI_SELECTION_EMPTY; an alternative genuine tagged spec/task is required for positive alternate.",
+      "providerOrNetworkExecuted": false
+    },
+    {
+      "originalSettingId": "RT-96b1400c6db325d0",
+      "side": "A",
+      "targetTaskSchemaAccepted": true,
+      "currentTaskPolicySchemaViewAccepted": true,
+      "HTTPpureParser": null,
+      "unsignedInputMeaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution. Selecting unmatched tag yields source OPENAPI_SELECTION_EMPTY; an alternative genuine tagged spec/task is required for positive alternate.",
+      "providerOrNetworkExecuted": false
+    },
+    {
+      "originalSettingId": "RT-96b1400c6db325d0",
+      "side": "B",
+      "targetTaskSchemaAccepted": true,
+      "currentTaskPolicySchemaViewAccepted": true,
+      "HTTPpureParser": null,
+      "unsignedInputMeaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution. Selecting unmatched tag yields source OPENAPI_SELECTION_EMPTY; an alternative genuine tagged spec/task is required for positive alternate.",
+      "providerOrNetworkExecuted": false
+    }
+  ],
+  "supportedOpenApiSchemaMembers": 8,
+  "completeNativeResourceAssociationSchemaAccepted": true
+}

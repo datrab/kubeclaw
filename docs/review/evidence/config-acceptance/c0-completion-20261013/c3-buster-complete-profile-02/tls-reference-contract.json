@@ -1,0 +1,25 @@
+{
+  "status": "C3 proposed supportedoptionalserverTLS reference branch; no privatekey/token reads",
+  "source": "production.ts::configuredRuntime\u2192remote-plan-http.ts::https.createServer",
+  "explicitGeneratedRoleModes": [
+    "cleartext-proxied",
+    "server-tls"
+  ],
+  "tlsFields": [
+    "keyPath",
+    "certificatePath"
+  ],
+  "schema": "schemas/generated-runtime.schema.json#/properties/tls",
+  "author": "existing selected role/deployment TLS provider binding; generated refs only, not settings/privatekey author",
+  "references": "Absolute or relative refs supported; relative path resolves against same authenticated runtime generation. Resolve only within explicit granted provider roots; reject escapes/extra fields before any store/listen effects. No arbitrary include resolver.",
+  "admission": "Before store/root/discovery/listen effects, require authenticated provider/source/schema/image/caller receipt, original revisionId/ownership/regularfile/size/read-drift/no-follow physical leaf and exact key/cert association; validate actualTLS key/certificate parsing/match through existing crypto/TLS contract. Projected Secret references need authentic revision-safe providercapture, not blind symlink following.",
+  "fixtures": "fixtures/generated-tls-runtime.json is structural pathref only; it is NOT availableprivatekey/certificate/provider/grant receipt. No bytes supplied or read.",
+  "recovery": "Original archived TLSrefs/providerrevision/keycertificate/image reader closure is required forA; missingA blocks, never fills fromB/omitsTLSfallback",
+  "dependencies": [
+    "C3 TLSconsumer/ref admission",
+    "C2/C4 authenticprovider/grant/registration receipt",
+    "C5 immutable originalhistory/secretrevision",
+    "C6 actual listener/key negative/effect evidence"
+  ],
+  "implementationAuthorization": null
+}

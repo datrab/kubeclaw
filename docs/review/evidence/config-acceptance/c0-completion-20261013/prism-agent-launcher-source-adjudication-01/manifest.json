@@ -1,0 +1,21 @@
+{
+  "scope": "WCR04 current-source adjudication only; full profile/independent review open",
+  "artifacts": [
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-source-adjudication-01/README.md",
+      "sha256": "a47b72a80c8bf8f4c877ff583c7873fa4bfa85bcf20e28483bf573d9b5e689eb",
+      "bytes": 5950
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-source-adjudication-01/original-bodies.json",
+      "sha256": "7d62d7c6818869f2c54328d479675a195ddc32e80b57cfa3fa37dc3c8e3b4d76",
+      "bytes": 78749
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-source-adjudication-01/source-identities.json",
+      "sha256": "3335718db0f4529a603e501fd3f22dc38745acc651d28836dc74745856337cc9",
+      "bytes": 2661
+    }
+  ],
+  "implementationAuthorization": null
+}

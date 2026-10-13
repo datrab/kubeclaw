@@ -1,0 +1,365 @@
+{
+  "reviewerTask": "/root/delivery_module_contract_review",
+  "scope": "BC3-01..04 bounded material recheck and authorized narrow pure collector replay",
+  "head": "367b4f88698a3db3e595eadf44f40a8f973cc932",
+  "tree": "7abb01f1508c55628605f261f94185e99e73db92",
+  "initialPackageChecks": [
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/README.md",
+      "sha256": "4f309ab797ac3e19cc9e75461732e51f87bb1f8339a9311c2383668aec71f341",
+      "bytes": 13710,
+      "actualSha256": "4f309ab797ac3e19cc9e75461732e51f87bb1f8339a9311c2383668aec71f341",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/capability-activation-contract.json",
+      "sha256": "9636c49e38004379c27dfb2b02016b40c1d98388b7a3668159e9b7052c1cda47",
+      "bytes": 5257,
+      "actualSha256": "9636c49e38004379c27dfb2b02016b40c1d98388b7a3668159e9b7052c1cda47",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/checks-attempt-01.stderr",
+      "sha256": "ca4e5a66ce8821020eb4e20973ed5001688d8f0bd592f42042d4cc5e161460d5",
+      "bytes": 1150,
+      "actualSha256": "ca4e5a66ce8821020eb4e20973ed5001688d8f0bd592f42042d4cc5e161460d5",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/checks-attempt-01.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "actualSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/checks-attempt-02.stderr",
+      "sha256": "e01c5c1b08cfe9c3bed8d51f90d0570ba7e802d3ad94f0db8e8cd0f06a104f98",
+      "bytes": 1670,
+      "actualSha256": "e01c5c1b08cfe9c3bed8d51f90d0570ba7e802d3ad94f0db8e8cd0f06a104f98",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/checks-attempt-02.stdout",
+      "sha256": "61bcb7bd7ee98a3621e8a051bccf254a9ffbe4b2ce1d1404731837f8d3410528",
+      "bytes": 3141,
+      "actualSha256": "61bcb7bd7ee98a3621e8a051bccf254a9ffbe4b2ce1d1404731837f8d3410528",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/checks-attempt-03.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "actualSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/checks-attempt-03.stdout",
+      "sha256": "0f9891c56e8e09ccc316f589154e570182cbe6b90b1195d0307003f023765b66",
+      "bytes": 4607,
+      "actualSha256": "0f9891c56e8e09ccc316f589154e570182cbe6b90b1195d0307003f023765b66",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/checks-attempt-04.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "actualSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/checks-attempt-04.stdout",
+      "sha256": "0f9891c56e8e09ccc316f589154e570182cbe6b90b1195d0307003f023765b66",
+      "bytes": 4607,
+      "actualSha256": "0f9891c56e8e09ccc316f589154e570182cbe6b90b1195d0307003f023765b66",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/checks-final.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "actualSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/checks-final.stdout",
+      "sha256": "0f9891c56e8e09ccc316f589154e570182cbe6b90b1195d0307003f023765b66",
+      "bytes": 4607,
+      "actualSha256": "0f9891c56e8e09ccc316f589154e570182cbe6b90b1195d0307003f023765b66",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/collect-definition-checks.mjs",
+      "sha256": "b200dfbd2a59232a46e4a78ad7965429d044f64ae7f6554f38a635bd8ba0497f",
+      "bytes": 10310,
+      "actualSha256": "b200dfbd2a59232a46e4a78ad7965429d044f64ae7f6554f38a635bd8ba0497f",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/commands-and-exits.json",
+      "sha256": "cbf53e9e37e6ef79892bdbd3a02335fd4b84faf3266b161bd6b6cb9d72a10822",
+      "bytes": 1952,
+      "actualSha256": "cbf53e9e37e6ef79892bdbd3a02335fd4b84faf3266b161bd6b6cb9d72a10822",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/config/components/buster-engine.config.json",
+      "sha256": "6dc049adadb3f3627a7b8501a17553df8fc7702a2bfb0ab605007fefbb5472ab",
+      "bytes": 1127857,
+      "actualSha256": "6dc049adadb3f3627a7b8501a17553df8fc7702a2bfb0ab605007fefbb5472ab",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/config/components/prism-control.config.json",
+      "sha256": "524ca90d6b62c656b5f279c27b8b49250d93869636aa71f73d5891429e01e1e4",
+      "bytes": 4597,
+      "actualSha256": "524ca90d6b62c656b5f279c27b8b49250d93869636aa71f73d5891429e01e1e4",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/config/components/prism-execution.config.json",
+      "sha256": "225d2d31235f0996196da2f2b7d25a0605d59087427b997ab487d648ddf89ce3",
+      "bytes": 1606,
+      "actualSha256": "225d2d31235f0996196da2f2b7d25a0605d59087427b997ab487d648ddf89ce3",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/config/components/prism-studio.config.json",
+      "sha256": "b41a9113d26384ee0dd07d5defac180b8a52d67315c738d0a5459c49bead0fac",
+      "bytes": 976,
+      "actualSha256": "b41a9113d26384ee0dd07d5defac180b8a52d67315c738d0a5459c49bead0fac",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/config/components/prism-worker.config.json",
+      "sha256": "61da3c7b2b81033ed9c350f593cf1ab58f3630a39b109a9b251f1b2e0ba28220",
+      "bytes": 1581,
+      "actualSha256": "61da3c7b2b81033ed9c350f593cf1ab58f3630a39b109a9b251f1b2e0ba28220",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/config/components/worker-core.config.json",
+      "sha256": "f59c7ec6798e853f9fb87a494cdd245193c50d19f90275fe5b530706adcb8934",
+      "bytes": 1270,
+      "actualSha256": "f59c7ec6798e853f9fb87a494cdd245193c50d19f90275fe5b530706adcb8934",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/config/pipeline.config.json",
+      "sha256": "cada42fed522b74b554d77048b14288eef5af45bb10708f3650f0d03ac11b992",
+      "bytes": 2113,
+      "actualSha256": "cada42fed522b74b554d77048b14288eef5af45bb10708f3650f0d03ac11b992",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/definition-checks-02.json",
+      "sha256": "b1bbb59ef793ac23ea3f26966487f35c1de9a8101a4ca22589969f110968e1d9",
+      "bytes": 54606,
+      "actualSha256": "b1bbb59ef793ac23ea3f26966487f35c1de9a8101a4ca22589969f110968e1d9",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/emitted-current-public-structural.json",
+      "sha256": "f8e91230166d7daa7421feb9fcaee651d88c10653154e6fb0e8133ad903b0ec1",
+      "bytes": 8286,
+      "actualSha256": "f8e91230166d7daa7421feb9fcaee651d88c10653154e6fb0e8133ad903b0ec1",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/failed-attempt-01/buster-engine.config.json",
+      "sha256": "54f375077ccc22f060e2e3da4bb9ef213bc03f029d9ef32a2684878b41b0e672",
+      "bytes": 1127757,
+      "actualSha256": "54f375077ccc22f060e2e3da4bb9ef213bc03f029d9ef32a2684878b41b0e672",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/failed-attempt-01/collect-definition-checks.mjs",
+      "sha256": "78f6b25618eb7b848ba1c9d39ec7ca361010df47c52cd8537aa348762013c550",
+      "bytes": 9062,
+      "actualSha256": "78f6b25618eb7b848ba1c9d39ec7ca361010df47c52cd8537aa348762013c550",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/failed-attempt-02/generated-runtime.schema.json",
+      "sha256": "b351c7f34177e5600aef3c7f27d133a7c4f7e79af21932e52ac9dd878d825d56",
+      "bytes": 49049,
+      "actualSha256": "b351c7f34177e5600aef3c7f27d133a7c4f7e79af21932e52ac9dd878d825d56",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/final-run/definition-checks-02.json",
+      "sha256": "2796573d01103a43b0a9ab218e1c4b0bf236379b8479268755c74ce9256780ff",
+      "bytes": 54786,
+      "actualSha256": "2796573d01103a43b0a9ab218e1c4b0bf236379b8479268755c74ce9256780ff",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/final-run.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "actualSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/final-run.stdout",
+      "sha256": "0f9891c56e8e09ccc316f589154e570182cbe6b90b1195d0307003f023765b66",
+      "bytes": 4607,
+      "actualSha256": "0f9891c56e8e09ccc316f589154e570182cbe6b90b1195d0307003f023765b66",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/fixtures/generated-tls-runtime.json",
+      "sha256": "a97f4d3322c663831c362babbe8faa89b7bcf93d0564b2c244a29cf6fcde16a3",
+      "bytes": 6445,
+      "actualSha256": "a97f4d3322c663831c362babbe8faa89b7bcf93d0564b2c244a29cf6fcde16a3",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/fixtures/root-B.json",
+      "sha256": "0005a791f6088f500a3c8d6c9e6988a9b6bb64298afb9cbcec49e7136c01a49e",
+      "bytes": 2113,
+      "actualSha256": "0005a791f6088f500a3c8d6c9e6988a9b6bb64298afb9cbcec49e7136c01a49e",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/fixtures/roots/reasonThreshold-A.json",
+      "sha256": "d8ce536f37640c6de25d3b1153382c5f5f46b94e2e49cfb3833f0548aaed6e24",
+      "bytes": 2135,
+      "actualSha256": "d8ce536f37640c6de25d3b1153382c5f5f46b94e2e49cfb3833f0548aaed6e24",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/future-case-joins.json",
+      "sha256": "740834b2c6c16e35f5db2bf987d614c5d794a8bd8c4f1f46348edef80428fb2c",
+      "bytes": 374111,
+      "actualSha256": "740834b2c6c16e35f5db2bf987d614c5d794a8bd8c4f1f46348edef80428fb2c",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/generated-role-projections.json",
+      "sha256": "064c9c0a09a156ac9b7a6382a36054d6cabe0a639c6531580a48762454278071",
+      "bytes": 745114,
+      "actualSha256": "064c9c0a09a156ac9b7a6382a36054d6cabe0a639c6531580a48762454278071",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/historical-01-execution-summary.json",
+      "sha256": "16383850b1a8267eba694478a079dff2a41ca54916a440da8e53e90025ed3205",
+      "bytes": 458,
+      "actualSha256": "16383850b1a8267eba694478a079dff2a41ca54916a440da8e53e90025ed3205",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/public-fixtures/browser-read-marker.txt",
+      "sha256": "819e93b057d3c965f5b93a51155194def3385350c5b98682edc3bff5df908533",
+      "bytes": 72,
+      "actualSha256": "819e93b057d3c965f5b93a51155194def3385350c5b98682edc3bff5df908533",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/public-fixtures/direct-read-marker.txt",
+      "sha256": "819e93b057d3c965f5b93a51155194def3385350c5b98682edc3bff5df908533",
+      "bytes": 72,
+      "actualSha256": "819e93b057d3c965f5b93a51155194def3385350c5b98682edc3bff5df908533",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/public-role-inputs.json",
+      "sha256": "aca1a6f30f63fcaa91417e151c438e0c42b0aaf6d4bdafa54d8c9f8e13586d6b",
+      "bytes": 13209,
+      "actualSha256": "aca1a6f30f63fcaa91417e151c438e0c42b0aaf6d4bdafa54d8c9f8e13586d6b",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/schemas/buster-engine.schema.json",
+      "sha256": "115982f18efb75f7ea5e2e05a5dee7a574707400469aaf5de4b88721d3b9cb97",
+      "bytes": 97220,
+      "actualSha256": "115982f18efb75f7ea5e2e05a5dee7a574707400469aaf5de4b88721d3b9cb97",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/schemas/generated-platform-registry.schema.json",
+      "sha256": "da52233feab2a0981d1580056a2537aeff3af1b162082fe774f414f603351f87",
+      "bytes": 1516,
+      "actualSha256": "da52233feab2a0981d1580056a2537aeff3af1b162082fe774f414f603351f87",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/schemas/generated-runtime.schema.json",
+      "sha256": "04c9792b471810c1accaf9f3ec1684dd691fc428a784af2989fe0c35de557f6b",
+      "bytes": 50289,
+      "actualSha256": "04c9792b471810c1accaf9f3ec1684dd691fc428a784af2989fe0c35de557f6b",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/schemas/pipeline-entry.schema.json",
+      "sha256": "0cc304a9c5ccf13605fb683568d18dff403508c8d3aef529f0cc5751656cbbce",
+      "bytes": 2182,
+      "actualSha256": "0cc304a9c5ccf13605fb683568d18dff403508c8d3aef529f0cc5751656cbbce",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/schemas/prism-control.schema.json",
+      "sha256": "235717a7621de85c3933b095b0724c53eb27afa791ed5f094bf47a53bee39d85",
+      "bytes": 74117,
+      "actualSha256": "235717a7621de85c3933b095b0724c53eb27afa791ed5f094bf47a53bee39d85",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/schemas/prism-execution.schema.json",
+      "sha256": "c6dfe88a3518f6819f5840b7e6739796c6fc0e6a0711ab1fc42cf19df4e76cbe",
+      "bytes": 48715,
+      "actualSha256": "c6dfe88a3518f6819f5840b7e6739796c6fc0e6a0711ab1fc42cf19df4e76cbe",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/schemas/prism-studio.schema.json",
+      "sha256": "72921bb9de970f5eccec5b7889a26501c8614e96304179dc54a5eef0375abe7b",
+      "bytes": 44639,
+      "actualSha256": "72921bb9de970f5eccec5b7889a26501c8614e96304179dc54a5eef0375abe7b",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/schemas/prism-worker.schema.json",
+      "sha256": "5b7fca15563fb20ad2b5dcef67724b62c68648a67fa7e5b0d34276f5472faa5b",
+      "bytes": 49101,
+      "actualSha256": "5b7fca15563fb20ad2b5dcef67724b62c68648a67fa7e5b0d34276f5472faa5b",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/schemas/worker-core.schema.json",
+      "sha256": "22c665a659ae8af436b642ef8959e3f2ca6aebcefd1e9858ff718386dbd65630",
+      "bytes": 45730,
+      "actualSha256": "22c665a659ae8af436b642ef8959e3f2ca6aebcefd1e9858ff718386dbd65630",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/source-pins.json",
+      "sha256": "0c831d41b69a3269d994f10c34622a3bf5b91c84c9f8d651494a0714c38e7b07",
+      "bytes": 5943,
+      "actualSha256": "0c831d41b69a3269d994f10c34622a3bf5b91c84c9f8d651494a0714c38e7b07",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/source-target-supersession.json",
+      "sha256": "5fd39e47be3d632c9e54dff99aed4d6aa1c9ca0cf5deb0f0b67fa4f78d65fae1",
+      "bytes": 50948,
+      "actualSha256": "5fd39e47be3d632c9e54dff99aed4d6aa1c9ca0cf5deb0f0b67fa4f78d65fae1",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/tls-reference-contract.json",
+      "sha256": "c042f9ee2d05cbf25d67482344d44d12efccb9fcf22f011392e3007052b6fdf0",
+      "bytes": 1833,
+      "actualSha256": "c042f9ee2d05cbf25d67482344d44d12efccb9fcf22f011392e3007052b6fdf0",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/whole-profile-index.json",
+      "sha256": "d048dcd6399aa3bd47d8119d75b4dadf32bac4cb4e0d917afd297698c9a7958f",
+      "bytes": 54642,
+      "actualSha256": "d048dcd6399aa3bd47d8119d75b4dadf32bac4cb4e0d917afd297698c9a7958f",
+      "matches": true
+    }
+  ]
+}
