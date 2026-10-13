@@ -1,0 +1,11 @@
+{
+  "source": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-01/exact-source-exceptions.json",
+  "sourceSha256": "76d6a8e80067804216948fa41125056ed0e4162b6b1c2c067ddd7d64f756ec82",
+  "fourUOriginalIDs": [
+    "CMP-API-OUTBOX-EXISTING-MAXIMUMBYTES-READBOUND",
+    "CMP-API-BLOB-EXISTING-TOTALBYTES-REQUIRED",
+    "CMP-BUSTER-FIXTURE-QUANTITY-QUOTA-REPRESENTATION",
+    "CMP-BUSTER-PROVIDER-RESOURCE-MEASUREMENT-PROVENANCE"
+  ],
+  "qualification": "All four exact original source/caller/capacity/representation tasks still local/open, target activation denied; not relabelled external or closed by case-count joins. Original source-specific standalone/observer recipes and exported producer/membership work likewise unaccepted."
+}

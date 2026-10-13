@@ -1,0 +1,26 @@
+{
+  "time": "2026-10-13T23:43:17.946769+00:00",
+  "originalIDSetPreserved": true,
+  "originalHistoryCaseSourcePreservationErrors": [],
+  "caseReferenceObservations": {
+    "actualExactReferenceOccurrences": 3516,
+    "distinctFrozenPointerTargets": 894,
+    "pointerHashErrors": [],
+    "providerPolicyUnboundRecords": [],
+    "qualification": "Exact frozen byte/pointer/body and existing case identity only; no source-semantic or execution acceptance"
+  },
+  "patternMemberDuplicateIds": [],
+  "patternMissingOriginalIds": [],
+  "capturedInputDrift": [
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/source-processing-adjudication.json",
+      "capturedSha256": "65d35cf9079bcbd4b4b9dc408e2fc57ab1f7cc912c90c995451feec34b16e25a",
+      "currentSha256": "6f4b3749bf5c24ab3183af4673fe3d5457bd94a5575cdb44936cb13944bf0727"
+    }
+  ],
+  "snapshotRoundtripErrors": [],
+  "globalC0Accepted": false,
+  "implementationAuthorization": null,
+  "executedNativeOrRuntimeCases": [],
+  "qualification": "Source-specific identity/conservation only; no semantic receipt or generic validator."
+}

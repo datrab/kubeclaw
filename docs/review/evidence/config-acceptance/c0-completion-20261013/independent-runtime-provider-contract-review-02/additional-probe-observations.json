@@ -1,0 +1,1336 @@
+{
+  "qualification": "Specific independent schema/default/finite authored-predicate probes only; no provider execute/native constructor/adapter activation/network/timer/API/credentials/Eval",
+  "node": "v24.21.0",
+  "observations": [
+    {
+      "check": "every-profile-default-ceiling-relation",
+      "packageId": "kubeclaw.api-flow",
+      "profile": "A",
+      "default": 1000,
+      "ceiling": 1000,
+      "admittedByOwnerSchema": true,
+      "semanticRelation": true
+    },
+    {
+      "check": "every-profile-default-ceiling-relation",
+      "packageId": "kubeclaw.api-flow",
+      "profile": "B",
+      "default": 500,
+      "ceiling": 1000,
+      "admittedByOwnerSchema": true,
+      "semanticRelation": true
+    },
+    {
+      "check": "every-profile-default-ceiling-relation",
+      "packageId": "kubeclaw.api-flow",
+      "profile": "RT-b8eb5e344f496d7c-A",
+      "default": 50,
+      "ceiling": 1000,
+      "admittedByOwnerSchema": true,
+      "semanticRelation": true
+    },
+    {
+      "check": "every-profile-default-ceiling-relation",
+      "packageId": "kubeclaw.api-flow",
+      "profile": "RT-b8eb5e344f496d7c-B",
+      "default": 500,
+      "ceiling": 1000,
+      "admittedByOwnerSchema": true,
+      "semanticRelation": true
+    },
+    {
+      "check": "every-profile-default-ceiling-relation",
+      "packageId": "kubeclaw.api-flow",
+      "profile": "RT-98a5849759145124-A",
+      "default": 1000,
+      "ceiling": 1000,
+      "admittedByOwnerSchema": true,
+      "semanticRelation": true
+    },
+    {
+      "check": "every-profile-default-ceiling-relation",
+      "packageId": "kubeclaw.api-flow",
+      "profile": "RT-98a5849759145124-B",
+      "default": 1000,
+      "ceiling": 1000,
+      "admittedByOwnerSchema": true,
+      "semanticRelation": true
+    },
+    {
+      "check": "every-profile-default-ceiling-relation",
+      "packageId": "kubeclaw.api-flow",
+      "profile": "RT-6e292c3c6f492f07-A",
+      "default": 1000,
+      "ceiling": 1000,
+      "admittedByOwnerSchema": true,
+      "semanticRelation": true
+    },
+    {
+      "check": "every-profile-default-ceiling-relation",
+      "packageId": "kubeclaw.api-flow",
+      "profile": "RT-6e292c3c6f492f07-B",
+      "default": 1000,
+      "ceiling": 1000,
+      "admittedByOwnerSchema": true,
+      "semanticRelation": true
+    },
+    {
+      "check": "every-profile-default-ceiling-relation",
+      "packageId": "kubeclaw.api-flow",
+      "profile": "deadline-ceiling-A",
+      "default": 1000,
+      "ceiling": 1000,
+      "admittedByOwnerSchema": true,
+      "semanticRelation": true
+    },
+    {
+      "check": "every-profile-default-ceiling-relation",
+      "packageId": "kubeclaw.api-flow",
+      "profile": "deadline-ceiling-B",
+      "default": 1000,
+      "ceiling": 500,
+      "admittedByOwnerSchema": true,
+      "semanticRelation": false
+    },
+    {
+      "check": "every-profile-default-ceiling-relation",
+      "packageId": "kubeclaw.api-flow",
+      "profile": "maximumFlowFileBytes-A",
+      "default": 1000,
+      "ceiling": 1000,
+      "admittedByOwnerSchema": true,
+      "semanticRelation": true
+    },
+    {
+      "check": "every-profile-default-ceiling-relation",
+      "packageId": "kubeclaw.api-flow",
+      "profile": "maximumFlowFileBytes-B",
+      "default": 1000,
+      "ceiling": 1000,
+      "admittedByOwnerSchema": true,
+      "semanticRelation": true
+    },
+    {
+      "check": "mandatory-baseline-specific-negative",
+      "packageId": "kubeclaw.api-flow",
+      "outcome": "onPass",
+      "mutation": "empty",
+      "ownerRejected": true,
+      "nodeOverrideRejected": true
+    },
+    {
+      "check": "mandatory-baseline-specific-negative",
+      "packageId": "kubeclaw.api-flow",
+      "outcome": "onPass",
+      "mutation": "missing-log",
+      "ownerRejected": true,
+      "nodeOverrideRejected": true
+    },
+    {
+      "check": "mandatory-baseline-specific-negative",
+      "packageId": "kubeclaw.api-flow",
+      "outcome": "onPass",
+      "mutation": "unproduced-error-report",
+      "ownerRejected": true,
+      "nodeOverrideRejected": true
+    },
+    {
+      "check": "mandatory-baseline-specific-negative",
+      "packageId": "kubeclaw.api-flow",
+      "outcome": "onPass",
+      "mutation": "duplicate",
+      "ownerRejected": true,
+      "nodeOverrideRejected": true
+    },
+    {
+      "check": "mandatory-baseline-specific-negative",
+      "packageId": "kubeclaw.api-flow",
+      "outcome": "onFail",
+      "mutation": "empty",
+      "ownerRejected": true,
+      "nodeOverrideRejected": true
+    },
+    {
+      "check": "mandatory-baseline-specific-negative",
+      "packageId": "kubeclaw.api-flow",
+      "outcome": "onFail",
+      "mutation": "missing-log",
+      "ownerRejected": true,
+      "nodeOverrideRejected": true
+    },
+    {
+      "check": "mandatory-baseline-specific-negative",
+      "packageId": "kubeclaw.api-flow",
+      "outcome": "onFail",
+      "mutation": "unproduced-error-report",
+      "ownerRejected": true,
+      "nodeOverrideRejected": true
+    },
+    {
+      "check": "mandatory-baseline-specific-negative",
+      "packageId": "kubeclaw.api-flow",
+      "outcome": "onFail",
+      "mutation": "duplicate",
+      "ownerRejected": true,
+      "nodeOverrideRejected": true
+    },
+    {
+      "check": "mandatory-baseline-specific-negative",
+      "packageId": "kubeclaw.api-flow",
+      "outcome": "onError",
+      "mutation": "empty",
+      "ownerRejected": true,
+      "nodeOverrideRejected": true
+    },
+    {
+      "check": "mandatory-baseline-specific-negative",
+      "packageId": "kubeclaw.api-flow",
+      "outcome": "onError",
+      "mutation": "missing-log",
+      "ownerRejected": true,
+      "nodeOverrideRejected": true
+    },
+    {
+      "check": "mandatory-baseline-specific-negative",
+      "packageId": "kubeclaw.api-flow",
+      "outcome": "onError",
+      "mutation": "unproduced-error-report",
+      "ownerRejected": true,
+      "nodeOverrideRejected": true
+    },
+    {
+      "check": "mandatory-baseline-specific-negative",
+      "packageId": "kubeclaw.api-flow",
+      "outcome": "onError",
+      "mutation": "duplicate",
+      "ownerRejected": true,
+      "nodeOverrideRejected": true
+    },
+    {
+      "check": "partial-override-absent-keeps-selected-baseline",
+      "packageId": "kubeclaw.api-flow",
+      "accepted": true
+    },
+    {
+      "check": "every-profile-default-ceiling-relation",
+      "packageId": "kubeclaw.http",
+      "profile": "A",
+      "default": 1000,
+      "ceiling": 1000,
+      "admittedByOwnerSchema": true,
+      "semanticRelation": true
+    },
+    {
+      "check": "every-profile-default-ceiling-relation",
+      "packageId": "kubeclaw.http",
+      "profile": "B",
+      "default": 500,
+      "ceiling": 1000,
+      "admittedByOwnerSchema": true,
+      "semanticRelation": true
+    },
+    {
+      "check": "every-profile-default-ceiling-relation",
+      "packageId": "kubeclaw.http",
+      "profile": "RT-6b6f0761a77de324-A",
+      "default": 1000,
+      "ceiling": 1000,
+      "admittedByOwnerSchema": true,
+      "semanticRelation": true
+    },
+    {
+      "check": "every-profile-default-ceiling-relation",
+      "packageId": "kubeclaw.http",
+      "profile": "RT-6b6f0761a77de324-B",
+      "default": 1000,
+      "ceiling": 1000,
+      "admittedByOwnerSchema": true,
+      "semanticRelation": true
+    },
+    {
+      "check": "every-profile-default-ceiling-relation",
+      "packageId": "kubeclaw.http",
+      "profile": "RT-6a3cdfc223a3c24b-A",
+      "default": 50,
+      "ceiling": 1000,
+      "admittedByOwnerSchema": true,
+      "semanticRelation": true
+    },
+    {
+      "check": "every-profile-default-ceiling-relation",
+      "packageId": "kubeclaw.http",
+      "profile": "RT-6a3cdfc223a3c24b-B",
+      "default": 500,
+      "ceiling": 1000,
+      "admittedByOwnerSchema": true,
+      "semanticRelation": true
+    },
+    {
+      "check": "every-profile-default-ceiling-relation",
+      "packageId": "kubeclaw.http",
+      "profile": "deadline-ceiling-A",
+      "default": 1000,
+      "ceiling": 1000,
+      "admittedByOwnerSchema": true,
+      "semanticRelation": true
+    },
+    {
+      "check": "every-profile-default-ceiling-relation",
+      "packageId": "kubeclaw.http",
+      "profile": "deadline-ceiling-B",
+      "default": 1000,
+      "ceiling": 500,
+      "admittedByOwnerSchema": true,
+      "semanticRelation": false
+    },
+    {
+      "check": "every-profile-default-ceiling-relation",
+      "packageId": "kubeclaw.http",
+      "profile": "retry-conservative-A",
+      "default": 1000,
+      "ceiling": 1000,
+      "admittedByOwnerSchema": true,
+      "semanticRelation": true
+    },
+    {
+      "check": "every-profile-default-ceiling-relation",
+      "packageId": "kubeclaw.http",
+      "profile": "retry-conservative-B",
+      "default": 1000,
+      "ceiling": 1000,
+      "admittedByOwnerSchema": true,
+      "semanticRelation": true
+    },
+    {
+      "check": "every-profile-default-ceiling-relation",
+      "packageId": "kubeclaw.http",
+      "profile": "matrix-conservative-A",
+      "default": 1000,
+      "ceiling": 1000,
+      "admittedByOwnerSchema": true,
+      "semanticRelation": true
+    },
+    {
+      "check": "every-profile-default-ceiling-relation",
+      "packageId": "kubeclaw.http",
+      "profile": "matrix-conservative-B",
+      "default": 1000,
+      "ceiling": 1000,
+      "admittedByOwnerSchema": true,
+      "semanticRelation": true
+    },
+    {
+      "check": "mandatory-baseline-specific-negative",
+      "packageId": "kubeclaw.http",
+      "outcome": "onPass",
+      "mutation": "empty",
+      "ownerRejected": true,
+      "nodeOverrideRejected": true
+    },
+    {
+      "check": "mandatory-baseline-specific-negative",
+      "packageId": "kubeclaw.http",
+      "outcome": "onPass",
+      "mutation": "missing-log",
+      "ownerRejected": true,
+      "nodeOverrideRejected": true
+    },
+    {
+      "check": "mandatory-baseline-specific-negative",
+      "packageId": "kubeclaw.http",
+      "outcome": "onPass",
+      "mutation": "unproduced-error-report",
+      "ownerRejected": true,
+      "nodeOverrideRejected": true
+    },
+    {
+      "check": "mandatory-baseline-specific-negative",
+      "packageId": "kubeclaw.http",
+      "outcome": "onPass",
+      "mutation": "duplicate",
+      "ownerRejected": true,
+      "nodeOverrideRejected": true
+    },
+    {
+      "check": "mandatory-baseline-specific-negative",
+      "packageId": "kubeclaw.http",
+      "outcome": "onFail",
+      "mutation": "empty",
+      "ownerRejected": true,
+      "nodeOverrideRejected": true
+    },
+    {
+      "check": "mandatory-baseline-specific-negative",
+      "packageId": "kubeclaw.http",
+      "outcome": "onFail",
+      "mutation": "missing-log",
+      "ownerRejected": true,
+      "nodeOverrideRejected": true
+    },
+    {
+      "check": "mandatory-baseline-specific-negative",
+      "packageId": "kubeclaw.http",
+      "outcome": "onFail",
+      "mutation": "unproduced-error-report",
+      "ownerRejected": true,
+      "nodeOverrideRejected": true
+    },
+    {
+      "check": "mandatory-baseline-specific-negative",
+      "packageId": "kubeclaw.http",
+      "outcome": "onFail",
+      "mutation": "duplicate",
+      "ownerRejected": true,
+      "nodeOverrideRejected": true
+    },
+    {
+      "check": "mandatory-baseline-specific-negative",
+      "packageId": "kubeclaw.http",
+      "outcome": "onError",
+      "mutation": "empty",
+      "ownerRejected": true,
+      "nodeOverrideRejected": true
+    },
+    {
+      "check": "mandatory-baseline-specific-negative",
+      "packageId": "kubeclaw.http",
+      "outcome": "onError",
+      "mutation": "missing-log",
+      "ownerRejected": true,
+      "nodeOverrideRejected": true
+    },
+    {
+      "check": "mandatory-baseline-specific-negative",
+      "packageId": "kubeclaw.http",
+      "outcome": "onError",
+      "mutation": "unproduced-error-report",
+      "ownerRejected": true,
+      "nodeOverrideRejected": true
+    },
+    {
+      "check": "mandatory-baseline-specific-negative",
+      "packageId": "kubeclaw.http",
+      "outcome": "onError",
+      "mutation": "duplicate",
+      "ownerRejected": true,
+      "nodeOverrideRejected": true
+    },
+    {
+      "check": "partial-override-absent-keeps-selected-baseline",
+      "packageId": "kubeclaw.http",
+      "accepted": true
+    },
+    {
+      "check": "every-profile-default-ceiling-relation",
+      "packageId": "kubeclaw.openapi",
+      "profile": "A",
+      "default": 1000,
+      "ceiling": 1000,
+      "admittedByOwnerSchema": true,
+      "semanticRelation": true
+    },
+    {
+      "check": "every-profile-default-ceiling-relation",
+      "packageId": "kubeclaw.openapi",
+      "profile": "B",
+      "default": 500,
+      "ceiling": 1000,
+      "admittedByOwnerSchema": true,
+      "semanticRelation": true
+    },
+    {
+      "check": "every-profile-default-ceiling-relation",
+      "packageId": "kubeclaw.openapi",
+      "profile": "RT-550d941bb663f8fc-A",
+      "default": 50,
+      "ceiling": 1000,
+      "admittedByOwnerSchema": true,
+      "semanticRelation": true
+    },
+    {
+      "check": "every-profile-default-ceiling-relation",
+      "packageId": "kubeclaw.openapi",
+      "profile": "RT-550d941bb663f8fc-B",
+      "default": 500,
+      "ceiling": 1000,
+      "admittedByOwnerSchema": true,
+      "semanticRelation": true
+    },
+    {
+      "check": "every-profile-default-ceiling-relation",
+      "packageId": "kubeclaw.openapi",
+      "profile": "RT-63d5aafbda9b5281-A",
+      "default": 1000,
+      "ceiling": 1000,
+      "admittedByOwnerSchema": true,
+      "semanticRelation": true
+    },
+    {
+      "check": "every-profile-default-ceiling-relation",
+      "packageId": "kubeclaw.openapi",
+      "profile": "RT-63d5aafbda9b5281-B",
+      "default": 1000,
+      "ceiling": 1000,
+      "admittedByOwnerSchema": true,
+      "semanticRelation": true
+    },
+    {
+      "check": "every-profile-default-ceiling-relation",
+      "packageId": "kubeclaw.openapi",
+      "profile": "deadline-ceiling-A",
+      "default": 1000,
+      "ceiling": 1000,
+      "admittedByOwnerSchema": true,
+      "semanticRelation": true
+    },
+    {
+      "check": "every-profile-default-ceiling-relation",
+      "packageId": "kubeclaw.openapi",
+      "profile": "deadline-ceiling-B",
+      "default": 1000,
+      "ceiling": 500,
+      "admittedByOwnerSchema": true,
+      "semanticRelation": false
+    },
+    {
+      "check": "every-profile-default-ceiling-relation",
+      "packageId": "kubeclaw.openapi",
+      "profile": "maximumSpecFileBytes-A",
+      "default": 1000,
+      "ceiling": 1000,
+      "admittedByOwnerSchema": true,
+      "semanticRelation": true
+    },
+    {
+      "check": "every-profile-default-ceiling-relation",
+      "packageId": "kubeclaw.openapi",
+      "profile": "maximumSpecFileBytes-B",
+      "default": 1000,
+      "ceiling": 1000,
+      "admittedByOwnerSchema": true,
+      "semanticRelation": true
+    },
+    {
+      "check": "every-profile-default-ceiling-relation",
+      "packageId": "kubeclaw.openapi",
+      "profile": "maximumSelections-A",
+      "default": 1000,
+      "ceiling": 1000,
+      "admittedByOwnerSchema": true,
+      "semanticRelation": true
+    },
+    {
+      "check": "every-profile-default-ceiling-relation",
+      "packageId": "kubeclaw.openapi",
+      "profile": "maximumSelections-B",
+      "default": 1000,
+      "ceiling": 1000,
+      "admittedByOwnerSchema": true,
+      "semanticRelation": true
+    },
+    {
+      "check": "every-profile-default-ceiling-relation",
+      "packageId": "kubeclaw.openapi",
+      "profile": "maximumSchemaGraphDepth-A",
+      "default": 1000,
+      "ceiling": 1000,
+      "admittedByOwnerSchema": true,
+      "semanticRelation": true
+    },
+    {
+      "check": "every-profile-default-ceiling-relation",
+      "packageId": "kubeclaw.openapi",
+      "profile": "maximumSchemaGraphDepth-B",
+      "default": 1000,
+      "ceiling": 1000,
+      "admittedByOwnerSchema": true,
+      "semanticRelation": true
+    },
+    {
+      "check": "every-profile-default-ceiling-relation",
+      "packageId": "kubeclaw.openapi",
+      "profile": "maximumRefChainDepth-A",
+      "default": 1000,
+      "ceiling": 1000,
+      "admittedByOwnerSchema": true,
+      "semanticRelation": true
+    },
+    {
+      "check": "every-profile-default-ceiling-relation",
+      "packageId": "kubeclaw.openapi",
+      "profile": "maximumRefChainDepth-B",
+      "default": 1000,
+      "ceiling": 1000,
+      "admittedByOwnerSchema": true,
+      "semanticRelation": true
+    },
+    {
+      "check": "every-profile-default-ceiling-relation",
+      "packageId": "kubeclaw.openapi",
+      "profile": "maximumPayloadDepth-A",
+      "default": 1000,
+      "ceiling": 1000,
+      "admittedByOwnerSchema": true,
+      "semanticRelation": true
+    },
+    {
+      "check": "every-profile-default-ceiling-relation",
+      "packageId": "kubeclaw.openapi",
+      "profile": "maximumPayloadDepth-B",
+      "default": 1000,
+      "ceiling": 1000,
+      "admittedByOwnerSchema": true,
+      "semanticRelation": true
+    },
+    {
+      "check": "every-profile-default-ceiling-relation",
+      "packageId": "kubeclaw.openapi",
+      "profile": "maximumPatternCodeUnits-A",
+      "default": 1000,
+      "ceiling": 1000,
+      "admittedByOwnerSchema": true,
+      "semanticRelation": true
+    },
+    {
+      "check": "every-profile-default-ceiling-relation",
+      "packageId": "kubeclaw.openapi",
+      "profile": "maximumPatternCodeUnits-B",
+      "default": 1000,
+      "ceiling": 1000,
+      "admittedByOwnerSchema": true,
+      "semanticRelation": true
+    },
+    {
+      "check": "every-profile-default-ceiling-relation",
+      "packageId": "kubeclaw.openapi",
+      "profile": "maximumPatternQuantifier-A",
+      "default": 1000,
+      "ceiling": 1000,
+      "admittedByOwnerSchema": true,
+      "semanticRelation": true
+    },
+    {
+      "check": "every-profile-default-ceiling-relation",
+      "packageId": "kubeclaw.openapi",
+      "profile": "maximumPatternQuantifier-B",
+      "default": 1000,
+      "ceiling": 1000,
+      "admittedByOwnerSchema": true,
+      "semanticRelation": true
+    },
+    {
+      "check": "mandatory-baseline-specific-negative",
+      "packageId": "kubeclaw.openapi",
+      "outcome": "onPass",
+      "mutation": "empty",
+      "ownerRejected": true,
+      "nodeOverrideRejected": true
+    },
+    {
+      "check": "mandatory-baseline-specific-negative",
+      "packageId": "kubeclaw.openapi",
+      "outcome": "onPass",
+      "mutation": "missing-log",
+      "ownerRejected": true,
+      "nodeOverrideRejected": true
+    },
+    {
+      "check": "mandatory-baseline-specific-negative",
+      "packageId": "kubeclaw.openapi",
+      "outcome": "onPass",
+      "mutation": "unproduced-error-report",
+      "ownerRejected": true,
+      "nodeOverrideRejected": true
+    },
+    {
+      "check": "mandatory-baseline-specific-negative",
+      "packageId": "kubeclaw.openapi",
+      "outcome": "onPass",
+      "mutation": "duplicate",
+      "ownerRejected": true,
+      "nodeOverrideRejected": true
+    },
+    {
+      "check": "mandatory-baseline-specific-negative",
+      "packageId": "kubeclaw.openapi",
+      "outcome": "onFail",
+      "mutation": "empty",
+      "ownerRejected": true,
+      "nodeOverrideRejected": true
+    },
+    {
+      "check": "mandatory-baseline-specific-negative",
+      "packageId": "kubeclaw.openapi",
+      "outcome": "onFail",
+      "mutation": "missing-log",
+      "ownerRejected": true,
+      "nodeOverrideRejected": true
+    },
+    {
+      "check": "mandatory-baseline-specific-negative",
+      "packageId": "kubeclaw.openapi",
+      "outcome": "onFail",
+      "mutation": "unproduced-error-report",
+      "ownerRejected": true,
+      "nodeOverrideRejected": true
+    },
+    {
+      "check": "mandatory-baseline-specific-negative",
+      "packageId": "kubeclaw.openapi",
+      "outcome": "onFail",
+      "mutation": "duplicate",
+      "ownerRejected": true,
+      "nodeOverrideRejected": true
+    },
+    {
+      "check": "mandatory-baseline-specific-negative",
+      "packageId": "kubeclaw.openapi",
+      "outcome": "onError",
+      "mutation": "empty",
+      "ownerRejected": true,
+      "nodeOverrideRejected": true
+    },
+    {
+      "check": "mandatory-baseline-specific-negative",
+      "packageId": "kubeclaw.openapi",
+      "outcome": "onError",
+      "mutation": "missing-log",
+      "ownerRejected": true,
+      "nodeOverrideRejected": true
+    },
+    {
+      "check": "mandatory-baseline-specific-negative",
+      "packageId": "kubeclaw.openapi",
+      "outcome": "onError",
+      "mutation": "unproduced-error-report",
+      "ownerRejected": true,
+      "nodeOverrideRejected": true
+    },
+    {
+      "check": "mandatory-baseline-specific-negative",
+      "packageId": "kubeclaw.openapi",
+      "outcome": "onError",
+      "mutation": "duplicate",
+      "ownerRejected": true,
+      "nodeOverrideRejected": true
+    },
+    {
+      "check": "partial-override-absent-keeps-selected-baseline",
+      "packageId": "kubeclaw.openapi",
+      "accepted": true
+    },
+    {
+      "check": "every-profile-default-ceiling-relation",
+      "packageId": "kubeclaw.network-http",
+      "profile": "A",
+      "default": null,
+      "ceiling": null,
+      "admittedByOwnerSchema": true,
+      "semanticRelation": null
+    },
+    {
+      "check": "every-profile-default-ceiling-relation",
+      "packageId": "kubeclaw.network-http",
+      "profile": "B",
+      "default": null,
+      "ceiling": null,
+      "admittedByOwnerSchema": true,
+      "semanticRelation": null
+    },
+    {
+      "check": "every-profile-default-ceiling-relation",
+      "packageId": "kubeclaw.network-http",
+      "profile": "field-allowedOrigins-A",
+      "default": null,
+      "ceiling": null,
+      "admittedByOwnerSchema": true,
+      "semanticRelation": null
+    },
+    {
+      "check": "every-profile-default-ceiling-relation",
+      "packageId": "kubeclaw.network-http",
+      "profile": "field-allowedOrigins-B",
+      "default": null,
+      "ceiling": null,
+      "admittedByOwnerSchema": true,
+      "semanticRelation": null
+    },
+    {
+      "check": "every-profile-default-ceiling-relation",
+      "packageId": "kubeclaw.network-http",
+      "profile": "field-allowedMethods-A",
+      "default": null,
+      "ceiling": null,
+      "admittedByOwnerSchema": true,
+      "semanticRelation": null
+    },
+    {
+      "check": "every-profile-default-ceiling-relation",
+      "packageId": "kubeclaw.network-http",
+      "profile": "field-allowedMethods-B",
+      "default": null,
+      "ceiling": null,
+      "admittedByOwnerSchema": true,
+      "semanticRelation": null
+    },
+    {
+      "check": "every-profile-default-ceiling-relation",
+      "packageId": "kubeclaw.network-http",
+      "profile": "field-allowedHeaders-A",
+      "default": null,
+      "ceiling": null,
+      "admittedByOwnerSchema": true,
+      "semanticRelation": null
+    },
+    {
+      "check": "every-profile-default-ceiling-relation",
+      "packageId": "kubeclaw.network-http",
+      "profile": "field-allowedHeaders-B",
+      "default": null,
+      "ceiling": null,
+      "admittedByOwnerSchema": true,
+      "semanticRelation": null
+    },
+    {
+      "check": "every-profile-default-ceiling-relation",
+      "packageId": "kubeclaw.network-http",
+      "profile": "field-maxRequestBytes-A",
+      "default": null,
+      "ceiling": null,
+      "admittedByOwnerSchema": true,
+      "semanticRelation": null
+    },
+    {
+      "check": "every-profile-default-ceiling-relation",
+      "packageId": "kubeclaw.network-http",
+      "profile": "field-maxRequestBytes-B",
+      "default": null,
+      "ceiling": null,
+      "admittedByOwnerSchema": true,
+      "semanticRelation": null
+    },
+    {
+      "check": "every-profile-default-ceiling-relation",
+      "packageId": "kubeclaw.network-http",
+      "profile": "field-maxResponseBytes-A",
+      "default": null,
+      "ceiling": null,
+      "admittedByOwnerSchema": true,
+      "semanticRelation": null
+    },
+    {
+      "check": "every-profile-default-ceiling-relation",
+      "packageId": "kubeclaw.network-http",
+      "profile": "field-maxResponseBytes-B",
+      "default": null,
+      "ceiling": null,
+      "admittedByOwnerSchema": true,
+      "semanticRelation": null
+    },
+    {
+      "check": "every-profile-default-ceiling-relation",
+      "packageId": "kubeclaw.network-http",
+      "profile": "field-timeoutMs-A",
+      "default": null,
+      "ceiling": null,
+      "admittedByOwnerSchema": true,
+      "semanticRelation": null
+    },
+    {
+      "check": "every-profile-default-ceiling-relation",
+      "packageId": "kubeclaw.network-http",
+      "profile": "field-timeoutMs-B",
+      "default": null,
+      "ceiling": null,
+      "admittedByOwnerSchema": true,
+      "semanticRelation": null
+    },
+    {
+      "check": "every-supported-profile-selected-root-relation",
+      "packageId": "kubeclaw.api-flow",
+      "profile": "A",
+      "errors": []
+    },
+    {
+      "check": "every-supported-profile-selected-root-relation",
+      "packageId": "kubeclaw.api-flow",
+      "profile": "B",
+      "errors": []
+    },
+    {
+      "check": "every-supported-profile-selected-root-relation",
+      "packageId": "kubeclaw.api-flow",
+      "profile": "RT-b8eb5e344f496d7c-A",
+      "errors": []
+    },
+    {
+      "check": "every-supported-profile-selected-root-relation",
+      "packageId": "kubeclaw.api-flow",
+      "profile": "RT-b8eb5e344f496d7c-B",
+      "errors": []
+    },
+    {
+      "check": "every-supported-profile-selected-root-relation",
+      "packageId": "kubeclaw.api-flow",
+      "profile": "RT-98a5849759145124-A",
+      "errors": []
+    },
+    {
+      "check": "every-supported-profile-selected-root-relation",
+      "packageId": "kubeclaw.api-flow",
+      "profile": "RT-98a5849759145124-B",
+      "errors": []
+    },
+    {
+      "check": "every-supported-profile-selected-root-relation",
+      "packageId": "kubeclaw.api-flow",
+      "profile": "RT-6e292c3c6f492f07-A",
+      "errors": []
+    },
+    {
+      "check": "every-supported-profile-selected-root-relation",
+      "packageId": "kubeclaw.api-flow",
+      "profile": "RT-6e292c3c6f492f07-B",
+      "errors": []
+    },
+    {
+      "check": "every-supported-profile-selected-root-relation",
+      "packageId": "kubeclaw.api-flow",
+      "profile": "deadline-ceiling-A",
+      "errors": []
+    },
+    {
+      "check": "every-supported-profile-selected-root-relation",
+      "packageId": "kubeclaw.api-flow",
+      "profile": "deadline-ceiling-B",
+      "errors": [
+        "default-over-ceiling"
+      ]
+    },
+    {
+      "check": "every-supported-profile-selected-root-relation",
+      "packageId": "kubeclaw.api-flow",
+      "profile": "maximumFlowFileBytes-A",
+      "errors": []
+    },
+    {
+      "check": "every-supported-profile-selected-root-relation",
+      "packageId": "kubeclaw.api-flow",
+      "profile": "maximumFlowFileBytes-B",
+      "errors": []
+    },
+    {
+      "check": "every-supported-profile-selected-root-relation",
+      "packageId": "kubeclaw.http",
+      "profile": "A",
+      "errors": []
+    },
+    {
+      "check": "every-supported-profile-selected-root-relation",
+      "packageId": "kubeclaw.http",
+      "profile": "B",
+      "errors": []
+    },
+    {
+      "check": "every-supported-profile-selected-root-relation",
+      "packageId": "kubeclaw.http",
+      "profile": "RT-6b6f0761a77de324-A",
+      "errors": []
+    },
+    {
+      "check": "every-supported-profile-selected-root-relation",
+      "packageId": "kubeclaw.http",
+      "profile": "RT-6b6f0761a77de324-B",
+      "errors": []
+    },
+    {
+      "check": "every-supported-profile-selected-root-relation",
+      "packageId": "kubeclaw.http",
+      "profile": "RT-6a3cdfc223a3c24b-A",
+      "errors": []
+    },
+    {
+      "check": "every-supported-profile-selected-root-relation",
+      "packageId": "kubeclaw.http",
+      "profile": "RT-6a3cdfc223a3c24b-B",
+      "errors": []
+    },
+    {
+      "check": "every-supported-profile-selected-root-relation",
+      "packageId": "kubeclaw.http",
+      "profile": "deadline-ceiling-A",
+      "errors": []
+    },
+    {
+      "check": "every-supported-profile-selected-root-relation",
+      "packageId": "kubeclaw.http",
+      "profile": "deadline-ceiling-B",
+      "errors": [
+        "default-over-ceiling"
+      ]
+    },
+    {
+      "check": "every-supported-profile-selected-root-relation",
+      "packageId": "kubeclaw.http",
+      "profile": "retry-conservative-A",
+      "errors": []
+    },
+    {
+      "check": "every-supported-profile-selected-root-relation",
+      "packageId": "kubeclaw.http",
+      "profile": "retry-conservative-B",
+      "errors": []
+    },
+    {
+      "check": "every-supported-profile-selected-root-relation",
+      "packageId": "kubeclaw.http",
+      "profile": "matrix-conservative-A",
+      "errors": []
+    },
+    {
+      "check": "every-supported-profile-selected-root-relation",
+      "packageId": "kubeclaw.http",
+      "profile": "matrix-conservative-B",
+      "errors": []
+    },
+    {
+      "check": "every-supported-profile-selected-root-relation",
+      "packageId": "kubeclaw.openapi",
+      "profile": "A",
+      "errors": []
+    },
+    {
+      "check": "every-supported-profile-selected-root-relation",
+      "packageId": "kubeclaw.openapi",
+      "profile": "B",
+      "errors": []
+    },
+    {
+      "check": "every-supported-profile-selected-root-relation",
+      "packageId": "kubeclaw.openapi",
+      "profile": "RT-550d941bb663f8fc-A",
+      "errors": []
+    },
+    {
+      "check": "every-supported-profile-selected-root-relation",
+      "packageId": "kubeclaw.openapi",
+      "profile": "RT-550d941bb663f8fc-B",
+      "errors": []
+    },
+    {
+      "check": "every-supported-profile-selected-root-relation",
+      "packageId": "kubeclaw.openapi",
+      "profile": "RT-63d5aafbda9b5281-A",
+      "errors": []
+    },
+    {
+      "check": "every-supported-profile-selected-root-relation",
+      "packageId": "kubeclaw.openapi",
+      "profile": "RT-63d5aafbda9b5281-B",
+      "errors": []
+    },
+    {
+      "check": "every-supported-profile-selected-root-relation",
+      "packageId": "kubeclaw.openapi",
+      "profile": "deadline-ceiling-A",
+      "errors": []
+    },
+    {
+      "check": "every-supported-profile-selected-root-relation",
+      "packageId": "kubeclaw.openapi",
+      "profile": "deadline-ceiling-B",
+      "errors": [
+        "default-over-ceiling"
+      ]
+    },
+    {
+      "check": "every-supported-profile-selected-root-relation",
+      "packageId": "kubeclaw.openapi",
+      "profile": "maximumSpecFileBytes-A",
+      "errors": []
+    },
+    {
+      "check": "every-supported-profile-selected-root-relation",
+      "packageId": "kubeclaw.openapi",
+      "profile": "maximumSpecFileBytes-B",
+      "errors": []
+    },
+    {
+      "check": "every-supported-profile-selected-root-relation",
+      "packageId": "kubeclaw.openapi",
+      "profile": "maximumSelections-A",
+      "errors": []
+    },
+    {
+      "check": "every-supported-profile-selected-root-relation",
+      "packageId": "kubeclaw.openapi",
+      "profile": "maximumSelections-B",
+      "errors": []
+    },
+    {
+      "check": "every-supported-profile-selected-root-relation",
+      "packageId": "kubeclaw.openapi",
+      "profile": "maximumSchemaGraphDepth-A",
+      "errors": []
+    },
+    {
+      "check": "every-supported-profile-selected-root-relation",
+      "packageId": "kubeclaw.openapi",
+      "profile": "maximumSchemaGraphDepth-B",
+      "errors": []
+    },
+    {
+      "check": "every-supported-profile-selected-root-relation",
+      "packageId": "kubeclaw.openapi",
+      "profile": "maximumRefChainDepth-A",
+      "errors": []
+    },
+    {
+      "check": "every-supported-profile-selected-root-relation",
+      "packageId": "kubeclaw.openapi",
+      "profile": "maximumRefChainDepth-B",
+      "errors": []
+    },
+    {
+      "check": "every-supported-profile-selected-root-relation",
+      "packageId": "kubeclaw.openapi",
+      "profile": "maximumPayloadDepth-A",
+      "errors": []
+    },
+    {
+      "check": "every-supported-profile-selected-root-relation",
+      "packageId": "kubeclaw.openapi",
+      "profile": "maximumPayloadDepth-B",
+      "errors": []
+    },
+    {
+      "check": "every-supported-profile-selected-root-relation",
+      "packageId": "kubeclaw.openapi",
+      "profile": "maximumPatternCodeUnits-A",
+      "errors": []
+    },
+    {
+      "check": "every-supported-profile-selected-root-relation",
+      "packageId": "kubeclaw.openapi",
+      "profile": "maximumPatternCodeUnits-B",
+      "errors": []
+    },
+    {
+      "check": "every-supported-profile-selected-root-relation",
+      "packageId": "kubeclaw.openapi",
+      "profile": "maximumPatternQuantifier-A",
+      "errors": []
+    },
+    {
+      "check": "every-supported-profile-selected-root-relation",
+      "packageId": "kubeclaw.openapi",
+      "profile": "maximumPatternQuantifier-B",
+      "errors": []
+    },
+    {
+      "check": "every-supported-profile-selected-root-relation",
+      "packageId": "kubeclaw.network-http",
+      "profile": "A",
+      "errors": []
+    },
+    {
+      "check": "every-supported-profile-selected-root-relation",
+      "packageId": "kubeclaw.network-http",
+      "profile": "B",
+      "errors": []
+    },
+    {
+      "check": "every-supported-profile-selected-root-relation",
+      "packageId": "kubeclaw.network-http",
+      "profile": "field-allowedOrigins-A",
+      "errors": []
+    },
+    {
+      "check": "every-supported-profile-selected-root-relation",
+      "packageId": "kubeclaw.network-http",
+      "profile": "field-allowedOrigins-B",
+      "errors": []
+    },
+    {
+      "check": "every-supported-profile-selected-root-relation",
+      "packageId": "kubeclaw.network-http",
+      "profile": "field-allowedMethods-A",
+      "errors": []
+    },
+    {
+      "check": "every-supported-profile-selected-root-relation",
+      "packageId": "kubeclaw.network-http",
+      "profile": "field-allowedMethods-B",
+      "errors": []
+    },
+    {
+      "check": "every-supported-profile-selected-root-relation",
+      "packageId": "kubeclaw.network-http",
+      "profile": "field-allowedHeaders-A",
+      "errors": []
+    },
+    {
+      "check": "every-supported-profile-selected-root-relation",
+      "packageId": "kubeclaw.network-http",
+      "profile": "field-allowedHeaders-B",
+      "errors": []
+    },
+    {
+      "check": "every-supported-profile-selected-root-relation",
+      "packageId": "kubeclaw.network-http",
+      "profile": "field-maxRequestBytes-A",
+      "errors": []
+    },
+    {
+      "check": "every-supported-profile-selected-root-relation",
+      "packageId": "kubeclaw.network-http",
+      "profile": "field-maxRequestBytes-B",
+      "errors": []
+    },
+    {
+      "check": "every-supported-profile-selected-root-relation",
+      "packageId": "kubeclaw.network-http",
+      "profile": "field-maxResponseBytes-A",
+      "errors": []
+    },
+    {
+      "check": "every-supported-profile-selected-root-relation",
+      "packageId": "kubeclaw.network-http",
+      "profile": "field-maxResponseBytes-B",
+      "errors": []
+    },
+    {
+      "check": "every-supported-profile-selected-root-relation",
+      "packageId": "kubeclaw.network-http",
+      "profile": "field-timeoutMs-A",
+      "errors": []
+    },
+    {
+      "check": "every-supported-profile-selected-root-relation",
+      "packageId": "kubeclaw.network-http",
+      "profile": "field-timeoutMs-B",
+      "errors": []
+    },
+    {
+      "check": "every-authored-whole-entry-selected-relation",
+      "file": "kubeclaw.api-flow.maximumFlowFileBytes-A.pipeline.config.json",
+      "errors": []
+    },
+    {
+      "check": "every-authored-whole-entry-selected-relation",
+      "file": "kubeclaw.api-flow.maximumFlowFileBytes-B.pipeline.config.json",
+      "errors": []
+    },
+    {
+      "check": "every-authored-whole-entry-selected-relation",
+      "file": "kubeclaw.openapi.maximumPatternCodeUnits-A.pipeline.config.json",
+      "errors": []
+    },
+    {
+      "check": "every-authored-whole-entry-selected-relation",
+      "file": "kubeclaw.openapi.maximumPatternCodeUnits-B.pipeline.config.json",
+      "errors": []
+    },
+    {
+      "check": "every-authored-whole-entry-selected-relation",
+      "file": "kubeclaw.openapi.maximumPatternQuantifier-A.pipeline.config.json",
+      "errors": []
+    },
+    {
+      "check": "every-authored-whole-entry-selected-relation",
+      "file": "kubeclaw.openapi.maximumPatternQuantifier-B.pipeline.config.json",
+      "errors": []
+    },
+    {
+      "check": "every-authored-whole-entry-selected-relation",
+      "file": "kubeclaw.openapi.maximumPayloadDepth-A.pipeline.config.json",
+      "errors": []
+    },
+    {
+      "check": "every-authored-whole-entry-selected-relation",
+      "file": "kubeclaw.openapi.maximumPayloadDepth-B.pipeline.config.json",
+      "errors": []
+    },
+    {
+      "check": "every-authored-whole-entry-selected-relation",
+      "file": "kubeclaw.openapi.maximumRefChainDepth-A.pipeline.config.json",
+      "errors": []
+    },
+    {
+      "check": "every-authored-whole-entry-selected-relation",
+      "file": "kubeclaw.openapi.maximumRefChainDepth-B.pipeline.config.json",
+      "errors": []
+    },
+    {
+      "check": "every-authored-whole-entry-selected-relation",
+      "file": "kubeclaw.openapi.maximumSchemaGraphDepth-A.pipeline.config.json",
+      "errors": []
+    },
+    {
+      "check": "every-authored-whole-entry-selected-relation",
+      "file": "kubeclaw.openapi.maximumSchemaGraphDepth-B.pipeline.config.json",
+      "errors": []
+    },
+    {
+      "check": "every-authored-whole-entry-selected-relation",
+      "file": "kubeclaw.openapi.maximumSelections-A.pipeline.config.json",
+      "errors": []
+    },
+    {
+      "check": "every-authored-whole-entry-selected-relation",
+      "file": "kubeclaw.openapi.maximumSelections-B.pipeline.config.json",
+      "errors": []
+    },
+    {
+      "check": "every-authored-whole-entry-selected-relation",
+      "file": "kubeclaw.openapi.maximumSpecFileBytes-A.pipeline.config.json",
+      "errors": []
+    },
+    {
+      "check": "every-authored-whole-entry-selected-relation",
+      "file": "kubeclaw.openapi.maximumSpecFileBytes-B.pipeline.config.json",
+      "errors": []
+    },
+    {
+      "check": "actual-current-schema-default-injection-and-invalid-root",
+      "invalidRootRejected": true,
+      "omittedRootAccepted": true,
+      "resolvedOmittedRoot": {
+        "flowFile": "flow-one.json",
+        "requestTimeoutMs": 10000,
+        "maximumResponseBytes": 1048576,
+        "maximumSteps": 64
+      }
+    },
+    {
+      "check": "task-deadline-real-domain",
+      "value": 1,
+      "accepted": true
+    },
+    {
+      "check": "task-deadline-real-domain",
+      "value": 50,
+      "accepted": true
+    },
+    {
+      "check": "task-deadline-real-domain",
+      "value": 500,
+      "accepted": true
+    },
+    {
+      "check": "task-deadline-real-domain",
+      "value": 300000,
+      "accepted": true
+    },
+    {
+      "check": "task-deadline-real-domain",
+      "value": 0,
+      "accepted": false
+    },
+    {
+      "check": "task-deadline-real-domain",
+      "value": 300001,
+      "accepted": false
+    }
+  ]
+}

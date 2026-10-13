@@ -1,0 +1,4 @@
+  File "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-02/compose-corrections.py", line 8
+    def ref(p,ptr,body,id=None):return {'path':str(p),'sha256':hashlib.sha256(captured[str(p)]).encode()).hexdigest()} # replaced below
+                                                                                                        ^
+SyntaxError: closing parenthesis ')' does not match opening parenthesis '{'

@@ -1,0 +1,39 @@
+{
+  "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+  "commands": [
+    {
+      "command": "node docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-03/collect-definition-checks.mjs --output-dir docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-03/final-run",
+      "exit": 1,
+      "rawStdout": "failed-attempt-01/final-run.stdout",
+      "rawStderr": "failed-attempt-01/final-run.stderr",
+      "attemptedCollector": "failed-attempt-01/collect-definition-checks.mjs",
+      "attemptedSchema": "failed-attempt-01/generated-runtime.schema.json",
+      "failure": "Ajv strictRequired branch lacked declared properties; strict checks retained"
+    },
+    {
+      "command": "node docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-03/collect-definition-checks.mjs --output-dir docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-03/final-run",
+      "exit": 1,
+      "rawStdout": "failed-attempt-02/final-run.stdout",
+      "rawStderr": "failed-attempt-02/final-run.stderr",
+      "attemptedCollector": "failed-attempt-02/collect-definition-checks.mjs",
+      "attemptedSchema": "failed-attempt-02/generated-runtime.schema.json",
+      "failure": "Capability conditional duplicated peer schemas still rejected registryCaFile; corrected all exact copies, no weakened control"
+    },
+    {
+      "command": "node docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-03/collect-definition-checks.mjs --output-dir docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-03/final-run",
+      "exit": 0,
+      "qualification": "intermediate successful execution before final trust receipt wording/source pin check; raw output not retained and not used as final evidence"
+    },
+    {
+      "command": "node docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-03/collect-definition-checks.mjs --output-dir docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-03/final-run",
+      "exit": 0,
+      "rawStdout": "final-run.stdout",
+      "rawStderr": "final-run.stderr",
+      "receipt": "final-run/definition-checks-03.json",
+      "controls": 32,
+      "ownerProfiles": 96,
+      "busterProfiles": 91,
+      "generatedPairs": 91
+    }
+  ]
+}

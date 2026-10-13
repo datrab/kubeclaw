@@ -1,0 +1,1376 @@
+[
+  {
+    "id": "RT-351419f2c26e2696",
+    "ownerRegistration": {
+      "registration": "kubeclaw.api-flow:flow",
+      "kind": "test-provider",
+      "instance": "fixture.api-flow",
+      "profile": "A",
+      "serviceInstanceId": "fixture.service.buster-runtime",
+      "soleAuthor": "plugins/kubeclaw.api-flow.config.json#/profiles/A",
+      "root": "config/pipeline.config.json pipeline-entry.v5 proposed binding"
+    },
+    "taskA": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/task-fixtures/pairs/RT-351419f2c26e2696/A.json",
+    "taskB": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/task-fixtures/pairs/RT-351419f2c26e2696/B.json",
+    "policySelection": "Complete owner profile A for BOTH task alternatives; native resource association unchanged to isolate task intent.",
+    "unsignedInputsDefinition": [],
+    "meaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+    "taskFilesNeverMovedIntoCONFIG": true,
+    "futureResult": "not-run",
+    "retainedOriginalPairDefinition": {
+      "id": "RT-351419f2c26e2696",
+      "ownerRegistration": {
+        "registration": "kubeclaw.api-flow:flow",
+        "kind": "testProviders",
+        "instance": "each configured stage/adapter/observer/test-provider invocation",
+        "profile": "selected by workflow or platform; no central author established"
+      },
+      "taskA": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/task-fixtures/pairs/RT-351419f2c26e2696/A.json",
+      "taskB": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/task-fixtures/pairs/RT-351419f2c26e2696/B.json",
+      "policySelection": "Complete owner profile A for BOTH task alternatives; native resource association unchanged to isolate task intent.",
+      "unsignedInputsDefinition": [],
+      "meaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+      "taskFilesNeverMovedIntoCONFIG": true,
+      "futureResult": "not-run"
+    }
+  },
+  {
+    "id": "RT-ecc6714a5d1b8270",
+    "ownerRegistration": {
+      "registration": "kubeclaw.api-flow:flow",
+      "kind": "test-provider",
+      "instance": "fixture.api-flow",
+      "profile": "A",
+      "serviceInstanceId": "fixture.service.buster-runtime",
+      "soleAuthor": "plugins/kubeclaw.api-flow.config.json#/profiles/A",
+      "root": "config/pipeline.config.json pipeline-entry.v5 proposed binding"
+    },
+    "taskA": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/task-fixtures/pairs/RT-ecc6714a5d1b8270/A.json",
+    "taskB": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/task-fixtures/pairs/RT-ecc6714a5d1b8270/B.json",
+    "policySelection": "Complete owner profile A for BOTH task alternatives; native resource association unchanged to isolate task intent.",
+    "unsignedInputsDefinition": [],
+    "meaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+    "taskFilesNeverMovedIntoCONFIG": true,
+    "futureResult": "not-run",
+    "retainedOriginalPairDefinition": {
+      "id": "RT-ecc6714a5d1b8270",
+      "ownerRegistration": {
+        "registration": "kubeclaw.api-flow:flow",
+        "kind": "testProviders",
+        "instance": "each configured stage/adapter/observer/test-provider invocation",
+        "profile": "selected by workflow or platform; no central author established"
+      },
+      "taskA": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/task-fixtures/pairs/RT-ecc6714a5d1b8270/A.json",
+      "taskB": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/task-fixtures/pairs/RT-ecc6714a5d1b8270/B.json",
+      "policySelection": "Complete owner profile A for BOTH task alternatives; native resource association unchanged to isolate task intent.",
+      "unsignedInputsDefinition": [],
+      "meaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+      "taskFilesNeverMovedIntoCONFIG": true,
+      "futureResult": "not-run"
+    }
+  },
+  {
+    "id": "RT-98800e708ba4ebcc",
+    "ownerRegistration": {
+      "registration": "kubeclaw.api-flow:flow",
+      "kind": "test-provider",
+      "instance": "fixture.api-flow",
+      "profile": "A",
+      "serviceInstanceId": "fixture.service.buster-runtime",
+      "soleAuthor": "plugins/kubeclaw.api-flow.config.json#/profiles/A",
+      "root": "config/pipeline.config.json pipeline-entry.v5 proposed binding"
+    },
+    "taskA": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/task-fixtures/pairs/RT-98800e708ba4ebcc/A.json",
+    "taskB": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/task-fixtures/pairs/RT-98800e708ba4ebcc/B.json",
+    "policySelection": "Complete owner profile A for BOTH task alternatives; native resource association unchanged to isolate task intent.",
+    "unsignedInputsDefinition": [
+      {
+        "name": "deployment",
+        "kind": "value",
+        "schemaId": "kubeclaw.kubernetes-deployment-fixture@1",
+        "value": {
+          "schemaVersion": "kubernetes-deployment-fixture.v1",
+          "endpoints": [
+            {
+              "name": "service-a",
+              "url": "https://fixture.invalid"
+            },
+            {
+              "name": "service-b",
+              "url": "https://alternate.fixture.invalid"
+            }
+          ]
+        }
+      }
+    ],
+    "meaning": "Unsigned data-shape endpoint choice only. Authentic lease/owner/expiry/grant/image/manifest provenance NOT fabricated; inputs are NOT activation-ready.",
+    "taskFilesNeverMovedIntoCONFIG": true,
+    "futureResult": "not-run",
+    "retainedOriginalPairDefinition": {
+      "id": "RT-98800e708ba4ebcc",
+      "ownerRegistration": {
+        "registration": "kubeclaw.api-flow:flow",
+        "kind": "testProviders",
+        "instance": "each configured stage/adapter/observer/test-provider invocation",
+        "profile": "selected by workflow or platform; no central author established"
+      },
+      "taskA": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/task-fixtures/pairs/RT-98800e708ba4ebcc/A.json",
+      "taskB": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/task-fixtures/pairs/RT-98800e708ba4ebcc/B.json",
+      "policySelection": "Complete owner profile A for BOTH task alternatives; native resource association unchanged to isolate task intent.",
+      "unsignedInputsDefinition": [
+        {
+          "name": "deployment",
+          "kind": "value",
+          "schemaId": "kubeclaw.kubernetes-deployment-fixture@1",
+          "value": {
+            "schemaVersion": "kubernetes-deployment-fixture.v1",
+            "endpoints": [
+              {
+                "name": "service-a",
+                "url": "https://fixture.invalid"
+              },
+              {
+                "name": "service-b",
+                "url": "https://alternate.fixture.invalid"
+              }
+            ]
+          }
+        }
+      ],
+      "meaning": "Unsigned data-shape endpoint choice only. Authentic lease/owner/expiry/grant/image/manifest provenance NOT fabricated; inputs are NOT activation-ready.",
+      "taskFilesNeverMovedIntoCONFIG": true,
+      "futureResult": "not-run"
+    }
+  },
+  {
+    "id": "RT-2089ad1c8390909b",
+    "ownerRegistration": {
+      "registration": "kubeclaw.http:request",
+      "kind": "test-provider",
+      "instance": "fixture.http",
+      "profile": "A",
+      "serviceInstanceId": "fixture.service.buster-runtime",
+      "soleAuthor": "plugins/kubeclaw.http.config.json#/profiles/A",
+      "root": "config/pipeline.config.json pipeline-entry.v5 proposed binding"
+    },
+    "taskA": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/task-fixtures/pairs/RT-2089ad1c8390909b/A.json",
+    "taskB": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/task-fixtures/pairs/RT-2089ad1c8390909b/B.json",
+    "policySelection": "Complete owner profile A for BOTH task alternatives; native resource association unchanged to isolate task intent.",
+    "unsignedInputsDefinition": [],
+    "meaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+    "taskFilesNeverMovedIntoCONFIG": true,
+    "futureResult": "not-run",
+    "retainedOriginalPairDefinition": {
+      "id": "RT-2089ad1c8390909b",
+      "ownerRegistration": {
+        "registration": "kubeclaw.http:request",
+        "kind": "testProviders",
+        "instance": "each configured stage/adapter/observer/test-provider invocation",
+        "profile": "selected by workflow or platform; no central author established"
+      },
+      "taskA": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/task-fixtures/pairs/RT-2089ad1c8390909b/A.json",
+      "taskB": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/task-fixtures/pairs/RT-2089ad1c8390909b/B.json",
+      "policySelection": "Complete owner profile A for BOTH task alternatives; native resource association unchanged to isolate task intent.",
+      "unsignedInputsDefinition": [],
+      "meaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+      "taskFilesNeverMovedIntoCONFIG": true,
+      "futureResult": "not-run"
+    }
+  },
+  {
+    "id": "RT-e821665e0a2aedb9",
+    "ownerRegistration": {
+      "registration": "kubeclaw.http:request",
+      "kind": "test-provider",
+      "instance": "fixture.http",
+      "profile": "A",
+      "serviceInstanceId": "fixture.service.buster-runtime",
+      "soleAuthor": "plugins/kubeclaw.http.config.json#/profiles/A",
+      "root": "config/pipeline.config.json pipeline-entry.v5 proposed binding"
+    },
+    "taskA": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/task-fixtures/pairs/RT-e821665e0a2aedb9/A.json",
+    "taskB": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/task-fixtures/pairs/RT-e821665e0a2aedb9/B.json",
+    "policySelection": "Complete owner profile A for BOTH task alternatives; native resource association unchanged to isolate task intent.",
+    "unsignedInputsDefinition": [
+      {
+        "name": "deployment",
+        "kind": "value",
+        "schemaId": "kubeclaw.kubernetes-deployment-fixture@1",
+        "value": {
+          "schemaVersion": "kubernetes-deployment-fixture.v1",
+          "endpoints": [
+            {
+              "name": "service-a",
+              "url": "https://fixture.invalid"
+            },
+            {
+              "name": "service-b",
+              "url": "https://alternate.fixture.invalid"
+            }
+          ]
+        }
+      }
+    ],
+    "meaning": "Unsigned data-shape endpoint choice only. Authentic lease/owner/expiry/grant/image/manifest provenance NOT fabricated; inputs are NOT activation-ready.",
+    "taskFilesNeverMovedIntoCONFIG": true,
+    "futureResult": "not-run",
+    "retainedOriginalPairDefinition": {
+      "id": "RT-e821665e0a2aedb9",
+      "ownerRegistration": {
+        "registration": "kubeclaw.http:request",
+        "kind": "testProviders",
+        "instance": "each configured stage/adapter/observer/test-provider invocation",
+        "profile": "selected by workflow or platform; no central author established"
+      },
+      "taskA": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/task-fixtures/pairs/RT-e821665e0a2aedb9/A.json",
+      "taskB": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/task-fixtures/pairs/RT-e821665e0a2aedb9/B.json",
+      "policySelection": "Complete owner profile A for BOTH task alternatives; native resource association unchanged to isolate task intent.",
+      "unsignedInputsDefinition": [
+        {
+          "name": "deployment",
+          "kind": "value",
+          "schemaId": "kubeclaw.kubernetes-deployment-fixture@1",
+          "value": {
+            "schemaVersion": "kubernetes-deployment-fixture.v1",
+            "endpoints": [
+              {
+                "name": "service-a",
+                "url": "https://fixture.invalid"
+              },
+              {
+                "name": "service-b",
+                "url": "https://alternate.fixture.invalid"
+              }
+            ]
+          }
+        }
+      ],
+      "meaning": "Unsigned data-shape endpoint choice only. Authentic lease/owner/expiry/grant/image/manifest provenance NOT fabricated; inputs are NOT activation-ready.",
+      "taskFilesNeverMovedIntoCONFIG": true,
+      "futureResult": "not-run"
+    }
+  },
+  {
+    "id": "RT-c66db038b75b910a",
+    "ownerRegistration": {
+      "registration": "kubeclaw.http:request",
+      "kind": "test-provider",
+      "instance": "fixture.http",
+      "profile": "A",
+      "serviceInstanceId": "fixture.service.buster-runtime",
+      "soleAuthor": "plugins/kubeclaw.http.config.json#/profiles/A",
+      "root": "config/pipeline.config.json pipeline-entry.v5 proposed binding"
+    },
+    "taskA": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/task-fixtures/pairs/RT-c66db038b75b910a/A.json",
+    "taskB": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/task-fixtures/pairs/RT-c66db038b75b910a/B.json",
+    "policySelection": "Complete owner profile A for BOTH task alternatives; native resource association unchanged to isolate task intent.",
+    "unsignedInputsDefinition": [],
+    "meaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+    "taskFilesNeverMovedIntoCONFIG": true,
+    "futureResult": "not-run",
+    "retainedOriginalPairDefinition": {
+      "id": "RT-c66db038b75b910a",
+      "ownerRegistration": {
+        "registration": "kubeclaw.http:request",
+        "kind": "testProviders",
+        "instance": "each configured stage/adapter/observer/test-provider invocation",
+        "profile": "selected by workflow or platform; no central author established"
+      },
+      "taskA": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/task-fixtures/pairs/RT-c66db038b75b910a/A.json",
+      "taskB": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/task-fixtures/pairs/RT-c66db038b75b910a/B.json",
+      "policySelection": "Complete owner profile A for BOTH task alternatives; native resource association unchanged to isolate task intent.",
+      "unsignedInputsDefinition": [],
+      "meaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+      "taskFilesNeverMovedIntoCONFIG": true,
+      "futureResult": "not-run"
+    }
+  },
+  {
+    "id": "RT-a6feb259112b5574",
+    "ownerRegistration": {
+      "registration": "kubeclaw.http:request",
+      "kind": "test-provider",
+      "instance": "fixture.http",
+      "profile": "A",
+      "serviceInstanceId": "fixture.service.buster-runtime",
+      "soleAuthor": "plugins/kubeclaw.http.config.json#/profiles/A",
+      "root": "config/pipeline.config.json pipeline-entry.v5 proposed binding"
+    },
+    "taskA": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/task-fixtures/pairs/RT-a6feb259112b5574/A.json",
+    "taskB": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/task-fixtures/pairs/RT-a6feb259112b5574/B.json",
+    "policySelection": "Complete owner profile A for BOTH task alternatives; native resource association unchanged to isolate task intent.",
+    "unsignedInputsDefinition": [],
+    "meaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution. HEAD task explicitly has no body-text assertion; coupled constraint, not isolated field transplant.",
+    "taskFilesNeverMovedIntoCONFIG": true,
+    "futureResult": "not-run",
+    "retainedOriginalPairDefinition": {
+      "id": "RT-a6feb259112b5574",
+      "ownerRegistration": {
+        "registration": "kubeclaw.http:request",
+        "kind": "testProviders",
+        "instance": "each configured stage/adapter/observer/test-provider invocation",
+        "profile": "selected by workflow or platform; no central author established"
+      },
+      "taskA": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/task-fixtures/pairs/RT-a6feb259112b5574/A.json",
+      "taskB": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/task-fixtures/pairs/RT-a6feb259112b5574/B.json",
+      "policySelection": "Complete owner profile A for BOTH task alternatives; native resource association unchanged to isolate task intent.",
+      "unsignedInputsDefinition": [],
+      "meaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution. HEAD task explicitly has no body-text assertion; coupled constraint, not isolated field transplant.",
+      "taskFilesNeverMovedIntoCONFIG": true,
+      "futureResult": "not-run"
+    }
+  },
+  {
+    "id": "RT-d9e562dd50c1f9b3",
+    "ownerRegistration": {
+      "registration": "kubeclaw.http:request",
+      "kind": "test-provider",
+      "instance": "fixture.http",
+      "profile": "A",
+      "serviceInstanceId": "fixture.service.buster-runtime",
+      "soleAuthor": "plugins/kubeclaw.http.config.json#/profiles/A",
+      "root": "config/pipeline.config.json pipeline-entry.v5 proposed binding"
+    },
+    "taskA": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/task-fixtures/pairs/RT-d9e562dd50c1f9b3/A.json",
+    "taskB": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/task-fixtures/pairs/RT-d9e562dd50c1f9b3/B.json",
+    "policySelection": "Complete owner profile A for BOTH task alternatives; native resource association unchanged to isolate task intent.",
+    "unsignedInputsDefinition": [],
+    "meaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+    "taskFilesNeverMovedIntoCONFIG": true,
+    "futureResult": "not-run",
+    "retainedOriginalPairDefinition": {
+      "id": "RT-d9e562dd50c1f9b3",
+      "ownerRegistration": {
+        "registration": "kubeclaw.http:request",
+        "kind": "testProviders",
+        "instance": "each configured stage/adapter/observer/test-provider invocation",
+        "profile": "selected by workflow or platform; no central author established"
+      },
+      "taskA": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/task-fixtures/pairs/RT-d9e562dd50c1f9b3/A.json",
+      "taskB": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/task-fixtures/pairs/RT-d9e562dd50c1f9b3/B.json",
+      "policySelection": "Complete owner profile A for BOTH task alternatives; native resource association unchanged to isolate task intent.",
+      "unsignedInputsDefinition": [],
+      "meaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+      "taskFilesNeverMovedIntoCONFIG": true,
+      "futureResult": "not-run"
+    }
+  },
+  {
+    "id": "RT-fcc77b9c29ab0230",
+    "ownerRegistration": {
+      "registration": "kubeclaw.http:request",
+      "kind": "test-provider",
+      "instance": "fixture.http",
+      "profile": "A",
+      "serviceInstanceId": "fixture.service.buster-runtime",
+      "soleAuthor": "plugins/kubeclaw.http.config.json#/profiles/A",
+      "root": "config/pipeline.config.json pipeline-entry.v5 proposed binding"
+    },
+    "taskA": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/task-fixtures/pairs/RT-fcc77b9c29ab0230/A.json",
+    "taskB": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/task-fixtures/pairs/RT-fcc77b9c29ab0230/B.json",
+    "policySelection": "Complete owner profile A for BOTH task alternatives; native resource association unchanged to isolate task intent.",
+    "unsignedInputsDefinition": [],
+    "meaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+    "taskFilesNeverMovedIntoCONFIG": true,
+    "futureResult": "not-run",
+    "retainedOriginalPairDefinition": {
+      "id": "RT-fcc77b9c29ab0230",
+      "ownerRegistration": {
+        "registration": "kubeclaw.http:request",
+        "kind": "testProviders",
+        "instance": "each configured stage/adapter/observer/test-provider invocation",
+        "profile": "selected by workflow or platform; no central author established"
+      },
+      "taskA": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/task-fixtures/pairs/RT-fcc77b9c29ab0230/A.json",
+      "taskB": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/task-fixtures/pairs/RT-fcc77b9c29ab0230/B.json",
+      "policySelection": "Complete owner profile A for BOTH task alternatives; native resource association unchanged to isolate task intent.",
+      "unsignedInputsDefinition": [],
+      "meaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+      "taskFilesNeverMovedIntoCONFIG": true,
+      "futureResult": "not-run"
+    }
+  },
+  {
+    "id": "RT-259ec75a40f57a0b",
+    "ownerRegistration": {
+      "registration": "kubeclaw.http:request",
+      "kind": "test-provider",
+      "instance": "fixture.http",
+      "profile": "A",
+      "serviceInstanceId": "fixture.service.buster-runtime",
+      "soleAuthor": "plugins/kubeclaw.http.config.json#/profiles/A",
+      "root": "config/pipeline.config.json pipeline-entry.v5 proposed binding"
+    },
+    "taskA": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/task-fixtures/pairs/RT-259ec75a40f57a0b/A.json",
+    "taskB": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/task-fixtures/pairs/RT-259ec75a40f57a0b/B.json",
+    "policySelection": "Complete owner profile A for BOTH task alternatives; native resource association unchanged to isolate task intent.",
+    "unsignedInputsDefinition": [],
+    "meaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+    "taskFilesNeverMovedIntoCONFIG": true,
+    "futureResult": "not-run",
+    "retainedOriginalPairDefinition": {
+      "id": "RT-259ec75a40f57a0b",
+      "ownerRegistration": {
+        "registration": "kubeclaw.http:request",
+        "kind": "testProviders",
+        "instance": "each configured stage/adapter/observer/test-provider invocation",
+        "profile": "selected by workflow or platform; no central author established"
+      },
+      "taskA": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/task-fixtures/pairs/RT-259ec75a40f57a0b/A.json",
+      "taskB": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/task-fixtures/pairs/RT-259ec75a40f57a0b/B.json",
+      "policySelection": "Complete owner profile A for BOTH task alternatives; native resource association unchanged to isolate task intent.",
+      "unsignedInputsDefinition": [],
+      "meaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+      "taskFilesNeverMovedIntoCONFIG": true,
+      "futureResult": "not-run"
+    }
+  },
+  {
+    "id": "RT-c7fdaab3e3e6c833",
+    "ownerRegistration": {
+      "registration": "kubeclaw.http:request",
+      "kind": "test-provider",
+      "instance": "fixture.http",
+      "profile": "A",
+      "serviceInstanceId": "fixture.service.buster-runtime",
+      "soleAuthor": "plugins/kubeclaw.http.config.json#/profiles/A",
+      "root": "config/pipeline.config.json pipeline-entry.v5 proposed binding"
+    },
+    "taskA": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/task-fixtures/pairs/RT-c7fdaab3e3e6c833/A.json",
+    "taskB": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/task-fixtures/pairs/RT-c7fdaab3e3e6c833/B.json",
+    "policySelection": "Complete owner profile A for BOTH task alternatives; native resource association unchanged to isolate task intent.",
+    "unsignedInputsDefinition": [],
+    "meaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+    "taskFilesNeverMovedIntoCONFIG": true,
+    "futureResult": "not-run",
+    "retainedOriginalPairDefinition": {
+      "id": "RT-c7fdaab3e3e6c833",
+      "ownerRegistration": {
+        "registration": "kubeclaw.http:request",
+        "kind": "testProviders",
+        "instance": "each configured stage/adapter/observer/test-provider invocation",
+        "profile": "selected by workflow or platform; no central author established"
+      },
+      "taskA": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/task-fixtures/pairs/RT-c7fdaab3e3e6c833/A.json",
+      "taskB": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/task-fixtures/pairs/RT-c7fdaab3e3e6c833/B.json",
+      "policySelection": "Complete owner profile A for BOTH task alternatives; native resource association unchanged to isolate task intent.",
+      "unsignedInputsDefinition": [],
+      "meaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+      "taskFilesNeverMovedIntoCONFIG": true,
+      "futureResult": "not-run"
+    }
+  },
+  {
+    "id": "RT-b2f5e06d53448731",
+    "ownerRegistration": {
+      "registration": "kubeclaw.http:request",
+      "kind": "test-provider",
+      "instance": "fixture.http",
+      "profile": "A",
+      "serviceInstanceId": "fixture.service.buster-runtime",
+      "soleAuthor": "plugins/kubeclaw.http.config.json#/profiles/A",
+      "root": "config/pipeline.config.json pipeline-entry.v5 proposed binding"
+    },
+    "taskA": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/task-fixtures/pairs/RT-b2f5e06d53448731/A.json",
+    "taskB": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/task-fixtures/pairs/RT-b2f5e06d53448731/B.json",
+    "policySelection": "Complete owner profile A for BOTH task alternatives; native resource association unchanged to isolate task intent.",
+    "unsignedInputsDefinition": [],
+    "meaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+    "taskFilesNeverMovedIntoCONFIG": true,
+    "futureResult": "not-run",
+    "retainedOriginalPairDefinition": {
+      "id": "RT-b2f5e06d53448731",
+      "ownerRegistration": {
+        "registration": "kubeclaw.http:request",
+        "kind": "testProviders",
+        "instance": "each configured stage/adapter/observer/test-provider invocation",
+        "profile": "selected by workflow or platform; no central author established"
+      },
+      "taskA": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/task-fixtures/pairs/RT-b2f5e06d53448731/A.json",
+      "taskB": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/task-fixtures/pairs/RT-b2f5e06d53448731/B.json",
+      "policySelection": "Complete owner profile A for BOTH task alternatives; native resource association unchanged to isolate task intent.",
+      "unsignedInputsDefinition": [],
+      "meaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+      "taskFilesNeverMovedIntoCONFIG": true,
+      "futureResult": "not-run"
+    }
+  },
+  {
+    "id": "RT-10f3f03208806c98",
+    "ownerRegistration": {
+      "registration": "kubeclaw.openapi:operations",
+      "kind": "test-provider",
+      "instance": "fixture.openapi",
+      "profile": "A",
+      "serviceInstanceId": "fixture.service.buster-runtime",
+      "soleAuthor": "plugins/kubeclaw.openapi.config.json#/profiles/A",
+      "root": "config/pipeline.config.json pipeline-entry.v5 proposed binding"
+    },
+    "taskA": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/task-fixtures/pairs/RT-10f3f03208806c98/A.json",
+    "taskB": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/task-fixtures/pairs/RT-10f3f03208806c98/B.json",
+    "policySelection": "Complete owner profile A for BOTH task alternatives; native resource association unchanged to isolate task intent.",
+    "unsignedInputsDefinition": [],
+    "meaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+    "taskFilesNeverMovedIntoCONFIG": true,
+    "futureResult": "not-run",
+    "retainedOriginalPairDefinition": {
+      "id": "RT-10f3f03208806c98",
+      "ownerRegistration": {
+        "registration": "kubeclaw.openapi:operations",
+        "kind": "testProviders",
+        "instance": "each configured stage/adapter/observer/test-provider invocation",
+        "profile": "selected by workflow or platform; no central author established"
+      },
+      "taskA": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/task-fixtures/pairs/RT-10f3f03208806c98/A.json",
+      "taskB": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/task-fixtures/pairs/RT-10f3f03208806c98/B.json",
+      "policySelection": "Complete owner profile A for BOTH task alternatives; native resource association unchanged to isolate task intent.",
+      "unsignedInputsDefinition": [],
+      "meaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+      "taskFilesNeverMovedIntoCONFIG": true,
+      "futureResult": "not-run"
+    }
+  },
+  {
+    "id": "RT-1609b6ce9dfde15b",
+    "ownerRegistration": {
+      "registration": "kubeclaw.openapi:operations",
+      "kind": "test-provider",
+      "instance": "fixture.openapi",
+      "profile": "A",
+      "serviceInstanceId": "fixture.service.buster-runtime",
+      "soleAuthor": "plugins/kubeclaw.openapi.config.json#/profiles/A",
+      "root": "config/pipeline.config.json pipeline-entry.v5 proposed binding"
+    },
+    "taskA": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/task-fixtures/pairs/RT-1609b6ce9dfde15b/A.json",
+    "taskB": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/task-fixtures/pairs/RT-1609b6ce9dfde15b/B.json",
+    "policySelection": "Complete owner profile A for BOTH task alternatives; native resource association unchanged to isolate task intent.",
+    "unsignedInputsDefinition": [],
+    "meaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+    "taskFilesNeverMovedIntoCONFIG": true,
+    "futureResult": "not-run",
+    "retainedOriginalPairDefinition": {
+      "id": "RT-1609b6ce9dfde15b",
+      "ownerRegistration": {
+        "registration": "kubeclaw.openapi:operations",
+        "kind": "testProviders",
+        "instance": "each configured stage/adapter/observer/test-provider invocation",
+        "profile": "selected by workflow or platform; no central author established"
+      },
+      "taskA": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/task-fixtures/pairs/RT-1609b6ce9dfde15b/A.json",
+      "taskB": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/task-fixtures/pairs/RT-1609b6ce9dfde15b/B.json",
+      "policySelection": "Complete owner profile A for BOTH task alternatives; native resource association unchanged to isolate task intent.",
+      "unsignedInputsDefinition": [],
+      "meaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+      "taskFilesNeverMovedIntoCONFIG": true,
+      "futureResult": "not-run"
+    }
+  },
+  {
+    "id": "RT-d2dfede67afe22ac",
+    "ownerRegistration": {
+      "registration": "kubeclaw.openapi:operations",
+      "kind": "test-provider",
+      "instance": "fixture.openapi",
+      "profile": "A",
+      "serviceInstanceId": "fixture.service.buster-runtime",
+      "soleAuthor": "plugins/kubeclaw.openapi.config.json#/profiles/A",
+      "root": "config/pipeline.config.json pipeline-entry.v5 proposed binding"
+    },
+    "taskA": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/task-fixtures/pairs/RT-d2dfede67afe22ac/A.json",
+    "taskB": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/task-fixtures/pairs/RT-d2dfede67afe22ac/B.json",
+    "policySelection": "Complete owner profile A for BOTH task alternatives; native resource association unchanged to isolate task intent.",
+    "unsignedInputsDefinition": [
+      {
+        "name": "deployment",
+        "kind": "value",
+        "schemaId": "kubeclaw.kubernetes-deployment-fixture@1",
+        "value": {
+          "schemaVersion": "kubernetes-deployment-fixture.v1",
+          "endpoints": [
+            {
+              "name": "service-a",
+              "url": "https://fixture.invalid"
+            },
+            {
+              "name": "service-b",
+              "url": "https://alternate.fixture.invalid"
+            }
+          ]
+        }
+      }
+    ],
+    "meaning": "Unsigned data-shape endpoint choice only. Authentic lease/owner/expiry/grant/image/manifest provenance NOT fabricated; inputs are NOT activation-ready.",
+    "taskFilesNeverMovedIntoCONFIG": true,
+    "futureResult": "not-run",
+    "retainedOriginalPairDefinition": {
+      "id": "RT-d2dfede67afe22ac",
+      "ownerRegistration": {
+        "registration": "kubeclaw.openapi:operations",
+        "kind": "testProviders",
+        "instance": "each configured stage/adapter/observer/test-provider invocation",
+        "profile": "selected by workflow or platform; no central author established"
+      },
+      "taskA": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/task-fixtures/pairs/RT-d2dfede67afe22ac/A.json",
+      "taskB": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/task-fixtures/pairs/RT-d2dfede67afe22ac/B.json",
+      "policySelection": "Complete owner profile A for BOTH task alternatives; native resource association unchanged to isolate task intent.",
+      "unsignedInputsDefinition": [
+        {
+          "name": "deployment",
+          "kind": "value",
+          "schemaId": "kubeclaw.kubernetes-deployment-fixture@1",
+          "value": {
+            "schemaVersion": "kubernetes-deployment-fixture.v1",
+            "endpoints": [
+              {
+                "name": "service-a",
+                "url": "https://fixture.invalid"
+              },
+              {
+                "name": "service-b",
+                "url": "https://alternate.fixture.invalid"
+              }
+            ]
+          }
+        }
+      ],
+      "meaning": "Unsigned data-shape endpoint choice only. Authentic lease/owner/expiry/grant/image/manifest provenance NOT fabricated; inputs are NOT activation-ready.",
+      "taskFilesNeverMovedIntoCONFIG": true,
+      "futureResult": "not-run"
+    }
+  },
+  {
+    "id": "RT-396eb59b11141a9a",
+    "ownerRegistration": {
+      "registration": "kubeclaw.openapi:operations",
+      "kind": "test-provider",
+      "instance": "fixture.openapi",
+      "profile": "A",
+      "serviceInstanceId": "fixture.service.buster-runtime",
+      "soleAuthor": "plugins/kubeclaw.openapi.config.json#/profiles/A",
+      "root": "config/pipeline.config.json pipeline-entry.v5 proposed binding"
+    },
+    "taskA": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/task-fixtures/pairs/RT-396eb59b11141a9a/A.json",
+    "taskB": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/task-fixtures/pairs/RT-396eb59b11141a9a/B.json",
+    "policySelection": "Complete owner profile A for BOTH task alternatives; native resource association unchanged to isolate task intent.",
+    "unsignedInputsDefinition": [],
+    "meaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+    "taskFilesNeverMovedIntoCONFIG": true,
+    "futureResult": "not-run",
+    "retainedOriginalPairDefinition": {
+      "id": "RT-396eb59b11141a9a",
+      "ownerRegistration": {
+        "registration": "kubeclaw.openapi:operations",
+        "kind": "testProviders",
+        "instance": "each configured stage/adapter/observer/test-provider invocation",
+        "profile": "selected by workflow or platform; no central author established"
+      },
+      "taskA": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/task-fixtures/pairs/RT-396eb59b11141a9a/A.json",
+      "taskB": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/task-fixtures/pairs/RT-396eb59b11141a9a/B.json",
+      "policySelection": "Complete owner profile A for BOTH task alternatives; native resource association unchanged to isolate task intent.",
+      "unsignedInputsDefinition": [],
+      "meaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+      "taskFilesNeverMovedIntoCONFIG": true,
+      "futureResult": "not-run"
+    }
+  },
+  {
+    "id": "RT-1d1c5da45ebf7a59",
+    "ownerRegistration": {
+      "registration": "kubeclaw.openapi:operations",
+      "kind": "test-provider",
+      "instance": "fixture.openapi",
+      "profile": "A",
+      "serviceInstanceId": "fixture.service.buster-runtime",
+      "soleAuthor": "plugins/kubeclaw.openapi.config.json#/profiles/A",
+      "root": "config/pipeline.config.json pipeline-entry.v5 proposed binding"
+    },
+    "taskA": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/task-fixtures/pairs/RT-1d1c5da45ebf7a59/A.json",
+    "taskB": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/task-fixtures/pairs/RT-1d1c5da45ebf7a59/B.json",
+    "policySelection": "Complete owner profile A for BOTH task alternatives; native resource association unchanged to isolate task intent.",
+    "unsignedInputsDefinition": [],
+    "meaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+    "taskFilesNeverMovedIntoCONFIG": true,
+    "futureResult": "not-run",
+    "retainedOriginalPairDefinition": {
+      "id": "RT-1d1c5da45ebf7a59",
+      "ownerRegistration": {
+        "registration": "kubeclaw.openapi:operations",
+        "kind": "testProviders",
+        "instance": "each configured stage/adapter/observer/test-provider invocation",
+        "profile": "selected by workflow or platform; no central author established"
+      },
+      "taskA": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/task-fixtures/pairs/RT-1d1c5da45ebf7a59/A.json",
+      "taskB": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/task-fixtures/pairs/RT-1d1c5da45ebf7a59/B.json",
+      "policySelection": "Complete owner profile A for BOTH task alternatives; native resource association unchanged to isolate task intent.",
+      "unsignedInputsDefinition": [],
+      "meaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+      "taskFilesNeverMovedIntoCONFIG": true,
+      "futureResult": "not-run"
+    }
+  },
+  {
+    "id": "RT-039cd17e18207028",
+    "ownerRegistration": {
+      "registration": "kubeclaw.openapi:operations",
+      "kind": "test-provider",
+      "instance": "fixture.openapi",
+      "profile": "A",
+      "serviceInstanceId": "fixture.service.buster-runtime",
+      "soleAuthor": "plugins/kubeclaw.openapi.config.json#/profiles/A",
+      "root": "config/pipeline.config.json pipeline-entry.v5 proposed binding"
+    },
+    "taskA": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/task-fixtures/pairs/RT-039cd17e18207028/A.json",
+    "taskB": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/task-fixtures/pairs/RT-039cd17e18207028/B.json",
+    "policySelection": "Complete owner profile A for BOTH task alternatives; native resource association unchanged to isolate task intent.",
+    "unsignedInputsDefinition": [],
+    "meaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+    "taskFilesNeverMovedIntoCONFIG": true,
+    "futureResult": "not-run",
+    "retainedOriginalPairDefinition": {
+      "id": "RT-039cd17e18207028",
+      "ownerRegistration": {
+        "registration": "kubeclaw.openapi:operations",
+        "kind": "testProviders",
+        "instance": "each configured stage/adapter/observer/test-provider invocation",
+        "profile": "selected by workflow or platform; no central author established"
+      },
+      "taskA": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/task-fixtures/pairs/RT-039cd17e18207028/A.json",
+      "taskB": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/task-fixtures/pairs/RT-039cd17e18207028/B.json",
+      "policySelection": "Complete owner profile A for BOTH task alternatives; native resource association unchanged to isolate task intent.",
+      "unsignedInputsDefinition": [],
+      "meaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+      "taskFilesNeverMovedIntoCONFIG": true,
+      "futureResult": "not-run"
+    }
+  },
+  {
+    "id": "RT-4ad5dd8a7cfccc1c",
+    "ownerRegistration": {
+      "registration": "kubeclaw.openapi:operations",
+      "kind": "test-provider",
+      "instance": "fixture.openapi",
+      "profile": "A",
+      "serviceInstanceId": "fixture.service.buster-runtime",
+      "soleAuthor": "plugins/kubeclaw.openapi.config.json#/profiles/A",
+      "root": "config/pipeline.config.json pipeline-entry.v5 proposed binding"
+    },
+    "taskA": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/task-fixtures/pairs/RT-4ad5dd8a7cfccc1c/A.json",
+    "taskB": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/task-fixtures/pairs/RT-4ad5dd8a7cfccc1c/B.json",
+    "policySelection": "Complete owner profile A for BOTH task alternatives; native resource association unchanged to isolate task intent.",
+    "unsignedInputsDefinition": [],
+    "meaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+    "taskFilesNeverMovedIntoCONFIG": true,
+    "futureResult": "not-run",
+    "retainedOriginalPairDefinition": {
+      "id": "RT-4ad5dd8a7cfccc1c",
+      "ownerRegistration": {
+        "registration": "kubeclaw.openapi:operations",
+        "kind": "testProviders",
+        "instance": "each configured stage/adapter/observer/test-provider invocation",
+        "profile": "selected by workflow or platform; no central author established"
+      },
+      "taskA": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/task-fixtures/pairs/RT-4ad5dd8a7cfccc1c/A.json",
+      "taskB": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/task-fixtures/pairs/RT-4ad5dd8a7cfccc1c/B.json",
+      "policySelection": "Complete owner profile A for BOTH task alternatives; native resource association unchanged to isolate task intent.",
+      "unsignedInputsDefinition": [],
+      "meaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+      "taskFilesNeverMovedIntoCONFIG": true,
+      "futureResult": "not-run"
+    }
+  },
+  {
+    "id": "RT-496f09de742b998e",
+    "ownerRegistration": {
+      "registration": "kubeclaw.openapi:operations",
+      "kind": "test-provider",
+      "instance": "fixture.openapi",
+      "profile": "A",
+      "serviceInstanceId": "fixture.service.buster-runtime",
+      "soleAuthor": "plugins/kubeclaw.openapi.config.json#/profiles/A",
+      "root": "config/pipeline.config.json pipeline-entry.v5 proposed binding"
+    },
+    "taskA": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/task-fixtures/pairs/RT-496f09de742b998e/A.json",
+    "taskB": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/task-fixtures/pairs/RT-496f09de742b998e/B.json",
+    "policySelection": "Complete owner profile A for BOTH task alternatives; native resource association unchanged to isolate task intent.",
+    "unsignedInputsDefinition": [],
+    "meaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+    "taskFilesNeverMovedIntoCONFIG": true,
+    "futureResult": "not-run",
+    "retainedOriginalPairDefinition": {
+      "id": "RT-496f09de742b998e",
+      "ownerRegistration": {
+        "registration": "kubeclaw.openapi:operations",
+        "kind": "testProviders",
+        "instance": "each configured stage/adapter/observer/test-provider invocation",
+        "profile": "selected by workflow or platform; no central author established"
+      },
+      "taskA": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/task-fixtures/pairs/RT-496f09de742b998e/A.json",
+      "taskB": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/task-fixtures/pairs/RT-496f09de742b998e/B.json",
+      "policySelection": "Complete owner profile A for BOTH task alternatives; native resource association unchanged to isolate task intent.",
+      "unsignedInputsDefinition": [],
+      "meaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+      "taskFilesNeverMovedIntoCONFIG": true,
+      "futureResult": "not-run"
+    }
+  },
+  {
+    "id": "RT-d077dd499ce84e1c",
+    "ownerRegistration": {
+      "registration": "kubeclaw.openapi:operations",
+      "kind": "test-provider",
+      "instance": "fixture.openapi",
+      "profile": "A",
+      "serviceInstanceId": "fixture.service.buster-runtime",
+      "soleAuthor": "plugins/kubeclaw.openapi.config.json#/profiles/A",
+      "root": "config/pipeline.config.json pipeline-entry.v5 proposed binding"
+    },
+    "taskA": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/task-fixtures/pairs/RT-d077dd499ce84e1c/A.json",
+    "taskB": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/task-fixtures/pairs/RT-d077dd499ce84e1c/B.json",
+    "policySelection": "Complete owner profile A for BOTH task alternatives; native resource association unchanged to isolate task intent.",
+    "unsignedInputsDefinition": [],
+    "meaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+    "taskFilesNeverMovedIntoCONFIG": true,
+    "futureResult": "not-run",
+    "retainedOriginalPairDefinition": {
+      "id": "RT-d077dd499ce84e1c",
+      "ownerRegistration": {
+        "registration": "kubeclaw.openapi:operations",
+        "kind": "testProviders",
+        "instance": "each configured stage/adapter/observer/test-provider invocation",
+        "profile": "selected by workflow or platform; no central author established"
+      },
+      "taskA": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/task-fixtures/pairs/RT-d077dd499ce84e1c/A.json",
+      "taskB": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/task-fixtures/pairs/RT-d077dd499ce84e1c/B.json",
+      "policySelection": "Complete owner profile A for BOTH task alternatives; native resource association unchanged to isolate task intent.",
+      "unsignedInputsDefinition": [],
+      "meaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+      "taskFilesNeverMovedIntoCONFIG": true,
+      "futureResult": "not-run"
+    }
+  },
+  {
+    "id": "RT-9cec05672cab2d0d",
+    "ownerRegistration": {
+      "registration": "kubeclaw.openapi:operations",
+      "kind": "test-provider",
+      "instance": "fixture.openapi",
+      "profile": "A",
+      "serviceInstanceId": "fixture.service.buster-runtime",
+      "soleAuthor": "plugins/kubeclaw.openapi.config.json#/profiles/A",
+      "root": "config/pipeline.config.json pipeline-entry.v5 proposed binding"
+    },
+    "taskA": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/task-fixtures/pairs/RT-9cec05672cab2d0d/A.json",
+    "taskB": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/task-fixtures/pairs/RT-9cec05672cab2d0d/B.json",
+    "policySelection": "Complete owner profile A for BOTH task alternatives; native resource association unchanged to isolate task intent.",
+    "unsignedInputsDefinition": [],
+    "meaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+    "taskFilesNeverMovedIntoCONFIG": true,
+    "futureResult": "not-run",
+    "retainedOriginalPairDefinition": {
+      "id": "RT-9cec05672cab2d0d",
+      "ownerRegistration": {
+        "registration": "kubeclaw.openapi:operations",
+        "kind": "testProviders",
+        "instance": "each configured stage/adapter/observer/test-provider invocation",
+        "profile": "selected by workflow or platform; no central author established"
+      },
+      "taskA": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/task-fixtures/pairs/RT-9cec05672cab2d0d/A.json",
+      "taskB": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/task-fixtures/pairs/RT-9cec05672cab2d0d/B.json",
+      "policySelection": "Complete owner profile A for BOTH task alternatives; native resource association unchanged to isolate task intent.",
+      "unsignedInputsDefinition": [],
+      "meaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+      "taskFilesNeverMovedIntoCONFIG": true,
+      "futureResult": "not-run"
+    }
+  },
+  {
+    "id": "RT-148251b72f4d24e0",
+    "ownerRegistration": {
+      "registration": "kubeclaw.openapi:operations",
+      "kind": "test-provider",
+      "instance": "fixture.openapi",
+      "profile": "A",
+      "serviceInstanceId": "fixture.service.buster-runtime",
+      "soleAuthor": "plugins/kubeclaw.openapi.config.json#/profiles/A",
+      "root": "config/pipeline.config.json pipeline-entry.v5 proposed binding"
+    },
+    "taskA": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/task-fixtures/pairs/RT-148251b72f4d24e0/A.json",
+    "taskB": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/task-fixtures/pairs/RT-148251b72f4d24e0/B.json",
+    "policySelection": "Complete owner profile A for BOTH task alternatives; native resource association unchanged to isolate task intent.",
+    "unsignedInputsDefinition": [],
+    "meaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+    "taskFilesNeverMovedIntoCONFIG": true,
+    "futureResult": "not-run",
+    "retainedOriginalPairDefinition": {
+      "id": "RT-148251b72f4d24e0",
+      "ownerRegistration": {
+        "registration": "kubeclaw.openapi:operations",
+        "kind": "testProviders",
+        "instance": "each configured stage/adapter/observer/test-provider invocation",
+        "profile": "selected by workflow or platform; no central author established"
+      },
+      "taskA": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/task-fixtures/pairs/RT-148251b72f4d24e0/A.json",
+      "taskB": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/task-fixtures/pairs/RT-148251b72f4d24e0/B.json",
+      "policySelection": "Complete owner profile A for BOTH task alternatives; native resource association unchanged to isolate task intent.",
+      "unsignedInputsDefinition": [],
+      "meaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+      "taskFilesNeverMovedIntoCONFIG": true,
+      "futureResult": "not-run"
+    }
+  },
+  {
+    "id": "RT-153e53cbf58a2c3b",
+    "ownerRegistration": {
+      "registration": "kubeclaw.openapi:operations",
+      "kind": "test-provider",
+      "instance": "fixture.openapi",
+      "profile": "A",
+      "serviceInstanceId": "fixture.service.buster-runtime",
+      "soleAuthor": "plugins/kubeclaw.openapi.config.json#/profiles/A",
+      "root": "config/pipeline.config.json pipeline-entry.v5 proposed binding"
+    },
+    "taskA": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/task-fixtures/pairs/RT-153e53cbf58a2c3b/A.json",
+    "taskB": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/task-fixtures/pairs/RT-153e53cbf58a2c3b/B.json",
+    "policySelection": "Complete owner profile A for BOTH task alternatives; native resource association unchanged to isolate task intent.",
+    "unsignedInputsDefinition": [],
+    "meaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+    "taskFilesNeverMovedIntoCONFIG": true,
+    "futureResult": "not-run",
+    "retainedOriginalPairDefinition": {
+      "id": "RT-153e53cbf58a2c3b",
+      "ownerRegistration": {
+        "registration": "kubeclaw.openapi:operations",
+        "kind": "testProviders",
+        "instance": "each configured stage/adapter/observer/test-provider invocation",
+        "profile": "selected by workflow or platform; no central author established"
+      },
+      "taskA": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/task-fixtures/pairs/RT-153e53cbf58a2c3b/A.json",
+      "taskB": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/task-fixtures/pairs/RT-153e53cbf58a2c3b/B.json",
+      "policySelection": "Complete owner profile A for BOTH task alternatives; native resource association unchanged to isolate task intent.",
+      "unsignedInputsDefinition": [],
+      "meaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+      "taskFilesNeverMovedIntoCONFIG": true,
+      "futureResult": "not-run"
+    }
+  },
+  {
+    "id": "RT-03b79ef05f21760b",
+    "ownerRegistration": {
+      "registration": "kubeclaw.openapi:operations",
+      "kind": "test-provider",
+      "instance": "fixture.openapi",
+      "profile": "A",
+      "serviceInstanceId": "fixture.service.buster-runtime",
+      "soleAuthor": "plugins/kubeclaw.openapi.config.json#/profiles/A",
+      "root": "config/pipeline.config.json pipeline-entry.v5 proposed binding"
+    },
+    "taskA": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/task-fixtures/pairs/RT-03b79ef05f21760b/A.json",
+    "taskB": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/task-fixtures/pairs/RT-03b79ef05f21760b/B.json",
+    "policySelection": "Complete owner profile A for BOTH task alternatives; native resource association unchanged to isolate task intent.",
+    "unsignedInputsDefinition": [],
+    "meaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+    "taskFilesNeverMovedIntoCONFIG": true,
+    "futureResult": "not-run",
+    "retainedOriginalPairDefinition": {
+      "id": "RT-03b79ef05f21760b",
+      "ownerRegistration": {
+        "registration": "kubeclaw.openapi:operations",
+        "kind": "testProviders",
+        "instance": "each configured stage/adapter/observer/test-provider invocation",
+        "profile": "selected by workflow or platform; no central author established"
+      },
+      "taskA": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/task-fixtures/pairs/RT-03b79ef05f21760b/A.json",
+      "taskB": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/task-fixtures/pairs/RT-03b79ef05f21760b/B.json",
+      "policySelection": "Complete owner profile A for BOTH task alternatives; native resource association unchanged to isolate task intent.",
+      "unsignedInputsDefinition": [],
+      "meaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+      "taskFilesNeverMovedIntoCONFIG": true,
+      "futureResult": "not-run"
+    }
+  },
+  {
+    "id": "RT-9d2b7832df8521b8",
+    "ownerRegistration": {
+      "registration": "kubeclaw.openapi:operations",
+      "kind": "test-provider",
+      "instance": "fixture.openapi",
+      "profile": "A",
+      "serviceInstanceId": "fixture.service.buster-runtime",
+      "soleAuthor": "plugins/kubeclaw.openapi.config.json#/profiles/A",
+      "root": "config/pipeline.config.json pipeline-entry.v5 proposed binding"
+    },
+    "taskA": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/task-fixtures/pairs/RT-9d2b7832df8521b8/A.json",
+    "taskB": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/task-fixtures/pairs/RT-9d2b7832df8521b8/B.json",
+    "policySelection": "Complete owner profile A for BOTH task alternatives; native resource association unchanged to isolate task intent.",
+    "unsignedInputsDefinition": [],
+    "meaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+    "taskFilesNeverMovedIntoCONFIG": true,
+    "futureResult": "not-run",
+    "retainedOriginalPairDefinition": {
+      "id": "RT-9d2b7832df8521b8",
+      "ownerRegistration": {
+        "registration": "kubeclaw.openapi:operations",
+        "kind": "testProviders",
+        "instance": "each configured stage/adapter/observer/test-provider invocation",
+        "profile": "selected by workflow or platform; no central author established"
+      },
+      "taskA": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/task-fixtures/pairs/RT-9d2b7832df8521b8/A.json",
+      "taskB": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/task-fixtures/pairs/RT-9d2b7832df8521b8/B.json",
+      "policySelection": "Complete owner profile A for BOTH task alternatives; native resource association unchanged to isolate task intent.",
+      "unsignedInputsDefinition": [],
+      "meaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+      "taskFilesNeverMovedIntoCONFIG": true,
+      "futureResult": "not-run"
+    }
+  },
+  {
+    "id": "RT-88373ef30a584869",
+    "ownerRegistration": {
+      "registration": "kubeclaw.openapi:operations",
+      "kind": "test-provider",
+      "instance": "fixture.openapi",
+      "profile": "A",
+      "serviceInstanceId": "fixture.service.buster-runtime",
+      "soleAuthor": "plugins/kubeclaw.openapi.config.json#/profiles/A",
+      "root": "config/pipeline.config.json pipeline-entry.v5 proposed binding"
+    },
+    "taskA": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/task-fixtures/pairs/RT-88373ef30a584869/A.json",
+    "taskB": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/task-fixtures/pairs/RT-88373ef30a584869/B.json",
+    "policySelection": "Complete owner profile A for BOTH task alternatives; native resource association unchanged to isolate task intent.",
+    "unsignedInputsDefinition": [],
+    "meaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+    "taskFilesNeverMovedIntoCONFIG": true,
+    "futureResult": "not-run",
+    "retainedOriginalPairDefinition": {
+      "id": "RT-88373ef30a584869",
+      "ownerRegistration": {
+        "registration": "kubeclaw.openapi:operations",
+        "kind": "testProviders",
+        "instance": "each configured stage/adapter/observer/test-provider invocation",
+        "profile": "selected by workflow or platform; no central author established"
+      },
+      "taskA": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/task-fixtures/pairs/RT-88373ef30a584869/A.json",
+      "taskB": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/task-fixtures/pairs/RT-88373ef30a584869/B.json",
+      "policySelection": "Complete owner profile A for BOTH task alternatives; native resource association unchanged to isolate task intent.",
+      "unsignedInputsDefinition": [],
+      "meaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+      "taskFilesNeverMovedIntoCONFIG": true,
+      "futureResult": "not-run"
+    }
+  },
+  {
+    "id": "RT-3168b8463b219872",
+    "ownerRegistration": {
+      "registration": "kubeclaw.openapi:operations",
+      "kind": "test-provider",
+      "instance": "fixture.openapi",
+      "profile": "A",
+      "serviceInstanceId": "fixture.service.buster-runtime",
+      "soleAuthor": "plugins/kubeclaw.openapi.config.json#/profiles/A",
+      "root": "config/pipeline.config.json pipeline-entry.v5 proposed binding"
+    },
+    "taskA": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/task-fixtures/pairs/RT-3168b8463b219872/A.json",
+    "taskB": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/task-fixtures/pairs/RT-3168b8463b219872/B.json",
+    "policySelection": "Complete owner profile A for BOTH task alternatives; native resource association unchanged to isolate task intent.",
+    "unsignedInputsDefinition": [],
+    "meaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+    "taskFilesNeverMovedIntoCONFIG": true,
+    "futureResult": "not-run",
+    "retainedOriginalPairDefinition": {
+      "id": "RT-3168b8463b219872",
+      "ownerRegistration": {
+        "registration": "kubeclaw.openapi:operations",
+        "kind": "testProviders",
+        "instance": "each configured stage/adapter/observer/test-provider invocation",
+        "profile": "selected by workflow or platform; no central author established"
+      },
+      "taskA": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/task-fixtures/pairs/RT-3168b8463b219872/A.json",
+      "taskB": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/task-fixtures/pairs/RT-3168b8463b219872/B.json",
+      "policySelection": "Complete owner profile A for BOTH task alternatives; native resource association unchanged to isolate task intent.",
+      "unsignedInputsDefinition": [],
+      "meaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+      "taskFilesNeverMovedIntoCONFIG": true,
+      "futureResult": "not-run"
+    }
+  },
+  {
+    "id": "RT-6c40eb311c36aa18",
+    "ownerRegistration": {
+      "registration": "kubeclaw.openapi:operations",
+      "kind": "test-provider",
+      "instance": "fixture.openapi",
+      "profile": "A",
+      "serviceInstanceId": "fixture.service.buster-runtime",
+      "soleAuthor": "plugins/kubeclaw.openapi.config.json#/profiles/A",
+      "root": "config/pipeline.config.json pipeline-entry.v5 proposed binding"
+    },
+    "taskA": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/task-fixtures/pairs/RT-6c40eb311c36aa18/A.json",
+    "taskB": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/task-fixtures/pairs/RT-6c40eb311c36aa18/B.json",
+    "policySelection": "Complete owner profile A for BOTH task alternatives; native resource association unchanged to isolate task intent.",
+    "unsignedInputsDefinition": [],
+    "meaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+    "taskFilesNeverMovedIntoCONFIG": true,
+    "futureResult": "not-run",
+    "retainedOriginalPairDefinition": {
+      "id": "RT-6c40eb311c36aa18",
+      "ownerRegistration": {
+        "registration": "kubeclaw.openapi:operations",
+        "kind": "testProviders",
+        "instance": "each configured stage/adapter/observer/test-provider invocation",
+        "profile": "selected by workflow or platform; no central author established"
+      },
+      "taskA": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/task-fixtures/pairs/RT-6c40eb311c36aa18/A.json",
+      "taskB": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/task-fixtures/pairs/RT-6c40eb311c36aa18/B.json",
+      "policySelection": "Complete owner profile A for BOTH task alternatives; native resource association unchanged to isolate task intent.",
+      "unsignedInputsDefinition": [],
+      "meaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+      "taskFilesNeverMovedIntoCONFIG": true,
+      "futureResult": "not-run"
+    }
+  },
+  {
+    "id": "RT-67427bf80b25f14f",
+    "ownerRegistration": {
+      "registration": "kubeclaw.openapi:operations",
+      "kind": "test-provider",
+      "instance": "fixture.openapi",
+      "profile": "A",
+      "serviceInstanceId": "fixture.service.buster-runtime",
+      "soleAuthor": "plugins/kubeclaw.openapi.config.json#/profiles/A",
+      "root": "config/pipeline.config.json pipeline-entry.v5 proposed binding"
+    },
+    "taskA": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/task-fixtures/pairs/RT-67427bf80b25f14f/A.json",
+    "taskB": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/task-fixtures/pairs/RT-67427bf80b25f14f/B.json",
+    "policySelection": "Complete owner profile A for BOTH task alternatives; native resource association unchanged to isolate task intent.",
+    "unsignedInputsDefinition": [],
+    "meaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+    "taskFilesNeverMovedIntoCONFIG": true,
+    "futureResult": "not-run",
+    "retainedOriginalPairDefinition": {
+      "id": "RT-67427bf80b25f14f",
+      "ownerRegistration": {
+        "registration": "kubeclaw.openapi:operations",
+        "kind": "testProviders",
+        "instance": "each configured stage/adapter/observer/test-provider invocation",
+        "profile": "selected by workflow or platform; no central author established"
+      },
+      "taskA": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/task-fixtures/pairs/RT-67427bf80b25f14f/A.json",
+      "taskB": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/task-fixtures/pairs/RT-67427bf80b25f14f/B.json",
+      "policySelection": "Complete owner profile A for BOTH task alternatives; native resource association unchanged to isolate task intent.",
+      "unsignedInputsDefinition": [],
+      "meaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+      "taskFilesNeverMovedIntoCONFIG": true,
+      "futureResult": "not-run"
+    }
+  },
+  {
+    "id": "RT-da87e9da52e239b4",
+    "ownerRegistration": {
+      "registration": "kubeclaw.openapi:operations",
+      "kind": "test-provider",
+      "instance": "fixture.openapi",
+      "profile": "A",
+      "serviceInstanceId": "fixture.service.buster-runtime",
+      "soleAuthor": "plugins/kubeclaw.openapi.config.json#/profiles/A",
+      "root": "config/pipeline.config.json pipeline-entry.v5 proposed binding"
+    },
+    "taskA": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/task-fixtures/pairs/RT-da87e9da52e239b4/A.json",
+    "taskB": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/task-fixtures/pairs/RT-da87e9da52e239b4/B.json",
+    "policySelection": "Complete owner profile A for BOTH task alternatives; native resource association unchanged to isolate task intent.",
+    "unsignedInputsDefinition": [],
+    "meaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+    "taskFilesNeverMovedIntoCONFIG": true,
+    "futureResult": "not-run",
+    "retainedOriginalPairDefinition": {
+      "id": "RT-da87e9da52e239b4",
+      "ownerRegistration": {
+        "registration": "kubeclaw.openapi:operations",
+        "kind": "testProviders",
+        "instance": "each configured stage/adapter/observer/test-provider invocation",
+        "profile": "selected by workflow or platform; no central author established"
+      },
+      "taskA": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/task-fixtures/pairs/RT-da87e9da52e239b4/A.json",
+      "taskB": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/task-fixtures/pairs/RT-da87e9da52e239b4/B.json",
+      "policySelection": "Complete owner profile A for BOTH task alternatives; native resource association unchanged to isolate task intent.",
+      "unsignedInputsDefinition": [],
+      "meaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+      "taskFilesNeverMovedIntoCONFIG": true,
+      "futureResult": "not-run"
+    }
+  },
+  {
+    "id": "RT-795b89c50339c532",
+    "ownerRegistration": {
+      "registration": "kubeclaw.openapi:operations",
+      "kind": "test-provider",
+      "instance": "fixture.openapi",
+      "profile": "A",
+      "serviceInstanceId": "fixture.service.buster-runtime",
+      "soleAuthor": "plugins/kubeclaw.openapi.config.json#/profiles/A",
+      "root": "config/pipeline.config.json pipeline-entry.v5 proposed binding"
+    },
+    "taskA": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/task-fixtures/pairs/RT-795b89c50339c532/A.json",
+    "taskB": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/task-fixtures/pairs/RT-795b89c50339c532/B.json",
+    "policySelection": "Complete owner profile A for BOTH task alternatives; native resource association unchanged to isolate task intent.",
+    "unsignedInputsDefinition": [],
+    "meaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+    "taskFilesNeverMovedIntoCONFIG": true,
+    "futureResult": "not-run",
+    "retainedOriginalPairDefinition": {
+      "id": "RT-795b89c50339c532",
+      "ownerRegistration": {
+        "registration": "kubeclaw.openapi:operations",
+        "kind": "testProviders",
+        "instance": "each configured stage/adapter/observer/test-provider invocation",
+        "profile": "selected by workflow or platform; no central author established"
+      },
+      "taskA": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/task-fixtures/pairs/RT-795b89c50339c532/A.json",
+      "taskB": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/task-fixtures/pairs/RT-795b89c50339c532/B.json",
+      "policySelection": "Complete owner profile A for BOTH task alternatives; native resource association unchanged to isolate task intent.",
+      "unsignedInputsDefinition": [],
+      "meaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+      "taskFilesNeverMovedIntoCONFIG": true,
+      "futureResult": "not-run"
+    }
+  },
+  {
+    "id": "RT-0dfdeb7fe789b20b",
+    "ownerRegistration": {
+      "registration": "kubeclaw.openapi:operations",
+      "kind": "test-provider",
+      "instance": "fixture.openapi",
+      "profile": "A",
+      "serviceInstanceId": "fixture.service.buster-runtime",
+      "soleAuthor": "plugins/kubeclaw.openapi.config.json#/profiles/A",
+      "root": "config/pipeline.config.json pipeline-entry.v5 proposed binding"
+    },
+    "taskA": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/task-fixtures/pairs/RT-0dfdeb7fe789b20b/A.json",
+    "taskB": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/task-fixtures/pairs/RT-0dfdeb7fe789b20b/B.json",
+    "policySelection": "Complete owner profile A for BOTH task alternatives; native resource association unchanged to isolate task intent.",
+    "unsignedInputsDefinition": [],
+    "meaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+    "taskFilesNeverMovedIntoCONFIG": true,
+    "futureResult": "not-run",
+    "retainedOriginalPairDefinition": {
+      "id": "RT-0dfdeb7fe789b20b",
+      "ownerRegistration": {
+        "registration": "kubeclaw.openapi:operations",
+        "kind": "testProviders",
+        "instance": "each configured stage/adapter/observer/test-provider invocation",
+        "profile": "selected by workflow or platform; no central author established"
+      },
+      "taskA": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/task-fixtures/pairs/RT-0dfdeb7fe789b20b/A.json",
+      "taskB": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/task-fixtures/pairs/RT-0dfdeb7fe789b20b/B.json",
+      "policySelection": "Complete owner profile A for BOTH task alternatives; native resource association unchanged to isolate task intent.",
+      "unsignedInputsDefinition": [],
+      "meaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+      "taskFilesNeverMovedIntoCONFIG": true,
+      "futureResult": "not-run"
+    }
+  },
+  {
+    "id": "RT-93fe557af6f46c3f",
+    "ownerRegistration": {
+      "registration": "kubeclaw.openapi:operations",
+      "kind": "test-provider",
+      "instance": "fixture.openapi",
+      "profile": "A",
+      "serviceInstanceId": "fixture.service.buster-runtime",
+      "soleAuthor": "plugins/kubeclaw.openapi.config.json#/profiles/A",
+      "root": "config/pipeline.config.json pipeline-entry.v5 proposed binding"
+    },
+    "taskA": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/task-fixtures/pairs/RT-93fe557af6f46c3f/A.json",
+    "taskB": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/task-fixtures/pairs/RT-93fe557af6f46c3f/B.json",
+    "policySelection": "Complete owner profile A for BOTH task alternatives; native resource association unchanged to isolate task intent.",
+    "unsignedInputsDefinition": [],
+    "meaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+    "taskFilesNeverMovedIntoCONFIG": true,
+    "futureResult": "not-run",
+    "retainedOriginalPairDefinition": {
+      "id": "RT-93fe557af6f46c3f",
+      "ownerRegistration": {
+        "registration": "kubeclaw.openapi:operations",
+        "kind": "testProviders",
+        "instance": "each configured stage/adapter/observer/test-provider invocation",
+        "profile": "selected by workflow or platform; no central author established"
+      },
+      "taskA": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/task-fixtures/pairs/RT-93fe557af6f46c3f/A.json",
+      "taskB": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/task-fixtures/pairs/RT-93fe557af6f46c3f/B.json",
+      "policySelection": "Complete owner profile A for BOTH task alternatives; native resource association unchanged to isolate task intent.",
+      "unsignedInputsDefinition": [],
+      "meaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution.",
+      "taskFilesNeverMovedIntoCONFIG": true,
+      "futureResult": "not-run"
+    }
+  },
+  {
+    "id": "RT-d67d1281071db148",
+    "ownerRegistration": {
+      "registration": "kubeclaw.openapi:operations",
+      "kind": "test-provider",
+      "instance": "fixture.openapi",
+      "profile": "A",
+      "serviceInstanceId": "fixture.service.buster-runtime",
+      "soleAuthor": "plugins/kubeclaw.openapi.config.json#/profiles/A",
+      "root": "config/pipeline.config.json pipeline-entry.v5 proposed binding"
+    },
+    "taskA": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/task-fixtures/pairs/RT-d67d1281071db148/A.json",
+    "taskB": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/task-fixtures/pairs/RT-d67d1281071db148/B.json",
+    "policySelection": "Complete owner profile A for BOTH task alternatives; native resource association unchanged to isolate task intent.",
+    "unsignedInputsDefinition": [],
+    "meaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution. Selecting unmatched tag yields source OPENAPI_SELECTION_EMPTY; an alternative genuine tagged spec/task is required for positive alternate.",
+    "taskFilesNeverMovedIntoCONFIG": true,
+    "futureResult": "not-run",
+    "retainedOriginalPairDefinition": {
+      "id": "RT-d67d1281071db148",
+      "ownerRegistration": {
+        "registration": "kubeclaw.openapi:operations",
+        "kind": "testProviders",
+        "instance": "each configured stage/adapter/observer/test-provider invocation",
+        "profile": "selected by workflow or platform; no central author established"
+      },
+      "taskA": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/task-fixtures/pairs/RT-d67d1281071db148/A.json",
+      "taskB": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/task-fixtures/pairs/RT-d67d1281071db148/B.json",
+      "policySelection": "Complete owner profile A for BOTH task alternatives; native resource association unchanged to isolate task intent.",
+      "unsignedInputsDefinition": [],
+      "meaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution. Selecting unmatched tag yields source OPENAPI_SELECTION_EMPTY; an alternative genuine tagged spec/task is required for positive alternate.",
+      "taskFilesNeverMovedIntoCONFIG": true,
+      "futureResult": "not-run"
+    }
+  },
+  {
+    "id": "RT-96b1400c6db325d0",
+    "ownerRegistration": {
+      "registration": "kubeclaw.openapi:operations",
+      "kind": "test-provider",
+      "instance": "fixture.openapi",
+      "profile": "A",
+      "serviceInstanceId": "fixture.service.buster-runtime",
+      "soleAuthor": "plugins/kubeclaw.openapi.config.json#/profiles/A",
+      "root": "config/pipeline.config.json pipeline-entry.v5 proposed binding"
+    },
+    "taskA": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/task-fixtures/pairs/RT-96b1400c6db325d0/A.json",
+    "taskB": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/task-fixtures/pairs/RT-96b1400c6db325d0/B.json",
+    "policySelection": "Complete owner profile A for BOTH task alternatives; native resource association unchanged to isolate task intent.",
+    "unsignedInputsDefinition": [],
+    "meaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution. Selecting unmatched tag yields source OPENAPI_SELECTION_EMPTY; an alternative genuine tagged spec/task is required for positive alternate.",
+    "taskFilesNeverMovedIntoCONFIG": true,
+    "futureResult": "not-run",
+    "retainedOriginalPairDefinition": {
+      "id": "RT-96b1400c6db325d0",
+      "ownerRegistration": {
+        "registration": "kubeclaw.openapi:operations",
+        "kind": "testProviders",
+        "instance": "each configured stage/adapter/observer/test-provider invocation",
+        "profile": "selected by workflow or platform; no central author established"
+      },
+      "taskA": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/task-fixtures/pairs/RT-96b1400c6db325d0/A.json",
+      "taskB": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/task-fixtures/pairs/RT-96b1400c6db325d0/B.json",
+      "policySelection": "Complete owner profile A for BOTH task alternatives; native resource association unchanged to isolate task intent.",
+      "unsignedInputsDefinition": [],
+      "meaning": "Exact actual task-member selection/assertion/encoding; actual endpoint/grant/provenance unavailable, no provider/network execution. Selecting unmatched tag yields source OPENAPI_SELECTION_EMPTY; an alternative genuine tagged spec/task is required for positive alternate.",
+      "taskFilesNeverMovedIntoCONFIG": true,
+      "futureResult": "not-run"
+    }
+  }
+]

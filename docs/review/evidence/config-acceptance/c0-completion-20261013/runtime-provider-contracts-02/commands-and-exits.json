@@ -1,0 +1,29 @@
+{
+  "workingDirectory": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+  "commands": [
+    {
+      "argv": [
+        "node",
+        "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/check-corrections.mjs"
+      ],
+      "exit": 0,
+      "stdout": "logs/final-replay.stdout",
+      "stderr": "logs/final-replay.stderr",
+      "qualification": "Specific local author schema/source definition checks only; no native/provider/network/activation/API/browser/Eval"
+    }
+  ],
+  "priorToolOutputReferences": [
+    "d69d62",
+    "8756a8",
+    "508367",
+    "c738e7",
+    "a91db3",
+    "a90ab4",
+    "7464ab",
+    "e19b0d",
+    "2642e2",
+    "7c7366"
+  ],
+  "priorFailure": "prior-definition-attempt.json",
+  "finalCollectorToolOutputReference": "f8c840"
+}

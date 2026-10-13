@@ -1,0 +1,312 @@
+[
+  {
+    "originalSettingId": "RT-b8eb5e344f496d7c",
+    "side": "A",
+    "registrationId": "kubeclaw.api-flow:flow",
+    "profileId": "RT-b8eb5e344f496d7c-A",
+    "wholePolicySha256": "b5695f4d483a0f4aec72333f49943298ec55f362c2de8655fed8d5bc5e9c6715",
+    "definition": "explicit complete02 profile, prior01 profile bytes retained in frozen01; no silent historical execution transplant"
+  },
+  {
+    "originalSettingId": "RT-b8eb5e344f496d7c",
+    "side": "B",
+    "registrationId": "kubeclaw.api-flow:flow",
+    "profileId": "RT-b8eb5e344f496d7c-B",
+    "wholePolicySha256": "2799ce7bf656c117950722cd5e154b9025efe38c19cccb33a0741a54dd6c0a00",
+    "definition": "explicit complete02 profile, prior01 profile bytes retained in frozen01; no silent historical execution transplant"
+  },
+  {
+    "originalSettingId": "RT-98a5849759145124",
+    "side": "A",
+    "registrationId": "kubeclaw.api-flow:flow",
+    "profileId": "RT-98a5849759145124-A",
+    "wholePolicySha256": "24e66406078dbe3c67acfa1dff6385130b9dc82d0cffcb133c1304df3e7f0460",
+    "definition": "explicit complete02 profile, prior01 profile bytes retained in frozen01; no silent historical execution transplant"
+  },
+  {
+    "originalSettingId": "RT-98a5849759145124",
+    "side": "B",
+    "registrationId": "kubeclaw.api-flow:flow",
+    "profileId": "RT-98a5849759145124-B",
+    "wholePolicySha256": "ae8c1324579b92b7e7d6b53fdabcf8949b808b03411d1c1fc2c3e0939b940cef",
+    "definition": "explicit complete02 profile, prior01 profile bytes retained in frozen01; no silent historical execution transplant"
+  },
+  {
+    "originalSettingId": "RT-6e292c3c6f492f07",
+    "side": "A",
+    "registrationId": "kubeclaw.api-flow:flow",
+    "profileId": "RT-6e292c3c6f492f07-A",
+    "wholePolicySha256": "0214dacdf23b6f77ee48a9ffe66381510d5510bdc7893ed2ad49790934eac037",
+    "definition": "explicit complete02 profile, prior01 profile bytes retained in frozen01; no silent historical execution transplant"
+  },
+  {
+    "originalSettingId": "RT-6e292c3c6f492f07",
+    "side": "B",
+    "registrationId": "kubeclaw.api-flow:flow",
+    "profileId": "RT-6e292c3c6f492f07-B",
+    "wholePolicySha256": "ae8c1324579b92b7e7d6b53fdabcf8949b808b03411d1c1fc2c3e0939b940cef",
+    "definition": "explicit complete02 profile, prior01 profile bytes retained in frozen01; no silent historical execution transplant"
+  },
+  {
+    "originalSettingId": "RT-6b6f0761a77de324",
+    "side": "A",
+    "registrationId": "kubeclaw.http:request",
+    "profileId": "RT-6b6f0761a77de324-A",
+    "wholePolicySha256": "7effc74900cb9882ffd5b81ba638ad6393f0b0b0f4e5b861ce3434bc16dfd209",
+    "definition": "explicit complete02 profile, prior01 profile bytes retained in frozen01; no silent historical execution transplant"
+  },
+  {
+    "originalSettingId": "RT-6b6f0761a77de324",
+    "side": "B",
+    "registrationId": "kubeclaw.http:request",
+    "profileId": "RT-6b6f0761a77de324-B",
+    "wholePolicySha256": "fbfa8f02d9c409ca821b28f654be6f2b3305d3a59abc0ad8d662bd78eea17811",
+    "definition": "explicit complete02 profile, prior01 profile bytes retained in frozen01; no silent historical execution transplant"
+  },
+  {
+    "originalSettingId": "RT-6a3cdfc223a3c24b",
+    "side": "A",
+    "registrationId": "kubeclaw.http:request",
+    "profileId": "RT-6a3cdfc223a3c24b-A",
+    "wholePolicySha256": "610207daeebc99e7018324900d39a58e30da8ea20b130d12345e11d8fe35681f",
+    "definition": "explicit complete02 profile, prior01 profile bytes retained in frozen01; no silent historical execution transplant"
+  },
+  {
+    "originalSettingId": "RT-6a3cdfc223a3c24b",
+    "side": "B",
+    "registrationId": "kubeclaw.http:request",
+    "profileId": "RT-6a3cdfc223a3c24b-B",
+    "wholePolicySha256": "345c588861d8b27f7045547a2947881f0b7c4a7732e81ebf46c5ea01745196b5",
+    "definition": "explicit complete02 profile, prior01 profile bytes retained in frozen01; no silent historical execution transplant"
+  },
+  {
+    "originalSettingId": "RT-550d941bb663f8fc",
+    "side": "A",
+    "registrationId": "kubeclaw.openapi:operations",
+    "profileId": "RT-550d941bb663f8fc-A",
+    "wholePolicySha256": "ef6b518673b5a4b3b94ccae64d385605c44587e2d48ef8528c22011cea60fca1",
+    "definition": "explicit complete02 profile, prior01 profile bytes retained in frozen01; no silent historical execution transplant"
+  },
+  {
+    "originalSettingId": "RT-550d941bb663f8fc",
+    "side": "B",
+    "registrationId": "kubeclaw.openapi:operations",
+    "profileId": "RT-550d941bb663f8fc-B",
+    "wholePolicySha256": "db0e6bfe4e8e461cb2bfec74b9b5f84143a3ad3a23d376b21cee6b9508710b88",
+    "definition": "explicit complete02 profile, prior01 profile bytes retained in frozen01; no silent historical execution transplant"
+  },
+  {
+    "originalSettingId": "RT-63d5aafbda9b5281",
+    "side": "A",
+    "registrationId": "kubeclaw.openapi:operations",
+    "profileId": "RT-63d5aafbda9b5281-A",
+    "wholePolicySha256": "729e98ae0aca419b4db1630d334a36d2eed260789836fe7f385d14c18aca9236",
+    "definition": "explicit complete02 profile, prior01 profile bytes retained in frozen01; no silent historical execution transplant"
+  },
+  {
+    "originalSettingId": "RT-63d5aafbda9b5281",
+    "side": "B",
+    "registrationId": "kubeclaw.openapi:operations",
+    "profileId": "RT-63d5aafbda9b5281-B",
+    "wholePolicySha256": "3f919ada7088c705f92cd7a9efb6806358a6966ee8513bc6eecb13bcf877ff59",
+    "definition": "explicit complete02 profile, prior01 profile bytes retained in frozen01; no silent historical execution transplant"
+  },
+  {
+    "originalSettingId": "RT-0b11b3282059d1db",
+    "side": "A",
+    "registrationId": "kubeclaw.network-http:http",
+    "profileId": "field-allowedOrigins-A",
+    "wholeCompletePolicy": true,
+    "activation": "New isolated actual RUN captures this policy, not new module in started same run",
+    "competingGuardCondition": "For request bytes BOTH profiles allowPOST; other policy caps fixed. Corresponding real request/response origin/header/method/byte/time member must be exact source-specific.",
+    "wholePolicySha256": "f167de0970c7d575c016960d286f0716c4dcb81b970f5ffa654ab14c6e5dc599",
+    "definition": "explicit complete02 profile, prior01 profile bytes retained in frozen01; no silent historical execution transplant"
+  },
+  {
+    "originalSettingId": "RT-db4ff06654e4c996",
+    "side": "A",
+    "registrationId": "kubeclaw.network-http:http",
+    "profileId": "field-allowedOrigins-A",
+    "wholeCompletePolicy": true,
+    "activation": "New isolated actual RUN captures this policy, not new module in started same run",
+    "competingGuardCondition": "For request bytes BOTH profiles allowPOST; other policy caps fixed. Corresponding real request/response origin/header/method/byte/time member must be exact source-specific.",
+    "wholePolicySha256": "f167de0970c7d575c016960d286f0716c4dcb81b970f5ffa654ab14c6e5dc599",
+    "definition": "explicit complete02 profile, prior01 profile bytes retained in frozen01; no silent historical execution transplant"
+  },
+  {
+    "originalSettingId": "RT-0b11b3282059d1db",
+    "side": "B",
+    "registrationId": "kubeclaw.network-http:http",
+    "profileId": "field-allowedOrigins-B",
+    "wholeCompletePolicy": true,
+    "activation": "New isolated actual RUN captures this policy, not new module in started same run",
+    "competingGuardCondition": "For request bytes BOTH profiles allowPOST; other policy caps fixed. Corresponding real request/response origin/header/method/byte/time member must be exact source-specific.",
+    "wholePolicySha256": "07fe61673d354bdfad9bdc4a4686ffd744d8b3e8adf36c7ddc20f3c1ea800d9e",
+    "definition": "explicit complete02 profile, prior01 profile bytes retained in frozen01; no silent historical execution transplant"
+  },
+  {
+    "originalSettingId": "RT-db4ff06654e4c996",
+    "side": "B",
+    "registrationId": "kubeclaw.network-http:http",
+    "profileId": "field-allowedOrigins-B",
+    "wholeCompletePolicy": true,
+    "activation": "New isolated actual RUN captures this policy, not new module in started same run",
+    "competingGuardCondition": "For request bytes BOTH profiles allowPOST; other policy caps fixed. Corresponding real request/response origin/header/method/byte/time member must be exact source-specific.",
+    "wholePolicySha256": "07fe61673d354bdfad9bdc4a4686ffd744d8b3e8adf36c7ddc20f3c1ea800d9e",
+    "definition": "explicit complete02 profile, prior01 profile bytes retained in frozen01; no silent historical execution transplant"
+  },
+  {
+    "originalSettingId": "RT-8510aae902279dfa",
+    "side": "A",
+    "registrationId": "kubeclaw.network-http:http",
+    "profileId": "field-allowedMethods-A",
+    "wholeCompletePolicy": true,
+    "activation": "New isolated actual RUN captures this policy, not new module in started same run",
+    "competingGuardCondition": "For request bytes BOTH profiles allowPOST; other policy caps fixed. Corresponding real request/response origin/header/method/byte/time member must be exact source-specific.",
+    "wholePolicySha256": "f167de0970c7d575c016960d286f0716c4dcb81b970f5ffa654ab14c6e5dc599",
+    "definition": "explicit complete02 profile, prior01 profile bytes retained in frozen01; no silent historical execution transplant"
+  },
+  {
+    "originalSettingId": "RT-8e9540f20d6b3e93",
+    "side": "A",
+    "registrationId": "kubeclaw.network-http:http",
+    "profileId": "field-allowedMethods-A",
+    "wholeCompletePolicy": true,
+    "activation": "New isolated actual RUN captures this policy, not new module in started same run",
+    "competingGuardCondition": "For request bytes BOTH profiles allowPOST; other policy caps fixed. Corresponding real request/response origin/header/method/byte/time member must be exact source-specific.",
+    "wholePolicySha256": "f167de0970c7d575c016960d286f0716c4dcb81b970f5ffa654ab14c6e5dc599",
+    "definition": "explicit complete02 profile, prior01 profile bytes retained in frozen01; no silent historical execution transplant"
+  },
+  {
+    "originalSettingId": "RT-8510aae902279dfa",
+    "side": "B",
+    "registrationId": "kubeclaw.network-http:http",
+    "profileId": "field-allowedMethods-B",
+    "wholeCompletePolicy": true,
+    "activation": "New isolated actual RUN captures this policy, not new module in started same run",
+    "competingGuardCondition": "For request bytes BOTH profiles allowPOST; other policy caps fixed. Corresponding real request/response origin/header/method/byte/time member must be exact source-specific.",
+    "wholePolicySha256": "5c2fdf5d9e86f9603bc2e3b29484cd4fd07319fd48a9d5bfdff93d212b593099",
+    "definition": "explicit complete02 profile, prior01 profile bytes retained in frozen01; no silent historical execution transplant"
+  },
+  {
+    "originalSettingId": "RT-8e9540f20d6b3e93",
+    "side": "B",
+    "registrationId": "kubeclaw.network-http:http",
+    "profileId": "field-allowedMethods-B",
+    "wholeCompletePolicy": true,
+    "activation": "New isolated actual RUN captures this policy, not new module in started same run",
+    "competingGuardCondition": "For request bytes BOTH profiles allowPOST; other policy caps fixed. Corresponding real request/response origin/header/method/byte/time member must be exact source-specific.",
+    "wholePolicySha256": "5c2fdf5d9e86f9603bc2e3b29484cd4fd07319fd48a9d5bfdff93d212b593099",
+    "definition": "explicit complete02 profile, prior01 profile bytes retained in frozen01; no silent historical execution transplant"
+  },
+  {
+    "originalSettingId": "RT-bdbb356d7dbdb05b",
+    "side": "A",
+    "registrationId": "kubeclaw.network-http:http",
+    "profileId": "field-allowedHeaders-A",
+    "wholeCompletePolicy": true,
+    "activation": "New isolated actual RUN captures this policy, not new module in started same run",
+    "competingGuardCondition": "For request bytes BOTH profiles allowPOST; other policy caps fixed. Corresponding real request/response origin/header/method/byte/time member must be exact source-specific.",
+    "wholePolicySha256": "f167de0970c7d575c016960d286f0716c4dcb81b970f5ffa654ab14c6e5dc599",
+    "definition": "explicit complete02 profile, prior01 profile bytes retained in frozen01; no silent historical execution transplant"
+  },
+  {
+    "originalSettingId": "RT-129d37457d0a92b8",
+    "side": "A",
+    "registrationId": "kubeclaw.network-http:http",
+    "profileId": "field-allowedHeaders-A",
+    "wholeCompletePolicy": true,
+    "activation": "New isolated actual RUN captures this policy, not new module in started same run",
+    "competingGuardCondition": "For request bytes BOTH profiles allowPOST; other policy caps fixed. Corresponding real request/response origin/header/method/byte/time member must be exact source-specific.",
+    "wholePolicySha256": "f167de0970c7d575c016960d286f0716c4dcb81b970f5ffa654ab14c6e5dc599",
+    "definition": "explicit complete02 profile, prior01 profile bytes retained in frozen01; no silent historical execution transplant"
+  },
+  {
+    "originalSettingId": "RT-bdbb356d7dbdb05b",
+    "side": "B",
+    "registrationId": "kubeclaw.network-http:http",
+    "profileId": "field-allowedHeaders-B",
+    "wholeCompletePolicy": true,
+    "activation": "New isolated actual RUN captures this policy, not new module in started same run",
+    "competingGuardCondition": "For request bytes BOTH profiles allowPOST; other policy caps fixed. Corresponding real request/response origin/header/method/byte/time member must be exact source-specific.",
+    "wholePolicySha256": "b7e492925bcdfec4f67362de9f3d628d221a59b7a02d25bf54cb46aac7fc893f",
+    "definition": "explicit complete02 profile, prior01 profile bytes retained in frozen01; no silent historical execution transplant"
+  },
+  {
+    "originalSettingId": "RT-129d37457d0a92b8",
+    "side": "B",
+    "registrationId": "kubeclaw.network-http:http",
+    "profileId": "field-allowedHeaders-B",
+    "wholeCompletePolicy": true,
+    "activation": "New isolated actual RUN captures this policy, not new module in started same run",
+    "competingGuardCondition": "For request bytes BOTH profiles allowPOST; other policy caps fixed. Corresponding real request/response origin/header/method/byte/time member must be exact source-specific.",
+    "wholePolicySha256": "b7e492925bcdfec4f67362de9f3d628d221a59b7a02d25bf54cb46aac7fc893f",
+    "definition": "explicit complete02 profile, prior01 profile bytes retained in frozen01; no silent historical execution transplant"
+  },
+  {
+    "originalSettingId": "RT-3e41afae2fdc5889",
+    "side": "A",
+    "registrationId": "kubeclaw.network-http:http",
+    "profileId": "field-maxRequestBytes-A",
+    "wholeCompletePolicy": true,
+    "activation": "New isolated actual RUN captures this policy, not new module in started same run",
+    "competingGuardCondition": "For request bytes BOTH profiles allowPOST; other policy caps fixed. Corresponding real request/response origin/header/method/byte/time member must be exact source-specific.",
+    "wholePolicySha256": "5c2fdf5d9e86f9603bc2e3b29484cd4fd07319fd48a9d5bfdff93d212b593099",
+    "definition": "explicit complete02 profile, prior01 profile bytes retained in frozen01; no silent historical execution transplant"
+  },
+  {
+    "originalSettingId": "RT-3e41afae2fdc5889",
+    "side": "B",
+    "registrationId": "kubeclaw.network-http:http",
+    "profileId": "field-maxRequestBytes-B",
+    "wholeCompletePolicy": true,
+    "activation": "New isolated actual RUN captures this policy, not new module in started same run",
+    "competingGuardCondition": "For request bytes BOTH profiles allowPOST; other policy caps fixed. Corresponding real request/response origin/header/method/byte/time member must be exact source-specific.",
+    "wholePolicySha256": "047c58bb4fd16d26437eaf1ec4999e60429be370272a230cf5caa735bc4a6f91",
+    "definition": "explicit complete02 profile, prior01 profile bytes retained in frozen01; no silent historical execution transplant"
+  },
+  {
+    "originalSettingId": "RT-a21fee46884b7194",
+    "side": "A",
+    "registrationId": "kubeclaw.network-http:http",
+    "profileId": "field-maxResponseBytes-A",
+    "wholeCompletePolicy": true,
+    "activation": "New isolated actual RUN captures this policy, not new module in started same run",
+    "competingGuardCondition": "For request bytes BOTH profiles allowPOST; other policy caps fixed. Corresponding real request/response origin/header/method/byte/time member must be exact source-specific.",
+    "wholePolicySha256": "f167de0970c7d575c016960d286f0716c4dcb81b970f5ffa654ab14c6e5dc599",
+    "definition": "explicit complete02 profile, prior01 profile bytes retained in frozen01; no silent historical execution transplant"
+  },
+  {
+    "originalSettingId": "RT-a21fee46884b7194",
+    "side": "B",
+    "registrationId": "kubeclaw.network-http:http",
+    "profileId": "field-maxResponseBytes-B",
+    "wholeCompletePolicy": true,
+    "activation": "New isolated actual RUN captures this policy, not new module in started same run",
+    "competingGuardCondition": "For request bytes BOTH profiles allowPOST; other policy caps fixed. Corresponding real request/response origin/header/method/byte/time member must be exact source-specific.",
+    "wholePolicySha256": "a52f9b6cb75467f5a944049d1499af28ecbaa417e81bf5345a6bc4ab1b3cc166",
+    "definition": "explicit complete02 profile, prior01 profile bytes retained in frozen01; no silent historical execution transplant"
+  },
+  {
+    "originalSettingId": "RT-e8382fb0497a39a3",
+    "side": "A",
+    "registrationId": "kubeclaw.network-http:http",
+    "profileId": "field-timeoutMs-A",
+    "wholeCompletePolicy": true,
+    "activation": "New isolated actual RUN captures this policy, not new module in started same run",
+    "competingGuardCondition": "For request bytes BOTH profiles allowPOST; other policy caps fixed. Corresponding real request/response origin/header/method/byte/time member must be exact source-specific.",
+    "wholePolicySha256": "f167de0970c7d575c016960d286f0716c4dcb81b970f5ffa654ab14c6e5dc599",
+    "definition": "explicit complete02 profile, prior01 profile bytes retained in frozen01; no silent historical execution transplant"
+  },
+  {
+    "originalSettingId": "RT-e8382fb0497a39a3",
+    "side": "B",
+    "registrationId": "kubeclaw.network-http:http",
+    "profileId": "field-timeoutMs-B",
+    "wholeCompletePolicy": true,
+    "activation": "New isolated actual RUN captures this policy, not new module in started same run",
+    "competingGuardCondition": "For request bytes BOTH profiles allowPOST; other policy caps fixed. Corresponding real request/response origin/header/method/byte/time member must be exact source-specific.",
+    "wholePolicySha256": "69eaefeba50fd33391651296bbc6ae68731c140d6b6e940f3b96c6bb85c06279",
+    "definition": "explicit complete02 profile, prior01 profile bytes retained in frozen01; no silent historical execution transplant"
+  }
+]

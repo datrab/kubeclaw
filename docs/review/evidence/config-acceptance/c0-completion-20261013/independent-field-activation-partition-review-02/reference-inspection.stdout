@@ -1,0 +1,145 @@
+{
+  "counts": {
+    "originalFields": 2409,
+    "originalCases": 6845,
+    "mapFields": 2409,
+    "newRecords": 187,
+    "authorSnapshots": 71,
+    "AUTHPrismRows": 107,
+    "archivedSourceRows": 2,
+    "exactReferenceOccurrences": 3531,
+    "providerJoins": 64,
+    "policyJoins": 20
+  },
+  "badFieldConservation": 0,
+  "snapshotDrift": [
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/source-processing-adjudication.json",
+      "capturedSha256": "65d35cf9079bcbd4b4b9dc408e2fc57ab1f7cc912c90c995451feec34b16e25a",
+      "snapshotRoundtrip": true,
+      "currentSha256": "6f4b3749bf5c24ab3183af4673fe3d5457bd94a5575cdb44936cb13944bf0727",
+      "currentMatches": false
+    }
+  ],
+  "referenceFailures": [],
+  "patternsExact": true,
+  "badPatternScopes": 0,
+  "badCorrections": [],
+  "allNewCaseIDsNonempty": true,
+  "contextNoAliases": true,
+  "staleComparison": [
+    {
+      "field": "processing.maximumFlowFileBytes",
+      "changed": true,
+      "changedKeys": [
+        "actualTaskData",
+        "wholeEntries",
+        "immutableSourceIdentity",
+        "boundedDefinitionStatus",
+        "applicationContract",
+        "applicationCaseArtifactRefs",
+        "exactSelectedSchemaNode"
+      ],
+      "originalContextId": "RT-351419f2c26e2696"
+    },
+    {
+      "field": "processing.maximumSpecFileBytes",
+      "changed": true,
+      "changedKeys": [
+        "actualTaskData",
+        "wholeEntries",
+        "immutableSourceIdentity",
+        "boundedDefinitionStatus",
+        "applicationContract",
+        "applicationCaseArtifactRefs",
+        "exactSelectedSchemaNode"
+      ],
+      "originalContextId": "RT-10f3f03208806c98"
+    },
+    {
+      "field": "processing.maximumSelections",
+      "changed": true,
+      "changedKeys": [
+        "actualTaskData",
+        "wholeEntries",
+        "immutableSourceIdentity",
+        "boundedDefinitionStatus",
+        "applicationContract",
+        "applicationCaseArtifactRefs",
+        "exactSelectedSchemaNode"
+      ],
+      "originalContextId": "RT-396eb59b11141a9a"
+    },
+    {
+      "field": "processing.maximumSchemaGraphDepth",
+      "changed": true,
+      "changedKeys": [
+        "actualTaskData",
+        "wholeEntries",
+        "immutableSourceIdentity",
+        "boundedDefinitionStatus",
+        "applicationContract",
+        "applicationCaseArtifactRefs",
+        "exactSelectedSchemaNode"
+      ],
+      "originalContextId": "RT-10f3f03208806c98"
+    },
+    {
+      "field": "processing.maximumRefChainDepth",
+      "changed": true,
+      "changedKeys": [
+        "actualTaskData",
+        "wholeEntries",
+        "immutableSourceIdentity",
+        "boundedDefinitionStatus",
+        "applicationContract",
+        "applicationCaseArtifactRefs",
+        "exactSelectedSchemaNode"
+      ],
+      "originalContextId": "RT-10f3f03208806c98"
+    },
+    {
+      "field": "processing.maximumPayloadDepth",
+      "changed": true,
+      "changedKeys": [
+        "actualTaskData",
+        "wholeEntries",
+        "immutableSourceIdentity",
+        "boundedDefinitionStatus",
+        "applicationContract",
+        "applicationCaseArtifactRefs",
+        "exactSelectedSchemaNode"
+      ],
+      "originalContextId": "RT-10f3f03208806c98"
+    },
+    {
+      "field": "processing.maximumPatternCodeUnits",
+      "changed": true,
+      "changedKeys": [
+        "actualTaskData",
+        "wholeEntries",
+        "immutableSourceIdentity",
+        "boundedDefinitionStatus",
+        "applicationContract",
+        "applicationCaseArtifactRefs",
+        "exactSelectedSchemaNode"
+      ],
+      "originalContextId": "RT-10f3f03208806c98"
+    },
+    {
+      "field": "processing.maximumPatternQuantifier",
+      "changed": true,
+      "changedKeys": [
+        "actualTaskData",
+        "wholeEntries",
+        "immutableSourceIdentity",
+        "boundedDefinitionStatus",
+        "applicationContract",
+        "applicationCaseArtifactRefs",
+        "exactSelectedSchemaNode"
+      ],
+      "originalContextId": "RT-10f3f03208806c98"
+    }
+  ],
+  "readInputs": 164
+}

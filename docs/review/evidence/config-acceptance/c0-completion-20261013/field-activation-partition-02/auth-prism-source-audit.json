@@ -1,0 +1,3380 @@
+{
+  "all107OriginalAUTHRows": [
+    {
+      "id": "AUTH-PRISM-CACHE-maximumInFlight",
+      "source": {
+        "path": "skills/prism/engine/execution-cache.ts",
+        "field": "DEFAULT_ENGINE_CACHE_LIMITS.maximumInFlight",
+        "sha256": "13c9664a99457aadcb2de822dc82a63764d3afe799fd37a2ab1bedb097ccf90a",
+        "lines": [
+          2,
+          7,
+          22,
+          49
+        ]
+      },
+      "sourceSha256": "13c9664a99457aadcb2de822dc82a63764d3afe799fd37a2ab1bedb097ccf90a",
+      "entireSourceRead": true,
+      "actualReader": "execute rejects pending.size >= limit with PRISM_ENGINE_IN_FLIGHT_LIMIT",
+      "observedDecision": "Actual dedicated one-operation host cache is J-local; source library supports keys but productive multi-key EFFECT remains unsupported/open, no new shared cache service.",
+      "proposedScope": {
+        "contract": "standalone-operation",
+        "classes": [
+          "J"
+        ],
+        "bindingPatternId": "PAT-decd1a32b8c88c2c",
+        "decisionBasis": "Actual accepted native/order/round/agent/render/provider operation consumer; library/deterministic/cache applicability exceptions below.",
+        "fieldConsumerEvidence": "Operator policy controls actual resource/transport/attempt behavior; explicit config required during approved migration.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-CACHE-maximumInFlight-EFFECT",
+        "AUTH-PRISM-CACHE-C0-TYPED-PROFILES"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": [
+        {
+          "task": "one-operation dedicated host J only; retain original EFFECT IDs; no productive multi-key applicability or new shared-cache service claimed",
+          "source": {
+            "path": "skills/prism/engine/execution-cache.ts",
+            "field": "DEFAULT_ENGINE_CACHE_LIMITS.maximumInFlight",
+            "sha256": "13c9664a99457aadcb2de822dc82a63764d3afe799fd37a2ab1bedb097ccf90a",
+            "lines": [
+              2,
+              7,
+              22,
+              49
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "AUTH-PRISM-CACHE-maximumCompletedEntries",
+      "source": {
+        "path": "skills/prism/engine/execution-cache.ts",
+        "field": "DEFAULT_ENGINE_CACHE_LIMITS.maximumCompletedEntries",
+        "sha256": "13c9664a99457aadcb2de822dc82a63764d3afe799fd37a2ab1bedb097ccf90a",
+        "lines": [
+          3,
+          8,
+          22,
+          73
+        ]
+      },
+      "sourceSha256": "13c9664a99457aadcb2de822dc82a63764d3afe799fd37a2ab1bedb097ccf90a",
+      "entireSourceRead": true,
+      "actualReader": "#retain evicts oldest completed key while count >= limit",
+      "observedDecision": "Actual dedicated one-operation host cache is J-local; source library supports keys but productive multi-key EFFECT remains unsupported/open, no new shared cache service.",
+      "proposedScope": {
+        "contract": "standalone-operation",
+        "classes": [
+          "J"
+        ],
+        "bindingPatternId": "PAT-a984bfbd69451953",
+        "decisionBasis": "Actual accepted native/order/round/agent/render/provider operation consumer; library/deterministic/cache applicability exceptions below.",
+        "fieldConsumerEvidence": "Operator policy controls actual resource/transport/attempt behavior; explicit config required during approved migration.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-CACHE-C0-TYPED-PROFILES",
+        "AUTH-PRISM-CACHE-maximumCompletedEntries-EFFECT"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": [
+        {
+          "task": "one-operation dedicated host J only; retain original EFFECT IDs; no productive multi-key applicability or new shared-cache service claimed",
+          "source": {
+            "path": "skills/prism/engine/execution-cache.ts",
+            "field": "DEFAULT_ENGINE_CACHE_LIMITS.maximumCompletedEntries",
+            "sha256": "13c9664a99457aadcb2de822dc82a63764d3afe799fd37a2ab1bedb097ccf90a",
+            "lines": [
+              3,
+              8,
+              22,
+              73
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "AUTH-PRISM-CACHE-maximumCompletedBytes",
+      "source": {
+        "path": "skills/prism/engine/execution-cache.ts",
+        "field": "DEFAULT_ENGINE_CACHE_LIMITS.maximumCompletedBytes",
+        "sha256": "13c9664a99457aadcb2de822dc82a63764d3afe799fd37a2ab1bedb097ccf90a",
+        "lines": [
+          4,
+          9,
+          22,
+          72,
+          74
+        ]
+      },
+      "sourceSha256": "13c9664a99457aadcb2de822dc82a63764d3afe799fd37a2ab1bedb097ccf90a",
+      "entireSourceRead": true,
+      "actualReader": "#retain measures UTF-8 serialized result/key/fingerprint; oversize not retained, oldest evicted until fit",
+      "observedDecision": "Actual dedicated one-operation host cache is J-local; source library supports keys but productive multi-key EFFECT remains unsupported/open, no new shared cache service.",
+      "proposedScope": {
+        "contract": "standalone-operation",
+        "classes": [
+          "J"
+        ],
+        "bindingPatternId": "PAT-aabd2016965fd014",
+        "decisionBasis": "Actual accepted native/order/round/agent/render/provider operation consumer; library/deterministic/cache applicability exceptions below.",
+        "fieldConsumerEvidence": "Operator policy controls actual resource/transport/attempt behavior; explicit config required during approved migration.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-CACHE-C0-TYPED-PROFILES",
+        "AUTH-PRISM-CACHE-maximumCompletedBytes-EFFECT"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": [
+        {
+          "task": "one-operation dedicated host J only; retain original EFFECT IDs; no productive multi-key applicability or new shared-cache service claimed",
+          "source": {
+            "path": "skills/prism/engine/execution-cache.ts",
+            "field": "DEFAULT_ENGINE_CACHE_LIMITS.maximumCompletedBytes",
+            "sha256": "13c9664a99457aadcb2de822dc82a63764d3afe799fd37a2ab1bedb097ccf90a",
+            "lines": [
+              4,
+              9,
+              22,
+              72,
+              74
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "AUTH-PRISM-ATTEMPT-timeoutMs",
+      "source": {
+        "path": "skills/prism/engine/worker-envelope.ts",
+        "field": "limits.timeoutMs",
+        "sha256": "56ddb558742228e8c828b98b83916dcdcd1c46f355f2061bfc0c4bdac0290941",
+        "lines": [
+          43
+        ]
+      },
+      "sourceSha256": "56ddb558742228e8c828b98b83916dcdcd1c46f355f2061bfc0c4bdac0290941",
+      "entireSourceRead": true,
+      "actualReader": "WorkerAttemptExecutor consumes accepted envelope.limits.timeoutMs",
+      "observedDecision": "retain source-specific previous assignment after actual source/reader audit; not inferred from AUTH prefix",
+      "proposedScope": {
+        "contract": "standalone-operation",
+        "classes": [
+          "J"
+        ],
+        "bindingPatternId": "PAT-ca27e94537f556f9",
+        "decisionBasis": "Actual accepted native/order/round/agent/render/provider operation consumer; library/deterministic/cache applicability exceptions below.",
+        "fieldConsumerEvidence": "Operator policy controls actual resource/transport/attempt behavior; explicit config required during approved migration.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-ATTEMPT-timeoutMs-EFFECT"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-ATTEMPT-cleanupTimeoutMs",
+      "source": {
+        "path": "skills/prism/engine/worker-envelope.ts",
+        "field": "limits.cleanupTimeoutMs",
+        "sha256": "56ddb558742228e8c828b98b83916dcdcd1c46f355f2061bfc0c4bdac0290941",
+        "lines": [
+          43
+        ]
+      },
+      "sourceSha256": "56ddb558742228e8c828b98b83916dcdcd1c46f355f2061bfc0c4bdac0290941",
+      "entireSourceRead": true,
+      "actualReader": "WorkerAttemptExecutor consumes accepted envelope.limits.cleanupTimeoutMs",
+      "observedDecision": "retain source-specific previous assignment after actual source/reader audit; not inferred from AUTH prefix",
+      "proposedScope": {
+        "contract": "standalone-operation",
+        "classes": [
+          "J"
+        ],
+        "bindingPatternId": "PAT-bf2c70f53773db6c",
+        "decisionBasis": "Actual accepted native/order/round/agent/render/provider operation consumer; library/deterministic/cache applicability exceptions below.",
+        "fieldConsumerEvidence": "Operator policy controls actual resource/transport/attempt behavior; explicit config required during approved migration.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-ATTEMPT-cleanupTimeoutMs-EFFECT"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-ATTEMPT-logBytes",
+      "source": {
+        "path": "skills/prism/engine/worker-envelope.ts",
+        "field": "limits.logBytes",
+        "sha256": "56ddb558742228e8c828b98b83916dcdcd1c46f355f2061bfc0c4bdac0290941",
+        "lines": [
+          43
+        ]
+      },
+      "sourceSha256": "56ddb558742228e8c828b98b83916dcdcd1c46f355f2061bfc0c4bdac0290941",
+      "entireSourceRead": true,
+      "actualReader": "WorkerAttemptExecutor consumes accepted envelope.limits.logBytes",
+      "observedDecision": "retain source-specific previous assignment after actual source/reader audit; not inferred from AUTH prefix",
+      "proposedScope": {
+        "contract": "standalone-operation",
+        "classes": [
+          "J"
+        ],
+        "bindingPatternId": "PAT-936fd5c80048b1f8",
+        "decisionBasis": "Actual accepted native/order/round/agent/render/provider operation consumer; library/deterministic/cache applicability exceptions below.",
+        "fieldConsumerEvidence": "Operator policy controls actual resource/transport/attempt behavior; explicit config required during approved migration.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-ATTEMPT-logBytes-EFFECT"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-ATTEMPT-resultBytes",
+      "source": {
+        "path": "skills/prism/engine/worker-envelope.ts",
+        "field": "limits.resultBytes",
+        "sha256": "56ddb558742228e8c828b98b83916dcdcd1c46f355f2061bfc0c4bdac0290941",
+        "lines": [
+          43
+        ]
+      },
+      "sourceSha256": "56ddb558742228e8c828b98b83916dcdcd1c46f355f2061bfc0c4bdac0290941",
+      "entireSourceRead": true,
+      "actualReader": "WorkerAttemptExecutor consumes accepted envelope.limits.resultBytes",
+      "observedDecision": "retain source-specific previous assignment after actual source/reader audit; not inferred from AUTH prefix",
+      "proposedScope": {
+        "contract": "standalone-operation",
+        "classes": [
+          "J"
+        ],
+        "bindingPatternId": "PAT-5c5c859114017cfc",
+        "decisionBasis": "Actual accepted native/order/round/agent/render/provider operation consumer; library/deterministic/cache applicability exceptions below.",
+        "fieldConsumerEvidence": "Operator policy controls actual resource/transport/attempt behavior; explicit config required during approved migration.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-ATTEMPT-resultBytes-EFFECT"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-ATTEMPT-evidenceBytes",
+      "source": {
+        "path": "skills/prism/engine/worker-envelope.ts",
+        "field": "limits.evidenceBytes",
+        "sha256": "56ddb558742228e8c828b98b83916dcdcd1c46f355f2061bfc0c4bdac0290941",
+        "lines": [
+          43
+        ]
+      },
+      "sourceSha256": "56ddb558742228e8c828b98b83916dcdcd1c46f355f2061bfc0c4bdac0290941",
+      "entireSourceRead": true,
+      "actualReader": "WorkerAttemptExecutor consumes accepted envelope.limits.evidenceBytes",
+      "observedDecision": "retain source-specific previous assignment after actual source/reader audit; not inferred from AUTH prefix",
+      "proposedScope": {
+        "contract": "standalone-operation",
+        "classes": [
+          "J"
+        ],
+        "bindingPatternId": "PAT-af53d10ad06ab384",
+        "decisionBasis": "Actual accepted native/order/round/agent/render/provider operation consumer; library/deterministic/cache applicability exceptions below.",
+        "fieldConsumerEvidence": "Operator policy controls actual resource/transport/attempt behavior; explicit config required during approved migration.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-ATTEMPT-evidenceBytes-EFFECT"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-ATTEMPT-evidenceFiles",
+      "source": {
+        "path": "skills/prism/engine/worker-envelope.ts",
+        "field": "limits.evidenceFiles",
+        "sha256": "56ddb558742228e8c828b98b83916dcdcd1c46f355f2061bfc0c4bdac0290941",
+        "lines": [
+          43
+        ]
+      },
+      "sourceSha256": "56ddb558742228e8c828b98b83916dcdcd1c46f355f2061bfc0c4bdac0290941",
+      "entireSourceRead": true,
+      "actualReader": "WorkerAttemptExecutor consumes accepted envelope.limits.evidenceFiles",
+      "observedDecision": "retain source-specific previous assignment after actual source/reader audit; not inferred from AUTH prefix",
+      "proposedScope": {
+        "contract": "standalone-operation",
+        "classes": [
+          "J"
+        ],
+        "bindingPatternId": "PAT-5f22ba19512734e9",
+        "decisionBasis": "Actual accepted native/order/round/agent/render/provider operation consumer; library/deterministic/cache applicability exceptions below.",
+        "fieldConsumerEvidence": "Operator policy controls actual resource/transport/attempt behavior; explicit config required during approved migration.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-ATTEMPT-evidenceFiles-EFFECT"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-CLAIM-LIFETIME",
+      "source": {
+        "path": "skills/prism/engine/worker-envelope.ts",
+        "field": "expires",
+        "sha256": "56ddb558742228e8c828b98b83916dcdcd1c46f355f2061bfc0c4bdac0290941",
+        "lines": [
+          35,
+          41,
+          50
+        ]
+      },
+      "sourceSha256": "56ddb558742228e8c828b98b83916dcdcd1c46f355f2061bfc0c4bdac0290941",
+      "entireSourceRead": true,
+      "actualReader": "prismNativeAttempt sets claim.expiresAt and queueDeadline from same expires",
+      "observedDecision": "retain source-specific previous assignment after actual source/reader audit; not inferred from AUTH prefix",
+      "proposedScope": {
+        "contract": "standalone-operation",
+        "classes": [
+          "J"
+        ],
+        "bindingPatternId": "PAT-e97a8191827af674",
+        "decisionBasis": "Actual accepted native/order/round/agent/render/provider operation consumer; library/deterministic/cache applicability exceptions below.",
+        "fieldConsumerEvidence": "Operator policy controls actual resource/transport/attempt behavior; explicit config required during approved migration.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-CLAIM-LIFETIME-EFFECT"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-INGEST-TEXT-LIMIT",
+      "source": {
+        "path": "skills/prism/engine/index.ts",
+        "field": "ingest.text.length",
+        "sha256": "8502a5bf60bc3b352556ed72464f743581b67fd4e70d70d3734a832c25a9ad16",
+        "lines": [
+          107,
+          108,
+          111
+        ]
+      },
+      "sourceSha256": "8502a5bf60bc3b352556ed72464f743581b67fd4e70d70d3734a832c25a9ad16",
+      "entireSourceRead": true,
+      "actualReader": "ingest rejects empty or text.length>200000 with ingest text length is invalid",
+      "observedDecision": "retain source-specific previous assignment after actual source/reader audit; not inferred from AUTH prefix",
+      "proposedScope": {
+        "contract": "standalone-operation",
+        "classes": [
+          "J"
+        ],
+        "bindingPatternId": "PAT-0ad74e97a5d577a4",
+        "decisionBasis": "Actual accepted native/order/round/agent/render/provider operation consumer; library/deterministic/cache applicability exceptions below.",
+        "fieldConsumerEvidence": "Operator policy controls actual resource/transport/attempt behavior; explicit config required during approved migration.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-INGEST-TEXT-LIMIT-EFFECT"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-DESIGN-PROVIDER-TIMEOUT",
+      "source": {
+        "path": "skills/prism/engine/design-providers.ts",
+        "field": "options.timeoutMs",
+        "sha256": "8f5e806732b36779182d5b9e7e025927a6a9ff5898866d876880d382e4d67145",
+        "lines": [
+          44,
+          51,
+          78,
+          88,
+          89,
+          130,
+          131
+        ]
+      },
+      "sourceSha256": "8f5e806732b36779182d5b9e7e025927a6a9ff5898866d876880d382e4d67145",
+      "entireSourceRead": true,
+      "actualReader": "propose/embed each compose AbortSignal.timeout(this.#timeoutMs)",
+      "observedDecision": "Actual OpenAI-compatible provider source is library branch; current productive deterministic profile dormant. X retained; no model/credential/native reader invented.",
+      "proposedScope": {
+        "contract": "dormant-unused",
+        "classes": [
+          "X"
+        ],
+        "bindingPatternId": "PAT-a2a966e695012d43",
+        "decisionBasis": "Actual accepted native/order/round/agent/render/provider operation consumer; library/deterministic/cache applicability exceptions below.",
+        "fieldConsumerEvidence": "Dormant exported provider has adjustable timeout policy; productive host currently chooses deterministic provider directly.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-DESIGN-PROVIDER-TIMEOUT-EFFECT"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": [
+        {
+          "task": "library OpenAI-compatible provider branch dormant under actual deterministic execution profile; activation requires actual productive caller/provider support and genuine credential/model identity; keep original EFFECT obligation pending supported migration",
+          "source": {
+            "path": "skills/prism/engine/design-providers.ts",
+            "field": "options.timeoutMs",
+            "sha256": "8f5e806732b36779182d5b9e7e025927a6a9ff5898866d876880d382e4d67145",
+            "lines": [
+              44,
+              51,
+              78,
+              88,
+              89,
+              130,
+              131
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "AUTH-PRISM-DESIGN-SYSTEM-PROMPT",
+      "source": {
+        "path": "skills/prism/engine/design-providers.ts",
+        "field": "messages.system.content",
+        "sha256": "8f5e806732b36779182d5b9e7e025927a6a9ff5898866d876880d382e4d67145",
+        "lines": [
+          32,
+          92,
+          100,
+          103,
+          110,
+          112,
+          113,
+          134
+        ]
+      },
+      "sourceSha256": "8f5e806732b36779182d5b9e7e025927a6a9ff5898866d876880d382e4d67145",
+      "entireSourceRead": true,
+      "actualReader": "HTTP request messages[0].content hardcoded instruction",
+      "observedDecision": "Actual OpenAI-compatible provider source is library branch; current productive deterministic profile dormant. X retained; no model/credential/native reader invented.",
+      "proposedScope": {
+        "contract": "dormant-unused",
+        "classes": [
+          "X"
+        ],
+        "bindingPatternId": "PAT-669307ff21dcad52",
+        "decisionBasis": "Actual accepted native/order/round/agent/render/provider operation consumer; library/deterministic/cache applicability exceptions below.",
+        "fieldConsumerEvidence": "Edit-worthy instruction policy, not protocol constant; no current productive model composition.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-DESIGN-SYSTEM-PROMPT-EFFECT"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": [
+        {
+          "task": "library OpenAI-compatible provider branch dormant under actual deterministic execution profile; activation requires actual productive caller/provider support and genuine credential/model identity; keep original EFFECT obligation pending supported migration",
+          "source": {
+            "path": "skills/prism/engine/design-providers.ts",
+            "field": "messages.system.content",
+            "sha256": "8f5e806732b36779182d5b9e7e025927a6a9ff5898866d876880d382e4d67145",
+            "lines": [
+              32,
+              92,
+              100,
+              103,
+              110,
+              112,
+              113,
+              134
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "AUTH-PRISM-INGESTION-ROOT",
+      "source": {
+        "path": "skills/prism/server/ingestion.ts",
+        "field": "PRISM_QUARANTINE_ROOT",
+        "sha256": "bbee6795991e601600e6442927e483bcd5a87c798b66a42ed5606bb496354717",
+        "lines": [
+          12
+        ]
+      },
+      "sourceSha256": "bbee6795991e601600e6442927e483bcd5a87c798b66a42ed5606bb496354717",
+      "entireSourceRead": true,
+      "actualReader": "mkdir/readdir/stat/unlink/writeFile under selected root",
+      "observedDecision": "retain source-specific previous assignment after actual source/reader audit; not inferred from AUTH prefix",
+      "proposedScope": {
+        "contract": "service-global-policy",
+        "classes": [
+          "S"
+        ],
+        "bindingPatternId": "PAT-dfc1bf8530264a3e",
+        "decisionBasis": "Specific Control/ingestion/bridge/DB parser/query/transport/global writer consumer captured S; per-order request/deadline cannot replace it.",
+        "fieldConsumerEvidence": "Operator policy controls actual resource/transport/attempt behavior; explicit config required during approved migration.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-INGESTION-ROOT-EFFECT"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-INGESTION-TTL",
+      "source": {
+        "path": "skills/prism/server/ingestion.ts",
+        "field": "PRISM_QUARANTINE_TTL_MS",
+        "sha256": "bbee6795991e601600e6442927e483bcd5a87c798b66a42ed5606bb496354717",
+        "lines": [
+          14,
+          15
+        ]
+      },
+      "sourceSha256": "bbee6795991e601600e6442927e483bcd5a87c798b66a42ed5606bb496354717",
+      "entireSourceRead": true,
+      "actualReader": "mtime age >= quarantineTtl selects digest file removal",
+      "observedDecision": "retain source-specific previous assignment after actual source/reader audit; not inferred from AUTH prefix",
+      "proposedScope": {
+        "contract": "service-global-policy",
+        "classes": [
+          "S"
+        ],
+        "bindingPatternId": "PAT-9e13cd981accefb8",
+        "decisionBasis": "Specific Control/ingestion/bridge/DB parser/query/transport/global writer consumer captured S; per-order request/deadline cannot replace it.",
+        "fieldConsumerEvidence": "Operator policy controls actual resource/transport/attempt behavior; explicit config required during approved migration.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-INGESTION-TTL-EFFECT"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-INGESTION-PORT",
+      "source": {
+        "path": "skills/prism/server/ingestion.ts",
+        "field": "PORT",
+        "sha256": "bbee6795991e601600e6442927e483bcd5a87c798b66a42ed5606bb496354717",
+        "lines": [
+          97
+        ]
+      },
+      "sourceSha256": "bbee6795991e601600e6442927e483bcd5a87c798b66a42ed5606bb496354717",
+      "entireSourceRead": true,
+      "actualReader": "createServer.listen on 0.0.0.0 selected port",
+      "observedDecision": "retain source-specific previous assignment after actual source/reader audit; not inferred from AUTH prefix",
+      "proposedScope": {
+        "contract": "service-global-policy",
+        "classes": [
+          "S"
+        ],
+        "bindingPatternId": "PAT-9446d1328447c05c",
+        "decisionBasis": "Specific Control/ingestion/bridge/DB parser/query/transport/global writer consumer captured S; per-order request/deadline cannot replace it.",
+        "fieldConsumerEvidence": "Operator policy controls actual resource/transport/attempt behavior; explicit config required during approved migration.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-INGESTION-PORT-EFFECT"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-INGESTION-ACQUIRED-BYTES",
+      "source": {
+        "path": "skills/prism/server/ingestion.ts",
+        "field": "getPinned.size",
+        "sha256": "bbee6795991e601600e6442927e483bcd5a87c798b66a42ed5606bb496354717",
+        "lines": [
+          39,
+          40,
+          73
+        ]
+      },
+      "sourceSha256": "bbee6795991e601600e6442927e483bcd5a87c798b66a42ed5606bb496354717",
+      "entireSourceRead": true,
+      "actualReader": "incoming https streamed size destroys request; content-length/upload bytes rejects oversize",
+      "observedDecision": "retain source-specific previous assignment after actual source/reader audit; not inferred from AUTH prefix",
+      "proposedScope": {
+        "contract": "service-global-policy",
+        "classes": [
+          "S"
+        ],
+        "bindingPatternId": "PAT-c74e2b73e0faf812",
+        "decisionBasis": "Specific Control/ingestion/bridge/DB parser/query/transport/global writer consumer captured S; per-order request/deadline cannot replace it.",
+        "fieldConsumerEvidence": "Operator policy controls actual resource/transport/attempt behavior; explicit config required during approved migration.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-INGESTION-ACQUIRED-BYTES-EFFECT"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-INGESTION-REQUEST-BYTES",
+      "source": {
+        "path": "skills/prism/server/ingestion.ts",
+        "field": "handleRequest.size",
+        "sha256": "bbee6795991e601600e6442927e483bcd5a87c798b66a42ed5606bb496354717",
+        "lines": [
+          39,
+          40,
+          73
+        ]
+      },
+      "sourceSha256": "bbee6795991e601600e6442927e483bcd5a87c798b66a42ed5606bb496354717",
+      "entireSourceRead": true,
+      "actualReader": "request loop throws above max then 422",
+      "observedDecision": "retain source-specific previous assignment after actual source/reader audit; not inferred from AUTH prefix",
+      "proposedScope": {
+        "contract": "service-global-policy",
+        "classes": [
+          "S"
+        ],
+        "bindingPatternId": "PAT-068a483cbfbd7c64",
+        "decisionBasis": "Specific Control/ingestion/bridge/DB parser/query/transport/global writer consumer captured S; per-order request/deadline cannot replace it.",
+        "fieldConsumerEvidence": "Operator policy controls actual resource/transport/attempt behavior; explicit config required during approved migration.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-INGESTION-REQUEST-BYTES-EFFECT"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-INGESTION-HTTP-TIMEOUT",
+      "source": {
+        "path": "skills/prism/server/ingestion.ts",
+        "field": "request.setTimeout",
+        "sha256": "bbee6795991e601600e6442927e483bcd5a87c798b66a42ed5606bb496354717",
+        "lines": [
+          43
+        ]
+      },
+      "sourceSha256": "bbee6795991e601600e6442927e483bcd5a87c798b66a42ed5606bb496354717",
+      "entireSourceRead": true,
+      "actualReader": "HTTPS request.setTimeout destroys source request",
+      "observedDecision": "retain source-specific previous assignment after actual source/reader audit; not inferred from AUTH prefix",
+      "proposedScope": {
+        "contract": "service-global-policy",
+        "classes": [
+          "S"
+        ],
+        "bindingPatternId": "PAT-a8d52a642d78196d",
+        "decisionBasis": "Specific Control/ingestion/bridge/DB parser/query/transport/global writer consumer captured S; per-order request/deadline cannot replace it.",
+        "fieldConsumerEvidence": "Operator policy controls actual resource/transport/attempt behavior; explicit config required during approved migration.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-INGESTION-HTTP-TIMEOUT-EFFECT"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-INGESTION-REDIRECTS",
+      "source": {
+        "path": "skills/prism/server/ingestion.ts",
+        "field": "redirects",
+        "sha256": "bbee6795991e601600e6442927e483bcd5a87c798b66a42ed5606bb496354717",
+        "lines": [
+          50,
+          55
+        ]
+      },
+      "sourceSha256": "bbee6795991e601600e6442927e483bcd5a87c798b66a42ed5606bb496354717",
+      "entireSourceRead": true,
+      "actualReader": "acquire validates HTTPS at each redirect then too many source redirects",
+      "observedDecision": "retain source-specific previous assignment after actual source/reader audit; not inferred from AUTH prefix",
+      "proposedScope": {
+        "contract": "service-global-policy",
+        "classes": [
+          "S"
+        ],
+        "bindingPatternId": "PAT-b4a1a86cb2f9ddd2",
+        "decisionBasis": "Specific Control/ingestion/bridge/DB parser/query/transport/global writer consumer captured S; per-order request/deadline cannot replace it.",
+        "fieldConsumerEvidence": "Operator policy controls actual resource/transport/attempt behavior; explicit config required during approved migration.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-INGESTION-REDIRECTS-EFFECT"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-BRIDGE-PORT",
+      "source": {
+        "path": "skills/prism/server/agent-bridge.mjs",
+        "field": "PORT",
+        "sha256": "f908013330077103e3c8c37df76401c642737d245f361b4c6ff63d9161e9738c",
+        "lines": [
+          4
+        ]
+      },
+      "sourceSha256": "f908013330077103e3c8c37df76401c642737d245f361b4c6ff63d9161e9738c",
+      "entireSourceRead": true,
+      "actualReader": "server.listen(port,127.0.0.1,tick)",
+      "observedDecision": "retain source-specific previous assignment after actual source/reader audit; not inferred from AUTH prefix",
+      "proposedScope": {
+        "contract": "service-global-policy",
+        "classes": [
+          "S"
+        ],
+        "bindingPatternId": "PAT-a7c7e09efc0c66e2",
+        "decisionBasis": "Specific Control/ingestion/bridge/DB parser/query/transport/global writer consumer captured S; per-order request/deadline cannot replace it.",
+        "fieldConsumerEvidence": "Adjustable productive policy, not protocol encoding; current fallback retained as inventoried deficiency.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-BRIDGE-PORT-EFFECT"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-BRIDGE-CONTROL",
+      "source": {
+        "path": "skills/prism/server/agent-bridge.mjs",
+        "field": "PRISM_CONTROL_URL",
+        "sha256": "f908013330077103e3c8c37df76401c642737d245f361b4c6ff63d9161e9738c",
+        "lines": [
+          5
+        ]
+      },
+      "sourceSha256": "f908013330077103e3c8c37df76401c642737d245f361b4c6ff63d9161e9738c",
+      "entireSourceRead": true,
+      "actualReader": "fetch /v1/dispatch; controlRequest /v1/agent/jobs",
+      "observedDecision": "retain source-specific previous assignment after actual source/reader audit; not inferred from AUTH prefix",
+      "proposedScope": {
+        "contract": "service-global-policy",
+        "classes": [
+          "S"
+        ],
+        "bindingPatternId": "PAT-e99ea851a4d9231e",
+        "decisionBasis": "Specific Control/ingestion/bridge/DB parser/query/transport/global writer consumer captured S; per-order request/deadline cannot replace it.",
+        "fieldConsumerEvidence": "Adjustable productive policy, not protocol encoding; current fallback retained as inventoried deficiency.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-BRIDGE-CONTROL-EFFECT"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-BRIDGE-BODY",
+      "source": {
+        "path": "skills/prism/server/agent-bridge.mjs",
+        "field": "size",
+        "sha256": "f908013330077103e3c8c37df76401c642737d245f361b4c6ff63d9161e9738c",
+        "lines": [
+          8,
+          9
+        ]
+      },
+      "sourceSha256": "f908013330077103e3c8c37df76401c642737d245f361b4c6ff63d9161e9738c",
+      "entireSourceRead": true,
+      "actualReader": "readJson throws request too large; response422",
+      "observedDecision": "retain source-specific previous assignment after actual source/reader audit; not inferred from AUTH prefix",
+      "proposedScope": {
+        "contract": "service-global-policy",
+        "classes": [
+          "S"
+        ],
+        "bindingPatternId": "PAT-0107a6492b3e78d0",
+        "decisionBasis": "Specific Control/ingestion/bridge/DB parser/query/transport/global writer consumer captured S; per-order request/deadline cannot replace it.",
+        "fieldConsumerEvidence": "Adjustable productive policy, not protocol encoding; current fallback retained as inventoried deficiency.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-BRIDGE-BODY-EFFECT"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-BRIDGE-DISPATCH",
+      "source": {
+        "path": "skills/prism/server/agent-bridge.mjs",
+        "field": "AbortSignal.timeout",
+        "sha256": "f908013330077103e3c8c37df76401c642737d245f361b4c6ff63d9161e9738c",
+        "lines": [
+          14,
+          26
+        ]
+      },
+      "sourceSha256": "f908013330077103e3c8c37df76401c642737d245f361b4c6ff63d9161e9738c",
+      "entireSourceRead": true,
+      "actualReader": "dispatch fetch /v1/dispatch",
+      "observedDecision": "retain source-specific previous assignment after actual source/reader audit; not inferred from AUTH prefix",
+      "proposedScope": {
+        "contract": "service-global-policy",
+        "classes": [
+          "S"
+        ],
+        "bindingPatternId": "PAT-e5135f015f0ede0a",
+        "decisionBasis": "Specific Control/ingestion/bridge/DB parser/query/transport/global writer consumer captured S; per-order request/deadline cannot replace it.",
+        "fieldConsumerEvidence": "Adjustable productive policy, not protocol encoding; current fallback retained as inventoried deficiency.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-BRIDGE-DISPATCH-EFFECT"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-BRIDGE-JOB-LOOKUP",
+      "source": {
+        "path": "skills/prism/server/agent-bridge.mjs",
+        "field": "controlRequest",
+        "sha256": "f908013330077103e3c8c37df76401c642737d245f361b4c6ff63d9161e9738c",
+        "lines": [
+          2,
+          26
+        ]
+      },
+      "sourceSha256": "f908013330077103e3c8c37df76401c642737d245f361b4c6ff63d9161e9738c",
+      "entireSourceRead": true,
+      "actualReader": "design-set/revise persisted job GET before 202",
+      "observedDecision": "retain source-specific previous assignment after actual source/reader audit; not inferred from AUTH prefix",
+      "proposedScope": {
+        "contract": "service-global-policy",
+        "classes": [
+          "S"
+        ],
+        "bindingPatternId": "PAT-caa50623c4db28c0",
+        "decisionBasis": "Specific Control/ingestion/bridge/DB parser/query/transport/global writer consumer captured S; per-order request/deadline cannot replace it.",
+        "fieldConsumerEvidence": "Adjustable productive policy, not protocol encoding; current fallback retained as inventoried deficiency.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-BRIDGE-JOB-LOOKUP-EFFECT"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-BRIDGE-POLL",
+      "source": {
+        "path": "skills/prism/server/agent-bridge.mjs",
+        "field": "setInterval",
+        "sha256": "f908013330077103e3c8c37df76401c642737d245f361b4c6ff63d9161e9738c",
+        "lines": [
+          33
+        ]
+      },
+      "sourceSha256": "f908013330077103e3c8c37df76401c642737d245f361b4c6ff63d9161e9738c",
+      "entireSourceRead": true,
+      "actualReader": "AgentJobRunner.tick every1000 while alive",
+      "observedDecision": "retain source-specific previous assignment after actual source/reader audit; not inferred from AUTH prefix",
+      "proposedScope": {
+        "contract": "service-global-policy",
+        "classes": [
+          "S"
+        ],
+        "bindingPatternId": "PAT-c6cc315cdccc74ca",
+        "decisionBasis": "Specific Control/ingestion/bridge/DB parser/query/transport/global writer consumer captured S; per-order request/deadline cannot replace it.",
+        "fieldConsumerEvidence": "Adjustable productive policy, not protocol encoding; current fallback retained as inventoried deficiency.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-BRIDGE-POLL-EFFECT"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-DB-BOOTSTRAP-connectionTimeoutMs",
+      "source": {
+        "path": "skills/prism/config/database-bootstrap.ts",
+        "field": "connectionTimeoutMs",
+        "sha256": "23b7078c1fe9304ab60d0fa7742dc5fe543a75da8a3367bb508a9ce8dc649625",
+        "lines": [
+          10
+        ]
+      },
+      "sourceSha256": "23b7078c1fe9304ab60d0fa7742dc5fe543a75da8a3367bb508a9ce8dc649625",
+      "entireSourceRead": true,
+      "actualReader": "database connection establishment timeout",
+      "observedDecision": "retain source-specific previous assignment after actual source/reader audit; not inferred from AUTH prefix",
+      "proposedScope": {
+        "contract": "service-global-policy",
+        "classes": [
+          "S"
+        ],
+        "bindingPatternId": "PAT-210fc2e33d2e1894",
+        "decisionBasis": "Specific Control/ingestion/bridge/DB parser/query/transport/global writer consumer captured S; per-order request/deadline cannot replace it.",
+        "fieldConsumerEvidence": "Adjustable productive policy, not protocol encoding; current fallback retained as inventoried deficiency.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-DB-BOOTSTRAP-connectionTimeoutMs-EFFECT"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-DB-BOOTSTRAP-maximumAttempts",
+      "source": {
+        "path": "skills/prism/config/database-bootstrap.ts",
+        "field": "maximumAttempts",
+        "sha256": "23b7078c1fe9304ab60d0fa7742dc5fe543a75da8a3367bb508a9ce8dc649625",
+        "lines": [
+          10
+        ]
+      },
+      "sourceSha256": "23b7078c1fe9304ab60d0fa7742dc5fe543a75da8a3367bb508a9ce8dc649625",
+      "entireSourceRead": true,
+      "actualReader": "bootstrap retry attempt upper bound",
+      "observedDecision": "retain source-specific previous assignment after actual source/reader audit; not inferred from AUTH prefix",
+      "proposedScope": {
+        "contract": "service-global-policy",
+        "classes": [
+          "S"
+        ],
+        "bindingPatternId": "PAT-a16a75be49b60bf2",
+        "decisionBasis": "Specific Control/ingestion/bridge/DB parser/query/transport/global writer consumer captured S; per-order request/deadline cannot replace it.",
+        "fieldConsumerEvidence": "Adjustable productive policy, not protocol encoding; current fallback retained as inventoried deficiency.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-DB-BOOTSTRAP-maximumAttempts-EFFECT"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-DB-BOOTSTRAP-retryDelayMs",
+      "source": {
+        "path": "skills/prism/config/database-bootstrap.ts",
+        "field": "retryDelayMs",
+        "sha256": "23b7078c1fe9304ab60d0fa7742dc5fe543a75da8a3367bb508a9ce8dc649625",
+        "lines": [
+          10
+        ]
+      },
+      "sourceSha256": "23b7078c1fe9304ab60d0fa7742dc5fe543a75da8a3367bb508a9ce8dc649625",
+      "entireSourceRead": true,
+      "actualReader": "wait between bootstrap connection attempts",
+      "observedDecision": "retain source-specific previous assignment after actual source/reader audit; not inferred from AUTH prefix",
+      "proposedScope": {
+        "contract": "service-global-policy",
+        "classes": [
+          "S"
+        ],
+        "bindingPatternId": "PAT-66fd3a6c8b0b07de",
+        "decisionBasis": "Specific Control/ingestion/bridge/DB parser/query/transport/global writer consumer captured S; per-order request/deadline cannot replace it.",
+        "fieldConsumerEvidence": "Adjustable productive policy, not protocol encoding; current fallback retained as inventoried deficiency.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-DB-BOOTSTRAP-retryDelayMs-EFFECT"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-DB-SECRET-ADMIN_DATABASE_URL",
+      "source": {
+        "path": "skills/prism/config/database-bootstrap.ts",
+        "field": "ADMIN_DATABASE_URL",
+        "sha256": "23b7078c1fe9304ab60d0fa7742dc5fe543a75da8a3367bb508a9ce8dc649625",
+        "lines": [
+          8
+        ]
+      },
+      "sourceSha256": "23b7078c1fe9304ab60d0fa7742dc5fe543a75da8a3367bb508a9ce8dc649625",
+      "entireSourceRead": true,
+      "actualReader": "bootstrap captures required(environment,name) once",
+      "observedDecision": "Actual service/bootstrap/key/file/ENV credential receiver only. Captured raw current secret is not invented durable revision; immutable target requires actual backend/key/access revision capability before activation.",
+      "proposedScope": {
+        "contract": "secret-revision",
+        "classes": [
+          "H",
+          "R"
+        ],
+        "bindingPatternId": "PAT-fcac9c4b9870a6c4",
+        "decisionBasis": "Exact named credential/reference authority in original source and caller; require authentic retained backend revision.",
+        "fieldConsumerEvidence": "Only external reference/resolver revision belongs in config. Secret bytes remain external, this row stores no actual credential.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-DB-SECRET-ADMIN_DATABASE_URL-EFFECT"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-DB-SECRET-PRISM_MIGRATOR_PASSWORD",
+      "source": {
+        "path": "skills/prism/config/database-bootstrap.ts",
+        "field": "PRISM_MIGRATOR_PASSWORD",
+        "sha256": "23b7078c1fe9304ab60d0fa7742dc5fe543a75da8a3367bb508a9ce8dc649625",
+        "lines": [
+          9
+        ]
+      },
+      "sourceSha256": "23b7078c1fe9304ab60d0fa7742dc5fe543a75da8a3367bb508a9ce8dc649625",
+      "entireSourceRead": true,
+      "actualReader": "bootstrap captures required(environment,name) once",
+      "observedDecision": "Actual service/bootstrap/key/file/ENV credential receiver only. Captured raw current secret is not invented durable revision; immutable target requires actual backend/key/access revision capability before activation.",
+      "proposedScope": {
+        "contract": "secret-revision",
+        "classes": [
+          "H",
+          "R"
+        ],
+        "bindingPatternId": "PAT-fcac9c4b9870a6c4",
+        "decisionBasis": "Exact named credential/reference authority in original source and caller; require authentic retained backend revision.",
+        "fieldConsumerEvidence": "Only external reference/resolver revision belongs in config. Secret bytes remain external, this row stores no actual credential.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-DB-SECRET-PRISM_MIGRATOR_PASSWORD-EFFECT"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-DB-SECRET-PRISM_RUNTIME_PASSWORD",
+      "source": {
+        "path": "skills/prism/config/database-bootstrap.ts",
+        "field": "PRISM_RUNTIME_PASSWORD",
+        "sha256": "23b7078c1fe9304ab60d0fa7742dc5fe543a75da8a3367bb508a9ce8dc649625",
+        "lines": [
+          9
+        ]
+      },
+      "sourceSha256": "23b7078c1fe9304ab60d0fa7742dc5fe543a75da8a3367bb508a9ce8dc649625",
+      "entireSourceRead": true,
+      "actualReader": "bootstrap captures required(environment,name) once",
+      "observedDecision": "Actual service/bootstrap/key/file/ENV credential receiver only. Captured raw current secret is not invented durable revision; immutable target requires actual backend/key/access revision capability before activation.",
+      "proposedScope": {
+        "contract": "secret-revision",
+        "classes": [
+          "H",
+          "R"
+        ],
+        "bindingPatternId": "PAT-fcac9c4b9870a6c4",
+        "decisionBasis": "Exact named credential/reference authority in original source and caller; require authentic retained backend revision.",
+        "fieldConsumerEvidence": "Only external reference/resolver revision belongs in config. Secret bytes remain external, this row stores no actual credential.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-DB-SECRET-PRISM_RUNTIME_PASSWORD-EFFECT"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-DB-SECRET-PRISM_READONLY_PASSWORD",
+      "source": {
+        "path": "skills/prism/config/database-bootstrap.ts",
+        "field": "PRISM_READONLY_PASSWORD",
+        "sha256": "23b7078c1fe9304ab60d0fa7742dc5fe543a75da8a3367bb508a9ce8dc649625",
+        "lines": [
+          9
+        ]
+      },
+      "sourceSha256": "23b7078c1fe9304ab60d0fa7742dc5fe543a75da8a3367bb508a9ce8dc649625",
+      "entireSourceRead": true,
+      "actualReader": "bootstrap captures required(environment,name) once",
+      "observedDecision": "Actual service/bootstrap/key/file/ENV credential receiver only. Captured raw current secret is not invented durable revision; immutable target requires actual backend/key/access revision capability before activation.",
+      "proposedScope": {
+        "contract": "secret-revision",
+        "classes": [
+          "H",
+          "R"
+        ],
+        "bindingPatternId": "PAT-fcac9c4b9870a6c4",
+        "decisionBasis": "Exact named credential/reference authority in original source and caller; require authentic retained backend revision.",
+        "fieldConsumerEvidence": "Only external reference/resolver revision belongs in config. Secret bytes remain external, this row stores no actual credential.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-DB-SECRET-PRISM_READONLY_PASSWORD-EFFECT"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-PRODUCT-ENABLE",
+      "source": {
+        "path": "skills/prism/control/product-decisions.ts",
+        "field": "PRISM_PRODUCT_DECISIONS_ENABLED",
+        "sha256": "65a172a7867a3ff4635956d3c02fd1ecae837fd9b25f913826b0d12fdca3f1a2",
+        "lines": [
+          24
+        ]
+      },
+      "sourceSha256": "65a172a7867a3ff4635956d3c02fd1ecae837fd9b25f913826b0d12fdca3f1a2",
+      "entireSourceRead": true,
+      "actualReader": "loadProductConfig returns undefined unless true; Control skips product authority",
+      "observedDecision": "actual feature service gate S, old signed/lease history R",
+      "proposedScope": {
+        "contract": "service-global-policy",
+        "classes": [
+          "S",
+          "R"
+        ],
+        "bindingPatternId": "PAT02-d13884a108147174",
+        "decisionBasis": "loadProductConfig gate composes selected service routes/controller authority before requests; feature boolean is service activation, not itself host capacity or module tuning.",
+        "fieldConsumerEvidence": "Adjustable productive policy, not protocol encoding; current fallback retained as inventoried deficiency.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A.",
+        "firstActualAcceptanceBoundary": "Control product route/service composition, retaining existing signed histories",
+        "sourceSpecificCurrentConsumer": "Current true enables actual route authority; false omits it. Existing accepted decisions/session/issuer/nonce history remains R, H signer/peer/grant separate."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-PRODUCT-ENABLE-EFFECT"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-PRODUCT-PRISM_PRODUCT_ORIGIN",
+      "source": {
+        "path": "skills/prism/control/product-decisions.ts",
+        "field": "PRISM_PRODUCT_ORIGIN",
+        "sha256": "65a172a7867a3ff4635956d3c02fd1ecae837fd9b25f913826b0d12fdca3f1a2",
+        "lines": [
+          26
+        ]
+      },
+      "sourceSha256": "65a172a7867a3ff4635956d3c02fd1ecae837fd9b25f913826b0d12fdca3f1a2",
+      "entireSourceRead": true,
+      "actualReader": "productActor validates origin+CSRF before mutation",
+      "observedDecision": "retain source-specific previous assignment after actual source/reader audit; not inferred from AUTH prefix",
+      "proposedScope": {
+        "contract": "host-authority",
+        "classes": [
+          "H",
+          "S",
+          "R"
+        ],
+        "bindingPatternId": "PAT-c78960f6c5edca46",
+        "decisionBasis": "Specific signed issuer/principal/peer/endpoint/product authority, immutable existing token/lease/nonce provenance.",
+        "fieldConsumerEvidence": "Adjustable productive policy, not protocol encoding; current fallback retained as inventoried deficiency.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-PRODUCT-PRISM_PRODUCT_ORIGIN-EFFECT"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-PRODUCT-PRISM_PRODUCT_CONTROLLER_URL",
+      "source": {
+        "path": "skills/prism/control/product-decisions.ts",
+        "field": "PRISM_PRODUCT_CONTROLLER_URL",
+        "sha256": "65a172a7867a3ff4635956d3c02fd1ecae837fd9b25f913826b0d12fdca3f1a2",
+        "lines": [
+          27
+        ]
+      },
+      "sourceSha256": "65a172a7867a3ff4635956d3c02fd1ecae837fd9b25f913826b0d12fdca3f1a2",
+      "entireSourceRead": true,
+      "actualReader": "signed intent forwarded to controller origin",
+      "observedDecision": "retain source-specific previous assignment after actual source/reader audit; not inferred from AUTH prefix",
+      "proposedScope": {
+        "contract": "host-authority",
+        "classes": [
+          "H",
+          "S",
+          "R"
+        ],
+        "bindingPatternId": "PAT-4cf737ee3ca9264c",
+        "decisionBasis": "Specific signed issuer/principal/peer/endpoint/product authority, immutable existing token/lease/nonce provenance.",
+        "fieldConsumerEvidence": "Adjustable productive policy, not protocol encoding; current fallback retained as inventoried deficiency.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-PRODUCT-PRISM_PRODUCT_CONTROLLER_URL-EFFECT"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-PRODUCT-PRISM_PRODUCT_OPERATORS",
+      "source": {
+        "path": "skills/prism/control/product-decisions.ts",
+        "field": "PRISM_PRODUCT_OPERATORS",
+        "sha256": "65a172a7867a3ff4635956d3c02fd1ecae837fd9b25f913826b0d12fdca3f1a2",
+        "lines": [
+          29
+        ]
+      },
+      "sourceSha256": "65a172a7867a3ff4635956d3c02fd1ecae837fd9b25f913826b0d12fdca3f1a2",
+      "entireSourceRead": true,
+      "actualReader": "productActor allowlist has(session.user)",
+      "observedDecision": "retain source-specific previous assignment after actual source/reader audit; not inferred from AUTH prefix",
+      "proposedScope": {
+        "contract": "host-authority",
+        "classes": [
+          "H",
+          "S",
+          "R"
+        ],
+        "bindingPatternId": "PAT-99f36bf5df35b7d2",
+        "decisionBasis": "Specific signed issuer/principal/peer/endpoint/product authority, immutable existing token/lease/nonce provenance.",
+        "fieldConsumerEvidence": "Adjustable productive policy, not protocol encoding; current fallback retained as inventoried deficiency.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-PRODUCT-PRISM_PRODUCT_OPERATORS-EFFECT"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-PRODUCT-PRISM_PRODUCT_ISSUER",
+      "source": {
+        "path": "skills/prism/control/product-decisions.ts",
+        "field": "PRISM_PRODUCT_ISSUER",
+        "sha256": "65a172a7867a3ff4635956d3c02fd1ecae837fd9b25f913826b0d12fdca3f1a2",
+        "lines": [
+          33
+        ]
+      },
+      "sourceSha256": "65a172a7867a3ff4635956d3c02fd1ecae837fd9b25f913826b0d12fdca3f1a2",
+      "entireSourceRead": true,
+      "actualReader": "signProductIntent payload.issuer and controller trust",
+      "observedDecision": "retain source-specific previous assignment after actual source/reader audit; not inferred from AUTH prefix",
+      "proposedScope": {
+        "contract": "host-authority",
+        "classes": [
+          "H",
+          "S",
+          "R"
+        ],
+        "bindingPatternId": "PAT-004303677d969b10",
+        "decisionBasis": "Specific signed issuer/principal/peer/endpoint/product authority, immutable existing token/lease/nonce provenance.",
+        "fieldConsumerEvidence": "Adjustable productive policy, not protocol encoding; current fallback retained as inventoried deficiency.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-PRODUCT-PRISM_PRODUCT_ISSUER-EFFECT"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-PRODUCT-SECRET-PRISM_PRODUCT_PRIVATE_KEY_FILE",
+      "source": {
+        "path": "skills/prism/control/product-decisions.ts",
+        "field": "PRISM_PRODUCT_PRIVATE_KEY_FILE",
+        "sha256": "65a172a7867a3ff4635956d3c02fd1ecae837fd9b25f913826b0d12fdca3f1a2",
+        "lines": [
+          31
+        ]
+      },
+      "sourceSha256": "65a172a7867a3ff4635956d3c02fd1ecae837fd9b25f913826b0d12fdca3f1a2",
+      "entireSourceRead": true,
+      "actualReader": "readFile/createPrivateKey; dedicated ed25519 signer",
+      "observedDecision": "Actual service/bootstrap/key/file/ENV credential receiver only. Captured raw current secret is not invented durable revision; immutable target requires actual backend/key/access revision capability before activation.",
+      "proposedScope": {
+        "contract": "secret-revision",
+        "classes": [
+          "H",
+          "R"
+        ],
+        "bindingPatternId": "PAT-f29db9cd48868703",
+        "decisionBasis": "Exact named credential/reference authority in original source and caller; require authentic retained backend revision.",
+        "fieldConsumerEvidence": "File path selects external secret/trust content; only ref/version and authorized consumer are config, not actual key/token bytes.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-PRODUCT-SECRET-PRISM_PRODUCT_PRIVATE_KEY_FILE-EFFECT"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-PRODUCT-SECRET-PRISM_PRODUCT_CONTROLLER_CA_FILE",
+      "source": {
+        "path": "skills/prism/control/product-decisions.ts",
+        "field": "PRISM_PRODUCT_CONTROLLER_CA_FILE",
+        "sha256": "65a172a7867a3ff4635956d3c02fd1ecae837fd9b25f913826b0d12fdca3f1a2",
+        "lines": [
+          34
+        ]
+      },
+      "sourceSha256": "65a172a7867a3ff4635956d3c02fd1ecae837fd9b25f913826b0d12fdca3f1a2",
+      "entireSourceRead": true,
+      "actualReader": "controller TLS trustedCA file",
+      "observedDecision": "Actual service/bootstrap/key/file/ENV credential receiver only. Captured raw current secret is not invented durable revision; immutable target requires actual backend/key/access revision capability before activation.",
+      "proposedScope": {
+        "contract": "secret-revision",
+        "classes": [
+          "H",
+          "R"
+        ],
+        "bindingPatternId": "PAT-dd4c42638a3c92bc",
+        "decisionBasis": "Exact named credential/reference authority in original source and caller; require authentic retained backend revision.",
+        "fieldConsumerEvidence": "File path selects external secret/trust content; only ref/version and authorized consumer are config, not actual key/token bytes.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-PRODUCT-SECRET-PRISM_PRODUCT_CONTROLLER_CA_FILE-EFFECT"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-PRODUCT-SECRET-PRISM_PRODUCT_CONTROLLER_TOKEN_FILE",
+      "source": {
+        "path": "skills/prism/control/product-decisions.ts",
+        "field": "PRISM_PRODUCT_CONTROLLER_TOKEN_FILE",
+        "sha256": "65a172a7867a3ff4635956d3c02fd1ecae837fd9b25f913826b0d12fdca3f1a2",
+        "lines": [
+          34
+        ]
+      },
+      "sourceSha256": "65a172a7867a3ff4635956d3c02fd1ecae837fd9b25f913826b0d12fdca3f1a2",
+      "entireSourceRead": true,
+      "actualReader": "authenticated controller token file",
+      "observedDecision": "Actual service/bootstrap/key/file/ENV credential receiver only. Captured raw current secret is not invented durable revision; immutable target requires actual backend/key/access revision capability before activation.",
+      "proposedScope": {
+        "contract": "secret-revision",
+        "classes": [
+          "H",
+          "R"
+        ],
+        "bindingPatternId": "PAT-ff15a89473d38c97",
+        "decisionBasis": "Exact named credential/reference authority in original source and caller; require authentic retained backend revision.",
+        "fieldConsumerEvidence": "File path selects external secret/trust content; only ref/version and authorized consumer are config, not actual key/token bytes.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-PRODUCT-SECRET-PRISM_PRODUCT_CONTROLLER_TOKEN_FILE-EFFECT"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-PRODUCT-DECISION-TTL",
+      "source": {
+        "path": "skills/prism/control/product-decisions.ts",
+        "field": "signProductIntent.expiry",
+        "sha256": "65a172a7867a3ff4635956d3c02fd1ecae837fd9b25f913826b0d12fdca3f1a2",
+        "lines": [
+          61,
+          62,
+          67
+        ]
+      },
+      "sourceSha256": "65a172a7867a3ff4635956d3c02fd1ecae837fd9b25f913826b0d12fdca3f1a2",
+      "entireSourceRead": true,
+      "actualReader": "expiresAt=floor(min(now+300000,session expiry)/1000)*1000; expiry<=now rejected",
+      "observedDecision": "actual signer TTL captured S/R, existing issued expiry immutable",
+      "proposedScope": {
+        "contract": "service-global-policy",
+        "classes": [
+          "S",
+          "R"
+        ],
+        "bindingPatternId": "PAT02-96644548ca9ec38d",
+        "decisionBasis": "Signer policy TTL applies at actual signed intent mint with original session expiry; current literal300000 is not per-module grant/reset.",
+        "fieldConsumerEvidence": "Adjustable productive policy, not protocol encoding; current fallback retained as inventoried deficiency.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A.",
+        "firstActualAcceptanceBoundary": "product config/mint before immutable signed envelope; retain original issued expiresAt",
+        "sourceSpecificCurrentConsumer": "signProductIntent expiresAt=floor(min(now+300000,session expiry)/1000)*1000; existing issued expiry never recomputed after B"
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-PRODUCT-DECISION-TTL-EFFECT"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-PRODUCT-DOMAIN",
+      "source": {
+        "path": "skills/prism/control/product-decisions.ts",
+        "field": "PRODUCT_DOMAIN",
+        "sha256": "65a172a7867a3ff4635956d3c02fd1ecae837fd9b25f913826b0d12fdca3f1a2",
+        "lines": [
+          6,
+          71
+        ]
+      },
+      "sourceSha256": "65a172a7867a3ff4635956d3c02fd1ecae837fd9b25f913826b0d12fdca3f1a2",
+      "entireSourceRead": true,
+      "actualReader": "sign concatenates domain bytes+payload before Ed25519; verifier must same domain",
+      "observedDecision": "retain source-specific previous assignment after actual source/reader audit; not inferred from AUTH prefix",
+      "proposedScope": {
+        "contract": "protocol-software",
+        "classes": [
+          "V"
+        ],
+        "bindingPatternId": "PAT-dad679b38fd5aa00",
+        "decisionBasis": "Original source identifies actual supported codec/version/capability contract; not a tuning default.",
+        "fieldConsumerEvidence": "Changing tag changes signature meaning across producer/verifier; cannot be safely tuned as service setting.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-PRODUCT-DOMAIN-EFFECT"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-RENDER-ASSET-LENGTH",
+      "source": {
+        "path": "skills/prism/engine/render-operation.ts",
+        "field": "src.length",
+        "sha256": "63b95de9640f47bce2b04e929232e0f7dd617c11ba08152f8e428db6a601d501",
+        "lines": [
+          26
+        ]
+      },
+      "sourceSha256": "63b95de9640f47bce2b04e929232e0f7dd617c11ba08152f8e428db6a601d501",
+      "entireSourceRead": true,
+      "actualReader": "renderAssetsFor rejects src length>16000000 with render asset is unavailable",
+      "observedDecision": "retain source-specific previous assignment after actual source/reader audit; not inferred from AUTH prefix",
+      "proposedScope": {
+        "contract": "standalone-operation",
+        "classes": [
+          "J"
+        ],
+        "bindingPatternId": "PAT-a75e8c60bcefc307",
+        "decisionBasis": "Actual accepted native/order/round/agent/render/provider operation consumer; library/deterministic/cache applicability exceptions below.",
+        "fieldConsumerEvidence": "Adjustable productive policy, not protocol encoding; current fallback retained as inventoried deficiency.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-RENDER-ASSET-LENGTH-EFFECT"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-RENDER-WIDTH-COMPACT",
+      "source": {
+        "path": "skills/prism/engine/render-operation.ts",
+        "field": "compact",
+        "sha256": "63b95de9640f47bce2b04e929232e0f7dd617c11ba08152f8e428db6a601d501",
+        "lines": [
+          73,
+          102
+        ]
+      },
+      "sourceSha256": "63b95de9640f47bce2b04e929232e0f7dd617c11ba08152f8e428db6a601d501",
+      "entireSourceRead": true,
+      "actualReader": "captureHtml context width for compact",
+      "observedDecision": "retain source-specific previous assignment after actual source/reader audit; not inferred from AUTH prefix",
+      "proposedScope": {
+        "contract": "standalone-operation",
+        "classes": [
+          "J"
+        ],
+        "bindingPatternId": "PAT-78715a4b967e1c93",
+        "decisionBasis": "Actual accepted native/order/round/agent/render/provider operation consumer; library/deterministic/cache applicability exceptions below.",
+        "fieldConsumerEvidence": "Adjustable productive policy, not protocol encoding; current fallback retained as inventoried deficiency.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-RENDER-WIDTH-COMPACT-EFFECT"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-RENDER-WIDTH-REGULAR",
+      "source": {
+        "path": "skills/prism/engine/render-operation.ts",
+        "field": "regular",
+        "sha256": "63b95de9640f47bce2b04e929232e0f7dd617c11ba08152f8e428db6a601d501",
+        "lines": [
+          73,
+          102
+        ]
+      },
+      "sourceSha256": "63b95de9640f47bce2b04e929232e0f7dd617c11ba08152f8e428db6a601d501",
+      "entireSourceRead": true,
+      "actualReader": "captureHtml context width for regular",
+      "observedDecision": "retain source-specific previous assignment after actual source/reader audit; not inferred from AUTH prefix",
+      "proposedScope": {
+        "contract": "standalone-operation",
+        "classes": [
+          "J"
+        ],
+        "bindingPatternId": "PAT-362149e7169e1233",
+        "decisionBasis": "Actual accepted native/order/round/agent/render/provider operation consumer; library/deterministic/cache applicability exceptions below.",
+        "fieldConsumerEvidence": "Adjustable productive policy, not protocol encoding; current fallback retained as inventoried deficiency.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-RENDER-WIDTH-REGULAR-EFFECT"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-RENDER-WIDTH-WIDE",
+      "source": {
+        "path": "skills/prism/engine/render-operation.ts",
+        "field": "wide",
+        "sha256": "63b95de9640f47bce2b04e929232e0f7dd617c11ba08152f8e428db6a601d501",
+        "lines": [
+          73,
+          102
+        ]
+      },
+      "sourceSha256": "63b95de9640f47bce2b04e929232e0f7dd617c11ba08152f8e428db6a601d501",
+      "entireSourceRead": true,
+      "actualReader": "captureHtml context width for wide or unknown",
+      "observedDecision": "retain source-specific previous assignment after actual source/reader audit; not inferred from AUTH prefix",
+      "proposedScope": {
+        "contract": "standalone-operation",
+        "classes": [
+          "J"
+        ],
+        "bindingPatternId": "PAT-df179b0b92772f0d",
+        "decisionBasis": "Actual accepted native/order/round/agent/render/provider operation consumer; library/deterministic/cache applicability exceptions below.",
+        "fieldConsumerEvidence": "Adjustable productive policy, not protocol encoding; current fallback retained as inventoried deficiency.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-RENDER-WIDTH-WIDE-EFFECT"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-RENDER-HEIGHT",
+      "source": {
+        "path": "skills/prism/engine/render-operation.ts",
+        "field": "height",
+        "sha256": "63b95de9640f47bce2b04e929232e0f7dd617c11ba08152f8e428db6a601d501",
+        "lines": [
+          68,
+          106
+        ]
+      },
+      "sourceSha256": "63b95de9640f47bce2b04e929232e0f7dd617c11ba08152f8e428db6a601d501",
+      "entireSourceRead": true,
+      "actualReader": "captureHtml context height",
+      "observedDecision": "retain source-specific previous assignment after actual source/reader audit; not inferred from AUTH prefix",
+      "proposedScope": {
+        "contract": "standalone-operation",
+        "classes": [
+          "J"
+        ],
+        "bindingPatternId": "PAT-19b1b6b88252c06b",
+        "decisionBasis": "Actual accepted native/order/round/agent/render/provider operation consumer; library/deterministic/cache applicability exceptions below.",
+        "fieldConsumerEvidence": "Adjustable productive policy, not protocol encoding; current fallback retained as inventoried deficiency.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-RENDER-HEIGHT-EFFECT"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-RENDER-LOCALE",
+      "source": {
+        "path": "skills/prism/engine/render-operation.ts",
+        "field": "locale",
+        "sha256": "63b95de9640f47bce2b04e929232e0f7dd617c11ba08152f8e428db6a601d501",
+        "lines": [
+          108,
+          154
+        ]
+      },
+      "sourceSha256": "63b95de9640f47bce2b04e929232e0f7dd617c11ba08152f8e428db6a601d501",
+      "entireSourceRead": true,
+      "actualReader": "newContext locale; rendererMetadata locale",
+      "observedDecision": "retain source-specific previous assignment after actual source/reader audit; not inferred from AUTH prefix",
+      "proposedScope": {
+        "contract": "standalone-operation",
+        "classes": [
+          "J"
+        ],
+        "bindingPatternId": "PAT-9f9df69bff3f3f85",
+        "decisionBasis": "Actual accepted native/order/round/agent/render/provider operation consumer; library/deterministic/cache applicability exceptions below.",
+        "fieldConsumerEvidence": "Adjustable productive policy, not protocol encoding; current fallback retained as inventoried deficiency.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-RENDER-LOCALE-EFFECT"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-RENDER-TIMEZONE",
+      "source": {
+        "path": "skills/prism/engine/render-operation.ts",
+        "field": "timezoneId",
+        "sha256": "63b95de9640f47bce2b04e929232e0f7dd617c11ba08152f8e428db6a601d501",
+        "lines": [
+          109
+        ]
+      },
+      "sourceSha256": "63b95de9640f47bce2b04e929232e0f7dd617c11ba08152f8e428db6a601d501",
+      "entireSourceRead": true,
+      "actualReader": "newContext timezoneId; metadata timezone",
+      "observedDecision": "retain source-specific previous assignment after actual source/reader audit; not inferred from AUTH prefix",
+      "proposedScope": {
+        "contract": "standalone-operation",
+        "classes": [
+          "J"
+        ],
+        "bindingPatternId": "PAT-22bbaef31345583d",
+        "decisionBasis": "Actual accepted native/order/round/agent/render/provider operation consumer; library/deterministic/cache applicability exceptions below.",
+        "fieldConsumerEvidence": "Adjustable productive policy, not protocol encoding; current fallback retained as inventoried deficiency.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-RENDER-TIMEZONE-EFFECT"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-RENDER-MOTION",
+      "source": {
+        "path": "skills/prism/engine/render-operation.ts",
+        "field": "reducedMotion",
+        "sha256": "63b95de9640f47bce2b04e929232e0f7dd617c11ba08152f8e428db6a601d501",
+        "lines": [
+          110
+        ]
+      },
+      "sourceSha256": "63b95de9640f47bce2b04e929232e0f7dd617c11ba08152f8e428db6a601d501",
+      "entireSourceRead": true,
+      "actualReader": "newContext media preference and injected animation suppression",
+      "observedDecision": "retain source-specific previous assignment after actual source/reader audit; not inferred from AUTH prefix",
+      "proposedScope": {
+        "contract": "standalone-operation",
+        "classes": [
+          "J"
+        ],
+        "bindingPatternId": "PAT-712420f2294ce69a",
+        "decisionBasis": "Actual accepted native/order/round/agent/render/provider operation consumer; library/deterministic/cache applicability exceptions below.",
+        "fieldConsumerEvidence": "Adjustable productive policy, not protocol encoding; current fallback retained as inventoried deficiency.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-RENDER-MOTION-EFFECT"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-AGENT-LIMIT-timeoutMs",
+      "source": {
+        "path": "skills/prism/server/agent-attempt.ts",
+        "field": "limits.timeoutMs",
+        "sha256": "3e27552ab5cbc3d1c357df81a3ba92b5928feaeb4df36d054c174b9c2f7d0de8",
+        "lines": [
+          24
+        ]
+      },
+      "sourceSha256": "3e27552ab5cbc3d1c357df81a3ba92b5928feaeb4df36d054c174b9c2f7d0de8",
+      "entireSourceRead": true,
+      "actualReader": "WorkerAttemptExecutor",
+      "observedDecision": "retain source-specific previous assignment after actual source/reader audit; not inferred from AUTH prefix",
+      "proposedScope": {
+        "contract": "standalone-operation",
+        "classes": [
+          "J"
+        ],
+        "bindingPatternId": "PAT-c50f9bc84836b107",
+        "decisionBasis": "Actual accepted native/order/round/agent/render/provider operation consumer; library/deterministic/cache applicability exceptions below.",
+        "fieldConsumerEvidence": "Launcher-specific operator policy, not deterministic-engine quota or remote resource guarantee.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "CMP-C0-SCHEMA-agent-POSITIVE",
+        "CMP-C0-SCHEMA-agent-CLAIM",
+        "CMP-C0-SCHEMA-agent-GRANT",
+        "CMP-C0-SCHEMA-agent-DIGEST",
+        "CMP-C0-SCHEMA-AGENT-UNAVAILABLE",
+        "AUTH-PRISM-AGENT-LIMIT-timeoutMs-EFFECT",
+        "AUTH-PRISM-AGENT-C0-DEFINITION"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-AGENT-LIMIT-cleanupTimeoutMs",
+      "source": {
+        "path": "skills/prism/server/agent-attempt.ts",
+        "field": "limits.cleanupTimeoutMs",
+        "sha256": "3e27552ab5cbc3d1c357df81a3ba92b5928feaeb4df36d054c174b9c2f7d0de8",
+        "lines": [
+          24
+        ]
+      },
+      "sourceSha256": "3e27552ab5cbc3d1c357df81a3ba92b5928feaeb4df36d054c174b9c2f7d0de8",
+      "entireSourceRead": true,
+      "actualReader": "WorkerAttemptExecutor",
+      "observedDecision": "retain source-specific previous assignment after actual source/reader audit; not inferred from AUTH prefix",
+      "proposedScope": {
+        "contract": "standalone-operation",
+        "classes": [
+          "J"
+        ],
+        "bindingPatternId": "PAT-c50f9bc84836b107",
+        "decisionBasis": "Actual accepted native/order/round/agent/render/provider operation consumer; library/deterministic/cache applicability exceptions below.",
+        "fieldConsumerEvidence": "Launcher-specific operator policy, not deterministic-engine quota or remote resource guarantee.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "CMP-C0-SCHEMA-agent-POSITIVE",
+        "CMP-C0-SCHEMA-agent-CLAIM",
+        "CMP-C0-SCHEMA-agent-GRANT",
+        "CMP-C0-SCHEMA-agent-DIGEST",
+        "CMP-C0-SCHEMA-AGENT-UNAVAILABLE",
+        "AUTH-PRISM-AGENT-C0-DEFINITION",
+        "AUTH-PRISM-AGENT-LIMIT-cleanupTimeoutMs-EFFECT"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-AGENT-LIMIT-logBytes",
+      "source": {
+        "path": "skills/prism/server/agent-attempt.ts",
+        "field": "limits.logBytes",
+        "sha256": "3e27552ab5cbc3d1c357df81a3ba92b5928feaeb4df36d054c174b9c2f7d0de8",
+        "lines": [
+          24
+        ]
+      },
+      "sourceSha256": "3e27552ab5cbc3d1c357df81a3ba92b5928feaeb4df36d054c174b9c2f7d0de8",
+      "entireSourceRead": true,
+      "actualReader": "WorkerAttemptExecutor",
+      "observedDecision": "retain source-specific previous assignment after actual source/reader audit; not inferred from AUTH prefix",
+      "proposedScope": {
+        "contract": "standalone-operation",
+        "classes": [
+          "J"
+        ],
+        "bindingPatternId": "PAT-c50f9bc84836b107",
+        "decisionBasis": "Actual accepted native/order/round/agent/render/provider operation consumer; library/deterministic/cache applicability exceptions below.",
+        "fieldConsumerEvidence": "Launcher-specific operator policy, not deterministic-engine quota or remote resource guarantee.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "CMP-C0-SCHEMA-agent-POSITIVE",
+        "CMP-C0-SCHEMA-agent-CLAIM",
+        "CMP-C0-SCHEMA-agent-GRANT",
+        "CMP-C0-SCHEMA-agent-DIGEST",
+        "CMP-C0-SCHEMA-AGENT-UNAVAILABLE",
+        "AUTH-PRISM-AGENT-C0-DEFINITION",
+        "AUTH-PRISM-AGENT-LIMIT-logBytes-EFFECT"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-AGENT-LIMIT-resultBytes",
+      "source": {
+        "path": "skills/prism/server/agent-attempt.ts",
+        "field": "limits.resultBytes",
+        "sha256": "3e27552ab5cbc3d1c357df81a3ba92b5928feaeb4df36d054c174b9c2f7d0de8",
+        "lines": [
+          24
+        ]
+      },
+      "sourceSha256": "3e27552ab5cbc3d1c357df81a3ba92b5928feaeb4df36d054c174b9c2f7d0de8",
+      "entireSourceRead": true,
+      "actualReader": "WorkerAttemptExecutor",
+      "observedDecision": "retain source-specific previous assignment after actual source/reader audit; not inferred from AUTH prefix",
+      "proposedScope": {
+        "contract": "standalone-operation",
+        "classes": [
+          "J"
+        ],
+        "bindingPatternId": "PAT-c50f9bc84836b107",
+        "decisionBasis": "Actual accepted native/order/round/agent/render/provider operation consumer; library/deterministic/cache applicability exceptions below.",
+        "fieldConsumerEvidence": "Launcher-specific operator policy, not deterministic-engine quota or remote resource guarantee.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "CMP-C0-SCHEMA-agent-POSITIVE",
+        "CMP-C0-SCHEMA-agent-CLAIM",
+        "CMP-C0-SCHEMA-agent-GRANT",
+        "CMP-C0-SCHEMA-agent-DIGEST",
+        "CMP-C0-SCHEMA-AGENT-UNAVAILABLE",
+        "AUTH-PRISM-AGENT-C0-DEFINITION",
+        "AUTH-PRISM-AGENT-LIMIT-resultBytes-EFFECT"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-AGENT-LIMIT-evidenceBytes",
+      "source": {
+        "path": "skills/prism/server/agent-attempt.ts",
+        "field": "limits.evidenceBytes",
+        "sha256": "3e27552ab5cbc3d1c357df81a3ba92b5928feaeb4df36d054c174b9c2f7d0de8",
+        "lines": [
+          24
+        ]
+      },
+      "sourceSha256": "3e27552ab5cbc3d1c357df81a3ba92b5928feaeb4df36d054c174b9c2f7d0de8",
+      "entireSourceRead": true,
+      "actualReader": "WorkerAttemptExecutor",
+      "observedDecision": "retain source-specific previous assignment after actual source/reader audit; not inferred from AUTH prefix",
+      "proposedScope": {
+        "contract": "standalone-operation",
+        "classes": [
+          "J"
+        ],
+        "bindingPatternId": "PAT-c50f9bc84836b107",
+        "decisionBasis": "Actual accepted native/order/round/agent/render/provider operation consumer; library/deterministic/cache applicability exceptions below.",
+        "fieldConsumerEvidence": "Launcher-specific operator policy, not deterministic-engine quota or remote resource guarantee.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "CMP-C0-SCHEMA-agent-POSITIVE",
+        "CMP-C0-SCHEMA-agent-CLAIM",
+        "CMP-C0-SCHEMA-agent-GRANT",
+        "CMP-C0-SCHEMA-agent-DIGEST",
+        "CMP-C0-SCHEMA-AGENT-UNAVAILABLE",
+        "AUTH-PRISM-AGENT-C0-DEFINITION",
+        "AUTH-PRISM-AGENT-LIMIT-evidenceBytes-EFFECT"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-AGENT-LIMIT-evidenceFiles",
+      "source": {
+        "path": "skills/prism/server/agent-attempt.ts",
+        "field": "limits.evidenceFiles",
+        "sha256": "3e27552ab5cbc3d1c357df81a3ba92b5928feaeb4df36d054c174b9c2f7d0de8",
+        "lines": [
+          24
+        ]
+      },
+      "sourceSha256": "3e27552ab5cbc3d1c357df81a3ba92b5928feaeb4df36d054c174b9c2f7d0de8",
+      "entireSourceRead": true,
+      "actualReader": "WorkerAttemptExecutor",
+      "observedDecision": "retain source-specific previous assignment after actual source/reader audit; not inferred from AUTH prefix",
+      "proposedScope": {
+        "contract": "standalone-operation",
+        "classes": [
+          "J"
+        ],
+        "bindingPatternId": "PAT-c50f9bc84836b107",
+        "decisionBasis": "Actual accepted native/order/round/agent/render/provider operation consumer; library/deterministic/cache applicability exceptions below.",
+        "fieldConsumerEvidence": "Launcher-specific operator policy, not deterministic-engine quota or remote resource guarantee.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "CMP-C0-SCHEMA-agent-POSITIVE",
+        "CMP-C0-SCHEMA-agent-CLAIM",
+        "CMP-C0-SCHEMA-agent-GRANT",
+        "CMP-C0-SCHEMA-agent-DIGEST",
+        "CMP-C0-SCHEMA-AGENT-UNAVAILABLE",
+        "AUTH-PRISM-AGENT-C0-DEFINITION",
+        "AUTH-PRISM-AGENT-LIMIT-evidenceFiles-EFFECT"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-AGENT-CLAIM-LIFETIME",
+      "source": {
+        "path": "skills/prism/control/agent-jobs.ts",
+        "field": "claimLifetimeMs",
+        "sha256": "ff62ef04432ebb67c700c4a25103a0477096f588c2cc3f34f3fab0b776860334",
+        "lines": [
+          48
+        ]
+      },
+      "sourceSha256": "ff62ef04432ebb67c700c4a25103a0477096f588c2cc3f34f3fab0b776860334",
+      "entireSourceRead": true,
+      "actualReader": "lockAgentResult",
+      "observedDecision": "retain source-specific previous assignment after actual source/reader audit; not inferred from AUTH prefix",
+      "proposedScope": {
+        "contract": "standalone-operation",
+        "classes": [
+          "J"
+        ],
+        "bindingPatternId": "PAT-a57c696e8fe5f653",
+        "decisionBasis": "Actual accepted native/order/round/agent/render/provider operation consumer; library/deterministic/cache applicability exceptions below.",
+        "fieldConsumerEvidence": "Launcher-specific operator policy, not deterministic-engine quota or remote resource guarantee.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "CMP-C0-SCHEMA-agent-POSITIVE",
+        "CMP-C0-SCHEMA-agent-CLAIM",
+        "CMP-C0-SCHEMA-agent-GRANT",
+        "CMP-C0-SCHEMA-agent-DIGEST",
+        "CMP-C0-SCHEMA-AGENT-UNAVAILABLE",
+        "AUTH-PRISM-AGENT-CLAIM-LIFETIME-EFFECT"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-AGENT-KILL-GRACE",
+      "source": {
+        "path": "skills/prism/server/agent-process.ts",
+        "field": "terminationGraceMs",
+        "sha256": "1d3486c1ada0851150257a4ef197d62f523924e2c01da3e7a7c53ad06fb1102b",
+        "lines": [
+          33
+        ]
+      },
+      "sourceSha256": "1d3486c1ada0851150257a4ef197d62f523924e2c01da3e7a7c53ad06fb1102b",
+      "entireSourceRead": true,
+      "actualReader": "negative process-group PID signal",
+      "observedDecision": "retain source-specific previous assignment after actual source/reader audit; not inferred from AUTH prefix",
+      "proposedScope": {
+        "contract": "standalone-operation",
+        "classes": [
+          "J"
+        ],
+        "bindingPatternId": "PAT-eeb79574306dc695",
+        "decisionBasis": "Actual accepted native/order/round/agent/render/provider operation consumer; library/deterministic/cache applicability exceptions below.",
+        "fieldConsumerEvidence": "Launcher-specific operator policy, not deterministic-engine quota or remote resource guarantee.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-AGENT-KILL-GRACE-EFFECT"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-AGENT-CLI-TIMEOUT",
+      "source": {
+        "path": "skills/prism/server/agent-job-runner.mjs",
+        "field": "cliTimeoutSeconds",
+        "sha256": "f97926e67b1737be717db6a549ca60920232b7fbd2da23f73c0a15597c331bfb",
+        "lines": [
+          38
+        ]
+      },
+      "sourceSha256": "f97926e67b1737be717db6a549ca60920232b7fbd2da23f73c0a15597c331bfb",
+      "entireSourceRead": true,
+      "actualReader": "spawn openclaw agent --timeout",
+      "observedDecision": "retain source-specific previous assignment after actual source/reader audit; not inferred from AUTH prefix",
+      "proposedScope": {
+        "contract": "generated-authority-ref",
+        "classes": [
+          "G"
+        ],
+        "bindingPatternId": "PAT-bd96e50b50bb0922",
+        "decisionBasis": "Exact source projection/derived installed reference, source/caller and supplying authority remain explicit per member.",
+        "fieldConsumerEvidence": "Target CLI seconds must be an exact validated projection of sole accepted launcher timeoutMs author, not a second independently editable timeout. Current fixed 900 seconds and 900000 ms are two code literals, not proven single authority.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-AGENT-CLI-TIMEOUT-EFFECT"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-AGENT-CLI-OWNER",
+      "source": {
+        "path": "skills/prism/server/agent-job-runner.mjs",
+        "field": "agentId",
+        "sha256": "f97926e67b1737be717db6a549ca60920232b7fbd2da23f73c0a15597c331bfb",
+        "lines": [
+          38
+        ]
+      },
+      "sourceSha256": "f97926e67b1737be717db6a549ca60920232b7fbd2da23f73c0a15597c331bfb",
+      "entireSourceRead": true,
+      "actualReader": "OpenClaw agent --agent",
+      "observedDecision": "retain source-specific previous assignment after actual source/reader audit; not inferred from AUTH prefix",
+      "proposedScope": {
+        "contract": "standalone-operation",
+        "classes": [
+          "J"
+        ],
+        "bindingPatternId": "PAT-04098d3b22dda931",
+        "decisionBasis": "Actual accepted native/order/round/agent/render/provider operation consumer; library/deterministic/cache applicability exceptions below.",
+        "fieldConsumerEvidence": "Launcher-specific operator policy, not deterministic-engine quota or remote resource guarantee.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-AGENT-CLI-OWNER-EFFECT"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-AGENT-CLAIM-HTTP",
+      "source": {
+        "path": "skills/prism/server/agent-job-runner.mjs",
+        "field": "claimHttpTimeoutMs",
+        "sha256": "f97926e67b1737be717db6a549ca60920232b7fbd2da23f73c0a15597c331bfb",
+        "lines": [
+          28
+        ]
+      },
+      "sourceSha256": "f97926e67b1737be717db6a549ca60920232b7fbd2da23f73c0a15597c331bfb",
+      "entireSourceRead": true,
+      "actualReader": "fetch AbortSignal.timeout",
+      "observedDecision": "retain source-specific previous assignment after actual source/reader audit; not inferred from AUTH prefix",
+      "proposedScope": {
+        "contract": "service-global-policy",
+        "classes": [
+          "S"
+        ],
+        "bindingPatternId": "PAT-e3969bec8a387bab",
+        "decisionBasis": "Specific Control/ingestion/bridge/DB parser/query/transport/global writer consumer captured S; per-order request/deadline cannot replace it.",
+        "fieldConsumerEvidence": "Launcher-specific operator policy, not deterministic-engine quota or remote resource guarantee.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-AGENT-CLAIM-HTTP-EFFECT"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-AGENT-FINISH-HTTP",
+      "source": {
+        "path": "skills/prism/server/agent-job-runner.mjs",
+        "field": "finishHttpTimeoutMs",
+        "sha256": "f97926e67b1737be717db6a549ca60920232b7fbd2da23f73c0a15597c331bfb",
+        "lines": [
+          44
+        ]
+      },
+      "sourceSha256": "f97926e67b1737be717db6a549ca60920232b7fbd2da23f73c0a15597c331bfb",
+      "entireSourceRead": true,
+      "actualReader": "finishAgentRun fenced transaction",
+      "observedDecision": "retain source-specific previous assignment after actual source/reader audit; not inferred from AUTH prefix",
+      "proposedScope": {
+        "contract": "service-global-policy",
+        "classes": [
+          "S"
+        ],
+        "bindingPatternId": "PAT-aedbceac451e40dc",
+        "decisionBasis": "Specific Control/ingestion/bridge/DB parser/query/transport/global writer consumer captured S; per-order request/deadline cannot replace it.",
+        "fieldConsumerEvidence": "Launcher-specific operator policy, not deterministic-engine quota or remote resource guarantee.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-AGENT-FINISH-HTTP-EFFECT"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-ENDPOINT-WORKER",
+      "source": {
+        "path": "skills/prism/server/control-config.ts",
+        "sha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4",
+        "field": "PRISM_WORKER_URL",
+        "lines": [
+          59
+        ]
+      },
+      "sourceSha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4",
+      "entireSourceRead": true,
+      "actualReader": "fetch /v1/attempts",
+      "observedDecision": "Actual endpoint is service/deployment transport+host peer authority; original J/R uses captured route. Live verification endpoint source is a verification host input, not new productive application author.",
+      "proposedScope": {
+        "contract": "host-authority",
+        "classes": [
+          "H",
+          "S",
+          "R"
+        ],
+        "bindingPatternId": "PAT-c55491d417b59037",
+        "decisionBasis": "Specific signed issuer/principal/peer/endpoint/product authority, immutable existing token/lease/nonce provenance.",
+        "fieldConsumerEvidence": "Deployment transport route is operator policy; loopback port/service and emitted ENV are projections, not separate editable endpoints.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-ENDPOINT-WORKER-DELIVERY",
+        "AUTH-PRISM-ENDPOINT-WORKER-BOUNDARY"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-ENDPOINT-CONTROL-INTERNAL",
+      "source": {
+        "path": "skills/prism/server/control-config.ts",
+        "sha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4",
+        "field": "PRISM_CONTROL_INTERNAL_URL",
+        "lines": [
+          61
+        ]
+      },
+      "sourceSha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4",
+      "entireSourceRead": true,
+      "actualReader": "WorkerArtifactClient",
+      "observedDecision": "Actual endpoint is service/deployment transport+host peer authority; original J/R uses captured route. Live verification endpoint source is a verification host input, not new productive application author.",
+      "proposedScope": {
+        "contract": "host-authority",
+        "classes": [
+          "H",
+          "S",
+          "R"
+        ],
+        "bindingPatternId": "PAT-7becef514c792f22",
+        "decisionBasis": "Specific signed issuer/principal/peer/endpoint/product authority, immutable existing token/lease/nonce provenance.",
+        "fieldConsumerEvidence": "Deployment transport route is operator policy; loopback port/service and emitted ENV are projections, not separate editable endpoints.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-ENDPOINT-CONTROL-INTERNAL-DELIVERY",
+        "AUTH-PRISM-ENDPOINT-CONTROL-INTERNAL-BOUNDARY"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-ENDPOINT-INGESTION",
+      "source": {
+        "path": "skills/prism/server/control-config.ts",
+        "sha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4",
+        "field": "PRISM_INGESTION_URL",
+        "lines": [
+          60
+        ]
+      },
+      "sourceSha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4",
+      "entireSourceRead": true,
+      "actualReader": "cleanup DELETE quarantine digest",
+      "observedDecision": "Actual endpoint is service/deployment transport+host peer authority; original J/R uses captured route. Live verification endpoint source is a verification host input, not new productive application author.",
+      "proposedScope": {
+        "contract": "host-authority",
+        "classes": [
+          "H",
+          "S",
+          "R"
+        ],
+        "bindingPatternId": "PAT-53b67233473fe135",
+        "decisionBasis": "Specific signed issuer/principal/peer/endpoint/product authority, immutable existing token/lease/nonce provenance.",
+        "fieldConsumerEvidence": "Deployment transport route is operator policy; loopback port/service and emitted ENV are projections, not separate editable endpoints.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-ENDPOINT-INGESTION-DELIVERY",
+        "AUTH-PRISM-ENDPOINT-INGESTION-BOUNDARY"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-ENDPOINT-AGENT-LIVE-RUNNER",
+      "source": {
+        "path": "tests/verification/live/prism-nova-production-e2e.mjs",
+        "sha256": "41cef571679f2b7b41981fa69f1e93de50f7b012a8465eca48bd89ae6f160919",
+        "field": "PRISM_AGENT_URL",
+        "lines": [
+          10
+        ]
+      },
+      "sourceSha256": "41cef571679f2b7b41981fa69f1e93de50f7b012a8465eca48bd89ae6f160919",
+      "entireSourceRead": true,
+      "actualReader": "real agent endpoint dispatch in production verification",
+      "observedDecision": "Actual endpoint is service/deployment transport+host peer authority; original J/R uses captured route. Live verification endpoint source is a verification host input, not new productive application author.",
+      "proposedScope": {
+        "contract": "host-authority",
+        "classes": [
+          "H",
+          "S",
+          "R"
+        ],
+        "bindingPatternId": "PAT-253460dfa56fcc2b",
+        "decisionBasis": "Specific signed issuer/principal/peer/endpoint/product authority, immutable existing token/lease/nonce provenance.",
+        "fieldConsumerEvidence": "Deployment transport route is operator policy; loopback port/service and emitted ENV are projections, not separate editable endpoints.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-ENDPOINT-AGENT-LIVE-RUNNER-DELIVERY",
+        "AUTH-PRISM-ENDPOINT-AGENT-LIVE-RUNNER-BOUNDARY"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-NATIVE-COMPLETION-PHASE-ALLOWANCE",
+      "source": {
+        "path": "skills/prism/server/native-worker-execution.ts",
+        "sha256": "d87eb7d05cdc40f3eb353dba63236fa8c20a02adf1b70512c81944bb7cb71a56",
+        "field": "timeoutMs: envelope.limits.timeoutMs + 8 * envelope.limits.cleanupTimeoutMs",
+        "lines": [
+          29
+        ]
+      },
+      "sourceSha256": "d87eb7d05cdc40f3eb353dba63236fa8c20a02adf1b70512c81944bb7cb71a56",
+      "entireSourceRead": true,
+      "actualReader": "nativePrismExecution.execute parent process timeout projection",
+      "observedDecision": "Actual captured/generated peer/native assigned input/pool/launcher/content-identity projection; original supplying H/S/R/J authority and retention maintained. Native completion allowance remains actual accepted envelope arithmetic, not independent host capacity.",
+      "proposedScope": {
+        "contract": "standalone-operation",
+        "classes": [
+          "J"
+        ],
+        "bindingPatternId": "PAT-72fa6de3bdc97b81",
+        "decisionBasis": "Actual accepted native/order/round/agent/render/provider operation consumer; library/deterministic/cache applicability exceptions below.",
+        "fieldConsumerEvidence": "Operator policy controls actual resource/transport/attempt behavior; explicit config required during approved migration.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-NATIVE-COMPLETION-PHASE-ALLOWANCE-VAL",
+        "AUTH-PRISM-NATIVE-COMPLETION-PHASE-ALLOWANCE-PROJECTION",
+        "AUTH-PRISM-NATIVE-COMPLETION-PHASE-ALLOWANCE-RECOVERY"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-CONTROL-SESSION-TTL",
+      "source": {
+        "path": "skills/prism/control/session.ts",
+        "sha256": "0d4f5e3842275055aaf928b51580f3879655538584dfd607ff80b31fc2aef77b",
+        "field": "mintSession expiresAt"
+      },
+      "sourceSha256": "0d4f5e3842275055aaf928b51580f3879655538584dfd607ff80b31fc2aef77b",
+      "entireSourceRead": true,
+      "actualReader": "mintSession expiresAt",
+      "observedDecision": "retain source-specific previous assignment after actual source/reader audit; not inferred from AUTH prefix",
+      "proposedScope": {
+        "contract": "service-global-policy",
+        "classes": [
+          "S"
+        ],
+        "bindingPatternId": "PAT-003da2cb971a44bd",
+        "decisionBasis": "Specific Control/ingestion/bridge/DB parser/query/transport/global writer consumer captured S; per-order request/deadline cannot replace it.",
+        "fieldConsumerEvidence": "Literal controls admission, ranking, trust or maintenance policy at identified productive reader; not classified immutable merely because current code has no override.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-CONTROL-SESSION-TTL-IMPLEMENTATION",
+        "AUTH-PRISM-CONTROL-C0-CURRENT-SESSION-PARSER"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-CONTROL-SESSION-DEFAULT-ROLES",
+      "source": {
+        "path": "skills/prism/control/session.ts",
+        "sha256": "0d4f5e3842275055aaf928b51580f3879655538584dfd607ff80b31fc2aef77b",
+        "field": "mintSession roles default"
+      },
+      "sourceSha256": "0d4f5e3842275055aaf928b51580f3879655538584dfd607ff80b31fc2aef77b",
+      "entireSourceRead": true,
+      "actualReader": "mintSession signed roles payload \u2192 verifySession array-only check \u2192 authenticated returned actor.roles metadata; productActor uses user/operators instead",
+      "observedDecision": "mintSession signs serialized role metadata; verifySession checks array and returns metadata; productActor checks user/operators, not roles. S metadata content, no ACL EFFECT/authorization reader invented.",
+      "proposedScope": {
+        "contract": "service-global-policy",
+        "classes": [
+          "S"
+        ],
+        "bindingPatternId": "PAT-6ba0f477829832df",
+        "decisionBasis": "Specific Control/ingestion/bridge/DB parser/query/transport/global writer consumer captured S; per-order request/deadline cannot replace it.",
+        "fieldConsumerEvidence": "Current minted signed-session metadata defaults to editor, but no repo-tracked Prism authorization predicate consumes actor.roles. Product authorization reads the separate configured user operators allowlist. Not a proven role grant; future external metadata consumers/domain remain open.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-CONTROL-C0-CURRENT-SESSION-PARSER",
+        "AUTH-PRISM-CONTROL-SESSION-DEFAULT-ROLES-IMPLEMENTATION",
+        "AUTH-PRISM-CONTROL-C0-ROLE-METADATA"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-CONTROL-HTTP-BODY-BYTES",
+      "source": {
+        "path": "skills/prism/server/control-http.ts",
+        "sha256": "df12e64c95c890f5f4cc9c3a0452f3802552d36995f0b8629cb47679879482c1",
+        "field": "body maxBytes default"
+      },
+      "sourceSha256": "df12e64c95c890f5f4cc9c3a0452f3802552d36995f0b8629cb47679879482c1",
+      "entireSourceRead": true,
+      "actualReader": "body maxBytes default",
+      "observedDecision": "retain source-specific previous assignment after actual source/reader audit; not inferred from AUTH prefix",
+      "proposedScope": {
+        "contract": "service-global-policy",
+        "classes": [
+          "S"
+        ],
+        "bindingPatternId": "PAT-6f236a238122ea00",
+        "decisionBasis": "Specific Control/ingestion/bridge/DB parser/query/transport/global writer consumer captured S; per-order request/deadline cannot replace it.",
+        "fieldConsumerEvidence": "Literal controls admission, ranking, trust or maintenance policy at identified productive reader; not classified immutable merely because current code has no override.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-CONTROL-C0-CURRENT-SESSION-PARSER",
+        "AUTH-PRISM-CONTROL-HTTP-BODY-BYTES-IMPLEMENTATION"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-CONTROL-ARTIFACT-WIRE-BYTES",
+      "source": {
+        "path": "skills/prism/server/corpus-routes.ts",
+        "sha256": "3f02fab3d0b41ed9a1074193e0312db0176be504f5d510a1c7a35d967eff77bf",
+        "field": "uploadArtifact body(request,8500000)"
+      },
+      "sourceSha256": "3f02fab3d0b41ed9a1074193e0312db0176be504f5d510a1c7a35d967eff77bf",
+      "entireSourceRead": true,
+      "actualReader": "uploadArtifact body(request,8500000)",
+      "observedDecision": "retain source-specific previous assignment after actual source/reader audit; not inferred from AUTH prefix",
+      "proposedScope": {
+        "contract": "service-global-policy",
+        "classes": [
+          "S"
+        ],
+        "bindingPatternId": "PAT-f392f6cb2ae8b39c",
+        "decisionBasis": "Specific Control/ingestion/bridge/DB parser/query/transport/global writer consumer captured S; per-order request/deadline cannot replace it.",
+        "fieldConsumerEvidence": "Literal controls admission, ranking, trust or maintenance policy at identified productive reader; not classified immutable merely because current code has no override.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-CONTROL-ARTIFACT-WIRE-BYTES-IMPLEMENTATION"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-CONTROL-ARTIFACT-DECODED-BYTES",
+      "source": {
+        "path": "skills/prism/server/corpus-routes.ts",
+        "sha256": "3f02fab3d0b41ed9a1074193e0312db0176be504f5d510a1c7a35d967eff77bf",
+        "field": "uploadArtifact decoded.byteLength"
+      },
+      "sourceSha256": "3f02fab3d0b41ed9a1074193e0312db0176be504f5d510a1c7a35d967eff77bf",
+      "entireSourceRead": true,
+      "actualReader": "uploadArtifact decoded.byteLength",
+      "observedDecision": "retain source-specific previous assignment after actual source/reader audit; not inferred from AUTH prefix",
+      "proposedScope": {
+        "contract": "service-global-policy",
+        "classes": [
+          "S"
+        ],
+        "bindingPatternId": "PAT-53fce216e5179bdc",
+        "decisionBasis": "Specific Control/ingestion/bridge/DB parser/query/transport/global writer consumer captured S; per-order request/deadline cannot replace it.",
+        "fieldConsumerEvidence": "Literal controls admission, ranking, trust or maintenance policy at identified productive reader; not classified immutable merely because current code has no override.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-CONTROL-ARTIFACT-DECODED-BYTES-IMPLEMENTATION"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-CONTROL-SEARCH-DEFAULT-LIMIT",
+      "source": {
+        "path": "skills/prism/server/corpus-routes.ts",
+        "sha256": "3f02fab3d0b41ed9a1074193e0312db0176be504f5d510a1c7a35d967eff77bf",
+        "field": "searchCorpus limit default; search limit default"
+      },
+      "sourceSha256": "3f02fab3d0b41ed9a1074193e0312db0176be504f5d510a1c7a35d967eff77bf",
+      "entireSourceRead": true,
+      "actualReader": "searchCorpus limit default; search limit default",
+      "observedDecision": "retain source-specific previous assignment after actual source/reader audit; not inferred from AUTH prefix",
+      "proposedScope": {
+        "contract": "service-global-policy",
+        "classes": [
+          "S"
+        ],
+        "bindingPatternId": "PAT-a272d5a2e1617cb9",
+        "decisionBasis": "Specific Control/ingestion/bridge/DB parser/query/transport/global writer consumer captured S; per-order request/deadline cannot replace it.",
+        "fieldConsumerEvidence": "Literal controls admission, ranking, trust or maintenance policy at identified productive reader; not classified immutable merely because current code has no override.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-CONTROL-SEARCH-DEFAULT-LIMIT-IMPLEMENTATION"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-CONTROL-SEARCH-MAX-LIMIT",
+      "source": {
+        "path": "skills/prism/server/corpus-routes.ts",
+        "sha256": "3f02fab3d0b41ed9a1074193e0312db0176be504f5d510a1c7a35d967eff77bf",
+        "field": "searchCorpus Math.min(50,...)"
+      },
+      "sourceSha256": "3f02fab3d0b41ed9a1074193e0312db0176be504f5d510a1c7a35d967eff77bf",
+      "entireSourceRead": true,
+      "actualReader": "searchCorpus Math.min(50,...)",
+      "observedDecision": "retain source-specific previous assignment after actual source/reader audit; not inferred from AUTH prefix",
+      "proposedScope": {
+        "contract": "service-global-policy",
+        "classes": [
+          "S"
+        ],
+        "bindingPatternId": "PAT-cb93f2ccd2ee8a7f",
+        "decisionBasis": "Specific Control/ingestion/bridge/DB parser/query/transport/global writer consumer captured S; per-order request/deadline cannot replace it.",
+        "fieldConsumerEvidence": "Literal controls admission, ranking, trust or maintenance policy at identified productive reader; not classified immutable merely because current code has no override.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-CONTROL-SEARCH-MAX-LIMIT-IMPLEMENTATION"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-CONTROL-SEARCH-FAMILY-DEFAULT",
+      "source": {
+        "path": "skills/prism/server/corpus-routes.ts",
+        "sha256": "3f02fab3d0b41ed9a1074193e0312db0176be504f5d510a1c7a35d967eff77bf",
+        "field": "searchCorpus sourceFamilyLimit ??2; search options fallback"
+      },
+      "sourceSha256": "3f02fab3d0b41ed9a1074193e0312db0176be504f5d510a1c7a35d967eff77bf",
+      "entireSourceRead": true,
+      "actualReader": "searchCorpus sourceFamilyLimit ??2; search options fallback",
+      "observedDecision": "retain source-specific previous assignment after actual source/reader audit; not inferred from AUTH prefix",
+      "proposedScope": {
+        "contract": "service-global-policy",
+        "classes": [
+          "S"
+        ],
+        "bindingPatternId": "PAT-823b2fa58f9f0967",
+        "decisionBasis": "Specific Control/ingestion/bridge/DB parser/query/transport/global writer consumer captured S; per-order request/deadline cannot replace it.",
+        "fieldConsumerEvidence": "Literal controls admission, ranking, trust or maintenance policy at identified productive reader; not classified immutable merely because current code has no override.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-CONTROL-SEARCH-FAMILY-DEFAULT-IMPLEMENTATION"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-CONTROL-SEARCH-FAMILY-MAX",
+      "source": {
+        "path": "skills/prism/server/corpus-routes.ts",
+        "sha256": "3f02fab3d0b41ed9a1074193e0312db0176be504f5d510a1c7a35d967eff77bf",
+        "field": "sourceFamilyLimit Math.min(10,...)"
+      },
+      "sourceSha256": "3f02fab3d0b41ed9a1074193e0312db0176be504f5d510a1c7a35d967eff77bf",
+      "entireSourceRead": true,
+      "actualReader": "sourceFamilyLimit Math.min(10,...)",
+      "observedDecision": "retain source-specific previous assignment after actual source/reader audit; not inferred from AUTH prefix",
+      "proposedScope": {
+        "contract": "service-global-policy",
+        "classes": [
+          "S"
+        ],
+        "bindingPatternId": "PAT-dca7d68cf4cb6f26",
+        "decisionBasis": "Specific Control/ingestion/bridge/DB parser/query/transport/global writer consumer captured S; per-order request/deadline cannot replace it.",
+        "fieldConsumerEvidence": "Literal controls admission, ranking, trust or maintenance policy at identified productive reader; not classified immutable merely because current code has no override.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-CONTROL-SEARCH-FAMILY-MAX-IMPLEMENTATION"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-CONTROL-SEARCH-CANDIDATE-FLOOR",
+      "source": {
+        "path": "skills/prism/corpus/index.ts",
+        "sha256": "99ee5eee2282734c9df492c5ac1219903b9680f3dff37f3c513bfa4cff2c6343",
+        "field": "SQL LIMIT100 and Math.max(limit*10,100)"
+      },
+      "sourceSha256": "99ee5eee2282734c9df492c5ac1219903b9680f3dff37f3c513bfa4cff2c6343",
+      "entireSourceRead": true,
+      "actualReader": "SQL LIMIT100 and Math.max(limit*10,100)",
+      "observedDecision": "retain source-specific previous assignment after actual source/reader audit; not inferred from AUTH prefix",
+      "proposedScope": {
+        "contract": "service-global-policy",
+        "classes": [
+          "S"
+        ],
+        "bindingPatternId": "PAT-9cc93618d8167e1b",
+        "decisionBasis": "Specific Control/ingestion/bridge/DB parser/query/transport/global writer consumer captured S; per-order request/deadline cannot replace it.",
+        "fieldConsumerEvidence": "Literal controls admission, ranking, trust or maintenance policy at identified productive reader; not classified immutable merely because current code has no override.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-CONTROL-SEARCH-CANDIDATE-FLOOR-IMPLEMENTATION"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-CONTROL-SEARCH-CANDIDATE-MULTIPLIER",
+      "source": {
+        "path": "skills/prism/corpus/index.ts",
+        "sha256": "99ee5eee2282734c9df492c5ac1219903b9680f3dff37f3c513bfa4cff2c6343",
+        "field": "Math.max(limit*10,100)"
+      },
+      "sourceSha256": "99ee5eee2282734c9df492c5ac1219903b9680f3dff37f3c513bfa4cff2c6343",
+      "entireSourceRead": true,
+      "actualReader": "Math.max(limit*10,100)",
+      "observedDecision": "retain source-specific previous assignment after actual source/reader audit; not inferred from AUTH prefix",
+      "proposedScope": {
+        "contract": "service-global-policy",
+        "classes": [
+          "S"
+        ],
+        "bindingPatternId": "PAT-5a908d6e1ee723f8",
+        "decisionBasis": "Specific Control/ingestion/bridge/DB parser/query/transport/global writer consumer captured S; per-order request/deadline cannot replace it.",
+        "fieldConsumerEvidence": "Literal controls admission, ranking, trust or maintenance policy at identified productive reader; not classified immutable merely because current code has no override.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-CONTROL-SEARCH-CANDIDATE-MULTIPLIER-IMPLEMENTATION"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-CONTROL-SEARCH-RRF-DAMPING",
+      "source": {
+        "path": "skills/prism/corpus/index.ts",
+        "sha256": "99ee5eee2282734c9df492c5ac1219903b9680f3dff37f3c513bfa4cff2c6343",
+        "field": "1.0/(60+rank)"
+      },
+      "sourceSha256": "99ee5eee2282734c9df492c5ac1219903b9680f3dff37f3c513bfa4cff2c6343",
+      "entireSourceRead": true,
+      "actualReader": "1.0/(60+rank)",
+      "observedDecision": "retain source-specific previous assignment after actual source/reader audit; not inferred from AUTH prefix",
+      "proposedScope": {
+        "contract": "service-global-policy",
+        "classes": [
+          "S"
+        ],
+        "bindingPatternId": "PAT-c58d55013c492d62",
+        "decisionBasis": "Specific Control/ingestion/bridge/DB parser/query/transport/global writer consumer captured S; per-order request/deadline cannot replace it.",
+        "fieldConsumerEvidence": "Literal controls admission, ranking, trust or maintenance policy at identified productive reader; not classified immutable merely because current code has no override.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-CONTROL-SEARCH-RRF-DAMPING-IMPLEMENTATION"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-CONTROL-CORPUS-ACQUIRE-TIMEOUT",
+      "source": {
+        "path": "skills/prism/server/corpus-routes.ts",
+        "sha256": "3f02fab3d0b41ed9a1074193e0312db0176be504f5d510a1c7a35d967eff77bf",
+        "field": "acquireCorpus AbortSignal.timeout"
+      },
+      "sourceSha256": "3f02fab3d0b41ed9a1074193e0312db0176be504f5d510a1c7a35d967eff77bf",
+      "entireSourceRead": true,
+      "actualReader": "acquireCorpus AbortSignal.timeout",
+      "observedDecision": "Actual corpus route external acquire/clean requests use selected service timeout; each original accepted acquisition/captured source/ref/cleanup must retain original projection. Current code does not implement a job-binding policy selector; target J durability/alternate operation needs explicit typed receiving closure, not automatic reload.",
+      "proposedScope": {
+        "contract": "service-global-policy",
+        "classes": [
+          "S"
+        ],
+        "bindingPatternId": "PAT-b8c7e82bfc566a22",
+        "decisionBasis": "Specific Control/ingestion/bridge/DB parser/query/transport/global writer consumer captured S; per-order request/deadline cannot replace it.",
+        "fieldConsumerEvidence": "Literal controls admission, ranking, trust or maintenance policy at identified productive reader; not classified immutable merely because current code has no override.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-CONTROL-CORPUS-ACQUIRE-TIMEOUT-IMPLEMENTATION"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-CONTROL-CORPUS-CLEANUP-TIMEOUT",
+      "source": {
+        "path": "skills/prism/server/corpus-routes.ts",
+        "sha256": "3f02fab3d0b41ed9a1074193e0312db0176be504f5d510a1c7a35d967eff77bf",
+        "field": "cleanAcquisition AbortSignal.timeout"
+      },
+      "sourceSha256": "3f02fab3d0b41ed9a1074193e0312db0176be504f5d510a1c7a35d967eff77bf",
+      "entireSourceRead": true,
+      "actualReader": "cleanAcquisition AbortSignal.timeout",
+      "observedDecision": "Actual corpus route external acquire/clean requests use selected service timeout; each original accepted acquisition/captured source/ref/cleanup must retain original projection. Current code does not implement a job-binding policy selector; target J durability/alternate operation needs explicit typed receiving closure, not automatic reload.",
+      "proposedScope": {
+        "contract": "service-global-policy",
+        "classes": [
+          "S"
+        ],
+        "bindingPatternId": "PAT-84c6bc8776095abc",
+        "decisionBasis": "Specific Control/ingestion/bridge/DB parser/query/transport/global writer consumer captured S; per-order request/deadline cannot replace it.",
+        "fieldConsumerEvidence": "Literal controls admission, ranking, trust or maintenance policy at identified productive reader; not classified immutable merely because current code has no override.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-CONTROL-CORPUS-CLEANUP-TIMEOUT-IMPLEMENTATION"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-CONTROL-HMAC-WINDOW",
+      "source": {
+        "path": "skills/prism/server/internal-auth.ts",
+        "sha256": "e0662a6b5237bc081fa346a35739fd2a388bdf20e93fff88ab866f8839b3fc72",
+        "field": "WINDOW_MS verification and nonce expiresAt"
+      },
+      "sourceSha256": "e0662a6b5237bc081fa346a35739fd2a388bdf20e93fff88ab866f8839b3fc72",
+      "entireSourceRead": true,
+      "actualReader": "WINDOW_MS verification and nonce expiresAt",
+      "observedDecision": "retain source-specific previous assignment after actual source/reader audit; not inferred from AUTH prefix",
+      "proposedScope": {
+        "contract": "service-global-policy",
+        "classes": [
+          "S"
+        ],
+        "bindingPatternId": "PAT-3ac86c6fac22d203",
+        "decisionBasis": "Specific Control/ingestion/bridge/DB parser/query/transport/global writer consumer captured S; per-order request/deadline cannot replace it.",
+        "fieldConsumerEvidence": "Literal controls admission, ranking, trust or maintenance policy at identified productive reader; not classified immutable merely because current code has no override.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-CONTROL-HMAC-WINDOW-IMPLEMENTATION"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-CONTROL-NONCE-CLEANUP-BATCH",
+      "source": {
+        "path": "skills/prism/server/internal-auth.ts",
+        "sha256": "e0662a6b5237bc081fa346a35739fd2a388bdf20e93fff88ab866f8839b3fc72",
+        "field": "PostgresNonceStore.consume DELETE LIMIT1000"
+      },
+      "sourceSha256": "e0662a6b5237bc081fa346a35739fd2a388bdf20e93fff88ab866f8839b3fc72",
+      "entireSourceRead": true,
+      "actualReader": "PostgresNonceStore.consume DELETE LIMIT1000",
+      "observedDecision": "retain source-specific previous assignment after actual source/reader audit; not inferred from AUTH prefix",
+      "proposedScope": {
+        "contract": "service-global-policy",
+        "classes": [
+          "S"
+        ],
+        "bindingPatternId": "PAT-0696175560f93e38",
+        "decisionBasis": "Specific Control/ingestion/bridge/DB parser/query/transport/global writer consumer captured S; per-order request/deadline cannot replace it.",
+        "fieldConsumerEvidence": "Literal controls admission, ranking, trust or maintenance policy at identified productive reader; not classified immutable merely because current code has no override.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-CONTROL-NONCE-CLEANUP-BATCH-IMPLEMENTATION"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-TRUST-MODE",
+      "source": {
+        "path": "skills/prism/server/control-config.ts",
+        "field": "WORKER_TRUST_SPIFFE_ENABLED",
+        "sha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4"
+      },
+      "sourceSha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4",
+      "entireSourceRead": true,
+      "actualReader": "artifact/attempt auth",
+      "observedDecision": "Actual captured/generated peer/native assigned input/pool/launcher/content-identity projection; original supplying H/S/R/J authority and retention maintained. Native completion allowance remains actual accepted envelope arithmetic, not independent host capacity.",
+      "proposedScope": {
+        "contract": "generated-authority-ref",
+        "classes": [
+          "G"
+        ],
+        "bindingPatternId": "PAT-87864220b7543c6d",
+        "decisionBasis": "Exact source projection/derived installed reference, source/caller and supplying authority remain explicit per member.",
+        "fieldConsumerEvidence": "All control/worker/proxy projections must agree. False omits ENV and selects real HMAC secrets; true emits peer IDs/proxy and suppresses HMAC secret ENV. No per-request latest mode.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-TRUST-MODE-IMPLEMENTATION",
+        "AUTH-PRISM-C0-CURRENT-COMPOSITION-CHECKPOINT5"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-TRUST-PRINCIPAL-NOVA",
+      "source": {
+        "path": "skills/prism/server/control-config.ts",
+        "field": "PRISM_TRUSTED_NOVA_SPIFFE_ID",
+        "sha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4"
+      },
+      "sourceSha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4",
+      "entireSourceRead": true,
+      "actualReader": "loopback-only authorizeProxiedSpiffePeer",
+      "observedDecision": "Actual captured/generated peer/native assigned input/pool/launcher/content-identity projection; original supplying H/S/R/J authority and retention maintained. Native completion allowance remains actual accepted envelope arithmetic, not independent host capacity.",
+      "proposedScope": {
+        "contract": "generated-authority-ref",
+        "classes": [
+          "G"
+        ],
+        "bindingPatternId": "PAT-acc144b066ec2c5c",
+        "decisionBasis": "Exact source projection/derived installed reference, source/caller and supplying authority remain explicit per member.",
+        "fieldConsumerEvidence": "Load checks presence only; actual guard validates syntax and exact peer membership. Not a separate editable identity author.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-C0-CURRENT-COMPOSITION-CHECKPOINT5",
+        "AUTH-PRISM-TRUST-PRINCIPAL-NOVA-IMPLEMENTATION"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-TRUST-PRINCIPAL-WORKER",
+      "source": {
+        "path": "skills/prism/server/control-config.ts",
+        "field": "PRISM_TRUSTED_WORKER_SPIFFE_ID",
+        "sha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4"
+      },
+      "sourceSha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4",
+      "entireSourceRead": true,
+      "actualReader": "Core loopback peer guard",
+      "observedDecision": "Actual captured/generated peer/native assigned input/pool/launcher/content-identity projection; original supplying H/S/R/J authority and retention maintained. Native completion allowance remains actual accepted envelope arithmetic, not independent host capacity.",
+      "proposedScope": {
+        "contract": "generated-authority-ref",
+        "classes": [
+          "G"
+        ],
+        "bindingPatternId": "PAT-d58d48de755eb5ef",
+        "decisionBasis": "Exact source projection/derived installed reference, source/caller and supplying authority remain explicit per member.",
+        "fieldConsumerEvidence": "Artifact route permits worker/control/optional agent peers; preserve exact selected identity and accepted artifact origin on retry.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-C0-CURRENT-COMPOSITION-CHECKPOINT5",
+        "AUTH-PRISM-TRUST-PRINCIPAL-WORKER-IMPLEMENTATION"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-TRUST-PRINCIPAL-CONTROL",
+      "source": {
+        "path": "skills/prism/server/control-config.ts",
+        "field": "PRISM_CONTROL_SPIFFE_ID; worker PRISM_TRUSTED_CONTROL_SPIFFE_ID",
+        "sha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4"
+      },
+      "sourceSha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4",
+      "entireSourceRead": true,
+      "actualReader": "worker-service guard",
+      "observedDecision": "Actual captured/generated peer/native assigned input/pool/launcher/content-identity projection; original supplying H/S/R/J authority and retention maintained. Native completion allowance remains actual accepted envelope arithmetic, not independent host capacity.",
+      "proposedScope": {
+        "contract": "generated-authority-ref",
+        "classes": [
+          "G"
+        ],
+        "bindingPatternId": "PAT-912fea4366e0eac5",
+        "decisionBasis": "Exact source projection/derived installed reference, source/caller and supplying authority remain explicit per member.",
+        "fieldConsumerEvidence": "Control principal also prefixes admitted agent registration (/prism/main/v2); cannot classify as only transport auth. Worker alias is not a second author.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-C0-CURRENT-COMPOSITION-CHECKPOINT5",
+        "AUTH-PRISM-TRUST-PRINCIPAL-CONTROL-IMPLEMENTATION"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-TRUST-PRINCIPAL-AGENT",
+      "source": {
+        "path": "skills/prism/server/control-config.ts",
+        "field": "PRISM_TRUSTED_AGENT_SPIFFE_ID",
+        "sha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4"
+      },
+      "sourceSha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4",
+      "entireSourceRead": true,
+      "actualReader": "internal artifact allowed peer set",
+      "observedDecision": "Actual captured/generated peer/native assigned input/pool/launcher/content-identity projection; original supplying H/S/R/J authority and retention maintained. Native completion allowance remains actual accepted envelope arithmetic, not independent host capacity.",
+      "proposedScope": {
+        "contract": "generated-authority-ref",
+        "classes": [
+          "G"
+        ],
+        "bindingPatternId": "PAT-6f0a0da3e79fc746",
+        "decisionBasis": "Exact source projection/derived installed reference, source/caller and supplying authority remain explicit per member.",
+        "fieldConsumerEvidence": "This is the peer identity allowlist, not the runtime/model selector; artifact route includes it only when nonempty.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-C0-CURRENT-COMPOSITION-CHECKPOINT5",
+        "AUTH-PRISM-TRUST-PRINCIPAL-AGENT-IMPLEMENTATION"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-TRUST-PRINCIPAL-TEST-RUNNER",
+      "source": {
+        "path": "skills/prism/server/control-config.ts",
+        "field": "PRISM_TRUSTED_TEST_RUNNER_SPIFFE_ID",
+        "sha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4"
+      },
+      "sourceSha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4",
+      "entireSourceRead": true,
+      "actualReader": "dispatchRoute authenticated peer set after filtering empty values",
+      "observedDecision": "Actual captured/generated peer/native assigned input/pool/launcher/content-identity projection; original supplying H/S/R/J authority and retention maintained. Native completion allowance remains actual accepted envelope arithmetic, not independent host capacity.",
+      "proposedScope": {
+        "contract": "generated-authority-ref",
+        "classes": [
+          "G"
+        ],
+        "bindingPatternId": "PAT-64f5f4ae6a4c2453",
+        "decisionBasis": "Exact source projection/derived installed reference, source/caller and supplying authority remain explicit per member.",
+        "fieldConsumerEvidence": "Distinct allowed caller, not a fabricated productive Core trust-envelope consumer.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-C0-CURRENT-COMPOSITION-CHECKPOINT5",
+        "AUTH-PRISM-TRUST-PRINCIPAL-TEST-RUNNER-IMPLEMENTATION"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-SECRET-SESSION",
+      "source": {
+        "path": "skills/prism/server/control-config.ts",
+        "field": "PRISM_SESSION_SECRET",
+        "sha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4"
+      },
+      "sourceSha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4",
+      "entireSourceRead": true,
+      "actualReader": "session mint/verify and productActor",
+      "observedDecision": "Actual service/bootstrap/key/file/ENV credential receiver only. Captured raw current secret is not invented durable revision; immutable target requires actual backend/key/access revision capability before activation.",
+      "proposedScope": {
+        "contract": "secret-revision",
+        "classes": [
+          "H",
+          "R"
+        ],
+        "bindingPatternId": "PAT-e1a7d9e8c32ad3a8",
+        "decisionBasis": "Exact named credential/reference authority in original source and caller; require authentic retained backend revision.",
+        "fieldConsumerEvidence": "Session validity uses originally signed expiry. External Secretstore identity/revision/rotation and recovery contract unknown; do not invent a revision.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-C0-CURRENT-COMPOSITION-CHECKPOINT5",
+        "AUTH-PRISM-SECRET-SESSION-IMPLEMENTATION"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-SECRET-INGRESS",
+      "source": {
+        "path": "skills/prism/server/control-config.ts",
+        "field": "PRISM_INGRESS_SECRET; Studio same ENV",
+        "sha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4"
+      },
+      "sourceSha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4",
+      "entireSourceRead": true,
+      "actualReader": "Studio upstreamHeaders x-prism-ingress-secret",
+      "observedDecision": "Actual service/bootstrap/key/file/ENV credential receiver only. Captured raw current secret is not invented durable revision; immutable target requires actual backend/key/access revision capability before activation.",
+      "proposedScope": {
+        "contract": "secret-revision",
+        "classes": [
+          "H",
+          "R"
+        ],
+        "bindingPatternId": "PAT-f35e6ef60269981d",
+        "decisionBasis": "Exact named credential/reference authority in original source and caller; require authentic retained backend revision.",
+        "fieldConsumerEvidence": "Control/Studio share the exact logical credential; selected endpoint/credential must remain coupled. No separate Studio secret author.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-C0-CURRENT-COMPOSITION-CHECKPOINT5",
+        "AUTH-PRISM-SECRET-INGRESS-IMPLEMENTATION"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-SECRET-WORKER",
+      "source": {
+        "path": "skills/prism/server/worker-config.ts",
+        "field": "PRISM_WORKER_SECRET; Control and native child aliases",
+        "sha256": "f74aa34451583c1df785eaf21006b056b55791277f4731c9360f1ee5db0f5b0e"
+      },
+      "sourceSha256": "f74aa34451583c1df785eaf21006b056b55791277f4731c9360f1ee5db0f5b0e",
+      "entireSourceRead": true,
+      "actualReader": "WorkerArtifactClient",
+      "observedDecision": "Actual service/bootstrap/key/file/ENV credential receiver only. Captured raw current secret is not invented durable revision; immutable target requires actual backend/key/access revision capability before activation.",
+      "proposedScope": {
+        "contract": "secret-revision",
+        "classes": [
+          "H",
+          "R"
+        ],
+        "bindingPatternId": "PAT-bbadd6e7ffdcd2ae",
+        "decisionBasis": "Exact named credential/reference authority in original source and caller; require authentic retained backend revision.",
+        "fieldConsumerEvidence": "Same bytes serve HMAC attempts and artifact Bearer auth, but those are different validation protocols. Child environment is captured, not reloaded from ambient ENV.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-C0-CURRENT-COMPOSITION-CHECKPOINT5",
+        "AUTH-PRISM-SECRET-WORKER-IMPLEMENTATION"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-SECRET-DISPATCH",
+      "source": {
+        "path": "skills/prism/server/control-config.ts",
+        "field": "PRISM_DISPATCH_SECRET",
+        "sha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4"
+      },
+      "sourceSha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4",
+      "entireSourceRead": true,
+      "actualReader": "dispatch-route HMAC(key.rawBody)",
+      "observedDecision": "Actual service/bootstrap/key/file/ENV credential receiver only. Captured raw current secret is not invented durable revision; immutable target requires actual backend/key/access revision capability before activation.",
+      "proposedScope": {
+        "contract": "secret-revision",
+        "classes": [
+          "H",
+          "R"
+        ],
+        "bindingPatternId": "PAT-908aea02ec2fbe88",
+        "decisionBasis": "Exact named credential/reference authority in original source and caller; require authentic retained backend revision.",
+        "fieldConsumerEvidence": "Not the worker secret or model selector; idempotency key + raw body define actual signature domain.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-C0-CURRENT-COMPOSITION-CHECKPOINT5",
+        "AUTH-PRISM-SECRET-DISPATCH-IMPLEMENTATION"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-SECRET-INGESTION",
+      "source": {
+        "path": "skills/prism/server/control-config.ts",
+        "field": "PRISM_INGESTION_SECRET",
+        "sha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4"
+      },
+      "sourceSha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4",
+      "entireSourceRead": true,
+      "actualReader": "corpus acquisition POST / cleanup DELETE Authorization",
+      "observedDecision": "Actual service/bootstrap/key/file/ENV credential receiver only. Captured raw current secret is not invented durable revision; immutable target requires actual backend/key/access revision capability before activation.",
+      "proposedScope": {
+        "contract": "secret-revision",
+        "classes": [
+          "H",
+          "R"
+        ],
+        "bindingPatternId": "PAT-9ca7de255a3be6a9",
+        "decisionBasis": "Exact named credential/reference authority in original source and caller; require authentic retained backend revision.",
+        "fieldConsumerEvidence": "Original endpoint, quarantine digest and credential reference must survive cleanup/retry. No latest credential fills missing historical binding.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-C0-CURRENT-COMPOSITION-CHECKPOINT5",
+        "AUTH-PRISM-SECRET-INGESTION-IMPLEMENTATION"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-SECRET-DATABASE",
+      "source": {
+        "path": "skills/prism/server/worker-config.ts",
+        "field": "DATABASE_URL; Control listener alias",
+        "sha256": "f74aa34451583c1df785eaf21006b056b55791277f4731c9360f1ee5db0f5b0e"
+      },
+      "sourceSha256": "f74aa34451583c1df785eaf21006b056b55791277f4731c9360f1ee5db0f5b0e",
+      "entireSourceRead": true,
+      "actualReader": "pg.Pool",
+      "observedDecision": "Actual service/bootstrap/key/file/ENV credential receiver only. Captured raw current secret is not invented durable revision; immutable target requires actual backend/key/access revision capability before activation.",
+      "proposedScope": {
+        "contract": "secret-revision",
+        "classes": [
+          "H",
+          "R"
+        ],
+        "bindingPatternId": "PAT-e9002b38e1cf019f",
+        "decisionBasis": "Exact named credential/reference authority in original source and caller; require authentic retained backend revision.",
+        "fieldConsumerEvidence": "Worker SPIFFE does not use nonce DB. Control missing URL can fall through to pg connection defaults; current existence of a required explicit Control connection reference is not proven.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-C0-CURRENT-COMPOSITION-CHECKPOINT5",
+        "AUTH-PRISM-SECRET-DATABASE-IMPLEMENTATION"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-NATIVE-SCOPE",
+      "source": {
+        "path": "skills/prism/config/native-worker.ts",
+        "field": "KUBECLAW_NATIVE_SCOPE",
+        "sha256": "c2a0722a4a938830529d5f60ff5fb4533984a0f8e38c37c693be79c0674141a6"
+      },
+      "sourceSha256": "c2a0722a4a938830529d5f60ff5fb4533984a0f8e38c37c693be79c0674141a6",
+      "entireSourceRead": true,
+      "actualReader": "native operation scope",
+      "observedDecision": "Actual captured/generated peer/native assigned input/pool/launcher/content-identity projection; original supplying H/S/R/J authority and retention maintained. Native completion allowance remains actual accepted envelope arithmetic, not independent host capacity.",
+      "proposedScope": {
+        "contract": "generated-authority-ref",
+        "classes": [
+          "G"
+        ],
+        "bindingPatternId": "PAT-3333b9e4391db413",
+        "decisionBasis": "Exact source projection/derived installed reference, source/caller and supplying authority remain explicit per member.",
+        "fieldConsumerEvidence": "Not an operator-tunable arbitrary ENV path. Genuine host membership/recovery proof remains not-run; no cgroup mutation in this evidence.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-NATIVE-SCOPE-IMPLEMENTATION"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-NATIVE-ASSIGNED-INPUT",
+      "source": {
+        "path": "skills/prism/config/native-worker.ts",
+        "field": "PRISM_NATIVE_ASSIGNED_INPUT_BYTES",
+        "sha256": "c2a0722a4a938830529d5f60ff5fb4533984a0f8e38c37c693be79c0674141a6"
+      },
+      "sourceSha256": "c2a0722a4a938830529d5f60ff5fb4533984a0f8e38c37c693be79c0674141a6",
+      "entireSourceRead": true,
+      "actualReader": "host input bound",
+      "observedDecision": "Actual captured/generated peer/native assigned input/pool/launcher/content-identity projection; original supplying H/S/R/J authority and retention maintained. Native completion allowance remains actual accepted envelope arithmetic, not independent host capacity.",
+      "proposedScope": {
+        "contract": "generated-authority-ref",
+        "classes": [
+          "G"
+        ],
+        "bindingPatternId": "PAT-d23b20fd86477169",
+        "decisionBasis": "Exact source projection/derived installed reference, source/caller and supplying authority remain explicit per member.",
+        "fieldConsumerEvidence": "Same variable is forbidden ambient loader authority but required generated child transport. Do not classify the two paths as equivalent overrides.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-NATIVE-ASSIGNED-INPUT-IMPLEMENTATION"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-NATIVE-POOL-POLICY-LOCATOR",
+      "source": {
+        "path": "skills/prism/config/native-worker.ts",
+        "field": "PRISM_NATIVE_POOL_POLICY_FILE",
+        "sha256": "c2a0722a4a938830529d5f60ff5fb4533984a0f8e38c37c693be79c0674141a6"
+      },
+      "sourceSha256": "c2a0722a4a938830529d5f60ff5fb4533984a0f8e38c37c693be79c0674141a6",
+      "entireSourceRead": true,
+      "actualReader": "readNativeWorkerPoolPolicy/identity",
+      "observedDecision": "Actual captured/generated peer/native assigned input/pool/launcher/content-identity projection; original supplying H/S/R/J authority and retention maintained. Native completion allowance remains actual accepted envelope arithmetic, not independent host capacity.",
+      "proposedScope": {
+        "contract": "generated-authority-ref",
+        "classes": [
+          "G"
+        ],
+        "bindingPatternId": "PAT-266063bf9180c538",
+        "decisionBasis": "Exact source projection/derived installed reference, source/caller and supplying authority remain explicit per member.",
+        "fieldConsumerEvidence": "Policy bytes/limits remain their existing sole Core/host authority; filepath transport does not create a second policy author. Exact actual host/node/pool identity is external.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-NATIVE-POOL-POLICY-LOCATOR-IMPLEMENTATION"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-NATIVE-LAUNCHER-LOCATOR",
+      "source": {
+        "path": "skills/prism/config/native-worker.ts",
+        "field": "PRISM_NATIVE_LAUNCHER",
+        "sha256": "c2a0722a4a938830529d5f60ff5fb4533984a0f8e38c37c693be79c0674141a6"
+      },
+      "sourceSha256": "c2a0722a4a938830529d5f60ff5fb4533984a0f8e38c37c693be79c0674141a6",
+      "entireSourceRead": true,
+      "actualReader": "Core launcher",
+      "observedDecision": "Actual captured/generated peer/native assigned input/pool/launcher/content-identity projection; original supplying H/S/R/J authority and retention maintained. Native completion allowance remains actual accepted envelope arithmetic, not independent host capacity.",
+      "proposedScope": {
+        "contract": "generated-authority-ref",
+        "classes": [
+          "G"
+        ],
+        "bindingPatternId": "PAT-5b23916714c847c0",
+        "decisionBasis": "Exact source projection/derived installed reference, source/caller and supplying authority remain explicit per member.",
+        "fieldConsumerEvidence": "No claim that pathname alone proves installed executable or privilege/cgroup authority.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-NATIVE-LAUNCHER-LOCATOR-IMPLEMENTATION"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-BROWSER-ROOT",
+      "source": {
+        "path": "skills/prism/config/native-worker.ts",
+        "field": "PLAYWRIGHT_BROWSERS_PATH",
+        "sha256": "c2a0722a4a938830529d5f60ff5fb4533984a0f8e38c37c693be79c0674141a6"
+      },
+      "sourceSha256": "c2a0722a4a938830529d5f60ff5fb4533984a0f8e38c37c693be79c0674141a6",
+      "entireSourceRead": true,
+      "actualReader": "Playwright registry/browser launch",
+      "observedDecision": "nativePrismSupervisorConfig captures PLAYWRIGHT_BROWSERS_PATH or /ms-playwright after actual pool/runtime identity; browserPath supplied to host installation, no accepted order can replace installed browser capability",
+      "proposedScope": {
+        "contract": "installed-asset-browser-reference",
+        "classes": [
+          "G",
+          "H",
+          "S"
+        ],
+        "bindingPatternId": "PAT02-581d8812ebd9b31f",
+        "decisionBasis": "Actual installation locator/package/native dependency is generated/captured host/service input, not J editable policy. Preserve existing installation reference target; no new author/root.",
+        "fieldConsumerEvidence": "Native child cannot see later ambient path changes. Actual locked registry reader, architecture/package closure and complete alternative installation profile proof remain open.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A.",
+        "firstActualAcceptanceBoundary": "package/installed native authority admission and loadStudioConfig/nativePrismSupervisorConfig before listener/supervisor",
+        "sourceSpecificCurrentConsumer": "nativePrismSupervisorConfig captures PLAYWRIGHT_BROWSERS_PATH or /ms-playwright after actual pool/runtime identity; browserPath supplied to host installation, no accepted order can replace installed browser capability",
+        "authorMode": "existing same-owner installation reference is immutable generated projection of installed authority, not independently tunable J writer"
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-BROWSER-ROOT-IMPLEMENTATION"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-STUDIO-ASSET-ROOT",
+      "source": {
+        "path": "skills/prism/server/studio-config.ts",
+        "field": "STUDIO_ROOT",
+        "sha256": "c2a7d42ae65d68da876c2efc64194effc969d90a1132d8677ec2190260391465"
+      },
+      "sourceSha256": "c2a7d42ae65d68da876c2efc64194effc969d90a1132d8677ec2190260391465",
+      "entireSourceRead": true,
+      "actualReader": "handleStudioRequest actual static-file resolver",
+      "observedDecision": "loadStudioConfig root from STUDIO_ROOT or packaged dist-studio; studio.ts loads options once then starts listener; handleStudioRequest static read has no order",
+      "proposedScope": {
+        "contract": "installed-asset-browser-reference",
+        "classes": [
+          "G",
+          "H",
+          "S"
+        ],
+        "bindingPatternId": "PAT02-040cd3fe40d38bca",
+        "decisionBasis": "Actual installation locator/package/native dependency is generated/captured host/service input, not J editable policy. Preserve existing installation reference target; no new author/root.",
+        "fieldConsumerEvidence": "Package locator and actual files must be one delivered generation; no fake root/path-only success or unrelated asset rewrite.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A.",
+        "firstActualAcceptanceBoundary": "package/installed native authority admission and loadStudioConfig/nativePrismSupervisorConfig before listener/supervisor",
+        "sourceSpecificCurrentConsumer": "loadStudioConfig root from STUDIO_ROOT or packaged dist-studio; studio.ts loads options once then starts listener; handleStudioRequest static read has no order",
+        "authorMode": "existing same-owner installation reference is immutable generated projection of installed authority, not independently tunable J writer"
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-STUDIO-ASSET-ROOT-IMPLEMENTATION"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-INTERNAL-ARTIFACT-UPLOAD-BYTES",
+      "source": {
+        "path": "skills/prism/server/internal-artifacts.ts",
+        "field": "POST accumulated bytes ceiling",
+        "sha256": "16750a5eecea51781dc67e271cfc331550f1a0a03460917133226cd9c975dab8"
+      },
+      "sourceSha256": "16750a5eecea51781dc67e271cfc331550f1a0a03460917133226cd9c975dab8",
+      "entireSourceRead": true,
+      "actualReader": "artifacts.put",
+      "observedDecision": "internal-artifacts.ts authenticated POST rejects bytes>134217728 before digest check/artifacts.put; matched route has no order-envelope selector",
+      "proposedScope": {
+        "contract": "prism-service-parser-ceiling",
+        "classes": [
+          "S"
+        ],
+        "bindingPatternId": "PAT02-23de36a427069568",
+        "decisionBasis": "internal-artifacts.ts authenticated POST rejects bytes>134217728 before digest check/artifacts.put; matched route has no order-envelope selector",
+        "fieldConsumerEvidence": "Distinct from6MB corpus/base64 and native evidence envelope budgets; requires coupled domain/admission/profile review, not equal-cap alias.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A.",
+        "firstActualAcceptanceBoundary": "existing selected Studio/Control/Worker artifact client service/transport ceiling before actual request/ACK parsing and before effect",
+        "sourceSpecificCurrentConsumer": "internal-artifacts.ts authenticated POST rejects bytes>134217728 before digest check/artifacts.put; matched route has no order-envelope selector"
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-INTERNAL-ARTIFACT-UPLOAD-BYTES-IMPLEMENTATION"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-ARTIFACT-ACK-BYTES",
+      "source": {
+        "path": "skills/prism/server/worker-artifacts.ts",
+        "field": "upload responseBytes(response,8192)",
+        "sha256": "01590555f760fde93addcaccefe6d7fec3c38415e5e37e17086f82748a01e950"
+      },
+      "sourceSha256": "01590555f760fde93addcaccefe6d7fec3c38415e5e37e17086f82748a01e950",
+      "entireSourceRead": true,
+      "actualReader": "acknowledgment identity checks",
+      "observedDecision": "WorkerArtifactClient.upload bounds ACK bytes8192 before JSON/identity parsing; the same client transport policy applies to uploads, while requested artifact bytes and evidence IDs remain original J/R data",
+      "proposedScope": {
+        "contract": "prism-service-parser-ceiling",
+        "classes": [
+          "S"
+        ],
+        "bindingPatternId": "PAT02-7a9ccba0a234c9c7",
+        "decisionBasis": "WorkerArtifactClient.upload bounds ACK bytes8192 before JSON/identity parsing; the same client transport policy applies to uploads, while requested artifact bytes and evidence IDs remain original J/R data",
+        "fieldConsumerEvidence": "Read artifact limit derives artifact.sizeBytes task binding; acknowledgment cap is code policy. Preserve redirect:error and digest/size/ID equality.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A.",
+        "firstActualAcceptanceBoundary": "existing selected Studio/Control/Worker artifact client service/transport ceiling before actual request/ACK parsing and before effect",
+        "sourceSpecificCurrentConsumer": "WorkerArtifactClient.upload bounds ACK bytes8192 before JSON/identity parsing; the same client transport policy applies to uploads, while requested artifact bytes and evidence IDs remain original J/R data"
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-ARTIFACT-ACK-BYTES-IMPLEMENTATION"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-STUDIO-REQUEST-BYTES",
+      "source": {
+        "path": "skills/prism/server/studio-request.ts",
+        "field": "requestBody accumulated size ceiling",
+        "sha256": "efca0f821ef3da9f441e9c6c5458a33d8c525f8e7db3a63aea1a8e7f37e93bbb"
+      },
+      "sourceSha256": "efca0f821ef3da9f441e9c6c5458a33d8c525f8e7db3a63aea1a8e7f37e93bbb",
+      "entireSourceRead": true,
+      "actualReader": "upstream fetch",
+      "observedDecision": "studio-request.ts requestBody rejects bytes>2000000 with413 before proxy fetch; options supplied from captured Studio service, no job/order view",
+      "proposedScope": {
+        "contract": "prism-service-parser-ceiling",
+        "classes": [
+          "S"
+        ],
+        "bindingPatternId": "PAT02-5a385cbf6a7cfd79",
+        "decisionBasis": "studio-request.ts requestBody rejects bytes>2000000 with413 before proxy fetch; options supplied from captured Studio service, no job/order view",
+        "fieldConsumerEvidence": "Independent real parser/consumer from Control body even though current value equals2M; coupled domains/full profiles/real proxy harness still open.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A.",
+        "firstActualAcceptanceBoundary": "existing selected Studio/Control/Worker artifact client service/transport ceiling before actual request/ACK parsing and before effect",
+        "sourceSpecificCurrentConsumer": "studio-request.ts requestBody rejects bytes>2000000 with413 before proxy fetch; options supplied from captured Studio service, no job/order view"
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-STUDIO-REQUEST-BYTES-IMPLEMENTATION"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-DESIGN-CARDINALITY",
+      "source": {
+        "path": "skills/prism/server/agent-routes.ts",
+        "sha256": "55c4c77fc4ff7b981287c433c126d9754dffd3df1de464ec0d83bb0294caec17",
+        "field": "createAgentDesignSet designs.length and unique keys3"
+      },
+      "sourceSha256": "55c4c77fc4ff7b981287c433c126d9754dffd3df1de464ec0d83bb0294caec17",
+      "entireSourceRead": true,
+      "actualReader": "agent tool/prompt \u2192 authenticated agentRoutes \u2192 diversity \u2192 RevisionRepository \u2192 Studio round state",
+      "observedDecision": "retain source-specific previous assignment after actual source/reader audit; not inferred from AUTH prefix",
+      "proposedScope": {
+        "contract": "standalone-operation",
+        "classes": [
+          "J"
+        ],
+        "bindingPatternId": "PAT-69447ea6a9db305a",
+        "decisionBasis": "Actual accepted native/order/round/agent/render/provider operation consumer; library/deterministic/cache applicability exceptions below.",
+        "fieldConsumerEvidence": "operator-owned business workflow policy with generated tool/prompt/service/UI projections, not an immutable protocol invariant solely because copies are3",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-DESIGN-CARDINALITY-FUTURE",
+        "AUTH-PRISM-C0-CURRENT-DESIGN-DEFINITIONS",
+        "AUTH-PRISM-DESIGN-ROUND-A3",
+        "AUTH-PRISM-DESIGN-ROUND-B2",
+        "AUTH-PRISM-DESIGN-SAME-KEY-PUBLISH-B",
+        "AUTH-PRISM-DESIGN-CRASH-BETWEEN-TRANSACTIONS",
+        "AUTH-PRISM-DESIGN-PRELEDGER-COMPLETED",
+        "AUTH-PRISM-DESIGN-MISSING-ORIGINAL",
+        "AUTH-PRISM-DESIGN-EXACT-THREE-INTENT-B",
+        "AUTH-PRISM-DESIGN-INTENT-REFERENCE-MISMATCH",
+        "AUTH-PRISM-DESIGN-R-THREE-ONLY",
+        "AUTH-PRISM-DESIGN-CLIENT-ALL-COMPLETION-PATHS",
+        "AUTH-PRISM-DESIGN-CLIENT-MIXED-GENERATION",
+        "AUTH-PRISM-DESIGN-RETAINED-UNCERTAINTY",
+        "AUTH-PRISM-DESIGN-COUNT-NEGATIVES",
+        "AUTH-PRISM-DESIGN-FIXED-EVAL-A"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    },
+    {
+      "id": "AUTH-PRISM-ENGINE-DEVELOPMENT-IDENTITY",
+      "source": {
+        "path": "skills/prism/engine/worker-envelope.ts",
+        "sha256": "56ddb558742228e8c828b98b83916dcdcd1c46f355f2061bfc0c4bdac0290941",
+        "field": "module engineContentDigest = prismEngineContentDigest() || synthetic dev hash"
+      },
+      "sourceSha256": "56ddb558742228e8c828b98b83916dcdcd1c46f355f2061bfc0c4bdac0290941",
+      "entireSourceRead": true,
+      "actualReader": "prismNativeWorkerProfile module materialization -> profileDigest -> fresh supervisor equality ONLY when !recovered; recovered paths consult original journal/history and resourcePolicy. Dedicated native host validates declared envelope, but imports no current profile equality check; nativePrismHostConfig reads no engine digest. No installed-image/code authentication is proven.",
+      "observedDecision": "Actual captured/generated peer/native assigned input/pool/launcher/content-identity projection; original supplying H/S/R/J authority and retention maintained. Native completion allowance remains actual accepted envelope arithmetic, not independent host capacity.",
+      "proposedScope": {
+        "contract": "generated-authority-ref",
+        "classes": [
+          "G"
+        ],
+        "bindingPatternId": "PAT-0ed9ab10ad386788",
+        "decisionBasis": "Exact source projection/derived installed reference, source/caller and supplying authority remain explicit per member.",
+        "fieldConsumerEvidence": "Current production receives OCI worker-image digest from Chart, not recomputed package/code bytes. Nonproduction fallback is a synthetic engineId/version/development hash, not operator default or production content proof.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "originalCaseIds": [
+        "AUTH-PRISM-C0-IMAGE-BINDING-SYNTAX",
+        "AUTH-PRISM-NATIVE-PROVENANCE-A-B",
+        "AUTH-PRISM-NATIVE-PROVENANCE-CODE-MISMATCH",
+        "AUTH-PRISM-NATIVE-PROVENANCE-OCI-MISMATCH",
+        "AUTH-PRISM-NATIVE-PROVENANCE-CONFIG-MISMATCH",
+        "AUTH-PRISM-NATIVE-PROVENANCE-ROLE-GRANT-MISMATCH",
+        "AUTH-PRISM-NATIVE-PROVENANCE-SAME-KEY",
+        "AUTH-PRISM-NATIVE-PROVENANCE-RECOVERY-A",
+        "AUTH-PRISM-NATIVE-PROVENANCE-MISSING-HISTORY",
+        "AUTH-PRISM-NATIVE-PROVENANCE-RESULT-REPLAY",
+        "AUTH-PRISM-NATIVE-PROVENANCE-UNCERTAIN-RETRY",
+        "AUTH-PRISM-NATIVE-PROVENANCE-DEV-NOT-PRODUCTION",
+        "AUTH-PRISM-NATIVE-PROVENANCE-FIXED-EVAL",
+        "AUTH-PRISM-NATIVE-PRELAUNCH-IMPORT-PIN",
+        "AUTH-PRISM-NATIVE-PRELAUNCH-NODE-LAUNCHER",
+        "AUTH-PRISM-NATIVE-PRELAUNCH-MUTABLE-PATH",
+        "AUTH-PRISM-NATIVE-INPUT-REPLAY-NO-WRITE",
+        "AUTH-PRISM-NATIVE-INPUT-RESERVE-BEFORE-WRITE",
+        "AUTH-PRISM-NATIVE-INPUT-CONFLICT-NO-WRITE",
+        "AUTH-PRISM-NATIVE-INPUT-QUOTA-REJECT",
+        "AUTH-PRISM-NATIVE-INPUT-CRASH-RESERVED",
+        "AUTH-PRISM-NATIVE-INPUT-CRASH-READY",
+        "AUTH-PRISM-NATIVE-INPUT-SHARED-CLEANUP",
+        "AUTH-PRISM-NATIVE-INPUT-UNCERTAIN-RETAINED"
+      ],
+      "caseApplicability": "existing precise source-specific implementation/effect case at this actual receiver; no generic CMP-C5-BIND closure or invented productive J view",
+      "remainingLocalWork": []
+    }
+  ],
+  "qualification": "Every original AUTH row audited against actual source/reader; retained known scopes explicitly source-qualified, no blanket S/J conversion. Dormant/unsupported/library/metadata/public-capacity work remains open."
+}

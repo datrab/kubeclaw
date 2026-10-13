@@ -1,0 +1,115 @@
+{
+  "status": "author correction02; independent FAPR01\u201303 material recheck required",
+  "artifacts": [
+    {
+      "path": "README.md",
+      "sha256": "1a299a129a28754ad2a082711875693bb04df1a011f18ba82f292302c9fd243b",
+      "bytes": 14255
+    },
+    {
+      "path": "actual-new-policy-map.json",
+      "sha256": "e4a54d5220f4418fc8c5f822aae758d7787b1f295cf5e860a74b6664f98627cc",
+      "bytes": 3534505
+    },
+    {
+      "path": "auth-prism-source-audit.json",
+      "sha256": "6a0bfc6d3a19bf2d522598e594ef2002110cb96caef4541ba53f047e250db749",
+      "bytes": 192798
+    },
+    {
+      "path": "compose-attempt1.py.snapshot",
+      "sha256": "c8960d787424c285284829e2214a065339328fd8359a76544a29b6b08e95434f",
+      "bytes": 29194
+    },
+    {
+      "path": "compose-attempt1.stderr",
+      "sha256": "ed88b68831c7608a236d4eb24535d0218e45f1e19a68d463e117a76ed691a4d3",
+      "bytes": 500
+    },
+    {
+      "path": "compose-attempt2.stderr",
+      "sha256": "10ae55b1db8b92b2968702a2cbf7093fd0d7a545b0ac8f776638ba6dad2fc864",
+      "bytes": 1389
+    },
+    {
+      "path": "compose-corrections.py",
+      "sha256": "c9cb56337d234c385ca5434cf9be44a96f82342227e3cc050b780334be2766e6",
+      "bytes": 29114
+    },
+    {
+      "path": "compose.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "compose.stdout",
+      "sha256": "6cb52c6b66f818cf7d8820f7bbce44fbf2c46421aae0d27bafe82d09bbc763bf",
+      "bytes": 220
+    },
+    {
+      "path": "contracts.json",
+      "sha256": "fc3d95d96b099d7ebdbcf0e8f13ae8d3f8714baeb7249cdc8782bc57901bcf7e",
+      "bytes": 19690
+    },
+    {
+      "path": "corrected-binding-patterns.json",
+      "sha256": "49bd580049e3b26c54d1494a2f3b04802c7cff0192d38ec567302807ff1b35a9",
+      "bytes": 6530
+    },
+    {
+      "path": "definition-observations.json",
+      "sha256": "d2031c718b0c3cb1975a4f5c2cee9ee6ceec112b916a1bf3e9f165e83ee161c7",
+      "bytes": 1146
+    },
+    {
+      "path": "dependent-material-reference-work.json",
+      "sha256": "13079451b6bb88b0246172a29916622ca777baae3075d1ba96e1d60fc1244181",
+      "bytes": 41881
+    },
+    {
+      "path": "field-map.json",
+      "sha256": "860e60b25b8640d04af6e567fe936309d7e48bbb8edd238a051bf8c1b924b6e0",
+      "bytes": 26206600
+    },
+    {
+      "path": "identical-binding-patterns.json",
+      "sha256": "94e81adf7aef0a80070f73f50e2073377df1c2e0e8f60d0fce5964b324826c17",
+      "bytes": 1829599
+    },
+    {
+      "path": "pinned-evidence-source-audit.json",
+      "sha256": "6024a38d38c35d4a97ca48aa53ac459f9167b7772ba1226358dff3e095840c70",
+      "bytes": 1615
+    },
+    {
+      "path": "policy-field-instance-case-joins.json",
+      "sha256": "4263329f0e155cd33bd7ea8e412a6e4f95bff404c3c8edf6d626812b79ab92ad",
+      "bytes": 738049
+    },
+    {
+      "path": "provider-exact-case-joins.json",
+      "sha256": "ba19027d5528362300741f67c414cbcc4225fac49c9aaf00492d7a5fcaf09530",
+      "bytes": 613465
+    },
+    {
+      "path": "read-identities.json",
+      "sha256": "92522312a3c17aa314cf41444b3e509f3d88f4dc2b1f8269f01228ee41ef1dba",
+      "bytes": 23426
+    },
+    {
+      "path": "reference-observation-attempt1.txt",
+      "sha256": "79b4de2580742d43748a7ffa67fc934d9dfa8033c15fe22a0f02d61acc6df886",
+      "bytes": 289
+    },
+    {
+      "path": "remaining-local-definition-work.json",
+      "sha256": "fd2105df67ea6392ec3ef7a42ba37396c767f315830fbf82caa8c3989de9c39d",
+      "bytes": 772
+    },
+    {
+      "path": "source-specific-changes.json",
+      "sha256": "2d65b007429170f29593e9f7489784da34dbf6911fe5229b5024525dcb3ccebb",
+      "bytes": 3405
+    }
+  ]
+}

@@ -1,0 +1,143 @@
+[
+  {
+    "id": "PAT02-8d0b9bc0b05dcd88",
+    "fieldIds": [
+      "DLV-NATIVE-OPENCLAW-AGENTS-DEFAULTS-TIMEOUTSECONDS"
+    ],
+    "contract": "native-run-deadline",
+    "source": {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/timeout-Bjg7ga80.mjs",
+      "line": 14,
+      "endLine": 30,
+      "sha256": "fe0a9056d0a2e8d3e9f2eb87161064217b2043a619b15f5895a8129046736514",
+      "package": "openclaw@2026.9.5",
+      "packagePath": "dist/timeout-Bjg7ga80.mjs",
+      "field": "agents.defaults.timeoutSeconds",
+      "lineKind": "native productive resolution of missing authored setting"
+    },
+    "firstActualAcceptanceBoundary": "resolveAgentTimeoutMs -> actual getReply/native attempt run start -> captured original absolute deadline",
+    "justification": "Exact source-specific singleton correction; not lexical archive/path/owner/prefix inference and not grouped behavioral waiver."
+  },
+  {
+    "id": "PAT02-97739f964a090cd2",
+    "fieldIds": [
+      "DLV-PRISM-BACKUP-CONTROLLER-TIMEZONE"
+    ],
+    "contract": "native-cron-scheduler",
+    "source": {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-robfig-cron-v3.0.1/parser.go",
+      "sha256": "3133fdf1d1865fb2e45a0a3362a4d780d97ec7cd975c8c31b1d580005e2c7cf6",
+      "field": "Parser.Parse time.Local when spec.timeZone is omitted",
+      "line": 94,
+      "lineKind": "actual native ambient policy resolver"
+    },
+    "firstActualAcceptanceBoundary": "selected backup.timeZone/CronJob.spec.timeZone/controller schedule admission before new Job",
+    "justification": "Exact source-specific singleton correction; not lexical archive/path/owner/prefix inference and not grouped behavioral waiver."
+  },
+  {
+    "id": "PAT02-d13884a108147174",
+    "fieldIds": [
+      "AUTH-PRISM-PRODUCT-ENABLE"
+    ],
+    "contract": "service-global-policy",
+    "source": {
+      "path": "skills/prism/control/product-decisions.ts",
+      "field": "PRISM_PRODUCT_DECISIONS_ENABLED",
+      "sha256": "65a172a7867a3ff4635956d3c02fd1ecae837fd9b25f913826b0d12fdca3f1a2",
+      "lines": [
+        24
+      ]
+    },
+    "firstActualAcceptanceBoundary": "Control product route/service composition, retaining existing signed histories",
+    "justification": "Exact source-specific singleton correction; not lexical archive/path/owner/prefix inference and not grouped behavioral waiver."
+  },
+  {
+    "id": "PAT02-96644548ca9ec38d",
+    "fieldIds": [
+      "AUTH-PRISM-PRODUCT-DECISION-TTL"
+    ],
+    "contract": "service-global-policy",
+    "source": {
+      "path": "skills/prism/control/product-decisions.ts",
+      "field": "signProductIntent.expiry",
+      "sha256": "65a172a7867a3ff4635956d3c02fd1ecae837fd9b25f913826b0d12fdca3f1a2",
+      "lines": [
+        61,
+        62,
+        67
+      ]
+    },
+    "firstActualAcceptanceBoundary": "product config/mint before immutable signed envelope; retain original issued expiresAt",
+    "justification": "Exact source-specific singleton correction; not lexical archive/path/owner/prefix inference and not grouped behavioral waiver."
+  },
+  {
+    "id": "PAT02-581d8812ebd9b31f",
+    "fieldIds": [
+      "AUTH-PRISM-BROWSER-ROOT"
+    ],
+    "contract": "installed-asset-browser-reference",
+    "source": {
+      "path": "skills/prism/config/native-worker.ts",
+      "field": "PLAYWRIGHT_BROWSERS_PATH",
+      "sha256": "c2a0722a4a938830529d5f60ff5fb4533984a0f8e38c37c693be79c0674141a6"
+    },
+    "firstActualAcceptanceBoundary": "package/installed native authority admission and loadStudioConfig/nativePrismSupervisorConfig before listener/supervisor",
+    "justification": "Exact source-specific singleton correction; not lexical archive/path/owner/prefix inference and not grouped behavioral waiver."
+  },
+  {
+    "id": "PAT02-040cd3fe40d38bca",
+    "fieldIds": [
+      "AUTH-PRISM-STUDIO-ASSET-ROOT"
+    ],
+    "contract": "installed-asset-browser-reference",
+    "source": {
+      "path": "skills/prism/server/studio-config.ts",
+      "field": "STUDIO_ROOT",
+      "sha256": "c2a7d42ae65d68da876c2efc64194effc969d90a1132d8677ec2190260391465"
+    },
+    "firstActualAcceptanceBoundary": "package/installed native authority admission and loadStudioConfig/nativePrismSupervisorConfig before listener/supervisor",
+    "justification": "Exact source-specific singleton correction; not lexical archive/path/owner/prefix inference and not grouped behavioral waiver."
+  },
+  {
+    "id": "PAT02-23de36a427069568",
+    "fieldIds": [
+      "AUTH-PRISM-INTERNAL-ARTIFACT-UPLOAD-BYTES"
+    ],
+    "contract": "prism-service-parser-ceiling",
+    "source": {
+      "path": "skills/prism/server/internal-artifacts.ts",
+      "field": "POST accumulated bytes ceiling",
+      "sha256": "16750a5eecea51781dc67e271cfc331550f1a0a03460917133226cd9c975dab8"
+    },
+    "firstActualAcceptanceBoundary": "existing selected Studio/Control/Worker artifact client service/transport ceiling before actual request/ACK parsing and before effect",
+    "justification": "Exact source-specific singleton correction; not lexical archive/path/owner/prefix inference and not grouped behavioral waiver."
+  },
+  {
+    "id": "PAT02-7a9ccba0a234c9c7",
+    "fieldIds": [
+      "AUTH-PRISM-ARTIFACT-ACK-BYTES"
+    ],
+    "contract": "prism-service-parser-ceiling",
+    "source": {
+      "path": "skills/prism/server/worker-artifacts.ts",
+      "field": "upload responseBytes(response,8192)",
+      "sha256": "01590555f760fde93addcaccefe6d7fec3c38415e5e37e17086f82748a01e950"
+    },
+    "firstActualAcceptanceBoundary": "existing selected Studio/Control/Worker artifact client service/transport ceiling before actual request/ACK parsing and before effect",
+    "justification": "Exact source-specific singleton correction; not lexical archive/path/owner/prefix inference and not grouped behavioral waiver."
+  },
+  {
+    "id": "PAT02-5a385cbf6a7cfd79",
+    "fieldIds": [
+      "AUTH-PRISM-STUDIO-REQUEST-BYTES"
+    ],
+    "contract": "prism-service-parser-ceiling",
+    "source": {
+      "path": "skills/prism/server/studio-request.ts",
+      "field": "requestBody accumulated size ceiling",
+      "sha256": "efca0f821ef3da9f441e9c6c5458a33d8c525f8e7db3a63aea1a8e7f37e93bbb"
+    },
+    "firstActualAcceptanceBoundary": "existing selected Studio/Control/Worker artifact client service/transport ceiling before actual request/ACK parsing and before effect",
+    "justification": "Exact source-specific singleton correction; not lexical archive/path/owner/prefix inference and not grouped behavioral waiver."
+  }
+]
