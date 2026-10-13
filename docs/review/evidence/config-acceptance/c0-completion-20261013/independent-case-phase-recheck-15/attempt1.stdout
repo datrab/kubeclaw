@@ -1,0 +1,22 @@
+{
+  "actualBaseline": {
+    "sourceRevision": "0bcaf85d192d031814554c590b1bfca5b3ba81dd",
+    "caseCount": 6845,
+    "phases": {
+      "C0": 96,
+      "implementation-proposal": 6722,
+      "current-source-definition": 2,
+      "proposed-after-approval": 25
+    },
+    "scopeCategories": {
+      "local": 6399,
+      "live": 4,
+      "descriptive": 439,
+      "absent": 3
+    },
+    "results": {
+      "passed": 86,
+      "not-run": 6759
+    }
+  }
+}

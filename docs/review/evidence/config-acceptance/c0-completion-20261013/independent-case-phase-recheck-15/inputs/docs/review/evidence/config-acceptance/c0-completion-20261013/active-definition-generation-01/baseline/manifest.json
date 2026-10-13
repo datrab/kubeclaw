@@ -1,0 +1,66 @@
+{
+  "schemaVersion": "config-definition-baseline-manifest.v1",
+  "sourceRevision": "0bcaf85d192d031814554c590b1bfca5b3ba81dd",
+  "inputs": [
+    {
+      "originalPath": "docs/review/evidence/config-acceptance/author/candidate-ledger.json",
+      "gitRevision": "0bcaf85d192d031814554c590b1bfca5b3ba81dd",
+      "uncompressedSha256": "a5066c74fe2dbd60c88c75d1e17264b98f05df352823cf3b6e39bc206fae09d1",
+      "uncompressedBytes": 4174777,
+      "objectPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/active-definition-generation-01/baseline/objects/a5066c74fe2dbd60c88c75d1e17264b98f05df352823cf3b6e39bc206fae09d1.json.gz",
+      "objectSha256": "1e48aee058c51918fd6ab055b02eb30e25a5e849115ac77ba150bce9ba98cc01",
+      "objectBytes": 273581,
+      "encoding": "gzip"
+    },
+    {
+      "originalPath": "docs/review/evidence/config-acceptance/author/infra-coordinate-extension-20261013.json",
+      "gitRevision": "0bcaf85d192d031814554c590b1bfca5b3ba81dd",
+      "uncompressedSha256": "ade4b97635742418faac720982e1e01195c8a212322ea342f0299ae45c06e774",
+      "uncompressedBytes": 809378,
+      "objectPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/active-definition-generation-01/baseline/objects/ade4b97635742418faac720982e1e01195c8a212322ea342f0299ae45c06e774.json.gz",
+      "objectSha256": "fc5358972ae9e05ee35c73688660fdf9102f86d893436413721fb57dfc33d60a",
+      "objectBytes": 41281,
+      "encoding": "gzip"
+    },
+    {
+      "originalPath": "docs/review/evidence/config-acceptance/author/source-boundary.json",
+      "gitRevision": "0bcaf85d192d031814554c590b1bfca5b3ba81dd",
+      "uncompressedSha256": "a7465fe2adb49584486b81d9f86c08c319f7c213f71b5603fe81811722d9bc8b",
+      "uncompressedBytes": 9056789,
+      "objectPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/active-definition-generation-01/baseline/objects/a7465fe2adb49584486b81d9f86c08c319f7c213f71b5603fe81811722d9bc8b.json.gz",
+      "objectSha256": "498238f1e23560a83c447739c3472efad9e42deb625eba7a6bfaeae628602da8",
+      "objectBytes": 1637641,
+      "encoding": "gzip"
+    },
+    {
+      "originalPath": "docs/review/remediation/config-acceptance-matrix.json",
+      "gitRevision": "0bcaf85d192d031814554c590b1bfca5b3ba81dd",
+      "uncompressedSha256": "d59f043d545425ad95bbca58ed450902915784ef6962e3ea2e2db470bbf34733",
+      "uncompressedBytes": 101611476,
+      "objectPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/active-definition-generation-01/baseline/objects/d59f043d545425ad95bbca58ed450902915784ef6962e3ea2e2db470bbf34733.json.gz",
+      "objectSha256": "d9429f73b75eef10b263319947624948bb70d91169f1ed18f44b9012da760792",
+      "objectBytes": 4357926,
+      "encoding": "gzip"
+    },
+    {
+      "originalPath": "docs/review/remediation/config-semantic-inventory.json",
+      "gitRevision": "0bcaf85d192d031814554c590b1bfca5b3ba81dd",
+      "uncompressedSha256": "0eb07e01174594709977e5d7c1690827f3f6eede9803b7c65eaafe41c629614c",
+      "uncompressedBytes": 37905665,
+      "objectPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/active-definition-generation-01/baseline/objects/0eb07e01174594709977e5d7c1690827f3f6eede9803b7c65eaafe41c629614c.json.gz",
+      "objectSha256": "31c4c933f5234b91e14c56feef4b35c953c5efbc5ba61f7e34f8ecee06095b05",
+      "objectBytes": 2359840,
+      "encoding": "gzip"
+    }
+  ],
+  "catalogRef": {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/active-definition-generation-01/baseline/catalog.json",
+    "sha256": "356caedd244b0d0ccd4f648fee94dad8f066722a0feb943726edd276ff700aab"
+  },
+  "catalogSha256": "df17175a8cd8fffb357193094e4b0eefb65e4f792a3b7553b4e0adb5d1174946",
+  "catalogOccurrences": 50617,
+  "catalogUniqueIds": 50617,
+  "requirementsSha256": "3be90bded1705198348f08a8e711ff8406bfb4e50c9406d1363d48301e8266b4",
+  "globalC0Accepted": false,
+  "implementationAuthorization": null
+}

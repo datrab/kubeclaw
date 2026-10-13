@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-case-phase-recheck-15/inputs/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-case-phase-recheck-15/recheck.py", line 104, in <module>
+    absent=next(v for v in originals.values() if 'scope' not in v and v['phase']=='implementation-proposal')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+StopIteration

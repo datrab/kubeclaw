@@ -11,6 +11,9 @@ import argparse
 from observation_references import ObservationReferences
 from historical_mapping import load_reviewed as load_historical_mappings
 from historical_projection import verify as verify_historical_projection
+from review_receipts import ReviewReceipts
+from definition_baseline import strict_json
+from definition_generation import DefinitionRoots, load_paired_generation
 
 root = pathlib.Path.cwd()
 remediation = root/'docs/review/remediation'
@@ -19,12 +22,21 @@ parser.add_argument('--structural',action='store_true')
 parser.add_argument('--inventory',type=pathlib.Path,default=remediation/'config-semantic-inventory.json')
 parser.add_argument('--matrix',type=pathlib.Path,default=remediation/'config-acceptance-matrix.json')
 args = parser.parse_args()
-inventory = json.loads(args.inventory.read_text())
-matrix = json.loads(args.matrix.read_text())
+root_documents = DefinitionRoots(root)
+inventory = root_documents.read('inventory', args.inventory)
+matrix = root_documents.read('matrix', args.matrix)
 structural = args.structural
+reviews = ReviewReceipts(root)
 errors = []
 def reject(message):
     errors.append(message)
+active_generation = None
+try:
+    active_generation = load_paired_generation(root, inventory, matrix, root_documents=root_documents)
+    if active_generation is not None and not structural:
+        active_generation.require_acceptance()
+except (ValueError, KeyError, TypeError, OSError, ImportError) as error:
+    reject(f'active definition generation: {error}')
 def ids(items, label):
     result = set()
     for item in items:
@@ -41,6 +53,27 @@ def identity(path, expected, label):
         reject(f'{label}: absent input {path}')
     elif hashlib.sha256(p.read_bytes()).hexdigest()!=expected:
         reject(f'{label}: content drift {path}')
+
+# Complete snapshot catalog before resolving any scoped review. Registrations
+# are externally pinned independent deliveries, never a CLI/file boolean. All
+# source, requirement, history and result checks below remain in force.
+for kind, entries in [('setting', inventory['rows']), ('case', matrix['cases']),
+                      ('requirement', matrix['requirements']),
+                      ('supplemental', inventory.get('supplementalDefinitionPackages', [])),
+                      ('definition-observation', matrix.get('definitionObservationPackages', [])),
+                      ('native-package', matrix.get('nativeCasePackages', []))]:
+    for entry in entries:
+        reviews.observe(kind, entry['id'], entry)
+for package in matrix.get('nativeCasePackages', []):
+    for link in package['canonicalCaseMapping']:
+        reviews.observe('native-map', package['id'] + ':' + link['nativeCaseId'], link, 'mappingReview')
+for ledger_path in inventory.get('coordinateCandidateLedgers', []):
+    for entry in json.loads((root/ledger_path).read_text())['coordinateCandidates']:
+        reviews.observe('coordinate', entry['id'], entry)
+for entry in json.loads((root/inventory['candidateLedger']).read_text())['candidates']:
+    reviews.observe('candidate', entry['id'], entry)
+for entry in json.loads((root/inventory['sourceBoundary']).read_text())['boundaries']:
+    reviews.observe('source', entry['path'], entry)
 
 row_ids=ids(inventory['rows'],'setting')
 case_ids=ids(matrix['cases'],'case')
@@ -70,7 +103,7 @@ if (root/runtime_fragment).is_file():
             'verifiedSourceEvidence':original.get('verifiedSourceEvidence',original.get('evidence',[])),
             'semanticStatus':original.get('semanticStatus',original.get('status','unresolved')),
             'reviewerConfirmation':None}
-        if projected_runtime.get(original['id']) != expected:
+        if not reviews.conserved('setting', original['id'], projected_runtime.get(original['id'], {}), expected):
             reject(f"Runtime row {original['id']}: normalized source body/requirement conservation drift")
 canonical_question_fragment='docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/canonical-question-fragment.json'
 if (root/canonical_question_fragment).is_file():
@@ -89,12 +122,12 @@ if (root/canonical_question_fragment).is_file():
             'verifiedSourceEvidence':original.get('verifiedSourceEvidence',original.get('evidence',[])),
             'semanticStatus':original.get('semanticStatus',original.get('status','unresolved')),
             'reviewerConfirmation':None}
-        if projected_rows.get(original['id']) != expected:
+        if not reviews.conserved('setting', original['id'], projected_rows.get(original['id'], {}), expected):
             reject(f"Core canonical row {original['id']}: normalized source body/requirement conservation drift")
     for original in expected_fragment['cases']:
         projected=projected_cases.get(original['id'],{})
         for key,value in original.items():
-            if key not in projected or projected[key] != value:
+            if key != 'reviewerConfirmation' and (key not in projected or projected[key] != value):
                 reject(f"Core canonical case {original['id']}: source property/requirement conservation drift: {key}")
         for target,source in {'inputProfile':'inputConfigProfile','command':'actualTestCommand',
                               'result':'actualResult','sourceIdentity':'identities',
@@ -102,7 +135,7 @@ if (root/canonical_question_fragment).is_file():
             if target not in original and source in original and projected.get(target) != original[source]:
                 reject(f"Core canonical case {original['id']}: normalized alias conservation drift: {target}")
         expected_phase=original.get('phase','C0' if '-C0-' in original['id'] else 'implementation-proposal')
-        if projected.get('phase') != expected_phase or projected.get('reviewerConfirmation') is not None:
+        if projected.get('phase') != expected_phase or not reviews.draft_or_confirmed('case', original['id'], projected):
             reject(f"Core canonical case {original['id']}: phase/review promotion drift")
     if not any(package['id'] == 'CORE-ICQ-DEFINITION-CORRECTIONS-20261013' for package in inventory.get('supplementalDefinitionPackages',[])):
         reject('Core canonical question supplemental package omitted')
@@ -140,7 +173,7 @@ for package in inventory.get('supplementalDefinitionPackages',[]):
         if case.get('lifecycle',{}).get('status') != 'active-superseding-proposed-not-run':
             reject(f"supplemental {case['id']}: unexpected acceptance/runtime lifecycle")
     if not structural:
-        if not package.get('reviewerConfirmation'):
+        if not reviews.confirmed('supplemental', package['id'], package):
             reject(f"supplemental {package['id']}: independent complete field/consumer/case closure required")
         # A native question/specification is not a substitute for canonical
         # field/case coverage. Require explicit independently checked links;
@@ -177,7 +210,7 @@ for package in definition_packages:
         for key in ['sourceDigests','specDigests','testDigests']:
             for path,expected in observation.get(key,{}).items():
                 identity(path,expected,'pure definition '+key)
-    if not structural and not package.get('reviewerConfirmation'):
+    if not structural and not reviews.confirmed('definition-observation', package['id'], package):
         reject('pure definition observation package: independent bounded material review pending; no native/whole C0 acceptance')
 native_advertisements=inventory.get('nativeCasePackageReferences',[])
 if ids(native_packages,'native package') != ids(native_advertisements,'native package advertisement'):
@@ -236,9 +269,9 @@ for package in native_packages:
         if not structural:
             if canonical is None and 'historicalMapping' not in link:
                 reject(f'native {cid}: canonical field/case mapping unresolved')
-            if not link.get('mappingReview'):
+            if not reviews.confirmed('native-map', package['id'] + ':' + cid, link, 'mappingReview'):
                 reject(f'native {cid}: no independent mapping/specification review')
-    if not structural and not package.get('reviewerConfirmation'):
+    if not structural and not reviews.confirmed('native-package', package['id'], package):
         reject(f"native {package['id']}: no whole field/consumer/case acceptance")
 for canonical in matrix['cases']:
     for ref in canonical.get('nativeSpecificationReferences',[]):
@@ -264,7 +297,7 @@ for ledger_path in inventory.get('coordinateCandidateLedgers',[]):
                 reject(f"coordinate {candidate['id']}: absent semantic setting link")
             elif candidate.get('disposition')=='non-setting' and not candidate.get('reason'):
                 reject(f"coordinate {candidate['id']}: absent non-setting reason")
-            if not candidate.get('reviewerConfirmation'):
+            if not reviews.confirmed('coordinate', candidate['id'], candidate):
                 reject(f"coordinate {candidate['id']}: no independent semantic review")
 for row in inventory['rows']:
     label=row.get('id')
@@ -283,7 +316,7 @@ for row in inventory['rows']:
     if not structural:
         if row.get('semanticStatus') not in ['source-traced','resolved','verified']:
             reject(f'{label}: unresolved semantic inventory')
-        if not row.get('reviewerConfirmation'): reject(f'{label}: no independent required review')
+        if not reviews.confirmed('setting', label, row): reject(f'{label}: no independent required review')
         if not row.get('caseIds'): reject(f'{label}: no required cases')
 for case in matrix['cases']:
     label=case['id']
@@ -301,8 +334,9 @@ for case in matrix['cases']:
     if not structural:
         for field in ['productiveCaller','inputProfile','priorState','expectedEffectOrRejectingBoundary',
                       'observerMethod','command','sourceIdentity','testDigests',
-                      'toolDependencyImageConfigIdentities','reason','reviewerConfirmation']:
+                      'toolDependencyImageConfigIdentities','reason']:
             if not case.get(field): reject(f'{label}: incomplete exact case {field}')
+        if not reviews.confirmed('case', label, case): reject(f'{label}: incomplete exact case reviewerConfirmation')
         if case.get('phase')=='C0' and case.get('result')!='passed':
             reject(f'{label}: required current C0 check not passed')
         if case.get('phase')!='C0' and case.get('result')!='not-run' and not matrix.get('implementationAuthorization'):
@@ -311,7 +345,7 @@ if not structural:
     if inventory.get('gaps'): reject('inventory: unresolved recorded gaps')
     boundary=json.loads((root/inventory['sourceBoundary']).read_text())
     for source in boundary['boundaries']:
-        if not source.get('semanticDisposition') or not source.get('reviewerConfirmation'):
+        if not source.get('semanticDisposition') or not reviews.confirmed('source', source['path'], source):
             reject(f"source {source['path']}: no independently checked source disposition")
     for source in boundary['sources']:
         identity(source['path'],source['sha256'],'source boundary')
@@ -326,8 +360,17 @@ if not structural:
             reject(f"candidate {candidate['id']}: no independently checked non-setting reason")
         for setting in candidate.get('settingIds',[]):
             if setting not in row_ids: reject(f"candidate {candidate['id']}: dangling setting {setting}")
+        if not reviews.confirmed('candidate', candidate['id'], candidate):
+            reject(f"candidate {candidate['id']}: no exact independently reviewed disposition")
     linked={r for c in matrix['cases'] for r in c.get('requirementIds',[])}
     for requirement in sorted(requirement_ids-linked): reject(f'requirement {requirement}: no explicit case coverage')
+try:
+    reviews.assert_no_drift()
+    root_documents.assert_no_drift()
+    if active_generation is not None:
+        active_generation.assert_no_drift()
+except (OSError, ValueError) as error:
+    reject(str(error))
 report={'mode':'draft-structural' if structural else 'strict-C0-completion',
         'scope':'integrity only; independent semantic review remains mandatory',
         'settings':len(row_ids),'cases':len(case_ids),'errorCount':len(errors),'errors':errors}

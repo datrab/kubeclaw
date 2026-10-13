@@ -13,6 +13,14 @@ close production findings or accept global C0, native behavior or module binding
 
 ## Source and delivery identity
 
+Active autonomous completion work (2026-10-13) is recorded in the
+[completion package](../evidence/config-acceptance/c0-completion-20261013/README.md).
+It adds concrete author-side domain/delivery/binding definitions and exact source
+coordinate batches while preserving original canonical fragments/history.
+These proposed overlays are not yet independent whole-C0 acceptance. Sources,
+field/case joins and complete fixtures remain work; C1–C6 are not implemented.
+
+
 Source baseline: `9452d35524192f8665bc87254b3c63a361e7bd4a`, tree
 `89fa8e4d683cf442deb189d60ce8b7cc1ff05327`, obtained after fetching/pulling the
 repository and checking out the current CONFIG handoff into an isolated worktree.
@@ -490,3 +498,51 @@ C0-A through C0-E remain open until the consolidated inventory has no unexplaine
 candidate, unknown reader/default/validation or incomplete field-level case and
 the fresh reviewer independently closes it. Integrity/whitespace/register checks
 are narrower evidence. No implementation approval is being requested now.
+
+## Autonomous C0 resumption — 2026-10-13
+
+The stalled waiting continuation was resumed from repository state. HEAD remains
+`0bcaf85d192d031814554c590b1bfca5b3ba81dd`; no production/test implementation or
+C1–C6 authorization. Original inventory/matrix remain byte-identical.
+[Working state](../evidence/config-acceptance/c0-completion-20261013/WORK-STATE.json)
+records current source/definition work; no original requirement/history is erased.
+
+[Independent11](../evidence/config-acceptance/c0-completion-20261013/independent-data-integrity-recheck-11/README.md)
+verifies three bounded data-integrity corrections with 30 generation,24 case
+metadata and10 actual historical checker controls. Root files are pinned before
+parsing with independently stored parsed identity and final logical-target checks.
+The finalized-case contract remains a nonintegrated candidate. Active strict
+semantic completion deliberately fails closed; root001 remains OPEN.
+
+[Independent13](../evidence/config-acceptance/c0-completion-20261013/independent-component-product-prose-recheck-13/REPORT.md)
+verifies bounded002 material/data/metadata/prose correction: all398 original field
+IDs and their history/cases,305 active policy bodies,459 fixture bindings/13 staged
+schemas,15 malformed CLI rejections. Product A=true/B=false is typed and agrees
+with active prose; opposite inherited prose remains only historical. No receipt
+or whole productive owner/provider64 acceptance follows. Frozen old review inputs
+and failures have separate verified archives; source/tool identity checks are
+explicitly external to the CLI's internal data-reference pins.
+
+Runtime emitter work16 now retains34 exact role members/14 existing stable Runtime
+joins and10 new same-Buster C3 service policies, with333 source/body/link checks.
+Its34 runtime cases remain not-run and full profile/native joins remain open.
+Native Node timer behavior was separately observed with exact script/tool/log
+identities, not attributed to a migrated Buster consumer.
+
+Provider source extension18 has64 field IDs/61 physical pointers,64 profile-shape
+checks/64 missing-field negatives and19 actual current constructor controls, not
+productive invocations;256 future cases remain not-run. The
+[source-specific correction21](../evidence/config-acceptance/c0-completion-20261013/components/provider-domain-corrections-21/README.md)
+refines optional native registry-health wire versus required target boolean, and
+network origin/suffix admission before fixture exactness (distinct from browser
+union). It preserves all256 case IDs and refines12 bodies; eight proposed
+projection/current mapper controls pass. Fresh domain review remains pending.
+
+Next: source-specific independent review and corrections, complete same-owner
+profile/schema/generated-role/source/case/binding joins; typed full active catalog
+and strict historical-to-active semantic integration with authentic review DAG;
+remaining Runtime/Delivery/source/native/module obligations; then full C0-A–E
+review and concrete C1–C6 package. Bounded green controls do not request or infer
+implementation approval.
+
+Independent provider-domain review14 now verifies the three bounded corrections and all256 retained case IDs. This is not native effect, target loader or owner closure. Incremental case-phase integration has 34 generation,27 case and11 original-baseline controls passing; fresh review15 pending. Strict C0 still fails closed. User requests regular meaningful draft-PR checkpoints; no merge or C1-C6 permission is inferred. Bundled autoreview attempted but unavailable: Codex CLI executable missing; no clean autoreview result claimed.

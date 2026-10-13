@@ -508,3 +508,17 @@ Konfigurierbare initiale Demo-Laufzeit lokal `f308063` committed. Eine unabhäng
 Der echte Nova-Übergabepfad fand eine reentrante Sperrkollision zwischen logischer Evidenzprüfung und innerem Artefaktzugriff. Diese wird durch korrekte Ressourcendomänen behoben, ohne Core-Sperrausnahme oder vertraulichen Ersatzaufruf. Noch uncommittete Übergabearbeit wird nicht als Ready-Abschluss gezählt.
 
 Versionierte initiale Demo-Laufzeit ist remote `05c88ff331deac4a932126e8a686e7f9865aa758` gesichert. [Isolierter kombinierter Commitcheck f308063](../evidence/integration-f308063/README.md) besteht vollständig innerhalb seiner neun ausgewählten Kommandos. Die weiterhin uncommittete Nova-Handoff-/Readinessarbeit war im Checkout nicht enthalten.
+
+## CONFIG C0 — autonome Wiederaufnahme 2026-10-13
+
+Der offene C0-Goal wird nach hängen gebliebener Wartefortsetzung weiterbearbeitet.
+[Definition und konkrete nächste Arbeit](config-definition-current.md#autonomous-c0-resumption--2026-10-13)
+und [Arbeitszustand](../evidence/config-acceptance/c0-completion-20261013/WORK-STATE.json)
+weisen die unveränderte Originalbasis, neuen Teilkorrekturen und Rohbelege aus.
+Unabhängig geprüft sind die begrenzten Datenintegritätskorrekturen (Review11) und
+die002-Komponenten-Metadaten-/Profil-/Textkorrektur (Review13), nicht globales C0.
+Root001/aktive Semantik, vollständige Provider-/Role-/Profil-/Quellen-/Fall-/Binding-
+Zusammenführung und C0-Gesamtprüfung bleiben offen. C1–C6 wurden weder umgesetzt
+noch freigegeben; keine historischen Produktionsfindings automatisch geschlossen.
+
+C0 checkpoint8: independent15 verifies corrected phase/history/scope metadata and fail-closed remaining gates (34/31/11 author controls,41 independent controls). All10,350 snapshot members losslessly verified; split gzip evidence retained. Existing draft PR18 checkpoint push authorized by user. Autoreview helper unavailable due missing Codex CLI, explicitly recorded; C0 remains unaccepted.

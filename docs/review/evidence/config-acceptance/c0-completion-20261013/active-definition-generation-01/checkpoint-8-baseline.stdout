@@ -1,0 +1,61 @@
+{
+  "controls": [
+    {
+      "id": "author-selected replacement manifest hash is not a registered baseline",
+      "result": "passed",
+      "boundary": "DEFINITION_BASELINE_NOT_REGISTERED"
+    },
+    {
+      "id": "alternate baseline path is not an authority",
+      "result": "passed",
+      "boundary": "DEFINITION_BASELINE_NOT_REGISTERED"
+    },
+    {
+      "id": "extra baseline reference field is not accepted",
+      "result": "passed",
+      "boundary": "DEFINITION_BASELINE_REF_INVALID"
+    },
+    {
+      "id": "duplicate JSON keys are rejected rather than last-key-wins",
+      "result": "passed",
+      "boundary": "DEFINITION_JSON_DUPLICATE_KEY"
+    },
+    {
+      "id": "nonfinite JSON value rejected",
+      "result": "passed",
+      "boundary": "DEFINITION_JSON_NONFINITE"
+    },
+    {
+      "id": "overflowed JSON exponent rejected",
+      "result": "passed",
+      "boundary": "DEFINITION_JSON_NONFINITE"
+    },
+    {
+      "id": "finite JSON exponent remains supported",
+      "result": "passed"
+    },
+    {
+      "id": "actual original typed catalog/occurrences and historical compiler body preserved",
+      "result": "passed",
+      "records": 50617
+    },
+    {
+      "id": "original catalog byte drift at mandatory end check",
+      "result": "passed",
+      "boundary": "REVIEW_INPUT_CHANGED"
+    },
+    {
+      "id": "original catalog same-byte target identity changed at end",
+      "result": "passed",
+      "boundary": "REVIEW_INPUT_CHANGED"
+    },
+    {
+      "id": "restored original reference passes unchanged end check",
+      "result": "passed"
+    }
+  ],
+  "passed": 11,
+  "failed": 0,
+  "qualification": "original baseline preservation only; active validator/root integration pending",
+  "globalC0Accepted": false
+}
