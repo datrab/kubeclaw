@@ -1,0 +1,5 @@
+# Prism services/storage/network definitions — 56 clauses
+
+Preserves56 original candidates from7 templates; current schema domains and actual renderer/generated script/adjacent readers retained. Distinguishes3 backup schedules, decimal byte limits versus Chart duration and shell timer domain, application versus tools image, mode-specific SecretRef, ingestion quantity/replicas/TTL clamping and ephemeral quarantine semantics. Database init fixed role creation is not existing credential rotation; jobs.yaml existingSecret variable is only required precondition, actual ENV reads secrets.database.
+
+Individual NetworkPolicy rule contexts retain peer/direction/ports and same-entry namespace+pod selectors, not a claim labels authenticate ServiceAccounts or CNI effects are observed. Generated internal Services preserve ordinary Services independently; Tailscale policy branch is not tied to enabled exposure flag. Persistent PVC/database/provider facts remain open. No source/schema/canonical/production/test edits, native or wholeC0 acceptance; fresh independent source review pending.

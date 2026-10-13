@@ -1,0 +1,50 @@
+{
+  "reviewer": "/root/prism_service_storage_network_25",
+  "head": "c2a81d78ed5d1c94b7c1a433259c77961d92c973",
+  "tree": "74a022bc2f86e18a272b8b651a634e9e6b29f85e",
+  "branch": "codex/config-c0-semantic-inventory-20261012",
+  "candidateCount": 56,
+  "originalBodiesMatched": 56,
+  "queueIdsMatched": 56,
+  "sourceCount": 7,
+  "nonblankExpressionPinsMatched": 740,
+  "schemaPointersMatched": 34,
+  "errors": [],
+  "scopeSourceCounts": {
+    "charts/prism/templates/backup-storage-check.yaml": 2,
+    "charts/prism/templates/backup.yaml": 9,
+    "charts/prism/templates/ingestion.yaml": 9,
+    "charts/prism/templates/jobs.yaml": 6,
+    "charts/prism/templates/networkpolicy.yaml": 18,
+    "charts/prism/templates/postgresql.yaml": 7,
+    "charts/prism/templates/services.yaml": 5
+  },
+  "queueSha256": "c0fc9f0996ecdecab945ba7c8b9810d3211e8c418631fddc03ed91a71c4fefad",
+  "originalCandidatesSha256": "2d5267f5a7b0bbc80fd2ba8cf680011e59d7cbdb262e36c7e0031765dc0a2ad6",
+  "packageFiles": {
+    "README.md": "c1f215168f6744b7bdb0b76f79ee785ef92b37866a97e6266aa765bba1e260e3",
+    "local-check.json": "19555a5ac76baeb72c0ad0ea5d6ee681f85646cc6ed12aae66ba5466ae7267d9",
+    "define.py": "e80d0f6a596e4c91463375737d144ebc5dcd8950e6dafe06487dda42b93a1c46",
+    "source-field-definitions.json": "01cee4513e23d72136432ffddf0294e4949e6cf0308a7fd1e023029ef9b8581e",
+    "package-manifest.json": "57a1d81eba0923937621244acd4b4540b6efbf578fbed031db71b9fe4732031f"
+  },
+  "readSourceIdentities": {
+    "charts/prism/files/prism-backup.sh": "4a0209b0ec2c7b68811d856c85b9519d0ea12151e5e17409ba963e4fda961bef",
+    "charts/prism/templates/_helpers.tpl": "33d5044abeae2faabd1202e544aeb33b34a30fb7afe9300b4bfb11d7ef914e49",
+    "charts/prism/templates/_swarm-config.tpl": "e044387aa75a3f784ccd2a0d0f30d91f6e69b7e07e663ab2cc005417bff7265a",
+    "charts/prism/templates/backup-storage-check.yaml": "706c9868b2e6aab791a28d129a62b4c07718c67130d202819d8d8e00ae5e07fc",
+    "charts/prism/templates/backup.yaml": "c7fdc0b9524672ae49179eb258f0144c09774a56b5eb74a31f1a597ff2e88e9e",
+    "charts/prism/templates/ingestion.yaml": "73f19bc39066d2f6f0944846c2784c193a4d1e59202ed737d3a6c6ff8ec77f98",
+    "charts/prism/templates/jobs.yaml": "9ea1bcd344c7ccc2177836ea64adcf82fbdc7df451032c77f8245596ba96902c",
+    "charts/prism/templates/networkpolicy.yaml": "75d2770a9d4a008cc10f6e506717ba8832e52d27ac2bd583bfee57dbd76eaa9f",
+    "charts/prism/templates/postgresql.yaml": "e81248bfa623695e0e79f36ddf347ad75a1d7bc449a4250287a96a80e17742c1",
+    "charts/prism/templates/services.yaml": "abae201f362dacc4e4422c8867d57113483eb443d5cf964e2a65996bf9683a85",
+    "charts/prism/templates/workloads.yaml": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20",
+    "charts/prism/values.schema.json": "7588db4e045bc4d52c1b46b4bbffeac238f12c9bd074b71aa9592c4ed24589c3",
+    "skills/prism/config/database-bootstrap.ts": "23b7078c1fe9304ab60d0fa7742dc5fe543a75da8a3367bb508a9ce8dc649625",
+    "skills/prism/server/bootstrap-database.ts": "4cacc0a24266f58196bd6f6a74abeeb4f7bb95f833312fe691e9f6c0a76d28ee",
+    "skills/prism/server/database-roles.ts": "f9b1b0048c2cc881969e33d7db58a74293a311079a50c8d391827996eaf5ae3a",
+    "skills/prism/server/ingestion.ts": "bbee6795991e601600e6442927e483bcd5a87c798b66a42ed5606bb496354717",
+    "skills/prism/server/migrate.ts": "19eeb8571e604ec548334b4f4ea75bfb65975a6499dabef18052bc02f5a7cb18"
+  }
+}

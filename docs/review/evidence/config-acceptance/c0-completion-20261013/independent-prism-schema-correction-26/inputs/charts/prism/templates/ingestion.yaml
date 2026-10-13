@@ -1,0 +1,40 @@
+{{- if .Values.ingestion.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prism-ingestion
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  replicas: {{ .Values.ingestion.replicas }}
+  selector: { matchLabels: { app: prism-ingestion } }
+  template:
+    metadata: { labels: { app: prism-ingestion } }
+    spec:
+      serviceAccountName: prism-ingestion
+      imagePullSecrets: {{ toYaml .Values.imagePullSecrets | nindent 8 }}
+      automountServiceAccountToken: false
+      securityContext: { runAsNonRoot: true, runAsUser: 1000, runAsGroup: 1000, seccompProfile: { type: RuntimeDefault } }
+      containers:
+        - name: ingestion
+          image: {{ include "prism.imageRef" .Values.images.ingestion | quote }}
+          imagePullPolicy: {{ .Values.images.ingestion.pullPolicy }}
+          securityContext: { allowPrivilegeEscalation: false, readOnlyRootFilesystem: true, capabilities: { drop: ["ALL"] } }
+          resources:
+            requests:
+              cpu: {{ required "ingestion.resources.requests.cpu requires operator sizing" .Values.ingestion.resources.requests.cpu | quote }}
+              memory: {{ required "ingestion.resources.requests.memory requires operator sizing" .Values.ingestion.resources.requests.memory | quote }}
+            limits:
+              cpu: {{ required "ingestion.resources.limits.cpu requires operator sizing" .Values.ingestion.resources.limits.cpu | quote }}
+              memory: {{ required "ingestion.resources.limits.memory requires operator sizing" .Values.ingestion.resources.limits.memory | quote }}
+          env:
+            - { name: PORT, value: "8080" }
+            - name: PRISM_INGESTION_SECRET
+              valueFrom: { secretKeyRef: { name: {{ .Values.secrets.runtime }}, key: ingestion-secret } }
+            - { name: PRISM_QUARANTINE_ROOT, value: /quarantine }
+            - { name: PRISM_QUARANTINE_TTL_MS, value: {{ .Values.ingestion.quarantineTtlMs | quote }} }
+          volumeMounts: [{ name: quarantine, mountPath: /quarantine }]
+          readinessProbe: { httpGet: { path: /ready, port: 8080 }, initialDelaySeconds: 3 }
+          livenessProbe: { httpGet: { path: /health, port: 8080 }, initialDelaySeconds: 3 }
+      volumes: [{ name: quarantine, emptyDir: { sizeLimit: 4Gi } }]
+{{- end }}
