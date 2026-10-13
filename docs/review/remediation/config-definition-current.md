@@ -3,7 +3,13 @@
 Status: **C0 in progress; not accepted; C1–C6 not approved.** This document
 supersedes neither historical evidence nor the authorization boundary in
 [OPENCLAW-CONFIG-GOAL.md](OPENCLAW-CONFIG-GOAL.md). D17–D22 apply. Nothing in
-this branch implements CONFIG, changes tests, deploys, or closes a finding.
+this branch implements CONFIG, changes tests, deploys, or closes a production finding.
+
+Bounded evidence corrections: the four user-review findings and one supplemental
+Runtime root guard finding are
+[fixed and independently rechecked](../evidence/config-acceptance/four-findings-fix-20261013/README.md).
+This disposition concerns documentation/provenance validators only; it does not
+close production findings or accept global C0, native behavior or module binding.
 
 ## Source and delivery identity
 

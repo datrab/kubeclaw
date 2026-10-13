@@ -5,6 +5,12 @@ tree `89fa8e4d683cf442deb189d60ce8b7cc1ff05327`.
 The CONFIG worktree is isolated from the existing dirty documentation checkout.
 No production source, original tests or historical raw evidence is changed here.
 
+Current bounded correction status: [four user-review findings plus the additional
+Runtime root conservation guard are independently verified fixed](four-findings-fix-20261013/README.md).
+The [initial independent recheck](independent-four-findings-recheck-20261013/README.md)
+and its [clean guard recovery](independent-four-findings-recheck-20261013/root-guard-recheck/README.md)
+are separate historical records. Global C0/native/module acceptance remains open.
+
 ## Reading and reproduction
 
 - `author/source-boundary.json` enumerates all tracked inputs; candidate locations

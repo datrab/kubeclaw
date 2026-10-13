@@ -1,0 +1,401 @@
+[
+  {
+    "label": "root-structural",
+    "command": [
+      "python3",
+      "docs/review/evidence/config-acceptance/author/check-matrix.py",
+      "--structural"
+    ],
+    "exit": 0,
+    "expectedExit": 0,
+    "expectedBoundary": null,
+    "passed": true
+  },
+  {
+    "label": "native-conservation",
+    "command": [
+      "python3",
+      "docs/review/evidence/config-acceptance/author/check-native-case-integration.py"
+    ],
+    "exit": 0,
+    "expectedExit": 0,
+    "expectedBoundary": null,
+    "passed": true
+  },
+  {
+    "label": "01-positive-before",
+    "command": [
+      "python3",
+      "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-01/check-bindings.py",
+      "--input",
+      "/tmp/independent-four-review-j_93wsu0/candidate.json"
+    ],
+    "exit": 0,
+    "expectedExit": 0,
+    "expectedBoundary": null,
+    "passed": true
+  },
+  {
+    "label": "01-member-delete",
+    "command": [
+      "python3",
+      "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-01/check-bindings.py",
+      "--input",
+      "/tmp/independent-four-review-j_93wsu0/candidate.json"
+    ],
+    "exit": 1,
+    "expectedExit": 1,
+    "expectedBoundary": "CANONICAL_BINDING:",
+    "passed": true
+  },
+  {
+    "label": "01-member-duplicate",
+    "command": [
+      "python3",
+      "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-01/check-bindings.py",
+      "--input",
+      "/tmp/independent-four-review-j_93wsu0/candidate.json"
+    ],
+    "exit": 1,
+    "expectedExit": 1,
+    "expectedBoundary": "CANONICAL_BINDING:",
+    "passed": true
+  },
+  {
+    "label": "01-coordinate-delete",
+    "command": [
+      "python3",
+      "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-01/check-bindings.py",
+      "--input",
+      "/tmp/independent-four-review-j_93wsu0/candidate.json"
+    ],
+    "exit": 1,
+    "expectedExit": 1,
+    "expectedBoundary": "CANONICAL_BINDING:",
+    "passed": true
+  },
+  {
+    "label": "01-unrelated-profile",
+    "command": [
+      "python3",
+      "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-01/check-bindings.py",
+      "--input",
+      "/tmp/independent-four-review-j_93wsu0/candidate.json"
+    ],
+    "exit": 1,
+    "expectedExit": 1,
+    "expectedBoundary": "CANONICAL_BINDING:",
+    "passed": true
+  },
+  {
+    "label": "01-same-owner-wrong-field",
+    "command": [
+      "python3",
+      "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-01/check-bindings.py",
+      "--input",
+      "/tmp/independent-four-review-j_93wsu0/candidate.json"
+    ],
+    "exit": 1,
+    "expectedExit": 1,
+    "expectedBoundary": "CANONICAL_BINDING:",
+    "passed": true
+  },
+  {
+    "label": "01-owner-drift",
+    "command": [
+      "python3",
+      "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-01/check-bindings.py",
+      "--input",
+      "/tmp/independent-four-review-j_93wsu0/candidate.json"
+    ],
+    "exit": 1,
+    "expectedExit": 1,
+    "expectedBoundary": "CANONICAL_BINDING:",
+    "passed": true
+  },
+  {
+    "label": "01-field-drift",
+    "command": [
+      "python3",
+      "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-01/check-bindings.py",
+      "--input",
+      "/tmp/independent-four-review-j_93wsu0/candidate.json"
+    ],
+    "exit": 1,
+    "expectedExit": 1,
+    "expectedBoundary": "CANONICAL_BINDING:",
+    "passed": true
+  },
+  {
+    "label": "01-case-loss",
+    "command": [
+      "python3",
+      "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-01/check-bindings.py",
+      "--input",
+      "/tmp/independent-four-review-j_93wsu0/candidate.json"
+    ],
+    "exit": 1,
+    "expectedExit": 1,
+    "expectedBoundary": "CANONICAL_BINDING:",
+    "passed": true
+  },
+  {
+    "label": "01-persisted-unrelated-profile-content",
+    "command": [
+      "python3",
+      "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-01/check-bindings.py",
+      "--input",
+      "/tmp/independent-four-review-j_93wsu0/candidate.json"
+    ],
+    "exit": 1,
+    "expectedExit": 1,
+    "expectedBoundary": "canonical source drift:",
+    "passed": true
+  },
+  {
+    "label": "01-positive-after",
+    "command": [
+      "python3",
+      "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-01/check-bindings.py",
+      "--input",
+      "/tmp/independent-four-review-j_93wsu0/candidate.json"
+    ],
+    "exit": 0,
+    "expectedExit": 0,
+    "expectedBoundary": null,
+    "passed": true
+  },
+  {
+    "label": "02-positive-before",
+    "command": [
+      "python3",
+      "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-02/check-bindings.py",
+      "--input",
+      "/tmp/independent-four-review-j_93wsu0/candidate.json"
+    ],
+    "exit": 0,
+    "expectedExit": 0,
+    "expectedBoundary": null,
+    "passed": true
+  },
+  {
+    "label": "02-member-delete",
+    "command": [
+      "python3",
+      "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-02/check-bindings.py",
+      "--input",
+      "/tmp/independent-four-review-j_93wsu0/candidate.json"
+    ],
+    "exit": 1,
+    "expectedExit": 1,
+    "expectedBoundary": "CANONICAL_BINDING:",
+    "passed": true
+  },
+  {
+    "label": "02-member-duplicate",
+    "command": [
+      "python3",
+      "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-02/check-bindings.py",
+      "--input",
+      "/tmp/independent-four-review-j_93wsu0/candidate.json"
+    ],
+    "exit": 1,
+    "expectedExit": 1,
+    "expectedBoundary": "CANONICAL_BINDING:",
+    "passed": true
+  },
+  {
+    "label": "02-coordinate-delete",
+    "command": [
+      "python3",
+      "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-02/check-bindings.py",
+      "--input",
+      "/tmp/independent-four-review-j_93wsu0/candidate.json"
+    ],
+    "exit": 1,
+    "expectedExit": 1,
+    "expectedBoundary": "CANONICAL_BINDING:",
+    "passed": true
+  },
+  {
+    "label": "02-unrelated-profile",
+    "command": [
+      "python3",
+      "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-02/check-bindings.py",
+      "--input",
+      "/tmp/independent-four-review-j_93wsu0/candidate.json"
+    ],
+    "exit": 1,
+    "expectedExit": 1,
+    "expectedBoundary": "CANONICAL_BINDING:",
+    "passed": true
+  },
+  {
+    "label": "02-same-owner-wrong-field",
+    "command": [
+      "python3",
+      "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-02/check-bindings.py",
+      "--input",
+      "/tmp/independent-four-review-j_93wsu0/candidate.json"
+    ],
+    "exit": 1,
+    "expectedExit": 1,
+    "expectedBoundary": "CANONICAL_BINDING:",
+    "passed": true
+  },
+  {
+    "label": "02-owner-drift",
+    "command": [
+      "python3",
+      "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-02/check-bindings.py",
+      "--input",
+      "/tmp/independent-four-review-j_93wsu0/candidate.json"
+    ],
+    "exit": 1,
+    "expectedExit": 1,
+    "expectedBoundary": "CANONICAL_BINDING:",
+    "passed": true
+  },
+  {
+    "label": "02-field-drift",
+    "command": [
+      "python3",
+      "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-02/check-bindings.py",
+      "--input",
+      "/tmp/independent-four-review-j_93wsu0/candidate.json"
+    ],
+    "exit": 1,
+    "expectedExit": 1,
+    "expectedBoundary": "CANONICAL_BINDING:",
+    "passed": true
+  },
+  {
+    "label": "02-case-loss",
+    "command": [
+      "python3",
+      "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-02/check-bindings.py",
+      "--input",
+      "/tmp/independent-four-review-j_93wsu0/candidate.json"
+    ],
+    "exit": 1,
+    "expectedExit": 1,
+    "expectedBoundary": "CANONICAL_BINDING:",
+    "passed": true
+  },
+  {
+    "label": "02-persisted-unrelated-profile-content",
+    "command": [
+      "python3",
+      "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-02/check-bindings.py",
+      "--input",
+      "/tmp/independent-four-review-j_93wsu0/candidate.json"
+    ],
+    "exit": 1,
+    "expectedExit": 1,
+    "expectedBoundary": "canonical source drift:",
+    "passed": true
+  },
+  {
+    "label": "02-positive-after",
+    "command": [
+      "python3",
+      "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-02/check-bindings.py",
+      "--input",
+      "/tmp/independent-four-review-j_93wsu0/candidate.json"
+    ],
+    "exit": 0,
+    "expectedExit": 0,
+    "expectedBoundary": null,
+    "passed": true
+  },
+  {
+    "label": "runtime-row-delete",
+    "command": [
+      "python3",
+      "docs/review/evidence/config-acceptance/author/check-matrix.py",
+      "--structural",
+      "--inventory",
+      "/tmp/independent-four-review-j_93wsu0/inventory.json",
+      "--matrix",
+      "/tmp/independent-four-review-j_93wsu0/matrix.json"
+    ],
+    "exit": 1,
+    "expectedExit": 1,
+    "expectedBoundary": null,
+    "passed": true
+  },
+  {
+    "label": "runtime-history-drift",
+    "command": [
+      "python3",
+      "docs/review/evidence/config-acceptance/author/check-matrix.py",
+      "--structural",
+      "--inventory",
+      "/tmp/independent-four-review-j_93wsu0/inventory.json",
+      "--matrix",
+      "/tmp/independent-four-review-j_93wsu0/matrix.json"
+    ],
+    "exit": 0,
+    "expectedExit": 0,
+    "expectedBoundary": null,
+    "passed": true
+  },
+  {
+    "label": "native-spec-delete",
+    "command": [
+      "python3",
+      "docs/review/evidence/config-acceptance/author/check-matrix.py",
+      "--structural",
+      "--inventory",
+      "/tmp/independent-four-review-j_93wsu0/inventory.json",
+      "--matrix",
+      "/tmp/independent-four-review-j_93wsu0/matrix.json"
+    ],
+    "exit": 1,
+    "expectedExit": 1,
+    "expectedBoundary": null,
+    "passed": true
+  },
+  {
+    "label": "runtime-fragment-original-hash",
+    "command": [
+      "python3",
+      "docs/review/evidence/config-acceptance/four-findings-fix-20261013/runtime/verify.py",
+      "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/runtime-fragment-original-hash.json.gz"
+    ],
+    "exit": 1,
+    "expectedBoundary": "Original row digest mismatch",
+    "passed": true
+  },
+  {
+    "label": "runtime-fragment-drop-correction",
+    "command": [
+      "python3",
+      "docs/review/evidence/config-acceptance/four-findings-fix-20261013/runtime/verify.py",
+      "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/runtime-fragment-drop-correction.json.gz"
+    ],
+    "exit": 1,
+    "expectedBoundary": "oldRowSHA256Correction",
+    "passed": true
+  },
+  {
+    "label": "runtime-fragment-unrelated-row",
+    "command": [
+      "python3",
+      "docs/review/evidence/config-acceptance/four-findings-fix-20261013/runtime/verify.py",
+      "docs/review/evidence/config-acceptance/independent-four-findings-recheck-20261013/runtime-fragment-unrelated-row.json.gz"
+    ],
+    "exit": 1,
+    "expectedBoundary": "Non-provenance inventory content changed",
+    "passed": true
+  },
+  {
+    "label": "runtime-fragment-restored-positive",
+    "command": [
+      "python3",
+      "docs/review/evidence/config-acceptance/four-findings-fix-20261013/runtime/verify.py"
+    ],
+    "exit": 0,
+    "passed": true
+  }
+]

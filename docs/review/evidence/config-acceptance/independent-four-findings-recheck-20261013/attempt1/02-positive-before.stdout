@@ -1,0 +1,8 @@
+{
+  "result": "passed-document-integrity-only",
+  "batch": "02",
+  "coordinates": 105,
+  "memberOccurrences": 125,
+  "scope": "C0 conservation/profile traceability only; no semantic/runtime/Helm/F-MUT acceptance",
+  "inputSHA256": "6a3524bd48015dd9c53d3086bb9523a895bc3789491efab908b4f5b1ff8d5f44"
+}

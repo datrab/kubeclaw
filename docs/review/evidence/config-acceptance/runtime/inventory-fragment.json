@@ -329224,7 +329224,7 @@
       "sourceDefinitionHistory": [
         {
           "batch": "standalone-remote-19",
-          "oldRowSHA256": "cc07172930e8f6d666fd4072c6e436c8e1719bf722c6561da3dd283ec509c306",
+          "oldRowSHA256": "5154a296c7d2ad23e9d9d43db840e75976bded4d12b64a7ba471f3dfd0ffc73d",
           "oldCurrent": {
             "value": "required explicit value (bearer token conditional; proxy should reject unused token author)",
             "default": "required explicit value (bearer token conditional; proxy should reject unused token author)",
@@ -329303,7 +329303,19 @@
             "RT-NOVA-REMOTE-SCHEMAVERSION-ALT",
             "RT-NOVA-REMOTE-SCHEMAVERSION-MUTANT"
           ],
-          "beforeBytes": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/changed-rows-before.json.gz"
+          "beforeBytes": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/changed-rows-before.json.gz",
+          "oldRowSHA256Correction": {
+            "findingID": "URUNTIME-001",
+            "reason": "Historical digest included sourceDefinitionHistory=[] inserted by setdefault before hashing; corrected from the immutable original snapshot.",
+            "previousIncorrectOldRowSHA256": "cc07172930e8f6d666fd4072c6e436c8e1719bf722c6561da3dd283ec509c306",
+            "correctedOldRowSHA256": "5154a296c7d2ad23e9d9d43db840e75976bded4d12b64a7ba471f3dfd0ffc73d",
+            "originalSnapshotPath": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/changed-rows-before.json.gz",
+            "originalSnapshotSHA256": "08df03d68f5df497a288542bd976016c659b7f6e000e7e8cc1d6f09d1192d6ff",
+            "originalRowID": "RT-NOVA-REMOTE-SCHEMAVERSION",
+            "originalBaselineCommit": "21bf51bc2075abec1191fdc091952492b6cb484e",
+            "canonicalization": "UTF-8 JSON; sort_keys=True; separators=(comma,colon); ensure_ascii=False",
+            "evidencePath": "docs/review/evidence/config-acceptance/four-findings-fix-20261013/runtime/corrections.json"
+          }
         }
       ]
     },
@@ -329519,7 +329531,7 @@
       "sourceDefinitionHistory": [
         {
           "batch": "standalone-remote-19",
-          "oldRowSHA256": "809fb92cbe1a1c3ffe9a5df48d65d3547ac314bc2e56ee832a0bdb527740148f",
+          "oldRowSHA256": "5a99a166a316a419c7e5ba8e20a5d5c7687198c4a1f4f9f6a261022b2ef3ce75",
           "oldCurrent": {
             "value": "required explicit value (bearer token conditional; proxy should reject unused token author)",
             "default": "required explicit value (bearer token conditional; proxy should reject unused token author)",
@@ -329664,7 +329676,19 @@
             "RT-NOVA-REMOTE-ENDPOINT-ALT",
             "RT-NOVA-REMOTE-ENDPOINT-MUTANT"
           ],
-          "beforeBytes": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/changed-rows-before.json.gz"
+          "beforeBytes": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/changed-rows-before.json.gz",
+          "oldRowSHA256Correction": {
+            "findingID": "URUNTIME-001",
+            "reason": "Historical digest included sourceDefinitionHistory=[] inserted by setdefault before hashing; corrected from the immutable original snapshot.",
+            "previousIncorrectOldRowSHA256": "809fb92cbe1a1c3ffe9a5df48d65d3547ac314bc2e56ee832a0bdb527740148f",
+            "correctedOldRowSHA256": "5a99a166a316a419c7e5ba8e20a5d5c7687198c4a1f4f9f6a261022b2ef3ce75",
+            "originalSnapshotPath": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/changed-rows-before.json.gz",
+            "originalSnapshotSHA256": "08df03d68f5df497a288542bd976016c659b7f6e000e7e8cc1d6f09d1192d6ff",
+            "originalRowID": "RT-NOVA-REMOTE-ENDPOINT",
+            "originalBaselineCommit": "21bf51bc2075abec1191fdc091952492b6cb484e",
+            "canonicalization": "UTF-8 JSON; sort_keys=True; separators=(comma,colon); ensure_ascii=False",
+            "evidencePath": "docs/review/evidence/config-acceptance/four-findings-fix-20261013/runtime/corrections.json"
+          }
         }
       ]
     },
@@ -329820,7 +329844,7 @@
       "sourceDefinitionHistory": [
         {
           "batch": "standalone-remote-19",
-          "oldRowSHA256": "24484cf37d7503a43eb1656e76fd854be5e8267ae89a0f368990e1fe1f891bff",
+          "oldRowSHA256": "a93f65599a811b411e4bc8ffe7d271d8634f390764e5e463866052618fdfaf70",
           "oldCurrent": {
             "value": "bearer if missing/invalid authentication",
             "default": "bearer if missing/invalid authentication",
@@ -329905,7 +329929,19 @@
             "RT-NOVA-REMOTE-AUTHENTICATION-ALT",
             "RT-NOVA-REMOTE-AUTHENTICATION-MUTANT"
           ],
-          "beforeBytes": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/changed-rows-before.json.gz"
+          "beforeBytes": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/changed-rows-before.json.gz",
+          "oldRowSHA256Correction": {
+            "findingID": "URUNTIME-001",
+            "reason": "Historical digest included sourceDefinitionHistory=[] inserted by setdefault before hashing; corrected from the immutable original snapshot.",
+            "previousIncorrectOldRowSHA256": "24484cf37d7503a43eb1656e76fd854be5e8267ae89a0f368990e1fe1f891bff",
+            "correctedOldRowSHA256": "a93f65599a811b411e4bc8ffe7d271d8634f390764e5e463866052618fdfaf70",
+            "originalSnapshotPath": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/changed-rows-before.json.gz",
+            "originalSnapshotSHA256": "08df03d68f5df497a288542bd976016c659b7f6e000e7e8cc1d6f09d1192d6ff",
+            "originalRowID": "RT-NOVA-REMOTE-AUTHENTICATION",
+            "originalBaselineCommit": "21bf51bc2075abec1191fdc091952492b6cb484e",
+            "canonicalization": "UTF-8 JSON; sort_keys=True; separators=(comma,colon); ensure_ascii=False",
+            "evidencePath": "docs/review/evidence/config-acceptance/four-findings-fix-20261013/runtime/corrections.json"
+          }
         }
       ]
     },
@@ -330019,7 +330055,7 @@
       "sourceDefinitionHistory": [
         {
           "batch": "standalone-remote-19",
-          "oldRowSHA256": "c6c13742a96002f6f4390f59d7fe2e4f406ef67fa151690b5667358ee198424c",
+          "oldRowSHA256": "24b2bc8f5a84cf95b3c9664187980ae53a17109a672414cf2e1dc1c0c818aa6e",
           "oldCurrent": {
             "value": "required explicit value (bearer token conditional; proxy should reject unused token author)",
             "default": "required explicit value (bearer token conditional; proxy should reject unused token author)",
@@ -330062,7 +330098,19 @@
             "RT-NOVA-REMOTE-TOKENENVIRONMENTVARIABLE-ALT",
             "RT-NOVA-REMOTE-TOKENENVIRONMENTVARIABLE-MUTANT"
           ],
-          "beforeBytes": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/changed-rows-before.json.gz"
+          "beforeBytes": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/changed-rows-before.json.gz",
+          "oldRowSHA256Correction": {
+            "findingID": "URUNTIME-001",
+            "reason": "Historical digest included sourceDefinitionHistory=[] inserted by setdefault before hashing; corrected from the immutable original snapshot.",
+            "previousIncorrectOldRowSHA256": "c6c13742a96002f6f4390f59d7fe2e4f406ef67fa151690b5667358ee198424c",
+            "correctedOldRowSHA256": "24b2bc8f5a84cf95b3c9664187980ae53a17109a672414cf2e1dc1c0c818aa6e",
+            "originalSnapshotPath": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/changed-rows-before.json.gz",
+            "originalSnapshotSHA256": "08df03d68f5df497a288542bd976016c659b7f6e000e7e8cc1d6f09d1192d6ff",
+            "originalRowID": "RT-NOVA-REMOTE-TOKENENVIRONMENTVARIABLE",
+            "originalBaselineCommit": "21bf51bc2075abec1191fdc091952492b6cb484e",
+            "canonicalization": "UTF-8 JSON; sort_keys=True; separators=(comma,colon); ensure_ascii=False",
+            "evidencePath": "docs/review/evidence/config-acceptance/four-findings-fix-20261013/runtime/corrections.json"
+          }
         }
       ]
     },
@@ -330170,7 +330218,7 @@
       "sourceDefinitionHistory": [
         {
           "batch": "standalone-remote-19",
-          "oldRowSHA256": "6178f660d932ecdb3414f8b306cb1e4a6bef13d0a6bff010a4241f301af7470a",
+          "oldRowSHA256": "a0d488415d1689f45510b47dc01037f58e159cffb9cb1442739c09b7cb90dfbd",
           "oldCurrent": {
             "value": "required explicit value (bearer token conditional; proxy should reject unused token author)",
             "default": "required explicit value (bearer token conditional; proxy should reject unused token author)",
@@ -330207,7 +330255,19 @@
             "RT-NOVA-REMOTE-SOURCEATTESTATIONPRIVATEKEYENVIRONMENTVARIABLE-ALT",
             "RT-NOVA-REMOTE-SOURCEATTESTATIONPRIVATEKEYENVIRONMENTVARIABLE-MUTANT"
           ],
-          "beforeBytes": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/changed-rows-before.json.gz"
+          "beforeBytes": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/changed-rows-before.json.gz",
+          "oldRowSHA256Correction": {
+            "findingID": "URUNTIME-001",
+            "reason": "Historical digest included sourceDefinitionHistory=[] inserted by setdefault before hashing; corrected from the immutable original snapshot.",
+            "previousIncorrectOldRowSHA256": "6178f660d932ecdb3414f8b306cb1e4a6bef13d0a6bff010a4241f301af7470a",
+            "correctedOldRowSHA256": "a0d488415d1689f45510b47dc01037f58e159cffb9cb1442739c09b7cb90dfbd",
+            "originalSnapshotPath": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/changed-rows-before.json.gz",
+            "originalSnapshotSHA256": "08df03d68f5df497a288542bd976016c659b7f6e000e7e8cc1d6f09d1192d6ff",
+            "originalRowID": "RT-NOVA-REMOTE-SOURCEATTESTATIONPRIVATEKEYENVIRONMENTVARIABLE",
+            "originalBaselineCommit": "21bf51bc2075abec1191fdc091952492b6cb484e",
+            "canonicalization": "UTF-8 JSON; sort_keys=True; separators=(comma,colon); ensure_ascii=False",
+            "evidencePath": "docs/review/evidence/config-acceptance/four-findings-fix-20261013/runtime/corrections.json"
+          }
         }
       ]
     },
@@ -330351,7 +330411,7 @@
       "sourceDefinitionHistory": [
         {
           "batch": "standalone-remote-19",
-          "oldRowSHA256": "4359e6394cc57ae058f861c95e9df44e6b2d163f0737dd191779e577963cd60c",
+          "oldRowSHA256": "fa4b809e77af63934fc08ee14081ef36eccc978ed9e34034b345cca66f9cd3e5",
           "oldCurrent": {
             "value": "required explicit value (bearer token conditional; proxy should reject unused token author)",
             "default": "required explicit value (bearer token conditional; proxy should reject unused token author)",
@@ -330424,7 +330484,19 @@
             "RT-NOVA-REMOTE-SOURCEAUTHORITY-ALT",
             "RT-NOVA-REMOTE-SOURCEAUTHORITY-MUTANT"
           ],
-          "beforeBytes": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/changed-rows-before.json.gz"
+          "beforeBytes": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/changed-rows-before.json.gz",
+          "oldRowSHA256Correction": {
+            "findingID": "URUNTIME-001",
+            "reason": "Historical digest included sourceDefinitionHistory=[] inserted by setdefault before hashing; corrected from the immutable original snapshot.",
+            "previousIncorrectOldRowSHA256": "4359e6394cc57ae058f861c95e9df44e6b2d163f0737dd191779e577963cd60c",
+            "correctedOldRowSHA256": "fa4b809e77af63934fc08ee14081ef36eccc978ed9e34034b345cca66f9cd3e5",
+            "originalSnapshotPath": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/changed-rows-before.json.gz",
+            "originalSnapshotSHA256": "08df03d68f5df497a288542bd976016c659b7f6e000e7e8cc1d6f09d1192d6ff",
+            "originalRowID": "RT-NOVA-REMOTE-SOURCEAUTHORITY",
+            "originalBaselineCommit": "21bf51bc2075abec1191fdc091952492b6cb484e",
+            "canonicalization": "UTF-8 JSON; sort_keys=True; separators=(comma,colon); ensure_ascii=False",
+            "evidencePath": "docs/review/evidence/config-acceptance/four-findings-fix-20261013/runtime/corrections.json"
+          }
         }
       ]
     },
@@ -330556,7 +330628,7 @@
       "sourceDefinitionHistory": [
         {
           "batch": "standalone-remote-19",
-          "oldRowSHA256": "ccafb71ed764b3efcb0176613bb6c6a09f69e862b0c36b6c95aee8e13e53fb2d",
+          "oldRowSHA256": "64ebed90d26e4cdf82e0f8da92cfa960a367897bbb10c754e3c5688ea88e396c",
           "oldCurrent": {
             "value": "required explicit value (bearer token conditional; proxy should reject unused token author)",
             "default": "required explicit value (bearer token conditional; proxy should reject unused token author)",
@@ -330617,7 +330689,19 @@
             "RT-NOVA-REMOTE-STATEROOT-ALT",
             "RT-NOVA-REMOTE-STATEROOT-MUTANT"
           ],
-          "beforeBytes": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/changed-rows-before.json.gz"
+          "beforeBytes": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/changed-rows-before.json.gz",
+          "oldRowSHA256Correction": {
+            "findingID": "URUNTIME-001",
+            "reason": "Historical digest included sourceDefinitionHistory=[] inserted by setdefault before hashing; corrected from the immutable original snapshot.",
+            "previousIncorrectOldRowSHA256": "ccafb71ed764b3efcb0176613bb6c6a09f69e862b0c36b6c95aee8e13e53fb2d",
+            "correctedOldRowSHA256": "64ebed90d26e4cdf82e0f8da92cfa960a367897bbb10c754e3c5688ea88e396c",
+            "originalSnapshotPath": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/changed-rows-before.json.gz",
+            "originalSnapshotSHA256": "08df03d68f5df497a288542bd976016c659b7f6e000e7e8cc1d6f09d1192d6ff",
+            "originalRowID": "RT-NOVA-REMOTE-STATEROOT",
+            "originalBaselineCommit": "21bf51bc2075abec1191fdc091952492b6cb484e",
+            "canonicalization": "UTF-8 JSON; sort_keys=True; separators=(comma,colon); ensure_ascii=False",
+            "evidencePath": "docs/review/evidence/config-acceptance/four-findings-fix-20261013/runtime/corrections.json"
+          }
         }
       ]
     },
@@ -330761,7 +330845,7 @@
       "sourceDefinitionHistory": [
         {
           "batch": "standalone-remote-19",
-          "oldRowSHA256": "dd00792f77585a792e9b5154880e665ef5db7334d05fbe881c4ad712f5b7a1dd",
+          "oldRowSHA256": "e426034c860ee2b8e8f128f9caddd1364b01903cf86c8f4290852cabdb2f7571",
           "oldCurrent": {
             "value": "required explicit value (bearer token conditional; proxy should reject unused token author)",
             "default": "required explicit value (bearer token conditional; proxy should reject unused token author)",
@@ -330834,7 +330918,19 @@
             "RT-NOVA-REMOTE-POLLMILLISECONDS-ALT",
             "RT-NOVA-REMOTE-POLLMILLISECONDS-MUTANT"
           ],
-          "beforeBytes": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/changed-rows-before.json.gz"
+          "beforeBytes": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/changed-rows-before.json.gz",
+          "oldRowSHA256Correction": {
+            "findingID": "URUNTIME-001",
+            "reason": "Historical digest included sourceDefinitionHistory=[] inserted by setdefault before hashing; corrected from the immutable original snapshot.",
+            "previousIncorrectOldRowSHA256": "dd00792f77585a792e9b5154880e665ef5db7334d05fbe881c4ad712f5b7a1dd",
+            "correctedOldRowSHA256": "e426034c860ee2b8e8f128f9caddd1364b01903cf86c8f4290852cabdb2f7571",
+            "originalSnapshotPath": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/changed-rows-before.json.gz",
+            "originalSnapshotSHA256": "08df03d68f5df497a288542bd976016c659b7f6e000e7e8cc1d6f09d1192d6ff",
+            "originalRowID": "RT-NOVA-REMOTE-POLLMILLISECONDS",
+            "originalBaselineCommit": "21bf51bc2075abec1191fdc091952492b6cb484e",
+            "canonicalization": "UTF-8 JSON; sort_keys=True; separators=(comma,colon); ensure_ascii=False",
+            "evidencePath": "docs/review/evidence/config-acceptance/four-findings-fix-20261013/runtime/corrections.json"
+          }
         }
       ]
     },
@@ -330990,7 +331086,7 @@
       "sourceDefinitionHistory": [
         {
           "batch": "standalone-remote-19",
-          "oldRowSHA256": "33bdb8516ca24376312331056f4514ce65a995c0e1561a734b205b7208a5e696",
+          "oldRowSHA256": "dfab6b331735569695887e4072f591ac4563a8e0407ce9b656d12cb52a39db9a",
           "oldCurrent": {
             "value": "required explicit value (bearer token conditional; proxy should reject unused token author)",
             "default": "required explicit value (bearer token conditional; proxy should reject unused token author)",
@@ -331075,7 +331171,19 @@
             "RT-NOVA-REMOTE-MAXIMUMRESPONSEBYTES-ALT",
             "RT-NOVA-REMOTE-MAXIMUMRESPONSEBYTES-MUTANT"
           ],
-          "beforeBytes": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/changed-rows-before.json.gz"
+          "beforeBytes": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/changed-rows-before.json.gz",
+          "oldRowSHA256Correction": {
+            "findingID": "URUNTIME-001",
+            "reason": "Historical digest included sourceDefinitionHistory=[] inserted by setdefault before hashing; corrected from the immutable original snapshot.",
+            "previousIncorrectOldRowSHA256": "33bdb8516ca24376312331056f4514ce65a995c0e1561a734b205b7208a5e696",
+            "correctedOldRowSHA256": "dfab6b331735569695887e4072f591ac4563a8e0407ce9b656d12cb52a39db9a",
+            "originalSnapshotPath": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/changed-rows-before.json.gz",
+            "originalSnapshotSHA256": "08df03d68f5df497a288542bd976016c659b7f6e000e7e8cc1d6f09d1192d6ff",
+            "originalRowID": "RT-NOVA-REMOTE-MAXIMUMRESPONSEBYTES",
+            "originalBaselineCommit": "21bf51bc2075abec1191fdc091952492b6cb484e",
+            "canonicalization": "UTF-8 JSON; sort_keys=True; separators=(comma,colon); ensure_ascii=False",
+            "evidencePath": "docs/review/evidence/config-acceptance/four-findings-fix-20261013/runtime/corrections.json"
+          }
         }
       ]
     },
@@ -331255,7 +331363,7 @@
       "sourceDefinitionHistory": [
         {
           "batch": "standalone-remote-19",
-          "oldRowSHA256": "bc1d7f99645f422c693bc0d1a1400726d6167cd9212dc19b76fe5a03c3ae5393",
+          "oldRowSHA256": "89d484f2ccfb13b3bc33c6b25dbc58f70e368edfd6f90478d6fa2624d2924e15",
           "oldCurrent": {
             "value": "required explicit value (bearer token conditional; proxy should reject unused token author)",
             "default": "required explicit value (bearer token conditional; proxy should reject unused token author)",
@@ -331364,7 +331472,19 @@
             "RT-NOVA-REMOTE-MAXIMUMRESULTBYTES-ALT",
             "RT-NOVA-REMOTE-MAXIMUMRESULTBYTES-MUTANT"
           ],
-          "beforeBytes": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/changed-rows-before.json.gz"
+          "beforeBytes": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/changed-rows-before.json.gz",
+          "oldRowSHA256Correction": {
+            "findingID": "URUNTIME-001",
+            "reason": "Historical digest included sourceDefinitionHistory=[] inserted by setdefault before hashing; corrected from the immutable original snapshot.",
+            "previousIncorrectOldRowSHA256": "bc1d7f99645f422c693bc0d1a1400726d6167cd9212dc19b76fe5a03c3ae5393",
+            "correctedOldRowSHA256": "89d484f2ccfb13b3bc33c6b25dbc58f70e368edfd6f90478d6fa2624d2924e15",
+            "originalSnapshotPath": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/changed-rows-before.json.gz",
+            "originalSnapshotSHA256": "08df03d68f5df497a288542bd976016c659b7f6e000e7e8cc1d6f09d1192d6ff",
+            "originalRowID": "RT-NOVA-REMOTE-MAXIMUMRESULTBYTES",
+            "originalBaselineCommit": "21bf51bc2075abec1191fdc091952492b6cb484e",
+            "canonicalization": "UTF-8 JSON; sort_keys=True; separators=(comma,colon); ensure_ascii=False",
+            "evidencePath": "docs/review/evidence/config-acceptance/four-findings-fix-20261013/runtime/corrections.json"
+          }
         }
       ]
     },
@@ -331508,7 +331628,7 @@
       "sourceDefinitionHistory": [
         {
           "batch": "standalone-remote-19",
-          "oldRowSHA256": "43f392fa98c3fc126f8be4d7e9eb5517a1917831e1c8f2cd53238f8009428b25",
+          "oldRowSHA256": "91afb120ae388db7b7849f8a60bb4c884185ae3fb43666c6a674850133d95010",
           "oldCurrent": {
             "value": "required explicit value (bearer token conditional; proxy should reject unused token author)",
             "default": "required explicit value (bearer token conditional; proxy should reject unused token author)",
@@ -331581,7 +331701,19 @@
             "RT-NOVA-REMOTE-MAXIMUMARCHIVEBYTES-ALT",
             "RT-NOVA-REMOTE-MAXIMUMARCHIVEBYTES-MUTANT"
           ],
-          "beforeBytes": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/changed-rows-before.json.gz"
+          "beforeBytes": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/changed-rows-before.json.gz",
+          "oldRowSHA256Correction": {
+            "findingID": "URUNTIME-001",
+            "reason": "Historical digest included sourceDefinitionHistory=[] inserted by setdefault before hashing; corrected from the immutable original snapshot.",
+            "previousIncorrectOldRowSHA256": "43f392fa98c3fc126f8be4d7e9eb5517a1917831e1c8f2cd53238f8009428b25",
+            "correctedOldRowSHA256": "91afb120ae388db7b7849f8a60bb4c884185ae3fb43666c6a674850133d95010",
+            "originalSnapshotPath": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/changed-rows-before.json.gz",
+            "originalSnapshotSHA256": "08df03d68f5df497a288542bd976016c659b7f6e000e7e8cc1d6f09d1192d6ff",
+            "originalRowID": "RT-NOVA-REMOTE-MAXIMUMARCHIVEBYTES",
+            "originalBaselineCommit": "21bf51bc2075abec1191fdc091952492b6cb484e",
+            "canonicalization": "UTF-8 JSON; sort_keys=True; separators=(comma,colon); ensure_ascii=False",
+            "evidencePath": "docs/review/evidence/config-acceptance/four-findings-fix-20261013/runtime/corrections.json"
+          }
         }
       ]
     },
@@ -331695,7 +331827,7 @@
       "sourceDefinitionHistory": [
         {
           "batch": "standalone-remote-19",
-          "oldRowSHA256": "0c6c8619f7729c877fa615c7d0d6e8af59128e171ed3006d1d01913d03ef7bc1",
+          "oldRowSHA256": "693df26ea6398862968900dc112dcb1331435c3f5c048163f67cd77ecd9c726a",
           "oldCurrent": {
             "value": "required explicit value (bearer token conditional; proxy should reject unused token author)",
             "default": "required explicit value (bearer token conditional; proxy should reject unused token author)",
@@ -331738,7 +331870,19 @@
             "RT-NOVA-REMOTE-MAXIMUMARCHIVESTOREBYTES-ALT",
             "RT-NOVA-REMOTE-MAXIMUMARCHIVESTOREBYTES-MUTANT"
           ],
-          "beforeBytes": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/changed-rows-before.json.gz"
+          "beforeBytes": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/changed-rows-before.json.gz",
+          "oldRowSHA256Correction": {
+            "findingID": "URUNTIME-001",
+            "reason": "Historical digest included sourceDefinitionHistory=[] inserted by setdefault before hashing; corrected from the immutable original snapshot.",
+            "previousIncorrectOldRowSHA256": "0c6c8619f7729c877fa615c7d0d6e8af59128e171ed3006d1d01913d03ef7bc1",
+            "correctedOldRowSHA256": "693df26ea6398862968900dc112dcb1331435c3f5c048163f67cd77ecd9c726a",
+            "originalSnapshotPath": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/changed-rows-before.json.gz",
+            "originalSnapshotSHA256": "08df03d68f5df497a288542bd976016c659b7f6e000e7e8cc1d6f09d1192d6ff",
+            "originalRowID": "RT-NOVA-REMOTE-MAXIMUMARCHIVESTOREBYTES",
+            "originalBaselineCommit": "21bf51bc2075abec1191fdc091952492b6cb484e",
+            "canonicalization": "UTF-8 JSON; sort_keys=True; separators=(comma,colon); ensure_ascii=False",
+            "evidencePath": "docs/review/evidence/config-acceptance/four-findings-fix-20261013/runtime/corrections.json"
+          }
         }
       ]
     },
@@ -331888,7 +332032,7 @@
       "sourceDefinitionHistory": [
         {
           "batch": "standalone-remote-19",
-          "oldRowSHA256": "6514546bccd2220329aa698ae2026977985ba03551ae709ec7d36df0d5003924",
+          "oldRowSHA256": "6c8c929fd3bba51773ee71a0876ebd0148847a3f0e867ad734902b6411fb353b",
           "oldCurrent": {
             "value": "required explicit value (bearer token conditional; proxy should reject unused token author)",
             "default": "required explicit value (bearer token conditional; proxy should reject unused token author)",
@@ -331967,7 +332111,19 @@
             "RT-NOVA-REMOTE-MAXIMUMEVIDENCEBYTES-ALT",
             "RT-NOVA-REMOTE-MAXIMUMEVIDENCEBYTES-MUTANT"
           ],
-          "beforeBytes": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/changed-rows-before.json.gz"
+          "beforeBytes": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/changed-rows-before.json.gz",
+          "oldRowSHA256Correction": {
+            "findingID": "URUNTIME-001",
+            "reason": "Historical digest included sourceDefinitionHistory=[] inserted by setdefault before hashing; corrected from the immutable original snapshot.",
+            "previousIncorrectOldRowSHA256": "6514546bccd2220329aa698ae2026977985ba03551ae709ec7d36df0d5003924",
+            "correctedOldRowSHA256": "6c8c929fd3bba51773ee71a0876ebd0148847a3f0e867ad734902b6411fb353b",
+            "originalSnapshotPath": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/changed-rows-before.json.gz",
+            "originalSnapshotSHA256": "08df03d68f5df497a288542bd976016c659b7f6e000e7e8cc1d6f09d1192d6ff",
+            "originalRowID": "RT-NOVA-REMOTE-MAXIMUMEVIDENCEBYTES",
+            "originalBaselineCommit": "21bf51bc2075abec1191fdc091952492b6cb484e",
+            "canonicalization": "UTF-8 JSON; sort_keys=True; separators=(comma,colon); ensure_ascii=False",
+            "evidencePath": "docs/review/evidence/config-acceptance/four-findings-fix-20261013/runtime/corrections.json"
+          }
         }
       ]
     },
@@ -332093,7 +332249,7 @@
       "sourceDefinitionHistory": [
         {
           "batch": "standalone-remote-19",
-          "oldRowSHA256": "71edb459134813601802c4d0924adce9abb736936fc01c58f418270e24e0824d",
+          "oldRowSHA256": "4a1a7dc9c03e692de900610091e6f19a42fc5bd0e320e97213a27f159c26d064",
           "oldCurrent": {
             "value": "required explicit value (bearer token conditional; proxy should reject unused token author)",
             "default": "required explicit value (bearer token conditional; proxy should reject unused token author)",
@@ -332148,7 +332304,19 @@
             "RT-NOVA-REMOTE-MAXIMUMEVIDENCESTOREBYTES-ALT",
             "RT-NOVA-REMOTE-MAXIMUMEVIDENCESTOREBYTES-MUTANT"
           ],
-          "beforeBytes": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/changed-rows-before.json.gz"
+          "beforeBytes": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/changed-rows-before.json.gz",
+          "oldRowSHA256Correction": {
+            "findingID": "URUNTIME-001",
+            "reason": "Historical digest included sourceDefinitionHistory=[] inserted by setdefault before hashing; corrected from the immutable original snapshot.",
+            "previousIncorrectOldRowSHA256": "71edb459134813601802c4d0924adce9abb736936fc01c58f418270e24e0824d",
+            "correctedOldRowSHA256": "4a1a7dc9c03e692de900610091e6f19a42fc5bd0e320e97213a27f159c26d064",
+            "originalSnapshotPath": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/changed-rows-before.json.gz",
+            "originalSnapshotSHA256": "08df03d68f5df497a288542bd976016c659b7f6e000e7e8cc1d6f09d1192d6ff",
+            "originalRowID": "RT-NOVA-REMOTE-MAXIMUMEVIDENCESTOREBYTES",
+            "originalBaselineCommit": "21bf51bc2075abec1191fdc091952492b6cb484e",
+            "canonicalization": "UTF-8 JSON; sort_keys=True; separators=(comma,colon); ensure_ascii=False",
+            "evidencePath": "docs/review/evidence/config-acceptance/four-findings-fix-20261013/runtime/corrections.json"
+          }
         }
       ]
     },
@@ -332250,7 +332418,7 @@
       "sourceDefinitionHistory": [
         {
           "batch": "standalone-remote-19",
-          "oldRowSHA256": "01b9f0c3475c01d224beeeade513d18e1d99ef04d6c7ee14b56786f9fac01947",
+          "oldRowSHA256": "eed09e9e9ed5b1dc0fdbb73138d7cd50cb292f3aa6bfd765e7b26de279c4e6a8",
           "oldCurrent": {
             "value": "required explicit value (bearer token conditional; proxy should reject unused token author)",
             "default": "required explicit value (bearer token conditional; proxy should reject unused token author)",
@@ -332281,7 +332449,19 @@
             "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDS-ALT",
             "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDS-MUTANT"
           ],
-          "beforeBytes": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/changed-rows-before.json.gz"
+          "beforeBytes": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/changed-rows-before.json.gz",
+          "oldRowSHA256Correction": {
+            "findingID": "URUNTIME-001",
+            "reason": "Historical digest included sourceDefinitionHistory=[] inserted by setdefault before hashing; corrected from the immutable original snapshot.",
+            "previousIncorrectOldRowSHA256": "01b9f0c3475c01d224beeeade513d18e1d99ef04d6c7ee14b56786f9fac01947",
+            "correctedOldRowSHA256": "eed09e9e9ed5b1dc0fdbb73138d7cd50cb292f3aa6bfd765e7b26de279c4e6a8",
+            "originalSnapshotPath": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/changed-rows-before.json.gz",
+            "originalSnapshotSHA256": "08df03d68f5df497a288542bd976016c659b7f6e000e7e8cc1d6f09d1192d6ff",
+            "originalRowID": "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDS",
+            "originalBaselineCommit": "21bf51bc2075abec1191fdc091952492b6cb484e",
+            "canonicalization": "UTF-8 JSON; sort_keys=True; separators=(comma,colon); ensure_ascii=False",
+            "evidencePath": "docs/review/evidence/config-acceptance/four-findings-fix-20261013/runtime/corrections.json"
+          }
         }
       ]
     },
@@ -332431,7 +332611,7 @@
       "sourceDefinitionHistory": [
         {
           "batch": "standalone-remote-19",
-          "oldRowSHA256": "9ec1b9307f7fcef52033244bce0c454555956e316508d1b6038ddcb9bf349d46",
+          "oldRowSHA256": "4f041072587120331d0bc9110f82cbc40f3c787b01a04f9f3569bc3c83574c0d",
           "oldCurrent": {
             "value": "required explicit value (bearer token conditional; proxy should reject unused token author)",
             "default": "required explicit value (bearer token conditional; proxy should reject unused token author)",
@@ -332510,7 +332690,19 @@
             "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMBYTES-ALT",
             "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMBYTES-MUTANT"
           ],
-          "beforeBytes": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/changed-rows-before.json.gz"
+          "beforeBytes": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/changed-rows-before.json.gz",
+          "oldRowSHA256Correction": {
+            "findingID": "URUNTIME-001",
+            "reason": "Historical digest included sourceDefinitionHistory=[] inserted by setdefault before hashing; corrected from the immutable original snapshot.",
+            "previousIncorrectOldRowSHA256": "9ec1b9307f7fcef52033244bce0c454555956e316508d1b6038ddcb9bf349d46",
+            "correctedOldRowSHA256": "4f041072587120331d0bc9110f82cbc40f3c787b01a04f9f3569bc3c83574c0d",
+            "originalSnapshotPath": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/changed-rows-before.json.gz",
+            "originalSnapshotSHA256": "08df03d68f5df497a288542bd976016c659b7f6e000e7e8cc1d6f09d1192d6ff",
+            "originalRowID": "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMBYTES",
+            "originalBaselineCommit": "21bf51bc2075abec1191fdc091952492b6cb484e",
+            "canonicalization": "UTF-8 JSON; sort_keys=True; separators=(comma,colon); ensure_ascii=False",
+            "evidencePath": "docs/review/evidence/config-acceptance/four-findings-fix-20261013/runtime/corrections.json"
+          }
         }
       ]
     },
@@ -332612,7 +332804,7 @@
       "sourceDefinitionHistory": [
         {
           "batch": "standalone-remote-19",
-          "oldRowSHA256": "2ce73c71e1d85aafd0531cd9ff1a6d314cf74899e9d684ce3e547fd684c31e0f",
+          "oldRowSHA256": "6c59901ece6d5bf1beffc5a22410af5086ad06277b22f85d291551289a131a47",
           "oldCurrent": {
             "value": "required explicit value (bearer token conditional; proxy should reject unused token author)",
             "default": "required explicit value (bearer token conditional; proxy should reject unused token author)",
@@ -332643,7 +332835,19 @@
             "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDBYTES-ALT",
             "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDBYTES-MUTANT"
           ],
-          "beforeBytes": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/changed-rows-before.json.gz"
+          "beforeBytes": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/changed-rows-before.json.gz",
+          "oldRowSHA256Correction": {
+            "findingID": "URUNTIME-001",
+            "reason": "Historical digest included sourceDefinitionHistory=[] inserted by setdefault before hashing; corrected from the immutable original snapshot.",
+            "previousIncorrectOldRowSHA256": "2ce73c71e1d85aafd0531cd9ff1a6d314cf74899e9d684ce3e547fd684c31e0f",
+            "correctedOldRowSHA256": "6c59901ece6d5bf1beffc5a22410af5086ad06277b22f85d291551289a131a47",
+            "originalSnapshotPath": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/changed-rows-before.json.gz",
+            "originalSnapshotSHA256": "08df03d68f5df497a288542bd976016c659b7f6e000e7e8cc1d6f09d1192d6ff",
+            "originalRowID": "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDBYTES",
+            "originalBaselineCommit": "21bf51bc2075abec1191fdc091952492b6cb484e",
+            "canonicalization": "UTF-8 JSON; sort_keys=True; separators=(comma,colon); ensure_ascii=False",
+            "evidencePath": "docs/review/evidence/config-acceptance/four-findings-fix-20261013/runtime/corrections.json"
+          }
         }
       ]
     },

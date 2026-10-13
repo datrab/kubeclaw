@@ -1,0 +1,352 @@
+[
+  {
+    "label": "positive-before",
+    "command": [
+      "python3",
+      "docs/review/evidence/config-acceptance/author/check-matrix.py",
+      "--structural",
+      "--inventory",
+      "/tmp/independent-root-guard-i3mf7kdh/inventory.json",
+      "--matrix",
+      "docs/review/remediation/config-acceptance-matrix.json"
+    ],
+    "exit": 0,
+    "expectedBoundary": null,
+    "errors": [],
+    "inputSHA256": "0eb07e01174594709977e5d7c1690827f3f6eede9803b7c65eaafe41c629614c",
+    "passed": true
+  },
+  {
+    "label": "original-history-hash",
+    "command": [
+      "python3",
+      "docs/review/evidence/config-acceptance/author/check-matrix.py",
+      "--structural",
+      "--inventory",
+      "/tmp/independent-root-guard-jpzab9qe/inventory.json",
+      "--matrix",
+      "docs/review/remediation/config-acceptance-matrix.json"
+    ],
+    "exit": 1,
+    "expectedBoundary": "normalized source body/requirement conservation drift",
+    "errors": [
+      "Runtime row RT-NOVA-REMOTE-SCHEMAVERSION: normalized source body/requirement conservation drift"
+    ],
+    "inputSHA256": "668b6435391ac9d66827dc50f096b2ca43ff434aa3ad015dac3fd55a337112c0",
+    "passed": true
+  },
+  {
+    "label": "correction-provenance-remove",
+    "command": [
+      "python3",
+      "docs/review/evidence/config-acceptance/author/check-matrix.py",
+      "--structural",
+      "--inventory",
+      "/tmp/independent-root-guard-5wk8z7a7/inventory.json",
+      "--matrix",
+      "docs/review/remediation/config-acceptance-matrix.json"
+    ],
+    "exit": 1,
+    "expectedBoundary": "normalized source body/requirement conservation drift",
+    "errors": [
+      "Runtime row RT-NOVA-REMOTE-SCHEMAVERSION: normalized source body/requirement conservation drift"
+    ],
+    "inputSHA256": "643f4f836fd8e072005ee8a24cc9357a92141666975477b808695c29d51662c8",
+    "passed": true
+  },
+  {
+    "label": "retained-incorrect-digest",
+    "command": [
+      "python3",
+      "docs/review/evidence/config-acceptance/author/check-matrix.py",
+      "--structural",
+      "--inventory",
+      "/tmp/independent-root-guard-9qx09sq0/inventory.json",
+      "--matrix",
+      "docs/review/remediation/config-acceptance-matrix.json"
+    ],
+    "exit": 1,
+    "expectedBoundary": "normalized source body/requirement conservation drift",
+    "errors": [
+      "Runtime row RT-NOVA-REMOTE-SCHEMAVERSION: normalized source body/requirement conservation drift"
+    ],
+    "inputSHA256": "7ba41e46e05ed6182595d0e27cb634fd745d3261decb248e380df1e0605394d8",
+    "passed": true
+  },
+  {
+    "label": "nonprovenance-current",
+    "command": [
+      "python3",
+      "docs/review/evidence/config-acceptance/author/check-matrix.py",
+      "--structural",
+      "--inventory",
+      "/tmp/independent-root-guard-i6vewq9x/inventory.json",
+      "--matrix",
+      "docs/review/remediation/config-acceptance-matrix.json"
+    ],
+    "exit": 1,
+    "expectedBoundary": "normalized source body/requirement conservation drift",
+    "errors": [
+      "Runtime row RT-NOVA-REMOTE-SCHEMAVERSION: normalized source body/requirement conservation drift"
+    ],
+    "inputSHA256": "b8f58eaf5dc6e78609f6edb4332a8806865c2fd99db9eb2df8f1308d2a062714",
+    "passed": true
+  },
+  {
+    "label": "normalized-class",
+    "command": [
+      "python3",
+      "docs/review/evidence/config-acceptance/author/check-matrix.py",
+      "--structural",
+      "--inventory",
+      "/tmp/independent-root-guard-aa5d0sbx/inventory.json",
+      "--matrix",
+      "docs/review/remediation/config-acceptance-matrix.json"
+    ],
+    "exit": 1,
+    "expectedBoundary": "normalized source body/requirement conservation drift",
+    "errors": [
+      "Runtime row RT-NOVA-REMOTE-SCHEMAVERSION: normalized source body/requirement conservation drift"
+    ],
+    "inputSHA256": "2554ddd82d38fd0cfacb1596c3367eedae8735e8f1ee7a08cb6bdcf2b52150d7",
+    "passed": true
+  },
+  {
+    "label": "required-obligations-remove",
+    "command": [
+      "python3",
+      "docs/review/evidence/config-acceptance/author/check-matrix.py",
+      "--structural",
+      "--inventory",
+      "/tmp/independent-root-guard-nvl5pr5i/inventory.json",
+      "--matrix",
+      "docs/review/remediation/config-acceptance-matrix.json"
+    ],
+    "exit": 1,
+    "expectedBoundary": "normalized source body/requirement conservation drift",
+    "errors": [
+      "Runtime row RT-NOVA-REMOTE-SCHEMAVERSION: normalized source body/requirement conservation drift"
+    ],
+    "inputSHA256": "456df86064f9ca23073f002a81e194c8d8bb831dc36b759d14cdfb30a8f9087b",
+    "passed": true
+  },
+  {
+    "label": "case-links-remove",
+    "command": [
+      "python3",
+      "docs/review/evidence/config-acceptance/author/check-matrix.py",
+      "--structural",
+      "--inventory",
+      "/tmp/independent-root-guard-yv468ej7/inventory.json",
+      "--matrix",
+      "docs/review/remediation/config-acceptance-matrix.json"
+    ],
+    "exit": 1,
+    "expectedBoundary": "normalized source body/requirement conservation drift",
+    "errors": [
+      "Runtime row RT-NOVA-REMOTE-SCHEMAVERSION: normalized source body/requirement conservation drift"
+    ],
+    "inputSHA256": "af2f62743e1e295a900ac51c81539dbb65cba3bd5d05ee0e30e98d3ec8fd5b6a",
+    "passed": true
+  },
+  {
+    "label": "review-acceptance-promote",
+    "command": [
+      "python3",
+      "docs/review/evidence/config-acceptance/author/check-matrix.py",
+      "--structural",
+      "--inventory",
+      "/tmp/independent-root-guard-zos46tky/inventory.json",
+      "--matrix",
+      "docs/review/remediation/config-acceptance-matrix.json"
+    ],
+    "exit": 1,
+    "expectedBoundary": "normalized source body/requirement conservation drift",
+    "errors": [
+      "Runtime row RT-NOVA-REMOTE-SCHEMAVERSION: normalized source body/requirement conservation drift"
+    ],
+    "inputSHA256": "7cb4df4dd20ed566c975fa347f98da0c0dac274ac9df056c3d18dd9c4ee58767",
+    "passed": true
+  },
+  {
+    "label": "c0-acceptance-promote",
+    "command": [
+      "python3",
+      "docs/review/evidence/config-acceptance/author/check-matrix.py",
+      "--structural",
+      "--inventory",
+      "/tmp/independent-root-guard-bc_0ly_0/inventory.json",
+      "--matrix",
+      "docs/review/remediation/config-acceptance-matrix.json"
+    ],
+    "exit": 1,
+    "expectedBoundary": "normalized source body/requirement conservation drift",
+    "errors": [
+      "Runtime row RT-NOVA-REMOTE-SCHEMAVERSION: normalized source body/requirement conservation drift"
+    ],
+    "inputSHA256": "9403198f8379c616ed2f5cbab7df45726c995dbfde8b47f4ffbd5d4d7715007f",
+    "passed": true
+  },
+  {
+    "label": "unexpected-property",
+    "command": [
+      "python3",
+      "docs/review/evidence/config-acceptance/author/check-matrix.py",
+      "--structural",
+      "--inventory",
+      "/tmp/independent-root-guard-dq73y90f/inventory.json",
+      "--matrix",
+      "docs/review/remediation/config-acceptance-matrix.json"
+    ],
+    "exit": 1,
+    "expectedBoundary": "normalized source body/requirement conservation drift",
+    "errors": [
+      "Runtime row RT-NOVA-REMOTE-SCHEMAVERSION: normalized source body/requirement conservation drift"
+    ],
+    "inputSHA256": "68a49c2457d0d156bf88b83ae5cd3f61909f2cc78d35e5ae1e1b51e84d051188",
+    "passed": true
+  },
+  {
+    "label": "row-delete",
+    "command": [
+      "python3",
+      "docs/review/evidence/config-acceptance/author/check-matrix.py",
+      "--structural",
+      "--inventory",
+      "/tmp/independent-root-guard-d7fzkmkp/inventory.json",
+      "--matrix",
+      "docs/review/remediation/config-acceptance-matrix.json"
+    ],
+    "exit": 1,
+    "expectedBoundary": "Runtime normalized row set conservation drift",
+    "errors": [
+      "Runtime normalized row set conservation drift",
+      "Runtime row RT-NOVA-REMOTE-SCHEMAVERSION: normalized source body/requirement conservation drift",
+      "RT-NOVA-REMOTE-SCHEMAVERSION-MISSING: dangling setting RT-NOVA-REMOTE-SCHEMAVERSION",
+      "RT-NOVA-REMOTE-SCHEMAVERSION-ALT: dangling setting RT-NOVA-REMOTE-SCHEMAVERSION",
+      "RT-NOVA-REMOTE-SCHEMAVERSION-MUTANT: dangling setting RT-NOVA-REMOTE-SCHEMAVERSION",
+      "RT-NOVA-REMOTE-SCHEMAVERSION-STANDALONE19-VAL: dangling setting RT-NOVA-REMOTE-SCHEMAVERSION",
+      "RT-NOVA-REMOTE-SCHEMAVERSION-STANDALONE19-AB: dangling setting RT-NOVA-REMOTE-SCHEMAVERSION",
+      "RT-NOVA-REMOTE-SCHEMAVERSION-STANDALONE19-BINDING: dangling setting RT-NOVA-REMOTE-SCHEMAVERSION",
+      "RT-NOVA-REMOTE-SCHEMAVERSION-STANDALONE19-RECOVERY: dangling setting RT-NOVA-REMOTE-SCHEMAVERSION",
+      "RT-NOVA-REMOTE-SCHEMAVERSION-STANDALONE19-EVAL: dangling setting RT-NOVA-REMOTE-SCHEMAVERSION",
+      "RT-NOVA-REMOTE-SCHEMAVERSION-STANDALONE19-MUTANT: dangling setting RT-NOVA-REMOTE-SCHEMAVERSION",
+      "RT-NOVA-REMOTE-SCHEMAVERSION-STANDALONE19-CURRENT-DEFINITION: dangling setting RT-NOVA-REMOTE-SCHEMAVERSION"
+    ],
+    "inputSHA256": "6da79fef789796e0fae5555a2a08efcdce798c3c257ea77d22b49b5821d981d1",
+    "passed": true
+  },
+  {
+    "label": "fragment-escape",
+    "command": [
+      "python3",
+      "docs/review/evidence/config-acceptance/author/check-matrix.py",
+      "--structural",
+      "--inventory",
+      "/tmp/independent-root-guard-nhq3a3za/inventory.json",
+      "--matrix",
+      "docs/review/remediation/config-acceptance-matrix.json"
+    ],
+    "exit": 1,
+    "expectedBoundary": "Runtime normalized row set conservation drift",
+    "errors": [
+      "Runtime normalized row set conservation drift",
+      "Runtime row RT-NOVA-REMOTE-SCHEMAVERSION: normalized source body/requirement conservation drift"
+    ],
+    "inputSHA256": "f27401882c82d5da131f1976d2961bd22d0f6d411f44774f56ff63d6f306dc28",
+    "passed": true
+  },
+  {
+    "label": "fragment-registration-delete",
+    "command": [
+      "python3",
+      "docs/review/evidence/config-acceptance/author/check-matrix.py",
+      "--structural",
+      "--inventory",
+      "/tmp/independent-root-guard-e5oeaiy4/inventory.json",
+      "--matrix",
+      "docs/review/remediation/config-acceptance-matrix.json"
+    ],
+    "exit": 1,
+    "expectedBoundary": "Runtime fragment registration missing",
+    "errors": [
+      "Runtime fragment registration missing"
+    ],
+    "inputSHA256": "6a9ebdac00c6adcd75de133424e5a445f306bcb62181ce2fe49f8b91c8b6709c",
+    "passed": true
+  },
+  {
+    "label": "row-duplicate",
+    "command": [
+      "python3",
+      "docs/review/evidence/config-acceptance/author/check-matrix.py",
+      "--structural",
+      "--inventory",
+      "/tmp/independent-root-guard-c6r4fz7j/inventory.json",
+      "--matrix",
+      "docs/review/remediation/config-acceptance-matrix.json"
+    ],
+    "exit": 1,
+    "expectedBoundary": "duplicate ID",
+    "errors": [
+      "setting: duplicate ID RT-NOVA-REMOTE-SCHEMAVERSION"
+    ],
+    "inputSHA256": "fb58a28ba654f98fd3073a5521f2aa943e00915b4ece5b6c409c21bf5ed25540",
+    "passed": true
+  },
+  {
+    "label": "unexpected-runtime-row",
+    "command": [
+      "python3",
+      "docs/review/evidence/config-acceptance/author/check-matrix.py",
+      "--structural",
+      "--inventory",
+      "/tmp/independent-root-guard-zrek7fgt/inventory.json",
+      "--matrix",
+      "docs/review/remediation/config-acceptance-matrix.json"
+    ],
+    "exit": 1,
+    "expectedBoundary": "Runtime normalized row set conservation drift",
+    "errors": [
+      "Runtime normalized row set conservation drift"
+    ],
+    "inputSHA256": "0d9f37ebd17d962cc6bad69cdb917c94f55d14b70412ece6efd002dae956a3ab",
+    "passed": true
+  },
+  {
+    "label": "positive-after",
+    "command": [
+      "python3",
+      "docs/review/evidence/config-acceptance/author/check-matrix.py",
+      "--structural",
+      "--inventory",
+      "/tmp/independent-root-guard-zxuvmlhl/inventory.json",
+      "--matrix",
+      "docs/review/remediation/config-acceptance-matrix.json"
+    ],
+    "exit": 0,
+    "expectedBoundary": null,
+    "errors": [],
+    "inputSHA256": "0eb07e01174594709977e5d7c1690827f3f6eede9803b7c65eaafe41c629614c",
+    "passed": true
+  },
+  {
+    "label": "original-report-mutant",
+    "command": [
+      "python3",
+      "docs/review/evidence/config-acceptance/author/check-matrix.py",
+      "--structural",
+      "--inventory",
+      "/tmp/independent-root-guard-4hde9e89/inventory.json",
+      "--matrix",
+      "docs/review/remediation/config-acceptance-matrix.json"
+    ],
+    "exit": 1,
+    "expectedBoundary": "normalized source body/requirement conservation drift",
+    "errors": [
+      "Runtime row RT-NOVA-REMOTE-SCHEMAVERSION: normalized source body/requirement conservation drift"
+    ],
+    "inputSHA256": "668b6435391ac9d66827dc50f096b2ca43ff434aa3ad015dac3fd55a337112c0",
+    "passed": true
+  }
+]

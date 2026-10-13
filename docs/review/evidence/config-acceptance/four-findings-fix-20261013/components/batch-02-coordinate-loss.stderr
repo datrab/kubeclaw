@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-02/check-bindings.py", line 6, in <module>
+    runpy.run_path(str(helper))["run"]("02")
+  File "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/four-findings-fix-20261013/components/validate-bindings.py", line 217, in run
+    result = validate(json.loads(args.input.read_text()), batch)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/four-findings-fix-20261013/components/validate-bindings.py", line 183, in validate
+    require(Counter(r["candidateId"] for r in records) == Counter(expected.keys()), "coordinate set/multiplicity drift")
+  File "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/four-findings-fix-20261013/components/validate-bindings.py", line 21, in require
+    raise ValueError("CANONICAL_BINDING:" + message)
+ValueError: CANONICAL_BINDING:coordinate set/multiplicity drift

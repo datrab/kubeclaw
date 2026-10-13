@@ -52,6 +52,26 @@ except (ValueError,KeyError,TypeError,OSError,json.JSONDecodeError) as error:
     reject(f'observation references: {error}')
 for entry in inventory.get('inputFragments',[]):
     identity(entry['path'],entry['sha256'],'fragment')
+runtime_fragment='docs/review/evidence/config-acceptance/runtime/inventory-fragment.json'
+if (root/runtime_fragment).is_file():
+    expected_runtime=json.loads((root/runtime_fragment).read_text())['rows']
+    if not any(entry['path'] == runtime_fragment for entry in inventory.get('inputFragments',[])):
+        reject('Runtime fragment registration missing')
+    projected_runtime={row['id']:row for row in inventory['rows'] if row.get('fragment') == 'runtime'}
+    if set(projected_runtime) != {row['id'] for row in expected_runtime}:
+        reject('Runtime normalized row set conservation drift')
+    # Fragment hashes alone cannot authenticate projected root bodies. Retain
+    # every source property, including original-row history/correction provenance.
+    for original in expected_runtime:
+        expected={**original,'fragment':'runtime',
+            'class':original.get('class',original.get('classification')),
+            'requirementIds':original.get('requirementIds',original.get('requirements',[])),
+            'caseIds':original.get('caseIds',original.get('cases',[])),
+            'verifiedSourceEvidence':original.get('verifiedSourceEvidence',original.get('evidence',[])),
+            'semanticStatus':original.get('semanticStatus',original.get('status','unresolved')),
+            'reviewerConfirmation':None}
+        if projected_runtime.get(original['id']) != expected:
+            reject(f"Runtime row {original['id']}: normalized source body/requirement conservation drift")
 canonical_question_fragment='docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/canonical-question-fragment.json'
 if (root/canonical_question_fragment).is_file():
     expected_fragment=json.loads((root/canonical_question_fragment).read_text())

@@ -11,8 +11,17 @@ handoff commit `9452d35524192f8665bc87254b3c63a361e7bd4a`. The current
 **C0 remains in progress and is not accepted.** Schema/candidate rows with open
 consumers and incomplete proposed cases remain explicit; they do not satisfy
 the gates below. A fresh independent reviewer checks the work against code.
-No production/test implementation, C1 approval, deployment or finding closure
+No production/test implementation, C1 approval, deployment or production-finding closure
 has occurred. Continue semantic closure and review before asking for approval.
+
+The four document-integrity findings from the user-requested `21bf` review are
+now [corrected and independently verified](../evidence/config-acceptance/four-findings-fix-20261013/README.md).
+The fresh zero-conversation-context reviewer also identified a Runtime root
+conservation guard gap; its correction has a
+[clean bounded recheck](../evidence/config-acceptance/independent-four-findings-recheck-20261013/root-guard-recheck/README.md).
+Historical findings and failures remain preserved. This closes only those five
+evidence/validator corrections, not production findings, global C0, native or
+module acceptance. Original obligations and C1–C6 authorization remain unchanged.
 
 The original [independent Core challenge](independent-config-c0-core-domain-a07de567.md)
 is preserved with its historical **NOT ACCEPTED** verdict. Its material corrections

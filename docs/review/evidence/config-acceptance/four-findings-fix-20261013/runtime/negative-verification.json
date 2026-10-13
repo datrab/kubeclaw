@@ -1,0 +1,48 @@
+{
+  "status": "passed",
+  "controls": [
+    {
+      "name": "restore-incorrect-hash",
+      "command": [
+        "/usr/bin/python3",
+        "docs/review/evidence/config-acceptance/four-findings-fix-20261013/runtime/verify.py",
+        "docs/review/evidence/config-acceptance/four-findings-fix-20261013/runtime/restore-incorrect-hash.json.gz"
+      ],
+      "inputSHA256": "3d2e3a92ef25bb57a240dc65c3e9cdc017ff3272a69ff97f8a126b9610189e29",
+      "exitCode": 1,
+      "expectedRejectBoundary": "Original row digest mismatch",
+      "result": "passed-negative-rejected",
+      "stdout": "docs/review/evidence/config-acceptance/four-findings-fix-20261013/runtime/restore-incorrect-hash.stdout",
+      "stderr": "docs/review/evidence/config-acceptance/four-findings-fix-20261013/runtime/restore-incorrect-hash.stderr"
+    },
+    {
+      "name": "drop-correction-provenance",
+      "command": [
+        "/usr/bin/python3",
+        "docs/review/evidence/config-acceptance/four-findings-fix-20261013/runtime/verify.py",
+        "docs/review/evidence/config-acceptance/four-findings-fix-20261013/runtime/drop-correction-provenance.json.gz"
+      ],
+      "inputSHA256": "83f8e80db7245cd8fac1df45ca622b9fa5d2328a67326de89b59a8e93b6cc323",
+      "exitCode": 1,
+      "expectedRejectBoundary": "oldRowSHA256Correction",
+      "result": "passed-negative-rejected",
+      "stdout": "docs/review/evidence/config-acceptance/four-findings-fix-20261013/runtime/drop-correction-provenance.stdout",
+      "stderr": "docs/review/evidence/config-acceptance/four-findings-fix-20261013/runtime/drop-correction-provenance.stderr"
+    },
+    {
+      "name": "change-unrelated-row",
+      "command": [
+        "/usr/bin/python3",
+        "docs/review/evidence/config-acceptance/four-findings-fix-20261013/runtime/verify.py",
+        "docs/review/evidence/config-acceptance/four-findings-fix-20261013/runtime/change-unrelated-row.json.gz"
+      ],
+      "inputSHA256": "70b790ccb516727044b14368a1477ec5d0ce166e116337a6892bed0402ec3ae1",
+      "exitCode": 1,
+      "expectedRejectBoundary": "Non-provenance inventory content changed",
+      "result": "passed-negative-rejected",
+      "stdout": "docs/review/evidence/config-acceptance/four-findings-fix-20261013/runtime/change-unrelated-row.stdout",
+      "stderr": "docs/review/evidence/config-acceptance/four-findings-fix-20261013/runtime/change-unrelated-row.stderr"
+    }
+  ],
+  "negativeScriptSHA256": "f3ffb7bf0868a9b427dab99a95adff1748276bf3afeae8e036b7baaa84da1c55"
+}

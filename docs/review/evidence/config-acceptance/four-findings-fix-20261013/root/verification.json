@@ -1,0 +1,35 @@
+[
+  {
+    "label": "consolidate",
+    "command": [
+      "python3",
+      "docs/review/evidence/config-acceptance/author/consolidate.py"
+    ],
+    "exitCode": 0
+  },
+  {
+    "label": "structural",
+    "command": [
+      "python3",
+      "docs/review/evidence/config-acceptance/author/check-matrix.py",
+      "--structural"
+    ],
+    "exitCode": 0
+  },
+  {
+    "label": "native-conservation",
+    "command": [
+      "python3",
+      "docs/review/evidence/config-acceptance/author/check-native-case-integration.py"
+    ],
+    "exitCode": 0
+  },
+  {
+    "label": "projection-regressions",
+    "command": [
+      "python3",
+      "docs/review/evidence/config-acceptance/four-findings-fix-20261013/root/check-projection-regressions.py"
+    ],
+    "exitCode": 0
+  }
+]
