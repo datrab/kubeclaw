@@ -1,0 +1,156 @@
+{
+  "head": "78c44b14dd831fee782de78d98a4f62081a6e476",
+  "tree": "79d4e4044a14e35e4037cbaa59ca8a07a5c62528",
+  "originalBodiesPreserved": 28,
+  "exactExpectedIdsMatched": true,
+  "pinsMatched": 135,
+  "sourceCounts": {
+    "packaging/runtime/package-ownership.json": 1,
+    "packaging/runtime/roles/buster.json": 2,
+    "scripts/build-runtime-role-bundle.mjs": 9,
+    "scripts/check-runtime-role-manifests.mjs": 11,
+    "scripts/package-agent-skill-bundle.sh": 5
+  },
+  "candidateIds": [
+    "SRC-3efcfd9c990a93d1",
+    "SRC-8acd1d7696ea3d29",
+    "SRC-44976dc5d861a3aa",
+    "SRC-6fe212a93f28130a",
+    "SRC-3abde277d38c821b",
+    "SRC-7728c74126dc754e",
+    "SRC-5d0288c984cae837",
+    "SRC-45123afadd1cf62a",
+    "SRC-76a49fb240f86750",
+    "SRC-5e2303ec300438a2",
+    "SRC-a5b03259b93e0a66",
+    "SRC-46edc75f4155c0fd",
+    "SRC-b53a7be65008e8f5",
+    "SRC-f06effd8f6cbaf64",
+    "SRC-3bfe595a7377f244",
+    "SRC-e60a381ecc36b138",
+    "SRC-a357ba528e0df431",
+    "SRC-f46f464b912935ae",
+    "SRC-424e94b3eacfdd06",
+    "SRC-bfc49f684ab83ea1",
+    "SRC-d82f4aedbe1c99e6",
+    "SRC-3402b44e37bae07d",
+    "SRC-4caa26c257743c28",
+    "SRC-b7a630bce375e367",
+    "SRC-5d413666eaff59c5",
+    "SRC-20a867892c2eb688",
+    "SRC-2b3d4d4861ab2304",
+    "SRC-bfae3c11b4e8ae17"
+  ],
+  "identities": [
+    {
+      "path": ".github/workflows/build-images.yaml",
+      "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+    },
+    {
+      "path": ".github/workflows/pipeline-reliability.yaml",
+      "sha256": "e338f143d87d8fcbf16830fdf82a0f7a9396f53376a780f4076ee4fb5e87ac4a"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-24/remaining-batches.json",
+      "sha256": "c0fc9f0996ecdecab945ba7c8b9810d3211e8c418631fddc03ed91a71c4fefad"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-32/README.md",
+      "sha256": "77f27dcfca2d7f66ecb4f9260bf516c7da08fc864270b6b7485594b95da39f87"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-32/define.py",
+      "sha256": "d41bf3e520fbf040d70019b5b12bb70006a3982794e7e8eb8e09e0b2a886f16f"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-32/local-check.json",
+      "sha256": "e2ddef30e6c43fb18b1f741fc5411a63af783e342275d505d0f5e47bf21f3556"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-32/package-manifest.json",
+      "sha256": "6d2881d107c94ba05983ed201c8219fff379c14ec467a2a3801394000fe43462"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-32/source-field-definitions.json",
+      "sha256": "79dcd3659f93074c420540f9c6f33deb4b2041a2246f9d211958382b820641c9"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/candidate-dispositions.json",
+      "sha256": "2d5267f5a7b0bbc80fd2ba8cf680011e59d7cbdb262e36c7e0031765dc0a2ad6"
+    },
+    {
+      "path": "docs/review/remediation/GOAL-START.md",
+      "sha256": "688334e1ccaa30fd9497e605ef0a9de1fb67fbeae51c4a312b15e15a12fa085b"
+    },
+    {
+      "path": "docs/review/remediation/OPENCLAW-CONFIG-GOAL.md",
+      "sha256": "fe9215a2674b95facef1d6fe0920eab2fa1f4830e765624692152a28b1731127"
+    },
+    {
+      "path": "package.json",
+      "sha256": "63322d00421a359d4c310e2e8a59ac888dd869dd800db715612a032aa7e3d517"
+    },
+    {
+      "path": "packaging/runtime/external-capabilities.json",
+      "sha256": "83655fee6c449cf01c4d28482758bbbbfcbd4afd81a3c89dd15b0554747b345b"
+    },
+    {
+      "path": "packaging/runtime/package-ownership.json",
+      "sha256": "0723d0a55eba3fdcc6c041132616db3330c3397db6a24f1d0abbf874bd28cab8"
+    },
+    {
+      "path": "packaging/runtime/roles/buster.json",
+      "sha256": "a049283b5964eba52cc3b4b71c356bc0e4ae441483d7aadf8c0eb88aed26d6dc"
+    },
+    {
+      "path": "packaging/runtime/roles/nova.json",
+      "sha256": "1c9de75dde812cb7ac118cfc074aa3a57bef7f428b789f11e9051ea713f0dc23"
+    },
+    {
+      "path": "packaging/runtime/roles/prism.json",
+      "sha256": "8723f462ad3597f2f1bfd2dd6f1028274c3a442af6c4485c1ae3597c12c4b3fe"
+    },
+    {
+      "path": "scripts/build-runtime-role-bundle.mjs",
+      "sha256": "0e20765fdcc03f09b884aba805e6733f42e63c494d39a11827b2fda5c9bd6ef9"
+    },
+    {
+      "path": "scripts/check-runtime-role-manifests.mjs",
+      "sha256": "2a3af027d6fb437c7341ed24e2438b76545f665cab048b3c04943c62ade3e905"
+    },
+    {
+      "path": "scripts/package-agent-skill-bundle.sh",
+      "sha256": "dc4cc8626b5b303d2c28085bab83adf090932b4f31b0b4355a6dc188ac0a562c"
+    },
+    {
+      "path": "scripts/updates/code-release.mjs",
+      "sha256": "bedd4f2a8668a27b675e53aa415451a4b428543e6fc6a99bc88988355bff3259"
+    },
+    {
+      "path": "scripts/updates/runtime-inputs.mjs",
+      "sha256": "d846f387b74d9cd71cb7b4515eb99da238fb1ce54b072525a075ec0ed299232a"
+    },
+    {
+      "path": "skills/buster/plugins/coverage-budget/plugin.json",
+      "sha256": "0f0ae38312005bf70de5b8da45dd96122be24614b05079b2ed410248e9166067"
+    },
+    {
+      "path": "skills/buster/plugins/size-budget/plugin.json",
+      "sha256": "5f9a11dad63edf557454124ae8a71a6382ddac5212dbeaf064e86019fe28a737"
+    },
+    {
+      "path": "skills/common/plugins/openclaw-agent-observer/scripts/sync-contract.mjs",
+      "sha256": "9cf81c81f0fa85ea740e578d6a3e10bcf86c7d85dec3c1ea287f3e7bab7d9fab"
+    },
+    {
+      "path": "tests/verification/contracts/check-prism-runtime-role.mts",
+      "sha256": "92fa2b9d8738862797e9b28ce1fe77d61d7350f1ffe5ceb72decf1feb277036b"
+    }
+  ],
+  "scope": "static bounded source inventory review only",
+  "materialFindings": [],
+  "verdict": "accepted at bounded source-definition scope only",
+  "globalC0Accepted": false,
+  "runtimeResult": "not-run",
+  "implementationAuthorization": null
+}

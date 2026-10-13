@@ -1,0 +1,1773 @@
+{
+  "scope": "28 original role packaging/manifest/dependency/wrapper clauses; static source definitions",
+  "rows": [
+    {
+      "candidateId": "SRC-3efcfd9c990a93d1",
+      "originalCandidate": {
+        "id": "SRC-3efcfd9c990a93d1",
+        "source": "packaging/runtime/package-ownership.json",
+        "line": 64,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "0723d0a55eba3fdcc6c041132616db3330c3397db6a24f1d0abbf874bd28cab8",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "0723d0a55eba3fdcc6c041132616db3330c3397db6a24f1d0abbf874bd28cab8",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "packaging/runtime/package-ownership.json",
+        "line": 64,
+        "expression": "    \"prompt-contract\": [],",
+        "sha256": "0723d0a55eba3fdcc6c041132616db3330c3397db6a24f1d0abbf874bd28cab8"
+      },
+      "field": "prompt-contract shared role ownership",
+      "classification": "declared-package-ownership",
+      "currentDomainAndPrecedence": "Current empty expected role set for sharedPlugins.prompt-contract. Checker resolves actual runtime catalog identity then requires empty for unknown identity or exact selected-role concordance for a known one. Not a prompt-content/model author or proof all prompts are centrally defined.",
+      "actualReaderRef": {
+        "path": "scripts/check-runtime-role-manifests.mjs",
+        "line": 148,
+        "expression": "for (const [directory, expectedRoles] of Object.entries(ownership.sharedPlugins)) {",
+        "sha256": "2a3af027d6fb437c7341ed24e2438b76545f665cab048b3c04943c62ade3e905"
+      },
+      "productiveCallerRefs": [
+        {
+          "path": "scripts/check-runtime-role-manifests.mjs",
+          "line": 151,
+          "expression": "  const runtimeId = pipelinePlugin ?? extension;",
+          "sha256": "2a3af027d6fb437c7341ed24e2438b76545f665cab048b3c04943c62ade3e905"
+        },
+        {
+          "path": "scripts/check-runtime-role-manifests.mjs",
+          "line": 153,
+          "expression": "    assert.deepEqual(expectedRoles, [], `unclassified shared package use: ${directory}`);",
+          "sha256": "2a3af027d6fb437c7341ed24e2438b76545f665cab048b3c04943c62ade3e905"
+        },
+        {
+          "path": "scripts/check-runtime-role-manifests.mjs",
+          "line": 157,
+          "expression": "  assert.deepEqual([...expectedRoles].sort(), actualRoles, `role manifests disagree with shared package inventory: ${directory}`);",
+          "sha256": "2a3af027d6fb437c7341ed24e2438b76545f665cab048b3c04943c62ade3e905"
+        }
+      ],
+      "proposedAuthority": "Retain selected complete role manifest/ownership/catalog and explicit release inputs as appropriate; generated archive/manifest/facade are not competing config authors. Migrate root/schema/role/buildcontext/CI guards together in authorized C1/C4, not new unapproved packaging system.",
+      "activation": "Build exact selected source/image/config/role generation before publication; verify real installed loader/entrypoint and declared provider compatibility before dispatch. Builder performs extension sync-contract subprocess before copying; source mutation/contract generation must be covered by final release identity, not assumed pure packaging.",
+      "recovery": "Retain original artifact/content/contract/role/config identities and required authentic external capability facts; no latest tree or newly selected plugin catalog into recovered modules/runs.",
+      "remaining": [
+        "exact schema/profile/setting/requirement/future executable case joins",
+        "full actual release/install/runtime loader and immutable module binding",
+        "authentic external installed provider/lockfile/source/contract identities",
+        "fresh independent source review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-8acd1d7696ea3d29",
+      "originalCandidate": {
+        "id": "SRC-8acd1d7696ea3d29",
+        "source": "packaging/runtime/roles/buster.json",
+        "line": 39,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "a049283b5964eba52cc3b4b71c356bc0e4ae441483d7aadf8c0eb88aed26d6dc",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "a049283b5964eba52cc3b4b71c356bc0e4ae441483d7aadf8c0eb88aed26d6dc",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "packaging/runtime/roles/buster.json",
+        "line": 39,
+        "expression": "    \"kubeclaw.coverage-budget\",",
+        "sha256": "a049283b5964eba52cc3b4b71c356bc0e4ae441483d7aadf8c0eb88aed26d6dc"
+      },
+      "field": "kubeclaw.coverage-budget Buster role selection",
+      "classification": "declared-role-profile",
+      "currentDomainAndPrecedence": "Exact installed-role plugin ID in Buster plugins array; builder copies selected plugin files, checker enforces catalog/owner/required capability closure. Plugin policy values and workflow stage instances remain separate authors/joins.",
+      "actualReaderRef": {
+        "path": "scripts/build-runtime-role-bundle.mjs",
+        "line": 170,
+        "expression": "for (const pluginId of roleManifest.plugins) {",
+        "sha256": "0e20765fdcc03f09b884aba805e6733f42e63c494d39a11827b2fda5c9bd6ef9"
+      },
+      "productiveCallerRefs": [
+        {
+          "path": "scripts/check-runtime-role-manifests.mjs",
+          "line": 101,
+          "expression": "  for (const pluginId of manifest.plugins) {",
+          "sha256": "2a3af027d6fb437c7341ed24e2438b76545f665cab048b3c04943c62ade3e905"
+        },
+        {
+          "path": "scripts/check-runtime-role-manifests.mjs",
+          "line": 104,
+          "expression": "    assert(plugin.owner === 'shared' || plugin.owner === role, `${role} cannot select ${plugin.owner} plugin ${pluginId}`);",
+          "sha256": "2a3af027d6fb437c7341ed24e2438b76545f665cab048b3c04943c62ade3e905"
+        }
+      ],
+      "proposedAuthority": "Retain selected complete role manifest/ownership/catalog and explicit release inputs as appropriate; generated archive/manifest/facade are not competing config authors. Migrate root/schema/role/buildcontext/CI guards together in authorized C1/C4, not new unapproved packaging system.",
+      "activation": "Build exact selected source/image/config/role generation before publication; verify real installed loader/entrypoint and declared provider compatibility before dispatch. Builder performs extension sync-contract subprocess before copying; source mutation/contract generation must be covered by final release identity, not assumed pure packaging.",
+      "recovery": "Retain original artifact/content/contract/role/config identities and required authentic external capability facts; no latest tree or newly selected plugin catalog into recovered modules/runs.",
+      "remaining": [
+        "exact schema/profile/setting/requirement/future executable case joins",
+        "full actual release/install/runtime loader and immutable module binding",
+        "authentic external installed provider/lockfile/source/contract identities",
+        "fresh independent source review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-44976dc5d861a3aa",
+      "originalCandidate": {
+        "id": "SRC-44976dc5d861a3aa",
+        "source": "packaging/runtime/roles/buster.json",
+        "line": 46,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "a049283b5964eba52cc3b4b71c356bc0e4ae441483d7aadf8c0eb88aed26d6dc",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "a049283b5964eba52cc3b4b71c356bc0e4ae441483d7aadf8c0eb88aed26d6dc",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "packaging/runtime/roles/buster.json",
+        "line": 46,
+        "expression": "    \"kubeclaw.size-budget\"",
+        "sha256": "a049283b5964eba52cc3b4b71c356bc0e4ae441483d7aadf8c0eb88aed26d6dc"
+      },
+      "field": "kubeclaw.size-budget Buster role selection",
+      "classification": "declared-role-profile",
+      "currentDomainAndPrecedence": "Exact installed-role plugin ID in Buster plugins array; builder copies selected plugin files, checker enforces catalog/owner/required capability closure. Plugin policy values and workflow stage instances remain separate authors/joins.",
+      "actualReaderRef": {
+        "path": "scripts/build-runtime-role-bundle.mjs",
+        "line": 170,
+        "expression": "for (const pluginId of roleManifest.plugins) {",
+        "sha256": "0e20765fdcc03f09b884aba805e6733f42e63c494d39a11827b2fda5c9bd6ef9"
+      },
+      "productiveCallerRefs": [
+        {
+          "path": "scripts/check-runtime-role-manifests.mjs",
+          "line": 101,
+          "expression": "  for (const pluginId of manifest.plugins) {",
+          "sha256": "2a3af027d6fb437c7341ed24e2438b76545f665cab048b3c04943c62ade3e905"
+        },
+        {
+          "path": "scripts/check-runtime-role-manifests.mjs",
+          "line": 104,
+          "expression": "    assert(plugin.owner === 'shared' || plugin.owner === role, `${role} cannot select ${plugin.owner} plugin ${pluginId}`);",
+          "sha256": "2a3af027d6fb437c7341ed24e2438b76545f665cab048b3c04943c62ade3e905"
+        }
+      ],
+      "proposedAuthority": "Retain selected complete role manifest/ownership/catalog and explicit release inputs as appropriate; generated archive/manifest/facade are not competing config authors. Migrate root/schema/role/buildcontext/CI guards together in authorized C1/C4, not new unapproved packaging system.",
+      "activation": "Build exact selected source/image/config/role generation before publication; verify real installed loader/entrypoint and declared provider compatibility before dispatch. Builder performs extension sync-contract subprocess before copying; source mutation/contract generation must be covered by final release identity, not assumed pure packaging.",
+      "recovery": "Retain original artifact/content/contract/role/config identities and required authentic external capability facts; no latest tree or newly selected plugin catalog into recovered modules/runs.",
+      "remaining": [
+        "exact schema/profile/setting/requirement/future executable case joins",
+        "full actual release/install/runtime loader and immutable module binding",
+        "authentic external installed provider/lockfile/source/contract identities",
+        "fresh independent source review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-6fe212a93f28130a",
+      "originalCandidate": {
+        "id": "SRC-6fe212a93f28130a",
+        "source": "scripts/build-runtime-role-bundle.mjs",
+        "line": 9,
+        "kinds": [
+          "fallback-or-expression"
+        ],
+        "sourceSha256": "0e20765fdcc03f09b884aba805e6733f42e63c494d39a11827b2fda5c9bd6ef9",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "0e20765fdcc03f09b884aba805e6733f42e63c494d39a11827b2fda5c9bd6ef9",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "scripts/build-runtime-role-bundle.mjs",
+        "line": 9,
+        "expression": "if (!['nova', 'buster', 'prism'].includes(role) || !outputValue || !commit || !contractVersion || !builtAt) {",
+        "sha256": "0e20765fdcc03f09b884aba805e6733f42e63c494d39a11827b2fda5c9bd6ef9"
+      },
+      "field": "bundle invocation identity",
+      "classification": "build-input",
+      "currentDomainAndPrecedence": "five CLI inputs: role nova|buster|prism, fresh output path, commit, contractVersion, builtAt. Current nonempty checks do not prove commit SHA/content equivalence or contract/timestamp syntax; wrapper supplies v2/date defaults",
+      "actualReaderRef": {
+        "path": "scripts/build-runtime-role-bundle.mjs",
+        "line": 9,
+        "expression": "if (!['nova', 'buster', 'prism'].includes(role) || !outputValue || !commit || !contractVersion || !builtAt) {",
+        "sha256": "0e20765fdcc03f09b884aba805e6733f42e63c494d39a11827b2fda5c9bd6ef9"
+      },
+      "productiveCallerRefs": [
+        {
+          "path": "scripts/package-agent-skill-bundle.sh",
+          "line": 30,
+          "expression": "node \"${SCRIPT_DIR}/build-runtime-role-bundle.mjs\" \\",
+          "sha256": "dc4cc8626b5b303d2c28085bab83adf090932b4f31b0b4355a6dc188ac0a562c"
+        },
+        {
+          "path": ".github/workflows/build-images.yaml",
+          "line": 147,
+          "expression": "          bash ./scripts/package-agent-skill-bundle.sh nova \"dist/nova-${GITHUB_SHA}.tgz\" \"${GITHUB_SHA}\"",
+          "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+        },
+        {
+          "path": ".github/workflows/build-images.yaml",
+          "line": 148,
+          "expression": "          bash ./scripts/package-agent-skill-bundle.sh buster \"dist/buster-${GITHUB_SHA}.tgz\" \"${GITHUB_SHA}\"",
+          "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+        },
+        {
+          "path": ".github/workflows/build-images.yaml",
+          "line": 149,
+          "expression": "          bash ./scripts/package-agent-skill-bundle.sh prism \"dist/prism-${GITHUB_SHA}.tgz\" \"${GITHUB_SHA}\"",
+          "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+        }
+      ],
+      "proposedAuthority": "Retain selected complete role manifest/ownership/catalog and explicit release inputs as appropriate; generated archive/manifest/facade are not competing config authors. Migrate root/schema/role/buildcontext/CI guards together in authorized C1/C4, not new unapproved packaging system.",
+      "activation": "Build exact selected source/image/config/role generation before publication; verify real installed loader/entrypoint and declared provider compatibility before dispatch. Builder performs extension sync-contract subprocess before copying; source mutation/contract generation must be covered by final release identity, not assumed pure packaging.",
+      "recovery": "Retain original artifact/content/contract/role/config identities and required authentic external capability facts; no latest tree or newly selected plugin catalog into recovered modules/runs.",
+      "remaining": [
+        "exact schema/profile/setting/requirement/future executable case joins",
+        "full actual release/install/runtime loader and immutable module binding",
+        "authentic external installed provider/lockfile/source/contract identities",
+        "fresh independent source review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-3abde277d38c821b",
+      "originalCandidate": {
+        "id": "SRC-3abde277d38c821b",
+        "source": "scripts/build-runtime-role-bundle.mjs",
+        "line": 108,
+        "kinds": [
+          "fallback-or-expression"
+        ],
+        "sourceSha256": "0e20765fdcc03f09b884aba805e6733f42e63c494d39a11827b2fda5c9bd6ef9",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "0e20765fdcc03f09b884aba805e6733f42e63c494d39a11827b2fda5c9bd6ef9",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "scripts/build-runtime-role-bundle.mjs",
+        "line": 108,
+        "expression": "      if (!entry.isDirectory() || !fs.existsSync(manifestPath)) continue;",
+        "sha256": "0e20765fdcc03f09b884aba805e6733f42e63c494d39a11827b2fda5c9bd6ef9"
+      },
+      "field": "plugin discovery membership",
+      "classification": "generated-catalog",
+      "currentDomainAndPrecedence": "actual four common/nova/buster/prism plugin roots; only directory+plugin.json entries collected. Checker independently rejects duplicate plugin IDs; no inferred external installed roster",
+      "actualReaderRef": {
+        "path": "scripts/build-runtime-role-bundle.mjs",
+        "line": 108,
+        "expression": "      if (!entry.isDirectory() || !fs.existsSync(manifestPath)) continue;",
+        "sha256": "0e20765fdcc03f09b884aba805e6733f42e63c494d39a11827b2fda5c9bd6ef9"
+      },
+      "productiveCallerRefs": [
+        {
+          "path": "scripts/package-agent-skill-bundle.sh",
+          "line": 30,
+          "expression": "node \"${SCRIPT_DIR}/build-runtime-role-bundle.mjs\" \\",
+          "sha256": "dc4cc8626b5b303d2c28085bab83adf090932b4f31b0b4355a6dc188ac0a562c"
+        },
+        {
+          "path": ".github/workflows/build-images.yaml",
+          "line": 147,
+          "expression": "          bash ./scripts/package-agent-skill-bundle.sh nova \"dist/nova-${GITHUB_SHA}.tgz\" \"${GITHUB_SHA}\"",
+          "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+        },
+        {
+          "path": ".github/workflows/build-images.yaml",
+          "line": 148,
+          "expression": "          bash ./scripts/package-agent-skill-bundle.sh buster \"dist/buster-${GITHUB_SHA}.tgz\" \"${GITHUB_SHA}\"",
+          "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+        },
+        {
+          "path": ".github/workflows/build-images.yaml",
+          "line": 149,
+          "expression": "          bash ./scripts/package-agent-skill-bundle.sh prism \"dist/prism-${GITHUB_SHA}.tgz\" \"${GITHUB_SHA}\"",
+          "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+        }
+      ],
+      "proposedAuthority": "Retain selected complete role manifest/ownership/catalog and explicit release inputs as appropriate; generated archive/manifest/facade are not competing config authors. Migrate root/schema/role/buildcontext/CI guards together in authorized C1/C4, not new unapproved packaging system.",
+      "activation": "Build exact selected source/image/config/role generation before publication; verify real installed loader/entrypoint and declared provider compatibility before dispatch. Builder performs extension sync-contract subprocess before copying; source mutation/contract generation must be covered by final release identity, not assumed pure packaging.",
+      "recovery": "Retain original artifact/content/contract/role/config identities and required authentic external capability facts; no latest tree or newly selected plugin catalog into recovered modules/runs.",
+      "remaining": [
+        "exact schema/profile/setting/requirement/future executable case joins",
+        "full actual release/install/runtime loader and immutable module binding",
+        "authentic external installed provider/lockfile/source/contract identities",
+        "fresh independent source review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-7728c74126dc754e",
+      "originalCandidate": {
+        "id": "SRC-7728c74126dc754e",
+        "source": "scripts/build-runtime-role-bundle.mjs",
+        "line": 122,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "0e20765fdcc03f09b884aba805e6733f42e63c494d39a11827b2fda5c9bd6ef9",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "0e20765fdcc03f09b884aba805e6733f42e63c494d39a11827b2fda5c9bd6ef9",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "scripts/build-runtime-role-bundle.mjs",
+        "line": 122,
+        "expression": "}), ...[...catalog.values()].flatMap((sourceRoot) => {",
+        "sha256": "0e20765fdcc03f09b884aba805e6733f42e63c494d39a11827b2fda5c9bd6ef9"
+      },
+      "field": "internal package names",
+      "classification": "generated-dependency-catalog",
+      "currentDomainAndPrecedence": "ownership node-package package.json names plus discovered plugin package.json names; missing plugin package.json skipped. This is name classification for dependency collection, not selected-role membership or authorization",
+      "actualReaderRef": {
+        "path": "scripts/build-runtime-role-bundle.mjs",
+        "line": 122,
+        "expression": "}), ...[...catalog.values()].flatMap((sourceRoot) => {",
+        "sha256": "0e20765fdcc03f09b884aba805e6733f42e63c494d39a11827b2fda5c9bd6ef9"
+      },
+      "productiveCallerRefs": [
+        {
+          "path": "scripts/package-agent-skill-bundle.sh",
+          "line": 30,
+          "expression": "node \"${SCRIPT_DIR}/build-runtime-role-bundle.mjs\" \\",
+          "sha256": "dc4cc8626b5b303d2c28085bab83adf090932b4f31b0b4355a6dc188ac0a562c"
+        },
+        {
+          "path": ".github/workflows/build-images.yaml",
+          "line": 147,
+          "expression": "          bash ./scripts/package-agent-skill-bundle.sh nova \"dist/nova-${GITHUB_SHA}.tgz\" \"${GITHUB_SHA}\"",
+          "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+        },
+        {
+          "path": ".github/workflows/build-images.yaml",
+          "line": 148,
+          "expression": "          bash ./scripts/package-agent-skill-bundle.sh buster \"dist/buster-${GITHUB_SHA}.tgz\" \"${GITHUB_SHA}\"",
+          "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+        },
+        {
+          "path": ".github/workflows/build-images.yaml",
+          "line": 149,
+          "expression": "          bash ./scripts/package-agent-skill-bundle.sh prism \"dist/prism-${GITHUB_SHA}.tgz\" \"${GITHUB_SHA}\"",
+          "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+        }
+      ],
+      "proposedAuthority": "Retain selected complete role manifest/ownership/catalog and explicit release inputs as appropriate; generated archive/manifest/facade are not competing config authors. Migrate root/schema/role/buildcontext/CI guards together in authorized C1/C4, not new unapproved packaging system.",
+      "activation": "Build exact selected source/image/config/role generation before publication; verify real installed loader/entrypoint and declared provider compatibility before dispatch. Builder performs extension sync-contract subprocess before copying; source mutation/contract generation must be covered by final release identity, not assumed pure packaging.",
+      "recovery": "Retain original artifact/content/contract/role/config identities and required authentic external capability facts; no latest tree or newly selected plugin catalog into recovered modules/runs.",
+      "remaining": [
+        "exact schema/profile/setting/requirement/future executable case joins",
+        "full actual release/install/runtime loader and immutable module binding",
+        "authentic external installed provider/lockfile/source/contract identities",
+        "fresh independent source review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-5d0288c984cae837",
+      "originalCandidate": {
+        "id": "SRC-5d0288c984cae837",
+        "source": "scripts/build-runtime-role-bundle.mjs",
+        "line": 133,
+        "kinds": [
+          "fallback-or-expression"
+        ],
+        "sourceSha256": "0e20765fdcc03f09b884aba805e6733f42e63c494d39a11827b2fda5c9bd6ef9",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "0e20765fdcc03f09b884aba805e6733f42e63c494d39a11827b2fda5c9bd6ef9",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "scripts/build-runtime-role-bundle.mjs",
+        "line": 133,
+        "expression": "  for (const name of Object.keys(manifest.dependencies ?? {})) {",
+        "sha256": "0e20765fdcc03f09b884aba805e6733f42e63c494d39a11827b2fda5c9bd6ef9"
+      },
+      "field": "direct mandatory dependency collection",
+      "classification": "generated-package-closure",
+      "currentDomainAndPrecedence": "enqueue each package.json dependencies name outside internalPackageNames; copied from actual root node_modules, must exist later. Versions come from installed manifests, not from the dependency range string as native proof",
+      "actualReaderRef": {
+        "path": "scripts/build-runtime-role-bundle.mjs",
+        "line": 133,
+        "expression": "  for (const name of Object.keys(manifest.dependencies ?? {})) {",
+        "sha256": "0e20765fdcc03f09b884aba805e6733f42e63c494d39a11827b2fda5c9bd6ef9"
+      },
+      "productiveCallerRefs": [
+        {
+          "path": "scripts/package-agent-skill-bundle.sh",
+          "line": 30,
+          "expression": "node \"${SCRIPT_DIR}/build-runtime-role-bundle.mjs\" \\",
+          "sha256": "dc4cc8626b5b303d2c28085bab83adf090932b4f31b0b4355a6dc188ac0a562c"
+        },
+        {
+          "path": ".github/workflows/build-images.yaml",
+          "line": 147,
+          "expression": "          bash ./scripts/package-agent-skill-bundle.sh nova \"dist/nova-${GITHUB_SHA}.tgz\" \"${GITHUB_SHA}\"",
+          "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+        },
+        {
+          "path": ".github/workflows/build-images.yaml",
+          "line": 148,
+          "expression": "          bash ./scripts/package-agent-skill-bundle.sh buster \"dist/buster-${GITHUB_SHA}.tgz\" \"${GITHUB_SHA}\"",
+          "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+        },
+        {
+          "path": ".github/workflows/build-images.yaml",
+          "line": 149,
+          "expression": "          bash ./scripts/package-agent-skill-bundle.sh prism \"dist/prism-${GITHUB_SHA}.tgz\" \"${GITHUB_SHA}\"",
+          "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+        }
+      ],
+      "proposedAuthority": "Retain selected complete role manifest/ownership/catalog and explicit release inputs as appropriate; generated archive/manifest/facade are not competing config authors. Migrate root/schema/role/buildcontext/CI guards together in authorized C1/C4, not new unapproved packaging system.",
+      "activation": "Build exact selected source/image/config/role generation before publication; verify real installed loader/entrypoint and declared provider compatibility before dispatch. Builder performs extension sync-contract subprocess before copying; source mutation/contract generation must be covered by final release identity, not assumed pure packaging.",
+      "recovery": "Retain original artifact/content/contract/role/config identities and required authentic external capability facts; no latest tree or newly selected plugin catalog into recovered modules/runs.",
+      "remaining": [
+        "exact schema/profile/setting/requirement/future executable case joins",
+        "full actual release/install/runtime loader and immutable module binding",
+        "authentic external installed provider/lockfile/source/contract identities",
+        "fresh independent source review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-45123afadd1cf62a",
+      "originalCandidate": {
+        "id": "SRC-45123afadd1cf62a",
+        "source": "scripts/build-runtime-role-bundle.mjs",
+        "line": 136,
+        "kinds": [
+          "fallback-or-expression"
+        ],
+        "sourceSha256": "0e20765fdcc03f09b884aba805e6733f42e63c494d39a11827b2fda5c9bd6ef9",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "0e20765fdcc03f09b884aba805e6733f42e63c494d39a11827b2fda5c9bd6ef9",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "scripts/build-runtime-role-bundle.mjs",
+        "line": 136,
+        "expression": "  for (const name of Object.keys(manifest.optionalDependencies ?? {})) {",
+        "sha256": "0e20765fdcc03f09b884aba805e6733f42e63c494d39a11827b2fda5c9bd6ef9"
+      },
+      "field": "direct optional dependency collection",
+      "classification": "generated-package-closure",
+      "currentDomainAndPrecedence": "enqueue noninternal optionalDependencies only if root node_modules package.json exists; absent optional packages omitted. Distinct from mandatory closure; checker mandatory dependency loop does not assert this optional closure",
+      "actualReaderRef": {
+        "path": "scripts/build-runtime-role-bundle.mjs",
+        "line": 136,
+        "expression": "  for (const name of Object.keys(manifest.optionalDependencies ?? {})) {",
+        "sha256": "0e20765fdcc03f09b884aba805e6733f42e63c494d39a11827b2fda5c9bd6ef9"
+      },
+      "productiveCallerRefs": [
+        {
+          "path": "scripts/package-agent-skill-bundle.sh",
+          "line": 30,
+          "expression": "node \"${SCRIPT_DIR}/build-runtime-role-bundle.mjs\" \\",
+          "sha256": "dc4cc8626b5b303d2c28085bab83adf090932b4f31b0b4355a6dc188ac0a562c"
+        },
+        {
+          "path": ".github/workflows/build-images.yaml",
+          "line": 147,
+          "expression": "          bash ./scripts/package-agent-skill-bundle.sh nova \"dist/nova-${GITHUB_SHA}.tgz\" \"${GITHUB_SHA}\"",
+          "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+        },
+        {
+          "path": ".github/workflows/build-images.yaml",
+          "line": 148,
+          "expression": "          bash ./scripts/package-agent-skill-bundle.sh buster \"dist/buster-${GITHUB_SHA}.tgz\" \"${GITHUB_SHA}\"",
+          "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+        },
+        {
+          "path": ".github/workflows/build-images.yaml",
+          "line": 149,
+          "expression": "          bash ./scripts/package-agent-skill-bundle.sh prism \"dist/prism-${GITHUB_SHA}.tgz\" \"${GITHUB_SHA}\"",
+          "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+        }
+      ],
+      "proposedAuthority": "Retain selected complete role manifest/ownership/catalog and explicit release inputs as appropriate; generated archive/manifest/facade are not competing config authors. Migrate root/schema/role/buildcontext/CI guards together in authorized C1/C4, not new unapproved packaging system.",
+      "activation": "Build exact selected source/image/config/role generation before publication; verify real installed loader/entrypoint and declared provider compatibility before dispatch. Builder performs extension sync-contract subprocess before copying; source mutation/contract generation must be covered by final release identity, not assumed pure packaging.",
+      "recovery": "Retain original artifact/content/contract/role/config identities and required authentic external capability facts; no latest tree or newly selected plugin catalog into recovered modules/runs.",
+      "remaining": [
+        "exact schema/profile/setting/requirement/future executable case joins",
+        "full actual release/install/runtime loader and immutable module binding",
+        "authentic external installed provider/lockfile/source/contract identities",
+        "fresh independent source review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-76a49fb240f86750",
+      "originalCandidate": {
+        "id": "SRC-76a49fb240f86750",
+        "source": "scripts/build-runtime-role-bundle.mjs",
+        "line": 225,
+        "kinds": [
+          "fallback-or-expression"
+        ],
+        "sourceSha256": "0e20765fdcc03f09b884aba805e6733f42e63c494d39a11827b2fda5c9bd6ef9",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "0e20765fdcc03f09b884aba805e6733f42e63c494d39a11827b2fda5c9bd6ef9",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "scripts/build-runtime-role-bundle.mjs",
+        "line": 225,
+        "expression": "  for (const dependency of Object.keys(manifest.dependencies ?? {})) {",
+        "sha256": "0e20765fdcc03f09b884aba805e6733f42e63c494d39a11827b2fda5c9bd6ef9"
+      },
+      "field": "transitive mandatory dependency collection",
+      "classification": "generated-package-closure",
+      "currentDomainAndPrecedence": "copied external package dependencies recursively queued outside internal names; deduplicate installedDependencies by name, root node_modules resolution. No external solver or lockfile equivalence proof from this loop",
+      "actualReaderRef": {
+        "path": "scripts/build-runtime-role-bundle.mjs",
+        "line": 225,
+        "expression": "  for (const dependency of Object.keys(manifest.dependencies ?? {})) {",
+        "sha256": "0e20765fdcc03f09b884aba805e6733f42e63c494d39a11827b2fda5c9bd6ef9"
+      },
+      "productiveCallerRefs": [
+        {
+          "path": "scripts/package-agent-skill-bundle.sh",
+          "line": 30,
+          "expression": "node \"${SCRIPT_DIR}/build-runtime-role-bundle.mjs\" \\",
+          "sha256": "dc4cc8626b5b303d2c28085bab83adf090932b4f31b0b4355a6dc188ac0a562c"
+        },
+        {
+          "path": ".github/workflows/build-images.yaml",
+          "line": 147,
+          "expression": "          bash ./scripts/package-agent-skill-bundle.sh nova \"dist/nova-${GITHUB_SHA}.tgz\" \"${GITHUB_SHA}\"",
+          "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+        },
+        {
+          "path": ".github/workflows/build-images.yaml",
+          "line": 148,
+          "expression": "          bash ./scripts/package-agent-skill-bundle.sh buster \"dist/buster-${GITHUB_SHA}.tgz\" \"${GITHUB_SHA}\"",
+          "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+        },
+        {
+          "path": ".github/workflows/build-images.yaml",
+          "line": 149,
+          "expression": "          bash ./scripts/package-agent-skill-bundle.sh prism \"dist/prism-${GITHUB_SHA}.tgz\" \"${GITHUB_SHA}\"",
+          "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+        }
+      ],
+      "proposedAuthority": "Retain selected complete role manifest/ownership/catalog and explicit release inputs as appropriate; generated archive/manifest/facade are not competing config authors. Migrate root/schema/role/buildcontext/CI guards together in authorized C1/C4, not new unapproved packaging system.",
+      "activation": "Build exact selected source/image/config/role generation before publication; verify real installed loader/entrypoint and declared provider compatibility before dispatch. Builder performs extension sync-contract subprocess before copying; source mutation/contract generation must be covered by final release identity, not assumed pure packaging.",
+      "recovery": "Retain original artifact/content/contract/role/config identities and required authentic external capability facts; no latest tree or newly selected plugin catalog into recovered modules/runs.",
+      "remaining": [
+        "exact schema/profile/setting/requirement/future executable case joins",
+        "full actual release/install/runtime loader and immutable module binding",
+        "authentic external installed provider/lockfile/source/contract identities",
+        "fresh independent source review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-5e2303ec300438a2",
+      "originalCandidate": {
+        "id": "SRC-5e2303ec300438a2",
+        "source": "scripts/build-runtime-role-bundle.mjs",
+        "line": 228,
+        "kinds": [
+          "fallback-or-expression"
+        ],
+        "sourceSha256": "0e20765fdcc03f09b884aba805e6733f42e63c494d39a11827b2fda5c9bd6ef9",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "0e20765fdcc03f09b884aba805e6733f42e63c494d39a11827b2fda5c9bd6ef9",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "scripts/build-runtime-role-bundle.mjs",
+        "line": 228,
+        "expression": "  for (const dependency of Object.keys(manifest.optionalDependencies ?? {})) {",
+        "sha256": "0e20765fdcc03f09b884aba805e6733f42e63c494d39a11827b2fda5c9bd6ef9"
+      },
+      "field": "transitive optional dependency collection",
+      "classification": "generated-package-closure",
+      "currentDomainAndPrecedence": "recursively enqueue installed optional noninternal names only. Actual selected installed tree required for reproducibility; do not turn optional absence into mandatory default or claim peerDependencies are collected",
+      "actualReaderRef": {
+        "path": "scripts/build-runtime-role-bundle.mjs",
+        "line": 228,
+        "expression": "  for (const dependency of Object.keys(manifest.optionalDependencies ?? {})) {",
+        "sha256": "0e20765fdcc03f09b884aba805e6733f42e63c494d39a11827b2fda5c9bd6ef9"
+      },
+      "productiveCallerRefs": [
+        {
+          "path": "scripts/package-agent-skill-bundle.sh",
+          "line": 30,
+          "expression": "node \"${SCRIPT_DIR}/build-runtime-role-bundle.mjs\" \\",
+          "sha256": "dc4cc8626b5b303d2c28085bab83adf090932b4f31b0b4355a6dc188ac0a562c"
+        },
+        {
+          "path": ".github/workflows/build-images.yaml",
+          "line": 147,
+          "expression": "          bash ./scripts/package-agent-skill-bundle.sh nova \"dist/nova-${GITHUB_SHA}.tgz\" \"${GITHUB_SHA}\"",
+          "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+        },
+        {
+          "path": ".github/workflows/build-images.yaml",
+          "line": 148,
+          "expression": "          bash ./scripts/package-agent-skill-bundle.sh buster \"dist/buster-${GITHUB_SHA}.tgz\" \"${GITHUB_SHA}\"",
+          "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+        },
+        {
+          "path": ".github/workflows/build-images.yaml",
+          "line": 149,
+          "expression": "          bash ./scripts/package-agent-skill-bundle.sh prism \"dist/prism-${GITHUB_SHA}.tgz\" \"${GITHUB_SHA}\"",
+          "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+        }
+      ],
+      "proposedAuthority": "Retain selected complete role manifest/ownership/catalog and explicit release inputs as appropriate; generated archive/manifest/facade are not competing config authors. Migrate root/schema/role/buildcontext/CI guards together in authorized C1/C4, not new unapproved packaging system.",
+      "activation": "Build exact selected source/image/config/role generation before publication; verify real installed loader/entrypoint and declared provider compatibility before dispatch. Builder performs extension sync-contract subprocess before copying; source mutation/contract generation must be covered by final release identity, not assumed pure packaging.",
+      "recovery": "Retain original artifact/content/contract/role/config identities and required authentic external capability facts; no latest tree or newly selected plugin catalog into recovered modules/runs.",
+      "remaining": [
+        "exact schema/profile/setting/requirement/future executable case joins",
+        "full actual release/install/runtime loader and immutable module binding",
+        "authentic external installed provider/lockfile/source/contract identities",
+        "fresh independent source review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-a5b03259b93e0a66",
+      "originalCandidate": {
+        "id": "SRC-a5b03259b93e0a66",
+        "source": "scripts/build-runtime-role-bundle.mjs",
+        "line": 234,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "0e20765fdcc03f09b884aba805e6733f42e63c494d39a11827b2fda5c9bd6ef9",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "0e20765fdcc03f09b884aba805e6733f42e63c494d39a11827b2fda5c9bd6ef9",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "scripts/build-runtime-role-bundle.mjs",
+        "line": 234,
+        "expression": "  role === 'nova' ? '#!/usr/bin/env node' : '',",
+        "sha256": "0e20765fdcc03f09b884aba805e6733f42e63c494d39a11827b2fda5c9bd6ef9"
+      },
+      "field": "role entrypoint facade shebang",
+      "classification": "generated-role-entrypoint",
+      "currentDomainAndPrecedence": "only Nova gets node shebang and generated facade executable0755; others0644. Import/optional execution source comes from selected role manifest; output runtime role selection is not task/module grant",
+      "actualReaderRef": {
+        "path": "scripts/build-runtime-role-bundle.mjs",
+        "line": 234,
+        "expression": "  role === 'nova' ? '#!/usr/bin/env node' : '',",
+        "sha256": "0e20765fdcc03f09b884aba805e6733f42e63c494d39a11827b2fda5c9bd6ef9"
+      },
+      "productiveCallerRefs": [
+        {
+          "path": "scripts/package-agent-skill-bundle.sh",
+          "line": 30,
+          "expression": "node \"${SCRIPT_DIR}/build-runtime-role-bundle.mjs\" \\",
+          "sha256": "dc4cc8626b5b303d2c28085bab83adf090932b4f31b0b4355a6dc188ac0a562c"
+        },
+        {
+          "path": ".github/workflows/build-images.yaml",
+          "line": 147,
+          "expression": "          bash ./scripts/package-agent-skill-bundle.sh nova \"dist/nova-${GITHUB_SHA}.tgz\" \"${GITHUB_SHA}\"",
+          "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+        },
+        {
+          "path": ".github/workflows/build-images.yaml",
+          "line": 148,
+          "expression": "          bash ./scripts/package-agent-skill-bundle.sh buster \"dist/buster-${GITHUB_SHA}.tgz\" \"${GITHUB_SHA}\"",
+          "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+        },
+        {
+          "path": ".github/workflows/build-images.yaml",
+          "line": 149,
+          "expression": "          bash ./scripts/package-agent-skill-bundle.sh prism \"dist/prism-${GITHUB_SHA}.tgz\" \"${GITHUB_SHA}\"",
+          "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+        }
+      ],
+      "proposedAuthority": "Retain selected complete role manifest/ownership/catalog and explicit release inputs as appropriate; generated archive/manifest/facade are not competing config authors. Migrate root/schema/role/buildcontext/CI guards together in authorized C1/C4, not new unapproved packaging system.",
+      "activation": "Build exact selected source/image/config/role generation before publication; verify real installed loader/entrypoint and declared provider compatibility before dispatch. Builder performs extension sync-contract subprocess before copying; source mutation/contract generation must be covered by final release identity, not assumed pure packaging.",
+      "recovery": "Retain original artifact/content/contract/role/config identities and required authentic external capability facts; no latest tree or newly selected plugin catalog into recovered modules/runs.",
+      "remaining": [
+        "exact schema/profile/setting/requirement/future executable case joins",
+        "full actual release/install/runtime loader and immutable module binding",
+        "authentic external installed provider/lockfile/source/contract identities",
+        "fresh independent source review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-46edc75f4155c0fd",
+      "originalCandidate": {
+        "id": "SRC-46edc75f4155c0fd",
+        "source": "scripts/build-runtime-role-bundle.mjs",
+        "line": 267,
+        "kinds": [
+          "environment"
+        ],
+        "sourceSha256": "0e20765fdcc03f09b884aba805e6733f42e63c494d39a11827b2fda5c9bd6ef9",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "0e20765fdcc03f09b884aba805e6733f42e63c494d39a11827b2fda5c9bd6ef9",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "scripts/build-runtime-role-bundle.mjs",
+        "line": 267,
+        "expression": "writeFile('manifest.json', `${JSON.stringify(bundleManifest, null, 2)}\\n`);",
+        "sha256": "0e20765fdcc03f09b884aba805e6733f42e63c494d39a11827b2fda5c9bd6ef9"
+      },
+      "field": "bundle manifest publication",
+      "classification": "generated-release-document",
+      "currentDomainAndPrecedence": "pipeline-runtime-bundle.v1 manifest records contractVersion, app-skills-package-set, /app/skills surface, role/commit/builtAt, selected entrypoint/package/plugin/dependency content records and declared externalCapabilities. Before writing, finalSourceChecks recompute original file sets/content mode digests. This is assembly identity, not installed runtime or immutable module/config acceptance",
+      "actualReaderRef": {
+        "path": "scripts/build-runtime-role-bundle.mjs",
+        "line": 267,
+        "expression": "writeFile('manifest.json', `${JSON.stringify(bundleManifest, null, 2)}\\n`);",
+        "sha256": "0e20765fdcc03f09b884aba805e6733f42e63c494d39a11827b2fda5c9bd6ef9"
+      },
+      "productiveCallerRefs": [
+        {
+          "path": "scripts/package-agent-skill-bundle.sh",
+          "line": 30,
+          "expression": "node \"${SCRIPT_DIR}/build-runtime-role-bundle.mjs\" \\",
+          "sha256": "dc4cc8626b5b303d2c28085bab83adf090932b4f31b0b4355a6dc188ac0a562c"
+        },
+        {
+          "path": ".github/workflows/build-images.yaml",
+          "line": 147,
+          "expression": "          bash ./scripts/package-agent-skill-bundle.sh nova \"dist/nova-${GITHUB_SHA}.tgz\" \"${GITHUB_SHA}\"",
+          "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+        },
+        {
+          "path": ".github/workflows/build-images.yaml",
+          "line": 148,
+          "expression": "          bash ./scripts/package-agent-skill-bundle.sh buster \"dist/buster-${GITHUB_SHA}.tgz\" \"${GITHUB_SHA}\"",
+          "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+        },
+        {
+          "path": ".github/workflows/build-images.yaml",
+          "line": 149,
+          "expression": "          bash ./scripts/package-agent-skill-bundle.sh prism \"dist/prism-${GITHUB_SHA}.tgz\" \"${GITHUB_SHA}\"",
+          "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+        }
+      ],
+      "proposedAuthority": "Retain selected complete role manifest/ownership/catalog and explicit release inputs as appropriate; generated archive/manifest/facade are not competing config authors. Migrate root/schema/role/buildcontext/CI guards together in authorized C1/C4, not new unapproved packaging system.",
+      "activation": "Build exact selected source/image/config/role generation before publication; verify real installed loader/entrypoint and declared provider compatibility before dispatch. Builder performs extension sync-contract subprocess before copying; source mutation/contract generation must be covered by final release identity, not assumed pure packaging.",
+      "recovery": "Retain original artifact/content/contract/role/config identities and required authentic external capability facts; no latest tree or newly selected plugin catalog into recovered modules/runs.",
+      "remaining": [
+        "exact schema/profile/setting/requirement/future executable case joins",
+        "full actual release/install/runtime loader and immutable module binding",
+        "authentic external installed provider/lockfile/source/contract identities",
+        "fresh independent source review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-b53a7be65008e8f5",
+      "originalCandidate": {
+        "id": "SRC-b53a7be65008e8f5",
+        "source": "scripts/check-runtime-role-manifests.mjs",
+        "line": 84,
+        "kinds": [
+          "fallback-or-expression"
+        ],
+        "sourceSha256": "2a3af027d6fb437c7341ed24e2438b76545f665cab048b3c04943c62ade3e905",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "2a3af027d6fb437c7341ed24e2438b76545f665cab048b3c04943c62ade3e905",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "scripts/check-runtime-role-manifests.mjs",
+        "line": 84,
+        "expression": "    for (const dependency of Object.keys(packageManifest.dependencies ?? {})) {",
+        "sha256": "2a3af027d6fb437c7341ed24e2438b76545f665cab048b3c04943c62ade3e905"
+      },
+      "field": "role mandatory package dependency closure",
+      "classification": "declared-package-membership",
+      "currentDomainAndPrecedence": "selected package package.json dependencies; registered internal packages/plugins must also be selected; unregistered @kubeclaw names reject. No optionalDependencies closure gate in this checker loop",
+      "actualReaderRef": {
+        "path": "scripts/check-runtime-role-manifests.mjs",
+        "line": 84,
+        "expression": "    for (const dependency of Object.keys(packageManifest.dependencies ?? {})) {",
+        "sha256": "2a3af027d6fb437c7341ed24e2438b76545f665cab048b3c04943c62ade3e905"
+      },
+      "productiveCallerRefs": [
+        {
+          "path": "scripts/build-runtime-role-bundle.mjs",
+          "line": 14,
+          "expression": "execFileSync(process.execPath, [path.join(root, 'scripts/check-runtime-role-manifests.mjs')], { stdio: 'inherit' });",
+          "sha256": "0e20765fdcc03f09b884aba805e6733f42e63c494d39a11827b2fda5c9bd6ef9"
+        }
+      ],
+      "proposedAuthority": "Retain selected complete role manifest/ownership/catalog and explicit release inputs as appropriate; generated archive/manifest/facade are not competing config authors. Migrate root/schema/role/buildcontext/CI guards together in authorized C1/C4, not new unapproved packaging system.",
+      "activation": "Build exact selected source/image/config/role generation before publication; verify real installed loader/entrypoint and declared provider compatibility before dispatch. Builder performs extension sync-contract subprocess before copying; source mutation/contract generation must be covered by final release identity, not assumed pure packaging.",
+      "recovery": "Retain original artifact/content/contract/role/config identities and required authentic external capability facts; no latest tree or newly selected plugin catalog into recovered modules/runs.",
+      "remaining": [
+        "exact schema/profile/setting/requirement/future executable case joins",
+        "full actual release/install/runtime loader and immutable module binding",
+        "authentic external installed provider/lockfile/source/contract identities",
+        "fresh independent source review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-f06effd8f6cbaf64",
+      "originalCandidate": {
+        "id": "SRC-f06effd8f6cbaf64",
+        "source": "scripts/check-runtime-role-manifests.mjs",
+        "line": 87,
+        "kinds": [
+          "fallback-or-expression"
+        ],
+        "sourceSha256": "2a3af027d6fb437c7341ed24e2438b76545f665cab048b3c04943c62ade3e905",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "2a3af027d6fb437c7341ed24e2438b76545f665cab048b3c04943c62ade3e905",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "scripts/check-runtime-role-manifests.mjs",
+        "line": 87,
+        "expression": "      if (dependency.startsWith('@kubeclaw/')) assert(dependencyId || dependencyPluginId,",
+        "sha256": "2a3af027d6fb437c7341ed24e2438b76545f665cab048b3c04943c62ade3e905"
+      },
+      "field": "internal namespace registration invariant",
+      "classification": "protocol-package-invariant",
+      "currentDomainAndPrecedence": "dependency starting @kubeclaw/ must map to registered ownership package or plugin package name; then enforce the relevant selected-role membership",
+      "actualReaderRef": {
+        "path": "scripts/check-runtime-role-manifests.mjs",
+        "line": 87,
+        "expression": "      if (dependency.startsWith('@kubeclaw/')) assert(dependencyId || dependencyPluginId,",
+        "sha256": "2a3af027d6fb437c7341ed24e2438b76545f665cab048b3c04943c62ade3e905"
+      },
+      "productiveCallerRefs": [
+        {
+          "path": "scripts/build-runtime-role-bundle.mjs",
+          "line": 14,
+          "expression": "execFileSync(process.execPath, [path.join(root, 'scripts/check-runtime-role-manifests.mjs')], { stdio: 'inherit' });",
+          "sha256": "0e20765fdcc03f09b884aba805e6733f42e63c494d39a11827b2fda5c9bd6ef9"
+        }
+      ],
+      "proposedAuthority": "Retain selected complete role manifest/ownership/catalog and explicit release inputs as appropriate; generated archive/manifest/facade are not competing config authors. Migrate root/schema/role/buildcontext/CI guards together in authorized C1/C4, not new unapproved packaging system.",
+      "activation": "Build exact selected source/image/config/role generation before publication; verify real installed loader/entrypoint and declared provider compatibility before dispatch. Builder performs extension sync-contract subprocess before copying; source mutation/contract generation must be covered by final release identity, not assumed pure packaging.",
+      "recovery": "Retain original artifact/content/contract/role/config identities and required authentic external capability facts; no latest tree or newly selected plugin catalog into recovered modules/runs.",
+      "remaining": [
+        "exact schema/profile/setting/requirement/future executable case joins",
+        "full actual release/install/runtime loader and immutable module binding",
+        "authentic external installed provider/lockfile/source/contract identities",
+        "fresh independent source review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-3bfe595a7377f244",
+      "originalCandidate": {
+        "id": "SRC-3bfe595a7377f244",
+        "source": "scripts/check-runtime-role-manifests.mjs",
+        "line": 93,
+        "kinds": [
+          "fallback-or-expression"
+        ],
+        "sourceSha256": "2a3af027d6fb437c7341ed24e2438b76545f665cab048b3c04943c62ade3e905",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "2a3af027d6fb437c7341ed24e2438b76545f665cab048b3c04943c62ade3e905",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "scripts/check-runtime-role-manifests.mjs",
+        "line": 93,
+        "expression": "    for (const assetId of packageManifest.kubeclawRuntimeAssets ?? []) {",
+        "sha256": "2a3af027d6fb437c7341ed24e2438b76545f665cab048b3c04943c62ade3e905"
+      },
+      "field": "runtime asset membership",
+      "classification": "declared-package-membership",
+      "currentDomainAndPrecedence": "each kubeclawRuntimeAssets member must be known ownership package and explicitly selected in this role. Assets are packaging members, not independently loaded config or actor grants",
+      "actualReaderRef": {
+        "path": "scripts/check-runtime-role-manifests.mjs",
+        "line": 93,
+        "expression": "    for (const assetId of packageManifest.kubeclawRuntimeAssets ?? []) {",
+        "sha256": "2a3af027d6fb437c7341ed24e2438b76545f665cab048b3c04943c62ade3e905"
+      },
+      "productiveCallerRefs": [
+        {
+          "path": "scripts/build-runtime-role-bundle.mjs",
+          "line": 14,
+          "expression": "execFileSync(process.execPath, [path.join(root, 'scripts/check-runtime-role-manifests.mjs')], { stdio: 'inherit' });",
+          "sha256": "0e20765fdcc03f09b884aba805e6733f42e63c494d39a11827b2fda5c9bd6ef9"
+        }
+      ],
+      "proposedAuthority": "Retain selected complete role manifest/ownership/catalog and explicit release inputs as appropriate; generated archive/manifest/facade are not competing config authors. Migrate root/schema/role/buildcontext/CI guards together in authorized C1/C4, not new unapproved packaging system.",
+      "activation": "Build exact selected source/image/config/role generation before publication; verify real installed loader/entrypoint and declared provider compatibility before dispatch. Builder performs extension sync-contract subprocess before copying; source mutation/contract generation must be covered by final release identity, not assumed pure packaging.",
+      "recovery": "Retain original artifact/content/contract/role/config identities and required authentic external capability facts; no latest tree or newly selected plugin catalog into recovered modules/runs.",
+      "remaining": [
+        "exact schema/profile/setting/requirement/future executable case joins",
+        "full actual release/install/runtime loader and immutable module binding",
+        "authentic external installed provider/lockfile/source/contract identities",
+        "fresh independent source review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-e60a381ecc36b138",
+      "originalCandidate": {
+        "id": "SRC-e60a381ecc36b138",
+        "source": "scripts/check-runtime-role-manifests.mjs",
+        "line": 104,
+        "kinds": [
+          "fallback-or-expression"
+        ],
+        "sourceSha256": "2a3af027d6fb437c7341ed24e2438b76545f665cab048b3c04943c62ade3e905",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "2a3af027d6fb437c7341ed24e2438b76545f665cab048b3c04943c62ade3e905",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "scripts/check-runtime-role-manifests.mjs",
+        "line": 104,
+        "expression": "    assert(plugin.owner === 'shared' || plugin.owner === role, `${role} cannot select ${plugin.owner} plugin ${pluginId}`);",
+        "sha256": "2a3af027d6fb437c7341ed24e2438b76545f665cab048b3c04943c62ade3e905"
+      },
+      "field": "plugin owner compatibility",
+      "classification": "declared-role-profile",
+      "currentDomainAndPrecedence": "selected plugin must exist and owner shared or exact role. Current roles exactly nova/buster/prism; owner compatibility alone does not prove dynamic registration/profile or installed consumer effects",
+      "actualReaderRef": {
+        "path": "scripts/check-runtime-role-manifests.mjs",
+        "line": 104,
+        "expression": "    assert(plugin.owner === 'shared' || plugin.owner === role, `${role} cannot select ${plugin.owner} plugin ${pluginId}`);",
+        "sha256": "2a3af027d6fb437c7341ed24e2438b76545f665cab048b3c04943c62ade3e905"
+      },
+      "productiveCallerRefs": [
+        {
+          "path": "scripts/build-runtime-role-bundle.mjs",
+          "line": 14,
+          "expression": "execFileSync(process.execPath, [path.join(root, 'scripts/check-runtime-role-manifests.mjs')], { stdio: 'inherit' });",
+          "sha256": "0e20765fdcc03f09b884aba805e6733f42e63c494d39a11827b2fda5c9bd6ef9"
+        }
+      ],
+      "proposedAuthority": "Retain selected complete role manifest/ownership/catalog and explicit release inputs as appropriate; generated archive/manifest/facade are not competing config authors. Migrate root/schema/role/buildcontext/CI guards together in authorized C1/C4, not new unapproved packaging system.",
+      "activation": "Build exact selected source/image/config/role generation before publication; verify real installed loader/entrypoint and declared provider compatibility before dispatch. Builder performs extension sync-contract subprocess before copying; source mutation/contract generation must be covered by final release identity, not assumed pure packaging.",
+      "recovery": "Retain original artifact/content/contract/role/config identities and required authentic external capability facts; no latest tree or newly selected plugin catalog into recovered modules/runs.",
+      "remaining": [
+        "exact schema/profile/setting/requirement/future executable case joins",
+        "full actual release/install/runtime loader and immutable module binding",
+        "authentic external installed provider/lockfile/source/contract identities",
+        "fresh independent source review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-a357ba528e0df431",
+      "originalCandidate": {
+        "id": "SRC-a357ba528e0df431",
+        "source": "scripts/check-runtime-role-manifests.mjs",
+        "line": 105,
+        "kinds": [
+          "fallback-or-expression"
+        ],
+        "sourceSha256": "2a3af027d6fb437c7341ed24e2438b76545f665cab048b3c04943c62ade3e905",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "2a3af027d6fb437c7341ed24e2438b76545f665cab048b3c04943c62ade3e905",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "scripts/check-runtime-role-manifests.mjs",
+        "line": 105,
+        "expression": "    for (const registration of [...(plugin.manifest.stages ?? []), ...(plugin.manifest.observers ?? []), ...(plugin.manifest.adapters ?? [])]) {",
+        "sha256": "2a3af027d6fb437c7341ed24e2438b76545f665cab048b3c04943c62ade3e905"
+      },
+      "field": "capability requirement registration classes",
+      "classification": "generated-capability-closure",
+      "currentDomainAndPrecedence": "requirements gathered from stages, observers and adapters registrations; testProviders not in this loop. Distinguish this from later owned-plugin enumeration, which includes testProviders",
+      "actualReaderRef": {
+        "path": "scripts/check-runtime-role-manifests.mjs",
+        "line": 105,
+        "expression": "    for (const registration of [...(plugin.manifest.stages ?? []), ...(plugin.manifest.observers ?? []), ...(plugin.manifest.adapters ?? [])]) {",
+        "sha256": "2a3af027d6fb437c7341ed24e2438b76545f665cab048b3c04943c62ade3e905"
+      },
+      "productiveCallerRefs": [
+        {
+          "path": "scripts/build-runtime-role-bundle.mjs",
+          "line": 14,
+          "expression": "execFileSync(process.execPath, [path.join(root, 'scripts/check-runtime-role-manifests.mjs')], { stdio: 'inherit' });",
+          "sha256": "0e20765fdcc03f09b884aba805e6733f42e63c494d39a11827b2fda5c9bd6ef9"
+        }
+      ],
+      "proposedAuthority": "Retain selected complete role manifest/ownership/catalog and explicit release inputs as appropriate; generated archive/manifest/facade are not competing config authors. Migrate root/schema/role/buildcontext/CI guards together in authorized C1/C4, not new unapproved packaging system.",
+      "activation": "Build exact selected source/image/config/role generation before publication; verify real installed loader/entrypoint and declared provider compatibility before dispatch. Builder performs extension sync-contract subprocess before copying; source mutation/contract generation must be covered by final release identity, not assumed pure packaging.",
+      "recovery": "Retain original artifact/content/contract/role/config identities and required authentic external capability facts; no latest tree or newly selected plugin catalog into recovered modules/runs.",
+      "remaining": [
+        "exact schema/profile/setting/requirement/future executable case joins",
+        "full actual release/install/runtime loader and immutable module binding",
+        "authentic external installed provider/lockfile/source/contract identities",
+        "fresh independent source review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-f46f464b912935ae",
+      "originalCandidate": {
+        "id": "SRC-f46f464b912935ae",
+        "source": "scripts/check-runtime-role-manifests.mjs",
+        "line": 106,
+        "kinds": [
+          "fallback-or-expression"
+        ],
+        "sourceSha256": "2a3af027d6fb437c7341ed24e2438b76545f665cab048b3c04943c62ade3e905",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "2a3af027d6fb437c7341ed24e2438b76545f665cab048b3c04943c62ade3e905",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "scripts/check-runtime-role-manifests.mjs",
+        "line": 106,
+        "expression": "      for (const capability of registration.requiredCapabilities ?? []) requiredCapabilities.add(capability);",
+        "sha256": "2a3af027d6fb437c7341ed24e2438b76545f665cab048b3c04943c62ade3e905"
+      },
+      "field": "capability requirement IDs",
+      "classification": "declared-capability-reference",
+      "currentDomainAndPrecedence": "each registration.requiredCapabilities member added to required set; absent uses empty array. Reference closure is not a native available provider or dispatch authority",
+      "actualReaderRef": {
+        "path": "scripts/check-runtime-role-manifests.mjs",
+        "line": 106,
+        "expression": "      for (const capability of registration.requiredCapabilities ?? []) requiredCapabilities.add(capability);",
+        "sha256": "2a3af027d6fb437c7341ed24e2438b76545f665cab048b3c04943c62ade3e905"
+      },
+      "productiveCallerRefs": [
+        {
+          "path": "scripts/build-runtime-role-bundle.mjs",
+          "line": 14,
+          "expression": "execFileSync(process.execPath, [path.join(root, 'scripts/check-runtime-role-manifests.mjs')], { stdio: 'inherit' });",
+          "sha256": "0e20765fdcc03f09b884aba805e6733f42e63c494d39a11827b2fda5c9bd6ef9"
+        }
+      ],
+      "proposedAuthority": "Retain selected complete role manifest/ownership/catalog and explicit release inputs as appropriate; generated archive/manifest/facade are not competing config authors. Migrate root/schema/role/buildcontext/CI guards together in authorized C1/C4, not new unapproved packaging system.",
+      "activation": "Build exact selected source/image/config/role generation before publication; verify real installed loader/entrypoint and declared provider compatibility before dispatch. Builder performs extension sync-contract subprocess before copying; source mutation/contract generation must be covered by final release identity, not assumed pure packaging.",
+      "recovery": "Retain original artifact/content/contract/role/config identities and required authentic external capability facts; no latest tree or newly selected plugin catalog into recovered modules/runs.",
+      "remaining": [
+        "exact schema/profile/setting/requirement/future executable case joins",
+        "full actual release/install/runtime loader and immutable module binding",
+        "authentic external installed provider/lockfile/source/contract identities",
+        "fresh independent source review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-424e94b3eacfdd06",
+      "originalCandidate": {
+        "id": "SRC-424e94b3eacfdd06",
+        "source": "scripts/check-runtime-role-manifests.mjs",
+        "line": 108,
+        "kinds": [
+          "fallback-or-expression"
+        ],
+        "sourceSha256": "2a3af027d6fb437c7341ed24e2438b76545f665cab048b3c04943c62ade3e905",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "2a3af027d6fb437c7341ed24e2438b76545f665cab048b3c04943c62ade3e905",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "scripts/check-runtime-role-manifests.mjs",
+        "line": 108,
+        "expression": "    for (const adapter of plugin.manifest.adapters ?? []) {",
+        "sha256": "2a3af027d6fb437c7341ed24e2438b76545f665cab048b3c04943c62ade3e905"
+      },
+      "field": "adapter registration members",
+      "classification": "declared-role-profile",
+      "currentDomainAndPrecedence": "plugin adapters supply providesCapabilities into provided set; no stages/observers/testProviders interpreted as capability providers by this loop",
+      "actualReaderRef": {
+        "path": "scripts/check-runtime-role-manifests.mjs",
+        "line": 108,
+        "expression": "    for (const adapter of plugin.manifest.adapters ?? []) {",
+        "sha256": "2a3af027d6fb437c7341ed24e2438b76545f665cab048b3c04943c62ade3e905"
+      },
+      "productiveCallerRefs": [
+        {
+          "path": "scripts/build-runtime-role-bundle.mjs",
+          "line": 14,
+          "expression": "execFileSync(process.execPath, [path.join(root, 'scripts/check-runtime-role-manifests.mjs')], { stdio: 'inherit' });",
+          "sha256": "0e20765fdcc03f09b884aba805e6733f42e63c494d39a11827b2fda5c9bd6ef9"
+        }
+      ],
+      "proposedAuthority": "Retain selected complete role manifest/ownership/catalog and explicit release inputs as appropriate; generated archive/manifest/facade are not competing config authors. Migrate root/schema/role/buildcontext/CI guards together in authorized C1/C4, not new unapproved packaging system.",
+      "activation": "Build exact selected source/image/config/role generation before publication; verify real installed loader/entrypoint and declared provider compatibility before dispatch. Builder performs extension sync-contract subprocess before copying; source mutation/contract generation must be covered by final release identity, not assumed pure packaging.",
+      "recovery": "Retain original artifact/content/contract/role/config identities and required authentic external capability facts; no latest tree or newly selected plugin catalog into recovered modules/runs.",
+      "remaining": [
+        "exact schema/profile/setting/requirement/future executable case joins",
+        "full actual release/install/runtime loader and immutable module binding",
+        "authentic external installed provider/lockfile/source/contract identities",
+        "fresh independent source review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-bfc49f684ab83ea1",
+      "originalCandidate": {
+        "id": "SRC-bfc49f684ab83ea1",
+        "source": "scripts/check-runtime-role-manifests.mjs",
+        "line": 109,
+        "kinds": [
+          "fallback-or-expression"
+        ],
+        "sourceSha256": "2a3af027d6fb437c7341ed24e2438b76545f665cab048b3c04943c62ade3e905",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "2a3af027d6fb437c7341ed24e2438b76545f665cab048b3c04943c62ade3e905",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "scripts/check-runtime-role-manifests.mjs",
+        "line": 109,
+        "expression": "      for (const capability of adapter.providesCapabilities ?? []) providedCapabilities.add(capability);",
+        "sha256": "2a3af027d6fb437c7341ed24e2438b76545f665cab048b3c04943c62ade3e905"
+      },
+      "field": "adapter provided capability IDs",
+      "classification": "declared-capability-reference",
+      "currentDomainAndPrecedence": "each adapter.providesCapabilities added to provided set, missing uses empty array. Actual provider instance/native authority must still be authentic and bound",
+      "actualReaderRef": {
+        "path": "scripts/check-runtime-role-manifests.mjs",
+        "line": 109,
+        "expression": "      for (const capability of adapter.providesCapabilities ?? []) providedCapabilities.add(capability);",
+        "sha256": "2a3af027d6fb437c7341ed24e2438b76545f665cab048b3c04943c62ade3e905"
+      },
+      "productiveCallerRefs": [
+        {
+          "path": "scripts/build-runtime-role-bundle.mjs",
+          "line": 14,
+          "expression": "execFileSync(process.execPath, [path.join(root, 'scripts/check-runtime-role-manifests.mjs')], { stdio: 'inherit' });",
+          "sha256": "0e20765fdcc03f09b884aba805e6733f42e63c494d39a11827b2fda5c9bd6ef9"
+        }
+      ],
+      "proposedAuthority": "Retain selected complete role manifest/ownership/catalog and explicit release inputs as appropriate; generated archive/manifest/facade are not competing config authors. Migrate root/schema/role/buildcontext/CI guards together in authorized C1/C4, not new unapproved packaging system.",
+      "activation": "Build exact selected source/image/config/role generation before publication; verify real installed loader/entrypoint and declared provider compatibility before dispatch. Builder performs extension sync-contract subprocess before copying; source mutation/contract generation must be covered by final release identity, not assumed pure packaging.",
+      "recovery": "Retain original artifact/content/contract/role/config identities and required authentic external capability facts; no latest tree or newly selected plugin catalog into recovered modules/runs.",
+      "remaining": [
+        "exact schema/profile/setting/requirement/future executable case joins",
+        "full actual release/install/runtime loader and immutable module binding",
+        "authentic external installed provider/lockfile/source/contract identities",
+        "fresh independent source review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-d82f4aedbe1c99e6",
+      "originalCandidate": {
+        "id": "SRC-d82f4aedbe1c99e6",
+        "source": "scripts/check-runtime-role-manifests.mjs",
+        "line": 115,
+        "kinds": [
+          "fallback-or-expression"
+        ],
+        "sourceSha256": "2a3af027d6fb437c7341ed24e2438b76545f665cab048b3c04943c62ade3e905",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "2a3af027d6fb437c7341ed24e2438b76545f665cab048b3c04943c62ade3e905",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "scripts/check-runtime-role-manifests.mjs",
+        "line": 115,
+        "expression": "    assert(extension.owner === 'shared' || extension.owner === role, `${role} cannot select extension ${extensionId}`);",
+        "sha256": "2a3af027d6fb437c7341ed24e2438b76545f665cab048b3c04943c62ade3e905"
+      },
+      "field": "extension owner compatibility",
+      "classification": "declared-role-profile",
+      "currentDomainAndPrecedence": "selected extension must be cataloged, owner shared or exact role, and have actual package.json. Current explicit catalog kubeclaw-agent-observer shared; not arbitrary external extension install support",
+      "actualReaderRef": {
+        "path": "scripts/check-runtime-role-manifests.mjs",
+        "line": 115,
+        "expression": "    assert(extension.owner === 'shared' || extension.owner === role, `${role} cannot select extension ${extensionId}`);",
+        "sha256": "2a3af027d6fb437c7341ed24e2438b76545f665cab048b3c04943c62ade3e905"
+      },
+      "productiveCallerRefs": [
+        {
+          "path": "scripts/build-runtime-role-bundle.mjs",
+          "line": 14,
+          "expression": "execFileSync(process.execPath, [path.join(root, 'scripts/check-runtime-role-manifests.mjs')], { stdio: 'inherit' });",
+          "sha256": "0e20765fdcc03f09b884aba805e6733f42e63c494d39a11827b2fda5c9bd6ef9"
+        }
+      ],
+      "proposedAuthority": "Retain selected complete role manifest/ownership/catalog and explicit release inputs as appropriate; generated archive/manifest/facade are not competing config authors. Migrate root/schema/role/buildcontext/CI guards together in authorized C1/C4, not new unapproved packaging system.",
+      "activation": "Build exact selected source/image/config/role generation before publication; verify real installed loader/entrypoint and declared provider compatibility before dispatch. Builder performs extension sync-contract subprocess before copying; source mutation/contract generation must be covered by final release identity, not assumed pure packaging.",
+      "recovery": "Retain original artifact/content/contract/role/config identities and required authentic external capability facts; no latest tree or newly selected plugin catalog into recovered modules/runs.",
+      "remaining": [
+        "exact schema/profile/setting/requirement/future executable case joins",
+        "full actual release/install/runtime loader and immutable module binding",
+        "authentic external installed provider/lockfile/source/contract identities",
+        "fresh independent source review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-3402b44e37bae07d",
+      "originalCandidate": {
+        "id": "SRC-3402b44e37bae07d",
+        "source": "scripts/check-runtime-role-manifests.mjs",
+        "line": 132,
+        "kinds": [
+          "fallback-or-expression"
+        ],
+        "sourceSha256": "2a3af027d6fb437c7341ed24e2438b76545f665cab048b3c04943c62ade3e905",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "2a3af027d6fb437c7341ed24e2438b76545f665cab048b3c04943c62ade3e905",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "scripts/check-runtime-role-manifests.mjs",
+        "line": 132,
+        "expression": "    assert(providedCapabilities.has(capability) || externalCapabilities.has(capability), `${role} has no provider for ${capability}`);",
+        "sha256": "2a3af027d6fb437c7341ed24e2438b76545f665cab048b3c04943c62ade3e905"
+      },
+      "field": "required capability closure",
+      "classification": "generated-profile-validation",
+      "currentDomainAndPrecedence": "each required capability must have selected adapter provider OR explicit role externalCapabilities ID. External entries separately require strings/reason>=20, uniqueID and compatible catalog source roles/capabilities; declarations alone do not prove native availability",
+      "actualReaderRef": {
+        "path": "scripts/check-runtime-role-manifests.mjs",
+        "line": 132,
+        "expression": "    assert(providedCapabilities.has(capability) || externalCapabilities.has(capability), `${role} has no provider for ${capability}`);",
+        "sha256": "2a3af027d6fb437c7341ed24e2438b76545f665cab048b3c04943c62ade3e905"
+      },
+      "productiveCallerRefs": [
+        {
+          "path": "scripts/build-runtime-role-bundle.mjs",
+          "line": 14,
+          "expression": "execFileSync(process.execPath, [path.join(root, 'scripts/check-runtime-role-manifests.mjs')], { stdio: 'inherit' });",
+          "sha256": "0e20765fdcc03f09b884aba805e6733f42e63c494d39a11827b2fda5c9bd6ef9"
+        }
+      ],
+      "proposedAuthority": "Retain selected complete role manifest/ownership/catalog and explicit release inputs as appropriate; generated archive/manifest/facade are not competing config authors. Migrate root/schema/role/buildcontext/CI guards together in authorized C1/C4, not new unapproved packaging system.",
+      "activation": "Build exact selected source/image/config/role generation before publication; verify real installed loader/entrypoint and declared provider compatibility before dispatch. Builder performs extension sync-contract subprocess before copying; source mutation/contract generation must be covered by final release identity, not assumed pure packaging.",
+      "recovery": "Retain original artifact/content/contract/role/config identities and required authentic external capability facts; no latest tree or newly selected plugin catalog into recovered modules/runs.",
+      "remaining": [
+        "exact schema/profile/setting/requirement/future executable case joins",
+        "full actual release/install/runtime loader and immutable module binding",
+        "authentic external installed provider/lockfile/source/contract identities",
+        "fresh independent source review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-4caa26c257743c28",
+      "originalCandidate": {
+        "id": "SRC-4caa26c257743c28",
+        "source": "scripts/check-runtime-role-manifests.mjs",
+        "line": 151,
+        "kinds": [
+          "fallback-or-expression"
+        ],
+        "sourceSha256": "2a3af027d6fb437c7341ed24e2438b76545f665cab048b3c04943c62ade3e905",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "2a3af027d6fb437c7341ed24e2438b76545f665cab048b3c04943c62ade3e905",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "scripts/check-runtime-role-manifests.mjs",
+        "line": 151,
+        "expression": "  const runtimeId = pipelinePlugin ?? extension;",
+        "sha256": "2a3af027d6fb437c7341ed24e2438b76545f665cab048b3c04943c62ade3e905"
+      },
+      "field": "shared package runtime identity resolution",
+      "classification": "generated-catalog",
+      "currentDomainAndPrecedence": "resolve shared directory basename to pipeline plugin ID first, otherwise extension ID; unknown runtime identity requires empty expected-role list. Compare actual selected roles against explicit ownership.sharedPlugins, not an independent settings author",
+      "actualReaderRef": {
+        "path": "scripts/check-runtime-role-manifests.mjs",
+        "line": 151,
+        "expression": "  const runtimeId = pipelinePlugin ?? extension;",
+        "sha256": "2a3af027d6fb437c7341ed24e2438b76545f665cab048b3c04943c62ade3e905"
+      },
+      "productiveCallerRefs": [
+        {
+          "path": "scripts/build-runtime-role-bundle.mjs",
+          "line": 14,
+          "expression": "execFileSync(process.execPath, [path.join(root, 'scripts/check-runtime-role-manifests.mjs')], { stdio: 'inherit' });",
+          "sha256": "0e20765fdcc03f09b884aba805e6733f42e63c494d39a11827b2fda5c9bd6ef9"
+        }
+      ],
+      "proposedAuthority": "Retain selected complete role manifest/ownership/catalog and explicit release inputs as appropriate; generated archive/manifest/facade are not competing config authors. Migrate root/schema/role/buildcontext/CI guards together in authorized C1/C4, not new unapproved packaging system.",
+      "activation": "Build exact selected source/image/config/role generation before publication; verify real installed loader/entrypoint and declared provider compatibility before dispatch. Builder performs extension sync-contract subprocess before copying; source mutation/contract generation must be covered by final release identity, not assumed pure packaging.",
+      "recovery": "Retain original artifact/content/contract/role/config identities and required authentic external capability facts; no latest tree or newly selected plugin catalog into recovered modules/runs.",
+      "remaining": [
+        "exact schema/profile/setting/requirement/future executable case joins",
+        "full actual release/install/runtime loader and immutable module binding",
+        "authentic external installed provider/lockfile/source/contract identities",
+        "fresh independent source review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-b7a630bce375e367",
+      "originalCandidate": {
+        "id": "SRC-b7a630bce375e367",
+        "source": "scripts/package-agent-skill-bundle.sh",
+        "line": 4,
+        "kinds": [
+          "environment"
+        ],
+        "sourceSha256": "dc4cc8626b5b303d2c28085bab83adf090932b4f31b0b4355a6dc188ac0a562c",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "dc4cc8626b5b303d2c28085bab83adf090932b4f31b0b4355a6dc188ac0a562c",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "scripts/package-agent-skill-bundle.sh",
+        "line": 4,
+        "expression": "SCRIPT_DIR=\"$(cd \"$(dirname \"${BASH_SOURCE[0]}\")\" && pwd)\"",
+        "sha256": "dc4cc8626b5b303d2c28085bab83adf090932b4f31b0b4355a6dc188ac0a562c"
+      },
+      "field": "wrapper source directory",
+      "classification": "generated-location",
+      "currentDomainAndPrecedence": "derive absolute script directory from BASH_SOURCE; not user runtime setting",
+      "actualReaderRef": {
+        "path": "scripts/package-agent-skill-bundle.sh",
+        "line": 4,
+        "expression": "SCRIPT_DIR=\"$(cd \"$(dirname \"${BASH_SOURCE[0]}\")\" && pwd)\"",
+        "sha256": "dc4cc8626b5b303d2c28085bab83adf090932b4f31b0b4355a6dc188ac0a562c"
+      },
+      "productiveCallerRefs": [
+        {
+          "path": ".github/workflows/build-images.yaml",
+          "line": 147,
+          "expression": "          bash ./scripts/package-agent-skill-bundle.sh nova \"dist/nova-${GITHUB_SHA}.tgz\" \"${GITHUB_SHA}\"",
+          "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+        },
+        {
+          "path": ".github/workflows/build-images.yaml",
+          "line": 148,
+          "expression": "          bash ./scripts/package-agent-skill-bundle.sh buster \"dist/buster-${GITHUB_SHA}.tgz\" \"${GITHUB_SHA}\"",
+          "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+        },
+        {
+          "path": ".github/workflows/build-images.yaml",
+          "line": 149,
+          "expression": "          bash ./scripts/package-agent-skill-bundle.sh prism \"dist/prism-${GITHUB_SHA}.tgz\" \"${GITHUB_SHA}\"",
+          "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+        },
+        {
+          "path": ".github/workflows/pipeline-reliability.yaml",
+          "line": 77,
+          "expression": "          bash scripts/package-agent-skill-bundle.sh nova \"dist/nova-${GITHUB_SHA}.tgz\" \"${GITHUB_SHA}\"",
+          "sha256": "e338f143d87d8fcbf16830fdf82a0f7a9396f53376a780f4076ee4fb5e87ac4a"
+        },
+        {
+          "path": ".github/workflows/pipeline-reliability.yaml",
+          "line": 78,
+          "expression": "          bash scripts/package-agent-skill-bundle.sh buster \"dist/buster-${GITHUB_SHA}.tgz\" \"${GITHUB_SHA}\"",
+          "sha256": "e338f143d87d8fcbf16830fdf82a0f7a9396f53376a780f4076ee4fb5e87ac4a"
+        }
+      ],
+      "proposedAuthority": "Retain selected complete role manifest/ownership/catalog and explicit release inputs as appropriate; generated archive/manifest/facade are not competing config authors. Migrate root/schema/role/buildcontext/CI guards together in authorized C1/C4, not new unapproved packaging system.",
+      "activation": "Build exact selected source/image/config/role generation before publication; verify real installed loader/entrypoint and declared provider compatibility before dispatch. Builder performs extension sync-contract subprocess before copying; source mutation/contract generation must be covered by final release identity, not assumed pure packaging.",
+      "recovery": "Retain original artifact/content/contract/role/config identities and required authentic external capability facts; no latest tree or newly selected plugin catalog into recovered modules/runs.",
+      "remaining": [
+        "exact schema/profile/setting/requirement/future executable case joins",
+        "full actual release/install/runtime loader and immutable module binding",
+        "authentic external installed provider/lockfile/source/contract identities",
+        "fresh independent source review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-5d413666eaff59c5",
+      "originalCandidate": {
+        "id": "SRC-5d413666eaff59c5",
+        "source": "scripts/package-agent-skill-bundle.sh",
+        "line": 5,
+        "kinds": [
+          "environment"
+        ],
+        "sourceSha256": "dc4cc8626b5b303d2c28085bab83adf090932b4f31b0b4355a6dc188ac0a562c",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "dc4cc8626b5b303d2c28085bab83adf090932b4f31b0b4355a6dc188ac0a562c",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "scripts/package-agent-skill-bundle.sh",
+        "line": 5,
+        "expression": "REPO_DIR=\"$(dirname \"$SCRIPT_DIR\")\"",
+        "sha256": "dc4cc8626b5b303d2c28085bab83adf090932b4f31b0b4355a6dc188ac0a562c"
+      },
+      "field": "wrapper repository directory",
+      "classification": "generated-location",
+      "currentDomainAndPrecedence": "derive parent of script directory; used as location metadata here, builder independently derives its root from import.meta.dirname",
+      "actualReaderRef": {
+        "path": "scripts/package-agent-skill-bundle.sh",
+        "line": 5,
+        "expression": "REPO_DIR=\"$(dirname \"$SCRIPT_DIR\")\"",
+        "sha256": "dc4cc8626b5b303d2c28085bab83adf090932b4f31b0b4355a6dc188ac0a562c"
+      },
+      "productiveCallerRefs": [
+        {
+          "path": ".github/workflows/build-images.yaml",
+          "line": 147,
+          "expression": "          bash ./scripts/package-agent-skill-bundle.sh nova \"dist/nova-${GITHUB_SHA}.tgz\" \"${GITHUB_SHA}\"",
+          "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+        },
+        {
+          "path": ".github/workflows/build-images.yaml",
+          "line": 148,
+          "expression": "          bash ./scripts/package-agent-skill-bundle.sh buster \"dist/buster-${GITHUB_SHA}.tgz\" \"${GITHUB_SHA}\"",
+          "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+        },
+        {
+          "path": ".github/workflows/build-images.yaml",
+          "line": 149,
+          "expression": "          bash ./scripts/package-agent-skill-bundle.sh prism \"dist/prism-${GITHUB_SHA}.tgz\" \"${GITHUB_SHA}\"",
+          "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+        },
+        {
+          "path": ".github/workflows/pipeline-reliability.yaml",
+          "line": 77,
+          "expression": "          bash scripts/package-agent-skill-bundle.sh nova \"dist/nova-${GITHUB_SHA}.tgz\" \"${GITHUB_SHA}\"",
+          "sha256": "e338f143d87d8fcbf16830fdf82a0f7a9396f53376a780f4076ee4fb5e87ac4a"
+        },
+        {
+          "path": ".github/workflows/pipeline-reliability.yaml",
+          "line": 78,
+          "expression": "          bash scripts/package-agent-skill-bundle.sh buster \"dist/buster-${GITHUB_SHA}.tgz\" \"${GITHUB_SHA}\"",
+          "sha256": "e338f143d87d8fcbf16830fdf82a0f7a9396f53376a780f4076ee4fb5e87ac4a"
+        }
+      ],
+      "proposedAuthority": "Retain selected complete role manifest/ownership/catalog and explicit release inputs as appropriate; generated archive/manifest/facade are not competing config authors. Migrate root/schema/role/buildcontext/CI guards together in authorized C1/C4, not new unapproved packaging system.",
+      "activation": "Build exact selected source/image/config/role generation before publication; verify real installed loader/entrypoint and declared provider compatibility before dispatch. Builder performs extension sync-contract subprocess before copying; source mutation/contract generation must be covered by final release identity, not assumed pure packaging.",
+      "recovery": "Retain original artifact/content/contract/role/config identities and required authentic external capability facts; no latest tree or newly selected plugin catalog into recovered modules/runs.",
+      "remaining": [
+        "exact schema/profile/setting/requirement/future executable case joins",
+        "full actual release/install/runtime loader and immutable module binding",
+        "authentic external installed provider/lockfile/source/contract identities",
+        "fresh independent source review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-20a867892c2eb688",
+      "originalCandidate": {
+        "id": "SRC-20a867892c2eb688",
+        "source": "scripts/package-agent-skill-bundle.sh",
+        "line": 9,
+        "kinds": [
+          "environment"
+        ],
+        "sourceSha256": "dc4cc8626b5b303d2c28085bab83adf090932b4f31b0b4355a6dc188ac0a562c",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "dc4cc8626b5b303d2c28085bab83adf090932b4f31b0b4355a6dc188ac0a562c",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "scripts/package-agent-skill-bundle.sh",
+        "line": 9,
+        "expression": "commit=\"${3:-${GITHUB_SHA:-}}\"",
+        "sha256": "dc4cc8626b5b303d2c28085bab83adf090932b4f31b0b4355a6dc188ac0a562c"
+      },
+      "field": "wrapper commit precedence",
+      "classification": "build-input",
+      "currentDomainAndPrecedence": "positional argument3 if set, else GITHUB_SHA, else empty then reject. Exact reference/content/role compatibility must be checked in approved release closure; current wrapper only requires nonempty",
+      "actualReaderRef": {
+        "path": "scripts/package-agent-skill-bundle.sh",
+        "line": 9,
+        "expression": "commit=\"${3:-${GITHUB_SHA:-}}\"",
+        "sha256": "dc4cc8626b5b303d2c28085bab83adf090932b4f31b0b4355a6dc188ac0a562c"
+      },
+      "productiveCallerRefs": [
+        {
+          "path": ".github/workflows/build-images.yaml",
+          "line": 147,
+          "expression": "          bash ./scripts/package-agent-skill-bundle.sh nova \"dist/nova-${GITHUB_SHA}.tgz\" \"${GITHUB_SHA}\"",
+          "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+        },
+        {
+          "path": ".github/workflows/build-images.yaml",
+          "line": 148,
+          "expression": "          bash ./scripts/package-agent-skill-bundle.sh buster \"dist/buster-${GITHUB_SHA}.tgz\" \"${GITHUB_SHA}\"",
+          "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+        },
+        {
+          "path": ".github/workflows/build-images.yaml",
+          "line": 149,
+          "expression": "          bash ./scripts/package-agent-skill-bundle.sh prism \"dist/prism-${GITHUB_SHA}.tgz\" \"${GITHUB_SHA}\"",
+          "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+        },
+        {
+          "path": ".github/workflows/pipeline-reliability.yaml",
+          "line": 77,
+          "expression": "          bash scripts/package-agent-skill-bundle.sh nova \"dist/nova-${GITHUB_SHA}.tgz\" \"${GITHUB_SHA}\"",
+          "sha256": "e338f143d87d8fcbf16830fdf82a0f7a9396f53376a780f4076ee4fb5e87ac4a"
+        },
+        {
+          "path": ".github/workflows/pipeline-reliability.yaml",
+          "line": 78,
+          "expression": "          bash scripts/package-agent-skill-bundle.sh buster \"dist/buster-${GITHUB_SHA}.tgz\" \"${GITHUB_SHA}\"",
+          "sha256": "e338f143d87d8fcbf16830fdf82a0f7a9396f53376a780f4076ee4fb5e87ac4a"
+        }
+      ],
+      "proposedAuthority": "Retain selected complete role manifest/ownership/catalog and explicit release inputs as appropriate; generated archive/manifest/facade are not competing config authors. Migrate root/schema/role/buildcontext/CI guards together in authorized C1/C4, not new unapproved packaging system.",
+      "activation": "Build exact selected source/image/config/role generation before publication; verify real installed loader/entrypoint and declared provider compatibility before dispatch. Builder performs extension sync-contract subprocess before copying; source mutation/contract generation must be covered by final release identity, not assumed pure packaging.",
+      "recovery": "Retain original artifact/content/contract/role/config identities and required authentic external capability facts; no latest tree or newly selected plugin catalog into recovered modules/runs.",
+      "remaining": [
+        "exact schema/profile/setting/requirement/future executable case joins",
+        "full actual release/install/runtime loader and immutable module binding",
+        "authentic external installed provider/lockfile/source/contract identities",
+        "fresh independent source review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-2b3d4d4861ab2304",
+      "originalCandidate": {
+        "id": "SRC-2b3d4d4861ab2304",
+        "source": "scripts/package-agent-skill-bundle.sh",
+        "line": 13,
+        "kinds": [
+          "fallback-or-expression"
+        ],
+        "sourceSha256": "dc4cc8626b5b303d2c28085bab83adf090932b4f31b0b4355a6dc188ac0a562c",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "dc4cc8626b5b303d2c28085bab83adf090932b4f31b0b4355a6dc188ac0a562c",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "scripts/package-agent-skill-bundle.sh",
+        "line": 13,
+        "expression": "if [[ -z $role || -z $output_path ]]; then",
+        "sha256": "dc4cc8626b5b303d2c28085bab83adf090932b4f31b0b4355a6dc188ac0a562c"
+      },
+      "field": "wrapper required role/output",
+      "classification": "build-input",
+      "currentDomainAndPrecedence": "role/output arguments nonempty; subsequent role enum nova|buster|prism and commit presence gates. Output archive path explicit, no implicit deployed path",
+      "actualReaderRef": {
+        "path": "scripts/package-agent-skill-bundle.sh",
+        "line": 13,
+        "expression": "if [[ -z $role || -z $output_path ]]; then",
+        "sha256": "dc4cc8626b5b303d2c28085bab83adf090932b4f31b0b4355a6dc188ac0a562c"
+      },
+      "productiveCallerRefs": [
+        {
+          "path": ".github/workflows/build-images.yaml",
+          "line": 147,
+          "expression": "          bash ./scripts/package-agent-skill-bundle.sh nova \"dist/nova-${GITHUB_SHA}.tgz\" \"${GITHUB_SHA}\"",
+          "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+        },
+        {
+          "path": ".github/workflows/build-images.yaml",
+          "line": 148,
+          "expression": "          bash ./scripts/package-agent-skill-bundle.sh buster \"dist/buster-${GITHUB_SHA}.tgz\" \"${GITHUB_SHA}\"",
+          "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+        },
+        {
+          "path": ".github/workflows/build-images.yaml",
+          "line": 149,
+          "expression": "          bash ./scripts/package-agent-skill-bundle.sh prism \"dist/prism-${GITHUB_SHA}.tgz\" \"${GITHUB_SHA}\"",
+          "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+        },
+        {
+          "path": ".github/workflows/pipeline-reliability.yaml",
+          "line": 77,
+          "expression": "          bash scripts/package-agent-skill-bundle.sh nova \"dist/nova-${GITHUB_SHA}.tgz\" \"${GITHUB_SHA}\"",
+          "sha256": "e338f143d87d8fcbf16830fdf82a0f7a9396f53376a780f4076ee4fb5e87ac4a"
+        },
+        {
+          "path": ".github/workflows/pipeline-reliability.yaml",
+          "line": 78,
+          "expression": "          bash scripts/package-agent-skill-bundle.sh buster \"dist/buster-${GITHUB_SHA}.tgz\" \"${GITHUB_SHA}\"",
+          "sha256": "e338f143d87d8fcbf16830fdf82a0f7a9396f53376a780f4076ee4fb5e87ac4a"
+        }
+      ],
+      "proposedAuthority": "Retain selected complete role manifest/ownership/catalog and explicit release inputs as appropriate; generated archive/manifest/facade are not competing config authors. Migrate root/schema/role/buildcontext/CI guards together in authorized C1/C4, not new unapproved packaging system.",
+      "activation": "Build exact selected source/image/config/role generation before publication; verify real installed loader/entrypoint and declared provider compatibility before dispatch. Builder performs extension sync-contract subprocess before copying; source mutation/contract generation must be covered by final release identity, not assumed pure packaging.",
+      "recovery": "Retain original artifact/content/contract/role/config identities and required authentic external capability facts; no latest tree or newly selected plugin catalog into recovered modules/runs.",
+      "remaining": [
+        "exact schema/profile/setting/requirement/future executable case joins",
+        "full actual release/install/runtime loader and immutable module binding",
+        "authentic external installed provider/lockfile/source/contract identities",
+        "fresh independent source review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-bfae3c11b4e8ae17",
+      "originalCandidate": {
+        "id": "SRC-bfae3c11b4e8ae17",
+        "source": "scripts/package-agent-skill-bundle.sh",
+        "line": 30,
+        "kinds": [
+          "environment"
+        ],
+        "sourceSha256": "dc4cc8626b5b303d2c28085bab83adf090932b4f31b0b4355a6dc188ac0a562c",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "dc4cc8626b5b303d2c28085bab83adf090932b4f31b0b4355a6dc188ac0a562c",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "scripts/package-agent-skill-bundle.sh",
+        "line": 30,
+        "expression": "node \"${SCRIPT_DIR}/build-runtime-role-bundle.mjs\" \\",
+        "sha256": "dc4cc8626b5b303d2c28085bab83adf090932b4f31b0b4355a6dc188ac0a562c"
+      },
+      "field": "builder invocation and archive delivery",
+      "classification": "generated-build-call",
+      "currentDomainAndPrecedence": "pass role, temporary fresh role-commit root, commit, contract_version and built_at to builder. Current wrapper defaults contract_version v2 and built_at UTC now; tar sorted names/epoch mtime/uidgid0 plus gzip-n normalize archive metadata, not arbitrary source/builtAt identity",
+      "actualReaderRef": {
+        "path": "scripts/package-agent-skill-bundle.sh",
+        "line": 30,
+        "expression": "node \"${SCRIPT_DIR}/build-runtime-role-bundle.mjs\" \\",
+        "sha256": "dc4cc8626b5b303d2c28085bab83adf090932b4f31b0b4355a6dc188ac0a562c"
+      },
+      "productiveCallerRefs": [
+        {
+          "path": ".github/workflows/build-images.yaml",
+          "line": 147,
+          "expression": "          bash ./scripts/package-agent-skill-bundle.sh nova \"dist/nova-${GITHUB_SHA}.tgz\" \"${GITHUB_SHA}\"",
+          "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+        },
+        {
+          "path": ".github/workflows/build-images.yaml",
+          "line": 148,
+          "expression": "          bash ./scripts/package-agent-skill-bundle.sh buster \"dist/buster-${GITHUB_SHA}.tgz\" \"${GITHUB_SHA}\"",
+          "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+        },
+        {
+          "path": ".github/workflows/build-images.yaml",
+          "line": 149,
+          "expression": "          bash ./scripts/package-agent-skill-bundle.sh prism \"dist/prism-${GITHUB_SHA}.tgz\" \"${GITHUB_SHA}\"",
+          "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc"
+        },
+        {
+          "path": ".github/workflows/pipeline-reliability.yaml",
+          "line": 77,
+          "expression": "          bash scripts/package-agent-skill-bundle.sh nova \"dist/nova-${GITHUB_SHA}.tgz\" \"${GITHUB_SHA}\"",
+          "sha256": "e338f143d87d8fcbf16830fdf82a0f7a9396f53376a780f4076ee4fb5e87ac4a"
+        },
+        {
+          "path": ".github/workflows/pipeline-reliability.yaml",
+          "line": 78,
+          "expression": "          bash scripts/package-agent-skill-bundle.sh buster \"dist/buster-${GITHUB_SHA}.tgz\" \"${GITHUB_SHA}\"",
+          "sha256": "e338f143d87d8fcbf16830fdf82a0f7a9396f53376a780f4076ee4fb5e87ac4a"
+        }
+      ],
+      "proposedAuthority": "Retain selected complete role manifest/ownership/catalog and explicit release inputs as appropriate; generated archive/manifest/facade are not competing config authors. Migrate root/schema/role/buildcontext/CI guards together in authorized C1/C4, not new unapproved packaging system.",
+      "activation": "Build exact selected source/image/config/role generation before publication; verify real installed loader/entrypoint and declared provider compatibility before dispatch. Builder performs extension sync-contract subprocess before copying; source mutation/contract generation must be covered by final release identity, not assumed pure packaging.",
+      "recovery": "Retain original artifact/content/contract/role/config identities and required authentic external capability facts; no latest tree or newly selected plugin catalog into recovered modules/runs.",
+      "remaining": [
+        "exact schema/profile/setting/requirement/future executable case joins",
+        "full actual release/install/runtime loader and immutable module binding",
+        "authentic external installed provider/lockfile/source/contract identities",
+        "fresh independent source review"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    }
+  ],
+  "priorQueueRef": {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-24/remaining-batches.json",
+    "sha256": "c0fc9f0996ecdecab945ba7c8b9810d3211e8c418631fddc03ed91a71c4fefad"
+  },
+  "remainingQueueUnchanged": true,
+  "globalC0Accepted": false
+}
