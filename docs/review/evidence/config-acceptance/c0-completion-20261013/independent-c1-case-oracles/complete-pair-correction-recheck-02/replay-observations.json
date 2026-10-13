@@ -1,0 +1,207 @@
+{
+  "qualification": "Independent C0 definition replay only: strict typed owner schemas and CURRENT v2/v1 config loader. No v3 runtime/native behavior accepted.",
+  "nodeVersion": "v24.21.0",
+  "argv": [
+    "/usr/local/bin/node",
+    "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-c1-case-oracles/complete-pair-correction-recheck-02/replay.mjs"
+  ],
+  "ownerSchemaResults": [
+    {
+      "owner": "prism-control",
+      "source": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-15/schemas/C1/prism-control.schema.json",
+      "sha256": "748ac508068e2602baec902389083a6bccbf222a5b311e77f9ad45e795239976",
+      "profiles": 6,
+      "valid": true,
+      "errors": null
+    },
+    {
+      "owner": "prism-studio",
+      "source": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-15/schemas/C1/prism-studio.schema.json",
+      "sha256": "a29a69c498a79e947f04ea89de8288637891a56b4e0cdbb287981b5ff02460d9",
+      "profiles": 4,
+      "valid": true,
+      "errors": null
+    },
+    {
+      "owner": "prism-worker",
+      "source": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-15/schemas/C1/prism-worker.schema.json",
+      "sha256": "30a6358ba072f61607adee564db0fffcfefc43726ecab984651a8941f7697848",
+      "profiles": 17,
+      "valid": true,
+      "errors": null
+    },
+    {
+      "owner": "prism-execution",
+      "source": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-15/schemas/C1/prism-execution.schema.json",
+      "sha256": "5ff02d02d1f7a215a5c0bd5380b2af68510c2d1ea9118bd243f337f745d79b25",
+      "profiles": 5,
+      "valid": true,
+      "errors": null
+    },
+    {
+      "owner": "buster-engine",
+      "source": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-15/schemas/C1/buster-engine.schema.json",
+      "sha256": "10bea5b470973809cfa5dfad1af204cdac3ce33290dc6e74a933d95a956c425f",
+      "profiles": 118,
+      "valid": true,
+      "errors": null
+    },
+    {
+      "owner": "worker-core",
+      "source": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-15/schemas/C1/worker-core.schema.json",
+      "sha256": "8bd4f48d6beadab9e3c011663dac18e3361f1d6eab0b3ffa3bd1bcb0af6eff3c",
+      "profiles": 4,
+      "valid": true,
+      "errors": null
+    }
+  ],
+  "declaredProfiles": 154,
+  "currentWireObservations": [
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.reports.maximumTimeoutMs",
+      "side": "A",
+      "result": "passed-current-value-definition-check",
+      "files": [
+        {
+          "name": "swarm.config.json",
+          "sha256": "7abab7d47722cb3f5ab94187ba8225a437dde8d4e8f329f552fb60d54ed0766a"
+        },
+        {
+          "name": "prism-control.config.json",
+          "sha256": "5bcb341aff443a755504b0b583bfa1c367a80eb7642b7a15fd44527a218abd02"
+        },
+        {
+          "name": "prism-studio.config.json",
+          "sha256": "55634fb41d4d1ccb2a1a4bcff58c02e7a823a95388585251773c13cd71282d94"
+        },
+        {
+          "name": "prism-worker.config.json",
+          "sha256": "25b1932332c1fd6323eaedc4922a52e93680944774abcfa883df02c5274926eb"
+        },
+        {
+          "name": "prism-execution.config.json",
+          "sha256": "cf1ec2bce02c0528d1e5f32cbd6929d844adf7f1dfa48d527ef8d627033e3db8"
+        },
+        {
+          "name": "buster-engine.config.json",
+          "sha256": "f1946f0e25739b034f0da8e7d66523b79b108282d2f509d427f7c5e3cc4fcfca"
+        },
+        {
+          "name": "worker-core.config.json",
+          "sha256": "e6547dd9a1a086f751de935790c70b4172c635ce8460e4901bcb7e21e6dea35f"
+        }
+      ],
+      "recursiveFreeze": true
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.reports.maximumTimeoutMs",
+      "side": "B",
+      "result": "passed-current-value-definition-check",
+      "files": [
+        {
+          "name": "swarm.config.json",
+          "sha256": "7abab7d47722cb3f5ab94187ba8225a437dde8d4e8f329f552fb60d54ed0766a"
+        },
+        {
+          "name": "prism-control.config.json",
+          "sha256": "5bcb341aff443a755504b0b583bfa1c367a80eb7642b7a15fd44527a218abd02"
+        },
+        {
+          "name": "prism-studio.config.json",
+          "sha256": "55634fb41d4d1ccb2a1a4bcff58c02e7a823a95388585251773c13cd71282d94"
+        },
+        {
+          "name": "prism-worker.config.json",
+          "sha256": "25b1932332c1fd6323eaedc4922a52e93680944774abcfa883df02c5274926eb"
+        },
+        {
+          "name": "prism-execution.config.json",
+          "sha256": "cf1ec2bce02c0528d1e5f32cbd6929d844adf7f1dfa48d527ef8d627033e3db8"
+        },
+        {
+          "name": "buster-engine.config.json",
+          "sha256": "e5613a3602ea377336cd065350d632991f0031cca72697092819636c9c7efad3"
+        },
+        {
+          "name": "worker-core.config.json",
+          "sha256": "e6547dd9a1a086f751de935790c70b4172c635ce8460e4901bcb7e21e6dea35f"
+        }
+      ],
+      "recursiveFreeze": true
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.reports.minimumCpuTimeMs",
+      "side": "A",
+      "result": "passed-current-value-definition-check",
+      "files": [
+        {
+          "name": "swarm.config.json",
+          "sha256": "7abab7d47722cb3f5ab94187ba8225a437dde8d4e8f329f552fb60d54ed0766a"
+        },
+        {
+          "name": "prism-control.config.json",
+          "sha256": "5bcb341aff443a755504b0b583bfa1c367a80eb7642b7a15fd44527a218abd02"
+        },
+        {
+          "name": "prism-studio.config.json",
+          "sha256": "55634fb41d4d1ccb2a1a4bcff58c02e7a823a95388585251773c13cd71282d94"
+        },
+        {
+          "name": "prism-worker.config.json",
+          "sha256": "25b1932332c1fd6323eaedc4922a52e93680944774abcfa883df02c5274926eb"
+        },
+        {
+          "name": "prism-execution.config.json",
+          "sha256": "cf1ec2bce02c0528d1e5f32cbd6929d844adf7f1dfa48d527ef8d627033e3db8"
+        },
+        {
+          "name": "buster-engine.config.json",
+          "sha256": "f1946f0e25739b034f0da8e7d66523b79b108282d2f509d427f7c5e3cc4fcfca"
+        },
+        {
+          "name": "worker-core.config.json",
+          "sha256": "e6547dd9a1a086f751de935790c70b4172c635ce8460e4901bcb7e21e6dea35f"
+        }
+      ],
+      "recursiveFreeze": true
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.reports.minimumCpuTimeMs",
+      "side": "B",
+      "result": "passed-current-value-definition-check",
+      "files": [
+        {
+          "name": "swarm.config.json",
+          "sha256": "7abab7d47722cb3f5ab94187ba8225a437dde8d4e8f329f552fb60d54ed0766a"
+        },
+        {
+          "name": "prism-control.config.json",
+          "sha256": "5bcb341aff443a755504b0b583bfa1c367a80eb7642b7a15fd44527a218abd02"
+        },
+        {
+          "name": "prism-studio.config.json",
+          "sha256": "55634fb41d4d1ccb2a1a4bcff58c02e7a823a95388585251773c13cd71282d94"
+        },
+        {
+          "name": "prism-worker.config.json",
+          "sha256": "25b1932332c1fd6323eaedc4922a52e93680944774abcfa883df02c5274926eb"
+        },
+        {
+          "name": "prism-execution.config.json",
+          "sha256": "cf1ec2bce02c0528d1e5f32cbd6929d844adf7f1dfa48d527ef8d627033e3db8"
+        },
+        {
+          "name": "buster-engine.config.json",
+          "sha256": "fdc50bb8c0ddd29f1ab9e6488ad6dd869dadb8a876a41da68b5ffdc556e8491f"
+        },
+        {
+          "name": "worker-core.config.json",
+          "sha256": "e6547dd9a1a086f751de935790c70b4172c635ce8460e4901bcb7e21e6dea35f"
+        }
+      ],
+      "recursiveFreeze": true
+    }
+  ],
+  "errors": [],
+  "futureImplementationResults": "not-run"
+}

@@ -1,0 +1,158 @@
+{
+  "verdict": "NOT ACCEPTED whole C0",
+  "gapCount": 8,
+  "gaps": [
+    {
+      "id": "G1",
+      "priority": 1,
+      "finding": "Integrate source relationships, not merely index batches (C0-A/B/C)",
+      "concreteNextWork": "The original candidate bodies still explicitly retain unresolved/empty setting associations, while the consolidated supplement only points to bounded definitions. Incorporate these 262 evidence-qualified associations as a **superseding integration overlay with original IDs/pointers** and retain the 96 concrete unmatched obligations. An index saying \"358 definitions\" is not field/author/case acceptance. Do not erase original bodies or retroactively convert case results."
+    },
+    {
+      "id": "G2",
+      "priority": 2,
+      "finding": "Resolve a concrete conflicting proposed author path (C0-B/E)",
+      "concreteNextWork": "The new C1 draft moves six owners to `config/{owner}.config.json`. The original canonical component contracts instead propose `config/components/{owner}.config.json`, e.g. `CMP-buster-engine-admission.maximumActiveJobs.targetAuthorRef.path`. Both refer to the same selected owner and `config/pipeline.config.json` entry. This is a reviewable **proposal conflict**, not evidence of two current productive authors. Select one physical layout and publish one explicit superseding path/entry/profile/projection contract for all affected original field IDs before approval. Preserve original records as history."
+    },
+    {
+      "id": "G3",
+      "priority": 3,
+      "finding": "Complete evolved entry, profile and effective-domain contract (C0-B/C)",
+      "concreteNextWork": "`skills/common/plugin-runtime/foundation/config/swarm.schema.json:42` fixes `swarm-entry.v2`; lines57\u201372 fix six sibling component filenames. Therefore a file move alone cannot define the evolved entry/profile wire. C1 correctly marks wire/version/instance-to-profile choice unresolved. Specify exact supported entry/version/ref rules, complete owner/profile selection (Buster runtime is a whole owner, not a patch), duplicate/unknown/missing/unsafe-ref errors, and no old-file fallback. Join role/registration/instance complete profiles to actual schemas, loader and renderer. Current KubeClaw/Ops Charts have no checked-in values schema; direct guards cannot be treated as general schema enforcement. Keep generated Chart bundles/read-only bindings separate from sole authors."
+    },
+    {
+      "id": "G4",
+      "priority": 4,
+      "finding": "Finish 96 exact boundary dispositions without inventing settings (C0-A/B/C)",
+      "concreteNextWork": "The JSON lists each unmatched field/line. Work by actual boundary, not 96 independent review loops:\n\n- 26 role ownership/bundle/checker/wrapper clauses: selected mandatory/installed optional dependencies, registration/capability closure, actual role publication and wrapper inputs. Resolve against role/package/V authorities, not all settings in a shared file.\n- 20 Hubble/Kubernetes clauses: task query/result/warning/continuation invariants versus real policy such as the 15-minute window and pagination defaults/total budgets. `recentEvents` result trimming does not bound its complete scan; six `namespace_overview` callers retain unbounded pagination defaults. Preserve request/file rotation versus immutable generation distinctions.\n- 22 Buster native preparation/config/supervisor clauses: actual productive parent, pool/resource relations, root-owned file/source identity, source-attestation reference, source staging and child startup boundaries. Do not exclude `test-gates` by directory name or create new competing owners for fixed generated identities.\n- Remaining trust-readiness, retired bundle validation, database init, Ops bootstrap/supervisor/deployer, root marker and extension clauses: decide explicit generated/protocol/display/task/reference/policy dispositions with their current consumers. The fixed root retention marker is not an expiry timer; the readiness self-check's `1s` is not a business-route timeout."
+    },
+    {
+      "id": "G5",
+      "priority": 5,
+      "finding": "Replace C1's case placeholders with bounded actual specifications (C0-C/E)",
+      "concreteNextWork": "C1 draft verified: **8 current author files, 160 exact existing field IDs, 229 linked original cases; all 229 have `specificationStatus=incomplete`**. Link integrity is not specification completeness. Complete actual consumer, valid complete materially different profiles, prior state, changed effect or intended rejection boundary, observer and concrete invocation/oracle for each distinct behavior family, then join original IDs. Keep the original bodies/requirements visible and every implementation result `not-run` until authorized. No native operation is required merely to author honest proposed cases."
+    },
+    {
+      "id": "G6",
+      "priority": 6,
+      "finding": "Freeze inseparable productive C1 delivery delta (C0-B/E)",
+      "concreteNextWork": "Draft names loader/schema, packaged Helm bundle, image/build context, release/CI change detection, role/package closure and native/container locator. Convert these to one exact proposed file/change/consumer/identity package, with config-only change detection and same-generation image/Chart/release receipts. A rename leaving `SWARM_CONFIG`, Docker ENV, `.Files.Get`, installed loader, test fixtures or runtime-profile selectors on old files is not the intended migration. Do not invent final wire/schema choice in this review. Approval of C1 must not imply C2\u2013C6 authorization."
+    },
+    {
+      "id": "G7",
+      "priority": 7,
+      "finding": "Finish definition-level run/module/standalone/recovery/Eval joins (C0-D)",
+      "concreteNextWork": "Actual `compiler.ts:48\u201355` creates per-module implement/lint/review/test stages. `stage-executor.ts:71` receives `definition.config`; `:113\u2013118` persists existing attempt identity and budgets before dispatch but no separate target CONFIG module closure. `engine-run.ts:39\u201342` snapshots under run mutation lock before execution. `journal.ts:158\u2013176` serializes synchronous transaction callback and append; it is not rollback of earlier appends. Current definition describes a proposed durable pre-dispatch transition, not implementation. Complete exact versioned stage membership/free-graph and standalone unit contracts, eligibility against immutable R grants/budgets, full closure/secret revision references, repair/retry inheritance, restart reuse and fixed-generation Eval cases with original canonical IDs. Do not demand unapproved implementation or treat existing run snapshots as implemented M binding."
+    },
+    {
+      "id": "G8",
+      "priority": 8,
+      "finding": "Fresh whole-C0 review of the integrated concrete package (C0-E)",
+      "concreteNextWork": "This bounded source concordance does not freshly accept every one of the 2,409 canonical setting contracts, 6,845 cases, source universe, author/profile domains, module contract or C1 delta. The matrix still records C0-A\u2013E `not-run`; 6,564 original cases are explicitly incomplete. That count is navigation, not 6,564 separate new infrastructure tasks. Integrate the finite decisions above, then obtain one fresh substantive whole-C0 review with exact input identities and bounded C1 verdict. No skip/unknown/absent native evidence may become PASS; missing live facts should remain separate from honest static definition acceptance."
+    }
+  ],
+  "additionalSourceWitnesses": [
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/swarm.schema.json",
+      "line": 42,
+      "expression": "      \"const\": \"swarm-entry.v2\"",
+      "sha256": "2269b97277a5a24ccd14434c942cdf4ea83c43d1c6a8e048083add782140ae20"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/swarm.schema.json",
+      "line": 57,
+      "expression": "          \"const\": \"prism-control.config.json\"",
+      "sha256": "2269b97277a5a24ccd14434c942cdf4ea83c43d1c6a8e048083add782140ae20"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/swarm.schema.json",
+      "line": 69,
+      "expression": "          \"const\": \"buster-engine.config.json\"",
+      "sha256": "2269b97277a5a24ccd14434c942cdf4ea83c43d1c6a8e048083add782140ae20"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/swarm.schema.json",
+      "line": 72,
+      "expression": "          \"const\": \"worker-core.config.json\"",
+      "sha256": "2269b97277a5a24ccd14434c942cdf4ea83c43d1c6a8e048083add782140ae20"
+    },
+    {
+      "path": "skills/nova/project/compiler.ts",
+      "line": 48,
+      "expression": "function moduleStages(module: ObjectValue, context: ModuleContext): StageDefinition[] {",
+      "sha256": "9d8ccdb3a1ccc56c58c1ec510aed54473f7db6d4135d28b2e265bbf90d7f1ef5"
+    },
+    {
+      "path": "skills/nova/project/compiler.ts",
+      "line": 52,
+      "expression": "  const implementationId = `implement-${module.id}`;",
+      "sha256": "9d8ccdb3a1ccc56c58c1ec510aed54473f7db6d4135d28b2e265bbf90d7f1ef5"
+    },
+    {
+      "path": "skills/nova/project/compiler.ts",
+      "line": 55,
+      "expression": "  const testId = `test-${module.id}`;",
+      "sha256": "9d8ccdb3a1ccc56c58c1ec510aed54473f7db6d4135d28b2e265bbf90d7f1ef5"
+    },
+    {
+      "path": "skills/nova/core/execution/stage-executor.ts",
+      "line": 71,
+      "expression": "      schemaVersion: 'plugin-context.v2', lease: leaseContract, config: definition.config, input: definition.input,",
+      "sha256": "4c846993c679c9ce663f7dda0e8de78fd26101e83948dd17211e62f83ea2eafb"
+    },
+    {
+      "path": "skills/nova/core/execution/stage-executor.ts",
+      "line": 113,
+      "expression": "    this.#options.append('attempt.created', { runId, stageId: state.stageId, attemptId: runtime.attempt.attemptId }, { attempt: Object.freeze({",
+      "sha256": "4c846993c679c9ce663f7dda0e8de78fd26101e83948dd17211e62f83ea2eafb"
+    },
+    {
+      "path": "skills/nova/core/execution/stage-executor.ts",
+      "line": 118,
+      "expression": "    this.#options.append('attempt.dispatched', { runId, stageId: state.stageId, attemptId: runtime.attempt.attemptId });",
+      "sha256": "4c846993c679c9ce663f7dda0e8de78fd26101e83948dd17211e62f83ea2eafb"
+    },
+    {
+      "path": "skills/nova/core/execution/engine-run.ts",
+      "line": 39,
+      "expression": "  return withRunMutationLock(runRoot, async (leaseSignal) => {",
+      "sha256": "eca97e2a488bd31d597c0dd71cd9971beffc9a5dc94fad1dbccf8867aa8f4819"
+    },
+    {
+      "path": "skills/nova/core/execution/engine-run.ts",
+      "line": 40,
+      "expression": "    fs.mkdirSync(runRoot, { recursive: true }); const graph = graphSnapshot(definition); writeRunSnapshots(runRoot, graph, frozenRegistryRecord(runtime, definition, graph));",
+      "sha256": "eca97e2a488bd31d597c0dd71cd9971beffc9a5dc94fad1dbccf8867aa8f4819"
+    },
+    {
+      "path": "skills/nova/core/execution/engine-run.ts",
+      "line": 42,
+      "expression": "    return executePrepared({ platform, definition, runtime, runId: effectiveRunId, runRoot, leaseSignal: signal ? AbortSignal.any([signal, leaseSignal]) : leaseSignal, events }, {});",
+      "sha256": "eca97e2a488bd31d597c0dd71cd9971beffc9a5dc94fad1dbccf8867aa8f4819"
+    },
+    {
+      "path": "skills/nova/core/state/journal.ts",
+      "line": 158,
+      "expression": "  transact<R>(",
+      "sha256": "25be25a991c93c0e523178e3c45e2f7fb15ecad6e1a03566fca241d6b27f40bf"
+    },
+    {
+      "path": "skills/nova/core/state/journal.ts",
+      "line": 170,
+      "expression": "          (entry) => {",
+      "sha256": "25be25a991c93c0e523178e3c45e2f7fb15ecad6e1a03566fca241d6b27f40bf"
+    },
+    {
+      "path": "skills/nova/core/state/journal.ts",
+      "line": 174,
+      "expression": "        );",
+      "sha256": "25be25a991c93c0e523178e3c45e2f7fb15ecad6e1a03566fca241d6b27f40bf"
+    }
+  ],
+  "inputIdentitiesRechecked": 80,
+  "changedInputs": [],
+  "originalBodiesExactlyEqual": 358,
+  "linkedCanonicalAuthorIdentityMatches": 305,
+  "runtimeExecuted": false,
+  "implementationAuthorization": false
+}

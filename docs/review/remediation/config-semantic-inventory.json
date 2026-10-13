@@ -650041,5 +650041,27 @@
   "coordinateCandidateLedgers": [
     "docs/review/evidence/config-acceptance/author/infra-coordinate-extension-20261013.json"
   ],
-  "sourceBoundary": "docs/review/evidence/config-acceptance/author/source-boundary.json"
+  "sourceBoundary": "docs/review/evidence/config-acceptance/author/source-boundary.json",
+  "currentSourceConcordance": {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/integrated-source-concordance-02/overlay.json",
+    "sha256": "939d3b4d71bf896996267c56acef287f62690e35f29f3fe6b811308c25f7609b",
+    "scope": "Additive current-source evidence integration of independently verified507+79 associations; current boundaries only, not target/global acceptance.",
+    "globalC0Accepted": false,
+    "boundedReviewRefs": [
+      {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-canonical-source-join/correction-01/corrected-concordance.json",
+        "sha256": "e817b509fc7491bf997db78dc5d7916467ab41525cbd9aa3ab07f8fb1354351e"
+      },
+      {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-source-concordance-layout-recheck/README.md",
+        "sha256": "93a44622adbfb42a99fc5680278d546f381b7a29d9f66ab9e660ecf9891a2b18",
+        "scope": "507 corrected source associations, exact integration, original conservation, author layout and proposed wire coherence only",
+        "globalC0Accepted": false
+      },
+      {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-source-concordance-layout-recheck/boundary-addendum-02/README.md",
+        "sha256": "4aed2f8fddc04fd79291cc19e7929767c4b181a4e17f048b55fcc97497949921"
+      }
+    ]
+  }
 }

@@ -2,8 +2,8 @@
   "goal": "active; full C0 and concrete C1-C6 package NOT achieved",
   "baselineCommit": "0bcaf85d192d031814554c590b1bfca5b3ba81dd",
   "definitionPhase": "in-progress",
-  "review": "Independent11/13/14/15 bounded verified;16 bounded controller source review retained.17 report changes-required preserved but runtime turn_failed; material W17-001/002 confirmed locally and corrected additively26. Fresh independent18 verified both workload corrections at bounded scope; fresh19 Swarm clause source review pending. Whole C0/001 remain OPEN. Independent19 foundSWARM19-001 six missing effective buffer caps; additive28 retains schema domains and20 originals while adding cap2147483647; Fresh independent20 verifies SWARM19-001 at bounded scope,100 checks/0fail, schema/original20 and other19 rows unchanged. Gateway29 captures19 original renderer/startup clauses, independent review next. Independent21 conserves19 gateway bodies/242pins but RGI21-001 command reader489wrong; additional precise memory/binding/gateway parse refs corrected additively30. Fresh independent22 verifies RGI21-001 source attribution correction,255pins/19 originalbodies/oldmanifest+frozeninput identities, no global/native acceptance. Fresh23 PASS bounded24 source clauses/148pins/251staticassertions; no completeprofile/case/native/global acceptance. Fresh24 accepts bounded28 packaging source definitions/135pins, no materialfindings; complete release/profile/case/native/module closure remainsopen. Fresh25 NOTACCEPTED bounded56source scope: PSSN25-001 currentimageenum incorrectlyAlways;PSSN25-002 four enabledconditionalquantitydomains omitted. Original33/review25 preserved; additive34 corrects7rows (including2Controlpolicyprojections),29resolved schemaRefs,56originalbodies49otherrowsunchanged. Fresh26 PASS PSSN25-001/002 bounded correction572checks0errors,56originalbodies7changed49unchanged29addedresolvedrefs; no global/native acceptance. Fresh27 NOTACCEPTED Ops33 scope OPS27-001 omitted six actualnamespace_overview Infinity calls andget_events->recentEvents outerunboundedscan attribution. Original35/review27 unchanged; additive36 nineKube rows concretecaller/budgetcontracts33bodies24otherrowsretained. Fresh28 PASS OPS27-001 actualcaller attribution,33originalbodies24unchangedrows727sourcepinoccurrences28historicalmanifestcomparisons; no global/native acceptance. Resumed independent OpsChart review NOT ACCEPTED: OPS-RESUMED-001 row22 downstream deduplication misstated. Additive38 corrects generator and JSON; 31 bodies preserved,30 rows unchanged; fresh bounded recheck pending. Fresh Ops dedup recheck PASS:31 bodies30 unchanged149pins13manifest/history26prioridentities; no global acceptance. Independent remaining inventory delivered all124 candidates24sources619pins51identities; parent source checks agree. All358 Delivery frozenqueue current-source observed, fullC0 joins stillOPEN.",
-  "canonicalInventoryChanged": false,
+  "review": "Independent11/13/14/15 bounded verified;16 bounded controller source review retained.17 report changes-required preserved but runtime turn_failed; material W17-001/002 confirmed locally and corrected additively26. Fresh independent18 verified both workload corrections at bounded scope; fresh19 Swarm clause source review pending. Whole C0/001 remain OPEN. Independent19 foundSWARM19-001 six missing effective buffer caps; additive28 retains schema domains and20 originals while adding cap2147483647; Fresh independent20 verifies SWARM19-001 at bounded scope,100 checks/0fail, schema/original20 and other19 rows unchanged. Gateway29 captures19 original renderer/startup clauses, independent review next. Independent21 conserves19 gateway bodies/242pins but RGI21-001 command reader489wrong; additional precise memory/binding/gateway parse refs corrected additively30. Fresh independent22 verifies RGI21-001 source attribution correction,255pins/19 originalbodies/oldmanifest+frozeninput identities, no global/native acceptance. Fresh23 PASS bounded24 source clauses/148pins/251staticassertions; no completeprofile/case/native/global acceptance. Fresh24 accepts bounded28 packaging source definitions/135pins, no materialfindings; complete release/profile/case/native/module closure remainsopen. Fresh25 NOTACCEPTED bounded56source scope: PSSN25-001 currentimageenum incorrectlyAlways;PSSN25-002 four enabledconditionalquantitydomains omitted. Original33/review25 preserved; additive34 corrects7rows (including2Controlpolicyprojections),29resolved schemaRefs,56originalbodies49otherrowsunchanged. Fresh26 PASS PSSN25-001/002 bounded correction572checks0errors,56originalbodies7changed49unchanged29addedresolvedrefs; no global/native acceptance. Fresh27 NOTACCEPTED Ops33 scope OPS27-001 omitted six actualnamespace_overview Infinity calls andget_events->recentEvents outerunboundedscan attribution. Original35/review27 unchanged; additive36 nineKube rows concretecaller/budgetcontracts33bodies24otherrowsretained. Fresh28 PASS OPS27-001 actualcaller attribution,33originalbodies24unchangedrows727sourcepinoccurrences28historicalmanifestcomparisons; no global/native acceptance. Resumed independent OpsChart review NOT ACCEPTED: OPS-RESUMED-001 row22 downstream deduplication misstated. Additive38 corrects generator and JSON; 31 bodies preserved,30 rows unchanged; fresh bounded recheck pending. Fresh Ops dedup recheck PASS:31 bodies30 unchanged149pins13manifest/history26prioridentities; no global acceptance. Independent remaining inventory delivered all124 candidates24sources619pins51identities; parent source checks agree. All358 Delivery frozenqueue current-source observed, fullC0 joins stillOPEN. Correctedsourceconcordance41badassociationsremoved:507associations281settings358IDs/96unmatched. Fresh bounded layout/integration VERIFIED; original2409rows6845cases50requirements unchanged exceptrootreferences; finalstructural0errors. C1 case lifecycle clarified28C0PASS/201futureNOTRUN,148refined/40incomplete/13unspecified.",
+  "canonicalInventoryChanged": "Root currentSourceConcordance references added only; original row/case/requirement bodies unchanged",
   "productionOrTestsChanged": false,
   "implementationAuthorization": null,
   "authors": {
@@ -13,13 +13,8 @@
     "binding": "initial frozen + boundaries02(10controls), membership03(11/16actualcompiledstage maps), codec04(6controls), journal-bound05(11genericactualjournal/finiteencodingcontrols). Original error retained; wholefield/standalone/provider/harness joins unfinished. Demo-membership06 observed unchanged existing compiler test1pass0fail, exactsource/testhashesmatchHEAD; no realprovider or targetbinding acceptance. Captured original sourceapproval/retentioncrossdomainobligation."
   },
   "next": [
-    "Prioritize concrete remaining field/domain/consumer definitions and approval package; do not expand general-purpose validators. Push each meaningful completed checkpoint to PR18.",
-    "Collect all358 source/canonical concordance and finite concrete C0-A-E/package gaps from /root/c0_canonical_source_join_review. Integrate actual author/field/profile/case/module definitions preserving immutable original records, finalize C1-C6 package. No generic validators; no inferred approval.",
-    "Tooling ICC04 and IR05 material corrections independently verified within bounds; keep original reports/failures and empty trust registry. Continue full source/field/profile/case C0 closure and genuine whole independent acceptance, not infer C0 from clean tooling checks.",
-    "Continue exact author batches; reconcile component274field/91handoff physicalauthor concordance and explicit staged schema/profile publication with Delivery; no competingfiles/defaultbridge.",
-    "Expand proposal-coordinate input list only for frozen real overlays; preserve all originalIDs/properties and every overlap; never infer closure from coverage counts.",
-    "Complete canonical field/consumer/task-policy/scope/schema/grant and exact future executable case joins, then conservative canonical integration with original/history conservation.",
-    "Fresh full C0 completeness review and iterative material corrections; only then exactC1-C6 approval package."
+    "Push reviewed checkpoint17 source associations, coherent author/profile wire, original lifecycle, concrete complete pairs and preserved independent corrections.",
+    "Collect finite policy/family/delivery/module contracts, integrate substantive definition, then fresh wholeC0 and concrete C1-C6 approval package. No generic validator expansion."
   ],
   "unrelatedUntrackedExclude": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013 four preexisting files",
   "nativeTeam": [
@@ -50,12 +45,12 @@
     "implementationAuthorized": false
   },
   "lastPushedCheckpoint": {
-    "commit": "ab02f1fe70f077d6d9d3d40d3b9c255f254e8a0b",
+    "commit": "a0d5588c4b4a9944d3c9e98140f1223d77bf5af3",
     "pr": "https://github.com/datrab/kubeclaw/pull/18",
     "pushed": true,
     "productionOrExistingTestsChanged": false,
     "autoreview": "unavailable Codex CLI; no clean claim",
-    "checkpoint": 15,
+    "checkpoint": 16,
     "remoteHeadVerified": true
   },
   "checkpoint9Prepared": {
@@ -70,14 +65,7 @@
       "errors": 0
     }
   },
-  "pendingNativeReviews": [
-    {
-      "task": "/root/c0_canonical_source_join_review",
-      "scope": "all358 source-candidate concordance to immutable canonical2409fields/6845cases and concrete finite C0/package gaps",
-      "report": "independent-canonical-source-join/",
-      "status": "running; no result claimed"
-    }
-  ],
+  "pendingNativeReviews": [],
   "checkpoint10Prepared": {
     "baseCommit": "ddd49add7eefd5fbbccac84360498a5ece8bae0a",
     "scope": "Swarm effective buffer cap28 independently20 verified; gateway19 source definitions29 and exact startup reader correction30 independently22 verified",
@@ -89,7 +77,21 @@
   "executionFocus": "Finish missing source definitions, consolidate into canonical inventory/matrix/definition, then full C0-A-E independent review and concrete C1-C6 package. No new generic validator infrastructure; retain historical obligations and raw evidence.",
   "sourceSupplementIndex": "docs/review/remediation/config-source-supplement-current.md",
   "activeNativeWork": [
-    "/root/c0_canonical_source_join_review"
+    {
+      "task": "/root/c0_canonical_source_join_review",
+      "scope": "four same-owner concrete policy-family contracts",
+      "status": "running"
+    },
+    {
+      "task": "/root/c1_case_oracle_review",
+      "scope": "source-specific case-family fixture contracts and two guard-only reachability obligations",
+      "status": "running"
+    },
+    {
+      "task": "/root/source_concordance_layout_recheck",
+      "scope": "exact caller selection/delivery/module/recovery/Eval contracts",
+      "status": "running"
+    }
   ],
   "completedLatestReviews": [
     {
@@ -114,8 +116,30 @@
     "currentAuthorFiles": 8,
     "canonicalSettingIds": 160,
     "linkedOriginalCaseIds": 229,
-    "incompleteCaseSpecifications": 229,
+    "incompleteCaseSpecifications": 201,
     "status": "not-ready-for-approval",
-    "implementationAuthorization": null
+    "implementationAuthorization": null,
+    "historicalC0PassedObservations": 28,
+    "futureRefinedSpecsReviewOpen": 148
+  },
+  "gapDisposition": {
+    "G1": "586 current-source associations to308 original fields integrated; original roots conserved; bounded source reviews not global acceptance",
+    "G2": "one physical original-aligned component layout independently bounded verified",
+    "G3": "proposed entry/profile wire/domain/lifecycle independently bounded verified; implementation delivery/caller ABI still open",
+    "G4": "All96 boundaries independently dispositioned;79 additions verified;52 classified without guessed link;four same-owner tunable families being specified",
+    "G5": "229 lifecycle/source-specific assessment reviewed;148 complete typed pairs/296 selections;154 strictschema and296 current-wire loader observations;two additive pair corrections reviewed;future nativeeffects notrun",
+    "G6": "exact productive caller/delivery selection contract being authored",
+    "G7": "module/run/standalone/recovery/Eval boundary contract being authored",
+    "G8": "wholeC0review remainsnotrun/notaccepted"
+  },
+  "checkpoint17Prepared": {
+    "pushed": false,
+    "sourceOverlay": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/integrated-source-concordance-02/overlay.json",
+      "sha256": "939d3b4d71bf896996267c56acef287f62690e35f29f3fe6b811308c25f7609b"
+    },
+    "originalRowsCasesRequirementsUnchanged": true,
+    "futureImplementationAndNativeEffects": "not-run",
+    "globalC0Accepted": false
   }
 }

@@ -1,0 +1,292 @@
+{
+  "listener-bind": {
+    "action": "Start actual component entry with each whole profile; request the actual configured HTTP route at its selected port; after shutdown confirm old port is closed. Supply retired PORT separately as a negative startup input. Never submit a numeric port+1 quota witness.",
+    "observer": "Bound socket address and HTTP response; startup legacy-override error before listener creation.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable."
+  },
+  "preference-authorization": {
+    "action": "Dispatch the same actual order with authenticated subject under null versus explicitly selected preference subject, resolving through authorizePipelinePreferenceSubject and actual dispatch.",
+    "observer": "Selected authorized preference source/dispatch result; invalid or competing subject rejection before worker dispatch.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable."
+  },
+  "artifact-root": {
+    "action": "Execute actual artifact creation/retrieval through ContentAddressedArtifactStore composed by control-context; use distinct isolated permitted roots.",
+    "observer": "Content address and exact file/root location; no writes in the unselected root; retained artifact identity unchanged.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable."
+  },
+  "studio-url": {
+    "action": "Execute actual agent route that creates project/document result with same identifiers.",
+    "observer": "Returned studioUrl equals selected base plus actual project/document query; no transport capacity test.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable."
+  },
+  "control-upstream-url": {
+    "action": "Make real studio request with pathname/query to two isolated actual Control services selected by whole profiles.",
+    "observer": "Actual upstream destination and forwarded path/query; unselected service receives nothing.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable."
+  },
+  "worker-dispatch-abort": {
+    "action": "Dispatch real worker operation lasting between selected deadlines, with claim and other phase budgets admitting it.",
+    "observer": "AbortSignal.timeout outcome and actual bounded transport error; capture whether remote work remains unresolved, never equate timeout with reap.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable."
+  },
+  "studio-upstream-abort": {
+    "action": "Forward actual studio request whose upstream completion straddles controlTimeoutMs; retain actual upstream cancellation behavior.",
+    "observer": "Selected setTimeout/controller.abort and returned HTTP/error; no fake timer replacing productive request.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable."
+  },
+  "ingress-active-capacity": {
+    "action": "Hold actual ordinary HTTP handlers unresolved; fill maximumActiveRequests and submit one additional ordinary request while connections/bytes/timeouts admit it.",
+    "observer": "PRISM_WORKER_CAPACITY_EXCEEDED at actual accept; admitted handlers count and subsequent release/re-admission.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable."
+  },
+  "ingress-probe-reserve": {
+    "action": "Hold active ordinary requests; submit GET /health,/bootstrap,/ready with no body/transfer-encoding through actual worker entry. Contrast ordinary request and body-bearing probe.",
+    "observer": "capacity=maximumActiveRequests+(probe?maximumProbeRequests:0); exact 503 capacity result. Probe count is not an independent maximumActiveRequests replacement.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable."
+  },
+  "ingress-connections": {
+    "action": "Hold real TCP connections at server.maxConnections with HTTP work below active-request cap; connect additional peer.",
+    "observer": "Actual socket admission/close behavior and server connection count; no guessed quota diagnostic.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable."
+  },
+  "ingress-request-timeout": {
+    "action": "Send real slow/incomplete HTTP request, comparing server.requestTimeout and headersTimeout=min(existing,requestTimeoutMs).",
+    "observer": "Actual Node HTTP request/header timeout and connection closure; distinguish header bound from body bound.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable."
+  },
+  "ingress-shutdown": {
+    "action": "Start active real requests then actual shutdown. Admission closes synchronously; cancellation/drain completes or exceeds selected deadline.",
+    "observer": "PRISM_WORKER_SHUTDOWN_DEADLINE or UNRESOLVED, closeAllConnections and durable uncertainty. Connection cutoff never proves arbitrary child reap.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable."
+  },
+  "identity-uid-gid": {
+    "action": "Run actual native supervisor child through configured identity launch, with authorized isolated host prerequisites.",
+    "observer": "OS observed uid/gid and ownership record; identity refusal before native effect; cannot model uid/gid as numeric capacity.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable."
+  },
+  "kernel-resource-policy": {
+    "action": "Launch actual native bounded phase with measured CPU, resident/cgroup memory or Linux task usage crossing selected policy; retain claim and cleanup prerequisites.",
+    "observer": "Actual sandbox/cgroup/kernel termination/resource accounting and persisted result. CPU uses cumulative CPU, not sleeping; tasks count processes/threads, not JSON items.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable."
+  },
+  "heap-floor-fraction": {
+    "action": "Launch actual provider/report child with invocation memory selecting each branch of max(minimumHeapMiB,floor(memoryBytes/1048576*heapFraction)).",
+    "observer": "Actual child argv and effective V8 heap constraint; hold floor/fraction counterpart to expose the setting. No maximum-quota witness for a minimum.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable."
+  },
+  "provider-openfiles-derived": {
+    "action": "Launch actual provider child with artifactFiles selecting floor and additive-reserve branches of max(minimumOpenFiles,artifactFiles+artifactFileDescriptorReserve).",
+    "observer": "Actual sandbox open-file argv/effective RLIMIT, safe-integer rejection; descriptor floor is not a maximum admission cap.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable."
+  },
+  "report-minimum-openfiles": {
+    "action": "Invoke actual report adapter with openFiles below/at minimumOpenFiles but <=maximumOpenFiles.",
+    "observer": "REPORT_ADAPTER_OPEN_FILE_LIMIT_TOO_LOW before child launch; compare accepted same-boundary positive.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable."
+  },
+  "report-cpu-derived": {
+    "action": "Invoke actual report adapter with selected CPU limit and max(minimumCpuTimeMs,floor(maximumTimeoutMs/1000)*1000) ceiling, measuring real child CPU where required.",
+    "observer": "REPORT_ADAPTER_CPU_LIMIT_BELOW_POLICY versus HARD_LIMIT_EXCEEDED:cpuMillis; actual sandbox CPU limit. Minimum and rounded ceiling are distinct.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable."
+  },
+  "report-memory-reserve": {
+    "action": "Invoke actual report adapter with memoryBytes around runtimeMemoryReserveBytes+3*maximumSourceBytes+2*maximumResultBytes; other limits accepted.",
+    "observer": "REPORT_ADAPTER_MEMORY_LIMIT_INCOMPATIBLE before launch; actual accepted child memory limit. Reserve is an additive compatibility formula, not task payload maximum.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable."
+  },
+  "claim-window-derived": {
+    "action": "Run actual runner-attempt-envelope with same node timeout and cleanup phases.",
+    "observer": "Original issuedAt/claim deadline: node.timeoutMs+completionPhases*cleanupTimeoutMs+claimGraceMs; capture signed persisted envelope, not sleep/no-op boundary.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable."
+  },
+  "queue-deadline-derived": {
+    "action": "Create actual runner attempt with fixed original issuance chronology.",
+    "observer": "queueDeadline=issuedAt+queueTimeoutMs in actual envelope and real queue expiration; no claim deadline substitution.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable."
+  },
+  "result-wrapper-derived": {
+    "action": "Create actual attempt envelope with same provider/report result limits.",
+    "observer": "resultBytes=providerResultLimit+reportResultLimit+workerResultWrapperBytes in signed/persisted envelope; wrapper is additive reserve, not input maximum.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable."
+  },
+  "source-reservation-derived": {
+    "action": "Run gate/staged/extracted actual preparation reservations and ledger admission with retained records.",
+    "observer": "reservation=payloadBytes+entries*sourceEntryReservationBytes; extracted adds archive.sizeBytes+maximumExtractedBytes+maximumHeaderBytes+maximumInputBytes with maximumArchiveEntries+7 entries; charged totals and rejection at source ledger. Header is not a direct payload quota here.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable."
+  },
+  "durable-store-admission": {
+    "action": "Seed identical valid retained records/evidence/journal with original identities; execute actual store admission/write at its measured byte/count/age boundary.",
+    "observer": "Real store reservation/encoded bytes/count and exact source error; lowering policy must not clear retained evidence/history or reset uncertainty.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable."
+  },
+  "preparation-slots": {
+    "action": "Hold actual preparations occupying selected slot prefix; submit additional preparation and then release one with actual receipt.",
+    "observer": "preparationSlots.slice(0,maximumActivePreparations) free-slot selection and persisted ledger; independent pool/request/source budgets admit the case.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable."
+  },
+  "admission-jobs-attempts": {
+    "action": "Submit actual jobs/attempts via remote plan service until active/queued/concurrent-attempt admission path saturates; release through actual result/cleanup.",
+    "observer": "Actual admitted/queued/refused job/attempt identity and counter, not synthetic generic counter. Freeze exact corresponding source branch.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable."
+  },
+  "pending-capabilities": {
+    "action": "Run actual provider capability requests with actual service resolving slowly; reach pending capacity then release.",
+    "observer": "Real ProviderCapabilities pending set/backpressure/refusal and drain; no mocked generic limiter.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable."
+  },
+  "poll-cadence": {
+    "action": "Keep actual operation pending under identical accepted claim/deadline; observe repeated productive polls before completion.",
+    "observer": "Real sample/poll timestamps and corresponding persisted observations; deadline-clamped cadence, not single midpoint timeout.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable."
+  },
+  "runtime-freshness": {
+    "action": "Consume actual runtime-security observation with timestamps at age and future-skew boundaries under fixed observed now and identity.",
+    "observer": "observedMs<=nowMs+maximumFutureSkewMs && nowMs-observedMs<=maximumObservationAgeMs; readiness acceptance/rejection, no output-size quota.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable."
+  },
+  "diagnostic-truncation": {
+    "action": "Execute actual failing command/tar child with controlled stderr including multibyte text and astral characters.",
+    "observer": "Actual diagnostic text .slice(0,diagnosticCodeUnits) or bounded stderr retained bytes; code units and UTF-8 bytes are different. Preserve original failure.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable."
+  },
+  "execution-search-path": {
+    "action": "Execute actual runtime-security command under selected PATH joined by path.delimiter; use real permitted isolated executables.",
+    "observer": "Resolved actual executable/process environment; no credential values in evidence, no synthetic string-only assertion.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable."
+  },
+  "kubectl-executable": {
+    "action": "Execute actual capability operation using selected permitted kubectl binary in isolated authorized environment.",
+    "observer": "Actual exec path and command result; shell-free argv. Cluster proof remains blocked absent explicitly authorized cluster inputs.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable."
+  },
+  "lease-protocol": {
+    "action": "Execute actual lease read/patch through capability caller with selected coherent apiGroup/apiVersion.",
+    "observer": "Actual requested lease GVK and persisted owner/claim transfer; compatibility is protocol authority, not scalar threshold.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable."
+  },
+  "namespace-prefix-policy": {
+    "action": "Invoke actual fixture/exposure/runtime-security capability with namespace accepted by one full profile and denied by the other; preserve signed lease scope.",
+    "observer": "Exact namespace-policy rejection before cluster mutation; allowed prefix delimiter/source rule, not arbitrary substring matching.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable."
+  },
+  "registry-prefix-policy": {
+    "action": "Prepare actual immutable image manifest with allowed/disallowed repository prefix; keep digest/security/service requirements valid.",
+    "observer": "Manifest inspection/capability image acceptance or source-specific registry denial before apply; no invented mutable image.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable."
+  },
+  "secret-reference-policy": {
+    "action": "Prepare actual fixture referencing permitted versus denied Secret name with same manifest, never secret bytes.",
+    "observer": "Actual reference allow-list/entry-count rejection before credentials read/apply; no lexical settings-only assertion.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable."
+  },
+  "pvc-storage-policy": {
+    "action": "Inspect real valid fixture PVCs with class/default selection and exact Kubernetes quantities; exercise per-claim and aggregate total including replicas.",
+    "observer": "validatePersistentVolumeClaim/inspection result and exact PVC denial; total includes copies; class/default boolean is policy, not numeric cap.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable."
+  },
+  "service-account-subject": {
+    "action": "Construct actual production cluster options then capability authorization for same controllerNamespace with selected runner/credentialReader account.",
+    "observer": "runnerSubject or credentialReaderSubject=namespace/account and actual RBAC boundary; no fabricated identities or credential access.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable."
+  },
+  "host-suffix-policy": {
+    "action": "Invoke actual exposure with normalized allowed/denied host suffix under same authorized lease and owner.",
+    "observer": "Actual suffix predicate and denial before exposure effect; retain original release/replay identity.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable."
+  },
+  "manifest-parser-bounds": {
+    "action": "Pass actual YAML manifest through boundedManifestDocuments/flattenDocuments with controlled depth/nodes/aliases/visits/pending/resource count; other grammar and safety constraints admit it.",
+    "observer": "Exact parser/traversal/resource boundary and error, not settings constructor alone. Each bound needs its own shaped graph and counting convention.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable."
+  },
+  "manifest-output-multiplier": {
+    "action": "Execute actual fixture kubectl read/command path with output limit maximumManifestBytes*commandOutputManifestMultiplier.",
+    "observer": "Actual child maxBuffer/serialized output bound and safe product validation; multiplier is not itself a byte maximum.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable."
+  },
+  "retention-policy": {
+    "action": "Prepare actual fixture lease with requested retention near selected limit, preserving owner/deadline/release semantics.",
+    "observer": "Actual accepted lease retention or policy denial; integer seconds and real cleanup chronology, not wall-ms confusion.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable."
+  },
+  "report-details": {
+    "action": "Run registered actual report adapter yielding valid cases/findings; isolate total cases, total findings, and per-case findings.",
+    "observer": "REPORT_ADAPTER_CASE_LIMIT/FINDING_LIMIT/CASE_FINDING_LIMIT and original contract limits (5000/5000/100), no weakened schemas.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable."
+  },
+  "bounded-wire-bytes": {
+    "action": "Drive actual owning productive serialization/read/write with witness sized by its actual encoded/framed byte expression and all competing caps admitting it.",
+    "observer": "Measured exact encoded byte count and actual matching source rejection/positive; unframed input length is insufficient. Freeze exact encoding and diagnostic before harness.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable."
+  },
+  "phase-timeout-cleanup": {
+    "action": "Drive actual named execution/cleanup/drain/close/termination/acknowledgement phase with same original claim and state; completion straddles selected bound.",
+    "observer": "Actual corresponding timer, abort/escalation/error and persisted uncertainty; timeout is not cleanup success. Freeze phase and competing deadlines before harness.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable."
+  },
+  "replay-history-capacity": {
+    "action": "Use actual LocalWorkerRuntime accepted-attempt identity set at replayLimit then resubmit old/new attempts without erasing history.",
+    "observer": "acceptedAttemptIds.size>=replayLimit branch and actual replay/overflow behavior; original attempt IDs retained.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable."
+  },
+  "local-worker-drain-cancel": {
+    "action": "Start real local worker attempt; close using drain then cancellation stage and actual unresolved work.",
+    "observer": "settleWithin(initial,drainTimeoutMs) then settleWithin(cancelled,cancellationTimeoutMs); actual termination/error/uncertainty, no generic sleep proof.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable."
+  },
+  "preparation-projection-dormant": {
+    "action": "Validate actual preparation settings, inspect projection and search named productive consumers; for DORMANT assert bounded absence at current source, not invented execution effect.",
+    "observer": "Source-specific validation/projection and honest dormant obligation; EFFECT needs actual completion allowance consumer.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable."
+  },
+  "whole-owner-validation": {
+    "action": "Load each whole selected owner through real bundle/Ajv and semantic validator; remove required fields, add unknown/retired equal-valued input, and violate one actual relation while complete positive reaches same boundary.",
+    "observer": "Exact source schema/semantic diagnostic before listener/native/cluster effect; input generation identity and same-boundary positive.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable."
+  },
+  "whole-owner-effect-aggregate": {
+    "action": "Decompose owner aggregate into linked per-field productive families; execute whole coherent selected generation, not arbitrary union of isolated deltas.",
+    "observer": "All linked individual observers plus generation identity; aggregate ID is incomplete until finite member roster and executable collection are frozen.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable."
+  },
+  "delivery-generation": {
+    "action": "Materialize complete component authors plus Buster selected runtime and system entry through actual Helm/OCI/buildcontext/release callers; trace every generated byte.",
+    "observer": "Chart ConfigMap/mount/image payload and CI/release caller closure; missing/old/equal-valued authorities rejected. Existing delivery package must supply finite command/profile/source roster.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable."
+  },
+  "semantic-mutations": {
+    "action": "Mutate each actual consumer selection/predicate/formula in isolated future authorized tree, run same positive/negative productive case.",
+    "observer": "Original case kills corresponding mutant at intended boundary; structural/name checks cannot satisfy F-MUT. Finite real mutant roster remains needed.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable."
+  },
+  "later-c5-binding": {
+    "action": "Preserve C5 original generation before dispatch across publish/crash/parallel/recovery/cleanup/Eval as named in original case.",
+    "observer": "Original durable closure/receipts/claim/counter/uncertainty and fixed Eval generation; never merge this later obligation into C1 authorization.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable."
+  },
+  "descriptor-ceiling": {
+    "action": "Launch actual report/preparation native child through sandbox with selected maximumOpenFiles; real descriptor-opening task crosses that RLIMIT while other limits admit it.",
+    "observer": "Actual sandbox argv/RLIMIT and OS EMFILE or child outcome; descriptors are neither wire bytes nor task count.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable."
+  },
+  "preparation-client-pending": {
+    "action": "Hold actual preparation client operations pending, submit at maximumPendingAdmissions and one beyond, then release through real response.",
+    "observer": "Actual client pending admission/backpressure and error; use named client source branch, not active preparation slots.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable."
+  },
+  "archive-list-extract": {
+    "action": "Execute real tar listing/extraction under preparation-archive with controlled entry count, listing line bytes, and summed extracted bytes; keep archive/request caps admitting it.",
+    "observer": "Actual BUSTER_REMOTE_ARCHIVE_ENTRY_LIMIT or cited line/size boundary; tar stderr truncation preserves original failure, and entry count is not byte size.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable."
+  },
+  "historical-c0-observation": {
+    "action": "Preserve original recorded C0 command/raw observation and its exact bounded definition/source scope.",
+    "observer": "Historical passed result remains passed; no current source/runtime/global acceptance inferred.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable."
+  },
+  "qc-source-specific": {
+    "action": "Use actual QC field source, corresponding validator/formatter/history/storage/tar/secret representation path and original whole typed profile package.",
+    "observer": "Exact source-derived QC boundary; concrete fixture shape/encoding/oracle must be frozen, not replaced by generic maximum formula.",
+    "priorState": "Same task and identities; new isolated actual component per whole selected profile; preserve retained state where the reader is durable."
+  }
+}

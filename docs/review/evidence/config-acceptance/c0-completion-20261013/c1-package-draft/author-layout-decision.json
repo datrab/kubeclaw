@@ -1,0 +1,2619 @@
+{
+  "finding": "G2",
+  "status": "proposal conflict corrected; independent recheck pending",
+  "originalCanonicalRowsUnchanged": true,
+  "affectedOriginalSettingIds": [
+    {
+      "settingId": "CMP-prism-control-pipelinePreferenceSubject",
+      "originalTargetAuthorRef": {
+        "path": "config/components/prism-control.config.json",
+        "entry": "config/pipeline.config.json components.prism-control",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/prism-control.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/prism-control.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-prism-control-artifactRoot",
+      "originalTargetAuthorRef": {
+        "path": "config/components/prism-control.config.json",
+        "entry": "config/pipeline.config.json components.prism-control",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/prism-control.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/prism-control.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-prism-control-studioPublicUrl",
+      "originalTargetAuthorRef": {
+        "path": "config/components/prism-control.config.json",
+        "entry": "config/pipeline.config.json components.prism-control",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/prism-control.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/prism-control.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-prism-control-port",
+      "originalTargetAuthorRef": {
+        "path": "config/components/prism-control.config.json",
+        "entry": "config/pipeline.config.json components.prism-control",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/prism-control.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/prism-control.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-prism-control-dispatchTimeoutMs",
+      "originalTargetAuthorRef": {
+        "path": "config/components/prism-control.config.json",
+        "entry": "config/pipeline.config.json components.prism-control",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/prism-control.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/prism-control.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-prism-control-schemaVersion",
+      "originalTargetAuthorRef": {
+        "path": "config/components/prism-control.config.json",
+        "entry": "config/pipeline.config.json components.prism-control",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/prism-control.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/prism-control.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-prism-control-owner",
+      "originalTargetAuthorRef": {
+        "path": "config/components/prism-control.config.json",
+        "entry": "config/pipeline.config.json components.prism-control",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/prism-control.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/prism-control.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-prism-studio-port",
+      "originalTargetAuthorRef": {
+        "path": "config/components/prism-studio.config.json",
+        "entry": "config/pipeline.config.json components.prism-studio",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/prism-studio.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/prism-studio.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-prism-studio-controlTimeoutMs",
+      "originalTargetAuthorRef": {
+        "path": "config/components/prism-studio.config.json",
+        "entry": "config/pipeline.config.json components.prism-studio",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/prism-studio.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/prism-studio.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-prism-studio-controlUrl",
+      "originalTargetAuthorRef": {
+        "path": "config/components/prism-studio.config.json",
+        "entry": "config/pipeline.config.json components.prism-studio",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/prism-studio.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/prism-studio.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-prism-studio-schemaVersion",
+      "originalTargetAuthorRef": {
+        "path": "config/components/prism-studio.config.json",
+        "entry": "config/pipeline.config.json components.prism-studio",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/prism-studio.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/prism-studio.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-prism-studio-owner",
+      "originalTargetAuthorRef": {
+        "path": "config/components/prism-studio.config.json",
+        "entry": "config/pipeline.config.json components.prism-studio",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/prism-studio.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/prism-studio.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-prism-worker-ingress.port",
+      "originalTargetAuthorRef": {
+        "path": "config/components/prism-worker.config.json",
+        "entry": "config/pipeline.config.json components.prism-worker",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/prism-worker.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/prism-worker.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-prism-worker-ingress.maximumActiveRequests",
+      "originalTargetAuthorRef": {
+        "path": "config/components/prism-worker.config.json",
+        "entry": "config/pipeline.config.json components.prism-worker",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/prism-worker.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/prism-worker.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-prism-worker-ingress.maximumProbeRequests",
+      "originalTargetAuthorRef": {
+        "path": "config/components/prism-worker.config.json",
+        "entry": "config/pipeline.config.json components.prism-worker",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/prism-worker.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/prism-worker.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-prism-worker-ingress.maximumConnections",
+      "originalTargetAuthorRef": {
+        "path": "config/components/prism-worker.config.json",
+        "entry": "config/pipeline.config.json components.prism-worker",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/prism-worker.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/prism-worker.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-prism-worker-ingress.requestTimeoutMs",
+      "originalTargetAuthorRef": {
+        "path": "config/components/prism-worker.config.json",
+        "entry": "config/pipeline.config.json components.prism-worker",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/prism-worker.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/prism-worker.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-prism-worker-ingress.shutdownTimeoutMs",
+      "originalTargetAuthorRef": {
+        "path": "config/components/prism-worker.config.json",
+        "entry": "config/pipeline.config.json components.prism-worker",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/prism-worker.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/prism-worker.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-prism-worker-ingress.maximumInputBytes",
+      "originalTargetAuthorRef": {
+        "path": "config/components/prism-worker.config.json",
+        "entry": "config/pipeline.config.json components.prism-worker",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/prism-worker.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/prism-worker.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-prism-worker-supervisor.uid",
+      "originalTargetAuthorRef": {
+        "path": "config/components/prism-worker.config.json",
+        "entry": "config/pipeline.config.json components.prism-worker",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/prism-worker.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/prism-worker.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-prism-worker-supervisor.gid",
+      "originalTargetAuthorRef": {
+        "path": "config/components/prism-worker.config.json",
+        "entry": "config/pipeline.config.json components.prism-worker",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/prism-worker.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/prism-worker.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-prism-worker-supervisor.maximumOwnershipRecords",
+      "originalTargetAuthorRef": {
+        "path": "config/components/prism-worker.config.json",
+        "entry": "config/pipeline.config.json components.prism-worker",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/prism-worker.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/prism-worker.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-prism-worker-supervisor.maximumOwnershipBytes",
+      "originalTargetAuthorRef": {
+        "path": "config/components/prism-worker.config.json",
+        "entry": "config/pipeline.config.json components.prism-worker",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/prism-worker.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/prism-worker.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-prism-worker-supervisor.maximumOutputBytes",
+      "originalTargetAuthorRef": {
+        "path": "config/components/prism-worker.config.json",
+        "entry": "config/pipeline.config.json components.prism-worker",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/prism-worker.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/prism-worker.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-prism-worker-supervisor.maximumJournalBytes",
+      "originalTargetAuthorRef": {
+        "path": "config/components/prism-worker.config.json",
+        "entry": "config/pipeline.config.json components.prism-worker",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/prism-worker.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/prism-worker.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-prism-worker-supervisor.pollIntervalMs",
+      "originalTargetAuthorRef": {
+        "path": "config/components/prism-worker.config.json",
+        "entry": "config/pipeline.config.json components.prism-worker",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/prism-worker.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/prism-worker.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-prism-worker-supervisor.drainTimeoutMs",
+      "originalTargetAuthorRef": {
+        "path": "config/components/prism-worker.config.json",
+        "entry": "config/pipeline.config.json components.prism-worker",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/prism-worker.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/prism-worker.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-prism-worker-supervisor.closeTimeoutMs",
+      "originalTargetAuthorRef": {
+        "path": "config/components/prism-worker.config.json",
+        "entry": "config/pipeline.config.json components.prism-worker",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/prism-worker.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/prism-worker.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-prism-worker-schemaVersion",
+      "originalTargetAuthorRef": {
+        "path": "config/components/prism-worker.config.json",
+        "entry": "config/pipeline.config.json components.prism-worker",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/prism-worker.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/prism-worker.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-prism-worker-owner",
+      "originalTargetAuthorRef": {
+        "path": "config/components/prism-worker.config.json",
+        "entry": "config/pipeline.config.json components.prism-worker",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/prism-worker.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/prism-worker.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-prism-execution-resourcePolicy.cpuTimeMs",
+      "originalTargetAuthorRef": {
+        "path": "config/components/prism-execution.config.json",
+        "entry": "config/pipeline.config.json components.prism-execution",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/prism-execution.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/prism-execution.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-prism-execution-resourcePolicy.memoryBytes",
+      "originalTargetAuthorRef": {
+        "path": "config/components/prism-execution.config.json",
+        "entry": "config/pipeline.config.json components.prism-execution",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/prism-execution.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/prism-execution.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-prism-execution-resourcePolicy.tasks",
+      "originalTargetAuthorRef": {
+        "path": "config/components/prism-execution.config.json",
+        "entry": "config/pipeline.config.json components.prism-execution",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/prism-execution.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/prism-execution.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-prism-execution-maximumResultBytes",
+      "originalTargetAuthorRef": {
+        "path": "config/components/prism-execution.config.json",
+        "entry": "config/pipeline.config.json components.prism-execution",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/prism-execution.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/prism-execution.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-prism-execution-schemaVersion",
+      "originalTargetAuthorRef": {
+        "path": "config/components/prism-execution.config.json",
+        "entry": "config/pipeline.config.json components.prism-execution",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/prism-execution.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/prism-execution.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-prism-execution-owner",
+      "originalTargetAuthorRef": {
+        "path": "config/components/prism-execution.config.json",
+        "entry": "config/pipeline.config.json components.prism-execution",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/prism-execution.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/prism-execution.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-preparation.resourcePolicy.cpuTimeMs",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-preparation.resourcePolicy.memoryBytes",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-preparation.resourcePolicy.tasks",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-preparation.timeoutMs",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-preparation.cleanupTimeoutMs",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-preparation.maximumActivePreparations",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-preparation.maximumPendingAdmissions",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-preparation.maximumRequestBytes",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-preparation.maximumArchiveBytes",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-preparation.maximumExtractedBytes",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-preparation.maximumHeaderBytes",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-preparation.maximumSourceBytes",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-preparation.maximumMetadataBytes",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-preparation.maximumRecords",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-preparation.maximumOwnershipBytes",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-preparation.maximumJournalBytes",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-preparation.maximumInputBytes",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-preparation.maximumOutputBytes",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-preparation.maximumResultBytes",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-preparation.pollIntervalMs",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-preparation.drainTimeoutMs",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-preparation.closeTimeoutMs",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-preparation.tarTimeoutMs",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-preparation.maximumArchiveEntries",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-preparation.maximumListingLineBytes",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-preparation.maximumTarStderrBytes",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-preparation.maximumSourceEntries",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-preparation.sourceEntryReservationBytes",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-preparation.maximumOpenFiles",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-admission.maximumActiveJobs",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-admission.maximumQueuedJobs",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-admission.maximumConcurrentAttempts",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-dependencyReadiness.maximumExecutionMs",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-dependencyReadiness.maximumOutputBytes",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-execution.provider.cleanupTimeoutMs",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-execution.provider.maximumResultBytes",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-execution.provider.claimGraceMs",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-execution.provider.queueTimeoutMs",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-execution.provider.workerResultWrapperBytes",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-execution.provider.maximumProtocolBytes",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-execution.provider.terminationGraceMs",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-execution.provider.terminationTimeoutMs",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-execution.provider.capabilityDrainTimeoutMs",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-execution.provider.minimumHeapMiB",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-execution.provider.heapFraction",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-execution.provider.maximumPendingCapabilities",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-execution.provider.minimumOpenFiles",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-execution.provider.artifactFileDescriptorReserve",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-execution.reports.maximumAggregateResultBytes",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-execution.reports.maximumSourceBytes",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-execution.reports.maximumCases",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-execution.reports.maximumFindings",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-execution.reports.maximumCaseFindings",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-execution.reports.maximumTimeoutMs",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-execution.reports.memoryBytes",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-execution.reports.minimumCpuTimeMs",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-execution.reports.maximumOpenFiles",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-execution.reports.minimumOpenFiles",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-execution.reports.minimumHeapMiB",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-execution.reports.heapFraction",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-execution.reports.runtimeMemoryReserveBytes",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-execution.observation.resourceSampleIntervalMs",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-execution.observation.processSampleIntervalMs",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-execution.stores.attempts.maximumEvidenceObjects",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-execution.stores.attempts.maximumEvidenceBytes",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-execution.stores.attempts.maximumEvidenceObjectBytes",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-execution.stores.attempts.maximumResults",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-execution.stores.attempts.maximumClosures",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-execution.stores.attempts.maximumMetadataBytes",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-execution.stores.attempts.maximumPendingEvidenceAgeMs",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-execution.stores.admission.maximumIngressBytes",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-execution.stores.admission.maximumRecords",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-execution.stores.admission.maximumBytes",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-execution.stores.admission.maximumQuarantineRecords",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-execution.stores.admission.maximumQuarantineBytes",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-execution.processInput.cleanupTimeoutMs",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-execution.processInput.terminationGraceMs",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-execution.processInput.acknowledgementPollMs",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-clusterInvokers.shared.kubectlExecutable",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-clusterInvokers.shared.leaseApiGroup",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-clusterInvokers.shared.leaseApiVersion",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-clusterInvokers.kubernetesFixture.allowedNamespacePrefixes",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-clusterInvokers.kubernetesFixture.registryRepositoryPrefixes",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-clusterInvokers.kubernetesFixture.allowedSecretReferences",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-clusterInvokers.kubernetesFixture.allowedStorageClasses",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-clusterInvokers.kubernetesFixture.allowDefaultStorageClass",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-clusterInvokers.kubernetesFixture.runnerServiceAccount",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-clusterInvokers.kubernetesFixture.credentialReaderServiceAccount",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-clusterInvokers.kubernetesFixture.maximumManifestBytes",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-clusterInvokers.kubernetesFixture.maximumResources",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-clusterInvokers.kubernetesFixture.maximumPersistentVolumeClaimBytes",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-clusterInvokers.kubernetesFixture.maximumPersistentVolumeTotalBytes",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-clusterInvokers.kubernetesFixture.maximumRetentionSeconds",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-clusterInvokers.kubernetesFixture.maximumExecutionMs",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-clusterInvokers.kubernetesFixture.pollIntervalMs",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-clusterInvokers.kubernetesFixture.shortCommandTimeoutMs",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-clusterInvokers.kubernetesFixture.commandOutputManifestMultiplier",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-clusterInvokers.kubernetesFixture.diagnosticCodeUnits",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-clusterInvokers.kubernetesFixture.manifest.maximumNodes",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-clusterInvokers.kubernetesFixture.manifest.maximumDepth",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-clusterInvokers.kubernetesFixture.manifest.maximumAliases",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-clusterInvokers.kubernetesFixture.manifest.maximumFlattenVisits",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-clusterInvokers.kubernetesFixture.manifest.maximumFlattenPending",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-clusterInvokers.tailscaleExposure.allowedNamespacePrefixes",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-clusterInvokers.tailscaleExposure.allowedHostSuffixes",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-clusterInvokers.tailscaleExposure.maximumExecutionMs",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-clusterInvokers.tailscaleExposure.pollIntervalMs",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-clusterInvokers.tailscaleExposure.shortCommandTimeoutMs",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-clusterInvokers.tailscaleExposure.maximumCommandOutputBytes",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-clusterInvokers.runtimeSecurity.allowedNamespacePrefixes",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-clusterInvokers.runtimeSecurity.maximumExecutionMs",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-clusterInvokers.runtimeSecurity.maximumOutputBytes",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-clusterInvokers.runtimeSecurity.pollIntervalMs",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-clusterInvokers.runtimeSecurity.maximumObservationAgeMs",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-clusterInvokers.runtimeSecurity.maximumFutureSkewMs",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-clusterInvokers.runtimeSecurity.diagnosticCodeUnits",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-clusterInvokers.runtimeSecurity.executableSearchPath",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-schemaVersion",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-owner",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "entry": "config/pipeline.config.json components.buster-engine",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/buster-engine.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-worker-core-localRuntime.drainTimeoutMs",
+      "originalTargetAuthorRef": {
+        "path": "config/components/worker-core.config.json",
+        "entry": "config/pipeline.config.json components.worker-core",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/worker-core.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/worker-core.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-worker-core-localRuntime.cancellationTimeoutMs",
+      "originalTargetAuthorRef": {
+        "path": "config/components/worker-core.config.json",
+        "entry": "config/pipeline.config.json components.worker-core",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/worker-core.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/worker-core.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-worker-core-localRuntime.replayLimit",
+      "originalTargetAuthorRef": {
+        "path": "config/components/worker-core.config.json",
+        "entry": "config/pipeline.config.json components.worker-core",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/worker-core.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/worker-core.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-worker-core-schemaVersion",
+      "originalTargetAuthorRef": {
+        "path": "config/components/worker-core.config.json",
+        "entry": "config/pipeline.config.json components.worker-core",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/worker-core.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/worker-core.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-worker-core-owner",
+      "originalTargetAuthorRef": {
+        "path": "config/components/worker-core.config.json",
+        "entry": "config/pipeline.config.json components.worker-core",
+        "status": "prospective root proposal; not implemented",
+        "projectionPaths": [
+          "charts/kubeclaw/files/config/worker-core.config.json"
+        ],
+        "rootJustification": "Existing canonical Helm .Files.Get author location is charts/kubeclaw/files/config; proposed config/ separates authored values from generated chart/image input. C1 must implement real explicit materialization and CI/buildcontext/release callers together; moving file alone breaks consumers. No second editable chart copy."
+      },
+      "effectiveProposedAuthorPath": "config/components/worker-core.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-WCORE-INPUT-BYTES",
+      "originalTargetAuthorRef": {
+        "path": "config/components/worker-core.config.json",
+        "field": "settings.runtime.input_bytes",
+        "proposal": "one explicit WorkerCore runtime budget; shared producer/consumer projection",
+        "implemented": false
+      },
+      "effectiveProposedAuthorPath": "config/components/worker-core.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-WCORE-JSON-NODES",
+      "originalTargetAuthorRef": {
+        "path": "config/components/worker-core.config.json",
+        "field": "settings.runtime.json_nodes",
+        "proposal": "one explicit WorkerCore runtime budget; shared producer/consumer projection",
+        "implemented": false
+      },
+      "effectiveProposedAuthorPath": "config/components/worker-core.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-WCORE-JSON-DEPTH",
+      "originalTargetAuthorRef": {
+        "path": "config/components/worker-core.config.json",
+        "field": "settings.runtime.json_depth",
+        "proposal": "one explicit WorkerCore runtime budget; shared producer/consumer projection",
+        "implemented": false
+      },
+      "effectiveProposedAuthorPath": "config/components/worker-core.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-WCORE-LOG-PARTS",
+      "originalTargetAuthorRef": {
+        "path": "config/components/worker-core.config.json",
+        "field": "settings.runtime.log_parts",
+        "proposal": "one explicit WorkerCore runtime budget; shared producer/consumer projection",
+        "implemented": false
+      },
+      "effectiveProposedAuthorPath": "config/components/worker-core.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-WCORE-RETAIN-LOGS",
+      "originalTargetAuthorRef": {
+        "path": "config/components/worker-core.config.json",
+        "field": "settings.runtime.retain_logs",
+        "proposal": "one explicit WorkerCore runtime budget; shared producer/consumer projection",
+        "implemented": false,
+        "scopeClarification": "One map in one Core author with six actual instance keys, no separate agent/native/Buster authors or omitted fallback."
+      },
+      "effectiveProposedAuthorPath": "config/components/worker-core.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-WCORE-DRAIN-POLL-MS",
+      "originalTargetAuthorRef": {
+        "path": "config/components/worker-core.config.json",
+        "field": "settings.runtime.drain_poll_ms",
+        "proposal": "one explicit WorkerCore runtime budget; shared producer/consumer projection",
+        "implemented": false
+      },
+      "effectiveProposedAuthorPath": "config/components/worker-core.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-WCORE-POOL-FILE-BYTES",
+      "originalTargetAuthorRef": {
+        "path": "config/components/worker-core.config.json",
+        "field": "settings.runtime.pool_file_bytes",
+        "proposal": "one explicit WorkerCore runtime budget; shared producer/consumer projection",
+        "implemented": false
+      },
+      "effectiveProposedAuthorPath": "config/components/worker-core.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-WCORE-RUNTIME-IDENTITY-FILE-BYTES",
+      "originalTargetAuthorRef": {
+        "path": "config/components/worker-core.config.json",
+        "field": "settings.runtime.runtime_identity_file_bytes",
+        "proposal": "one explicit WorkerCore runtime budget; shared producer/consumer projection",
+        "implemented": false
+      },
+      "effectiveProposedAuthorPath": "config/components/worker-core.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-WCORE-NODE-IDENTITY-FILE-BYTES",
+      "originalTargetAuthorRef": {
+        "path": "config/components/worker-core.config.json",
+        "field": "settings.runtime.node_identity_file_bytes",
+        "proposal": "one explicit WorkerCore runtime budget; shared producer/consumer projection",
+        "implemented": false
+      },
+      "effectiveProposedAuthorPath": "config/components/worker-core.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-WCORE-JOURNAL-RECORD-BYTES",
+      "originalTargetAuthorRef": {
+        "path": "config/components/worker-core.config.json",
+        "field": "settings.runtime.journal_record_bytes",
+        "proposal": "one explicit WorkerCore runtime budget; shared producer/consumer projection",
+        "implemented": false
+      },
+      "effectiveProposedAuthorPath": "config/components/worker-core.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-WCORE-JOURNAL-DIAGNOSTIC-UNITS",
+      "originalTargetAuthorRef": {
+        "path": "config/components/worker-core.config.json",
+        "field": "settings.runtime.journal_diagnostic_units",
+        "proposal": "one explicit WorkerCore runtime budget; shared producer/consumer projection",
+        "implemented": false
+      },
+      "effectiveProposedAuthorPath": "config/components/worker-core.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-WCORE-OWNERSHIP-DIAGNOSTIC-UNITS",
+      "originalTargetAuthorRef": {
+        "path": "config/components/worker-core.config.json",
+        "field": "settings.runtime.ownership_diagnostic_units",
+        "proposal": "one explicit WorkerCore runtime budget; shared producer/consumer projection",
+        "implemented": false
+      },
+      "effectiveProposedAuthorPath": "config/components/worker-core.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-WCORE-LOCK-STRIPES",
+      "originalTargetAuthorRef": {
+        "path": "config/components/worker-core.config.json",
+        "field": "settings.runtime.journalLockHexDigits",
+        "status": "proposed R closure; not implemented"
+      },
+      "effectiveProposedAuthorPath": "config/components/worker-core.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-preparation.attemptLogBytes",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "field": "settings.preparation.attemptLogBytes",
+        "entry": "pipeline.config.json selected whole Buster author",
+        "implemented": false
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-preparation.attemptEvidenceBytes",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "field": "settings.preparation.attemptEvidenceBytes",
+        "entry": "pipeline.config.json selected whole Buster author",
+        "implemented": false
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-preparation.attemptEvidenceFiles",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "field": "settings.preparation.attemptEvidenceFiles",
+        "entry": "pipeline.config.json selected whole Buster author",
+        "implemented": false
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    },
+    {
+      "settingId": "CMP-buster-engine-preparation.completionPhaseAllowance",
+      "originalTargetAuthorRef": {
+        "path": "config/components/buster-engine.config.json",
+        "field": "settings.preparation.completionPhaseAllowance",
+        "entry": "pipeline.config.json selected whole Buster author",
+        "implemented": false
+      },
+      "effectiveProposedAuthorPath": "config/components/buster-engine.config.json",
+      "entry": "config/pipeline.config.json",
+      "status": "same original proposed physical author; no original row mutation or implementation"
+    }
+  ],
+  "supersededDraftSha256": {
+    "scope.json": "d4f6a4948e5ea7b5e595b857e0b448eeb818520b5823fa3a99f712767aa0329c",
+    "config-c1-package-current.md": "e2da7f4063783d4c90b5712b94eed28f72a98cf99d48433d798eecff050a4382"
+  },
+  "implementationAuthorization": null,
+  "completeRuntimeProfileAuthor": "config/components/buster-engine.config.json#/profiles/runtime",
+  "profileWrapperVersion": "pipeline-component.v2",
+  "samePhysicalAuthorForAllBusterProfiles": true
+}

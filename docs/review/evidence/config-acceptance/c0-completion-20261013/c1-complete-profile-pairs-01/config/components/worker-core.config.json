@@ -1,0 +1,42 @@
+{
+  "schemaVersion": "pipeline-component.v2",
+  "owner": "worker-core",
+  "profiles": {
+    "baseline-A": {
+      "settings": {
+        "localRuntime": {
+          "drainTimeoutMs": 300000,
+          "cancellationTimeoutMs": 30000,
+          "replayLimit": 65536
+        }
+      }
+    },
+    "b-ed27dbea03e3ab7a": {
+      "settings": {
+        "localRuntime": {
+          "drainTimeoutMs": 225000,
+          "cancellationTimeoutMs": 30000,
+          "replayLimit": 65536
+        }
+      }
+    },
+    "b-7c97784a5f685f15": {
+      "settings": {
+        "localRuntime": {
+          "drainTimeoutMs": 300000,
+          "cancellationTimeoutMs": 22500,
+          "replayLimit": 65536
+        }
+      }
+    },
+    "b-5dbcdd3861453b65": {
+      "settings": {
+        "localRuntime": {
+          "drainTimeoutMs": 300000,
+          "cancellationTimeoutMs": 30000,
+          "replayLimit": 49152
+        }
+      }
+    }
+  }
+}

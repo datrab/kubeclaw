@@ -1,0 +1,414 @@
+{
+  "schemaVersion": "pipeline-component.v2",
+  "owner": "prism-worker",
+  "profiles": {
+    "baseline-A": {
+      "settings": {
+        "ingress": {
+          "port": 8080,
+          "maximumActiveRequests": 16,
+          "maximumProbeRequests": 4,
+          "maximumConnections": 128,
+          "requestTimeoutMs": 120000,
+          "shutdownTimeoutMs": 120000,
+          "maximumInputBytes": 16777216
+        },
+        "supervisor": {
+          "uid": 1000,
+          "gid": 1000,
+          "maximumOwnershipRecords": 65536,
+          "maximumOwnershipBytes": 67108864,
+          "maximumOutputBytes": 33554432,
+          "maximumJournalBytes": 68719476736,
+          "pollIntervalMs": 20,
+          "drainTimeoutMs": 10000,
+          "closeTimeoutMs": 105000
+        }
+      }
+    },
+    "b-678f38a4eceda45d": {
+      "settings": {
+        "ingress": {
+          "port": 6060,
+          "maximumActiveRequests": 16,
+          "maximumProbeRequests": 4,
+          "maximumConnections": 128,
+          "requestTimeoutMs": 120000,
+          "shutdownTimeoutMs": 120000,
+          "maximumInputBytes": 16777216
+        },
+        "supervisor": {
+          "uid": 1000,
+          "gid": 1000,
+          "maximumOwnershipRecords": 65536,
+          "maximumOwnershipBytes": 67108864,
+          "maximumOutputBytes": 33554432,
+          "maximumJournalBytes": 68719476736,
+          "pollIntervalMs": 20,
+          "drainTimeoutMs": 10000,
+          "closeTimeoutMs": 105000
+        }
+      }
+    },
+    "b-4712a6b986d58bf5": {
+      "settings": {
+        "ingress": {
+          "port": 8080,
+          "maximumActiveRequests": 12,
+          "maximumProbeRequests": 4,
+          "maximumConnections": 128,
+          "requestTimeoutMs": 120000,
+          "shutdownTimeoutMs": 120000,
+          "maximumInputBytes": 16777216
+        },
+        "supervisor": {
+          "uid": 1000,
+          "gid": 1000,
+          "maximumOwnershipRecords": 65536,
+          "maximumOwnershipBytes": 67108864,
+          "maximumOutputBytes": 33554432,
+          "maximumJournalBytes": 68719476736,
+          "pollIntervalMs": 20,
+          "drainTimeoutMs": 10000,
+          "closeTimeoutMs": 105000
+        }
+      }
+    },
+    "b-c90d466eda14af5a": {
+      "settings": {
+        "ingress": {
+          "port": 8080,
+          "maximumActiveRequests": 16,
+          "maximumProbeRequests": 3,
+          "maximumConnections": 128,
+          "requestTimeoutMs": 120000,
+          "shutdownTimeoutMs": 120000,
+          "maximumInputBytes": 16777216
+        },
+        "supervisor": {
+          "uid": 1000,
+          "gid": 1000,
+          "maximumOwnershipRecords": 65536,
+          "maximumOwnershipBytes": 67108864,
+          "maximumOutputBytes": 33554432,
+          "maximumJournalBytes": 68719476736,
+          "pollIntervalMs": 20,
+          "drainTimeoutMs": 10000,
+          "closeTimeoutMs": 105000
+        }
+      }
+    },
+    "b-8ef455b996873bd9": {
+      "settings": {
+        "ingress": {
+          "port": 8080,
+          "maximumActiveRequests": 16,
+          "maximumProbeRequests": 4,
+          "maximumConnections": 96,
+          "requestTimeoutMs": 120000,
+          "shutdownTimeoutMs": 120000,
+          "maximumInputBytes": 16777216
+        },
+        "supervisor": {
+          "uid": 1000,
+          "gid": 1000,
+          "maximumOwnershipRecords": 65536,
+          "maximumOwnershipBytes": 67108864,
+          "maximumOutputBytes": 33554432,
+          "maximumJournalBytes": 68719476736,
+          "pollIntervalMs": 20,
+          "drainTimeoutMs": 10000,
+          "closeTimeoutMs": 105000
+        }
+      }
+    },
+    "b-d08fb7ea0b3b72cd": {
+      "settings": {
+        "ingress": {
+          "port": 8080,
+          "maximumActiveRequests": 16,
+          "maximumProbeRequests": 4,
+          "maximumConnections": 128,
+          "requestTimeoutMs": 90000,
+          "shutdownTimeoutMs": 120000,
+          "maximumInputBytes": 16777216
+        },
+        "supervisor": {
+          "uid": 1000,
+          "gid": 1000,
+          "maximumOwnershipRecords": 65536,
+          "maximumOwnershipBytes": 67108864,
+          "maximumOutputBytes": 33554432,
+          "maximumJournalBytes": 68719476736,
+          "pollIntervalMs": 20,
+          "drainTimeoutMs": 10000,
+          "closeTimeoutMs": 105000
+        }
+      }
+    },
+    "b-d285139707f3b619": {
+      "settings": {
+        "ingress": {
+          "port": 8080,
+          "maximumActiveRequests": 16,
+          "maximumProbeRequests": 4,
+          "maximumConnections": 128,
+          "requestTimeoutMs": 120000,
+          "shutdownTimeoutMs": 150000,
+          "maximumInputBytes": 16777216
+        },
+        "supervisor": {
+          "uid": 1000,
+          "gid": 1000,
+          "maximumOwnershipRecords": 65536,
+          "maximumOwnershipBytes": 67108864,
+          "maximumOutputBytes": 33554432,
+          "maximumJournalBytes": 68719476736,
+          "pollIntervalMs": 20,
+          "drainTimeoutMs": 10000,
+          "closeTimeoutMs": 105000
+        }
+      }
+    },
+    "b-10104c0057729826": {
+      "settings": {
+        "ingress": {
+          "port": 8080,
+          "maximumActiveRequests": 16,
+          "maximumProbeRequests": 4,
+          "maximumConnections": 128,
+          "requestTimeoutMs": 120000,
+          "shutdownTimeoutMs": 120000,
+          "maximumInputBytes": 12582912
+        },
+        "supervisor": {
+          "uid": 1000,
+          "gid": 1000,
+          "maximumOwnershipRecords": 65536,
+          "maximumOwnershipBytes": 67108864,
+          "maximumOutputBytes": 33554432,
+          "maximumJournalBytes": 68719476736,
+          "pollIntervalMs": 20,
+          "drainTimeoutMs": 10000,
+          "closeTimeoutMs": 105000
+        }
+      }
+    },
+    "b-e365010f06ca45b4": {
+      "settings": {
+        "ingress": {
+          "port": 8080,
+          "maximumActiveRequests": 16,
+          "maximumProbeRequests": 4,
+          "maximumConnections": 128,
+          "requestTimeoutMs": 120000,
+          "shutdownTimeoutMs": 120000,
+          "maximumInputBytes": 16777216
+        },
+        "supervisor": {
+          "uid": 750,
+          "gid": 1000,
+          "maximumOwnershipRecords": 65536,
+          "maximumOwnershipBytes": 67108864,
+          "maximumOutputBytes": 33554432,
+          "maximumJournalBytes": 68719476736,
+          "pollIntervalMs": 20,
+          "drainTimeoutMs": 10000,
+          "closeTimeoutMs": 105000
+        }
+      }
+    },
+    "b-e2017c591ead5714": {
+      "settings": {
+        "ingress": {
+          "port": 8080,
+          "maximumActiveRequests": 16,
+          "maximumProbeRequests": 4,
+          "maximumConnections": 128,
+          "requestTimeoutMs": 120000,
+          "shutdownTimeoutMs": 120000,
+          "maximumInputBytes": 16777216
+        },
+        "supervisor": {
+          "uid": 1000,
+          "gid": 750,
+          "maximumOwnershipRecords": 65536,
+          "maximumOwnershipBytes": 67108864,
+          "maximumOutputBytes": 33554432,
+          "maximumJournalBytes": 68719476736,
+          "pollIntervalMs": 20,
+          "drainTimeoutMs": 10000,
+          "closeTimeoutMs": 105000
+        }
+      }
+    },
+    "b-ce78b3d59a2b5fb0": {
+      "settings": {
+        "ingress": {
+          "port": 8080,
+          "maximumActiveRequests": 16,
+          "maximumProbeRequests": 4,
+          "maximumConnections": 128,
+          "requestTimeoutMs": 120000,
+          "shutdownTimeoutMs": 120000,
+          "maximumInputBytes": 16777216
+        },
+        "supervisor": {
+          "uid": 1000,
+          "gid": 1000,
+          "maximumOwnershipRecords": 49152,
+          "maximumOwnershipBytes": 67108864,
+          "maximumOutputBytes": 33554432,
+          "maximumJournalBytes": 68719476736,
+          "pollIntervalMs": 20,
+          "drainTimeoutMs": 10000,
+          "closeTimeoutMs": 105000
+        }
+      }
+    },
+    "b-dbb8441782a48260": {
+      "settings": {
+        "ingress": {
+          "port": 8080,
+          "maximumActiveRequests": 16,
+          "maximumProbeRequests": 4,
+          "maximumConnections": 128,
+          "requestTimeoutMs": 120000,
+          "shutdownTimeoutMs": 120000,
+          "maximumInputBytes": 16777216
+        },
+        "supervisor": {
+          "uid": 1000,
+          "gid": 1000,
+          "maximumOwnershipRecords": 65536,
+          "maximumOwnershipBytes": 50331648,
+          "maximumOutputBytes": 33554432,
+          "maximumJournalBytes": 68719476736,
+          "pollIntervalMs": 20,
+          "drainTimeoutMs": 10000,
+          "closeTimeoutMs": 105000
+        }
+      }
+    },
+    "b-a21615ac0d82c60e": {
+      "settings": {
+        "ingress": {
+          "port": 8080,
+          "maximumActiveRequests": 16,
+          "maximumProbeRequests": 4,
+          "maximumConnections": 128,
+          "requestTimeoutMs": 120000,
+          "shutdownTimeoutMs": 120000,
+          "maximumInputBytes": 16777216
+        },
+        "supervisor": {
+          "uid": 1000,
+          "gid": 1000,
+          "maximumOwnershipRecords": 65536,
+          "maximumOwnershipBytes": 67108864,
+          "maximumOutputBytes": 25165824,
+          "maximumJournalBytes": 68719476736,
+          "pollIntervalMs": 20,
+          "drainTimeoutMs": 10000,
+          "closeTimeoutMs": 105000
+        }
+      }
+    },
+    "b-fc90aea5756a4fed": {
+      "settings": {
+        "ingress": {
+          "port": 8080,
+          "maximumActiveRequests": 16,
+          "maximumProbeRequests": 4,
+          "maximumConnections": 128,
+          "requestTimeoutMs": 120000,
+          "shutdownTimeoutMs": 120000,
+          "maximumInputBytes": 16777216
+        },
+        "supervisor": {
+          "uid": 1000,
+          "gid": 1000,
+          "maximumOwnershipRecords": 65536,
+          "maximumOwnershipBytes": 67108864,
+          "maximumOutputBytes": 33554432,
+          "maximumJournalBytes": 51539607552,
+          "pollIntervalMs": 20,
+          "drainTimeoutMs": 10000,
+          "closeTimeoutMs": 105000
+        }
+      }
+    },
+    "b-90911bb15b565fd1": {
+      "settings": {
+        "ingress": {
+          "port": 8080,
+          "maximumActiveRequests": 16,
+          "maximumProbeRequests": 4,
+          "maximumConnections": 128,
+          "requestTimeoutMs": 120000,
+          "shutdownTimeoutMs": 120000,
+          "maximumInputBytes": 16777216
+        },
+        "supervisor": {
+          "uid": 1000,
+          "gid": 1000,
+          "maximumOwnershipRecords": 65536,
+          "maximumOwnershipBytes": 67108864,
+          "maximumOutputBytes": 33554432,
+          "maximumJournalBytes": 68719476736,
+          "pollIntervalMs": 15,
+          "drainTimeoutMs": 10000,
+          "closeTimeoutMs": 105000
+        }
+      }
+    },
+    "b-638ff51d0e1a0174": {
+      "settings": {
+        "ingress": {
+          "port": 8080,
+          "maximumActiveRequests": 16,
+          "maximumProbeRequests": 4,
+          "maximumConnections": 128,
+          "requestTimeoutMs": 120000,
+          "shutdownTimeoutMs": 120000,
+          "maximumInputBytes": 16777216
+        },
+        "supervisor": {
+          "uid": 1000,
+          "gid": 1000,
+          "maximumOwnershipRecords": 65536,
+          "maximumOwnershipBytes": 67108864,
+          "maximumOutputBytes": 33554432,
+          "maximumJournalBytes": 68719476736,
+          "pollIntervalMs": 20,
+          "drainTimeoutMs": 7500,
+          "closeTimeoutMs": 105000
+        }
+      }
+    },
+    "b-873f399074319371": {
+      "settings": {
+        "ingress": {
+          "port": 8080,
+          "maximumActiveRequests": 16,
+          "maximumProbeRequests": 4,
+          "maximumConnections": 128,
+          "requestTimeoutMs": 120000,
+          "shutdownTimeoutMs": 120000,
+          "maximumInputBytes": 16777216
+        },
+        "supervisor": {
+          "uid": 1000,
+          "gid": 1000,
+          "maximumOwnershipRecords": 65536,
+          "maximumOwnershipBytes": 67108864,
+          "maximumOutputBytes": 33554432,
+          "maximumJournalBytes": 68719476736,
+          "pollIntervalMs": 20,
+          "drainTimeoutMs": 10000,
+          "closeTimeoutMs": 78750
+        }
+      }
+    }
+  }
+}

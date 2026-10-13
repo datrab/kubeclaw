@@ -1,0 +1,158 @@
+{
+  "status": "proposed C1 normative definition; independent review pending; no implementation",
+  "entryPath": "config/pipeline.config.json",
+  "schemaVersion": "pipeline-entry.v3",
+  "ownerFileSchemaVersion": "pipeline-component.v2",
+  "componentReferences": {
+    "prism-control": "components/prism-control.config.json",
+    "prism-studio": "components/prism-studio.config.json",
+    "prism-worker": "components/prism-worker.config.json",
+    "prism-execution": "components/prism-execution.config.json",
+    "buster-engine": "components/buster-engine.config.json",
+    "worker-core": "components/worker-core.config.json"
+  },
+  "preservedFixedRootMetadata": {
+    "profile": "standard",
+    "features": {
+      "observability": true,
+      "buster": true,
+      "discord_alerts": true
+    },
+    "tuning": {
+      "safety_margins": "high",
+      "retention": "high",
+      "alerts": "rich",
+      "logs": "verbose",
+      "checks": "strict",
+      "determinism": "strict"
+    },
+    "overrides": {}
+  },
+  "rootRequiredMembers": [
+    "schemaVersion",
+    "profile",
+    "features",
+    "tuning",
+    "overrides",
+    "components",
+    "bindings"
+  ],
+  "rootOptionalMembers": [
+    "_doc"
+  ],
+  "unknownRootMembers": "reject",
+  "bindingRequiredMembers": [
+    "role",
+    "owner",
+    "instanceId",
+    "profileId"
+  ],
+  "bindingUnknownMembers": "reject",
+  "roleDomain": [
+    "nova",
+    "buster",
+    "prism"
+  ],
+  "ownerDomain": [
+    "prism-control",
+    "prism-studio",
+    "prism-worker",
+    "prism-execution",
+    "buster-engine",
+    "worker-core"
+  ],
+  "profileIdDomain": "^[a-z][a-z0-9-]{0,62}$; exact member of the selected owner file profiles object",
+  "instanceIdDomain": "nonempty string length1..128, no leading/trailing whitespace; exact supplied installed/service identity, not auto-derived or a grant",
+  "bindingUniquenessKey": [
+    "role",
+    "owner",
+    "instanceId"
+  ],
+  "selectionRule": "Exact supplied role/owner/instanceId must match exactly one binding; select complete named profile, never first, never default, never keywise merge",
+  "schemaValidationRule": "Every owner file and every declared profile must validate at its staged complete owner schema; then selected cross-owner/role/instance relations must validate; no defaults or coercion injected",
+  "referencesRule": "Only six fixed components/<owner>.config.json relative paths; no arbitrary includes, absolute paths, dot components, escape, symlink traversal or old filename fallback",
+  "initialProfiles": [
+    {
+      "owner": "prism-control",
+      "authorPath": "config/components/prism-control.config.json",
+      "profileId": "standard",
+      "source": {
+        "path": "charts/kubeclaw/files/config/prism-control.config.json",
+        "sha256": "5e41d7612926ce4d3bfad195d79649e106b54cd59c23de64afad1e9c43e1dcd0"
+      },
+      "originalSettingsSha256": "3f9e83fe29283f4084886870074472c644b33e175b7afbd44ae587f8a4ded031"
+    },
+    {
+      "owner": "prism-studio",
+      "authorPath": "config/components/prism-studio.config.json",
+      "profileId": "standard",
+      "source": {
+        "path": "charts/kubeclaw/files/config/prism-studio.config.json",
+        "sha256": "c38ba184a0dcbdd4b11c86f99eb39b2dd7c0ec72bd697fce7f7a1fa32f750fdb"
+      },
+      "originalSettingsSha256": "02a7fa8f1096543798bcb6a4a80b3a7e5bf12f8f09bc5c2855707abe5ada570d"
+    },
+    {
+      "owner": "prism-worker",
+      "authorPath": "config/components/prism-worker.config.json",
+      "profileId": "standard",
+      "source": {
+        "path": "charts/kubeclaw/files/config/prism-worker.config.json",
+        "sha256": "6d263c2f1844e4bc117ec25504ccb9d6644a5272611de031a2027d5a55d7c834"
+      },
+      "originalSettingsSha256": "a04cae73c3429b9e1a0a1aee07eaa40a9c0a2e64819181d62d841a331f88a854"
+    },
+    {
+      "owner": "prism-execution",
+      "authorPath": "config/components/prism-execution.config.json",
+      "profileId": "standard",
+      "source": {
+        "path": "charts/kubeclaw/files/config/prism-execution.config.json",
+        "sha256": "94f1a8eece3aa58db89907accd846d471d17263557c8e0925cc1caae6ec0034f"
+      },
+      "originalSettingsSha256": "15a46993e78839730923fd2173d65508ac4ef72d2237889ebb77825a2562c082"
+    },
+    {
+      "owner": "buster-engine",
+      "authorPath": "config/components/buster-engine.config.json",
+      "profileId": "standard",
+      "source": {
+        "path": "charts/kubeclaw/files/config/buster-engine.config.json",
+        "sha256": "d43c96506287ade07e23a38bf3d24764e81c16a2ebe8e5bb8a347ac640a3aaa5"
+      },
+      "originalSettingsSha256": "15b13a6d34f2a7dc7262e604f65a94169e4f92cf8e9e0210b1fee1ec80e9bef7"
+    },
+    {
+      "owner": "worker-core",
+      "authorPath": "config/components/worker-core.config.json",
+      "profileId": "standard",
+      "source": {
+        "path": "charts/kubeclaw/files/config/worker-core.config.json",
+        "sha256": "08a6c89490442803c2d4178608832fb0a8147be1a83bb6027a7a00f3d81dc615"
+      },
+      "originalSettingsSha256": "004d2f977b9605adf5260eb748ab31ead1e6896f7be0f39f0ed64232bbc124fe"
+    },
+    {
+      "owner": "buster-engine",
+      "authorPath": "config/components/buster-engine.config.json",
+      "profileId": "runtime",
+      "source": {
+        "path": "charts/kubeclaw/files/config/profiles/buster-engine.runtime.config.json",
+        "sha256": "177c4ba8a115dd296689b412bfaf453d3154bd780f43effd0f297e2cbe38899b"
+      },
+      "originalSettingsSha256": "e3259112b88e4657f545727380b0e25219a8623d98fc02ed1ef0cb6761387966"
+    }
+  ],
+  "locator": {
+    "environmentName": "SWARM_CONFIG",
+    "class": "explicit transport locator only, never settings values",
+    "entryFilename": "pipeline.config.json",
+    "runtimePath": "/etc/kubeclaw/config/pipeline.config.json",
+    "oldFilenameNewStart": "reject",
+    "implicitLocator": "reject"
+  },
+  "publication": "Validate all root, owner, profile and relation objects and captured source identities before generating one immutable complete root+components directory tree. Both Charts and all consuming images read that identical generation; generated copies have no editable authority. Preserve no-follow/regular-file/stat-drift/freeze properties. Bundle identity includes each relative path and SHA256 and selected binding tuple/profile; do not silently hash basename-only files after adding a subdirectory.",
+  "activation": "C1 service/process startup only, explicit selected profile; no live module reload. C5 will persist run/module bindings; no current module implementation claimed.",
+  "recovery": "Existing historical v2 runs retain original archived v2 reader/package closure and cannot be read as v3 by defaults. New v3 starts do not search old author files; missing historical closure rejects rather than Latest. External secret revision identity remains separate.",
+  "implementationAuthorization": null
+}

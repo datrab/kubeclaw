@@ -1,18 +1,18 @@
 # C1 concrete migration draft — not yet approval-ready
 
-This narrows the first implementation delta; it does not authorize it or assert C0 completion. Original requirements and case bodies remain unchanged. Exact current author hashes, selected canonical field IDs and linked original case IDs are in [scope.json](../evidence/config-acceptance/c0-completion-20261013/c1-package-draft/scope.json). Linked cases still need their missing executable definitions; case membership is not acceptance.
+This narrows the first implementation delta; it does not authorize it or assert C0 completion. Original requirements and case bodies remain unchanged. Exact current author hashes, selected canonical field IDs and linked original case IDs are in [scope.json](../evidence/config-acceptance/c0-completion-20261013/c1-package-draft/scope.json). Lifecycle is preserved:28 linked IDs are passed bounded C0 observations,201 are not-run future cases;148 of the latter already contain refined specifications requiring source-specific review. Missing/incorrect oracles and cross-slice allocation remain explicit, not229 blank new tests. Case membership is not acceptance.
 
 ## Author movement proposed for C1
 
 | Current editable author | Proposed sole editable author |
 |---|---|
 | `charts/kubeclaw/files/config/swarm.config.json` | `config/pipeline.config.json` |
-| Six sibling `{owner}.config.json` files | `config/{owner}.config.json`, preserving owner names |
-| `profiles/buster-engine.runtime.config.json` | `config/profiles/buster-engine.runtime.config.json` |
+| Six sibling `{owner}.config.json` files | `config/components/{owner}.config.json`, preserving owner names |
+| `profiles/buster-engine.runtime.config.json` | `config/components/buster-engine.config.json#/profiles/runtime` |
 
 Six owners: prism-control, prism-studio, prism-worker, prism-execution, buster-engine, worker-core. Current complete base and runtime-profile values must survive byte/semantic comparison. The Buster runtime variant is a whole selected owner document, not a patch merged with base. `pipeline.json` remains workflow input. Schemas remain authored in the existing foundation config module; Chart copies are generated delivery artifacts, never independently editable schema authorities.
 
-The current strict entry fixes sibling filenames and its schemaVersion is `swarm-entry.v2`. Moving/renaming a file does not by itself implement complete profile selection. The exact evolved entry schema, instance-to-profile references and wire/version migration must be finalized from the source-concordance review before approval; do not add an unrelated second system index or silently keep an old-file fallback. Internal Swarm loader names need not be cosmetically renamed to establish one physical author.
+The current strict entry fixes sibling filenames and its schemaVersion is `swarm-entry.v2`. Moving/renaming a file does not by itself implement complete profile selection. The evolved entry/profile contract is now specified in [entry/profile contract](config-entry-profile-contract-current.md), using pipeline-entry.v3 and explicit complete profile binding; its independent review is still required before approval; do not add an unrelated second system index or silently keep an old-file fallback. Internal Swarm loader names need not be cosmetically renamed to establish one physical author.
 
 ## Inseparable productive delta
 
@@ -40,3 +40,20 @@ C1 does not implement module-generation persistence, new worker execution topolo
 ## Subsequent slice boundaries (not authorized)
 
 C2 owns Nova/Core orchestration/compiler/runtime policy; C3 owns remaining Engine/Service/Operator/host/deployment settings; C4 owns complete plugin/agent/model/prompt/tool profiles; C5 owns durable module/run/standalone binding and fixed-generation Eval; C6 consolidates real effect/rejection/mutation/recovery/code/document proof. Their exact fields and cases must be included in the eventual reviewable package, not inferred from approving this C1 draft.
+
+## Explicit author-layout correction (G2)
+
+The current proposed component authority is **`config/components/{owner}.config.json`**, matching original component targetAuthorRef contracts. This supersedes the checkpoint16 draft's `config/{owner}.config.json` targets; prior draft bytes are preserved under [history](../evidence/config-acceptance/c0-completion-20261013/c1-package-draft/history-before-author-layout-correction/). The root is `config/pipeline.config.json`; the complete Buster runtime profile is `config/components/buster-engine.config.json#/profiles/runtime`. No second editable Chart copy or implicit fallback is introduced. This is a proposal correction, not an executed source migration.
+
+## Case lifecycle clarification
+
+The earlier phrase “all229 case specifications incomplete” flattened distinct lifecycles. The corrected scope retains28 passed historical C0 observations and201 future not-run cases, including148 existing refined specs awaiting genuine consumer-specific review,40 explicitly incomplete and13 without a specificationStatus. Original case bodies/results/requirements are unchanged. No C0 observation is relabeled not-run or counted as implementation effect. Linked C5 and later proposal cases remain separate from the bounded C1 approval boundary. Prior reviewed draft bytes are preserved under history-before-case-lifecycle-clarification.
+
+
+## Checkpoint17 consolidated source and complete-pair update
+
+The [latest additive integration](../evidence/config-acceptance/c0-completion-20261013/integrated-source-concordance-02/README.md) now includes586 exact current-source associations to308 original settings:306 of358 candidates associated,52 explicit boundary classifications without guessed links. All96 prior boundaries have [independently verified dispositions](../evidence/config-acceptance/c0-completion-20261013/independent-source-concordance-layout-recheck/boundary-addendum-02/README.md). Four genuinely adjustable policy families remain under their existing deployment/Ops owners and are not silently reclassified constants. Original2,409 fields,6,845 cases,50 requirements and lifecycle results remain unchanged.
+
+The [current whole-component pairs](../evidence/config-acceptance/c0-completion-20261013/c1-complete-profile-pairs-02/README.md) preserve148 original refined effect IDs with154 complete profiles and296 complete proposed entry selections. Strict staged schemas accepted154 profiles; the real current loader accepted296 temporary current-wire views. Two actual caller-masked report B profiles are additively corrected and independently rechecked; the corrected CPU request is not claimed to extend the wall timeout. Two guard-only report-field native-effect classification obligations remain open, alongside exact family fixture contracts. These are bounded C0 observations, not v3 implementation, native effects or future-case passes.
+
+Proposed tuple selection, supported profile-name domain and case lifecycle partition are independently checked. Concrete policy-family, caller/delivery and module/recovery/Eval contracts are the remaining substantive work; whole C0 and C1-C6 implementation authorization remain open.
