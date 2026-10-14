@@ -1,0 +1,21 @@
+{
+  "qualification": "Existing source-package hash computation only, not installed/native trust",
+  "digests": {
+    "kubeclaw.axe": "sha256:676c664a3378ab87ba99fb72bd160814a788579fb72c0daccb02b32cbeb8a29b",
+    "kubeclaw.lighthouse": "sha256:c0b8f848ff18b35ee217246d6e38f2c70c1a49c9d9b81c8d8fb9a41261ae7d9c",
+    "kubeclaw.playwright": "sha256:6a57e70b6e95041f7c09ca4f397d36a8414541f7e7b4de8a89e51c737fe6a7ef",
+    "kubeclaw.visual": "sha256:bad99128dd2f6434a4fe8b96969ea1053ddd43eae745aefb997ee9de5ff389e4"
+  },
+  "viewsChecked": 210,
+  "helpers": [
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/registry/digest.ts",
+      "sha256": "000539ceae6719b16ac795ef1cfb90877aa44e81c26b4335c17f85912b4076e4"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/registry/errors.ts",
+      "sha256": "148025829782ddac5d15ea25736b4ec7a3faefcfabdce152809baf8ed807ce25"
+    }
+  ],
+  "productiveActions": 0
+}

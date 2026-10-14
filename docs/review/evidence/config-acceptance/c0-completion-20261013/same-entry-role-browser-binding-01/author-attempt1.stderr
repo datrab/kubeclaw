@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/author-attempt1.py.snapshot", line 60, in <module>
+    cpSchema['properties'][k]['properties'].update(gpSchema['properties'][k]['properties']);cpSchema['properties'][k]['required']+=gpSchema['properties'][k]['required']
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+KeyError: 'properties'

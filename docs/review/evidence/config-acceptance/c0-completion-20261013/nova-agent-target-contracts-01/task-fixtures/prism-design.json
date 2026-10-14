@@ -1,0 +1,10 @@
+{
+  "runId": "run:fixture-nova",
+  "projectId": "fixture-project",
+  "architectureArtifact": {
+    "artifactId": "fixture-architecture",
+    "contentDigest": "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+    "revision": 1
+  },
+  "requiresDesign": true
+}

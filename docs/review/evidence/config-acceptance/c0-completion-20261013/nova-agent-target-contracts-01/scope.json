@@ -1,0 +1,343 @@
+{
+  "groups": {
+    "architecture-validator": [
+      {
+        "id": "RT-c0a779743e7384ba",
+        "source": {
+          "path": "skills/nova/plugins/architecture-validator/schemas/config.schema.json",
+          "field": "#/properties/agent",
+          "sha256": "49b1391ff9c5076715c42cf37857f4a6ec6e5a90e7777ff9c94e0d664449981a"
+        },
+        "originalCaseIds": [
+          "RT-c0a779743e7384ba-CURRENT-SCHEMA-FIELD",
+          "RT-c0a779743e7384ba-AGENT16-VAL",
+          "RT-c0a779743e7384ba-AGENT16-AB",
+          "RT-c0a779743e7384ba-AGENT16-BINDING",
+          "RT-c0a779743e7384ba-AGENT16-RECOVERY",
+          "RT-c0a779743e7384ba-AGENT16-EVAL",
+          "RT-c0a779743e7384ba-AGENT16-MUTANT",
+          "RT-c0a779743e7384ba-AGENT16-CURRENT-DEFINITION"
+        ]
+      },
+      {
+        "id": "RT-ae11bf913a6050c6",
+        "source": {
+          "path": "skills/nova/plugins/architecture-validator/schemas/config.schema.json",
+          "field": "#/properties/agentRole",
+          "sha256": "49b1391ff9c5076715c42cf37857f4a6ec6e5a90e7777ff9c94e0d664449981a"
+        },
+        "originalCaseIds": [
+          "RT-ae11bf913a6050c6-CURRENT-SCHEMA-FIELD",
+          "RT-ae11bf913a6050c6-AGENT16-VAL",
+          "RT-ae11bf913a6050c6-AGENT16-AB",
+          "RT-ae11bf913a6050c6-AGENT16-BINDING",
+          "RT-ae11bf913a6050c6-AGENT16-RECOVERY",
+          "RT-ae11bf913a6050c6-AGENT16-EVAL",
+          "RT-ae11bf913a6050c6-AGENT16-MUTANT",
+          "RT-ae11bf913a6050c6-AGENT16-CURRENT-DEFINITION"
+        ]
+      }
+    ],
+    "implementation-agent": [
+      {
+        "id": "RT-34cb107ae059df42",
+        "source": {
+          "path": "skills/nova/plugins/implementation-agent/schemas/config.schema.json",
+          "field": "#/properties/agent",
+          "sha256": "49b1391ff9c5076715c42cf37857f4a6ec6e5a90e7777ff9c94e0d664449981a"
+        },
+        "originalCaseIds": [
+          "RT-34cb107ae059df42-CURRENT-SCHEMA-FIELD",
+          "RT-34cb107ae059df42-AGENT16-VAL",
+          "RT-34cb107ae059df42-AGENT16-AB",
+          "RT-34cb107ae059df42-AGENT16-BINDING",
+          "RT-34cb107ae059df42-AGENT16-RECOVERY",
+          "RT-34cb107ae059df42-AGENT16-EVAL",
+          "RT-34cb107ae059df42-AGENT16-MUTANT",
+          "RT-34cb107ae059df42-AGENT16-CURRENT-DEFINITION"
+        ]
+      },
+      {
+        "id": "RT-6442142673149854",
+        "source": {
+          "path": "skills/nova/plugins/implementation-agent/schemas/config.schema.json",
+          "field": "#/properties/agentRole",
+          "sha256": "49b1391ff9c5076715c42cf37857f4a6ec6e5a90e7777ff9c94e0d664449981a"
+        },
+        "originalCaseIds": [
+          "RT-6442142673149854-CURRENT-SCHEMA-FIELD",
+          "RT-6442142673149854-AGENT16-VAL",
+          "RT-6442142673149854-AGENT16-AB",
+          "RT-6442142673149854-AGENT16-BINDING",
+          "RT-6442142673149854-AGENT16-RECOVERY",
+          "RT-6442142673149854-AGENT16-EVAL",
+          "RT-6442142673149854-AGENT16-MUTANT",
+          "RT-6442142673149854-AGENT16-CURRENT-DEFINITION"
+        ]
+      }
+    ],
+    "pipeline-review": [
+      {
+        "id": "RT-2d37a257c3d7dd45",
+        "source": {
+          "path": "skills/nova/plugins/pipeline-review/schemas/config.schema.json",
+          "field": "#/properties/agent",
+          "sha256": "49b1391ff9c5076715c42cf37857f4a6ec6e5a90e7777ff9c94e0d664449981a"
+        },
+        "originalCaseIds": [
+          "RT-2d37a257c3d7dd45-CURRENT-SCHEMA-FIELD",
+          "RT-2d37a257c3d7dd45-AGENT16-VAL",
+          "RT-2d37a257c3d7dd45-AGENT16-AB",
+          "RT-2d37a257c3d7dd45-AGENT16-BINDING",
+          "RT-2d37a257c3d7dd45-AGENT16-RECOVERY",
+          "RT-2d37a257c3d7dd45-AGENT16-EVAL",
+          "RT-2d37a257c3d7dd45-AGENT16-MUTANT",
+          "RT-2d37a257c3d7dd45-AGENT16-CURRENT-DEFINITION"
+        ]
+      },
+      {
+        "id": "RT-4c1a2b66cdab7e18",
+        "source": {
+          "path": "skills/nova/plugins/pipeline-review/schemas/config.schema.json",
+          "field": "#/properties/agentRole",
+          "sha256": "49b1391ff9c5076715c42cf37857f4a6ec6e5a90e7777ff9c94e0d664449981a"
+        },
+        "originalCaseIds": [
+          "RT-4c1a2b66cdab7e18-CURRENT-SCHEMA-FIELD",
+          "RT-4c1a2b66cdab7e18-AGENT16-VAL",
+          "RT-4c1a2b66cdab7e18-AGENT16-AB",
+          "RT-4c1a2b66cdab7e18-AGENT16-BINDING",
+          "RT-4c1a2b66cdab7e18-AGENT16-RECOVERY",
+          "RT-4c1a2b66cdab7e18-AGENT16-EVAL",
+          "RT-4c1a2b66cdab7e18-AGENT16-MUTANT",
+          "RT-4c1a2b66cdab7e18-AGENT16-CURRENT-DEFINITION"
+        ]
+      },
+      {
+        "id": "RT-8750f030bf25ecae",
+        "source": {
+          "path": "skills/nova/plugins/pipeline-review/schemas/evidence-config.schema.json",
+          "field": "#/properties/storageRoot",
+          "sha256": "905fba3c46c2fbf13a617d385099dda9959302ab3414a67cc8f5d5c33502e530"
+        },
+        "originalCaseIds": [
+          "RT-8750f030bf25ecae-CURRENT-SCHEMA-FIELD",
+          "RT-8750f030bf25ecae-REPORT17-VAL",
+          "RT-8750f030bf25ecae-REPORT17-AB",
+          "RT-8750f030bf25ecae-REPORT17-BINDING",
+          "RT-8750f030bf25ecae-REPORT17-RECOVERY",
+          "RT-8750f030bf25ecae-REPORT17-EVAL",
+          "RT-8750f030bf25ecae-REPORT17-MUTANT",
+          "RT-8750f030bf25ecae-REPORT17-CURRENT-DEFINITION"
+        ]
+      },
+      {
+        "id": "RT-96698b5568aba94d",
+        "source": {
+          "path": "skills/nova/plugins/pipeline-review/schemas/evidence-config.schema.json",
+          "field": "#/properties/orchestratorIssuerId",
+          "sha256": "905fba3c46c2fbf13a617d385099dda9959302ab3414a67cc8f5d5c33502e530"
+        },
+        "originalCaseIds": [
+          "RT-96698b5568aba94d-CURRENT-SCHEMA-FIELD",
+          "RT-96698b5568aba94d-REPORT17-VAL",
+          "RT-96698b5568aba94d-REPORT17-AB",
+          "RT-96698b5568aba94d-REPORT17-BINDING",
+          "RT-96698b5568aba94d-REPORT17-RECOVERY",
+          "RT-96698b5568aba94d-REPORT17-EVAL",
+          "RT-96698b5568aba94d-REPORT17-MUTANT",
+          "RT-96698b5568aba94d-REPORT17-CURRENT-DEFINITION"
+        ]
+      },
+      {
+        "id": "RT-36accddb567c892f",
+        "source": {
+          "path": "skills/nova/plugins/pipeline-review/schemas/evidence-config.schema.json",
+          "field": "#/properties/maximumJournalBytes",
+          "sha256": "905fba3c46c2fbf13a617d385099dda9959302ab3414a67cc8f5d5c33502e530"
+        },
+        "originalCaseIds": [
+          "RT-36accddb567c892f-CURRENT-SCHEMA-FIELD",
+          "RT-36accddb567c892f-REPORT17-VAL",
+          "RT-36accddb567c892f-REPORT17-AB",
+          "RT-36accddb567c892f-REPORT17-BINDING",
+          "RT-36accddb567c892f-REPORT17-RECOVERY",
+          "RT-36accddb567c892f-REPORT17-EVAL",
+          "RT-36accddb567c892f-REPORT17-MUTANT",
+          "RT-36accddb567c892f-REPORT17-CURRENT-DEFINITION"
+        ]
+      },
+      {
+        "id": "RT-81d42184c1081430",
+        "source": {
+          "path": "skills/nova/plugins/pipeline-review/schemas/evidence-config.schema.json",
+          "field": "#/properties/maximumArtifactBytes",
+          "sha256": "905fba3c46c2fbf13a617d385099dda9959302ab3414a67cc8f5d5c33502e530"
+        },
+        "originalCaseIds": [
+          "RT-81d42184c1081430-CURRENT-SCHEMA-FIELD",
+          "RT-81d42184c1081430-REPORT17-VAL",
+          "RT-81d42184c1081430-REPORT17-AB",
+          "RT-81d42184c1081430-REPORT17-BINDING",
+          "RT-81d42184c1081430-REPORT17-RECOVERY",
+          "RT-81d42184c1081430-REPORT17-EVAL",
+          "RT-81d42184c1081430-REPORT17-MUTANT",
+          "RT-81d42184c1081430-REPORT17-CURRENT-DEFINITION"
+        ]
+      },
+      {
+        "id": "RT-41d93665317a7d07",
+        "source": {
+          "path": "skills/nova/plugins/pipeline-review/schemas/evidence-config.schema.json",
+          "field": "#/properties/maximumBundleBytes",
+          "sha256": "905fba3c46c2fbf13a617d385099dda9959302ab3414a67cc8f5d5c33502e530"
+        },
+        "originalCaseIds": [
+          "RT-41d93665317a7d07-CURRENT-SCHEMA-FIELD",
+          "RT-41d93665317a7d07-REPORT17-VAL",
+          "RT-41d93665317a7d07-REPORT17-AB",
+          "RT-41d93665317a7d07-REPORT17-BINDING",
+          "RT-41d93665317a7d07-REPORT17-RECOVERY",
+          "RT-41d93665317a7d07-REPORT17-EVAL",
+          "RT-41d93665317a7d07-REPORT17-MUTANT",
+          "RT-41d93665317a7d07-REPORT17-CURRENT-DEFINITION"
+        ]
+      }
+    ],
+    "prism-design": [
+      {
+        "id": "RT-8e39db110874a9d6",
+        "source": {
+          "path": "skills/nova/plugins/prism-design/schemas/config.schema.json",
+          "field": "#/properties/agent",
+          "sha256": "15fc34fb28e0afe96ad1e248c32e6d9a9bb173bb731226fb52ccb78a8afcc61e"
+        },
+        "originalCaseIds": [
+          "RT-8e39db110874a9d6-CURRENT-SCHEMA-FIELD",
+          "RT-8e39db110874a9d6-APPROVAL13-VAL",
+          "RT-8e39db110874a9d6-APPROVAL13-AB",
+          "RT-8e39db110874a9d6-APPROVAL13-BINDING",
+          "RT-8e39db110874a9d6-APPROVAL13-RECOVERY",
+          "RT-8e39db110874a9d6-APPROVAL13-EVAL",
+          "RT-8e39db110874a9d6-APPROVAL13-MUTANT",
+          "RT-8e39db110874a9d6-APPROVAL13-CURRENT-DEFINITION"
+        ]
+      },
+      {
+        "id": "RT-03fda24ef110ef33",
+        "source": {
+          "path": "skills/nova/plugins/prism-design/schemas/config.schema.json",
+          "field": "#/properties/target",
+          "sha256": "15fc34fb28e0afe96ad1e248c32e6d9a9bb173bb731226fb52ccb78a8afcc61e"
+        },
+        "originalCaseIds": [
+          "RT-03fda24ef110ef33-CURRENT-SCHEMA-FIELD",
+          "RT-03fda24ef110ef33-APPROVAL13-VAL",
+          "RT-03fda24ef110ef33-APPROVAL13-AB",
+          "RT-03fda24ef110ef33-APPROVAL13-BINDING",
+          "RT-03fda24ef110ef33-APPROVAL13-RECOVERY",
+          "RT-03fda24ef110ef33-APPROVAL13-EVAL",
+          "RT-03fda24ef110ef33-APPROVAL13-MUTANT",
+          "RT-03fda24ef110ef33-APPROVAL13-CURRENT-DEFINITION"
+        ]
+      },
+      {
+        "id": "RT-94d352d99db6b92d",
+        "source": {
+          "path": "skills/nova/plugins/prism-design/schemas/config.schema.json",
+          "field": "#/properties/issuerId",
+          "sha256": "15fc34fb28e0afe96ad1e248c32e6d9a9bb173bb731226fb52ccb78a8afcc61e"
+        },
+        "originalCaseIds": [
+          "RT-94d352d99db6b92d-CURRENT-SCHEMA-FIELD",
+          "RT-94d352d99db6b92d-APPROVAL13-VAL",
+          "RT-94d352d99db6b92d-APPROVAL13-AB",
+          "RT-94d352d99db6b92d-APPROVAL13-BINDING",
+          "RT-94d352d99db6b92d-APPROVAL13-RECOVERY",
+          "RT-94d352d99db6b92d-APPROVAL13-EVAL",
+          "RT-94d352d99db6b92d-APPROVAL13-MUTANT",
+          "RT-94d352d99db6b92d-APPROVAL13-CURRENT-DEFINITION"
+        ]
+      },
+      {
+        "id": "RT-afddbf26c06e75cf",
+        "source": {
+          "path": "skills/nova/plugins/prism-design/schemas/config.schema.json",
+          "field": "#/properties/timeoutMinutes",
+          "sha256": "15fc34fb28e0afe96ad1e248c32e6d9a9bb173bb731226fb52ccb78a8afcc61e"
+        },
+        "originalCaseIds": [
+          "RT-afddbf26c06e75cf-CURRENT-SCHEMA-FIELD",
+          "RT-afddbf26c06e75cf-APPROVAL13-VAL",
+          "RT-afddbf26c06e75cf-APPROVAL13-AB",
+          "RT-afddbf26c06e75cf-APPROVAL13-BINDING",
+          "RT-afddbf26c06e75cf-APPROVAL13-RECOVERY",
+          "RT-afddbf26c06e75cf-APPROVAL13-EVAL",
+          "RT-afddbf26c06e75cf-APPROVAL13-MUTANT",
+          "RT-afddbf26c06e75cf-APPROVAL13-CURRENT-DEFINITION"
+        ]
+      }
+    ],
+    "project-summary": [
+      {
+        "id": "RT-2b6e3bc13743e80c",
+        "source": {
+          "path": "skills/nova/plugins/project-summary/schemas/config.schema.json",
+          "field": "#/properties/agentRole",
+          "sha256": "7c1bf8023f80f2bd5c3727b97636c804cd2c8b801fbe71fd8374a6edd7049bd9"
+        },
+        "originalCaseIds": [
+          "RT-2b6e3bc13743e80c-CURRENT-SCHEMA-FIELD",
+          "RT-2b6e3bc13743e80c-AGENT16-VAL",
+          "RT-2b6e3bc13743e80c-AGENT16-AB",
+          "RT-2b6e3bc13743e80c-AGENT16-BINDING",
+          "RT-2b6e3bc13743e80c-AGENT16-RECOVERY",
+          "RT-2b6e3bc13743e80c-AGENT16-EVAL",
+          "RT-2b6e3bc13743e80c-AGENT16-MUTANT",
+          "RT-2b6e3bc13743e80c-AGENT16-CURRENT-DEFINITION"
+        ]
+      },
+      {
+        "id": "RT-0086141ada6be298",
+        "source": {
+          "path": "skills/nova/plugins/project-summary/schemas/config.schema.json",
+          "field": "#/properties/deliveryManifestEncoding",
+          "sha256": "7c1bf8023f80f2bd5c3727b97636c804cd2c8b801fbe71fd8374a6edd7049bd9"
+        },
+        "originalCaseIds": [
+          "RT-0086141ada6be298-CURRENT-SCHEMA-FIELD",
+          "RT-0086141ada6be298-AGENT16-VAL",
+          "RT-0086141ada6be298-AGENT16-AB",
+          "RT-0086141ada6be298-AGENT16-BINDING",
+          "RT-0086141ada6be298-AGENT16-RECOVERY",
+          "RT-0086141ada6be298-AGENT16-EVAL",
+          "RT-0086141ada6be298-AGENT16-MUTANT",
+          "RT-0086141ada6be298-AGENT16-CURRENT-DEFINITION"
+        ]
+      }
+    ],
+    "case-study": [
+      {
+        "id": "RT-8152550972f10185",
+        "source": {
+          "path": "skills/nova/plugins/case-study/schemas/config.schema.json",
+          "field": "#/properties/agent",
+          "sha256": "4632cc51357ffecdbd593cf1d1928a99b9cd4855b3763354f67261b62cc0c895"
+        },
+        "originalCaseIds": [
+          "RT-8152550972f10185-CURRENT-SCHEMA-FIELD",
+          "RT-8152550972f10185-AGENT16-VAL",
+          "RT-8152550972f10185-AGENT16-AB",
+          "RT-8152550972f10185-AGENT16-BINDING",
+          "RT-8152550972f10185-AGENT16-RECOVERY",
+          "RT-8152550972f10185-AGENT16-EVAL",
+          "RT-8152550972f10185-AGENT16-MUTANT",
+          "RT-8152550972f10185-AGENT16-CURRENT-DEFINITION"
+        ]
+      }
+    ]
+  },
+  "originalFieldCount": 18,
+  "originalCaseCount": 144,
+  "qualification": "No extra original fields or IDs; new literal source coordinates are dependencies, not canonical ID additions."
+}

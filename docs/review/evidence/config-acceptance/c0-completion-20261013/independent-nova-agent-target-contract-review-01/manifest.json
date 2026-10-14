@@ -1,0 +1,48 @@
+{
+  "verdict": "VERIFIED bounded Nova18/144 definitions",
+  "materialFindings": [],
+  "artifacts": [
+    {
+      "path": "README.md",
+      "sha256": "cb161766ae4678db666d061db0d13ce868b99f9570cbe94aabf4cb1667b1e2e8",
+      "bytes": 313
+    },
+    {
+      "path": "REPORT.md",
+      "sha256": "0355b3f41cac954c1e207a42e672c5c4c5a23bc240dbe4eb7de7cf9b52778c63",
+      "bytes": 9091
+    },
+    {
+      "path": "commands-and-exits.json",
+      "sha256": "44c59d9208a161177a78c7b3197d831beb1d5f9cb34dc6a285f2f6f3713a46fe",
+      "bytes": 876
+    },
+    {
+      "path": "end-identities.json",
+      "sha256": "648102d3c21a25d3cd512f10f06dc4a30989e16ba5f1e455f60e9624f763d084",
+      "bytes": 136191
+    },
+    {
+      "path": "inspection-navigation-error.txt",
+      "sha256": "774beb3a157009fd8ccb24b4fbc3590e06176ad73fe79ef70c5df47ad45ae9b5",
+      "bytes": 222
+    },
+    {
+      "path": "physical-original-conservation.json",
+      "sha256": "709d11562ad0bba384523f05faef7f5cf26682ecac6e6230d2f9faa87eae9da6",
+      "bytes": 22622
+    },
+    {
+      "path": "read-identities.json",
+      "sha256": "4230ff8bcdf40a6f348c47b085888fe899cfb777cc208fdc21c7207766040ac2",
+      "bytes": 138512
+    },
+    {
+      "path": "receiving-generation-case-joins.json",
+      "sha256": "d39bb593060f6d810ed6aa6ffb5698edadf0c42fbcecadedc1e9595f43223ac5",
+      "bytes": 39356
+    }
+  ],
+  "implementationAuthorization": null,
+  "globalC0Accepted": false
+}

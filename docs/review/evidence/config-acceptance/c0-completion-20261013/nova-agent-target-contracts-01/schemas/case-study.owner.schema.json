@@ -1,0 +1,60 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "packageId",
+    "instanceId",
+    "profiles"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "pipeline-package-policy.v1"
+    },
+    "packageId": {
+      "const": "kubeclaw.case-study"
+    },
+    "instanceId": {
+      "const": "fixture.case-study"
+    },
+    "profiles": {
+      "type": "object",
+      "minProperties": 1,
+      "propertyNames": {
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"
+      },
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "processing"
+        ],
+        "properties": {
+          "processing": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "kubeclaw.case-study:case-study"
+            ],
+            "properties": {
+              "kubeclaw.case-study:case-study": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "agent"
+                ],
+                "properties": {
+                  "agent": {
+                    "type": "string",
+                    "pattern": "^[a-z0-9](?:[a-z0-9._:-]{0,126}[a-z0-9])?$"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}

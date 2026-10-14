@@ -1,0 +1,4463 @@
+{
+  "schemaVersion": "pipeline-package-policy.v1",
+  "packageId": "kubeclaw.lighthouse",
+  "instanceId": "fixture.lighthouse",
+  "profiles": {
+    "A": {
+      "processing": {
+        "settings": {
+          "schemaVersion": "kubeclaw.lighthouse-settings.v1",
+          "profiles": {
+            "desktop": {
+              "formFactor": "desktop",
+              "screen": {
+                "width": 1440,
+                "height": 900,
+                "deviceScaleFactor": 1,
+                "mobile": false
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            },
+            "mobile": {
+              "formFactor": "mobile",
+              "screen": {
+                "width": 390,
+                "height": 844,
+                "deviceScaleFactor": 1,
+                "mobile": true
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            }
+          },
+          "budgets": {
+            "relaxed": {
+              "minimumScore": 80,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            },
+            "strict": {
+              "minimumScore": 90,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            }
+          }
+        },
+        "byPurpose": {
+          "performance": {
+            "runs": 3,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": "relaxed",
+            "acceptances": []
+          },
+          "seo": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": []
+          },
+          "best-practices": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": []
+          }
+        }
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onFail": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-45cbcce6c9a8143a-A": {
+      "processing": {
+        "settings": {
+          "schemaVersion": "kubeclaw.lighthouse-settings.v1",
+          "profiles": {
+            "desktop": {
+              "formFactor": "desktop",
+              "screen": {
+                "width": 1440,
+                "height": 900,
+                "deviceScaleFactor": 1,
+                "mobile": false
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            },
+            "mobile": {
+              "formFactor": "mobile",
+              "screen": {
+                "width": 390,
+                "height": 844,
+                "deviceScaleFactor": 1,
+                "mobile": true
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            }
+          },
+          "budgets": {
+            "relaxed": {
+              "minimumScore": 80,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            },
+            "strict": {
+              "minimumScore": 90,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            }
+          }
+        },
+        "byPurpose": {
+          "performance": {
+            "runs": 3,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": "relaxed",
+            "acceptances": []
+          },
+          "seo": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": []
+          },
+          "best-practices": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": []
+          }
+        }
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onFail": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-45cbcce6c9a8143a-B": {
+      "processing": {
+        "settings": {
+          "schemaVersion": "kubeclaw.lighthouse-settings.v1",
+          "profiles": {
+            "desktop": {
+              "formFactor": "desktop",
+              "screen": {
+                "width": 1440,
+                "height": 900,
+                "deviceScaleFactor": 1,
+                "mobile": false
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            },
+            "mobile": {
+              "formFactor": "mobile",
+              "screen": {
+                "width": 390,
+                "height": 844,
+                "deviceScaleFactor": 1,
+                "mobile": true
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            }
+          },
+          "budgets": {
+            "relaxed": {
+              "minimumScore": 80,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            },
+            "strict": {
+              "minimumScore": 90,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            }
+          }
+        },
+        "byPurpose": {
+          "performance": {
+            "runs": 3,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": "relaxed",
+            "acceptances": []
+          },
+          "seo": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": []
+          },
+          "best-practices": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": []
+          }
+        }
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onFail": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-c5c2b774e067d6c3-A": {
+      "processing": {
+        "settings": {
+          "schemaVersion": "kubeclaw.lighthouse-settings.v1",
+          "profiles": {
+            "desktop": {
+              "formFactor": "desktop",
+              "screen": {
+                "width": 1440,
+                "height": 900,
+                "deviceScaleFactor": 1,
+                "mobile": false
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            },
+            "mobile": {
+              "formFactor": "mobile",
+              "screen": {
+                "width": 390,
+                "height": 844,
+                "deviceScaleFactor": 1,
+                "mobile": true
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            }
+          },
+          "budgets": {
+            "relaxed": {
+              "minimumScore": 80,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            },
+            "strict": {
+              "minimumScore": 90,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            }
+          }
+        },
+        "byPurpose": {
+          "performance": {
+            "runs": 3,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": "relaxed",
+            "acceptances": []
+          },
+          "seo": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": []
+          },
+          "best-practices": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": []
+          }
+        }
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onFail": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-c5c2b774e067d6c3-B": {
+      "processing": {
+        "settings": {
+          "schemaVersion": "kubeclaw.lighthouse-settings.v1",
+          "profiles": {
+            "desktop": {
+              "formFactor": "desktop",
+              "screen": {
+                "width": 1440,
+                "height": 900,
+                "deviceScaleFactor": 1,
+                "mobile": false
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            },
+            "mobile": {
+              "formFactor": "mobile",
+              "screen": {
+                "width": 390,
+                "height": 844,
+                "deviceScaleFactor": 1,
+                "mobile": true
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            }
+          },
+          "budgets": {
+            "relaxed": {
+              "minimumScore": 80,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            },
+            "strict": {
+              "minimumScore": 90,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            }
+          }
+        },
+        "byPurpose": {
+          "performance": {
+            "runs": 3,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": "relaxed",
+            "acceptances": []
+          },
+          "seo": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": []
+          },
+          "best-practices": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": []
+          }
+        }
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onFail": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-f513e45a2c34c183-A": {
+      "processing": {
+        "settings": {
+          "schemaVersion": "kubeclaw.lighthouse-settings.v1",
+          "profiles": {
+            "desktop": {
+              "formFactor": "desktop",
+              "screen": {
+                "width": 1440,
+                "height": 900,
+                "deviceScaleFactor": 1,
+                "mobile": false
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            },
+            "mobile": {
+              "formFactor": "mobile",
+              "screen": {
+                "width": 390,
+                "height": 844,
+                "deviceScaleFactor": 1,
+                "mobile": true
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            }
+          },
+          "budgets": {
+            "relaxed": {
+              "minimumScore": 80,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            },
+            "strict": {
+              "minimumScore": 90,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            }
+          }
+        },
+        "byPurpose": {
+          "performance": {
+            "runs": 3,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": "relaxed",
+            "acceptances": []
+          },
+          "seo": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": []
+          },
+          "best-practices": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": []
+          }
+        }
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onFail": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-f513e45a2c34c183-B": {
+      "processing": {
+        "settings": {
+          "schemaVersion": "kubeclaw.lighthouse-settings.v1",
+          "profiles": {
+            "desktop": {
+              "formFactor": "desktop",
+              "screen": {
+                "width": 1440,
+                "height": 900,
+                "deviceScaleFactor": 1,
+                "mobile": false
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            },
+            "mobile": {
+              "formFactor": "mobile",
+              "screen": {
+                "width": 390,
+                "height": 844,
+                "deviceScaleFactor": 1,
+                "mobile": true
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            }
+          },
+          "budgets": {
+            "relaxed": {
+              "minimumScore": 80,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            },
+            "strict": {
+              "minimumScore": 90,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            }
+          }
+        },
+        "byPurpose": {
+          "performance": {
+            "runs": 3,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": "relaxed",
+            "acceptances": []
+          },
+          "seo": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": []
+          },
+          "best-practices": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": []
+          }
+        }
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onFail": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-91356268eda2cde6-A": {
+      "processing": {
+        "settings": {
+          "schemaVersion": "kubeclaw.lighthouse-settings.v1",
+          "profiles": {
+            "desktop": {
+              "formFactor": "desktop",
+              "screen": {
+                "width": 1440,
+                "height": 900,
+                "deviceScaleFactor": 1,
+                "mobile": false
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            },
+            "mobile": {
+              "formFactor": "mobile",
+              "screen": {
+                "width": 390,
+                "height": 844,
+                "deviceScaleFactor": 1,
+                "mobile": true
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            }
+          },
+          "budgets": {
+            "relaxed": {
+              "minimumScore": 80,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            },
+            "strict": {
+              "minimumScore": 90,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            }
+          }
+        },
+        "byPurpose": {
+          "performance": {
+            "runs": 3,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": "relaxed",
+            "acceptances": []
+          },
+          "seo": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": []
+          },
+          "best-practices": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": []
+          }
+        }
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onFail": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-91356268eda2cde6-B": {
+      "processing": {
+        "settings": {
+          "schemaVersion": "kubeclaw.lighthouse-settings.v1",
+          "profiles": {
+            "desktop": {
+              "formFactor": "desktop",
+              "screen": {
+                "width": 1440,
+                "height": 900,
+                "deviceScaleFactor": 1,
+                "mobile": false
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            },
+            "mobile": {
+              "formFactor": "mobile",
+              "screen": {
+                "width": 390,
+                "height": 844,
+                "deviceScaleFactor": 1,
+                "mobile": true
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            }
+          },
+          "budgets": {
+            "relaxed": {
+              "minimumScore": 80,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            },
+            "strict": {
+              "minimumScore": 90,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            }
+          }
+        },
+        "byPurpose": {
+          "performance": {
+            "runs": 3,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": "relaxed",
+            "acceptances": []
+          },
+          "seo": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": []
+          },
+          "best-practices": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": []
+          }
+        }
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onFail": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-9bca7a8727abb08f-A": {
+      "processing": {
+        "settings": {
+          "schemaVersion": "kubeclaw.lighthouse-settings.v1",
+          "profiles": {
+            "desktop": {
+              "formFactor": "desktop",
+              "screen": {
+                "width": 1440,
+                "height": 900,
+                "deviceScaleFactor": 1,
+                "mobile": false
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            },
+            "mobile": {
+              "formFactor": "mobile",
+              "screen": {
+                "width": 390,
+                "height": 844,
+                "deviceScaleFactor": 1,
+                "mobile": true
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            }
+          },
+          "budgets": {
+            "relaxed": {
+              "minimumScore": 80,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            },
+            "strict": {
+              "minimumScore": 90,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            }
+          }
+        },
+        "byPurpose": {
+          "performance": {
+            "runs": 3,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": "relaxed",
+            "acceptances": []
+          },
+          "seo": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": []
+          },
+          "best-practices": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": []
+          }
+        }
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onFail": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-9bca7a8727abb08f-B": {
+      "processing": {
+        "settings": {
+          "schemaVersion": "kubeclaw.lighthouse-settings.v1",
+          "profiles": {
+            "desktop": {
+              "formFactor": "desktop",
+              "screen": {
+                "width": 1440,
+                "height": 900,
+                "deviceScaleFactor": 1,
+                "mobile": false
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            },
+            "mobile": {
+              "formFactor": "mobile",
+              "screen": {
+                "width": 390,
+                "height": 844,
+                "deviceScaleFactor": 1,
+                "mobile": true
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            }
+          },
+          "budgets": {
+            "relaxed": {
+              "minimumScore": 80,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            },
+            "strict": {
+              "minimumScore": 90,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            }
+          }
+        },
+        "byPurpose": {
+          "performance": {
+            "runs": 3,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": "relaxed",
+            "acceptances": []
+          },
+          "seo": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": []
+          },
+          "best-practices": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": []
+          }
+        }
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onFail": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-b8fe49d2862e13fe-A": {
+      "processing": {
+        "settings": {
+          "schemaVersion": "kubeclaw.lighthouse-settings.v1",
+          "profiles": {
+            "desktop": {
+              "formFactor": "desktop",
+              "screen": {
+                "width": 1440,
+                "height": 900,
+                "deviceScaleFactor": 1,
+                "mobile": false
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            },
+            "mobile": {
+              "formFactor": "mobile",
+              "screen": {
+                "width": 390,
+                "height": 844,
+                "deviceScaleFactor": 1,
+                "mobile": true
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            }
+          },
+          "budgets": {
+            "relaxed": {
+              "minimumScore": 80,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            },
+            "strict": {
+              "minimumScore": 90,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            }
+          }
+        },
+        "byPurpose": {
+          "performance": {
+            "runs": 3,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": "relaxed",
+            "acceptances": []
+          },
+          "seo": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": []
+          },
+          "best-practices": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": []
+          }
+        }
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onFail": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-b8fe49d2862e13fe-B": {
+      "processing": {
+        "settings": {
+          "schemaVersion": "kubeclaw.lighthouse-settings.v1",
+          "profiles": {
+            "desktop": {
+              "formFactor": "desktop",
+              "screen": {
+                "width": 1440,
+                "height": 900,
+                "deviceScaleFactor": 1,
+                "mobile": false
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            },
+            "mobile": {
+              "formFactor": "mobile",
+              "screen": {
+                "width": 390,
+                "height": 844,
+                "deviceScaleFactor": 1,
+                "mobile": true
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            }
+          },
+          "budgets": {
+            "relaxed": {
+              "minimumScore": 90,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            },
+            "strict": {
+              "minimumScore": 90,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            }
+          }
+        },
+        "byPurpose": {
+          "performance": {
+            "runs": 3,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": "relaxed",
+            "acceptances": []
+          },
+          "seo": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": []
+          },
+          "best-practices": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": []
+          }
+        }
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onFail": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-c245ed3eed7a76c8-A": {
+      "processing": {
+        "settings": {
+          "schemaVersion": "kubeclaw.lighthouse-settings.v1",
+          "profiles": {
+            "desktop": {
+              "formFactor": "desktop",
+              "screen": {
+                "width": 1440,
+                "height": 900,
+                "deviceScaleFactor": 1,
+                "mobile": false
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            },
+            "mobile": {
+              "formFactor": "mobile",
+              "screen": {
+                "width": 390,
+                "height": 844,
+                "deviceScaleFactor": 1,
+                "mobile": true
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            }
+          },
+          "budgets": {
+            "relaxed": {
+              "minimumScore": 80,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            },
+            "strict": {
+              "minimumScore": 90,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            }
+          }
+        },
+        "byPurpose": {
+          "performance": {
+            "runs": 3,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": "relaxed",
+            "acceptances": []
+          },
+          "seo": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": []
+          },
+          "best-practices": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": []
+          }
+        }
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onFail": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-c245ed3eed7a76c8-B": {
+      "processing": {
+        "settings": {
+          "schemaVersion": "kubeclaw.lighthouse-settings.v1",
+          "profiles": {
+            "desktop": {
+              "formFactor": "desktop",
+              "screen": {
+                "width": 1440,
+                "height": 900,
+                "deviceScaleFactor": 1,
+                "mobile": false
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            },
+            "mobile": {
+              "formFactor": "mobile",
+              "screen": {
+                "width": 390,
+                "height": 844,
+                "deviceScaleFactor": 1,
+                "mobile": true
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            }
+          },
+          "budgets": {
+            "relaxed": {
+              "minimumScore": 80,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            },
+            "strict": {
+              "minimumScore": 90,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            }
+          }
+        },
+        "byPurpose": {
+          "performance": {
+            "runs": 3,
+            "timeoutMs": 120000,
+            "selectedProfile": "mobile",
+            "selectedBudget": "relaxed",
+            "acceptances": []
+          },
+          "seo": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": []
+          },
+          "best-practices": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": []
+          }
+        }
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onFail": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-858b7c0d83228aea-A": {
+      "processing": {
+        "settings": {
+          "schemaVersion": "kubeclaw.lighthouse-settings.v1",
+          "profiles": {
+            "desktop": {
+              "formFactor": "desktop",
+              "screen": {
+                "width": 1440,
+                "height": 900,
+                "deviceScaleFactor": 1,
+                "mobile": false
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            },
+            "mobile": {
+              "formFactor": "mobile",
+              "screen": {
+                "width": 390,
+                "height": 844,
+                "deviceScaleFactor": 1,
+                "mobile": true
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            }
+          },
+          "budgets": {
+            "relaxed": {
+              "minimumScore": 80,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            },
+            "strict": {
+              "minimumScore": 90,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            }
+          }
+        },
+        "byPurpose": {
+          "performance": {
+            "runs": 3,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": "relaxed",
+            "acceptances": []
+          },
+          "seo": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": []
+          },
+          "best-practices": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": []
+          }
+        }
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onFail": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-858b7c0d83228aea-B": {
+      "processing": {
+        "settings": {
+          "schemaVersion": "kubeclaw.lighthouse-settings.v1",
+          "profiles": {
+            "desktop": {
+              "formFactor": "desktop",
+              "screen": {
+                "width": 1440,
+                "height": 900,
+                "deviceScaleFactor": 1,
+                "mobile": false
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            },
+            "mobile": {
+              "formFactor": "mobile",
+              "screen": {
+                "width": 390,
+                "height": 844,
+                "deviceScaleFactor": 1,
+                "mobile": true
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            }
+          },
+          "budgets": {
+            "relaxed": {
+              "minimumScore": 80,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            },
+            "strict": {
+              "minimumScore": 90,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            }
+          }
+        },
+        "byPurpose": {
+          "performance": {
+            "runs": 3,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": "strict",
+            "acceptances": []
+          },
+          "seo": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": []
+          },
+          "best-practices": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": []
+          }
+        }
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onFail": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-d1ed31f756f931f4-A": {
+      "processing": {
+        "settings": {
+          "schemaVersion": "kubeclaw.lighthouse-settings.v1",
+          "profiles": {
+            "desktop": {
+              "formFactor": "desktop",
+              "screen": {
+                "width": 1440,
+                "height": 900,
+                "deviceScaleFactor": 1,
+                "mobile": false
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            },
+            "mobile": {
+              "formFactor": "mobile",
+              "screen": {
+                "width": 390,
+                "height": 844,
+                "deviceScaleFactor": 1,
+                "mobile": true
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            }
+          },
+          "budgets": {
+            "relaxed": {
+              "minimumScore": 80,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            },
+            "strict": {
+              "minimumScore": 90,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            }
+          }
+        },
+        "byPurpose": {
+          "performance": {
+            "runs": 3,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": "relaxed",
+            "acceptances": []
+          },
+          "seo": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": []
+          },
+          "best-practices": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": []
+          }
+        }
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onFail": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-d1ed31f756f931f4-B": {
+      "processing": {
+        "settings": {
+          "schemaVersion": "kubeclaw.lighthouse-settings.v1",
+          "profiles": {
+            "desktop": {
+              "formFactor": "desktop",
+              "screen": {
+                "width": 1440,
+                "height": 900,
+                "deviceScaleFactor": 1,
+                "mobile": false
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            },
+            "mobile": {
+              "formFactor": "mobile",
+              "screen": {
+                "width": 390,
+                "height": 844,
+                "deviceScaleFactor": 1,
+                "mobile": true
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            }
+          },
+          "budgets": {
+            "relaxed": {
+              "minimumScore": 80,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            },
+            "strict": {
+              "minimumScore": 90,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            }
+          }
+        },
+        "byPurpose": {
+          "performance": {
+            "runs": 5,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": "relaxed",
+            "acceptances": []
+          },
+          "seo": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": []
+          },
+          "best-practices": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": []
+          }
+        }
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onFail": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-91b918f8698f70dd-A": {
+      "processing": {
+        "settings": {
+          "schemaVersion": "kubeclaw.lighthouse-settings.v1",
+          "profiles": {
+            "desktop": {
+              "formFactor": "desktop",
+              "screen": {
+                "width": 1440,
+                "height": 900,
+                "deviceScaleFactor": 1,
+                "mobile": false
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            },
+            "mobile": {
+              "formFactor": "mobile",
+              "screen": {
+                "width": 390,
+                "height": 844,
+                "deviceScaleFactor": 1,
+                "mobile": true
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            }
+          },
+          "budgets": {
+            "relaxed": {
+              "minimumScore": 80,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            },
+            "strict": {
+              "minimumScore": 90,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            }
+          }
+        },
+        "byPurpose": {
+          "performance": {
+            "runs": 3,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": "relaxed",
+            "acceptances": []
+          },
+          "seo": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": [
+              {
+                "audit": "meta-description",
+                "route": "/a",
+                "reason": "C0 definition-only fixture waiver",
+                "expiresAt": "2099-01-01"
+              }
+            ]
+          },
+          "best-practices": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": []
+          }
+        }
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onFail": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-91b918f8698f70dd-B": {
+      "processing": {
+        "settings": {
+          "schemaVersion": "kubeclaw.lighthouse-settings.v1",
+          "profiles": {
+            "desktop": {
+              "formFactor": "desktop",
+              "screen": {
+                "width": 1440,
+                "height": 900,
+                "deviceScaleFactor": 1,
+                "mobile": false
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            },
+            "mobile": {
+              "formFactor": "mobile",
+              "screen": {
+                "width": 390,
+                "height": 844,
+                "deviceScaleFactor": 1,
+                "mobile": true
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            }
+          },
+          "budgets": {
+            "relaxed": {
+              "minimumScore": 80,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            },
+            "strict": {
+              "minimumScore": 90,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            }
+          }
+        },
+        "byPurpose": {
+          "performance": {
+            "runs": 3,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": "relaxed",
+            "acceptances": []
+          },
+          "seo": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": [
+              {
+                "audit": "meta-description",
+                "route": "/a",
+                "reason": "C0 definition-only fixture waiver",
+                "expiresAt": "2000-01-01"
+              }
+            ]
+          },
+          "best-practices": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": []
+          }
+        }
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onFail": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-8138a8b093bfc06d-A": {
+      "processing": {
+        "settings": {
+          "schemaVersion": "kubeclaw.lighthouse-settings.v1",
+          "profiles": {
+            "desktop": {
+              "formFactor": "desktop",
+              "screen": {
+                "width": 1440,
+                "height": 900,
+                "deviceScaleFactor": 1,
+                "mobile": false
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            },
+            "mobile": {
+              "formFactor": "mobile",
+              "screen": {
+                "width": 390,
+                "height": 844,
+                "deviceScaleFactor": 1,
+                "mobile": true
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            }
+          },
+          "budgets": {
+            "relaxed": {
+              "minimumScore": 80,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            },
+            "strict": {
+              "minimumScore": 90,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            }
+          }
+        },
+        "byPurpose": {
+          "performance": {
+            "runs": 3,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": "relaxed",
+            "acceptances": []
+          },
+          "seo": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": [
+              {
+                "audit": "meta-description",
+                "route": "/a",
+                "reason": "C0 definition-only fixture waiver",
+                "expiresAt": "2099-01-01"
+              }
+            ]
+          },
+          "best-practices": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": []
+          }
+        }
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onFail": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-8138a8b093bfc06d-B": {
+      "processing": {
+        "settings": {
+          "schemaVersion": "kubeclaw.lighthouse-settings.v1",
+          "profiles": {
+            "desktop": {
+              "formFactor": "desktop",
+              "screen": {
+                "width": 1440,
+                "height": 900,
+                "deviceScaleFactor": 1,
+                "mobile": false
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            },
+            "mobile": {
+              "formFactor": "mobile",
+              "screen": {
+                "width": 390,
+                "height": 844,
+                "deviceScaleFactor": 1,
+                "mobile": true
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            }
+          },
+          "budgets": {
+            "relaxed": {
+              "minimumScore": 80,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            },
+            "strict": {
+              "minimumScore": 90,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            }
+          }
+        },
+        "byPurpose": {
+          "performance": {
+            "runs": 3,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": "relaxed",
+            "acceptances": []
+          },
+          "seo": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": [
+              {
+                "audit": "meta-description",
+                "route": "/a",
+                "reason": "C0 definition-only fixture waiver",
+                "expiresAt": "2000-01-01"
+              }
+            ]
+          },
+          "best-practices": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": []
+          }
+        }
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onFail": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-323256cac3d5065d-A": {
+      "processing": {
+        "settings": {
+          "schemaVersion": "kubeclaw.lighthouse-settings.v1",
+          "profiles": {
+            "desktop": {
+              "formFactor": "desktop",
+              "screen": {
+                "width": 1440,
+                "height": 900,
+                "deviceScaleFactor": 1,
+                "mobile": false
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            },
+            "mobile": {
+              "formFactor": "mobile",
+              "screen": {
+                "width": 390,
+                "height": 844,
+                "deviceScaleFactor": 1,
+                "mobile": true
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            }
+          },
+          "budgets": {
+            "relaxed": {
+              "minimumScore": 80,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            },
+            "strict": {
+              "minimumScore": 90,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            }
+          }
+        },
+        "byPurpose": {
+          "performance": {
+            "runs": 3,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": "relaxed",
+            "acceptances": []
+          },
+          "seo": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": [
+              {
+                "audit": "meta-description",
+                "route": "/a",
+                "reason": "C0 definition-only fixture waiver",
+                "expiresAt": "2099-01-01"
+              }
+            ]
+          },
+          "best-practices": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": []
+          }
+        }
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onFail": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-323256cac3d5065d-B": {
+      "processing": {
+        "settings": {
+          "schemaVersion": "kubeclaw.lighthouse-settings.v1",
+          "profiles": {
+            "desktop": {
+              "formFactor": "desktop",
+              "screen": {
+                "width": 1440,
+                "height": 900,
+                "deviceScaleFactor": 1,
+                "mobile": false
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            },
+            "mobile": {
+              "formFactor": "mobile",
+              "screen": {
+                "width": 390,
+                "height": 844,
+                "deviceScaleFactor": 1,
+                "mobile": true
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            }
+          },
+          "budgets": {
+            "relaxed": {
+              "minimumScore": 80,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            },
+            "strict": {
+              "minimumScore": 90,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            }
+          }
+        },
+        "byPurpose": {
+          "performance": {
+            "runs": 3,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": "relaxed",
+            "acceptances": []
+          },
+          "seo": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": [
+              {
+                "audit": "document-title",
+                "route": "/a",
+                "reason": "C0 definition-only fixture waiver",
+                "expiresAt": "2099-01-01"
+              }
+            ]
+          },
+          "best-practices": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": []
+          }
+        }
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onFail": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-398b1cee6b5ad261-A": {
+      "processing": {
+        "settings": {
+          "schemaVersion": "kubeclaw.lighthouse-settings.v1",
+          "profiles": {
+            "desktop": {
+              "formFactor": "desktop",
+              "screen": {
+                "width": 1440,
+                "height": 900,
+                "deviceScaleFactor": 1,
+                "mobile": false
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            },
+            "mobile": {
+              "formFactor": "mobile",
+              "screen": {
+                "width": 390,
+                "height": 844,
+                "deviceScaleFactor": 1,
+                "mobile": true
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            }
+          },
+          "budgets": {
+            "relaxed": {
+              "minimumScore": 80,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            },
+            "strict": {
+              "minimumScore": 90,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            }
+          }
+        },
+        "byPurpose": {
+          "performance": {
+            "runs": 3,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": "relaxed",
+            "acceptances": []
+          },
+          "seo": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": [
+              {
+                "audit": "meta-description",
+                "route": "/a",
+                "reason": "C0 definition-only fixture waiver",
+                "expiresAt": "2099-01-01"
+              }
+            ]
+          },
+          "best-practices": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": []
+          }
+        }
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onFail": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-398b1cee6b5ad261-B": {
+      "processing": {
+        "settings": {
+          "schemaVersion": "kubeclaw.lighthouse-settings.v1",
+          "profiles": {
+            "desktop": {
+              "formFactor": "desktop",
+              "screen": {
+                "width": 1440,
+                "height": 900,
+                "deviceScaleFactor": 1,
+                "mobile": false
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            },
+            "mobile": {
+              "formFactor": "mobile",
+              "screen": {
+                "width": 390,
+                "height": 844,
+                "deviceScaleFactor": 1,
+                "mobile": true
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            }
+          },
+          "budgets": {
+            "relaxed": {
+              "minimumScore": 80,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            },
+            "strict": {
+              "minimumScore": 90,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            }
+          }
+        },
+        "byPurpose": {
+          "performance": {
+            "runs": 3,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": "relaxed",
+            "acceptances": []
+          },
+          "seo": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": [
+              {
+                "audit": "meta-description",
+                "route": "/b",
+                "reason": "C0 definition-only fixture waiver",
+                "expiresAt": "2099-01-01"
+              }
+            ]
+          },
+          "best-practices": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": []
+          }
+        }
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onFail": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-1412bca48fc1b08d-A": {
+      "processing": {
+        "settings": {
+          "schemaVersion": "kubeclaw.lighthouse-settings.v1",
+          "profiles": {
+            "desktop": {
+              "formFactor": "desktop",
+              "screen": {
+                "width": 1440,
+                "height": 900,
+                "deviceScaleFactor": 1,
+                "mobile": false
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            },
+            "mobile": {
+              "formFactor": "mobile",
+              "screen": {
+                "width": 390,
+                "height": 844,
+                "deviceScaleFactor": 1,
+                "mobile": true
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            }
+          },
+          "budgets": {
+            "relaxed": {
+              "minimumScore": 80,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            },
+            "strict": {
+              "minimumScore": 90,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            }
+          }
+        },
+        "byPurpose": {
+          "performance": {
+            "runs": 3,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": "relaxed",
+            "acceptances": []
+          },
+          "seo": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": [
+              {
+                "audit": "meta-description",
+                "route": "/a",
+                "reason": "C0 definition-only fixture waiver",
+                "expiresAt": "2099-01-01"
+              }
+            ]
+          },
+          "best-practices": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": []
+          }
+        }
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onFail": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-1412bca48fc1b08d-B": {
+      "processing": {
+        "settings": {
+          "schemaVersion": "kubeclaw.lighthouse-settings.v1",
+          "profiles": {
+            "desktop": {
+              "formFactor": "desktop",
+              "screen": {
+                "width": 1440,
+                "height": 900,
+                "deviceScaleFactor": 1,
+                "mobile": false
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            },
+            "mobile": {
+              "formFactor": "mobile",
+              "screen": {
+                "width": 390,
+                "height": 844,
+                "deviceScaleFactor": 1,
+                "mobile": true
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            }
+          },
+          "budgets": {
+            "relaxed": {
+              "minimumScore": 80,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            },
+            "strict": {
+              "minimumScore": 90,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            }
+          }
+        },
+        "byPurpose": {
+          "performance": {
+            "runs": 3,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": "relaxed",
+            "acceptances": []
+          },
+          "seo": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": [
+              {
+                "audit": "meta-description",
+                "route": "/a",
+                "reason": "Second C0 definition-only rationale",
+                "expiresAt": "2099-01-01"
+              }
+            ]
+          },
+          "best-practices": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": []
+          }
+        }
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onFail": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-bfc739d422a140ce-A": {
+      "processing": {
+        "settings": {
+          "schemaVersion": "kubeclaw.lighthouse-settings.v1",
+          "profiles": {
+            "desktop": {
+              "formFactor": "desktop",
+              "screen": {
+                "width": 1440,
+                "height": 900,
+                "deviceScaleFactor": 1,
+                "mobile": false
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            },
+            "mobile": {
+              "formFactor": "mobile",
+              "screen": {
+                "width": 390,
+                "height": 844,
+                "deviceScaleFactor": 1,
+                "mobile": true
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            }
+          },
+          "budgets": {
+            "relaxed": {
+              "minimumScore": 80,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            },
+            "strict": {
+              "minimumScore": 90,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            }
+          }
+        },
+        "byPurpose": {
+          "performance": {
+            "runs": 3,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": "relaxed",
+            "acceptances": []
+          },
+          "seo": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": [
+              {
+                "audit": "meta-description",
+                "route": "/a",
+                "reason": "C0 definition-only fixture waiver",
+                "expiresAt": "2099-01-01"
+              }
+            ]
+          },
+          "best-practices": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": []
+          }
+        }
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onFail": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-bfc739d422a140ce-B": {
+      "processing": {
+        "settings": {
+          "schemaVersion": "kubeclaw.lighthouse-settings.v1",
+          "profiles": {
+            "desktop": {
+              "formFactor": "desktop",
+              "screen": {
+                "width": 1440,
+                "height": 900,
+                "deviceScaleFactor": 1,
+                "mobile": false
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            },
+            "mobile": {
+              "formFactor": "mobile",
+              "screen": {
+                "width": 390,
+                "height": 844,
+                "deviceScaleFactor": 1,
+                "mobile": true
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            }
+          },
+          "budgets": {
+            "relaxed": {
+              "minimumScore": 80,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            },
+            "strict": {
+              "minimumScore": 90,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            }
+          }
+        },
+        "byPurpose": {
+          "performance": {
+            "runs": 3,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": "relaxed",
+            "acceptances": []
+          },
+          "seo": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": [
+              {
+                "audit": "meta-description",
+                "route": "/a",
+                "reason": "C0 definition-only fixture waiver",
+                "expiresAt": "2000-01-01"
+              }
+            ]
+          },
+          "best-practices": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": []
+          }
+        }
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onFail": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-088d813a8d6ff7ca-A": {
+      "processing": {
+        "settings": {
+          "schemaVersion": "kubeclaw.lighthouse-settings.v1",
+          "profiles": {
+            "desktop": {
+              "formFactor": "desktop",
+              "screen": {
+                "width": 1440,
+                "height": 900,
+                "deviceScaleFactor": 1,
+                "mobile": false
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            },
+            "mobile": {
+              "formFactor": "mobile",
+              "screen": {
+                "width": 390,
+                "height": 844,
+                "deviceScaleFactor": 1,
+                "mobile": true
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            }
+          },
+          "budgets": {
+            "relaxed": {
+              "minimumScore": 80,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            },
+            "strict": {
+              "minimumScore": 90,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            }
+          }
+        },
+        "byPurpose": {
+          "performance": {
+            "runs": 3,
+            "timeoutMs": 10000,
+            "selectedProfile": "desktop",
+            "selectedBudget": "relaxed",
+            "acceptances": []
+          },
+          "seo": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": []
+          },
+          "best-practices": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": []
+          }
+        }
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onFail": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-088d813a8d6ff7ca-B": {
+      "processing": {
+        "settings": {
+          "schemaVersion": "kubeclaw.lighthouse-settings.v1",
+          "profiles": {
+            "desktop": {
+              "formFactor": "desktop",
+              "screen": {
+                "width": 1440,
+                "height": 900,
+                "deviceScaleFactor": 1,
+                "mobile": false
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            },
+            "mobile": {
+              "formFactor": "mobile",
+              "screen": {
+                "width": 390,
+                "height": 844,
+                "deviceScaleFactor": 1,
+                "mobile": true
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            }
+          },
+          "budgets": {
+            "relaxed": {
+              "minimumScore": 80,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            },
+            "strict": {
+              "minimumScore": 90,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            }
+          }
+        },
+        "byPurpose": {
+          "performance": {
+            "runs": 3,
+            "timeoutMs": 20000,
+            "selectedProfile": "desktop",
+            "selectedBudget": "relaxed",
+            "acceptances": []
+          },
+          "seo": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": []
+          },
+          "best-practices": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": []
+          }
+        }
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onFail": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-a8b0c90a7a729d20-A": {
+      "processing": {
+        "settings": {
+          "schemaVersion": "kubeclaw.lighthouse-settings.v1",
+          "profiles": {
+            "desktop": {
+              "formFactor": "desktop",
+              "screen": {
+                "width": 1440,
+                "height": 900,
+                "deviceScaleFactor": 1,
+                "mobile": false
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            },
+            "mobile": {
+              "formFactor": "mobile",
+              "screen": {
+                "width": 390,
+                "height": 844,
+                "deviceScaleFactor": 1,
+                "mobile": true
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            }
+          },
+          "budgets": {
+            "relaxed": {
+              "minimumScore": 80,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            },
+            "strict": {
+              "minimumScore": 90,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            }
+          }
+        },
+        "byPurpose": {
+          "performance": {
+            "runs": 3,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": "relaxed",
+            "acceptances": []
+          },
+          "seo": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": []
+          },
+          "best-practices": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": []
+          }
+        }
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onFail": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-a8b0c90a7a729d20-B": {
+      "processing": {
+        "settings": {
+          "schemaVersion": "kubeclaw.lighthouse-settings.v1",
+          "profiles": {
+            "desktop": {
+              "formFactor": "desktop",
+              "screen": {
+                "width": 1440,
+                "height": 900,
+                "deviceScaleFactor": 1,
+                "mobile": false
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            },
+            "mobile": {
+              "formFactor": "mobile",
+              "screen": {
+                "width": 390,
+                "height": 844,
+                "deviceScaleFactor": 1,
+                "mobile": true
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            }
+          },
+          "budgets": {
+            "relaxed": {
+              "minimumScore": 80,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            },
+            "strict": {
+              "minimumScore": 90,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            }
+          }
+        },
+        "byPurpose": {
+          "performance": {
+            "runs": 3,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": "relaxed",
+            "acceptances": []
+          },
+          "seo": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": []
+          },
+          "best-practices": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": []
+          }
+        }
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onFail": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-14d3d815490102e1-A": {
+      "processing": {
+        "settings": {
+          "schemaVersion": "kubeclaw.lighthouse-settings.v1",
+          "profiles": {
+            "desktop": {
+              "formFactor": "desktop",
+              "screen": {
+                "width": 1440,
+                "height": 900,
+                "deviceScaleFactor": 1,
+                "mobile": false
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            },
+            "mobile": {
+              "formFactor": "mobile",
+              "screen": {
+                "width": 390,
+                "height": 844,
+                "deviceScaleFactor": 1,
+                "mobile": true
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            }
+          },
+          "budgets": {
+            "relaxed": {
+              "minimumScore": 80,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            },
+            "strict": {
+              "minimumScore": 90,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            }
+          }
+        },
+        "byPurpose": {
+          "performance": {
+            "runs": 3,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": "relaxed",
+            "acceptances": []
+          },
+          "seo": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": []
+          },
+          "best-practices": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": []
+          }
+        }
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onFail": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-14d3d815490102e1-B": {
+      "processing": {
+        "settings": {
+          "schemaVersion": "kubeclaw.lighthouse-settings.v1",
+          "profiles": {
+            "desktop": {
+              "formFactor": "desktop",
+              "screen": {
+                "width": 1440,
+                "height": 900,
+                "deviceScaleFactor": 1,
+                "mobile": false
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            },
+            "mobile": {
+              "formFactor": "mobile",
+              "screen": {
+                "width": 390,
+                "height": 844,
+                "deviceScaleFactor": 1,
+                "mobile": true
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            }
+          },
+          "budgets": {
+            "relaxed": {
+              "minimumScore": 80,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            },
+            "strict": {
+              "minimumScore": 90,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            }
+          }
+        },
+        "byPurpose": {
+          "performance": {
+            "runs": 5,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": "relaxed",
+            "acceptances": []
+          },
+          "seo": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": []
+          },
+          "best-practices": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": []
+          }
+        }
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onFail": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-97dfffc2083d51ea-A": {
+      "processing": {
+        "settings": {
+          "schemaVersion": "kubeclaw.lighthouse-settings.v1",
+          "profiles": {
+            "desktop": {
+              "formFactor": "desktop",
+              "screen": {
+                "width": 1440,
+                "height": 900,
+                "deviceScaleFactor": 1,
+                "mobile": false
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            },
+            "mobile": {
+              "formFactor": "mobile",
+              "screen": {
+                "width": 390,
+                "height": 844,
+                "deviceScaleFactor": 1,
+                "mobile": true
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            }
+          },
+          "budgets": {
+            "relaxed": {
+              "minimumScore": 80,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            },
+            "strict": {
+              "minimumScore": 90,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            }
+          }
+        },
+        "byPurpose": {
+          "performance": {
+            "runs": 3,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": "relaxed",
+            "acceptances": []
+          },
+          "seo": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": []
+          },
+          "best-practices": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": []
+          }
+        }
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onFail": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-97dfffc2083d51ea-B": {
+      "processing": {
+        "settings": {
+          "schemaVersion": "kubeclaw.lighthouse-settings.v1",
+          "profiles": {
+            "desktop": {
+              "formFactor": "desktop",
+              "screen": {
+                "width": 1440,
+                "height": 900,
+                "deviceScaleFactor": 1,
+                "mobile": false
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            },
+            "mobile": {
+              "formFactor": "mobile",
+              "screen": {
+                "width": 390,
+                "height": 844,
+                "deviceScaleFactor": 1,
+                "mobile": true
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            }
+          },
+          "budgets": {
+            "relaxed": {
+              "minimumScore": 80,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            },
+            "strict": {
+              "minimumScore": 90,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            }
+          }
+        },
+        "byPurpose": {
+          "performance": {
+            "runs": 3,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": "relaxed",
+            "acceptances": []
+          },
+          "seo": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": []
+          },
+          "best-practices": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": []
+          }
+        }
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onFail": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-480d76acac6850a9-A": {
+      "processing": {
+        "settings": {
+          "schemaVersion": "kubeclaw.lighthouse-settings.v1",
+          "profiles": {
+            "desktop": {
+              "formFactor": "desktop",
+              "screen": {
+                "width": 1440,
+                "height": 900,
+                "deviceScaleFactor": 1,
+                "mobile": false
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            },
+            "mobile": {
+              "formFactor": "mobile",
+              "screen": {
+                "width": 390,
+                "height": 844,
+                "deviceScaleFactor": 1,
+                "mobile": true
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            }
+          },
+          "budgets": {
+            "relaxed": {
+              "minimumScore": 80,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            },
+            "strict": {
+              "minimumScore": 90,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            }
+          }
+        },
+        "byPurpose": {
+          "performance": {
+            "runs": 3,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": "relaxed",
+            "acceptances": []
+          },
+          "seo": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": []
+          },
+          "best-practices": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": []
+          }
+        }
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onFail": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-EVIDENCEDEFAULTS-ONPASS-A": {
+      "processing": {
+        "settings": {
+          "schemaVersion": "kubeclaw.lighthouse-settings.v1",
+          "profiles": {
+            "desktop": {
+              "formFactor": "desktop",
+              "screen": {
+                "width": 1440,
+                "height": 900,
+                "deviceScaleFactor": 1,
+                "mobile": false
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            },
+            "mobile": {
+              "formFactor": "mobile",
+              "screen": {
+                "width": 390,
+                "height": 844,
+                "deviceScaleFactor": 1,
+                "mobile": true
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            }
+          },
+          "budgets": {
+            "relaxed": {
+              "minimumScore": 80,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            },
+            "strict": {
+              "minimumScore": 90,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            }
+          }
+        },
+        "byPurpose": {
+          "performance": {
+            "runs": 3,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": "relaxed",
+            "acceptances": []
+          },
+          "seo": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": []
+          },
+          "best-practices": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": []
+          }
+        }
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onFail": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-EVIDENCEDEFAULTS-ONFAIL-A": {
+      "processing": {
+        "settings": {
+          "schemaVersion": "kubeclaw.lighthouse-settings.v1",
+          "profiles": {
+            "desktop": {
+              "formFactor": "desktop",
+              "screen": {
+                "width": 1440,
+                "height": 900,
+                "deviceScaleFactor": 1,
+                "mobile": false
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            },
+            "mobile": {
+              "formFactor": "mobile",
+              "screen": {
+                "width": 390,
+                "height": 844,
+                "deviceScaleFactor": 1,
+                "mobile": true
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            }
+          },
+          "budgets": {
+            "relaxed": {
+              "minimumScore": 80,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            },
+            "strict": {
+              "minimumScore": 90,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            }
+          }
+        },
+        "byPurpose": {
+          "performance": {
+            "runs": 3,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": "relaxed",
+            "acceptances": []
+          },
+          "seo": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": []
+          },
+          "best-practices": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": []
+          }
+        }
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onFail": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-EVIDENCEDEFAULTS-ONERROR-A": {
+      "processing": {
+        "settings": {
+          "schemaVersion": "kubeclaw.lighthouse-settings.v1",
+          "profiles": {
+            "desktop": {
+              "formFactor": "desktop",
+              "screen": {
+                "width": 1440,
+                "height": 900,
+                "deviceScaleFactor": 1,
+                "mobile": false
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            },
+            "mobile": {
+              "formFactor": "mobile",
+              "screen": {
+                "width": 390,
+                "height": 844,
+                "deviceScaleFactor": 1,
+                "mobile": true
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            }
+          },
+          "budgets": {
+            "relaxed": {
+              "minimumScore": 80,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            },
+            "strict": {
+              "minimumScore": 90,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            }
+          }
+        },
+        "byPurpose": {
+          "performance": {
+            "runs": 3,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": "relaxed",
+            "acceptances": []
+          },
+          "seo": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": []
+          },
+          "best-practices": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": []
+          }
+        }
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onFail": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-EVIDENCEDEFAULTS-ONERROR-B": {
+      "processing": {
+        "settings": {
+          "schemaVersion": "kubeclaw.lighthouse-settings.v1",
+          "profiles": {
+            "desktop": {
+              "formFactor": "desktop",
+              "screen": {
+                "width": 1440,
+                "height": 900,
+                "deviceScaleFactor": 1,
+                "mobile": false
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            },
+            "mobile": {
+              "formFactor": "mobile",
+              "screen": {
+                "width": 390,
+                "height": 844,
+                "deviceScaleFactor": 1,
+                "mobile": true
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            }
+          },
+          "budgets": {
+            "relaxed": {
+              "minimumScore": 80,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            },
+            "strict": {
+              "minimumScore": 90,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            }
+          }
+        },
+        "byPurpose": {
+          "performance": {
+            "runs": 3,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": "relaxed",
+            "acceptances": []
+          },
+          "seo": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": []
+          },
+          "best-practices": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": []
+          }
+        }
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onFail": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onError": [
+            "log",
+            "performance-report"
+          ]
+        }
+      }
+    },
+    "RT-PROVIDER-CONTRACT-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-RETRYSAFE-A": {
+      "processing": {
+        "settings": {
+          "schemaVersion": "kubeclaw.lighthouse-settings.v1",
+          "profiles": {
+            "desktop": {
+              "formFactor": "desktop",
+              "screen": {
+                "width": 1440,
+                "height": 900,
+                "deviceScaleFactor": 1,
+                "mobile": false
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            },
+            "mobile": {
+              "formFactor": "mobile",
+              "screen": {
+                "width": 390,
+                "height": 844,
+                "deviceScaleFactor": 1,
+                "mobile": true
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            }
+          },
+          "budgets": {
+            "relaxed": {
+              "minimumScore": 80,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            },
+            "strict": {
+              "minimumScore": 90,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            }
+          }
+        },
+        "byPurpose": {
+          "performance": {
+            "runs": 3,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": "relaxed",
+            "acceptances": []
+          },
+          "seo": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": []
+          },
+          "best-practices": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": []
+          }
+        }
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onFail": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-PROVIDER-CONTRACT-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-RETRYSAFE-B": {
+      "processing": {
+        "settings": {
+          "schemaVersion": "kubeclaw.lighthouse-settings.v1",
+          "profiles": {
+            "desktop": {
+              "formFactor": "desktop",
+              "screen": {
+                "width": 1440,
+                "height": 900,
+                "deviceScaleFactor": 1,
+                "mobile": false
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            },
+            "mobile": {
+              "formFactor": "mobile",
+              "screen": {
+                "width": 390,
+                "height": 844,
+                "deviceScaleFactor": 1,
+                "mobile": true
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            }
+          },
+          "budgets": {
+            "relaxed": {
+              "minimumScore": 80,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            },
+            "strict": {
+              "minimumScore": 90,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            }
+          }
+        },
+        "byPurpose": {
+          "performance": {
+            "runs": 3,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": "relaxed",
+            "acceptances": []
+          },
+          "seo": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": []
+          },
+          "best-practices": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": []
+          }
+        }
+      },
+      "declarations": {
+        "retrySafe": false,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onFail": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-PROVIDER-CONTRACT-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-MATRIXFIELDS-A": {
+      "processing": {
+        "settings": {
+          "schemaVersion": "kubeclaw.lighthouse-settings.v1",
+          "profiles": {
+            "desktop": {
+              "formFactor": "desktop",
+              "screen": {
+                "width": 1440,
+                "height": 900,
+                "deviceScaleFactor": 1,
+                "mobile": false
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            },
+            "mobile": {
+              "formFactor": "mobile",
+              "screen": {
+                "width": 390,
+                "height": 844,
+                "deviceScaleFactor": 1,
+                "mobile": true
+              },
+              "throttling": {
+                "rttMs": 0,
+                "throughputKbps": 100000,
+                "cpuSlowdownMultiplier": 1
+              }
+            }
+          },
+          "budgets": {
+            "relaxed": {
+              "minimumScore": 80,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            },
+            "strict": {
+              "minimumScore": 90,
+              "maximumLcpMs": 3000,
+              "maximumCls": 1,
+              "maximumTbtMs": 1000
+            }
+          }
+        },
+        "byPurpose": {
+          "performance": {
+            "runs": 3,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": "relaxed",
+            "acceptances": []
+          },
+          "seo": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": []
+          },
+          "best-practices": {
+            "runs": 1,
+            "timeoutMs": 120000,
+            "selectedProfile": "desktop",
+            "selectedBudget": null,
+            "acceptances": []
+          }
+        }
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onFail": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    }
+  }
+}

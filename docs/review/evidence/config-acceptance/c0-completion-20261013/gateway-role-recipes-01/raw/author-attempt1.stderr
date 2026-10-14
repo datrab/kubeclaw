@@ -1,0 +1,17 @@
+Traceback (most recent call last):
+  File "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-role-recipes-01/author-recipes.py", line 13, in <module>
+    p=root/rel;pin(p);q=out/'source-current'/rel;q.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(p,q)
+               ^^^^^^
+  File "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-role-recipes-01/author-recipes.py", line 6, in pin
+    def pin(p):pins.append({'path':str(p.relative_to(root)) if p.is_relative_to(root) else str(p),'sha256':sha(p),'bytes':p.stat().st_size})
+                                                                                                           ^^^^^^
+  File "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-role-recipes-01/author-recipes.py", line 3, in sha
+    def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
+                                     ^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/pathlib.py", line 1051, in read_bytes
+    with self.open(mode='rb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/pathlib.py", line 1045, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/node/.openclaw/workspace/kubeclaw-config-c0/charts/kubeclaw/values.schema.json'

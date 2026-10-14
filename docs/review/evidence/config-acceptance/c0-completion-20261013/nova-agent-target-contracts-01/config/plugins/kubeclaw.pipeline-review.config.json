@@ -1,0 +1,232 @@
+{
+  "schemaVersion": "pipeline-package-policy.v1",
+  "packageId": "kubeclaw.pipeline-review",
+  "instanceId": "fixture.pipeline-review",
+  "profiles": {
+    "A": {
+      "processing": {
+        "kubeclaw.pipeline-review:review": {
+          "agent": "case-target-a",
+          "agentRole": "review-diagnostic-A"
+        },
+        "kubeclaw.pipeline-review:evidence": {
+          "storageRoot": "/fixture/nova/original-state",
+          "orchestratorIssuerId": "case-original-writer",
+          "maximumJournalBytes": 1048576,
+          "maximumArtifactBytes": 1048576,
+          "maximumBundleBytes": 1048576
+        }
+      }
+    },
+    "RT-2d37a257c3d7dd45-A": {
+      "processing": {
+        "kubeclaw.pipeline-review:review": {
+          "agent": "case-target-a",
+          "agentRole": "review-diagnostic-A"
+        },
+        "kubeclaw.pipeline-review:evidence": {
+          "storageRoot": "/fixture/nova/original-state",
+          "orchestratorIssuerId": "case-original-writer",
+          "maximumJournalBytes": 1048576,
+          "maximumArtifactBytes": 1048576,
+          "maximumBundleBytes": 1048576
+        }
+      }
+    },
+    "RT-2d37a257c3d7dd45-B": {
+      "processing": {
+        "kubeclaw.pipeline-review:review": {
+          "agent": "case-target-b",
+          "agentRole": "review-diagnostic-A"
+        },
+        "kubeclaw.pipeline-review:evidence": {
+          "storageRoot": "/fixture/nova/original-state",
+          "orchestratorIssuerId": "case-original-writer",
+          "maximumJournalBytes": 1048576,
+          "maximumArtifactBytes": 1048576,
+          "maximumBundleBytes": 1048576
+        }
+      }
+    },
+    "RT-4c1a2b66cdab7e18-A": {
+      "processing": {
+        "kubeclaw.pipeline-review:review": {
+          "agent": "case-target-a",
+          "agentRole": "review-diagnostic-A"
+        },
+        "kubeclaw.pipeline-review:evidence": {
+          "storageRoot": "/fixture/nova/original-state",
+          "orchestratorIssuerId": "case-original-writer",
+          "maximumJournalBytes": 1048576,
+          "maximumArtifactBytes": 1048576,
+          "maximumBundleBytes": 1048576
+        }
+      }
+    },
+    "RT-4c1a2b66cdab7e18-B": {
+      "processing": {
+        "kubeclaw.pipeline-review:review": {
+          "agent": "case-target-a",
+          "agentRole": "review-diagnostic-B"
+        },
+        "kubeclaw.pipeline-review:evidence": {
+          "storageRoot": "/fixture/nova/original-state",
+          "orchestratorIssuerId": "case-original-writer",
+          "maximumJournalBytes": 1048576,
+          "maximumArtifactBytes": 1048576,
+          "maximumBundleBytes": 1048576
+        }
+      }
+    },
+    "RT-8750f030bf25ecae-A": {
+      "processing": {
+        "kubeclaw.pipeline-review:review": {
+          "agent": "case-target-a",
+          "agentRole": "review-diagnostic-A"
+        },
+        "kubeclaw.pipeline-review:evidence": {
+          "storageRoot": "/fixture/nova/original-state",
+          "orchestratorIssuerId": "case-original-writer",
+          "maximumJournalBytes": 1048576,
+          "maximumArtifactBytes": 1048576,
+          "maximumBundleBytes": 1048576
+        }
+      }
+    },
+    "RT-8750f030bf25ecae-B": {
+      "processing": {
+        "kubeclaw.pipeline-review:review": {
+          "agent": "case-target-a",
+          "agentRole": "review-diagnostic-A"
+        },
+        "kubeclaw.pipeline-review:evidence": {
+          "storageRoot": "/fixture/nova/original-state",
+          "orchestratorIssuerId": "case-original-writer",
+          "maximumJournalBytes": 1048576,
+          "maximumArtifactBytes": 1048576,
+          "maximumBundleBytes": 1048576
+        }
+      }
+    },
+    "RT-96698b5568aba94d-A": {
+      "processing": {
+        "kubeclaw.pipeline-review:review": {
+          "agent": "case-target-a",
+          "agentRole": "review-diagnostic-A"
+        },
+        "kubeclaw.pipeline-review:evidence": {
+          "storageRoot": "/fixture/nova/original-state",
+          "orchestratorIssuerId": "case-original-writer",
+          "maximumJournalBytes": 1048576,
+          "maximumArtifactBytes": 1048576,
+          "maximumBundleBytes": 1048576
+        }
+      }
+    },
+    "RT-96698b5568aba94d-B": {
+      "processing": {
+        "kubeclaw.pipeline-review:review": {
+          "agent": "case-target-a",
+          "agentRole": "review-diagnostic-A"
+        },
+        "kubeclaw.pipeline-review:evidence": {
+          "storageRoot": "/fixture/nova/original-state",
+          "orchestratorIssuerId": "case-original-writer",
+          "maximumJournalBytes": 1048576,
+          "maximumArtifactBytes": 1048576,
+          "maximumBundleBytes": 1048576
+        }
+      }
+    },
+    "RT-36accddb567c892f-A": {
+      "processing": {
+        "kubeclaw.pipeline-review:review": {
+          "agent": "case-target-a",
+          "agentRole": "review-diagnostic-A"
+        },
+        "kubeclaw.pipeline-review:evidence": {
+          "storageRoot": "/fixture/nova/original-state",
+          "orchestratorIssuerId": "case-original-writer",
+          "maximumJournalBytes": 1048576,
+          "maximumArtifactBytes": 1048576,
+          "maximumBundleBytes": 1048576
+        }
+      }
+    },
+    "RT-36accddb567c892f-B": {
+      "processing": {
+        "kubeclaw.pipeline-review:review": {
+          "agent": "case-target-a",
+          "agentRole": "review-diagnostic-A"
+        },
+        "kubeclaw.pipeline-review:evidence": {
+          "storageRoot": "/fixture/nova/original-state",
+          "orchestratorIssuerId": "case-original-writer",
+          "maximumJournalBytes": 524288,
+          "maximumArtifactBytes": 1048576,
+          "maximumBundleBytes": 1048576
+        }
+      }
+    },
+    "RT-81d42184c1081430-A": {
+      "processing": {
+        "kubeclaw.pipeline-review:review": {
+          "agent": "case-target-a",
+          "agentRole": "review-diagnostic-A"
+        },
+        "kubeclaw.pipeline-review:evidence": {
+          "storageRoot": "/fixture/nova/original-state",
+          "orchestratorIssuerId": "case-original-writer",
+          "maximumJournalBytes": 1048576,
+          "maximumArtifactBytes": 1048576,
+          "maximumBundleBytes": 1048576
+        }
+      }
+    },
+    "RT-81d42184c1081430-B": {
+      "processing": {
+        "kubeclaw.pipeline-review:review": {
+          "agent": "case-target-a",
+          "agentRole": "review-diagnostic-A"
+        },
+        "kubeclaw.pipeline-review:evidence": {
+          "storageRoot": "/fixture/nova/original-state",
+          "orchestratorIssuerId": "case-original-writer",
+          "maximumJournalBytes": 1048576,
+          "maximumArtifactBytes": 524288,
+          "maximumBundleBytes": 1048576
+        }
+      }
+    },
+    "RT-41d93665317a7d07-A": {
+      "processing": {
+        "kubeclaw.pipeline-review:review": {
+          "agent": "case-target-a",
+          "agentRole": "review-diagnostic-A"
+        },
+        "kubeclaw.pipeline-review:evidence": {
+          "storageRoot": "/fixture/nova/original-state",
+          "orchestratorIssuerId": "case-original-writer",
+          "maximumJournalBytes": 1048576,
+          "maximumArtifactBytes": 1048576,
+          "maximumBundleBytes": 1048576
+        }
+      }
+    },
+    "RT-41d93665317a7d07-B": {
+      "processing": {
+        "kubeclaw.pipeline-review:review": {
+          "agent": "case-target-a",
+          "agentRole": "review-diagnostic-A"
+        },
+        "kubeclaw.pipeline-review:evidence": {
+          "storageRoot": "/fixture/nova/original-state",
+          "orchestratorIssuerId": "case-original-writer",
+          "maximumJournalBytes": 1048576,
+          "maximumArtifactBytes": 1048576,
+          "maximumBundleBytes": 524288
+        }
+      }
+    }
+  }
+}

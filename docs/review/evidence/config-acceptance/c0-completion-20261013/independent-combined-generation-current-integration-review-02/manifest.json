@@ -1,0 +1,58 @@
+{
+  "scope": "Independent bounded actual v8 canonical reference integration receipt only",
+  "files": [
+    {
+      "relativePath": "README.md",
+      "byteLength": 12926,
+      "sha256": "ec0df811e9a934554415177c2e08031ed212dabb1c0f1a89c9236f0fcb53e624"
+    },
+    {
+      "relativePath": "actual-root-inspection.json",
+      "byteLength": 32207,
+      "sha256": "41293e7e38baa2de61197847aa2aeb31a3d7e9e8d45f1f4688349689c0de9e68"
+    },
+    {
+      "relativePath": "commands-and-exits.json",
+      "byteLength": 2461,
+      "sha256": "cb817b1c4fabf89cedc4e9b443b495efc828ae8b0b0dcb8a533e3a43c83d075f"
+    },
+    {
+      "relativePath": "end-input-stability.json",
+      "byteLength": 536,
+      "sha256": "03f11141b8383306d3867d45d3efec087ad30614d7a709ee06f71e9b3f8ac040"
+    },
+    {
+      "relativePath": "inspect-actual-roots.py",
+      "byteLength": 10034,
+      "sha256": "9160d80d194e040ddf4ff596f48a00c917a6bf66845bae57999594fc3925affd"
+    },
+    {
+      "relativePath": "inspection.stderr",
+      "byteLength": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "relativePath": "inspection.stdout.json",
+      "byteLength": 1979,
+      "sha256": "a57a85415faad882b8d4e468b1644e72deb7b863d45271311fa725704b0e8cc0"
+    },
+    {
+      "relativePath": "parent-tracked-dirty-navigation.txt",
+      "byteLength": 354,
+      "sha256": "97a69fc5aa313f6e8c0e566b773879c0b6212e360e8498dcab3c5e518136eb3c"
+    },
+    {
+      "relativePath": "read-identities.json",
+      "byteLength": 297095,
+      "sha256": "fb32b6b9a52e412a94d0b61fd1f432707faa648dc6075131b920bdb9b2f606cd"
+    },
+    {
+      "relativePath": "reading-and-pending-scope-checks.json",
+      "byteLength": 1505,
+      "sha256": "11a3189b406d1335bdc45f658325afbb8085c8a55922b6dd56bd65a908aa97c4"
+    }
+  ],
+  "nativeActivationAllowed": false,
+  "globalC0Accepted": false,
+  "implementationAuthorization": null
+}

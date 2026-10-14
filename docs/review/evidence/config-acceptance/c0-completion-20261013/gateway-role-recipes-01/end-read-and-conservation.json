@@ -1,0 +1,53 @@
+{
+  "time": "2026-10-14T04:22:08.540513+00:00",
+  "readPins": 66,
+  "changedInputs": [
+    {
+      "path": "docs/review/remediation/config-semantic-inventory.json",
+      "before": "d113ff0289b6030afafb4c30d6d4b67115a7d7ee567e43fd851e7bff658399bf",
+      "end": "5f6ccfc4f00b08b8f3e6a80400cde0708b768161363ada396f6764ef7c8ff387",
+      "qualification": "canonical metadata-only drift may be known; other drift unacceptable"
+    },
+    {
+      "path": "docs/review/remediation/config-acceptance-matrix.json",
+      "before": "397386f9a5d541664995fc0a5c008f74cbc9a5559c85924480ae403c5ae36020",
+      "end": "1e8be6e5bf7c327cc6a429bbc4005740f3f77408d4a44394420033991ec6c32d",
+      "qualification": "canonical metadata-only drift may be known; other drift unacceptable"
+    }
+  ],
+  "nonMetadataInputDrift": [],
+  "original70FieldBodyMismatch": [],
+  "original75CaseBodyMismatch": [],
+  "wholePriorBusterOwnerProfilesMismatch": [],
+  "wholePriorBusterProfileByteMismatch": [],
+  "oldBusterContextByteExact": true,
+  "priorGateway02BusterRemotePlan01FrozenCandidateV8ManifestMismatch": [],
+  "archiveMembers": [
+    {
+      "member": "package/dist/number-coercion-CLj0HTDM.mjs",
+      "archiveSHA256": "1fb6ef4fae447af14f1e3b1028334f39146d181a66a4cce2848d4f741c636340",
+      "memberSHA256": "0ed7f5c11b0e6b4cd307532bbe46b709dbdbb09eaa584e57e2edbfb44689aa08",
+      "exactSmallSourceCopyEqual": true
+    },
+    {
+      "member": "package/dist/timeout-Bjg7ga80.mjs",
+      "archiveSHA256": "1fb6ef4fae447af14f1e3b1028334f39146d181a66a4cce2848d4f741c636340",
+      "memberSHA256": "fe0a9056d0a2e8d3e9f2eb87161064217b2043a619b15f5895a8129046736514",
+      "exactSmallSourceCopyEqual": true
+    },
+    {
+      "member": "package/dist/ref-contract-CpZCkwB4.mjs",
+      "archiveSHA256": "1fb6ef4fae447af14f1e3b1028334f39146d181a66a4cce2848d4f741c636340",
+      "memberSHA256": "843a7b433b6dc7d4dd2f77447d8b2064fdfd000a9b05e1a0aea0aaa533bd6182",
+      "exactSmallSourceCopyEqual": true
+    }
+  ],
+  "canonicalBeforeEnd": "canonical-before-end-metadata.json",
+  "lastAdoptedFrozenRefsAtRead": "reviewedv7 + engine02; v8candidate under review only, mutable metadata adoption not source recipe approval",
+  "roleFieldRecords": 280,
+  "latestObservations": 1229,
+  "latestFailures": 0,
+  "productiveCasesExecuted": 0,
+  "freshIndependentReviewRequired": true,
+  "globalC0Accepted": false
+}

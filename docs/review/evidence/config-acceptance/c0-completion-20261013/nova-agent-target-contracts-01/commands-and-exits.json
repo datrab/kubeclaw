@@ -1,0 +1,87 @@
+{
+  "qualification": "Actual node source-definition checker commands/raw stdout+stderr/exits and tool chunk identifiers; failed attempts preserved. No stage/provider/native actions.",
+  "attempts": [
+    {
+      "command": [
+        "node",
+        "docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/check-definition.mjs"
+      ],
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+      "exitCode": 1,
+      "stdout": "attempt-01.stdout.log",
+      "stderr": "attempt-01.stderr.log",
+      "execCommandToolChunkId": "761c83",
+      "functionsExecToolAvailable": true
+    },
+    {
+      "command": [
+        "node",
+        "docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/check-definition.mjs"
+      ],
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+      "exitCode": 1,
+      "stdout": "attempt-02.stdout.log",
+      "stderr": "attempt-02.stderr.log",
+      "execCommandToolChunkId": "1cb72a",
+      "functionsExecToolAvailable": true
+    },
+    {
+      "command": [
+        "node",
+        "docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/check-definition.mjs"
+      ],
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+      "exitCode": 0,
+      "stdout": "attempt-03.stdout.log",
+      "stderr": "attempt-03.stderr.log",
+      "execCommandToolChunkId": "0808c4",
+      "functionsExecToolAvailable": true
+    },
+    {
+      "command": [
+        "node",
+        "docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/check-definition.mjs"
+      ],
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+      "exitCode": 0,
+      "stdout": "attempt-04.stdout.log",
+      "stderr": "attempt-04.stderr.log",
+      "execCommandToolChunkId": "bb8729",
+      "functionsExecToolAvailable": true
+    },
+    {
+      "command": [
+        "node",
+        "docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/check-definition.mjs"
+      ],
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+      "exitCode": 0,
+      "stdout": "attempt-05.stdout.log",
+      "stderr": "attempt-05.stderr.log",
+      "execCommandToolChunkId": "4018b5",
+      "functionsExecToolAvailable": true
+    }
+  ],
+  "failedAttemptExplanation": {
+    "01": "Isolated SDK serializer helper omitted actual imported node:util types dependency; ReferenceError. Fixed harness imports only real node:util/node:crypto; productive source untouched.",
+    "02": "Isolated summary helper omitted source imported PORTABLE_JSON_ENCODING; positive control failed. Fixed harness evaluates exact current SDK source constant; productive source untouched."
+  },
+  "authorCommands": [
+    {
+      "command": "python3 docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/define.py",
+      "toolChunkId": "446933",
+      "exitCode": 0
+    },
+    {
+      "command": "python3 docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/define.py",
+      "toolChunkId": "ccdcfd",
+      "exitCode": 0
+    },
+    {
+      "command": "python3 docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/define.py",
+      "toolChunkId": "f2a262",
+      "exitCode": 0
+    }
+  ],
+  "failedCodeIdentityQualification": "Failed harness raw stderr/stdout/exit preserved; historical checker source hash was not captured before correction and is not invented. Final checker/source/helper slices are pinned in final manifest."
+}

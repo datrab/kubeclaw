@@ -1,0 +1,30 @@
+{
+  "historicalDescription": {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/source-author-tree-delta.json",
+    "sha256": "d655bfb202c09737cf24dd958730fef9cf43d4903a191210ceabe64f998ec35b"
+  },
+  "descriptionOnlyNonexistentPath": "skills/buster/engine/runner/worker.ts",
+  "actualSource": {
+    "path": "skills/buster/engine/test-gates/runner-worker-profile.ts",
+    "sha256": "4e7cc1f1206047bf768b1826d979fc5384fe1edc7e3e4fa9bb71e24e5d31a648"
+  },
+  "sourceWitness": [
+    {
+      "line": 11,
+      "text": "  const entry = registry.testProviderContracts.get(node.provider.contractId);"
+    }
+  ],
+  "meaning": "Actual single-contract-key reader; no implicit Browser/Security installed multi-instance routing. Nonmaterial cleanup additively annotates exact frozen source without editing it.",
+  "physicalRoster": {
+    "stand": 121,
+    "schemas": 87,
+    "entries": 422,
+    "outputs": 226
+  },
+  "actualPhysicalTotal": 856,
+  "historical857NotCurrentProof": true,
+  "independentReview": {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-same-entry-role-browser-binding-review-01/README.md",
+    "sha256": "555a64cc06d7af3b4711fdb3fe0052c329716bcba310ed6fc48e4b62384130d4"
+  }
+}

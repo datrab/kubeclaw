@@ -1,0 +1,7 @@
+{
+  "storageRoot": "/fixture/nova/original-state",
+  "orchestratorIssuerId": "case-original-writer",
+  "maximumJournalBytes": 1048576,
+  "maximumArtifactBytes": 1048576,
+  "maximumBundleBytes": 1048576
+}

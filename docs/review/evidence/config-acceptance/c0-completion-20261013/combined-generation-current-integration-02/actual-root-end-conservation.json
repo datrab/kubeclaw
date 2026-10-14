@@ -1,0 +1,232 @@
+{
+  "actualRoots": [
+    {
+      "path": "docs/review/remediation/config-semantic-inventory.json",
+      "rawAfterSha256": "5f6ccfc4f00b08b8f3e6a80400cde0708b768161363ada396f6764ef7c8ff387",
+      "immutableBeforeGitObject": "beda27eb69ce409ac37fe075edd4686980e39fd3:docs/review/remediation/config-semantic-inventory.json",
+      "rawBeforeSha256": "d113ff0289b6030afafb4c30d6d4b67115a7d7ee567e43fd851e7bff658399bf",
+      "fullNonCurrentMetadataObjectEqual": true,
+      "originalNonMetadataRawPrefixExactlyEqual": true,
+      "originalRowsCasesRequirementsAndCurrentProviderFieldAdoptionEqual": true,
+      "oldDescriptorExactlyPreservedAsHistorical": true
+    },
+    {
+      "path": "docs/review/remediation/config-acceptance-matrix.json",
+      "rawAfterSha256": "1e8be6e5bf7c327cc6a429bbc4005740f3f77408d4a44394420033991ec6c32d",
+      "immutableBeforeGitObject": "beda27eb69ce409ac37fe075edd4686980e39fd3:docs/review/remediation/config-acceptance-matrix.json",
+      "rawBeforeSha256": "397386f9a5d541664995fc0a5c008f74cbc9a5559c85924480ae403c5ae36020",
+      "fullNonCurrentMetadataObjectEqual": true,
+      "originalNonMetadataRawPrefixExactlyEqual": true,
+      "originalRowsCasesRequirementsAndCurrentProviderFieldAdoptionEqual": true,
+      "oldDescriptorExactlyPreservedAsHistorical": true
+    }
+  ],
+  "sameDescriptor": true,
+  "uniqueScopedFieldIds": 392,
+  "uniqueScopedCaseIds": 1744,
+  "actualDescriptorReferenceOccurrences": 46,
+  "uniqueDescriptorReferenceFiles": 46,
+  "endPinnedDescriptorReferences": [
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/browser-provider-contracts-01/README.md",
+      "sha256": "05194e5fab060fc186aaaf1431ccfaf581d004be32875a7f9a2bb79c9cd0b18b"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/combined-generation-current-integration-01/adoption-contract.json",
+      "sha256": "1906adbf26bbd0a5bd7de65eb78264fcc421b609c2ec760b7a873c65b05a5980"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/combined-generation-current-integration-02/adoption-contract.json",
+      "sha256": "859985287e41a4c6dd4c721e87081788f68cea46319a138c610f60e76ab3e5db"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/combined-generation-current-integration-02/scoped-original-ID-roster.json",
+      "sha256": "44d022f121702415401e38174588857e5e7b6e2cc3a2a7b3a96be50b3bbc1af0"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/combined-generation-current-integration-02/source-coordinate-annotation.json",
+      "sha256": "9d11055bc4bbd4b4126d7e67aa5abbf28e0430c68b4f95f17207768c1a216519"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/README.md",
+      "sha256": "3c7b675c79aee35b486062832d210bf742c8da30261e17cff8a56cab9e4551a9"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-browser-provider-contract-review-01/REPORT.md",
+      "sha256": "35ff43921c1c1f59baa30af2b7c4e907de8c8d7e9398ef084970736ada9aca16"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/README.md",
+      "sha256": "cba0ec112b4d24ac078d7e5508e1f1cbd3f8188734f8025dd5582690bea5e5d8"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-same-entry-engine-binding-review-02/README.md",
+      "sha256": "5d1b8afe6befdf800c93363139244793d31e616afc606a16edd9e7fe6f60e775"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-same-entry-role-browser-binding-review-01/README.md",
+      "sha256": "555a64cc06d7af3b4711fdb3fe0052c329716bcba310ed6fc48e4b62384130d4"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-same-entry-role-browser-binding-review-01/manifest.json",
+      "sha256": "308b6530766b0eacb539943ef0d6f1f0ae754aee7cfdcea3dd5e6eb2872d6eb2"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/README.md",
+      "sha256": "8cdf71380e7237d5a555935537fd5b9bfc73a74ceda454a9dba16324c7eb1907"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/field-definitions.json",
+      "sha256": "7a366b855115edaf3343fc5dd704cc14a59c7f66d68d370d1ffc9195df499c5d"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/current-case-member-concordance.json",
+      "sha256": "3722981c7f9baebdf67c0f9f17a8fc7518b47b644907e6a423b2ed0aa4f9ed9c"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/current-field-concordance.json",
+      "sha256": "b3076846af60edf3051a6f140c29199b5125712c8be1c77b9e166fedccd44573"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/current-original-case-contexts.json",
+      "sha256": "c1e0dc99a3aa57aeef5034eb3b906fb26d9614f8bac08eef5d1cc65f456140ea"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/prism-current-root-rejoin.json",
+      "sha256": "4a2e10cbab9c0e0a9214378541b9c1822fb27b33c0a23b72e2f62923f259f891"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "2e20ca68b88ae9b21741732630ffea5736d50db942c33b42a0b9403fee1d2228"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stand/config/pipeline.config.json",
+      "sha256": "2147cfa1eaf53ed57928563212442f13aaef735e4733178a8579b0f2308e4011"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-02/correction-contract.json",
+      "sha256": "b42aa53104b48a4be36ac4342d5b50357f09a7d55452b9ee460180a81e0c34d0"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/RECEIVING-ABI.md",
+      "sha256": "6ae06d66e7a67931ad7240e53a7c3a4419923a4efa12f6643a75e3d1345edf4a"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/controller-current-49-field-rejoin.json",
+      "sha256": "c023b3593cd98ab15c2bb945c8821aa32ccae63d40b5953d6a558755b62cbd15"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/current-case-contexts.json",
+      "sha256": "6ae72b1a125dd0043831243c221c0e24c82cebe329cab8e6f06fa845359ce584"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/current-case-member-concordance.json",
+      "sha256": "8e5047b8be201bd365c5d8d78a3f737e78d58f498063dd546bfe7cf608fd8ab6"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/current-entry-contexts.json",
+      "sha256": "c98b0a9e9689e9dd56743624bf2efce85d3f85918bfe777d8a02d5db82e11f74"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/current-field-instance-source-closure.json",
+      "sha256": "4d45e7d7242f45c6fa8f1f7c27b97e09ed0cc453fb069420cb92bb777f66bccf"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/current-field-node-concordance.json",
+      "sha256": "54d8d408fc705a2e3491e576d2a050f1bdc6beb18fa41a39bad121e80561d00c"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/current-receiving-view-index.json",
+      "sha256": "2202c84200cd71b48f7225bae4493280e8ad122606439bd2411cb4d20d9a05e9"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/file-set-stand.json",
+      "sha256": "ec250f06fca25db3f9e2423b0be60cfff6bc3a2fdf0a53bd475d73e4ed5104ce"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/gateway-case-rejoin.json",
+      "sha256": "0e263e53f8fe1993d868fe18d62225e4a0e40f29bf97854f2f32d57d050a16b5"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/gateway-context-source-recipes.json",
+      "sha256": "334286ca546a93be3544b50fa662080964da3eecc8a5aede1b2a516c6ae4088c"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/gateway-current-case-member-concordance.json",
+      "sha256": "6766d4e0823409321eeb2e5a9a840325b8ae0766276aa5b217979629ba51f3f6"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/gateway-current-schema-node-concordance.json",
+      "sha256": "fc336e35c6d5481efc6666b6ab67d95299cea0ae306cd8b93934b6caccbba612"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/gateway-field-concordance.json",
+      "sha256": "b4042d7b1ce181509845ecf55c4163129ab132f7882c6ce9cf49bca9946a7a0e"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/generation-receipt-stand.json",
+      "sha256": "2113d38ff3fae27dbac39d346a8a3a12b23efbd5102f57f441f33102a897b374"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/manifest.json",
+      "sha256": "519426534936fe7409a8386220b7a497ae5a781b0f855b14cb1de7ed93b54834"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/original-body-and-input-conservation.json",
+      "sha256": "af053b9ecb906b615d642aa958e8caf5ddec642cfeb1df6f9c308b442c85898c"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/prism-current-root-rejoin.json",
+      "sha256": "ea15687e92d64008ca2e0503b11aeff37433740b00d67c3aed68562b4c388685"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/product-off-local-closure.json",
+      "sha256": "f454911a81395470a014bffc9b1056d7c812f24915418c9bd7cf83e238bbbedc"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/remaining-local-role-recipes.json",
+      "sha256": "c77677cdbb124241b10fafc988651d6b6ff3cd79268f7fa8aa58893b966fcee4"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/provider-configuration.v2.schema.json",
+      "sha256": "52e71620288633120daad7db53c4022de4b9551b121d4728f9d80af597c7c21b"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/source-author-tree-delta.json",
+      "sha256": "d655bfb202c09737cf24dd958730fef9cf43d4903a191210ceabe64f998ec35b"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/source-current-boundary.json",
+      "sha256": "4b0b54720a13278808f5595fc12edd99305c647de81c6740d04286322a150585"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/config/pipeline.config.json",
+      "sha256": "05addb8209de125deee1f5c2ad67528e0ae3b26b04c2994c021c8389ceebe5fa"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+      "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386"
+    }
+  ],
+  "immutableRawBeforeHistoricalRoots": [
+    {
+      "path": "docs/review/remediation/config-semantic-inventory.json",
+      "gitObjectRef": "beda27eb69ce409ac37fe075edd4686980e39fd3:docs/review/remediation/config-semantic-inventory.json",
+      "rawBeforeSha256": "d113ff0289b6030afafb4c30d6d4b67115a7d7ee567e43fd851e7bff658399bf"
+    },
+    {
+      "path": "docs/review/remediation/config-acceptance-matrix.json",
+      "gitObjectRef": "beda27eb69ce409ac37fe075edd4686980e39fd3:docs/review/remediation/config-acceptance-matrix.json",
+      "rawBeforeSha256": "397386f9a5d541664995fc0a5c008f74cbc9a5559c85924480ae403c5ae36020"
+    }
+  ],
+  "physicalV8SourceSchemaEntryOutputTotal": 856,
+  "unmodifiedPinnedInputs": 36,
+  "headBefore": "beda27eb69ce409ac37fe075edd4686980e39fd3",
+  "headEnd": "beda27eb69ce409ac37fe075edd4686980e39fd3",
+  "nativeImplementationGlobalAccepted": false
+}

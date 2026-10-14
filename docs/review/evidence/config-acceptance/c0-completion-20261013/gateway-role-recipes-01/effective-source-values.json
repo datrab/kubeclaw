@@ -1,0 +1,831 @@
+{
+  "qualification": "pure current YAML source facts; not render/installed values/grants; source-specific override of same original Chart keys",
+  "sources": {
+    "charts/kubeclaw/values.yaml": {
+      "busterComponentFile": "files/config/buster-engine.config.json",
+      "agentRole": "nova",
+      "image": {
+        "digest": "",
+        "repository": "ghcr.io/datrab/kubeclaw-nova",
+        "tag": "latest",
+        "pullPolicy": "Always"
+      },
+      "imagePullSecrets": [],
+      "codeBundle": {
+        "sha256": "",
+        "enabled": false,
+        "archiveUrl": "",
+        "expectedCommit": "",
+        "contractVersion": "v2",
+        "auth": {
+          "existingSecret": "",
+          "existingSecretKey": "token"
+        }
+      },
+      "runtimeInfrastructure": {
+        "registry": {
+          "endpoint": "",
+          "transport": "",
+          "authSecretName": "",
+          "usernameKey": "username",
+          "passwordKey": "password",
+          "caSecretName": "",
+          "caSecretKey": "ca.crt",
+          "nodeCaFile": ""
+        },
+        "dockerHubMirror": {
+          "endpoint": "",
+          "transport": "",
+          "caSecretName": "",
+          "caSecretKey": "ca.crt",
+          "nodeCaFile": ""
+        }
+      },
+      "gateway": {
+        "url": "",
+        "startupDoctor": {
+          "enabled": true,
+          "nodeOptions": "--max-old-space-size=768",
+          "resources": {
+            "requests": {
+              "cpu": "50m",
+              "memory": "128Mi"
+            },
+            "limits": {
+              "cpu": "1000m",
+              "memory": "1Gi"
+            }
+          }
+        },
+        "command": [
+          "node",
+          "/app/openclaw.mjs",
+          "gateway",
+          "--bind",
+          "lan",
+          "--port",
+          "18789"
+        ],
+        "port": 18789,
+        "bridgePort": 18790,
+        "resources": {}
+      },
+      "initSetup": {
+        "resources": {
+          "requests": {
+            "cpu": "100m",
+            "memory": "256Mi"
+          },
+          "limits": {
+            "cpu": "1000m",
+            "memory": "2Gi"
+          }
+        }
+      },
+      "pluginSeed": {
+        "installMode": "official-npm-v1",
+        "specs": [
+          "npm:@openclaw/acpx@2026.9.5",
+          "npm:@openclaw/discord@2026.9.5"
+        ]
+      },
+      "capabilityProviders": {},
+      "replicaCount": 1,
+      "workerTrust": {
+        "spiffe": {
+          "enabled": false,
+          "trustDomain": "kubeclaw.internal",
+          "socketPath": "/run/spire/sockets/spire-agent.sock",
+          "csiDriver": "csi.spiffe.io",
+          "envoy": {
+            "repository": "envoyproxy/envoy",
+            "tag": "v1.39.0",
+            "digest": "sha256:d59f7f5fa10cff6d5892b6c5e7df5c9297ddfb2c3683e33fbfb82da24de4fa66",
+            "pullPolicy": "IfNotPresent",
+            "resources": {
+              "requests": {
+                "cpu": "50m",
+                "memory": "64Mi"
+              },
+              "limits": {
+                "cpu": "500m",
+                "memory": "256Mi"
+              }
+            }
+          }
+        }
+      },
+      "auth": {
+        "token": "",
+        "existingSecret": "",
+        "existingSecretKey": "gatewayToken"
+      },
+      "litellm": {
+        "endpoint": "http://litellm.kubeclaw.svc.cluster.local:4000/v1",
+        "apiKey": "",
+        "existingSecret": "",
+        "existingSecretKey": "litellmApiKey"
+      },
+      "stitch": {
+        "existingSecret": "",
+        "existingSecretKey": "stitchApiKey"
+      },
+      "discord": {
+        "enabled": false,
+        "channelId": "",
+        "execApprovers": [],
+        "token": "",
+        "existingSecret": "",
+        "existingSecretKey": "discordToken"
+      },
+      "discordWebhook": {
+        "secretName": "",
+        "secretKey": "discordWebhook"
+      },
+      "agent": {
+        "project": "",
+        "model": {
+          "primary": "openai/gpt-5.6-sol",
+          "fallbacks": [
+            "openai/gpt-5.5"
+          ]
+        },
+        "git": {
+          "enabled": true,
+          "secretName": "",
+          "repoUrl": ""
+        }
+      },
+      "redis": {
+        "host": "redis-master.kubeclaw.svc.cluster.local",
+        "port": "6379",
+        "secretName": "redis-secrets",
+        "secretKey": "redis-password"
+      },
+      "workspace": {
+        "enabled": true,
+        "overrideOnRestart": false,
+        "soul": "",
+        "agents": "",
+        "user": "",
+        "tools": "",
+        "memory": "",
+        "identity": "",
+        "bootstrap": ""
+      },
+      "service": {
+        "type": "ClusterIP",
+        "gatewayPort": 18789,
+        "gatewayTargetPort": "gateway",
+        "bridgeEnabled": true,
+        "bridgePort": 18790,
+        "nodePort": 0,
+        "bridgeNodePort": 0,
+        "extraPorts": []
+      },
+      "persistence": {
+        "config": {
+          "enabled": true,
+          "size": "10Gi",
+          "storageClass": "",
+          "accessModes": [
+            "ReadWriteOnce"
+          ]
+        },
+        "workspace": {
+          "enabled": true,
+          "size": "20Gi",
+          "storageClass": "",
+          "accessModes": [
+            "ReadWriteOnce"
+          ]
+        }
+      },
+      "resources": {
+        "requests": {
+          "cpu": "200m",
+          "memory": "512Mi"
+        },
+        "limits": {
+          "cpu": "2000m",
+          "memory": "2Gi"
+        }
+      },
+      "runAsRoot": true,
+      "probes": {
+        "startup": {
+          "enabled": true,
+          "initialDelaySeconds": 10,
+          "periodSeconds": 10,
+          "timeoutSeconds": 10,
+          "failureThreshold": 24
+        },
+        "readiness": {
+          "enabled": true,
+          "initialDelaySeconds": 5,
+          "periodSeconds": 10,
+          "timeoutSeconds": 10,
+          "failureThreshold": 3
+        },
+        "liveness": {
+          "enabled": true,
+          "initialDelaySeconds": 120,
+          "periodSeconds": 15,
+          "timeoutSeconds": 5,
+          "failureThreshold": 3
+        },
+        "dependencies": {
+          "gateway": {
+            "enabled": true
+          },
+          "redis": {
+            "enabled": true
+          },
+          "redisStream": {
+            "enabled": true,
+            "stream": "",
+            "maxLen": 1000
+          },
+          "litellm": {
+            "enabled": true
+          },
+          "registries": {
+            "enabled": true,
+            "endpoints": [
+              "http://registry-local.kubeclaw.svc.cluster.local:5001",
+              "http://registry-mirror.kubeclaw.svc.cluster.local:5000"
+            ]
+          }
+        }
+      },
+      "shutdown": {
+        "terminationGracePeriodSeconds": 180,
+        "drainFile": "/tmp/kubeclaw-draining",
+        "preStopDrainSeconds": 5
+      },
+      "serviceAccount": {
+        "create": false,
+        "automount": false
+      },
+      "busterNamespaceBroker": {
+        "enabled": false,
+        "leaseClient": {
+          "enabled": false,
+          "verificationRead": {
+            "enabled": false,
+            "tailscaleOperatorNamespace": "tailscale",
+            "tailscaleOAuthSecretName": "operator-oauth"
+          }
+        },
+        "readyClient": {
+          "enabled": false,
+          "endpoint": "",
+          "audience": "",
+          "caSecretName": ""
+        },
+        "allowedPrefixes": [
+          "test"
+        ],
+        "defaultTtlSeconds": 7200,
+        "maxTtlSeconds": 86400,
+        "controller": {
+          "productDecisions": {
+            "enabled": false,
+            "audience": "",
+            "producerNamespace": "",
+            "producerServiceAccount": "",
+            "issuer": "",
+            "verifyKey": "",
+            "allowedActors": []
+          },
+          "readiness": {
+            "enabled": false,
+            "audience": "",
+            "producerNamespace": "",
+            "producerServiceAccount": "",
+            "tlsSecretName": ""
+          },
+          "allowedAccess": [
+            {
+              "subject": "agent-buster",
+              "modes": [
+                "deployer",
+                "tester"
+              ]
+            },
+            {
+              "subject": "agent-nova",
+              "modes": [
+                "deployer"
+              ]
+            }
+          ],
+          "allowedSourceSecrets": [],
+          "image": {
+            "repository": "ghcr.io/datrab/kubeclaw-namespace-controller",
+            "tag": "latest",
+            "pullPolicy": "Always"
+          },
+          "pollIntervalMs": 3000,
+          "resources": {
+            "requests": {
+              "cpu": "50m",
+              "memory": "128Mi"
+            },
+            "limits": {
+              "cpu": "500m",
+              "memory": "512Mi"
+            }
+          }
+        }
+      },
+      "commands": {
+        "ownerAllowFrom": [],
+        "allowFromDiscord": []
+      },
+      "swarmConfig": {
+        "overrideOnRestart": false
+      },
+      "semgrepConfigYaml": "",
+      "eslintConfigMjs": "",
+      "customSkills": {},
+      "nodeSelector": {},
+      "tolerations": [],
+      "podAnnotations": {},
+      "extraEnv": [],
+      "extraContainers": [],
+      "archviewer": {
+        "enabled": false,
+        "networkPolicyProvider": "cilium",
+        "existingSecret": "",
+        "hostname": "nova-architecture",
+        "tailscaleOperatorNamespace": "tailscale"
+      },
+      "extraVolumes": [],
+      "extraVolumeMounts": [],
+      "busterRuntimePersistence": {
+        "enabled": false,
+        "claimName": "",
+        "size": "64Gi",
+        "storageClass": ""
+      },
+      "busterNative": {
+        "nodeName": "",
+        "namespace": "",
+        "policyDigest": ""
+      }
+    },
+    "my-values/nova-values.yaml": {
+      "agentRole": "nova",
+      "gateway": {
+        "startupDoctor": {
+          "enabled": true,
+          "nodeOptions": "--max-old-space-size=3072",
+          "resources": {
+            "requests": {
+              "cpu": "100m",
+              "memory": "256Mi"
+            },
+            "limits": {
+              "cpu": "2",
+              "memory": "4Gi"
+            }
+          }
+        }
+      },
+      "initSetup": {
+        "resources": {
+          "requests": {
+            "cpu": "500m",
+            "memory": "1Gi"
+          },
+          "limits": {
+            "cpu": "2",
+            "memory": "8Gi"
+          }
+        }
+      },
+      "image": {
+        "repository": "ghcr.io/datrab/kubeclaw-nova",
+        "tag": "latest",
+        "pullPolicy": "Always"
+      },
+      "imagePullSecrets": [
+        {
+          "name": "ghcr-secret"
+        }
+      ],
+      "codeBundle": {
+        "enabled": false,
+        "archiveUrl": "",
+        "expectedCommit": "",
+        "contractVersion": "v2",
+        "auth": {
+          "existingSecret": "github-bundle-reader",
+          "existingSecretKey": "token"
+        }
+      },
+      "auth": {
+        "existingSecret": "openclaw-shared-secrets",
+        "existingSecretKey": "gatewayToken-nova"
+      },
+      "stitch": {
+        "existingSecret": "openclaw-shared-secrets",
+        "existingSecretKey": "stitchApiKey"
+      },
+      "litellm": {
+        "existingSecret": "openclaw-shared-secrets",
+        "existingSecretKey": "litellmApiKey"
+      },
+      "discord": {
+        "enabled": true,
+        "existingSecret": "openclaw-shared-secrets",
+        "existingSecretKey": "discordToken-nova",
+        "channelId": "1475581795021099169"
+      },
+      "discordWebhook": {
+        "secretName": "openclaw-shared-secrets",
+        "secretKey": "discordWebhook"
+      },
+      "commands": {
+        "ownerAllowFrom": [
+          "discord:849379821536804864"
+        ],
+        "allowFromDiscord": [
+          "849379821536804864",
+          "user:849379821536804864"
+        ]
+      },
+      "agent": {
+        "project": "clawdeck",
+        "model": {
+          "primary": "openai/gpt-6-astra",
+          "fallbacks": [
+            "openai/gpt-5.5"
+          ]
+        },
+        "git": {
+          "enabled": true,
+          "secretName": "git-deploy-key-nova",
+          "repoUrl": "git@github.com:datrab/kubeclaw.git"
+        }
+      },
+      "serviceAccount": {
+        "create": true,
+        "automount": true
+      },
+      "busterNamespaceBroker": {
+        "enabled": true,
+        "leaseClient": {
+          "enabled": true,
+          "verificationRead": {
+            "enabled": true
+          }
+        }
+      },
+      "archviewer": {
+        "enabled": true,
+        "existingSecret": "nova-archviewer-auth",
+        "hostname": "nova-architecture",
+        "tailscaleOperatorNamespace": "tailscale"
+      },
+      "capabilityProviders": {
+        "buster": {
+          "agentRole": "buster",
+          "capabilities": {
+            "runtime.dispatch": {
+              "adapter": "openclaw",
+              "port": 18789
+            },
+            "test.plan.execute": {
+              "adapter": "buster-plan-v1",
+              "scheme": "http",
+              "port": 18891,
+              "proxyPort": 28891
+            }
+          }
+        },
+        "prism": {
+          "agentRole": "prism",
+          "capabilities": {
+            "runtime.dispatch": {
+              "adapter": "runtime",
+              "port": 8080,
+              "proxyPort": 28080,
+              "authentication": "spiffe-proxy"
+            }
+          }
+        }
+      },
+      "workerTrust": {
+        "spiffe": {
+          "enabled": true,
+          "trustDomain": "kubeclaw.internal"
+        }
+      },
+      "extraEnv": [
+        {
+          "name": "BUSTER_V2_TOKEN",
+          "valueFrom": {
+            "secretKeyRef": {
+              "name": "openclaw-shared-secrets",
+              "key": "busterV2Token"
+            }
+          }
+        },
+        {
+          "name": "BUSTER_SOURCE_ATTESTATION_PRIVATE_KEY",
+          "valueFrom": {
+            "secretKeyRef": {
+              "name": "pipeline-test-gate-source-attestation",
+              "key": "privateKey"
+            }
+          }
+        },
+        {
+          "name": "BUSTER_GATEWAY_TOKEN",
+          "valueFrom": {
+            "secretKeyRef": {
+              "name": "openclaw-shared-secrets",
+              "key": "gatewayToken-buster"
+            }
+          }
+        },
+        {
+          "name": "BUSTER_GATEWAY_REPOSITORY_ROOT",
+          "value": "/home/node/.openclaw/workspace/git-repo"
+        }
+      ],
+      "resources": {
+        "requests": {
+          "cpu": "1000m",
+          "memory": "12288Mi"
+        },
+        "limits": {
+          "cpu": "4000m",
+          "memory": "16384Mi"
+        }
+      },
+      "probes": {
+        "liveness": {
+          "timeoutSeconds": 10,
+          "failureThreshold": 5
+        }
+      },
+      "extraContainers": [
+        {
+          "name": "archviewer",
+          "image": "ghcr.io/datrab/kubeclaw-archviewer:latest",
+          "imagePullPolicy": "Always",
+          "ports": [
+            {
+              "name": "archviewer",
+              "containerPort": 3456,
+              "protocol": "TCP"
+            }
+          ],
+          "volumeMounts": [
+            {
+              "name": "archviewer-auth",
+              "mountPath": "/etc/archviewer-auth",
+              "readOnly": true
+            },
+            {
+              "name": "workspace",
+              "mountPath": "/designs",
+              "subPath": "prism/designs",
+              "readOnly": true
+            }
+          ],
+          "startupProbe": {
+            "httpGet": {
+              "path": "/healthz",
+              "port": "archviewer"
+            },
+            "periodSeconds": 2,
+            "failureThreshold": 30
+          },
+          "readinessProbe": {
+            "httpGet": {
+              "path": "/healthz",
+              "port": "archviewer"
+            },
+            "periodSeconds": 10
+          },
+          "livenessProbe": {
+            "httpGet": {
+              "path": "/healthz",
+              "port": "archviewer"
+            },
+            "initialDelaySeconds": 10,
+            "periodSeconds": 15
+          },
+          "resources": {
+            "requests": {
+              "cpu": "50m",
+              "memory": "64Mi"
+            },
+            "limits": {
+              "cpu": "200m",
+              "memory": "128Mi"
+            }
+          }
+        }
+      ],
+      "extraVolumes": [],
+      "extraVolumeMounts": [],
+      "workspace": {
+        "enabled": false,
+        "soul": "You are Nova, architect and visionary of the KubeClaw Swarm. You are the operator's right hand.\n\nWHO YOU ARE:\nYou think in systems. You see the big picture \u2014 architecture, business value, resource constraints, what's possible with the swarm. You plan software from vision to modules. You advise on strategy, prioritization, and trade-offs. You take initiative: if you see a better approach, a missing opportunity, or a smarter way to ship \u2014 say it. You know the full infrastructure (K8s, agents, pipeline, memory, tooling) and you leverage that knowledge creatively.\n\nWHAT YOU DO:\n- Architect: declare module dependencies, ownership and requirements using the packaged project runtime guide\n- Orchestrate: run pipeline.ts, analyze failures, craft better retry prompts, manage swarm memory\n- Advise: suggest features, flag risks, estimate effort, think about product-market fit and positioning\n- Automate: if a task can be a skill, make it a skill and notify davide. If an agent can handle it, delegate it.\n\nRULES:\n- State lives in files. Trust files over context.\n- You never write code, run tests, or review. You delegate to Forge, Buster, Echo.\n- BLOCKED = stop. Alert Davide. No creative workarounds past 3 fails.\n- Pipeline first: use pipeline.ts for standard module flow.\n- Memory duty: recall before delegating, store after every outcome. Atomic facts only.\n- Cost aware: plan before executing. Read files instead of spawning agents when possible.\n- You can spawn persistent agents for ongoing tasks (design, research)\n\nSTYLE: Direct, opinionated, proactive. Terse when orchestrating, thoughtful when advising. You have a point of view and you share it.\n",
+        "agents": "## Swarm\nForge (code writer) \u2014 ACP subagent, spawned by pipeline as thread-bound session\nBuster (tester) \u2014 separate pod, receives typed v2 suite jobs and runs them against its local BuildKit\nEcho (reviewer) \u2014 ACP subagent, spawned by pipeline for gate reviews\nYou are the only coordination point. Agents never contact each other directly.\n\n## Project Pipeline\nUse a nova-project.v2 JSON file with explicit architecture/source declarations,\nmodule blueprints, dependencies, owned paths, requirements, resolved provider plans\nand cumulative final checks. Use the installed platform configuration.\n```\nnode /app/skills/pipeline.ts --platform /path/platform.json --project /path/project.json\n```\nThe project route requires deterministic source preflight and Blueprint sync,\nthen serializes implementation, lint, optional Echo review and native provider\nquality gates before cumulative final checks. Failed gates request repair;\nall later checks rerun before a dependent module can proceed.\nPrism approval/import and deployment remain separate prerequisites; this command\ndoes not establish their completion.\n\n## Validation and Recovery\nCompile and validate the installed stage contracts before starting:\n`node /app/skills/pipeline.ts --platform /path/platform.json --project /path/project.json --compile /path/new-pipeline.json`\nRecover the same immutable project/run configuration:\n`node /app/skills/pipeline.ts --platform /path/platform.json --project /path/project.json --recover <run-id>`\nSupply an authenticated continuation using `--signal /path/resume-signal.json`.\nRead stdout JSON for runId, status and stage states; read the durable run journal\nand artifacts for findings. Do not retry an unresolved external mutation manually.\nExit 0 means succeeded (or compiled); exit 1 means a non-success result or error.\n",
+        "tools": "## Pipeline\npipeline.ts --platform <platform.json> --project <project.json> [--compile <new-pipeline.json> | --recover <run-id> | --signal <resume-signal.json>]\nExplicit core graphs remain supported with --pipeline <pipeline.json> and\n--run-id <run-id>, --recover <run-id>, or --run-id <run-id> --signal <file>.\n\n## Buster\nBuster execution is available only through the v2 pipeline capability. Do not\ncall a queue, Redis tool, or worker endpoint manually.\n\nConfidence: \u2605\u2605\u2605 \u22650.75 (validated), \u2605\u2605\u2606 0.45-0.74 (neutral), \u2605\u2606\u2606 <0.45 (unverified).\nScope: project (default, current project), global (cross-project patterns), agent (private).\n\n## Lint\nLint runs through each compiled module stage using its declared policyPath and policyProject. Read its durable artifacts for findings.\n\n## Project Setup guide\n/app/skills/packages/nova-project/README.md\n",
+        "user": "Name: Davide\nrest can be filled by you as you learn about me\n",
+        "identity": "Nova \ud83d\udd2d \u2014 Architect, visionary, orchestrator. Thinks in systems, ships with intent.\n",
+        "bootstrap": "1. Read SOUL.md, AGENTS.md, TOOLS.md.\n2. Get familiar with your enviroment\n3. Post to Discord: \"\ud83d\udd2d Nova online.\" + quick summary of your enviroment\n4. Delete this file.\n"
+      }
+    },
+    "my-values/prism-agent-values.yaml": {
+      "agentRole": "prism",
+      "image": {
+        "repository": "ghcr.io/datrab/kubeclaw-prism-agent",
+        "tag": "latest",
+        "pullPolicy": "Always"
+      },
+      "imagePullSecrets": [
+        {
+          "name": "ghcr-secret"
+        }
+      ],
+      "runAsRoot": false,
+      "codeBundle": {
+        "enabled": false,
+        "archiveUrl": "",
+        "expectedCommit": "",
+        "contractVersion": "v2",
+        "auth": {
+          "existingSecret": "github-bundle-reader",
+          "existingSecretKey": "token"
+        }
+      },
+      "auth": {
+        "existingSecret": "openclaw-shared-secrets",
+        "existingSecretKey": "gatewayToken-prism"
+      },
+      "litellm": {
+        "endpoint": "http://litellm.kubeclaw.svc.cluster.local:4000/v1",
+        "existingSecret": "openclaw-shared-secrets",
+        "existingSecretKey": "litellmApiKey"
+      },
+      "discord": {
+        "enabled": false,
+        "existingSecret": "openclaw-shared-secrets",
+        "existingSecretKey": "discordToken-prism",
+        "channelId": ""
+      },
+      "commands": {
+        "ownerAllowFrom": [
+          "discord:849379821536804864"
+        ],
+        "allowFromDiscord": [
+          "849379821536804864",
+          "user:849379821536804864"
+        ]
+      },
+      "agent": {
+        "project": "prism",
+        "model": {
+          "primary": "openai/gpt-5.6-sol",
+          "fallbacks": [
+            "openai/gpt-5.5"
+          ]
+        },
+        "git": {
+          "enabled": true,
+          "secretName": "git-deploy-key-nova",
+          "repoUrl": "git@github.com:datrab/kubeclaw.git"
+        }
+      },
+      "serviceAccount": {
+        "create": true,
+        "automount": false
+      },
+      "workerTrust": {
+        "spiffe": {
+          "enabled": true,
+          "trustDomain": "kubeclaw.internal"
+        }
+      },
+      "service": {
+        "gatewayPort": 8080,
+        "gatewayTargetPort": "prism-dispatch",
+        "bridgeEnabled": false
+      },
+      "extraEnv": [
+        {
+          "name": "PRISM_CONTROL_URL",
+          "value": "http://127.0.0.1:28080"
+        },
+        {
+          "name": "PRISM_STUDIO_PUBLIC_URL",
+          "value": "https://prism-studio"
+        }
+      ],
+      "extraContainers": [
+        {
+          "name": "prism-agent-bridge",
+          "image": "ghcr.io/datrab/kubeclaw-prism-agent:latest",
+          "imagePullPolicy": "Always",
+          "command": [
+            "node",
+            "/opt/kubeclaw-prism/agent-bridge.mjs"
+          ],
+          "env": [
+            {
+              "name": "PORT",
+              "value": "18080"
+            },
+            {
+              "name": "PRISM_CONTROL_URL",
+              "value": "http://127.0.0.1:28080"
+            },
+            {
+              "name": "PRISM_STUDIO_PUBLIC_URL",
+              "value": "https://prism-studio"
+            },
+            {
+              "name": "OPENCLAW_GATEWAY_TOKEN",
+              "valueFrom": {
+                "secretKeyRef": {
+                  "name": "openclaw-shared-secrets",
+                  "key": "gatewayToken-prism"
+                }
+              }
+            }
+          ],
+          "volumeMounts": [
+            {
+              "name": "config",
+              "mountPath": "/home/node/.openclaw"
+            },
+            {
+              "name": "tmp",
+              "mountPath": "/tmp"
+            }
+          ],
+          "securityContext": {
+            "runAsUser": 1000,
+            "runAsGroup": 1000,
+            "allowPrivilegeEscalation": false,
+            "readOnlyRootFilesystem": true,
+            "capabilities": {
+              "drop": [
+                "ALL"
+              ]
+            }
+          },
+          "readinessProbe": {
+            "httpGet": {
+              "path": "/ready",
+              "port": 18080
+            },
+            "initialDelaySeconds": 3
+          },
+          "livenessProbe": {
+            "httpGet": {
+              "path": "/health",
+              "port": 18080
+            },
+            "initialDelaySeconds": 10
+          },
+          "resources": {
+            "requests": {
+              "cpu": "50m",
+              "memory": "128Mi"
+            },
+            "limits": {
+              "cpu": "500m",
+              "memory": "512Mi"
+            }
+          }
+        }
+      ],
+      "workspace": {
+        "enabled": true,
+        "overrideOnRestart": true,
+        "soul": "You are Prism, KubeClaw's single design agent. Nova gives you an architecture and product context.\nProduce exactly three materially distinct, complete, accessible Prism designs and commit them with prism_create_design_set.\nWhen Studio or Discord sends feedback, continue the same project session and commit the complete update with prism_apply_revision.\nNever call a model provider outside OpenClaw. All reasoning uses the managed OpenAI route through this OpenClaw gateway.\n",
+        "tools": "prism_create_design_set is mandatory for a new architecture and accepts exactly three designs.\nprism_apply_revision is mandatory for Studio or Discord design changes.\nRead /app/skills/packages/prism-contract/schemas/prism-v1.schema.json for the canonical contract and /app/skills/packages/prism-contract/fixtures/minimal-web.json for a minimal valid example before creating a document.\n"
+      },
+      "probes": {
+        "dependencies": {
+          "redis": {
+            "enabled": false
+          },
+          "registries": {
+            "enabled": false,
+            "endpoints": []
+          }
+        }
+      }
+    }
+  }
+}

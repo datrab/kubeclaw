@@ -1,0 +1,3119 @@
+[
+  {
+    "id": "DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-ENABLED",
+    "originalContract": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/original70-field-contracts.json",
+      "sha256": "859ae0c2b12269cf494d4591a4f8774a1f9884dc7dafd5ab3169b162083dcd6a",
+      "pointer": "/fields/0"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "profiles": {
+      "local-A": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-A/settings/gatewayOpenClaw/memory/search/enabled",
+          "exactNode": true
+        },
+        "receivingPointer": "/managedOpenClaw/memory/search/enabled",
+        "exactNode": true,
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-A"
+        }
+      },
+      "local-B": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-B/settings/gatewayOpenClaw/memory/search/enabled",
+          "exactNode": true
+        },
+        "receivingPointer": "/managedOpenClaw/memory/search/enabled",
+        "exactNode": true,
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-B"
+        }
+      }
+    }
+  },
+  {
+    "id": "DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-EXPERIMENTAL-SESSIONMEMORY",
+    "originalContract": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/original70-field-contracts.json",
+      "sha256": "859ae0c2b12269cf494d4591a4f8774a1f9884dc7dafd5ab3169b162083dcd6a",
+      "pointer": "/fields/1"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "profiles": {
+      "local-A": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-A/settings/gatewayOpenClaw/memory/search/experimental/sessionMemory",
+          "exactNode": true
+        },
+        "receivingPointer": "/managedOpenClaw/memory/search/experimental/sessionMemory",
+        "exactNode": true,
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-A"
+        }
+      },
+      "local-B": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-B/settings/gatewayOpenClaw/memory/search/experimental/sessionMemory",
+          "exactNode": true
+        },
+        "receivingPointer": "/managedOpenClaw/memory/search/experimental/sessionMemory",
+        "exactNode": true,
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-B"
+        }
+      }
+    }
+  },
+  {
+    "id": "DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-SOURCES",
+    "originalContract": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/original70-field-contracts.json",
+      "sha256": "859ae0c2b12269cf494d4591a4f8774a1f9884dc7dafd5ab3169b162083dcd6a",
+      "pointer": "/fields/2"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "profiles": {
+      "local-A": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-A/settings/gatewayOpenClaw/memory/search/sources",
+          "exactNode": [
+            "memory",
+            "sessions"
+          ]
+        },
+        "receivingPointer": "/managedOpenClaw/memory/search/sources",
+        "exactNode": [
+          "memory",
+          "sessions"
+        ],
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-A"
+        }
+      },
+      "local-B": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-B/settings/gatewayOpenClaw/memory/search/sources",
+          "exactNode": [
+            "memory",
+            "sessions"
+          ]
+        },
+        "receivingPointer": "/managedOpenClaw/memory/search/sources",
+        "exactNode": [
+          "memory",
+          "sessions"
+        ],
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-B"
+        }
+      }
+    }
+  },
+  {
+    "id": "DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-PROVIDER",
+    "originalContract": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/original70-field-contracts.json",
+      "sha256": "859ae0c2b12269cf494d4591a4f8774a1f9884dc7dafd5ab3169b162083dcd6a",
+      "pointer": "/fields/3"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "profiles": {
+      "local-A": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-A/settings/gatewayOpenClaw/memory/search/provider",
+          "exactNode": "openai-compatible"
+        },
+        "receivingPointer": "/managedOpenClaw/memory/search/provider",
+        "exactNode": "openai-compatible",
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-A"
+        }
+      },
+      "local-B": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-B/settings/gatewayOpenClaw/memory/search/provider",
+          "exactNode": "openai-compatible"
+        },
+        "receivingPointer": "/managedOpenClaw/memory/search/provider",
+        "exactNode": "openai-compatible",
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-B"
+        }
+      }
+    }
+  },
+  {
+    "id": "DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-BASEURL",
+    "originalContract": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/original70-field-contracts.json",
+      "sha256": "859ae0c2b12269cf494d4591a4f8774a1f9884dc7dafd5ab3169b162083dcd6a",
+      "pointer": "/fields/4"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "profiles": {
+      "local-A": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-A/settings/litellm/endpoint",
+          "exactNode": "http://127.0.0.1:18081/v1"
+        },
+        "receivingPointer": "/managedOpenClaw/memory/search/remote/baseUrl",
+        "exactNode": "http://127.0.0.1:18081/v1",
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-A"
+        }
+      },
+      "local-B": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-B/settings/litellm/endpoint",
+          "exactNode": "http://127.0.0.1:18081/v1"
+        },
+        "receivingPointer": "/managedOpenClaw/memory/search/remote/baseUrl",
+        "exactNode": "http://127.0.0.1:18081/v1",
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-B"
+        }
+      }
+    }
+  },
+  {
+    "id": "DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-APIKEY-SOURCE",
+    "originalContract": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/original70-field-contracts.json",
+      "sha256": "859ae0c2b12269cf494d4591a4f8774a1f9884dc7dafd5ab3169b162083dcd6a",
+      "pointer": "/fields/5"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "profiles": {
+      "local-A": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-A/settings/gatewayOpenClaw/memory/search/remote/apiKey/source",
+          "exactNode": "env"
+        },
+        "receivingPointer": "/managedOpenClaw/memory/search/remote/apiKey/source",
+        "exactNode": "env",
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-A"
+        }
+      },
+      "local-B": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-B/settings/gatewayOpenClaw/memory/search/remote/apiKey/source",
+          "exactNode": "env"
+        },
+        "receivingPointer": "/managedOpenClaw/memory/search/remote/apiKey/source",
+        "exactNode": "env",
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-B"
+        }
+      }
+    }
+  },
+  {
+    "id": "DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-APIKEY-PROVIDER",
+    "originalContract": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/original70-field-contracts.json",
+      "sha256": "859ae0c2b12269cf494d4591a4f8774a1f9884dc7dafd5ab3169b162083dcd6a",
+      "pointer": "/fields/6"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "profiles": {
+      "local-A": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-A/settings/gatewayOpenClaw/memory/search/remote/apiKey/provider",
+          "exactNode": "default"
+        },
+        "receivingPointer": "/managedOpenClaw/memory/search/remote/apiKey/provider",
+        "exactNode": "default",
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-A"
+        }
+      },
+      "local-B": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-B/settings/gatewayOpenClaw/memory/search/remote/apiKey/provider",
+          "exactNode": "default"
+        },
+        "receivingPointer": "/managedOpenClaw/memory/search/remote/apiKey/provider",
+        "exactNode": "default",
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-B"
+        }
+      }
+    }
+  },
+  {
+    "id": "DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-APIKEY-ID",
+    "originalContract": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/original70-field-contracts.json",
+      "sha256": "859ae0c2b12269cf494d4591a4f8774a1f9884dc7dafd5ab3169b162083dcd6a",
+      "pointer": "/fields/7"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "profiles": {
+      "local-A": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-A/settings/gatewayOpenClaw/memory/search/remote/apiKey/id",
+          "exactNode": "LITELLM_API_KEY"
+        },
+        "receivingPointer": "/managedOpenClaw/memory/search/remote/apiKey/id",
+        "exactNode": "LITELLM_API_KEY",
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-A"
+        }
+      },
+      "local-B": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-B/settings/gatewayOpenClaw/memory/search/remote/apiKey/id",
+          "exactNode": "LITELLM_API_KEY"
+        },
+        "receivingPointer": "/managedOpenClaw/memory/search/remote/apiKey/id",
+        "exactNode": "LITELLM_API_KEY",
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-B"
+        }
+      }
+    }
+  },
+  {
+    "id": "DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-MODEL",
+    "originalContract": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/original70-field-contracts.json",
+      "sha256": "859ae0c2b12269cf494d4591a4f8774a1f9884dc7dafd5ab3169b162083dcd6a",
+      "pointer": "/fields/8"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "profiles": {
+      "local-A": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-A/settings/gatewayOpenClaw/memory/search/model",
+          "exactNode": "dlv-embedding-a"
+        },
+        "receivingPointer": "/managedOpenClaw/memory/search/model",
+        "exactNode": "dlv-embedding-a",
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-A"
+        }
+      },
+      "local-B": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-B/settings/gatewayOpenClaw/memory/search/model",
+          "exactNode": "dlv-embedding-a"
+        },
+        "receivingPointer": "/managedOpenClaw/memory/search/model",
+        "exactNode": "dlv-embedding-a",
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-B"
+        }
+      }
+    }
+  },
+  {
+    "id": "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-THINKINGDEFAULT",
+    "originalContract": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/original70-field-contracts.json",
+      "sha256": "859ae0c2b12269cf494d4591a4f8774a1f9884dc7dafd5ab3169b162083dcd6a",
+      "pointer": "/fields/9"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "profiles": {
+      "local-A": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-A/settings/gatewayOpenClaw/agents/defaults/thinkingDefault",
+          "exactNode": "off"
+        },
+        "receivingPointer": "/managedOpenClaw/agents/defaults/thinkingDefault",
+        "exactNode": "off",
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-A"
+        }
+      },
+      "local-B": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-B/settings/gatewayOpenClaw/agents/defaults/thinkingDefault",
+          "exactNode": "high"
+        },
+        "receivingPointer": "/managedOpenClaw/agents/defaults/thinkingDefault",
+        "exactNode": "high",
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-B"
+        }
+      }
+    }
+  },
+  {
+    "id": "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-REASONINGDEFAULT",
+    "originalContract": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/original70-field-contracts.json",
+      "sha256": "859ae0c2b12269cf494d4591a4f8774a1f9884dc7dafd5ab3169b162083dcd6a",
+      "pointer": "/fields/10"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "profiles": {
+      "local-A": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-A/settings/gatewayOpenClaw/agents/defaults/reasoningDefault",
+          "exactNode": "off"
+        },
+        "receivingPointer": "/managedOpenClaw/agents/defaults/reasoningDefault",
+        "exactNode": "off",
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-A"
+        }
+      },
+      "local-B": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-B/settings/gatewayOpenClaw/agents/defaults/reasoningDefault",
+          "exactNode": "on"
+        },
+        "receivingPointer": "/managedOpenClaw/agents/defaults/reasoningDefault",
+        "exactNode": "on",
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-B"
+        }
+      }
+    }
+  },
+  {
+    "id": "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELPOLICY-ALLOW",
+    "originalContract": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/original70-field-contracts.json",
+      "sha256": "859ae0c2b12269cf494d4591a4f8774a1f9884dc7dafd5ab3169b162083dcd6a",
+      "pointer": "/fields/11"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "profiles": {
+      "local-A": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-A/settings/gatewayOpenClaw/agents/defaults/modelPolicy/allow",
+          "exactNode": [
+            "openai/gpt-5.6-sol",
+            "openai/gpt-5.5"
+          ]
+        },
+        "receivingPointer": "/managedOpenClaw/agents/defaults/modelPolicy/allow",
+        "exactNode": [
+          "openai/gpt-5.6-sol",
+          "openai/gpt-5.5"
+        ],
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-A"
+        }
+      },
+      "local-B": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-B/settings/gatewayOpenClaw/agents/defaults/modelPolicy/allow",
+          "exactNode": [
+            "openai/gpt-6-astra",
+            "openai/gpt-5.6-sol",
+            "openai/gpt-5.5"
+          ]
+        },
+        "receivingPointer": "/managedOpenClaw/agents/defaults/modelPolicy/allow",
+        "exactNode": [
+          "openai/gpt-6-astra",
+          "openai/gpt-5.6-sol",
+          "openai/gpt-5.5"
+        ],
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-B"
+        }
+      }
+    }
+  },
+  {
+    "id": "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELS-OPENAI-GPT-6-ASTRA-AGENTRUNTIME-ID",
+    "originalContract": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/original70-field-contracts.json",
+      "sha256": "859ae0c2b12269cf494d4591a4f8774a1f9884dc7dafd5ab3169b162083dcd6a",
+      "pointer": "/fields/12"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "profiles": {
+      "local-A": {
+        "disposition": "conditional model catalogue absent under selected primary, no ghost default runtime",
+        "currentReader": "no ghost receiver; same original conditional/unused obligation"
+      },
+      "local-B": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-B/settings/gatewayOpenClaw/agents/defaults/models/openai~1gpt-6-astra/agentRuntime/id",
+          "exactNode": "codex"
+        },
+        "receivingPointer": "/managedOpenClaw/agents/defaults/models/openai~1gpt-6-astra/agentRuntime/id",
+        "exactNode": "codex",
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-B"
+        }
+      }
+    }
+  },
+  {
+    "id": "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELS-OPENAI-GPT-5-6-SOL-AGENTRUNTIME-ID",
+    "originalContract": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/original70-field-contracts.json",
+      "sha256": "859ae0c2b12269cf494d4591a4f8774a1f9884dc7dafd5ab3169b162083dcd6a",
+      "pointer": "/fields/13"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "profiles": {
+      "local-A": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-A/settings/gatewayOpenClaw/agents/defaults/models/openai~1gpt-5.6-sol/agentRuntime/id",
+          "exactNode": "codex"
+        },
+        "receivingPointer": "/managedOpenClaw/agents/defaults/models/openai~1gpt-5.6-sol/agentRuntime/id",
+        "exactNode": "codex",
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-A"
+        }
+      },
+      "local-B": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-B/settings/gatewayOpenClaw/agents/defaults/models/openai~1gpt-5.6-sol/agentRuntime/id",
+          "exactNode": "codex"
+        },
+        "receivingPointer": "/managedOpenClaw/agents/defaults/models/openai~1gpt-5.6-sol/agentRuntime/id",
+        "exactNode": "codex",
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-B"
+        }
+      }
+    }
+  },
+  {
+    "id": "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELS-OPENAI-GPT-5-5-AGENTRUNTIME-ID",
+    "originalContract": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/original70-field-contracts.json",
+      "sha256": "859ae0c2b12269cf494d4591a4f8774a1f9884dc7dafd5ab3169b162083dcd6a",
+      "pointer": "/fields/14"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "profiles": {
+      "local-A": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-A/settings/gatewayOpenClaw/agents/defaults/models/openai~1gpt-5.5/agentRuntime/id",
+          "exactNode": "codex"
+        },
+        "receivingPointer": "/managedOpenClaw/agents/defaults/models/openai~1gpt-5.5/agentRuntime/id",
+        "exactNode": "codex",
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-A"
+        }
+      },
+      "local-B": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-B/settings/gatewayOpenClaw/agents/defaults/models/openai~1gpt-5.5/agentRuntime/id",
+          "exactNode": "codex"
+        },
+        "receivingPointer": "/managedOpenClaw/agents/defaults/models/openai~1gpt-5.5/agentRuntime/id",
+        "exactNode": "codex",
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-B"
+        }
+      }
+    }
+  },
+  {
+    "id": "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-WORKSPACE",
+    "originalContract": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/original70-field-contracts.json",
+      "sha256": "859ae0c2b12269cf494d4591a4f8774a1f9884dc7dafd5ab3169b162083dcd6a",
+      "pointer": "/fields/15"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "profiles": {
+      "local-A": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-A/settings/gatewayOpenClaw/agents/defaults/workspace",
+          "exactNode": "/home/node/.openclaw/workspace"
+        },
+        "receivingPointer": "/managedOpenClaw/agents/defaults/workspace",
+        "exactNode": "/home/node/.openclaw/workspace",
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-A"
+        }
+      },
+      "local-B": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-B/settings/gatewayOpenClaw/agents/defaults/workspace",
+          "exactNode": "/home/node/.openclaw/workspace"
+        },
+        "receivingPointer": "/managedOpenClaw/agents/defaults/workspace",
+        "exactNode": "/home/node/.openclaw/workspace",
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-B"
+        }
+      }
+    }
+  },
+  {
+    "id": "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-EMBEDDEDAGENT-EXECUTIONCONTRACT",
+    "originalContract": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/original70-field-contracts.json",
+      "sha256": "859ae0c2b12269cf494d4591a4f8774a1f9884dc7dafd5ab3169b162083dcd6a",
+      "pointer": "/fields/16"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "profiles": {
+      "local-A": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-A/settings/gatewayOpenClaw/agents/defaults/embeddedAgent/executionContract",
+          "exactNode": "strict-agentic"
+        },
+        "receivingPointer": "/managedOpenClaw/agents/defaults/embeddedAgent/executionContract",
+        "exactNode": "strict-agentic",
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-A"
+        }
+      },
+      "local-B": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-B/settings/gatewayOpenClaw/agents/defaults/embeddedAgent/executionContract",
+          "exactNode": "strict-agentic"
+        },
+        "receivingPointer": "/managedOpenClaw/agents/defaults/embeddedAgent/executionContract",
+        "exactNode": "strict-agentic",
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-B"
+        }
+      }
+    }
+  },
+  {
+    "id": "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-CONTEXTPRUNING-MODE",
+    "originalContract": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/original70-field-contracts.json",
+      "sha256": "859ae0c2b12269cf494d4591a4f8774a1f9884dc7dafd5ab3169b162083dcd6a",
+      "pointer": "/fields/17"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "profiles": {
+      "local-A": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-A/settings/gatewayOpenClaw/agents/defaults/contextPruning/mode",
+          "exactNode": "cache-ttl"
+        },
+        "receivingPointer": "/managedOpenClaw/agents/defaults/contextPruning/mode",
+        "exactNode": "cache-ttl",
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-A"
+        }
+      },
+      "local-B": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-B/settings/gatewayOpenClaw/agents/defaults/contextPruning/mode",
+          "exactNode": "cache-ttl"
+        },
+        "receivingPointer": "/managedOpenClaw/agents/defaults/contextPruning/mode",
+        "exactNode": "cache-ttl",
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-B"
+        }
+      }
+    }
+  },
+  {
+    "id": "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-CONTEXTPRUNING-TTL",
+    "originalContract": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/original70-field-contracts.json",
+      "sha256": "859ae0c2b12269cf494d4591a4f8774a1f9884dc7dafd5ab3169b162083dcd6a",
+      "pointer": "/fields/18"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "profiles": {
+      "local-A": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-A/settings/gatewayOpenClaw/agents/defaults/contextPruning/ttl",
+          "exactNode": "2h"
+        },
+        "receivingPointer": "/managedOpenClaw/agents/defaults/contextPruning/ttl",
+        "exactNode": "2h",
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-A"
+        }
+      },
+      "local-B": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-B/settings/gatewayOpenClaw/agents/defaults/contextPruning/ttl",
+          "exactNode": "1h"
+        },
+        "receivingPointer": "/managedOpenClaw/agents/defaults/contextPruning/ttl",
+        "exactNode": "1h",
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-B"
+        }
+      }
+    }
+  },
+  {
+    "id": "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-COMPACTION-MODE",
+    "originalContract": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/original70-field-contracts.json",
+      "sha256": "859ae0c2b12269cf494d4591a4f8774a1f9884dc7dafd5ab3169b162083dcd6a",
+      "pointer": "/fields/19"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "profiles": {
+      "local-A": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-A/settings/gatewayOpenClaw/agents/defaults/compaction/mode",
+          "exactNode": "safeguard"
+        },
+        "receivingPointer": "/managedOpenClaw/agents/defaults/compaction/mode",
+        "exactNode": "safeguard",
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-A"
+        }
+      },
+      "local-B": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-B/settings/gatewayOpenClaw/agents/defaults/compaction/mode",
+          "exactNode": "safeguard"
+        },
+        "receivingPointer": "/managedOpenClaw/agents/defaults/compaction/mode",
+        "exactNode": "safeguard",
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-B"
+        }
+      }
+    }
+  },
+  {
+    "id": "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-COMPACTION-KEEPRECENTTOKENS",
+    "originalContract": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/original70-field-contracts.json",
+      "sha256": "859ae0c2b12269cf494d4591a4f8774a1f9884dc7dafd5ab3169b162083dcd6a",
+      "pointer": "/fields/20"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "profiles": {
+      "local-A": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-A/settings/gatewayOpenClaw/agents/defaults/compaction/keepRecentTokens",
+          "exactNode": 140000
+        },
+        "receivingPointer": "/managedOpenClaw/agents/defaults/compaction/keepRecentTokens",
+        "exactNode": 140000,
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-A"
+        }
+      },
+      "local-B": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-B/settings/gatewayOpenClaw/agents/defaults/compaction/keepRecentTokens",
+          "exactNode": 70000
+        },
+        "receivingPointer": "/managedOpenClaw/agents/defaults/compaction/keepRecentTokens",
+        "exactNode": 70000,
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-B"
+        }
+      }
+    }
+  },
+  {
+    "id": "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-COMPACTION-MEMORYFLUSH-ENABLED",
+    "originalContract": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/original70-field-contracts.json",
+      "sha256": "859ae0c2b12269cf494d4591a4f8774a1f9884dc7dafd5ab3169b162083dcd6a",
+      "pointer": "/fields/21"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "profiles": {
+      "local-A": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-A/settings/gatewayOpenClaw/agents/defaults/compaction/memoryFlush/enabled",
+          "exactNode": true
+        },
+        "receivingPointer": "/managedOpenClaw/agents/defaults/compaction/memoryFlush/enabled",
+        "exactNode": true,
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-A"
+        }
+      },
+      "local-B": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-B/settings/gatewayOpenClaw/agents/defaults/compaction/memoryFlush/enabled",
+          "exactNode": true
+        },
+        "receivingPointer": "/managedOpenClaw/agents/defaults/compaction/memoryFlush/enabled",
+        "exactNode": true,
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-B"
+        }
+      }
+    }
+  },
+  {
+    "id": "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-SUBAGENTS-MAXCONCURRENT",
+    "originalContract": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/original70-field-contracts.json",
+      "sha256": "859ae0c2b12269cf494d4591a4f8774a1f9884dc7dafd5ab3169b162083dcd6a",
+      "pointer": "/fields/22"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "profiles": {
+      "local-A": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-A/settings/gatewayOpenClaw/agents/defaults/subagents/maxConcurrent",
+          "exactNode": 20
+        },
+        "receivingPointer": "/managedOpenClaw/agents/defaults/subagents/maxConcurrent",
+        "exactNode": 20,
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-A"
+        }
+      },
+      "local-B": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-B/settings/gatewayOpenClaw/agents/defaults/subagents/maxConcurrent",
+          "exactNode": 10
+        },
+        "receivingPointer": "/managedOpenClaw/agents/defaults/subagents/maxConcurrent",
+        "exactNode": 10,
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-B"
+        }
+      }
+    }
+  },
+  {
+    "id": "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-SUBAGENTS-ARCHIVEAFTERMINUTES",
+    "originalContract": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/original70-field-contracts.json",
+      "sha256": "859ae0c2b12269cf494d4591a4f8774a1f9884dc7dafd5ab3169b162083dcd6a",
+      "pointer": "/fields/23"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "profiles": {
+      "local-A": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-A/settings/gatewayOpenClaw/agents/defaults/subagents/archiveAfterMinutes",
+          "exactNode": 240
+        },
+        "receivingPointer": "/managedOpenClaw/agents/defaults/subagents/archiveAfterMinutes",
+        "exactNode": 240,
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-A"
+        }
+      },
+      "local-B": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-B/settings/gatewayOpenClaw/agents/defaults/subagents/archiveAfterMinutes",
+          "exactNode": 120
+        },
+        "receivingPointer": "/managedOpenClaw/agents/defaults/subagents/archiveAfterMinutes",
+        "exactNode": 120,
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-B"
+        }
+      }
+    }
+  },
+  {
+    "id": "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-SUBAGENTS-RUNTIMEOUTSECONDS",
+    "originalContract": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/original70-field-contracts.json",
+      "sha256": "859ae0c2b12269cf494d4591a4f8774a1f9884dc7dafd5ab3169b162083dcd6a",
+      "pointer": "/fields/24"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "profiles": {
+      "local-A": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-A/settings/gatewayOpenClaw/agents/defaults/subagents/runTimeoutSeconds",
+          "exactNode": 43200
+        },
+        "receivingPointer": "/managedOpenClaw/agents/defaults/subagents/runTimeoutSeconds",
+        "exactNode": 43200,
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-A"
+        }
+      },
+      "local-B": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-B/settings/gatewayOpenClaw/agents/defaults/subagents/runTimeoutSeconds",
+          "exactNode": 21600
+        },
+        "receivingPointer": "/managedOpenClaw/agents/defaults/subagents/runTimeoutSeconds",
+        "exactNode": 21600,
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-B"
+        }
+      }
+    }
+  },
+  {
+    "id": "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-SUBAGENTS-MAXSPAWNDEPTH",
+    "originalContract": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/original70-field-contracts.json",
+      "sha256": "859ae0c2b12269cf494d4591a4f8774a1f9884dc7dafd5ab3169b162083dcd6a",
+      "pointer": "/fields/25"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "profiles": {
+      "local-A": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-A/settings/gatewayOpenClaw/agents/defaults/subagents/maxSpawnDepth",
+          "exactNode": 3
+        },
+        "receivingPointer": "/managedOpenClaw/agents/defaults/subagents/maxSpawnDepth",
+        "exactNode": 3,
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-A"
+        }
+      },
+      "local-B": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-B/settings/gatewayOpenClaw/agents/defaults/subagents/maxSpawnDepth",
+          "exactNode": 2
+        },
+        "receivingPointer": "/managedOpenClaw/agents/defaults/subagents/maxSpawnDepth",
+        "exactNode": 2,
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-B"
+        }
+      }
+    }
+  },
+  {
+    "id": "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-CONTEXTINJECTION",
+    "originalContract": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/original70-field-contracts.json",
+      "sha256": "859ae0c2b12269cf494d4591a4f8774a1f9884dc7dafd5ab3169b162083dcd6a",
+      "pointer": "/fields/26"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "profiles": {
+      "local-A": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-A/settings/gatewayOpenClaw/agents/defaults/contextInjection",
+          "exactNode": "never"
+        },
+        "receivingPointer": "/managedOpenClaw/agents/defaults/contextInjection",
+        "exactNode": "never",
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-A"
+        }
+      },
+      "local-B": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-B/settings/gatewayOpenClaw/agents/defaults/contextInjection",
+          "exactNode": "continuation-skip"
+        },
+        "receivingPointer": "/managedOpenClaw/agents/defaults/contextInjection",
+        "exactNode": "continuation-skip",
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-B"
+        }
+      }
+    }
+  },
+  {
+    "id": "DLV-GATEWAY-OPENCLAW-AGENTS-ENTRIES-MAIN-SUBAGENTS-ALLOWAGENTS",
+    "originalContract": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/original70-field-contracts.json",
+      "sha256": "859ae0c2b12269cf494d4591a4f8774a1f9884dc7dafd5ab3169b162083dcd6a",
+      "pointer": "/fields/27"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "profiles": {
+      "local-A": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-A/settings/gatewayOpenClaw/agents/entries/main/subagents/allowAgents",
+          "exactNode": [
+            "*"
+          ]
+        },
+        "receivingPointer": "/managedOpenClaw/agents/entries/main/subagents/allowAgents",
+        "exactNode": [
+          "*"
+        ],
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-A"
+        }
+      },
+      "local-B": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-B/settings/gatewayOpenClaw/agents/entries/main/subagents/allowAgents",
+          "exactNode": [
+            "*"
+          ]
+        },
+        "receivingPointer": "/managedOpenClaw/agents/entries/main/subagents/allowAgents",
+        "exactNode": [
+          "*"
+        ],
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-B"
+        }
+      }
+    }
+  },
+  {
+    "id": "DLV-GATEWAY-OPENCLAW-AGENTS-ENTRIES-MAIN-SKILLS",
+    "originalContract": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/original70-field-contracts.json",
+      "sha256": "859ae0c2b12269cf494d4591a4f8774a1f9884dc7dafd5ab3169b162083dcd6a",
+      "pointer": "/fields/28"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "profiles": {
+      "local-A": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-A/settings/gatewayOpenClaw/agents/entries/main/skills",
+          "exactNode": []
+        },
+        "receivingPointer": "/managedOpenClaw/agents/entries/main/skills",
+        "exactNode": [],
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-A"
+        }
+      },
+      "local-B": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-B/settings/gatewayOpenClaw/agents/entries/main/skills",
+          "exactNode": []
+        },
+        "receivingPointer": "/managedOpenClaw/agents/entries/main/skills",
+        "exactNode": [],
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-B"
+        }
+      }
+    }
+  },
+  {
+    "id": "DLV-GATEWAY-OPENCLAW-AGENTS-ENTRIES-MAIN-SKILLSLIMITS-MAXSKILLSPROMPTCHARS",
+    "originalContract": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/original70-field-contracts.json",
+      "sha256": "859ae0c2b12269cf494d4591a4f8774a1f9884dc7dafd5ab3169b162083dcd6a",
+      "pointer": "/fields/29"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "profiles": {
+      "local-A": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-A/settings/gatewayOpenClaw/agents/entries/main/skillsLimits/maxSkillsPromptChars",
+          "exactNode": 1200
+        },
+        "receivingPointer": "/managedOpenClaw/agents/entries/main/skillsLimits/maxSkillsPromptChars",
+        "exactNode": 1200,
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-A"
+        }
+      },
+      "local-B": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-B/settings/gatewayOpenClaw/agents/entries/main/skillsLimits/maxSkillsPromptChars",
+          "exactNode": 2400
+        },
+        "receivingPointer": "/managedOpenClaw/agents/entries/main/skillsLimits/maxSkillsPromptChars",
+        "exactNode": 2400,
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-B"
+        }
+      }
+    }
+  },
+  {
+    "id": "DLV-GATEWAY-OPENCLAW-ACP-ENABLED",
+    "originalContract": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/original70-field-contracts.json",
+      "sha256": "859ae0c2b12269cf494d4591a4f8774a1f9884dc7dafd5ab3169b162083dcd6a",
+      "pointer": "/fields/30"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "profiles": {
+      "local-A": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-A/settings/gatewayOpenClaw/acp/enabled",
+          "exactNode": true
+        },
+        "receivingPointer": "/managedOpenClaw/acp/enabled",
+        "exactNode": true,
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-A"
+        }
+      },
+      "local-B": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-B/settings/gatewayOpenClaw/acp/enabled",
+          "exactNode": true
+        },
+        "receivingPointer": "/managedOpenClaw/acp/enabled",
+        "exactNode": true,
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-B"
+        }
+      }
+    }
+  },
+  {
+    "id": "DLV-GATEWAY-OPENCLAW-ACP-BACKEND",
+    "originalContract": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/original70-field-contracts.json",
+      "sha256": "859ae0c2b12269cf494d4591a4f8774a1f9884dc7dafd5ab3169b162083dcd6a",
+      "pointer": "/fields/31"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "profiles": {
+      "local-A": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-A/settings/gatewayOpenClaw/acp/backend",
+          "exactNode": "acpx"
+        },
+        "receivingPointer": "/managedOpenClaw/acp/backend",
+        "exactNode": "acpx",
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-A"
+        }
+      },
+      "local-B": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-B/settings/gatewayOpenClaw/acp/backend",
+          "exactNode": "acpx"
+        },
+        "receivingPointer": "/managedOpenClaw/acp/backend",
+        "exactNode": "acpx",
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-B"
+        }
+      }
+    }
+  },
+  {
+    "id": "DLV-GATEWAY-OPENCLAW-ACP-DEFAULTAGENT",
+    "originalContract": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/original70-field-contracts.json",
+      "sha256": "859ae0c2b12269cf494d4591a4f8774a1f9884dc7dafd5ab3169b162083dcd6a",
+      "pointer": "/fields/32"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "profiles": {
+      "local-A": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-A/settings/gatewayOpenClaw/acp/defaultAgent",
+          "exactNode": "codex"
+        },
+        "receivingPointer": "/managedOpenClaw/acp/defaultAgent",
+        "exactNode": "codex",
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-A"
+        }
+      },
+      "local-B": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-B/settings/gatewayOpenClaw/acp/defaultAgent",
+          "exactNode": "codex"
+        },
+        "receivingPointer": "/managedOpenClaw/acp/defaultAgent",
+        "exactNode": "codex",
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-B"
+        }
+      }
+    }
+  },
+  {
+    "id": "DLV-GATEWAY-OPENCLAW-ACP-ALLOWEDAGENTS",
+    "originalContract": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/original70-field-contracts.json",
+      "sha256": "859ae0c2b12269cf494d4591a4f8774a1f9884dc7dafd5ab3169b162083dcd6a",
+      "pointer": "/fields/33"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "profiles": {
+      "local-A": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-A/settings/gatewayOpenClaw/acp/allowedAgents",
+          "exactNode": [
+            "claude",
+            "codex",
+            "kimi",
+            "gemini",
+            "pi"
+          ]
+        },
+        "receivingPointer": "/managedOpenClaw/acp/allowedAgents",
+        "exactNode": [
+          "claude",
+          "codex",
+          "kimi",
+          "gemini",
+          "pi"
+        ],
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-A"
+        }
+      },
+      "local-B": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-B/settings/gatewayOpenClaw/acp/allowedAgents",
+          "exactNode": [
+            "codex"
+          ]
+        },
+        "receivingPointer": "/managedOpenClaw/acp/allowedAgents",
+        "exactNode": [
+          "codex"
+        ],
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-B"
+        }
+      }
+    }
+  },
+  {
+    "id": "DLV-GATEWAY-OPENCLAW-TOOLS-PROFILE",
+    "originalContract": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/original70-field-contracts.json",
+      "sha256": "859ae0c2b12269cf494d4591a4f8774a1f9884dc7dafd5ab3169b162083dcd6a",
+      "pointer": "/fields/34"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "profiles": {
+      "local-A": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-A/settings/gatewayOpenClaw/tools/profile",
+          "exactNode": "coding"
+        },
+        "receivingPointer": "/managedOpenClaw/tools/profile",
+        "exactNode": "coding",
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-A"
+        }
+      },
+      "local-B": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-B/settings/gatewayOpenClaw/tools/profile",
+          "exactNode": "coding"
+        },
+        "receivingPointer": "/managedOpenClaw/tools/profile",
+        "exactNode": "coding",
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-B"
+        }
+      }
+    }
+  },
+  {
+    "id": "DLV-GATEWAY-OPENCLAW-TOOLS-SESSIONS-VISIBILITY",
+    "originalContract": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/original70-field-contracts.json",
+      "sha256": "859ae0c2b12269cf494d4591a4f8774a1f9884dc7dafd5ab3169b162083dcd6a",
+      "pointer": "/fields/35"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "profiles": {
+      "local-A": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-A/settings/gatewayOpenClaw/tools/sessions/visibility",
+          "exactNode": "all"
+        },
+        "receivingPointer": "/managedOpenClaw/tools/sessions/visibility",
+        "exactNode": "all",
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-A"
+        }
+      },
+      "local-B": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-B/settings/gatewayOpenClaw/tools/sessions/visibility",
+          "exactNode": "tree"
+        },
+        "receivingPointer": "/managedOpenClaw/tools/sessions/visibility",
+        "exactNode": "tree",
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-B"
+        }
+      }
+    }
+  },
+  {
+    "id": "DLV-GATEWAY-OPENCLAW-TOOLS-SESSIONS-SPAWN-ATTACHMENTS-ENABLED",
+    "originalContract": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/original70-field-contracts.json",
+      "sha256": "859ae0c2b12269cf494d4591a4f8774a1f9884dc7dafd5ab3169b162083dcd6a",
+      "pointer": "/fields/36"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "profiles": {
+      "local-A": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-A/settings/gatewayOpenClaw/tools/sessions_spawn/attachments/enabled",
+          "exactNode": true
+        },
+        "receivingPointer": "/managedOpenClaw/tools/sessions_spawn/attachments/enabled",
+        "exactNode": true,
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-A"
+        }
+      },
+      "local-B": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-B/settings/gatewayOpenClaw/tools/sessions_spawn/attachments/enabled",
+          "exactNode": false
+        },
+        "receivingPointer": "/managedOpenClaw/tools/sessions_spawn/attachments/enabled",
+        "exactNode": false,
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-B"
+        }
+      }
+    }
+  },
+  {
+    "id": "DLV-GATEWAY-OPENCLAW-TOOLS-EXEC-TIMEOUTSECONDS",
+    "originalContract": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/original70-field-contracts.json",
+      "sha256": "859ae0c2b12269cf494d4591a4f8774a1f9884dc7dafd5ab3169b162083dcd6a",
+      "pointer": "/fields/37"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "profiles": {
+      "local-A": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-A/settings/gatewayOpenClaw/tools/exec/timeoutSeconds",
+          "exactNode": 604800
+        },
+        "receivingPointer": "/managedOpenClaw/tools/exec/timeoutSeconds",
+        "exactNode": 604800,
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-A"
+        }
+      },
+      "local-B": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-B/settings/gatewayOpenClaw/tools/exec/timeoutSeconds",
+          "exactNode": 172800
+        },
+        "receivingPointer": "/managedOpenClaw/tools/exec/timeoutSeconds",
+        "exactNode": 172800,
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-B"
+        }
+      }
+    }
+  },
+  {
+    "id": "DLV-GATEWAY-OPENCLAW-TOOLS-EXEC-MODE",
+    "originalContract": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/original70-field-contracts.json",
+      "sha256": "859ae0c2b12269cf494d4591a4f8774a1f9884dc7dafd5ab3169b162083dcd6a",
+      "pointer": "/fields/38"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "profiles": {
+      "local-A": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-A/settings/gatewayOpenClaw/tools/exec/mode",
+          "exactNode": "full"
+        },
+        "receivingPointer": "/managedOpenClaw/tools/exec/mode",
+        "exactNode": "full",
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-A"
+        }
+      },
+      "local-B": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-B/settings/gatewayOpenClaw/tools/exec/mode",
+          "exactNode": "allowlist"
+        },
+        "receivingPointer": "/managedOpenClaw/tools/exec/mode",
+        "exactNode": "allowlist",
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-B"
+        }
+      }
+    }
+  },
+  {
+    "id": "DLV-GATEWAY-OPENCLAW-TOOLS-AGENTTOAGENT-ENABLED",
+    "originalContract": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/original70-field-contracts.json",
+      "sha256": "859ae0c2b12269cf494d4591a4f8774a1f9884dc7dafd5ab3169b162083dcd6a",
+      "pointer": "/fields/39"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "profiles": {
+      "local-A": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-A/settings/gatewayOpenClaw/tools/agentToAgent/enabled",
+          "exactNode": true
+        },
+        "receivingPointer": "/managedOpenClaw/tools/agentToAgent/enabled",
+        "exactNode": true,
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-A"
+        }
+      },
+      "local-B": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-B/settings/gatewayOpenClaw/tools/agentToAgent/enabled",
+          "exactNode": true
+        },
+        "receivingPointer": "/managedOpenClaw/tools/agentToAgent/enabled",
+        "exactNode": true,
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-B"
+        }
+      }
+    }
+  },
+  {
+    "id": "DLV-GATEWAY-OPENCLAW-COMMANDS-NATIVE",
+    "originalContract": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/original70-field-contracts.json",
+      "sha256": "859ae0c2b12269cf494d4591a4f8774a1f9884dc7dafd5ab3169b162083dcd6a",
+      "pointer": "/fields/40"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "profiles": {
+      "local-A": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-A/settings/gatewayOpenClaw/commands/native",
+          "exactNode": "auto"
+        },
+        "receivingPointer": "/managedOpenClaw/commands/native",
+        "exactNode": "auto",
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-A"
+        }
+      },
+      "local-B": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-B/settings/gatewayOpenClaw/commands/native",
+          "exactNode": false
+        },
+        "receivingPointer": "/managedOpenClaw/commands/native",
+        "exactNode": false,
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-B"
+        }
+      }
+    }
+  },
+  {
+    "id": "DLV-GATEWAY-OPENCLAW-COMMANDS-NATIVESKILLS",
+    "originalContract": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/original70-field-contracts.json",
+      "sha256": "859ae0c2b12269cf494d4591a4f8774a1f9884dc7dafd5ab3169b162083dcd6a",
+      "pointer": "/fields/41"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "profiles": {
+      "local-A": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-A/settings/gatewayOpenClaw/commands/nativeSkills",
+          "exactNode": "auto"
+        },
+        "receivingPointer": "/managedOpenClaw/commands/nativeSkills",
+        "exactNode": "auto",
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-A"
+        }
+      },
+      "local-B": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-B/settings/gatewayOpenClaw/commands/nativeSkills",
+          "exactNode": false
+        },
+        "receivingPointer": "/managedOpenClaw/commands/nativeSkills",
+        "exactNode": false,
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-B"
+        }
+      }
+    }
+  },
+  {
+    "id": "DLV-GATEWAY-OPENCLAW-COMMANDS-RESTART",
+    "originalContract": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/original70-field-contracts.json",
+      "sha256": "859ae0c2b12269cf494d4591a4f8774a1f9884dc7dafd5ab3169b162083dcd6a",
+      "pointer": "/fields/42"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "profiles": {
+      "local-A": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-A/settings/gatewayOpenClaw/commands/restart",
+          "exactNode": true
+        },
+        "receivingPointer": "/managedOpenClaw/commands/restart",
+        "exactNode": true,
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-A"
+        }
+      },
+      "local-B": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-B/settings/gatewayOpenClaw/commands/restart",
+          "exactNode": false
+        },
+        "receivingPointer": "/managedOpenClaw/commands/restart",
+        "exactNode": false,
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-B"
+        }
+      }
+    }
+  },
+  {
+    "id": "DLV-GATEWAY-OPENCLAW-SESSION-DMSCOPE",
+    "originalContract": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/original70-field-contracts.json",
+      "sha256": "859ae0c2b12269cf494d4591a4f8774a1f9884dc7dafd5ab3169b162083dcd6a",
+      "pointer": "/fields/43"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "profiles": {
+      "local-A": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-A/settings/gatewayOpenClaw/session/dmScope",
+          "exactNode": "per-channel-peer"
+        },
+        "receivingPointer": "/managedOpenClaw/session/dmScope",
+        "exactNode": "per-channel-peer",
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-A"
+        }
+      },
+      "local-B": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-B/settings/gatewayOpenClaw/session/dmScope",
+          "exactNode": "per-account-channel-peer"
+        },
+        "receivingPointer": "/managedOpenClaw/session/dmScope",
+        "exactNode": "per-account-channel-peer",
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-B"
+        }
+      }
+    }
+  },
+  {
+    "id": "DLV-GATEWAY-OPENCLAW-SESSION-RESETBYTYPE-GROUP-MODE",
+    "originalContract": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/original70-field-contracts.json",
+      "sha256": "859ae0c2b12269cf494d4591a4f8774a1f9884dc7dafd5ab3169b162083dcd6a",
+      "pointer": "/fields/44"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "profiles": {
+      "local-A": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-A/settings/gatewayOpenClaw/session/resetByType/group/mode",
+          "exactNode": "idle"
+        },
+        "receivingPointer": "/managedOpenClaw/session/resetByType/group/mode",
+        "exactNode": "idle",
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-A"
+        }
+      },
+      "local-B": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-B/settings/gatewayOpenClaw/session/resetByType/group/mode",
+          "exactNode": "idle"
+        },
+        "receivingPointer": "/managedOpenClaw/session/resetByType/group/mode",
+        "exactNode": "idle",
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-B"
+        }
+      }
+    }
+  },
+  {
+    "id": "DLV-GATEWAY-OPENCLAW-SESSION-RESETBYTYPE-GROUP-IDLEMINUTES",
+    "originalContract": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/original70-field-contracts.json",
+      "sha256": "859ae0c2b12269cf494d4591a4f8774a1f9884dc7dafd5ab3169b162083dcd6a",
+      "pointer": "/fields/45"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "profiles": {
+      "local-A": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-A/settings/gatewayOpenClaw/session/resetByType/group/idleMinutes",
+          "exactNode": 43200
+        },
+        "receivingPointer": "/managedOpenClaw/session/resetByType/group/idleMinutes",
+        "exactNode": 43200,
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-A"
+        }
+      },
+      "local-B": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-B/settings/gatewayOpenClaw/session/resetByType/group/idleMinutes",
+          "exactNode": 21600
+        },
+        "receivingPointer": "/managedOpenClaw/session/resetByType/group/idleMinutes",
+        "exactNode": 21600,
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-B"
+        }
+      }
+    }
+  },
+  {
+    "id": "DLV-GATEWAY-OPENCLAW-SESSION-THREADBINDINGS-ENABLED",
+    "originalContract": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/original70-field-contracts.json",
+      "sha256": "859ae0c2b12269cf494d4591a4f8774a1f9884dc7dafd5ab3169b162083dcd6a",
+      "pointer": "/fields/46"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "profiles": {
+      "local-A": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-A/settings/gatewayOpenClaw/session/threadBindings/enabled",
+          "exactNode": true
+        },
+        "receivingPointer": "/managedOpenClaw/session/threadBindings/enabled",
+        "exactNode": true,
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-A"
+        }
+      },
+      "local-B": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-B/settings/gatewayOpenClaw/session/threadBindings/enabled",
+          "exactNode": true
+        },
+        "receivingPointer": "/managedOpenClaw/session/threadBindings/enabled",
+        "exactNode": true,
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-B"
+        }
+      }
+    }
+  },
+  {
+    "id": "DLV-GATEWAY-OPENCLAW-SESSION-THREADBINDINGS-IDLEHOURS",
+    "originalContract": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/original70-field-contracts.json",
+      "sha256": "859ae0c2b12269cf494d4591a4f8774a1f9884dc7dafd5ab3169b162083dcd6a",
+      "pointer": "/fields/47"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "profiles": {
+      "local-A": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-A/settings/gatewayOpenClaw/session/threadBindings/idleHours",
+          "exactNode": 999
+        },
+        "receivingPointer": "/managedOpenClaw/session/threadBindings/idleHours",
+        "exactNode": 999,
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-A"
+        }
+      },
+      "local-B": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-B/settings/gatewayOpenClaw/session/threadBindings/idleHours",
+          "exactNode": 24
+        },
+        "receivingPointer": "/managedOpenClaw/session/threadBindings/idleHours",
+        "exactNode": 24,
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-B"
+        }
+      }
+    }
+  },
+  {
+    "id": "DLV-GATEWAY-OPENCLAW-SESSION-THREADBINDINGS-MAXAGEHOURS",
+    "originalContract": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/original70-field-contracts.json",
+      "sha256": "859ae0c2b12269cf494d4591a4f8774a1f9884dc7dafd5ab3169b162083dcd6a",
+      "pointer": "/fields/48"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "profiles": {
+      "local-A": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-A/settings/gatewayOpenClaw/session/threadBindings/maxAgeHours",
+          "exactNode": 0
+        },
+        "receivingPointer": "/managedOpenClaw/session/threadBindings/maxAgeHours",
+        "exactNode": 0,
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-A"
+        }
+      },
+      "local-B": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-B/settings/gatewayOpenClaw/session/threadBindings/maxAgeHours",
+          "exactNode": 48
+        },
+        "receivingPointer": "/managedOpenClaw/session/threadBindings/maxAgeHours",
+        "exactNode": 48,
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-B"
+        }
+      }
+    }
+  },
+  {
+    "id": "DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-GROUPPOLICY",
+    "originalContract": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/original70-field-contracts.json",
+      "sha256": "859ae0c2b12269cf494d4591a4f8774a1f9884dc7dafd5ab3169b162083dcd6a",
+      "pointer": "/fields/49"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "profiles": {
+      "local-A": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-A/settings/gatewayOpenClaw/channels/discord/groupPolicy",
+          "exactNode": "allowlist"
+        },
+        "receivingPointer": "/managedOpenClaw/channels/discord/groupPolicy",
+        "exactNode": "allowlist",
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-A"
+        }
+      },
+      "local-B": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-B/settings/gatewayOpenClaw/channels/discord/groupPolicy",
+          "exactNode": "allowlist"
+        },
+        "receivingPointer": "/managedOpenClaw/channels/discord/groupPolicy",
+        "exactNode": "allowlist",
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-B"
+        }
+      }
+    }
+  },
+  {
+    "id": "DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-STREAMING-MODE",
+    "originalContract": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/original70-field-contracts.json",
+      "sha256": "859ae0c2b12269cf494d4591a4f8774a1f9884dc7dafd5ab3169b162083dcd6a",
+      "pointer": "/fields/50"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "profiles": {
+      "local-A": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-A/settings/gatewayOpenClaw/channels/discord/streaming/mode",
+          "exactNode": "partial"
+        },
+        "receivingPointer": "/managedOpenClaw/channels/discord/streaming/mode",
+        "exactNode": "partial",
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-A"
+        }
+      },
+      "local-B": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-B/settings/gatewayOpenClaw/channels/discord/streaming/mode",
+          "exactNode": "off"
+        },
+        "receivingPointer": "/managedOpenClaw/channels/discord/streaming/mode",
+        "exactNode": "off",
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-B"
+        }
+      }
+    }
+  },
+  {
+    "id": "DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-INBOUNDWORKER-RUNTIMEOUTMS",
+    "originalContract": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/original70-field-contracts.json",
+      "sha256": "859ae0c2b12269cf494d4591a4f8774a1f9884dc7dafd5ab3169b162083dcd6a",
+      "pointer": "/fields/51"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "profiles": {
+      "local-A": {
+        "disposition": "excluded unsupported dormant field; never generated",
+        "currentReader": "no ghost receiver; same original conditional/unused obligation"
+      },
+      "local-B": {
+        "disposition": "excluded unsupported dormant field; never generated",
+        "currentReader": "no ghost receiver; same original conditional/unused obligation"
+      }
+    }
+  },
+  {
+    "id": "DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-GUILDS-REQUIREMENTION",
+    "originalContract": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/original70-field-contracts.json",
+      "sha256": "859ae0c2b12269cf494d4591a4f8774a1f9884dc7dafd5ab3169b162083dcd6a",
+      "pointer": "/fields/52"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "profiles": {
+      "local-A": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-A/settings/gatewayOpenClaw/channels/discord/guilds/*/requireMention",
+          "exactNode": true
+        },
+        "receivingPointer": "/managedOpenClaw/channels/discord/guilds/*/requireMention",
+        "exactNode": true,
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-A"
+        }
+      },
+      "local-B": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-B/settings/gatewayOpenClaw/channels/discord/guilds/*/requireMention",
+          "exactNode": true
+        },
+        "receivingPointer": "/managedOpenClaw/channels/discord/guilds/*/requireMention",
+        "exactNode": true,
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-B"
+        }
+      }
+    }
+  },
+  {
+    "id": "DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-THREADBINDINGS-ENABLED",
+    "originalContract": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/original70-field-contracts.json",
+      "sha256": "859ae0c2b12269cf494d4591a4f8774a1f9884dc7dafd5ab3169b162083dcd6a",
+      "pointer": "/fields/53"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "profiles": {
+      "local-A": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-A/settings/gatewayOpenClaw/channels/discord/threadBindings/enabled",
+          "exactNode": true
+        },
+        "receivingPointer": "/managedOpenClaw/channels/discord/threadBindings/enabled",
+        "exactNode": true,
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-A"
+        }
+      },
+      "local-B": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-B/settings/gatewayOpenClaw/channels/discord/threadBindings/enabled",
+          "exactNode": true
+        },
+        "receivingPointer": "/managedOpenClaw/channels/discord/threadBindings/enabled",
+        "exactNode": true,
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-B"
+        }
+      }
+    }
+  },
+  {
+    "id": "DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-THREADBINDINGS-IDLEHOURS",
+    "originalContract": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/original70-field-contracts.json",
+      "sha256": "859ae0c2b12269cf494d4591a4f8774a1f9884dc7dafd5ab3169b162083dcd6a",
+      "pointer": "/fields/54"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "profiles": {
+      "local-A": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-A/settings/gatewayOpenClaw/channels/discord/threadBindings/idleHours",
+          "exactNode": 999
+        },
+        "receivingPointer": "/managedOpenClaw/channels/discord/threadBindings/idleHours",
+        "exactNode": 999,
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-A"
+        }
+      },
+      "local-B": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-B/settings/gatewayOpenClaw/channels/discord/threadBindings/idleHours",
+          "exactNode": 24
+        },
+        "receivingPointer": "/managedOpenClaw/channels/discord/threadBindings/idleHours",
+        "exactNode": 24,
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-B"
+        }
+      }
+    }
+  },
+  {
+    "id": "DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-THREADBINDINGS-SPAWNSESSIONS",
+    "originalContract": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/original70-field-contracts.json",
+      "sha256": "859ae0c2b12269cf494d4591a4f8774a1f9884dc7dafd5ab3169b162083dcd6a",
+      "pointer": "/fields/55"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "profiles": {
+      "local-A": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-A/settings/gatewayOpenClaw/channels/discord/threadBindings/spawnSessions",
+          "exactNode": true
+        },
+        "receivingPointer": "/managedOpenClaw/channels/discord/threadBindings/spawnSessions",
+        "exactNode": true,
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-A"
+        }
+      },
+      "local-B": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-B/settings/gatewayOpenClaw/channels/discord/threadBindings/spawnSessions",
+          "exactNode": false
+        },
+        "receivingPointer": "/managedOpenClaw/channels/discord/threadBindings/spawnSessions",
+        "exactNode": false,
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-B"
+        }
+      }
+    }
+  },
+  {
+    "id": "DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-EXECAPPROVALS-ENABLED",
+    "originalContract": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/original70-field-contracts.json",
+      "sha256": "859ae0c2b12269cf494d4591a4f8774a1f9884dc7dafd5ab3169b162083dcd6a",
+      "pointer": "/fields/56"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "profiles": {
+      "local-A": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-A/settings/gatewayOpenClaw/channels/discord/execApprovals/enabled",
+          "exactNode": true
+        },
+        "receivingPointer": "/managedOpenClaw/channels/discord/execApprovals/enabled",
+        "exactNode": true,
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-A"
+        }
+      },
+      "local-B": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-B/settings/gatewayOpenClaw/channels/discord/execApprovals/enabled",
+          "exactNode": false
+        },
+        "receivingPointer": "/managedOpenClaw/channels/discord/execApprovals/enabled",
+        "exactNode": false,
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-B"
+        }
+      }
+    }
+  },
+  {
+    "id": "DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-EXECAPPROVALS-TARGET",
+    "originalContract": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/original70-field-contracts.json",
+      "sha256": "859ae0c2b12269cf494d4591a4f8774a1f9884dc7dafd5ab3169b162083dcd6a",
+      "pointer": "/fields/57"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "profiles": {
+      "local-A": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-A/settings/gatewayOpenClaw/channels/discord/execApprovals/target",
+          "exactNode": "dm"
+        },
+        "receivingPointer": "/managedOpenClaw/channels/discord/execApprovals/target",
+        "exactNode": "dm",
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-A"
+        }
+      },
+      "local-B": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-B/settings/gatewayOpenClaw/channels/discord/execApprovals/target",
+          "exactNode": "dm"
+        },
+        "receivingPointer": "/managedOpenClaw/channels/discord/execApprovals/target",
+        "exactNode": "dm",
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-B"
+        }
+      }
+    }
+  },
+  {
+    "id": "DLV-GATEWAY-OPENCLAW-GATEWAY-MODE",
+    "originalContract": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/original70-field-contracts.json",
+      "sha256": "859ae0c2b12269cf494d4591a4f8774a1f9884dc7dafd5ab3169b162083dcd6a",
+      "pointer": "/fields/58"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "profiles": {
+      "local-A": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-A/settings/gatewayOpenClaw/gateway/mode",
+          "exactNode": "local"
+        },
+        "receivingPointer": "/managedOpenClaw/gateway/mode",
+        "exactNode": "local",
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-A"
+        }
+      },
+      "local-B": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-B/settings/gatewayOpenClaw/gateway/mode",
+          "exactNode": "local"
+        },
+        "receivingPointer": "/managedOpenClaw/gateway/mode",
+        "exactNode": "local",
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-B"
+        }
+      }
+    }
+  },
+  {
+    "id": "DLV-GATEWAY-OPENCLAW-GATEWAY-BIND",
+    "originalContract": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/original70-field-contracts.json",
+      "sha256": "859ae0c2b12269cf494d4591a4f8774a1f9884dc7dafd5ab3169b162083dcd6a",
+      "pointer": "/fields/59"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "profiles": {
+      "local-A": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-A/settings/gatewayOpenClaw/gateway/bind",
+          "exactNode": "loopback"
+        },
+        "receivingPointer": "/managedOpenClaw/gateway/bind",
+        "exactNode": "loopback",
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-A"
+        }
+      },
+      "local-B": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-B/settings/gatewayOpenClaw/gateway/bind",
+          "exactNode": "lan"
+        },
+        "receivingPointer": "/managedOpenClaw/gateway/bind",
+        "exactNode": "lan",
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-B"
+        }
+      }
+    }
+  },
+  {
+    "id": "DLV-GATEWAY-OPENCLAW-GATEWAY-CONTROLUI-DANGEROUSLYALLOWHOSTHEADERORIGINFALLBACK",
+    "originalContract": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/original70-field-contracts.json",
+      "sha256": "859ae0c2b12269cf494d4591a4f8774a1f9884dc7dafd5ab3169b162083dcd6a",
+      "pointer": "/fields/60"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "profiles": {
+      "local-A": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-A/settings/gatewayOpenClaw/gateway/controlUi/dangerouslyAllowHostHeaderOriginFallback",
+          "exactNode": true
+        },
+        "receivingPointer": "/managedOpenClaw/gateway/controlUi/dangerouslyAllowHostHeaderOriginFallback",
+        "exactNode": true,
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-A"
+        }
+      },
+      "local-B": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-B/settings/gatewayOpenClaw/gateway/controlUi/dangerouslyAllowHostHeaderOriginFallback",
+          "exactNode": true
+        },
+        "receivingPointer": "/managedOpenClaw/gateway/controlUi/dangerouslyAllowHostHeaderOriginFallback",
+        "exactNode": true,
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-B"
+        }
+      }
+    }
+  },
+  {
+    "id": "DLV-GATEWAY-OPENCLAW-GATEWAY-AUTH-MODE",
+    "originalContract": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/original70-field-contracts.json",
+      "sha256": "859ae0c2b12269cf494d4591a4f8774a1f9884dc7dafd5ab3169b162083dcd6a",
+      "pointer": "/fields/61"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "profiles": {
+      "local-A": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-A/settings/gatewayOpenClaw/gateway/auth/mode",
+          "exactNode": "token"
+        },
+        "receivingPointer": "/managedOpenClaw/gateway/auth/mode",
+        "exactNode": "token",
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-A"
+        }
+      },
+      "local-B": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-B/settings/gatewayOpenClaw/gateway/auth/mode",
+          "exactNode": "token"
+        },
+        "receivingPointer": "/managedOpenClaw/gateway/auth/mode",
+        "exactNode": "token",
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-B"
+        }
+      }
+    }
+  },
+  {
+    "id": "DLV-GATEWAY-OPENCLAW-GATEWAY-TOOLS-ALLOW",
+    "originalContract": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/original70-field-contracts.json",
+      "sha256": "859ae0c2b12269cf494d4591a4f8774a1f9884dc7dafd5ab3169b162083dcd6a",
+      "pointer": "/fields/62"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "profiles": {
+      "local-A": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-A/settings/gatewayOpenClaw/gateway/tools/allow",
+          "exactNode": [
+            "sessions_spawn",
+            "sessions_send",
+            "session_status",
+            "group:openclaw"
+          ]
+        },
+        "receivingPointer": "/managedOpenClaw/gateway/tools/allow",
+        "exactNode": [
+          "sessions_spawn",
+          "sessions_send",
+          "session_status",
+          "group:openclaw"
+        ],
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-A"
+        }
+      },
+      "local-B": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-B/settings/gatewayOpenClaw/gateway/tools/allow",
+          "exactNode": [
+            "sessions_spawn",
+            "sessions_send",
+            "session_status",
+            "group:openclaw"
+          ]
+        },
+        "receivingPointer": "/managedOpenClaw/gateway/tools/allow",
+        "exactNode": [
+          "sessions_spawn",
+          "sessions_send",
+          "session_status",
+          "group:openclaw"
+        ],
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-B"
+        }
+      }
+    }
+  },
+  {
+    "id": "DLV-GATEWAY-OPENCLAW-GATEWAY-TAILSCALE-MODE",
+    "originalContract": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/original70-field-contracts.json",
+      "sha256": "859ae0c2b12269cf494d4591a4f8774a1f9884dc7dafd5ab3169b162083dcd6a",
+      "pointer": "/fields/63"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "profiles": {
+      "local-A": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-A/settings/gatewayOpenClaw/gateway/tailscale/mode",
+          "exactNode": "off"
+        },
+        "receivingPointer": "/managedOpenClaw/gateway/tailscale/mode",
+        "exactNode": "off",
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-A"
+        }
+      },
+      "local-B": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-B/settings/gatewayOpenClaw/gateway/tailscale/mode",
+          "exactNode": "off"
+        },
+        "receivingPointer": "/managedOpenClaw/gateway/tailscale/mode",
+        "exactNode": "off",
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-B"
+        }
+      }
+    }
+  },
+  {
+    "id": "DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-ACPX-ENABLED",
+    "originalContract": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/original70-field-contracts.json",
+      "sha256": "859ae0c2b12269cf494d4591a4f8774a1f9884dc7dafd5ab3169b162083dcd6a",
+      "pointer": "/fields/64"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "profiles": {
+      "local-A": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-A/settings/gatewayOpenClaw/plugins/entries/acpx/enabled",
+          "exactNode": true
+        },
+        "receivingPointer": "/managedOpenClaw/plugins/entries/acpx/enabled",
+        "exactNode": true,
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-A"
+        }
+      },
+      "local-B": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-B/settings/gatewayOpenClaw/plugins/entries/acpx/enabled",
+          "exactNode": true
+        },
+        "receivingPointer": "/managedOpenClaw/plugins/entries/acpx/enabled",
+        "exactNode": true,
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-B"
+        }
+      }
+    }
+  },
+  {
+    "id": "DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-ACPX-CONFIG-PERMISSIONMODE",
+    "originalContract": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/original70-field-contracts.json",
+      "sha256": "859ae0c2b12269cf494d4591a4f8774a1f9884dc7dafd5ab3169b162083dcd6a",
+      "pointer": "/fields/65"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "profiles": {
+      "local-A": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-A/settings/gatewayOpenClaw/plugins/entries/acpx/config/permissionMode",
+          "exactNode": "approve-all"
+        },
+        "receivingPointer": "/managedOpenClaw/plugins/entries/acpx/config/permissionMode",
+        "exactNode": "approve-all",
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-A"
+        }
+      },
+      "local-B": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-B/settings/gatewayOpenClaw/plugins/entries/acpx/config/permissionMode",
+          "exactNode": "approve-all"
+        },
+        "receivingPointer": "/managedOpenClaw/plugins/entries/acpx/config/permissionMode",
+        "exactNode": "approve-all",
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-B"
+        }
+      }
+    }
+  },
+  {
+    "id": "DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-OPENAI-ENABLED",
+    "originalContract": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/original70-field-contracts.json",
+      "sha256": "859ae0c2b12269cf494d4591a4f8774a1f9884dc7dafd5ab3169b162083dcd6a",
+      "pointer": "/fields/66"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "profiles": {
+      "local-A": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-A/settings/gatewayOpenClaw/plugins/entries/openai/enabled",
+          "exactNode": true
+        },
+        "receivingPointer": "/managedOpenClaw/plugins/entries/openai/enabled",
+        "exactNode": true,
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-A"
+        }
+      },
+      "local-B": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-B/settings/gatewayOpenClaw/plugins/entries/openai/enabled",
+          "exactNode": true
+        },
+        "receivingPointer": "/managedOpenClaw/plugins/entries/openai/enabled",
+        "exactNode": true,
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-B"
+        }
+      }
+    }
+  },
+  {
+    "id": "DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-CODEX-ENABLED",
+    "originalContract": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/original70-field-contracts.json",
+      "sha256": "859ae0c2b12269cf494d4591a4f8774a1f9884dc7dafd5ab3169b162083dcd6a",
+      "pointer": "/fields/67"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "profiles": {
+      "local-A": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-A/settings/gatewayOpenClaw/plugins/entries/codex/enabled",
+          "exactNode": true
+        },
+        "receivingPointer": "/managedOpenClaw/plugins/entries/codex/enabled",
+        "exactNode": true,
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-A"
+        }
+      },
+      "local-B": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-B/settings/gatewayOpenClaw/plugins/entries/codex/enabled",
+          "exactNode": true
+        },
+        "receivingPointer": "/managedOpenClaw/plugins/entries/codex/enabled",
+        "exactNode": true,
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-B"
+        }
+      }
+    }
+  },
+  {
+    "id": "DLV-GATEWAY-OPENCLAW-MESSAGES-GROUPCHAT-VISIBLEREPLIES",
+    "originalContract": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/original70-field-contracts.json",
+      "sha256": "859ae0c2b12269cf494d4591a4f8774a1f9884dc7dafd5ab3169b162083dcd6a",
+      "pointer": "/fields/68"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "profiles": {
+      "local-A": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-A/settings/gatewayOpenClaw/messages/groupChat/visibleReplies",
+          "exactNode": "automatic"
+        },
+        "receivingPointer": "/managedOpenClaw/messages/groupChat/visibleReplies",
+        "exactNode": "automatic",
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-A"
+        }
+      },
+      "local-B": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-B/settings/gatewayOpenClaw/messages/groupChat/visibleReplies",
+          "exactNode": "message_tool"
+        },
+        "receivingPointer": "/managedOpenClaw/messages/groupChat/visibleReplies",
+        "exactNode": "message_tool",
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-B"
+        }
+      }
+    }
+  },
+  {
+    "id": "DLV-NATIVE-OPENCLAW-AGENTS-DEFAULTS-TIMEOUTSECONDS",
+    "originalContract": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/original70-field-contracts.json",
+      "sha256": "859ae0c2b12269cf494d4591a4f8774a1f9884dc7dafd5ab3169b162083dcd6a",
+      "pointer": "/fields/69"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "profiles": {
+      "local-A": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-A/settings/gatewayOpenClaw/agents/defaults/timeoutSeconds",
+          "exactNode": 172800
+        },
+        "receivingPointer": "/managedOpenClaw/agents/defaults/timeoutSeconds",
+        "exactNode": 172800,
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-A"
+        }
+      },
+      "local-B": {
+        "author": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6",
+          "pointer": "/profiles/local-B/settings/gatewayOpenClaw/agents/defaults/timeoutSeconds",
+          "exactNode": 86400
+        },
+        "receivingPointer": "/managedOpenClaw/agents/defaults/timeoutSeconds",
+        "exactNode": 86400,
+        "ownContext": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/managed-bootstrap-context.json",
+          "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386",
+          "pointer": "/contexts/local-B"
+        }
+      }
+    }
+  }
+]

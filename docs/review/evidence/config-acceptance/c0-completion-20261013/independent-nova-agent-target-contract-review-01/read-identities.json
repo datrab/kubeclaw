@@ -1,0 +1,2098 @@
+{
+  "inputs": [
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/contracts/delivery-manifest/v3/schemas/delivery-manifest.v3.schema.json",
+      "sha256": "6a991c53bfafbcc0509e1e01acc68eb16abe23ffedfdcf49cdc04be61d488c9a",
+      "bytes": 4043,
+      "snapshot": "frozen-inputs/6a991c53bfafbcc0509e1e01acc68eb16abe23ffedfdcf49cdc04be61d488c9a.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/contracts/delivery-manifest/v3/src/index.ts",
+      "sha256": "5293ab3d5813e814487011bd80cad516bc3d1f5faec1181c86675505fa8ba294",
+      "bytes": 15713,
+      "snapshot": "frozen-inputs/5293ab3d5813e814487011bd80cad516bc3d1f5faec1181c86675505fa8ba294.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/contracts/pipeline-observability/v1/src/canonical-json.ts",
+      "sha256": "378c3ba35ca88e40527e3912dfc0f897e6d5cbdc1dfd40b3a825fbf1241e9177",
+      "bytes": 1397,
+      "snapshot": "frozen-inputs/378c3ba35ca88e40527e3912dfc0f897e6d5cbdc1dfd40b3a825fbf1241e9177.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json",
+      "sha256": "e97aedc52818a5f89f2fc88090b99e7b7339966603f686b64c69459270a655df",
+      "bytes": 53611,
+      "snapshot": "frozen-inputs/e97aedc52818a5f89f2fc88090b99e7b7339966603f686b64c69459270a655df.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/contracts/pipeline-test-gate/v1/src/coverage.ts",
+      "sha256": "bd5a20ccbefab393453dc9072ceb72343ee40741776909007d3a084578b0855d",
+      "bytes": 5883,
+      "snapshot": "frozen-inputs/bd5a20ccbefab393453dc9072ceb72343ee40741776909007d3a084578b0855d.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/contracts/pipeline-test-gate/v1/src/digest.ts",
+      "sha256": "ee29d0b95e09ae305b9b79d1f289514100c08b4badbd427057cdfeed2fdfa762",
+      "bytes": 279,
+      "snapshot": "frozen-inputs/ee29d0b95e09ae305b9b79d1f289514100c08b4badbd427057cdfeed2fdfa762.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-same-entry-engine-binding-review-02/README.md",
+      "sha256": "5d1b8afe6befdf800c93363139244793d31e616afc606a16edd9e7fe6f60e775",
+      "bytes": 10492,
+      "snapshot": "frozen-inputs/5d1b8afe6befdf800c93363139244793d31e616afc606a16edd9e7fe6f60e775.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/COMMANDS.md",
+      "sha256": "8c06d3a4f71626b85154a3249e33aaa0095fab983af54d759fb69f446b9e1bab",
+      "bytes": 1839,
+      "snapshot": "frozen-inputs/8c06d3a4f71626b85154a3249e33aaa0095fab983af54d759fb69f446b9e1bab.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/README.md",
+      "sha256": "8cdf71380e7237d5a555935537fd5b9bfc73a74ceda454a9dba16324c7eb1907",
+      "bytes": 4093,
+      "snapshot": "frozen-inputs/8cdf71380e7237d5a555935537fd5b9bfc73a74ceda454a9dba16324c7eb1907.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/RECEIVING-ABI.md",
+      "sha256": "99a3b6fe675c08066f95bad4fa9965e5f3d625cb8803114f0ca4d958fbacedae",
+      "bytes": 4238,
+      "snapshot": "frozen-inputs/99a3b6fe675c08066f95bad4fa9965e5f3d625cb8803114f0ca4d958fbacedae.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/actual-package-identities.json",
+      "sha256": "f379186eed0beaac354a2534635478d242caacebeaad2bb625173cd7b4d2111e",
+      "bytes": 7090,
+      "snapshot": "frozen-inputs/f379186eed0beaac354a2534635478d242caacebeaad2bb625173cd7b4d2111e.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/attempt-01.command.json",
+      "sha256": "822b6f2a8ba9f9106896b03801a2be7d511904e69f1424b9364d6121cd0a6e03",
+      "bytes": 308,
+      "snapshot": "frozen-inputs/822b6f2a8ba9f9106896b03801a2be7d511904e69f1424b9364d6121cd0a6e03.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/attempt-01.stderr.log",
+      "sha256": "ea24fbbdfaac0ccf130a6661e61563b644a21655f17e59bbcac9cdec66d29535",
+      "bytes": 935,
+      "snapshot": "frozen-inputs/ea24fbbdfaac0ccf130a6661e61563b644a21655f17e59bbcac9cdec66d29535.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/attempt-01.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "snapshot": "frozen-inputs/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/attempt-02.command.json",
+      "sha256": "ebe22321d5bed6b71d434f3050b409159172170f0c88abb931831811639b6192",
+      "bytes": 308,
+      "snapshot": "frozen-inputs/ebe22321d5bed6b71d434f3050b409159172170f0c88abb931831811639b6192.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/attempt-02.observations.json",
+      "sha256": "86bd8aabb2a553955171500a01aae887de2c159923cf1ddcf3eeacc609e061fd",
+      "bytes": 708845,
+      "snapshot": "frozen-inputs/86bd8aabb2a553955171500a01aae887de2c159923cf1ddcf3eeacc609e061fd.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/attempt-02.stderr.log",
+      "sha256": "e74004311012dfb1c4a03ba733f39e764bfdbafaf33dd057a8ef797e21c4a73e",
+      "bytes": 1278,
+      "snapshot": "frozen-inputs/e74004311012dfb1c4a03ba733f39e764bfdbafaf33dd057a8ef797e21c4a73e.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/attempt-02.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "snapshot": "frozen-inputs/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/attempt-03.command.json",
+      "sha256": "c7bd3ee739412953c9985d08faff551dd90916243c8d4472923229bd07fc4cee",
+      "bytes": 308,
+      "snapshot": "frozen-inputs/c7bd3ee739412953c9985d08faff551dd90916243c8d4472923229bd07fc4cee.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/attempt-03.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "snapshot": "frozen-inputs/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/attempt-03.stdout.log",
+      "sha256": "6cdd9fdbbbac65fd90466f93936fb8c728de401dc5bb2c7f7d3488eb2d18f392",
+      "bytes": 131,
+      "snapshot": "frozen-inputs/6cdd9fdbbbac65fd90466f93936fb8c728de401dc5bb2c7f7d3488eb2d18f392.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/attempt-04.command.json",
+      "sha256": "8796897c50799d93da3af1fa2ebe06b39244aedbb020ae77510cfd915999ea9a",
+      "bytes": 308,
+      "snapshot": "frozen-inputs/8796897c50799d93da3af1fa2ebe06b39244aedbb020ae77510cfd915999ea9a.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/attempt-04.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "snapshot": "frozen-inputs/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/attempt-04.stdout.log",
+      "sha256": "ebf17a57b0c86e435037fbe8c3da805d1b8dce52cdd02f37e09970f82304cda8",
+      "bytes": 131,
+      "snapshot": "frozen-inputs/ebf17a57b0c86e435037fbe8c3da805d1b8dce52cdd02f37e09970f82304cda8.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/attempt-05.command.json",
+      "sha256": "d83c60b1754f13d423cc2209d4b49a57fff24fc8851572769671a64aa1fd0cb9",
+      "bytes": 308,
+      "snapshot": "frozen-inputs/d83c60b1754f13d423cc2209d4b49a57fff24fc8851572769671a64aa1fd0cb9.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/attempt-05.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "snapshot": "frozen-inputs/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/attempt-05.stdout.log",
+      "sha256": "61194daffb15e491625cb9519b43e1e900bbe42c092cb7960e0377351341c6b2",
+      "bytes": 131,
+      "snapshot": "frozen-inputs/61194daffb15e491625cb9519b43e1e900bbe42c092cb7960e0377351341c6b2.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/case-definitions.json",
+      "sha256": "9724c5038f816e862a26ca7404e6290f3cfc81fbb0ae4e2dd1b3a3036701a864",
+      "bytes": 557714,
+      "snapshot": "frozen-inputs/9724c5038f816e862a26ca7404e6290f3cfc81fbb0ae4e2dd1b3a3036701a864.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/check-definition.mjs",
+      "sha256": "bafe8fa7b9f4a9853e352c45a191fa736cd49024ff81a05a0135f3cd2b36c2cb",
+      "bytes": 28806,
+      "snapshot": "frozen-inputs/bafe8fa7b9f4a9853e352c45a191fa736cd49024ff81a05a0135f3cd2b36c2cb.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/commands-and-exits.json",
+      "sha256": "877cc82ae75f001a9a8f8b48c574786c6bc2ae24c6548f9e8503b227953c4d1e",
+      "bytes": 3652,
+      "snapshot": "frozen-inputs/877cc82ae75f001a9a8f8b48c574786c6bc2ae24c6548f9e8503b227953c4d1e.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/config/components/buster-engine.config.json",
+      "sha256": "849d4848f2dccfe19d5d6c4a421b6001ee0f59ff4905b646b9dd3b93f3b0cc84",
+      "bytes": 1165082,
+      "snapshot": "frozen-inputs/849d4848f2dccfe19d5d6c4a421b6001ee0f59ff4905b646b9dd3b93f3b0cc84.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/config/components/prism-control.config.json",
+      "sha256": "524ca90d6b62c656b5f279c27b8b49250d93869636aa71f73d5891429e01e1e4",
+      "bytes": 4597,
+      "snapshot": "frozen-inputs/524ca90d6b62c656b5f279c27b8b49250d93869636aa71f73d5891429e01e1e4.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/config/components/prism-execution.config.json",
+      "sha256": "225d2d31235f0996196da2f2b7d25a0605d59087427b997ab487d648ddf89ce3",
+      "bytes": 1606,
+      "snapshot": "frozen-inputs/225d2d31235f0996196da2f2b7d25a0605d59087427b997ab487d648ddf89ce3.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/config/components/prism-studio.config.json",
+      "sha256": "b41a9113d26384ee0dd07d5defac180b8a52d67315c738d0a5459c49bead0fac",
+      "bytes": 976,
+      "snapshot": "frozen-inputs/b41a9113d26384ee0dd07d5defac180b8a52d67315c738d0a5459c49bead0fac.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/config/components/prism-worker.config.json",
+      "sha256": "61da3c7b2b81033ed9c350f593cf1ab58f3630a39b109a9b251f1b2e0ba28220",
+      "bytes": 1581,
+      "snapshot": "frozen-inputs/61da3c7b2b81033ed9c350f593cf1ab58f3630a39b109a9b251f1b2e0ba28220.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/config/components/worker-core.config.json",
+      "sha256": "f59c7ec6798e853f9fb87a494cdd245193c50d19f90275fe5b530706adcb8934",
+      "bytes": 1270,
+      "snapshot": "frozen-inputs/f59c7ec6798e853f9fb87a494cdd245193c50d19f90275fe5b530706adcb8934.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/config/engines/prism-agent.config.json",
+      "sha256": "b6309c71d73c87a5598f00f2f16612c4b8bed2d705da84ca782459b4d5902f39",
+      "bytes": 900,
+      "snapshot": "frozen-inputs/b6309c71d73c87a5598f00f2f16612c4b8bed2d705da84ca782459b4d5902f39.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/config/pipeline.config.json",
+      "sha256": "2147cfa1eaf53ed57928563212442f13aaef735e4733178a8579b0f2308e4011",
+      "bytes": 6751,
+      "snapshot": "frozen-inputs/2147cfa1eaf53ed57928563212442f13aaef735e4733178a8579b0f2308e4011.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/config/plugins/kubeclaw.api-flow.config.json",
+      "sha256": "6d0d39c516128aefb8e94edf6c8f68c43caa0bf9aade74628c6fc49d3c5fe917",
+      "bytes": 7218,
+      "snapshot": "frozen-inputs/6d0d39c516128aefb8e94edf6c8f68c43caa0bf9aade74628c6fc49d3c5fe917.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/config/plugins/kubeclaw.architecture-validator.config.json",
+      "sha256": "a285dec3fe80067268c952275eb9da790f2db08d34b4fa1aaaaaa9e939bc9795",
+      "bytes": 1267,
+      "snapshot": "frozen-inputs/a285dec3fe80067268c952275eb9da790f2db08d34b4fa1aaaaaa9e939bc9795.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/config/plugins/kubeclaw.case-study.config.json",
+      "sha256": "d7da8c57b40e12d791cf80c7b92d7712c936a841c86d51934754f5ec1c56cec8",
+      "bytes": 599,
+      "snapshot": "frozen-inputs/d7da8c57b40e12d791cf80c7b92d7712c936a841c86d51934754f5ec1c56cec8.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/config/plugins/kubeclaw.http.config.json",
+      "sha256": "e8eb48798dd3b126b32962b1e17882109a289420a3ad87d82f65b8aefbe87517",
+      "bytes": 6020,
+      "snapshot": "frozen-inputs/e8eb48798dd3b126b32962b1e17882109a289420a3ad87d82f65b8aefbe87517.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/config/plugins/kubeclaw.implementation-agent.config.json",
+      "sha256": "b6507806f0e0495286eadea7717aaaaa2c819bf0346cc1d9bd9aa8d6bf996adf",
+      "bytes": 1273,
+      "snapshot": "frozen-inputs/b6507806f0e0495286eadea7717aaaaa2c819bf0346cc1d9bd9aa8d6bf996adf.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/config/plugins/kubeclaw.network-http.config.json",
+      "sha256": "26b4fb9495edd6b6c60ff9acbfc866f43e953b9e013781950ff9c6708e4e64c4",
+      "bytes": 6133,
+      "snapshot": "frozen-inputs/26b4fb9495edd6b6c60ff9acbfc866f43e953b9e013781950ff9c6708e4e64c4.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/config/plugins/kubeclaw.openapi.config.json",
+      "sha256": "f575e0431736bb0ff20cd6e6f615b3595ab366c45858dc1712436dabcafe98e3",
+      "bytes": 17513,
+      "snapshot": "frozen-inputs/f575e0431736bb0ff20cd6e6f615b3595ab366c45858dc1712436dabcafe98e3.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/config/plugins/kubeclaw.pipeline-review.config.json",
+      "sha256": "5b6f7965d1b8ee13df6225fbe24e3dceb07bc626c51052e9a87c8f2699ab54d8",
+      "bytes": 7665,
+      "snapshot": "frozen-inputs/5b6f7965d1b8ee13df6225fbe24e3dceb07bc626c51052e9a87c8f2699ab54d8.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/config/plugins/kubeclaw.prism-design.config.json",
+      "sha256": "8e6a8c8c13a17558fc4962d8d7f8e7f62cfb8b63dde06e3467e726ac4b735c49",
+      "bytes": 2445,
+      "snapshot": "frozen-inputs/8e6a8c8c13a17558fc4962d8d7f8e7f62cfb8b63dde06e3467e726ac4b735c49.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/config/plugins/kubeclaw.project-summary.config.json",
+      "sha256": "ee82f0c19f56cd77e05858e76943333f2f18ca8ae704586417e98538dce9e413",
+      "bytes": 1056,
+      "snapshot": "frozen-inputs/ee82f0c19f56cd77e05858e76943333f2f18ca8ae704586417e98538dce9e413.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/config/plugins/kubeclaw.runtime-dispatch.config.json",
+      "sha256": "64dbefffefc75df11853ec3d0b1654b807dec0ea2d0aea44eb2517f1dba72438",
+      "bytes": 3152,
+      "snapshot": "frozen-inputs/64dbefffefc75df11853ec3d0b1654b807dec0ea2d0aea44eb2517f1dba72438.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/config/plugins/kubeclaw.security-providers.config.json",
+      "sha256": "53bde50ac26c05328b7c09c3a855bfbf5e8aca7760646f5c2511f28b8d6eeb01",
+      "bytes": 954479,
+      "snapshot": "frozen-inputs/53bde50ac26c05328b7c09c3a855bfbf5e8aca7760646f5c2511f28b8d6eeb01.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/conservation.json",
+      "sha256": "fdbcbebfd07d7d3ad9e946180c5385048cf22715cdcaff439f9fb09a06d8c57d",
+      "bytes": 826,
+      "snapshot": "frozen-inputs/fdbcbebfd07d7d3ad9e946180c5385048cf22715cdcaff439f9fb09a06d8c57d.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/definition-observations-attempt-failed.json",
+      "sha256": "86bd8aabb2a553955171500a01aae887de2c159923cf1ddcf3eeacc609e061fd",
+      "bytes": 708845,
+      "snapshot": "frozen-inputs/86bd8aabb2a553955171500a01aae887de2c159923cf1ddcf3eeacc609e061fd.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/definition-observations.json",
+      "sha256": "714fcf9e2aec9f434f190800cf2f34580c1a12ed4d467e000fff8bb3f602dcf2",
+      "bytes": 730611,
+      "snapshot": "frozen-inputs/714fcf9e2aec9f434f190800cf2f34580c1a12ed4d467e000fff8bb3f602dcf2.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/end-conservation.json",
+      "sha256": "21709d44491517f2e9e5217b4726bb8aab8926753cd475bc2b7d48ae25d3dd76",
+      "bytes": 494744,
+      "snapshot": "frozen-inputs/21709d44491517f2e9e5217b4726bb8aab8926753cd475bc2b7d48ae25d3dd76.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/field-definitions.json",
+      "sha256": "7a366b855115edaf3343fc5dd704cc14a59c7f66d68d370d1ffc9195df499c5d",
+      "bytes": 245655,
+      "snapshot": "frozen-inputs/7a366b855115edaf3343fc5dd704cc14a59c7f66d68d370d1ffc9195df499c5d.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/fixtures/actual-wrapper-prompt.json",
+      "sha256": "055911dd911b800955c4896c3af6b2c0fd7cbdd8e312b97069c64ad23ad86f6c",
+      "bytes": 1695,
+      "snapshot": "frozen-inputs/055911dd911b800955c4896c3af6b2c0fd7cbdd8e312b97069c64ad23ad86f6c.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/fixtures/http-runtime-targets.json",
+      "sha256": "2e61c100a8d91416f466550bf0b31d440756ccb62be79dbf2d0c942350fd4fd9",
+      "bytes": 246,
+      "snapshot": "frozen-inputs/2e61c100a8d91416f466550bf0b31d440756ccb62be79dbf2d0c942350fd4fd9.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/fixtures/runtime-context.json",
+      "sha256": "45434801703dc10a4f58251913743a443ea5369a224384a7c5e6164e464a46d0",
+      "bytes": 1472,
+      "snapshot": "frozen-inputs/45434801703dc10a4f58251913743a443ea5369a224384a7c5e6164e464a46d0.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/freeze.command.json",
+      "sha256": "7a4081690d50df8cf537b0271268e5894fa29cec160ee2cce9fc2bbd8bc0ccec",
+      "bytes": 292,
+      "snapshot": "frozen-inputs/7a4081690d50df8cf537b0271268e5894fa29cec160ee2cce9fc2bbd8bc0ccec.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/freeze.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "snapshot": "frozen-inputs/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/freeze.stdout.log",
+      "sha256": "f9f2ca27a824f3e8d60de20a8a6fd2070cb80e38ce1d9638072617b2ced334b7",
+      "bytes": 190,
+      "snapshot": "frozen-inputs/f9f2ca27a824f3e8d60de20a8a6fd2070cb80e38ce1d9638072617b2ced334b7.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/frozen-base-physical-file-set.json",
+      "sha256": "af53797af0ff2252def0ad0bf4cace00086ed61a75775f8f4f3a0ce65c2a5b1d",
+      "bytes": 7225,
+      "snapshot": "frozen-inputs/af53797af0ff2252def0ad0bf4cace00086ed61a75775f8f4f3a0ce65c2a5b1d.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/future-entry-pairs/RT-0086141ada6be298/A/config/pipeline.config.json",
+      "sha256": "3616f93657f78c56e348190ecfbb3308a43f7fad0c91a8a556f37edf39c81195",
+      "bytes": 9548,
+      "snapshot": "frozen-inputs/3616f93657f78c56e348190ecfbb3308a43f7fad0c91a8a556f37edf39c81195.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/future-entry-pairs/RT-0086141ada6be298/B/config/pipeline.config.json",
+      "sha256": "9490a2ab86cb02e909d775f49d1b35264684fe16f9f3524d81b271b2e547c5a0",
+      "bytes": 9548,
+      "snapshot": "frozen-inputs/9490a2ab86cb02e909d775f49d1b35264684fe16f9f3524d81b271b2e547c5a0.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/future-entry-pairs/RT-03fda24ef110ef33/A/config/pipeline.config.json",
+      "sha256": "542feab44ffb9be7344e455d9917f8ae2ec29de89dd691335f197ed58ef73d35",
+      "bytes": 9548,
+      "snapshot": "frozen-inputs/542feab44ffb9be7344e455d9917f8ae2ec29de89dd691335f197ed58ef73d35.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/future-entry-pairs/RT-03fda24ef110ef33/B/config/pipeline.config.json",
+      "sha256": "e174236879e4022842b7e2d6deeb7651356de77c7af6eda7fa28ca63c126927f",
+      "bytes": 9548,
+      "snapshot": "frozen-inputs/e174236879e4022842b7e2d6deeb7651356de77c7af6eda7fa28ca63c126927f.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/future-entry-pairs/RT-2b6e3bc13743e80c/A/config/pipeline.config.json",
+      "sha256": "37d77412d4bd29c43e78322f4d4c27177fbba764d923bd52d4bfd90e9fb0353f",
+      "bytes": 9548,
+      "snapshot": "frozen-inputs/37d77412d4bd29c43e78322f4d4c27177fbba764d923bd52d4bfd90e9fb0353f.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/future-entry-pairs/RT-2b6e3bc13743e80c/B/config/pipeline.config.json",
+      "sha256": "1a258917ebba0bf473e126b07f249b92cc2f34e22630185b758ae5d50f85a6bb",
+      "bytes": 9548,
+      "snapshot": "frozen-inputs/1a258917ebba0bf473e126b07f249b92cc2f34e22630185b758ae5d50f85a6bb.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/future-entry-pairs/RT-2d37a257c3d7dd45/A/config/pipeline.config.json",
+      "sha256": "aec369ca93903a79cd799ab445f031f7cbaeb676a4f41a1b712702275903aa21",
+      "bytes": 9568,
+      "snapshot": "frozen-inputs/aec369ca93903a79cd799ab445f031f7cbaeb676a4f41a1b712702275903aa21.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/future-entry-pairs/RT-2d37a257c3d7dd45/B/config/pipeline.config.json",
+      "sha256": "616d71ac96d665977cb0cae75a4bbf564025005f3bf2f5ff8ae744919e95bd97",
+      "bytes": 9568,
+      "snapshot": "frozen-inputs/616d71ac96d665977cb0cae75a4bbf564025005f3bf2f5ff8ae744919e95bd97.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/future-entry-pairs/RT-34cb107ae059df42/A/config/pipeline.config.json",
+      "sha256": "4cd9a7a87568f8c175206039b88b1b077fae6a4fe1a55fd1339ed9b106554424",
+      "bytes": 9548,
+      "snapshot": "frozen-inputs/4cd9a7a87568f8c175206039b88b1b077fae6a4fe1a55fd1339ed9b106554424.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/future-entry-pairs/RT-34cb107ae059df42/B/config/pipeline.config.json",
+      "sha256": "a3b64f0b5b2b05478179979b478fd346605eea30ae23899cae83ed55c9a1be29",
+      "bytes": 9548,
+      "snapshot": "frozen-inputs/a3b64f0b5b2b05478179979b478fd346605eea30ae23899cae83ed55c9a1be29.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/future-entry-pairs/RT-36accddb567c892f/A/config/pipeline.config.json",
+      "sha256": "f161d54e2fb8a1aaf74446edff48f962f401018fea0ee5d21b4856d1a6dfc2d1",
+      "bytes": 9568,
+      "snapshot": "frozen-inputs/f161d54e2fb8a1aaf74446edff48f962f401018fea0ee5d21b4856d1a6dfc2d1.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/future-entry-pairs/RT-36accddb567c892f/B/config/pipeline.config.json",
+      "sha256": "0ee62a80ace900878c262e5149f8faaf4eb28ab565934a11fc13aeb4b7d61beb",
+      "bytes": 9568,
+      "snapshot": "frozen-inputs/0ee62a80ace900878c262e5149f8faaf4eb28ab565934a11fc13aeb4b7d61beb.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/future-entry-pairs/RT-41d93665317a7d07/A/config/pipeline.config.json",
+      "sha256": "821b0f6d5ff58d4f6729b7c5aa7dd7ac64adf8bfaa42201aff176c38692d2353",
+      "bytes": 9568,
+      "snapshot": "frozen-inputs/821b0f6d5ff58d4f6729b7c5aa7dd7ac64adf8bfaa42201aff176c38692d2353.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/future-entry-pairs/RT-41d93665317a7d07/B/config/pipeline.config.json",
+      "sha256": "76ebe5d9097a81ca34c973888b96e375b10c7d315b05942fdfe02534171cf422",
+      "bytes": 9568,
+      "snapshot": "frozen-inputs/76ebe5d9097a81ca34c973888b96e375b10c7d315b05942fdfe02534171cf422.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/future-entry-pairs/RT-4c1a2b66cdab7e18/A/config/pipeline.config.json",
+      "sha256": "48ac8192e34395b5e3aae04e9aa7e39f3ead11f2bbe7dc6accd067b9534d5253",
+      "bytes": 9568,
+      "snapshot": "frozen-inputs/48ac8192e34395b5e3aae04e9aa7e39f3ead11f2bbe7dc6accd067b9534d5253.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/future-entry-pairs/RT-4c1a2b66cdab7e18/B/config/pipeline.config.json",
+      "sha256": "2fa0d974e0c7342c263a6d75176875f0ab5f04f06e5ba42198fd93f19f705a82",
+      "bytes": 9568,
+      "snapshot": "frozen-inputs/2fa0d974e0c7342c263a6d75176875f0ab5f04f06e5ba42198fd93f19f705a82.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/future-entry-pairs/RT-6442142673149854/A/config/pipeline.config.json",
+      "sha256": "4c02066978b661ce1bd587984e4e043ad4fde302ff87ac15d90b4fdc9f73a370",
+      "bytes": 9548,
+      "snapshot": "frozen-inputs/4c02066978b661ce1bd587984e4e043ad4fde302ff87ac15d90b4fdc9f73a370.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/future-entry-pairs/RT-6442142673149854/B/config/pipeline.config.json",
+      "sha256": "9f4f8549b35e5336b7859360fa55df788529253199f42fb9073c0e168e332e3f",
+      "bytes": 9548,
+      "snapshot": "frozen-inputs/9f4f8549b35e5336b7859360fa55df788529253199f42fb9073c0e168e332e3f.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/future-entry-pairs/RT-8152550972f10185/A/config/pipeline.config.json",
+      "sha256": "217a97c9455af67f95333b1aaa31352252501ce35c40f70e809fad85fe684378",
+      "bytes": 9548,
+      "snapshot": "frozen-inputs/217a97c9455af67f95333b1aaa31352252501ce35c40f70e809fad85fe684378.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/future-entry-pairs/RT-8152550972f10185/B/config/pipeline.config.json",
+      "sha256": "c56667bcf223f1c96ba5e75a30bbad00ecd30de5ce19122ccf2dfcb5551c86a4",
+      "bytes": 9548,
+      "snapshot": "frozen-inputs/c56667bcf223f1c96ba5e75a30bbad00ecd30de5ce19122ccf2dfcb5551c86a4.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/future-entry-pairs/RT-81d42184c1081430/A/config/pipeline.config.json",
+      "sha256": "88fb9a1dd3b03cb9e410fdb6202abedc95053daf7abc8f8f07ec5add8af1ed75",
+      "bytes": 9568,
+      "snapshot": "frozen-inputs/88fb9a1dd3b03cb9e410fdb6202abedc95053daf7abc8f8f07ec5add8af1ed75.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/future-entry-pairs/RT-81d42184c1081430/B/config/pipeline.config.json",
+      "sha256": "4653517e0e3db8b0ce4591d8733f18836760fed35047c21c33817156af0f5089",
+      "bytes": 9568,
+      "snapshot": "frozen-inputs/4653517e0e3db8b0ce4591d8733f18836760fed35047c21c33817156af0f5089.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/future-entry-pairs/RT-8750f030bf25ecae/A/config/pipeline.config.json",
+      "sha256": "8de1719f6c8b13b2a8d0384f0c3aa53d43557c3859515d1a0b97c9197e720bfa",
+      "bytes": 9568,
+      "snapshot": "frozen-inputs/8de1719f6c8b13b2a8d0384f0c3aa53d43557c3859515d1a0b97c9197e720bfa.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/future-entry-pairs/RT-8750f030bf25ecae/B/config/pipeline.config.json",
+      "sha256": "f308d80d92fb67534f17e85b938d2737b83bb5ef4b54146fd259cd809cfeeaa4",
+      "bytes": 9568,
+      "snapshot": "frozen-inputs/f308d80d92fb67534f17e85b938d2737b83bb5ef4b54146fd259cd809cfeeaa4.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/future-entry-pairs/RT-8e39db110874a9d6/A/config/pipeline.config.json",
+      "sha256": "3a024314b29777f8760062c7b020628d976ebaf09d0d23d1e2b9dc83787f2f74",
+      "bytes": 9548,
+      "snapshot": "frozen-inputs/3a024314b29777f8760062c7b020628d976ebaf09d0d23d1e2b9dc83787f2f74.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/future-entry-pairs/RT-8e39db110874a9d6/B/config/pipeline.config.json",
+      "sha256": "bc1b5902d4d0b614ff6b79b66d893096197e32ac47a281b2b66d63cc2be58991",
+      "bytes": 9548,
+      "snapshot": "frozen-inputs/bc1b5902d4d0b614ff6b79b66d893096197e32ac47a281b2b66d63cc2be58991.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/future-entry-pairs/RT-94d352d99db6b92d/A/config/pipeline.config.json",
+      "sha256": "43dbf6846cd3d1a572fe6b36aa82af3992b4e9b5d5380c4c1ccc3b70d68cae5e",
+      "bytes": 9548,
+      "snapshot": "frozen-inputs/43dbf6846cd3d1a572fe6b36aa82af3992b4e9b5d5380c4c1ccc3b70d68cae5e.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/future-entry-pairs/RT-94d352d99db6b92d/B/config/pipeline.config.json",
+      "sha256": "c16857a8e8814f63c74feef30efce8528d06751594ab11e1a072f92e9a8bc8c1",
+      "bytes": 9548,
+      "snapshot": "frozen-inputs/c16857a8e8814f63c74feef30efce8528d06751594ab11e1a072f92e9a8bc8c1.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/future-entry-pairs/RT-96698b5568aba94d/A/config/pipeline.config.json",
+      "sha256": "1efd5be3111065dc4a563d4d6657dcd4d490ae39cba9621fb4fffadac68efb58",
+      "bytes": 9568,
+      "snapshot": "frozen-inputs/1efd5be3111065dc4a563d4d6657dcd4d490ae39cba9621fb4fffadac68efb58.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/future-entry-pairs/RT-96698b5568aba94d/B/config/pipeline.config.json",
+      "sha256": "cf262ed9f9054756e522c7e9bd9a5867420a1264585c9a74ee99946ee244e1e8",
+      "bytes": 9568,
+      "snapshot": "frozen-inputs/cf262ed9f9054756e522c7e9bd9a5867420a1264585c9a74ee99946ee244e1e8.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/future-entry-pairs/RT-ae11bf913a6050c6/A/config/pipeline.config.json",
+      "sha256": "8fc4575a824bccb4811dd9c95b0541b10379eaf173caa21fcf1ea2d153aa2423",
+      "bytes": 9548,
+      "snapshot": "frozen-inputs/8fc4575a824bccb4811dd9c95b0541b10379eaf173caa21fcf1ea2d153aa2423.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/future-entry-pairs/RT-ae11bf913a6050c6/B/config/pipeline.config.json",
+      "sha256": "cb6b99b84fd42048dc4c809ca3058d6a4823545191fd1cdf11bf1a396ab9cb11",
+      "bytes": 9548,
+      "snapshot": "frozen-inputs/cb6b99b84fd42048dc4c809ca3058d6a4823545191fd1cdf11bf1a396ab9cb11.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/future-entry-pairs/RT-afddbf26c06e75cf/A/config/pipeline.config.json",
+      "sha256": "f8e571734b8bfffe022953b3165b69999ff533bf90af57617209b8678af3eed8",
+      "bytes": 9548,
+      "snapshot": "frozen-inputs/f8e571734b8bfffe022953b3165b69999ff533bf90af57617209b8678af3eed8.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/future-entry-pairs/RT-afddbf26c06e75cf/B/config/pipeline.config.json",
+      "sha256": "1c5bab4b155664990b8b6a2f97a224645cbefc726701624c5bcde070ca59e4ac",
+      "bytes": 9548,
+      "snapshot": "frozen-inputs/1c5bab4b155664990b8b6a2f97a224645cbefc726701624c5bcde070ca59e4ac.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/future-entry-pairs/RT-c0a779743e7384ba/A/config/pipeline.config.json",
+      "sha256": "f7dcd76e1f7a0bb987631681f1666b28dacb6842fe10823faeead9a4b5def570",
+      "bytes": 9548,
+      "snapshot": "frozen-inputs/f7dcd76e1f7a0bb987631681f1666b28dacb6842fe10823faeead9a4b5def570.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/future-entry-pairs/RT-c0a779743e7384ba/B/config/pipeline.config.json",
+      "sha256": "b04d6f52094f2f5379ed72ec907ce2d08df9aef9827562a9f27e72f675011869",
+      "bytes": 9548,
+      "snapshot": "frozen-inputs/b04d6f52094f2f5379ed72ec907ce2d08df9aef9827562a9f27e72f675011869.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/history-pins.json",
+      "sha256": "d414ec86958fbce04960315ffd1ad4ace460f26e1106ca716e726922561fef72",
+      "bytes": 524600,
+      "snapshot": "frozen-inputs/d414ec86958fbce04960315ffd1ad4ace460f26e1106ca716e726922561fef72.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/manifest.json",
+      "sha256": "24d879fd62c2dc924c5c5d1e62b55860753414a90407f56d0b1e3fc13a394440",
+      "bytes": 53200,
+      "snapshot": "frozen-inputs/24d879fd62c2dc924c5c5d1e62b55860753414a90407f56d0b1e3fc13a394440.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/original/cases.json",
+      "sha256": "88775a1201075bf6d7f8dcfc16ed095d80219c3ea60a583a9b69779ec7ea68be",
+      "bytes": 219967,
+      "snapshot": "frozen-inputs/88775a1201075bf6d7f8dcfc16ed095d80219c3ea60a583a9b69779ec7ea68be.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/original/identity.json",
+      "sha256": "1b1165d2e91ee8495fe4394cb7447027b9e737f535e20b22188d06f8cadcafac",
+      "bytes": 49530,
+      "snapshot": "frozen-inputs/1b1165d2e91ee8495fe4394cb7447027b9e737f535e20b22188d06f8cadcafac.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/original/native-case-bodies.json",
+      "sha256": "b141d51dd2390a27e6c174580c3f1b246b18f8723c7f59ccce0606b6bd4243b7",
+      "bytes": 1102214,
+      "snapshot": "frozen-inputs/b141d51dd2390a27e6c174580c3f1b246b18f8723c7f59ccce0606b6bd4243b7.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/original/rows.json",
+      "sha256": "716ea96b12a53434ca177a6a036042149f9566ad7dd4e27c318e4b5367a9f585",
+      "bytes": 200380,
+      "snapshot": "frozen-inputs/716ea96b12a53434ca177a6a036042149f9566ad7dd4e27c318e4b5367a9f585.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/profile-pairs.json",
+      "sha256": "90f987cf65ee4e6c9c028b82c5470fa876748b849b785cbe1ea97d8fbf1c2eff",
+      "bytes": 26612,
+      "snapshot": "frozen-inputs/90f987cf65ee4e6c9c028b82c5470fa876748b849b785cbe1ea97d8fbf1c2eff.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/pure-source-slice-identities.json",
+      "sha256": "2fcc8ad1089abaf39ed6fd66f43e4e6703488325a2373499a3bdc1baed6a7c2c",
+      "bytes": 58253,
+      "snapshot": "frozen-inputs/2fcc8ad1089abaf39ed6fd66f43e4e6703488325a2373499a3bdc1baed6a7c2c.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/read-attempt-failures.json",
+      "sha256": "5e383a059e9c5a1be94f6cabc435058c20a2914351a836d2d6bf2340339d0248",
+      "bytes": 1096,
+      "snapshot": "frozen-inputs/5e383a059e9c5a1be94f6cabc435058c20a2914351a836d2d6bf2340339d0248.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/receiving-index.json",
+      "sha256": "6e30049f81af715fb2644e88b5edcc1ecfe04253e60189d19777cef76e29ffc1",
+      "bytes": 32111,
+      "snapshot": "frozen-inputs/6e30049f81af715fb2644e88b5edcc1ecfe04253e60189d19777cef76e29ffc1.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/receiving/pairs/RT-0086141ada6be298/A.json",
+      "sha256": "2173b1f2f0e01b9011f2a8e9e91707d6852542c0ef2eceb6dc7e29515bda59b9",
+      "bytes": 42,
+      "snapshot": "frozen-inputs/2173b1f2f0e01b9011f2a8e9e91707d6852542c0ef2eceb6dc7e29515bda59b9.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/receiving/pairs/RT-0086141ada6be298/B.json",
+      "sha256": "4324de979e8eb2dd1505d7774f359c8631249c2a18ea3ea9897f647efed5e831",
+      "bytes": 102,
+      "snapshot": "frozen-inputs/4324de979e8eb2dd1505d7774f359c8631249c2a18ea3ea9897f647efed5e831.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/receiving/pairs/RT-03fda24ef110ef33/A.json",
+      "sha256": "c146cd03658a9b2658dac6adefceeac2f4abd4dc2b31920b16443735e814a894",
+      "bytes": 109,
+      "snapshot": "frozen-inputs/c146cd03658a9b2658dac6adefceeac2f4abd4dc2b31920b16443735e814a894.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/receiving/pairs/RT-03fda24ef110ef33/B.json",
+      "sha256": "4bae368ead96a8b06567b466ff8b233c390ca441b0a668e6c7a259b2da8636a5",
+      "bytes": 109,
+      "snapshot": "frozen-inputs/4bae368ead96a8b06567b466ff8b233c390ca441b0a668e6c7a259b2da8636a5.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/receiving/pairs/RT-2b6e3bc13743e80c/A.json",
+      "sha256": "2173b1f2f0e01b9011f2a8e9e91707d6852542c0ef2eceb6dc7e29515bda59b9",
+      "bytes": 42,
+      "snapshot": "frozen-inputs/2173b1f2f0e01b9011f2a8e9e91707d6852542c0ef2eceb6dc7e29515bda59b9.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/receiving/pairs/RT-2b6e3bc13743e80c/B.json",
+      "sha256": "7224ac27043d51fb82be3056595824fd129f5f76fe3a43eec1a96d111990776b",
+      "bytes": 42,
+      "snapshot": "frozen-inputs/7224ac27043d51fb82be3056595824fd129f5f76fe3a43eec1a96d111990776b.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/receiving/pairs/RT-2d37a257c3d7dd45/A.json",
+      "sha256": "ab58734c597b06daa4ac650782f49d05a3866dd0c4b6dc764208fdd24d24de87",
+      "bytes": 69,
+      "snapshot": "frozen-inputs/ab58734c597b06daa4ac650782f49d05a3866dd0c4b6dc764208fdd24d24de87.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/receiving/pairs/RT-2d37a257c3d7dd45/B.json",
+      "sha256": "5911c0107d02b7338d68298f456582ab7e60b64e1d4b7b03928616f98f0da9dd",
+      "bytes": 69,
+      "snapshot": "frozen-inputs/5911c0107d02b7338d68298f456582ab7e60b64e1d4b7b03928616f98f0da9dd.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/receiving/pairs/RT-34cb107ae059df42/A.json",
+      "sha256": "9fb5f309b0385d1c0f59b38ab59388d7f1db7b0accd7ad1bbd501365345a6f7b",
+      "bytes": 77,
+      "snapshot": "frozen-inputs/9fb5f309b0385d1c0f59b38ab59388d7f1db7b0accd7ad1bbd501365345a6f7b.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/receiving/pairs/RT-34cb107ae059df42/B.json",
+      "sha256": "f79f12dfbe5efc225120bef6a414cd8d519dd4b4093e8774c000d5eac73775f4",
+      "bytes": 77,
+      "snapshot": "frozen-inputs/f79f12dfbe5efc225120bef6a414cd8d519dd4b4093e8774c000d5eac73775f4.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/receiving/pairs/RT-36accddb567c892f/A.json",
+      "sha256": "8faa63c8f576b4df452fcc0792b526c90422aa12bdb0c89f6bf6609f3376c3c3",
+      "bytes": 204,
+      "snapshot": "frozen-inputs/8faa63c8f576b4df452fcc0792b526c90422aa12bdb0c89f6bf6609f3376c3c3.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/receiving/pairs/RT-36accddb567c892f/B.json",
+      "sha256": "b0a5533151cc251c9680bfb2f9fd3db85f92c56b19172dbc446984b89e5114eb",
+      "bytes": 203,
+      "snapshot": "frozen-inputs/b0a5533151cc251c9680bfb2f9fd3db85f92c56b19172dbc446984b89e5114eb.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/receiving/pairs/RT-41d93665317a7d07/A.json",
+      "sha256": "8faa63c8f576b4df452fcc0792b526c90422aa12bdb0c89f6bf6609f3376c3c3",
+      "bytes": 204,
+      "snapshot": "frozen-inputs/8faa63c8f576b4df452fcc0792b526c90422aa12bdb0c89f6bf6609f3376c3c3.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/receiving/pairs/RT-41d93665317a7d07/B.json",
+      "sha256": "24fef3aac680268db10973f7174d3cd9ee414958317993c95a08cfe19b532bfc",
+      "bytes": 203,
+      "snapshot": "frozen-inputs/24fef3aac680268db10973f7174d3cd9ee414958317993c95a08cfe19b532bfc.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/receiving/pairs/RT-4c1a2b66cdab7e18/A.json",
+      "sha256": "ab58734c597b06daa4ac650782f49d05a3866dd0c4b6dc764208fdd24d24de87",
+      "bytes": 69,
+      "snapshot": "frozen-inputs/ab58734c597b06daa4ac650782f49d05a3866dd0c4b6dc764208fdd24d24de87.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/receiving/pairs/RT-4c1a2b66cdab7e18/B.json",
+      "sha256": "3681c771034a6619b410c657d19c966434717e5e6689db5e9594a097aaf677fc",
+      "bytes": 69,
+      "snapshot": "frozen-inputs/3681c771034a6619b410c657d19c966434717e5e6689db5e9594a097aaf677fc.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/receiving/pairs/RT-6442142673149854/A.json",
+      "sha256": "9fb5f309b0385d1c0f59b38ab59388d7f1db7b0accd7ad1bbd501365345a6f7b",
+      "bytes": 77,
+      "snapshot": "frozen-inputs/9fb5f309b0385d1c0f59b38ab59388d7f1db7b0accd7ad1bbd501365345a6f7b.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/receiving/pairs/RT-6442142673149854/B.json",
+      "sha256": "303488dc5941dc44ac4b113dd2245749577875d696ecfa6830e47d2724b269bc",
+      "bytes": 77,
+      "snapshot": "frozen-inputs/303488dc5941dc44ac4b113dd2245749577875d696ecfa6830e47d2724b269bc.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/receiving/pairs/RT-8152550972f10185/A.json",
+      "sha256": "65abf52a44c8fb178ae5fcce86119f31bccd1ed5e6d5a27bc822fda218b78aa9",
+      "bytes": 31,
+      "snapshot": "frozen-inputs/65abf52a44c8fb178ae5fcce86119f31bccd1ed5e6d5a27bc822fda218b78aa9.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/receiving/pairs/RT-8152550972f10185/B.json",
+      "sha256": "b8300e6463e6d0d0e3071ce4190f8f3957841fd808885cc715a28093b7065ec2",
+      "bytes": 31,
+      "snapshot": "frozen-inputs/b8300e6463e6d0d0e3071ce4190f8f3957841fd808885cc715a28093b7065ec2.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/receiving/pairs/RT-81d42184c1081430/A.json",
+      "sha256": "8faa63c8f576b4df452fcc0792b526c90422aa12bdb0c89f6bf6609f3376c3c3",
+      "bytes": 204,
+      "snapshot": "frozen-inputs/8faa63c8f576b4df452fcc0792b526c90422aa12bdb0c89f6bf6609f3376c3c3.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/receiving/pairs/RT-81d42184c1081430/B.json",
+      "sha256": "c3ac322164a545f03cb7f13fc2ad7c5bca7a0485cb7847aaea025dd0a2c944c2",
+      "bytes": 203,
+      "snapshot": "frozen-inputs/c3ac322164a545f03cb7f13fc2ad7c5bca7a0485cb7847aaea025dd0a2c944c2.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/receiving/pairs/RT-8750f030bf25ecae/A.json",
+      "sha256": "8faa63c8f576b4df452fcc0792b526c90422aa12bdb0c89f6bf6609f3376c3c3",
+      "bytes": 204,
+      "snapshot": "frozen-inputs/8faa63c8f576b4df452fcc0792b526c90422aa12bdb0c89f6bf6609f3376c3c3.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/receiving/pairs/RT-8750f030bf25ecae/B.json",
+      "sha256": "8faa63c8f576b4df452fcc0792b526c90422aa12bdb0c89f6bf6609f3376c3c3",
+      "bytes": 204,
+      "snapshot": "frozen-inputs/8faa63c8f576b4df452fcc0792b526c90422aa12bdb0c89f6bf6609f3376c3c3.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/receiving/pairs/RT-8e39db110874a9d6/A.json",
+      "sha256": "c146cd03658a9b2658dac6adefceeac2f4abd4dc2b31920b16443735e814a894",
+      "bytes": 109,
+      "snapshot": "frozen-inputs/c146cd03658a9b2658dac6adefceeac2f4abd4dc2b31920b16443735e814a894.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/receiving/pairs/RT-8e39db110874a9d6/B.json",
+      "sha256": "c146cd03658a9b2658dac6adefceeac2f4abd4dc2b31920b16443735e814a894",
+      "bytes": 109,
+      "snapshot": "frozen-inputs/c146cd03658a9b2658dac6adefceeac2f4abd4dc2b31920b16443735e814a894.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/receiving/pairs/RT-94d352d99db6b92d/A.json",
+      "sha256": "c146cd03658a9b2658dac6adefceeac2f4abd4dc2b31920b16443735e814a894",
+      "bytes": 109,
+      "snapshot": "frozen-inputs/c146cd03658a9b2658dac6adefceeac2f4abd4dc2b31920b16443735e814a894.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/receiving/pairs/RT-94d352d99db6b92d/B.json",
+      "sha256": "77d48cdeefcf5b197b4c9550349de159f3a5a58a73e061387086a66960e5de55",
+      "bytes": 109,
+      "snapshot": "frozen-inputs/77d48cdeefcf5b197b4c9550349de159f3a5a58a73e061387086a66960e5de55.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/receiving/pairs/RT-96698b5568aba94d/A.json",
+      "sha256": "8faa63c8f576b4df452fcc0792b526c90422aa12bdb0c89f6bf6609f3376c3c3",
+      "bytes": 204,
+      "snapshot": "frozen-inputs/8faa63c8f576b4df452fcc0792b526c90422aa12bdb0c89f6bf6609f3376c3c3.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/receiving/pairs/RT-96698b5568aba94d/B.json",
+      "sha256": "8faa63c8f576b4df452fcc0792b526c90422aa12bdb0c89f6bf6609f3376c3c3",
+      "bytes": 204,
+      "snapshot": "frozen-inputs/8faa63c8f576b4df452fcc0792b526c90422aa12bdb0c89f6bf6609f3376c3c3.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/receiving/pairs/RT-ae11bf913a6050c6/A.json",
+      "sha256": "8b7118883b7c344c4f7bd7292da3b6f36c3d5e7feb754b95a0980f31e565b126",
+      "bytes": 75,
+      "snapshot": "frozen-inputs/8b7118883b7c344c4f7bd7292da3b6f36c3d5e7feb754b95a0980f31e565b126.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/receiving/pairs/RT-ae11bf913a6050c6/B.json",
+      "sha256": "cc62dcdafaf9fc4fd502acb62dbf18827e1424a20723d46cd1243dfe6a96a1f8",
+      "bytes": 75,
+      "snapshot": "frozen-inputs/cc62dcdafaf9fc4fd502acb62dbf18827e1424a20723d46cd1243dfe6a96a1f8.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/receiving/pairs/RT-afddbf26c06e75cf/A.json",
+      "sha256": "c146cd03658a9b2658dac6adefceeac2f4abd4dc2b31920b16443735e814a894",
+      "bytes": 109,
+      "snapshot": "frozen-inputs/c146cd03658a9b2658dac6adefceeac2f4abd4dc2b31920b16443735e814a894.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/receiving/pairs/RT-afddbf26c06e75cf/B.json",
+      "sha256": "c04691b444a06e183265d08913a0145119287c2107b7daba97cb059fd0dd430b",
+      "bytes": 109,
+      "snapshot": "frozen-inputs/c04691b444a06e183265d08913a0145119287c2107b7daba97cb059fd0dd430b.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/receiving/pairs/RT-c0a779743e7384ba/A.json",
+      "sha256": "8b7118883b7c344c4f7bd7292da3b6f36c3d5e7feb754b95a0980f31e565b126",
+      "bytes": 75,
+      "snapshot": "frozen-inputs/8b7118883b7c344c4f7bd7292da3b6f36c3d5e7feb754b95a0980f31e565b126.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/receiving/pairs/RT-c0a779743e7384ba/B.json",
+      "sha256": "eaecc6c1ce291ea908e71eac19e3287d5144a338f6aea0c4ab2613200b3d955f",
+      "bytes": 75,
+      "snapshot": "frozen-inputs/eaecc6c1ce291ea908e71eac19e3287d5144a338f6aea0c4ab2613200b3d955f.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/runtime-target-domains.json",
+      "sha256": "88c1d2eb74e682b1addaccdf55b521f96dce568d016adacc7842eda294158af5",
+      "bytes": 21874,
+      "snapshot": "frozen-inputs/88c1d2eb74e682b1addaccdf55b521f96dce568d016adacc7842eda294158af5.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/same-entry-extension-dependency.json",
+      "sha256": "6aee44dd92553f89c3fb7e8af7ec2b8f4a5c6e2fa4baf9a2f39b2c2e24611c56",
+      "bytes": 3514,
+      "snapshot": "frozen-inputs/6aee44dd92553f89c3fb7e8af7ec2b8f4a5c6e2fa4baf9a2f39b2c2e24611c56.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/schemas/architecture-validator.owner.schema.json",
+      "sha256": "a5d295d90bfe3427c25b98f341507aebd637fd979b92f7ed930bb29fcf0766ce",
+      "bytes": 1646,
+      "snapshot": "frozen-inputs/a5d295d90bfe3427c25b98f341507aebd637fd979b92f7ed930bb29fcf0766ce.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/schemas/case-study.owner.schema.json",
+      "sha256": "4931209afc2b14d50f77dc6c92182edb150078f18eadeaeb76ee5fc5667789b4",
+      "bytes": 1467,
+      "snapshot": "frozen-inputs/4931209afc2b14d50f77dc6c92182edb150078f18eadeaeb76ee5fc5667789b4.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/schemas/future-same-entry-extension.schema.json",
+      "sha256": "defe6dac1e195cc2ee2a16dc120681a2869dc5a47af83607d812c2a173e7472b",
+      "bytes": 9572,
+      "snapshot": "frozen-inputs/defe6dac1e195cc2ee2a16dc120681a2869dc5a47af83607d812c2a173e7472b.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/schemas/implementation-agent.owner.schema.json",
+      "sha256": "84d2023c250edd6f7902a997cff2169663e8f2588fc2c932e38315714b21a543",
+      "bytes": 1642,
+      "snapshot": "frozen-inputs/84d2023c250edd6f7902a997cff2169663e8f2588fc2c932e38315714b21a543.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/schemas/pipeline-review.owner.schema.json",
+      "sha256": "8199b401904ab796eeb5e88be40afb783bcda67f4f0030c9b4ec8b6c1b170f56",
+      "bytes": 3038,
+      "snapshot": "frozen-inputs/8199b401904ab796eeb5e88be40afb783bcda67f4f0030c9b4ec8b6c1b170f56.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/schemas/prism-design.owner.schema.json",
+      "sha256": "905854f2dd9943849731babf4624c019471fb6c44220f8d901a52f69632a2aee",
+      "bytes": 1904,
+      "snapshot": "frozen-inputs/905854f2dd9943849731babf4624c019471fb6c44220f8d901a52f69632a2aee.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/schemas/project-summary.owner.schema.json",
+      "sha256": "f7ae8754fa0d354e6f026755c40609af9f5fde5d9f189ea0963d49451fa44e05",
+      "bytes": 1496,
+      "snapshot": "frozen-inputs/f7ae8754fa0d354e6f026755c40609af9f5fde5d9f189ea0963d49451fa44e05.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/schemas/runtime-dispatch.owner.schema.json",
+      "sha256": "2367ab741c3955c485097a26fdb31686bc6b8313998b2caed5c809862b6838e8",
+      "bytes": 6021,
+      "snapshot": "frozen-inputs/2367ab741c3955c485097a26fdb31686bc6b8313998b2caed5c809862b6838e8.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/scope.json",
+      "sha256": "74ec6389f5ade6f4dcfe9d1723e7359dcadbd9b458e78642d9dd08bfdbf22194",
+      "bytes": 13839,
+      "snapshot": "frozen-inputs/74ec6389f5ade6f4dcfe9d1723e7359dcadbd9b458e78642d9dd08bfdbf22194.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/semantic-admission-contract.json",
+      "sha256": "e90f42389135f634813fac248ec6d017e57e9d143b64d6a537adb0f52f8e97bd",
+      "bytes": 4787,
+      "snapshot": "frozen-inputs/e90f42389135f634813fac248ec6d017e57e9d143b64d6a537adb0f52f8e97bd.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/source-pins.json",
+      "sha256": "09a228a4bfc3716398e4b2d0bee05f5c3da17fc88d8d8203e4b48a1236b97f6a",
+      "bytes": 23700,
+      "snapshot": "frozen-inputs/09a228a4bfc3716398e4b2d0bee05f5c3da17fc88d8d8203e4b48a1236b97f6a.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/source-processing-coordinates.json",
+      "sha256": "88cfbdb7fb2ea6113e4dbee5a7905ccfcc91aee04d5b9d0e4a76f0c3ddddd910",
+      "bytes": 81745,
+      "snapshot": "frozen-inputs/88cfbdb7fb2ea6113e4dbee5a7905ccfcc91aee04d5b9d0e4a76f0c3ddddd910.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/source/contracts/delivery-manifest/v3/schemas/delivery-manifest.v3.schema.json",
+      "sha256": "6a991c53bfafbcc0509e1e01acc68eb16abe23ffedfdcf49cdc04be61d488c9a",
+      "bytes": 4043,
+      "snapshot": "frozen-inputs/6a991c53bfafbcc0509e1e01acc68eb16abe23ffedfdcf49cdc04be61d488c9a.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/source/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json",
+      "sha256": "e97aedc52818a5f89f2fc88090b99e7b7339966603f686b64c69459270a655df",
+      "bytes": 53611,
+      "snapshot": "frozen-inputs/e97aedc52818a5f89f2fc88090b99e7b7339966603f686b64c69459270a655df.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/source/skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+      "sha256": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db",
+      "bytes": 46877,
+      "snapshot": "frozen-inputs/837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/source/skills/common/plugins/runtime-dispatch/package.json",
+      "sha256": "dea861af81c54c9801a87c272d7467f359056be1cdb2d25ab0fa6cf88f9bbc67",
+      "bytes": 410,
+      "snapshot": "frozen-inputs/dea861af81c54c9801a87c272d7467f359056be1cdb2d25ab0fa6cf88f9bbc67.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/source/skills/common/plugins/runtime-dispatch/plugin.json",
+      "sha256": "b3c3a77253ce191a184c8c85f6d02595a1df26b472a63f252339205cae04f349",
+      "bytes": 822,
+      "snapshot": "frozen-inputs/b3c3a77253ce191a184c8c85f6d02595a1df26b472a63f252339205cae04f349.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/source/skills/common/plugins/runtime-dispatch/schemas/config.schema.json",
+      "sha256": "c780e8086e6d6c954734e62c171f3de67a37b1c94c7483c887571ea08f18a641",
+      "bytes": 1286,
+      "snapshot": "frozen-inputs/c780e8086e6d6c954734e62c171f3de67a37b1c94c7483c887571ea08f18a641.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/source/skills/common/plugins/runtime-dispatch/schemas/openclaw-config.schema.json",
+      "sha256": "defa712aa87820a8e2d4fa593f6e3dedf2fbc6c22a22f2a6933dc36e3d8d95b7",
+      "bytes": 2661,
+      "snapshot": "frozen-inputs/defa712aa87820a8e2d4fa593f6e3dedf2fbc6c22a22f2a6933dc36e3d8d95b7.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/source/skills/common/plugins/runtime-dispatch/tsconfig.json",
+      "sha256": "14b157e19a12fc64deb926bf5abf286611c715f5a8475aa6408f037a5a09e472",
+      "bytes": 137,
+      "snapshot": "frozen-inputs/14b157e19a12fc64deb926bf5abf286611c715f5a8475aa6408f037a5a09e472.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/source/skills/nova/plugins/architecture-validator/README.md",
+      "sha256": "1ea6563f1ca2b809d9cc3966ab11d6098caa39beb030bd907ed1aabf73ec4cf2",
+      "bytes": 1711,
+      "snapshot": "frozen-inputs/1ea6563f1ca2b809d9cc3966ab11d6098caa39beb030bd907ed1aabf73ec4cf2.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/source/skills/nova/plugins/architecture-validator/package.json",
+      "sha256": "d933be9975abc5f69b08f2d8bb28480264cfa09e1d04e7f1206c1e69e663e3da",
+      "bytes": 341,
+      "snapshot": "frozen-inputs/d933be9975abc5f69b08f2d8bb28480264cfa09e1d04e7f1206c1e69e663e3da.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/source/skills/nova/plugins/architecture-validator/plugin.json",
+      "sha256": "915926814bba76b52d9cce47961da67e43cf5ade85c077a417272023c5730792",
+      "bytes": 621,
+      "snapshot": "frozen-inputs/915926814bba76b52d9cce47961da67e43cf5ade85c077a417272023c5730792.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/source/skills/nova/plugins/architecture-validator/schemas/config.schema.json",
+      "sha256": "49b1391ff9c5076715c42cf37857f4a6ec6e5a90e7777ff9c94e0d664449981a",
+      "bytes": 224,
+      "snapshot": "frozen-inputs/49b1391ff9c5076715c42cf37857f4a6ec6e5a90e7777ff9c94e0d664449981a.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/source/skills/nova/plugins/architecture-validator/schemas/input.schema.json",
+      "sha256": "105defd63fd5abe3baf1993b7477e13ef16010213ec5548051908433131f9d56",
+      "bytes": 1704,
+      "snapshot": "frozen-inputs/105defd63fd5abe3baf1993b7477e13ef16010213ec5548051908433131f9d56.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/source/skills/nova/plugins/architecture-validator/schemas/result.schema.json",
+      "sha256": "6f0724b07d28e7599627452c02f7c6528acf74183bb03c8111ddbbdd4736a87d",
+      "bytes": 164,
+      "snapshot": "frozen-inputs/6f0724b07d28e7599627452c02f7c6528acf74183bb03c8111ddbbdd4736a87d.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/source/skills/nova/plugins/architecture-validator/tests/package-boundary.test.mjs",
+      "sha256": "f2c61894590da296486addd0d8135ba6b0550592d24dd2cf83ecc83b649dcf9a",
+      "bytes": 423,
+      "snapshot": "frozen-inputs/f2c61894590da296486addd0d8135ba6b0550592d24dd2cf83ecc83b649dcf9a.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/source/skills/nova/plugins/architecture-validator/tsconfig.json",
+      "sha256": "e870b88d9f1d5090754667bb4214ee5f4ac6ed68b1460d655af0e37cb048959b",
+      "bytes": 215,
+      "snapshot": "frozen-inputs/e870b88d9f1d5090754667bb4214ee5f4ac6ed68b1460d655af0e37cb048959b.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/source/skills/nova/plugins/case-study/README.md",
+      "sha256": "d896e5e31a642289a86806abd984add82a969fd6377257ff39b864c1967aaa56",
+      "bytes": 3223,
+      "snapshot": "frozen-inputs/d896e5e31a642289a86806abd984add82a969fd6377257ff39b864c1967aaa56.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/source/skills/nova/plugins/case-study/package.json",
+      "sha256": "4c8729dfdf523befdb7dfc2551ba543780d0171bb6d3998ac387a6d50e9668a5",
+      "bytes": 325,
+      "snapshot": "frozen-inputs/4c8729dfdf523befdb7dfc2551ba543780d0171bb6d3998ac387a6d50e9668a5.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/source/skills/nova/plugins/case-study/plugin.json",
+      "sha256": "e18697e96655c6b0fcf775de0a898a18821d7bd1c9e1960fdd150d18f9f68b8e",
+      "bytes": 578,
+      "snapshot": "frozen-inputs/e18697e96655c6b0fcf775de0a898a18821d7bd1c9e1960fdd150d18f9f68b8e.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/source/skills/nova/plugins/case-study/schemas/config.schema.json",
+      "sha256": "4632cc51357ffecdbd593cf1d1928a99b9cd4855b3763354f67261b62cc0c895",
+      "bytes": 180,
+      "snapshot": "frozen-inputs/4632cc51357ffecdbd593cf1d1928a99b9cd4855b3763354f67261b62cc0c895.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/source/skills/nova/plugins/case-study/schemas/input.schema.json",
+      "sha256": "57b29f85dd70c0e69c90eed33563fde513533de0df258ab5f2b62c2ca693bd7b",
+      "bytes": 1335,
+      "snapshot": "frozen-inputs/57b29f85dd70c0e69c90eed33563fde513533de0df258ab5f2b62c2ca693bd7b.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/source/skills/nova/plugins/case-study/schemas/result.schema.json",
+      "sha256": "6f0724b07d28e7599627452c02f7c6528acf74183bb03c8111ddbbdd4736a87d",
+      "bytes": 164,
+      "snapshot": "frozen-inputs/6f0724b07d28e7599627452c02f7c6528acf74183bb03c8111ddbbdd4736a87d.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/source/skills/nova/plugins/case-study/tests/package-boundary.test.mjs",
+      "sha256": "7121daaaddd3268395864668c065b163e94a3636ddbd5e94dc2583c805b46309",
+      "bytes": 742,
+      "snapshot": "frozen-inputs/7121daaaddd3268395864668c065b163e94a3636ddbd5e94dc2583c805b46309.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/source/skills/nova/plugins/case-study/tests/protocol.test.mjs",
+      "sha256": "980e6140e7c4d4f66134f49ce5ac537d65102ab0c6a498d2a2ff98d4fe13b069",
+      "bytes": 2168,
+      "snapshot": "frozen-inputs/980e6140e7c4d4f66134f49ce5ac537d65102ab0c6a498d2a2ff98d4fe13b069.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/source/skills/nova/plugins/case-study/tsconfig.json",
+      "sha256": "e870b88d9f1d5090754667bb4214ee5f4ac6ed68b1460d655af0e37cb048959b",
+      "bytes": 215,
+      "snapshot": "frozen-inputs/e870b88d9f1d5090754667bb4214ee5f4ac6ed68b1460d655af0e37cb048959b.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/source/skills/nova/plugins/implementation-agent/README.md",
+      "sha256": "9f6b149f2994f44abeefc59e9e960f240f3c4947c1dceaf1d97806cc0255192a",
+      "bytes": 1947,
+      "snapshot": "frozen-inputs/9f6b149f2994f44abeefc59e9e960f240f3c4947c1dceaf1d97806cc0255192a.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/source/skills/nova/plugins/implementation-agent/package.json",
+      "sha256": "a2b40ca7dd4f1e3007696ef03304f80e7c31e4e8ab5834393bf69d2ca3d698cb",
+      "bytes": 334,
+      "snapshot": "frozen-inputs/a2b40ca7dd4f1e3007696ef03304f80e7c31e4e8ab5834393bf69d2ca3d698cb.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/source/skills/nova/plugins/implementation-agent/plugin.json",
+      "sha256": "fde7e60285cf1fd687b85e9ce2372b1aaa02d7bbf35bced1b8741c073493e5c9",
+      "bytes": 696,
+      "snapshot": "frozen-inputs/fde7e60285cf1fd687b85e9ce2372b1aaa02d7bbf35bced1b8741c073493e5c9.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/source/skills/nova/plugins/implementation-agent/schemas/config.schema.json",
+      "sha256": "49b1391ff9c5076715c42cf37857f4a6ec6e5a90e7777ff9c94e0d664449981a",
+      "bytes": 224,
+      "snapshot": "frozen-inputs/49b1391ff9c5076715c42cf37857f4a6ec6e5a90e7777ff9c94e0d664449981a.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/source/skills/nova/plugins/implementation-agent/schemas/input.schema.json",
+      "sha256": "f2c8f956678a98cce81e8d6bd41fa444588ceb1519a9ca7a7f5db509f9478d5c",
+      "bytes": 2210,
+      "snapshot": "frozen-inputs/f2c8f956678a98cce81e8d6bd41fa444588ceb1519a9ca7a7f5db509f9478d5c.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/source/skills/nova/plugins/implementation-agent/schemas/result.schema.json",
+      "sha256": "6f0724b07d28e7599627452c02f7c6528acf74183bb03c8111ddbbdd4736a87d",
+      "bytes": 164,
+      "snapshot": "frozen-inputs/6f0724b07d28e7599627452c02f7c6528acf74183bb03c8111ddbbdd4736a87d.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/source/skills/nova/plugins/implementation-agent/tests/package-boundary.test.mjs",
+      "sha256": "9c7301442eebf330bddfa1bb65e0f391ada98097553e76aafad2980266a59f50",
+      "bytes": 477,
+      "snapshot": "frozen-inputs/9c7301442eebf330bddfa1bb65e0f391ada98097553e76aafad2980266a59f50.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/source/skills/nova/plugins/implementation-agent/tsconfig.json",
+      "sha256": "14b157e19a12fc64deb926bf5abf286611c715f5a8475aa6408f037a5a09e472",
+      "bytes": 137,
+      "snapshot": "frozen-inputs/14b157e19a12fc64deb926bf5abf286611c715f5a8475aa6408f037a5a09e472.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/source/skills/nova/plugins/pipeline-review/README.md",
+      "sha256": "acdf524d2b206d0f6152b537375a69b07b0abf5ad3ce6e57942a5e64ebde9141",
+      "bytes": 3229,
+      "snapshot": "frozen-inputs/acdf524d2b206d0f6152b537375a69b07b0abf5ad3ce6e57942a5e64ebde9141.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/source/skills/nova/plugins/pipeline-review/package.json",
+      "sha256": "1f587ae529db6a8c3ede69be6ca14651d989a80e884d111888469bd5b30da888",
+      "bytes": 412,
+      "snapshot": "frozen-inputs/1f587ae529db6a8c3ede69be6ca14651d989a80e884d111888469bd5b30da888.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/source/skills/nova/plugins/pipeline-review/plugin.json",
+      "sha256": "113fad3ba88ebc4db595fd411230d3288a28e8dfc99583e5495cf34da2483cab",
+      "bytes": 892,
+      "snapshot": "frozen-inputs/113fad3ba88ebc4db595fd411230d3288a28e8dfc99583e5495cf34da2483cab.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/source/skills/nova/plugins/pipeline-review/schemas/config.schema.json",
+      "sha256": "49b1391ff9c5076715c42cf37857f4a6ec6e5a90e7777ff9c94e0d664449981a",
+      "bytes": 224,
+      "snapshot": "frozen-inputs/49b1391ff9c5076715c42cf37857f4a6ec6e5a90e7777ff9c94e0d664449981a.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/source/skills/nova/plugins/pipeline-review/schemas/evidence-config.schema.json",
+      "sha256": "905fba3c46c2fbf13a617d385099dda9959302ab3414a67cc8f5d5c33502e530",
+      "bytes": 682,
+      "snapshot": "frozen-inputs/905fba3c46c2fbf13a617d385099dda9959302ab3414a67cc8f5d5c33502e530.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/source/skills/nova/plugins/pipeline-review/schemas/input.schema.json",
+      "sha256": "57b29f85dd70c0e69c90eed33563fde513533de0df258ab5f2b62c2ca693bd7b",
+      "bytes": 1335,
+      "snapshot": "frozen-inputs/57b29f85dd70c0e69c90eed33563fde513533de0df258ab5f2b62c2ca693bd7b.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/source/skills/nova/plugins/pipeline-review/schemas/result.schema.json",
+      "sha256": "6f0724b07d28e7599627452c02f7c6528acf74183bb03c8111ddbbdd4736a87d",
+      "bytes": 164,
+      "snapshot": "frozen-inputs/6f0724b07d28e7599627452c02f7c6528acf74183bb03c8111ddbbdd4736a87d.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/source/skills/nova/plugins/pipeline-review/tests/package-boundary.test.mjs",
+      "sha256": "b4a91a91ec99a62813f2c2e8cf35642add682c1cfb699d0e8930ae2230453af6",
+      "bytes": 752,
+      "snapshot": "frozen-inputs/b4a91a91ec99a62813f2c2e8cf35642add682c1cfb699d0e8930ae2230453af6.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/source/skills/nova/plugins/pipeline-review/tests/protocol.test.mjs",
+      "sha256": "e6041312773df12596b7b695b7b86b35c5839e97d371dae81edceddad1ac0709",
+      "bytes": 2181,
+      "snapshot": "frozen-inputs/e6041312773df12596b7b695b7b86b35c5839e97d371dae81edceddad1ac0709.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/source/skills/nova/plugins/pipeline-review/tsconfig.json",
+      "sha256": "e870b88d9f1d5090754667bb4214ee5f4ac6ed68b1460d655af0e37cb048959b",
+      "bytes": 215,
+      "snapshot": "frozen-inputs/e870b88d9f1d5090754667bb4214ee5f4ac6ed68b1460d655af0e37cb048959b.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/source/skills/nova/plugins/prism-design/README.md",
+      "sha256": "578e856a2dc1bec26227012406c610bca1ed9ce569778347b9d90355ed4f96ac",
+      "bytes": 1374,
+      "snapshot": "frozen-inputs/578e856a2dc1bec26227012406c610bca1ed9ce569778347b9d90355ed4f96ac.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/source/skills/nova/plugins/prism-design/package.json",
+      "sha256": "54c0031ee6ce2b8bed687d805cadb90ea40c405df36cde653f99fab30303972d",
+      "bytes": 441,
+      "snapshot": "frozen-inputs/54c0031ee6ce2b8bed687d805cadb90ea40c405df36cde653f99fab30303972d.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/source/skills/nova/plugins/prism-design/plugin.json",
+      "sha256": "063ef9316e7bfdbe8b2b9a0812bfc2a0b968294edc116d85e557d3e591dbf2d9",
+      "bytes": 482,
+      "snapshot": "frozen-inputs/063ef9316e7bfdbe8b2b9a0812bfc2a0b968294edc116d85e557d3e591dbf2d9.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/source/skills/nova/plugins/prism-design/schemas/config.schema.json",
+      "sha256": "15fc34fb28e0afe96ad1e248c32e6d9a9bb173bb731226fb52ccb78a8afcc61e",
+      "bytes": 352,
+      "snapshot": "frozen-inputs/15fc34fb28e0afe96ad1e248c32e6d9a9bb173bb731226fb52ccb78a8afcc61e.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/source/skills/nova/plugins/prism-design/schemas/input.schema.json",
+      "sha256": "0c636654897e05d3a4981009c4676e3a7fec517ff6c59822edd49259590fb66d",
+      "bytes": 605,
+      "snapshot": "frozen-inputs/0c636654897e05d3a4981009c4676e3a7fec517ff6c59822edd49259590fb66d.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/source/skills/nova/plugins/prism-design/schemas/result.schema.json",
+      "sha256": "3e80e0c6d65754ee88072b0d08c1780b6d196358d25f45175a7d2c8ff7d45fea",
+      "bytes": 344,
+      "snapshot": "frozen-inputs/3e80e0c6d65754ee88072b0d08c1780b6d196358d25f45175a7d2c8ff7d45fea.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/source/skills/nova/plugins/prism-design/tsconfig.json",
+      "sha256": "6fcce9b8c2807131e39d8aaed282eb5f03906dc757d09d8b4fe54c6460cab2f1",
+      "bytes": 105,
+      "snapshot": "frozen-inputs/6fcce9b8c2807131e39d8aaed282eb5f03906dc757d09d8b4fe54c6460cab2f1.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/source/skills/nova/plugins/project-summary/README.md",
+      "sha256": "0e88232cfbabf90d094ca6f8de77c3828de288b81109f2d6239087f52dbe4ee9",
+      "bytes": 2210,
+      "snapshot": "frozen-inputs/0e88232cfbabf90d094ca6f8de77c3828de288b81109f2d6239087f52dbe4ee9.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/source/skills/nova/plugins/project-summary/package.json",
+      "sha256": "5d55bac5f34dbb15dc796f54e09e4069e2b23b668461b12f5dcf6c3ee0508f8e",
+      "bytes": 473,
+      "snapshot": "frozen-inputs/5d55bac5f34dbb15dc796f54e09e4069e2b23b668461b12f5dcf6c3ee0508f8e.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/source/skills/nova/plugins/project-summary/plugin.json",
+      "sha256": "995ddb9dec1c6ad6ea9e55c7ed667e560a045365fcc6e4721908bd86b63b0454",
+      "bytes": 551,
+      "snapshot": "frozen-inputs/995ddb9dec1c6ad6ea9e55c7ed667e560a045365fcc6e4721908bd86b63b0454.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/source/skills/nova/plugins/project-summary/schemas/config.schema.json",
+      "sha256": "7c1bf8023f80f2bd5c3727b97636c804cd2c8b801fbe71fd8374a6edd7049bd9",
+      "bytes": 229,
+      "snapshot": "frozen-inputs/7c1bf8023f80f2bd5c3727b97636c804cd2c8b801fbe71fd8374a6edd7049bd9.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/source/skills/nova/plugins/project-summary/schemas/input.schema.json",
+      "sha256": "451591d9b115aa5aae88c4a08301845316f1207cdd24ed9baf7639adc83439cf",
+      "bytes": 2210,
+      "snapshot": "frozen-inputs/451591d9b115aa5aae88c4a08301845316f1207cdd24ed9baf7639adc83439cf.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/source/skills/nova/plugins/project-summary/schemas/result.schema.json",
+      "sha256": "6f0724b07d28e7599627452c02f7c6528acf74183bb03c8111ddbbdd4736a87d",
+      "bytes": 164,
+      "snapshot": "frozen-inputs/6f0724b07d28e7599627452c02f7c6528acf74183bb03c8111ddbbdd4736a87d.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/source/skills/nova/plugins/project-summary/tests/package-boundary.test.mjs",
+      "sha256": "451c143e3fe713a8bd919789b2ad0a8c5b5758853059b20f3bee33c23029c495",
+      "bytes": 745,
+      "snapshot": "frozen-inputs/451c143e3fe713a8bd919789b2ad0a8c5b5758853059b20f3bee33c23029c495.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/source/skills/nova/plugins/project-summary/tsconfig.json",
+      "sha256": "e870b88d9f1d5090754667bb4214ee5f4ac6ed68b1460d655af0e37cb048959b",
+      "bytes": 215,
+      "snapshot": "frozen-inputs/e870b88d9f1d5090754667bb4214ee5f4ac6ed68b1460d655af0e37cb048959b.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/task-fixtures/architecture-validator.json",
+      "sha256": "4d5892ff1dd2c367ff7df3c547e28517ae1440fcd4bbf4e7d08ad4ee6a78a174",
+      "bytes": 323,
+      "snapshot": "frozen-inputs/4d5892ff1dd2c367ff7df3c547e28517ae1440fcd4bbf4e7d08ad4ee6a78a174.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/task-fixtures/case-study.json",
+      "sha256": "a5ed32cdfb7b64aa9b26bff78394908453dd69d3870dfd5944fc2ab03b651d43",
+      "bytes": 888,
+      "snapshot": "frozen-inputs/a5ed32cdfb7b64aa9b26bff78394908453dd69d3870dfd5944fc2ab03b651d43.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/task-fixtures/implementation-agent.json",
+      "sha256": "7f512ba762a10435dc91ef4881c243b6a351ceead2579f26afafee8fcd8ff713",
+      "bytes": 510,
+      "snapshot": "frozen-inputs/7f512ba762a10435dc91ef4881c243b6a351ceead2579f26afafee8fcd8ff713.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/task-fixtures/pipeline-review.json",
+      "sha256": "0e420af43bc863835488a94bd5105bdf996b01c3ecd7ee7e8085eadbef60ed3e",
+      "bytes": 875,
+      "snapshot": "frozen-inputs/0e420af43bc863835488a94bd5105bdf996b01c3ecd7ee7e8085eadbef60ed3e.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/task-fixtures/prism-design.json",
+      "sha256": "eedc996f398c28a2c2262941de3e52a442c4fbae8cd8927265dec02909a6cbd1",
+      "bytes": 283,
+      "snapshot": "frozen-inputs/eedc996f398c28a2c2262941de3e52a442c4fbae8cd8927265dec02909a6cbd1.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/task-fixtures/project-summary.json",
+      "sha256": "d826f3a04a6acbfb2db4ee67967a50385c91d3f33faffb0b5744bdbc119d5e6e",
+      "bytes": 2198,
+      "snapshot": "frozen-inputs/d826f3a04a6acbfb2db4ee67967a50385c91d3f33faffb0b5744bdbc119d5e6e.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/unavailable-independent-effects.json",
+      "sha256": "c53d305a55519e5f2265bc66dc7869de8fce34c217d1ff7bbf7bfdbb060f0923",
+      "bytes": 5382,
+      "snapshot": "frozen-inputs/c53d305a55519e5f2265bc66dc7869de8fce34c217d1ff7bbf7bfdbb060f0923.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/whole-entry-pairs.json",
+      "sha256": "267137ae8db2637a7459ef2615585ceb5790e21f0239f339ca9e85ca8ac41fc0",
+      "bytes": 24245,
+      "snapshot": "frozen-inputs/267137ae8db2637a7459ef2615585ceb5790e21f0239f339ca9e85ca8ac41fc0.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "2e20ca68b88ae9b21741732630ffea5736d50db942c33b42a0b9403fee1d2228",
+      "bytes": 8365,
+      "snapshot": "frozen-inputs/2e20ca68b88ae9b21741732630ffea5736d50db942c33b42a0b9403fee1d2228.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stand/config/pipeline.config.json",
+      "sha256": "2147cfa1eaf53ed57928563212442f13aaef735e4733178a8579b0f2308e4011",
+      "bytes": 6751,
+      "snapshot": "frozen-inputs/2147cfa1eaf53ed57928563212442f13aaef735e4733178a8579b0f2308e4011.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-02/README.md",
+      "sha256": "36bc2bdd387cf9a5343fea6443dd6a27a253c95575840edafb45bca57290aa86",
+      "bytes": 4020,
+      "snapshot": "frozen-inputs/36bc2bdd387cf9a5343fea6443dd6a27a253c95575840edafb45bca57290aa86.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/runtime/case-proposals.json",
+      "sha256": "9c5b4aaeae097bb2952f668acd4353a3d15735c6bf0f80a5c8191a1d23f25d36",
+      "bytes": 65357207,
+      "snapshot": "frozen-inputs/9c5b4aaeae097bb2952f668acd4353a3d15735c6bf0f80a5c8191a1d23f25d36.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/remediation/GOAL-START.md",
+      "sha256": "688334e1ccaa30fd9497e605ef0a9de1fb67fbeae51c4a312b15e15a12fa085b",
+      "bytes": 6788,
+      "snapshot": "frozen-inputs/688334e1ccaa30fd9497e605ef0a9de1fb67fbeae51c4a312b15e15a12fa085b.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/remediation/config-acceptance-matrix.json",
+      "sha256": "397386f9a5d541664995fc0a5c008f74cbc9a5559c85924480ae403c5ae36020",
+      "bytes": 101694304,
+      "snapshot": "frozen-inputs/397386f9a5d541664995fc0a5c008f74cbc9a5559c85924480ae403c5ae36020.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/remediation/config-semantic-inventory.json",
+      "sha256": "d113ff0289b6030afafb4c30d6d4b67115a7d7ee567e43fd851e7bff658399bf",
+      "bytes": 37988493,
+      "snapshot": "frozen-inputs/d113ff0289b6030afafb4c30d6d4b67115a7d7ee567e43fd851e7bff658399bf.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+      "sha256": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db",
+      "bytes": 46877,
+      "snapshot": "frozen-inputs/837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+      "sha256": "eeebd66fcb6a813fdad60188261e14d530c5d09f6c61f9972bc0428ecff151b6",
+      "bytes": 9110,
+      "snapshot": "frozen-inputs/eeebd66fcb6a813fdad60188261e14d530c5d09f6c61f9972bc0428ecff151b6.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/registry/configuration.ts",
+      "sha256": "94f711ce386148d0aa3e114512afb3fcf8b69ef41c14b7e5215d17881fe66a2f",
+      "bytes": 4047,
+      "snapshot": "frozen-inputs/94f711ce386148d0aa3e114512afb3fcf8b69ef41c14b7e5215d17881fe66a2f.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/registry/digest.ts",
+      "sha256": "000539ceae6719b16ac795ef1cfb90877aa44e81c26b4335c17f85912b4076e4",
+      "bytes": 1051,
+      "snapshot": "frozen-inputs/000539ceae6719b16ac795ef1cfb90877aa44e81c26b4335c17f85912b4076e4.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/registry/errors.ts",
+      "sha256": "148025829782ddac5d15ea25736b4ec7a3faefcfabdce152809baf8ed807ce25",
+      "bytes": 1305,
+      "snapshot": "frozen-inputs/148025829782ddac5d15ea25736b4ec7a3faefcfabdce152809baf8ed807ce25.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/registry/schema.ts",
+      "sha256": "eb665b9db83e0d0d1bd15fbe5c6f916f479bf8a9c049de6d90b2d6f9f59cc557",
+      "bytes": 5817,
+      "snapshot": "frozen-inputs/eb665b9db83e0d0d1bd15fbe5c6f916f479bf8a9c049de6d90b2d6f9f59cc557.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
+      "sha256": "8ade81b1f64c78b4cf2198f7ae7dc0c726fb4cec3ffa553986310d353dbc71c1",
+      "bytes": 18480,
+      "snapshot": "frozen-inputs/8ade81b1f64c78b4cf2198f7ae7dc0c726fb4cec3ffa553986310d353dbc71c1.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/sdk/src/runtime-agent-task.ts",
+      "sha256": "a2b18a4fd9655b88fc4e13d785a1671849779c90bd2ed7dc02c5735c609e6113",
+      "bytes": 1570,
+      "snapshot": "frozen-inputs/a2b18a4fd9655b88fc4e13d785a1671849779c90bd2ed7dc02c5735c609e6113.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/sdk/src/runtime-dispatch-profile.ts",
+      "sha256": "13f61a984922b7fa815e084b6a5a20238fd0da67aed5959bdc8b061a8e3173fb",
+      "bytes": 1767,
+      "snapshot": "frozen-inputs/13f61a984922b7fa815e084b6a5a20238fd0da67aed5959bdc8b061a8e3173fb.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/sdk/src/values.ts",
+      "sha256": "b91ec914fb8ce1eaccc40751f9693689694e455389eb8742d7f275fdeb24571f",
+      "bytes": 5155,
+      "snapshot": "frozen-inputs/b91ec914fb8ce1eaccc40751f9693689694e455389eb8742d7f275fdeb24571f.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugins/runtime-dispatch/package.json",
+      "sha256": "dea861af81c54c9801a87c272d7467f359056be1cdb2d25ab0fa6cf88f9bbc67",
+      "bytes": 410,
+      "snapshot": "frozen-inputs/dea861af81c54c9801a87c272d7467f359056be1cdb2d25ab0fa6cf88f9bbc67.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugins/runtime-dispatch/plugin.json",
+      "sha256": "b3c3a77253ce191a184c8c85f6d02595a1df26b472a63f252339205cae04f349",
+      "bytes": 822,
+      "snapshot": "frozen-inputs/b3c3a77253ce191a184c8c85f6d02595a1df26b472a63f252339205cae04f349.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugins/runtime-dispatch/schemas/config.schema.json",
+      "sha256": "c780e8086e6d6c954734e62c171f3de67a37b1c94c7483c887571ea08f18a641",
+      "bytes": 1286,
+      "snapshot": "frozen-inputs/c780e8086e6d6c954734e62c171f3de67a37b1c94c7483c887571ea08f18a641.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugins/runtime-dispatch/schemas/openclaw-config.schema.json",
+      "sha256": "defa712aa87820a8e2d4fa593f6e3dedf2fbc6c22a22f2a6933dc36e3d8d95b7",
+      "bytes": 2661,
+      "snapshot": "frozen-inputs/defa712aa87820a8e2d4fa593f6e3dedf2fbc6c22a22f2a6933dc36e3d8d95b7.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugins/runtime-dispatch/src/adapter.ts",
+      "sha256": "5bf2d0c003497e74b0bfdf7524b4725bcd77d12b592f00e121be553868009e5e",
+      "bytes": 7189,
+      "snapshot": "frozen-inputs/5bf2d0c003497e74b0bfdf7524b4725bcd77d12b592f00e121be553868009e5e.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugins/runtime-dispatch/src/dispatch-adapter.ts",
+      "sha256": "16ccaa5e974de17c36d20078fb2912ddd9d2fa1c6a0a677af760e242ce3cd33a",
+      "bytes": 1278,
+      "snapshot": "frozen-inputs/16ccaa5e974de17c36d20078fb2912ddd9d2fa1c6a0a677af760e242ce3cd33a.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugins/runtime-dispatch/src/openclaw-adapter.ts",
+      "sha256": "1532db26c17561feba17d5bdbba2771de2730df9bd299af203c4b0432d5842f4",
+      "bytes": 1193,
+      "snapshot": "frozen-inputs/1532db26c17561feba17d5bdbba2771de2730df9bd299af203c4b0432d5842f4.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugins/runtime-dispatch/src/openclaw-cleanup.ts",
+      "sha256": "9cd036b48db02117734aea56e9e77bf4010f5487150e3bab0fcdc99585ac22fd",
+      "bytes": 3730,
+      "snapshot": "frozen-inputs/9cd036b48db02117734aea56e9e77bf4010f5487150e3bab0fcdc99585ac22fd.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+      "sha256": "52ba5eff35c441ee727753a3d154a357257df525c0461b6f81941ceadaf1add1",
+      "bytes": 6531,
+      "snapshot": "frozen-inputs/52ba5eff35c441ee727753a3d154a357257df525c0461b6f81941ceadaf1add1.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugins/runtime-dispatch/src/openclaw-response.ts",
+      "sha256": "70a2a376fcf885861af37075646b0868a810f9bc3cd109781fc48fb62fe8444d",
+      "bytes": 3610,
+      "snapshot": "frozen-inputs/70a2a376fcf885861af37075646b0868a810f9bc3cd109781fc48fb62fe8444d.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugins/runtime-dispatch/src/openclaw-result.ts",
+      "sha256": "38290ff080cc31a5465f911bf8adaf1d7d82c1c0a019914d088a5dd6c35b9643",
+      "bytes": 6651,
+      "snapshot": "frozen-inputs/38290ff080cc31a5465f911bf8adaf1d7d82c1c0a019914d088a5dd6c35b9643.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugins/runtime-dispatch/src/openclaw-session.ts",
+      "sha256": "8f3bfbfe9d3d9fa3fa88ac532f8f59abe457d830089a340b196cb8c25bd97217",
+      "bytes": 15618,
+      "snapshot": "frozen-inputs/8f3bfbfe9d3d9fa3fa88ac532f8f59abe457d830089a340b196cb8c25bd97217.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugins/runtime-dispatch/src/openclaw.ts",
+      "sha256": "a66a16088c28519c1d88a63b650bf7caa416e13cee5eefe3b773df2691832af5",
+      "bytes": 18385,
+      "snapshot": "frozen-inputs/a66a16088c28519c1d88a63b650bf7caa416e13cee5eefe3b773df2691832af5.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugins/runtime-dispatch/src/result-persistence.ts",
+      "sha256": "4939307a37adc3aea6dfba4d7f196a897c5ee3ca72a7594c6b7b8c02f4509a41",
+      "bytes": 4992,
+      "snapshot": "frozen-inputs/4939307a37adc3aea6dfba4d7f196a897c5ee3ca72a7594c6b7b8c02f4509a41.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugins/runtime-dispatch/src/workspace-target.ts",
+      "sha256": "163d6442b6eb4261db013c55af03183a04cedaa1a4a90c0893dc1f65f36f2ab5",
+      "bytes": 1804,
+      "snapshot": "frozen-inputs/163d6442b6eb4261db013c55af03183a04cedaa1a4a90c0893dc1f65f36f2ab5.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugins/runtime-dispatch/tests/live-function.test.ts",
+      "sha256": "94236bcdf8a08d67bbb7fbaba785d0d03d46f7f6f86846d28b805ae15047b3f9",
+      "bytes": 24029,
+      "snapshot": "frozen-inputs/94236bcdf8a08d67bbb7fbaba785d0d03d46f7f6f86846d28b805ae15047b3f9.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugins/runtime-dispatch/tsconfig.json",
+      "sha256": "14b157e19a12fc64deb926bf5abf286611c715f5a8475aa6408f037a5a09e472",
+      "bytes": 137,
+      "snapshot": "frozen-inputs/14b157e19a12fc64deb926bf5abf286611c715f5a8475aa6408f037a5a09e472.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/core/execution/adapter-startup.ts",
+      "sha256": "ec0ee03f9b740865da79e9ba558fc9447f0354ecd14b4e36eedc5320edac34f0",
+      "bytes": 15396,
+      "snapshot": "frozen-inputs/ec0ee03f9b740865da79e9ba558fc9447f0354ecd14b4e36eedc5320edac34f0.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/core/execution/adapters.ts",
+      "sha256": "30332f9d2d360b32a13e6f2795f83c90297346eb892b4d9346d5e61ed9d60d5b",
+      "bytes": 6731,
+      "snapshot": "frozen-inputs/30332f9d2d360b32a13e6f2795f83c90297346eb892b4d9346d5e61ed9d60d5b.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/core/execution/context.ts",
+      "sha256": "3f61fc7b2e18d6c36bf9eaff5173a06d31dd06d14a07b05c6d8be7320098a288",
+      "bytes": 2782,
+      "snapshot": "frozen-inputs/3f61fc7b2e18d6c36bf9eaff5173a06d31dd06d14a07b05c6d8be7320098a288.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/core/execution/engine-run.ts",
+      "sha256": "eca97e2a488bd31d597c0dd71cd9971beffc9a5dc94fad1dbccf8867aa8f4819",
+      "bytes": 11148,
+      "snapshot": "frozen-inputs/eca97e2a488bd31d597c0dd71cd9971beffc9a5dc94fad1dbccf8867aa8f4819.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/core/execution/engine-runtime.ts",
+      "sha256": "96c8e5964977cc9287897a63db0f102ff915e9a2ebd3c3ca87ed47b7dde81613",
+      "bytes": 8372,
+      "snapshot": "frozen-inputs/96c8e5964977cc9287897a63db0f102ff915e9a2ebd3c3ca87ed47b7dde81613.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/core/execution/engine-snapshots.ts",
+      "sha256": "50dfe92e656875658b7604f30012f8493564729473f6ddd65b64960ecf9946fd",
+      "bytes": 12185,
+      "snapshot": "frozen-inputs/50dfe92e656875658b7604f30012f8493564729473f6ddd65b64960ecf9946fd.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/core/execution/graph.ts",
+      "sha256": "680077697180d4ef2df70e823391eaef710d49fb721338663f8f73d65973b2af",
+      "bytes": 5121,
+      "snapshot": "frozen-inputs/680077697180d4ef2df70e823391eaef710d49fb721338663f8f73d65973b2af.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/core/execution/pipeline-loop.ts",
+      "sha256": "129a77125e5d88a118b9d3cefb06d1bedf734924cabd32be607063a33d985530",
+      "bytes": 10717,
+      "snapshot": "frozen-inputs/129a77125e5d88a118b9d3cefb06d1bedf734924cabd32be607063a33d985530.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/core/execution/run-decisions.ts",
+      "sha256": "a509f00aa74367e90d396f338db55acff2610075ac0063d14fa8bec4ba9d1171",
+      "bytes": 9555,
+      "snapshot": "frozen-inputs/a509f00aa74367e90d396f338db55acff2610075ac0063d14fa8bec4ba9d1171.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/core/execution/runner.ts",
+      "sha256": "9a34098cd68460f42e220ada2f3e7bef37fcc9eb5fdd351db2cd1585fe6a5cc6",
+      "bytes": 6254,
+      "snapshot": "frozen-inputs/9a34098cd68460f42e220ada2f3e7bef37fcc9eb5fdd351db2cd1585fe6a5cc6.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/core/execution/stage-executor.ts",
+      "sha256": "4c846993c679c9ce663f7dda0e8de78fd26101e83948dd17211e62f83ea2eafb",
+      "bytes": 11002,
+      "snapshot": "frozen-inputs/4c846993c679c9ce663f7dda0e8de78fd26101e83948dd17211e62f83ea2eafb.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/core/lifecycle/recovery.ts",
+      "sha256": "5095a92c809f1e19524687d44e227585edaf482a7024dfc41b72f264b28822c8",
+      "bytes": 2614,
+      "snapshot": "frozen-inputs/5095a92c809f1e19524687d44e227585edaf482a7024dfc41b72f264b28822c8.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/core/state/read-run-evidence.ts",
+      "sha256": "bd33a3503d61236a03fcd19ae61fc3fde838d0dfefacacb7c1e75ff820444065",
+      "bytes": 15217,
+      "snapshot": "frozen-inputs/bd33a3503d61236a03fcd19ae61fc3fde838d0dfefacacb7c1e75ff820444065.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/architecture-validator/README.md",
+      "sha256": "1ea6563f1ca2b809d9cc3966ab11d6098caa39beb030bd907ed1aabf73ec4cf2",
+      "bytes": 1711,
+      "snapshot": "frozen-inputs/1ea6563f1ca2b809d9cc3966ab11d6098caa39beb030bd907ed1aabf73ec4cf2.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/architecture-validator/package.json",
+      "sha256": "d933be9975abc5f69b08f2d8bb28480264cfa09e1d04e7f1206c1e69e663e3da",
+      "bytes": 341,
+      "snapshot": "frozen-inputs/d933be9975abc5f69b08f2d8bb28480264cfa09e1d04e7f1206c1e69e663e3da.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/architecture-validator/plugin.json",
+      "sha256": "915926814bba76b52d9cce47961da67e43cf5ade85c077a417272023c5730792",
+      "bytes": 621,
+      "snapshot": "frozen-inputs/915926814bba76b52d9cce47961da67e43cf5ade85c077a417272023c5730792.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/architecture-validator/schemas/config.schema.json",
+      "sha256": "49b1391ff9c5076715c42cf37857f4a6ec6e5a90e7777ff9c94e0d664449981a",
+      "bytes": 224,
+      "snapshot": "frozen-inputs/49b1391ff9c5076715c42cf37857f4a6ec6e5a90e7777ff9c94e0d664449981a.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/architecture-validator/schemas/input.schema.json",
+      "sha256": "105defd63fd5abe3baf1993b7477e13ef16010213ec5548051908433131f9d56",
+      "bytes": 1704,
+      "snapshot": "frozen-inputs/105defd63fd5abe3baf1993b7477e13ef16010213ec5548051908433131f9d56.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/architecture-validator/schemas/result.schema.json",
+      "sha256": "6f0724b07d28e7599627452c02f7c6528acf74183bb03c8111ddbbdd4736a87d",
+      "bytes": 164,
+      "snapshot": "frozen-inputs/6f0724b07d28e7599627452c02f7c6528acf74183bb03c8111ddbbdd4736a87d.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/architecture-validator/src/output.ts",
+      "sha256": "8b6ee1fe1f98b019f0fda4eb52f4f3786863885f52c67f9db3e7d667416d93ea",
+      "bytes": 4063,
+      "snapshot": "frozen-inputs/8b6ee1fe1f98b019f0fda4eb52f4f3786863885f52c67f9db3e7d667416d93ea.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/architecture-validator/src/protocol.ts",
+      "sha256": "46c3f8894c19ac12c8ca5c35493ef47ace66a8d8092056e102d513c93f29b07a",
+      "bytes": 2886,
+      "snapshot": "frozen-inputs/46c3f8894c19ac12c8ca5c35493ef47ace66a8d8092056e102d513c93f29b07a.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/architecture-validator/src/stage.ts",
+      "sha256": "1d078730d6c276cba32fbdded3b289bff155638490e7a5d191750732e13565bc",
+      "bytes": 3204,
+      "snapshot": "frozen-inputs/1d078730d6c276cba32fbdded3b289bff155638490e7a5d191750732e13565bc.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/architecture-validator/tests/live-function.test.ts",
+      "sha256": "272268fd60cdaa459ce2edb9bf5f77387d901450b45d75f45cde0ccdce383e03",
+      "bytes": 5465,
+      "snapshot": "frozen-inputs/272268fd60cdaa459ce2edb9bf5f77387d901450b45d75f45cde0ccdce383e03.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/architecture-validator/tests/package-boundary.test.mjs",
+      "sha256": "f2c61894590da296486addd0d8135ba6b0550592d24dd2cf83ecc83b649dcf9a",
+      "bytes": 423,
+      "snapshot": "frozen-inputs/f2c61894590da296486addd0d8135ba6b0550592d24dd2cf83ecc83b649dcf9a.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/architecture-validator/tests/protocol.unit.test.ts",
+      "sha256": "5c39bec23c109fdf8bc11b075ed87b7494d6bda4b463018ef94a0c3a7c45d2ff",
+      "bytes": 2438,
+      "snapshot": "frozen-inputs/5c39bec23c109fdf8bc11b075ed87b7494d6bda4b463018ef94a0c3a7c45d2ff.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/architecture-validator/tsconfig.json",
+      "sha256": "e870b88d9f1d5090754667bb4214ee5f4ac6ed68b1460d655af0e37cb048959b",
+      "bytes": 215,
+      "snapshot": "frozen-inputs/e870b88d9f1d5090754667bb4214ee5f4ac6ed68b1460d655af0e37cb048959b.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/case-study/README.md",
+      "sha256": "d896e5e31a642289a86806abd984add82a969fd6377257ff39b864c1967aaa56",
+      "bytes": 3223,
+      "snapshot": "frozen-inputs/d896e5e31a642289a86806abd984add82a969fd6377257ff39b864c1967aaa56.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/case-study/package.json",
+      "sha256": "4c8729dfdf523befdb7dfc2551ba543780d0171bb6d3998ac387a6d50e9668a5",
+      "bytes": 325,
+      "snapshot": "frozen-inputs/4c8729dfdf523befdb7dfc2551ba543780d0171bb6d3998ac387a6d50e9668a5.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/case-study/plugin.json",
+      "sha256": "e18697e96655c6b0fcf775de0a898a18821d7bd1c9e1960fdd150d18f9f68b8e",
+      "bytes": 578,
+      "snapshot": "frozen-inputs/e18697e96655c6b0fcf775de0a898a18821d7bd1c9e1960fdd150d18f9f68b8e.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/case-study/schemas/config.schema.json",
+      "sha256": "4632cc51357ffecdbd593cf1d1928a99b9cd4855b3763354f67261b62cc0c895",
+      "bytes": 180,
+      "snapshot": "frozen-inputs/4632cc51357ffecdbd593cf1d1928a99b9cd4855b3763354f67261b62cc0c895.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/case-study/schemas/input.schema.json",
+      "sha256": "57b29f85dd70c0e69c90eed33563fde513533de0df258ab5f2b62c2ca693bd7b",
+      "bytes": 1335,
+      "snapshot": "frozen-inputs/57b29f85dd70c0e69c90eed33563fde513533de0df258ab5f2b62c2ca693bd7b.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/case-study/schemas/result.schema.json",
+      "sha256": "6f0724b07d28e7599627452c02f7c6528acf74183bb03c8111ddbbdd4736a87d",
+      "bytes": 164,
+      "snapshot": "frozen-inputs/6f0724b07d28e7599627452c02f7c6528acf74183bb03c8111ddbbdd4736a87d.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/case-study/src/protocol.ts",
+      "sha256": "3ff3c3dc70f2967d194896205cb1c7a2f7226d84de2a042f6c7bae46a25588c6",
+      "bytes": 5223,
+      "snapshot": "frozen-inputs/3ff3c3dc70f2967d194896205cb1c7a2f7226d84de2a042f6c7bae46a25588c6.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/case-study/src/stage.ts",
+      "sha256": "a537e4028ddc30ea19ae7fa18e828c10745f08f14b0cf16e534ee8b42ea720b9",
+      "bytes": 2618,
+      "snapshot": "frozen-inputs/a537e4028ddc30ea19ae7fa18e828c10745f08f14b0cf16e534ee8b42ea720b9.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/case-study/tests/live-function.test.ts",
+      "sha256": "034be8b74bd8a687b9732f1cd7f40784c10f9f2769a748e4f1c427792ff83ff0",
+      "bytes": 793,
+      "snapshot": "frozen-inputs/034be8b74bd8a687b9732f1cd7f40784c10f9f2769a748e4f1c427792ff83ff0.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/case-study/tests/package-boundary.test.mjs",
+      "sha256": "7121daaaddd3268395864668c065b163e94a3636ddbd5e94dc2583c805b46309",
+      "bytes": 742,
+      "snapshot": "frozen-inputs/7121daaaddd3268395864668c065b163e94a3636ddbd5e94dc2583c805b46309.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/case-study/tests/protocol.test.mjs",
+      "sha256": "980e6140e7c4d4f66134f49ce5ac537d65102ab0c6a498d2a2ff98d4fe13b069",
+      "bytes": 2168,
+      "snapshot": "frozen-inputs/980e6140e7c4d4f66134f49ce5ac537d65102ab0c6a498d2a2ff98d4fe13b069.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/case-study/tsconfig.json",
+      "sha256": "e870b88d9f1d5090754667bb4214ee5f4ac6ed68b1460d655af0e37cb048959b",
+      "bytes": 215,
+      "snapshot": "frozen-inputs/e870b88d9f1d5090754667bb4214ee5f4ac6ed68b1460d655af0e37cb048959b.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/implementation-agent/README.md",
+      "sha256": "9f6b149f2994f44abeefc59e9e960f240f3c4947c1dceaf1d97806cc0255192a",
+      "bytes": 1947,
+      "snapshot": "frozen-inputs/9f6b149f2994f44abeefc59e9e960f240f3c4947c1dceaf1d97806cc0255192a.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/implementation-agent/package.json",
+      "sha256": "a2b40ca7dd4f1e3007696ef03304f80e7c31e4e8ab5834393bf69d2ca3d698cb",
+      "bytes": 334,
+      "snapshot": "frozen-inputs/a2b40ca7dd4f1e3007696ef03304f80e7c31e4e8ab5834393bf69d2ca3d698cb.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/implementation-agent/plugin.json",
+      "sha256": "fde7e60285cf1fd687b85e9ce2372b1aaa02d7bbf35bced1b8741c073493e5c9",
+      "bytes": 696,
+      "snapshot": "frozen-inputs/fde7e60285cf1fd687b85e9ce2372b1aaa02d7bbf35bced1b8741c073493e5c9.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/implementation-agent/schemas/config.schema.json",
+      "sha256": "49b1391ff9c5076715c42cf37857f4a6ec6e5a90e7777ff9c94e0d664449981a",
+      "bytes": 224,
+      "snapshot": "frozen-inputs/49b1391ff9c5076715c42cf37857f4a6ec6e5a90e7777ff9c94e0d664449981a.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/implementation-agent/schemas/input.schema.json",
+      "sha256": "f2c8f956678a98cce81e8d6bd41fa444588ceb1519a9ca7a7f5db509f9478d5c",
+      "bytes": 2210,
+      "snapshot": "frozen-inputs/f2c8f956678a98cce81e8d6bd41fa444588ceb1519a9ca7a7f5db509f9478d5c.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/implementation-agent/schemas/result.schema.json",
+      "sha256": "6f0724b07d28e7599627452c02f7c6528acf74183bb03c8111ddbbdd4736a87d",
+      "bytes": 164,
+      "snapshot": "frozen-inputs/6f0724b07d28e7599627452c02f7c6528acf74183bb03c8111ddbbdd4736a87d.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/implementation-agent/src/protocol.ts",
+      "sha256": "d1d2e0c5d82e37e3a3e51e89f1d002e1623a06fdcd0a4b9add816bf563b9cbe6",
+      "bytes": 7464,
+      "snapshot": "frozen-inputs/d1d2e0c5d82e37e3a3e51e89f1d002e1623a06fdcd0a4b9add816bf563b9cbe6.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/implementation-agent/src/repair-evidence.ts",
+      "sha256": "0ba38e4004d0b9c3058fdce363611beeb6170ee3cb37424da599eb3757fa5c99",
+      "bytes": 2793,
+      "snapshot": "frozen-inputs/0ba38e4004d0b9c3058fdce363611beeb6170ee3cb37424da599eb3757fa5c99.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/implementation-agent/src/stage.ts",
+      "sha256": "4f2057feef1fdd4c81bbb90ae203564cd0ab3922a9fd44b098a1a99558da4870",
+      "bytes": 9062,
+      "snapshot": "frozen-inputs/4f2057feef1fdd4c81bbb90ae203564cd0ab3922a9fd44b098a1a99558da4870.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/implementation-agent/src/workspace.ts",
+      "sha256": "14cdeb066a35cbb2564928ca8ff8f4fa5ce2bd95a36c3607bda011f9c0e79c34",
+      "bytes": 558,
+      "snapshot": "frozen-inputs/14cdeb066a35cbb2564928ca8ff8f4fa5ce2bd95a36c3607bda011f9c0e79c34.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/implementation-agent/tests/live-function.test.ts",
+      "sha256": "13ccae41a9d10b740a55d103fdf7deea45df597c91e949682d06652c413c7034",
+      "bytes": 13008,
+      "snapshot": "frozen-inputs/13ccae41a9d10b740a55d103fdf7deea45df597c91e949682d06652c413c7034.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/implementation-agent/tests/package-boundary.test.mjs",
+      "sha256": "9c7301442eebf330bddfa1bb65e0f391ada98097553e76aafad2980266a59f50",
+      "bytes": 477,
+      "snapshot": "frozen-inputs/9c7301442eebf330bddfa1bb65e0f391ada98097553e76aafad2980266a59f50.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/implementation-agent/tests/protocol.test.ts",
+      "sha256": "d95fd3d67bba3e442c02a722378cd763e70274ecb5fde72f5765156b49db1478",
+      "bytes": 1753,
+      "snapshot": "frozen-inputs/d95fd3d67bba3e442c02a722378cd763e70274ecb5fde72f5765156b49db1478.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/implementation-agent/tsconfig.json",
+      "sha256": "14b157e19a12fc64deb926bf5abf286611c715f5a8475aa6408f037a5a09e472",
+      "bytes": 137,
+      "snapshot": "frozen-inputs/14b157e19a12fc64deb926bf5abf286611c715f5a8475aa6408f037a5a09e472.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/pipeline-review/README.md",
+      "sha256": "acdf524d2b206d0f6152b537375a69b07b0abf5ad3ce6e57942a5e64ebde9141",
+      "bytes": 3229,
+      "snapshot": "frozen-inputs/acdf524d2b206d0f6152b537375a69b07b0abf5ad3ce6e57942a5e64ebde9141.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/pipeline-review/package.json",
+      "sha256": "1f587ae529db6a8c3ede69be6ca14651d989a80e884d111888469bd5b30da888",
+      "bytes": 412,
+      "snapshot": "frozen-inputs/1f587ae529db6a8c3ede69be6ca14651d989a80e884d111888469bd5b30da888.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/pipeline-review/plugin.json",
+      "sha256": "113fad3ba88ebc4db595fd411230d3288a28e8dfc99583e5495cf34da2483cab",
+      "bytes": 892,
+      "snapshot": "frozen-inputs/113fad3ba88ebc4db595fd411230d3288a28e8dfc99583e5495cf34da2483cab.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/pipeline-review/schemas/config.schema.json",
+      "sha256": "49b1391ff9c5076715c42cf37857f4a6ec6e5a90e7777ff9c94e0d664449981a",
+      "bytes": 224,
+      "snapshot": "frozen-inputs/49b1391ff9c5076715c42cf37857f4a6ec6e5a90e7777ff9c94e0d664449981a.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/pipeline-review/schemas/evidence-config.schema.json",
+      "sha256": "905fba3c46c2fbf13a617d385099dda9959302ab3414a67cc8f5d5c33502e530",
+      "bytes": 682,
+      "snapshot": "frozen-inputs/905fba3c46c2fbf13a617d385099dda9959302ab3414a67cc8f5d5c33502e530.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/pipeline-review/schemas/input.schema.json",
+      "sha256": "57b29f85dd70c0e69c90eed33563fde513533de0df258ab5f2b62c2ca693bd7b",
+      "bytes": 1335,
+      "snapshot": "frozen-inputs/57b29f85dd70c0e69c90eed33563fde513533de0df258ab5f2b62c2ca693bd7b.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/pipeline-review/schemas/result.schema.json",
+      "sha256": "6f0724b07d28e7599627452c02f7c6528acf74183bb03c8111ddbbdd4736a87d",
+      "bytes": 164,
+      "snapshot": "frozen-inputs/6f0724b07d28e7599627452c02f7c6528acf74183bb03c8111ddbbdd4736a87d.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/pipeline-review/src/evidence-adapter.ts",
+      "sha256": "477c0a5349d80816ab5af7dd06abbdeec3bf62ab94fe25ea88159d3f1b74293c",
+      "bytes": 3858,
+      "snapshot": "frozen-inputs/477c0a5349d80816ab5af7dd06abbdeec3bf62ab94fe25ea88159d3f1b74293c.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/pipeline-review/src/evidence-bundle.ts",
+      "sha256": "ca3db15dbc1f008f690b79df3f4cb94143b924631b11711fb935f4ee3ccda7dd",
+      "bytes": 5615,
+      "snapshot": "frozen-inputs/ca3db15dbc1f008f690b79df3f4cb94143b924631b11711fb935f4ee3ccda7dd.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/pipeline-review/src/protocol.ts",
+      "sha256": "df3e02fd4c7a13aa38ce93292a55da9cb6c712799e813cbe0c8a283fd769081f",
+      "bytes": 5871,
+      "snapshot": "frozen-inputs/df3e02fd4c7a13aa38ce93292a55da9cb6c712799e813cbe0c8a283fd769081f.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/pipeline-review/src/stage.ts",
+      "sha256": "e2951394c77a1f57f8538dc8586fb6f8b571a5b2050b87fec65f42260055d51a",
+      "bytes": 2662,
+      "snapshot": "frozen-inputs/e2951394c77a1f57f8538dc8586fb6f8b571a5b2050b87fec65f42260055d51a.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/pipeline-review/tests/live-function.test.ts",
+      "sha256": "eb56fbcf5a026359aad4351423c92ebfd1f76e72843f646bc7e50953cb6e60ef",
+      "bytes": 817,
+      "snapshot": "frozen-inputs/eb56fbcf5a026359aad4351423c92ebfd1f76e72843f646bc7e50953cb6e60ef.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/pipeline-review/tests/package-boundary.test.mjs",
+      "sha256": "b4a91a91ec99a62813f2c2e8cf35642add682c1cfb699d0e8930ae2230453af6",
+      "bytes": 752,
+      "snapshot": "frozen-inputs/b4a91a91ec99a62813f2c2e8cf35642add682c1cfb699d0e8930ae2230453af6.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/pipeline-review/tests/protocol.test.mjs",
+      "sha256": "e6041312773df12596b7b695b7b86b35c5839e97d371dae81edceddad1ac0709",
+      "bytes": 2181,
+      "snapshot": "frozen-inputs/e6041312773df12596b7b695b7b86b35c5839e97d371dae81edceddad1ac0709.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/pipeline-review/tsconfig.json",
+      "sha256": "e870b88d9f1d5090754667bb4214ee5f4ac6ed68b1460d655af0e37cb048959b",
+      "bytes": 215,
+      "snapshot": "frozen-inputs/e870b88d9f1d5090754667bb4214ee5f4ac6ed68b1460d655af0e37cb048959b.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/prism-design/README.md",
+      "sha256": "578e856a2dc1bec26227012406c610bca1ed9ce569778347b9d90355ed4f96ac",
+      "bytes": 1374,
+      "snapshot": "frozen-inputs/578e856a2dc1bec26227012406c610bca1ed9ce569778347b9d90355ed4f96ac.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/prism-design/package.json",
+      "sha256": "54c0031ee6ce2b8bed687d805cadb90ea40c405df36cde653f99fab30303972d",
+      "bytes": 441,
+      "snapshot": "frozen-inputs/54c0031ee6ce2b8bed687d805cadb90ea40c405df36cde653f99fab30303972d.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/prism-design/plugin.json",
+      "sha256": "063ef9316e7bfdbe8b2b9a0812bfc2a0b968294edc116d85e557d3e591dbf2d9",
+      "bytes": 482,
+      "snapshot": "frozen-inputs/063ef9316e7bfdbe8b2b9a0812bfc2a0b968294edc116d85e557d3e591dbf2d9.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/prism-design/schemas/config.schema.json",
+      "sha256": "15fc34fb28e0afe96ad1e248c32e6d9a9bb173bb731226fb52ccb78a8afcc61e",
+      "bytes": 352,
+      "snapshot": "frozen-inputs/15fc34fb28e0afe96ad1e248c32e6d9a9bb173bb731226fb52ccb78a8afcc61e.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/prism-design/schemas/input.schema.json",
+      "sha256": "0c636654897e05d3a4981009c4676e3a7fec517ff6c59822edd49259590fb66d",
+      "bytes": 605,
+      "snapshot": "frozen-inputs/0c636654897e05d3a4981009c4676e3a7fec517ff6c59822edd49259590fb66d.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/prism-design/schemas/result.schema.json",
+      "sha256": "3e80e0c6d65754ee88072b0d08c1780b6d196358d25f45175a7d2c8ff7d45fea",
+      "bytes": 344,
+      "snapshot": "frozen-inputs/3e80e0c6d65754ee88072b0d08c1780b6d196358d25f45175a7d2c8ff7d45fea.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/prism-design/src/architecture.ts",
+      "sha256": "bb4fab2431b51d68a787fefdaec95649678e86ede9961bc2fb1ad168b7eed10f",
+      "bytes": 1868,
+      "snapshot": "frozen-inputs/bb4fab2431b51d68a787fefdaec95649678e86ede9961bc2fb1ad168b7eed10f.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/prism-design/src/archive.ts",
+      "sha256": "8875fcaa4c6efafa2f231c8e3fcc522dcd1ae1f23850a4d8941a89358726383e",
+      "bytes": 6220,
+      "snapshot": "frozen-inputs/8875fcaa4c6efafa2f231c8e3fcc522dcd1ae1f23850a4d8941a89358726383e.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/prism-design/src/stage.ts",
+      "sha256": "20bee389c4868070dc7450d366b85745c2f26acb88e8d526463c3cb5a599db88",
+      "bytes": 6162,
+      "snapshot": "frozen-inputs/20bee389c4868070dc7450d366b85745c2f26acb88e8d526463c3cb5a599db88.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/prism-design/tests/live-function.test.ts",
+      "sha256": "f2e6610df9c42ec53a110c10cf1c4a4d37f54ee16bcafcc120b2943fd43f0d3d",
+      "bytes": 699,
+      "snapshot": "frozen-inputs/f2e6610df9c42ec53a110c10cf1c4a4d37f54ee16bcafcc120b2943fd43f0d3d.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/prism-design/tsconfig.json",
+      "sha256": "6fcce9b8c2807131e39d8aaed282eb5f03906dc757d09d8b4fe54c6460cab2f1",
+      "bytes": 105,
+      "snapshot": "frozen-inputs/6fcce9b8c2807131e39d8aaed282eb5f03906dc757d09d8b4fe54c6460cab2f1.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/project-summary/README.md",
+      "sha256": "0e88232cfbabf90d094ca6f8de77c3828de288b81109f2d6239087f52dbe4ee9",
+      "bytes": 2210,
+      "snapshot": "frozen-inputs/0e88232cfbabf90d094ca6f8de77c3828de288b81109f2d6239087f52dbe4ee9.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/project-summary/package.json",
+      "sha256": "5d55bac5f34dbb15dc796f54e09e4069e2b23b668461b12f5dcf6c3ee0508f8e",
+      "bytes": 473,
+      "snapshot": "frozen-inputs/5d55bac5f34dbb15dc796f54e09e4069e2b23b668461b12f5dcf6c3ee0508f8e.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/project-summary/plugin.json",
+      "sha256": "995ddb9dec1c6ad6ea9e55c7ed667e560a045365fcc6e4721908bd86b63b0454",
+      "bytes": 551,
+      "snapshot": "frozen-inputs/995ddb9dec1c6ad6ea9e55c7ed667e560a045365fcc6e4721908bd86b63b0454.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/project-summary/schemas/config.schema.json",
+      "sha256": "7c1bf8023f80f2bd5c3727b97636c804cd2c8b801fbe71fd8374a6edd7049bd9",
+      "bytes": 229,
+      "snapshot": "frozen-inputs/7c1bf8023f80f2bd5c3727b97636c804cd2c8b801fbe71fd8374a6edd7049bd9.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/project-summary/schemas/input.schema.json",
+      "sha256": "451591d9b115aa5aae88c4a08301845316f1207cdd24ed9baf7639adc83439cf",
+      "bytes": 2210,
+      "snapshot": "frozen-inputs/451591d9b115aa5aae88c4a08301845316f1207cdd24ed9baf7639adc83439cf.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/project-summary/schemas/result.schema.json",
+      "sha256": "6f0724b07d28e7599627452c02f7c6528acf74183bb03c8111ddbbdd4736a87d",
+      "bytes": 164,
+      "snapshot": "frozen-inputs/6f0724b07d28e7599627452c02f7c6528acf74183bb03c8111ddbbdd4736a87d.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/project-summary/src/review-semantics.ts",
+      "sha256": "a14a5e8039d481063d2439a8c1060ca414012f7ba55b73ee153d2317effc2104",
+      "bytes": 2988,
+      "snapshot": "frozen-inputs/a14a5e8039d481063d2439a8c1060ca414012f7ba55b73ee153d2317effc2104.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/project-summary/src/stage.ts",
+      "sha256": "b16533ade1d6bbf08c53d3c31bbe7102f5b67b785b1f928524ca9879a99a4fee",
+      "bytes": 1731,
+      "snapshot": "frozen-inputs/b16533ade1d6bbf08c53d3c31bbe7102f5b67b785b1f928524ca9879a99a4fee.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/project-summary/src/summary.ts",
+      "sha256": "bb82063929e9100dd42c3dff541eca77be2cfa624f8b5fd8733e773acb7ce7c5",
+      "bytes": 11669,
+      "snapshot": "frozen-inputs/bb82063929e9100dd42c3dff541eca77be2cfa624f8b5fd8733e773acb7ce7c5.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/project-summary/tests/live-function.test.ts",
+      "sha256": "9fbc900913cdebd86ea447193f3dedb6ddab231321279df6263be910496c7197",
+      "bytes": 4771,
+      "snapshot": "frozen-inputs/9fbc900913cdebd86ea447193f3dedb6ddab231321279df6263be910496c7197.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/project-summary/tests/package-boundary.test.mjs",
+      "sha256": "451c143e3fe713a8bd919789b2ad0a8c5b5758853059b20f3bee33c23029c495",
+      "bytes": 745,
+      "snapshot": "frozen-inputs/451c143e3fe713a8bd919789b2ad0a8c5b5758853059b20f3bee33c23029c495.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/project-summary/tsconfig.json",
+      "sha256": "e870b88d9f1d5090754667bb4214ee5f4ac6ed68b1460d655af0e37cb048959b",
+      "bytes": 215,
+      "snapshot": "frozen-inputs/e870b88d9f1d5090754667bb4214ee5f4ac6ed68b1460d655af0e37cb048959b.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/project/compiler.ts",
+      "sha256": "9d8ccdb3a1ccc56c58c1ec510aed54473f7db6d4135d28b2e265bbf90d7f1ef5",
+      "bytes": 14415,
+      "snapshot": "frozen-inputs/9d8ccdb3a1ccc56c58c1ec510aed54473f7db6d4135d28b2e265bbf90d7f1ef5.gz"
+    }
+  ]
+}

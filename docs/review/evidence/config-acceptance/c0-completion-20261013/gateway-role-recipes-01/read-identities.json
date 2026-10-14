@@ -1,0 +1,343 @@
+{
+  "time": "2026-10-14T04:05:21.443683+00:00",
+  "inputs": [
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/gateway-profile.schema.json",
+      "sha256": "f0128b5d4b2947785260489c221eec96e1cad2d82fccf02f98cf06fa9d5b3600",
+      "bytes": 36850
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/existing-chart-owner.schema.json",
+      "sha256": "e5665677dc038177fbbec509dd66af35448ae10904499978629b7ca895e83c13",
+      "bytes": 47639
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/existing-chart-owner-proposal.json",
+      "sha256": "bd18300361425b9f005efad737fcddbf5e0aedf2899ec4dd85fbb3f2eaedcf89",
+      "bytes": 16506
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/managed-bootstrap-context.json",
+      "sha256": "af393b54812aa3fafed30dad8fe8cb0e06d674b63865358785cc30ad7e9cfbe9",
+      "bytes": 8863
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/managed-bootstrap-context.schema.json",
+      "sha256": "7ca9fc33d5a011cf2002058c264d986549b5f376bebd7ed165bd58298a631887",
+      "bytes": 16788
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/readonly-context-source-recipes.json",
+      "sha256": "c4ad7e2885088263621329dd99097006857dfbc4d765e5e82becfd5d7967bc98",
+      "bytes": 7179
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/original70-field-contracts.json",
+      "sha256": "859ae0c2b12269cf494d4591a4f8774a1f9884dc7dafd5ab3169b162083dcd6a",
+      "bytes": 1467762
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/original-case-contracts.json",
+      "sha256": "8a059981ff2a1d8be82b65f35aa2ff7650a0244cc6bceade4be00ff2bf0bda2e",
+      "bytes": 117772
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/pinned-native-source-cuts.json",
+      "sha256": "af56bdd8e2fde306c21da00bff3c042f7f3190c0b9e9b73fcd6a9893c97b1cee",
+      "bytes": 801270
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/memory-credential-authority-contract.json",
+      "sha256": "ed0b8690e1d49448b354e1adbea675f30f7b00bf665cbceb22ce3f1454cdb972",
+      "bytes": 4945
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/duration-consumer-contract.json",
+      "sha256": "f92897ac61399fc82813f7d1ac09010bd389eae8a6ea3c89cc89620fc39eb358",
+      "bytes": 2169
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/check-gateway-definition.mjs",
+      "sha256": "9b9b64e1a546ef12b35874148dac043490a51dad37d6e0d1a419a4bbb6ff43f2",
+      "bytes": 24662
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/duration-source/package.json",
+      "sha256": "fe24be9aa953aa41d10da28162bd1221034c4a7983f447f4f861b1452156fd85",
+      "bytes": 138760
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/duration-source/ms/package.json",
+      "sha256": "1a6b4d9739790c0b94ab96c8cc0507e281c164c311ff4fbf5e57fb8d26290b40",
+      "bytes": 732
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/duration-source/ms/index.js",
+      "sha256": "e5f0b6a946a9b2b356a28557728410717df54ea2f599edb619f9839df6b7b0e9",
+      "bytes": 3024
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/duration-source/dist/parse-duration-DBWI377R.mjs",
+      "sha256": "1090c987bb219e1cf966eb508856a202c6b7737534186af7b3f6eace6c3709d9",
+      "bytes": 1891
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/duration-source/dist/string-coerce-CIXf7egm.mjs",
+      "sha256": "db70aa59f984a63935d147b6ac11b50a90f21b726998853ef3455451f1e622e7",
+      "bytes": 4647
+    },
+    {
+      "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+      "sha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4",
+      "bytes": 9173
+    },
+    {
+      "path": "charts/kubeclaw/templates/configmap-skills.yaml",
+      "sha256": "0147b857c5c3659cfad74bf410a39e81f6187d5d1b7df2ebdb8d23c7595f7a6c",
+      "bytes": 847
+    },
+    {
+      "path": "charts/kubeclaw/templates/deployment.yaml",
+      "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041",
+      "bytes": 85514
+    },
+    {
+      "path": "charts/kubeclaw/templates/_helpers.tpl",
+      "sha256": "69986722975a973479b9fb1a2c35ab1a1ecb972662e8c19dd03718ac441f5103",
+      "bytes": 3671
+    },
+    {
+      "path": "charts/kubeclaw/templates/service.yaml",
+      "sha256": "76a347213feffadad635311cc89fdbfb896c6a3f800e8e92528ec9efee280cc2",
+      "bytes": 1187
+    },
+    {
+      "path": "charts/kubeclaw/values.yaml",
+      "sha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1",
+      "bytes": 18792
+    },
+    {
+      "path": "my-values/nova-values.yaml",
+      "sha256": "0fcc239368db8830868f38d7be350580575e8c241bd6435f79c9f9b931ff6140",
+      "bytes": 10247
+    },
+    {
+      "path": "my-values/prism-agent-values.yaml",
+      "sha256": "5ff81cee48e035c74e67694c57dea8a2ee66ce5ca5015c6b15cd6ae352c2936a",
+      "bytes": 3981
+    },
+    {
+      "path": "docker/Dockerfile.nova",
+      "sha256": "34e54267a3cd0d7541315de3c6ec785206a0364b7ec76699d433c4a3ca341242",
+      "bytes": 16365
+    },
+    {
+      "path": "docker/Dockerfile.prism-agent",
+      "sha256": "85209d0cb47ab3bca1e2a27acb50d4e554853adfa472fa7195c0468627a19a47",
+      "bytes": 7225
+    },
+    {
+      "path": "docker/openclaw-tools/package.json",
+      "sha256": "4b8c76e529badffd396e7d09539974179eb17106f3d467cf2acd5fe23ed6a552",
+      "bytes": 130
+    },
+    {
+      "path": "docker/openclaw-tools/package-lock.json",
+      "sha256": "3d0142c43fa170f59e0d4c51f91c17f81ed47ab571f407b1abceadff50be4d72",
+      "bytes": 3827
+    },
+    {
+      "path": "docker/nova-tools/package.json",
+      "sha256": "45c552450661749c0908f846c2ce49bf8e5bf25a59950950da9ca0adb327b454",
+      "bytes": 408
+    },
+    {
+      "path": "docker/nova-tools/package-lock.json",
+      "sha256": "2f6463db041b9c25b14f5f163207eb1a6d22f91e9fc088ad1af7d14b350d8b2d",
+      "bytes": 101324
+    },
+    {
+      "path": "skills/prism/openclaw-plugin/index.mjs",
+      "sha256": "97a30daa0a042f2cd9416746caffe9207828dd9a587e3a6c3e8de481f5d0640e",
+      "bytes": 3128
+    },
+    {
+      "path": "skills/prism/openclaw-plugin/openclaw.plugin.json",
+      "sha256": "1cf3f06268870973f2d7131cf64d469e516a62bf4b5f3a9d5b6d6a1c9bdd0588",
+      "bytes": 579
+    },
+    {
+      "path": "skills/prism/openclaw-plugin/package.json",
+      "sha256": "27f48da7e93c5506cbc7f77cb56163ceae6c6ce6659597cbbfde3f88b194dfcf",
+      "bytes": 354
+    },
+    {
+      "path": "skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json",
+      "sha256": "651bf5310a5261ee309e219453e534754e7738fdd86152e582183e3ba95ec5eb",
+      "bytes": 1255
+    },
+    {
+      "path": "skills/common/plugins/openclaw-agent-observer/package.json",
+      "sha256": "ef410425428ee010a7ad7df246426118ec3f4a365b03ce9a27f87f67268819e1",
+      "bytes": 1072
+    },
+    {
+      "path": "skills/nova/project_setup/SKILL.md",
+      "sha256": "bc04eb9c29902ae9ec9722afa96fe81faab002819e731d75225a49d6563ee426",
+      "bytes": 11779
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/manifest.json",
+      "sha256": "d9d98210c24ab4935614177d012f15f2d4d0000880cbe777d3914b4393f7ef96",
+      "bytes": 6841
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/README.md",
+      "sha256": "cba0ec112b4d24ac078d7e5508e1f1cbd3f8188734f8025dd5582690bea5e5d8",
+      "bytes": 10348
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/review-manifest.json",
+      "sha256": "6a7e343c9965aa0cb89572f87f34610c989cb8227972665b9227f82e84c9cf8d",
+      "bytes": 168073
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/manifest.json",
+      "sha256": "976eabc1e42b8cac91ff0e3f979207c9a7e3951bad64a33f97c4e4e1d9b88c12",
+      "bytes": 79292
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-02/manifest.json",
+      "sha256": "460f543e27aa0b6aa23644ae14cb83c189988412d67c50d82c4658dc6b207946",
+      "bytes": 2164
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-same-entry-engine-binding-review-02/README.md",
+      "sha256": "5d1b8afe6befdf800c93363139244793d31e616afc606a16edd9e7fe6f60e775",
+      "bytes": 10492
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/README.md",
+      "sha256": "d7683f6b37672e9515de203a250dcf963eb588dbb292bf082bb196955b04cfaf",
+      "bytes": 5660
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/RECEIVING-ABI.md",
+      "sha256": "6ae06d66e7a67931ad7240e53a7c3a4419923a4efa12f6643a75e3d1345edf4a",
+      "bytes": 11837
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/remaining-local-role-recipes.json",
+      "sha256": "c77677cdbb124241b10fafc988651d6b6ff3cd79268f7fa8aa58893b966fcee4",
+      "bytes": 21078
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/manifest.json",
+      "sha256": "519426534936fe7409a8386220b7a497ae5a781b0f855b14cb1de7ed93b54834",
+      "bytes": 172840
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/config/pipeline.config.json",
+      "sha256": "05addb8209de125deee1f5c2ad67528e0ae3b26b04c2994c021c8389ceebe5fa",
+      "bytes": 8634
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017",
+      "bytes": 10346
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/file-set-stand.json",
+      "sha256": "ec250f06fca25db3f9e2423b0be60cfff6bc3a2fdf0a53bd475d73e4ed5104ce",
+      "bytes": 73490
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/buster-remote-plan-profile-01/manifest.json",
+      "sha256": "0fcb939f4b2df3e4de37962259bf98114af4711b85c3186d435a5561871f40c1",
+      "bytes": 40620
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-buster-remote-plan-profile-review-01/README.md",
+      "sha256": "c6ab5a04c887e359edf1ba6f8e406b960fee18a194e1f6e7b70b4eba075abb47",
+      "bytes": 13443
+    },
+    {
+      "path": "docs/review/remediation/config-semantic-inventory.json",
+      "sha256": "d113ff0289b6030afafb4c30d6d4b67115a7d7ee567e43fd851e7bff658399bf",
+      "bytes": 37988493
+    },
+    {
+      "path": "docs/review/remediation/config-acceptance-matrix.json",
+      "sha256": "397386f9a5d541664995fc0a5c008f74cbc9a5559c85924480ae403c5ae36020",
+      "bytes": 101694304
+    },
+    {
+      "path": "/tmp/kubeclaw-c0-delivery-openclaw-2026.9.5/openclaw-2026.9.5.tgz",
+      "sha256": "1fb6ef4fae447af14f1e3b1028334f39146d181a66a4cce2848d4f741c636340",
+      "bytes": 72453925
+    },
+    {
+      "path": "/tmp/kubeclaw-c0-delivery-openclaw-2026.9.5/package/dist/number-coercion-CLj0HTDM.mjs",
+      "sha256": "0ed7f5c11b0e6b4cd307532bbe46b709dbdbb09eaa584e57e2edbfb44689aa08",
+      "bytes": 12706,
+      "archiveMember": "package/dist/number-coercion-CLj0HTDM.mjs",
+      "archiveSha256": "1fb6ef4fae447af14f1e3b1028334f39146d181a66a4cce2848d4f741c636340"
+    },
+    {
+      "path": "/tmp/kubeclaw-c0-delivery-openclaw-2026.9.5/package/dist/timeout-Bjg7ga80.mjs",
+      "sha256": "fe0a9056d0a2e8d3e9f2eb87161064217b2043a619b15f5895a8129046736514",
+      "bytes": 1449,
+      "archiveMember": "package/dist/timeout-Bjg7ga80.mjs",
+      "archiveSha256": "1fb6ef4fae447af14f1e3b1028334f39146d181a66a4cce2848d4f741c636340"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/gateway-service-selection.proposed.schema.json",
+      "sha256": "0495a4589a887d493b2b8d5c3bdc71884ab46857829c0fb28f5e5ab02f7e657b",
+      "bytes": 831
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/same-entry-root-and-sole-author-contract.json",
+      "sha256": "2b981638b66c8c68d758a2e6b8a5495b6346cbc03c10ce30893090befbfed3ed",
+      "bytes": 5564
+    },
+    {
+      "path": "/tmp/kubeclaw-c0-delivery-openclaw-2026.9.5/package/dist/ref-contract-CpZCkwB4.mjs",
+      "sha256": "843a7b433b6dc7d4dd2f77447d8b2064fdfd000a9b05e1a0aea0aaa533bd6182",
+      "bytes": 5766,
+      "archiveMember": "package/dist/ref-contract-CpZCkwB4.mjs",
+      "archiveSha256": "1fb6ef4fae447af14f1e3b1028334f39146d181a66a4cce2848d4f741c636340"
+    },
+    {
+      "path": "gitops/production/apps/applications.yaml",
+      "sha256": "2c4e7b1db4ac0282cf64e6cee265c084c59dd24f7623ef61ca8cb09ebb9a1542",
+      "bytes": 4171
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/future-field-case-plans.json",
+      "sha256": "dbc7fde9c31ba6e98514118323956e0445b825fb41f1f7735516435d426b003c",
+      "bytes": 660752
+    },
+    {
+      "path": "node_modules/ajv/dist/2020.js",
+      "sha256": "908e9670b478b2ba126802a221b7e47006f50cf467e2c5dd7935d3dbef10a20a",
+      "bytes": 2894
+    },
+    {
+      "path": "node_modules/ajv/package.json",
+      "sha256": "1f9033ee5a6515e7d76938b7072941862d1ed228a6879cc7fe10cdeb75107989",
+      "bytes": 4405
+    },
+    {
+      "path": "node_modules/ajv-formats/dist/index.js",
+      "sha256": "3f3014150293846086d11058bb8bf43e669e354a98b37adcf10281454d5e753b",
+      "bytes": 1508
+    },
+    {
+      "path": "node_modules/yaml/package.json",
+      "sha256": "20b8b197cbd10dad245d45e463dfe58e4c8c25a47e24bc4256ad9ab58bf35683",
+      "bytes": 3254
+    }
+  ],
+  "priorNativeCuts": "original185 native source cuts and Gateway02 exact duration contracts preserved by pinned reference; no giant minified source/archive copies",
+  "rootBoundary": "last adopted frozen reviewedv7; candidate frozenv8 under review read only for explicit local missing-role dependency, not adopted"
+}

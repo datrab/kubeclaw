@@ -1,0 +1,48 @@
+{
+  "headBefore": "beda27eb69ce409ac37fe075edd4686980e39fd3",
+  "roots": [
+    {
+      "path": "docs/review/remediation/config-semantic-inventory.json",
+      "beforeSha256": "d113ff0289b6030afafb4c30d6d4b67115a7d7ee567e43fd851e7bff658399bf",
+      "afterSha256": "5f6ccfc4f00b08b8f3e6a80400cde0708b768161363ada396f6764ef7c8ff387",
+      "allNonCurrentCombinedPropertiesEqual": true,
+      "onlyReplacedProperty": "currentCombinedDefinitionGeneration",
+      "currentProviderFieldAdoptionExactlyUnchanged": true,
+      "oldMetadataPreservedInSupersession": true
+    },
+    {
+      "path": "docs/review/remediation/config-acceptance-matrix.json",
+      "beforeSha256": "397386f9a5d541664995fc0a5c008f74cbc9a5559c85924480ae403c5ae36020",
+      "afterSha256": "1e8be6e5bf7c327cc6a429bbc4005740f3f77408d4a44394420033991ec6c32d",
+      "allNonCurrentCombinedPropertiesEqual": true,
+      "onlyReplacedProperty": "currentCombinedDefinitionGeneration",
+      "currentProviderFieldAdoptionExactlyUnchanged": true,
+      "oldMetadataPreservedInSupersession": true
+    }
+  ],
+  "sameDescriptorBothRoots": true,
+  "contract": {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/combined-generation-current-integration-02/adoption-contract.json",
+    "sha256": "859985287e41a4c6dd4c721e87081788f68cea46319a138c610f60e76ab3e5db"
+  },
+  "uniqueScope": {
+    "fields": 392,
+    "cases": 1744,
+    "primaryOriginalFieldOccurrences": 343,
+    "controllerOriginalFields": 49,
+    "primaryCaseOccurrences": 1739,
+    "primaryUniqueCaseIds": 1738,
+    "extraControllerCaseIds": 6
+  },
+  "fullOriginalCounts": {
+    "fields": 2409,
+    "cases": 6845,
+    "requirements": 50
+  },
+  "fullPreviousNonCurrentCombinedObjectEqualityNotCountsProof": true,
+  "originalLifecyclesStatusGatesAuthorizationUnchanged": true,
+  "implementationAuthorization": null,
+  "globalC0Accepted": false,
+  "nativeActivationAllowed": false,
+  "freshIndependentActualRootReviewRequired": true
+}

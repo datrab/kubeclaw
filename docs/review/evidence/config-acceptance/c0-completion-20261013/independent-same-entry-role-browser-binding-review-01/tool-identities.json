@@ -1,0 +1,14 @@
+{
+  "NodeExecutable": {
+    "path": "/usr/local/bin/node",
+    "sha256": "7fde7b8afa198da66257f42ee2001d874c7355631e6d1579a5fb5ef1f246df4c"
+  },
+  "replayNodeVersion": "v24.21.0",
+  "AjvEntry": {
+    "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/ajv/dist/2020.js",
+    "sha256": "908e9670b478b2ba126802a221b7e47006f50cf467e2c5dd7935d3dbef10a20a"
+  },
+  "AjvVersion": "8.20.0",
+  "TypeScriptVersion": "5.9.3",
+  "selectedActualReadInputs": 302
+}

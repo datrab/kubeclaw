@@ -1,0 +1,140 @@
+{
+  "files": [
+    {
+      "source": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stand/config/pipeline.config.json",
+        "sha256": "2147cfa1eaf53ed57928563212442f13aaef735e4733178a8579b0f2308e4011",
+        "bytes": 6751
+      },
+      "target": "config/pipeline.config.json",
+      "sha256": "2147cfa1eaf53ed57928563212442f13aaef735e4733178a8579b0f2308e4011"
+    },
+    {
+      "source": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stand/config/plugins/kubeclaw.openapi.config.json",
+        "sha256": "f575e0431736bb0ff20cd6e6f615b3595ab366c45858dc1712436dabcafe98e3",
+        "bytes": 17513
+      },
+      "target": "config/plugins/kubeclaw.openapi.config.json",
+      "sha256": "f575e0431736bb0ff20cd6e6f615b3595ab366c45858dc1712436dabcafe98e3"
+    },
+    {
+      "source": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stand/config/plugins/kubeclaw.network-http.config.json",
+        "sha256": "26b4fb9495edd6b6c60ff9acbfc866f43e953b9e013781950ff9c6708e4e64c4",
+        "bytes": 6133
+      },
+      "target": "config/plugins/kubeclaw.network-http.config.json",
+      "sha256": "26b4fb9495edd6b6c60ff9acbfc866f43e953b9e013781950ff9c6708e4e64c4"
+    },
+    {
+      "source": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stand/config/plugins/kubeclaw.http.config.json",
+        "sha256": "e8eb48798dd3b126b32962b1e17882109a289420a3ad87d82f65b8aefbe87517",
+        "bytes": 6020
+      },
+      "target": "config/plugins/kubeclaw.http.config.json",
+      "sha256": "e8eb48798dd3b126b32962b1e17882109a289420a3ad87d82f65b8aefbe87517"
+    },
+    {
+      "source": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stand/config/plugins/kubeclaw.api-flow.config.json",
+        "sha256": "6d0d39c516128aefb8e94edf6c8f68c43caa0bf9aade74628c6fc49d3c5fe917",
+        "bytes": 7218
+      },
+      "target": "config/plugins/kubeclaw.api-flow.config.json",
+      "sha256": "6d0d39c516128aefb8e94edf6c8f68c43caa0bf9aade74628c6fc49d3c5fe917"
+    },
+    {
+      "source": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stand/config/plugins/kubeclaw.security-providers.config.json",
+        "sha256": "53bde50ac26c05328b7c09c3a855bfbf5e8aca7760646f5c2511f28b8d6eeb01",
+        "bytes": 954479
+      },
+      "target": "config/plugins/kubeclaw.security-providers.config.json",
+      "sha256": "53bde50ac26c05328b7c09c3a855bfbf5e8aca7760646f5c2511f28b8d6eeb01"
+    },
+    {
+      "source": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stand/config/components/prism-worker.config.json",
+        "sha256": "61da3c7b2b81033ed9c350f593cf1ab58f3630a39b109a9b251f1b2e0ba28220",
+        "bytes": 1581
+      },
+      "target": "config/components/prism-worker.config.json",
+      "sha256": "61da3c7b2b81033ed9c350f593cf1ab58f3630a39b109a9b251f1b2e0ba28220"
+    },
+    {
+      "source": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stand/config/components/worker-core.config.json",
+        "sha256": "f59c7ec6798e853f9fb87a494cdd245193c50d19f90275fe5b530706adcb8934",
+        "bytes": 1270
+      },
+      "target": "config/components/worker-core.config.json",
+      "sha256": "f59c7ec6798e853f9fb87a494cdd245193c50d19f90275fe5b530706adcb8934"
+    },
+    {
+      "source": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stand/config/components/prism-studio.config.json",
+        "sha256": "b41a9113d26384ee0dd07d5defac180b8a52d67315c738d0a5459c49bead0fac",
+        "bytes": 976
+      },
+      "target": "config/components/prism-studio.config.json",
+      "sha256": "b41a9113d26384ee0dd07d5defac180b8a52d67315c738d0a5459c49bead0fac"
+    },
+    {
+      "source": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stand/config/components/buster-engine.config.json",
+        "sha256": "849d4848f2dccfe19d5d6c4a421b6001ee0f59ff4905b646b9dd3b93f3b0cc84",
+        "bytes": 1165082
+      },
+      "target": "config/components/buster-engine.config.json",
+      "sha256": "849d4848f2dccfe19d5d6c4a421b6001ee0f59ff4905b646b9dd3b93f3b0cc84"
+    },
+    {
+      "source": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stand/config/components/prism-control.config.json",
+        "sha256": "524ca90d6b62c656b5f279c27b8b49250d93869636aa71f73d5891429e01e1e4",
+        "bytes": 4597
+      },
+      "target": "config/components/prism-control.config.json",
+      "sha256": "524ca90d6b62c656b5f279c27b8b49250d93869636aa71f73d5891429e01e1e4"
+    },
+    {
+      "source": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stand/config/components/prism-execution.config.json",
+        "sha256": "225d2d31235f0996196da2f2b7d25a0605d59087427b997ab487d648ddf89ce3",
+        "bytes": 1606
+      },
+      "target": "config/components/prism-execution.config.json",
+      "sha256": "225d2d31235f0996196da2f2b7d25a0605d59087427b997ab487d648ddf89ce3"
+    },
+    {
+      "source": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stand/config/engines/prism-agent.config.json",
+        "sha256": "b6309c71d73c87a5598f00f2f16612c4b8bed2d705da84ca782459b4d5902f39",
+        "bytes": 900
+      },
+      "target": "config/engines/prism-agent.config.json",
+      "sha256": "b6309c71d73c87a5598f00f2f16612c4b8bed2d705da84ca782459b4d5902f39"
+    },
+    {
+      "source": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stand/charts/kubeclaw/values.yaml",
+        "sha256": "badc34136cd6c59eaaf5d2e43615489e1de805f9b9e3442613a4894ff460b40a",
+        "bytes": 23646
+      },
+      "target": "charts/kubeclaw/values.yaml",
+      "sha256": "badc34136cd6c59eaaf5d2e43615489e1de805f9b9e3442613a4894ff460b40a"
+    },
+    {
+      "source": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stand/my-values/infra/postgresql-recovery.yaml",
+        "sha256": "ce029433a76e6e4edc5d67086ab1293277ea852ca83a2e9bdccadf15232acae7",
+        "bytes": 25823
+      },
+      "target": "my-values/infra/postgresql-recovery.yaml",
+      "sha256": "ce029433a76e6e4edc5d67086ab1293277ea852ca83a2e9bdccadf15232acae7"
+    }
+  ],
+  "qualification": "The shared complete physical v7 author namespace is retained unchanged, plus explicit Nova package owners. Future root pair files are complete root-value views over this shared namespace, not standalone installed/deployable directory trees or a competing CONFIG index. A future reviewed generation author must materialize the sole entry plus this exact file-set at the receiving root; no implicit file lookup/current fill."
+}

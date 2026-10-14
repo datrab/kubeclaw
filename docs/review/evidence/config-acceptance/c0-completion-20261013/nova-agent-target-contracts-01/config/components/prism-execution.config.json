@@ -1,0 +1,58 @@
+{
+  "schemaVersion": "pipeline-component.v3",
+  "owner": "prism-execution",
+  "profiles": {
+    "local-A": {
+      "settings": {
+        "resourcePolicy": {
+          "cpuTimeMs": 60000,
+          "memoryBytes": 8589934592,
+          "tasks": 2048
+        },
+        "maximumResultBytes": 67108864,
+        "attemptPolicy": {
+          "limits": {
+            "cleanupTimeoutMs": 10000,
+            "evidenceBytes": 134217728,
+            "evidenceFiles": 64,
+            "logBytes": 1048576,
+            "resultBytes": 16777216,
+            "timeoutMs": 300000
+          },
+          "claimLifetimeMs": 600000,
+          "parentCompletionPhaseAllowance": 8
+        },
+        "engine": {
+          "cache": {
+            "maximumCompletedBytes": 16777216,
+            "maximumCompletedEntries": 32,
+            "maximumInFlight": 4
+          },
+          "maximumIngestTextCodeUnits": 200000,
+          "render": {
+            "ASSET-LENGTH": 16000000,
+            "HEIGHT": 1000,
+            "LOCALE": "en-US",
+            "MOTION": "reduce",
+            "TIMEZONE": "UTC",
+            "WIDTH-COMPACT": 390,
+            "WIDTH-REGULAR": 768,
+            "WIDTH-WIDE": 1440
+          },
+          "capturePolicy": {
+            "minimumLargeContrast": 3,
+            "minimumNormalContrast": 4.5,
+            "largeBoldFontPx": 18.66,
+            "largeBoldWeight": 700,
+            "largeNormalFontPx": 24,
+            "minimumTargetPx": 24
+          }
+        }
+      },
+      "activation": {
+        "deterministicProvider": "enabled",
+        "openAICompatibleProvider": "dormant"
+      }
+    }
+  }
+}

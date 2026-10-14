@@ -1,0 +1,397 @@
+{
+  "qualification": "readonly exact generated role recipes, not second writer/installed grants",
+  "recipes": {
+    "nova-current": {
+      "qualification": "readonly generated existing-author/source context, not second configurable policy/secret writer; exact original per-role/host/grant/image support required",
+      "systemAgent": {
+        "agentId": "main"
+      },
+      "agentModel": {
+        "primary": "openai/gpt-6-astra",
+        "fallbacks": [
+          "openai/gpt-5.5"
+        ],
+        "sourceRef": "my-values/nova-values.yaml#/agent/model -> same existing Chart agent.model; current actual source"
+      },
+      "commandsAuthorization": {
+        "ownerAllowFrom": [
+          "discord:849379821536804864"
+        ],
+        "discord": [
+          "849379821536804864",
+          "user:849379821536804864"
+        ]
+      },
+      "discordEnabled": true,
+      "gatewayPort": 18789,
+      "gatewayTokenRef": {
+        "source": "env",
+        "provider": "default",
+        "id": "OPENCLAW_GATEWAY_TOKEN"
+      },
+      "discordTokenRef": {
+        "source": "env",
+        "provider": "default",
+        "id": "DISCORD_TOKEN"
+      },
+      "installedPluginAllow": [
+        "discord",
+        "acpx",
+        "codex",
+        "openai"
+      ],
+      "roleSpecificPluginEntries": {
+        "discord": {
+          "enabled": true
+        }
+      },
+      "secretsProviderContext": {
+        "providers": {
+          "default": {
+            "source": "env"
+          }
+        }
+      },
+      "authProfileContext": "existing Chart/native OAuth identity references only; actual retained tokens/grants/issuer external, no bytes here",
+      "sourceRoleAuthor": "existing Chart + my-values/nova-values.yaml; no arbitrary context CONFIG writer",
+      "agentRole": "nova",
+      "nativeSecretRefRefinement": "original pinned native SecretRefSchema/isValidFileSecretRefId/isValidExecSecretRefId mandatory in approved full-image bootstrap; partial local cuts are NOT that validator",
+      "roleSpecificProjectionSource": "actual ConfigMap role nova plugin branch; immutable generated source recipe, no installed grant",
+      "discordApprovers": [],
+      "guildUserProjection": [
+        "849379821536804864"
+      ],
+      "sourceAuthorizationRecipe": "exact my-values/nova-values.yaml commands/Discord/auth/litellm source projections; not active grant",
+      "nativeRoleSource": {
+        "roleValuesPath": "my-values/nova-values.yaml",
+        "deploymentName": "agent-nova",
+        "namespace": "kubeclaw",
+        "imageRecipe": "docker/Dockerfile.nova",
+        "imageRepository": "ghcr.io/datrab/kubeclaw-nova",
+        "imageTag": "latest",
+        "installedImageEquality": "external-required",
+        "gatewayTokenLocator": "kubernetes-secret:kubeclaw/openclaw-shared-secrets#gatewayToken-nova",
+        "discordTokenLocator": "kubernetes-secret:kubeclaw/openclaw-shared-secrets#discordToken-nova",
+        "discordTokenCarrier": "ENV DISCORD_TOKEN only when actual discord.enabled; dormant locator otherwise, not token read",
+        "litellmAlias": {
+          "endpoint": "http://litellm.kubeclaw.svc.cluster.local:4000/v1",
+          "apiKey": {
+            "source": "env",
+            "provider": "default",
+            "id": "LITELLM_API_KEY"
+          },
+          "locator": "kubernetes-secret:kubeclaw/openclaw-shared-secrets#litellmApiKey"
+        },
+        "skillSelection": [],
+        "skillSource": "Chart explicit main.skills=[]; image codebundle /app/skills overlay delivery does not imply selection/installed skill availability",
+        "pluginSdkSource": "OpenClaw2026.9.5 original base and diagnostic-runtime onDiagnosticEvent build assertion; Prism package compat >=2026.9.1 where active; actual installed SDK equality/grants missing",
+        "serviceExposure": {
+          "type": "ClusterIP",
+          "gatewayPort": 18789,
+          "gatewayTargetPort": "gateway",
+          "bridgeEnabled": true,
+          "bridgePort": 18790,
+          "nodePort": 0,
+          "bridgeNodePort": 0,
+          "extraPorts": []
+        },
+        "modelBranchMeaning": "current source exact"
+      }
+    },
+    "nova-modelcontrast": {
+      "qualification": "readonly generated existing-author/source context, not second configurable policy/secret writer; exact original per-role/host/grant/image support required",
+      "systemAgent": {
+        "agentId": "main"
+      },
+      "agentModel": {
+        "primary": "openai/gpt-5.6-sol",
+        "fallbacks": [
+          "openai/gpt-5.5"
+        ],
+        "sourceRef": "my-values/nova-values.yaml#/agent/model -> same existing Chart agent.model; proposed full-profile alternative using actual Chart conditional native domain, not deployed source/grant"
+      },
+      "commandsAuthorization": {
+        "ownerAllowFrom": [
+          "discord:849379821536804864"
+        ],
+        "discord": [
+          "849379821536804864",
+          "user:849379821536804864"
+        ]
+      },
+      "discordEnabled": true,
+      "gatewayPort": 18789,
+      "gatewayTokenRef": {
+        "source": "env",
+        "provider": "default",
+        "id": "OPENCLAW_GATEWAY_TOKEN"
+      },
+      "discordTokenRef": {
+        "source": "env",
+        "provider": "default",
+        "id": "DISCORD_TOKEN"
+      },
+      "installedPluginAllow": [
+        "discord",
+        "acpx",
+        "codex",
+        "openai"
+      ],
+      "roleSpecificPluginEntries": {
+        "discord": {
+          "enabled": true
+        }
+      },
+      "secretsProviderContext": {
+        "providers": {
+          "default": {
+            "source": "env"
+          }
+        }
+      },
+      "authProfileContext": "existing Chart/native OAuth identity references only; actual retained tokens/grants/issuer external, no bytes here",
+      "sourceRoleAuthor": "existing Chart + my-values/nova-values.yaml; no arbitrary context CONFIG writer",
+      "agentRole": "nova",
+      "nativeSecretRefRefinement": "original pinned native SecretRefSchema/isValidFileSecretRefId/isValidExecSecretRefId mandatory in approved full-image bootstrap; partial local cuts are NOT that validator",
+      "roleSpecificProjectionSource": "actual ConfigMap role nova plugin branch; immutable generated source recipe, no installed grant",
+      "discordApprovers": [],
+      "guildUserProjection": [
+        "849379821536804864"
+      ],
+      "sourceAuthorizationRecipe": "exact my-values/nova-values.yaml commands/Discord/auth/litellm source projections; not active grant",
+      "nativeRoleSource": {
+        "roleValuesPath": "my-values/nova-values.yaml",
+        "deploymentName": "agent-nova",
+        "namespace": "kubeclaw",
+        "imageRecipe": "docker/Dockerfile.nova",
+        "imageRepository": "ghcr.io/datrab/kubeclaw-nova",
+        "imageTag": "latest",
+        "installedImageEquality": "external-required",
+        "gatewayTokenLocator": "kubernetes-secret:kubeclaw/openclaw-shared-secrets#gatewayToken-nova",
+        "discordTokenLocator": "kubernetes-secret:kubeclaw/openclaw-shared-secrets#discordToken-nova",
+        "discordTokenCarrier": "ENV DISCORD_TOKEN only when actual discord.enabled; dormant locator otherwise, not token read",
+        "litellmAlias": {
+          "endpoint": "http://litellm.kubeclaw.svc.cluster.local:4000/v1",
+          "apiKey": {
+            "source": "env",
+            "provider": "default",
+            "id": "LITELLM_API_KEY"
+          },
+          "locator": "kubernetes-secret:kubeclaw/openclaw-shared-secrets#litellmApiKey"
+        },
+        "skillSelection": [],
+        "skillSource": "Chart explicit main.skills=[]; image codebundle /app/skills overlay delivery does not imply selection/installed skill availability",
+        "pluginSdkSource": "OpenClaw2026.9.5 original base and diagnostic-runtime onDiagnosticEvent build assertion; Prism package compat >=2026.9.1 where active; actual installed SDK equality/grants missing",
+        "serviceExposure": {
+          "type": "ClusterIP",
+          "gatewayPort": 18789,
+          "gatewayTargetPort": "gateway",
+          "bridgeEnabled": true,
+          "bridgePort": 18790,
+          "nodePort": 0,
+          "bridgeNodePort": 0,
+          "extraPorts": []
+        },
+        "modelBranchMeaning": "operator full-profile alternative, source-authentic conditional branch; installed model/harness grant missing"
+      }
+    },
+    "prism-current": {
+      "qualification": "readonly generated existing-author/source context, not second configurable policy/secret writer; exact original per-role/host/grant/image support required",
+      "systemAgent": {
+        "agentId": "main"
+      },
+      "agentModel": {
+        "primary": "openai/gpt-5.6-sol",
+        "fallbacks": [
+          "openai/gpt-5.5"
+        ],
+        "sourceRef": "my-values/prism-agent-values.yaml#/agent/model -> same existing Chart agent.model; current actual source"
+      },
+      "commandsAuthorization": {
+        "ownerAllowFrom": [
+          "discord:849379821536804864"
+        ],
+        "discord": [
+          "849379821536804864",
+          "user:849379821536804864"
+        ]
+      },
+      "discordEnabled": false,
+      "gatewayPort": 18789,
+      "gatewayTokenRef": {
+        "source": "env",
+        "provider": "default",
+        "id": "OPENCLAW_GATEWAY_TOKEN"
+      },
+      "discordTokenRef": {
+        "source": "env",
+        "provider": "default",
+        "id": "DISCORD_TOKEN"
+      },
+      "installedPluginAllow": [
+        "discord",
+        "acpx",
+        "codex",
+        "openai",
+        "kubeclaw-prism"
+      ],
+      "roleSpecificPluginEntries": {
+        "discord": {
+          "enabled": false
+        },
+        "kubeclaw-prism": {
+          "enabled": true,
+          "config": {
+            "controlUrl": "http://127.0.0.1:28080"
+          }
+        }
+      },
+      "secretsProviderContext": {
+        "providers": {
+          "default": {
+            "source": "env"
+          }
+        }
+      },
+      "authProfileContext": "existing Chart/native OAuth identity references only; actual retained tokens/grants/issuer external, no bytes here",
+      "sourceRoleAuthor": "existing Chart + my-values/prism-agent-values.yaml; no arbitrary context CONFIG writer",
+      "agentRole": "prism",
+      "nativeSecretRefRefinement": "original pinned native SecretRefSchema/isValidFileSecretRefId/isValidExecSecretRefId mandatory in approved full-image bootstrap; partial local cuts are NOT that validator",
+      "roleSpecificProjectionSource": "actual ConfigMap role prism plugin branch; immutable generated source recipe, no installed grant",
+      "discordApprovers": [],
+      "guildUserProjection": [
+        "849379821536804864"
+      ],
+      "sourceAuthorizationRecipe": "exact my-values/prism-agent-values.yaml commands/Discord/auth/litellm source projections; not active grant",
+      "nativeRoleSource": {
+        "roleValuesPath": "my-values/prism-agent-values.yaml",
+        "deploymentName": "agent-prism",
+        "namespace": "kubeclaw",
+        "imageRecipe": "docker/Dockerfile.prism-agent",
+        "imageRepository": "ghcr.io/datrab/kubeclaw-prism-agent",
+        "imageTag": "latest",
+        "installedImageEquality": "external-required",
+        "gatewayTokenLocator": "kubernetes-secret:kubeclaw/openclaw-shared-secrets#gatewayToken-prism",
+        "discordTokenLocator": "kubernetes-secret:kubeclaw/openclaw-shared-secrets#discordToken-prism",
+        "discordTokenCarrier": "ENV DISCORD_TOKEN only when actual discord.enabled; dormant locator otherwise, not token read",
+        "litellmAlias": {
+          "endpoint": "http://litellm.kubeclaw.svc.cluster.local:4000/v1",
+          "apiKey": {
+            "source": "env",
+            "provider": "default",
+            "id": "LITELLM_API_KEY"
+          },
+          "locator": "kubernetes-secret:kubeclaw/openclaw-shared-secrets#litellmApiKey"
+        },
+        "skillSelection": [],
+        "skillSource": "Chart explicit main.skills=[]; image codebundle /app/skills overlay delivery does not imply selection/installed skill availability",
+        "pluginSdkSource": "OpenClaw2026.9.5 original base and diagnostic-runtime onDiagnosticEvent build assertion; Prism package compat >=2026.9.1 where active; actual installed SDK equality/grants missing",
+        "serviceExposure": {
+          "gatewayPort": 8080,
+          "gatewayTargetPort": "prism-dispatch",
+          "bridgeEnabled": false
+        },
+        "modelBranchMeaning": "current source exact"
+      }
+    },
+    "prism-modelcontrast": {
+      "qualification": "readonly generated existing-author/source context, not second configurable policy/secret writer; exact original per-role/host/grant/image support required",
+      "systemAgent": {
+        "agentId": "main"
+      },
+      "agentModel": {
+        "primary": "openai/gpt-6-astra",
+        "fallbacks": [
+          "openai/gpt-5.5"
+        ],
+        "sourceRef": "my-values/prism-agent-values.yaml#/agent/model -> same existing Chart agent.model; proposed full-profile alternative using actual Chart conditional native domain, not deployed source/grant"
+      },
+      "commandsAuthorization": {
+        "ownerAllowFrom": [
+          "discord:849379821536804864"
+        ],
+        "discord": [
+          "849379821536804864",
+          "user:849379821536804864"
+        ]
+      },
+      "discordEnabled": false,
+      "gatewayPort": 18789,
+      "gatewayTokenRef": {
+        "source": "env",
+        "provider": "default",
+        "id": "OPENCLAW_GATEWAY_TOKEN"
+      },
+      "discordTokenRef": {
+        "source": "env",
+        "provider": "default",
+        "id": "DISCORD_TOKEN"
+      },
+      "installedPluginAllow": [
+        "discord",
+        "acpx",
+        "codex",
+        "openai",
+        "kubeclaw-prism"
+      ],
+      "roleSpecificPluginEntries": {
+        "discord": {
+          "enabled": false
+        },
+        "kubeclaw-prism": {
+          "enabled": true,
+          "config": {
+            "controlUrl": "http://127.0.0.1:28080"
+          }
+        }
+      },
+      "secretsProviderContext": {
+        "providers": {
+          "default": {
+            "source": "env"
+          }
+        }
+      },
+      "authProfileContext": "existing Chart/native OAuth identity references only; actual retained tokens/grants/issuer external, no bytes here",
+      "sourceRoleAuthor": "existing Chart + my-values/prism-agent-values.yaml; no arbitrary context CONFIG writer",
+      "agentRole": "prism",
+      "nativeSecretRefRefinement": "original pinned native SecretRefSchema/isValidFileSecretRefId/isValidExecSecretRefId mandatory in approved full-image bootstrap; partial local cuts are NOT that validator",
+      "roleSpecificProjectionSource": "actual ConfigMap role prism plugin branch; immutable generated source recipe, no installed grant",
+      "discordApprovers": [],
+      "guildUserProjection": [
+        "849379821536804864"
+      ],
+      "sourceAuthorizationRecipe": "exact my-values/prism-agent-values.yaml commands/Discord/auth/litellm source projections; not active grant",
+      "nativeRoleSource": {
+        "roleValuesPath": "my-values/prism-agent-values.yaml",
+        "deploymentName": "agent-prism",
+        "namespace": "kubeclaw",
+        "imageRecipe": "docker/Dockerfile.prism-agent",
+        "imageRepository": "ghcr.io/datrab/kubeclaw-prism-agent",
+        "imageTag": "latest",
+        "installedImageEquality": "external-required",
+        "gatewayTokenLocator": "kubernetes-secret:kubeclaw/openclaw-shared-secrets#gatewayToken-prism",
+        "discordTokenLocator": "kubernetes-secret:kubeclaw/openclaw-shared-secrets#discordToken-prism",
+        "discordTokenCarrier": "ENV DISCORD_TOKEN only when actual discord.enabled; dormant locator otherwise, not token read",
+        "litellmAlias": {
+          "endpoint": "http://litellm.kubeclaw.svc.cluster.local:4000/v1",
+          "apiKey": {
+            "source": "env",
+            "provider": "default",
+            "id": "LITELLM_API_KEY"
+          },
+          "locator": "kubernetes-secret:kubeclaw/openclaw-shared-secrets#litellmApiKey"
+        },
+        "skillSelection": [],
+        "skillSource": "Chart explicit main.skills=[]; image codebundle /app/skills overlay delivery does not imply selection/installed skill availability",
+        "pluginSdkSource": "OpenClaw2026.9.5 original base and diagnostic-runtime onDiagnosticEvent build assertion; Prism package compat >=2026.9.1 where active; actual installed SDK equality/grants missing",
+        "serviceExposure": {
+          "gatewayPort": 8080,
+          "gatewayTargetPort": "prism-dispatch",
+          "bridgeEnabled": false
+        },
+        "modelBranchMeaning": "operator full-profile alternative, source-authentic conditional branch; installed model/harness grant missing"
+      }
+    }
+  }
+}

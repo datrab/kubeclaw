@@ -1,0 +1,47 @@
+{
+  "schemaVersion": "pipeline-package-policy.v1",
+  "packageId": "kubeclaw.implementation-agent",
+  "instanceId": "fixture.implementation-agent",
+  "profiles": {
+    "A": {
+      "processing": {
+        "kubeclaw.implementation-agent:implementation": {
+          "agent": "case-target-a",
+          "agentRole": "implementation-diagnostic-A"
+        }
+      }
+    },
+    "RT-34cb107ae059df42-A": {
+      "processing": {
+        "kubeclaw.implementation-agent:implementation": {
+          "agent": "case-target-a",
+          "agentRole": "implementation-diagnostic-A"
+        }
+      }
+    },
+    "RT-34cb107ae059df42-B": {
+      "processing": {
+        "kubeclaw.implementation-agent:implementation": {
+          "agent": "case-target-b",
+          "agentRole": "implementation-diagnostic-A"
+        }
+      }
+    },
+    "RT-6442142673149854-A": {
+      "processing": {
+        "kubeclaw.implementation-agent:implementation": {
+          "agent": "case-target-a",
+          "agentRole": "implementation-diagnostic-A"
+        }
+      }
+    },
+    "RT-6442142673149854-B": {
+      "processing": {
+        "kubeclaw.implementation-agent:implementation": {
+          "agent": "case-target-a",
+          "agentRole": "implementation-diagnostic-B"
+        }
+      }
+    }
+  }
+}

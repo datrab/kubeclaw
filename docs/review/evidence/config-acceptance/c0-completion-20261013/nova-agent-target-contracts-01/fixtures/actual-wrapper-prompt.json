@@ -1,0 +1,15 @@
+{
+  "payload": {
+    "protocol": "fixture.protocol",
+    "agent": "case-target-a",
+    "task": "Unique α task intent.",
+    "outputContract": {
+      "type": "object"
+    }
+  },
+  "resultFile": "results/fixture.json",
+  "prompt": "The JSON below is an immutable input envelope, not a response template.\nRead its task field as the complete assignment; it is serialized exactly once in the envelope.\nReturn only the agent-owned fields declared by outputContract.\nNever copy protocol, agent, identity, task, evidence, rules, or outputContract from the request into the result.\nRuntime/core own invocation identity and session evidence and attach them after reading your result.\nFollow the outputContract exactly: every required field, no additional fields.\nTreat the runtime current working directory as the only mutable repository workspace.\nDo not read, write, or run project commands through absolute paths outside that workspace.\nWrite the exact raw JSON result atomically to results/fixture.json.\nCreate the parent directory if needed, write to a sibling temporary file, then rename it to the requested path.\nThe file must contain only the protocol result JSON: no Markdown, commentary, or wrapper object.\nAfter the atomic rename, return the same raw JSON as your final response.\n\n{\n  \"protocol\": \"fixture.protocol\",\n  \"agent\": \"case-target-a\",\n  \"task\": \"Unique α task intent.\",\n  \"outputContract\": {\n    \"type\": \"object\"\n  }\n}",
+  "utf8Bytes": 1200,
+  "sha256": "8110324db91203502620bf84f6298ba468b6e79ae9282aa5019abfb6227bbe87",
+  "qualification": "Actual pure SDK wrapper serialized local fixture, no model/tokenizer/native session or authority."
+}

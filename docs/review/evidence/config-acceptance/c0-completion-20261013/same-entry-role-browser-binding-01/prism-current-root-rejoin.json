@@ -1,0 +1,38 @@
+{
+  "historicalExact12fields13cases": {
+    "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/prism-current-root-rejoin.json",
+    "sha256": "4a2e10cbab9c0e0a9214378541b9c1822fb27b33c0a23b72e2f62923f259f891"
+  },
+  "currentRoot": {
+    "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/config/pipeline.config.json",
+    "sha256": "05addb8209de125deee1f5c2ad67528e0ae3b26b04c2994c021c8389ceebe5fa"
+  },
+  "currentRootSchema": {
+    "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+    "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+  },
+  "currentEngine": {
+    "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/config/engines/prism-agent.config.json",
+    "sha256": "b6309c71d73c87a5598f00f2f16612c4b8bed2d705da84ca782459b4d5902f39"
+  },
+  "currentSelection": {
+    "kind": "service-launcher",
+    "role": "prism-agent",
+    "engineId": "prism-openclaw-launcher",
+    "engineInstanceId": "fixture.engine.prism-agent",
+    "serviceInstanceId": "fixture.service.prism-agent",
+    "consumer": "prism-agent-bridge",
+    "ownerPath": "engines/prism-agent.config.json",
+    "profileId": "standard",
+    "controlComponentInstanceId": "fixture.service.prism-control"
+  },
+  "currentSReceiverSchema": {
+    "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/prism-agent-service-policy.schema.json",
+    "sha256": "a0526d6fb308e1edb357eb7fb040bb904728766ef6ee87a3a6cb7fc92576fa71"
+  },
+  "originalJSchema": {
+    "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/launcher-policy-binding.schema.json",
+    "sha256": "ef9b31532a3a4fc0b340996dd20fcb8933f9f050a7bb1a702c417caa07151918"
+  },
+  "currentOwnerSelectionBeforeClaim": "Same original Control agent_job/envelope capture, source/role/model grant/task/fence/claim/SQL deadline; no reset or taskintentspread/privateledger/native proof"
+}

@@ -1,0 +1,245 @@
+{
+  "schemaVersion": "gateway-openclaw-profile.v1-proposal",
+  "profileId": "ready-product-off",
+  "role": "buster",
+  "instanceId": "agent-buster-gateway",
+  "managedOpenClaw": {
+    "memory": {
+      "search": {
+        "enabled": true,
+        "experimental": {
+          "sessionMemory": true
+        },
+        "sources": [
+          "memory",
+          "sessions"
+        ],
+        "provider": "openai-compatible",
+        "remote": {
+          "apiKey": {
+            "source": "env",
+            "provider": "default",
+            "id": "LITELLM_API_KEY"
+          },
+          "baseUrl": "http://127.0.0.1:18081/v1"
+        },
+        "model": "dlv-embedding-a"
+      }
+    },
+    "agents": {
+      "defaults": {
+        "thinkingDefault": "off",
+        "reasoningDefault": "off",
+        "modelPolicy": {
+          "allow": [
+            "openai/gpt-5.6-sol",
+            "openai/gpt-5.5"
+          ]
+        },
+        "models": {
+          "openai/gpt-5.6-sol": {
+            "agentRuntime": {
+              "id": "codex"
+            }
+          },
+          "openai/gpt-5.5": {
+            "agentRuntime": {
+              "id": "codex"
+            }
+          }
+        },
+        "workspace": "/home/node/.openclaw/workspace",
+        "embeddedAgent": {
+          "executionContract": "strict-agentic"
+        },
+        "contextPruning": {
+          "mode": "cache-ttl",
+          "ttl": "2h"
+        },
+        "compaction": {
+          "mode": "safeguard",
+          "keepRecentTokens": 140000,
+          "memoryFlush": {
+            "enabled": true
+          }
+        },
+        "subagents": {
+          "maxConcurrent": 20,
+          "archiveAfterMinutes": 240,
+          "runTimeoutSeconds": 43200,
+          "maxSpawnDepth": 3
+        },
+        "contextInjection": "never",
+        "timeoutSeconds": 172800
+      },
+      "entries": {
+        "main": {
+          "subagents": {
+            "allowAgents": [
+              "*"
+            ]
+          },
+          "skills": [],
+          "skillsLimits": {
+            "maxSkillsPromptChars": 1200
+          }
+        }
+      }
+    },
+    "acp": {
+      "enabled": true,
+      "backend": "acpx",
+      "defaultAgent": "codex",
+      "allowedAgents": [
+        "claude",
+        "codex",
+        "kimi",
+        "gemini",
+        "pi"
+      ]
+    },
+    "tools": {
+      "profile": "coding",
+      "sessions": {
+        "visibility": "all"
+      },
+      "sessions_spawn": {
+        "attachments": {
+          "enabled": true
+        }
+      },
+      "exec": {
+        "timeoutSeconds": 604800,
+        "mode": "full"
+      },
+      "agentToAgent": {
+        "enabled": true
+      }
+    },
+    "commands": {
+      "native": "auto",
+      "nativeSkills": "auto",
+      "restart": true
+    },
+    "session": {
+      "dmScope": "per-channel-peer",
+      "resetByType": {
+        "group": {
+          "mode": "idle",
+          "idleMinutes": 43200
+        }
+      },
+      "threadBindings": {
+        "enabled": true,
+        "idleHours": 999,
+        "maxAgeHours": 0
+      }
+    },
+    "channels": {
+      "discord": {
+        "groupPolicy": "allowlist",
+        "streaming": {
+          "mode": "partial"
+        },
+        "guilds": {
+          "*": {
+            "requireMention": true
+          }
+        },
+        "threadBindings": {
+          "enabled": true,
+          "idleHours": 999,
+          "spawnSessions": true
+        },
+        "execApprovals": {
+          "enabled": true,
+          "target": "dm"
+        }
+      }
+    },
+    "gateway": {
+      "mode": "local",
+      "bind": "loopback",
+      "controlUi": {
+        "dangerouslyAllowHostHeaderOriginFallback": true
+      },
+      "auth": {
+        "mode": "token"
+      },
+      "tools": {
+        "allow": [
+          "sessions_spawn",
+          "sessions_send",
+          "session_status",
+          "group:openclaw"
+        ]
+      },
+      "tailscale": {
+        "mode": "off"
+      }
+    },
+    "plugins": {
+      "entries": {
+        "acpx": {
+          "enabled": true,
+          "config": {
+            "permissionMode": "approve-all"
+          }
+        },
+        "openai": {
+          "enabled": true
+        },
+        "codex": {
+          "enabled": true
+        }
+      }
+    },
+    "messages": {
+      "groupChat": {
+        "visibleReplies": "automatic"
+      }
+    }
+  },
+  "readonlyBindings": {
+    "modelRoute": {
+      "primary": "openai/gpt-5.6-sol",
+      "fallbacks": [
+        "openai/gpt-5.5"
+      ],
+      "sourceRef": "charts/kubeclaw/values.yaml#/agent/model (same existing Chart author; B explicit conditional selected branch proposal)"
+    },
+    "embedding": {
+      "providerRef": "original-registered-core.openai-compatible",
+      "modelCatalogueReceipt": "external-required",
+      "serviceSourceRef": "charts/kubeclaw/values.yaml#/litellm/endpoint; isolated future compatible-service fixture is not installed endpoint",
+      "credential": {
+        "authoritySourceRef": "my-values/buster-values.yaml#/litellm/existingSecret+existingSecretKey",
+        "locator": "kubernetes-secret:kubeclaw/openclaw-shared-secrets#litellmApiKey",
+        "revisionCapability": "requires-authentic-supported-original-revision-retention-or-block",
+        "originalRevisionReceipt": "external-required-not-fake-pin",
+        "accessGrantReceipt": "external-required",
+        "confidentialTransport": "original-authenticated-host-provider-to-native-resolved-runtime-snapshot-no-plaintext-config"
+      }
+    },
+    "installedRuntime": {
+      "version": "2026.9.5",
+      "nativePackageSourceReceipt": "npm archive1fb6ef4fae447af14f1e3b1028334f39146d181a66a4cce2848d4f741c636340; exact selected OCI bytes/source closure STILL external",
+      "actualImageEqualityReceipt": "external-required",
+      "agentOwnerReceipt": "external-required",
+      "harnessModelToolPluginGrantReceipt": "external-required"
+    },
+    "deployment": {
+      "role": "buster",
+      "instanceId": "agent-buster-gateway",
+      "namespace": "kubeclaw",
+      "gatewayPort": 18789,
+      "sourceRef": "my-values/buster-values.yaml +charts/kubeclaw/values.yaml; original authenticated role/instance/grant required"
+    },
+    "bootstrapContextRef": {
+      "path": "managed-bootstrap-context.json",
+      "pointer": "/contexts/ready-product-off",
+      "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386"
+    },
+    "originalRunAndRecoveryAuthority": "original-service/run/session/agent/model/source/trust/grants/credential-revision/deadline/cleanup; no latest or hot-M rebinding"
+  }
+}

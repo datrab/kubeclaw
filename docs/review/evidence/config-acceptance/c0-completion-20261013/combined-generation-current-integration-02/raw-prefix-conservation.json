@@ -1,0 +1,16 @@
+{
+  "reason": "Actual metadata-only byte splice retains exact original raw root prefix including all rows/cases/other properties/Unicode spelling; full parsed equality also holds. Intermediate full reserialization hash is historical, not current",
+  "roots": [
+    {
+      "path": "docs/review/remediation/config-semantic-inventory.json",
+      "intermediateRawHash": "42a70398b9e6953c52359337e2cf04732cb9de10b5178aad145416dc2e992c27",
+      "restoredOriginalNonmetadataRawPrefix": true
+    },
+    {
+      "path": "docs/review/remediation/config-acceptance-matrix.json",
+      "intermediateRawHash": "6663f29560770eaa7aef4d0bc7a9e1265c80c44f2f651ca45d15d1b2702abe2f",
+      "restoredOriginalNonmetadataRawPrefix": true
+    }
+  ],
+  "historicalEarlierStructuralReceipt": "Original check completed before raw spelling restoration, input documents equal; final necessary same existing structural check records exact final bytes"
+}

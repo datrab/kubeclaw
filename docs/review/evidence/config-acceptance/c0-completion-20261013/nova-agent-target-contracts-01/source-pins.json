@@ -1,0 +1,625 @@
+{
+  "files": [
+    {
+      "path": "contracts/delivery-manifest/v3/schemas/delivery-manifest.v3.schema.json",
+      "sha256": "6a991c53bfafbcc0509e1e01acc68eb16abe23ffedfdcf49cdc04be61d488c9a",
+      "bytes": 4043
+    },
+    {
+      "path": "contracts/delivery-manifest/v3/src/index.ts",
+      "sha256": "5293ab3d5813e814487011bd80cad516bc3d1f5faec1181c86675505fa8ba294",
+      "bytes": 15713
+    },
+    {
+      "path": "contracts/pipeline-observability/v1/src/canonical-json.ts",
+      "sha256": "378c3ba35ca88e40527e3912dfc0f897e6d5cbdc1dfd40b3a825fbf1241e9177",
+      "bytes": 1397
+    },
+    {
+      "path": "contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json",
+      "sha256": "e97aedc52818a5f89f2fc88090b99e7b7339966603f686b64c69459270a655df",
+      "bytes": 53611
+    },
+    {
+      "path": "contracts/pipeline-test-gate/v1/src/coverage.ts",
+      "sha256": "bd5a20ccbefab393453dc9072ceb72343ee40741776909007d3a084578b0855d",
+      "bytes": 5883
+    },
+    {
+      "path": "contracts/pipeline-test-gate/v1/src/digest.ts",
+      "sha256": "ee29d0b95e09ae305b9b79d1f289514100c08b4badbd427057cdfeed2fdfa762",
+      "bytes": 279
+    },
+    {
+      "path": "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+      "sha256": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db",
+      "bytes": 46877
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+      "sha256": "eeebd66fcb6a813fdad60188261e14d530c5d09f6c61f9972bc0428ecff151b6",
+      "bytes": 9110
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/configuration.ts",
+      "sha256": "94f711ce386148d0aa3e114512afb3fcf8b69ef41c14b7e5215d17881fe66a2f",
+      "bytes": 4047
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/schema.ts",
+      "sha256": "eb665b9db83e0d0d1bd15fbe5c6f916f479bf8a9c049de6d90b2d6f9f59cc557",
+      "bytes": 5817
+    },
+    {
+      "path": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
+      "sha256": "8ade81b1f64c78b4cf2198f7ae7dc0c726fb4cec3ffa553986310d353dbc71c1",
+      "bytes": 18480
+    },
+    {
+      "path": "skills/common/plugin-runtime/sdk/src/runtime-agent-task.ts",
+      "sha256": "a2b18a4fd9655b88fc4e13d785a1671849779c90bd2ed7dc02c5735c609e6113",
+      "bytes": 1570
+    },
+    {
+      "path": "skills/common/plugin-runtime/sdk/src/runtime-dispatch-profile.ts",
+      "sha256": "13f61a984922b7fa815e084b6a5a20238fd0da67aed5959bdc8b061a8e3173fb",
+      "bytes": 1767
+    },
+    {
+      "path": "skills/common/plugin-runtime/sdk/src/values.ts",
+      "sha256": "b91ec914fb8ce1eaccc40751f9693689694e455389eb8742d7f275fdeb24571f",
+      "bytes": 5155
+    },
+    {
+      "path": "skills/common/plugins/runtime-dispatch/package.json",
+      "sha256": "dea861af81c54c9801a87c272d7467f359056be1cdb2d25ab0fa6cf88f9bbc67",
+      "bytes": 410
+    },
+    {
+      "path": "skills/common/plugins/runtime-dispatch/plugin.json",
+      "sha256": "b3c3a77253ce191a184c8c85f6d02595a1df26b472a63f252339205cae04f349",
+      "bytes": 822
+    },
+    {
+      "path": "skills/common/plugins/runtime-dispatch/schemas/config.schema.json",
+      "sha256": "c780e8086e6d6c954734e62c171f3de67a37b1c94c7483c887571ea08f18a641",
+      "bytes": 1286
+    },
+    {
+      "path": "skills/common/plugins/runtime-dispatch/schemas/openclaw-config.schema.json",
+      "sha256": "defa712aa87820a8e2d4fa593f6e3dedf2fbc6c22a22f2a6933dc36e3d8d95b7",
+      "bytes": 2661
+    },
+    {
+      "path": "skills/common/plugins/runtime-dispatch/src/adapter.ts",
+      "sha256": "5bf2d0c003497e74b0bfdf7524b4725bcd77d12b592f00e121be553868009e5e",
+      "bytes": 7189
+    },
+    {
+      "path": "skills/common/plugins/runtime-dispatch/src/dispatch-adapter.ts",
+      "sha256": "16ccaa5e974de17c36d20078fb2912ddd9d2fa1c6a0a677af760e242ce3cd33a",
+      "bytes": 1278
+    },
+    {
+      "path": "skills/common/plugins/runtime-dispatch/src/openclaw-adapter.ts",
+      "sha256": "1532db26c17561feba17d5bdbba2771de2730df9bd299af203c4b0432d5842f4",
+      "bytes": 1193
+    },
+    {
+      "path": "skills/common/plugins/runtime-dispatch/src/openclaw-cleanup.ts",
+      "sha256": "9cd036b48db02117734aea56e9e77bf4010f5487150e3bab0fcdc99585ac22fd",
+      "bytes": 3730
+    },
+    {
+      "path": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+      "sha256": "52ba5eff35c441ee727753a3d154a357257df525c0461b6f81941ceadaf1add1",
+      "bytes": 6531
+    },
+    {
+      "path": "skills/common/plugins/runtime-dispatch/src/openclaw-response.ts",
+      "sha256": "70a2a376fcf885861af37075646b0868a810f9bc3cd109781fc48fb62fe8444d",
+      "bytes": 3610
+    },
+    {
+      "path": "skills/common/plugins/runtime-dispatch/src/openclaw-result.ts",
+      "sha256": "38290ff080cc31a5465f911bf8adaf1d7d82c1c0a019914d088a5dd6c35b9643",
+      "bytes": 6651
+    },
+    {
+      "path": "skills/common/plugins/runtime-dispatch/src/openclaw-session.ts",
+      "sha256": "8f3bfbfe9d3d9fa3fa88ac532f8f59abe457d830089a340b196cb8c25bd97217",
+      "bytes": 15618
+    },
+    {
+      "path": "skills/common/plugins/runtime-dispatch/src/openclaw.ts",
+      "sha256": "a66a16088c28519c1d88a63b650bf7caa416e13cee5eefe3b773df2691832af5",
+      "bytes": 18385
+    },
+    {
+      "path": "skills/common/plugins/runtime-dispatch/src/result-persistence.ts",
+      "sha256": "4939307a37adc3aea6dfba4d7f196a897c5ee3ca72a7594c6b7b8c02f4509a41",
+      "bytes": 4992
+    },
+    {
+      "path": "skills/common/plugins/runtime-dispatch/src/workspace-target.ts",
+      "sha256": "163d6442b6eb4261db013c55af03183a04cedaa1a4a90c0893dc1f65f36f2ab5",
+      "bytes": 1804
+    },
+    {
+      "path": "skills/common/plugins/runtime-dispatch/tests/live-function.test.ts",
+      "sha256": "94236bcdf8a08d67bbb7fbaba785d0d03d46f7f6f86846d28b805ae15047b3f9",
+      "bytes": 24029
+    },
+    {
+      "path": "skills/common/plugins/runtime-dispatch/tsconfig.json",
+      "sha256": "14b157e19a12fc64deb926bf5abf286611c715f5a8475aa6408f037a5a09e472",
+      "bytes": 137
+    },
+    {
+      "path": "skills/nova/core/execution/adapter-startup.ts",
+      "sha256": "ec0ee03f9b740865da79e9ba558fc9447f0354ecd14b4e36eedc5320edac34f0",
+      "bytes": 15396
+    },
+    {
+      "path": "skills/nova/core/execution/adapters.ts",
+      "sha256": "30332f9d2d360b32a13e6f2795f83c90297346eb892b4d9346d5e61ed9d60d5b",
+      "bytes": 6731
+    },
+    {
+      "path": "skills/nova/core/execution/context.ts",
+      "sha256": "3f61fc7b2e18d6c36bf9eaff5173a06d31dd06d14a07b05c6d8be7320098a288",
+      "bytes": 2782
+    },
+    {
+      "path": "skills/nova/core/execution/engine-run.ts",
+      "sha256": "eca97e2a488bd31d597c0dd71cd9971beffc9a5dc94fad1dbccf8867aa8f4819",
+      "bytes": 11148
+    },
+    {
+      "path": "skills/nova/core/execution/engine-runtime.ts",
+      "sha256": "96c8e5964977cc9287897a63db0f102ff915e9a2ebd3c3ca87ed47b7dde81613",
+      "bytes": 8372
+    },
+    {
+      "path": "skills/nova/core/execution/engine-snapshots.ts",
+      "sha256": "50dfe92e656875658b7604f30012f8493564729473f6ddd65b64960ecf9946fd",
+      "bytes": 12185
+    },
+    {
+      "path": "skills/nova/core/execution/graph.ts",
+      "sha256": "680077697180d4ef2df70e823391eaef710d49fb721338663f8f73d65973b2af",
+      "bytes": 5121
+    },
+    {
+      "path": "skills/nova/core/execution/pipeline-loop.ts",
+      "sha256": "129a77125e5d88a118b9d3cefb06d1bedf734924cabd32be607063a33d985530",
+      "bytes": 10717
+    },
+    {
+      "path": "skills/nova/core/execution/run-decisions.ts",
+      "sha256": "a509f00aa74367e90d396f338db55acff2610075ac0063d14fa8bec4ba9d1171",
+      "bytes": 9555
+    },
+    {
+      "path": "skills/nova/core/execution/runner.ts",
+      "sha256": "9a34098cd68460f42e220ada2f3e7bef37fcc9eb5fdd351db2cd1585fe6a5cc6",
+      "bytes": 6254
+    },
+    {
+      "path": "skills/nova/core/execution/stage-executor.ts",
+      "sha256": "4c846993c679c9ce663f7dda0e8de78fd26101e83948dd17211e62f83ea2eafb",
+      "bytes": 11002
+    },
+    {
+      "path": "skills/nova/core/lifecycle/recovery.ts",
+      "sha256": "5095a92c809f1e19524687d44e227585edaf482a7024dfc41b72f264b28822c8",
+      "bytes": 2614
+    },
+    {
+      "path": "skills/nova/core/state/read-run-evidence.ts",
+      "sha256": "bd33a3503d61236a03fcd19ae61fc3fde838d0dfefacacb7c1e75ff820444065",
+      "bytes": 15217
+    },
+    {
+      "path": "skills/nova/plugins/architecture-validator/README.md",
+      "sha256": "1ea6563f1ca2b809d9cc3966ab11d6098caa39beb030bd907ed1aabf73ec4cf2",
+      "bytes": 1711
+    },
+    {
+      "path": "skills/nova/plugins/architecture-validator/package.json",
+      "sha256": "d933be9975abc5f69b08f2d8bb28480264cfa09e1d04e7f1206c1e69e663e3da",
+      "bytes": 341
+    },
+    {
+      "path": "skills/nova/plugins/architecture-validator/plugin.json",
+      "sha256": "915926814bba76b52d9cce47961da67e43cf5ade85c077a417272023c5730792",
+      "bytes": 621
+    },
+    {
+      "path": "skills/nova/plugins/architecture-validator/schemas/config.schema.json",
+      "sha256": "49b1391ff9c5076715c42cf37857f4a6ec6e5a90e7777ff9c94e0d664449981a",
+      "bytes": 224
+    },
+    {
+      "path": "skills/nova/plugins/architecture-validator/schemas/input.schema.json",
+      "sha256": "105defd63fd5abe3baf1993b7477e13ef16010213ec5548051908433131f9d56",
+      "bytes": 1704
+    },
+    {
+      "path": "skills/nova/plugins/architecture-validator/schemas/result.schema.json",
+      "sha256": "6f0724b07d28e7599627452c02f7c6528acf74183bb03c8111ddbbdd4736a87d",
+      "bytes": 164
+    },
+    {
+      "path": "skills/nova/plugins/architecture-validator/src/output.ts",
+      "sha256": "8b6ee1fe1f98b019f0fda4eb52f4f3786863885f52c67f9db3e7d667416d93ea",
+      "bytes": 4063
+    },
+    {
+      "path": "skills/nova/plugins/architecture-validator/src/protocol.ts",
+      "sha256": "46c3f8894c19ac12c8ca5c35493ef47ace66a8d8092056e102d513c93f29b07a",
+      "bytes": 2886
+    },
+    {
+      "path": "skills/nova/plugins/architecture-validator/src/stage.ts",
+      "sha256": "1d078730d6c276cba32fbdded3b289bff155638490e7a5d191750732e13565bc",
+      "bytes": 3204
+    },
+    {
+      "path": "skills/nova/plugins/architecture-validator/tests/live-function.test.ts",
+      "sha256": "272268fd60cdaa459ce2edb9bf5f77387d901450b45d75f45cde0ccdce383e03",
+      "bytes": 5465
+    },
+    {
+      "path": "skills/nova/plugins/architecture-validator/tests/package-boundary.test.mjs",
+      "sha256": "f2c61894590da296486addd0d8135ba6b0550592d24dd2cf83ecc83b649dcf9a",
+      "bytes": 423
+    },
+    {
+      "path": "skills/nova/plugins/architecture-validator/tests/protocol.unit.test.ts",
+      "sha256": "5c39bec23c109fdf8bc11b075ed87b7494d6bda4b463018ef94a0c3a7c45d2ff",
+      "bytes": 2438
+    },
+    {
+      "path": "skills/nova/plugins/architecture-validator/tsconfig.json",
+      "sha256": "e870b88d9f1d5090754667bb4214ee5f4ac6ed68b1460d655af0e37cb048959b",
+      "bytes": 215
+    },
+    {
+      "path": "skills/nova/plugins/case-study/README.md",
+      "sha256": "d896e5e31a642289a86806abd984add82a969fd6377257ff39b864c1967aaa56",
+      "bytes": 3223
+    },
+    {
+      "path": "skills/nova/plugins/case-study/package.json",
+      "sha256": "4c8729dfdf523befdb7dfc2551ba543780d0171bb6d3998ac387a6d50e9668a5",
+      "bytes": 325
+    },
+    {
+      "path": "skills/nova/plugins/case-study/plugin.json",
+      "sha256": "e18697e96655c6b0fcf775de0a898a18821d7bd1c9e1960fdd150d18f9f68b8e",
+      "bytes": 578
+    },
+    {
+      "path": "skills/nova/plugins/case-study/schemas/config.schema.json",
+      "sha256": "4632cc51357ffecdbd593cf1d1928a99b9cd4855b3763354f67261b62cc0c895",
+      "bytes": 180
+    },
+    {
+      "path": "skills/nova/plugins/case-study/schemas/input.schema.json",
+      "sha256": "57b29f85dd70c0e69c90eed33563fde513533de0df258ab5f2b62c2ca693bd7b",
+      "bytes": 1335
+    },
+    {
+      "path": "skills/nova/plugins/case-study/schemas/result.schema.json",
+      "sha256": "6f0724b07d28e7599627452c02f7c6528acf74183bb03c8111ddbbdd4736a87d",
+      "bytes": 164
+    },
+    {
+      "path": "skills/nova/plugins/case-study/src/protocol.ts",
+      "sha256": "3ff3c3dc70f2967d194896205cb1c7a2f7226d84de2a042f6c7bae46a25588c6",
+      "bytes": 5223
+    },
+    {
+      "path": "skills/nova/plugins/case-study/src/stage.ts",
+      "sha256": "a537e4028ddc30ea19ae7fa18e828c10745f08f14b0cf16e534ee8b42ea720b9",
+      "bytes": 2618
+    },
+    {
+      "path": "skills/nova/plugins/case-study/tests/live-function.test.ts",
+      "sha256": "034be8b74bd8a687b9732f1cd7f40784c10f9f2769a748e4f1c427792ff83ff0",
+      "bytes": 793
+    },
+    {
+      "path": "skills/nova/plugins/case-study/tests/package-boundary.test.mjs",
+      "sha256": "7121daaaddd3268395864668c065b163e94a3636ddbd5e94dc2583c805b46309",
+      "bytes": 742
+    },
+    {
+      "path": "skills/nova/plugins/case-study/tests/protocol.test.mjs",
+      "sha256": "980e6140e7c4d4f66134f49ce5ac537d65102ab0c6a498d2a2ff98d4fe13b069",
+      "bytes": 2168
+    },
+    {
+      "path": "skills/nova/plugins/case-study/tsconfig.json",
+      "sha256": "e870b88d9f1d5090754667bb4214ee5f4ac6ed68b1460d655af0e37cb048959b",
+      "bytes": 215
+    },
+    {
+      "path": "skills/nova/plugins/implementation-agent/README.md",
+      "sha256": "9f6b149f2994f44abeefc59e9e960f240f3c4947c1dceaf1d97806cc0255192a",
+      "bytes": 1947
+    },
+    {
+      "path": "skills/nova/plugins/implementation-agent/package.json",
+      "sha256": "a2b40ca7dd4f1e3007696ef03304f80e7c31e4e8ab5834393bf69d2ca3d698cb",
+      "bytes": 334
+    },
+    {
+      "path": "skills/nova/plugins/implementation-agent/plugin.json",
+      "sha256": "fde7e60285cf1fd687b85e9ce2372b1aaa02d7bbf35bced1b8741c073493e5c9",
+      "bytes": 696
+    },
+    {
+      "path": "skills/nova/plugins/implementation-agent/schemas/config.schema.json",
+      "sha256": "49b1391ff9c5076715c42cf37857f4a6ec6e5a90e7777ff9c94e0d664449981a",
+      "bytes": 224
+    },
+    {
+      "path": "skills/nova/plugins/implementation-agent/schemas/input.schema.json",
+      "sha256": "f2c8f956678a98cce81e8d6bd41fa444588ceb1519a9ca7a7f5db509f9478d5c",
+      "bytes": 2210
+    },
+    {
+      "path": "skills/nova/plugins/implementation-agent/schemas/result.schema.json",
+      "sha256": "6f0724b07d28e7599627452c02f7c6528acf74183bb03c8111ddbbdd4736a87d",
+      "bytes": 164
+    },
+    {
+      "path": "skills/nova/plugins/implementation-agent/src/protocol.ts",
+      "sha256": "d1d2e0c5d82e37e3a3e51e89f1d002e1623a06fdcd0a4b9add816bf563b9cbe6",
+      "bytes": 7464
+    },
+    {
+      "path": "skills/nova/plugins/implementation-agent/src/repair-evidence.ts",
+      "sha256": "0ba38e4004d0b9c3058fdce363611beeb6170ee3cb37424da599eb3757fa5c99",
+      "bytes": 2793
+    },
+    {
+      "path": "skills/nova/plugins/implementation-agent/src/stage.ts",
+      "sha256": "4f2057feef1fdd4c81bbb90ae203564cd0ab3922a9fd44b098a1a99558da4870",
+      "bytes": 9062
+    },
+    {
+      "path": "skills/nova/plugins/implementation-agent/src/workspace.ts",
+      "sha256": "14cdeb066a35cbb2564928ca8ff8f4fa5ce2bd95a36c3607bda011f9c0e79c34",
+      "bytes": 558
+    },
+    {
+      "path": "skills/nova/plugins/implementation-agent/tests/live-function.test.ts",
+      "sha256": "13ccae41a9d10b740a55d103fdf7deea45df597c91e949682d06652c413c7034",
+      "bytes": 13008
+    },
+    {
+      "path": "skills/nova/plugins/implementation-agent/tests/package-boundary.test.mjs",
+      "sha256": "9c7301442eebf330bddfa1bb65e0f391ada98097553e76aafad2980266a59f50",
+      "bytes": 477
+    },
+    {
+      "path": "skills/nova/plugins/implementation-agent/tests/protocol.test.ts",
+      "sha256": "d95fd3d67bba3e442c02a722378cd763e70274ecb5fde72f5765156b49db1478",
+      "bytes": 1753
+    },
+    {
+      "path": "skills/nova/plugins/implementation-agent/tsconfig.json",
+      "sha256": "14b157e19a12fc64deb926bf5abf286611c715f5a8475aa6408f037a5a09e472",
+      "bytes": 137
+    },
+    {
+      "path": "skills/nova/plugins/pipeline-review/README.md",
+      "sha256": "acdf524d2b206d0f6152b537375a69b07b0abf5ad3ce6e57942a5e64ebde9141",
+      "bytes": 3229
+    },
+    {
+      "path": "skills/nova/plugins/pipeline-review/package.json",
+      "sha256": "1f587ae529db6a8c3ede69be6ca14651d989a80e884d111888469bd5b30da888",
+      "bytes": 412
+    },
+    {
+      "path": "skills/nova/plugins/pipeline-review/plugin.json",
+      "sha256": "113fad3ba88ebc4db595fd411230d3288a28e8dfc99583e5495cf34da2483cab",
+      "bytes": 892
+    },
+    {
+      "path": "skills/nova/plugins/pipeline-review/schemas/config.schema.json",
+      "sha256": "49b1391ff9c5076715c42cf37857f4a6ec6e5a90e7777ff9c94e0d664449981a",
+      "bytes": 224
+    },
+    {
+      "path": "skills/nova/plugins/pipeline-review/schemas/evidence-config.schema.json",
+      "sha256": "905fba3c46c2fbf13a617d385099dda9959302ab3414a67cc8f5d5c33502e530",
+      "bytes": 682
+    },
+    {
+      "path": "skills/nova/plugins/pipeline-review/schemas/input.schema.json",
+      "sha256": "57b29f85dd70c0e69c90eed33563fde513533de0df258ab5f2b62c2ca693bd7b",
+      "bytes": 1335
+    },
+    {
+      "path": "skills/nova/plugins/pipeline-review/schemas/result.schema.json",
+      "sha256": "6f0724b07d28e7599627452c02f7c6528acf74183bb03c8111ddbbdd4736a87d",
+      "bytes": 164
+    },
+    {
+      "path": "skills/nova/plugins/pipeline-review/src/evidence-adapter.ts",
+      "sha256": "477c0a5349d80816ab5af7dd06abbdeec3bf62ab94fe25ea88159d3f1b74293c",
+      "bytes": 3858
+    },
+    {
+      "path": "skills/nova/plugins/pipeline-review/src/evidence-bundle.ts",
+      "sha256": "ca3db15dbc1f008f690b79df3f4cb94143b924631b11711fb935f4ee3ccda7dd",
+      "bytes": 5615
+    },
+    {
+      "path": "skills/nova/plugins/pipeline-review/src/protocol.ts",
+      "sha256": "df3e02fd4c7a13aa38ce93292a55da9cb6c712799e813cbe0c8a283fd769081f",
+      "bytes": 5871
+    },
+    {
+      "path": "skills/nova/plugins/pipeline-review/src/stage.ts",
+      "sha256": "e2951394c77a1f57f8538dc8586fb6f8b571a5b2050b87fec65f42260055d51a",
+      "bytes": 2662
+    },
+    {
+      "path": "skills/nova/plugins/pipeline-review/tests/live-function.test.ts",
+      "sha256": "eb56fbcf5a026359aad4351423c92ebfd1f76e72843f646bc7e50953cb6e60ef",
+      "bytes": 817
+    },
+    {
+      "path": "skills/nova/plugins/pipeline-review/tests/package-boundary.test.mjs",
+      "sha256": "b4a91a91ec99a62813f2c2e8cf35642add682c1cfb699d0e8930ae2230453af6",
+      "bytes": 752
+    },
+    {
+      "path": "skills/nova/plugins/pipeline-review/tests/protocol.test.mjs",
+      "sha256": "e6041312773df12596b7b695b7b86b35c5839e97d371dae81edceddad1ac0709",
+      "bytes": 2181
+    },
+    {
+      "path": "skills/nova/plugins/pipeline-review/tsconfig.json",
+      "sha256": "e870b88d9f1d5090754667bb4214ee5f4ac6ed68b1460d655af0e37cb048959b",
+      "bytes": 215
+    },
+    {
+      "path": "skills/nova/plugins/prism-design/README.md",
+      "sha256": "578e856a2dc1bec26227012406c610bca1ed9ce569778347b9d90355ed4f96ac",
+      "bytes": 1374
+    },
+    {
+      "path": "skills/nova/plugins/prism-design/package.json",
+      "sha256": "54c0031ee6ce2b8bed687d805cadb90ea40c405df36cde653f99fab30303972d",
+      "bytes": 441
+    },
+    {
+      "path": "skills/nova/plugins/prism-design/plugin.json",
+      "sha256": "063ef9316e7bfdbe8b2b9a0812bfc2a0b968294edc116d85e557d3e591dbf2d9",
+      "bytes": 482
+    },
+    {
+      "path": "skills/nova/plugins/prism-design/schemas/config.schema.json",
+      "sha256": "15fc34fb28e0afe96ad1e248c32e6d9a9bb173bb731226fb52ccb78a8afcc61e",
+      "bytes": 352
+    },
+    {
+      "path": "skills/nova/plugins/prism-design/schemas/input.schema.json",
+      "sha256": "0c636654897e05d3a4981009c4676e3a7fec517ff6c59822edd49259590fb66d",
+      "bytes": 605
+    },
+    {
+      "path": "skills/nova/plugins/prism-design/schemas/result.schema.json",
+      "sha256": "3e80e0c6d65754ee88072b0d08c1780b6d196358d25f45175a7d2c8ff7d45fea",
+      "bytes": 344
+    },
+    {
+      "path": "skills/nova/plugins/prism-design/src/architecture.ts",
+      "sha256": "bb4fab2431b51d68a787fefdaec95649678e86ede9961bc2fb1ad168b7eed10f",
+      "bytes": 1868
+    },
+    {
+      "path": "skills/nova/plugins/prism-design/src/archive.ts",
+      "sha256": "8875fcaa4c6efafa2f231c8e3fcc522dcd1ae1f23850a4d8941a89358726383e",
+      "bytes": 6220
+    },
+    {
+      "path": "skills/nova/plugins/prism-design/src/stage.ts",
+      "sha256": "20bee389c4868070dc7450d366b85745c2f26acb88e8d526463c3cb5a599db88",
+      "bytes": 6162
+    },
+    {
+      "path": "skills/nova/plugins/prism-design/tests/live-function.test.ts",
+      "sha256": "f2e6610df9c42ec53a110c10cf1c4a4d37f54ee16bcafcc120b2943fd43f0d3d",
+      "bytes": 699
+    },
+    {
+      "path": "skills/nova/plugins/prism-design/tsconfig.json",
+      "sha256": "6fcce9b8c2807131e39d8aaed282eb5f03906dc757d09d8b4fe54c6460cab2f1",
+      "bytes": 105
+    },
+    {
+      "path": "skills/nova/plugins/project-summary/README.md",
+      "sha256": "0e88232cfbabf90d094ca6f8de77c3828de288b81109f2d6239087f52dbe4ee9",
+      "bytes": 2210
+    },
+    {
+      "path": "skills/nova/plugins/project-summary/package.json",
+      "sha256": "5d55bac5f34dbb15dc796f54e09e4069e2b23b668461b12f5dcf6c3ee0508f8e",
+      "bytes": 473
+    },
+    {
+      "path": "skills/nova/plugins/project-summary/plugin.json",
+      "sha256": "995ddb9dec1c6ad6ea9e55c7ed667e560a045365fcc6e4721908bd86b63b0454",
+      "bytes": 551
+    },
+    {
+      "path": "skills/nova/plugins/project-summary/schemas/config.schema.json",
+      "sha256": "7c1bf8023f80f2bd5c3727b97636c804cd2c8b801fbe71fd8374a6edd7049bd9",
+      "bytes": 229
+    },
+    {
+      "path": "skills/nova/plugins/project-summary/schemas/input.schema.json",
+      "sha256": "451591d9b115aa5aae88c4a08301845316f1207cdd24ed9baf7639adc83439cf",
+      "bytes": 2210
+    },
+    {
+      "path": "skills/nova/plugins/project-summary/schemas/result.schema.json",
+      "sha256": "6f0724b07d28e7599627452c02f7c6528acf74183bb03c8111ddbbdd4736a87d",
+      "bytes": 164
+    },
+    {
+      "path": "skills/nova/plugins/project-summary/src/review-semantics.ts",
+      "sha256": "a14a5e8039d481063d2439a8c1060ca414012f7ba55b73ee153d2317effc2104",
+      "bytes": 2988
+    },
+    {
+      "path": "skills/nova/plugins/project-summary/src/stage.ts",
+      "sha256": "b16533ade1d6bbf08c53d3c31bbe7102f5b67b785b1f928524ca9879a99a4fee",
+      "bytes": 1731
+    },
+    {
+      "path": "skills/nova/plugins/project-summary/src/summary.ts",
+      "sha256": "bb82063929e9100dd42c3dff541eca77be2cfa624f8b5fd8733e773acb7ce7c5",
+      "bytes": 11669
+    },
+    {
+      "path": "skills/nova/plugins/project-summary/tests/live-function.test.ts",
+      "sha256": "9fbc900913cdebd86ea447193f3dedb6ddab231321279df6263be910496c7197",
+      "bytes": 4771
+    },
+    {
+      "path": "skills/nova/plugins/project-summary/tests/package-boundary.test.mjs",
+      "sha256": "451c143e3fe713a8bd919789b2ad0a8c5b5758853059b20f3bee33c23029c495",
+      "bytes": 745
+    },
+    {
+      "path": "skills/nova/plugins/project-summary/tsconfig.json",
+      "sha256": "e870b88d9f1d5090754667bb4214ee5f4ac6ed68b1460d655af0e37cb048959b",
+      "bytes": 215
+    },
+    {
+      "path": "skills/nova/project/compiler.ts",
+      "sha256": "9d8ccdb3a1ccc56c58c1ec510aed54473f7db6d4135d28b2e265bbf90d7f1ef5",
+      "bytes": 14415
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/digest.ts",
+      "sha256": "000539ceae6719b16ac795ef1cfb90877aa44e81c26b4335c17f85912b4076e4",
+      "bytes": 1051
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/errors.ts",
+      "sha256": "148025829782ddac5d15ea25736b4ec7a3faefcfabdce152809baf8ed807ce25",
+      "bytes": 1305
+    }
+  ],
+  "qualification": "Actual read-only source witnesses; frozen source files are NOT activated/imported wholesale."
+}

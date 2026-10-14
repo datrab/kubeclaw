@@ -1,0 +1,142 @@
+{
+  "tool": "tools.exec_command via functions.exec",
+  "node": "v24.21.0",
+  "python": "3.11.2",
+  "Ajv": "8.20.0",
+  "commands": [
+    {
+      "command": "python3 docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-role-recipes-01/author-recipes.py",
+      "attemptSource": "raw/author-attempt1.py",
+      "exitCode": 1,
+      "stdout": "raw/author-attempt1.stdout",
+      "stderr": "raw/author-attempt1.stderr",
+      "reason": "nonexistent Chart values.schema.json read reference corrected, no schema/domain loosening"
+    },
+    {
+      "command": "node docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-role-recipes-01/check-gateway-definition.mjs",
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+      "stdout": "raw/check-01.json",
+      "stderr": "raw/check-01.stderr",
+      "exitCode": 1,
+      "observations": null,
+      "failures": "syntax/missing inherited input, exact stderr retained",
+      "scriptSHA256": null,
+      "attemptSnapshot": "raw/check-01.script.mjs"
+    },
+    {
+      "command": "node docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-role-recipes-01/check-gateway-definition.mjs",
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+      "stdout": "raw/check-02.json",
+      "stderr": "raw/check-02.stderr",
+      "exitCode": 1,
+      "observations": null,
+      "failures": "syntax/missing inherited input, exact stderr retained",
+      "scriptSHA256": null,
+      "attemptSnapshot": "raw/check-02.script.mjs"
+    },
+    {
+      "command": "node docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-role-recipes-01/check-gateway-definition.mjs",
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+      "stdout": "raw/check-03.json",
+      "stderr": "raw/check-03.stderr",
+      "exitCode": 1,
+      "observations": null,
+      "failures": "syntax/missing inherited input, exact stderr retained",
+      "scriptSHA256": null,
+      "attemptSnapshot": "intermediate hash/raw retained; final10 snapshot authoritative"
+    },
+    {
+      "command": "node docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-role-recipes-01/check-gateway-definition.mjs",
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+      "stdout": "raw/check-04.json",
+      "stderr": "raw/check-04.stderr",
+      "exitCode": 1,
+      "observations": 912,
+      "failures": 2,
+      "scriptSHA256": "0d89dd9a3bef9026706ad875ab8aa09e4d3b368ec9c097545ae43bd0148138da",
+      "attemptSnapshot": "raw/check-04.script.mjs"
+    },
+    {
+      "command": "node docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-role-recipes-01/check-gateway-definition.mjs",
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+      "stdout": "raw/check-05.json",
+      "stderr": "raw/check-05.stderr",
+      "exitCode": 1,
+      "observations": 912,
+      "failures": 1,
+      "scriptSHA256": "1f0635e69ffdfe19b75bc812fa532d7eaf0b9c67553a41066c80d8f1fc272794",
+      "attemptSnapshot": "raw/check-05.script.mjs"
+    },
+    {
+      "command": "node docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-role-recipes-01/check-gateway-definition.mjs",
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+      "stdout": "raw/check-06.json",
+      "stderr": "raw/check-06.stderr",
+      "exitCode": 0,
+      "observations": 912,
+      "failures": 0,
+      "scriptSHA256": "91d392c53ff81416c7aca8f081e03df4b3d1576bbe95a03534e6e5d78d931360",
+      "attemptSnapshot": "intermediate hash/raw retained; final10 snapshot authoritative"
+    },
+    {
+      "command": "node docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-role-recipes-01/check-gateway-definition.mjs",
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+      "stdout": "raw/check-07.json",
+      "stderr": "raw/check-07.stderr",
+      "exitCode": 0,
+      "observations": 913,
+      "failures": 0,
+      "scriptSHA256": "d81cfd8ae7aeb2bce35879d6e8b6081e210f2c86c21017e3340f5ead91835cef",
+      "attemptSnapshot": "intermediate hash/raw retained; final10 snapshot authoritative"
+    },
+    {
+      "command": "node docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-role-recipes-01/check-gateway-definition.mjs",
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+      "stdout": "raw/check-08.json",
+      "stderr": "raw/check-08.stderr",
+      "exitCode": 0,
+      "observations": 913,
+      "failures": 0,
+      "scriptSHA256": "d81cfd8ae7aeb2bce35879d6e8b6081e210f2c86c21017e3340f5ead91835cef",
+      "attemptSnapshot": "intermediate hash/raw retained; final10 snapshot authoritative"
+    },
+    {
+      "command": "node docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-role-recipes-01/check-gateway-definition.mjs",
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+      "stdout": "raw/check-09.json",
+      "stderr": "raw/check-09.stderr",
+      "exitCode": 0,
+      "observations": 1228,
+      "failures": 0,
+      "scriptSHA256": "077fbe84ac6cf34c413df93aecbf816ef065ad6582d59dbdc74611a1084a1528",
+      "attemptSnapshot": "intermediate hash/raw retained; final10 snapshot authoritative"
+    },
+    {
+      "command": "node docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-role-recipes-01/check-gateway-definition.mjs",
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+      "stdout": "raw/check-10.json",
+      "stderr": "raw/check-10.stderr",
+      "exitCode": 0,
+      "observations": 1229,
+      "failures": 0,
+      "scriptSHA256": "424cca2c172d77bf7efe7cf7489838d6b5abad217382cbe7bb081114e16a54a3",
+      "attemptSnapshot": "raw/check-10.script.mjs"
+    },
+    {
+      "command": "python3 docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-role-recipes-01/freeze-conservation.py",
+      "exitCode": 1,
+      "attemptSource": "raw/freeze-attempt1.py",
+      "stdout": "raw/freeze-attempt1.stdout",
+      "stderr": "raw/freeze-attempt1.stderr",
+      "reason": "candidate manifest uses relativePath rather than path; source-specific receipt field read fixed without equality assertion change"
+    },
+    {
+      "command": "python3 docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-role-recipes-01/freeze-conservation.py",
+      "exitCode": 0,
+      "stdout": "raw/conservation.stdout.json",
+      "qualification": "exact prior source/object/body/member/archive and before/end canonical metadata checks, no native effect"
+    }
+  ],
+  "safeAuthoring": "corrected author-recipes.py/adapt-role-collector.py/role-case-and-root-definitions.py exit0; one node YAML read of three actual public source files, no renderer; Python tarfile local exact archive members only; source VMs no native/credential/network capabilities",
+  "nativeCommandsExecuted": []
+}

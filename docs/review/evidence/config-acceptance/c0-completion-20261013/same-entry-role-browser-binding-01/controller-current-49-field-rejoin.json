@@ -1,0 +1,1351 @@
+[
+  {
+    "id": "DLV-NAMESPACE-CONTROLLER-KUBERNETES-SERVICE-PORT",
+    "originalConcordance": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-deployment-binding-02/controller-receiver-rejoin.json",
+      "sha256": "8c1641b580fd58148da0df84129c61818306d7955c7840be1d650a9b642c4d13"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "currentOwner": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+      "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6"
+    },
+    "receiving": {
+      "A": {
+        "pointer": "/profiles/local-A/readonlyBindings/api/port",
+        "exactTypedValue": 18443
+      },
+      "B": {
+        "pointer": "/profiles/local-B/readonlyBindings/api/port",
+        "exactTypedValue": 18443
+      }
+    }
+  },
+  {
+    "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-LEASE-API-GROUP",
+    "originalConcordance": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-deployment-binding-02/controller-receiver-rejoin.json",
+      "sha256": "8c1641b580fd58148da0df84129c61818306d7955c7840be1d650a9b642c4d13"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "currentOwner": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+      "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6"
+    },
+    "receiving": {
+      "A": {
+        "pointer": "/profiles/local-A/readonlyBindings/sharedLease/apiGroup",
+        "exactTypedValue": "kubeclaw.forgestack.ai"
+      },
+      "B": {
+        "pointer": "/profiles/local-B/readonlyBindings/sharedLease/apiGroup",
+        "exactTypedValue": "kubeclaw.forgestack.ai"
+      }
+    }
+  },
+  {
+    "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-LEASE-API-VERSION",
+    "originalConcordance": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-deployment-binding-02/controller-receiver-rejoin.json",
+      "sha256": "8c1641b580fd58148da0df84129c61818306d7955c7840be1d650a9b642c4d13"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "currentOwner": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+      "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6"
+    },
+    "receiving": {
+      "A": {
+        "pointer": "/profiles/local-A/readonlyBindings/sharedLease/apiVersion",
+        "exactTypedValue": "v1alpha1"
+      },
+      "B": {
+        "pointer": "/profiles/local-B/readonlyBindings/sharedLease/apiVersion",
+        "exactTypedValue": "v1alpha1"
+      }
+    }
+  },
+  {
+    "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-ALLOWED-NAMESPACE-PREFIXES",
+    "originalConcordance": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-deployment-binding-02/controller-receiver-rejoin.json",
+      "sha256": "8c1641b580fd58148da0df84129c61818306d7955c7840be1d650a9b642c4d13"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "currentOwner": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+      "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6"
+    },
+    "receiving": {
+      "A": {
+        "pointer": "/profiles/local-A/settings/busterNamespaceBroker/allowedPrefixes",
+        "exactTypedValue": [
+          "test"
+        ]
+      },
+      "B": {
+        "pointer": "/profiles/local-B/settings/busterNamespaceBroker/allowedPrefixes",
+        "exactTypedValue": [
+          "test"
+        ]
+      }
+    }
+  },
+  {
+    "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-DEFAULT-TTL-SECONDS",
+    "originalConcordance": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-deployment-binding-02/controller-receiver-rejoin.json",
+      "sha256": "8c1641b580fd58148da0df84129c61818306d7955c7840be1d650a9b642c4d13"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "currentOwner": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+      "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6"
+    },
+    "receiving": {
+      "A": {
+        "pointer": "/profiles/local-A/settings/busterNamespaceBroker/defaultTtlSeconds",
+        "exactTypedValue": 7200
+      },
+      "B": {
+        "pointer": "/profiles/local-B/settings/busterNamespaceBroker/defaultTtlSeconds",
+        "exactTypedValue": 3600
+      }
+    }
+  },
+  {
+    "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-MAX-TTL-SECONDS",
+    "originalConcordance": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-deployment-binding-02/controller-receiver-rejoin.json",
+      "sha256": "8c1641b580fd58148da0df84129c61818306d7955c7840be1d650a9b642c4d13"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "currentOwner": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+      "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6"
+    },
+    "receiving": {
+      "A": {
+        "pointer": "/profiles/local-A/settings/busterNamespaceBroker/maxTtlSeconds",
+        "exactTypedValue": 86400
+      },
+      "B": {
+        "pointer": "/profiles/local-B/settings/busterNamespaceBroker/maxTtlSeconds",
+        "exactTypedValue": 43200
+      }
+    }
+  },
+  {
+    "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-CONTROLLER-SERVICE-ACCOUNT",
+    "originalConcordance": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-deployment-binding-02/controller-receiver-rejoin.json",
+      "sha256": "8c1641b580fd58148da0df84129c61818306d7955c7840be1d650a9b642c4d13"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "currentOwner": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+      "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6"
+    },
+    "receiving": {
+      "A": {
+        "pointer": "/profiles/local-A/readonlyBindings/roles/controllerServiceAccount",
+        "exactTypedValue": "agent-buster-namespace-controller"
+      },
+      "B": {
+        "pointer": "/profiles/local-B/readonlyBindings/roles/controllerServiceAccount",
+        "exactTypedValue": "agent-buster-namespace-controller"
+      }
+    }
+  },
+  {
+    "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-SECRET-ROLE-NAME",
+    "originalConcordance": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-deployment-binding-02/controller-receiver-rejoin.json",
+      "sha256": "8c1641b580fd58148da0df84129c61818306d7955c7840be1d650a9b642c4d13"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "currentOwner": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+      "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6"
+    },
+    "receiving": {
+      "A": {
+        "pointer": "/profiles/local-A/readonlyBindings/roles/secretRole",
+        "exactTypedValue": "agent-buster-controller-secrets"
+      },
+      "B": {
+        "pointer": "/profiles/local-B/readonlyBindings/roles/secretRole",
+        "exactTypedValue": "agent-buster-controller-secrets"
+      }
+    }
+  },
+  {
+    "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-DEPLOYER-ROLE-NAME",
+    "originalConcordance": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-deployment-binding-02/controller-receiver-rejoin.json",
+      "sha256": "8c1641b580fd58148da0df84129c61818306d7955c7840be1d650a9b642c4d13"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "currentOwner": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+      "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6"
+    },
+    "receiving": {
+      "A": {
+        "pointer": "/profiles/local-A/readonlyBindings/roles/deployerRole",
+        "exactTypedValue": "agent-buster-namespace-deployer"
+      },
+      "B": {
+        "pointer": "/profiles/local-B/readonlyBindings/roles/deployerRole",
+        "exactTypedValue": "agent-buster-namespace-deployer"
+      }
+    }
+  },
+  {
+    "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-TESTER-ROLE-NAME",
+    "originalConcordance": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-deployment-binding-02/controller-receiver-rejoin.json",
+      "sha256": "8c1641b580fd58148da0df84129c61818306d7955c7840be1d650a9b642c4d13"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "currentOwner": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+      "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6"
+    },
+    "receiving": {
+      "A": {
+        "pointer": "/profiles/local-A/readonlyBindings/roles/testerRole",
+        "exactTypedValue": "agent-buster-namespace-tester"
+      },
+      "B": {
+        "pointer": "/profiles/local-B/readonlyBindings/roles/testerRole",
+        "exactTypedValue": "agent-buster-namespace-tester"
+      }
+    }
+  },
+  {
+    "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-ALLOWED-ACCESS-JSON",
+    "originalConcordance": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-deployment-binding-02/controller-receiver-rejoin.json",
+      "sha256": "8c1641b580fd58148da0df84129c61818306d7955c7840be1d650a9b642c4d13"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "currentOwner": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+      "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6"
+    },
+    "receiving": {
+      "A": {
+        "pointer": "/profiles/local-A/settings/busterNamespaceBroker/controller/allowedAccess",
+        "exactTypedValue": [
+          {
+            "subject": "kubeclaw/agent-nova",
+            "modes": [
+              "deployer"
+            ]
+          },
+          {
+            "subject": "kubeclaw/agent-buster",
+            "modes": [
+              "deployer",
+              "tester"
+            ]
+          }
+        ]
+      },
+      "B": {
+        "pointer": "/profiles/local-B/settings/busterNamespaceBroker/controller/allowedAccess",
+        "exactTypedValue": [
+          {
+            "subject": "kubeclaw/agent-nova",
+            "modes": [
+              "deployer"
+            ]
+          },
+          {
+            "subject": "kubeclaw/agent-buster",
+            "modes": [
+              "deployer",
+              "tester"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "DLV-NAMESPACE-CONTROLLER-KUBECLAW-NAMESPACE",
+    "originalConcordance": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-deployment-binding-02/controller-receiver-rejoin.json",
+      "sha256": "8c1641b580fd58148da0df84129c61818306d7955c7840be1d650a9b642c4d13"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "currentOwner": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+      "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6"
+    },
+    "receiving": {
+      "A": {
+        "pointer": "/profiles/local-A/readonlyBindings/releaseNamespace",
+        "exactTypedValue": "kubeclaw"
+      },
+      "B": {
+        "pointer": "/profiles/local-B/readonlyBindings/releaseNamespace",
+        "exactTypedValue": "kubeclaw"
+      }
+    }
+  },
+  {
+    "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-CONTROLLER-POLL-MS",
+    "originalConcordance": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-deployment-binding-02/controller-receiver-rejoin.json",
+      "sha256": "8c1641b580fd58148da0df84129c61818306d7955c7840be1d650a9b642c4d13"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "currentOwner": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+      "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6"
+    },
+    "receiving": {
+      "A": {
+        "pointer": "/profiles/local-A/settings/busterNamespaceBroker/controller/pollIntervalMs",
+        "exactTypedValue": 3000
+      },
+      "B": {
+        "pointer": "/profiles/local-B/settings/busterNamespaceBroker/controller/pollIntervalMs",
+        "exactTypedValue": 6000
+      }
+    }
+  },
+  {
+    "id": "DLV-NAMESPACE-CONTROLLER-KUBERNETES-SERVICE-HOST",
+    "originalConcordance": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-deployment-binding-02/controller-receiver-rejoin.json",
+      "sha256": "8c1641b580fd58148da0df84129c61818306d7955c7840be1d650a9b642c4d13"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "currentOwner": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+      "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6"
+    },
+    "receiving": {
+      "A": {
+        "pointer": "/profiles/local-A/readonlyBindings/api/host",
+        "exactTypedValue": "127.0.0.1"
+      },
+      "B": {
+        "pointer": "/profiles/local-B/readonlyBindings/api/host",
+        "exactTypedValue": "127.0.0.1"
+      }
+    }
+  },
+  {
+    "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-ALLOWED-SOURCE-SECRETS",
+    "originalConcordance": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-deployment-binding-02/controller-receiver-rejoin.json",
+      "sha256": "8c1641b580fd58148da0df84129c61818306d7955c7840be1d650a9b642c4d13"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "currentOwner": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+      "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6"
+    },
+    "receiving": {
+      "A": {
+        "pointer": "/profiles/local-A/settings/busterNamespaceBroker/controller/allowedSourceSecrets",
+        "exactTypedValue": [
+          "kubeclaw-fixture-preflight",
+          "prism-test-provider",
+          "prism-test-runtime",
+          "prism-test-postgresql-auth",
+          "prism-test-ghcr"
+        ]
+      },
+      "B": {
+        "pointer": "/profiles/local-B/settings/busterNamespaceBroker/controller/allowedSourceSecrets",
+        "exactTypedValue": [
+          "kubeclaw-fixture-preflight",
+          "prism-test-provider",
+          "prism-test-runtime",
+          "prism-test-postgresql-auth",
+          "prism-test-ghcr"
+        ]
+      }
+    }
+  },
+  {
+    "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-READY-LISTEN",
+    "originalConcordance": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-deployment-binding-02/controller-receiver-rejoin.json",
+      "sha256": "8c1641b580fd58148da0df84129c61818306d7955c7840be1d650a9b642c4d13"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "currentOwner": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+      "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6"
+    },
+    "receiving": {
+      "A": {
+        "pointer": "/profiles/local-A/settings/busterNamespaceBroker/controller/readiness/port",
+        "exactTypedValue": 8443
+      },
+      "B": {
+        "pointer": "/profiles/local-B/settings/busterNamespaceBroker/controller/readiness/port",
+        "exactTypedValue": 8443
+      }
+    }
+  },
+  {
+    "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-READY-AUDIENCE",
+    "originalConcordance": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-deployment-binding-02/controller-receiver-rejoin.json",
+      "sha256": "8c1641b580fd58148da0df84129c61818306d7955c7840be1d650a9b642c4d13"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "currentOwner": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+      "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6"
+    },
+    "receiving": {
+      "A": {
+        "pointer": "/profiles/local-A/settings/busterNamespaceBroker/controller/readiness/audience",
+        "exactTypedValue": "fixture-ready"
+      },
+      "B": {
+        "pointer": "/profiles/local-B/settings/busterNamespaceBroker/controller/readiness/audience",
+        "exactTypedValue": "fixture-ready"
+      }
+    }
+  },
+  {
+    "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-READY-PRODUCER",
+    "originalConcordance": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-deployment-binding-02/controller-receiver-rejoin.json",
+      "sha256": "8c1641b580fd58148da0df84129c61818306d7955c7840be1d650a9b642c4d13"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "currentOwner": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+      "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6"
+    },
+    "receiving": {
+      "A": {
+        "pointer": "/profiles/local-A/settings/busterNamespaceBroker/controller/readiness",
+        "exactTypedValue": {
+          "enabled": true,
+          "audience": "fixture-ready",
+          "producerNamespace": "kubeclaw",
+          "producerServiceAccount": "agent-nova",
+          "tlsSecretRef": {
+            "namespace": "kubeclaw",
+            "name": "fixture-controller-ready-tls",
+            "keys": [
+              "tls.crt",
+              "tls.key"
+            ],
+            "providerRef": "fixture-ready-tls-authority",
+            "revisionCapability": "must-resolve-original-revision-at-activation"
+          },
+          "port": 8443
+        }
+      },
+      "B": {
+        "pointer": "/profiles/local-B/settings/busterNamespaceBroker/controller/readiness",
+        "exactTypedValue": {
+          "enabled": true,
+          "audience": "fixture-ready",
+          "producerNamespace": "kubeclaw",
+          "producerServiceAccount": "agent-nova",
+          "tlsSecretRef": {
+            "namespace": "kubeclaw",
+            "name": "fixture-controller-ready-tls",
+            "keys": [
+              "tls.crt",
+              "tls.key"
+            ],
+            "providerRef": "fixture-ready-tls-authority",
+            "revisionCapability": "must-resolve-original-revision-at-activation"
+          },
+          "port": 8443
+        }
+      }
+    }
+  },
+  {
+    "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-READY-TLS-CERT",
+    "originalConcordance": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-deployment-binding-02/controller-receiver-rejoin.json",
+      "sha256": "8c1641b580fd58148da0df84129c61818306d7955c7840be1d650a9b642c4d13"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "currentOwner": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+      "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6"
+    },
+    "receiving": {
+      "A": {
+        "pointer": "/profiles/local-A/settings/busterNamespaceBroker/controller/readiness/tlsSecretRef",
+        "exactTypedValue": {
+          "namespace": "kubeclaw",
+          "name": "fixture-controller-ready-tls",
+          "keys": [
+            "tls.crt",
+            "tls.key"
+          ],
+          "providerRef": "fixture-ready-tls-authority",
+          "revisionCapability": "must-resolve-original-revision-at-activation"
+        }
+      },
+      "B": {
+        "pointer": "/profiles/local-B/settings/busterNamespaceBroker/controller/readiness/tlsSecretRef",
+        "exactTypedValue": {
+          "namespace": "kubeclaw",
+          "name": "fixture-controller-ready-tls",
+          "keys": [
+            "tls.crt",
+            "tls.key"
+          ],
+          "providerRef": "fixture-ready-tls-authority",
+          "revisionCapability": "must-resolve-original-revision-at-activation"
+        }
+      }
+    }
+  },
+  {
+    "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-READY-TLS-KEY",
+    "originalConcordance": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-deployment-binding-02/controller-receiver-rejoin.json",
+      "sha256": "8c1641b580fd58148da0df84129c61818306d7955c7840be1d650a9b642c4d13"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "currentOwner": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+      "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6"
+    },
+    "receiving": {
+      "A": {
+        "pointer": "/profiles/local-A/settings/busterNamespaceBroker/controller/readiness/tlsSecretRef",
+        "exactTypedValue": {
+          "namespace": "kubeclaw",
+          "name": "fixture-controller-ready-tls",
+          "keys": [
+            "tls.crt",
+            "tls.key"
+          ],
+          "providerRef": "fixture-ready-tls-authority",
+          "revisionCapability": "must-resolve-original-revision-at-activation"
+        }
+      },
+      "B": {
+        "pointer": "/profiles/local-B/settings/busterNamespaceBroker/controller/readiness/tlsSecretRef",
+        "exactTypedValue": {
+          "namespace": "kubeclaw",
+          "name": "fixture-controller-ready-tls",
+          "keys": [
+            "tls.crt",
+            "tls.key"
+          ],
+          "providerRef": "fixture-ready-tls-authority",
+          "revisionCapability": "must-resolve-original-revision-at-activation"
+        }
+      }
+    }
+  },
+  {
+    "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-PRODUCT-ENABLED",
+    "originalConcordance": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-deployment-binding-02/controller-receiver-rejoin.json",
+      "sha256": "8c1641b580fd58148da0df84129c61818306d7955c7840be1d650a9b642c4d13"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "currentOwner": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+      "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6"
+    },
+    "receiving": {
+      "A": {
+        "pointer": "/profiles/local-A/readonlyBindings/product/enabled",
+        "exactTypedValue": true
+      },
+      "B": {
+        "pointer": "/profiles/local-B/readonlyBindings/product/enabled",
+        "exactTypedValue": true
+      }
+    }
+  },
+  {
+    "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-PRODUCT-VERIFY-KEY",
+    "originalConcordance": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-deployment-binding-02/controller-receiver-rejoin.json",
+      "sha256": "8c1641b580fd58148da0df84129c61818306d7955c7840be1d650a9b642c4d13"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "currentOwner": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+      "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6"
+    },
+    "receiving": {
+      "A": {
+        "pointer": "/profiles/local-A/readonlyBindings/product/verifyKeyRef",
+        "exactTypedValue": {
+          "originalSigningAuthorityRef": "fixture-product-signing-Ed25519-authority",
+          "decodedPublicKeyBytes": 32,
+          "proofStatus": "external-required-no-private-bytes"
+        }
+      },
+      "B": {
+        "pointer": "/profiles/local-B/readonlyBindings/product/verifyKeyRef",
+        "exactTypedValue": {
+          "originalSigningAuthorityRef": "fixture-product-signing-Ed25519-authority",
+          "decodedPublicKeyBytes": 32,
+          "proofStatus": "external-required-no-private-bytes"
+        }
+      }
+    }
+  },
+  {
+    "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-PRODUCT-AUDIENCE",
+    "originalConcordance": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-deployment-binding-02/controller-receiver-rejoin.json",
+      "sha256": "8c1641b580fd58148da0df84129c61818306d7955c7840be1d650a9b642c4d13"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "currentOwner": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+      "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6"
+    },
+    "receiving": {
+      "A": {
+        "pointer": "/profiles/local-A/readonlyBindings/product/audience",
+        "exactTypedValue": "fixture-product"
+      },
+      "B": {
+        "pointer": "/profiles/local-B/readonlyBindings/product/audience",
+        "exactTypedValue": "fixture-product"
+      }
+    }
+  },
+  {
+    "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-PRODUCT-PRODUCER",
+    "originalConcordance": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-deployment-binding-02/controller-receiver-rejoin.json",
+      "sha256": "8c1641b580fd58148da0df84129c61818306d7955c7840be1d650a9b642c4d13"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "currentOwner": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+      "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6"
+    },
+    "receiving": {
+      "A": {
+        "pointer": "/profiles/local-A/readonlyBindings/product/producer",
+        "exactTypedValue": "system:serviceaccount:kubeclaw:prism-control"
+      },
+      "B": {
+        "pointer": "/profiles/local-B/readonlyBindings/product/producer",
+        "exactTypedValue": "system:serviceaccount:kubeclaw:prism-control"
+      }
+    }
+  },
+  {
+    "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-PRODUCT-ISSUER",
+    "originalConcordance": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-deployment-binding-02/controller-receiver-rejoin.json",
+      "sha256": "8c1641b580fd58148da0df84129c61818306d7955c7840be1d650a9b642c4d13"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "currentOwner": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+      "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6"
+    },
+    "receiving": {
+      "A": {
+        "pointer": "/profiles/local-A/readonlyBindings/product/issuer",
+        "exactTypedValue": "fixture-human-authority"
+      },
+      "B": {
+        "pointer": "/profiles/local-B/readonlyBindings/product/issuer",
+        "exactTypedValue": "fixture-human-authority"
+      }
+    }
+  },
+  {
+    "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-PRODUCT-ACTORS-JSON",
+    "originalConcordance": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-deployment-binding-02/controller-receiver-rejoin.json",
+      "sha256": "8c1641b580fd58148da0df84129c61818306d7955c7840be1d650a9b642c4d13"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "currentOwner": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+      "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6"
+    },
+    "receiving": {
+      "A": {
+        "pointer": "/profiles/local-A/readonlyBindings/product/actors",
+        "exactTypedValue": [
+          "fixture-operator"
+        ]
+      },
+      "B": {
+        "pointer": "/profiles/local-B/readonlyBindings/product/actors",
+        "exactTypedValue": [
+          "fixture-operator"
+        ]
+      }
+    }
+  },
+  {
+    "id": "DLV-NAMESPACE-CONTROLLER-HTTPCLIENTTIMEOUTSECONDS",
+    "originalConcordance": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-deployment-binding-02/controller-receiver-rejoin.json",
+      "sha256": "8c1641b580fd58148da0df84129c61818306d7955c7840be1d650a9b642c4d13"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "currentOwner": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+      "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6"
+    },
+    "receiving": {
+      "A": {
+        "pointer": "/profiles/local-A/settings/busterNamespaceBroker/controller/policy/httpClientTimeoutSeconds",
+        "exactTypedValue": 60
+      },
+      "B": {
+        "pointer": "/profiles/local-B/settings/busterNamespaceBroker/controller/policy/httpClientTimeoutSeconds",
+        "exactTypedValue": 120
+      }
+    }
+  },
+  {
+    "id": "DLV-NAMESPACE-CONTROLLER-RUNTIMESECURITYREFRESHSECONDS",
+    "originalConcordance": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-deployment-binding-02/controller-receiver-rejoin.json",
+      "sha256": "8c1641b580fd58148da0df84129c61818306d7955c7840be1d650a9b642c4d13"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "currentOwner": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+      "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6"
+    },
+    "receiving": {
+      "A": {
+        "pointer": "/profiles/local-A/settings/busterNamespaceBroker/controller/policy/runtimeSecurityRefreshSeconds",
+        "exactTypedValue": 5
+      },
+      "B": {
+        "pointer": "/profiles/local-B/settings/busterNamespaceBroker/controller/policy/runtimeSecurityRefreshSeconds",
+        "exactTypedValue": 10
+      }
+    }
+  },
+  {
+    "id": "DLV-NAMESPACE-CONTROLLER-RUNTIMESECURITYFUTURESKEWSECONDS",
+    "originalConcordance": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-deployment-binding-02/controller-receiver-rejoin.json",
+      "sha256": "8c1641b580fd58148da0df84129c61818306d7955c7840be1d650a9b642c4d13"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "currentOwner": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+      "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6"
+    },
+    "receiving": {
+      "A": {
+        "pointer": "/profiles/local-A/settings/busterNamespaceBroker/controller/policy/runtimeSecurityFutureSkewSeconds",
+        "exactTypedValue": 5
+      },
+      "B": {
+        "pointer": "/profiles/local-B/settings/busterNamespaceBroker/controller/policy/runtimeSecurityFutureSkewSeconds",
+        "exactTypedValue": 2
+      }
+    }
+  },
+  {
+    "id": "DLV-NAMESPACE-CONTROLLER-RUNTIMESECURITYMAXIMUMFINDINGS",
+    "originalConcordance": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-deployment-binding-02/controller-receiver-rejoin.json",
+      "sha256": "8c1641b580fd58148da0df84129c61818306d7955c7840be1d650a9b642c4d13"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "currentOwner": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+      "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6"
+    },
+    "receiving": {
+      "A": {
+        "pointer": "/profiles/local-A/settings/busterNamespaceBroker/controller/policy/runtimeSecurityMaximumFindings",
+        "exactTypedValue": 4096
+      },
+      "B": {
+        "pointer": "/profiles/local-B/settings/busterNamespaceBroker/controller/policy/runtimeSecurityMaximumFindings",
+        "exactTypedValue": 2048
+      }
+    }
+  },
+  {
+    "id": "DLV-NAMESPACE-CONTROLLER-RUNTIMESECURITYMAXIMUMSERIALIZEDBYTES",
+    "originalConcordance": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-deployment-binding-02/controller-receiver-rejoin.json",
+      "sha256": "8c1641b580fd58148da0df84129c61818306d7955c7840be1d650a9b642c4d13"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "currentOwner": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+      "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6"
+    },
+    "receiving": {
+      "A": {
+        "pointer": "/profiles/local-A/settings/busterNamespaceBroker/controller/policy/runtimeSecurityMaximumSerializedBytes",
+        "exactTypedValue": 65536
+      },
+      "B": {
+        "pointer": "/profiles/local-B/settings/busterNamespaceBroker/controller/policy/runtimeSecurityMaximumSerializedBytes",
+        "exactTypedValue": 131072
+      }
+    }
+  },
+  {
+    "id": "DLV-NAMESPACE-CONTROLLER-READYREADHEADERTIMEOUTSECONDS",
+    "originalConcordance": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-deployment-binding-02/controller-receiver-rejoin.json",
+      "sha256": "8c1641b580fd58148da0df84129c61818306d7955c7840be1d650a9b642c4d13"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "currentOwner": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+      "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6"
+    },
+    "receiving": {
+      "A": {
+        "pointer": "/profiles/local-A/settings/busterNamespaceBroker/controller/policy/readyReadHeaderTimeoutSeconds",
+        "exactTypedValue": 5
+      },
+      "B": {
+        "pointer": "/profiles/local-B/settings/busterNamespaceBroker/controller/policy/readyReadHeaderTimeoutSeconds",
+        "exactTypedValue": 10
+      }
+    }
+  },
+  {
+    "id": "DLV-NAMESPACE-CONTROLLER-READYREADTIMEOUTSECONDS",
+    "originalConcordance": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-deployment-binding-02/controller-receiver-rejoin.json",
+      "sha256": "8c1641b580fd58148da0df84129c61818306d7955c7840be1d650a9b642c4d13"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "currentOwner": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+      "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6"
+    },
+    "receiving": {
+      "A": {
+        "pointer": "/profiles/local-A/settings/busterNamespaceBroker/controller/policy/readyReadTimeoutSeconds",
+        "exactTypedValue": 20
+      },
+      "B": {
+        "pointer": "/profiles/local-B/settings/busterNamespaceBroker/controller/policy/readyReadTimeoutSeconds",
+        "exactTypedValue": 40
+      }
+    }
+  },
+  {
+    "id": "DLV-NAMESPACE-CONTROLLER-READYWRITETIMEOUTSECONDS",
+    "originalConcordance": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-deployment-binding-02/controller-receiver-rejoin.json",
+      "sha256": "8c1641b580fd58148da0df84129c61818306d7955c7840be1d650a9b642c4d13"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "currentOwner": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+      "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6"
+    },
+    "receiving": {
+      "A": {
+        "pointer": "/profiles/local-A/settings/busterNamespaceBroker/controller/policy/readyWriteTimeoutSeconds",
+        "exactTypedValue": 20
+      },
+      "B": {
+        "pointer": "/profiles/local-B/settings/busterNamespaceBroker/controller/policy/readyWriteTimeoutSeconds",
+        "exactTypedValue": 40
+      }
+    }
+  },
+  {
+    "id": "DLV-NAMESPACE-CONTROLLER-READYIDLETIMEOUTSECONDS",
+    "originalConcordance": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-deployment-binding-02/controller-receiver-rejoin.json",
+      "sha256": "8c1641b580fd58148da0df84129c61818306d7955c7840be1d650a9b642c4d13"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "currentOwner": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+      "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6"
+    },
+    "receiving": {
+      "A": {
+        "pointer": "/profiles/local-A/settings/busterNamespaceBroker/controller/policy/readyIdleTimeoutSeconds",
+        "exactTypedValue": 30
+      },
+      "B": {
+        "pointer": "/profiles/local-B/settings/busterNamespaceBroker/controller/policy/readyIdleTimeoutSeconds",
+        "exactTypedValue": 60
+      }
+    }
+  },
+  {
+    "id": "DLV-NAMESPACE-CONTROLLER-READYMAXHEADERBYTES",
+    "originalConcordance": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-deployment-binding-02/controller-receiver-rejoin.json",
+      "sha256": "8c1641b580fd58148da0df84129c61818306d7955c7840be1d650a9b642c4d13"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "currentOwner": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+      "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6"
+    },
+    "receiving": {
+      "A": {
+        "pointer": "/profiles/local-A/settings/busterNamespaceBroker/controller/policy/readyMaxHeaderBytes",
+        "exactTypedValue": 20480
+      },
+      "B": {
+        "pointer": "/profiles/local-B/settings/busterNamespaceBroker/controller/policy/readyMaxHeaderBytes",
+        "exactTypedValue": 40960
+      }
+    }
+  },
+  {
+    "id": "DLV-NAMESPACE-CONTROLLER-READYHANDLERTIMEOUTSECONDS",
+    "originalConcordance": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-deployment-binding-02/controller-receiver-rejoin.json",
+      "sha256": "8c1641b580fd58148da0df84129c61818306d7955c7840be1d650a9b642c4d13"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "currentOwner": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+      "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6"
+    },
+    "receiving": {
+      "A": {
+        "pointer": "/profiles/local-A/settings/busterNamespaceBroker/controller/policy/readyHandlerTimeoutSeconds",
+        "exactTypedValue": 15
+      },
+      "B": {
+        "pointer": "/profiles/local-B/settings/busterNamespaceBroker/controller/policy/readyHandlerTimeoutSeconds",
+        "exactTypedValue": 30
+      }
+    }
+  },
+  {
+    "id": "DLV-NAMESPACE-CONTROLLER-READYMAXIMUMBODYBYTES",
+    "originalConcordance": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-deployment-binding-02/controller-receiver-rejoin.json",
+      "sha256": "8c1641b580fd58148da0df84129c61818306d7955c7840be1d650a9b642c4d13"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "currentOwner": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+      "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6"
+    },
+    "receiving": {
+      "A": {
+        "pointer": "/profiles/local-A/settings/busterNamespaceBroker/controller/policy/readyMaximumBodyBytes",
+        "exactTypedValue": 16384
+      },
+      "B": {
+        "pointer": "/profiles/local-B/settings/busterNamespaceBroker/controller/policy/readyMaximumBodyBytes",
+        "exactTypedValue": 8192
+      }
+    }
+  },
+  {
+    "id": "DLV-NAMESPACE-CONTROLLER-PRODUCTHANDLERTIMEOUTSECONDS",
+    "originalConcordance": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-deployment-binding-02/controller-receiver-rejoin.json",
+      "sha256": "8c1641b580fd58148da0df84129c61818306d7955c7840be1d650a9b642c4d13"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "currentOwner": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+      "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6"
+    },
+    "receiving": {
+      "A": {
+        "pointer": "/profiles/local-A/settings/busterNamespaceBroker/controller/policy/productHandlerTimeoutSeconds",
+        "exactTypedValue": 15
+      },
+      "B": {
+        "pointer": "/profiles/local-B/settings/busterNamespaceBroker/controller/policy/productHandlerTimeoutSeconds",
+        "exactTypedValue": 30
+      }
+    }
+  },
+  {
+    "id": "DLV-NAMESPACE-CONTROLLER-PRODUCTMAXIMUMBODYBYTES",
+    "originalConcordance": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-deployment-binding-02/controller-receiver-rejoin.json",
+      "sha256": "8c1641b580fd58148da0df84129c61818306d7955c7840be1d650a9b642c4d13"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "currentOwner": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+      "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6"
+    },
+    "receiving": {
+      "A": {
+        "pointer": "/profiles/local-A/settings/busterNamespaceBroker/controller/policy/productMaximumBodyBytes",
+        "exactTypedValue": 16384
+      },
+      "B": {
+        "pointer": "/profiles/local-B/settings/busterNamespaceBroker/controller/policy/productMaximumBodyBytes",
+        "exactTypedValue": 8192
+      }
+    }
+  },
+  {
+    "id": "DLV-NAMESPACE-CONTROLLER-DEFAULTDEMORETENTIONSECONDS",
+    "originalConcordance": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-deployment-binding-02/controller-receiver-rejoin.json",
+      "sha256": "8c1641b580fd58148da0df84129c61818306d7955c7840be1d650a9b642c4d13"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "currentOwner": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+      "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6"
+    },
+    "receiving": {
+      "A": {
+        "pointer": "/profiles/local-A/settings/busterNamespaceBroker/controller/policy/defaultDemoRetentionSeconds",
+        "exactTypedValue": 604800
+      },
+      "B": {
+        "pointer": "/profiles/local-B/settings/busterNamespaceBroker/controller/policy/defaultDemoRetentionSeconds",
+        "exactTypedValue": 1209600
+      }
+    }
+  },
+  {
+    "id": "DLV-NAMESPACE-CONTROLLER-MAXIMUMDEMORETENTIONSECONDS",
+    "originalConcordance": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-deployment-binding-02/controller-receiver-rejoin.json",
+      "sha256": "8c1641b580fd58148da0df84129c61818306d7955c7840be1d650a9b642c4d13"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "currentOwner": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+      "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6"
+    },
+    "receiving": {
+      "A": {
+        "pointer": "/profiles/local-A/readonlyBindings/maximumDemoRetentionSeconds",
+        "exactTypedValue": 9223372036
+      },
+      "B": {
+        "pointer": "/profiles/local-B/readonlyBindings/maximumDemoRetentionSeconds",
+        "exactTypedValue": 9223372036
+      }
+    }
+  },
+  {
+    "id": "DLV-NAMESPACE-CONTROLLER-API-RESPONSE-MAXIMUM-BYTES",
+    "originalConcordance": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-deployment-binding-02/controller-receiver-rejoin.json",
+      "sha256": "8c1641b580fd58148da0df84129c61818306d7955c7840be1d650a9b642c4d13"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "currentOwner": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+      "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6"
+    },
+    "receiving": {
+      "A": {
+        "pointer": "/profiles/local-A/settings/busterNamespaceBroker/controller/policy/apiResponseMaximumBytes",
+        "exactTypedValue": 8388608
+      },
+      "B": {
+        "pointer": "/profiles/local-B/settings/busterNamespaceBroker/controller/policy/apiResponseMaximumBytes",
+        "exactTypedValue": 16777216
+      }
+    }
+  },
+  {
+    "id": "DLV-NAMESPACE-CONTROLLER-API-REQUEST-MAXIMUM-BYTES",
+    "originalConcordance": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-deployment-binding-02/controller-receiver-rejoin.json",
+      "sha256": "8c1641b580fd58148da0df84129c61818306d7955c7840be1d650a9b642c4d13"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "currentOwner": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+      "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6"
+    },
+    "receiving": {
+      "A": {
+        "pointer": "/profiles/local-A/settings/busterNamespaceBroker/controller/policy/apiRequestMaximumBytes",
+        "exactTypedValue": 4194304
+      },
+      "B": {
+        "pointer": "/profiles/local-B/settings/busterNamespaceBroker/controller/policy/apiRequestMaximumBytes",
+        "exactTypedValue": 8388608
+      }
+    }
+  },
+  {
+    "id": "DLV-NAMESPACE-CONTROLLER-API-DIAGNOSTIC-MAXIMUM-BYTES",
+    "originalConcordance": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-deployment-binding-02/controller-receiver-rejoin.json",
+      "sha256": "8c1641b580fd58148da0df84129c61818306d7955c7840be1d650a9b642c4d13"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "currentOwner": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+      "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6"
+    },
+    "receiving": {
+      "A": {
+        "pointer": "/profiles/local-A/settings/busterNamespaceBroker/controller/policy/apiDiagnosticMaximumBytes",
+        "exactTypedValue": 1024
+      },
+      "B": {
+        "pointer": "/profiles/local-B/settings/busterNamespaceBroker/controller/policy/apiDiagnosticMaximumBytes",
+        "exactTypedValue": 2048
+      }
+    }
+  },
+  {
+    "id": "DLV-NAMESPACE-CONTROLLER-AUTHORIZATION-MAXIMUM-BYTES",
+    "originalConcordance": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-deployment-binding-02/controller-receiver-rejoin.json",
+      "sha256": "8c1641b580fd58148da0df84129c61818306d7955c7840be1d650a9b642c4d13"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "currentOwner": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+      "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6"
+    },
+    "receiving": {
+      "A": {
+        "pointer": "/profiles/local-A/settings/busterNamespaceBroker/controller/policy/authorizationMaximumBytes",
+        "exactTypedValue": 16384
+      },
+      "B": {
+        "pointer": "/profiles/local-B/settings/busterNamespaceBroker/controller/policy/authorizationMaximumBytes",
+        "exactTypedValue": 8192
+      }
+    }
+  },
+  {
+    "id": "DLV-NAMESPACE-CONTROLLER-NAMESPACE-DELETION-TIMEOUT-SECONDS",
+    "originalConcordance": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-deployment-binding-02/controller-receiver-rejoin.json",
+      "sha256": "8c1641b580fd58148da0df84129c61818306d7955c7840be1d650a9b642c4d13"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "currentOwner": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+      "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6"
+    },
+    "receiving": {
+      "A": {
+        "pointer": "/profiles/local-A/settings/busterNamespaceBroker/controller/policy/namespaceDeletionTimeoutSeconds",
+        "exactTypedValue": 120
+      },
+      "B": {
+        "pointer": "/profiles/local-B/settings/busterNamespaceBroker/controller/policy/namespaceDeletionTimeoutSeconds",
+        "exactTypedValue": 180
+      }
+    }
+  },
+  {
+    "id": "DLV-NAMESPACE-CONTROLLER-READY-OBSERVATION-MAXIMUM-AGE-SECONDS",
+    "originalConcordance": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-deployment-binding-02/controller-receiver-rejoin.json",
+      "sha256": "8c1641b580fd58148da0df84129c61818306d7955c7840be1d650a9b642c4d13"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "currentOwner": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+      "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6"
+    },
+    "receiving": {
+      "A": {
+        "pointer": "/profiles/local-A/settings/busterNamespaceBroker/controller/policy/readyObservationMaximumAgeSeconds",
+        "exactTypedValue": 300
+      },
+      "B": {
+        "pointer": "/profiles/local-B/settings/busterNamespaceBroker/controller/policy/readyObservationMaximumAgeSeconds",
+        "exactTypedValue": 180
+      }
+    }
+  },
+  {
+    "id": "DLV-NAMESPACE-CONTROLLER-PRODUCT-DECISION-MAXIMUM-VALIDITY-SECONDS",
+    "originalConcordance": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-deployment-binding-02/controller-receiver-rejoin.json",
+      "sha256": "8c1641b580fd58148da0df84129c61818306d7955c7840be1d650a9b642c4d13"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017"
+    },
+    "currentOwner": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/charts/kubeclaw/values.yaml",
+      "sha256": "da3aeb7dc1eaa9883bd1b593e2b516875179bcd7a5e9c3c957ac1bc0a11720a6"
+    },
+    "receiving": {
+      "A": {
+        "pointer": "/profiles/local-A/settings/busterNamespaceBroker/controller/policy/productDecisionMaximumValiditySeconds",
+        "exactTypedValue": 300
+      },
+      "B": {
+        "pointer": "/profiles/local-B/settings/busterNamespaceBroker/controller/policy/productDecisionMaximumValiditySeconds",
+        "exactTypedValue": 120
+      }
+    }
+  }
+]

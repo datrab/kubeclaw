@@ -1,0 +1,13 @@
+{
+  "name": "@kubeclaw/plugin-prism-design",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@kubeclaw/plugin-sdk": "*",
+    "@kubeclaw/prism-contracts-v1": "*"
+  },
+  "scripts": {
+    "build": "tsc --noEmit -p tsconfig.json",
+    "test": "node tests/live-function.test.ts && node ../../../../tests/verification/integration/prism-wait.test.mts && node ../../../../tests/verification/integration/prism-archive.test.mts"
+  }
+}

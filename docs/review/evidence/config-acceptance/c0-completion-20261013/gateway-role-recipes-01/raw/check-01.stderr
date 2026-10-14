@@ -1,0 +1,17 @@
+file:///home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-role-recipes-01/check-gateway-definition.mjs:99
+for(const row of roleIndex)for(const [name,mutate]of [['missingref',p=>delete p.readonlyBindings.bootstrapContextRef],['foreignpath',p=>p.readonlyBindings.bootstrapContextRef.path='../foreign.json'],['missingpointer',p=>p.readonlyBindings.bootstrapContextRef.pointer='/contexts/Absent'],['busterborrow',p=>p.readonlyBindings.bootstrapContextRef=structuredClone(owner.profiles['local-A'].readonlyBindings.bootstrapContextRef)],['wrongrole',p=>p.role=row.role==='nova'?'prism':'nova'],['badnamespace',p=>p.readonlyBindings.deployment.namespace='foreign'],['wrongcredentialsource',p=>p.readonlyBindings.embedding.credential.authoritySourceRef='my-values/buster-values.yaml#/litellm'],['badmodelalias',p=>p.settings.agent.model.primary='foreign/model']]])check('selected+unselected role owner negative '+row.receivingProfileId+'/'+name,()=>{const o=structuredClone(owner),x=o.profiles[row.ownerProfileId];if(name==='badmodelalias')mutate(x);else{const projected={role:x.role,readonlyBindings:x.readonlyBindings};mutate(projected);x.role=projected.role;x.readonlyBindings=projected.readonlyBindings;}return resolve(o,caller,selection);},true);
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             ^
+
+SyntaxError: Unexpected token ']'
+    at compileSourceTextModule (node:internal/modules/esm/utils:319:16)
+    at ModuleLoader.moduleStrategy (node:internal/modules/esm/translators:89:18)
+    at #translate (node:internal/modules/esm/loader:438:20)
+    at afterLoad (node:internal/modules/esm/loader:506:29)
+    at ModuleLoader.loadAndTranslate (node:internal/modules/esm/loader:511:12)
+    at #getOrCreateModuleJobAfterResolve (node:internal/modules/esm/loader:564:36)
+    at afterResolve (node:internal/modules/esm/loader:611:52)
+    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:617:12)
+    at node:internal/modules/esm/loader:636:32
+    at TracingChannel.tracePromise (node:diagnostics_channel:362:14)
+
+Node.js v24.21.0

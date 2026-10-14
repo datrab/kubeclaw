@@ -1,0 +1,487 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contexts",
+    "nativeFullSchema"
+  ],
+  "properties": {
+    "contexts": {
+      "type": "object",
+      "minProperties": 1,
+      "propertyNames": {
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+      },
+      "additionalProperties": {
+        "anyOf": [
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "qualification",
+              "systemAgent",
+              "agentModel",
+              "commandsAuthorization",
+              "discordEnabled",
+              "gatewayPort",
+              "gatewayTokenRef",
+              "discordTokenRef",
+              "installedPluginAllow",
+              "roleSpecificPluginEntries",
+              "secretsProviderContext",
+              "authProfileContext",
+              "sourceRoleAuthor",
+              "agentRole",
+              "nativeSecretRefRefinement",
+              "roleSpecificProjectionSource",
+              "discordApprovers",
+              "guildUserProjection",
+              "sourceAuthorizationRecipe",
+              "nativeRoleSource",
+              "association"
+            ],
+            "properties": {
+              "qualification": {
+                "const": "readonly generated existing-author/source context, not second configurable policy/secret writer; exact original per-role/host/grant/image support required"
+              },
+              "systemAgent": {
+                "const": {
+                  "agentId": "main"
+                }
+              },
+              "agentModel": {
+                "const": {
+                  "primary": "openai/gpt-6-astra",
+                  "fallbacks": [
+                    "openai/gpt-5.5"
+                  ],
+                  "sourceRef": "my-values/nova-values.yaml#/agent/model -> same existing Chart agent.model; current actual source"
+                }
+              },
+              "commandsAuthorization": {
+                "const": {
+                  "ownerAllowFrom": [
+                    "discord:849379821536804864"
+                  ],
+                  "discord": [
+                    "849379821536804864",
+                    "user:849379821536804864"
+                  ]
+                }
+              },
+              "discordEnabled": {
+                "const": true
+              },
+              "gatewayPort": {
+                "const": 18789
+              },
+              "gatewayTokenRef": {
+                "const": {
+                  "source": "env",
+                  "provider": "default",
+                  "id": "OPENCLAW_GATEWAY_TOKEN"
+                }
+              },
+              "discordTokenRef": {
+                "const": {
+                  "source": "env",
+                  "provider": "default",
+                  "id": "DISCORD_TOKEN"
+                }
+              },
+              "installedPluginAllow": {
+                "const": [
+                  "discord",
+                  "acpx",
+                  "codex",
+                  "openai"
+                ]
+              },
+              "roleSpecificPluginEntries": {
+                "const": {
+                  "discord": {
+                    "enabled": true
+                  }
+                }
+              },
+              "secretsProviderContext": {
+                "const": {
+                  "providers": {
+                    "default": {
+                      "source": "env"
+                    }
+                  }
+                }
+              },
+              "authProfileContext": {
+                "const": "existing Chart/native OAuth identity references only; actual retained tokens/grants/issuer external, no bytes here"
+              },
+              "sourceRoleAuthor": {
+                "const": "existing Chart + my-values/nova-values.yaml; no arbitrary context CONFIG writer"
+              },
+              "agentRole": {
+                "const": "nova"
+              },
+              "nativeSecretRefRefinement": {
+                "const": "original pinned native SecretRefSchema/isValidFileSecretRefId/isValidExecSecretRefId mandatory in approved full-image bootstrap; partial local cuts are NOT that validator"
+              },
+              "roleSpecificProjectionSource": {
+                "const": "actual ConfigMap role nova plugin branch; immutable generated source recipe, no installed grant"
+              },
+              "discordApprovers": {
+                "const": []
+              },
+              "guildUserProjection": {
+                "const": [
+                  "849379821536804864"
+                ]
+              },
+              "sourceAuthorizationRecipe": {
+                "const": "exact my-values/nova-values.yaml commands/Discord/auth/litellm source projections; not active grant"
+              },
+              "nativeRoleSource": {
+                "const": {
+                  "roleValuesPath": "my-values/nova-values.yaml",
+                  "deploymentName": "agent-nova",
+                  "namespace": "kubeclaw",
+                  "imageRecipe": "docker/Dockerfile.nova",
+                  "imageRepository": "ghcr.io/datrab/kubeclaw-nova",
+                  "imageTag": "latest",
+                  "installedImageEquality": "external-required",
+                  "gatewayTokenLocator": "kubernetes-secret:kubeclaw/openclaw-shared-secrets#gatewayToken-nova",
+                  "discordTokenLocator": "kubernetes-secret:kubeclaw/openclaw-shared-secrets#discordToken-nova",
+                  "discordTokenCarrier": "ENV DISCORD_TOKEN only when actual discord.enabled; dormant locator otherwise, not token read",
+                  "litellmAlias": {
+                    "endpoint": "http://litellm.kubeclaw.svc.cluster.local:4000/v1",
+                    "apiKey": {
+                      "source": "env",
+                      "provider": "default",
+                      "id": "LITELLM_API_KEY"
+                    },
+                    "locator": "kubernetes-secret:kubeclaw/openclaw-shared-secrets#litellmApiKey"
+                  },
+                  "skillSelection": [],
+                  "skillSource": "Chart explicit main.skills=[]; image codebundle /app/skills overlay delivery does not imply selection/installed skill availability",
+                  "pluginSdkSource": "OpenClaw2026.9.5 original base and diagnostic-runtime onDiagnosticEvent build assertion; Prism package compat >=2026.9.1 where active; actual installed SDK equality/grants missing",
+                  "serviceExposure": {
+                    "type": "ClusterIP",
+                    "gatewayPort": 18789,
+                    "gatewayTargetPort": "gateway",
+                    "bridgeEnabled": true,
+                    "bridgePort": 18790,
+                    "nodePort": 0,
+                    "bridgeNodePort": 0,
+                    "extraPorts": []
+                  },
+                  "modelBranchMeaning": "current source exact"
+                }
+              },
+              "association": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "ownerPath",
+                  "ownerProfileId",
+                  "receivingProfileId",
+                  "role",
+                  "instanceId",
+                  "sourceRecipeId",
+                  "sourceInputs"
+                ],
+                "properties": {
+                  "ownerPath": {
+                    "const": "charts/kubeclaw/values.yaml"
+                  },
+                  "ownerProfileId": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+                  },
+                  "receivingProfileId": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+                  },
+                  "role": {
+                    "const": "nova"
+                  },
+                  "instanceId": {
+                    "const": "agent-nova-gateway"
+                  },
+                  "sourceRecipeId": {
+                    "const": "nova-current"
+                  },
+                  "sourceInputs": {
+                    "const": [
+                      {
+                        "path": "charts/kubeclaw/values.yaml",
+                        "sha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1"
+                      },
+                      {
+                        "path": "my-values/nova-values.yaml",
+                        "sha256": "0fcc239368db8830868f38d7be350580575e8c241bd6435f79c9f9b931ff6140"
+                      },
+                      {
+                        "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+                        "sha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4"
+                      },
+                      {
+                        "path": "charts/kubeclaw/templates/deployment.yaml",
+                        "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+                      },
+                      {
+                        "path": "charts/kubeclaw/templates/_helpers.tpl",
+                        "sha256": "69986722975a973479b9fb1a2c35ab1a1ecb972662e8c19dd03718ac441f5103"
+                      },
+                      {
+                        "path": "docker/Dockerfile.nova",
+                        "sha256": "34e54267a3cd0d7541315de3c6ec785206a0364b7ec76699d433c4a3ca341242"
+                      },
+                      {
+                        "path": "gitops/production/apps/applications.yaml",
+                        "sha256": "2c4e7b1db4ac0282cf64e6cee265c084c59dd24f7623ef61ca8cb09ebb9a1542"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "qualification",
+              "systemAgent",
+              "agentModel",
+              "commandsAuthorization",
+              "discordEnabled",
+              "gatewayPort",
+              "gatewayTokenRef",
+              "discordTokenRef",
+              "installedPluginAllow",
+              "roleSpecificPluginEntries",
+              "secretsProviderContext",
+              "authProfileContext",
+              "sourceRoleAuthor",
+              "agentRole",
+              "nativeSecretRefRefinement",
+              "roleSpecificProjectionSource",
+              "discordApprovers",
+              "guildUserProjection",
+              "sourceAuthorizationRecipe",
+              "nativeRoleSource",
+              "association"
+            ],
+            "properties": {
+              "qualification": {
+                "const": "readonly generated existing-author/source context, not second configurable policy/secret writer; exact original per-role/host/grant/image support required"
+              },
+              "systemAgent": {
+                "const": {
+                  "agentId": "main"
+                }
+              },
+              "agentModel": {
+                "const": {
+                  "primary": "openai/gpt-5.6-sol",
+                  "fallbacks": [
+                    "openai/gpt-5.5"
+                  ],
+                  "sourceRef": "my-values/nova-values.yaml#/agent/model -> same existing Chart agent.model; proposed full-profile alternative using actual Chart conditional native domain, not deployed source/grant"
+                }
+              },
+              "commandsAuthorization": {
+                "const": {
+                  "ownerAllowFrom": [
+                    "discord:849379821536804864"
+                  ],
+                  "discord": [
+                    "849379821536804864",
+                    "user:849379821536804864"
+                  ]
+                }
+              },
+              "discordEnabled": {
+                "const": true
+              },
+              "gatewayPort": {
+                "const": 18789
+              },
+              "gatewayTokenRef": {
+                "const": {
+                  "source": "env",
+                  "provider": "default",
+                  "id": "OPENCLAW_GATEWAY_TOKEN"
+                }
+              },
+              "discordTokenRef": {
+                "const": {
+                  "source": "env",
+                  "provider": "default",
+                  "id": "DISCORD_TOKEN"
+                }
+              },
+              "installedPluginAllow": {
+                "const": [
+                  "discord",
+                  "acpx",
+                  "codex",
+                  "openai"
+                ]
+              },
+              "roleSpecificPluginEntries": {
+                "const": {
+                  "discord": {
+                    "enabled": true
+                  }
+                }
+              },
+              "secretsProviderContext": {
+                "const": {
+                  "providers": {
+                    "default": {
+                      "source": "env"
+                    }
+                  }
+                }
+              },
+              "authProfileContext": {
+                "const": "existing Chart/native OAuth identity references only; actual retained tokens/grants/issuer external, no bytes here"
+              },
+              "sourceRoleAuthor": {
+                "const": "existing Chart + my-values/nova-values.yaml; no arbitrary context CONFIG writer"
+              },
+              "agentRole": {
+                "const": "nova"
+              },
+              "nativeSecretRefRefinement": {
+                "const": "original pinned native SecretRefSchema/isValidFileSecretRefId/isValidExecSecretRefId mandatory in approved full-image bootstrap; partial local cuts are NOT that validator"
+              },
+              "roleSpecificProjectionSource": {
+                "const": "actual ConfigMap role nova plugin branch; immutable generated source recipe, no installed grant"
+              },
+              "discordApprovers": {
+                "const": []
+              },
+              "guildUserProjection": {
+                "const": [
+                  "849379821536804864"
+                ]
+              },
+              "sourceAuthorizationRecipe": {
+                "const": "exact my-values/nova-values.yaml commands/Discord/auth/litellm source projections; not active grant"
+              },
+              "nativeRoleSource": {
+                "const": {
+                  "roleValuesPath": "my-values/nova-values.yaml",
+                  "deploymentName": "agent-nova",
+                  "namespace": "kubeclaw",
+                  "imageRecipe": "docker/Dockerfile.nova",
+                  "imageRepository": "ghcr.io/datrab/kubeclaw-nova",
+                  "imageTag": "latest",
+                  "installedImageEquality": "external-required",
+                  "gatewayTokenLocator": "kubernetes-secret:kubeclaw/openclaw-shared-secrets#gatewayToken-nova",
+                  "discordTokenLocator": "kubernetes-secret:kubeclaw/openclaw-shared-secrets#discordToken-nova",
+                  "discordTokenCarrier": "ENV DISCORD_TOKEN only when actual discord.enabled; dormant locator otherwise, not token read",
+                  "litellmAlias": {
+                    "endpoint": "http://litellm.kubeclaw.svc.cluster.local:4000/v1",
+                    "apiKey": {
+                      "source": "env",
+                      "provider": "default",
+                      "id": "LITELLM_API_KEY"
+                    },
+                    "locator": "kubernetes-secret:kubeclaw/openclaw-shared-secrets#litellmApiKey"
+                  },
+                  "skillSelection": [],
+                  "skillSource": "Chart explicit main.skills=[]; image codebundle /app/skills overlay delivery does not imply selection/installed skill availability",
+                  "pluginSdkSource": "OpenClaw2026.9.5 original base and diagnostic-runtime onDiagnosticEvent build assertion; Prism package compat >=2026.9.1 where active; actual installed SDK equality/grants missing",
+                  "serviceExposure": {
+                    "type": "ClusterIP",
+                    "gatewayPort": 18789,
+                    "gatewayTargetPort": "gateway",
+                    "bridgeEnabled": true,
+                    "bridgePort": 18790,
+                    "nodePort": 0,
+                    "bridgeNodePort": 0,
+                    "extraPorts": []
+                  },
+                  "modelBranchMeaning": "operator full-profile alternative, source-authentic conditional branch; installed model/harness grant missing"
+                }
+              },
+              "association": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "ownerPath",
+                  "ownerProfileId",
+                  "receivingProfileId",
+                  "role",
+                  "instanceId",
+                  "sourceRecipeId",
+                  "sourceInputs"
+                ],
+                "properties": {
+                  "ownerPath": {
+                    "const": "charts/kubeclaw/values.yaml"
+                  },
+                  "ownerProfileId": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+                  },
+                  "receivingProfileId": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+                  },
+                  "role": {
+                    "const": "nova"
+                  },
+                  "instanceId": {
+                    "const": "agent-nova-gateway"
+                  },
+                  "sourceRecipeId": {
+                    "const": "nova-modelcontrast"
+                  },
+                  "sourceInputs": {
+                    "const": [
+                      {
+                        "path": "charts/kubeclaw/values.yaml",
+                        "sha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1"
+                      },
+                      {
+                        "path": "my-values/nova-values.yaml",
+                        "sha256": "0fcc239368db8830868f38d7be350580575e8c241bd6435f79c9f9b931ff6140"
+                      },
+                      {
+                        "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+                        "sha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4"
+                      },
+                      {
+                        "path": "charts/kubeclaw/templates/deployment.yaml",
+                        "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+                      },
+                      {
+                        "path": "charts/kubeclaw/templates/_helpers.tpl",
+                        "sha256": "69986722975a973479b9fb1a2c35ab1a1ecb972662e8c19dd03718ac441f5103"
+                      },
+                      {
+                        "path": "docker/Dockerfile.nova",
+                        "sha256": "34e54267a3cd0d7541315de3c6ec785206a0364b7ec76699d433c4a3ca341242"
+                      },
+                      {
+                        "path": "gitops/production/apps/applications.yaml",
+                        "sha256": "2c4e7b1db4ac0282cf64e6cee265c084c59dd24f7623ef61ca8cb09ebb9a1542"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "nativeFullSchema": {
+      "const": "pinned validateConfigObjectRaw and actual image/native plugin schema still required; this managed69 schema is NOT a substitute full OpenClaw validator"
+    }
+  }
+}

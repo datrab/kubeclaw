@@ -1,0 +1,54 @@
+{
+  "schemaVersion": "provider-configuration.v2",
+  "contractId": "kubeclaw.api-flow@1",
+  "taskSchemaDigest": "sha256:64be3ae79bed9a97a4fe51615ab66a403413c0f0b09ddf3a2e922a67d6b80198",
+  "values": {
+    "flowFile": "flow-a.json",
+    "url": "https://fixture.invalid"
+  },
+  "selectedPolicy": {
+    "schemaVersion": "selected-registration-policy.v1",
+    "binding": {
+      "kind": "test-provider",
+      "packageId": "kubeclaw.api-flow",
+      "registrationId": "kubeclaw.api-flow:flow",
+      "instanceId": "fixture.api-flow",
+      "profileId": "A",
+      "serviceInstanceId": "fixture.service.buster-runtime",
+      "rootDigest": "sha256:05addb8209de125deee1f5c2ad67528e0ae3b26b04c2994c021c8389ceebe5fa",
+      "ownerDigest": "sha256:6d0d39c516128aefb8e94edf6c8f68c43caa0bf9aade74628c6fc49d3c5fe917",
+      "profileDigest": "sha256:ae8c1324579b92b7e7d6b53fdabcf8949b808b03411d1c1fc2c3e0939b940cef",
+      "packageVersion": "1.0.0",
+      "packageContentDigest": "sha256:404cc68fce4f287cc47d68f6661cc1ae6c848cf83fc4b098b73ee360a6f5881a",
+      "ownerSchemaDigest": "sha256:feda3e42ced475a7d1c7b4e86fb4750946d622d0e801bf6d279da3e7189e5b31",
+      "taskSchemaDigest": "sha256:64be3ae79bed9a97a4fe51615ab66a403413c0f0b09ddf3a2e922a67d6b80198",
+      "readerVersion": "pipeline-entry.v8/provider-configuration.v2",
+      "c3RuntimeSchemaDigest": "sha256:af8e9bded1aef68ebe88e0ded835b202e0a4591099eda89fa4ea99a31b1b1740",
+      "c3ReferenceContractDigest": "sha256:d1ba44788070a8300c6081fb448184d8cba8d3a38a6d20ff11583cb64bfd38c2"
+    },
+    "processing": {
+      "requestTimeoutMs": 1000,
+      "maximumResponseBytes": 2048,
+      "maximumSteps": 3,
+      "maximumFlowFileBytes": 1048576,
+      "maximumRequestTimeoutMs": 1000
+    },
+    "declarations": {
+      "evidenceDefaults": {
+        "onPass": [
+          "log",
+          "test-report"
+        ],
+        "onFail": [
+          "log",
+          "test-report"
+        ],
+        "onError": [
+          "log"
+        ]
+      },
+      "retrySafe": false,
+      "matrixFields": []
+    }
+  }
+}
