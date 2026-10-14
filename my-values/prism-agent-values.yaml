@@ -2,6 +2,16 @@
 # colocated bridge only converts Nova/Studio requests into persistent agent sends.
 agentRole: "prism"
 
+# Match Nova/Buster migration headroom: the startup doctor traverses persistent
+# state and plugin migrations before the gateway starts.
+gateway:
+  startupDoctor:
+    enabled: true
+    nodeOptions: "--max-old-space-size=3072"
+    resources:
+      requests: { cpu: 100m, memory: 256Mi }
+      limits: { cpu: "2", memory: 4Gi }
+
 image:
   repository: ghcr.io/datrab/kubeclaw-prism-agent
   tag: "latest"
