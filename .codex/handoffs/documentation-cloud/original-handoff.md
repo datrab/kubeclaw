@@ -1,3 +1,5 @@
+> Ausführungsupdate, vom Nutzer am 2026-10-14 bestätigt: Die effiziente Korrektur- und Abnahmeschleife in `goal-objective.md` hat Vorrang vor widersprechenden Wiederholungsregeln dieses historischen Handoffs. Fachlicher Umfang und finale Abnahmebedingungen bleiben unverändert.
+
 # KubeClaw documentation handoff
 
 Use this file as the complete starting context for a new Codex session with
@@ -402,9 +404,12 @@ global PASS prematurely.
 
 ### 5. Repeat Sol review until `OK`
 
-After each correction round, ask a new fresh-context Sol reviewer to inspect
-the complete AP09.8 scope. The reviewer must look for new defects, not only
-confirm that earlier findings disappeared.
+After grouped corrections and focused tests, request independent fresh-context
+reviews of the complete semantically affected scope on a stable candidate.
+Include changed behavior and affected callers, claims and dependencies; look
+for new defects, not only disappearance of earlier findings. Reuse explicitly
+bound evidence for unchanged scope. Review the complete AP09.8 package at
+final package acceptance, not after every bounded correction.
 
 Repeat:
 

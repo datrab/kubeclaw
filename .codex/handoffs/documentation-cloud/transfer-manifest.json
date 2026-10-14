@@ -3,13 +3,13 @@
   "files": [
     {
       "path": "CLOUD-PROMPT.txt",
-      "bytes": 756,
-      "sha256": "f7754adefc6e1c087fd0fdceac222730168d8acea256074367b65f5915eae769"
+      "bytes": 1260,
+      "sha256": "64243aaf7511e173cef835c5991d20f274c55bcc65e40d558aa9de26a99087bc"
     },
     {
       "path": "README.md",
-      "bytes": 9975,
-      "sha256": "21ab98f66749b0dfa2df43284aad52fb39180c35203d40f384137160f7fed0da"
+      "bytes": 10802,
+      "sha256": "367749f45f42eca416e0a7acc55365c6990e70c35942f8350d17a4202628d29f"
     },
     {
       "path": "current-state.json",
@@ -28,13 +28,13 @@
     },
     {
       "path": "goal-objective.md",
-      "bytes": 6082,
-      "sha256": "71ca400fea3b23e7e7bbee153884ecc8fe7ed3cbec7bf8b7c2b6cec517fd5345"
+      "bytes": 7180,
+      "sha256": "8ad236553fa5bae741fcdcb284016acbc4a72a4f1fe74fd55041fc1bbf9deb4e"
     },
     {
       "path": "original-handoff.md",
-      "bytes": 16776,
-      "sha256": "72048b18136df71333153bc2029ac30c94174641ec5233e8ed3768e650313116"
+      "bytes": 17307,
+      "sha256": "3fb97eb63e005d6a7473cfc667cd5a2ee6657372af138cf31a7b7f7cd699b0b1"
     },
     {
       "path": "verify-transfer.py",
