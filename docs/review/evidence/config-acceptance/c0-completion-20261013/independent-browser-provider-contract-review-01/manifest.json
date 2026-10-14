@@ -1,0 +1,53 @@
+{
+  "verdict": "VERIFIED bounded Browser01 material definitions",
+  "materialFindings": [],
+  "artifacts": [
+    {
+      "path": "README.md",
+      "sha256": "803ac6b882f22f276b02d7a866ee5deda610004450ff035bcfedad3b1d2fc6a6",
+      "bytes": 374
+    },
+    {
+      "path": "REPORT.md",
+      "sha256": "35ff43921c1c1f59baa30af2b7c4e907de8c8d7e9398ef084970736ada9aca16",
+      "bytes": 11766
+    },
+    {
+      "path": "commands-and-exits.json",
+      "sha256": "e38d17aed15c3a8eaa087bc9101a0e695ec90ccd0374dd75922b13752a6104b3",
+      "bytes": 1315
+    },
+    {
+      "path": "component-preservation.json",
+      "sha256": "c43c5cbd11b1a764d0167f0425ef15d9e2e13ea740dc8df2fee47709db5f0823",
+      "bytes": 1025
+    },
+    {
+      "path": "end-identities.json",
+      "sha256": "a0068e6f1ba0678573bfaae41f8d1d1d17858f8f0acf6b8456771961a2175ac9",
+      "bytes": 336571
+    },
+    {
+      "path": "physical-generation-joins.stdout.json",
+      "sha256": "ae8516d84037812de1c9f2d8b32224687ea1dde698ba46ff4e79908f74aa4512",
+      "bytes": 57582
+    },
+    {
+      "path": "physical-members-and-conservation.json",
+      "sha256": "3d5b899e0ebc919254a0bd85ffd2aab1daf2d3cf32a6b19c9b793d10fbc188a1",
+      "bytes": 297902
+    },
+    {
+      "path": "pure-visual-comparison.stdout.json",
+      "sha256": "1dd9e94c9a4381466c0678ce7224e974477e3dd71ac3ec91ae13d29f1246345d",
+      "bytes": 1299
+    },
+    {
+      "path": "read-identities.json",
+      "sha256": "39e818018338df87d0b5ed3a97a4ab015f136a12c7902a6b0b164017a91ea160",
+      "bytes": 341903
+    }
+  ],
+  "implementationAuthorization": null,
+  "globalC0Accepted": false
+}

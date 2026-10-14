@@ -1,0 +1,332 @@
+[
+  {
+    "originalEntry": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/fixtures/entries/kubeclaw.api-flow.deadline-ceiling-A.pipeline.config.json",
+      "sha256": "f3f494f794f9984fd2707ac0b35d1c6743ea542e2f13461d4466c50ed04df43f"
+    },
+    "currentEntry": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stands/providers/kubeclaw.api-flow.deadline-ceiling-A.pipeline.config.json",
+      "sha256": "bc76faf92a67c0fd48f1526eb72c5a03a6e159fc39f9ebc5b17d559e6b4d54d1"
+    },
+    "oldBindingsAnd4SelectionsExact": true,
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "2e20ca68b88ae9b21741732630ffea5736d50db942c33b42a0b9403fee1d2228"
+    }
+  },
+  {
+    "originalEntry": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/fixtures/entries/kubeclaw.api-flow.deadline-ceiling-B.pipeline.config.json",
+      "sha256": "8a35d9c96a1b8872de3a7b00cd3827e91cffd26553dfda1c4ba5af1b7c37d784"
+    },
+    "currentEntry": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stands/providers/kubeclaw.api-flow.deadline-ceiling-B.pipeline.config.json",
+      "sha256": "f595508dea8c93cdc234cf20c6b21300c008266fd77eee395ea11856fb3fc66f"
+    },
+    "oldBindingsAnd4SelectionsExact": true,
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "2e20ca68b88ae9b21741732630ffea5736d50db942c33b42a0b9403fee1d2228"
+    }
+  },
+  {
+    "originalEntry": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/fixtures/entries/kubeclaw.api-flow.maximumFlowFileBytes-A.pipeline.config.json",
+      "sha256": "654d110e04c781300b544fdfcd35f2b266ccfc09a80291c0a182d1e883f5ef51"
+    },
+    "currentEntry": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stands/providers/kubeclaw.api-flow.maximumFlowFileBytes-A.pipeline.config.json",
+      "sha256": "ef7610f97c49800f2a9abebff6f3a47dd56444859780e788127d075a76aaee29"
+    },
+    "oldBindingsAnd4SelectionsExact": true,
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "2e20ca68b88ae9b21741732630ffea5736d50db942c33b42a0b9403fee1d2228"
+    }
+  },
+  {
+    "originalEntry": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/fixtures/entries/kubeclaw.api-flow.maximumFlowFileBytes-B.pipeline.config.json",
+      "sha256": "94cf18a571b7ee97a80fe80d4388a0de767b72d305085cc394b76fa5d963cdb8"
+    },
+    "currentEntry": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stands/providers/kubeclaw.api-flow.maximumFlowFileBytes-B.pipeline.config.json",
+      "sha256": "caa11ae8747e404f1341781505cabe8fcf87eca30222eb5e0523bf9ef292b105"
+    },
+    "oldBindingsAnd4SelectionsExact": true,
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "2e20ca68b88ae9b21741732630ffea5736d50db942c33b42a0b9403fee1d2228"
+    }
+  },
+  {
+    "originalEntry": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/fixtures/entries/kubeclaw.http.deadline-ceiling-A.pipeline.config.json",
+      "sha256": "053eb312b73091cddfa8556e39055a0c56381edd1b37251f64dc7f66b1851321"
+    },
+    "currentEntry": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stands/providers/kubeclaw.http.deadline-ceiling-A.pipeline.config.json",
+      "sha256": "f8ae562bf35f3961e96b05359ea9245f8155178c95b7c3276fe91e4090dda043"
+    },
+    "oldBindingsAnd4SelectionsExact": true,
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "2e20ca68b88ae9b21741732630ffea5736d50db942c33b42a0b9403fee1d2228"
+    }
+  },
+  {
+    "originalEntry": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/fixtures/entries/kubeclaw.http.deadline-ceiling-B.pipeline.config.json",
+      "sha256": "29c5cf855f5b88a6c747eb63360ac3bb3f02a0ef27040a307ecbab3dd0bf61c1"
+    },
+    "currentEntry": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stands/providers/kubeclaw.http.deadline-ceiling-B.pipeline.config.json",
+      "sha256": "5740c51f137c014265437270fa8b8c3342568cff21c00eea28417453c54445df"
+    },
+    "oldBindingsAnd4SelectionsExact": true,
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "2e20ca68b88ae9b21741732630ffea5736d50db942c33b42a0b9403fee1d2228"
+    }
+  },
+  {
+    "originalEntry": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/fixtures/entries/kubeclaw.openapi.deadline-ceiling-A.pipeline.config.json",
+      "sha256": "2624cc1856e3a1a7dfc073b3b3d28f82ce37d97b897c46842fb80a507f8f570e"
+    },
+    "currentEntry": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stands/providers/kubeclaw.openapi.deadline-ceiling-A.pipeline.config.json",
+      "sha256": "8084971a56f5ebc20c15efd960685c37505dc8ebc3e73d68adfe79388ba24d4c"
+    },
+    "oldBindingsAnd4SelectionsExact": true,
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "2e20ca68b88ae9b21741732630ffea5736d50db942c33b42a0b9403fee1d2228"
+    }
+  },
+  {
+    "originalEntry": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/fixtures/entries/kubeclaw.openapi.deadline-ceiling-B.pipeline.config.json",
+      "sha256": "a57fa0582b172630037e032e6739f17847337a08ec7335fa69fe4a375bc8ad6c"
+    },
+    "currentEntry": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stands/providers/kubeclaw.openapi.deadline-ceiling-B.pipeline.config.json",
+      "sha256": "099c5ec8d8991d60549743eaf3881697075352c1d773f21b33aecf8dcd78427f"
+    },
+    "oldBindingsAnd4SelectionsExact": true,
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "2e20ca68b88ae9b21741732630ffea5736d50db942c33b42a0b9403fee1d2228"
+    }
+  },
+  {
+    "originalEntry": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/fixtures/entries/kubeclaw.openapi.maximumPatternCodeUnits-A.pipeline.config.json",
+      "sha256": "4a2f7fe81ef9277a2526de8ab3ad1ecc33062b80f2cd4f929a62c156f570c589"
+    },
+    "currentEntry": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stands/providers/kubeclaw.openapi.maximumPatternCodeUnits-A.pipeline.config.json",
+      "sha256": "1da9b4af7a86dc9a0e5087157e0b539f903b37e80a72df5c9489185b4914e2f6"
+    },
+    "oldBindingsAnd4SelectionsExact": true,
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "2e20ca68b88ae9b21741732630ffea5736d50db942c33b42a0b9403fee1d2228"
+    }
+  },
+  {
+    "originalEntry": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/fixtures/entries/kubeclaw.openapi.maximumPatternCodeUnits-B.pipeline.config.json",
+      "sha256": "be798956164c7f7b7c11d43b5178afc2dafa2de095b726bc489e64765dec5a69"
+    },
+    "currentEntry": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stands/providers/kubeclaw.openapi.maximumPatternCodeUnits-B.pipeline.config.json",
+      "sha256": "6610e0be63ea7a562fc8f885577d613595620a5c44af10a71432aab04c2b5075"
+    },
+    "oldBindingsAnd4SelectionsExact": true,
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "2e20ca68b88ae9b21741732630ffea5736d50db942c33b42a0b9403fee1d2228"
+    }
+  },
+  {
+    "originalEntry": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/fixtures/entries/kubeclaw.openapi.maximumPatternQuantifier-A.pipeline.config.json",
+      "sha256": "b1aaf71691582178e90077cb97ebf9691a3e02684dc2a70f3ac5e41747de827d"
+    },
+    "currentEntry": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stands/providers/kubeclaw.openapi.maximumPatternQuantifier-A.pipeline.config.json",
+      "sha256": "d5bfe70b1d72f51d149754c76a0cc8537ae4acae44845c8efe8bc4b4cb6881ab"
+    },
+    "oldBindingsAnd4SelectionsExact": true,
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "2e20ca68b88ae9b21741732630ffea5736d50db942c33b42a0b9403fee1d2228"
+    }
+  },
+  {
+    "originalEntry": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/fixtures/entries/kubeclaw.openapi.maximumPatternQuantifier-B.pipeline.config.json",
+      "sha256": "5b0255e2ececb211f1143adff2e3760943ea1abd38ae778be38eec97c9fbade2"
+    },
+    "currentEntry": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stands/providers/kubeclaw.openapi.maximumPatternQuantifier-B.pipeline.config.json",
+      "sha256": "3d461d8e4bc9724abb5a16a4a1701bc3598086298bf8549a7d5d77e3d7a25530"
+    },
+    "oldBindingsAnd4SelectionsExact": true,
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "2e20ca68b88ae9b21741732630ffea5736d50db942c33b42a0b9403fee1d2228"
+    }
+  },
+  {
+    "originalEntry": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/fixtures/entries/kubeclaw.openapi.maximumPayloadDepth-A.pipeline.config.json",
+      "sha256": "1f704ca6fa2ae669f764c2c1391767abdf65146c84de255711492f1b4f5823f3"
+    },
+    "currentEntry": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stands/providers/kubeclaw.openapi.maximumPayloadDepth-A.pipeline.config.json",
+      "sha256": "cfa2c99e49fe94b0f271ff972a39f8cea6960c21f478ae7151fb5529b32f60b7"
+    },
+    "oldBindingsAnd4SelectionsExact": true,
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "2e20ca68b88ae9b21741732630ffea5736d50db942c33b42a0b9403fee1d2228"
+    }
+  },
+  {
+    "originalEntry": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/fixtures/entries/kubeclaw.openapi.maximumPayloadDepth-B.pipeline.config.json",
+      "sha256": "40fc66aa2bc8f19d4f2a799f1ec1f2f2bda8b54c5184c59b62127a3d595fdac7"
+    },
+    "currentEntry": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stands/providers/kubeclaw.openapi.maximumPayloadDepth-B.pipeline.config.json",
+      "sha256": "1d9e71630a328738f72ba41712524ad410087b742e7d923a122fce402b5e61db"
+    },
+    "oldBindingsAnd4SelectionsExact": true,
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "2e20ca68b88ae9b21741732630ffea5736d50db942c33b42a0b9403fee1d2228"
+    }
+  },
+  {
+    "originalEntry": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/fixtures/entries/kubeclaw.openapi.maximumRefChainDepth-A.pipeline.config.json",
+      "sha256": "9868fc05f9b1bbe4c1ec9fd50574f27220fd38b350702df03b1483d118030ea5"
+    },
+    "currentEntry": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stands/providers/kubeclaw.openapi.maximumRefChainDepth-A.pipeline.config.json",
+      "sha256": "4d5be6b000fc1cb37f4660fa77c875c5edb6dd8d0eae9bd21da85f4c6b182ab9"
+    },
+    "oldBindingsAnd4SelectionsExact": true,
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "2e20ca68b88ae9b21741732630ffea5736d50db942c33b42a0b9403fee1d2228"
+    }
+  },
+  {
+    "originalEntry": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/fixtures/entries/kubeclaw.openapi.maximumRefChainDepth-B.pipeline.config.json",
+      "sha256": "83078e4d68b9dfc7317089a49c5ad67292bbb85d8d4e6ae6be61176e5729b9a6"
+    },
+    "currentEntry": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stands/providers/kubeclaw.openapi.maximumRefChainDepth-B.pipeline.config.json",
+      "sha256": "92933d8b1ad3c6f9c0d6b4d09394506f7ac5614f751c8bfd4b7968cdbc64ac1e"
+    },
+    "oldBindingsAnd4SelectionsExact": true,
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "2e20ca68b88ae9b21741732630ffea5736d50db942c33b42a0b9403fee1d2228"
+    }
+  },
+  {
+    "originalEntry": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/fixtures/entries/kubeclaw.openapi.maximumSchemaGraphDepth-A.pipeline.config.json",
+      "sha256": "3f48f42e73401c7e5b3879d772c27a8f7db8cf71b3193252e867e88fd11ff42b"
+    },
+    "currentEntry": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stands/providers/kubeclaw.openapi.maximumSchemaGraphDepth-A.pipeline.config.json",
+      "sha256": "6e98dbba562a9d49a592b1dc70ee782ebe1f7f4f69b5ded3fef5f5ab2859ebb1"
+    },
+    "oldBindingsAnd4SelectionsExact": true,
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "2e20ca68b88ae9b21741732630ffea5736d50db942c33b42a0b9403fee1d2228"
+    }
+  },
+  {
+    "originalEntry": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/fixtures/entries/kubeclaw.openapi.maximumSchemaGraphDepth-B.pipeline.config.json",
+      "sha256": "566dd2870ed001ac99304366df94a2925c79d3609264ad0fd7742254942a8f6b"
+    },
+    "currentEntry": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stands/providers/kubeclaw.openapi.maximumSchemaGraphDepth-B.pipeline.config.json",
+      "sha256": "ba0e8b736b7eedcf31cb6fd8322cd6b0b17cddeb44cdb6016b305398bacb65cb"
+    },
+    "oldBindingsAnd4SelectionsExact": true,
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "2e20ca68b88ae9b21741732630ffea5736d50db942c33b42a0b9403fee1d2228"
+    }
+  },
+  {
+    "originalEntry": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/fixtures/entries/kubeclaw.openapi.maximumSelections-A.pipeline.config.json",
+      "sha256": "0bba649531ac0ac80821790a663ecca3b08334a590fb345d6106e7790d33a513"
+    },
+    "currentEntry": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stands/providers/kubeclaw.openapi.maximumSelections-A.pipeline.config.json",
+      "sha256": "69ae8ef27027c9a4ec923f09387b720508798bdce9fde88561f8dff08fab4bcb"
+    },
+    "oldBindingsAnd4SelectionsExact": true,
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "2e20ca68b88ae9b21741732630ffea5736d50db942c33b42a0b9403fee1d2228"
+    }
+  },
+  {
+    "originalEntry": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/fixtures/entries/kubeclaw.openapi.maximumSelections-B.pipeline.config.json",
+      "sha256": "9d610de30a92822b2232636ca82324908d0baaf0fbad4d689a24d72f5710ffaf"
+    },
+    "currentEntry": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stands/providers/kubeclaw.openapi.maximumSelections-B.pipeline.config.json",
+      "sha256": "72a04fa1eeab39b159d41b584b81751273a842c2655b20900c1c173da609c760"
+    },
+    "oldBindingsAnd4SelectionsExact": true,
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "2e20ca68b88ae9b21741732630ffea5736d50db942c33b42a0b9403fee1d2228"
+    }
+  },
+  {
+    "originalEntry": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/fixtures/entries/kubeclaw.openapi.maximumSpecFileBytes-A.pipeline.config.json",
+      "sha256": "8f43e06bb4f33255eea242e488fd84fd1706d0a8c83f57a9420460cd1f6e527d"
+    },
+    "currentEntry": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stands/providers/kubeclaw.openapi.maximumSpecFileBytes-A.pipeline.config.json",
+      "sha256": "82a4a55dc70838cdb0e86c3809e22e341d134cb7549b7d7d2b2542aa3d73de5a"
+    },
+    "oldBindingsAnd4SelectionsExact": true,
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "2e20ca68b88ae9b21741732630ffea5736d50db942c33b42a0b9403fee1d2228"
+    }
+  },
+  {
+    "originalEntry": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/fixtures/entries/kubeclaw.openapi.maximumSpecFileBytes-B.pipeline.config.json",
+      "sha256": "c70fa5bfc54a2bcd857095e6c8cbc35dbbd998669f1cc805c6d4e947427ac962"
+    },
+    "currentEntry": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stands/providers/kubeclaw.openapi.maximumSpecFileBytes-B.pipeline.config.json",
+      "sha256": "3bfd87a1e6cc3cf381cfb2f7a2741fafefee3b41462d406c35856dea0cc610e2"
+    },
+    "oldBindingsAnd4SelectionsExact": true,
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "2e20ca68b88ae9b21741732630ffea5736d50db942c33b42a0b9403fee1d2228"
+    }
+  }
+]

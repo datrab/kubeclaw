@@ -1,0 +1,37 @@
+{
+  "schemaVersion": "prism-agent-service-policy.v1",
+  "rootVersion": "pipeline-entry.v7",
+  "rootRawSha256": "2147cfa1eaf53ed57928563212442f13aaef735e4733178a8579b0f2308e4011",
+  "inputGenerationSha256": "cc926a7171db521180bd2628ff690f558b1cc81df64a00d5d2821fd92e043289",
+  "receiver": "control-agent-jobs",
+  "selection": {
+    "kind": "service-launcher",
+    "role": "prism-agent",
+    "engineId": "prism-openclaw-launcher",
+    "engineInstanceId": "fixture.engine.prism-agent",
+    "serviceInstanceId": "fixture.service.prism-agent",
+    "consumer": "prism-agent-bridge",
+    "ownerPath": "engines/prism-agent.config.json",
+    "profileId": "standard",
+    "controlComponentInstanceId": "fixture.service.prism-control"
+  },
+  "ownerRawSha256": "b6309c71d73c87a5598f00f2f16612c4b8bed2d705da84ca782459b4d5902f39",
+  "ownerSchemaSha256": "6515bd1a041dfb885c157e9b1ebcca4eee455c81fd01f4265cbb6930e666b97d",
+  "profileSha256": "d7fd9c8a9f7b396dbcf890ab1d4b1cba7140155644fd326711b7f82057e76605",
+  "policy": {
+    "limits": {
+      "timeoutMs": 900000,
+      "cleanupTimeoutMs": 10000,
+      "logBytes": 1048576,
+      "resultBytes": 1048576,
+      "evidenceBytes": 2097152,
+      "evidenceFiles": 2
+    },
+    "claimLifetimeMs": 960000,
+    "terminationGraceMs": 1000,
+    "agentId": "main",
+    "claimHttpTimeoutMs": 10000,
+    "finishHttpTimeoutMs": 10000
+  },
+  "authentication": "public-unsealed"
+}

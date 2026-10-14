@@ -1,0 +1,36 @@
+{
+  "fullAuthorCollector": {
+    "argv": [
+      "node",
+      "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/browser-provider-contracts-01/check-definition.mjs"
+    ],
+    "executed": false,
+    "reason": "direct author receiving/current-wire/observation writes; parent agreed skip rather than mutable or giant mirrored replay",
+    "authorSourceSha256": "ceac35c13a4a9b7a810346efca615f3e602a2b45d86fb70f67facc55e123a344",
+    "authorRawStdout": "frozen source logs/final-replay-02.stdout;5074 author-only"
+  },
+  "independentExecuted": [
+    {
+      "command": "Read-only fixed Browser01 JSON pointer/hash/body and210 generation comparisons",
+      "exitCode": 0,
+      "artifacts": [
+        "physical-members-and-conservation.json",
+        "physical-generation-joins.stdout.json",
+        "component-preservation.json"
+      ]
+    },
+    {
+      "argv": [
+        "node",
+        "--input-type=module",
+        "-"
+      ],
+      "scope": "copied exact Visual verdict branch at synthetic diff.25 in builtin vm only",
+      "exitCode": 0,
+      "stdout": "pure-visual-comparison.stdout.json",
+      "stderr": "empty",
+      "sourceSha256": "1a321386019f583561a20297bf8ad1ff57599aac2e906ed1f48bada2f08419b1"
+    }
+  ],
+  "productiveActions": 0
+}

@@ -1,0 +1,1704 @@
+{
+  "time": "2026-10-14T01:47:15.871013+00:00",
+  "inputs": [
+    {
+      "path": "docs/review/remediation/config-semantic-inventory.json",
+      "sha256": "c6316b87f87b292db0ae1165eb3178ae0a32bf8db3111294398139c3f112be63",
+      "bytes": 37908408,
+      "snapshot": "frozen-inputs/c6316b87f87b292db0ae1165eb3178ae0a32bf8db3111294398139c3f112be63.gz"
+    },
+    {
+      "path": "docs/review/remediation/config-acceptance-matrix.json",
+      "sha256": "ab559aee906e4f72085031a84bb618c01941bc6e2d613175f235af0a18289227",
+      "bytes": 101614219,
+      "snapshot": "frozen-inputs/ab559aee906e4f72085031a84bb618c01941bc6e2d613175f235af0a18289227.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-case-specifications-20261013.json",
+      "sha256": "11756bc76b28e093f5f74b7424c644dc0c2c94947a592d0854ecaa9557bd19b0",
+      "bytes": 360751,
+      "snapshot": "frozen-inputs/11756bc76b28e093f5f74b7424c644dc0c2c94947a592d0854ecaa9557bd19b0.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-primitive-controls-20261013.json",
+      "sha256": "d24e6ce9e5591e8b1ec23f95d6def52dfe165e25c753d713713d206ed54e9894",
+      "bytes": 136880,
+      "snapshot": "frozen-inputs/d24e6ce9e5591e8b1ec23f95d6def52dfe165e25c753d713713d206ed54e9894.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/source-supplement-index.json",
+      "sha256": "25397a60e4462fc1bbe0cbef2c76ca4629d15ec10b312dbd5268b0da16ddbae6",
+      "bytes": 232780,
+      "snapshot": "frozen-inputs/25397a60e4462fc1bbe0cbef2c76ca4629d15ec10b312dbd5268b0da16ddbae6.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-30/source-field-definitions.json",
+      "sha256": "c7bd3135ec6924c122733f31484e5919d8919b8411bb35f9ec2b8be0fedaeb45",
+      "bytes": 126214,
+      "snapshot": "frozen-inputs/c7bd3135ec6924c122733f31484e5919d8919b8411bb35f9ec2b8be0fedaeb45.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-30/README.md",
+      "sha256": "7415e5c642a3dc799eb3e76a47eb7e91013c672a5deaef82c360d8f2b49f23d4",
+      "bytes": 831,
+      "snapshot": "frozen-inputs/7415e5c642a3dc799eb3e76a47eb7e91013c672a5deaef82c360d8f2b49f23d4.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-attribution-22/README.md",
+      "sha256": "3efc22f1f53a8fd2b7dd30eebcc75731bfc7ed328578e0ae542986d2048ac6b7",
+      "bytes": 6012,
+      "snapshot": "frozen-inputs/3efc22f1f53a8fd2b7dd30eebcc75731bfc7ed328578e0ae542986d2048ac6b7.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-inventory-21/README.md",
+      "sha256": "0804cd2f16954556ef5fb2c7bcf4a362d01bebdc2d46c5e547b3712801c68837",
+      "bytes": 8032,
+      "snapshot": "frozen-inputs/0804cd2f16954556ef5fb2c7bcf4a362d01bebdc2d46c5e547b3712801c68837.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-whole-c0-readiness-review-01/whole-universe-structural-navigation.json",
+      "sha256": "a41d6c7b0fa2e2fb35e20ecab4de05d195192db473896d13ad451e32d1b69ea1",
+      "bytes": 16902205,
+      "snapshot": "frozen-inputs/a41d6c7b0fa2e2fb35e20ecab4de05d195192db473896d13ad451e32d1b69ea1.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-SUBAGENTS-RUNTIMEOUTSECONDS.B.json",
+      "sha256": "ac5c0ab33ccdc03c1934722d5b5ce35be411d16acd9eef56005fcabbdc9a2fc2",
+      "bytes": 5335,
+      "snapshot": "frozen-inputs/ac5c0ab33ccdc03c1934722d5b5ce35be411d16acd9eef56005fcabbdc9a2fc2.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-STREAMING-MODE.A.json",
+      "sha256": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+      "bytes": 5337,
+      "snapshot": "frozen-inputs/2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-INBOUNDWORKER-RUNTIMEOUTMS.B.json",
+      "sha256": "3124460ff1cc87989a093721a8e78ab4cd79eafb6d1837a8a90c632eb894f97a",
+      "bytes": 5334,
+      "snapshot": "frozen-inputs/3124460ff1cc87989a093721a8e78ab4cd79eafb6d1837a8a90c632eb894f97a.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-ENTRIES-MAIN-SKILLSLIMITS-MAXSKILLSPROMPTCHARS.A.json",
+      "sha256": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+      "bytes": 5337,
+      "snapshot": "frozen-inputs/2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-TOOLS-EXEC-TIMEOUTSECONDS.A.json",
+      "sha256": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+      "bytes": 5337,
+      "snapshot": "frozen-inputs/2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-SESSION-RESETBYTYPE-GROUP-MODE.A.json",
+      "sha256": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+      "bytes": 5337,
+      "snapshot": "frozen-inputs/2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-ACP-BACKEND.B.json",
+      "sha256": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+      "bytes": 5337,
+      "snapshot": "frozen-inputs/2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-THINKINGDEFAULT.A.json",
+      "sha256": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+      "bytes": 5337,
+      "snapshot": "frozen-inputs/2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-NATIVE-OPENCLAW-AGENTS-DEFAULTS-TIMEOUTSECONDS.A.json",
+      "sha256": "7f07c59ba0dd88e4ce0632ad83b6ad6892276512322fb6e4bc95a73bf5203248",
+      "bytes": 5369,
+      "snapshot": "frozen-inputs/7f07c59ba0dd88e4ce0632ad83b6ad6892276512322fb6e4bc95a73bf5203248.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-TOOLS-AGENTTOAGENT-ENABLED.B.json",
+      "sha256": "0f8f206fd73bd052529dae754aa471f7867201366ca982f6e4154c75f5dbcb76",
+      "bytes": 5338,
+      "snapshot": "frozen-inputs/0f8f206fd73bd052529dae754aa471f7867201366ca982f6e4154c75f5dbcb76.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-SESSION-THREADBINDINGS-ENABLED.B.json",
+      "sha256": "c51f2ff998875edc75ef2f6f72cf19bc1566db3cd18d7c24e6d515f2ba2781ad",
+      "bytes": 5338,
+      "snapshot": "frozen-inputs/c51f2ff998875edc75ef2f6f72cf19bc1566db3cd18d7c24e6d515f2ba2781ad.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-GUILDS-REQUIREMENTION.A.json",
+      "sha256": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+      "bytes": 5337,
+      "snapshot": "frozen-inputs/2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-EXECAPPROVALS-ENABLED.B.json",
+      "sha256": "4d74473ad95b99b3d31496c98111beac210034f2abac221434366386a4aa0b08",
+      "bytes": 5338,
+      "snapshot": "frozen-inputs/4d74473ad95b99b3d31496c98111beac210034f2abac221434366386a4aa0b08.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-SUBAGENTS-MAXSPAWNDEPTH.B.json",
+      "sha256": "fe5c8127fa283af090553c523c13bcc1f79256adbb160173708cfd35f0ae1531",
+      "bytes": 5337,
+      "snapshot": "frozen-inputs/fe5c8127fa283af090553c523c13bcc1f79256adbb160173708cfd35f0ae1531.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELS-OPENAI-GPT-5-6-SOL-AGENTRUNTIME-ID.A.json",
+      "sha256": "dfe279de0930f194b53823908efabd0045a92204a04d69b18e32920cd0ca0f68",
+      "bytes": 5309,
+      "snapshot": "frozen-inputs/dfe279de0930f194b53823908efabd0045a92204a04d69b18e32920cd0ca0f68.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-TOOLS-SESSIONS-VISIBILITY.A.json",
+      "sha256": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+      "bytes": 5337,
+      "snapshot": "frozen-inputs/2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-MESSAGES-GROUPCHAT-VISIBLEREPLIES.B.json",
+      "sha256": "47ff6c39990b2380f477d5a5cbab95a0d07cad6ff92e4a7e7e7c670e16339b67",
+      "bytes": 5340,
+      "snapshot": "frozen-inputs/47ff6c39990b2380f477d5a5cbab95a0d07cad6ff92e4a7e7e7c670e16339b67.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-ENABLED.B.json",
+      "sha256": "4dad733ba5db0cec7763e0ff7299e3192f32b17e566e057ee2a987f379050735",
+      "bytes": 5709,
+      "snapshot": "frozen-inputs/4dad733ba5db0cec7763e0ff7299e3192f32b17e566e057ee2a987f379050735.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-THREADBINDINGS-SPAWNSESSIONS.A.json",
+      "sha256": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+      "bytes": 5337,
+      "snapshot": "frozen-inputs/2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-ACP-ENABLED.B.json",
+      "sha256": "d8bebeec5ca7d33c9ba1334fc9a169cfeb3c78730862536b8ae426c0aefbc36a",
+      "bytes": 5338,
+      "snapshot": "frozen-inputs/d8bebeec5ca7d33c9ba1334fc9a169cfeb3c78730862536b8ae426c0aefbc36a.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-STREAMING-MODE.B.json",
+      "sha256": "03ae1e8d8587eac4b7d765062636f1952edaa1e209db4a10dc9442012248e08c",
+      "bytes": 5333,
+      "snapshot": "frozen-inputs/03ae1e8d8587eac4b7d765062636f1952edaa1e209db4a10dc9442012248e08c.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-GROUPPOLICY.A.json",
+      "sha256": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+      "bytes": 5337,
+      "snapshot": "frozen-inputs/2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELS-OPENAI-GPT-5-5-AGENTRUNTIME-ID.A.json",
+      "sha256": "9c164039f2b37daf2d5ac11ec2370cd6465f053555a03282238486b1b9f6292b",
+      "bytes": 5301,
+      "snapshot": "frozen-inputs/9c164039f2b37daf2d5ac11ec2370cd6465f053555a03282238486b1b9f6292b.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-EMBEDDEDAGENT-EXECUTIONCONTRACT.B.json",
+      "sha256": "3066b10e2a77db887715f175a83b888e2581b4cdf527841f2b0b912ae38cb4a8",
+      "bytes": 5336,
+      "snapshot": "frozen-inputs/3066b10e2a77db887715f175a83b888e2581b4cdf527841f2b0b912ae38cb4a8.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-SUBAGENTS-MAXCONCURRENT.B.json",
+      "sha256": "13d26f393b7023664f1bc7bd9ff4f5b6aa8c0baeeed94175f4663a01c45a47da",
+      "bytes": 5336,
+      "snapshot": "frozen-inputs/13d26f393b7023664f1bc7bd9ff4f5b6aa8c0baeeed94175f4663a01c45a47da.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-NATIVE-OPENCLAW-AGENTS-DEFAULTS-TIMEOUTSECONDS.B.json",
+      "sha256": "3708db7a73eb485540be4eff5e9b0cc0a7f6521cf30f56ef4274ef675a482be3",
+      "bytes": 5366,
+      "snapshot": "frozen-inputs/3708db7a73eb485540be4eff5e9b0cc0a7f6521cf30f56ef4274ef675a482be3.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-ACP-BACKEND.A.json",
+      "sha256": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+      "bytes": 5337,
+      "snapshot": "frozen-inputs/2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-EXPERIMENTAL-SESSIONMEMORY.A.json",
+      "sha256": "e893a783d0b5f55bd0d110fd5b1d92b07e30a2836a236689dd856ee8697a2907",
+      "bytes": 5708,
+      "snapshot": "frozen-inputs/e893a783d0b5f55bd0d110fd5b1d92b07e30a2836a236689dd856ee8697a2907.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-REASONINGDEFAULT.A.json",
+      "sha256": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+      "bytes": 5337,
+      "snapshot": "frozen-inputs/2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELS-OPENAI-GPT-5-6-SOL-AGENTRUNTIME-ID.B.json",
+      "sha256": "352bf53baf9b0b9ae8b009a96b025b1b51626b8d4b31cc5390ea033dd184f855",
+      "bytes": 5312,
+      "snapshot": "frozen-inputs/352bf53baf9b0b9ae8b009a96b025b1b51626b8d4b31cc5390ea033dd184f855.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-INBOUNDWORKER-RUNTIMEOUTMS.A.json",
+      "sha256": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+      "bytes": 5337,
+      "snapshot": "frozen-inputs/2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-ACP-ALLOWEDAGENTS.B.json",
+      "sha256": "787214b42b9b6cb42d66fe5fede95e3b93bdeba1a481f54f6b8e915226d6bcd2",
+      "bytes": 5279,
+      "snapshot": "frozen-inputs/787214b42b9b6cb42d66fe5fede95e3b93bdeba1a481f54f6b8e915226d6bcd2.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-ENTRIES-MAIN-SUBAGENTS-ALLOWAGENTS.A.json",
+      "sha256": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+      "bytes": 5337,
+      "snapshot": "frozen-inputs/2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-REASONINGDEFAULT.B.json",
+      "sha256": "70ea7302c4134f40cf950a3446e7f12f37471b27c5cc644432382d463353d271",
+      "bytes": 5336,
+      "snapshot": "frozen-inputs/70ea7302c4134f40cf950a3446e7f12f37471b27c5cc644432382d463353d271.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELS-OPENAI-GPT-6-ASTRA-AGENTRUNTIME-ID.B.json",
+      "sha256": "666e2e70c1e31319d7af7f055b343129a7538295916b3af4fde359b68f58395c",
+      "bytes": 5421,
+      "snapshot": "frozen-inputs/666e2e70c1e31319d7af7f055b343129a7538295916b3af4fde359b68f58395c.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-ENTRIES-MAIN-SUBAGENTS-ALLOWAGENTS.B.json",
+      "sha256": "203190c8dfa085b163526d0e4aa2e2de9751e235a4595ba4f82f38c63b6a8109",
+      "bytes": 5340,
+      "snapshot": "frozen-inputs/203190c8dfa085b163526d0e4aa2e2de9751e235a4595ba4f82f38c63b6a8109.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-THREADBINDINGS-ENABLED.A.json",
+      "sha256": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+      "bytes": 5337,
+      "snapshot": "frozen-inputs/2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-WORKSPACE.A.json",
+      "sha256": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+      "bytes": 5337,
+      "snapshot": "frozen-inputs/2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-APIKEY-ID.B.json",
+      "sha256": "35cc482d45ec6f31e597e5bb3e6a42718207cc87fcc3c12f4c5d0d665586567c",
+      "bytes": 5717,
+      "snapshot": "frozen-inputs/35cc482d45ec6f31e597e5bb3e6a42718207cc87fcc3c12f4c5d0d665586567c.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-GROUPPOLICY.B.json",
+      "sha256": "433e01e0651b77b6cd1bbb528846151474a36b4ff172a1ce33995d9efdbf8bae",
+      "bytes": 5336,
+      "snapshot": "frozen-inputs/433e01e0651b77b6cd1bbb528846151474a36b4ff172a1ce33995d9efdbf8bae.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-COMPACTION-KEEPRECENTTOKENS.B.json",
+      "sha256": "73502c57fa5a446206abdcbb281b0a43e7e30a6afaa25ee9b20663b410b9fac3",
+      "bytes": 5342,
+      "snapshot": "frozen-inputs/73502c57fa5a446206abdcbb281b0a43e7e30a6afaa25ee9b20663b410b9fac3.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-ACPX-ENABLED.A.json",
+      "sha256": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+      "bytes": 5337,
+      "snapshot": "frozen-inputs/2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-APIKEY-SOURCE.A.json",
+      "sha256": "e893a783d0b5f55bd0d110fd5b1d92b07e30a2836a236689dd856ee8697a2907",
+      "bytes": 5708,
+      "snapshot": "frozen-inputs/e893a783d0b5f55bd0d110fd5b1d92b07e30a2836a236689dd856ee8697a2907.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-SESSION-DMSCOPE.A.json",
+      "sha256": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+      "bytes": 5337,
+      "snapshot": "frozen-inputs/2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-COMPACTION-MEMORYFLUSH-ENABLED.A.json",
+      "sha256": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+      "bytes": 5337,
+      "snapshot": "frozen-inputs/2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-MODEL.A.json",
+      "sha256": "e893a783d0b5f55bd0d110fd5b1d92b07e30a2836a236689dd856ee8697a2907",
+      "bytes": 5708,
+      "snapshot": "frozen-inputs/e893a783d0b5f55bd0d110fd5b1d92b07e30a2836a236689dd856ee8697a2907.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-ENTRIES-MAIN-SKILLS.B.json",
+      "sha256": "1b9dc744b779fe426c38a4ced194e2d732ac48d9e20a6bdbf0c2d1428b82c929",
+      "bytes": 5372,
+      "snapshot": "frozen-inputs/1b9dc744b779fe426c38a4ced194e2d732ac48d9e20a6bdbf0c2d1428b82c929.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-OPENAI-ENABLED.B.json",
+      "sha256": "ae736b80ee651cdb912d406acfcac1e2a3956b84e3bd6f71dc3cc0cace921c79",
+      "bytes": 5338,
+      "snapshot": "frozen-inputs/ae736b80ee651cdb912d406acfcac1e2a3956b84e3bd6f71dc3cc0cace921c79.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-SESSION-THREADBINDINGS-ENABLED.A.json",
+      "sha256": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+      "bytes": 5337,
+      "snapshot": "frozen-inputs/2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-GATEWAY-TOOLS-ALLOW.A.json",
+      "sha256": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+      "bytes": 5337,
+      "snapshot": "frozen-inputs/2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-ACP-ENABLED.A.json",
+      "sha256": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+      "bytes": 5337,
+      "snapshot": "frozen-inputs/2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-ACPX-CONFIG-PERMISSIONMODE.A.json",
+      "sha256": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+      "bytes": 5337,
+      "snapshot": "frozen-inputs/2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-APIKEY-ID.A.json",
+      "sha256": "e893a783d0b5f55bd0d110fd5b1d92b07e30a2836a236689dd856ee8697a2907",
+      "bytes": 5708,
+      "snapshot": "frozen-inputs/e893a783d0b5f55bd0d110fd5b1d92b07e30a2836a236689dd856ee8697a2907.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-EMBEDDEDAGENT-EXECUTIONCONTRACT.A.json",
+      "sha256": "b4469a7a33aba0ecdbf6a09d4bfbdd88e0fe0009416e997e22b68f0d8ff8d368",
+      "bytes": 5343,
+      "snapshot": "frozen-inputs/b4469a7a33aba0ecdbf6a09d4bfbdd88e0fe0009416e997e22b68f0d8ff8d368.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-COMMANDS-NATIVE.B.json",
+      "sha256": "c59d09222d7e13a1988874effdda4ee7e60ca0c8ab65252a963854d308046b84",
+      "bytes": 5336,
+      "snapshot": "frozen-inputs/c59d09222d7e13a1988874effdda4ee7e60ca0c8ab65252a963854d308046b84.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-THREADBINDINGS-ENABLED.B.json",
+      "sha256": "3c7646b7776881c91a738e301299e492121b276936899735d2bed181b0945d57",
+      "bytes": 5338,
+      "snapshot": "frozen-inputs/3c7646b7776881c91a738e301299e492121b276936899735d2bed181b0945d57.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-COMPACTION-MODE.A.json",
+      "sha256": "b4469a7a33aba0ecdbf6a09d4bfbdd88e0fe0009416e997e22b68f0d8ff8d368",
+      "bytes": 5343,
+      "snapshot": "frozen-inputs/b4469a7a33aba0ecdbf6a09d4bfbdd88e0fe0009416e997e22b68f0d8ff8d368.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-ACPX-CONFIG-PERMISSIONMODE.B.json",
+      "sha256": "9a82e060a93db2cf09c702f29fa395e413785704e9b5033eaea311c98f66ce54",
+      "bytes": 5339,
+      "snapshot": "frozen-inputs/9a82e060a93db2cf09c702f29fa395e413785704e9b5033eaea311c98f66ce54.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-TOOLS-EXEC-MODE.A.json",
+      "sha256": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+      "bytes": 5337,
+      "snapshot": "frozen-inputs/2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-MESSAGES-GROUPCHAT-VISIBLEREPLIES.A.json",
+      "sha256": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+      "bytes": 5337,
+      "snapshot": "frozen-inputs/2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-THREADBINDINGS-IDLEHOURS.B.json",
+      "sha256": "51e9edb319dc810c6bcf9d0d9234ddcbcaebd2b48d40d49a9aae9e0760f5b87f",
+      "bytes": 5335,
+      "snapshot": "frozen-inputs/51e9edb319dc810c6bcf9d0d9234ddcbcaebd2b48d40d49a9aae9e0760f5b87f.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-OPENAI-ENABLED.A.json",
+      "sha256": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+      "bytes": 5337,
+      "snapshot": "frozen-inputs/2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-TOOLS-SESSIONS-VISIBILITY.B.json",
+      "sha256": "52e4964bb36d7f1dfaeff2f1ee509b8d626055fc615af530744abb839f6d57ec",
+      "bytes": 5338,
+      "snapshot": "frozen-inputs/52e4964bb36d7f1dfaeff2f1ee509b8d626055fc615af530744abb839f6d57ec.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-GATEWAY-CONTROLUI-DANGEROUSLYALLOWHOSTHEADERORIGINFALLBACK.A.json",
+      "sha256": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+      "bytes": 5337,
+      "snapshot": "frozen-inputs/2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELS-OPENAI-GPT-5-5-AGENTRUNTIME-ID.B.json",
+      "sha256": "f70d361a5dd8465b42cf3b357c033b98d647135ae188fc4dd404e96361d00ba1",
+      "bytes": 5304,
+      "snapshot": "frozen-inputs/f70d361a5dd8465b42cf3b357c033b98d647135ae188fc4dd404e96361d00ba1.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-ACP-DEFAULTAGENT.A.json",
+      "sha256": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+      "bytes": 5337,
+      "snapshot": "frozen-inputs/2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-TOOLS-AGENTTOAGENT-ENABLED.A.json",
+      "sha256": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+      "bytes": 5337,
+      "snapshot": "frozen-inputs/2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-ENABLED.A.json",
+      "sha256": "e893a783d0b5f55bd0d110fd5b1d92b07e30a2836a236689dd856ee8697a2907",
+      "bytes": 5708,
+      "snapshot": "frozen-inputs/e893a783d0b5f55bd0d110fd5b1d92b07e30a2836a236689dd856ee8697a2907.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-SESSION-THREADBINDINGS-IDLEHOURS.A.json",
+      "sha256": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+      "bytes": 5337,
+      "snapshot": "frozen-inputs/2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-COMMANDS-NATIVESKILLS.B.json",
+      "sha256": "a2955c31612835ea20fb1410cf26cd1470adc643448fe72f12061384e3b5f616",
+      "bytes": 5336,
+      "snapshot": "frozen-inputs/a2955c31612835ea20fb1410cf26cd1470adc643448fe72f12061384e3b5f616.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-ENTRIES-MAIN-SKILLS.A.json",
+      "sha256": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+      "bytes": 5337,
+      "snapshot": "frozen-inputs/2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-THINKINGDEFAULT.B.json",
+      "sha256": "fc77f3121311e9f50609e4b008b927cb6f54ee480e6b80c4324fd4e10a577ace",
+      "bytes": 5337,
+      "snapshot": "frozen-inputs/fc77f3121311e9f50609e4b008b927cb6f54ee480e6b80c4324fd4e10a577ace.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-SUBAGENTS-ARCHIVEAFTERMINUTES.B.json",
+      "sha256": "f633a6d191d16567310a6c3e7e51245963d90ef6aecf494b94afa91f88c0dff3",
+      "bytes": 5337,
+      "snapshot": "frozen-inputs/f633a6d191d16567310a6c3e7e51245963d90ef6aecf494b94afa91f88c0dff3.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-CODEX-ENABLED.A.json",
+      "sha256": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+      "bytes": 5337,
+      "snapshot": "frozen-inputs/2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-SESSION-DMSCOPE.B.json",
+      "sha256": "391595410db00da2b7f43471ee08b4ace5e7e2a59668fe95f3a1d1bda2c4a190",
+      "bytes": 5325,
+      "snapshot": "frozen-inputs/391595410db00da2b7f43471ee08b4ace5e7e2a59668fe95f3a1d1bda2c4a190.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELPOLICY-ALLOW.B.json",
+      "sha256": "6e918a4eeb9b8cee2c74c460fcabe91d6fbe2ba1185f30d7a860a3f6b4198a00",
+      "bytes": 5305,
+      "snapshot": "frozen-inputs/6e918a4eeb9b8cee2c74c460fcabe91d6fbe2ba1185f30d7a860a3f6b4198a00.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-TOOLS-PROFILE.A.json",
+      "sha256": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+      "bytes": 5337,
+      "snapshot": "frozen-inputs/2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-TOOLS-SESSIONS-SPAWN-ATTACHMENTS-ENABLED.A.json",
+      "sha256": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+      "bytes": 5337,
+      "snapshot": "frozen-inputs/2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-COMPACTION-MODE.B.json",
+      "sha256": "8a9ac47584f3ffcf5f1e7d49af133282846cccddf8e8bf2f8e227ab812e8cae3",
+      "bytes": 5341,
+      "snapshot": "frozen-inputs/8a9ac47584f3ffcf5f1e7d49af133282846cccddf8e8bf2f8e227ab812e8cae3.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-MODEL.B.json",
+      "sha256": "286a6b48901469e1671eeaf37da3a677707ff51a0b667fe3a7e72f29d10d191a",
+      "bytes": 5708,
+      "snapshot": "frozen-inputs/286a6b48901469e1671eeaf37da3a677707ff51a0b667fe3a7e72f29d10d191a.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-SESSION-RESETBYTYPE-GROUP-IDLEMINUTES.A.json",
+      "sha256": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+      "bytes": 5337,
+      "snapshot": "frozen-inputs/2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-COMMANDS-NATIVE.A.json",
+      "sha256": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+      "bytes": 5337,
+      "snapshot": "frozen-inputs/2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-CONTEXTPRUNING-TTL.A.json",
+      "sha256": "b4469a7a33aba0ecdbf6a09d4bfbdd88e0fe0009416e997e22b68f0d8ff8d368",
+      "bytes": 5343,
+      "snapshot": "frozen-inputs/b4469a7a33aba0ecdbf6a09d4bfbdd88e0fe0009416e997e22b68f0d8ff8d368.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-GATEWAY-MODE.A.json",
+      "sha256": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+      "bytes": 5337,
+      "snapshot": "frozen-inputs/2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-APIKEY-SOURCE.B.json",
+      "sha256": "33e658031595dea1e406f752c6715c8480ab1a7ba6a2950274e08db6399e43a3",
+      "bytes": 5902,
+      "snapshot": "frozen-inputs/33e658031595dea1e406f752c6715c8480ab1a7ba6a2950274e08db6399e43a3.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-SESSION-RESETBYTYPE-GROUP-IDLEMINUTES.B.json",
+      "sha256": "3906e17a67091804435d435c284d7268225869c0fc706ad0b2be2984e4a5db65",
+      "bytes": 5335,
+      "snapshot": "frozen-inputs/3906e17a67091804435d435c284d7268225869c0fc706ad0b2be2984e4a5db65.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-GATEWAY-BIND.B.json",
+      "sha256": "d00315af5c730b28f1bbe6e09a7f4cebba00091523aebe514a373d29208f5334",
+      "bytes": 5332,
+      "snapshot": "frozen-inputs/d00315af5c730b28f1bbe6e09a7f4cebba00091523aebe514a373d29208f5334.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-ACPX-ENABLED.B.json",
+      "sha256": "cd75d337a20f273946c033e7c312d799c8f8265ad20eb22fb1991086d216d366",
+      "bytes": 5338,
+      "snapshot": "frozen-inputs/cd75d337a20f273946c033e7c312d799c8f8265ad20eb22fb1991086d216d366.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-CONTEXTPRUNING-TTL.B.json",
+      "sha256": "36dc69460aa8ed61f44fd18d222f73dae15fb7303698e82c54954c416223cb5c",
+      "bytes": 5344,
+      "snapshot": "frozen-inputs/36dc69460aa8ed61f44fd18d222f73dae15fb7303698e82c54954c416223cb5c.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-CODEX-ENABLED.B.json",
+      "sha256": "501a90af54574289f0c2926f5331527fd662e56358ffb00c1ed0d0db05f249e0",
+      "bytes": 5338,
+      "snapshot": "frozen-inputs/501a90af54574289f0c2926f5331527fd662e56358ffb00c1ed0d0db05f249e0.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-SUBAGENTS-MAXSPAWNDEPTH.A.json",
+      "sha256": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+      "bytes": 5337,
+      "snapshot": "frozen-inputs/2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-BASEURL.A.json",
+      "sha256": "e893a783d0b5f55bd0d110fd5b1d92b07e30a2836a236689dd856ee8697a2907",
+      "bytes": 5708,
+      "snapshot": "frozen-inputs/e893a783d0b5f55bd0d110fd5b1d92b07e30a2836a236689dd856ee8697a2907.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-ACP-ALLOWEDAGENTS.A.json",
+      "sha256": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+      "bytes": 5337,
+      "snapshot": "frozen-inputs/2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-WORKSPACE.B.json",
+      "sha256": "6227c08f26f871694c3ccf54f4f39e01121d0214efa9dabb450b4ae382749c5b",
+      "bytes": 5327,
+      "snapshot": "frozen-inputs/6227c08f26f871694c3ccf54f4f39e01121d0214efa9dabb450b4ae382749c5b.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-COMPACTION-KEEPRECENTTOKENS.A.json",
+      "sha256": "b4469a7a33aba0ecdbf6a09d4bfbdd88e0fe0009416e997e22b68f0d8ff8d368",
+      "bytes": 5343,
+      "snapshot": "frozen-inputs/b4469a7a33aba0ecdbf6a09d4bfbdd88e0fe0009416e997e22b68f0d8ff8d368.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-CONTEXTPRUNING-MODE.A.json",
+      "sha256": "b4469a7a33aba0ecdbf6a09d4bfbdd88e0fe0009416e997e22b68f0d8ff8d368",
+      "bytes": 5343,
+      "snapshot": "frozen-inputs/b4469a7a33aba0ecdbf6a09d4bfbdd88e0fe0009416e997e22b68f0d8ff8d368.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-TOOLS-EXEC-TIMEOUTSECONDS.B.json",
+      "sha256": "81e140058ed9c7fbe2eb3fc633cd756bf2b78b99aade5dea49134297fd71a1d1",
+      "bytes": 5334,
+      "snapshot": "frozen-inputs/81e140058ed9c7fbe2eb3fc633cd756bf2b78b99aade5dea49134297fd71a1d1.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-APIKEY-PROVIDER.B.json",
+      "sha256": "8237419dd3a45b5662f1666eea566e3717aaa330af4f647557e43215bbcf7a60",
+      "bytes": 5723,
+      "snapshot": "frozen-inputs/8237419dd3a45b5662f1666eea566e3717aaa330af4f647557e43215bbcf7a60.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-BASEURL.B.json",
+      "sha256": "286a6b48901469e1671eeaf37da3a677707ff51a0b667fe3a7e72f29d10d191a",
+      "bytes": 5708,
+      "snapshot": "frozen-inputs/286a6b48901469e1671eeaf37da3a677707ff51a0b667fe3a7e72f29d10d191a.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-SESSION-THREADBINDINGS-IDLEHOURS.B.json",
+      "sha256": "82f9ad39be99aaba3bdb2f4350dd82b7e39f9d793ad8e3fbc2c32dcc9d5943ea",
+      "bytes": 5335,
+      "snapshot": "frozen-inputs/82f9ad39be99aaba3bdb2f4350dd82b7e39f9d793ad8e3fbc2c32dcc9d5943ea.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-SOURCES.A.json",
+      "sha256": "e893a783d0b5f55bd0d110fd5b1d92b07e30a2836a236689dd856ee8697a2907",
+      "bytes": 5708,
+      "snapshot": "frozen-inputs/e893a783d0b5f55bd0d110fd5b1d92b07e30a2836a236689dd856ee8697a2907.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-SUBAGENTS-ARCHIVEAFTERMINUTES.A.json",
+      "sha256": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+      "bytes": 5337,
+      "snapshot": "frozen-inputs/2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-EXPERIMENTAL-SESSIONMEMORY.B.json",
+      "sha256": "959da620f3b30317aa13779a87452d2237df3829fa774f9c55ffbe84b7a0731e",
+      "bytes": 5709,
+      "snapshot": "frozen-inputs/959da620f3b30317aa13779a87452d2237df3829fa774f9c55ffbe84b7a0731e.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-CONTEXTINJECTION.B.json",
+      "sha256": "fb40f7dc73fadf6ef547b631cd1dbb9013ded86cee30774411efebc6e7ecb6f2",
+      "bytes": 5338,
+      "snapshot": "frozen-inputs/fb40f7dc73fadf6ef547b631cd1dbb9013ded86cee30774411efebc6e7ecb6f2.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-COMPACTION-MEMORYFLUSH-ENABLED.B.json",
+      "sha256": "ad6652ad710147674bb9a874225faeb8c154a895b50bbf43aa7d155830d67170",
+      "bytes": 5338,
+      "snapshot": "frozen-inputs/ad6652ad710147674bb9a874225faeb8c154a895b50bbf43aa7d155830d67170.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-GUILDS-REQUIREMENTION.B.json",
+      "sha256": "43c26faf3179c017b59f473b72076e407a7ca44ef524c1826b08cbe2e7b5caa5",
+      "bytes": 5338,
+      "snapshot": "frozen-inputs/43c26faf3179c017b59f473b72076e407a7ca44ef524c1826b08cbe2e7b5caa5.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-TOOLS-SESSIONS-SPAWN-ATTACHMENTS-ENABLED.B.json",
+      "sha256": "8332bb2f17cb01f9fed4d2996a7ee6f2e88ce3250f09283a3902f9fd18ea6e6a",
+      "bytes": 5338,
+      "snapshot": "frozen-inputs/8332bb2f17cb01f9fed4d2996a7ee6f2e88ce3250f09283a3902f9fd18ea6e6a.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-THREADBINDINGS-IDLEHOURS.A.json",
+      "sha256": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+      "bytes": 5337,
+      "snapshot": "frozen-inputs/2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-COMMANDS-NATIVESKILLS.A.json",
+      "sha256": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+      "bytes": 5337,
+      "snapshot": "frozen-inputs/2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-GATEWAY-TAILSCALE-MODE.B.json",
+      "sha256": "87f120f13c01c33d84580550b272df18c8974324a42ccf05ae3b17dcfc7addb7",
+      "bytes": 5339,
+      "snapshot": "frozen-inputs/87f120f13c01c33d84580550b272df18c8974324a42ccf05ae3b17dcfc7addb7.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-CONTEXTINJECTION.A.json",
+      "sha256": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+      "bytes": 5337,
+      "snapshot": "frozen-inputs/2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELS-OPENAI-GPT-6-ASTRA-AGENTRUNTIME-ID.A.json",
+      "sha256": "ac634388c638cf31f022ef1ded7481a8f0ee1d748f437f876b04d53aa00757af",
+      "bytes": 5418,
+      "snapshot": "frozen-inputs/ac634388c638cf31f022ef1ded7481a8f0ee1d748f437f876b04d53aa00757af.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-SESSION-THREADBINDINGS-MAXAGEHOURS.A.json",
+      "sha256": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+      "bytes": 5337,
+      "snapshot": "frozen-inputs/2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-COMMANDS-RESTART.A.json",
+      "sha256": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+      "bytes": 5337,
+      "snapshot": "frozen-inputs/2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-TOOLS-EXEC-MODE.B.json",
+      "sha256": "2641cd28464eab51eb12c59a4884e3b9063469b69fb3e1d6c4599a620abaf197",
+      "bytes": 5337,
+      "snapshot": "frozen-inputs/2641cd28464eab51eb12c59a4884e3b9063469b69fb3e1d6c4599a620abaf197.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-COMMANDS-RESTART.B.json",
+      "sha256": "e04a7af3b487fef7cc4257d0911871a3af4da8e4346cf8225fa80692fe49759a",
+      "bytes": 5338,
+      "snapshot": "frozen-inputs/e04a7af3b487fef7cc4257d0911871a3af4da8e4346cf8225fa80692fe49759a.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-APIKEY-PROVIDER.A.json",
+      "sha256": "e893a783d0b5f55bd0d110fd5b1d92b07e30a2836a236689dd856ee8697a2907",
+      "bytes": 5708,
+      "snapshot": "frozen-inputs/e893a783d0b5f55bd0d110fd5b1d92b07e30a2836a236689dd856ee8697a2907.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-GATEWAY-AUTH-MODE.B.json",
+      "sha256": "a7db512c5cae0771b91fccdfe4ee9d84c086ae61ff4aab05b2e22871beebfc62",
+      "bytes": 5671,
+      "snapshot": "frozen-inputs/a7db512c5cae0771b91fccdfe4ee9d84c086ae61ff4aab05b2e22871beebfc62.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-ACP-DEFAULTAGENT.B.json",
+      "sha256": "795e7499f9bab2700bf7703dc2aa4dba87e8c7a93962aa75a51d7a1cbfae3a75",
+      "bytes": 5338,
+      "snapshot": "frozen-inputs/795e7499f9bab2700bf7703dc2aa4dba87e8c7a93962aa75a51d7a1cbfae3a75.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELPOLICY-ALLOW.A.json",
+      "sha256": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+      "bytes": 5337,
+      "snapshot": "frozen-inputs/2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-GATEWAY-MODE.B.json",
+      "sha256": "f630d4736847a4c0aa500f92d6b8e49d04c5da32897dcc6a60147dc5aac31a77",
+      "bytes": 5518,
+      "snapshot": "frozen-inputs/f630d4736847a4c0aa500f92d6b8e49d04c5da32897dcc6a60147dc5aac31a77.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-TOOLS-PROFILE.B.json",
+      "sha256": "1441cd49ba3170b0f351e6373fa766edbb5dc9c666985005d674902f6407199b",
+      "bytes": 5338,
+      "snapshot": "frozen-inputs/1441cd49ba3170b0f351e6373fa766edbb5dc9c666985005d674902f6407199b.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-SESSION-THREADBINDINGS-MAXAGEHOURS.B.json",
+      "sha256": "2459c9629138576846c7226b04a8d44c62e28d46bd3ca331e895c581bc997797",
+      "bytes": 5338,
+      "snapshot": "frozen-inputs/2459c9629138576846c7226b04a8d44c62e28d46bd3ca331e895c581bc997797.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-SOURCES.B.json",
+      "sha256": "e11b3aa215b9e4322cdf9a263fdaebc4df391bbe3aae1eb47c5fcc1cc69fc0ad",
+      "bytes": 5688,
+      "snapshot": "frozen-inputs/e11b3aa215b9e4322cdf9a263fdaebc4df391bbe3aae1eb47c5fcc1cc69fc0ad.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-EXECAPPROVALS-TARGET.A.json",
+      "sha256": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+      "bytes": 5337,
+      "snapshot": "frozen-inputs/2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-GATEWAY-TAILSCALE-MODE.A.json",
+      "sha256": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+      "bytes": 5337,
+      "snapshot": "frozen-inputs/2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-GATEWAY-TOOLS-ALLOW.B.json",
+      "sha256": "4f60fd0e8e1f796fa7947f2c18c37018e726c2971506f5809f1f8b0a313c4a10",
+      "bytes": 5228,
+      "snapshot": "frozen-inputs/4f60fd0e8e1f796fa7947f2c18c37018e726c2971506f5809f1f8b0a313c4a10.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-PROVIDER.A.json",
+      "sha256": "e893a783d0b5f55bd0d110fd5b1d92b07e30a2836a236689dd856ee8697a2907",
+      "bytes": 5708,
+      "snapshot": "frozen-inputs/e893a783d0b5f55bd0d110fd5b1d92b07e30a2836a236689dd856ee8697a2907.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-GATEWAY-CONTROLUI-DANGEROUSLYALLOWHOSTHEADERORIGINFALLBACK.B.json",
+      "sha256": "68a81d01766659df6f4ea073371dd34e0cd8f6678bac895c3ad733c069d7dd7d",
+      "bytes": 5338,
+      "snapshot": "frozen-inputs/68a81d01766659df6f4ea073371dd34e0cd8f6678bac895c3ad733c069d7dd7d.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-EXECAPPROVALS-ENABLED.A.json",
+      "sha256": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+      "bytes": 5337,
+      "snapshot": "frozen-inputs/2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-THREADBINDINGS-SPAWNSESSIONS.B.json",
+      "sha256": "db356c1eac4fa61139f324dca132e6c402739d68c7172162439446d4e55c2e75",
+      "bytes": 5338,
+      "snapshot": "frozen-inputs/db356c1eac4fa61139f324dca132e6c402739d68c7172162439446d4e55c2e75.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-SESSION-RESETBYTYPE-GROUP-MODE.B.json",
+      "sha256": "267accfee5539780d91fc65983ab2ab0a2bc5d785bf9ed20835c04e77d496a48",
+      "bytes": 5338,
+      "snapshot": "frozen-inputs/267accfee5539780d91fc65983ab2ab0a2bc5d785bf9ed20835c04e77d496a48.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-PROVIDER.B.json",
+      "sha256": "e52dd9a828fbdc6abdabb3e43832fa818f6b438101a0702436a0aa30bd5bbd0a",
+      "bytes": 5697,
+      "snapshot": "frozen-inputs/e52dd9a828fbdc6abdabb3e43832fa818f6b438101a0702436a0aa30bd5bbd0a.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-EXECAPPROVALS-TARGET.B.json",
+      "sha256": "b48e1012f09364daae1843844dba7c6a84c4877a29d851af9926685fef24ac18",
+      "bytes": 5342,
+      "snapshot": "frozen-inputs/b48e1012f09364daae1843844dba7c6a84c4877a29d851af9926685fef24ac18.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-ENTRIES-MAIN-SKILLSLIMITS-MAXSKILLSPROMPTCHARS.B.json",
+      "sha256": "d7647b170915675c09699443153f666d8c2724641bac26e5dc7636f475c979e0",
+      "bytes": 5336,
+      "snapshot": "frozen-inputs/d7647b170915675c09699443153f666d8c2724641bac26e5dc7636f475c979e0.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-GATEWAY-BIND.A.json",
+      "sha256": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+      "bytes": 5337,
+      "snapshot": "frozen-inputs/2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-CONTEXTPRUNING-MODE.B.json",
+      "sha256": "376115b944e54d03cd30d1a08c0d42c5f2edcc874e6dcfa4553c19657b49696a",
+      "bytes": 5337,
+      "snapshot": "frozen-inputs/376115b944e54d03cd30d1a08c0d42c5f2edcc874e6dcfa4553c19657b49696a.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-SUBAGENTS-RUNTIMEOUTSECONDS.A.json",
+      "sha256": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+      "bytes": 5337,
+      "snapshot": "frozen-inputs/2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-GATEWAY-AUTH-MODE.A.json",
+      "sha256": "8c0ecff6dd36975f414d57aa86ab7b10b3ef85f6510e522255249019ddc6cda8",
+      "bytes": 5541,
+      "snapshot": "frozen-inputs/8c0ecff6dd36975f414d57aa86ab7b10b3ef85f6510e522255249019ddc6cda8.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/gateway-target-profiles-20261013/DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-SUBAGENTS-MAXCONCURRENT.A.json",
+      "sha256": "2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8",
+      "bytes": 5337,
+      "snapshot": "frozen-inputs/2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8.gz"
+    },
+    {
+      "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+      "sha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4",
+      "bytes": 9173,
+      "snapshot": "frozen-inputs/cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4.gz"
+    },
+    {
+      "path": "charts/kubeclaw/templates/deployment.yaml",
+      "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041",
+      "bytes": 85514,
+      "snapshot": "frozen-inputs/a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041.gz"
+    },
+    {
+      "path": "charts/kubeclaw/templates/_helpers.tpl",
+      "sha256": "69986722975a973479b9fb1a2c35ab1a1ecb972662e8c19dd03718ac441f5103",
+      "bytes": 3671,
+      "snapshot": "frozen-inputs/69986722975a973479b9fb1a2c35ab1a1ecb972662e8c19dd03718ac441f5103.gz"
+    },
+    {
+      "path": "charts/kubeclaw/templates/service.yaml",
+      "sha256": "76a347213feffadad635311cc89fdbfb896c6a3f800e8e92528ec9efee280cc2",
+      "bytes": 1187,
+      "snapshot": "frozen-inputs/76a347213feffadad635311cc89fdbfb896c6a3f800e8e92528ec9efee280cc2.gz"
+    },
+    {
+      "path": "charts/kubeclaw/values.yaml",
+      "sha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1",
+      "bytes": 18792,
+      "snapshot": "frozen-inputs/e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1.gz"
+    },
+    {
+      "path": "my-values/buster-values.yaml",
+      "sha256": "23106a0d42310ad7aa5e2ce22a7bc940e88beac0eb486130b6f728dd84e0472f",
+      "bytes": 7546,
+      "snapshot": "frozen-inputs/23106a0d42310ad7aa5e2ce22a7bc940e88beac0eb486130b6f728dd84e0472f.gz"
+    },
+    {
+      "path": "my-values/prism-values.yaml",
+      "sha256": "9462337fa87add8927e3e4eb9888fa197a25dea40c1598fa5017b7e5d26b11d2",
+      "bytes": 1849,
+      "snapshot": "frozen-inputs/9462337fa87add8927e3e4eb9888fa197a25dea40c1598fa5017b7e5d26b11d2.gz"
+    },
+    {
+      "path": "versions.json",
+      "sha256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d",
+      "bytes": 12594,
+      "snapshot": "frozen-inputs/40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d.gz"
+    },
+    {
+      "path": "node_modules/ajv/package.json",
+      "sha256": "1f9033ee5a6515e7d76938b7072941862d1ed228a6879cc7fe10cdeb75107989",
+      "bytes": 4405,
+      "snapshot": "frozen-inputs/1f9033ee5a6515e7d76938b7072941862d1ed228a6879cc7fe10cdeb75107989.gz"
+    },
+    {
+      "path": "node_modules/ajv/dist/2020.js",
+      "sha256": "908e9670b478b2ba126802a221b7e47006f50cf467e2c5dd7935d3dbef10a20a",
+      "bytes": 2894,
+      "snapshot": "frozen-inputs/908e9670b478b2ba126802a221b7e47006f50cf467e2c5dd7935d3dbef10a20a.gz"
+    },
+    {
+      "path": "node_modules/ajv-formats/package.json",
+      "sha256": "402fb4bcfa457f0226813f3976ac42839dd619907c075c108efba8600d7edb69",
+      "bytes": 1897,
+      "snapshot": "frozen-inputs/402fb4bcfa457f0226813f3976ac42839dd619907c075c108efba8600d7edb69.gz"
+    },
+    {
+      "path": "node_modules/ajv-formats/dist/index.js",
+      "sha256": "3f3014150293846086d11058bb8bf43e669e354a98b37adcf10281454d5e753b",
+      "bytes": 1508,
+      "snapshot": "frozen-inputs/3f3014150293846086d11058bb8bf43e669e354a98b37adcf10281454d5e753b.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-deployment-binding-02/README.md",
+      "sha256": "844b7b96f6695c2e647e22b65688c67108d8606177ec04e206f961459175b71f",
+      "bytes": 4752,
+      "snapshot": "frozen-inputs/844b7b96f6695c2e647e22b65688c67108d8606177ec04e206f961459175b71f.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-deployment-binding-02/CORRECTIONS.md",
+      "sha256": "a673961d2b963021cb81418d857ff0f7d669db47931e2c830b9b8300b3f48e89",
+      "bytes": 8375,
+      "snapshot": "frozen-inputs/a673961d2b963021cb81418d857ff0f7d669db47931e2c830b9b8300b3f48e89.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-deployment-binding-02/RECEIVING-ABI.md",
+      "sha256": "77cdca0937bbc921fefb7bec349377f7c237116e3cb7546129ae072565449178",
+      "bytes": 16119,
+      "snapshot": "frozen-inputs/77cdca0937bbc921fefb7bec349377f7c237116e3cb7546129ae072565449178.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-deployment-binding-02/manifest.json",
+      "sha256": "3cb5c0cafae57a846737aa2ffe8056ba04a677229fb0a0443273429c89a5b400",
+      "bytes": 68172,
+      "snapshot": "frozen-inputs/3cb5c0cafae57a846737aa2ffe8056ba04a677229fb0a0443273429c89a5b400.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-deployment-binding-02/schemas/pipeline-entry.schema.json",
+      "sha256": "85f1aef770211378cd277afca9764af2db1e021cfeba489fa6fcd022f361047e",
+      "bytes": 6295,
+      "snapshot": "frozen-inputs/85f1aef770211378cd277afca9764af2db1e021cfeba489fa6fcd022f361047e.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-deployment-binding-02/generation-receipt-stand.json",
+      "sha256": "90f969aa646fef434424b4877ca3fdc92c2bdf430a0fb2e66b160aefaf27266d",
+      "bytes": 19693,
+      "snapshot": "frozen-inputs/90f969aa646fef434424b4877ca3fdc92c2bdf430a0fb2e66b160aefaf27266d.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-deployment-binding-02/pending-security-extension.json",
+      "sha256": "3a9e50f3554756b32ee52a5a6154e145deb6523d6f65e421e8bf639d93188033",
+      "bytes": 7316,
+      "snapshot": "frozen-inputs/3a9e50f3554756b32ee52a5a6154e145deb6523d6f65e421e8bf639d93188033.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-acpx-2026.9.5/dist/.setup/config-DvCm0_Dp.mjs",
+      "sha256": "86ec0a2d5db7905605d4e95c4ae06ff31b2fda0db262ff83120d26a4d3634d80",
+      "bytes": 9265,
+      "exactSourceCuts": [
+        169,
+        170
+      ],
+      "qualification": "full physical source SHA/bytes inspected; exact cited source cuts retained instead of giant complete distribution archives"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-acpx-2026.9.5/dist/.setup/service-DZYyo6-7.mjs",
+      "sha256": "a39642d13116ae317307a9b2f948a3b0225330039fcd44e3388c090acd571403",
+      "bytes": 58337,
+      "exactSourceCuts": [
+        171
+      ],
+      "qualification": "full physical source SHA/bytes inspected; exact cited source cuts retained instead of giant complete distribution archives"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-acpx-runtime-0.16.0/dist/live-checkpoint-BEfxBKCh.js",
+      "sha256": "47378566ebde3814bb980eebcaef969f554c0739433cdf14361a922671e8d5e9",
+      "bytes": 245366,
+      "exactSourceCuts": [
+        172,
+        173
+      ],
+      "qualification": "full physical source SHA/bytes inspected; exact cited source cuts retained instead of giant complete distribution archives"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-discord-2026.9.5/dist/.setup/channel-ChKdlBgH.mjs",
+      "sha256": "d337bfcdb25eabc464d56ab85b554f5b1b5d7c060e3083069d90f1b3bc788c3f",
+      "bytes": 45515,
+      "exactSourceCuts": [
+        149
+      ],
+      "qualification": "full physical source SHA/bytes inspected; exact cited source cuts retained instead of giant complete distribution archives"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-discord-2026.9.5/dist/.setup/channel-type-DKnjV1XW.mjs",
+      "sha256": "716f66734438ff07a62288c926281237dd94729dd8d7bcc0ab9b10d06d03a8cd",
+      "bytes": 21724,
+      "exactSourceCuts": [
+        131,
+        136
+      ],
+      "qualification": "full physical source SHA/bytes inspected; exact cited source cuts retained instead of giant complete distribution archives"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-discord-2026.9.5/dist/.setup/config-schema-CiZz-mtA.mjs",
+      "sha256": "ce9749aaf201bc38b3c9a721c67d6777261552817c6b96bbb566955bd943f6e2",
+      "bytes": 31860,
+      "exactSourceCuts": [
+        130,
+        133,
+        135,
+        137,
+        140,
+        143,
+        146,
+        148
+      ],
+      "qualification": "full physical source SHA/bytes inspected; exact cited source cuts retained instead of giant complete distribution archives"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-discord-2026.9.5/dist/.setup/message-handler.process-Dz1xvuQU.mjs",
+      "sha256": "75c67114b7e6808ffb43d888481755454485a3337c35e70d6c093a4a99a8caf7",
+      "bytes": 75269,
+      "exactSourceCuts": [
+        134
+      ],
+      "qualification": "full physical source SHA/bytes inspected; exact cited source cuts retained instead of giant complete distribution archives"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-discord-2026.9.5/dist/.setup/outbound-session-route-CqWbuMOm.mjs",
+      "sha256": "9a20922ea0ca68a6236eb012fdea1942318112956edbe9124f1523c153e7ca1c",
+      "bytes": 32064,
+      "exactSourceCuts": [
+        147
+      ],
+      "qualification": "full physical source SHA/bytes inspected; exact cited source cuts retained instead of giant complete distribution archives"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-discord-2026.9.5/dist/.setup/provider-72zIvN-i.mjs",
+      "sha256": "f55ea5c378b781eabc53edf0e6cd01ddcc53ce32b2776155e40dc62a9d6f3c41",
+      "bytes": 407757,
+      "exactSourceCuts": [
+        132,
+        138
+      ],
+      "qualification": "full physical source SHA/bytes inspected; exact cited source cuts retained instead of giant complete distribution archives"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-discord-2026.9.5/dist/.setup/thread-bindings-CK5272V3.mjs",
+      "sha256": "ece4ed0754578d1e6384734b6bc51e5878e52af4ff2fbbeedb359e8380ffc439",
+      "bytes": 10239,
+      "exactSourceCuts": [
+        141
+      ],
+      "qualification": "full physical source SHA/bytes inspected; exact cited source cuts retained instead of giant complete distribution archives"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/acp-spawn-DBebUPRe.mjs",
+      "sha256": "52f807b1393eef1c68784151c3e0720bb43add4bd00c787d2fbd01527b32f81b",
+      "bytes": 65060,
+      "exactSourceCuts": [
+        85,
+        87,
+        89,
+        92,
+        145
+      ],
+      "qualification": "full physical source SHA/bytes inspected; exact cited source cuts retained instead of giant complete distribution archives"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/agent-filter-BEuhjVkZ.mjs",
+      "sha256": "f4919515b1594e38d8d14de83d37126fe53d53b8fe148fe3634090bb819b2a2b",
+      "bytes": 2609,
+      "exactSourceCuts": [
+        78,
+        80
+      ],
+      "qualification": "full physical source SHA/bytes inspected; exact cited source cuts retained instead of giant complete distribution archives"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/agent-scope-config-D2MQzbc-.mjs",
+      "sha256": "fbaf8e0eec5f9191ebfe950b1528403cd7fc95ed42dfc8f7b3d4b4e49043472d",
+      "bytes": 22007,
+      "exactSourceCuts": [
+        48
+      ],
+      "qualification": "full physical source SHA/bytes inspected; exact cited source cuts retained instead of giant complete distribution archives"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/agent-settings-er47wg1i.mjs",
+      "sha256": "b1fc23a30b7058220f0b8306b014c151f468025f8959e210894ef980c3bf2fc9",
+      "bytes": 6136,
+      "exactSourceCuts": [
+        58,
+        60
+      ],
+      "qualification": "full physical source SHA/bytes inspected; exact cited source cuts retained instead of giant complete distribution archives"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/agent-tools-lIZNv5a0.mjs",
+      "sha256": "9e71b09811fa6ac6d0093cef85905b267222eff6bebe8404281f2194d051a821",
+      "bytes": 45118,
+      "exactSourceCuts": [
+        101,
+        106
+      ],
+      "qualification": "full physical source SHA/bytes inspected; exact cited source cuts retained instead of giant complete distribution archives"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/bootstrap-files-CWP6Usgv.mjs",
+      "sha256": "b044ce2ad020eec7a6095484d43874ca387a12889fa5bc12742b29832276e37d",
+      "bytes": 12225,
+      "exactSourceCuts": [
+        73
+      ],
+      "qualification": "full physical source SHA/bytes inspected; exact cited source cuts retained instead of giant complete distribution archives"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/builtin-openclaw-C7-lQJ2Z.mjs",
+      "sha256": "97435362096a8903b3a01ee82869b55b4375c371db4be3bcc32b641a9074bcca",
+      "bytes": 930852,
+      "exactSourceCuts": [
+        50,
+        53,
+        56,
+        74,
+        184
+      ],
+      "qualification": "full physical source SHA/bytes inspected; exact cited source cuts retained instead of giant complete distribution archives"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/commands-bj0OwRJk.mjs",
+      "sha256": "09a3f1a37a4d80ceb6a15d0ccb1c143ed27964e6d212f5250412975b38990a9e",
+      "bytes": 2208,
+      "exactSourceCuts": [
+        112,
+        115
+      ],
+      "qualification": "full physical source SHA/bytes inspected; exact cited source cuts retained instead of giant complete distribution archives"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/commands.flags-BNJlVVgU.mjs",
+      "sha256": "73d886c98e025ee43f69c14967b441e882a9e8264a060d2bd6fbc183d5277b91",
+      "bytes": 727,
+      "exactSourceCuts": [
+        117
+      ],
+      "qualification": "full physical source SHA/bytes inspected; exact cited source cuts retained instead of giant complete distribution archives"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/compaction-DNVKIk6g.mjs",
+      "sha256": "e123ef21590e8f5538721e4fa320bebb2d66d8cd49fa4037df38fdb95b47937a",
+      "bytes": 40134,
+      "exactSourceCuts": [
+        61
+      ],
+      "qualification": "full physical source SHA/bytes inspected; exact cited source cuts retained instead of giant complete distribution archives"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/config-normalization-shared-Btqp-2KT.mjs",
+      "sha256": "e9ea9129fdff3423b977b0d92e976e08d2c7edb461bba39a0e8b239ae6c35760",
+      "bytes": 13837,
+      "exactSourceCuts": [
+        168,
+        176,
+        179
+      ],
+      "qualification": "full physical source SHA/bytes inspected; exact cited source cuts retained instead of giant complete distribution archives"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/exec-approvals-core-BZ3ECkXD.mjs",
+      "sha256": "1d594aa3e9de3cdd706e5bbf387a74cdda3c118c752797146c4fee15b6eeb0c0",
+      "bytes": 3567,
+      "exactSourceCuts": [
+        104
+      ],
+      "qualification": "full physical source SHA/bytes inspected; exact cited source cuts retained instead of giant complete distribution archives"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/exec-policy-D9ObJIoJ.mjs",
+      "sha256": "9a6eb49a2c36aac012c3ae0a2d7128737ca694ed8032699f978e62273c53c24f",
+      "bytes": 628,
+      "exactSourceCuts": [
+        105
+      ],
+      "qualification": "full physical source SHA/bytes inspected; exact cited source cuts retained instead of giant complete distribution archives"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/exec-tool-timeout-Ber3V3yq.mjs",
+      "sha256": "233cf3a093168b77c1bff1aea686f88bb79413793d3c94e7a2e90bc9cab6faa6",
+      "bytes": 1798,
+      "exactSourceCuts": [
+        102
+      ],
+      "qualification": "full physical source SHA/bytes inspected; exact cited source cuts retained instead of giant complete distribution archives"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/extensions/memory-core/index.js",
+      "sha256": "6e815a5580e105118360365fbf98225655cf44a10014e697a7c0e91a5d5ba511",
+      "bytes": 49692,
+      "exactSourceCuts": [
+        63
+      ],
+      "qualification": "full physical source SHA/bytes inspected; exact cited source cuts retained instead of giant complete distribution archives"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/gateway-startup-plugin-config-DS9I_vc_.mjs",
+      "sha256": "4b7eaefd97e7e55dddab4c257ef6e881611e9376e06652754aab3e10f606b74b",
+      "bytes": 41816,
+      "exactSourceCuts": [
+        10,
+        13,
+        14,
+        17,
+        20,
+        23,
+        26,
+        27
+      ],
+      "qualification": "full physical source SHA/bytes inspected; exact cited source cuts retained instead of giant complete distribution archives"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/get-reply-DN4OcavF.mjs",
+      "sha256": "ddacdea4bc3ea5e0fc10418e7c2688f76f97fe74358b03ba6d6c29ded4c51081",
+      "bytes": 310249,
+      "exactSourceCuts": [
+        29,
+        33,
+        183
+      ],
+      "qualification": "full physical source SHA/bytes inspected; exact cited source cuts retained instead of giant complete distribution archives"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/memory-search-DlNwNH1y.mjs",
+      "sha256": "e81e944479ad67022cafc148308027a1b63cd448e4065aec7357230a75888c54",
+      "bytes": 8667,
+      "exactSourceCuts": [
+        1,
+        3,
+        6,
+        9,
+        12,
+        25
+      ],
+      "qualification": "full physical source SHA/bytes inspected; exact cited source cuts retained instead of giant complete distribution archives"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/memory-search-source-policy-B3S1qyBP.mjs",
+      "sha256": "6067ccdc77a747e519980c5d0ed2202afe42c3402f2f0f657038664bedc03434",
+      "bytes": 1222,
+      "exactSourceCuts": [
+        4,
+        7
+      ],
+      "qualification": "full physical source SHA/bytes inspected; exact cited source cuts retained instead of giant complete distribution archives"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/model-runtime-policy-BLaXzaLP.mjs",
+      "sha256": "e1bc89d99e8eb99c42a97538fba2c56da5bf3690be6c67127be76c9606fa1aee",
+      "bytes": 9309,
+      "exactSourceCuts": [
+        39,
+        42,
+        45
+      ],
+      "qualification": "full physical source SHA/bytes inspected; exact cited source cuts retained instead of giant complete distribution archives"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/model-selection-shared-BVpjol2x.mjs",
+      "sha256": "a1ba657389bead33cda5d4e238416a97aca9a2fc77bf35884d956942043d45bd",
+      "bytes": 60493,
+      "exactSourceCuts": [
+        37
+      ],
+      "qualification": "full physical source SHA/bytes inspected; exact cited source cuts retained instead of giant complete distribution archives"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/model-thinking-default-BWHuh9PM.mjs",
+      "sha256": "bf95dfd2b5e95ef905a1b22c560779e100edbdb4881684a11bb7d530eb63a127",
+      "bytes": 3018,
+      "exactSourceCuts": [
+        30
+      ],
+      "qualification": "full physical source SHA/bytes inspected; exact cited source cuts retained instead of giant complete distribution archives"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/origin-check-UahNXagk.mjs",
+      "sha256": "5b59e27a49bf867abb1d88f5194f541b97014adbd7f0e355eaf7af1fb2be8eb6",
+      "bytes": 4248,
+      "exactSourceCuts": [
+        156
+      ],
+      "qualification": "full physical source SHA/bytes inspected; exact cited source cuts retained instead of giant complete distribution archives"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/policy-BLZaTvGZ.mjs",
+      "sha256": "340946573f55d96adbcf6b9730002a338919112208a24dc1a21652eda7ee492b",
+      "bytes": 2587,
+      "exactSourceCuts": [
+        84,
+        91
+      ],
+      "qualification": "full physical source SHA/bytes inspected; exact cited source cuts retained instead of giant complete distribution archives"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/reset-policy-e-dYr0YY.mjs",
+      "sha256": "e262dd469cfa81edac1e34354d8af745e8d15cf433ca7a870928383dd8c2f77a",
+      "bytes": 3450,
+      "exactSourceCuts": [
+        121,
+        123
+      ],
+      "qualification": "full physical source SHA/bytes inspected; exact cited source cuts retained instead of giant complete distribution archives"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/run-DjUt0Etp.mjs",
+      "sha256": "8374660bf92f89c4fe2e8fb1dc5a330bb9b99e469a07d149807c1380d74ceb75",
+      "bytes": 103114,
+      "exactSourceCuts": [
+        151,
+        153,
+        160
+      ],
+      "qualification": "full physical source SHA/bytes inspected; exact cited source cuts retained instead of giant complete distribution archives"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/secret-input-CUYoxLQo.mjs",
+      "sha256": "fe3c88827fa888b047abe02670b6c409e738fa57449ff2b02f8dad656a98b58c",
+      "bytes": 694,
+      "exactSourceCuts": [
+        16,
+        19,
+        22
+      ],
+      "qualification": "full physical source SHA/bytes inspected; exact cited source cuts retained instead of giant complete distribution archives"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/server-runtime-config-CL6YtxdP.mjs",
+      "sha256": "24a7eaaff39fd9fd0725a48fd451ef0d8e7de7dedf9b02deec25540c7c914c04",
+      "bytes": 7977,
+      "exactSourceCuts": [
+        154,
+        157,
+        159,
+        165
+      ],
+      "qualification": "full physical source SHA/bytes inspected; exact cited source cuts retained instead of giant complete distribution archives"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/session-key-CPlMYURm.mjs",
+      "sha256": "39bd60e3065a1dc3802c7d2401c7558ede3f126fe43dd25d23f86bef4e1c2f1e",
+      "bytes": 19556,
+      "exactSourceCuts": [
+        119
+      ],
+      "qualification": "full physical source SHA/bytes inspected; exact cited source cuts retained instead of giant complete distribution archives"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/session-visibility-WczUxrIV.mjs",
+      "sha256": "2c56796bf27b2b89cba5158c6ca3b9c0a02cb78c5633f8503c00ab32b654e13b",
+      "bytes": 19128,
+      "exactSourceCuts": [
+        97,
+        108,
+        109
+      ],
+      "qualification": "full physical source SHA/bytes inspected; exact cited source cuts retained instead of giant complete distribution archives"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/skill-prompt-limits-CwjetzV2.mjs",
+      "sha256": "dd9f6a56a5478fe3b58cd23fbe254008510c8597b0f72c143bea0c74b7d86281",
+      "bytes": 4463,
+      "exactSourceCuts": [
+        82
+      ],
+      "qualification": "full physical source SHA/bytes inspected; exact cited source cuts retained instead of giant complete distribution archives"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/source-reply-delivery-mode-Bo76bLDa.mjs",
+      "sha256": "4d02e1af9a97f3c4d77ed8839f0bc7a0203f08deef637f686faa2508c368e471",
+      "bytes": 7387,
+      "exactSourceCuts": [
+        181
+      ],
+      "qualification": "full physical source SHA/bytes inspected; exact cited source cuts retained instead of giant complete distribution archives"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/subagent-completion-admission.store-n_o95th3.mjs",
+      "sha256": "ec6a04f10a29d474c3acf35905108f772281aa258ae64790ed3beb9ab7805f50",
+      "bytes": 59370,
+      "exactSourceCuts": [
+        67
+      ],
+      "qualification": "full physical source SHA/bytes inspected; exact cited source cuts retained instead of giant complete distribution archives"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/subagent-spawn-cleanup-wzjnU00p.mjs",
+      "sha256": "c4fe3fccc8e3458c1390b5ca95e13ec244ac00bde5c4f736ade79b33613f8f39",
+      "bytes": 27764,
+      "exactSourceCuts": [
+        99
+      ],
+      "qualification": "full physical source SHA/bytes inspected; exact cited source cuts retained instead of giant complete distribution archives"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/subagent-spawn-ownership-C6ceClEw.mjs",
+      "sha256": "662d85fdfe3a6b62c577492534b2aa92b0603cfec0a80dd11e1a615dd9ee2bfc",
+      "bytes": 28448,
+      "exactSourceCuts": [
+        69,
+        71,
+        76
+      ],
+      "qualification": "full physical source SHA/bytes inspected; exact cited source cuts retained instead of giant complete distribution archives"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/thinking-runtime-nyXcYFng.mjs",
+      "sha256": "76e2e89a2314df4bf2f5247f96738d23234e66fa6708e7abc01136b18b208fcc",
+      "bytes": 3651,
+      "exactSourceCuts": [
+        31,
+        40,
+        43,
+        46
+      ],
+      "qualification": "full physical source SHA/bytes inspected; exact cited source cuts retained instead of giant complete distribution archives"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/thread-bindings-policy-BnrYHQte.mjs",
+      "sha256": "f587c2943b2660003dc7df0fe9d697fc1f041e3ebd8f1841ccd2208532b52779",
+      "bytes": 5778,
+      "exactSourceCuts": [
+        125,
+        127,
+        129,
+        139,
+        142,
+        144
+      ],
+      "qualification": "full physical source SHA/bytes inspected; exact cited source cuts retained instead of giant complete distribution archives"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/timeout-Bjg7ga80.mjs",
+      "sha256": "fe0a9056d0a2e8d3e9f2eb87161064217b2043a619b15f5895a8129046736514",
+      "bytes": 1449,
+      "exactSourceCuts": [
+        182
+      ],
+      "qualification": "full physical source SHA/bytes inspected; exact cited source cuts retained instead of giant complete distribution archives"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/tool-catalog-BAOwO8Un.mjs",
+      "sha256": "ce000d48ae22d03fbe3afc90925a1c042ebf8684022f02065d679b976d5388c2",
+      "bytes": 13915,
+      "exactSourceCuts": [
+        94
+      ],
+      "qualification": "full physical source SHA/bytes inspected; exact cited source cuts retained instead of giant complete distribution archives"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/tool-resolution-By0BnXxU.mjs",
+      "sha256": "734e3fc249ea81e8dbca071425f04d2a9baa5092d89d82c98a24c9fd673c2380",
+      "bytes": 22604,
+      "exactSourceCuts": [
+        95,
+        162
+      ],
+      "qualification": "full physical source SHA/bytes inspected; exact cited source cuts retained instead of giant complete distribution archives"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/tool-result-truncation-CS-9YGQx.mjs",
+      "sha256": "a7231810551285bf0ce5a374444b34fbf146ca4b2f1a936268f330bd3ee05999",
+      "bytes": 63689,
+      "exactSourceCuts": [
+        52,
+        55
+      ],
+      "qualification": "full physical source SHA/bytes inspected; exact cited source cuts retained instead of giant complete distribution archives"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/tools-invoke-shared-CtoD60xj.mjs",
+      "sha256": "648e5024c5e05fcb9a4d2462fe3506ef7be812cf6cc40b41d49c2820319ff799",
+      "bytes": 12378,
+      "exactSourceCuts": [
+        163
+      ],
+      "qualification": "full physical source SHA/bytes inspected; exact cited source cuts retained instead of giant complete distribution archives"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/validation-core-Deo_OniF.mjs",
+      "sha256": "7876b706d36f351b2bc11ee9a731498df44dd55d946c8a5a5d800daae72e451a",
+      "bytes": 61365,
+      "exactSourceCuts": [
+        35,
+        36,
+        65
+      ],
+      "qualification": "full physical source SHA/bytes inspected; exact cited source cuts retained instead of giant complete distribution archives"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/workspace-skill-prompt-CMs-9K9B.mjs",
+      "sha256": "f32baaf9ab08ab261600a194f21d56c327895b477969fdecfb4c496fbf5379ef",
+      "bytes": 6152,
+      "exactSourceCuts": [
+        81
+      ],
+      "qualification": "full physical source SHA/bytes inspected; exact cited source cuts retained instead of giant complete distribution archives"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/zod-schema-DN2u5FdA.mjs",
+      "sha256": "8c529aa3affc863301c419667e4401308a260aa285fce9f74e5f1c2c8541a428",
+      "bytes": 81555,
+      "exactSourceCuts": [
+        28,
+        32,
+        47,
+        49,
+        51,
+        54,
+        57,
+        59,
+        62,
+        64,
+        66,
+        68,
+        70,
+        72,
+        83,
+        86,
+        88,
+        90,
+        111,
+        114,
+        116,
+        118,
+        120,
+        122,
+        124,
+        126,
+        128,
+        150,
+        152,
+        155,
+        158,
+        161,
+        164,
+        166,
+        167,
+        174,
+        175,
+        177,
+        178
+      ],
+      "qualification": "full physical source SHA/bytes inspected; exact cited source cuts retained instead of giant complete distribution archives"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/zod-schema.agent-runtime-DQfiImgc.mjs",
+      "sha256": "8c946800f25e8d730cf93b3369c6dc7d09a6e0aefeec739f939d1a21e98c905e",
+      "bytes": 39361,
+      "exactSourceCuts": [
+        0,
+        2,
+        5,
+        8,
+        11,
+        24,
+        34,
+        38,
+        41,
+        44,
+        75,
+        77,
+        79,
+        93,
+        96,
+        98,
+        100,
+        103,
+        107
+      ],
+      "qualification": "full physical source SHA/bytes inspected; exact cited source cuts retained instead of giant complete distribution archives"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/zod-schema.core-CZ0zDyHR.mjs",
+      "sha256": "a0556a4cf9fed12844076c1491d5c5163ea695d12ee71310afca5980dac55623",
+      "bytes": 41308,
+      "exactSourceCuts": [
+        15,
+        18,
+        21,
+        110,
+        113,
+        180
+      ],
+      "qualification": "full physical source SHA/bytes inspected; exact cited source cuts retained instead of giant complete distribution archives"
+    },
+    {
+      "path": "docker/Dockerfile.buster-gateway",
+      "sha256": "8e1123eca01126dab881223a88ec83a4efd902b03e9484ca80f5dfd2dc9bf452",
+      "bytes": 6160,
+      "snapshot": "frozen-inputs/8e1123eca01126dab881223a88ec83a4efd902b03e9484ca80f5dfd2dc9bf452.gz"
+    },
+    {
+      "path": "docker/Dockerfile.nova",
+      "sha256": "34e54267a3cd0d7541315de3c6ec785206a0364b7ec76699d433c4a3ca341242",
+      "bytes": 16365,
+      "snapshot": "frozen-inputs/34e54267a3cd0d7541315de3c6ec785206a0364b7ec76699d433c4a3ca341242.gz"
+    },
+    {
+      "path": "docker/Dockerfile.prism-agent",
+      "sha256": "85209d0cb47ab3bca1e2a27acb50d4e554853adfa472fa7195c0468627a19a47",
+      "bytes": 7225,
+      "snapshot": "frozen-inputs/85209d0cb47ab3bca1e2a27acb50d4e554853adfa472fa7195c0468627a19a47.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/check-gateway-target-primitives-20261013.cjs",
+      "sha256": "020e2717a107dd120c52a965812509918cd3ef8923d57c55f4ee2c38bafadc56",
+      "bytes": 3220,
+      "snapshot": "frozen-inputs/020e2717a107dd120c52a965812509918cd3ef8923d57c55f4ee2c38bafadc56.gz"
+    },
+    {
+      "path": "skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json",
+      "sha256": "651bf5310a5261ee309e219453e534754e7738fdd86152e582183e3ba95ec5eb",
+      "bytes": 1255,
+      "snapshot": "frozen-inputs/651bf5310a5261ee309e219453e534754e7738fdd86152e582183e3ba95ec5eb.gz"
+    },
+    {
+      "path": "node_modules/js-yaml/package.json",
+      "sha256": "82b932c87c5da7901c6a8f984698c57912570146fffd3156dcdc96a6c210d847",
+      "bytes": 2281,
+      "snapshot": "frozen-inputs/82b932c87c5da7901c6a8f984698c57912570146fffd3156dcdc96a6c210d847.gz"
+    },
+    {
+      "path": "skills/nova/project_setup/SKILL.md",
+      "sha256": "bc04eb9c29902ae9ec9722afa96fe81faab002819e731d75225a49d6563ee426",
+      "bytes": 11779,
+      "snapshot": "frozen-inputs/bc04eb9c29902ae9ec9722afa96fe81faab002819e731d75225a49d6563ee426.gz"
+    }
+  ],
+  "scope": "native source exact full SHA/byte and cited-cut identities; no giant distribution archive copies, no imports/CLI/native effects",
+  "globalC0Accepted": false
+}

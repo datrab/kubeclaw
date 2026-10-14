@@ -1,0 +1,41 @@
+{
+  "qualification": "Exact existing generation/authorization functions, public pure definition only; no provider/native/CLI/transport effect; narrow current owner/tuple join probes",
+  "probes": [
+    {
+      "variant": "baseline",
+      "admitted": true,
+      "authorization": "PUBLIC_STRUCTURE_ONLY_NOT_GRANT",
+      "activationAllowed": false
+    },
+    {
+      "variant": "foreign-security-instance",
+      "admitted": false,
+      "error": "SECURITY_SERVICE_CLOSURE:wrong-package-instance-profile-kind"
+    },
+    {
+      "variant": "missing-selected-security-profile",
+      "admitted": false,
+      "error": "SECURITY_SERVICE_CLOSURE:wrong-package-instance-profile-kind"
+    },
+    {
+      "variant": "foreign-provider-instance",
+      "admitted": false,
+      "error": "WRONG_PACKAGE_REGISTRATION_INSTANCE"
+    },
+    {
+      "variant": "missing-selected-provider-profile",
+      "admitted": false,
+      "error": "MISSING_PLUGIN_PROFILE"
+    },
+    {
+      "variant": "missing-selected-prism-profile",
+      "admitted": false,
+      "error": "ENGINE_MISSING_PROFILE"
+    },
+    {
+      "variant": "chart-profile-key-conflict",
+      "admitted": false,
+      "error": "PROFILE_ID_KEY_MISMATCH"
+    }
+  ]
+}

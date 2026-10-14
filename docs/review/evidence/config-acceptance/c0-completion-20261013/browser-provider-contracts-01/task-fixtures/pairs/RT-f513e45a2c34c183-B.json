@@ -1,0 +1,7 @@
+{
+  "purpose": "performance",
+  "routes": [
+    "/a"
+  ],
+  "endpointName": "service-b"
+}

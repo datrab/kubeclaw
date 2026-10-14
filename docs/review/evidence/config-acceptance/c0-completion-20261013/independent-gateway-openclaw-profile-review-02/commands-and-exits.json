@@ -1,0 +1,19 @@
+{
+  "scope": "exact existing gateway02 finite pure checker; read-only local archive-member inspection, no native/config/credential activation",
+  "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+  "replays": [
+    {
+      "cmd": "node /home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/check-gateway-definition.mjs > /home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/replay.stdout.json 2> /home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/replay.stderr",
+      "chunk_id": "7067a2",
+      "wall_time_seconds": 0.351935043,
+      "exit_code": 0,
+      "original_token_count": 0,
+      "output": ""
+    }
+  ],
+  "rawStdout": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/replay.stdout.json",
+  "rawStderr": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/replay.stderr",
+  "inputToolAndArchiveIdentities": "initial-identities.json and end-identities.json",
+  "archiveCopyPolicy": "no giant archive copied; original archive SHA plus small archive-member equality retained",
+  "noOtherRuntimeExecution": true
+}

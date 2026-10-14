@@ -1,0 +1,376 @@
+[
+  {
+    "id": "AUTH-PRISM-AGENT-LIMIT-timeoutMs",
+    "side": "A",
+    "entry": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stands/prism/AUTH-PRISM-AGENT-LIMIT-timeoutMs-A.pipeline.config.json",
+      "sha256": "2147cfa1eaf53ed57928563212442f13aaef735e4733178a8579b0f2308e4011"
+    },
+    "logicalOwnerSlot": "config/engines/prism-agent.config.json",
+    "exactWholeOwnerInput": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/fixtures/pairs/AUTH-PRISM-AGENT-LIMIT-timeoutMs.config.json",
+      "sha256": "151c77066b5e7a124b15e65e29ce306b1130a27e965525513e9e2c0dbd198732"
+    },
+    "profileId": "standard",
+    "allUnrelatedOwnersSame": true,
+    "nativeEffectSupported": true,
+    "sourceGenerationMeaning": "Separate fullcaptureddefinition generation replaces SAMElogicalengineowner input; no runtimepatch/merge/latestfill"
+  },
+  {
+    "id": "AUTH-PRISM-AGENT-LIMIT-timeoutMs",
+    "side": "B",
+    "entry": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stands/prism/AUTH-PRISM-AGENT-LIMIT-timeoutMs-B.pipeline.config.json",
+      "sha256": "e21c01e4a7c81e62637aeffa350d6e73b8bbb4197f1f031ea65b8f8ba4575676"
+    },
+    "logicalOwnerSlot": "config/engines/prism-agent.config.json",
+    "exactWholeOwnerInput": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/fixtures/pairs/AUTH-PRISM-AGENT-LIMIT-timeoutMs.config.json",
+      "sha256": "151c77066b5e7a124b15e65e29ce306b1130a27e965525513e9e2c0dbd198732"
+    },
+    "profileId": "runtime",
+    "allUnrelatedOwnersSame": true,
+    "nativeEffectSupported": true,
+    "sourceGenerationMeaning": "Separate fullcaptureddefinition generation replaces SAMElogicalengineowner input; no runtimepatch/merge/latestfill"
+  },
+  {
+    "id": "AUTH-PRISM-AGENT-LIMIT-cleanupTimeoutMs",
+    "side": "A",
+    "entry": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stands/prism/AUTH-PRISM-AGENT-LIMIT-cleanupTimeoutMs-A.pipeline.config.json",
+      "sha256": "2147cfa1eaf53ed57928563212442f13aaef735e4733178a8579b0f2308e4011"
+    },
+    "logicalOwnerSlot": "config/engines/prism-agent.config.json",
+    "exactWholeOwnerInput": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/fixtures/pairs/AUTH-PRISM-AGENT-LIMIT-cleanupTimeoutMs.config.json",
+      "sha256": "2c787dc3575461c525e69588ae23281ebee2d6e41596625e1b098a33561d5559"
+    },
+    "profileId": "standard",
+    "allUnrelatedOwnersSame": true,
+    "nativeEffectSupported": true,
+    "sourceGenerationMeaning": "Separate fullcaptureddefinition generation replaces SAMElogicalengineowner input; no runtimepatch/merge/latestfill"
+  },
+  {
+    "id": "AUTH-PRISM-AGENT-LIMIT-cleanupTimeoutMs",
+    "side": "B",
+    "entry": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stands/prism/AUTH-PRISM-AGENT-LIMIT-cleanupTimeoutMs-B.pipeline.config.json",
+      "sha256": "e21c01e4a7c81e62637aeffa350d6e73b8bbb4197f1f031ea65b8f8ba4575676"
+    },
+    "logicalOwnerSlot": "config/engines/prism-agent.config.json",
+    "exactWholeOwnerInput": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/fixtures/pairs/AUTH-PRISM-AGENT-LIMIT-cleanupTimeoutMs.config.json",
+      "sha256": "2c787dc3575461c525e69588ae23281ebee2d6e41596625e1b098a33561d5559"
+    },
+    "profileId": "runtime",
+    "allUnrelatedOwnersSame": true,
+    "nativeEffectSupported": true,
+    "sourceGenerationMeaning": "Separate fullcaptureddefinition generation replaces SAMElogicalengineowner input; no runtimepatch/merge/latestfill"
+  },
+  {
+    "id": "AUTH-PRISM-AGENT-LIMIT-logBytes",
+    "side": "A",
+    "entry": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stands/prism/AUTH-PRISM-AGENT-LIMIT-logBytes-A.pipeline.config.json",
+      "sha256": "2147cfa1eaf53ed57928563212442f13aaef735e4733178a8579b0f2308e4011"
+    },
+    "logicalOwnerSlot": "config/engines/prism-agent.config.json",
+    "exactWholeOwnerInput": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/fixtures/pairs/AUTH-PRISM-AGENT-LIMIT-logBytes.config.json",
+      "sha256": "c44c44f98a93170a4c9c62b4d2c5d0df2ed231988f5d07669d229601f5b88d11"
+    },
+    "profileId": "standard",
+    "allUnrelatedOwnersSame": true,
+    "nativeEffectSupported": true,
+    "sourceGenerationMeaning": "Separate fullcaptureddefinition generation replaces SAMElogicalengineowner input; no runtimepatch/merge/latestfill"
+  },
+  {
+    "id": "AUTH-PRISM-AGENT-LIMIT-logBytes",
+    "side": "B",
+    "entry": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stands/prism/AUTH-PRISM-AGENT-LIMIT-logBytes-B.pipeline.config.json",
+      "sha256": "e21c01e4a7c81e62637aeffa350d6e73b8bbb4197f1f031ea65b8f8ba4575676"
+    },
+    "logicalOwnerSlot": "config/engines/prism-agent.config.json",
+    "exactWholeOwnerInput": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/fixtures/pairs/AUTH-PRISM-AGENT-LIMIT-logBytes.config.json",
+      "sha256": "c44c44f98a93170a4c9c62b4d2c5d0df2ed231988f5d07669d229601f5b88d11"
+    },
+    "profileId": "runtime",
+    "allUnrelatedOwnersSame": true,
+    "nativeEffectSupported": true,
+    "sourceGenerationMeaning": "Separate fullcaptureddefinition generation replaces SAMElogicalengineowner input; no runtimepatch/merge/latestfill"
+  },
+  {
+    "id": "AUTH-PRISM-AGENT-LIMIT-resultBytes",
+    "side": "A",
+    "entry": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stands/prism/AUTH-PRISM-AGENT-LIMIT-resultBytes-A.pipeline.config.json",
+      "sha256": "2147cfa1eaf53ed57928563212442f13aaef735e4733178a8579b0f2308e4011"
+    },
+    "logicalOwnerSlot": "config/engines/prism-agent.config.json",
+    "exactWholeOwnerInput": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/fixtures/pairs/AUTH-PRISM-AGENT-LIMIT-resultBytes.config.json",
+      "sha256": "1fcacf179733110663be2411dadcd231b744a2d9ef74061a6a28f325131735d3"
+    },
+    "profileId": "standard",
+    "allUnrelatedOwnersSame": true,
+    "nativeEffectSupported": false,
+    "sourceGenerationMeaning": "Separate fullcaptureddefinition generation replaces SAMElogicalengineowner input; no runtimepatch/merge/latestfill"
+  },
+  {
+    "id": "AUTH-PRISM-AGENT-LIMIT-resultBytes",
+    "side": "B",
+    "entry": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stands/prism/AUTH-PRISM-AGENT-LIMIT-resultBytes-B.pipeline.config.json",
+      "sha256": "e21c01e4a7c81e62637aeffa350d6e73b8bbb4197f1f031ea65b8f8ba4575676"
+    },
+    "logicalOwnerSlot": "config/engines/prism-agent.config.json",
+    "exactWholeOwnerInput": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/fixtures/pairs/AUTH-PRISM-AGENT-LIMIT-resultBytes.config.json",
+      "sha256": "1fcacf179733110663be2411dadcd231b744a2d9ef74061a6a28f325131735d3"
+    },
+    "profileId": "runtime",
+    "allUnrelatedOwnersSame": true,
+    "nativeEffectSupported": false,
+    "sourceGenerationMeaning": "Separate fullcaptureddefinition generation replaces SAMElogicalengineowner input; no runtimepatch/merge/latestfill"
+  },
+  {
+    "id": "AUTH-PRISM-AGENT-LIMIT-evidenceBytes",
+    "side": "A",
+    "entry": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stands/prism/AUTH-PRISM-AGENT-LIMIT-evidenceBytes-A.pipeline.config.json",
+      "sha256": "2147cfa1eaf53ed57928563212442f13aaef735e4733178a8579b0f2308e4011"
+    },
+    "logicalOwnerSlot": "config/engines/prism-agent.config.json",
+    "exactWholeOwnerInput": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/fixtures/pairs/AUTH-PRISM-AGENT-LIMIT-evidenceBytes.config.json",
+      "sha256": "1a4b917907b7b8082e4b7ba6ba405a6d259ccec0bd452da05785b85d55684531"
+    },
+    "profileId": "standard",
+    "allUnrelatedOwnersSame": true,
+    "nativeEffectSupported": false,
+    "sourceGenerationMeaning": "Separate fullcaptureddefinition generation replaces SAMElogicalengineowner input; no runtimepatch/merge/latestfill"
+  },
+  {
+    "id": "AUTH-PRISM-AGENT-LIMIT-evidenceBytes",
+    "side": "B",
+    "entry": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stands/prism/AUTH-PRISM-AGENT-LIMIT-evidenceBytes-B.pipeline.config.json",
+      "sha256": "e21c01e4a7c81e62637aeffa350d6e73b8bbb4197f1f031ea65b8f8ba4575676"
+    },
+    "logicalOwnerSlot": "config/engines/prism-agent.config.json",
+    "exactWholeOwnerInput": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/fixtures/pairs/AUTH-PRISM-AGENT-LIMIT-evidenceBytes.config.json",
+      "sha256": "1a4b917907b7b8082e4b7ba6ba405a6d259ccec0bd452da05785b85d55684531"
+    },
+    "profileId": "runtime",
+    "allUnrelatedOwnersSame": true,
+    "nativeEffectSupported": false,
+    "sourceGenerationMeaning": "Separate fullcaptureddefinition generation replaces SAMElogicalengineowner input; no runtimepatch/merge/latestfill"
+  },
+  {
+    "id": "AUTH-PRISM-AGENT-LIMIT-evidenceFiles",
+    "side": "A",
+    "entry": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stands/prism/AUTH-PRISM-AGENT-LIMIT-evidenceFiles-A.pipeline.config.json",
+      "sha256": "2147cfa1eaf53ed57928563212442f13aaef735e4733178a8579b0f2308e4011"
+    },
+    "logicalOwnerSlot": "config/engines/prism-agent.config.json",
+    "exactWholeOwnerInput": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/fixtures/pairs/AUTH-PRISM-AGENT-LIMIT-evidenceFiles.config.json",
+      "sha256": "40cfe910f350424b1f81e9d9b86d943ebb4c3d2b4d36b53199e04fc6bdd8782d"
+    },
+    "profileId": "standard",
+    "allUnrelatedOwnersSame": true,
+    "nativeEffectSupported": false,
+    "sourceGenerationMeaning": "Separate fullcaptureddefinition generation replaces SAMElogicalengineowner input; no runtimepatch/merge/latestfill"
+  },
+  {
+    "id": "AUTH-PRISM-AGENT-LIMIT-evidenceFiles",
+    "side": "B",
+    "entry": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stands/prism/AUTH-PRISM-AGENT-LIMIT-evidenceFiles-B.pipeline.config.json",
+      "sha256": "e21c01e4a7c81e62637aeffa350d6e73b8bbb4197f1f031ea65b8f8ba4575676"
+    },
+    "logicalOwnerSlot": "config/engines/prism-agent.config.json",
+    "exactWholeOwnerInput": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/fixtures/pairs/AUTH-PRISM-AGENT-LIMIT-evidenceFiles.config.json",
+      "sha256": "40cfe910f350424b1f81e9d9b86d943ebb4c3d2b4d36b53199e04fc6bdd8782d"
+    },
+    "profileId": "runtime",
+    "allUnrelatedOwnersSame": true,
+    "nativeEffectSupported": false,
+    "sourceGenerationMeaning": "Separate fullcaptureddefinition generation replaces SAMElogicalengineowner input; no runtimepatch/merge/latestfill"
+  },
+  {
+    "id": "AUTH-PRISM-AGENT-CLAIM-LIFETIME",
+    "side": "A",
+    "entry": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stands/prism/AUTH-PRISM-AGENT-CLAIM-LIFETIME-A.pipeline.config.json",
+      "sha256": "2147cfa1eaf53ed57928563212442f13aaef735e4733178a8579b0f2308e4011"
+    },
+    "logicalOwnerSlot": "config/engines/prism-agent.config.json",
+    "exactWholeOwnerInput": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/fixtures/pairs/AUTH-PRISM-AGENT-CLAIM-LIFETIME.config.json",
+      "sha256": "ae31df073bb51bf22878313942be710b0660b09257cb269f3d53655a53a8a72e"
+    },
+    "profileId": "standard",
+    "allUnrelatedOwnersSame": true,
+    "nativeEffectSupported": true,
+    "sourceGenerationMeaning": "Separate fullcaptureddefinition generation replaces SAMElogicalengineowner input; no runtimepatch/merge/latestfill"
+  },
+  {
+    "id": "AUTH-PRISM-AGENT-CLAIM-LIFETIME",
+    "side": "B",
+    "entry": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stands/prism/AUTH-PRISM-AGENT-CLAIM-LIFETIME-B.pipeline.config.json",
+      "sha256": "e21c01e4a7c81e62637aeffa350d6e73b8bbb4197f1f031ea65b8f8ba4575676"
+    },
+    "logicalOwnerSlot": "config/engines/prism-agent.config.json",
+    "exactWholeOwnerInput": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/fixtures/pairs/AUTH-PRISM-AGENT-CLAIM-LIFETIME.config.json",
+      "sha256": "ae31df073bb51bf22878313942be710b0660b09257cb269f3d53655a53a8a72e"
+    },
+    "profileId": "runtime",
+    "allUnrelatedOwnersSame": true,
+    "nativeEffectSupported": true,
+    "sourceGenerationMeaning": "Separate fullcaptureddefinition generation replaces SAMElogicalengineowner input; no runtimepatch/merge/latestfill"
+  },
+  {
+    "id": "AUTH-PRISM-AGENT-KILL-GRACE",
+    "side": "A",
+    "entry": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stands/prism/AUTH-PRISM-AGENT-KILL-GRACE-A.pipeline.config.json",
+      "sha256": "2147cfa1eaf53ed57928563212442f13aaef735e4733178a8579b0f2308e4011"
+    },
+    "logicalOwnerSlot": "config/engines/prism-agent.config.json",
+    "exactWholeOwnerInput": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/fixtures/pairs/AUTH-PRISM-AGENT-KILL-GRACE.config.json",
+      "sha256": "459905eba990086c7bda0545d8f4ff94d62aac2cdab4f13507f20405f53b73ad"
+    },
+    "profileId": "standard",
+    "allUnrelatedOwnersSame": true,
+    "nativeEffectSupported": true,
+    "sourceGenerationMeaning": "Separate fullcaptureddefinition generation replaces SAMElogicalengineowner input; no runtimepatch/merge/latestfill"
+  },
+  {
+    "id": "AUTH-PRISM-AGENT-KILL-GRACE",
+    "side": "B",
+    "entry": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stands/prism/AUTH-PRISM-AGENT-KILL-GRACE-B.pipeline.config.json",
+      "sha256": "e21c01e4a7c81e62637aeffa350d6e73b8bbb4197f1f031ea65b8f8ba4575676"
+    },
+    "logicalOwnerSlot": "config/engines/prism-agent.config.json",
+    "exactWholeOwnerInput": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/fixtures/pairs/AUTH-PRISM-AGENT-KILL-GRACE.config.json",
+      "sha256": "459905eba990086c7bda0545d8f4ff94d62aac2cdab4f13507f20405f53b73ad"
+    },
+    "profileId": "runtime",
+    "allUnrelatedOwnersSame": true,
+    "nativeEffectSupported": true,
+    "sourceGenerationMeaning": "Separate fullcaptureddefinition generation replaces SAMElogicalengineowner input; no runtimepatch/merge/latestfill"
+  },
+  {
+    "id": "AUTH-PRISM-AGENT-CLI-OWNER",
+    "side": "A",
+    "entry": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stands/prism/AUTH-PRISM-AGENT-CLI-OWNER-A.pipeline.config.json",
+      "sha256": "2147cfa1eaf53ed57928563212442f13aaef735e4733178a8579b0f2308e4011"
+    },
+    "logicalOwnerSlot": "config/engines/prism-agent.config.json",
+    "exactWholeOwnerInput": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/fixtures/pairs/AUTH-PRISM-AGENT-CLI-OWNER.config.json",
+      "sha256": "6ad3564edab7146824e7a1e03b8d02b4e138d54a545fec4d9850cd5dd46465b4"
+    },
+    "profileId": "standard",
+    "allUnrelatedOwnersSame": true,
+    "nativeEffectSupported": false,
+    "sourceGenerationMeaning": "Separate fullcaptureddefinition generation replaces SAMElogicalengineowner input; no runtimepatch/merge/latestfill"
+  },
+  {
+    "id": "AUTH-PRISM-AGENT-CLI-OWNER",
+    "side": "B",
+    "entry": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stands/prism/AUTH-PRISM-AGENT-CLI-OWNER-B.pipeline.config.json",
+      "sha256": "e21c01e4a7c81e62637aeffa350d6e73b8bbb4197f1f031ea65b8f8ba4575676"
+    },
+    "logicalOwnerSlot": "config/engines/prism-agent.config.json",
+    "exactWholeOwnerInput": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/fixtures/pairs/AUTH-PRISM-AGENT-CLI-OWNER.config.json",
+      "sha256": "6ad3564edab7146824e7a1e03b8d02b4e138d54a545fec4d9850cd5dd46465b4"
+    },
+    "profileId": "runtime",
+    "allUnrelatedOwnersSame": true,
+    "nativeEffectSupported": false,
+    "sourceGenerationMeaning": "Separate fullcaptureddefinition generation replaces SAMElogicalengineowner input; no runtimepatch/merge/latestfill"
+  },
+  {
+    "id": "AUTH-PRISM-AGENT-CLAIM-HTTP",
+    "side": "A",
+    "entry": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stands/prism/AUTH-PRISM-AGENT-CLAIM-HTTP-A.pipeline.config.json",
+      "sha256": "2147cfa1eaf53ed57928563212442f13aaef735e4733178a8579b0f2308e4011"
+    },
+    "logicalOwnerSlot": "config/engines/prism-agent.config.json",
+    "exactWholeOwnerInput": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/fixtures/pairs/AUTH-PRISM-AGENT-CLAIM-HTTP.config.json",
+      "sha256": "7990e21259237f4107a5664a6c79ff8ae22095c9e7574b45fa782e9889f5ce7e"
+    },
+    "profileId": "standard",
+    "allUnrelatedOwnersSame": true,
+    "nativeEffectSupported": true,
+    "sourceGenerationMeaning": "Separate fullcaptureddefinition generation replaces SAMElogicalengineowner input; no runtimepatch/merge/latestfill"
+  },
+  {
+    "id": "AUTH-PRISM-AGENT-CLAIM-HTTP",
+    "side": "B",
+    "entry": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stands/prism/AUTH-PRISM-AGENT-CLAIM-HTTP-B.pipeline.config.json",
+      "sha256": "e21c01e4a7c81e62637aeffa350d6e73b8bbb4197f1f031ea65b8f8ba4575676"
+    },
+    "logicalOwnerSlot": "config/engines/prism-agent.config.json",
+    "exactWholeOwnerInput": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/fixtures/pairs/AUTH-PRISM-AGENT-CLAIM-HTTP.config.json",
+      "sha256": "7990e21259237f4107a5664a6c79ff8ae22095c9e7574b45fa782e9889f5ce7e"
+    },
+    "profileId": "runtime",
+    "allUnrelatedOwnersSame": true,
+    "nativeEffectSupported": true,
+    "sourceGenerationMeaning": "Separate fullcaptureddefinition generation replaces SAMElogicalengineowner input; no runtimepatch/merge/latestfill"
+  },
+  {
+    "id": "AUTH-PRISM-AGENT-FINISH-HTTP",
+    "side": "A",
+    "entry": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stands/prism/AUTH-PRISM-AGENT-FINISH-HTTP-A.pipeline.config.json",
+      "sha256": "2147cfa1eaf53ed57928563212442f13aaef735e4733178a8579b0f2308e4011"
+    },
+    "logicalOwnerSlot": "config/engines/prism-agent.config.json",
+    "exactWholeOwnerInput": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/fixtures/pairs/AUTH-PRISM-AGENT-FINISH-HTTP.config.json",
+      "sha256": "73158771fc70d8f6815ada23514ba6f7293b4b20ea7eeb06595384d80cef6a8a"
+    },
+    "profileId": "standard",
+    "allUnrelatedOwnersSame": true,
+    "nativeEffectSupported": true,
+    "sourceGenerationMeaning": "Separate fullcaptureddefinition generation replaces SAMElogicalengineowner input; no runtimepatch/merge/latestfill"
+  },
+  {
+    "id": "AUTH-PRISM-AGENT-FINISH-HTTP",
+    "side": "B",
+    "entry": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stands/prism/AUTH-PRISM-AGENT-FINISH-HTTP-B.pipeline.config.json",
+      "sha256": "e21c01e4a7c81e62637aeffa350d6e73b8bbb4197f1f031ea65b8f8ba4575676"
+    },
+    "logicalOwnerSlot": "config/engines/prism-agent.config.json",
+    "exactWholeOwnerInput": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/fixtures/pairs/AUTH-PRISM-AGENT-FINISH-HTTP.config.json",
+      "sha256": "73158771fc70d8f6815ada23514ba6f7293b4b20ea7eeb06595384d80cef6a8a"
+    },
+    "profileId": "runtime",
+    "allUnrelatedOwnersSame": true,
+    "nativeEffectSupported": true,
+    "sourceGenerationMeaning": "Separate fullcaptureddefinition generation replaces SAMElogicalengineowner input; no runtimepatch/merge/latestfill"
+  }
+]

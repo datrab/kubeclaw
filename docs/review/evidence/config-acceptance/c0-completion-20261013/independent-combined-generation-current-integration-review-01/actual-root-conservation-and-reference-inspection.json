@@ -1,0 +1,151 @@
+{
+  "scope": "Actual canonical reference-only integration inspection; no structural collector or provider execution",
+  "head": "e42dab0fa474d8bf7c726db2d100efff1c825a65",
+  "at": "2026-10-14T03:23:49.441087+00:00",
+  "roots": [
+    {
+      "path": "docs/review/remediation/config-semantic-inventory.json",
+      "beforeSha256": "c6316b87f87b292db0ae1165eb3178ae0a32bf8db3111294398139c3f112be63",
+      "afterSha256": "d113ff0289b6030afafb4c30d6d4b67115a7d7ee567e43fd851e7bff658399bf",
+      "onlyNewKey": "currentCombinedDefinitionGeneration",
+      "allPreviousObjectExactlyEqual": true,
+      "priorKeys": [
+        "schemaVersion",
+        "status",
+        "identity",
+        "inputFragments",
+        "rows",
+        "sources",
+        "gaps",
+        "boundedReviewDispositions",
+        "resolvedCorrectionGaps",
+        "supplementalDefinitionPackages",
+        "nativeCasePackageReferences",
+        "candidateLedger",
+        "coordinateCandidateLedgers",
+        "sourceBoundary",
+        "currentSourceConcordance",
+        "currentProviderFieldAdoption"
+      ],
+      "originalRowsOrCases": 2409,
+      "requirements": 0,
+      "currentProviderFieldAdoptionExactlyEqual": true
+    },
+    {
+      "path": "docs/review/remediation/config-acceptance-matrix.json",
+      "beforeSha256": "ab559aee906e4f72085031a84bb618c01941bc6e2d613175f235af0a18289227",
+      "afterSha256": "397386f9a5d541664995fc0a5c008f74cbc9a5559c85924480ae403c5ae36020",
+      "onlyNewKey": "currentCombinedDefinitionGeneration",
+      "allPreviousObjectExactlyEqual": true,
+      "priorKeys": [
+        "schemaVersion",
+        "status",
+        "identity",
+        "requirements",
+        "cases",
+        "nativeCasePackages",
+        "definitionObservationPackages",
+        "acceptance",
+        "implementationAuthorization",
+        "historicalEvidence",
+        "limits",
+        "immutableObservationReferences",
+        "currentSourceConcordance",
+        "currentProviderFieldAdoption"
+      ],
+      "originalRowsOrCases": 6845,
+      "requirements": 50,
+      "currentProviderFieldAdoptionExactlyEqual": true
+    }
+  ],
+  "sameDescriptorBothRoots": true,
+  "descriptorMinusOnlyIntegrationContractEqualsStableContract": true,
+  "references": [
+    {
+      "kind": "entry",
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stand/config/pipeline.config.json",
+      "sha256": "2147cfa1eaf53ed57928563212442f13aaef735e4733178a8579b0f2308e4011",
+      "hashMatches": true
+    },
+    {
+      "kind": "entrySchema",
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "2e20ca68b88ae9b21741732630ffea5736d50db942c33b42a0b9403fee1d2228",
+      "hashMatches": true
+    },
+    {
+      "kind": "admissionSupplement",
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-02/correction-contract.json",
+      "sha256": "b42aa53104b48a4be36ac4342d5b50357f09a7d55452b9ee460180a81e0c34d0",
+      "hashMatches": true
+    },
+    {
+      "kind": "independentDefinitionReview",
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-same-entry-engine-binding-review-02/README.md",
+      "sha256": "5d1b8afe6befdf800c93363139244793d31e616afc606a16edd9e7fe6f60e775",
+      "hashMatches": true
+    },
+    {
+      "kind": "fieldConcordance",
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/current-field-concordance.json",
+      "sha256": "b3076846af60edf3051a6f140c29199b5125712c8be1c77b9e166fedccd44573",
+      "hashMatches": true
+    },
+    {
+      "kind": "caseMemberConcordance",
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/current-case-member-concordance.json",
+      "sha256": "3722981c7f9baebdf67c0f9f17a8fc7518b47b644907e6a423b2ed0aa4f9ed9c",
+      "hashMatches": true
+    },
+    {
+      "kind": "originalCaseContexts",
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/current-original-case-contexts.json",
+      "sha256": "c1e0dc99a3aa57aeef5034eb3b906fb26d9614f8bac08eef5d1cc65f456140ea",
+      "hashMatches": true
+    },
+    {
+      "kind": "prismRejoin",
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/prism-current-root-rejoin.json",
+      "sha256": "4a2e10cbab9c0e0a9214378541b9c1822fb27b33c0a23b72e2f62923f259f891",
+      "hashMatches": true
+    },
+    {
+      "kind": "integrationContract",
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/combined-generation-current-integration-01/adoption-contract.json",
+      "sha256": "1906adbf26bbd0a5bd7de65eb78264fcc421b609c2ec760b7a873c65b05a5980",
+      "hashMatches": true
+    },
+    {
+      "kind": "Gateway70/75/definition",
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/README.md",
+      "sha256": "3c7b675c79aee35b486062832d210bf742c8da30261e17cff8a56cab9e4551a9",
+      "hashMatches": true
+    },
+    {
+      "kind": "Gateway70/75/boundedReview",
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/README.md",
+      "sha256": "cba0ec112b4d24ac078d7e5508e1f1cbd3f8188734f8025dd5582690bea5e5d8",
+      "hashMatches": true
+    },
+    {
+      "kind": "Browser105/656/definition",
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/browser-provider-contracts-01/README.md",
+      "sha256": "05194e5fab060fc186aaaf1431ccfaf581d004be32875a7f9a2bb79c9cd0b18b",
+      "hashMatches": true
+    },
+    {
+      "kind": "Browser105/656/boundedReview",
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-browser-provider-contract-review-01/REPORT.md",
+      "sha256": "35ff43921c1c1f59baa30af2b7c4e907de8c8d7e9398ef084970736ada9aca16",
+      "hashMatches": true
+    }
+  ],
+  "fieldScope": 168,
+  "caseScope": 1008,
+  "physicalFieldNodes": 156,
+  "physicalMemberEdges": 1114,
+  "PrismFields": 12,
+  "PrismCases": 13,
+  "readingRule": "Proposed definition references only. Original rows/cases/requirements/results/authorization do not change. Future v8 integration remains independently unaccepted; native/image/grant/task/effect proofs are not created.",
+  "errors": []
+}

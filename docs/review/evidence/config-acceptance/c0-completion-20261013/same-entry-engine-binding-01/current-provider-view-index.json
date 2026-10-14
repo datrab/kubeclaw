@@ -1,0 +1,90 @@
+[
+  {
+    "registrationId": "kubeclaw.api-flow:flow",
+    "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/outputs/providers/kubeclaw.api-flow.provider-configuration.v2.json",
+    "sha256": "df7625d396d6daf18d9c0ae824e77d3966e18705ff2629c8f7f33cf27b7d6015",
+    "sourceView": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/fixtures/generated/kubeclaw.api-flow.provider-configuration.v2.json",
+      "sha256": "9d27458baddbd86318cfbf6af142b4e07ced2d1dc88519317b9e74ea6781cbf7"
+    },
+    "currentRootRawSHA256": "2147cfa1eaf53ed57928563212442f13aaef735e4733178a8579b0f2308e4011",
+    "typed8Arm": true
+  },
+  {
+    "registrationId": "kubeclaw.http:request",
+    "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/outputs/providers/kubeclaw.http.provider-configuration.v2.json",
+    "sha256": "84f05c98c15d4b78b8dd504bb4f468d096a55325d3a4b0abc78bba4a5d571456",
+    "sourceView": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/fixtures/generated/kubeclaw.http.provider-configuration.v2.json",
+      "sha256": "df86085f2fb7b0d9243b181a2db466bb45d8f9dbec13a755c9379508f2629004"
+    },
+    "currentRootRawSHA256": "2147cfa1eaf53ed57928563212442f13aaef735e4733178a8579b0f2308e4011",
+    "typed8Arm": true
+  },
+  {
+    "registrationId": "kubeclaw.openapi:operations",
+    "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/outputs/providers/kubeclaw.openapi.provider-configuration.v2.json",
+    "sha256": "8856d2e684d9a26cf4905b035dad6565d29b87823b5547ff7c055833daaf43a9",
+    "sourceView": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/fixtures/generated/kubeclaw.openapi.provider-configuration.v2.json",
+      "sha256": "070ea2e6084746c4cf7470cf8963443d94de78943b827dec9806eb3430fa193c"
+    },
+    "currentRootRawSHA256": "2147cfa1eaf53ed57928563212442f13aaef735e4733178a8579b0f2308e4011",
+    "typed8Arm": true
+  },
+  {
+    "registrationId": "kubeclaw.security-providers:headers",
+    "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/outputs/providers/headers.provider-configuration.v2.json",
+    "sha256": "640d7803408463bb616a6c76b11bef066f1e88d19a9cf192d8576850a65cc5ae",
+    "sourceView": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/generated/headers.provider-configuration.v2.json",
+      "sha256": "e711b8bcd3a38326355360c114921c170d96d45ac522167da1dae5164d5e7f10"
+    },
+    "currentRootRawSHA256": "2147cfa1eaf53ed57928563212442f13aaef735e4733178a8579b0f2308e4011",
+    "typed8Arm": true
+  },
+  {
+    "registrationId": "kubeclaw.security-providers:dependency-trivy",
+    "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/outputs/providers/dependency-trivy.provider-configuration.v2.json",
+    "sha256": "e27220ee989546b0c6903c50a4545a95d158711ea323519d3c6e7ca8676f99c1",
+    "sourceView": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/generated/dependency-trivy.provider-configuration.v2.json",
+      "sha256": "4a6f1aff78f7a90af349b241d25ba193639130bbf9abe296bf86a44b18d84cba"
+    },
+    "currentRootRawSHA256": "2147cfa1eaf53ed57928563212442f13aaef735e4733178a8579b0f2308e4011",
+    "typed8Arm": true
+  },
+  {
+    "registrationId": "kubeclaw.security-providers:image-trivy",
+    "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/outputs/providers/image-trivy.provider-configuration.v2.json",
+    "sha256": "1e74068af2e5a0ac099d13b07dc854837f301ab40b2a2b4cfba7ecab47511011",
+    "sourceView": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/generated/image-trivy.provider-configuration.v2.json",
+      "sha256": "bc3c53f76c45acf73c4a2d4e3f7b0c91cd87ff941b35dad8fd8d5f97a599a334"
+    },
+    "currentRootRawSHA256": "2147cfa1eaf53ed57928563212442f13aaef735e4733178a8579b0f2308e4011",
+    "typed8Arm": true
+  },
+  {
+    "registrationId": "kubeclaw.security-providers:kubernetes-policy",
+    "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/outputs/providers/kubernetes-policy.provider-configuration.v2.json",
+    "sha256": "a378c0caf29885648d8c3983388dcfdbf4cdaf7f8a8390c8344992f561ed86e0",
+    "sourceView": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/generated/kubernetes-policy.provider-configuration.v2.json",
+      "sha256": "61522aa51ee7bbcdc1a1c4d6e7a51c7b37a7a742547b5b0bed3650b3aedc35cd"
+    },
+    "currentRootRawSHA256": "2147cfa1eaf53ed57928563212442f13aaef735e4733178a8579b0f2308e4011",
+    "typed8Arm": true
+  },
+  {
+    "registrationId": "kubeclaw.security-providers:kubernetes-runtime",
+    "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/outputs/providers/kubernetes-runtime.provider-configuration.v2.json",
+    "sha256": "7916799a27d0398abb57541794f0c77006edc1ed242347fd1a483cf58f75a546",
+    "sourceView": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/generated/kubernetes-runtime.provider-configuration.v2.json",
+      "sha256": "f133b4cd622ca09298366593dcf48591fe07ea972939d9a655f5468ef1752b85"
+    },
+    "currentRootRawSHA256": "2147cfa1eaf53ed57928563212442f13aaef735e4733178a8579b0f2308e4011",
+    "typed8Arm": true
+  }
+]

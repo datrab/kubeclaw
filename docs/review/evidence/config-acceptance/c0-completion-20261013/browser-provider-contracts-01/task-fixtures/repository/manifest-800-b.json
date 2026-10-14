@@ -1,0 +1,52 @@
+{
+  "schemaVersion": "kubeclaw.visual-baselines.v2",
+  "baselineBundleDigest": "sha256:2ce3b167e65dc0ec6c5952b5eb0c9498a3ad6fc6dd34d1eaf0ed5f8aa81563d9",
+  "entries": [
+    {
+      "id": "target-a",
+      "route": "/b",
+      "profile": "desktop",
+      "baselineFile": "baseline-800.png",
+      "sha256": "sha256:8c58470c54c9107efc3bae5699c0330707bd43e6105b5456fee21d1cfbe9c0a7",
+      "browser": "chromium",
+      "browserVersion": "FIXTURE-UNOBSERVED-NOT-APPROVED",
+      "viewport": {
+        "width": 800,
+        "height": 480
+      },
+      "pageConditions": {
+        "colorScheme": "light",
+        "reducedMotion": "no-preference",
+        "locale": "en-US",
+        "timezoneId": "UTC",
+        "deviceScaleFactor": 1,
+        "hasTouch": false,
+        "isMobile": false,
+        "fullPage": true
+      }
+    },
+    {
+      "id": "target-b",
+      "route": "/b",
+      "profile": "desktop",
+      "baselineFile": "baseline-800.png",
+      "sha256": "sha256:8c58470c54c9107efc3bae5699c0330707bd43e6105b5456fee21d1cfbe9c0a7",
+      "browser": "chromium",
+      "browserVersion": "FIXTURE-UNOBSERVED-NOT-APPROVED",
+      "viewport": {
+        "width": 800,
+        "height": 480
+      },
+      "pageConditions": {
+        "colorScheme": "light",
+        "reducedMotion": "no-preference",
+        "locale": "en-US",
+        "timezoneId": "UTC",
+        "deviceScaleFactor": 1,
+        "hasTouch": false,
+        "isMobile": false,
+        "fullPage": true
+      }
+    }
+  ]
+}

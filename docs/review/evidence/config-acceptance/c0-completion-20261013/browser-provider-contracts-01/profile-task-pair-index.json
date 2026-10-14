@@ -1,0 +1,1682 @@
+[
+  {
+    "settingId": "RT-dab100380f6a024f",
+    "provider": "axe",
+    "profiles": {
+      "A": "RT-dab100380f6a024f-A",
+      "B": "RT-dab100380f6a024f-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-dab100380f6a024f-A.json",
+      "B": "task-fixtures/pairs/RT-dab100380f6a024f-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-dab100380f6a024f-A.json",
+      "B": "fixtures/entries/RT-dab100380f6a024f-B.json"
+    }
+  },
+  {
+    "settingId": "RT-6776ec7160ea0036",
+    "provider": "axe",
+    "profiles": {
+      "A": "RT-6776ec7160ea0036-A",
+      "B": "RT-6776ec7160ea0036-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-6776ec7160ea0036-A.json",
+      "B": "task-fixtures/pairs/RT-6776ec7160ea0036-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-6776ec7160ea0036-A.json",
+      "B": "fixtures/entries/RT-6776ec7160ea0036-B.json"
+    }
+  },
+  {
+    "settingId": "RT-b6eb30fbf6be03e1",
+    "provider": "axe",
+    "profiles": {
+      "A": "RT-b6eb30fbf6be03e1-A",
+      "B": "RT-b6eb30fbf6be03e1-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-b6eb30fbf6be03e1-A.json",
+      "B": "task-fixtures/pairs/RT-b6eb30fbf6be03e1-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-b6eb30fbf6be03e1-A.json",
+      "B": "fixtures/entries/RT-b6eb30fbf6be03e1-B.json"
+    }
+  },
+  {
+    "settingId": "RT-0d37b61a9e8bc451",
+    "provider": "axe",
+    "profiles": {
+      "A": "RT-0d37b61a9e8bc451-A",
+      "B": "RT-0d37b61a9e8bc451-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-0d37b61a9e8bc451-A.json",
+      "B": "task-fixtures/pairs/RT-0d37b61a9e8bc451-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-0d37b61a9e8bc451-A.json",
+      "B": "fixtures/entries/RT-0d37b61a9e8bc451-B.json"
+    }
+  },
+  {
+    "settingId": "RT-ce85d1e95781cb1b",
+    "provider": "axe",
+    "profiles": {
+      "A": "RT-ce85d1e95781cb1b-A",
+      "B": "RT-ce85d1e95781cb1b-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-ce85d1e95781cb1b-A.json",
+      "B": "task-fixtures/pairs/RT-ce85d1e95781cb1b-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-ce85d1e95781cb1b-A.json",
+      "B": "fixtures/entries/RT-ce85d1e95781cb1b-B.json"
+    }
+  },
+  {
+    "settingId": "RT-735e529045f176ca",
+    "provider": "axe",
+    "profiles": {
+      "A": "RT-735e529045f176ca-A",
+      "B": "RT-735e529045f176ca-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-735e529045f176ca-A.json",
+      "B": "task-fixtures/pairs/RT-735e529045f176ca-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-735e529045f176ca-A.json",
+      "B": "fixtures/entries/RT-735e529045f176ca-B.json"
+    }
+  },
+  {
+    "settingId": "RT-6053515db8e5f294",
+    "provider": "axe",
+    "profiles": {
+      "A": "RT-6053515db8e5f294-A",
+      "B": "RT-6053515db8e5f294-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-6053515db8e5f294-A.json",
+      "B": "task-fixtures/pairs/RT-6053515db8e5f294-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-6053515db8e5f294-A.json",
+      "B": "fixtures/entries/RT-6053515db8e5f294-B.json"
+    }
+  },
+  {
+    "settingId": "RT-b523246a8e584359",
+    "provider": "axe",
+    "profiles": {
+      "A": "RT-b523246a8e584359-A",
+      "B": "RT-b523246a8e584359-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-b523246a8e584359-A.json",
+      "B": "task-fixtures/pairs/RT-b523246a8e584359-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-b523246a8e584359-A.json",
+      "B": "fixtures/entries/RT-b523246a8e584359-B.json"
+    }
+  },
+  {
+    "settingId": "RT-0f8819569bb41402",
+    "provider": "axe",
+    "profiles": {
+      "A": "RT-0f8819569bb41402-A",
+      "B": "RT-0f8819569bb41402-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-0f8819569bb41402-A.json",
+      "B": "task-fixtures/pairs/RT-0f8819569bb41402-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-0f8819569bb41402-A.json",
+      "B": "fixtures/entries/RT-0f8819569bb41402-B.json"
+    }
+  },
+  {
+    "settingId": "RT-bb8352234e6c6200",
+    "provider": "axe",
+    "profiles": {
+      "A": "RT-bb8352234e6c6200-A",
+      "B": "RT-bb8352234e6c6200-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-bb8352234e6c6200-A.json",
+      "B": "task-fixtures/pairs/RT-bb8352234e6c6200-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-bb8352234e6c6200-A.json",
+      "B": "fixtures/entries/RT-bb8352234e6c6200-B.json"
+    }
+  },
+  {
+    "settingId": "RT-e32df097509e32fe",
+    "provider": "axe",
+    "profiles": {
+      "A": "RT-e32df097509e32fe-A",
+      "B": "RT-e32df097509e32fe-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-e32df097509e32fe-A.json",
+      "B": "task-fixtures/pairs/RT-e32df097509e32fe-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-e32df097509e32fe-A.json",
+      "B": "fixtures/entries/RT-e32df097509e32fe-B.json"
+    }
+  },
+  {
+    "settingId": "RT-ea6c994234263250",
+    "provider": "axe",
+    "profiles": {
+      "A": "RT-ea6c994234263250-A",
+      "B": "RT-ea6c994234263250-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-ea6c994234263250-A.json",
+      "B": "task-fixtures/pairs/RT-ea6c994234263250-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-ea6c994234263250-A.json",
+      "B": "fixtures/entries/RT-ea6c994234263250-B.json"
+    }
+  },
+  {
+    "settingId": "RT-3d366b22c4baadb6",
+    "provider": "axe",
+    "profiles": {
+      "A": "RT-3d366b22c4baadb6-A",
+      "B": "RT-3d366b22c4baadb6-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-3d366b22c4baadb6-A.json",
+      "B": "task-fixtures/pairs/RT-3d366b22c4baadb6-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-3d366b22c4baadb6-A.json",
+      "B": "fixtures/entries/RT-3d366b22c4baadb6-B.json"
+    }
+  },
+  {
+    "settingId": "RT-ace0dff341a51674",
+    "provider": "axe",
+    "profiles": {
+      "A": "RT-ace0dff341a51674-A",
+      "B": "RT-ace0dff341a51674-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-ace0dff341a51674-A.json",
+      "B": "task-fixtures/pairs/RT-ace0dff341a51674-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-ace0dff341a51674-A.json",
+      "B": "fixtures/entries/RT-ace0dff341a51674-B.json"
+    }
+  },
+  {
+    "settingId": "RT-e2d010126067fa17",
+    "provider": "axe",
+    "profiles": {
+      "A": "RT-e2d010126067fa17-A",
+      "B": "RT-e2d010126067fa17-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-e2d010126067fa17-A.json",
+      "B": "task-fixtures/pairs/RT-e2d010126067fa17-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-e2d010126067fa17-A.json",
+      "B": "fixtures/entries/RT-e2d010126067fa17-B.json"
+    }
+  },
+  {
+    "settingId": "RT-36d7d882e2bd6da2",
+    "provider": "axe",
+    "profiles": {
+      "A": "RT-36d7d882e2bd6da2-A",
+      "B": "RT-36d7d882e2bd6da2-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-36d7d882e2bd6da2-A.json",
+      "B": "task-fixtures/pairs/RT-36d7d882e2bd6da2-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-36d7d882e2bd6da2-A.json",
+      "B": "fixtures/entries/RT-36d7d882e2bd6da2-B.json"
+    }
+  },
+  {
+    "settingId": "RT-a31018709bf73a5c",
+    "provider": "axe",
+    "profiles": {
+      "A": "RT-a31018709bf73a5c-A",
+      "B": "RT-a31018709bf73a5c-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-a31018709bf73a5c-A.json",
+      "B": "task-fixtures/pairs/RT-a31018709bf73a5c-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-a31018709bf73a5c-A.json",
+      "B": "fixtures/entries/RT-a31018709bf73a5c-B.json"
+    }
+  },
+  {
+    "settingId": "RT-3eeda647e60d7d1b",
+    "provider": "axe",
+    "profiles": {
+      "A": "RT-3eeda647e60d7d1b-A",
+      "B": "RT-3eeda647e60d7d1b-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-3eeda647e60d7d1b-A.json",
+      "B": "task-fixtures/pairs/RT-3eeda647e60d7d1b-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-3eeda647e60d7d1b-A.json",
+      "B": "fixtures/entries/RT-3eeda647e60d7d1b-B.json"
+    }
+  },
+  {
+    "settingId": "RT-28216d3eec81ad18",
+    "provider": "axe",
+    "profiles": {
+      "A": "RT-28216d3eec81ad18-A",
+      "B": "RT-28216d3eec81ad18-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-28216d3eec81ad18-A.json",
+      "B": "task-fixtures/pairs/RT-28216d3eec81ad18-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-28216d3eec81ad18-A.json",
+      "B": "fixtures/entries/RT-28216d3eec81ad18-B.json"
+    }
+  },
+  {
+    "settingId": "RT-PROVIDER-EVIDENCE-KUBECLAW-AXE-AXE-EVIDENCEDEFAULTS-ONPASS",
+    "provider": "axe",
+    "profiles": {
+      "A": "RT-PROVIDER-EVIDENCE-KUBECLAW-AXE-AXE-EVIDENCEDEFAULTS-ONPASS-A",
+      "B": "RT-PROVIDER-EVIDENCE-KUBECLAW-AXE-AXE-EVIDENCEDEFAULTS-ONPASS-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-AXE-AXE-EVIDENCEDEFAULTS-ONPASS-A.json",
+      "B": "task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-AXE-AXE-EVIDENCEDEFAULTS-ONPASS-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-PROVIDER-EVIDENCE-KUBECLAW-AXE-AXE-EVIDENCEDEFAULTS-ONPASS-A.json",
+      "B": "fixtures/entries/RT-PROVIDER-EVIDENCE-KUBECLAW-AXE-AXE-EVIDENCEDEFAULTS-ONPASS-B.json"
+    }
+  },
+  {
+    "settingId": "RT-PROVIDER-EVIDENCE-KUBECLAW-AXE-AXE-EVIDENCEDEFAULTS-ONFAIL",
+    "provider": "axe",
+    "profiles": {
+      "A": "RT-PROVIDER-EVIDENCE-KUBECLAW-AXE-AXE-EVIDENCEDEFAULTS-ONFAIL-A",
+      "B": null
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-AXE-AXE-EVIDENCEDEFAULTS-ONFAIL-A.json",
+      "B": "task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-AXE-AXE-EVIDENCEDEFAULTS-ONFAIL-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-PROVIDER-EVIDENCE-KUBECLAW-AXE-AXE-EVIDENCEDEFAULTS-ONFAIL-A.json",
+      "B": "fixtures/entries/RT-PROVIDER-EVIDENCE-KUBECLAW-AXE-AXE-EVIDENCEDEFAULTS-ONFAIL-B.json"
+    }
+  },
+  {
+    "settingId": "RT-PROVIDER-EVIDENCE-KUBECLAW-AXE-AXE-EVIDENCEDEFAULTS-ONERROR",
+    "provider": "axe",
+    "profiles": {
+      "A": "RT-PROVIDER-EVIDENCE-KUBECLAW-AXE-AXE-EVIDENCEDEFAULTS-ONERROR-A",
+      "B": "RT-PROVIDER-EVIDENCE-KUBECLAW-AXE-AXE-EVIDENCEDEFAULTS-ONERROR-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-AXE-AXE-EVIDENCEDEFAULTS-ONERROR-A.json",
+      "B": "task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-AXE-AXE-EVIDENCEDEFAULTS-ONERROR-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-PROVIDER-EVIDENCE-KUBECLAW-AXE-AXE-EVIDENCEDEFAULTS-ONERROR-A.json",
+      "B": "fixtures/entries/RT-PROVIDER-EVIDENCE-KUBECLAW-AXE-AXE-EVIDENCEDEFAULTS-ONERROR-B.json"
+    }
+  },
+  {
+    "settingId": "RT-PROVIDER-CONTRACT-KUBECLAW-AXE-AXE-RETRYSAFE",
+    "provider": "axe",
+    "profiles": {
+      "A": "RT-PROVIDER-CONTRACT-KUBECLAW-AXE-AXE-RETRYSAFE-A",
+      "B": "RT-PROVIDER-CONTRACT-KUBECLAW-AXE-AXE-RETRYSAFE-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-PROVIDER-CONTRACT-KUBECLAW-AXE-AXE-RETRYSAFE-A.json",
+      "B": "task-fixtures/pairs/RT-PROVIDER-CONTRACT-KUBECLAW-AXE-AXE-RETRYSAFE-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-PROVIDER-CONTRACT-KUBECLAW-AXE-AXE-RETRYSAFE-A.json",
+      "B": "fixtures/entries/RT-PROVIDER-CONTRACT-KUBECLAW-AXE-AXE-RETRYSAFE-B.json"
+    }
+  },
+  {
+    "settingId": "RT-PROVIDER-CONTRACT-KUBECLAW-AXE-AXE-MATRIXFIELDS",
+    "provider": "axe",
+    "profiles": {
+      "A": "RT-PROVIDER-CONTRACT-KUBECLAW-AXE-AXE-MATRIXFIELDS-A",
+      "B": null
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-PROVIDER-CONTRACT-KUBECLAW-AXE-AXE-MATRIXFIELDS-A.json",
+      "B": "task-fixtures/pairs/RT-PROVIDER-CONTRACT-KUBECLAW-AXE-AXE-MATRIXFIELDS-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-PROVIDER-CONTRACT-KUBECLAW-AXE-AXE-MATRIXFIELDS-A.json",
+      "B": "fixtures/entries/RT-PROVIDER-CONTRACT-KUBECLAW-AXE-AXE-MATRIXFIELDS-B.json"
+    }
+  },
+  {
+    "settingId": "RT-AXE-BUILTIN-DESKTOP-BROWSER",
+    "provider": "axe",
+    "profiles": {
+      "A": "RT-AXE-BUILTIN-DESKTOP-BROWSER-A",
+      "B": "RT-AXE-BUILTIN-DESKTOP-BROWSER-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-AXE-BUILTIN-DESKTOP-BROWSER-A.json",
+      "B": "task-fixtures/pairs/RT-AXE-BUILTIN-DESKTOP-BROWSER-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-AXE-BUILTIN-DESKTOP-BROWSER-A.json",
+      "B": "fixtures/entries/RT-AXE-BUILTIN-DESKTOP-BROWSER-B.json"
+    }
+  },
+  {
+    "settingId": "RT-AXE-BUILTIN-DESKTOP-VIEWPORT-WIDTH",
+    "provider": "axe",
+    "profiles": {
+      "A": "RT-AXE-BUILTIN-DESKTOP-VIEWPORT-WIDTH-A",
+      "B": "RT-AXE-BUILTIN-DESKTOP-VIEWPORT-WIDTH-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-AXE-BUILTIN-DESKTOP-VIEWPORT-WIDTH-A.json",
+      "B": "task-fixtures/pairs/RT-AXE-BUILTIN-DESKTOP-VIEWPORT-WIDTH-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-AXE-BUILTIN-DESKTOP-VIEWPORT-WIDTH-A.json",
+      "B": "fixtures/entries/RT-AXE-BUILTIN-DESKTOP-VIEWPORT-WIDTH-B.json"
+    }
+  },
+  {
+    "settingId": "RT-AXE-BUILTIN-DESKTOP-VIEWPORT-HEIGHT",
+    "provider": "axe",
+    "profiles": {
+      "A": "RT-AXE-BUILTIN-DESKTOP-VIEWPORT-HEIGHT-A",
+      "B": "RT-AXE-BUILTIN-DESKTOP-VIEWPORT-HEIGHT-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-AXE-BUILTIN-DESKTOP-VIEWPORT-HEIGHT-A.json",
+      "B": "task-fixtures/pairs/RT-AXE-BUILTIN-DESKTOP-VIEWPORT-HEIGHT-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-AXE-BUILTIN-DESKTOP-VIEWPORT-HEIGHT-A.json",
+      "B": "fixtures/entries/RT-AXE-BUILTIN-DESKTOP-VIEWPORT-HEIGHT-B.json"
+    }
+  },
+  {
+    "settingId": "RT-AXE-BUILTIN-DESKTOP-COLORSCHEME",
+    "provider": "axe",
+    "profiles": {
+      "A": "RT-AXE-BUILTIN-DESKTOP-COLORSCHEME-A",
+      "B": "RT-AXE-BUILTIN-DESKTOP-COLORSCHEME-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-AXE-BUILTIN-DESKTOP-COLORSCHEME-A.json",
+      "B": "task-fixtures/pairs/RT-AXE-BUILTIN-DESKTOP-COLORSCHEME-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-AXE-BUILTIN-DESKTOP-COLORSCHEME-A.json",
+      "B": "fixtures/entries/RT-AXE-BUILTIN-DESKTOP-COLORSCHEME-B.json"
+    }
+  },
+  {
+    "settingId": "RT-AXE-BUILTIN-DESKTOP-REDUCEDMOTION",
+    "provider": "axe",
+    "profiles": {
+      "A": "RT-AXE-BUILTIN-DESKTOP-REDUCEDMOTION-A",
+      "B": "RT-AXE-BUILTIN-DESKTOP-REDUCEDMOTION-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-AXE-BUILTIN-DESKTOP-REDUCEDMOTION-A.json",
+      "B": "task-fixtures/pairs/RT-AXE-BUILTIN-DESKTOP-REDUCEDMOTION-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-AXE-BUILTIN-DESKTOP-REDUCEDMOTION-A.json",
+      "B": "fixtures/entries/RT-AXE-BUILTIN-DESKTOP-REDUCEDMOTION-B.json"
+    }
+  },
+  {
+    "settingId": "RT-AXE-BUILTIN-DESKTOP-LOCALE",
+    "provider": "axe",
+    "profiles": {
+      "A": "RT-AXE-BUILTIN-DESKTOP-LOCALE-A",
+      "B": "RT-AXE-BUILTIN-DESKTOP-LOCALE-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-AXE-BUILTIN-DESKTOP-LOCALE-A.json",
+      "B": "task-fixtures/pairs/RT-AXE-BUILTIN-DESKTOP-LOCALE-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-AXE-BUILTIN-DESKTOP-LOCALE-A.json",
+      "B": "fixtures/entries/RT-AXE-BUILTIN-DESKTOP-LOCALE-B.json"
+    }
+  },
+  {
+    "settingId": "RT-AXE-BUILTIN-DESKTOP-TIMEZONEID",
+    "provider": "axe",
+    "profiles": {
+      "A": "RT-AXE-BUILTIN-DESKTOP-TIMEZONEID-A",
+      "B": "RT-AXE-BUILTIN-DESKTOP-TIMEZONEID-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-AXE-BUILTIN-DESKTOP-TIMEZONEID-A.json",
+      "B": "task-fixtures/pairs/RT-AXE-BUILTIN-DESKTOP-TIMEZONEID-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-AXE-BUILTIN-DESKTOP-TIMEZONEID-A.json",
+      "B": "fixtures/entries/RT-AXE-BUILTIN-DESKTOP-TIMEZONEID-B.json"
+    }
+  },
+  {
+    "settingId": "RT-AXE-BUILTIN-DESKTOP-HASTOUCH",
+    "provider": "axe",
+    "profiles": {
+      "A": "RT-AXE-BUILTIN-DESKTOP-HASTOUCH-A",
+      "B": "RT-AXE-BUILTIN-DESKTOP-HASTOUCH-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-AXE-BUILTIN-DESKTOP-HASTOUCH-A.json",
+      "B": "task-fixtures/pairs/RT-AXE-BUILTIN-DESKTOP-HASTOUCH-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-AXE-BUILTIN-DESKTOP-HASTOUCH-A.json",
+      "B": "fixtures/entries/RT-AXE-BUILTIN-DESKTOP-HASTOUCH-B.json"
+    }
+  },
+  {
+    "settingId": "RT-AXE-BUILTIN-DESKTOP-ISMOBILE",
+    "provider": "axe",
+    "profiles": {
+      "A": "RT-AXE-BUILTIN-DESKTOP-ISMOBILE-A",
+      "B": "RT-AXE-BUILTIN-DESKTOP-ISMOBILE-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-AXE-BUILTIN-DESKTOP-ISMOBILE-A.json",
+      "B": "task-fixtures/pairs/RT-AXE-BUILTIN-DESKTOP-ISMOBILE-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-AXE-BUILTIN-DESKTOP-ISMOBILE-A.json",
+      "B": "fixtures/entries/RT-AXE-BUILTIN-DESKTOP-ISMOBILE-B.json"
+    }
+  },
+  {
+    "settingId": "RT-AXE-BUILTIN-DESKTOP-DEVICESCALEFACTOR",
+    "provider": "axe",
+    "profiles": {
+      "A": "RT-AXE-BUILTIN-DESKTOP-DEVICESCALEFACTOR-A",
+      "B": "RT-AXE-BUILTIN-DESKTOP-DEVICESCALEFACTOR-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-AXE-BUILTIN-DESKTOP-DEVICESCALEFACTOR-A.json",
+      "B": "task-fixtures/pairs/RT-AXE-BUILTIN-DESKTOP-DEVICESCALEFACTOR-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-AXE-BUILTIN-DESKTOP-DEVICESCALEFACTOR-A.json",
+      "B": "fixtures/entries/RT-AXE-BUILTIN-DESKTOP-DEVICESCALEFACTOR-B.json"
+    }
+  },
+  {
+    "settingId": "RT-AXE-BUILTIN-MOBILE-BROWSER",
+    "provider": "axe",
+    "profiles": {
+      "A": "RT-AXE-BUILTIN-MOBILE-BROWSER-A",
+      "B": "RT-AXE-BUILTIN-MOBILE-BROWSER-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-AXE-BUILTIN-MOBILE-BROWSER-A.json",
+      "B": "task-fixtures/pairs/RT-AXE-BUILTIN-MOBILE-BROWSER-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-AXE-BUILTIN-MOBILE-BROWSER-A.json",
+      "B": "fixtures/entries/RT-AXE-BUILTIN-MOBILE-BROWSER-B.json"
+    }
+  },
+  {
+    "settingId": "RT-AXE-BUILTIN-MOBILE-VIEWPORT-WIDTH",
+    "provider": "axe",
+    "profiles": {
+      "A": "RT-AXE-BUILTIN-MOBILE-VIEWPORT-WIDTH-A",
+      "B": "RT-AXE-BUILTIN-MOBILE-VIEWPORT-WIDTH-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-AXE-BUILTIN-MOBILE-VIEWPORT-WIDTH-A.json",
+      "B": "task-fixtures/pairs/RT-AXE-BUILTIN-MOBILE-VIEWPORT-WIDTH-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-AXE-BUILTIN-MOBILE-VIEWPORT-WIDTH-A.json",
+      "B": "fixtures/entries/RT-AXE-BUILTIN-MOBILE-VIEWPORT-WIDTH-B.json"
+    }
+  },
+  {
+    "settingId": "RT-AXE-BUILTIN-MOBILE-VIEWPORT-HEIGHT",
+    "provider": "axe",
+    "profiles": {
+      "A": "RT-AXE-BUILTIN-MOBILE-VIEWPORT-HEIGHT-A",
+      "B": "RT-AXE-BUILTIN-MOBILE-VIEWPORT-HEIGHT-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-AXE-BUILTIN-MOBILE-VIEWPORT-HEIGHT-A.json",
+      "B": "task-fixtures/pairs/RT-AXE-BUILTIN-MOBILE-VIEWPORT-HEIGHT-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-AXE-BUILTIN-MOBILE-VIEWPORT-HEIGHT-A.json",
+      "B": "fixtures/entries/RT-AXE-BUILTIN-MOBILE-VIEWPORT-HEIGHT-B.json"
+    }
+  },
+  {
+    "settingId": "RT-AXE-BUILTIN-MOBILE-COLORSCHEME",
+    "provider": "axe",
+    "profiles": {
+      "A": "RT-AXE-BUILTIN-MOBILE-COLORSCHEME-A",
+      "B": "RT-AXE-BUILTIN-MOBILE-COLORSCHEME-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-AXE-BUILTIN-MOBILE-COLORSCHEME-A.json",
+      "B": "task-fixtures/pairs/RT-AXE-BUILTIN-MOBILE-COLORSCHEME-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-AXE-BUILTIN-MOBILE-COLORSCHEME-A.json",
+      "B": "fixtures/entries/RT-AXE-BUILTIN-MOBILE-COLORSCHEME-B.json"
+    }
+  },
+  {
+    "settingId": "RT-AXE-BUILTIN-MOBILE-REDUCEDMOTION",
+    "provider": "axe",
+    "profiles": {
+      "A": "RT-AXE-BUILTIN-MOBILE-REDUCEDMOTION-A",
+      "B": "RT-AXE-BUILTIN-MOBILE-REDUCEDMOTION-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-AXE-BUILTIN-MOBILE-REDUCEDMOTION-A.json",
+      "B": "task-fixtures/pairs/RT-AXE-BUILTIN-MOBILE-REDUCEDMOTION-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-AXE-BUILTIN-MOBILE-REDUCEDMOTION-A.json",
+      "B": "fixtures/entries/RT-AXE-BUILTIN-MOBILE-REDUCEDMOTION-B.json"
+    }
+  },
+  {
+    "settingId": "RT-AXE-BUILTIN-MOBILE-LOCALE",
+    "provider": "axe",
+    "profiles": {
+      "A": "RT-AXE-BUILTIN-MOBILE-LOCALE-A",
+      "B": "RT-AXE-BUILTIN-MOBILE-LOCALE-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-AXE-BUILTIN-MOBILE-LOCALE-A.json",
+      "B": "task-fixtures/pairs/RT-AXE-BUILTIN-MOBILE-LOCALE-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-AXE-BUILTIN-MOBILE-LOCALE-A.json",
+      "B": "fixtures/entries/RT-AXE-BUILTIN-MOBILE-LOCALE-B.json"
+    }
+  },
+  {
+    "settingId": "RT-AXE-BUILTIN-MOBILE-TIMEZONEID",
+    "provider": "axe",
+    "profiles": {
+      "A": "RT-AXE-BUILTIN-MOBILE-TIMEZONEID-A",
+      "B": "RT-AXE-BUILTIN-MOBILE-TIMEZONEID-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-AXE-BUILTIN-MOBILE-TIMEZONEID-A.json",
+      "B": "task-fixtures/pairs/RT-AXE-BUILTIN-MOBILE-TIMEZONEID-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-AXE-BUILTIN-MOBILE-TIMEZONEID-A.json",
+      "B": "fixtures/entries/RT-AXE-BUILTIN-MOBILE-TIMEZONEID-B.json"
+    }
+  },
+  {
+    "settingId": "RT-AXE-BUILTIN-MOBILE-HASTOUCH",
+    "provider": "axe",
+    "profiles": {
+      "A": "RT-AXE-BUILTIN-MOBILE-HASTOUCH-A",
+      "B": "RT-AXE-BUILTIN-MOBILE-HASTOUCH-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-AXE-BUILTIN-MOBILE-HASTOUCH-A.json",
+      "B": "task-fixtures/pairs/RT-AXE-BUILTIN-MOBILE-HASTOUCH-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-AXE-BUILTIN-MOBILE-HASTOUCH-A.json",
+      "B": "fixtures/entries/RT-AXE-BUILTIN-MOBILE-HASTOUCH-B.json"
+    }
+  },
+  {
+    "settingId": "RT-AXE-BUILTIN-MOBILE-ISMOBILE",
+    "provider": "axe",
+    "profiles": {
+      "A": "RT-AXE-BUILTIN-MOBILE-ISMOBILE-A",
+      "B": "RT-AXE-BUILTIN-MOBILE-ISMOBILE-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-AXE-BUILTIN-MOBILE-ISMOBILE-A.json",
+      "B": "task-fixtures/pairs/RT-AXE-BUILTIN-MOBILE-ISMOBILE-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-AXE-BUILTIN-MOBILE-ISMOBILE-A.json",
+      "B": "fixtures/entries/RT-AXE-BUILTIN-MOBILE-ISMOBILE-B.json"
+    }
+  },
+  {
+    "settingId": "RT-AXE-BUILTIN-MOBILE-DEVICESCALEFACTOR",
+    "provider": "axe",
+    "profiles": {
+      "A": "RT-AXE-BUILTIN-MOBILE-DEVICESCALEFACTOR-A",
+      "B": "RT-AXE-BUILTIN-MOBILE-DEVICESCALEFACTOR-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-AXE-BUILTIN-MOBILE-DEVICESCALEFACTOR-A.json",
+      "B": "task-fixtures/pairs/RT-AXE-BUILTIN-MOBILE-DEVICESCALEFACTOR-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-AXE-BUILTIN-MOBILE-DEVICESCALEFACTOR-A.json",
+      "B": "fixtures/entries/RT-AXE-BUILTIN-MOBILE-DEVICESCALEFACTOR-B.json"
+    }
+  },
+  {
+    "settingId": "RT-45cbcce6c9a8143a",
+    "provider": "lighthouse",
+    "profiles": {
+      "A": "RT-45cbcce6c9a8143a-A",
+      "B": "RT-45cbcce6c9a8143a-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-45cbcce6c9a8143a-A.json",
+      "B": "task-fixtures/pairs/RT-45cbcce6c9a8143a-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-45cbcce6c9a8143a-A.json",
+      "B": "fixtures/entries/RT-45cbcce6c9a8143a-B.json"
+    }
+  },
+  {
+    "settingId": "RT-c5c2b774e067d6c3",
+    "provider": "lighthouse",
+    "profiles": {
+      "A": "RT-c5c2b774e067d6c3-A",
+      "B": "RT-c5c2b774e067d6c3-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-c5c2b774e067d6c3-A.json",
+      "B": "task-fixtures/pairs/RT-c5c2b774e067d6c3-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-c5c2b774e067d6c3-A.json",
+      "B": "fixtures/entries/RT-c5c2b774e067d6c3-B.json"
+    }
+  },
+  {
+    "settingId": "RT-f513e45a2c34c183",
+    "provider": "lighthouse",
+    "profiles": {
+      "A": "RT-f513e45a2c34c183-A",
+      "B": "RT-f513e45a2c34c183-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-f513e45a2c34c183-A.json",
+      "B": "task-fixtures/pairs/RT-f513e45a2c34c183-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-f513e45a2c34c183-A.json",
+      "B": "fixtures/entries/RT-f513e45a2c34c183-B.json"
+    }
+  },
+  {
+    "settingId": "RT-91356268eda2cde6",
+    "provider": "lighthouse",
+    "profiles": {
+      "A": "RT-91356268eda2cde6-A",
+      "B": "RT-91356268eda2cde6-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-91356268eda2cde6-A.json",
+      "B": "task-fixtures/pairs/RT-91356268eda2cde6-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-91356268eda2cde6-A.json",
+      "B": "fixtures/entries/RT-91356268eda2cde6-B.json"
+    }
+  },
+  {
+    "settingId": "RT-9bca7a8727abb08f",
+    "provider": "lighthouse",
+    "profiles": {
+      "A": "RT-9bca7a8727abb08f-A",
+      "B": "RT-9bca7a8727abb08f-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-9bca7a8727abb08f-A.json",
+      "B": "task-fixtures/pairs/RT-9bca7a8727abb08f-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-9bca7a8727abb08f-A.json",
+      "B": "fixtures/entries/RT-9bca7a8727abb08f-B.json"
+    }
+  },
+  {
+    "settingId": "RT-b8fe49d2862e13fe",
+    "provider": "lighthouse",
+    "profiles": {
+      "A": "RT-b8fe49d2862e13fe-A",
+      "B": "RT-b8fe49d2862e13fe-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-b8fe49d2862e13fe-A.json",
+      "B": "task-fixtures/pairs/RT-b8fe49d2862e13fe-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-b8fe49d2862e13fe-A.json",
+      "B": "fixtures/entries/RT-b8fe49d2862e13fe-B.json"
+    }
+  },
+  {
+    "settingId": "RT-c245ed3eed7a76c8",
+    "provider": "lighthouse",
+    "profiles": {
+      "A": "RT-c245ed3eed7a76c8-A",
+      "B": "RT-c245ed3eed7a76c8-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-c245ed3eed7a76c8-A.json",
+      "B": "task-fixtures/pairs/RT-c245ed3eed7a76c8-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-c245ed3eed7a76c8-A.json",
+      "B": "fixtures/entries/RT-c245ed3eed7a76c8-B.json"
+    }
+  },
+  {
+    "settingId": "RT-858b7c0d83228aea",
+    "provider": "lighthouse",
+    "profiles": {
+      "A": "RT-858b7c0d83228aea-A",
+      "B": "RT-858b7c0d83228aea-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-858b7c0d83228aea-A.json",
+      "B": "task-fixtures/pairs/RT-858b7c0d83228aea-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-858b7c0d83228aea-A.json",
+      "B": "fixtures/entries/RT-858b7c0d83228aea-B.json"
+    }
+  },
+  {
+    "settingId": "RT-d1ed31f756f931f4",
+    "provider": "lighthouse",
+    "profiles": {
+      "A": "RT-d1ed31f756f931f4-A",
+      "B": "RT-d1ed31f756f931f4-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-d1ed31f756f931f4-A.json",
+      "B": "task-fixtures/pairs/RT-d1ed31f756f931f4-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-d1ed31f756f931f4-A.json",
+      "B": "fixtures/entries/RT-d1ed31f756f931f4-B.json"
+    }
+  },
+  {
+    "settingId": "RT-91b918f8698f70dd",
+    "provider": "lighthouse",
+    "profiles": {
+      "A": "RT-91b918f8698f70dd-A",
+      "B": "RT-91b918f8698f70dd-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-91b918f8698f70dd-A.json",
+      "B": "task-fixtures/pairs/RT-91b918f8698f70dd-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-91b918f8698f70dd-A.json",
+      "B": "fixtures/entries/RT-91b918f8698f70dd-B.json"
+    }
+  },
+  {
+    "settingId": "RT-8138a8b093bfc06d",
+    "provider": "lighthouse",
+    "profiles": {
+      "A": "RT-8138a8b093bfc06d-A",
+      "B": "RT-8138a8b093bfc06d-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-8138a8b093bfc06d-A.json",
+      "B": "task-fixtures/pairs/RT-8138a8b093bfc06d-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-8138a8b093bfc06d-A.json",
+      "B": "fixtures/entries/RT-8138a8b093bfc06d-B.json"
+    }
+  },
+  {
+    "settingId": "RT-323256cac3d5065d",
+    "provider": "lighthouse",
+    "profiles": {
+      "A": "RT-323256cac3d5065d-A",
+      "B": "RT-323256cac3d5065d-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-323256cac3d5065d-A.json",
+      "B": "task-fixtures/pairs/RT-323256cac3d5065d-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-323256cac3d5065d-A.json",
+      "B": "fixtures/entries/RT-323256cac3d5065d-B.json"
+    }
+  },
+  {
+    "settingId": "RT-398b1cee6b5ad261",
+    "provider": "lighthouse",
+    "profiles": {
+      "A": "RT-398b1cee6b5ad261-A",
+      "B": "RT-398b1cee6b5ad261-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-398b1cee6b5ad261-A.json",
+      "B": "task-fixtures/pairs/RT-398b1cee6b5ad261-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-398b1cee6b5ad261-A.json",
+      "B": "fixtures/entries/RT-398b1cee6b5ad261-B.json"
+    }
+  },
+  {
+    "settingId": "RT-1412bca48fc1b08d",
+    "provider": "lighthouse",
+    "profiles": {
+      "A": "RT-1412bca48fc1b08d-A",
+      "B": "RT-1412bca48fc1b08d-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-1412bca48fc1b08d-A.json",
+      "B": "task-fixtures/pairs/RT-1412bca48fc1b08d-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-1412bca48fc1b08d-A.json",
+      "B": "fixtures/entries/RT-1412bca48fc1b08d-B.json"
+    }
+  },
+  {
+    "settingId": "RT-bfc739d422a140ce",
+    "provider": "lighthouse",
+    "profiles": {
+      "A": "RT-bfc739d422a140ce-A",
+      "B": "RT-bfc739d422a140ce-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-bfc739d422a140ce-A.json",
+      "B": "task-fixtures/pairs/RT-bfc739d422a140ce-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-bfc739d422a140ce-A.json",
+      "B": "fixtures/entries/RT-bfc739d422a140ce-B.json"
+    }
+  },
+  {
+    "settingId": "RT-088d813a8d6ff7ca",
+    "provider": "lighthouse",
+    "profiles": {
+      "A": "RT-088d813a8d6ff7ca-A",
+      "B": "RT-088d813a8d6ff7ca-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-088d813a8d6ff7ca-A.json",
+      "B": "task-fixtures/pairs/RT-088d813a8d6ff7ca-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-088d813a8d6ff7ca-A.json",
+      "B": "fixtures/entries/RT-088d813a8d6ff7ca-B.json"
+    }
+  },
+  {
+    "settingId": "RT-a8b0c90a7a729d20",
+    "provider": "lighthouse",
+    "profiles": {
+      "A": "RT-a8b0c90a7a729d20-A",
+      "B": "RT-a8b0c90a7a729d20-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-a8b0c90a7a729d20-A.json",
+      "B": "task-fixtures/pairs/RT-a8b0c90a7a729d20-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-a8b0c90a7a729d20-A.json",
+      "B": "fixtures/entries/RT-a8b0c90a7a729d20-B.json"
+    }
+  },
+  {
+    "settingId": "RT-14d3d815490102e1",
+    "provider": "lighthouse",
+    "profiles": {
+      "A": "RT-14d3d815490102e1-A",
+      "B": "RT-14d3d815490102e1-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-14d3d815490102e1-A.json",
+      "B": "task-fixtures/pairs/RT-14d3d815490102e1-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-14d3d815490102e1-A.json",
+      "B": "fixtures/entries/RT-14d3d815490102e1-B.json"
+    }
+  },
+  {
+    "settingId": "RT-97dfffc2083d51ea",
+    "provider": "lighthouse",
+    "profiles": {
+      "A": "RT-97dfffc2083d51ea-A",
+      "B": "RT-97dfffc2083d51ea-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-97dfffc2083d51ea-A.json",
+      "B": "task-fixtures/pairs/RT-97dfffc2083d51ea-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-97dfffc2083d51ea-A.json",
+      "B": "fixtures/entries/RT-97dfffc2083d51ea-B.json"
+    }
+  },
+  {
+    "settingId": "RT-480d76acac6850a9",
+    "provider": "lighthouse",
+    "profiles": {
+      "A": "RT-480d76acac6850a9-A",
+      "B": null
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-480d76acac6850a9-A.json",
+      "B": "task-fixtures/pairs/RT-480d76acac6850a9-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-480d76acac6850a9-A.json",
+      "B": "fixtures/entries/RT-480d76acac6850a9-B.json"
+    }
+  },
+  {
+    "settingId": "RT-PROVIDER-EVIDENCE-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-EVIDENCEDEFAULTS-ONPASS",
+    "provider": "lighthouse",
+    "profiles": {
+      "A": "RT-PROVIDER-EVIDENCE-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-EVIDENCEDEFAULTS-ONPASS-A",
+      "B": null
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-EVIDENCEDEFAULTS-ONPASS-A.json",
+      "B": "task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-EVIDENCEDEFAULTS-ONPASS-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-PROVIDER-EVIDENCE-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-EVIDENCEDEFAULTS-ONPASS-A.json",
+      "B": "fixtures/entries/RT-PROVIDER-EVIDENCE-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-EVIDENCEDEFAULTS-ONPASS-B.json"
+    }
+  },
+  {
+    "settingId": "RT-PROVIDER-EVIDENCE-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-EVIDENCEDEFAULTS-ONFAIL",
+    "provider": "lighthouse",
+    "profiles": {
+      "A": "RT-PROVIDER-EVIDENCE-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-EVIDENCEDEFAULTS-ONFAIL-A",
+      "B": null
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-EVIDENCEDEFAULTS-ONFAIL-A.json",
+      "B": "task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-EVIDENCEDEFAULTS-ONFAIL-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-PROVIDER-EVIDENCE-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-EVIDENCEDEFAULTS-ONFAIL-A.json",
+      "B": "fixtures/entries/RT-PROVIDER-EVIDENCE-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-EVIDENCEDEFAULTS-ONFAIL-B.json"
+    }
+  },
+  {
+    "settingId": "RT-PROVIDER-EVIDENCE-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-EVIDENCEDEFAULTS-ONERROR",
+    "provider": "lighthouse",
+    "profiles": {
+      "A": "RT-PROVIDER-EVIDENCE-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-EVIDENCEDEFAULTS-ONERROR-A",
+      "B": "RT-PROVIDER-EVIDENCE-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-EVIDENCEDEFAULTS-ONERROR-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-EVIDENCEDEFAULTS-ONERROR-A.json",
+      "B": "task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-EVIDENCEDEFAULTS-ONERROR-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-PROVIDER-EVIDENCE-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-EVIDENCEDEFAULTS-ONERROR-A.json",
+      "B": "fixtures/entries/RT-PROVIDER-EVIDENCE-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-EVIDENCEDEFAULTS-ONERROR-B.json"
+    }
+  },
+  {
+    "settingId": "RT-PROVIDER-CONTRACT-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-RETRYSAFE",
+    "provider": "lighthouse",
+    "profiles": {
+      "A": "RT-PROVIDER-CONTRACT-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-RETRYSAFE-A",
+      "B": "RT-PROVIDER-CONTRACT-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-RETRYSAFE-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-PROVIDER-CONTRACT-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-RETRYSAFE-A.json",
+      "B": "task-fixtures/pairs/RT-PROVIDER-CONTRACT-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-RETRYSAFE-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-PROVIDER-CONTRACT-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-RETRYSAFE-A.json",
+      "B": "fixtures/entries/RT-PROVIDER-CONTRACT-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-RETRYSAFE-B.json"
+    }
+  },
+  {
+    "settingId": "RT-PROVIDER-CONTRACT-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-MATRIXFIELDS",
+    "provider": "lighthouse",
+    "profiles": {
+      "A": "RT-PROVIDER-CONTRACT-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-MATRIXFIELDS-A",
+      "B": null
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-PROVIDER-CONTRACT-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-MATRIXFIELDS-A.json",
+      "B": "task-fixtures/pairs/RT-PROVIDER-CONTRACT-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-MATRIXFIELDS-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-PROVIDER-CONTRACT-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-MATRIXFIELDS-A.json",
+      "B": "fixtures/entries/RT-PROVIDER-CONTRACT-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-MATRIXFIELDS-B.json"
+    }
+  },
+  {
+    "settingId": "RT-f6fd1dec2d2c6b35",
+    "provider": "playwright",
+    "profiles": {
+      "A": "RT-f6fd1dec2d2c6b35-A",
+      "B": "RT-f6fd1dec2d2c6b35-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-f6fd1dec2d2c6b35-A.json",
+      "B": "task-fixtures/pairs/RT-f6fd1dec2d2c6b35-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-f6fd1dec2d2c6b35-A.json",
+      "B": "fixtures/entries/RT-f6fd1dec2d2c6b35-B.json"
+    }
+  },
+  {
+    "settingId": "RT-d17ed366e09f9e72",
+    "provider": "playwright",
+    "profiles": {
+      "A": "RT-d17ed366e09f9e72-A",
+      "B": "RT-d17ed366e09f9e72-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-d17ed366e09f9e72-A.json",
+      "B": "task-fixtures/pairs/RT-d17ed366e09f9e72-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-d17ed366e09f9e72-A.json",
+      "B": "fixtures/entries/RT-d17ed366e09f9e72-B.json"
+    }
+  },
+  {
+    "settingId": "RT-0960971aa584ed2a",
+    "provider": "playwright",
+    "profiles": {
+      "A": "RT-0960971aa584ed2a-A",
+      "B": "RT-0960971aa584ed2a-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-0960971aa584ed2a-A.json",
+      "B": "task-fixtures/pairs/RT-0960971aa584ed2a-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-0960971aa584ed2a-A.json",
+      "B": "fixtures/entries/RT-0960971aa584ed2a-B.json"
+    }
+  },
+  {
+    "settingId": "RT-c226799a77c2da3b",
+    "provider": "playwright",
+    "profiles": {
+      "A": "RT-c226799a77c2da3b-A",
+      "B": "RT-c226799a77c2da3b-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-c226799a77c2da3b-A.json",
+      "B": "task-fixtures/pairs/RT-c226799a77c2da3b-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-c226799a77c2da3b-A.json",
+      "B": "fixtures/entries/RT-c226799a77c2da3b-B.json"
+    }
+  },
+  {
+    "settingId": "RT-fbdecaab60720898",
+    "provider": "playwright",
+    "profiles": {
+      "A": "RT-fbdecaab60720898-A",
+      "B": "RT-fbdecaab60720898-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-fbdecaab60720898-A.json",
+      "B": "task-fixtures/pairs/RT-fbdecaab60720898-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-fbdecaab60720898-A.json",
+      "B": "fixtures/entries/RT-fbdecaab60720898-B.json"
+    }
+  },
+  {
+    "settingId": "RT-d46f4334df4967fa",
+    "provider": "playwright",
+    "profiles": {
+      "A": "RT-d46f4334df4967fa-A",
+      "B": "RT-d46f4334df4967fa-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-d46f4334df4967fa-A.json",
+      "B": "task-fixtures/pairs/RT-d46f4334df4967fa-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-d46f4334df4967fa-A.json",
+      "B": "fixtures/entries/RT-d46f4334df4967fa-B.json"
+    }
+  },
+  {
+    "settingId": "RT-e4dcfff9aa6b1ef0",
+    "provider": "playwright",
+    "profiles": {
+      "A": "RT-e4dcfff9aa6b1ef0-A",
+      "B": "RT-e4dcfff9aa6b1ef0-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-e4dcfff9aa6b1ef0-A.json",
+      "B": "task-fixtures/pairs/RT-e4dcfff9aa6b1ef0-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-e4dcfff9aa6b1ef0-A.json",
+      "B": "fixtures/entries/RT-e4dcfff9aa6b1ef0-B.json"
+    }
+  },
+  {
+    "settingId": "RT-28f9b2da06d59a77",
+    "provider": "playwright",
+    "profiles": {
+      "A": "RT-28f9b2da06d59a77-A",
+      "B": "RT-28f9b2da06d59a77-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-28f9b2da06d59a77-A.json",
+      "B": "task-fixtures/pairs/RT-28f9b2da06d59a77-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-28f9b2da06d59a77-A.json",
+      "B": "fixtures/entries/RT-28f9b2da06d59a77-B.json"
+    }
+  },
+  {
+    "settingId": "RT-d348d41c2ab35c8b",
+    "provider": "playwright",
+    "profiles": {
+      "A": "RT-d348d41c2ab35c8b-A",
+      "B": "RT-d348d41c2ab35c8b-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-d348d41c2ab35c8b-A.json",
+      "B": "task-fixtures/pairs/RT-d348d41c2ab35c8b-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-d348d41c2ab35c8b-A.json",
+      "B": "fixtures/entries/RT-d348d41c2ab35c8b-B.json"
+    }
+  },
+  {
+    "settingId": "RT-PROVIDER-EVIDENCE-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-EVIDENCEDEFAULTS-ONPASS",
+    "provider": "playwright",
+    "profiles": {
+      "A": "RT-PROVIDER-EVIDENCE-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-EVIDENCEDEFAULTS-ONPASS-A",
+      "B": null
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-EVIDENCEDEFAULTS-ONPASS-A.json",
+      "B": "task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-EVIDENCEDEFAULTS-ONPASS-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-PROVIDER-EVIDENCE-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-EVIDENCEDEFAULTS-ONPASS-A.json",
+      "B": "fixtures/entries/RT-PROVIDER-EVIDENCE-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-EVIDENCEDEFAULTS-ONPASS-B.json"
+    }
+  },
+  {
+    "settingId": "RT-PROVIDER-EVIDENCE-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-EVIDENCEDEFAULTS-ONFAIL",
+    "provider": "playwright",
+    "profiles": {
+      "A": "RT-PROVIDER-EVIDENCE-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-EVIDENCEDEFAULTS-ONFAIL-A",
+      "B": null
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-EVIDENCEDEFAULTS-ONFAIL-A.json",
+      "B": "task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-EVIDENCEDEFAULTS-ONFAIL-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-PROVIDER-EVIDENCE-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-EVIDENCEDEFAULTS-ONFAIL-A.json",
+      "B": "fixtures/entries/RT-PROVIDER-EVIDENCE-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-EVIDENCEDEFAULTS-ONFAIL-B.json"
+    }
+  },
+  {
+    "settingId": "RT-PROVIDER-EVIDENCE-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-EVIDENCEDEFAULTS-ONERROR",
+    "provider": "playwright",
+    "profiles": {
+      "A": "RT-PROVIDER-EVIDENCE-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-EVIDENCEDEFAULTS-ONERROR-A",
+      "B": "RT-PROVIDER-EVIDENCE-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-EVIDENCEDEFAULTS-ONERROR-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-EVIDENCEDEFAULTS-ONERROR-A.json",
+      "B": "task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-EVIDENCEDEFAULTS-ONERROR-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-PROVIDER-EVIDENCE-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-EVIDENCEDEFAULTS-ONERROR-A.json",
+      "B": "fixtures/entries/RT-PROVIDER-EVIDENCE-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-EVIDENCEDEFAULTS-ONERROR-B.json"
+    }
+  },
+  {
+    "settingId": "RT-PROVIDER-CONTRACT-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-RETRYSAFE",
+    "provider": "playwright",
+    "profiles": {
+      "A": "RT-PROVIDER-CONTRACT-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-RETRYSAFE-A",
+      "B": null
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-PROVIDER-CONTRACT-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-RETRYSAFE-A.json",
+      "B": "task-fixtures/pairs/RT-PROVIDER-CONTRACT-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-RETRYSAFE-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-PROVIDER-CONTRACT-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-RETRYSAFE-A.json",
+      "B": "fixtures/entries/RT-PROVIDER-CONTRACT-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-RETRYSAFE-B.json"
+    }
+  },
+  {
+    "settingId": "RT-PROVIDER-CONTRACT-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-MATRIXFIELDS",
+    "provider": "playwright",
+    "profiles": {
+      "A": "RT-PROVIDER-CONTRACT-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-MATRIXFIELDS-A",
+      "B": null
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-PROVIDER-CONTRACT-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-MATRIXFIELDS-A.json",
+      "B": "task-fixtures/pairs/RT-PROVIDER-CONTRACT-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-MATRIXFIELDS-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-PROVIDER-CONTRACT-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-MATRIXFIELDS-A.json",
+      "B": "fixtures/entries/RT-PROVIDER-CONTRACT-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-MATRIXFIELDS-B.json"
+    }
+  },
+  {
+    "settingId": "RT-42fd37c34f097e2d",
+    "provider": "visual",
+    "profiles": {
+      "A": "RT-42fd37c34f097e2d-A",
+      "B": "RT-42fd37c34f097e2d-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-42fd37c34f097e2d-A.json",
+      "B": "task-fixtures/pairs/RT-42fd37c34f097e2d-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-42fd37c34f097e2d-A.json",
+      "B": "fixtures/entries/RT-42fd37c34f097e2d-B.json"
+    }
+  },
+  {
+    "settingId": "RT-4003eb10ed91148b",
+    "provider": "visual",
+    "profiles": {
+      "A": "RT-4003eb10ed91148b-A",
+      "B": "RT-4003eb10ed91148b-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-4003eb10ed91148b-A.json",
+      "B": "task-fixtures/pairs/RT-4003eb10ed91148b-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-4003eb10ed91148b-A.json",
+      "B": "fixtures/entries/RT-4003eb10ed91148b-B.json"
+    }
+  },
+  {
+    "settingId": "RT-7055bd224779ebc9",
+    "provider": "visual",
+    "profiles": {
+      "A": "RT-7055bd224779ebc9-A",
+      "B": "RT-7055bd224779ebc9-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-7055bd224779ebc9-A.json",
+      "B": "task-fixtures/pairs/RT-7055bd224779ebc9-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-7055bd224779ebc9-A.json",
+      "B": "fixtures/entries/RT-7055bd224779ebc9-B.json"
+    }
+  },
+  {
+    "settingId": "RT-e044f6419f72c0e0",
+    "provider": "visual",
+    "profiles": {
+      "A": "RT-e044f6419f72c0e0-A",
+      "B": "RT-e044f6419f72c0e0-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-e044f6419f72c0e0-A.json",
+      "B": "task-fixtures/pairs/RT-e044f6419f72c0e0-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-e044f6419f72c0e0-A.json",
+      "B": "fixtures/entries/RT-e044f6419f72c0e0-B.json"
+    }
+  },
+  {
+    "settingId": "RT-bf905e47ed35863a",
+    "provider": "visual",
+    "profiles": {
+      "A": "RT-bf905e47ed35863a-A",
+      "B": "RT-bf905e47ed35863a-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-bf905e47ed35863a-A.json",
+      "B": "task-fixtures/pairs/RT-bf905e47ed35863a-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-bf905e47ed35863a-A.json",
+      "B": "fixtures/entries/RT-bf905e47ed35863a-B.json"
+    }
+  },
+  {
+    "settingId": "RT-165dd3d0da855565",
+    "provider": "visual",
+    "profiles": {
+      "A": "RT-165dd3d0da855565-A",
+      "B": "RT-165dd3d0da855565-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-165dd3d0da855565-A.json",
+      "B": "task-fixtures/pairs/RT-165dd3d0da855565-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-165dd3d0da855565-A.json",
+      "B": "fixtures/entries/RT-165dd3d0da855565-B.json"
+    }
+  },
+  {
+    "settingId": "RT-1ef5ab4a60156159",
+    "provider": "visual",
+    "profiles": {
+      "A": "RT-1ef5ab4a60156159-A",
+      "B": "RT-1ef5ab4a60156159-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-1ef5ab4a60156159-A.json",
+      "B": "task-fixtures/pairs/RT-1ef5ab4a60156159-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-1ef5ab4a60156159-A.json",
+      "B": "fixtures/entries/RT-1ef5ab4a60156159-B.json"
+    }
+  },
+  {
+    "settingId": "RT-e747f65a9f069ccd",
+    "provider": "visual",
+    "profiles": {
+      "A": "RT-e747f65a9f069ccd-A",
+      "B": "RT-e747f65a9f069ccd-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-e747f65a9f069ccd-A.json",
+      "B": "task-fixtures/pairs/RT-e747f65a9f069ccd-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-e747f65a9f069ccd-A.json",
+      "B": "fixtures/entries/RT-e747f65a9f069ccd-B.json"
+    }
+  },
+  {
+    "settingId": "RT-9bc4832efb4988b7",
+    "provider": "visual",
+    "profiles": {
+      "A": "RT-9bc4832efb4988b7-A",
+      "B": "RT-9bc4832efb4988b7-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-9bc4832efb4988b7-A.json",
+      "B": "task-fixtures/pairs/RT-9bc4832efb4988b7-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-9bc4832efb4988b7-A.json",
+      "B": "fixtures/entries/RT-9bc4832efb4988b7-B.json"
+    }
+  },
+  {
+    "settingId": "RT-fe646415d23cc642",
+    "provider": "visual",
+    "profiles": {
+      "A": "RT-fe646415d23cc642-A",
+      "B": "RT-fe646415d23cc642-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-fe646415d23cc642-A.json",
+      "B": "task-fixtures/pairs/RT-fe646415d23cc642-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-fe646415d23cc642-A.json",
+      "B": "fixtures/entries/RT-fe646415d23cc642-B.json"
+    }
+  },
+  {
+    "settingId": "RT-6e3cc348f44734f5",
+    "provider": "visual",
+    "profiles": {
+      "A": "RT-6e3cc348f44734f5-A",
+      "B": "RT-6e3cc348f44734f5-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-6e3cc348f44734f5-A.json",
+      "B": "task-fixtures/pairs/RT-6e3cc348f44734f5-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-6e3cc348f44734f5-A.json",
+      "B": "fixtures/entries/RT-6e3cc348f44734f5-B.json"
+    }
+  },
+  {
+    "settingId": "RT-be3717baf421a9dd",
+    "provider": "visual",
+    "profiles": {
+      "A": "RT-be3717baf421a9dd-A",
+      "B": "RT-be3717baf421a9dd-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-be3717baf421a9dd-A.json",
+      "B": "task-fixtures/pairs/RT-be3717baf421a9dd-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-be3717baf421a9dd-A.json",
+      "B": "fixtures/entries/RT-be3717baf421a9dd-B.json"
+    }
+  },
+  {
+    "settingId": "RT-fa24eda72114411c",
+    "provider": "visual",
+    "profiles": {
+      "A": "RT-fa24eda72114411c-A",
+      "B": "RT-fa24eda72114411c-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-fa24eda72114411c-A.json",
+      "B": "task-fixtures/pairs/RT-fa24eda72114411c-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-fa24eda72114411c-A.json",
+      "B": "fixtures/entries/RT-fa24eda72114411c-B.json"
+    }
+  },
+  {
+    "settingId": "RT-d57032dd890b6f18",
+    "provider": "visual",
+    "profiles": {
+      "A": "RT-d57032dd890b6f18-A",
+      "B": "RT-d57032dd890b6f18-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-d57032dd890b6f18-A.json",
+      "B": "task-fixtures/pairs/RT-d57032dd890b6f18-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-d57032dd890b6f18-A.json",
+      "B": "fixtures/entries/RT-d57032dd890b6f18-B.json"
+    }
+  },
+  {
+    "settingId": "RT-3f0dfb808c23e5e0",
+    "provider": "visual",
+    "profiles": {
+      "A": "RT-3f0dfb808c23e5e0-A",
+      "B": "RT-3f0dfb808c23e5e0-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-3f0dfb808c23e5e0-A.json",
+      "B": "task-fixtures/pairs/RT-3f0dfb808c23e5e0-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-3f0dfb808c23e5e0-A.json",
+      "B": "fixtures/entries/RT-3f0dfb808c23e5e0-B.json"
+    }
+  },
+  {
+    "settingId": "RT-086164702f20b582",
+    "provider": "visual",
+    "profiles": {
+      "A": "RT-086164702f20b582-A",
+      "B": "RT-086164702f20b582-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-086164702f20b582-A.json",
+      "B": "task-fixtures/pairs/RT-086164702f20b582-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-086164702f20b582-A.json",
+      "B": "fixtures/entries/RT-086164702f20b582-B.json"
+    }
+  },
+  {
+    "settingId": "RT-b1bebfd3aa463e09",
+    "provider": "visual",
+    "profiles": {
+      "A": "RT-b1bebfd3aa463e09-A",
+      "B": "RT-b1bebfd3aa463e09-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-b1bebfd3aa463e09-A.json",
+      "B": "task-fixtures/pairs/RT-b1bebfd3aa463e09-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-b1bebfd3aa463e09-A.json",
+      "B": "fixtures/entries/RT-b1bebfd3aa463e09-B.json"
+    }
+  },
+  {
+    "settingId": "RT-PROVIDER-EVIDENCE-KUBECLAW-VISUAL-VISUAL-EVIDENCEDEFAULTS-ONPASS",
+    "provider": "visual",
+    "profiles": {
+      "A": "RT-PROVIDER-EVIDENCE-KUBECLAW-VISUAL-VISUAL-EVIDENCEDEFAULTS-ONPASS-A",
+      "B": null
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-VISUAL-VISUAL-EVIDENCEDEFAULTS-ONPASS-A.json",
+      "B": "task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-VISUAL-VISUAL-EVIDENCEDEFAULTS-ONPASS-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-PROVIDER-EVIDENCE-KUBECLAW-VISUAL-VISUAL-EVIDENCEDEFAULTS-ONPASS-A.json",
+      "B": "fixtures/entries/RT-PROVIDER-EVIDENCE-KUBECLAW-VISUAL-VISUAL-EVIDENCEDEFAULTS-ONPASS-B.json"
+    }
+  },
+  {
+    "settingId": "RT-PROVIDER-EVIDENCE-KUBECLAW-VISUAL-VISUAL-EVIDENCEDEFAULTS-ONFAIL",
+    "provider": "visual",
+    "profiles": {
+      "A": "RT-PROVIDER-EVIDENCE-KUBECLAW-VISUAL-VISUAL-EVIDENCEDEFAULTS-ONFAIL-A",
+      "B": null
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-VISUAL-VISUAL-EVIDENCEDEFAULTS-ONFAIL-A.json",
+      "B": "task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-VISUAL-VISUAL-EVIDENCEDEFAULTS-ONFAIL-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-PROVIDER-EVIDENCE-KUBECLAW-VISUAL-VISUAL-EVIDENCEDEFAULTS-ONFAIL-A.json",
+      "B": "fixtures/entries/RT-PROVIDER-EVIDENCE-KUBECLAW-VISUAL-VISUAL-EVIDENCEDEFAULTS-ONFAIL-B.json"
+    }
+  },
+  {
+    "settingId": "RT-PROVIDER-EVIDENCE-KUBECLAW-VISUAL-VISUAL-EVIDENCEDEFAULTS-ONERROR",
+    "provider": "visual",
+    "profiles": {
+      "A": "RT-PROVIDER-EVIDENCE-KUBECLAW-VISUAL-VISUAL-EVIDENCEDEFAULTS-ONERROR-A",
+      "B": "RT-PROVIDER-EVIDENCE-KUBECLAW-VISUAL-VISUAL-EVIDENCEDEFAULTS-ONERROR-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-VISUAL-VISUAL-EVIDENCEDEFAULTS-ONERROR-A.json",
+      "B": "task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-VISUAL-VISUAL-EVIDENCEDEFAULTS-ONERROR-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-PROVIDER-EVIDENCE-KUBECLAW-VISUAL-VISUAL-EVIDENCEDEFAULTS-ONERROR-A.json",
+      "B": "fixtures/entries/RT-PROVIDER-EVIDENCE-KUBECLAW-VISUAL-VISUAL-EVIDENCEDEFAULTS-ONERROR-B.json"
+    }
+  },
+  {
+    "settingId": "RT-PROVIDER-CONTRACT-KUBECLAW-VISUAL-VISUAL-RETRYSAFE",
+    "provider": "visual",
+    "profiles": {
+      "A": "RT-PROVIDER-CONTRACT-KUBECLAW-VISUAL-VISUAL-RETRYSAFE-A",
+      "B": "RT-PROVIDER-CONTRACT-KUBECLAW-VISUAL-VISUAL-RETRYSAFE-B"
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-PROVIDER-CONTRACT-KUBECLAW-VISUAL-VISUAL-RETRYSAFE-A.json",
+      "B": "task-fixtures/pairs/RT-PROVIDER-CONTRACT-KUBECLAW-VISUAL-VISUAL-RETRYSAFE-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-PROVIDER-CONTRACT-KUBECLAW-VISUAL-VISUAL-RETRYSAFE-A.json",
+      "B": "fixtures/entries/RT-PROVIDER-CONTRACT-KUBECLAW-VISUAL-VISUAL-RETRYSAFE-B.json"
+    }
+  },
+  {
+    "settingId": "RT-PROVIDER-CONTRACT-KUBECLAW-VISUAL-VISUAL-MATRIXFIELDS",
+    "provider": "visual",
+    "profiles": {
+      "A": "RT-PROVIDER-CONTRACT-KUBECLAW-VISUAL-VISUAL-MATRIXFIELDS-A",
+      "B": null
+    },
+    "tasks": {
+      "A": "task-fixtures/pairs/RT-PROVIDER-CONTRACT-KUBECLAW-VISUAL-VISUAL-MATRIXFIELDS-A.json",
+      "B": "task-fixtures/pairs/RT-PROVIDER-CONTRACT-KUBECLAW-VISUAL-VISUAL-MATRIXFIELDS-B.json"
+    },
+    "entries": {
+      "A": "fixtures/entries/RT-PROVIDER-CONTRACT-KUBECLAW-VISUAL-VISUAL-MATRIXFIELDS-A.json",
+      "B": "fixtures/entries/RT-PROVIDER-CONTRACT-KUBECLAW-VISUAL-VISUAL-MATRIXFIELDS-B.json"
+    }
+  }
+]

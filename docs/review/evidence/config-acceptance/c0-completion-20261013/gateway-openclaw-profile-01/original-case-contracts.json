@@ -1,0 +1,3209 @@
+{
+  "qualification": "exact unchanged canonical bodies/requirements/results/lifecycle; future original native effect/bind/recovery/Eval obligations unwaived",
+  "cases": [
+    {
+      "id": "DLV-CASE-GATEWAY-POLICY-PROFILES",
+      "originalBody": {
+        "id": "DLV-CASE-GATEWAY-POLICY-PROFILES",
+        "settingIds": [
+          "DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-ENABLED",
+          "DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-EXPERIMENTAL-SESSIONMEMORY",
+          "DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-SOURCES",
+          "DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-PROVIDER",
+          "DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-BASEURL",
+          "DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-APIKEY-SOURCE",
+          "DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-APIKEY-PROVIDER",
+          "DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-APIKEY-ID",
+          "DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-MODEL",
+          "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-THINKINGDEFAULT",
+          "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-REASONINGDEFAULT",
+          "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELPOLICY-ALLOW",
+          "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELS-OPENAI-GPT-6-ASTRA-AGENTRUNTIME-ID",
+          "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELS-OPENAI-GPT-5-6-SOL-AGENTRUNTIME-ID",
+          "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELS-OPENAI-GPT-5-5-AGENTRUNTIME-ID",
+          "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-WORKSPACE",
+          "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-EMBEDDEDAGENT-EXECUTIONCONTRACT",
+          "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-CONTEXTPRUNING-MODE",
+          "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-CONTEXTPRUNING-TTL",
+          "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-COMPACTION-MODE",
+          "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-COMPACTION-KEEPRECENTTOKENS",
+          "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-COMPACTION-MEMORYFLUSH-ENABLED",
+          "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-SUBAGENTS-MAXCONCURRENT",
+          "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-SUBAGENTS-ARCHIVEAFTERMINUTES",
+          "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-SUBAGENTS-RUNTIMEOUTSECONDS",
+          "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-SUBAGENTS-MAXSPAWNDEPTH",
+          "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-CONTEXTINJECTION",
+          "DLV-GATEWAY-OPENCLAW-AGENTS-ENTRIES-MAIN-SUBAGENTS-ALLOWAGENTS",
+          "DLV-GATEWAY-OPENCLAW-AGENTS-ENTRIES-MAIN-SKILLS",
+          "DLV-GATEWAY-OPENCLAW-AGENTS-ENTRIES-MAIN-SKILLSLIMITS-MAXSKILLSPROMPTCHARS",
+          "DLV-GATEWAY-OPENCLAW-ACP-ENABLED",
+          "DLV-GATEWAY-OPENCLAW-ACP-BACKEND",
+          "DLV-GATEWAY-OPENCLAW-ACP-DEFAULTAGENT",
+          "DLV-GATEWAY-OPENCLAW-ACP-ALLOWEDAGENTS",
+          "DLV-GATEWAY-OPENCLAW-TOOLS-PROFILE",
+          "DLV-GATEWAY-OPENCLAW-TOOLS-SESSIONS-VISIBILITY",
+          "DLV-GATEWAY-OPENCLAW-TOOLS-SESSIONS-SPAWN-ATTACHMENTS-ENABLED",
+          "DLV-GATEWAY-OPENCLAW-TOOLS-EXEC-TIMEOUTSECONDS",
+          "DLV-GATEWAY-OPENCLAW-TOOLS-EXEC-MODE",
+          "DLV-GATEWAY-OPENCLAW-TOOLS-AGENTTOAGENT-ENABLED",
+          "DLV-GATEWAY-OPENCLAW-COMMANDS-NATIVE",
+          "DLV-GATEWAY-OPENCLAW-COMMANDS-NATIVESKILLS",
+          "DLV-GATEWAY-OPENCLAW-COMMANDS-RESTART",
+          "DLV-GATEWAY-OPENCLAW-SESSION-DMSCOPE",
+          "DLV-GATEWAY-OPENCLAW-SESSION-RESETBYTYPE-GROUP-MODE",
+          "DLV-GATEWAY-OPENCLAW-SESSION-RESETBYTYPE-GROUP-IDLEMINUTES",
+          "DLV-GATEWAY-OPENCLAW-SESSION-THREADBINDINGS-ENABLED",
+          "DLV-GATEWAY-OPENCLAW-SESSION-THREADBINDINGS-IDLEHOURS",
+          "DLV-GATEWAY-OPENCLAW-SESSION-THREADBINDINGS-MAXAGEHOURS",
+          "DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-GROUPPOLICY",
+          "DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-STREAMING-MODE",
+          "DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-INBOUNDWORKER-RUNTIMEOUTMS",
+          "DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-GUILDS-REQUIREMENTION",
+          "DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-THREADBINDINGS-ENABLED",
+          "DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-THREADBINDINGS-IDLEHOURS",
+          "DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-THREADBINDINGS-SPAWNSESSIONS",
+          "DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-EXECAPPROVALS-ENABLED",
+          "DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-EXECAPPROVALS-TARGET",
+          "DLV-GATEWAY-OPENCLAW-GATEWAY-MODE",
+          "DLV-GATEWAY-OPENCLAW-GATEWAY-BIND",
+          "DLV-GATEWAY-OPENCLAW-GATEWAY-CONTROLUI-DANGEROUSLYALLOWHOSTHEADERORIGINFALLBACK",
+          "DLV-GATEWAY-OPENCLAW-GATEWAY-AUTH-MODE",
+          "DLV-GATEWAY-OPENCLAW-GATEWAY-TOOLS-ALLOW",
+          "DLV-GATEWAY-OPENCLAW-GATEWAY-TAILSCALE-MODE",
+          "DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-ACPX-ENABLED",
+          "DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-ACPX-CONFIG-PERMISSIONMODE",
+          "DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-OPENAI-ENABLED",
+          "DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-CODEX-ENABLED",
+          "DLV-GATEWAY-OPENCLAW-MESSAGES-GROUPCHAT-VISIBLEREPLIES"
+        ],
+        "requirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "F-AUTH",
+          "F-DELIVERY",
+          "F-EFFECT",
+          "F-VAL"
+        ],
+        "scope": "local",
+        "phase": "implementation-proposal",
+        "productiveCaller": null,
+        "inputProfile": null,
+        "priorState": null,
+        "expectedEffectOrRejectingBoundary": null,
+        "observerMethod": null,
+        "command": null,
+        "sourceIdentity": {
+          "sourceCommit": "a996917f72e84753a94d6214f685e64ef3b1c4a7",
+          "sourceTree": "1eb7daf84a08c49bf134b6d9eeba281a21cabba0",
+          "method": "fragment consolidation; no semantic approval inferred"
+        },
+        "testDigests": [],
+        "toolDependencyImageConfigIdentities": null,
+        "rawEvidencePath": null,
+        "result": "not-run",
+        "reason": "exact executable specification pending author closure",
+        "reviewerConfirmation": null,
+        "specificationStatus": "incomplete"
+      },
+      "sourceBodySha256": "93dba5240970c691bea2a11693a9cd47e753bb27b01aed8cbc69e8346c800abd",
+      "result": "not-run"
+    },
+    {
+      "id": "DLV-CASE-GATEWAY-PERSISTENT-AUTHORITY",
+      "originalBody": {
+        "id": "DLV-CASE-GATEWAY-PERSISTENT-AUTHORITY",
+        "settingIds": [
+          "DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-ENABLED",
+          "DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-EXPERIMENTAL-SESSIONMEMORY",
+          "DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-SOURCES",
+          "DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-PROVIDER",
+          "DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-BASEURL",
+          "DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-APIKEY-SOURCE",
+          "DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-APIKEY-PROVIDER",
+          "DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-APIKEY-ID",
+          "DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-MODEL",
+          "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-THINKINGDEFAULT",
+          "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-REASONINGDEFAULT",
+          "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELPOLICY-ALLOW",
+          "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELS-OPENAI-GPT-6-ASTRA-AGENTRUNTIME-ID",
+          "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELS-OPENAI-GPT-5-6-SOL-AGENTRUNTIME-ID",
+          "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELS-OPENAI-GPT-5-5-AGENTRUNTIME-ID",
+          "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-WORKSPACE",
+          "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-EMBEDDEDAGENT-EXECUTIONCONTRACT",
+          "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-CONTEXTPRUNING-MODE",
+          "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-CONTEXTPRUNING-TTL",
+          "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-COMPACTION-MODE",
+          "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-COMPACTION-KEEPRECENTTOKENS",
+          "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-COMPACTION-MEMORYFLUSH-ENABLED",
+          "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-SUBAGENTS-MAXCONCURRENT",
+          "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-SUBAGENTS-ARCHIVEAFTERMINUTES",
+          "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-SUBAGENTS-RUNTIMEOUTSECONDS",
+          "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-SUBAGENTS-MAXSPAWNDEPTH",
+          "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-CONTEXTINJECTION",
+          "DLV-GATEWAY-OPENCLAW-AGENTS-ENTRIES-MAIN-SUBAGENTS-ALLOWAGENTS",
+          "DLV-GATEWAY-OPENCLAW-AGENTS-ENTRIES-MAIN-SKILLS",
+          "DLV-GATEWAY-OPENCLAW-AGENTS-ENTRIES-MAIN-SKILLSLIMITS-MAXSKILLSPROMPTCHARS",
+          "DLV-GATEWAY-OPENCLAW-ACP-ENABLED",
+          "DLV-GATEWAY-OPENCLAW-ACP-BACKEND",
+          "DLV-GATEWAY-OPENCLAW-ACP-DEFAULTAGENT",
+          "DLV-GATEWAY-OPENCLAW-ACP-ALLOWEDAGENTS",
+          "DLV-GATEWAY-OPENCLAW-TOOLS-PROFILE",
+          "DLV-GATEWAY-OPENCLAW-TOOLS-SESSIONS-VISIBILITY",
+          "DLV-GATEWAY-OPENCLAW-TOOLS-SESSIONS-SPAWN-ATTACHMENTS-ENABLED",
+          "DLV-GATEWAY-OPENCLAW-TOOLS-EXEC-TIMEOUTSECONDS",
+          "DLV-GATEWAY-OPENCLAW-TOOLS-EXEC-MODE",
+          "DLV-GATEWAY-OPENCLAW-TOOLS-AGENTTOAGENT-ENABLED",
+          "DLV-GATEWAY-OPENCLAW-COMMANDS-NATIVE",
+          "DLV-GATEWAY-OPENCLAW-COMMANDS-NATIVESKILLS",
+          "DLV-GATEWAY-OPENCLAW-COMMANDS-RESTART",
+          "DLV-GATEWAY-OPENCLAW-SESSION-DMSCOPE",
+          "DLV-GATEWAY-OPENCLAW-SESSION-RESETBYTYPE-GROUP-MODE",
+          "DLV-GATEWAY-OPENCLAW-SESSION-RESETBYTYPE-GROUP-IDLEMINUTES",
+          "DLV-GATEWAY-OPENCLAW-SESSION-THREADBINDINGS-ENABLED",
+          "DLV-GATEWAY-OPENCLAW-SESSION-THREADBINDINGS-IDLEHOURS",
+          "DLV-GATEWAY-OPENCLAW-SESSION-THREADBINDINGS-MAXAGEHOURS",
+          "DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-GROUPPOLICY",
+          "DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-STREAMING-MODE",
+          "DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-INBOUNDWORKER-RUNTIMEOUTMS",
+          "DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-GUILDS-REQUIREMENTION",
+          "DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-THREADBINDINGS-ENABLED",
+          "DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-THREADBINDINGS-IDLEHOURS",
+          "DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-THREADBINDINGS-SPAWNSESSIONS",
+          "DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-EXECAPPROVALS-ENABLED",
+          "DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-EXECAPPROVALS-TARGET",
+          "DLV-GATEWAY-OPENCLAW-GATEWAY-MODE",
+          "DLV-GATEWAY-OPENCLAW-GATEWAY-BIND",
+          "DLV-GATEWAY-OPENCLAW-GATEWAY-CONTROLUI-DANGEROUSLYALLOWHOSTHEADERORIGINFALLBACK",
+          "DLV-GATEWAY-OPENCLAW-GATEWAY-AUTH-MODE",
+          "DLV-GATEWAY-OPENCLAW-GATEWAY-TOOLS-ALLOW",
+          "DLV-GATEWAY-OPENCLAW-GATEWAY-TAILSCALE-MODE",
+          "DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-ACPX-ENABLED",
+          "DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-ACPX-CONFIG-PERMISSIONMODE",
+          "DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-OPENAI-ENABLED",
+          "DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-CODEX-ENABLED",
+          "DLV-GATEWAY-OPENCLAW-MESSAGES-GROUPCHAT-VISIBLEREPLIES"
+        ],
+        "requirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "F-AUTH",
+          "F-DELIVERY",
+          "F-EFFECT",
+          "F-VAL"
+        ],
+        "scope": "local",
+        "phase": "implementation-proposal",
+        "productiveCaller": null,
+        "inputProfile": null,
+        "priorState": null,
+        "expectedEffectOrRejectingBoundary": null,
+        "observerMethod": null,
+        "command": null,
+        "sourceIdentity": {
+          "sourceCommit": "a996917f72e84753a94d6214f685e64ef3b1c4a7",
+          "sourceTree": "1eb7daf84a08c49bf134b6d9eeba281a21cabba0",
+          "method": "fragment consolidation; no semantic approval inferred"
+        },
+        "testDigests": [],
+        "toolDependencyImageConfigIdentities": null,
+        "rawEvidencePath": null,
+        "result": "not-run",
+        "reason": "exact executable specification pending author closure",
+        "reviewerConfirmation": null,
+        "specificationStatus": "incomplete"
+      },
+      "sourceBodySha256": "0e3180143ec0437550023612f3e1d9d894d14c3478a91a874ab1e063862ab1da",
+      "result": "not-run"
+    },
+    {
+      "id": "DLV-CASE-GATEWAY-PINNED-VALIDATION",
+      "originalBody": {
+        "id": "DLV-CASE-GATEWAY-PINNED-VALIDATION",
+        "settingIds": [
+          "DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-ENABLED",
+          "DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-EXPERIMENTAL-SESSIONMEMORY",
+          "DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-SOURCES",
+          "DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-PROVIDER",
+          "DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-BASEURL",
+          "DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-APIKEY-SOURCE",
+          "DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-APIKEY-PROVIDER",
+          "DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-APIKEY-ID",
+          "DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-MODEL",
+          "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-THINKINGDEFAULT",
+          "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-REASONINGDEFAULT",
+          "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELPOLICY-ALLOW",
+          "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELS-OPENAI-GPT-6-ASTRA-AGENTRUNTIME-ID",
+          "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELS-OPENAI-GPT-5-6-SOL-AGENTRUNTIME-ID",
+          "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELS-OPENAI-GPT-5-5-AGENTRUNTIME-ID",
+          "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-WORKSPACE",
+          "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-EMBEDDEDAGENT-EXECUTIONCONTRACT",
+          "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-CONTEXTPRUNING-MODE",
+          "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-CONTEXTPRUNING-TTL",
+          "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-COMPACTION-MODE",
+          "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-COMPACTION-KEEPRECENTTOKENS",
+          "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-COMPACTION-MEMORYFLUSH-ENABLED",
+          "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-SUBAGENTS-MAXCONCURRENT",
+          "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-SUBAGENTS-ARCHIVEAFTERMINUTES",
+          "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-SUBAGENTS-RUNTIMEOUTSECONDS",
+          "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-SUBAGENTS-MAXSPAWNDEPTH",
+          "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-CONTEXTINJECTION",
+          "DLV-GATEWAY-OPENCLAW-AGENTS-ENTRIES-MAIN-SUBAGENTS-ALLOWAGENTS",
+          "DLV-GATEWAY-OPENCLAW-AGENTS-ENTRIES-MAIN-SKILLS",
+          "DLV-GATEWAY-OPENCLAW-AGENTS-ENTRIES-MAIN-SKILLSLIMITS-MAXSKILLSPROMPTCHARS",
+          "DLV-GATEWAY-OPENCLAW-ACP-ENABLED",
+          "DLV-GATEWAY-OPENCLAW-ACP-BACKEND",
+          "DLV-GATEWAY-OPENCLAW-ACP-DEFAULTAGENT",
+          "DLV-GATEWAY-OPENCLAW-ACP-ALLOWEDAGENTS",
+          "DLV-GATEWAY-OPENCLAW-TOOLS-PROFILE",
+          "DLV-GATEWAY-OPENCLAW-TOOLS-SESSIONS-VISIBILITY",
+          "DLV-GATEWAY-OPENCLAW-TOOLS-SESSIONS-SPAWN-ATTACHMENTS-ENABLED",
+          "DLV-GATEWAY-OPENCLAW-TOOLS-EXEC-TIMEOUTSECONDS",
+          "DLV-GATEWAY-OPENCLAW-TOOLS-EXEC-MODE",
+          "DLV-GATEWAY-OPENCLAW-TOOLS-AGENTTOAGENT-ENABLED",
+          "DLV-GATEWAY-OPENCLAW-COMMANDS-NATIVE",
+          "DLV-GATEWAY-OPENCLAW-COMMANDS-NATIVESKILLS",
+          "DLV-GATEWAY-OPENCLAW-COMMANDS-RESTART",
+          "DLV-GATEWAY-OPENCLAW-SESSION-DMSCOPE",
+          "DLV-GATEWAY-OPENCLAW-SESSION-RESETBYTYPE-GROUP-MODE",
+          "DLV-GATEWAY-OPENCLAW-SESSION-RESETBYTYPE-GROUP-IDLEMINUTES",
+          "DLV-GATEWAY-OPENCLAW-SESSION-THREADBINDINGS-ENABLED",
+          "DLV-GATEWAY-OPENCLAW-SESSION-THREADBINDINGS-IDLEHOURS",
+          "DLV-GATEWAY-OPENCLAW-SESSION-THREADBINDINGS-MAXAGEHOURS",
+          "DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-GROUPPOLICY",
+          "DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-STREAMING-MODE",
+          "DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-INBOUNDWORKER-RUNTIMEOUTMS",
+          "DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-GUILDS-REQUIREMENTION",
+          "DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-THREADBINDINGS-ENABLED",
+          "DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-THREADBINDINGS-IDLEHOURS",
+          "DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-THREADBINDINGS-SPAWNSESSIONS",
+          "DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-EXECAPPROVALS-ENABLED",
+          "DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-EXECAPPROVALS-TARGET",
+          "DLV-GATEWAY-OPENCLAW-GATEWAY-MODE",
+          "DLV-GATEWAY-OPENCLAW-GATEWAY-BIND",
+          "DLV-GATEWAY-OPENCLAW-GATEWAY-CONTROLUI-DANGEROUSLYALLOWHOSTHEADERORIGINFALLBACK",
+          "DLV-GATEWAY-OPENCLAW-GATEWAY-AUTH-MODE",
+          "DLV-GATEWAY-OPENCLAW-GATEWAY-TOOLS-ALLOW",
+          "DLV-GATEWAY-OPENCLAW-GATEWAY-TAILSCALE-MODE",
+          "DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-ACPX-ENABLED",
+          "DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-ACPX-CONFIG-PERMISSIONMODE",
+          "DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-OPENAI-ENABLED",
+          "DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-CODEX-ENABLED",
+          "DLV-GATEWAY-OPENCLAW-MESSAGES-GROUPCHAT-VISIBLEREPLIES"
+        ],
+        "requirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "F-AUTH",
+          "F-DELIVERY",
+          "F-EFFECT",
+          "F-VAL"
+        ],
+        "scope": "local",
+        "phase": "implementation-proposal",
+        "productiveCaller": null,
+        "inputProfile": null,
+        "priorState": null,
+        "expectedEffectOrRejectingBoundary": null,
+        "observerMethod": null,
+        "command": null,
+        "sourceIdentity": {
+          "sourceCommit": "a996917f72e84753a94d6214f685e64ef3b1c4a7",
+          "sourceTree": "1eb7daf84a08c49bf134b6d9eeba281a21cabba0",
+          "method": "fragment consolidation; no semantic approval inferred"
+        },
+        "testDigests": [],
+        "toolDependencyImageConfigIdentities": null,
+        "rawEvidencePath": null,
+        "result": "not-run",
+        "reason": "exact executable specification pending author closure",
+        "reviewerConfirmation": null,
+        "specificationStatus": "incomplete"
+      },
+      "sourceBodySha256": "431e4b6b13ef9412fcd51e48adde8844ccc536115ad6c807c8e4047453bddc67",
+      "result": "not-run"
+    },
+    {
+      "id": "DLV-GW-FIELD-MEMORY-SEARCH-ENABLED",
+      "originalBody": {
+        "id": "DLV-GW-FIELD-MEMORY-SEARCH-ENABLED",
+        "settingIds": [
+          "DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-ENABLED"
+        ],
+        "requirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "F-AUTH",
+          "F-DELIVERY",
+          "F-EFFECT",
+          "F-VAL"
+        ],
+        "scope": "local",
+        "phase": "implementation-proposal",
+        "productiveCaller": null,
+        "inputProfile": null,
+        "priorState": null,
+        "expectedEffectOrRejectingBoundary": null,
+        "observerMethod": null,
+        "command": null,
+        "sourceIdentity": {
+          "sourceCommit": "a996917f72e84753a94d6214f685e64ef3b1c4a7",
+          "sourceTree": "1eb7daf84a08c49bf134b6d9eeba281a21cabba0",
+          "method": "fragment consolidation; no semantic approval inferred"
+        },
+        "testDigests": [],
+        "toolDependencyImageConfigIdentities": null,
+        "rawEvidencePath": null,
+        "result": "not-run",
+        "reason": "exact executable specification pending author closure",
+        "reviewerConfirmation": null,
+        "specificationStatus": "incomplete"
+      },
+      "sourceBodySha256": "8d8f15301af34f31e723b10eb7d88ccc28679a54a2ee8fbe8b3d1c1661d9af61",
+      "result": "not-run"
+    },
+    {
+      "id": "DLV-GW-FIELD-MEMORY-SEARCH-EXPERIMENTAL-SESSIONMEMORY",
+      "originalBody": {
+        "id": "DLV-GW-FIELD-MEMORY-SEARCH-EXPERIMENTAL-SESSIONMEMORY",
+        "settingIds": [
+          "DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-EXPERIMENTAL-SESSIONMEMORY"
+        ],
+        "requirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "F-AUTH",
+          "F-DELIVERY",
+          "F-EFFECT",
+          "F-VAL"
+        ],
+        "scope": "local",
+        "phase": "implementation-proposal",
+        "productiveCaller": null,
+        "inputProfile": null,
+        "priorState": null,
+        "expectedEffectOrRejectingBoundary": null,
+        "observerMethod": null,
+        "command": null,
+        "sourceIdentity": {
+          "sourceCommit": "a996917f72e84753a94d6214f685e64ef3b1c4a7",
+          "sourceTree": "1eb7daf84a08c49bf134b6d9eeba281a21cabba0",
+          "method": "fragment consolidation; no semantic approval inferred"
+        },
+        "testDigests": [],
+        "toolDependencyImageConfigIdentities": null,
+        "rawEvidencePath": null,
+        "result": "not-run",
+        "reason": "exact executable specification pending author closure",
+        "reviewerConfirmation": null,
+        "specificationStatus": "incomplete"
+      },
+      "sourceBodySha256": "9b741c45cdad0d4fe4ee9d67a7debc4c67168f94f6f62c67f045271e023cc520",
+      "result": "not-run"
+    },
+    {
+      "id": "DLV-GW-FIELD-MEMORY-SEARCH-SOURCES",
+      "originalBody": {
+        "id": "DLV-GW-FIELD-MEMORY-SEARCH-SOURCES",
+        "settingIds": [
+          "DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-SOURCES"
+        ],
+        "requirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "F-AUTH",
+          "F-DELIVERY",
+          "F-EFFECT",
+          "F-VAL"
+        ],
+        "scope": "local",
+        "phase": "implementation-proposal",
+        "productiveCaller": null,
+        "inputProfile": null,
+        "priorState": null,
+        "expectedEffectOrRejectingBoundary": null,
+        "observerMethod": null,
+        "command": null,
+        "sourceIdentity": {
+          "sourceCommit": "a996917f72e84753a94d6214f685e64ef3b1c4a7",
+          "sourceTree": "1eb7daf84a08c49bf134b6d9eeba281a21cabba0",
+          "method": "fragment consolidation; no semantic approval inferred"
+        },
+        "testDigests": [],
+        "toolDependencyImageConfigIdentities": null,
+        "rawEvidencePath": null,
+        "result": "not-run",
+        "reason": "exact executable specification pending author closure",
+        "reviewerConfirmation": null,
+        "specificationStatus": "incomplete"
+      },
+      "sourceBodySha256": "879193e02d762121b426c3d2c791e73f12bec7435f03c30b7b9b74577ab8c3a4",
+      "result": "not-run"
+    },
+    {
+      "id": "DLV-GW-FIELD-MEMORY-SEARCH-PROVIDER",
+      "originalBody": {
+        "id": "DLV-GW-FIELD-MEMORY-SEARCH-PROVIDER",
+        "settingIds": [
+          "DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-PROVIDER"
+        ],
+        "requirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "F-AUTH",
+          "F-DELIVERY",
+          "F-EFFECT",
+          "F-VAL"
+        ],
+        "scope": "local",
+        "phase": "implementation-proposal",
+        "productiveCaller": null,
+        "inputProfile": null,
+        "priorState": null,
+        "expectedEffectOrRejectingBoundary": null,
+        "observerMethod": null,
+        "command": null,
+        "sourceIdentity": {
+          "sourceCommit": "a996917f72e84753a94d6214f685e64ef3b1c4a7",
+          "sourceTree": "1eb7daf84a08c49bf134b6d9eeba281a21cabba0",
+          "method": "fragment consolidation; no semantic approval inferred"
+        },
+        "testDigests": [],
+        "toolDependencyImageConfigIdentities": null,
+        "rawEvidencePath": null,
+        "result": "not-run",
+        "reason": "exact executable specification pending author closure",
+        "reviewerConfirmation": null,
+        "specificationStatus": "incomplete"
+      },
+      "sourceBodySha256": "6b699717aba5b09ba37fa4604569ed466f1b0cee861e4bf2111e2cec8f725d44",
+      "result": "not-run"
+    },
+    {
+      "id": "DLV-GW-FIELD-MEMORY-SEARCH-REMOTE-BASEURL",
+      "originalBody": {
+        "id": "DLV-GW-FIELD-MEMORY-SEARCH-REMOTE-BASEURL",
+        "settingIds": [
+          "DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-BASEURL"
+        ],
+        "requirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "F-AUTH",
+          "F-DELIVERY",
+          "F-EFFECT",
+          "F-VAL"
+        ],
+        "scope": "local",
+        "phase": "implementation-proposal",
+        "productiveCaller": null,
+        "inputProfile": null,
+        "priorState": null,
+        "expectedEffectOrRejectingBoundary": null,
+        "observerMethod": null,
+        "command": null,
+        "sourceIdentity": {
+          "sourceCommit": "a996917f72e84753a94d6214f685e64ef3b1c4a7",
+          "sourceTree": "1eb7daf84a08c49bf134b6d9eeba281a21cabba0",
+          "method": "fragment consolidation; no semantic approval inferred"
+        },
+        "testDigests": [],
+        "toolDependencyImageConfigIdentities": null,
+        "rawEvidencePath": null,
+        "result": "not-run",
+        "reason": "exact executable specification pending author closure",
+        "reviewerConfirmation": null,
+        "specificationStatus": "incomplete"
+      },
+      "sourceBodySha256": "e5678c7e4b898e5116f6bed61ce5c624cbec45f4674a53946aa135450f7c55f8",
+      "result": "not-run"
+    },
+    {
+      "id": "DLV-GW-FIELD-MEMORY-SEARCH-REMOTE-APIKEY-SOURCE",
+      "originalBody": {
+        "id": "DLV-GW-FIELD-MEMORY-SEARCH-REMOTE-APIKEY-SOURCE",
+        "settingIds": [
+          "DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-APIKEY-SOURCE"
+        ],
+        "requirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "F-AUTH",
+          "F-DELIVERY",
+          "F-EFFECT",
+          "F-VAL"
+        ],
+        "scope": "local",
+        "phase": "implementation-proposal",
+        "productiveCaller": null,
+        "inputProfile": null,
+        "priorState": null,
+        "expectedEffectOrRejectingBoundary": null,
+        "observerMethod": null,
+        "command": null,
+        "sourceIdentity": {
+          "sourceCommit": "a996917f72e84753a94d6214f685e64ef3b1c4a7",
+          "sourceTree": "1eb7daf84a08c49bf134b6d9eeba281a21cabba0",
+          "method": "fragment consolidation; no semantic approval inferred"
+        },
+        "testDigests": [],
+        "toolDependencyImageConfigIdentities": null,
+        "rawEvidencePath": null,
+        "result": "not-run",
+        "reason": "exact executable specification pending author closure",
+        "reviewerConfirmation": null,
+        "specificationStatus": "incomplete"
+      },
+      "sourceBodySha256": "4bab772c35613895283858a3e7d06f3c466b2b76e1db5b8778870fda705775e9",
+      "result": "not-run"
+    },
+    {
+      "id": "DLV-GW-FIELD-MEMORY-SEARCH-REMOTE-APIKEY-PROVIDER",
+      "originalBody": {
+        "id": "DLV-GW-FIELD-MEMORY-SEARCH-REMOTE-APIKEY-PROVIDER",
+        "settingIds": [
+          "DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-APIKEY-PROVIDER"
+        ],
+        "requirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "F-AUTH",
+          "F-DELIVERY",
+          "F-EFFECT",
+          "F-VAL"
+        ],
+        "scope": "local",
+        "phase": "implementation-proposal",
+        "productiveCaller": null,
+        "inputProfile": null,
+        "priorState": null,
+        "expectedEffectOrRejectingBoundary": null,
+        "observerMethod": null,
+        "command": null,
+        "sourceIdentity": {
+          "sourceCommit": "a996917f72e84753a94d6214f685e64ef3b1c4a7",
+          "sourceTree": "1eb7daf84a08c49bf134b6d9eeba281a21cabba0",
+          "method": "fragment consolidation; no semantic approval inferred"
+        },
+        "testDigests": [],
+        "toolDependencyImageConfigIdentities": null,
+        "rawEvidencePath": null,
+        "result": "not-run",
+        "reason": "exact executable specification pending author closure",
+        "reviewerConfirmation": null,
+        "specificationStatus": "incomplete"
+      },
+      "sourceBodySha256": "59565eb1c8d2da0997eb3530fbcf2780cde2f8b964e53dba6fdbfd908e0c921a",
+      "result": "not-run"
+    },
+    {
+      "id": "DLV-GW-FIELD-MEMORY-SEARCH-REMOTE-APIKEY-ID",
+      "originalBody": {
+        "id": "DLV-GW-FIELD-MEMORY-SEARCH-REMOTE-APIKEY-ID",
+        "settingIds": [
+          "DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-APIKEY-ID"
+        ],
+        "requirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "F-AUTH",
+          "F-DELIVERY",
+          "F-EFFECT",
+          "F-VAL"
+        ],
+        "scope": "local",
+        "phase": "implementation-proposal",
+        "productiveCaller": null,
+        "inputProfile": null,
+        "priorState": null,
+        "expectedEffectOrRejectingBoundary": null,
+        "observerMethod": null,
+        "command": null,
+        "sourceIdentity": {
+          "sourceCommit": "a996917f72e84753a94d6214f685e64ef3b1c4a7",
+          "sourceTree": "1eb7daf84a08c49bf134b6d9eeba281a21cabba0",
+          "method": "fragment consolidation; no semantic approval inferred"
+        },
+        "testDigests": [],
+        "toolDependencyImageConfigIdentities": null,
+        "rawEvidencePath": null,
+        "result": "not-run",
+        "reason": "exact executable specification pending author closure",
+        "reviewerConfirmation": null,
+        "specificationStatus": "incomplete"
+      },
+      "sourceBodySha256": "8fed1b0b447a6d1b4d97ec47350b2b2fcb48159b2f9655916faa1632831973dc",
+      "result": "not-run"
+    },
+    {
+      "id": "DLV-GW-FIELD-MEMORY-SEARCH-MODEL",
+      "originalBody": {
+        "id": "DLV-GW-FIELD-MEMORY-SEARCH-MODEL",
+        "settingIds": [
+          "DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-MODEL"
+        ],
+        "requirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "F-AUTH",
+          "F-DELIVERY",
+          "F-EFFECT",
+          "F-VAL"
+        ],
+        "scope": "local",
+        "phase": "implementation-proposal",
+        "productiveCaller": null,
+        "inputProfile": null,
+        "priorState": null,
+        "expectedEffectOrRejectingBoundary": null,
+        "observerMethod": null,
+        "command": null,
+        "sourceIdentity": {
+          "sourceCommit": "a996917f72e84753a94d6214f685e64ef3b1c4a7",
+          "sourceTree": "1eb7daf84a08c49bf134b6d9eeba281a21cabba0",
+          "method": "fragment consolidation; no semantic approval inferred"
+        },
+        "testDigests": [],
+        "toolDependencyImageConfigIdentities": null,
+        "rawEvidencePath": null,
+        "result": "not-run",
+        "reason": "exact executable specification pending author closure",
+        "reviewerConfirmation": null,
+        "specificationStatus": "incomplete"
+      },
+      "sourceBodySha256": "f11e8cf6dbf4230dc5ea7f15a5d07257e8bf210a7e8fe69c8a3f14a207960d72",
+      "result": "not-run"
+    },
+    {
+      "id": "DLV-GW-FIELD-AGENTS-DEFAULTS-THINKINGDEFAULT",
+      "originalBody": {
+        "id": "DLV-GW-FIELD-AGENTS-DEFAULTS-THINKINGDEFAULT",
+        "settingIds": [
+          "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-THINKINGDEFAULT"
+        ],
+        "requirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "F-AUTH",
+          "F-DELIVERY",
+          "F-EFFECT",
+          "F-VAL"
+        ],
+        "scope": "local",
+        "phase": "implementation-proposal",
+        "productiveCaller": null,
+        "inputProfile": null,
+        "priorState": null,
+        "expectedEffectOrRejectingBoundary": null,
+        "observerMethod": null,
+        "command": null,
+        "sourceIdentity": {
+          "sourceCommit": "a996917f72e84753a94d6214f685e64ef3b1c4a7",
+          "sourceTree": "1eb7daf84a08c49bf134b6d9eeba281a21cabba0",
+          "method": "fragment consolidation; no semantic approval inferred"
+        },
+        "testDigests": [],
+        "toolDependencyImageConfigIdentities": null,
+        "rawEvidencePath": null,
+        "result": "not-run",
+        "reason": "exact executable specification pending author closure",
+        "reviewerConfirmation": null,
+        "specificationStatus": "incomplete"
+      },
+      "sourceBodySha256": "74e9dbc1e7ddb96d4fde9a747ce06feca72ac4c7c33068a3385ee011c2ecb822",
+      "result": "not-run"
+    },
+    {
+      "id": "DLV-GW-FIELD-AGENTS-DEFAULTS-REASONINGDEFAULT",
+      "originalBody": {
+        "id": "DLV-GW-FIELD-AGENTS-DEFAULTS-REASONINGDEFAULT",
+        "settingIds": [
+          "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-REASONINGDEFAULT"
+        ],
+        "requirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "F-AUTH",
+          "F-DELIVERY",
+          "F-EFFECT",
+          "F-VAL"
+        ],
+        "scope": "local",
+        "phase": "implementation-proposal",
+        "productiveCaller": null,
+        "inputProfile": null,
+        "priorState": null,
+        "expectedEffectOrRejectingBoundary": null,
+        "observerMethod": null,
+        "command": null,
+        "sourceIdentity": {
+          "sourceCommit": "a996917f72e84753a94d6214f685e64ef3b1c4a7",
+          "sourceTree": "1eb7daf84a08c49bf134b6d9eeba281a21cabba0",
+          "method": "fragment consolidation; no semantic approval inferred"
+        },
+        "testDigests": [],
+        "toolDependencyImageConfigIdentities": null,
+        "rawEvidencePath": null,
+        "result": "not-run",
+        "reason": "exact executable specification pending author closure",
+        "reviewerConfirmation": null,
+        "specificationStatus": "incomplete"
+      },
+      "sourceBodySha256": "3459acbfbf4a91b9043f6ddee865e4f43a21ce678ffb05f47ec3cb19262b5f10",
+      "result": "not-run"
+    },
+    {
+      "id": "DLV-GW-FIELD-AGENTS-DEFAULTS-MODELPOLICY-ALLOW",
+      "originalBody": {
+        "id": "DLV-GW-FIELD-AGENTS-DEFAULTS-MODELPOLICY-ALLOW",
+        "settingIds": [
+          "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELPOLICY-ALLOW"
+        ],
+        "requirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "F-AUTH",
+          "F-DELIVERY",
+          "F-EFFECT",
+          "F-VAL"
+        ],
+        "scope": "local",
+        "phase": "implementation-proposal",
+        "productiveCaller": null,
+        "inputProfile": null,
+        "priorState": null,
+        "expectedEffectOrRejectingBoundary": null,
+        "observerMethod": null,
+        "command": null,
+        "sourceIdentity": {
+          "sourceCommit": "a996917f72e84753a94d6214f685e64ef3b1c4a7",
+          "sourceTree": "1eb7daf84a08c49bf134b6d9eeba281a21cabba0",
+          "method": "fragment consolidation; no semantic approval inferred"
+        },
+        "testDigests": [],
+        "toolDependencyImageConfigIdentities": null,
+        "rawEvidencePath": null,
+        "result": "not-run",
+        "reason": "exact executable specification pending author closure",
+        "reviewerConfirmation": null,
+        "specificationStatus": "incomplete"
+      },
+      "sourceBodySha256": "075f9c6adfe837edc11c5f73d0d4faa51c7b550b6f27d9cfb29cf26d49496a5b",
+      "result": "not-run"
+    },
+    {
+      "id": "DLV-GW-FIELD-AGENTS-DEFAULTS-MODELS-OPENAI-GPT-6-ASTRA-AGENTRUNTIME-ID",
+      "originalBody": {
+        "id": "DLV-GW-FIELD-AGENTS-DEFAULTS-MODELS-OPENAI-GPT-6-ASTRA-AGENTRUNTIME-ID",
+        "settingIds": [
+          "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELS-OPENAI-GPT-6-ASTRA-AGENTRUNTIME-ID"
+        ],
+        "requirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "F-AUTH",
+          "F-DELIVERY",
+          "F-EFFECT",
+          "F-VAL"
+        ],
+        "scope": "local",
+        "phase": "implementation-proposal",
+        "productiveCaller": null,
+        "inputProfile": null,
+        "priorState": null,
+        "expectedEffectOrRejectingBoundary": null,
+        "observerMethod": null,
+        "command": null,
+        "sourceIdentity": {
+          "sourceCommit": "a996917f72e84753a94d6214f685e64ef3b1c4a7",
+          "sourceTree": "1eb7daf84a08c49bf134b6d9eeba281a21cabba0",
+          "method": "fragment consolidation; no semantic approval inferred"
+        },
+        "testDigests": [],
+        "toolDependencyImageConfigIdentities": null,
+        "rawEvidencePath": null,
+        "result": "not-run",
+        "reason": "exact executable specification pending author closure",
+        "reviewerConfirmation": null,
+        "specificationStatus": "incomplete"
+      },
+      "sourceBodySha256": "b03633fd0924514d83dc8c8fa08a24421915e4f1e829d883b961c13cef9bfbc7",
+      "result": "not-run"
+    },
+    {
+      "id": "DLV-GW-FIELD-AGENTS-DEFAULTS-MODELS-OPENAI-GPT-5-6-SOL-AGENTRUNTIME-ID",
+      "originalBody": {
+        "id": "DLV-GW-FIELD-AGENTS-DEFAULTS-MODELS-OPENAI-GPT-5-6-SOL-AGENTRUNTIME-ID",
+        "settingIds": [
+          "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELS-OPENAI-GPT-5-6-SOL-AGENTRUNTIME-ID"
+        ],
+        "requirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "F-AUTH",
+          "F-DELIVERY",
+          "F-EFFECT",
+          "F-VAL"
+        ],
+        "scope": "local",
+        "phase": "implementation-proposal",
+        "productiveCaller": null,
+        "inputProfile": null,
+        "priorState": null,
+        "expectedEffectOrRejectingBoundary": null,
+        "observerMethod": null,
+        "command": null,
+        "sourceIdentity": {
+          "sourceCommit": "a996917f72e84753a94d6214f685e64ef3b1c4a7",
+          "sourceTree": "1eb7daf84a08c49bf134b6d9eeba281a21cabba0",
+          "method": "fragment consolidation; no semantic approval inferred"
+        },
+        "testDigests": [],
+        "toolDependencyImageConfigIdentities": null,
+        "rawEvidencePath": null,
+        "result": "not-run",
+        "reason": "exact executable specification pending author closure",
+        "reviewerConfirmation": null,
+        "specificationStatus": "incomplete"
+      },
+      "sourceBodySha256": "3b91b54bb018783bcdd85fd91fbcc85c6f69a5eafb3de80b1a03599eca56b46b",
+      "result": "not-run"
+    },
+    {
+      "id": "DLV-GW-FIELD-AGENTS-DEFAULTS-MODELS-OPENAI-GPT-5-5-AGENTRUNTIME-ID",
+      "originalBody": {
+        "id": "DLV-GW-FIELD-AGENTS-DEFAULTS-MODELS-OPENAI-GPT-5-5-AGENTRUNTIME-ID",
+        "settingIds": [
+          "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELS-OPENAI-GPT-5-5-AGENTRUNTIME-ID"
+        ],
+        "requirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "F-AUTH",
+          "F-DELIVERY",
+          "F-EFFECT",
+          "F-VAL"
+        ],
+        "scope": "local",
+        "phase": "implementation-proposal",
+        "productiveCaller": null,
+        "inputProfile": null,
+        "priorState": null,
+        "expectedEffectOrRejectingBoundary": null,
+        "observerMethod": null,
+        "command": null,
+        "sourceIdentity": {
+          "sourceCommit": "a996917f72e84753a94d6214f685e64ef3b1c4a7",
+          "sourceTree": "1eb7daf84a08c49bf134b6d9eeba281a21cabba0",
+          "method": "fragment consolidation; no semantic approval inferred"
+        },
+        "testDigests": [],
+        "toolDependencyImageConfigIdentities": null,
+        "rawEvidencePath": null,
+        "result": "not-run",
+        "reason": "exact executable specification pending author closure",
+        "reviewerConfirmation": null,
+        "specificationStatus": "incomplete"
+      },
+      "sourceBodySha256": "7e097bf5e67448ba15f44376d55e74db5528f8768f3be010726e665b1d985387",
+      "result": "not-run"
+    },
+    {
+      "id": "DLV-GW-FIELD-AGENTS-DEFAULTS-WORKSPACE",
+      "originalBody": {
+        "id": "DLV-GW-FIELD-AGENTS-DEFAULTS-WORKSPACE",
+        "settingIds": [
+          "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-WORKSPACE"
+        ],
+        "requirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "F-AUTH",
+          "F-DELIVERY",
+          "F-EFFECT",
+          "F-VAL"
+        ],
+        "scope": "local",
+        "phase": "implementation-proposal",
+        "productiveCaller": null,
+        "inputProfile": null,
+        "priorState": null,
+        "expectedEffectOrRejectingBoundary": null,
+        "observerMethod": null,
+        "command": null,
+        "sourceIdentity": {
+          "sourceCommit": "a996917f72e84753a94d6214f685e64ef3b1c4a7",
+          "sourceTree": "1eb7daf84a08c49bf134b6d9eeba281a21cabba0",
+          "method": "fragment consolidation; no semantic approval inferred"
+        },
+        "testDigests": [],
+        "toolDependencyImageConfigIdentities": null,
+        "rawEvidencePath": null,
+        "result": "not-run",
+        "reason": "exact executable specification pending author closure",
+        "reviewerConfirmation": null,
+        "specificationStatus": "incomplete"
+      },
+      "sourceBodySha256": "8ebb7d55130f4f4b0cb65233336372a31773321229ddd0167f5a84f1cba7efcb",
+      "result": "not-run"
+    },
+    {
+      "id": "DLV-GW-FIELD-AGENTS-DEFAULTS-EMBEDDEDAGENT-EXECUTIONCONTRACT",
+      "originalBody": {
+        "id": "DLV-GW-FIELD-AGENTS-DEFAULTS-EMBEDDEDAGENT-EXECUTIONCONTRACT",
+        "settingIds": [
+          "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-EMBEDDEDAGENT-EXECUTIONCONTRACT"
+        ],
+        "requirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "F-AUTH",
+          "F-DELIVERY",
+          "F-EFFECT",
+          "F-VAL"
+        ],
+        "scope": "local",
+        "phase": "implementation-proposal",
+        "productiveCaller": null,
+        "inputProfile": null,
+        "priorState": null,
+        "expectedEffectOrRejectingBoundary": null,
+        "observerMethod": null,
+        "command": null,
+        "sourceIdentity": {
+          "sourceCommit": "a996917f72e84753a94d6214f685e64ef3b1c4a7",
+          "sourceTree": "1eb7daf84a08c49bf134b6d9eeba281a21cabba0",
+          "method": "fragment consolidation; no semantic approval inferred"
+        },
+        "testDigests": [],
+        "toolDependencyImageConfigIdentities": null,
+        "rawEvidencePath": null,
+        "result": "not-run",
+        "reason": "exact executable specification pending author closure",
+        "reviewerConfirmation": null,
+        "specificationStatus": "incomplete"
+      },
+      "sourceBodySha256": "ddfeccc7b88456b8f5d812ee6fe5e388e56fdfdf48379920bf0fd07c6a176d7e",
+      "result": "not-run"
+    },
+    {
+      "id": "DLV-GW-FIELD-AGENTS-DEFAULTS-CONTEXTPRUNING-MODE",
+      "originalBody": {
+        "id": "DLV-GW-FIELD-AGENTS-DEFAULTS-CONTEXTPRUNING-MODE",
+        "settingIds": [
+          "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-CONTEXTPRUNING-MODE"
+        ],
+        "requirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "F-AUTH",
+          "F-DELIVERY",
+          "F-EFFECT",
+          "F-VAL"
+        ],
+        "scope": "local",
+        "phase": "implementation-proposal",
+        "productiveCaller": null,
+        "inputProfile": null,
+        "priorState": null,
+        "expectedEffectOrRejectingBoundary": null,
+        "observerMethod": null,
+        "command": null,
+        "sourceIdentity": {
+          "sourceCommit": "a996917f72e84753a94d6214f685e64ef3b1c4a7",
+          "sourceTree": "1eb7daf84a08c49bf134b6d9eeba281a21cabba0",
+          "method": "fragment consolidation; no semantic approval inferred"
+        },
+        "testDigests": [],
+        "toolDependencyImageConfigIdentities": null,
+        "rawEvidencePath": null,
+        "result": "not-run",
+        "reason": "exact executable specification pending author closure",
+        "reviewerConfirmation": null,
+        "specificationStatus": "incomplete"
+      },
+      "sourceBodySha256": "f8c204b7b68c59904bd0dade8d1118d758743c973978e65eea24e3b98dd0d12c",
+      "result": "not-run"
+    },
+    {
+      "id": "DLV-GW-FIELD-AGENTS-DEFAULTS-CONTEXTPRUNING-TTL",
+      "originalBody": {
+        "id": "DLV-GW-FIELD-AGENTS-DEFAULTS-CONTEXTPRUNING-TTL",
+        "settingIds": [
+          "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-CONTEXTPRUNING-TTL"
+        ],
+        "requirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "F-AUTH",
+          "F-DELIVERY",
+          "F-EFFECT",
+          "F-VAL"
+        ],
+        "scope": "local",
+        "phase": "implementation-proposal",
+        "productiveCaller": null,
+        "inputProfile": null,
+        "priorState": null,
+        "expectedEffectOrRejectingBoundary": null,
+        "observerMethod": null,
+        "command": null,
+        "sourceIdentity": {
+          "sourceCommit": "a996917f72e84753a94d6214f685e64ef3b1c4a7",
+          "sourceTree": "1eb7daf84a08c49bf134b6d9eeba281a21cabba0",
+          "method": "fragment consolidation; no semantic approval inferred"
+        },
+        "testDigests": [],
+        "toolDependencyImageConfigIdentities": null,
+        "rawEvidencePath": null,
+        "result": "not-run",
+        "reason": "exact executable specification pending author closure",
+        "reviewerConfirmation": null,
+        "specificationStatus": "incomplete"
+      },
+      "sourceBodySha256": "50b29d150a4cd394922aae1b4844bc1721feb61302f102f51610b5f4bb180ba0",
+      "result": "not-run"
+    },
+    {
+      "id": "DLV-GW-FIELD-AGENTS-DEFAULTS-COMPACTION-MODE",
+      "originalBody": {
+        "id": "DLV-GW-FIELD-AGENTS-DEFAULTS-COMPACTION-MODE",
+        "settingIds": [
+          "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-COMPACTION-MODE"
+        ],
+        "requirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "F-AUTH",
+          "F-DELIVERY",
+          "F-EFFECT",
+          "F-VAL"
+        ],
+        "scope": "local",
+        "phase": "implementation-proposal",
+        "productiveCaller": null,
+        "inputProfile": null,
+        "priorState": null,
+        "expectedEffectOrRejectingBoundary": null,
+        "observerMethod": null,
+        "command": null,
+        "sourceIdentity": {
+          "sourceCommit": "a996917f72e84753a94d6214f685e64ef3b1c4a7",
+          "sourceTree": "1eb7daf84a08c49bf134b6d9eeba281a21cabba0",
+          "method": "fragment consolidation; no semantic approval inferred"
+        },
+        "testDigests": [],
+        "toolDependencyImageConfigIdentities": null,
+        "rawEvidencePath": null,
+        "result": "not-run",
+        "reason": "exact executable specification pending author closure",
+        "reviewerConfirmation": null,
+        "specificationStatus": "incomplete"
+      },
+      "sourceBodySha256": "e5f107a09a216fc065d3cc1531fd32c5c5426e75570ac74bfad5b7a686f661e8",
+      "result": "not-run"
+    },
+    {
+      "id": "DLV-GW-FIELD-AGENTS-DEFAULTS-COMPACTION-KEEPRECENTTOKENS",
+      "originalBody": {
+        "id": "DLV-GW-FIELD-AGENTS-DEFAULTS-COMPACTION-KEEPRECENTTOKENS",
+        "settingIds": [
+          "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-COMPACTION-KEEPRECENTTOKENS"
+        ],
+        "requirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "F-AUTH",
+          "F-DELIVERY",
+          "F-EFFECT",
+          "F-VAL"
+        ],
+        "scope": "local",
+        "phase": "implementation-proposal",
+        "productiveCaller": null,
+        "inputProfile": null,
+        "priorState": null,
+        "expectedEffectOrRejectingBoundary": null,
+        "observerMethod": null,
+        "command": null,
+        "sourceIdentity": {
+          "sourceCommit": "a996917f72e84753a94d6214f685e64ef3b1c4a7",
+          "sourceTree": "1eb7daf84a08c49bf134b6d9eeba281a21cabba0",
+          "method": "fragment consolidation; no semantic approval inferred"
+        },
+        "testDigests": [],
+        "toolDependencyImageConfigIdentities": null,
+        "rawEvidencePath": null,
+        "result": "not-run",
+        "reason": "exact executable specification pending author closure",
+        "reviewerConfirmation": null,
+        "specificationStatus": "incomplete"
+      },
+      "sourceBodySha256": "10bb8f94890b4e810f32ad8dbfe2ca2c24deb6f50adfe272767f0aa3c03ece93",
+      "result": "not-run"
+    },
+    {
+      "id": "DLV-GW-FIELD-AGENTS-DEFAULTS-COMPACTION-MEMORYFLUSH-ENABLED",
+      "originalBody": {
+        "id": "DLV-GW-FIELD-AGENTS-DEFAULTS-COMPACTION-MEMORYFLUSH-ENABLED",
+        "settingIds": [
+          "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-COMPACTION-MEMORYFLUSH-ENABLED"
+        ],
+        "requirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "F-AUTH",
+          "F-DELIVERY",
+          "F-EFFECT",
+          "F-VAL"
+        ],
+        "scope": "local",
+        "phase": "implementation-proposal",
+        "productiveCaller": null,
+        "inputProfile": null,
+        "priorState": null,
+        "expectedEffectOrRejectingBoundary": null,
+        "observerMethod": null,
+        "command": null,
+        "sourceIdentity": {
+          "sourceCommit": "a996917f72e84753a94d6214f685e64ef3b1c4a7",
+          "sourceTree": "1eb7daf84a08c49bf134b6d9eeba281a21cabba0",
+          "method": "fragment consolidation; no semantic approval inferred"
+        },
+        "testDigests": [],
+        "toolDependencyImageConfigIdentities": null,
+        "rawEvidencePath": null,
+        "result": "not-run",
+        "reason": "exact executable specification pending author closure",
+        "reviewerConfirmation": null,
+        "specificationStatus": "incomplete"
+      },
+      "sourceBodySha256": "75612528d7a8ff3b75f3ee7a4f738555c7c067e88ba9e0b501d7399a08ba9b9f",
+      "result": "not-run"
+    },
+    {
+      "id": "DLV-GW-FIELD-AGENTS-DEFAULTS-SUBAGENTS-MAXCONCURRENT",
+      "originalBody": {
+        "id": "DLV-GW-FIELD-AGENTS-DEFAULTS-SUBAGENTS-MAXCONCURRENT",
+        "settingIds": [
+          "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-SUBAGENTS-MAXCONCURRENT"
+        ],
+        "requirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "F-AUTH",
+          "F-DELIVERY",
+          "F-EFFECT",
+          "F-VAL"
+        ],
+        "scope": "local",
+        "phase": "implementation-proposal",
+        "productiveCaller": null,
+        "inputProfile": null,
+        "priorState": null,
+        "expectedEffectOrRejectingBoundary": null,
+        "observerMethod": null,
+        "command": null,
+        "sourceIdentity": {
+          "sourceCommit": "a996917f72e84753a94d6214f685e64ef3b1c4a7",
+          "sourceTree": "1eb7daf84a08c49bf134b6d9eeba281a21cabba0",
+          "method": "fragment consolidation; no semantic approval inferred"
+        },
+        "testDigests": [],
+        "toolDependencyImageConfigIdentities": null,
+        "rawEvidencePath": null,
+        "result": "not-run",
+        "reason": "exact executable specification pending author closure",
+        "reviewerConfirmation": null,
+        "specificationStatus": "incomplete"
+      },
+      "sourceBodySha256": "5bbcc6c75aa884388e3609270e16e3e94d9a53b8038b7b3931650c625756b8e0",
+      "result": "not-run"
+    },
+    {
+      "id": "DLV-GW-FIELD-AGENTS-DEFAULTS-SUBAGENTS-ARCHIVEAFTERMINUTES",
+      "originalBody": {
+        "id": "DLV-GW-FIELD-AGENTS-DEFAULTS-SUBAGENTS-ARCHIVEAFTERMINUTES",
+        "settingIds": [
+          "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-SUBAGENTS-ARCHIVEAFTERMINUTES"
+        ],
+        "requirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "F-AUTH",
+          "F-DELIVERY",
+          "F-EFFECT",
+          "F-VAL"
+        ],
+        "scope": "local",
+        "phase": "implementation-proposal",
+        "productiveCaller": null,
+        "inputProfile": null,
+        "priorState": null,
+        "expectedEffectOrRejectingBoundary": null,
+        "observerMethod": null,
+        "command": null,
+        "sourceIdentity": {
+          "sourceCommit": "a996917f72e84753a94d6214f685e64ef3b1c4a7",
+          "sourceTree": "1eb7daf84a08c49bf134b6d9eeba281a21cabba0",
+          "method": "fragment consolidation; no semantic approval inferred"
+        },
+        "testDigests": [],
+        "toolDependencyImageConfigIdentities": null,
+        "rawEvidencePath": null,
+        "result": "not-run",
+        "reason": "exact executable specification pending author closure",
+        "reviewerConfirmation": null,
+        "specificationStatus": "incomplete"
+      },
+      "sourceBodySha256": "316c58e54481f396ec0cdce3ac54288d9bca3135f8be44107678a66c7cd43678",
+      "result": "not-run"
+    },
+    {
+      "id": "DLV-GW-FIELD-AGENTS-DEFAULTS-SUBAGENTS-RUNTIMEOUTSECONDS",
+      "originalBody": {
+        "id": "DLV-GW-FIELD-AGENTS-DEFAULTS-SUBAGENTS-RUNTIMEOUTSECONDS",
+        "settingIds": [
+          "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-SUBAGENTS-RUNTIMEOUTSECONDS"
+        ],
+        "requirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "F-AUTH",
+          "F-DELIVERY",
+          "F-EFFECT",
+          "F-VAL"
+        ],
+        "scope": "local",
+        "phase": "implementation-proposal",
+        "productiveCaller": null,
+        "inputProfile": null,
+        "priorState": null,
+        "expectedEffectOrRejectingBoundary": null,
+        "observerMethod": null,
+        "command": null,
+        "sourceIdentity": {
+          "sourceCommit": "a996917f72e84753a94d6214f685e64ef3b1c4a7",
+          "sourceTree": "1eb7daf84a08c49bf134b6d9eeba281a21cabba0",
+          "method": "fragment consolidation; no semantic approval inferred"
+        },
+        "testDigests": [],
+        "toolDependencyImageConfigIdentities": null,
+        "rawEvidencePath": null,
+        "result": "not-run",
+        "reason": "exact executable specification pending author closure",
+        "reviewerConfirmation": null,
+        "specificationStatus": "incomplete"
+      },
+      "sourceBodySha256": "2b95538e422f22d5b945c1b8600edbc8108dc1afcf23719b50a21dfa1359996a",
+      "result": "not-run"
+    },
+    {
+      "id": "DLV-GW-FIELD-AGENTS-DEFAULTS-SUBAGENTS-MAXSPAWNDEPTH",
+      "originalBody": {
+        "id": "DLV-GW-FIELD-AGENTS-DEFAULTS-SUBAGENTS-MAXSPAWNDEPTH",
+        "settingIds": [
+          "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-SUBAGENTS-MAXSPAWNDEPTH"
+        ],
+        "requirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "F-AUTH",
+          "F-DELIVERY",
+          "F-EFFECT",
+          "F-VAL"
+        ],
+        "scope": "local",
+        "phase": "implementation-proposal",
+        "productiveCaller": null,
+        "inputProfile": null,
+        "priorState": null,
+        "expectedEffectOrRejectingBoundary": null,
+        "observerMethod": null,
+        "command": null,
+        "sourceIdentity": {
+          "sourceCommit": "a996917f72e84753a94d6214f685e64ef3b1c4a7",
+          "sourceTree": "1eb7daf84a08c49bf134b6d9eeba281a21cabba0",
+          "method": "fragment consolidation; no semantic approval inferred"
+        },
+        "testDigests": [],
+        "toolDependencyImageConfigIdentities": null,
+        "rawEvidencePath": null,
+        "result": "not-run",
+        "reason": "exact executable specification pending author closure",
+        "reviewerConfirmation": null,
+        "specificationStatus": "incomplete"
+      },
+      "sourceBodySha256": "7cdc50cdc2969cbd3c715ff42aca467a229e3d3a6c4edfaa8ffb8c6038b8c310",
+      "result": "not-run"
+    },
+    {
+      "id": "DLV-GW-FIELD-AGENTS-DEFAULTS-CONTEXTINJECTION",
+      "originalBody": {
+        "id": "DLV-GW-FIELD-AGENTS-DEFAULTS-CONTEXTINJECTION",
+        "settingIds": [
+          "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-CONTEXTINJECTION"
+        ],
+        "requirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "F-AUTH",
+          "F-DELIVERY",
+          "F-EFFECT",
+          "F-VAL"
+        ],
+        "scope": "local",
+        "phase": "implementation-proposal",
+        "productiveCaller": null,
+        "inputProfile": null,
+        "priorState": null,
+        "expectedEffectOrRejectingBoundary": null,
+        "observerMethod": null,
+        "command": null,
+        "sourceIdentity": {
+          "sourceCommit": "a996917f72e84753a94d6214f685e64ef3b1c4a7",
+          "sourceTree": "1eb7daf84a08c49bf134b6d9eeba281a21cabba0",
+          "method": "fragment consolidation; no semantic approval inferred"
+        },
+        "testDigests": [],
+        "toolDependencyImageConfigIdentities": null,
+        "rawEvidencePath": null,
+        "result": "not-run",
+        "reason": "exact executable specification pending author closure",
+        "reviewerConfirmation": null,
+        "specificationStatus": "incomplete"
+      },
+      "sourceBodySha256": "710ee2610b6a9cad5ac8640868b7005c74d17fbf36ca030f8f93fb82b4d6307f",
+      "result": "not-run"
+    },
+    {
+      "id": "DLV-GW-FIELD-AGENTS-ENTRIES-MAIN-SUBAGENTS-ALLOWAGENTS",
+      "originalBody": {
+        "id": "DLV-GW-FIELD-AGENTS-ENTRIES-MAIN-SUBAGENTS-ALLOWAGENTS",
+        "settingIds": [
+          "DLV-GATEWAY-OPENCLAW-AGENTS-ENTRIES-MAIN-SUBAGENTS-ALLOWAGENTS"
+        ],
+        "requirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "F-AUTH",
+          "F-DELIVERY",
+          "F-EFFECT",
+          "F-VAL"
+        ],
+        "scope": "local",
+        "phase": "implementation-proposal",
+        "productiveCaller": null,
+        "inputProfile": null,
+        "priorState": null,
+        "expectedEffectOrRejectingBoundary": null,
+        "observerMethod": null,
+        "command": null,
+        "sourceIdentity": {
+          "sourceCommit": "a996917f72e84753a94d6214f685e64ef3b1c4a7",
+          "sourceTree": "1eb7daf84a08c49bf134b6d9eeba281a21cabba0",
+          "method": "fragment consolidation; no semantic approval inferred"
+        },
+        "testDigests": [],
+        "toolDependencyImageConfigIdentities": null,
+        "rawEvidencePath": null,
+        "result": "not-run",
+        "reason": "exact executable specification pending author closure",
+        "reviewerConfirmation": null,
+        "specificationStatus": "incomplete"
+      },
+      "sourceBodySha256": "752a8098d5667e7bcf5fe81804d22a07436c0166bd40bf9b21f536ceabe9018b",
+      "result": "not-run"
+    },
+    {
+      "id": "DLV-GW-FIELD-AGENTS-ENTRIES-MAIN-SKILLS",
+      "originalBody": {
+        "id": "DLV-GW-FIELD-AGENTS-ENTRIES-MAIN-SKILLS",
+        "settingIds": [
+          "DLV-GATEWAY-OPENCLAW-AGENTS-ENTRIES-MAIN-SKILLS"
+        ],
+        "requirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "F-AUTH",
+          "F-DELIVERY",
+          "F-EFFECT",
+          "F-VAL"
+        ],
+        "scope": "local",
+        "phase": "implementation-proposal",
+        "productiveCaller": null,
+        "inputProfile": null,
+        "priorState": null,
+        "expectedEffectOrRejectingBoundary": null,
+        "observerMethod": null,
+        "command": null,
+        "sourceIdentity": {
+          "sourceCommit": "a996917f72e84753a94d6214f685e64ef3b1c4a7",
+          "sourceTree": "1eb7daf84a08c49bf134b6d9eeba281a21cabba0",
+          "method": "fragment consolidation; no semantic approval inferred"
+        },
+        "testDigests": [],
+        "toolDependencyImageConfigIdentities": null,
+        "rawEvidencePath": null,
+        "result": "not-run",
+        "reason": "exact executable specification pending author closure",
+        "reviewerConfirmation": null,
+        "specificationStatus": "incomplete"
+      },
+      "sourceBodySha256": "11a058944dc13da0571e77fbda783f1757bc9e4efc9625836e732d3d4bc7bede",
+      "result": "not-run"
+    },
+    {
+      "id": "DLV-GW-FIELD-AGENTS-ENTRIES-MAIN-SKILLSLIMITS-MAXSKILLSPROMPTCHARS",
+      "originalBody": {
+        "id": "DLV-GW-FIELD-AGENTS-ENTRIES-MAIN-SKILLSLIMITS-MAXSKILLSPROMPTCHARS",
+        "settingIds": [
+          "DLV-GATEWAY-OPENCLAW-AGENTS-ENTRIES-MAIN-SKILLSLIMITS-MAXSKILLSPROMPTCHARS"
+        ],
+        "requirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "F-AUTH",
+          "F-DELIVERY",
+          "F-EFFECT",
+          "F-VAL"
+        ],
+        "scope": "local",
+        "phase": "implementation-proposal",
+        "productiveCaller": null,
+        "inputProfile": null,
+        "priorState": null,
+        "expectedEffectOrRejectingBoundary": null,
+        "observerMethod": null,
+        "command": null,
+        "sourceIdentity": {
+          "sourceCommit": "a996917f72e84753a94d6214f685e64ef3b1c4a7",
+          "sourceTree": "1eb7daf84a08c49bf134b6d9eeba281a21cabba0",
+          "method": "fragment consolidation; no semantic approval inferred"
+        },
+        "testDigests": [],
+        "toolDependencyImageConfigIdentities": null,
+        "rawEvidencePath": null,
+        "result": "not-run",
+        "reason": "exact executable specification pending author closure",
+        "reviewerConfirmation": null,
+        "specificationStatus": "incomplete"
+      },
+      "sourceBodySha256": "b0b792888054bdbf97b3fdf76b2b8da13bb8321387fc41293519ae265969a878",
+      "result": "not-run"
+    },
+    {
+      "id": "DLV-GW-FIELD-ACP-ENABLED",
+      "originalBody": {
+        "id": "DLV-GW-FIELD-ACP-ENABLED",
+        "settingIds": [
+          "DLV-GATEWAY-OPENCLAW-ACP-ENABLED"
+        ],
+        "requirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "F-AUTH",
+          "F-DELIVERY",
+          "F-EFFECT",
+          "F-VAL"
+        ],
+        "scope": "local",
+        "phase": "implementation-proposal",
+        "productiveCaller": null,
+        "inputProfile": null,
+        "priorState": null,
+        "expectedEffectOrRejectingBoundary": null,
+        "observerMethod": null,
+        "command": null,
+        "sourceIdentity": {
+          "sourceCommit": "a996917f72e84753a94d6214f685e64ef3b1c4a7",
+          "sourceTree": "1eb7daf84a08c49bf134b6d9eeba281a21cabba0",
+          "method": "fragment consolidation; no semantic approval inferred"
+        },
+        "testDigests": [],
+        "toolDependencyImageConfigIdentities": null,
+        "rawEvidencePath": null,
+        "result": "not-run",
+        "reason": "exact executable specification pending author closure",
+        "reviewerConfirmation": null,
+        "specificationStatus": "incomplete"
+      },
+      "sourceBodySha256": "15cb501324ac3be04697620757cd37479c8ac6e87c89582481c12cc16c4db337",
+      "result": "not-run"
+    },
+    {
+      "id": "DLV-GW-FIELD-ACP-BACKEND",
+      "originalBody": {
+        "id": "DLV-GW-FIELD-ACP-BACKEND",
+        "settingIds": [
+          "DLV-GATEWAY-OPENCLAW-ACP-BACKEND"
+        ],
+        "requirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "F-AUTH",
+          "F-DELIVERY",
+          "F-EFFECT",
+          "F-VAL"
+        ],
+        "scope": "local",
+        "phase": "implementation-proposal",
+        "productiveCaller": null,
+        "inputProfile": null,
+        "priorState": null,
+        "expectedEffectOrRejectingBoundary": null,
+        "observerMethod": null,
+        "command": null,
+        "sourceIdentity": {
+          "sourceCommit": "a996917f72e84753a94d6214f685e64ef3b1c4a7",
+          "sourceTree": "1eb7daf84a08c49bf134b6d9eeba281a21cabba0",
+          "method": "fragment consolidation; no semantic approval inferred"
+        },
+        "testDigests": [],
+        "toolDependencyImageConfigIdentities": null,
+        "rawEvidencePath": null,
+        "result": "not-run",
+        "reason": "exact executable specification pending author closure",
+        "reviewerConfirmation": null,
+        "specificationStatus": "incomplete"
+      },
+      "sourceBodySha256": "820eb9c5259549ad6880a57e954088fd752fc7fa2acd8a3b56d4f4312c5d5312",
+      "result": "not-run"
+    },
+    {
+      "id": "DLV-GW-FIELD-ACP-DEFAULTAGENT",
+      "originalBody": {
+        "id": "DLV-GW-FIELD-ACP-DEFAULTAGENT",
+        "settingIds": [
+          "DLV-GATEWAY-OPENCLAW-ACP-DEFAULTAGENT"
+        ],
+        "requirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "F-AUTH",
+          "F-DELIVERY",
+          "F-EFFECT",
+          "F-VAL"
+        ],
+        "scope": "local",
+        "phase": "implementation-proposal",
+        "productiveCaller": null,
+        "inputProfile": null,
+        "priorState": null,
+        "expectedEffectOrRejectingBoundary": null,
+        "observerMethod": null,
+        "command": null,
+        "sourceIdentity": {
+          "sourceCommit": "a996917f72e84753a94d6214f685e64ef3b1c4a7",
+          "sourceTree": "1eb7daf84a08c49bf134b6d9eeba281a21cabba0",
+          "method": "fragment consolidation; no semantic approval inferred"
+        },
+        "testDigests": [],
+        "toolDependencyImageConfigIdentities": null,
+        "rawEvidencePath": null,
+        "result": "not-run",
+        "reason": "exact executable specification pending author closure",
+        "reviewerConfirmation": null,
+        "specificationStatus": "incomplete"
+      },
+      "sourceBodySha256": "347cdc35e2cc19880abd17e206386f8482b77e426d62ac66262ec6f9181b74c1",
+      "result": "not-run"
+    },
+    {
+      "id": "DLV-GW-FIELD-ACP-ALLOWEDAGENTS",
+      "originalBody": {
+        "id": "DLV-GW-FIELD-ACP-ALLOWEDAGENTS",
+        "settingIds": [
+          "DLV-GATEWAY-OPENCLAW-ACP-ALLOWEDAGENTS"
+        ],
+        "requirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "F-AUTH",
+          "F-DELIVERY",
+          "F-EFFECT",
+          "F-VAL"
+        ],
+        "scope": "local",
+        "phase": "implementation-proposal",
+        "productiveCaller": null,
+        "inputProfile": null,
+        "priorState": null,
+        "expectedEffectOrRejectingBoundary": null,
+        "observerMethod": null,
+        "command": null,
+        "sourceIdentity": {
+          "sourceCommit": "a996917f72e84753a94d6214f685e64ef3b1c4a7",
+          "sourceTree": "1eb7daf84a08c49bf134b6d9eeba281a21cabba0",
+          "method": "fragment consolidation; no semantic approval inferred"
+        },
+        "testDigests": [],
+        "toolDependencyImageConfigIdentities": null,
+        "rawEvidencePath": null,
+        "result": "not-run",
+        "reason": "exact executable specification pending author closure",
+        "reviewerConfirmation": null,
+        "specificationStatus": "incomplete"
+      },
+      "sourceBodySha256": "bf036beb5a91cfcb7177fae6534a98b57d3f729144458724b922c6f9714b38cd",
+      "result": "not-run"
+    },
+    {
+      "id": "DLV-GW-FIELD-TOOLS-PROFILE",
+      "originalBody": {
+        "id": "DLV-GW-FIELD-TOOLS-PROFILE",
+        "settingIds": [
+          "DLV-GATEWAY-OPENCLAW-TOOLS-PROFILE"
+        ],
+        "requirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "F-AUTH",
+          "F-DELIVERY",
+          "F-EFFECT",
+          "F-VAL"
+        ],
+        "scope": "local",
+        "phase": "implementation-proposal",
+        "productiveCaller": null,
+        "inputProfile": null,
+        "priorState": null,
+        "expectedEffectOrRejectingBoundary": null,
+        "observerMethod": null,
+        "command": null,
+        "sourceIdentity": {
+          "sourceCommit": "a996917f72e84753a94d6214f685e64ef3b1c4a7",
+          "sourceTree": "1eb7daf84a08c49bf134b6d9eeba281a21cabba0",
+          "method": "fragment consolidation; no semantic approval inferred"
+        },
+        "testDigests": [],
+        "toolDependencyImageConfigIdentities": null,
+        "rawEvidencePath": null,
+        "result": "not-run",
+        "reason": "exact executable specification pending author closure",
+        "reviewerConfirmation": null,
+        "specificationStatus": "incomplete"
+      },
+      "sourceBodySha256": "fc2fad3df88815780cadfd47100ce9d7d2bc17d64f9159f3d3ab0bc961c760ac",
+      "result": "not-run"
+    },
+    {
+      "id": "DLV-GW-FIELD-TOOLS-SESSIONS-VISIBILITY",
+      "originalBody": {
+        "id": "DLV-GW-FIELD-TOOLS-SESSIONS-VISIBILITY",
+        "settingIds": [
+          "DLV-GATEWAY-OPENCLAW-TOOLS-SESSIONS-VISIBILITY"
+        ],
+        "requirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "F-AUTH",
+          "F-DELIVERY",
+          "F-EFFECT",
+          "F-VAL"
+        ],
+        "scope": "local",
+        "phase": "implementation-proposal",
+        "productiveCaller": null,
+        "inputProfile": null,
+        "priorState": null,
+        "expectedEffectOrRejectingBoundary": null,
+        "observerMethod": null,
+        "command": null,
+        "sourceIdentity": {
+          "sourceCommit": "a996917f72e84753a94d6214f685e64ef3b1c4a7",
+          "sourceTree": "1eb7daf84a08c49bf134b6d9eeba281a21cabba0",
+          "method": "fragment consolidation; no semantic approval inferred"
+        },
+        "testDigests": [],
+        "toolDependencyImageConfigIdentities": null,
+        "rawEvidencePath": null,
+        "result": "not-run",
+        "reason": "exact executable specification pending author closure",
+        "reviewerConfirmation": null,
+        "specificationStatus": "incomplete"
+      },
+      "sourceBodySha256": "825027be4b656949e4de5fb0deb14589e0f48a5654a13564afa03d0c546e169d",
+      "result": "not-run"
+    },
+    {
+      "id": "DLV-GW-FIELD-TOOLS-SESSIONS-SPAWN-ATTACHMENTS-ENABLED",
+      "originalBody": {
+        "id": "DLV-GW-FIELD-TOOLS-SESSIONS-SPAWN-ATTACHMENTS-ENABLED",
+        "settingIds": [
+          "DLV-GATEWAY-OPENCLAW-TOOLS-SESSIONS-SPAWN-ATTACHMENTS-ENABLED"
+        ],
+        "requirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "F-AUTH",
+          "F-DELIVERY",
+          "F-EFFECT",
+          "F-VAL"
+        ],
+        "scope": "local",
+        "phase": "implementation-proposal",
+        "productiveCaller": null,
+        "inputProfile": null,
+        "priorState": null,
+        "expectedEffectOrRejectingBoundary": null,
+        "observerMethod": null,
+        "command": null,
+        "sourceIdentity": {
+          "sourceCommit": "a996917f72e84753a94d6214f685e64ef3b1c4a7",
+          "sourceTree": "1eb7daf84a08c49bf134b6d9eeba281a21cabba0",
+          "method": "fragment consolidation; no semantic approval inferred"
+        },
+        "testDigests": [],
+        "toolDependencyImageConfigIdentities": null,
+        "rawEvidencePath": null,
+        "result": "not-run",
+        "reason": "exact executable specification pending author closure",
+        "reviewerConfirmation": null,
+        "specificationStatus": "incomplete"
+      },
+      "sourceBodySha256": "8a79708e289732e9fdca680118fa1220211094460d056103bc14405c8ed8f543",
+      "result": "not-run"
+    },
+    {
+      "id": "DLV-GW-FIELD-TOOLS-EXEC-TIMEOUTSECONDS",
+      "originalBody": {
+        "id": "DLV-GW-FIELD-TOOLS-EXEC-TIMEOUTSECONDS",
+        "settingIds": [
+          "DLV-GATEWAY-OPENCLAW-TOOLS-EXEC-TIMEOUTSECONDS"
+        ],
+        "requirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "F-AUTH",
+          "F-DELIVERY",
+          "F-EFFECT",
+          "F-VAL"
+        ],
+        "scope": "local",
+        "phase": "implementation-proposal",
+        "productiveCaller": null,
+        "inputProfile": null,
+        "priorState": null,
+        "expectedEffectOrRejectingBoundary": null,
+        "observerMethod": null,
+        "command": null,
+        "sourceIdentity": {
+          "sourceCommit": "a996917f72e84753a94d6214f685e64ef3b1c4a7",
+          "sourceTree": "1eb7daf84a08c49bf134b6d9eeba281a21cabba0",
+          "method": "fragment consolidation; no semantic approval inferred"
+        },
+        "testDigests": [],
+        "toolDependencyImageConfigIdentities": null,
+        "rawEvidencePath": null,
+        "result": "not-run",
+        "reason": "exact executable specification pending author closure",
+        "reviewerConfirmation": null,
+        "specificationStatus": "incomplete"
+      },
+      "sourceBodySha256": "e0666df53dfa5e262f9201ed1ce68fc6a495715e7c0e613b531f8948bdf3887b",
+      "result": "not-run"
+    },
+    {
+      "id": "DLV-GW-FIELD-TOOLS-EXEC-MODE",
+      "originalBody": {
+        "id": "DLV-GW-FIELD-TOOLS-EXEC-MODE",
+        "settingIds": [
+          "DLV-GATEWAY-OPENCLAW-TOOLS-EXEC-MODE"
+        ],
+        "requirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "F-AUTH",
+          "F-DELIVERY",
+          "F-EFFECT",
+          "F-VAL"
+        ],
+        "scope": "local",
+        "phase": "implementation-proposal",
+        "productiveCaller": null,
+        "inputProfile": null,
+        "priorState": null,
+        "expectedEffectOrRejectingBoundary": null,
+        "observerMethod": null,
+        "command": null,
+        "sourceIdentity": {
+          "sourceCommit": "a996917f72e84753a94d6214f685e64ef3b1c4a7",
+          "sourceTree": "1eb7daf84a08c49bf134b6d9eeba281a21cabba0",
+          "method": "fragment consolidation; no semantic approval inferred"
+        },
+        "testDigests": [],
+        "toolDependencyImageConfigIdentities": null,
+        "rawEvidencePath": null,
+        "result": "not-run",
+        "reason": "exact executable specification pending author closure",
+        "reviewerConfirmation": null,
+        "specificationStatus": "incomplete"
+      },
+      "sourceBodySha256": "d266c32f59834beb7de14d9c91ef82c33483f07582757294101e915755da6d1d",
+      "result": "not-run"
+    },
+    {
+      "id": "DLV-GW-FIELD-TOOLS-AGENTTOAGENT-ENABLED",
+      "originalBody": {
+        "id": "DLV-GW-FIELD-TOOLS-AGENTTOAGENT-ENABLED",
+        "settingIds": [
+          "DLV-GATEWAY-OPENCLAW-TOOLS-AGENTTOAGENT-ENABLED"
+        ],
+        "requirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "F-AUTH",
+          "F-DELIVERY",
+          "F-EFFECT",
+          "F-VAL"
+        ],
+        "scope": "local",
+        "phase": "implementation-proposal",
+        "productiveCaller": null,
+        "inputProfile": null,
+        "priorState": null,
+        "expectedEffectOrRejectingBoundary": null,
+        "observerMethod": null,
+        "command": null,
+        "sourceIdentity": {
+          "sourceCommit": "a996917f72e84753a94d6214f685e64ef3b1c4a7",
+          "sourceTree": "1eb7daf84a08c49bf134b6d9eeba281a21cabba0",
+          "method": "fragment consolidation; no semantic approval inferred"
+        },
+        "testDigests": [],
+        "toolDependencyImageConfigIdentities": null,
+        "rawEvidencePath": null,
+        "result": "not-run",
+        "reason": "exact executable specification pending author closure",
+        "reviewerConfirmation": null,
+        "specificationStatus": "incomplete"
+      },
+      "sourceBodySha256": "9ff4885a18d3c48bf4c0db2352bbf19a958b03aa9816db6098733abd6bd4ff3e",
+      "result": "not-run"
+    },
+    {
+      "id": "DLV-GW-FIELD-COMMANDS-NATIVE",
+      "originalBody": {
+        "id": "DLV-GW-FIELD-COMMANDS-NATIVE",
+        "settingIds": [
+          "DLV-GATEWAY-OPENCLAW-COMMANDS-NATIVE"
+        ],
+        "requirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "F-AUTH",
+          "F-DELIVERY",
+          "F-EFFECT",
+          "F-VAL"
+        ],
+        "scope": "local",
+        "phase": "implementation-proposal",
+        "productiveCaller": null,
+        "inputProfile": null,
+        "priorState": null,
+        "expectedEffectOrRejectingBoundary": null,
+        "observerMethod": null,
+        "command": null,
+        "sourceIdentity": {
+          "sourceCommit": "a996917f72e84753a94d6214f685e64ef3b1c4a7",
+          "sourceTree": "1eb7daf84a08c49bf134b6d9eeba281a21cabba0",
+          "method": "fragment consolidation; no semantic approval inferred"
+        },
+        "testDigests": [],
+        "toolDependencyImageConfigIdentities": null,
+        "rawEvidencePath": null,
+        "result": "not-run",
+        "reason": "exact executable specification pending author closure",
+        "reviewerConfirmation": null,
+        "specificationStatus": "incomplete"
+      },
+      "sourceBodySha256": "693544f4271567eb940bf0d64a22b55289cdfe7dccddcd6142663df474fedb3c",
+      "result": "not-run"
+    },
+    {
+      "id": "DLV-GW-FIELD-COMMANDS-NATIVESKILLS",
+      "originalBody": {
+        "id": "DLV-GW-FIELD-COMMANDS-NATIVESKILLS",
+        "settingIds": [
+          "DLV-GATEWAY-OPENCLAW-COMMANDS-NATIVESKILLS"
+        ],
+        "requirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "F-AUTH",
+          "F-DELIVERY",
+          "F-EFFECT",
+          "F-VAL"
+        ],
+        "scope": "local",
+        "phase": "implementation-proposal",
+        "productiveCaller": null,
+        "inputProfile": null,
+        "priorState": null,
+        "expectedEffectOrRejectingBoundary": null,
+        "observerMethod": null,
+        "command": null,
+        "sourceIdentity": {
+          "sourceCommit": "a996917f72e84753a94d6214f685e64ef3b1c4a7",
+          "sourceTree": "1eb7daf84a08c49bf134b6d9eeba281a21cabba0",
+          "method": "fragment consolidation; no semantic approval inferred"
+        },
+        "testDigests": [],
+        "toolDependencyImageConfigIdentities": null,
+        "rawEvidencePath": null,
+        "result": "not-run",
+        "reason": "exact executable specification pending author closure",
+        "reviewerConfirmation": null,
+        "specificationStatus": "incomplete"
+      },
+      "sourceBodySha256": "04cd73f57de4399fab8d83d5f2fa01a99c574521e05ddcfaf188eca7d612b572",
+      "result": "not-run"
+    },
+    {
+      "id": "DLV-GW-FIELD-COMMANDS-RESTART",
+      "originalBody": {
+        "id": "DLV-GW-FIELD-COMMANDS-RESTART",
+        "settingIds": [
+          "DLV-GATEWAY-OPENCLAW-COMMANDS-RESTART"
+        ],
+        "requirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "F-AUTH",
+          "F-DELIVERY",
+          "F-EFFECT",
+          "F-VAL"
+        ],
+        "scope": "local",
+        "phase": "implementation-proposal",
+        "productiveCaller": null,
+        "inputProfile": null,
+        "priorState": null,
+        "expectedEffectOrRejectingBoundary": null,
+        "observerMethod": null,
+        "command": null,
+        "sourceIdentity": {
+          "sourceCommit": "a996917f72e84753a94d6214f685e64ef3b1c4a7",
+          "sourceTree": "1eb7daf84a08c49bf134b6d9eeba281a21cabba0",
+          "method": "fragment consolidation; no semantic approval inferred"
+        },
+        "testDigests": [],
+        "toolDependencyImageConfigIdentities": null,
+        "rawEvidencePath": null,
+        "result": "not-run",
+        "reason": "exact executable specification pending author closure",
+        "reviewerConfirmation": null,
+        "specificationStatus": "incomplete"
+      },
+      "sourceBodySha256": "2d201b80ed63c7e77b19a760ea05b132da83088828ec40efdb29d92dd5516aca",
+      "result": "not-run"
+    },
+    {
+      "id": "DLV-GW-FIELD-SESSION-DMSCOPE",
+      "originalBody": {
+        "id": "DLV-GW-FIELD-SESSION-DMSCOPE",
+        "settingIds": [
+          "DLV-GATEWAY-OPENCLAW-SESSION-DMSCOPE"
+        ],
+        "requirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "F-AUTH",
+          "F-DELIVERY",
+          "F-EFFECT",
+          "F-VAL"
+        ],
+        "scope": "local",
+        "phase": "implementation-proposal",
+        "productiveCaller": null,
+        "inputProfile": null,
+        "priorState": null,
+        "expectedEffectOrRejectingBoundary": null,
+        "observerMethod": null,
+        "command": null,
+        "sourceIdentity": {
+          "sourceCommit": "a996917f72e84753a94d6214f685e64ef3b1c4a7",
+          "sourceTree": "1eb7daf84a08c49bf134b6d9eeba281a21cabba0",
+          "method": "fragment consolidation; no semantic approval inferred"
+        },
+        "testDigests": [],
+        "toolDependencyImageConfigIdentities": null,
+        "rawEvidencePath": null,
+        "result": "not-run",
+        "reason": "exact executable specification pending author closure",
+        "reviewerConfirmation": null,
+        "specificationStatus": "incomplete"
+      },
+      "sourceBodySha256": "12d897145c295033196cd0fabded04945160ba89d4a6371477a2057d1b27e3a1",
+      "result": "not-run"
+    },
+    {
+      "id": "DLV-GW-FIELD-SESSION-RESETBYTYPE-GROUP-MODE",
+      "originalBody": {
+        "id": "DLV-GW-FIELD-SESSION-RESETBYTYPE-GROUP-MODE",
+        "settingIds": [
+          "DLV-GATEWAY-OPENCLAW-SESSION-RESETBYTYPE-GROUP-MODE"
+        ],
+        "requirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "F-AUTH",
+          "F-DELIVERY",
+          "F-EFFECT",
+          "F-VAL"
+        ],
+        "scope": "local",
+        "phase": "implementation-proposal",
+        "productiveCaller": null,
+        "inputProfile": null,
+        "priorState": null,
+        "expectedEffectOrRejectingBoundary": null,
+        "observerMethod": null,
+        "command": null,
+        "sourceIdentity": {
+          "sourceCommit": "a996917f72e84753a94d6214f685e64ef3b1c4a7",
+          "sourceTree": "1eb7daf84a08c49bf134b6d9eeba281a21cabba0",
+          "method": "fragment consolidation; no semantic approval inferred"
+        },
+        "testDigests": [],
+        "toolDependencyImageConfigIdentities": null,
+        "rawEvidencePath": null,
+        "result": "not-run",
+        "reason": "exact executable specification pending author closure",
+        "reviewerConfirmation": null,
+        "specificationStatus": "incomplete"
+      },
+      "sourceBodySha256": "4e49eaad1f53f8b13899f39ad41a37d1ac296b6d4c9fb204a3a6fd17452e07ad",
+      "result": "not-run"
+    },
+    {
+      "id": "DLV-GW-FIELD-SESSION-RESETBYTYPE-GROUP-IDLEMINUTES",
+      "originalBody": {
+        "id": "DLV-GW-FIELD-SESSION-RESETBYTYPE-GROUP-IDLEMINUTES",
+        "settingIds": [
+          "DLV-GATEWAY-OPENCLAW-SESSION-RESETBYTYPE-GROUP-IDLEMINUTES"
+        ],
+        "requirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "F-AUTH",
+          "F-DELIVERY",
+          "F-EFFECT",
+          "F-VAL"
+        ],
+        "scope": "local",
+        "phase": "implementation-proposal",
+        "productiveCaller": null,
+        "inputProfile": null,
+        "priorState": null,
+        "expectedEffectOrRejectingBoundary": null,
+        "observerMethod": null,
+        "command": null,
+        "sourceIdentity": {
+          "sourceCommit": "a996917f72e84753a94d6214f685e64ef3b1c4a7",
+          "sourceTree": "1eb7daf84a08c49bf134b6d9eeba281a21cabba0",
+          "method": "fragment consolidation; no semantic approval inferred"
+        },
+        "testDigests": [],
+        "toolDependencyImageConfigIdentities": null,
+        "rawEvidencePath": null,
+        "result": "not-run",
+        "reason": "exact executable specification pending author closure",
+        "reviewerConfirmation": null,
+        "specificationStatus": "incomplete"
+      },
+      "sourceBodySha256": "39de486fa243d50f6db1c1e51b748348bce62b2f0c79b161ce98071c46dc729c",
+      "result": "not-run"
+    },
+    {
+      "id": "DLV-GW-FIELD-SESSION-THREADBINDINGS-ENABLED",
+      "originalBody": {
+        "id": "DLV-GW-FIELD-SESSION-THREADBINDINGS-ENABLED",
+        "settingIds": [
+          "DLV-GATEWAY-OPENCLAW-SESSION-THREADBINDINGS-ENABLED"
+        ],
+        "requirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "F-AUTH",
+          "F-DELIVERY",
+          "F-EFFECT",
+          "F-VAL"
+        ],
+        "scope": "local",
+        "phase": "implementation-proposal",
+        "productiveCaller": null,
+        "inputProfile": null,
+        "priorState": null,
+        "expectedEffectOrRejectingBoundary": null,
+        "observerMethod": null,
+        "command": null,
+        "sourceIdentity": {
+          "sourceCommit": "a996917f72e84753a94d6214f685e64ef3b1c4a7",
+          "sourceTree": "1eb7daf84a08c49bf134b6d9eeba281a21cabba0",
+          "method": "fragment consolidation; no semantic approval inferred"
+        },
+        "testDigests": [],
+        "toolDependencyImageConfigIdentities": null,
+        "rawEvidencePath": null,
+        "result": "not-run",
+        "reason": "exact executable specification pending author closure",
+        "reviewerConfirmation": null,
+        "specificationStatus": "incomplete"
+      },
+      "sourceBodySha256": "abe9453efd3dc5bd3af855925efb09d8ecf4360f7697404ee1901694891d36e9",
+      "result": "not-run"
+    },
+    {
+      "id": "DLV-GW-FIELD-SESSION-THREADBINDINGS-IDLEHOURS",
+      "originalBody": {
+        "id": "DLV-GW-FIELD-SESSION-THREADBINDINGS-IDLEHOURS",
+        "settingIds": [
+          "DLV-GATEWAY-OPENCLAW-SESSION-THREADBINDINGS-IDLEHOURS"
+        ],
+        "requirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "F-AUTH",
+          "F-DELIVERY",
+          "F-EFFECT",
+          "F-VAL"
+        ],
+        "scope": "local",
+        "phase": "implementation-proposal",
+        "productiveCaller": null,
+        "inputProfile": null,
+        "priorState": null,
+        "expectedEffectOrRejectingBoundary": null,
+        "observerMethod": null,
+        "command": null,
+        "sourceIdentity": {
+          "sourceCommit": "a996917f72e84753a94d6214f685e64ef3b1c4a7",
+          "sourceTree": "1eb7daf84a08c49bf134b6d9eeba281a21cabba0",
+          "method": "fragment consolidation; no semantic approval inferred"
+        },
+        "testDigests": [],
+        "toolDependencyImageConfigIdentities": null,
+        "rawEvidencePath": null,
+        "result": "not-run",
+        "reason": "exact executable specification pending author closure",
+        "reviewerConfirmation": null,
+        "specificationStatus": "incomplete"
+      },
+      "sourceBodySha256": "ab3810cefad2d8db2e8bf25699f54bc389ff5061884dea7bf0fce263004c1b0e",
+      "result": "not-run"
+    },
+    {
+      "id": "DLV-GW-FIELD-SESSION-THREADBINDINGS-MAXAGEHOURS",
+      "originalBody": {
+        "id": "DLV-GW-FIELD-SESSION-THREADBINDINGS-MAXAGEHOURS",
+        "settingIds": [
+          "DLV-GATEWAY-OPENCLAW-SESSION-THREADBINDINGS-MAXAGEHOURS"
+        ],
+        "requirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "F-AUTH",
+          "F-DELIVERY",
+          "F-EFFECT",
+          "F-VAL"
+        ],
+        "scope": "local",
+        "phase": "implementation-proposal",
+        "productiveCaller": null,
+        "inputProfile": null,
+        "priorState": null,
+        "expectedEffectOrRejectingBoundary": null,
+        "observerMethod": null,
+        "command": null,
+        "sourceIdentity": {
+          "sourceCommit": "a996917f72e84753a94d6214f685e64ef3b1c4a7",
+          "sourceTree": "1eb7daf84a08c49bf134b6d9eeba281a21cabba0",
+          "method": "fragment consolidation; no semantic approval inferred"
+        },
+        "testDigests": [],
+        "toolDependencyImageConfigIdentities": null,
+        "rawEvidencePath": null,
+        "result": "not-run",
+        "reason": "exact executable specification pending author closure",
+        "reviewerConfirmation": null,
+        "specificationStatus": "incomplete"
+      },
+      "sourceBodySha256": "9865628124415e01c07c125bc104e37268e4870b8502a1f509b191121322c8c1",
+      "result": "not-run"
+    },
+    {
+      "id": "DLV-GW-FIELD-CHANNELS-DISCORD-GROUPPOLICY",
+      "originalBody": {
+        "id": "DLV-GW-FIELD-CHANNELS-DISCORD-GROUPPOLICY",
+        "settingIds": [
+          "DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-GROUPPOLICY"
+        ],
+        "requirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "F-AUTH",
+          "F-DELIVERY",
+          "F-EFFECT",
+          "F-VAL"
+        ],
+        "scope": "local",
+        "phase": "implementation-proposal",
+        "productiveCaller": null,
+        "inputProfile": null,
+        "priorState": null,
+        "expectedEffectOrRejectingBoundary": null,
+        "observerMethod": null,
+        "command": null,
+        "sourceIdentity": {
+          "sourceCommit": "a996917f72e84753a94d6214f685e64ef3b1c4a7",
+          "sourceTree": "1eb7daf84a08c49bf134b6d9eeba281a21cabba0",
+          "method": "fragment consolidation; no semantic approval inferred"
+        },
+        "testDigests": [],
+        "toolDependencyImageConfigIdentities": null,
+        "rawEvidencePath": null,
+        "result": "not-run",
+        "reason": "exact executable specification pending author closure",
+        "reviewerConfirmation": null,
+        "specificationStatus": "incomplete"
+      },
+      "sourceBodySha256": "36a817478e826a1809189b38fdff4cac9740744f4678f781d0ae8db7551df661",
+      "result": "not-run"
+    },
+    {
+      "id": "DLV-GW-FIELD-CHANNELS-DISCORD-STREAMING-MODE",
+      "originalBody": {
+        "id": "DLV-GW-FIELD-CHANNELS-DISCORD-STREAMING-MODE",
+        "settingIds": [
+          "DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-STREAMING-MODE"
+        ],
+        "requirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "F-AUTH",
+          "F-DELIVERY",
+          "F-EFFECT",
+          "F-VAL"
+        ],
+        "scope": "local",
+        "phase": "implementation-proposal",
+        "productiveCaller": null,
+        "inputProfile": null,
+        "priorState": null,
+        "expectedEffectOrRejectingBoundary": null,
+        "observerMethod": null,
+        "command": null,
+        "sourceIdentity": {
+          "sourceCommit": "a996917f72e84753a94d6214f685e64ef3b1c4a7",
+          "sourceTree": "1eb7daf84a08c49bf134b6d9eeba281a21cabba0",
+          "method": "fragment consolidation; no semantic approval inferred"
+        },
+        "testDigests": [],
+        "toolDependencyImageConfigIdentities": null,
+        "rawEvidencePath": null,
+        "result": "not-run",
+        "reason": "exact executable specification pending author closure",
+        "reviewerConfirmation": null,
+        "specificationStatus": "incomplete"
+      },
+      "sourceBodySha256": "206c88c6f6f9bf1a90d79d021a52d5473096e49b24a348ccf4d72c5c2ed5f579",
+      "result": "not-run"
+    },
+    {
+      "id": "DLV-GW-FIELD-CHANNELS-DISCORD-INBOUNDWORKER-RUNTIMEOUTMS",
+      "originalBody": {
+        "id": "DLV-GW-FIELD-CHANNELS-DISCORD-INBOUNDWORKER-RUNTIMEOUTMS",
+        "settingIds": [
+          "DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-INBOUNDWORKER-RUNTIMEOUTMS"
+        ],
+        "requirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "F-AUTH",
+          "F-DELIVERY",
+          "F-EFFECT",
+          "F-VAL"
+        ],
+        "scope": "local",
+        "phase": "implementation-proposal",
+        "productiveCaller": null,
+        "inputProfile": null,
+        "priorState": null,
+        "expectedEffectOrRejectingBoundary": null,
+        "observerMethod": null,
+        "command": null,
+        "sourceIdentity": {
+          "sourceCommit": "a996917f72e84753a94d6214f685e64ef3b1c4a7",
+          "sourceTree": "1eb7daf84a08c49bf134b6d9eeba281a21cabba0",
+          "method": "fragment consolidation; no semantic approval inferred"
+        },
+        "testDigests": [],
+        "toolDependencyImageConfigIdentities": null,
+        "rawEvidencePath": null,
+        "result": "not-run",
+        "reason": "exact executable specification pending author closure",
+        "reviewerConfirmation": null,
+        "specificationStatus": "incomplete"
+      },
+      "sourceBodySha256": "2f88a244adef670d50b8b02c1510445491c1755badb89a3dca6dbdcddbb6214f",
+      "result": "not-run"
+    },
+    {
+      "id": "DLV-GW-FIELD-CHANNELS-DISCORD-GUILDS-REQUIREMENTION",
+      "originalBody": {
+        "id": "DLV-GW-FIELD-CHANNELS-DISCORD-GUILDS-REQUIREMENTION",
+        "settingIds": [
+          "DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-GUILDS-REQUIREMENTION"
+        ],
+        "requirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "F-AUTH",
+          "F-DELIVERY",
+          "F-EFFECT",
+          "F-VAL"
+        ],
+        "scope": "local",
+        "phase": "implementation-proposal",
+        "productiveCaller": null,
+        "inputProfile": null,
+        "priorState": null,
+        "expectedEffectOrRejectingBoundary": null,
+        "observerMethod": null,
+        "command": null,
+        "sourceIdentity": {
+          "sourceCommit": "a996917f72e84753a94d6214f685e64ef3b1c4a7",
+          "sourceTree": "1eb7daf84a08c49bf134b6d9eeba281a21cabba0",
+          "method": "fragment consolidation; no semantic approval inferred"
+        },
+        "testDigests": [],
+        "toolDependencyImageConfigIdentities": null,
+        "rawEvidencePath": null,
+        "result": "not-run",
+        "reason": "exact executable specification pending author closure",
+        "reviewerConfirmation": null,
+        "specificationStatus": "incomplete"
+      },
+      "sourceBodySha256": "1ae48653443de8e047f582a59598bf124d676af8dfa0ef819ea32b663e8bd978",
+      "result": "not-run"
+    },
+    {
+      "id": "DLV-GW-FIELD-CHANNELS-DISCORD-THREADBINDINGS-ENABLED",
+      "originalBody": {
+        "id": "DLV-GW-FIELD-CHANNELS-DISCORD-THREADBINDINGS-ENABLED",
+        "settingIds": [
+          "DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-THREADBINDINGS-ENABLED"
+        ],
+        "requirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "F-AUTH",
+          "F-DELIVERY",
+          "F-EFFECT",
+          "F-VAL"
+        ],
+        "scope": "local",
+        "phase": "implementation-proposal",
+        "productiveCaller": null,
+        "inputProfile": null,
+        "priorState": null,
+        "expectedEffectOrRejectingBoundary": null,
+        "observerMethod": null,
+        "command": null,
+        "sourceIdentity": {
+          "sourceCommit": "a996917f72e84753a94d6214f685e64ef3b1c4a7",
+          "sourceTree": "1eb7daf84a08c49bf134b6d9eeba281a21cabba0",
+          "method": "fragment consolidation; no semantic approval inferred"
+        },
+        "testDigests": [],
+        "toolDependencyImageConfigIdentities": null,
+        "rawEvidencePath": null,
+        "result": "not-run",
+        "reason": "exact executable specification pending author closure",
+        "reviewerConfirmation": null,
+        "specificationStatus": "incomplete"
+      },
+      "sourceBodySha256": "e9714782996cc7fad84bbbfd08d3a698e4f68c4a019d8e83c7b5bc004b3dc9ec",
+      "result": "not-run"
+    },
+    {
+      "id": "DLV-GW-FIELD-CHANNELS-DISCORD-THREADBINDINGS-IDLEHOURS",
+      "originalBody": {
+        "id": "DLV-GW-FIELD-CHANNELS-DISCORD-THREADBINDINGS-IDLEHOURS",
+        "settingIds": [
+          "DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-THREADBINDINGS-IDLEHOURS"
+        ],
+        "requirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "F-AUTH",
+          "F-DELIVERY",
+          "F-EFFECT",
+          "F-VAL"
+        ],
+        "scope": "local",
+        "phase": "implementation-proposal",
+        "productiveCaller": null,
+        "inputProfile": null,
+        "priorState": null,
+        "expectedEffectOrRejectingBoundary": null,
+        "observerMethod": null,
+        "command": null,
+        "sourceIdentity": {
+          "sourceCommit": "a996917f72e84753a94d6214f685e64ef3b1c4a7",
+          "sourceTree": "1eb7daf84a08c49bf134b6d9eeba281a21cabba0",
+          "method": "fragment consolidation; no semantic approval inferred"
+        },
+        "testDigests": [],
+        "toolDependencyImageConfigIdentities": null,
+        "rawEvidencePath": null,
+        "result": "not-run",
+        "reason": "exact executable specification pending author closure",
+        "reviewerConfirmation": null,
+        "specificationStatus": "incomplete"
+      },
+      "sourceBodySha256": "561a7cc25c6fd45b69fb700f9266c9723e6257f4de19582c75a8068d8dbf34ff",
+      "result": "not-run"
+    },
+    {
+      "id": "DLV-GW-FIELD-CHANNELS-DISCORD-THREADBINDINGS-SPAWNSESSIONS",
+      "originalBody": {
+        "id": "DLV-GW-FIELD-CHANNELS-DISCORD-THREADBINDINGS-SPAWNSESSIONS",
+        "settingIds": [
+          "DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-THREADBINDINGS-SPAWNSESSIONS"
+        ],
+        "requirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "F-AUTH",
+          "F-DELIVERY",
+          "F-EFFECT",
+          "F-VAL"
+        ],
+        "scope": "local",
+        "phase": "implementation-proposal",
+        "productiveCaller": null,
+        "inputProfile": null,
+        "priorState": null,
+        "expectedEffectOrRejectingBoundary": null,
+        "observerMethod": null,
+        "command": null,
+        "sourceIdentity": {
+          "sourceCommit": "a996917f72e84753a94d6214f685e64ef3b1c4a7",
+          "sourceTree": "1eb7daf84a08c49bf134b6d9eeba281a21cabba0",
+          "method": "fragment consolidation; no semantic approval inferred"
+        },
+        "testDigests": [],
+        "toolDependencyImageConfigIdentities": null,
+        "rawEvidencePath": null,
+        "result": "not-run",
+        "reason": "exact executable specification pending author closure",
+        "reviewerConfirmation": null,
+        "specificationStatus": "incomplete"
+      },
+      "sourceBodySha256": "4fa162ef6b93dc80d1d95f7aeba2b8bc3146db32e43f4cce9db8a5d8e7fa2aec",
+      "result": "not-run"
+    },
+    {
+      "id": "DLV-GW-FIELD-CHANNELS-DISCORD-EXECAPPROVALS-ENABLED",
+      "originalBody": {
+        "id": "DLV-GW-FIELD-CHANNELS-DISCORD-EXECAPPROVALS-ENABLED",
+        "settingIds": [
+          "DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-EXECAPPROVALS-ENABLED"
+        ],
+        "requirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "F-AUTH",
+          "F-DELIVERY",
+          "F-EFFECT",
+          "F-VAL"
+        ],
+        "scope": "local",
+        "phase": "implementation-proposal",
+        "productiveCaller": null,
+        "inputProfile": null,
+        "priorState": null,
+        "expectedEffectOrRejectingBoundary": null,
+        "observerMethod": null,
+        "command": null,
+        "sourceIdentity": {
+          "sourceCommit": "a996917f72e84753a94d6214f685e64ef3b1c4a7",
+          "sourceTree": "1eb7daf84a08c49bf134b6d9eeba281a21cabba0",
+          "method": "fragment consolidation; no semantic approval inferred"
+        },
+        "testDigests": [],
+        "toolDependencyImageConfigIdentities": null,
+        "rawEvidencePath": null,
+        "result": "not-run",
+        "reason": "exact executable specification pending author closure",
+        "reviewerConfirmation": null,
+        "specificationStatus": "incomplete"
+      },
+      "sourceBodySha256": "dee5930fefcdf3771dba358638ee0aef83ebca60d98da5fb9c245dd079bca6b7",
+      "result": "not-run"
+    },
+    {
+      "id": "DLV-GW-FIELD-CHANNELS-DISCORD-EXECAPPROVALS-TARGET",
+      "originalBody": {
+        "id": "DLV-GW-FIELD-CHANNELS-DISCORD-EXECAPPROVALS-TARGET",
+        "settingIds": [
+          "DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-EXECAPPROVALS-TARGET"
+        ],
+        "requirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "F-AUTH",
+          "F-DELIVERY",
+          "F-EFFECT",
+          "F-VAL"
+        ],
+        "scope": "local",
+        "phase": "implementation-proposal",
+        "productiveCaller": null,
+        "inputProfile": null,
+        "priorState": null,
+        "expectedEffectOrRejectingBoundary": null,
+        "observerMethod": null,
+        "command": null,
+        "sourceIdentity": {
+          "sourceCommit": "a996917f72e84753a94d6214f685e64ef3b1c4a7",
+          "sourceTree": "1eb7daf84a08c49bf134b6d9eeba281a21cabba0",
+          "method": "fragment consolidation; no semantic approval inferred"
+        },
+        "testDigests": [],
+        "toolDependencyImageConfigIdentities": null,
+        "rawEvidencePath": null,
+        "result": "not-run",
+        "reason": "exact executable specification pending author closure",
+        "reviewerConfirmation": null,
+        "specificationStatus": "incomplete"
+      },
+      "sourceBodySha256": "4afb4a22524bb7a9e790d8e0c86e2ce9912606cb3ebc65c4f068d5e86d75ace1",
+      "result": "not-run"
+    },
+    {
+      "id": "DLV-GW-FIELD-GATEWAY-MODE",
+      "originalBody": {
+        "id": "DLV-GW-FIELD-GATEWAY-MODE",
+        "settingIds": [
+          "DLV-GATEWAY-OPENCLAW-GATEWAY-MODE"
+        ],
+        "requirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "F-AUTH",
+          "F-DELIVERY",
+          "F-EFFECT",
+          "F-VAL"
+        ],
+        "scope": "local",
+        "phase": "implementation-proposal",
+        "productiveCaller": null,
+        "inputProfile": null,
+        "priorState": null,
+        "expectedEffectOrRejectingBoundary": null,
+        "observerMethod": null,
+        "command": null,
+        "sourceIdentity": {
+          "sourceCommit": "a996917f72e84753a94d6214f685e64ef3b1c4a7",
+          "sourceTree": "1eb7daf84a08c49bf134b6d9eeba281a21cabba0",
+          "method": "fragment consolidation; no semantic approval inferred"
+        },
+        "testDigests": [],
+        "toolDependencyImageConfigIdentities": null,
+        "rawEvidencePath": null,
+        "result": "not-run",
+        "reason": "exact executable specification pending author closure",
+        "reviewerConfirmation": null,
+        "specificationStatus": "incomplete"
+      },
+      "sourceBodySha256": "23c5728e1d56a7fe501acd3f15e455d794ddf2b2a7dfe1fc5dc2c8d9d143b3e8",
+      "result": "not-run"
+    },
+    {
+      "id": "DLV-GW-FIELD-GATEWAY-BIND",
+      "originalBody": {
+        "id": "DLV-GW-FIELD-GATEWAY-BIND",
+        "settingIds": [
+          "DLV-GATEWAY-OPENCLAW-GATEWAY-BIND"
+        ],
+        "requirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "F-AUTH",
+          "F-DELIVERY",
+          "F-EFFECT",
+          "F-VAL"
+        ],
+        "scope": "local",
+        "phase": "implementation-proposal",
+        "productiveCaller": null,
+        "inputProfile": null,
+        "priorState": null,
+        "expectedEffectOrRejectingBoundary": null,
+        "observerMethod": null,
+        "command": null,
+        "sourceIdentity": {
+          "sourceCommit": "a996917f72e84753a94d6214f685e64ef3b1c4a7",
+          "sourceTree": "1eb7daf84a08c49bf134b6d9eeba281a21cabba0",
+          "method": "fragment consolidation; no semantic approval inferred"
+        },
+        "testDigests": [],
+        "toolDependencyImageConfigIdentities": null,
+        "rawEvidencePath": null,
+        "result": "not-run",
+        "reason": "exact executable specification pending author closure",
+        "reviewerConfirmation": null,
+        "specificationStatus": "incomplete"
+      },
+      "sourceBodySha256": "c886fcc6f12145ead01ebe1cf90195bf742846637d943e5ddea5ee322fb75620",
+      "result": "not-run"
+    },
+    {
+      "id": "DLV-GW-FIELD-GATEWAY-CONTROLUI-DANGEROUSLYALLOWHOSTHEADERORIGINFALLBACK",
+      "originalBody": {
+        "id": "DLV-GW-FIELD-GATEWAY-CONTROLUI-DANGEROUSLYALLOWHOSTHEADERORIGINFALLBACK",
+        "settingIds": [
+          "DLV-GATEWAY-OPENCLAW-GATEWAY-CONTROLUI-DANGEROUSLYALLOWHOSTHEADERORIGINFALLBACK"
+        ],
+        "requirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "F-AUTH",
+          "F-DELIVERY",
+          "F-EFFECT",
+          "F-VAL"
+        ],
+        "scope": "local",
+        "phase": "implementation-proposal",
+        "productiveCaller": null,
+        "inputProfile": null,
+        "priorState": null,
+        "expectedEffectOrRejectingBoundary": null,
+        "observerMethod": null,
+        "command": null,
+        "sourceIdentity": {
+          "sourceCommit": "a996917f72e84753a94d6214f685e64ef3b1c4a7",
+          "sourceTree": "1eb7daf84a08c49bf134b6d9eeba281a21cabba0",
+          "method": "fragment consolidation; no semantic approval inferred"
+        },
+        "testDigests": [],
+        "toolDependencyImageConfigIdentities": null,
+        "rawEvidencePath": null,
+        "result": "not-run",
+        "reason": "exact executable specification pending author closure",
+        "reviewerConfirmation": null,
+        "specificationStatus": "incomplete"
+      },
+      "sourceBodySha256": "60935ab684a8d7c41a2a92340a6c3d7548400a112db0dd4d04773dcccae25900",
+      "result": "not-run"
+    },
+    {
+      "id": "DLV-GW-FIELD-GATEWAY-AUTH-MODE",
+      "originalBody": {
+        "id": "DLV-GW-FIELD-GATEWAY-AUTH-MODE",
+        "settingIds": [
+          "DLV-GATEWAY-OPENCLAW-GATEWAY-AUTH-MODE"
+        ],
+        "requirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "F-AUTH",
+          "F-DELIVERY",
+          "F-EFFECT",
+          "F-VAL"
+        ],
+        "scope": "local",
+        "phase": "implementation-proposal",
+        "productiveCaller": null,
+        "inputProfile": null,
+        "priorState": null,
+        "expectedEffectOrRejectingBoundary": null,
+        "observerMethod": null,
+        "command": null,
+        "sourceIdentity": {
+          "sourceCommit": "a996917f72e84753a94d6214f685e64ef3b1c4a7",
+          "sourceTree": "1eb7daf84a08c49bf134b6d9eeba281a21cabba0",
+          "method": "fragment consolidation; no semantic approval inferred"
+        },
+        "testDigests": [],
+        "toolDependencyImageConfigIdentities": null,
+        "rawEvidencePath": null,
+        "result": "not-run",
+        "reason": "exact executable specification pending author closure",
+        "reviewerConfirmation": null,
+        "specificationStatus": "incomplete"
+      },
+      "sourceBodySha256": "3c7c41385955383fe4df5987bdb13e9116ba3183f1f53e2807e81d3b1e5665f6",
+      "result": "not-run"
+    },
+    {
+      "id": "DLV-GW-FIELD-GATEWAY-TOOLS-ALLOW",
+      "originalBody": {
+        "id": "DLV-GW-FIELD-GATEWAY-TOOLS-ALLOW",
+        "settingIds": [
+          "DLV-GATEWAY-OPENCLAW-GATEWAY-TOOLS-ALLOW"
+        ],
+        "requirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "F-AUTH",
+          "F-DELIVERY",
+          "F-EFFECT",
+          "F-VAL"
+        ],
+        "scope": "local",
+        "phase": "implementation-proposal",
+        "productiveCaller": null,
+        "inputProfile": null,
+        "priorState": null,
+        "expectedEffectOrRejectingBoundary": null,
+        "observerMethod": null,
+        "command": null,
+        "sourceIdentity": {
+          "sourceCommit": "a996917f72e84753a94d6214f685e64ef3b1c4a7",
+          "sourceTree": "1eb7daf84a08c49bf134b6d9eeba281a21cabba0",
+          "method": "fragment consolidation; no semantic approval inferred"
+        },
+        "testDigests": [],
+        "toolDependencyImageConfigIdentities": null,
+        "rawEvidencePath": null,
+        "result": "not-run",
+        "reason": "exact executable specification pending author closure",
+        "reviewerConfirmation": null,
+        "specificationStatus": "incomplete"
+      },
+      "sourceBodySha256": "3fa7ae11f1d1faba5af0dc34ecc1de5a811bdfcfde444cc9d4d22a443a206612",
+      "result": "not-run"
+    },
+    {
+      "id": "DLV-GW-FIELD-GATEWAY-TAILSCALE-MODE",
+      "originalBody": {
+        "id": "DLV-GW-FIELD-GATEWAY-TAILSCALE-MODE",
+        "settingIds": [
+          "DLV-GATEWAY-OPENCLAW-GATEWAY-TAILSCALE-MODE"
+        ],
+        "requirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "F-AUTH",
+          "F-DELIVERY",
+          "F-EFFECT",
+          "F-VAL"
+        ],
+        "scope": "local",
+        "phase": "implementation-proposal",
+        "productiveCaller": null,
+        "inputProfile": null,
+        "priorState": null,
+        "expectedEffectOrRejectingBoundary": null,
+        "observerMethod": null,
+        "command": null,
+        "sourceIdentity": {
+          "sourceCommit": "a996917f72e84753a94d6214f685e64ef3b1c4a7",
+          "sourceTree": "1eb7daf84a08c49bf134b6d9eeba281a21cabba0",
+          "method": "fragment consolidation; no semantic approval inferred"
+        },
+        "testDigests": [],
+        "toolDependencyImageConfigIdentities": null,
+        "rawEvidencePath": null,
+        "result": "not-run",
+        "reason": "exact executable specification pending author closure",
+        "reviewerConfirmation": null,
+        "specificationStatus": "incomplete"
+      },
+      "sourceBodySha256": "2e033e470ab27d6a64be4fed38a83437f6d7cb46ece03163b6fd4c15dda1d245",
+      "result": "not-run"
+    },
+    {
+      "id": "DLV-GW-FIELD-PLUGINS-ENTRIES-ACPX-ENABLED",
+      "originalBody": {
+        "id": "DLV-GW-FIELD-PLUGINS-ENTRIES-ACPX-ENABLED",
+        "settingIds": [
+          "DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-ACPX-ENABLED"
+        ],
+        "requirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "F-AUTH",
+          "F-DELIVERY",
+          "F-EFFECT",
+          "F-VAL"
+        ],
+        "scope": "local",
+        "phase": "implementation-proposal",
+        "productiveCaller": null,
+        "inputProfile": null,
+        "priorState": null,
+        "expectedEffectOrRejectingBoundary": null,
+        "observerMethod": null,
+        "command": null,
+        "sourceIdentity": {
+          "sourceCommit": "a996917f72e84753a94d6214f685e64ef3b1c4a7",
+          "sourceTree": "1eb7daf84a08c49bf134b6d9eeba281a21cabba0",
+          "method": "fragment consolidation; no semantic approval inferred"
+        },
+        "testDigests": [],
+        "toolDependencyImageConfigIdentities": null,
+        "rawEvidencePath": null,
+        "result": "not-run",
+        "reason": "exact executable specification pending author closure",
+        "reviewerConfirmation": null,
+        "specificationStatus": "incomplete"
+      },
+      "sourceBodySha256": "0e0788dc560dd83047f6f47c3c2f261c7da8f233329656bdc19b21dd29a0ac4d",
+      "result": "not-run"
+    },
+    {
+      "id": "DLV-GW-FIELD-PLUGINS-ENTRIES-ACPX-CONFIG-PERMISSIONMODE",
+      "originalBody": {
+        "id": "DLV-GW-FIELD-PLUGINS-ENTRIES-ACPX-CONFIG-PERMISSIONMODE",
+        "settingIds": [
+          "DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-ACPX-CONFIG-PERMISSIONMODE"
+        ],
+        "requirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "F-AUTH",
+          "F-DELIVERY",
+          "F-EFFECT",
+          "F-VAL"
+        ],
+        "scope": "local",
+        "phase": "implementation-proposal",
+        "productiveCaller": null,
+        "inputProfile": null,
+        "priorState": null,
+        "expectedEffectOrRejectingBoundary": null,
+        "observerMethod": null,
+        "command": null,
+        "sourceIdentity": {
+          "sourceCommit": "a996917f72e84753a94d6214f685e64ef3b1c4a7",
+          "sourceTree": "1eb7daf84a08c49bf134b6d9eeba281a21cabba0",
+          "method": "fragment consolidation; no semantic approval inferred"
+        },
+        "testDigests": [],
+        "toolDependencyImageConfigIdentities": null,
+        "rawEvidencePath": null,
+        "result": "not-run",
+        "reason": "exact executable specification pending author closure",
+        "reviewerConfirmation": null,
+        "specificationStatus": "incomplete"
+      },
+      "sourceBodySha256": "78152c06daaed6077e114fbafc4f5c87ece49aa80f34b4b74df0519c49e4bfc0",
+      "result": "not-run"
+    },
+    {
+      "id": "DLV-GW-FIELD-PLUGINS-ENTRIES-OPENAI-ENABLED",
+      "originalBody": {
+        "id": "DLV-GW-FIELD-PLUGINS-ENTRIES-OPENAI-ENABLED",
+        "settingIds": [
+          "DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-OPENAI-ENABLED"
+        ],
+        "requirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "F-AUTH",
+          "F-DELIVERY",
+          "F-EFFECT",
+          "F-VAL"
+        ],
+        "scope": "local",
+        "phase": "implementation-proposal",
+        "productiveCaller": null,
+        "inputProfile": null,
+        "priorState": null,
+        "expectedEffectOrRejectingBoundary": null,
+        "observerMethod": null,
+        "command": null,
+        "sourceIdentity": {
+          "sourceCommit": "a996917f72e84753a94d6214f685e64ef3b1c4a7",
+          "sourceTree": "1eb7daf84a08c49bf134b6d9eeba281a21cabba0",
+          "method": "fragment consolidation; no semantic approval inferred"
+        },
+        "testDigests": [],
+        "toolDependencyImageConfigIdentities": null,
+        "rawEvidencePath": null,
+        "result": "not-run",
+        "reason": "exact executable specification pending author closure",
+        "reviewerConfirmation": null,
+        "specificationStatus": "incomplete"
+      },
+      "sourceBodySha256": "03c796b106e3ed8663dcab85fb835a72720c63f7f21530b8b7b49280af17bcd8",
+      "result": "not-run"
+    },
+    {
+      "id": "DLV-GW-FIELD-PLUGINS-ENTRIES-CODEX-ENABLED",
+      "originalBody": {
+        "id": "DLV-GW-FIELD-PLUGINS-ENTRIES-CODEX-ENABLED",
+        "settingIds": [
+          "DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-CODEX-ENABLED"
+        ],
+        "requirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "F-AUTH",
+          "F-DELIVERY",
+          "F-EFFECT",
+          "F-VAL"
+        ],
+        "scope": "local",
+        "phase": "implementation-proposal",
+        "productiveCaller": null,
+        "inputProfile": null,
+        "priorState": null,
+        "expectedEffectOrRejectingBoundary": null,
+        "observerMethod": null,
+        "command": null,
+        "sourceIdentity": {
+          "sourceCommit": "a996917f72e84753a94d6214f685e64ef3b1c4a7",
+          "sourceTree": "1eb7daf84a08c49bf134b6d9eeba281a21cabba0",
+          "method": "fragment consolidation; no semantic approval inferred"
+        },
+        "testDigests": [],
+        "toolDependencyImageConfigIdentities": null,
+        "rawEvidencePath": null,
+        "result": "not-run",
+        "reason": "exact executable specification pending author closure",
+        "reviewerConfirmation": null,
+        "specificationStatus": "incomplete"
+      },
+      "sourceBodySha256": "a1ee4f3471cc4d7ff9412a7b8f0eeb50ca51400881936622622b47f65500c1f3",
+      "result": "not-run"
+    },
+    {
+      "id": "DLV-GW-FIELD-MESSAGES-GROUPCHAT-VISIBLEREPLIES",
+      "originalBody": {
+        "id": "DLV-GW-FIELD-MESSAGES-GROUPCHAT-VISIBLEREPLIES",
+        "settingIds": [
+          "DLV-GATEWAY-OPENCLAW-MESSAGES-GROUPCHAT-VISIBLEREPLIES"
+        ],
+        "requirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "F-AUTH",
+          "F-DELIVERY",
+          "F-EFFECT",
+          "F-VAL"
+        ],
+        "scope": "local",
+        "phase": "implementation-proposal",
+        "productiveCaller": null,
+        "inputProfile": null,
+        "priorState": null,
+        "expectedEffectOrRejectingBoundary": null,
+        "observerMethod": null,
+        "command": null,
+        "sourceIdentity": {
+          "sourceCommit": "a996917f72e84753a94d6214f685e64ef3b1c4a7",
+          "sourceTree": "1eb7daf84a08c49bf134b6d9eeba281a21cabba0",
+          "method": "fragment consolidation; no semantic approval inferred"
+        },
+        "testDigests": [],
+        "toolDependencyImageConfigIdentities": null,
+        "rawEvidencePath": null,
+        "result": "not-run",
+        "reason": "exact executable specification pending author closure",
+        "reviewerConfirmation": null,
+        "specificationStatus": "incomplete"
+      },
+      "sourceBodySha256": "b06727c9889a8ccd81bb8379c239eaad41e2bee0460fb4d734cf241266b2f2e1",
+      "result": "not-run"
+    },
+    {
+      "id": "DLV-CASE-AGENT-TIMEOUT-PROFILES",
+      "originalBody": {
+        "id": "DLV-CASE-AGENT-TIMEOUT-PROFILES",
+        "settingIds": [
+          "DLV-NATIVE-OPENCLAW-AGENTS-DEFAULTS-TIMEOUTSECONDS"
+        ],
+        "requirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "F-AUTH",
+          "F-DELIVERY",
+          "F-EFFECT",
+          "F-VAL"
+        ],
+        "scope": "local",
+        "phase": "implementation-proposal",
+        "productiveCaller": null,
+        "inputProfile": null,
+        "priorState": null,
+        "expectedEffectOrRejectingBoundary": null,
+        "observerMethod": null,
+        "command": null,
+        "sourceIdentity": {
+          "sourceCommit": "a996917f72e84753a94d6214f685e64ef3b1c4a7",
+          "sourceTree": "1eb7daf84a08c49bf134b6d9eeba281a21cabba0",
+          "method": "fragment consolidation; no semantic approval inferred"
+        },
+        "testDigests": [],
+        "toolDependencyImageConfigIdentities": null,
+        "rawEvidencePath": null,
+        "result": "not-run",
+        "reason": "exact executable specification pending author closure",
+        "reviewerConfirmation": null,
+        "specificationStatus": "incomplete"
+      },
+      "sourceBodySha256": "08b9d858dceb265483bc7c043ed7b3051eef8828be9bdae5a3a058e47760f457",
+      "result": "not-run"
+    },
+    {
+      "id": "DLV-CASE-AGENT-TIMEOUT-MISSING-OVERRIDE-RECOVERY",
+      "originalBody": {
+        "id": "DLV-CASE-AGENT-TIMEOUT-MISSING-OVERRIDE-RECOVERY",
+        "settingIds": [
+          "DLV-NATIVE-OPENCLAW-AGENTS-DEFAULTS-TIMEOUTSECONDS"
+        ],
+        "requirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "F-AUTH",
+          "F-DELIVERY",
+          "F-EFFECT",
+          "F-VAL"
+        ],
+        "scope": "local",
+        "phase": "implementation-proposal",
+        "productiveCaller": null,
+        "inputProfile": null,
+        "priorState": null,
+        "expectedEffectOrRejectingBoundary": null,
+        "observerMethod": null,
+        "command": null,
+        "sourceIdentity": {
+          "sourceCommit": "a996917f72e84753a94d6214f685e64ef3b1c4a7",
+          "sourceTree": "1eb7daf84a08c49bf134b6d9eeba281a21cabba0",
+          "method": "fragment consolidation; no semantic approval inferred"
+        },
+        "testDigests": [],
+        "toolDependencyImageConfigIdentities": null,
+        "rawEvidencePath": null,
+        "result": "not-run",
+        "reason": "exact executable specification pending author closure",
+        "reviewerConfirmation": null,
+        "specificationStatus": "incomplete"
+      },
+      "sourceBodySha256": "e73d54b8d26351664dc15f0a787a551d9ee501c38ec3e517ef263cb5c71c26cd",
+      "result": "not-run"
+    },
+    {
+      "id": "DLV-GW-FIELD-DLV-NATIVE-OPENCLAW-AGENTS-DEFAULTS-TIMEOUTSECONDS",
+      "originalBody": {
+        "id": "DLV-GW-FIELD-DLV-NATIVE-OPENCLAW-AGENTS-DEFAULTS-TIMEOUTSECONDS",
+        "settingIds": [
+          "DLV-NATIVE-OPENCLAW-AGENTS-DEFAULTS-TIMEOUTSECONDS"
+        ],
+        "requirementIds": [
+          "C0-A",
+          "C0-B",
+          "C0-C",
+          "F-AUTH",
+          "F-DELIVERY",
+          "F-EFFECT",
+          "F-VAL"
+        ],
+        "scope": "local",
+        "phase": "implementation-proposal",
+        "productiveCaller": null,
+        "inputProfile": null,
+        "priorState": null,
+        "expectedEffectOrRejectingBoundary": null,
+        "observerMethod": null,
+        "command": null,
+        "sourceIdentity": {
+          "sourceCommit": "a996917f72e84753a94d6214f685e64ef3b1c4a7",
+          "sourceTree": "1eb7daf84a08c49bf134b6d9eeba281a21cabba0",
+          "method": "fragment consolidation; no semantic approval inferred"
+        },
+        "testDigests": [],
+        "toolDependencyImageConfigIdentities": null,
+        "rawEvidencePath": null,
+        "result": "not-run",
+        "reason": "exact executable specification pending author closure",
+        "reviewerConfirmation": null,
+        "specificationStatus": "incomplete"
+      },
+      "sourceBodySha256": "b4100b3a3aa34c4daef6e26934533f3d550854194774b76fc4ea99196f6afef1",
+      "result": "not-run"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "qualification": "Two source-specific schema-valid receiving closure controls only; no native effects",
+  "probes": [
+    {
+      "variant": "schema-valid-missing-required-capability",
+      "admitted": false,
+      "error": "SECURITY_SERVICE_CLOSURE:missing-declared-capability-ceiling"
+    },
+    {
+      "variant": "schema-valid-different-native-ceiling",
+      "admitted": false,
+      "error": "SECURITY_SERVICE_CLOSURE:wrong-captured-native-resource-projection"
+    }
+  ]
+}

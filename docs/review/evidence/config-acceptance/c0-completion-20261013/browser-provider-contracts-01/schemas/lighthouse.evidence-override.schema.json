@@ -1,0 +1,87 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "onPass": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "log",
+          "performance-report",
+          "performance-report-representative"
+        ]
+      },
+      "allOf": [
+        {
+          "contains": {
+            "const": "log"
+          }
+        },
+        {
+          "contains": {
+            "const": "performance-report"
+          }
+        },
+        {
+          "contains": {
+            "const": "performance-report-representative"
+          }
+        }
+      ]
+    },
+    "onFail": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "log",
+          "performance-report",
+          "performance-report-representative"
+        ]
+      },
+      "allOf": [
+        {
+          "contains": {
+            "const": "log"
+          }
+        },
+        {
+          "contains": {
+            "const": "performance-report"
+          }
+        },
+        {
+          "contains": {
+            "const": "performance-report-representative"
+          }
+        }
+      ]
+    },
+    "onError": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 3,
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "log",
+          "performance-report",
+          "performance-report-representative"
+        ]
+      },
+      "allOf": [
+        {
+          "contains": {
+            "const": "log"
+          }
+        }
+      ]
+    }
+  },
+  "description": "Provided outcome must preserve actual mandatory package baseline; absent outcome inherits captured selected declaration. This is retention choice, not produced artifact assertion."
+}

@@ -1,0 +1,13 @@
+{
+  "schemaVersion": "buster-registry-selection.v1",
+  "installationRoots": [
+    "/app/skills/buster/plugins"
+  ],
+  "trustedBuiltinRoots": [
+    "/app/skills/buster/plugins"
+  ],
+  "externalTrust": {
+    "allowedSourceDigests": {},
+    "verifiedAttestations": {}
+  }
+}

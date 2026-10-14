@@ -1,0 +1,107 @@
+{
+  "schemaVersion": "provider-configuration.v2",
+  "contractId": "kubeclaw.axe@1",
+  "taskSchemaDigest": "sha256:8aa98f229646f99fe323f466a4e4300d22266340bdf342b74d277d7a44a508dc",
+  "values": {
+    "url": "http://127.0.0.1:18080",
+    "routes": [
+      "/a"
+    ]
+  },
+  "selectedPolicy": {
+    "schemaVersion": "selected-registration-policy.v1",
+    "binding": {
+      "kind": "test-provider",
+      "packageId": "kubeclaw.axe",
+      "registrationId": "kubeclaw.axe:axe",
+      "instanceId": "fixture.axe",
+      "profileId": "RT-ace0dff341a51674-A",
+      "serviceInstanceId": "fixture.service.buster-runtime",
+      "ownerPath": "plugins/kubeclaw.axe.config.json",
+      "rootDigest": "sha256:8979726deb555f11f3a0e70fd07053baa342878e78858067fe66ab540020aea0",
+      "ownerDigest": "sha256:8adcacb28c8923e6b5dc528ea7ba17573342dcb4823f1fe8559d9f1a2b668584",
+      "profileDigest": "sha256:436cb56090be5683c0a123298e110a5c03b428d009674dc3aa972348560b3617",
+      "packageVersion": "1.0.0",
+      "packageContentDigest": "sha256:676c664a3378ab87ba99fb72bd160814a788579fb72c0daccb02b32cbeb8a29b",
+      "ownerSchemaDigest": "sha256:61075591db9551653910a6a7244a41eaf610c2aa8f598d17e4b3650cbff1debb",
+      "taskSchemaDigest": "sha256:8aa98f229646f99fe323f466a4e4300d22266340bdf342b74d277d7a44a508dc",
+      "readerVersion": "pipeline-entry.v6/provider-configuration.v2/browser-provider-contracts-01",
+      "c3RuntimeSchemaDigest": "sha256:af8e9bded1aef68ebe88e0ded835b202e0a4591099eda89fa4ea99a31b1b1740",
+      "c3ReferenceContractDigest": "sha256:d1ba44788070a8300c6081fb448184d8cba8d3a38a6d20ff11583cb64bfd38c2",
+      "runtimeRole": "buster",
+      "componentInstanceId": "fixture.service.buster-runtime",
+      "componentProfileId": "browser-source-A",
+      "componentOwnerDigest": "sha256:8d03a05a2ff812d1232e36a56eae1e6bc916094c1a21c0b19a24234fe4546301",
+      "componentProfileDigest": "sha256:3f57729163ae695896028dddbc9a8565266a9a28f060c950ac3c3dfbe388ac67",
+      "workerComponentProfileDigest": "sha256:bd819145a22dcf8018de07820a9589f1901163b17df01208dc4591a8c74d9b5c",
+      "nativeResourcePolicyDigest": "sha256:c589f55dfe8c651c7bb1f9253fc547534624eaf1741edca4f2f30e5e1d218d66"
+    },
+    "processing": {
+      "profiles": {
+        "desktop": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 1440,
+            "height": 900
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": false,
+          "isMobile": false,
+          "deviceScaleFactor": 1
+        },
+        "mobile": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": true,
+          "isMobile": true,
+          "deviceScaleFactor": 1
+        }
+      },
+      "selectedProfiles": [
+        "desktop"
+      ],
+      "tags": [
+        "wcag2a"
+      ],
+      "exclude": [],
+      "acceptances": [
+        {
+          "rule": "image-alt",
+          "route": "/a",
+          "selector": "#case",
+          "reason": "C0 definition-only fixture waiver",
+          "expiresAt": "2099-01-01"
+        }
+      ],
+      "timeoutMs": 30000
+    },
+    "declarations": {
+      "retrySafe": true,
+      "matrixFields": [],
+      "evidenceDefaults": {
+        "onPass": [
+          "log",
+          "test-report"
+        ],
+        "onFail": [
+          "log",
+          "test-report",
+          "screenshot"
+        ],
+        "onError": [
+          "log"
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,5 @@
+{
+  "projectDirectory": "playwright",
+  "configFile": "playwright.config.ts",
+  "endpointName": "service-b"
+}

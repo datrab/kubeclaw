@@ -1,0 +1,176 @@
+{
+  "profile": "standard",
+  "features": {
+    "observability": true,
+    "buster": true,
+    "discord_alerts": true
+  },
+  "tuning": {
+    "safety_margins": "high",
+    "retention": "high",
+    "alerts": "rich",
+    "logs": "verbose",
+    "checks": "strict",
+    "determinism": "strict"
+  },
+  "overrides": {},
+  "schemaVersion": "pipeline-entry.v6",
+  "components": {
+    "prism-control": "components/prism-control.config.json",
+    "prism-studio": "components/prism-studio.config.json",
+    "prism-worker": "components/prism-worker.config.json",
+    "prism-execution": "components/prism-execution.config.json",
+    "buster-engine": "components/buster-engine.config.json",
+    "worker-core": "components/worker-core.config.json"
+  },
+  "bindings": [
+    {
+      "role": "prism",
+      "owner": "prism-control",
+      "instanceId": "fixture.service.prism-control",
+      "profileId": "local-A"
+    },
+    {
+      "role": "prism",
+      "owner": "prism-execution",
+      "instanceId": "fixture.service.prism-control",
+      "profileId": "local-A"
+    },
+    {
+      "role": "prism",
+      "owner": "prism-worker",
+      "instanceId": "fixture.service.prism-worker",
+      "profileId": "local-A"
+    },
+    {
+      "role": "prism",
+      "owner": "prism-control",
+      "instanceId": "fixture.service.prism-worker",
+      "profileId": "local-A"
+    },
+    {
+      "role": "prism",
+      "owner": "prism-execution",
+      "instanceId": "fixture.service.prism-worker",
+      "profileId": "local-A"
+    },
+    {
+      "role": "prism",
+      "owner": "prism-studio",
+      "instanceId": "fixture.service.prism-studio",
+      "profileId": "local-A"
+    },
+    {
+      "role": "buster",
+      "owner": "buster-engine",
+      "instanceId": "fixture.service.buster-preparation",
+      "profileId": "local-A"
+    },
+    {
+      "role": "buster",
+      "owner": "buster-engine",
+      "instanceId": "fixture.service.buster-runtime",
+      "profileId": "browser-source-A"
+    },
+    {
+      "role": "buster",
+      "owner": "worker-core",
+      "instanceId": "fixture.service.buster-runtime",
+      "profileId": "local-A"
+    }
+  ],
+  "pluginSelections": [
+    {
+      "kind": "test-provider",
+      "packageId": "kubeclaw.api-flow",
+      "registrationId": "kubeclaw.api-flow:flow",
+      "instanceId": "fixture.api-flow",
+      "ownerPath": "plugins/kubeclaw.api-flow.config.json",
+      "profileId": "A",
+      "serviceInstanceId": "fixture.service.buster-runtime"
+    },
+    {
+      "kind": "test-provider",
+      "packageId": "kubeclaw.http",
+      "registrationId": "kubeclaw.http:request",
+      "instanceId": "fixture.http",
+      "ownerPath": "plugins/kubeclaw.http.config.json",
+      "profileId": "A",
+      "serviceInstanceId": "fixture.service.buster-runtime"
+    },
+    {
+      "kind": "test-provider",
+      "packageId": "kubeclaw.openapi",
+      "registrationId": "kubeclaw.openapi:operations",
+      "instanceId": "fixture.openapi",
+      "ownerPath": "plugins/kubeclaw.openapi.config.json",
+      "profileId": "A",
+      "serviceInstanceId": "fixture.service.buster-runtime"
+    },
+    {
+      "kind": "adapter",
+      "packageId": "kubeclaw.network-http",
+      "registrationId": "kubeclaw.network-http:http",
+      "instanceId": "fixture.network-http",
+      "ownerPath": "plugins/kubeclaw.network-http.config.json",
+      "profileId": "A",
+      "serviceInstanceId": "fixture.service.nova-runtime"
+    },
+    {
+      "kind": "test-provider",
+      "packageId": "kubeclaw.axe",
+      "registrationId": "kubeclaw.axe:axe",
+      "instanceId": "fixture.axe",
+      "ownerPath": "plugins/kubeclaw.axe.config.json",
+      "profileId": "A",
+      "serviceInstanceId": "fixture.service.buster-runtime"
+    },
+    {
+      "kind": "test-provider",
+      "packageId": "kubeclaw.lighthouse",
+      "registrationId": "kubeclaw.lighthouse:lighthouse",
+      "instanceId": "fixture.lighthouse",
+      "ownerPath": "plugins/kubeclaw.lighthouse.config.json",
+      "profileId": "A",
+      "serviceInstanceId": "fixture.service.buster-runtime"
+    },
+    {
+      "kind": "test-provider",
+      "packageId": "kubeclaw.playwright",
+      "registrationId": "kubeclaw.playwright:playwright",
+      "instanceId": "fixture.playwright",
+      "ownerPath": "plugins/kubeclaw.playwright.config.json",
+      "profileId": "A",
+      "serviceInstanceId": "fixture.service.buster-runtime"
+    },
+    {
+      "kind": "test-provider",
+      "packageId": "kubeclaw.visual",
+      "registrationId": "kubeclaw.visual:visual",
+      "instanceId": "fixture.visual",
+      "ownerPath": "plugins/kubeclaw.visual.config.json",
+      "profileId": "RT-PROVIDER-CONTRACT-KUBECLAW-VISUAL-VISUAL-RETRYSAFE-B",
+      "serviceInstanceId": "fixture.service.buster-runtime"
+    }
+  ],
+  "infrastructureSelections": [
+    {
+      "role": "postgresql-recovery",
+      "deploymentInstanceId": "fixture.recovery",
+      "ownerPath": "my-values/infra/postgresql-recovery.yaml",
+      "profileId": "A"
+    }
+  ],
+  "deploymentSelections": [
+    {
+      "role": "buster",
+      "deploymentInstanceId": "agent-buster",
+      "ownerPath": "charts/kubeclaw/values.yaml",
+      "profileId": "local-A",
+      "consumer": "namespace-controller",
+      "serviceInstanceId": "agent-buster-namespace-controller",
+      "busterComponentInstanceId": "fixture.service.buster-runtime",
+      "controlComponentInstanceId": "fixture.service.prism-control"
+    }
+  ]
+}

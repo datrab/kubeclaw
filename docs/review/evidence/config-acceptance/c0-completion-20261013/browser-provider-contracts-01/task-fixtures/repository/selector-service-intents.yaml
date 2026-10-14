@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-a
+spec:
+  selector:
+    app: real-pipeline-e2e-nginx
+  ports:
+    - port: 18080
+      targetPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-b
+spec:
+  selector:
+    app: real-pipeline-e2e-nginx
+  ports:
+    - port: 18081
+      targetPort: 80

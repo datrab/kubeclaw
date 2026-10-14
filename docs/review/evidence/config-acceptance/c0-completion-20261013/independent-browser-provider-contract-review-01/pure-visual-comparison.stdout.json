@@ -1,0 +1,41 @@
+{
+  "source": "skills/buster/plugins/visual/src/provider.js",
+  "sourceSHA256": "1a321386019f583561a20297bf8ad1ff57599aac2e906ed1f48bada2f08419b1",
+  "exactBranch": "    const uncertain = result.diffPercent > policy.maximumDifferencePercent\n      && result.diffPercent <= policy.maximumDifferencePercent + policy.uncertaintyMarginPercent;\n    const passed = result.diffPercent <= policy.maximumDifferencePercent; if (!passed) failed += 1;\n",
+  "output": [
+    {
+      "name": "strict",
+      "policy": {
+        "maximumDifferencePercent": 0,
+        "uncertaintyMarginPercent": 0
+      },
+      "diffPercent": 0.25,
+      "uncertain": false,
+      "passed": false,
+      "failed": 1
+    },
+    {
+      "name": "balanced",
+      "policy": {
+        "maximumDifferencePercent": 0.5,
+        "uncertaintyMarginPercent": 0.25
+      },
+      "diffPercent": 0.25,
+      "uncertain": false,
+      "passed": true,
+      "failed": 0
+    },
+    {
+      "name": "uncertain",
+      "policy": {
+        "maximumDifferencePercent": 0,
+        "uncertaintyMarginPercent": 0.5
+      },
+      "diffPercent": 0.25,
+      "uncertain": true,
+      "passed": false,
+      "failed": 1
+    }
+  ],
+  "qualification": "Actual copied pure verdict branch only; no provider/module/native browser/capture/compare invoked"
+}
