@@ -1,0 +1,138 @@
+{
+  "schemaVersion": "native-host-owner.v1-proposal",
+  "owner": "native-host",
+  "profiles": {
+    "ax41-current": {
+      "schemaVersion": 1,
+      "nodeName": "ax41-production",
+      "runtime": {
+        "containerdVersion": "2.3.4-k3s1.36"
+      },
+      "systemReserve": {
+        "cpuMillicores": 1000,
+        "memoryBytes": 3221225472,
+        "tasks": 2048
+      },
+      "kubernetesReserve": {
+        "cpuMillicores": 500,
+        "memoryBytes": 536870912,
+        "tasks": 2048
+      },
+      "pools": {
+        "buster": {
+          "namespace": "kubeclaw",
+          "cpuMillicores": 1500,
+          "memoryBytes": 8589934592,
+          "tasks": 4096,
+          "maximumActiveScopes": 1
+        },
+        "prism": {
+          "namespace": "kubeclaw",
+          "cpuMillicores": 2000,
+          "memoryBytes": 17179869184,
+          "tasks": 2048,
+          "maximumActiveScopes": 1
+        }
+      }
+    },
+    "source-model-A": {
+      "schemaVersion": 1,
+      "nodeName": "dlv-native-a",
+      "systemReserve": {
+        "cpuMillicores": 100,
+        "memoryBytes": 1048576,
+        "tasks": 16
+      },
+      "kubernetesReserve": {
+        "cpuMillicores": 100,
+        "memoryBytes": 1048576,
+        "tasks": 16
+      },
+      "pools": {
+        "buster": {
+          "namespace": "dlv-buster-a",
+          "cpuMillicores": 500,
+          "memoryBytes": 67108864,
+          "tasks": 32,
+          "maximumActiveScopes": 2
+        },
+        "prism": {
+          "namespace": "dlv-prism-a",
+          "cpuMillicores": 500,
+          "memoryBytes": 67108864,
+          "tasks": 32,
+          "maximumActiveScopes": 2
+        }
+      },
+      "runtime": {
+        "containerdVersion": "2.2.0"
+      }
+    },
+    "source-model-B": {
+      "schemaVersion": 1,
+      "nodeName": "dlv-native-b",
+      "systemReserve": {
+        "cpuMillicores": 200,
+        "memoryBytes": 2097152,
+        "tasks": 32
+      },
+      "kubernetesReserve": {
+        "cpuMillicores": 200,
+        "memoryBytes": 2097152,
+        "tasks": 32
+      },
+      "pools": {
+        "buster": {
+          "namespace": "dlv-buster-b",
+          "cpuMillicores": 1000,
+          "memoryBytes": 134217728,
+          "tasks": 64,
+          "maximumActiveScopes": 4
+        },
+        "prism": {
+          "namespace": "dlv-prism-b",
+          "cpuMillicores": 1000,
+          "memoryBytes": 134217728,
+          "tasks": 64,
+          "maximumActiveScopes": 4
+        }
+      },
+      "runtime": {
+        "containerdVersion": "2.3.0"
+      }
+    },
+    "ax41-coupled-request": {
+      "schemaVersion": 1,
+      "nodeName": "ax41-production",
+      "runtime": {
+        "containerdVersion": "2.3.4-k3s1.36"
+      },
+      "systemReserve": {
+        "cpuMillicores": 1000,
+        "memoryBytes": 3221225472,
+        "tasks": 2048
+      },
+      "kubernetesReserve": {
+        "cpuMillicores": 500,
+        "memoryBytes": 536870912,
+        "tasks": 2048
+      },
+      "pools": {
+        "buster": {
+          "namespace": "kubeclaw",
+          "cpuMillicores": 1500,
+          "memoryBytes": 8589934592,
+          "tasks": 4096,
+          "maximumActiveScopes": 2
+        },
+        "prism": {
+          "namespace": "kubeclaw",
+          "cpuMillicores": 2000,
+          "memoryBytes": 17179869184,
+          "tasks": 2048,
+          "maximumActiveScopes": 1
+        }
+      }
+    }
+  }
+}

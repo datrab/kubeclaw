@@ -1,0 +1,29 @@
+# D16: explicit fixed host pools. Set the real node name before generating setup.
+# These are requested ceilings, not a claim that the selected host has capacity.
+schemaVersion: 1
+nodeName: null
+runtime:
+  # Exact version reported by the selected containerd (including its K3s suffix).
+  # Namespace adjustment needs containerd 2.2+ with NRI enabled; no host upgrade is performed.
+  containerdVersion: null
+systemReserve:
+  cpuMillicores: 1000
+  memoryBytes: 4294967296
+  tasks: 2048
+kubernetesReserve:
+  cpuMillicores: 1000
+  memoryBytes: 2147483648
+  tasks: 2048
+pools:
+  buster:
+    namespace: kubeclaw
+    cpuMillicores: 4000
+    memoryBytes: 34359738368
+    tasks: 8192
+    maximumActiveScopes: 4
+  prism:
+    namespace: kubeclaw
+    cpuMillicores: 4000
+    memoryBytes: 17179869184
+    tasks: 4096
+    maximumActiveScopes: 2

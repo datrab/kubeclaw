@@ -1,0 +1,13 @@
+{
+  "sourcePath": "versions.json#/buildArgs/NODE_BASE",
+  "sourceSHA256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d",
+  "exactNodeBase": "node:24.15.0-bookworm-slim@sha256:4e6b70dd6cbfc88c8157ba19aa3d9f9cce6ba4703576d55459e45efcbc9c5f5d",
+  "rendererDerivedRequiredHostNodeVersion": "24.15.0",
+  "definitionCheckerNode": "v24.21.0",
+  "qualifications": [
+    "checker Node is not selected/installed host Node, stage/currentsetup require exact selected runtime equality",
+    "source-generated systemd envnode resolved to alreadyverified/usr/local/bin/node; no path/defaultNode substitution allowed",
+    "containerd runtime original19sourcebinding and selectedNode binary/ABI are distinct, no new softwareversion author or implicitupgrade",
+    "actual Node/cgroup/NRI/engine/image/mount/source/grants remain external"
+  ]
+}

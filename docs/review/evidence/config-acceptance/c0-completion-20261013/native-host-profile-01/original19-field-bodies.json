@@ -1,0 +1,2106 @@
+{
+  "qualification": "exact original row/source/target/lifecycle/status/native obligations; no canonical mutation",
+  "rows": [
+    {
+      "id": "DLV-NATIVE-HOST-SCHEMAVERSION",
+      "owner": "native-host",
+      "scope": {
+        "instance": "native-host",
+        "profile": "production deployment; alternate profiles proposed"
+      },
+      "class": "protocol-invariant",
+      "source": {
+        "path": "scripts/native-worker-node-policy.mjs",
+        "field": "schemaVersion",
+        "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+        "line": 17,
+        "lineKind": "first field-name occurrence; productive read evidence remains separately identified"
+      },
+      "current": {
+        "valueOrDefault": "explicit native-worker-pools YAML policy; values not copied from deployment environment",
+        "precedence": "explicit POLICY_YAML \u2192 validated object \u2192 renderer projections; role pool selection not keywise merge"
+      },
+      "typeUnitDomain": "integer literal1 required",
+      "reader": {
+        "operation": "validateNativeNodePolicy identity check; protocol format version, not adjustable operator policy",
+        "references": [
+          {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1"
+          },
+          {
+            "path": "scripts/render-native-worker-node.mjs",
+            "sha256": "b32571ac43e893783a87002d473ecc3d3b9dd76d996ea3b26f76ec6a2ed748fc"
+          },
+          {
+            "path": "scripts/prepare-native-worker-pools.mjs",
+            "sha256": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3"
+          }
+        ]
+      },
+      "productiveCallerChain": "render-native-worker-node CLI POLICY_YAML NEW_OUTPUT_DIRECTORY \u2192 emitted pool/NRI/Kubelet/systemd artifacts \u2192 initial stage installer \u2192 native host preflight \u2192 worker pool loaders",
+      "validation": {
+        "schema": "handwritten source validators",
+        "semantic": "integer literal1 required; exact buster,prism pool keys required. No general additionalProperties rejection: unknown fields pass current validator and participate in full selected JSON policyDigest",
+        "errorContract": "NATIVE_NODE_IDENTITY_REQUIRED"
+      },
+      "target": {
+        "author": "config/native-host/<selected-node>/policy.yaml (proposed placement of the EXISTING single selected node-policy YAML CLI input, referenced by pipeline.config.json; not a new host policy owner)",
+        "reference": "schemaVersion",
+        "justification": "loadNativeNodePolicy existing YAML argument validates this exact root; renderer/preflight/install callers must consume identical selected file digest. New path selection does not introduce a new loader/default/index. Physical naming/selection must be reviewed in C0 and implemented only authorized C3."
+      },
+      "activationScope": {
+        "current": "host initial install; changes require drained host maintenance, not runtime reload",
+        "target": "H host maintenance: original node/runtime/pool/root/ownership identity retained; fence+quiesce before changing pool/reserve/node or native software. B cannot move active A records or cleanup, and Ready only after same-generation physical capacity/kernel readback. schemaVersion remains protocol."
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "native pool capacity, Kubernetes reservation, max active scopes and host ownership; D18 migration deferred after T",
+      "profileEvalSuitability": "alternate valid profiles appropriate; fixed-generation Eval requires immutable binding before dispatch Complete current source-definition A/B YAML files at native-host-definition-profiles-bce3f075/{A,B}.yaml are actual existing renderer inputs; synthetic resource figures not physical capacity. All adjustable authored fields differ, schemaVersion1 unchanged protocol; runtime containerd A2.2.0/B2.3.0 are supported renderer syntax NOT actual installed binary claims.",
+      "migrationAction": "retain inventoried host profile author under C3; D18 worker rewrite explicitly not C1",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-DELIVERY"
+      ],
+      "caseIds": [
+        "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+        "DLV-CASE-NATIVE-HOST-ACTIVATION"
+      ],
+      "evidence": [
+        "docs/review/evidence/config-acceptance/delivery/source-observations.txt"
+      ],
+      "status": "source-traced",
+      "targetDomain": {
+        "schema": "docs/review/evidence/config-acceptance/delivery/target-native-host-schema-20261013.json",
+        "domain": {
+          "const": 1
+        },
+        "semanticRules": [
+          {
+            "id": "HOST-AGGREGATE-SAFE",
+            "expression": "for resource cpuMillicores,memoryBytes,tasks: BigInt(system)+BigInt(kubernetes)+sum(BigInt(role)) <=9007199254740991; never round overflow",
+            "reject": "NATIVE_NODE_TOTAL_RANGE_INVALID"
+          },
+          {
+            "id": "HOST-CFS-RATE",
+            "expression": "q=BigInt(pool.cpuMillicores)*BigInt(pool.cpuPeriodMicroseconds)/1000; product divisible by1000; q>=1000 and q<=9007199254740991; CFS period1000..1000000; currentcpuMillicores bound<=floor(MAX_SAFE/100) preserved until separately reviewed",
+            "reject": "NATIVE_NODE_CPU_QUOTA_RATE_INVALID (proposed producer semantic guard; existing Core/setup range diagnostics remain separate)"
+          },
+          {
+            "id": "HOST-CAPACITY",
+            "expression": "same physical node UID/machineId/bootId Ready; selected deployed containerd version equals sole versions.json selection; cgroupDriver systemd/cgroupsPerQOS/enforceNodeAllocatable pods; taskCapacity min(pidMax,threadsMax)>withheld and0<podTasksMax<=remaining; for CPU/memory capacity>withheld and0<allocatable<=capacity-withheld; host profile plus active scope reservations fit actual admission algorithm, not syntactic max alone",
+            "reject": "exact native-worker-node-capacity.mjs NATIVE_NODE_* and Core native pool readiness/limit mismatch diagnostics"
+          },
+          {
+            "id": "HOST-VERSION-SOLE",
+            "expression": "author schema has no runtime or software version property; selected versions.json#/nativeRuntime/containerd/version materializer ONLY adds current generated runtime.containerdVersion for real renderer/preflight/activation; no same-value exception for oldauthor",
+            "reject": "CONFIG_OLD_AUTHOR:runtime.containerdVersion (proposed)"
+          }
+        ],
+        "approval": "proposed C0 source-derived domain, independently unreviewed; not implementation",
+        "readerBoundary": "NATIVE_NODE_IDENTITY_REQUIRED"
+      },
+      "fragment": "delivery",
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/delivery/source-observations.txt"
+      ],
+      "semanticStatus": "source-traced",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "DLV-NATIVE-HOST-NODENAME",
+      "owner": "native-host",
+      "scope": {
+        "instance": "native-host",
+        "profile": "production deployment; alternate profiles proposed"
+      },
+      "class": "operator-setting",
+      "source": {
+        "path": "scripts/native-worker-node-policy.mjs",
+        "field": "nodeName",
+        "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+        "line": 17,
+        "lineKind": "first field-name occurrence; productive read evidence remains separately identified"
+      },
+      "current": {
+        "valueOrDefault": "explicit native-worker-pools YAML policy; values not copied from deployment environment",
+        "precedence": "explicit POLICY_YAML \u2192 validated object \u2192 renderer projections; role pool selection not keywise merge"
+      },
+      "typeUnitDomain": "string DNS-subdomain regex^[a-z0-9](?:[a-z0-9.-]{0,251}[a-z0-9])?$",
+      "reader": {
+        "operation": "renderNativeWorkerNode busterNative/worker.native.nodeName placement projection; selected node physical capacity separately verified",
+        "references": [
+          {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1"
+          },
+          {
+            "path": "scripts/render-native-worker-node.mjs",
+            "sha256": "b32571ac43e893783a87002d473ecc3d3b9dd76d996ea3b26f76ec6a2ed748fc"
+          },
+          {
+            "path": "scripts/prepare-native-worker-pools.mjs",
+            "sha256": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3"
+          }
+        ]
+      },
+      "productiveCallerChain": "render-native-worker-node CLI POLICY_YAML NEW_OUTPUT_DIRECTORY \u2192 emitted pool/NRI/Kubelet/systemd artifacts \u2192 initial stage installer \u2192 native host preflight \u2192 worker pool loaders",
+      "validation": {
+        "schema": "handwritten source validators",
+        "semantic": "string DNS-subdomain regex^[a-z0-9](?:[a-z0-9.-]{0,251}[a-z0-9])?$; exact buster,prism pool keys required. No general additionalProperties rejection: unknown fields pass current validator and participate in full selected JSON policyDigest",
+        "errorContract": "NATIVE_NODE_IDENTITY_REQUIRED"
+      },
+      "target": {
+        "author": "config/native-host/<selected-node>/policy.yaml (proposed placement of the EXISTING single selected node-policy YAML CLI input, referenced by pipeline.config.json; not a new host policy owner)",
+        "reference": "nodeName",
+        "justification": "loadNativeNodePolicy existing YAML argument validates this exact root; renderer/preflight/install callers must consume identical selected file digest. New path selection does not introduce a new loader/default/index. Physical naming/selection must be reviewed in C0 and implemented only authorized C3."
+      },
+      "activationScope": {
+        "current": "host initial install; changes require drained host maintenance, not runtime reload",
+        "target": "H host maintenance: original node/runtime/pool/root/ownership identity retained; fence+quiesce before changing pool/reserve/node or native software. B cannot move active A records or cleanup, and Ready only after same-generation physical capacity/kernel readback. schemaVersion remains protocol."
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "native pool capacity, Kubernetes reservation, max active scopes and host ownership; D18 migration deferred after T",
+      "profileEvalSuitability": "alternate valid profiles appropriate; fixed-generation Eval requires immutable binding before dispatch Complete current source-definition A/B YAML files at native-host-definition-profiles-bce3f075/{A,B}.yaml are actual existing renderer inputs; synthetic resource figures not physical capacity. All adjustable authored fields differ, schemaVersion1 unchanged protocol; runtime containerd A2.2.0/B2.3.0 are supported renderer syntax NOT actual installed binary claims.",
+      "migrationAction": "retain inventoried host profile author under C3; D18 worker rewrite explicitly not C1",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-DELIVERY"
+      ],
+      "caseIds": [
+        "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+        "DLV-CASE-NATIVE-HOST-ACTIVATION"
+      ],
+      "evidence": [
+        "docs/review/evidence/config-acceptance/delivery/source-observations.txt"
+      ],
+      "status": "source-traced",
+      "targetDomain": {
+        "schema": "docs/review/evidence/config-acceptance/delivery/target-native-host-schema-20261013.json",
+        "domain": {
+          "type": "string",
+          "pattern": "^[a-z0-9](?:[a-z0-9.-]{0,251}[a-z0-9])?$"
+        },
+        "semanticRules": [
+          {
+            "id": "HOST-AGGREGATE-SAFE",
+            "expression": "for resource cpuMillicores,memoryBytes,tasks: BigInt(system)+BigInt(kubernetes)+sum(BigInt(role)) <=9007199254740991; never round overflow",
+            "reject": "NATIVE_NODE_TOTAL_RANGE_INVALID"
+          },
+          {
+            "id": "HOST-CFS-RATE",
+            "expression": "q=BigInt(pool.cpuMillicores)*BigInt(pool.cpuPeriodMicroseconds)/1000; product divisible by1000; q>=1000 and q<=9007199254740991; CFS period1000..1000000; currentcpuMillicores bound<=floor(MAX_SAFE/100) preserved until separately reviewed",
+            "reject": "NATIVE_NODE_CPU_QUOTA_RATE_INVALID (proposed producer semantic guard; existing Core/setup range diagnostics remain separate)"
+          },
+          {
+            "id": "HOST-CAPACITY",
+            "expression": "same physical node UID/machineId/bootId Ready; selected deployed containerd version equals sole versions.json selection; cgroupDriver systemd/cgroupsPerQOS/enforceNodeAllocatable pods; taskCapacity min(pidMax,threadsMax)>withheld and0<podTasksMax<=remaining; for CPU/memory capacity>withheld and0<allocatable<=capacity-withheld; host profile plus active scope reservations fit actual admission algorithm, not syntactic max alone",
+            "reject": "exact native-worker-node-capacity.mjs NATIVE_NODE_* and Core native pool readiness/limit mismatch diagnostics"
+          },
+          {
+            "id": "HOST-VERSION-SOLE",
+            "expression": "author schema has no runtime or software version property; selected versions.json#/nativeRuntime/containerd/version materializer ONLY adds current generated runtime.containerdVersion for real renderer/preflight/activation; no same-value exception for oldauthor",
+            "reject": "CONFIG_OLD_AUTHOR:runtime.containerdVersion (proposed)"
+          }
+        ],
+        "approval": "proposed C0 source-derived domain, independently unreviewed; not implementation",
+        "readerBoundary": "NATIVE_NODE_IDENTITY_REQUIRED"
+      },
+      "fragment": "delivery",
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/delivery/source-observations.txt"
+      ],
+      "semanticStatus": "source-traced",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "DLV-NATIVE-HOST-SYSTEMRESERVE-CPUMILLICORES",
+      "owner": "native-host",
+      "scope": {
+        "instance": "native-host",
+        "profile": "production deployment; alternate profiles proposed"
+      },
+      "class": "operator-setting",
+      "source": {
+        "path": "scripts/native-worker-node-policy.mjs",
+        "field": "systemReserve.cpuMillicores",
+        "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+        "line": null
+      },
+      "current": {
+        "valueOrDefault": "explicit native-worker-pools YAML policy; values not copied from deployment environment",
+        "precedence": "explicit POLICY_YAML \u2192 validated object \u2192 renderer projections; role pool selection not keywise merge"
+      },
+      "typeUnitDomain": "positive Number.isSafeInteger; no numeric defaults; BigInt aggregate system+kubernetes+all pools <=MAX_SAFE_INTEGER",
+      "reader": {
+        "operation": "nativeNodeReservation systemReserve+all pool resources \u2192 kubelet-reservations.json systemReserved (CPU millicores suffixm,memory bytes,pid tasks)",
+        "references": [
+          {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1"
+          },
+          {
+            "path": "scripts/render-native-worker-node.mjs",
+            "sha256": "b32571ac43e893783a87002d473ecc3d3b9dd76d996ea3b26f76ec6a2ed748fc"
+          },
+          {
+            "path": "scripts/prepare-native-worker-pools.mjs",
+            "sha256": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3"
+          }
+        ]
+      },
+      "productiveCallerChain": "render-native-worker-node CLI POLICY_YAML NEW_OUTPUT_DIRECTORY \u2192 emitted pool/NRI/Kubelet/systemd artifacts \u2192 initial stage installer \u2192 native host preflight \u2192 worker pool loaders",
+      "validation": {
+        "schema": "handwritten source validators",
+        "semantic": "positive Number.isSafeInteger; no numeric defaults; BigInt aggregate system+kubernetes+all pools <=MAX_SAFE_INTEGER; exact buster,prism pool keys required. No general additionalProperties rejection: unknown fields pass current validator and participate in full selected JSON policyDigest",
+        "errorContract": "NATIVE_NODE_POLICY_LIMIT_INVALID / NATIVE_NODE_TOTAL_RANGE_INVALID"
+      },
+      "target": {
+        "author": "config/native-host/<selected-node>/policy.yaml (proposed placement of the EXISTING single selected node-policy YAML CLI input, referenced by pipeline.config.json; not a new host policy owner)",
+        "reference": "systemReserve.cpuMillicores",
+        "justification": "loadNativeNodePolicy existing YAML argument validates this exact root; renderer/preflight/install callers must consume identical selected file digest. New path selection does not introduce a new loader/default/index. Physical naming/selection must be reviewed in C0 and implemented only authorized C3."
+      },
+      "activationScope": {
+        "current": "host initial install; changes require drained host maintenance, not runtime reload",
+        "target": "H host maintenance: original node/runtime/pool/root/ownership identity retained; fence+quiesce before changing pool/reserve/node or native software. B cannot move active A records or cleanup, and Ready only after same-generation physical capacity/kernel readback. schemaVersion remains protocol."
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "native pool capacity, Kubernetes reservation, max active scopes and host ownership; D18 migration deferred after T",
+      "profileEvalSuitability": "alternate valid profiles appropriate; fixed-generation Eval requires immutable binding before dispatch Complete current source-definition A/B YAML files at native-host-definition-profiles-bce3f075/{A,B}.yaml are actual existing renderer inputs; synthetic resource figures not physical capacity. All adjustable authored fields differ, schemaVersion1 unchanged protocol; runtime containerd A2.2.0/B2.3.0 are supported renderer syntax NOT actual installed binary claims.",
+      "migrationAction": "retain inventoried host profile author under C3; D18 worker rewrite explicitly not C1",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-DELIVERY"
+      ],
+      "caseIds": [
+        "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+        "DLV-CASE-NATIVE-HOST-ACTIVATION"
+      ],
+      "evidence": [
+        "docs/review/evidence/config-acceptance/delivery/source-observations.txt"
+      ],
+      "status": "source-traced",
+      "targetDomain": {
+        "schema": "docs/review/evidence/config-acceptance/delivery/target-native-host-schema-20261013.json",
+        "domain": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "semanticRules": [
+          {
+            "id": "HOST-AGGREGATE-SAFE",
+            "expression": "for resource cpuMillicores,memoryBytes,tasks: BigInt(system)+BigInt(kubernetes)+sum(BigInt(role)) <=9007199254740991; never round overflow",
+            "reject": "NATIVE_NODE_TOTAL_RANGE_INVALID"
+          },
+          {
+            "id": "HOST-CFS-RATE",
+            "expression": "q=BigInt(pool.cpuMillicores)*BigInt(pool.cpuPeriodMicroseconds)/1000; product divisible by1000; q>=1000 and q<=9007199254740991; CFS period1000..1000000; currentcpuMillicores bound<=floor(MAX_SAFE/100) preserved until separately reviewed",
+            "reject": "NATIVE_NODE_CPU_QUOTA_RATE_INVALID (proposed producer semantic guard; existing Core/setup range diagnostics remain separate)"
+          },
+          {
+            "id": "HOST-CAPACITY",
+            "expression": "same physical node UID/machineId/bootId Ready; selected deployed containerd version equals sole versions.json selection; cgroupDriver systemd/cgroupsPerQOS/enforceNodeAllocatable pods; taskCapacity min(pidMax,threadsMax)>withheld and0<podTasksMax<=remaining; for CPU/memory capacity>withheld and0<allocatable<=capacity-withheld; host profile plus active scope reservations fit actual admission algorithm, not syntactic max alone",
+            "reject": "exact native-worker-node-capacity.mjs NATIVE_NODE_* and Core native pool readiness/limit mismatch diagnostics"
+          },
+          {
+            "id": "HOST-VERSION-SOLE",
+            "expression": "author schema has no runtime or software version property; selected versions.json#/nativeRuntime/containerd/version materializer ONLY adds current generated runtime.containerdVersion for real renderer/preflight/activation; no same-value exception for oldauthor",
+            "reject": "CONFIG_OLD_AUTHOR:runtime.containerdVersion (proposed)"
+          }
+        ],
+        "approval": "proposed C0 source-derived domain, independently unreviewed; not implementation",
+        "readerBoundary": "NATIVE_NODE_POLICY_LIMIT_INVALID"
+      },
+      "fragment": "delivery",
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/delivery/source-observations.txt"
+      ],
+      "semanticStatus": "source-traced",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "DLV-NATIVE-HOST-SYSTEMRESERVE-MEMORYBYTES",
+      "owner": "native-host",
+      "scope": {
+        "instance": "native-host",
+        "profile": "production deployment; alternate profiles proposed"
+      },
+      "class": "operator-setting",
+      "source": {
+        "path": "scripts/native-worker-node-policy.mjs",
+        "field": "systemReserve.memoryBytes",
+        "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+        "line": null
+      },
+      "current": {
+        "valueOrDefault": "explicit native-worker-pools YAML policy; values not copied from deployment environment",
+        "precedence": "explicit POLICY_YAML \u2192 validated object \u2192 renderer projections; role pool selection not keywise merge"
+      },
+      "typeUnitDomain": "positive Number.isSafeInteger; no numeric defaults; bytes multiple4096; BigInt aggregate system+kubernetes+all pools <=MAX_SAFE_INTEGER",
+      "reader": {
+        "operation": "nativeNodeReservation systemReserve+all pool resources \u2192 kubelet-reservations.json systemReserved (CPU millicores suffixm,memory bytes,pid tasks)",
+        "references": [
+          {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1"
+          },
+          {
+            "path": "scripts/render-native-worker-node.mjs",
+            "sha256": "b32571ac43e893783a87002d473ecc3d3b9dd76d996ea3b26f76ec6a2ed748fc"
+          },
+          {
+            "path": "scripts/prepare-native-worker-pools.mjs",
+            "sha256": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3"
+          }
+        ]
+      },
+      "productiveCallerChain": "render-native-worker-node CLI POLICY_YAML NEW_OUTPUT_DIRECTORY \u2192 emitted pool/NRI/Kubelet/systemd artifacts \u2192 initial stage installer \u2192 native host preflight \u2192 worker pool loaders",
+      "validation": {
+        "schema": "handwritten source validators",
+        "semantic": "positive Number.isSafeInteger; no numeric defaults; bytes multiple4096; BigInt aggregate system+kubernetes+all pools <=MAX_SAFE_INTEGER; exact buster,prism pool keys required. No general additionalProperties rejection: unknown fields pass current validator and participate in full selected JSON policyDigest",
+        "errorContract": "NATIVE_NODE_POLICY_LIMIT_INVALID / NATIVE_NODE_MEMORY_ALIGNMENT_INVALID / NATIVE_NODE_TOTAL_RANGE_INVALID"
+      },
+      "target": {
+        "author": "config/native-host/<selected-node>/policy.yaml (proposed placement of the EXISTING single selected node-policy YAML CLI input, referenced by pipeline.config.json; not a new host policy owner)",
+        "reference": "systemReserve.memoryBytes",
+        "justification": "loadNativeNodePolicy existing YAML argument validates this exact root; renderer/preflight/install callers must consume identical selected file digest. New path selection does not introduce a new loader/default/index. Physical naming/selection must be reviewed in C0 and implemented only authorized C3."
+      },
+      "activationScope": {
+        "current": "host initial install; changes require drained host maintenance, not runtime reload",
+        "target": "H host maintenance: original node/runtime/pool/root/ownership identity retained; fence+quiesce before changing pool/reserve/node or native software. B cannot move active A records or cleanup, and Ready only after same-generation physical capacity/kernel readback. schemaVersion remains protocol."
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "native pool capacity, Kubernetes reservation, max active scopes and host ownership; D18 migration deferred after T",
+      "profileEvalSuitability": "alternate valid profiles appropriate; fixed-generation Eval requires immutable binding before dispatch Complete current source-definition A/B YAML files at native-host-definition-profiles-bce3f075/{A,B}.yaml are actual existing renderer inputs; synthetic resource figures not physical capacity. All adjustable authored fields differ, schemaVersion1 unchanged protocol; runtime containerd A2.2.0/B2.3.0 are supported renderer syntax NOT actual installed binary claims.",
+      "migrationAction": "retain inventoried host profile author under C3; D18 worker rewrite explicitly not C1",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-DELIVERY"
+      ],
+      "caseIds": [
+        "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+        "DLV-CASE-NATIVE-HOST-ACTIVATION"
+      ],
+      "evidence": [
+        "docs/review/evidence/config-acceptance/delivery/source-observations.txt"
+      ],
+      "status": "source-traced",
+      "targetDomain": {
+        "schema": "docs/review/evidence/config-acceptance/delivery/target-native-host-schema-20261013.json",
+        "domain": {
+          "type": "integer",
+          "minimum": 4096,
+          "maximum": 9007199254740991,
+          "multipleOf": 4096
+        },
+        "semanticRules": [
+          {
+            "id": "HOST-AGGREGATE-SAFE",
+            "expression": "for resource cpuMillicores,memoryBytes,tasks: BigInt(system)+BigInt(kubernetes)+sum(BigInt(role)) <=9007199254740991; never round overflow",
+            "reject": "NATIVE_NODE_TOTAL_RANGE_INVALID"
+          },
+          {
+            "id": "HOST-CFS-RATE",
+            "expression": "q=BigInt(pool.cpuMillicores)*BigInt(pool.cpuPeriodMicroseconds)/1000; product divisible by1000; q>=1000 and q<=9007199254740991; CFS period1000..1000000; currentcpuMillicores bound<=floor(MAX_SAFE/100) preserved until separately reviewed",
+            "reject": "NATIVE_NODE_CPU_QUOTA_RATE_INVALID (proposed producer semantic guard; existing Core/setup range diagnostics remain separate)"
+          },
+          {
+            "id": "HOST-CAPACITY",
+            "expression": "same physical node UID/machineId/bootId Ready; selected deployed containerd version equals sole versions.json selection; cgroupDriver systemd/cgroupsPerQOS/enforceNodeAllocatable pods; taskCapacity min(pidMax,threadsMax)>withheld and0<podTasksMax<=remaining; for CPU/memory capacity>withheld and0<allocatable<=capacity-withheld; host profile plus active scope reservations fit actual admission algorithm, not syntactic max alone",
+            "reject": "exact native-worker-node-capacity.mjs NATIVE_NODE_* and Core native pool readiness/limit mismatch diagnostics"
+          },
+          {
+            "id": "HOST-VERSION-SOLE",
+            "expression": "author schema has no runtime or software version property; selected versions.json#/nativeRuntime/containerd/version materializer ONLY adds current generated runtime.containerdVersion for real renderer/preflight/activation; no same-value exception for oldauthor",
+            "reject": "CONFIG_OLD_AUTHOR:runtime.containerdVersion (proposed)"
+          }
+        ],
+        "approval": "proposed C0 source-derived domain, independently unreviewed; not implementation",
+        "readerBoundary": "NATIVE_NODE_MEMORY_ALIGNMENT_INVALID"
+      },
+      "fragment": "delivery",
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/delivery/source-observations.txt"
+      ],
+      "semanticStatus": "source-traced",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "DLV-NATIVE-HOST-SYSTEMRESERVE-TASKS",
+      "owner": "native-host",
+      "scope": {
+        "instance": "native-host",
+        "profile": "production deployment; alternate profiles proposed"
+      },
+      "class": "operator-setting",
+      "source": {
+        "path": "scripts/native-worker-node-policy.mjs",
+        "field": "systemReserve.tasks",
+        "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+        "line": 20,
+        "lineKind": "first field-name occurrence; productive read evidence remains separately identified"
+      },
+      "current": {
+        "valueOrDefault": "explicit native-worker-pools YAML policy; values not copied from deployment environment",
+        "precedence": "explicit POLICY_YAML \u2192 validated object \u2192 renderer projections; role pool selection not keywise merge"
+      },
+      "typeUnitDomain": "positive Number.isSafeInteger; no numeric defaults; BigInt aggregate system+kubernetes+all pools <=MAX_SAFE_INTEGER",
+      "reader": {
+        "operation": "nativeNodeReservation systemReserve+all pool resources \u2192 kubelet-reservations.json systemReserved (CPU millicores suffixm,memory bytes,pid tasks)",
+        "references": [
+          {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1"
+          },
+          {
+            "path": "scripts/render-native-worker-node.mjs",
+            "sha256": "b32571ac43e893783a87002d473ecc3d3b9dd76d996ea3b26f76ec6a2ed748fc"
+          },
+          {
+            "path": "scripts/prepare-native-worker-pools.mjs",
+            "sha256": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3"
+          }
+        ]
+      },
+      "productiveCallerChain": "render-native-worker-node CLI POLICY_YAML NEW_OUTPUT_DIRECTORY \u2192 emitted pool/NRI/Kubelet/systemd artifacts \u2192 initial stage installer \u2192 native host preflight \u2192 worker pool loaders",
+      "validation": {
+        "schema": "handwritten source validators",
+        "semantic": "positive Number.isSafeInteger; no numeric defaults; BigInt aggregate system+kubernetes+all pools <=MAX_SAFE_INTEGER; exact buster,prism pool keys required. No general additionalProperties rejection: unknown fields pass current validator and participate in full selected JSON policyDigest",
+        "errorContract": "NATIVE_NODE_POLICY_LIMIT_INVALID / NATIVE_NODE_TOTAL_RANGE_INVALID"
+      },
+      "target": {
+        "author": "config/native-host/<selected-node>/policy.yaml (proposed placement of the EXISTING single selected node-policy YAML CLI input, referenced by pipeline.config.json; not a new host policy owner)",
+        "reference": "systemReserve.tasks",
+        "justification": "loadNativeNodePolicy existing YAML argument validates this exact root; renderer/preflight/install callers must consume identical selected file digest. New path selection does not introduce a new loader/default/index. Physical naming/selection must be reviewed in C0 and implemented only authorized C3."
+      },
+      "activationScope": {
+        "current": "host initial install; changes require drained host maintenance, not runtime reload",
+        "target": "H host maintenance: original node/runtime/pool/root/ownership identity retained; fence+quiesce before changing pool/reserve/node or native software. B cannot move active A records or cleanup, and Ready only after same-generation physical capacity/kernel readback. schemaVersion remains protocol."
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "native pool capacity, Kubernetes reservation, max active scopes and host ownership; D18 migration deferred after T",
+      "profileEvalSuitability": "alternate valid profiles appropriate; fixed-generation Eval requires immutable binding before dispatch Complete current source-definition A/B YAML files at native-host-definition-profiles-bce3f075/{A,B}.yaml are actual existing renderer inputs; synthetic resource figures not physical capacity. All adjustable authored fields differ, schemaVersion1 unchanged protocol; runtime containerd A2.2.0/B2.3.0 are supported renderer syntax NOT actual installed binary claims.",
+      "migrationAction": "retain inventoried host profile author under C3; D18 worker rewrite explicitly not C1",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-DELIVERY"
+      ],
+      "caseIds": [
+        "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+        "DLV-CASE-NATIVE-HOST-ACTIVATION"
+      ],
+      "evidence": [
+        "docs/review/evidence/config-acceptance/delivery/source-observations.txt"
+      ],
+      "status": "source-traced",
+      "targetDomain": {
+        "schema": "docs/review/evidence/config-acceptance/delivery/target-native-host-schema-20261013.json",
+        "domain": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "semanticRules": [
+          {
+            "id": "HOST-AGGREGATE-SAFE",
+            "expression": "for resource cpuMillicores,memoryBytes,tasks: BigInt(system)+BigInt(kubernetes)+sum(BigInt(role)) <=9007199254740991; never round overflow",
+            "reject": "NATIVE_NODE_TOTAL_RANGE_INVALID"
+          },
+          {
+            "id": "HOST-CFS-RATE",
+            "expression": "q=BigInt(pool.cpuMillicores)*BigInt(pool.cpuPeriodMicroseconds)/1000; product divisible by1000; q>=1000 and q<=9007199254740991; CFS period1000..1000000; currentcpuMillicores bound<=floor(MAX_SAFE/100) preserved until separately reviewed",
+            "reject": "NATIVE_NODE_CPU_QUOTA_RATE_INVALID (proposed producer semantic guard; existing Core/setup range diagnostics remain separate)"
+          },
+          {
+            "id": "HOST-CAPACITY",
+            "expression": "same physical node UID/machineId/bootId Ready; selected deployed containerd version equals sole versions.json selection; cgroupDriver systemd/cgroupsPerQOS/enforceNodeAllocatable pods; taskCapacity min(pidMax,threadsMax)>withheld and0<podTasksMax<=remaining; for CPU/memory capacity>withheld and0<allocatable<=capacity-withheld; host profile plus active scope reservations fit actual admission algorithm, not syntactic max alone",
+            "reject": "exact native-worker-node-capacity.mjs NATIVE_NODE_* and Core native pool readiness/limit mismatch diagnostics"
+          },
+          {
+            "id": "HOST-VERSION-SOLE",
+            "expression": "author schema has no runtime or software version property; selected versions.json#/nativeRuntime/containerd/version materializer ONLY adds current generated runtime.containerdVersion for real renderer/preflight/activation; no same-value exception for oldauthor",
+            "reject": "CONFIG_OLD_AUTHOR:runtime.containerdVersion (proposed)"
+          }
+        ],
+        "approval": "proposed C0 source-derived domain, independently unreviewed; not implementation",
+        "readerBoundary": "NATIVE_NODE_POLICY_LIMIT_INVALID"
+      },
+      "fragment": "delivery",
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/delivery/source-observations.txt"
+      ],
+      "semanticStatus": "source-traced",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "DLV-NATIVE-HOST-KUBERNETESRESERVE-CPUMILLICORES",
+      "owner": "native-host",
+      "scope": {
+        "instance": "native-host",
+        "profile": "production deployment; alternate profiles proposed"
+      },
+      "class": "operator-setting",
+      "source": {
+        "path": "scripts/native-worker-node-policy.mjs",
+        "field": "kubernetesReserve.cpuMillicores",
+        "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+        "line": 58,
+        "lineKind": "first field-name occurrence; productive read evidence remains separately identified"
+      },
+      "current": {
+        "valueOrDefault": "explicit native-worker-pools YAML policy; values not copied from deployment environment",
+        "precedence": "explicit POLICY_YAML \u2192 validated object \u2192 renderer projections; role pool selection not keywise merge"
+      },
+      "typeUnitDomain": "positive Number.isSafeInteger; no numeric defaults; BigInt aggregate system+kubernetes+all pools <=MAX_SAFE_INTEGER",
+      "reader": {
+        "operation": "nativeNodeReservation kubernetesReserve \u2192 kubelet-reservations.json kubeReserved (CPU millicores suffixm,memory bytes,pid tasks)",
+        "references": [
+          {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1"
+          },
+          {
+            "path": "scripts/render-native-worker-node.mjs",
+            "sha256": "b32571ac43e893783a87002d473ecc3d3b9dd76d996ea3b26f76ec6a2ed748fc"
+          },
+          {
+            "path": "scripts/prepare-native-worker-pools.mjs",
+            "sha256": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3"
+          }
+        ]
+      },
+      "productiveCallerChain": "render-native-worker-node CLI POLICY_YAML NEW_OUTPUT_DIRECTORY \u2192 emitted pool/NRI/Kubelet/systemd artifacts \u2192 initial stage installer \u2192 native host preflight \u2192 worker pool loaders",
+      "validation": {
+        "schema": "handwritten source validators",
+        "semantic": "positive Number.isSafeInteger; no numeric defaults; BigInt aggregate system+kubernetes+all pools <=MAX_SAFE_INTEGER; exact buster,prism pool keys required. No general additionalProperties rejection: unknown fields pass current validator and participate in full selected JSON policyDigest",
+        "errorContract": "NATIVE_NODE_POLICY_LIMIT_INVALID / NATIVE_NODE_TOTAL_RANGE_INVALID"
+      },
+      "target": {
+        "author": "config/native-host/<selected-node>/policy.yaml (proposed placement of the EXISTING single selected node-policy YAML CLI input, referenced by pipeline.config.json; not a new host policy owner)",
+        "reference": "kubernetesReserve.cpuMillicores",
+        "justification": "loadNativeNodePolicy existing YAML argument validates this exact root; renderer/preflight/install callers must consume identical selected file digest. New path selection does not introduce a new loader/default/index. Physical naming/selection must be reviewed in C0 and implemented only authorized C3."
+      },
+      "activationScope": {
+        "current": "host initial install; changes require drained host maintenance, not runtime reload",
+        "target": "H host maintenance: original node/runtime/pool/root/ownership identity retained; fence+quiesce before changing pool/reserve/node or native software. B cannot move active A records or cleanup, and Ready only after same-generation physical capacity/kernel readback. schemaVersion remains protocol."
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "native pool capacity, Kubernetes reservation, max active scopes and host ownership; D18 migration deferred after T",
+      "profileEvalSuitability": "alternate valid profiles appropriate; fixed-generation Eval requires immutable binding before dispatch Complete current source-definition A/B YAML files at native-host-definition-profiles-bce3f075/{A,B}.yaml are actual existing renderer inputs; synthetic resource figures not physical capacity. All adjustable authored fields differ, schemaVersion1 unchanged protocol; runtime containerd A2.2.0/B2.3.0 are supported renderer syntax NOT actual installed binary claims.",
+      "migrationAction": "retain inventoried host profile author under C3; D18 worker rewrite explicitly not C1",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-DELIVERY"
+      ],
+      "caseIds": [
+        "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+        "DLV-CASE-NATIVE-HOST-ACTIVATION"
+      ],
+      "evidence": [
+        "docs/review/evidence/config-acceptance/delivery/source-observations.txt"
+      ],
+      "status": "source-traced",
+      "targetDomain": {
+        "schema": "docs/review/evidence/config-acceptance/delivery/target-native-host-schema-20261013.json",
+        "domain": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "semanticRules": [
+          {
+            "id": "HOST-AGGREGATE-SAFE",
+            "expression": "for resource cpuMillicores,memoryBytes,tasks: BigInt(system)+BigInt(kubernetes)+sum(BigInt(role)) <=9007199254740991; never round overflow",
+            "reject": "NATIVE_NODE_TOTAL_RANGE_INVALID"
+          },
+          {
+            "id": "HOST-CFS-RATE",
+            "expression": "q=BigInt(pool.cpuMillicores)*BigInt(pool.cpuPeriodMicroseconds)/1000; product divisible by1000; q>=1000 and q<=9007199254740991; CFS period1000..1000000; currentcpuMillicores bound<=floor(MAX_SAFE/100) preserved until separately reviewed",
+            "reject": "NATIVE_NODE_CPU_QUOTA_RATE_INVALID (proposed producer semantic guard; existing Core/setup range diagnostics remain separate)"
+          },
+          {
+            "id": "HOST-CAPACITY",
+            "expression": "same physical node UID/machineId/bootId Ready; selected deployed containerd version equals sole versions.json selection; cgroupDriver systemd/cgroupsPerQOS/enforceNodeAllocatable pods; taskCapacity min(pidMax,threadsMax)>withheld and0<podTasksMax<=remaining; for CPU/memory capacity>withheld and0<allocatable<=capacity-withheld; host profile plus active scope reservations fit actual admission algorithm, not syntactic max alone",
+            "reject": "exact native-worker-node-capacity.mjs NATIVE_NODE_* and Core native pool readiness/limit mismatch diagnostics"
+          },
+          {
+            "id": "HOST-VERSION-SOLE",
+            "expression": "author schema has no runtime or software version property; selected versions.json#/nativeRuntime/containerd/version materializer ONLY adds current generated runtime.containerdVersion for real renderer/preflight/activation; no same-value exception for oldauthor",
+            "reject": "CONFIG_OLD_AUTHOR:runtime.containerdVersion (proposed)"
+          }
+        ],
+        "approval": "proposed C0 source-derived domain, independently unreviewed; not implementation",
+        "readerBoundary": "NATIVE_NODE_POLICY_LIMIT_INVALID"
+      },
+      "fragment": "delivery",
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/delivery/source-observations.txt"
+      ],
+      "semanticStatus": "source-traced",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "DLV-NATIVE-HOST-KUBERNETESRESERVE-MEMORYBYTES",
+      "owner": "native-host",
+      "scope": {
+        "instance": "native-host",
+        "profile": "production deployment; alternate profiles proposed"
+      },
+      "class": "operator-setting",
+      "source": {
+        "path": "scripts/native-worker-node-policy.mjs",
+        "field": "kubernetesReserve.memoryBytes",
+        "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+        "line": 58,
+        "lineKind": "first field-name occurrence; productive read evidence remains separately identified"
+      },
+      "current": {
+        "valueOrDefault": "explicit native-worker-pools YAML policy; values not copied from deployment environment",
+        "precedence": "explicit POLICY_YAML \u2192 validated object \u2192 renderer projections; role pool selection not keywise merge"
+      },
+      "typeUnitDomain": "positive Number.isSafeInteger; no numeric defaults; bytes multiple4096; BigInt aggregate system+kubernetes+all pools <=MAX_SAFE_INTEGER",
+      "reader": {
+        "operation": "nativeNodeReservation kubernetesReserve \u2192 kubelet-reservations.json kubeReserved (CPU millicores suffixm,memory bytes,pid tasks)",
+        "references": [
+          {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1"
+          },
+          {
+            "path": "scripts/render-native-worker-node.mjs",
+            "sha256": "b32571ac43e893783a87002d473ecc3d3b9dd76d996ea3b26f76ec6a2ed748fc"
+          },
+          {
+            "path": "scripts/prepare-native-worker-pools.mjs",
+            "sha256": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3"
+          }
+        ]
+      },
+      "productiveCallerChain": "render-native-worker-node CLI POLICY_YAML NEW_OUTPUT_DIRECTORY \u2192 emitted pool/NRI/Kubelet/systemd artifacts \u2192 initial stage installer \u2192 native host preflight \u2192 worker pool loaders",
+      "validation": {
+        "schema": "handwritten source validators",
+        "semantic": "positive Number.isSafeInteger; no numeric defaults; bytes multiple4096; BigInt aggregate system+kubernetes+all pools <=MAX_SAFE_INTEGER; exact buster,prism pool keys required. No general additionalProperties rejection: unknown fields pass current validator and participate in full selected JSON policyDigest",
+        "errorContract": "NATIVE_NODE_POLICY_LIMIT_INVALID / NATIVE_NODE_MEMORY_ALIGNMENT_INVALID / NATIVE_NODE_TOTAL_RANGE_INVALID"
+      },
+      "target": {
+        "author": "config/native-host/<selected-node>/policy.yaml (proposed placement of the EXISTING single selected node-policy YAML CLI input, referenced by pipeline.config.json; not a new host policy owner)",
+        "reference": "kubernetesReserve.memoryBytes",
+        "justification": "loadNativeNodePolicy existing YAML argument validates this exact root; renderer/preflight/install callers must consume identical selected file digest. New path selection does not introduce a new loader/default/index. Physical naming/selection must be reviewed in C0 and implemented only authorized C3."
+      },
+      "activationScope": {
+        "current": "host initial install; changes require drained host maintenance, not runtime reload",
+        "target": "H host maintenance: original node/runtime/pool/root/ownership identity retained; fence+quiesce before changing pool/reserve/node or native software. B cannot move active A records or cleanup, and Ready only after same-generation physical capacity/kernel readback. schemaVersion remains protocol."
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "native pool capacity, Kubernetes reservation, max active scopes and host ownership; D18 migration deferred after T",
+      "profileEvalSuitability": "alternate valid profiles appropriate; fixed-generation Eval requires immutable binding before dispatch Complete current source-definition A/B YAML files at native-host-definition-profiles-bce3f075/{A,B}.yaml are actual existing renderer inputs; synthetic resource figures not physical capacity. All adjustable authored fields differ, schemaVersion1 unchanged protocol; runtime containerd A2.2.0/B2.3.0 are supported renderer syntax NOT actual installed binary claims.",
+      "migrationAction": "retain inventoried host profile author under C3; D18 worker rewrite explicitly not C1",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-DELIVERY"
+      ],
+      "caseIds": [
+        "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+        "DLV-CASE-NATIVE-HOST-ACTIVATION"
+      ],
+      "evidence": [
+        "docs/review/evidence/config-acceptance/delivery/source-observations.txt"
+      ],
+      "status": "source-traced",
+      "targetDomain": {
+        "schema": "docs/review/evidence/config-acceptance/delivery/target-native-host-schema-20261013.json",
+        "domain": {
+          "type": "integer",
+          "minimum": 4096,
+          "maximum": 9007199254740991,
+          "multipleOf": 4096
+        },
+        "semanticRules": [
+          {
+            "id": "HOST-AGGREGATE-SAFE",
+            "expression": "for resource cpuMillicores,memoryBytes,tasks: BigInt(system)+BigInt(kubernetes)+sum(BigInt(role)) <=9007199254740991; never round overflow",
+            "reject": "NATIVE_NODE_TOTAL_RANGE_INVALID"
+          },
+          {
+            "id": "HOST-CFS-RATE",
+            "expression": "q=BigInt(pool.cpuMillicores)*BigInt(pool.cpuPeriodMicroseconds)/1000; product divisible by1000; q>=1000 and q<=9007199254740991; CFS period1000..1000000; currentcpuMillicores bound<=floor(MAX_SAFE/100) preserved until separately reviewed",
+            "reject": "NATIVE_NODE_CPU_QUOTA_RATE_INVALID (proposed producer semantic guard; existing Core/setup range diagnostics remain separate)"
+          },
+          {
+            "id": "HOST-CAPACITY",
+            "expression": "same physical node UID/machineId/bootId Ready; selected deployed containerd version equals sole versions.json selection; cgroupDriver systemd/cgroupsPerQOS/enforceNodeAllocatable pods; taskCapacity min(pidMax,threadsMax)>withheld and0<podTasksMax<=remaining; for CPU/memory capacity>withheld and0<allocatable<=capacity-withheld; host profile plus active scope reservations fit actual admission algorithm, not syntactic max alone",
+            "reject": "exact native-worker-node-capacity.mjs NATIVE_NODE_* and Core native pool readiness/limit mismatch diagnostics"
+          },
+          {
+            "id": "HOST-VERSION-SOLE",
+            "expression": "author schema has no runtime or software version property; selected versions.json#/nativeRuntime/containerd/version materializer ONLY adds current generated runtime.containerdVersion for real renderer/preflight/activation; no same-value exception for oldauthor",
+            "reject": "CONFIG_OLD_AUTHOR:runtime.containerdVersion (proposed)"
+          }
+        ],
+        "approval": "proposed C0 source-derived domain, independently unreviewed; not implementation",
+        "readerBoundary": "NATIVE_NODE_MEMORY_ALIGNMENT_INVALID"
+      },
+      "fragment": "delivery",
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/delivery/source-observations.txt"
+      ],
+      "semanticStatus": "source-traced",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "DLV-NATIVE-HOST-KUBERNETESRESERVE-TASKS",
+      "owner": "native-host",
+      "scope": {
+        "instance": "native-host",
+        "profile": "production deployment; alternate profiles proposed"
+      },
+      "class": "operator-setting",
+      "source": {
+        "path": "scripts/native-worker-node-policy.mjs",
+        "field": "kubernetesReserve.tasks",
+        "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+        "line": 20,
+        "lineKind": "first field-name occurrence; productive read evidence remains separately identified"
+      },
+      "current": {
+        "valueOrDefault": "explicit native-worker-pools YAML policy; values not copied from deployment environment",
+        "precedence": "explicit POLICY_YAML \u2192 validated object \u2192 renderer projections; role pool selection not keywise merge"
+      },
+      "typeUnitDomain": "positive Number.isSafeInteger; no numeric defaults; BigInt aggregate system+kubernetes+all pools <=MAX_SAFE_INTEGER",
+      "reader": {
+        "operation": "nativeNodeReservation kubernetesReserve \u2192 kubelet-reservations.json kubeReserved (CPU millicores suffixm,memory bytes,pid tasks)",
+        "references": [
+          {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1"
+          },
+          {
+            "path": "scripts/render-native-worker-node.mjs",
+            "sha256": "b32571ac43e893783a87002d473ecc3d3b9dd76d996ea3b26f76ec6a2ed748fc"
+          },
+          {
+            "path": "scripts/prepare-native-worker-pools.mjs",
+            "sha256": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3"
+          }
+        ]
+      },
+      "productiveCallerChain": "render-native-worker-node CLI POLICY_YAML NEW_OUTPUT_DIRECTORY \u2192 emitted pool/NRI/Kubelet/systemd artifacts \u2192 initial stage installer \u2192 native host preflight \u2192 worker pool loaders",
+      "validation": {
+        "schema": "handwritten source validators",
+        "semantic": "positive Number.isSafeInteger; no numeric defaults; BigInt aggregate system+kubernetes+all pools <=MAX_SAFE_INTEGER; exact buster,prism pool keys required. No general additionalProperties rejection: unknown fields pass current validator and participate in full selected JSON policyDigest",
+        "errorContract": "NATIVE_NODE_POLICY_LIMIT_INVALID / NATIVE_NODE_TOTAL_RANGE_INVALID"
+      },
+      "target": {
+        "author": "config/native-host/<selected-node>/policy.yaml (proposed placement of the EXISTING single selected node-policy YAML CLI input, referenced by pipeline.config.json; not a new host policy owner)",
+        "reference": "kubernetesReserve.tasks",
+        "justification": "loadNativeNodePolicy existing YAML argument validates this exact root; renderer/preflight/install callers must consume identical selected file digest. New path selection does not introduce a new loader/default/index. Physical naming/selection must be reviewed in C0 and implemented only authorized C3."
+      },
+      "activationScope": {
+        "current": "host initial install; changes require drained host maintenance, not runtime reload",
+        "target": "H host maintenance: original node/runtime/pool/root/ownership identity retained; fence+quiesce before changing pool/reserve/node or native software. B cannot move active A records or cleanup, and Ready only after same-generation physical capacity/kernel readback. schemaVersion remains protocol."
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "native pool capacity, Kubernetes reservation, max active scopes and host ownership; D18 migration deferred after T",
+      "profileEvalSuitability": "alternate valid profiles appropriate; fixed-generation Eval requires immutable binding before dispatch Complete current source-definition A/B YAML files at native-host-definition-profiles-bce3f075/{A,B}.yaml are actual existing renderer inputs; synthetic resource figures not physical capacity. All adjustable authored fields differ, schemaVersion1 unchanged protocol; runtime containerd A2.2.0/B2.3.0 are supported renderer syntax NOT actual installed binary claims.",
+      "migrationAction": "retain inventoried host profile author under C3; D18 worker rewrite explicitly not C1",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-DELIVERY"
+      ],
+      "caseIds": [
+        "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+        "DLV-CASE-NATIVE-HOST-ACTIVATION"
+      ],
+      "evidence": [
+        "docs/review/evidence/config-acceptance/delivery/source-observations.txt"
+      ],
+      "status": "source-traced",
+      "targetDomain": {
+        "schema": "docs/review/evidence/config-acceptance/delivery/target-native-host-schema-20261013.json",
+        "domain": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "semanticRules": [
+          {
+            "id": "HOST-AGGREGATE-SAFE",
+            "expression": "for resource cpuMillicores,memoryBytes,tasks: BigInt(system)+BigInt(kubernetes)+sum(BigInt(role)) <=9007199254740991; never round overflow",
+            "reject": "NATIVE_NODE_TOTAL_RANGE_INVALID"
+          },
+          {
+            "id": "HOST-CFS-RATE",
+            "expression": "q=BigInt(pool.cpuMillicores)*BigInt(pool.cpuPeriodMicroseconds)/1000; product divisible by1000; q>=1000 and q<=9007199254740991; CFS period1000..1000000; currentcpuMillicores bound<=floor(MAX_SAFE/100) preserved until separately reviewed",
+            "reject": "NATIVE_NODE_CPU_QUOTA_RATE_INVALID (proposed producer semantic guard; existing Core/setup range diagnostics remain separate)"
+          },
+          {
+            "id": "HOST-CAPACITY",
+            "expression": "same physical node UID/machineId/bootId Ready; selected deployed containerd version equals sole versions.json selection; cgroupDriver systemd/cgroupsPerQOS/enforceNodeAllocatable pods; taskCapacity min(pidMax,threadsMax)>withheld and0<podTasksMax<=remaining; for CPU/memory capacity>withheld and0<allocatable<=capacity-withheld; host profile plus active scope reservations fit actual admission algorithm, not syntactic max alone",
+            "reject": "exact native-worker-node-capacity.mjs NATIVE_NODE_* and Core native pool readiness/limit mismatch diagnostics"
+          },
+          {
+            "id": "HOST-VERSION-SOLE",
+            "expression": "author schema has no runtime or software version property; selected versions.json#/nativeRuntime/containerd/version materializer ONLY adds current generated runtime.containerdVersion for real renderer/preflight/activation; no same-value exception for oldauthor",
+            "reject": "CONFIG_OLD_AUTHOR:runtime.containerdVersion (proposed)"
+          }
+        ],
+        "approval": "proposed C0 source-derived domain, independently unreviewed; not implementation",
+        "readerBoundary": "NATIVE_NODE_POLICY_LIMIT_INVALID"
+      },
+      "fragment": "delivery",
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/delivery/source-observations.txt"
+      ],
+      "semanticStatus": "source-traced",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "DLV-NATIVE-HOST-POOLS-BUSTER-NAMESPACE",
+      "owner": "native-host",
+      "scope": {
+        "instance": "native-host",
+        "profile": "production deployment; alternate profiles proposed"
+      },
+      "class": "operator-setting",
+      "source": {
+        "path": "scripts/native-worker-node-policy.mjs",
+        "field": "pools.buster.namespace",
+        "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+        "line": null
+      },
+      "current": {
+        "valueOrDefault": "explicit native-worker-pools YAML policy; values not copied from deployment environment",
+        "precedence": "explicit POLICY_YAML \u2192 validated object \u2192 renderer projections; role pool selection not keywise merge"
+      },
+      "typeUnitDomain": "string DNS-label regex^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$",
+      "reader": {
+        "operation": "nriPolicy roles.namespace \u2192 native-nri.json; rendered native Chart namespace; role admission identity",
+        "references": [
+          {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1"
+          },
+          {
+            "path": "scripts/render-native-worker-node.mjs",
+            "sha256": "b32571ac43e893783a87002d473ecc3d3b9dd76d996ea3b26f76ec6a2ed748fc"
+          },
+          {
+            "path": "scripts/prepare-native-worker-pools.mjs",
+            "sha256": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3"
+          }
+        ]
+      },
+      "productiveCallerChain": "render-native-worker-node CLI POLICY_YAML NEW_OUTPUT_DIRECTORY \u2192 emitted pool/NRI/Kubelet/systemd artifacts \u2192 initial stage installer \u2192 native host preflight \u2192 worker pool loaders",
+      "validation": {
+        "schema": "handwritten source validators",
+        "semantic": "string DNS-label regex^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$; exact buster,prism pool keys required. No general additionalProperties rejection: unknown fields pass current validator and participate in full selected JSON policyDigest",
+        "errorContract": "NATIVE_NODE_NAMESPACE_REQUIRED"
+      },
+      "target": {
+        "author": "config/native-host/<selected-node>/policy.yaml (proposed placement of the EXISTING single selected node-policy YAML CLI input, referenced by pipeline.config.json; not a new host policy owner)",
+        "reference": "pools.buster.namespace",
+        "justification": "loadNativeNodePolicy existing YAML argument validates this exact root; renderer/preflight/install callers must consume identical selected file digest. New path selection does not introduce a new loader/default/index. Physical naming/selection must be reviewed in C0 and implemented only authorized C3."
+      },
+      "activationScope": {
+        "current": "host initial install; changes require drained host maintenance, not runtime reload",
+        "target": "H host maintenance: original node/runtime/pool/root/ownership identity retained; fence+quiesce before changing pool/reserve/node or native software. B cannot move active A records or cleanup, and Ready only after same-generation physical capacity/kernel readback. schemaVersion remains protocol."
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "native pool capacity, Kubernetes reservation, max active scopes and host ownership; D18 migration deferred after T",
+      "profileEvalSuitability": "alternate valid profiles appropriate; fixed-generation Eval requires immutable binding before dispatch Complete current source-definition A/B YAML files at native-host-definition-profiles-bce3f075/{A,B}.yaml are actual existing renderer inputs; synthetic resource figures not physical capacity. All adjustable authored fields differ, schemaVersion1 unchanged protocol; runtime containerd A2.2.0/B2.3.0 are supported renderer syntax NOT actual installed binary claims.",
+      "migrationAction": "retain inventoried host profile author under C3; D18 worker rewrite explicitly not C1",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-DELIVERY"
+      ],
+      "caseIds": [
+        "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+        "DLV-CASE-NATIVE-HOST-ACTIVATION"
+      ],
+      "evidence": [
+        "docs/review/evidence/config-acceptance/delivery/source-observations.txt"
+      ],
+      "status": "source-traced",
+      "targetDomain": {
+        "schema": "docs/review/evidence/config-acceptance/delivery/target-native-host-schema-20261013.json",
+        "domain": {
+          "type": "string",
+          "pattern": "^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$"
+        },
+        "semanticRules": [
+          {
+            "id": "HOST-AGGREGATE-SAFE",
+            "expression": "for resource cpuMillicores,memoryBytes,tasks: BigInt(system)+BigInt(kubernetes)+sum(BigInt(role)) <=9007199254740991; never round overflow",
+            "reject": "NATIVE_NODE_TOTAL_RANGE_INVALID"
+          },
+          {
+            "id": "HOST-CFS-RATE",
+            "expression": "q=BigInt(pool.cpuMillicores)*BigInt(pool.cpuPeriodMicroseconds)/1000; product divisible by1000; q>=1000 and q<=9007199254740991; CFS period1000..1000000; currentcpuMillicores bound<=floor(MAX_SAFE/100) preserved until separately reviewed",
+            "reject": "NATIVE_NODE_CPU_QUOTA_RATE_INVALID (proposed producer semantic guard; existing Core/setup range diagnostics remain separate)"
+          },
+          {
+            "id": "HOST-CAPACITY",
+            "expression": "same physical node UID/machineId/bootId Ready; selected deployed containerd version equals sole versions.json selection; cgroupDriver systemd/cgroupsPerQOS/enforceNodeAllocatable pods; taskCapacity min(pidMax,threadsMax)>withheld and0<podTasksMax<=remaining; for CPU/memory capacity>withheld and0<allocatable<=capacity-withheld; host profile plus active scope reservations fit actual admission algorithm, not syntactic max alone",
+            "reject": "exact native-worker-node-capacity.mjs NATIVE_NODE_* and Core native pool readiness/limit mismatch diagnostics"
+          },
+          {
+            "id": "HOST-VERSION-SOLE",
+            "expression": "author schema has no runtime or software version property; selected versions.json#/nativeRuntime/containerd/version materializer ONLY adds current generated runtime.containerdVersion for real renderer/preflight/activation; no same-value exception for oldauthor",
+            "reject": "CONFIG_OLD_AUTHOR:runtime.containerdVersion (proposed)"
+          }
+        ],
+        "approval": "proposed C0 source-derived domain, independently unreviewed; not implementation",
+        "readerBoundary": "NATIVE_NODE_NAMESPACE_REQUIRED"
+      },
+      "fragment": "delivery",
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/delivery/source-observations.txt"
+      ],
+      "semanticStatus": "source-traced",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "DLV-NATIVE-HOST-POOLS-BUSTER-CPUMILLICORES",
+      "owner": "native-host",
+      "scope": {
+        "instance": "native-host",
+        "profile": "production deployment; alternate profiles proposed"
+      },
+      "class": "operator-setting",
+      "source": {
+        "path": "scripts/native-worker-node-policy.mjs",
+        "field": "pools.buster.cpuMillicores",
+        "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+        "line": null
+      },
+      "current": {
+        "valueOrDefault": "explicit native-worker-pools YAML policy; values not copied from deployment environment",
+        "precedence": "explicit POLICY_YAML \u2192 validated object \u2192 renderer projections; role pool selection not keywise merge"
+      },
+      "typeUnitDomain": "positive Number.isSafeInteger; no numeric defaults; <=Number.MAX_SAFE_INTEGER/100; BigInt aggregate system+kubernetes+all pools <=MAX_SAFE_INTEGER",
+      "reader": {
+        "operation": "nativePoolPolicy limits: memoryBytes\u2192memory.max; tasks\u2192pids.max; cpuMillicores*100\u2192cpu.max quota /100000us period \u2192 prepare controls; plus nativeNodeReservation systemReserved pool sum",
+        "references": [
+          {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1"
+          },
+          {
+            "path": "scripts/render-native-worker-node.mjs",
+            "sha256": "b32571ac43e893783a87002d473ecc3d3b9dd76d996ea3b26f76ec6a2ed748fc"
+          },
+          {
+            "path": "scripts/prepare-native-worker-pools.mjs",
+            "sha256": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3"
+          }
+        ]
+      },
+      "productiveCallerChain": "render-native-worker-node CLI POLICY_YAML NEW_OUTPUT_DIRECTORY \u2192 emitted pool/NRI/Kubelet/systemd artifacts \u2192 initial stage installer \u2192 native host preflight \u2192 worker pool loaders",
+      "validation": {
+        "schema": "handwritten source validators",
+        "semantic": "positive Number.isSafeInteger; no numeric defaults; <=Number.MAX_SAFE_INTEGER/100; BigInt aggregate system+kubernetes+all pools <=MAX_SAFE_INTEGER; exact buster,prism pool keys required. No general additionalProperties rejection: unknown fields pass current validator and participate in full selected JSON policyDigest",
+        "errorContract": "NATIVE_NODE_POLICY_LIMIT_INVALID / NATIVE_NODE_CPU_RANGE_INVALID / NATIVE_NODE_TOTAL_RANGE_INVALID"
+      },
+      "target": {
+        "author": "config/native-host/<selected-node>/policy.yaml (proposed placement of the EXISTING single selected node-policy YAML CLI input, referenced by pipeline.config.json; not a new host policy owner)",
+        "reference": "pools.buster.cpuMillicores",
+        "justification": "loadNativeNodePolicy existing YAML argument validates this exact root; renderer/preflight/install callers must consume identical selected file digest. New path selection does not introduce a new loader/default/index. Physical naming/selection must be reviewed in C0 and implemented only authorized C3."
+      },
+      "activationScope": {
+        "current": "host initial install; changes require drained host maintenance, not runtime reload",
+        "target": "H host maintenance: original node/runtime/pool/root/ownership identity retained; fence+quiesce before changing pool/reserve/node or native software. B cannot move active A records or cleanup, and Ready only after same-generation physical capacity/kernel readback. schemaVersion remains protocol."
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "native pool capacity, Kubernetes reservation, max active scopes and host ownership; D18 migration deferred after T",
+      "profileEvalSuitability": "alternate valid profiles appropriate; fixed-generation Eval requires immutable binding before dispatch Complete current source-definition A/B YAML files at native-host-definition-profiles-bce3f075/{A,B}.yaml are actual existing renderer inputs; synthetic resource figures not physical capacity. All adjustable authored fields differ, schemaVersion1 unchanged protocol; runtime containerd A2.2.0/B2.3.0 are supported renderer syntax NOT actual installed binary claims.",
+      "migrationAction": "retain inventoried host profile author under C3; D18 worker rewrite explicitly not C1",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-DELIVERY"
+      ],
+      "caseIds": [
+        "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+        "DLV-CASE-NATIVE-HOST-ACTIVATION"
+      ],
+      "evidence": [
+        "docs/review/evidence/config-acceptance/delivery/source-observations.txt"
+      ],
+      "status": "source-traced",
+      "targetDomain": {
+        "schema": "docs/review/evidence/config-acceptance/delivery/target-native-host-schema-20261013.json",
+        "domain": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 90071992547409
+        },
+        "semanticRules": [
+          {
+            "id": "HOST-AGGREGATE-SAFE",
+            "expression": "for resource cpuMillicores,memoryBytes,tasks: BigInt(system)+BigInt(kubernetes)+sum(BigInt(role)) <=9007199254740991; never round overflow",
+            "reject": "NATIVE_NODE_TOTAL_RANGE_INVALID"
+          },
+          {
+            "id": "HOST-CFS-RATE",
+            "expression": "q=BigInt(pool.cpuMillicores)*BigInt(pool.cpuPeriodMicroseconds)/1000; product divisible by1000; q>=1000 and q<=9007199254740991; CFS period1000..1000000; currentcpuMillicores bound<=floor(MAX_SAFE/100) preserved until separately reviewed",
+            "reject": "NATIVE_NODE_CPU_QUOTA_RATE_INVALID (proposed producer semantic guard; existing Core/setup range diagnostics remain separate)"
+          },
+          {
+            "id": "HOST-CAPACITY",
+            "expression": "same physical node UID/machineId/bootId Ready; selected deployed containerd version equals sole versions.json selection; cgroupDriver systemd/cgroupsPerQOS/enforceNodeAllocatable pods; taskCapacity min(pidMax,threadsMax)>withheld and0<podTasksMax<=remaining; for CPU/memory capacity>withheld and0<allocatable<=capacity-withheld; host profile plus active scope reservations fit actual admission algorithm, not syntactic max alone",
+            "reject": "exact native-worker-node-capacity.mjs NATIVE_NODE_* and Core native pool readiness/limit mismatch diagnostics"
+          },
+          {
+            "id": "HOST-VERSION-SOLE",
+            "expression": "author schema has no runtime or software version property; selected versions.json#/nativeRuntime/containerd/version materializer ONLY adds current generated runtime.containerdVersion for real renderer/preflight/activation; no same-value exception for oldauthor",
+            "reject": "CONFIG_OLD_AUTHOR:runtime.containerdVersion (proposed)"
+          }
+        ],
+        "approval": "proposed C0 source-derived domain, independently unreviewed; not implementation",
+        "readerBoundary": "NATIVE_NODE_CPU_RANGE_INVALID"
+      },
+      "fragment": "delivery",
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/delivery/source-observations.txt"
+      ],
+      "semanticStatus": "source-traced",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "DLV-NATIVE-HOST-POOLS-BUSTER-MEMORYBYTES",
+      "owner": "native-host",
+      "scope": {
+        "instance": "native-host",
+        "profile": "production deployment; alternate profiles proposed"
+      },
+      "class": "operator-setting",
+      "source": {
+        "path": "scripts/native-worker-node-policy.mjs",
+        "field": "pools.buster.memoryBytes",
+        "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+        "line": null
+      },
+      "current": {
+        "valueOrDefault": "explicit native-worker-pools YAML policy; values not copied from deployment environment",
+        "precedence": "explicit POLICY_YAML \u2192 validated object \u2192 renderer projections; role pool selection not keywise merge"
+      },
+      "typeUnitDomain": "positive Number.isSafeInteger; no numeric defaults; bytes multiple4096; BigInt aggregate system+kubernetes+all pools <=MAX_SAFE_INTEGER",
+      "reader": {
+        "operation": "nativePoolPolicy limits: memoryBytes\u2192memory.max; tasks\u2192pids.max; cpuMillicores*100\u2192cpu.max quota /100000us period \u2192 prepare controls; plus nativeNodeReservation systemReserved pool sum",
+        "references": [
+          {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1"
+          },
+          {
+            "path": "scripts/render-native-worker-node.mjs",
+            "sha256": "b32571ac43e893783a87002d473ecc3d3b9dd76d996ea3b26f76ec6a2ed748fc"
+          },
+          {
+            "path": "scripts/prepare-native-worker-pools.mjs",
+            "sha256": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3"
+          }
+        ]
+      },
+      "productiveCallerChain": "render-native-worker-node CLI POLICY_YAML NEW_OUTPUT_DIRECTORY \u2192 emitted pool/NRI/Kubelet/systemd artifacts \u2192 initial stage installer \u2192 native host preflight \u2192 worker pool loaders",
+      "validation": {
+        "schema": "handwritten source validators",
+        "semantic": "positive Number.isSafeInteger; no numeric defaults; bytes multiple4096; BigInt aggregate system+kubernetes+all pools <=MAX_SAFE_INTEGER; exact buster,prism pool keys required. No general additionalProperties rejection: unknown fields pass current validator and participate in full selected JSON policyDigest",
+        "errorContract": "NATIVE_NODE_POLICY_LIMIT_INVALID / NATIVE_NODE_MEMORY_ALIGNMENT_INVALID / NATIVE_NODE_TOTAL_RANGE_INVALID"
+      },
+      "target": {
+        "author": "config/native-host/<selected-node>/policy.yaml (proposed placement of the EXISTING single selected node-policy YAML CLI input, referenced by pipeline.config.json; not a new host policy owner)",
+        "reference": "pools.buster.memoryBytes",
+        "justification": "loadNativeNodePolicy existing YAML argument validates this exact root; renderer/preflight/install callers must consume identical selected file digest. New path selection does not introduce a new loader/default/index. Physical naming/selection must be reviewed in C0 and implemented only authorized C3."
+      },
+      "activationScope": {
+        "current": "host initial install; changes require drained host maintenance, not runtime reload",
+        "target": "H host maintenance: original node/runtime/pool/root/ownership identity retained; fence+quiesce before changing pool/reserve/node or native software. B cannot move active A records or cleanup, and Ready only after same-generation physical capacity/kernel readback. schemaVersion remains protocol."
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "native pool capacity, Kubernetes reservation, max active scopes and host ownership; D18 migration deferred after T",
+      "profileEvalSuitability": "alternate valid profiles appropriate; fixed-generation Eval requires immutable binding before dispatch Complete current source-definition A/B YAML files at native-host-definition-profiles-bce3f075/{A,B}.yaml are actual existing renderer inputs; synthetic resource figures not physical capacity. All adjustable authored fields differ, schemaVersion1 unchanged protocol; runtime containerd A2.2.0/B2.3.0 are supported renderer syntax NOT actual installed binary claims.",
+      "migrationAction": "retain inventoried host profile author under C3; D18 worker rewrite explicitly not C1",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-DELIVERY"
+      ],
+      "caseIds": [
+        "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+        "DLV-CASE-NATIVE-HOST-ACTIVATION"
+      ],
+      "evidence": [
+        "docs/review/evidence/config-acceptance/delivery/source-observations.txt"
+      ],
+      "status": "source-traced",
+      "targetDomain": {
+        "schema": "docs/review/evidence/config-acceptance/delivery/target-native-host-schema-20261013.json",
+        "domain": {
+          "type": "integer",
+          "minimum": 4096,
+          "maximum": 9007199254740991,
+          "multipleOf": 4096
+        },
+        "semanticRules": [
+          {
+            "id": "HOST-AGGREGATE-SAFE",
+            "expression": "for resource cpuMillicores,memoryBytes,tasks: BigInt(system)+BigInt(kubernetes)+sum(BigInt(role)) <=9007199254740991; never round overflow",
+            "reject": "NATIVE_NODE_TOTAL_RANGE_INVALID"
+          },
+          {
+            "id": "HOST-CFS-RATE",
+            "expression": "q=BigInt(pool.cpuMillicores)*BigInt(pool.cpuPeriodMicroseconds)/1000; product divisible by1000; q>=1000 and q<=9007199254740991; CFS period1000..1000000; currentcpuMillicores bound<=floor(MAX_SAFE/100) preserved until separately reviewed",
+            "reject": "NATIVE_NODE_CPU_QUOTA_RATE_INVALID (proposed producer semantic guard; existing Core/setup range diagnostics remain separate)"
+          },
+          {
+            "id": "HOST-CAPACITY",
+            "expression": "same physical node UID/machineId/bootId Ready; selected deployed containerd version equals sole versions.json selection; cgroupDriver systemd/cgroupsPerQOS/enforceNodeAllocatable pods; taskCapacity min(pidMax,threadsMax)>withheld and0<podTasksMax<=remaining; for CPU/memory capacity>withheld and0<allocatable<=capacity-withheld; host profile plus active scope reservations fit actual admission algorithm, not syntactic max alone",
+            "reject": "exact native-worker-node-capacity.mjs NATIVE_NODE_* and Core native pool readiness/limit mismatch diagnostics"
+          },
+          {
+            "id": "HOST-VERSION-SOLE",
+            "expression": "author schema has no runtime or software version property; selected versions.json#/nativeRuntime/containerd/version materializer ONLY adds current generated runtime.containerdVersion for real renderer/preflight/activation; no same-value exception for oldauthor",
+            "reject": "CONFIG_OLD_AUTHOR:runtime.containerdVersion (proposed)"
+          }
+        ],
+        "approval": "proposed C0 source-derived domain, independently unreviewed; not implementation",
+        "readerBoundary": "NATIVE_NODE_MEMORY_ALIGNMENT_INVALID"
+      },
+      "fragment": "delivery",
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/delivery/source-observations.txt"
+      ],
+      "semanticStatus": "source-traced",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "DLV-NATIVE-HOST-POOLS-BUSTER-TASKS",
+      "owner": "native-host",
+      "scope": {
+        "instance": "native-host",
+        "profile": "production deployment; alternate profiles proposed"
+      },
+      "class": "operator-setting",
+      "source": {
+        "path": "scripts/native-worker-node-policy.mjs",
+        "field": "pools.buster.tasks",
+        "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+        "line": null
+      },
+      "current": {
+        "valueOrDefault": "explicit native-worker-pools YAML policy; values not copied from deployment environment",
+        "precedence": "explicit POLICY_YAML \u2192 validated object \u2192 renderer projections; role pool selection not keywise merge"
+      },
+      "typeUnitDomain": "positive Number.isSafeInteger; no numeric defaults; BigInt aggregate system+kubernetes+all pools <=MAX_SAFE_INTEGER",
+      "reader": {
+        "operation": "nativePoolPolicy limits: memoryBytes\u2192memory.max; tasks\u2192pids.max; cpuMillicores*100\u2192cpu.max quota /100000us period \u2192 prepare controls; plus nativeNodeReservation systemReserved pool sum",
+        "references": [
+          {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1"
+          },
+          {
+            "path": "scripts/render-native-worker-node.mjs",
+            "sha256": "b32571ac43e893783a87002d473ecc3d3b9dd76d996ea3b26f76ec6a2ed748fc"
+          },
+          {
+            "path": "scripts/prepare-native-worker-pools.mjs",
+            "sha256": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3"
+          }
+        ]
+      },
+      "productiveCallerChain": "render-native-worker-node CLI POLICY_YAML NEW_OUTPUT_DIRECTORY \u2192 emitted pool/NRI/Kubelet/systemd artifacts \u2192 initial stage installer \u2192 native host preflight \u2192 worker pool loaders",
+      "validation": {
+        "schema": "handwritten source validators",
+        "semantic": "positive Number.isSafeInteger; no numeric defaults; BigInt aggregate system+kubernetes+all pools <=MAX_SAFE_INTEGER; exact buster,prism pool keys required. No general additionalProperties rejection: unknown fields pass current validator and participate in full selected JSON policyDigest",
+        "errorContract": "NATIVE_NODE_POLICY_LIMIT_INVALID / NATIVE_NODE_TOTAL_RANGE_INVALID"
+      },
+      "target": {
+        "author": "config/native-host/<selected-node>/policy.yaml (proposed placement of the EXISTING single selected node-policy YAML CLI input, referenced by pipeline.config.json; not a new host policy owner)",
+        "reference": "pools.buster.tasks",
+        "justification": "loadNativeNodePolicy existing YAML argument validates this exact root; renderer/preflight/install callers must consume identical selected file digest. New path selection does not introduce a new loader/default/index. Physical naming/selection must be reviewed in C0 and implemented only authorized C3."
+      },
+      "activationScope": {
+        "current": "host initial install; changes require drained host maintenance, not runtime reload",
+        "target": "H host maintenance: original node/runtime/pool/root/ownership identity retained; fence+quiesce before changing pool/reserve/node or native software. B cannot move active A records or cleanup, and Ready only after same-generation physical capacity/kernel readback. schemaVersion remains protocol."
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "native pool capacity, Kubernetes reservation, max active scopes and host ownership; D18 migration deferred after T",
+      "profileEvalSuitability": "alternate valid profiles appropriate; fixed-generation Eval requires immutable binding before dispatch Complete current source-definition A/B YAML files at native-host-definition-profiles-bce3f075/{A,B}.yaml are actual existing renderer inputs; synthetic resource figures not physical capacity. All adjustable authored fields differ, schemaVersion1 unchanged protocol; runtime containerd A2.2.0/B2.3.0 are supported renderer syntax NOT actual installed binary claims.",
+      "migrationAction": "retain inventoried host profile author under C3; D18 worker rewrite explicitly not C1",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-DELIVERY"
+      ],
+      "caseIds": [
+        "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+        "DLV-CASE-NATIVE-HOST-ACTIVATION"
+      ],
+      "evidence": [
+        "docs/review/evidence/config-acceptance/delivery/source-observations.txt"
+      ],
+      "status": "source-traced",
+      "targetDomain": {
+        "schema": "docs/review/evidence/config-acceptance/delivery/target-native-host-schema-20261013.json",
+        "domain": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "semanticRules": [
+          {
+            "id": "HOST-AGGREGATE-SAFE",
+            "expression": "for resource cpuMillicores,memoryBytes,tasks: BigInt(system)+BigInt(kubernetes)+sum(BigInt(role)) <=9007199254740991; never round overflow",
+            "reject": "NATIVE_NODE_TOTAL_RANGE_INVALID"
+          },
+          {
+            "id": "HOST-CFS-RATE",
+            "expression": "q=BigInt(pool.cpuMillicores)*BigInt(pool.cpuPeriodMicroseconds)/1000; product divisible by1000; q>=1000 and q<=9007199254740991; CFS period1000..1000000; currentcpuMillicores bound<=floor(MAX_SAFE/100) preserved until separately reviewed",
+            "reject": "NATIVE_NODE_CPU_QUOTA_RATE_INVALID (proposed producer semantic guard; existing Core/setup range diagnostics remain separate)"
+          },
+          {
+            "id": "HOST-CAPACITY",
+            "expression": "same physical node UID/machineId/bootId Ready; selected deployed containerd version equals sole versions.json selection; cgroupDriver systemd/cgroupsPerQOS/enforceNodeAllocatable pods; taskCapacity min(pidMax,threadsMax)>withheld and0<podTasksMax<=remaining; for CPU/memory capacity>withheld and0<allocatable<=capacity-withheld; host profile plus active scope reservations fit actual admission algorithm, not syntactic max alone",
+            "reject": "exact native-worker-node-capacity.mjs NATIVE_NODE_* and Core native pool readiness/limit mismatch diagnostics"
+          },
+          {
+            "id": "HOST-VERSION-SOLE",
+            "expression": "author schema has no runtime or software version property; selected versions.json#/nativeRuntime/containerd/version materializer ONLY adds current generated runtime.containerdVersion for real renderer/preflight/activation; no same-value exception for oldauthor",
+            "reject": "CONFIG_OLD_AUTHOR:runtime.containerdVersion (proposed)"
+          }
+        ],
+        "approval": "proposed C0 source-derived domain, independently unreviewed; not implementation",
+        "readerBoundary": "NATIVE_NODE_POLICY_LIMIT_INVALID"
+      },
+      "fragment": "delivery",
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/delivery/source-observations.txt"
+      ],
+      "semanticStatus": "source-traced",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "DLV-NATIVE-HOST-POOLS-BUSTER-MAXIMUMACTIVESCOPES",
+      "owner": "native-host",
+      "scope": {
+        "instance": "native-host",
+        "profile": "production deployment; alternate profiles proposed"
+      },
+      "class": "operator-setting",
+      "source": {
+        "path": "scripts/native-worker-node-policy.mjs",
+        "field": "pools.buster.maximumActiveScopes",
+        "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+        "line": null
+      },
+      "current": {
+        "valueOrDefault": "explicit native-worker-pools YAML policy; values not copied from deployment environment",
+        "precedence": "explicit POLICY_YAML \u2192 validated object \u2192 renderer projections; role pool selection not keywise merge"
+      },
+      "typeUnitDomain": "positive Number.isSafeInteger; no numeric defaults",
+      "reader": {
+        "operation": "nativePoolPolicy maximumActiveScopes \u2192 <role>-pool.json \u2192 worker native scope admission; not prepare cgroup control",
+        "references": [
+          {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1"
+          },
+          {
+            "path": "scripts/render-native-worker-node.mjs",
+            "sha256": "b32571ac43e893783a87002d473ecc3d3b9dd76d996ea3b26f76ec6a2ed748fc"
+          },
+          {
+            "path": "scripts/prepare-native-worker-pools.mjs",
+            "sha256": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3"
+          }
+        ]
+      },
+      "productiveCallerChain": "render-native-worker-node CLI POLICY_YAML NEW_OUTPUT_DIRECTORY \u2192 emitted pool/NRI/Kubelet/systemd artifacts \u2192 initial stage installer \u2192 native host preflight \u2192 worker pool loaders",
+      "validation": {
+        "schema": "handwritten source validators",
+        "semantic": "positive Number.isSafeInteger; no numeric defaults; exact buster,prism pool keys required. No general additionalProperties rejection: unknown fields pass current validator and participate in full selected JSON policyDigest",
+        "errorContract": "NATIVE_NODE_POLICY_LIMIT_INVALID"
+      },
+      "target": {
+        "author": "config/native-host/<selected-node>/policy.yaml (proposed placement of the EXISTING single selected node-policy YAML CLI input, referenced by pipeline.config.json; not a new host policy owner)",
+        "reference": "pools.buster.maximumActiveScopes",
+        "justification": "loadNativeNodePolicy existing YAML argument validates this exact root; renderer/preflight/install callers must consume identical selected file digest. New path selection does not introduce a new loader/default/index. Physical naming/selection must be reviewed in C0 and implemented only authorized C3."
+      },
+      "activationScope": {
+        "current": "host initial install; changes require drained host maintenance, not runtime reload",
+        "target": "H host maintenance: original node/runtime/pool/root/ownership identity retained; fence+quiesce before changing pool/reserve/node or native software. B cannot move active A records or cleanup, and Ready only after same-generation physical capacity/kernel readback. schemaVersion remains protocol."
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "native pool capacity, Kubernetes reservation, max active scopes and host ownership; D18 migration deferred after T",
+      "profileEvalSuitability": "alternate valid profiles appropriate; fixed-generation Eval requires immutable binding before dispatch Complete current source-definition A/B YAML files at native-host-definition-profiles-bce3f075/{A,B}.yaml are actual existing renderer inputs; synthetic resource figures not physical capacity. All adjustable authored fields differ, schemaVersion1 unchanged protocol; runtime containerd A2.2.0/B2.3.0 are supported renderer syntax NOT actual installed binary claims.",
+      "migrationAction": "retain inventoried host profile author under C3; D18 worker rewrite explicitly not C1",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-DELIVERY"
+      ],
+      "caseIds": [
+        "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+        "DLV-CASE-NATIVE-HOST-ACTIVATION"
+      ],
+      "evidence": [
+        "docs/review/evidence/config-acceptance/delivery/source-observations.txt"
+      ],
+      "status": "source-traced",
+      "targetDomain": {
+        "schema": "docs/review/evidence/config-acceptance/delivery/target-native-host-schema-20261013.json",
+        "domain": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "semanticRules": [
+          {
+            "id": "HOST-AGGREGATE-SAFE",
+            "expression": "for resource cpuMillicores,memoryBytes,tasks: BigInt(system)+BigInt(kubernetes)+sum(BigInt(role)) <=9007199254740991; never round overflow",
+            "reject": "NATIVE_NODE_TOTAL_RANGE_INVALID"
+          },
+          {
+            "id": "HOST-CFS-RATE",
+            "expression": "q=BigInt(pool.cpuMillicores)*BigInt(pool.cpuPeriodMicroseconds)/1000; product divisible by1000; q>=1000 and q<=9007199254740991; CFS period1000..1000000; currentcpuMillicores bound<=floor(MAX_SAFE/100) preserved until separately reviewed",
+            "reject": "NATIVE_NODE_CPU_QUOTA_RATE_INVALID (proposed producer semantic guard; existing Core/setup range diagnostics remain separate)"
+          },
+          {
+            "id": "HOST-CAPACITY",
+            "expression": "same physical node UID/machineId/bootId Ready; selected deployed containerd version equals sole versions.json selection; cgroupDriver systemd/cgroupsPerQOS/enforceNodeAllocatable pods; taskCapacity min(pidMax,threadsMax)>withheld and0<podTasksMax<=remaining; for CPU/memory capacity>withheld and0<allocatable<=capacity-withheld; host profile plus active scope reservations fit actual admission algorithm, not syntactic max alone",
+            "reject": "exact native-worker-node-capacity.mjs NATIVE_NODE_* and Core native pool readiness/limit mismatch diagnostics"
+          },
+          {
+            "id": "HOST-VERSION-SOLE",
+            "expression": "author schema has no runtime or software version property; selected versions.json#/nativeRuntime/containerd/version materializer ONLY adds current generated runtime.containerdVersion for real renderer/preflight/activation; no same-value exception for oldauthor",
+            "reject": "CONFIG_OLD_AUTHOR:runtime.containerdVersion (proposed)"
+          }
+        ],
+        "approval": "proposed C0 source-derived domain, independently unreviewed; not implementation",
+        "readerBoundary": "NATIVE_NODE_POLICY_LIMIT_INVALID"
+      },
+      "fragment": "delivery",
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/delivery/source-observations.txt"
+      ],
+      "semanticStatus": "source-traced",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "DLV-NATIVE-HOST-POOLS-PRISM-NAMESPACE",
+      "owner": "native-host",
+      "scope": {
+        "instance": "native-host",
+        "profile": "production deployment; alternate profiles proposed"
+      },
+      "class": "operator-setting",
+      "source": {
+        "path": "scripts/native-worker-node-policy.mjs",
+        "field": "pools.prism.namespace",
+        "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+        "line": null
+      },
+      "current": {
+        "valueOrDefault": "explicit native-worker-pools YAML policy; values not copied from deployment environment",
+        "precedence": "explicit POLICY_YAML \u2192 validated object \u2192 renderer projections; role pool selection not keywise merge"
+      },
+      "typeUnitDomain": "string DNS-label regex^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$",
+      "reader": {
+        "operation": "nriPolicy roles.namespace \u2192 native-nri.json; rendered native Chart namespace; role admission identity",
+        "references": [
+          {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1"
+          },
+          {
+            "path": "scripts/render-native-worker-node.mjs",
+            "sha256": "b32571ac43e893783a87002d473ecc3d3b9dd76d996ea3b26f76ec6a2ed748fc"
+          },
+          {
+            "path": "scripts/prepare-native-worker-pools.mjs",
+            "sha256": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3"
+          }
+        ]
+      },
+      "productiveCallerChain": "render-native-worker-node CLI POLICY_YAML NEW_OUTPUT_DIRECTORY \u2192 emitted pool/NRI/Kubelet/systemd artifacts \u2192 initial stage installer \u2192 native host preflight \u2192 worker pool loaders",
+      "validation": {
+        "schema": "handwritten source validators",
+        "semantic": "string DNS-label regex^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$; exact buster,prism pool keys required. No general additionalProperties rejection: unknown fields pass current validator and participate in full selected JSON policyDigest",
+        "errorContract": "NATIVE_NODE_NAMESPACE_REQUIRED"
+      },
+      "target": {
+        "author": "config/native-host/<selected-node>/policy.yaml (proposed placement of the EXISTING single selected node-policy YAML CLI input, referenced by pipeline.config.json; not a new host policy owner)",
+        "reference": "pools.prism.namespace",
+        "justification": "loadNativeNodePolicy existing YAML argument validates this exact root; renderer/preflight/install callers must consume identical selected file digest. New path selection does not introduce a new loader/default/index. Physical naming/selection must be reviewed in C0 and implemented only authorized C3."
+      },
+      "activationScope": {
+        "current": "host initial install; changes require drained host maintenance, not runtime reload",
+        "target": "H host maintenance: original node/runtime/pool/root/ownership identity retained; fence+quiesce before changing pool/reserve/node or native software. B cannot move active A records or cleanup, and Ready only after same-generation physical capacity/kernel readback. schemaVersion remains protocol."
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "native pool capacity, Kubernetes reservation, max active scopes and host ownership; D18 migration deferred after T",
+      "profileEvalSuitability": "alternate valid profiles appropriate; fixed-generation Eval requires immutable binding before dispatch Complete current source-definition A/B YAML files at native-host-definition-profiles-bce3f075/{A,B}.yaml are actual existing renderer inputs; synthetic resource figures not physical capacity. All adjustable authored fields differ, schemaVersion1 unchanged protocol; runtime containerd A2.2.0/B2.3.0 are supported renderer syntax NOT actual installed binary claims.",
+      "migrationAction": "retain inventoried host profile author under C3; D18 worker rewrite explicitly not C1",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-DELIVERY"
+      ],
+      "caseIds": [
+        "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+        "DLV-CASE-NATIVE-HOST-ACTIVATION"
+      ],
+      "evidence": [
+        "docs/review/evidence/config-acceptance/delivery/source-observations.txt"
+      ],
+      "status": "source-traced",
+      "targetDomain": {
+        "schema": "docs/review/evidence/config-acceptance/delivery/target-native-host-schema-20261013.json",
+        "domain": {
+          "type": "string",
+          "pattern": "^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$"
+        },
+        "semanticRules": [
+          {
+            "id": "HOST-AGGREGATE-SAFE",
+            "expression": "for resource cpuMillicores,memoryBytes,tasks: BigInt(system)+BigInt(kubernetes)+sum(BigInt(role)) <=9007199254740991; never round overflow",
+            "reject": "NATIVE_NODE_TOTAL_RANGE_INVALID"
+          },
+          {
+            "id": "HOST-CFS-RATE",
+            "expression": "q=BigInt(pool.cpuMillicores)*BigInt(pool.cpuPeriodMicroseconds)/1000; product divisible by1000; q>=1000 and q<=9007199254740991; CFS period1000..1000000; currentcpuMillicores bound<=floor(MAX_SAFE/100) preserved until separately reviewed",
+            "reject": "NATIVE_NODE_CPU_QUOTA_RATE_INVALID (proposed producer semantic guard; existing Core/setup range diagnostics remain separate)"
+          },
+          {
+            "id": "HOST-CAPACITY",
+            "expression": "same physical node UID/machineId/bootId Ready; selected deployed containerd version equals sole versions.json selection; cgroupDriver systemd/cgroupsPerQOS/enforceNodeAllocatable pods; taskCapacity min(pidMax,threadsMax)>withheld and0<podTasksMax<=remaining; for CPU/memory capacity>withheld and0<allocatable<=capacity-withheld; host profile plus active scope reservations fit actual admission algorithm, not syntactic max alone",
+            "reject": "exact native-worker-node-capacity.mjs NATIVE_NODE_* and Core native pool readiness/limit mismatch diagnostics"
+          },
+          {
+            "id": "HOST-VERSION-SOLE",
+            "expression": "author schema has no runtime or software version property; selected versions.json#/nativeRuntime/containerd/version materializer ONLY adds current generated runtime.containerdVersion for real renderer/preflight/activation; no same-value exception for oldauthor",
+            "reject": "CONFIG_OLD_AUTHOR:runtime.containerdVersion (proposed)"
+          }
+        ],
+        "approval": "proposed C0 source-derived domain, independently unreviewed; not implementation",
+        "readerBoundary": "NATIVE_NODE_NAMESPACE_REQUIRED"
+      },
+      "fragment": "delivery",
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/delivery/source-observations.txt"
+      ],
+      "semanticStatus": "source-traced",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "DLV-NATIVE-HOST-POOLS-PRISM-CPUMILLICORES",
+      "owner": "native-host",
+      "scope": {
+        "instance": "native-host",
+        "profile": "production deployment; alternate profiles proposed"
+      },
+      "class": "operator-setting",
+      "source": {
+        "path": "scripts/native-worker-node-policy.mjs",
+        "field": "pools.prism.cpuMillicores",
+        "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+        "line": null
+      },
+      "current": {
+        "valueOrDefault": "explicit native-worker-pools YAML policy; values not copied from deployment environment",
+        "precedence": "explicit POLICY_YAML \u2192 validated object \u2192 renderer projections; role pool selection not keywise merge"
+      },
+      "typeUnitDomain": "positive Number.isSafeInteger; no numeric defaults; <=Number.MAX_SAFE_INTEGER/100; BigInt aggregate system+kubernetes+all pools <=MAX_SAFE_INTEGER",
+      "reader": {
+        "operation": "nativePoolPolicy limits: memoryBytes\u2192memory.max; tasks\u2192pids.max; cpuMillicores*100\u2192cpu.max quota /100000us period \u2192 prepare controls; plus nativeNodeReservation systemReserved pool sum",
+        "references": [
+          {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1"
+          },
+          {
+            "path": "scripts/render-native-worker-node.mjs",
+            "sha256": "b32571ac43e893783a87002d473ecc3d3b9dd76d996ea3b26f76ec6a2ed748fc"
+          },
+          {
+            "path": "scripts/prepare-native-worker-pools.mjs",
+            "sha256": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3"
+          }
+        ]
+      },
+      "productiveCallerChain": "render-native-worker-node CLI POLICY_YAML NEW_OUTPUT_DIRECTORY \u2192 emitted pool/NRI/Kubelet/systemd artifacts \u2192 initial stage installer \u2192 native host preflight \u2192 worker pool loaders",
+      "validation": {
+        "schema": "handwritten source validators",
+        "semantic": "positive Number.isSafeInteger; no numeric defaults; <=Number.MAX_SAFE_INTEGER/100; BigInt aggregate system+kubernetes+all pools <=MAX_SAFE_INTEGER; exact buster,prism pool keys required. No general additionalProperties rejection: unknown fields pass current validator and participate in full selected JSON policyDigest",
+        "errorContract": "NATIVE_NODE_POLICY_LIMIT_INVALID / NATIVE_NODE_CPU_RANGE_INVALID / NATIVE_NODE_TOTAL_RANGE_INVALID"
+      },
+      "target": {
+        "author": "config/native-host/<selected-node>/policy.yaml (proposed placement of the EXISTING single selected node-policy YAML CLI input, referenced by pipeline.config.json; not a new host policy owner)",
+        "reference": "pools.prism.cpuMillicores",
+        "justification": "loadNativeNodePolicy existing YAML argument validates this exact root; renderer/preflight/install callers must consume identical selected file digest. New path selection does not introduce a new loader/default/index. Physical naming/selection must be reviewed in C0 and implemented only authorized C3."
+      },
+      "activationScope": {
+        "current": "host initial install; changes require drained host maintenance, not runtime reload",
+        "target": "H host maintenance: original node/runtime/pool/root/ownership identity retained; fence+quiesce before changing pool/reserve/node or native software. B cannot move active A records or cleanup, and Ready only after same-generation physical capacity/kernel readback. schemaVersion remains protocol."
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "native pool capacity, Kubernetes reservation, max active scopes and host ownership; D18 migration deferred after T",
+      "profileEvalSuitability": "alternate valid profiles appropriate; fixed-generation Eval requires immutable binding before dispatch Complete current source-definition A/B YAML files at native-host-definition-profiles-bce3f075/{A,B}.yaml are actual existing renderer inputs; synthetic resource figures not physical capacity. All adjustable authored fields differ, schemaVersion1 unchanged protocol; runtime containerd A2.2.0/B2.3.0 are supported renderer syntax NOT actual installed binary claims.",
+      "migrationAction": "retain inventoried host profile author under C3; D18 worker rewrite explicitly not C1",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-DELIVERY"
+      ],
+      "caseIds": [
+        "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+        "DLV-CASE-NATIVE-HOST-ACTIVATION"
+      ],
+      "evidence": [
+        "docs/review/evidence/config-acceptance/delivery/source-observations.txt"
+      ],
+      "status": "source-traced",
+      "targetDomain": {
+        "schema": "docs/review/evidence/config-acceptance/delivery/target-native-host-schema-20261013.json",
+        "domain": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 90071992547409
+        },
+        "semanticRules": [
+          {
+            "id": "HOST-AGGREGATE-SAFE",
+            "expression": "for resource cpuMillicores,memoryBytes,tasks: BigInt(system)+BigInt(kubernetes)+sum(BigInt(role)) <=9007199254740991; never round overflow",
+            "reject": "NATIVE_NODE_TOTAL_RANGE_INVALID"
+          },
+          {
+            "id": "HOST-CFS-RATE",
+            "expression": "q=BigInt(pool.cpuMillicores)*BigInt(pool.cpuPeriodMicroseconds)/1000; product divisible by1000; q>=1000 and q<=9007199254740991; CFS period1000..1000000; currentcpuMillicores bound<=floor(MAX_SAFE/100) preserved until separately reviewed",
+            "reject": "NATIVE_NODE_CPU_QUOTA_RATE_INVALID (proposed producer semantic guard; existing Core/setup range diagnostics remain separate)"
+          },
+          {
+            "id": "HOST-CAPACITY",
+            "expression": "same physical node UID/machineId/bootId Ready; selected deployed containerd version equals sole versions.json selection; cgroupDriver systemd/cgroupsPerQOS/enforceNodeAllocatable pods; taskCapacity min(pidMax,threadsMax)>withheld and0<podTasksMax<=remaining; for CPU/memory capacity>withheld and0<allocatable<=capacity-withheld; host profile plus active scope reservations fit actual admission algorithm, not syntactic max alone",
+            "reject": "exact native-worker-node-capacity.mjs NATIVE_NODE_* and Core native pool readiness/limit mismatch diagnostics"
+          },
+          {
+            "id": "HOST-VERSION-SOLE",
+            "expression": "author schema has no runtime or software version property; selected versions.json#/nativeRuntime/containerd/version materializer ONLY adds current generated runtime.containerdVersion for real renderer/preflight/activation; no same-value exception for oldauthor",
+            "reject": "CONFIG_OLD_AUTHOR:runtime.containerdVersion (proposed)"
+          }
+        ],
+        "approval": "proposed C0 source-derived domain, independently unreviewed; not implementation",
+        "readerBoundary": "NATIVE_NODE_CPU_RANGE_INVALID"
+      },
+      "fragment": "delivery",
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/delivery/source-observations.txt"
+      ],
+      "semanticStatus": "source-traced",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "DLV-NATIVE-HOST-POOLS-PRISM-MEMORYBYTES",
+      "owner": "native-host",
+      "scope": {
+        "instance": "native-host",
+        "profile": "production deployment; alternate profiles proposed"
+      },
+      "class": "operator-setting",
+      "source": {
+        "path": "scripts/native-worker-node-policy.mjs",
+        "field": "pools.prism.memoryBytes",
+        "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+        "line": null
+      },
+      "current": {
+        "valueOrDefault": "explicit native-worker-pools YAML policy; values not copied from deployment environment",
+        "precedence": "explicit POLICY_YAML \u2192 validated object \u2192 renderer projections; role pool selection not keywise merge"
+      },
+      "typeUnitDomain": "positive Number.isSafeInteger; no numeric defaults; bytes multiple4096; BigInt aggregate system+kubernetes+all pools <=MAX_SAFE_INTEGER",
+      "reader": {
+        "operation": "nativePoolPolicy limits: memoryBytes\u2192memory.max; tasks\u2192pids.max; cpuMillicores*100\u2192cpu.max quota /100000us period \u2192 prepare controls; plus nativeNodeReservation systemReserved pool sum",
+        "references": [
+          {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1"
+          },
+          {
+            "path": "scripts/render-native-worker-node.mjs",
+            "sha256": "b32571ac43e893783a87002d473ecc3d3b9dd76d996ea3b26f76ec6a2ed748fc"
+          },
+          {
+            "path": "scripts/prepare-native-worker-pools.mjs",
+            "sha256": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3"
+          }
+        ]
+      },
+      "productiveCallerChain": "render-native-worker-node CLI POLICY_YAML NEW_OUTPUT_DIRECTORY \u2192 emitted pool/NRI/Kubelet/systemd artifacts \u2192 initial stage installer \u2192 native host preflight \u2192 worker pool loaders",
+      "validation": {
+        "schema": "handwritten source validators",
+        "semantic": "positive Number.isSafeInteger; no numeric defaults; bytes multiple4096; BigInt aggregate system+kubernetes+all pools <=MAX_SAFE_INTEGER; exact buster,prism pool keys required. No general additionalProperties rejection: unknown fields pass current validator and participate in full selected JSON policyDigest",
+        "errorContract": "NATIVE_NODE_POLICY_LIMIT_INVALID / NATIVE_NODE_MEMORY_ALIGNMENT_INVALID / NATIVE_NODE_TOTAL_RANGE_INVALID"
+      },
+      "target": {
+        "author": "config/native-host/<selected-node>/policy.yaml (proposed placement of the EXISTING single selected node-policy YAML CLI input, referenced by pipeline.config.json; not a new host policy owner)",
+        "reference": "pools.prism.memoryBytes",
+        "justification": "loadNativeNodePolicy existing YAML argument validates this exact root; renderer/preflight/install callers must consume identical selected file digest. New path selection does not introduce a new loader/default/index. Physical naming/selection must be reviewed in C0 and implemented only authorized C3."
+      },
+      "activationScope": {
+        "current": "host initial install; changes require drained host maintenance, not runtime reload",
+        "target": "H host maintenance: original node/runtime/pool/root/ownership identity retained; fence+quiesce before changing pool/reserve/node or native software. B cannot move active A records or cleanup, and Ready only after same-generation physical capacity/kernel readback. schemaVersion remains protocol."
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "native pool capacity, Kubernetes reservation, max active scopes and host ownership; D18 migration deferred after T",
+      "profileEvalSuitability": "alternate valid profiles appropriate; fixed-generation Eval requires immutable binding before dispatch Complete current source-definition A/B YAML files at native-host-definition-profiles-bce3f075/{A,B}.yaml are actual existing renderer inputs; synthetic resource figures not physical capacity. All adjustable authored fields differ, schemaVersion1 unchanged protocol; runtime containerd A2.2.0/B2.3.0 are supported renderer syntax NOT actual installed binary claims.",
+      "migrationAction": "retain inventoried host profile author under C3; D18 worker rewrite explicitly not C1",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-DELIVERY"
+      ],
+      "caseIds": [
+        "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+        "DLV-CASE-NATIVE-HOST-ACTIVATION"
+      ],
+      "evidence": [
+        "docs/review/evidence/config-acceptance/delivery/source-observations.txt"
+      ],
+      "status": "source-traced",
+      "targetDomain": {
+        "schema": "docs/review/evidence/config-acceptance/delivery/target-native-host-schema-20261013.json",
+        "domain": {
+          "type": "integer",
+          "minimum": 4096,
+          "maximum": 9007199254740991,
+          "multipleOf": 4096
+        },
+        "semanticRules": [
+          {
+            "id": "HOST-AGGREGATE-SAFE",
+            "expression": "for resource cpuMillicores,memoryBytes,tasks: BigInt(system)+BigInt(kubernetes)+sum(BigInt(role)) <=9007199254740991; never round overflow",
+            "reject": "NATIVE_NODE_TOTAL_RANGE_INVALID"
+          },
+          {
+            "id": "HOST-CFS-RATE",
+            "expression": "q=BigInt(pool.cpuMillicores)*BigInt(pool.cpuPeriodMicroseconds)/1000; product divisible by1000; q>=1000 and q<=9007199254740991; CFS period1000..1000000; currentcpuMillicores bound<=floor(MAX_SAFE/100) preserved until separately reviewed",
+            "reject": "NATIVE_NODE_CPU_QUOTA_RATE_INVALID (proposed producer semantic guard; existing Core/setup range diagnostics remain separate)"
+          },
+          {
+            "id": "HOST-CAPACITY",
+            "expression": "same physical node UID/machineId/bootId Ready; selected deployed containerd version equals sole versions.json selection; cgroupDriver systemd/cgroupsPerQOS/enforceNodeAllocatable pods; taskCapacity min(pidMax,threadsMax)>withheld and0<podTasksMax<=remaining; for CPU/memory capacity>withheld and0<allocatable<=capacity-withheld; host profile plus active scope reservations fit actual admission algorithm, not syntactic max alone",
+            "reject": "exact native-worker-node-capacity.mjs NATIVE_NODE_* and Core native pool readiness/limit mismatch diagnostics"
+          },
+          {
+            "id": "HOST-VERSION-SOLE",
+            "expression": "author schema has no runtime or software version property; selected versions.json#/nativeRuntime/containerd/version materializer ONLY adds current generated runtime.containerdVersion for real renderer/preflight/activation; no same-value exception for oldauthor",
+            "reject": "CONFIG_OLD_AUTHOR:runtime.containerdVersion (proposed)"
+          }
+        ],
+        "approval": "proposed C0 source-derived domain, independently unreviewed; not implementation",
+        "readerBoundary": "NATIVE_NODE_MEMORY_ALIGNMENT_INVALID"
+      },
+      "fragment": "delivery",
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/delivery/source-observations.txt"
+      ],
+      "semanticStatus": "source-traced",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "DLV-NATIVE-HOST-POOLS-PRISM-TASKS",
+      "owner": "native-host",
+      "scope": {
+        "instance": "native-host",
+        "profile": "production deployment; alternate profiles proposed"
+      },
+      "class": "operator-setting",
+      "source": {
+        "path": "scripts/native-worker-node-policy.mjs",
+        "field": "pools.prism.tasks",
+        "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+        "line": null
+      },
+      "current": {
+        "valueOrDefault": "explicit native-worker-pools YAML policy; values not copied from deployment environment",
+        "precedence": "explicit POLICY_YAML \u2192 validated object \u2192 renderer projections; role pool selection not keywise merge"
+      },
+      "typeUnitDomain": "positive Number.isSafeInteger; no numeric defaults; BigInt aggregate system+kubernetes+all pools <=MAX_SAFE_INTEGER",
+      "reader": {
+        "operation": "nativePoolPolicy limits: memoryBytes\u2192memory.max; tasks\u2192pids.max; cpuMillicores*100\u2192cpu.max quota /100000us period \u2192 prepare controls; plus nativeNodeReservation systemReserved pool sum",
+        "references": [
+          {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1"
+          },
+          {
+            "path": "scripts/render-native-worker-node.mjs",
+            "sha256": "b32571ac43e893783a87002d473ecc3d3b9dd76d996ea3b26f76ec6a2ed748fc"
+          },
+          {
+            "path": "scripts/prepare-native-worker-pools.mjs",
+            "sha256": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3"
+          }
+        ]
+      },
+      "productiveCallerChain": "render-native-worker-node CLI POLICY_YAML NEW_OUTPUT_DIRECTORY \u2192 emitted pool/NRI/Kubelet/systemd artifacts \u2192 initial stage installer \u2192 native host preflight \u2192 worker pool loaders",
+      "validation": {
+        "schema": "handwritten source validators",
+        "semantic": "positive Number.isSafeInteger; no numeric defaults; BigInt aggregate system+kubernetes+all pools <=MAX_SAFE_INTEGER; exact buster,prism pool keys required. No general additionalProperties rejection: unknown fields pass current validator and participate in full selected JSON policyDigest",
+        "errorContract": "NATIVE_NODE_POLICY_LIMIT_INVALID / NATIVE_NODE_TOTAL_RANGE_INVALID"
+      },
+      "target": {
+        "author": "config/native-host/<selected-node>/policy.yaml (proposed placement of the EXISTING single selected node-policy YAML CLI input, referenced by pipeline.config.json; not a new host policy owner)",
+        "reference": "pools.prism.tasks",
+        "justification": "loadNativeNodePolicy existing YAML argument validates this exact root; renderer/preflight/install callers must consume identical selected file digest. New path selection does not introduce a new loader/default/index. Physical naming/selection must be reviewed in C0 and implemented only authorized C3."
+      },
+      "activationScope": {
+        "current": "host initial install; changes require drained host maintenance, not runtime reload",
+        "target": "H host maintenance: original node/runtime/pool/root/ownership identity retained; fence+quiesce before changing pool/reserve/node or native software. B cannot move active A records or cleanup, and Ready only after same-generation physical capacity/kernel readback. schemaVersion remains protocol."
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "native pool capacity, Kubernetes reservation, max active scopes and host ownership; D18 migration deferred after T",
+      "profileEvalSuitability": "alternate valid profiles appropriate; fixed-generation Eval requires immutable binding before dispatch Complete current source-definition A/B YAML files at native-host-definition-profiles-bce3f075/{A,B}.yaml are actual existing renderer inputs; synthetic resource figures not physical capacity. All adjustable authored fields differ, schemaVersion1 unchanged protocol; runtime containerd A2.2.0/B2.3.0 are supported renderer syntax NOT actual installed binary claims.",
+      "migrationAction": "retain inventoried host profile author under C3; D18 worker rewrite explicitly not C1",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-DELIVERY"
+      ],
+      "caseIds": [
+        "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+        "DLV-CASE-NATIVE-HOST-ACTIVATION"
+      ],
+      "evidence": [
+        "docs/review/evidence/config-acceptance/delivery/source-observations.txt"
+      ],
+      "status": "source-traced",
+      "targetDomain": {
+        "schema": "docs/review/evidence/config-acceptance/delivery/target-native-host-schema-20261013.json",
+        "domain": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "semanticRules": [
+          {
+            "id": "HOST-AGGREGATE-SAFE",
+            "expression": "for resource cpuMillicores,memoryBytes,tasks: BigInt(system)+BigInt(kubernetes)+sum(BigInt(role)) <=9007199254740991; never round overflow",
+            "reject": "NATIVE_NODE_TOTAL_RANGE_INVALID"
+          },
+          {
+            "id": "HOST-CFS-RATE",
+            "expression": "q=BigInt(pool.cpuMillicores)*BigInt(pool.cpuPeriodMicroseconds)/1000; product divisible by1000; q>=1000 and q<=9007199254740991; CFS period1000..1000000; currentcpuMillicores bound<=floor(MAX_SAFE/100) preserved until separately reviewed",
+            "reject": "NATIVE_NODE_CPU_QUOTA_RATE_INVALID (proposed producer semantic guard; existing Core/setup range diagnostics remain separate)"
+          },
+          {
+            "id": "HOST-CAPACITY",
+            "expression": "same physical node UID/machineId/bootId Ready; selected deployed containerd version equals sole versions.json selection; cgroupDriver systemd/cgroupsPerQOS/enforceNodeAllocatable pods; taskCapacity min(pidMax,threadsMax)>withheld and0<podTasksMax<=remaining; for CPU/memory capacity>withheld and0<allocatable<=capacity-withheld; host profile plus active scope reservations fit actual admission algorithm, not syntactic max alone",
+            "reject": "exact native-worker-node-capacity.mjs NATIVE_NODE_* and Core native pool readiness/limit mismatch diagnostics"
+          },
+          {
+            "id": "HOST-VERSION-SOLE",
+            "expression": "author schema has no runtime or software version property; selected versions.json#/nativeRuntime/containerd/version materializer ONLY adds current generated runtime.containerdVersion for real renderer/preflight/activation; no same-value exception for oldauthor",
+            "reject": "CONFIG_OLD_AUTHOR:runtime.containerdVersion (proposed)"
+          }
+        ],
+        "approval": "proposed C0 source-derived domain, independently unreviewed; not implementation",
+        "readerBoundary": "NATIVE_NODE_POLICY_LIMIT_INVALID"
+      },
+      "fragment": "delivery",
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/delivery/source-observations.txt"
+      ],
+      "semanticStatus": "source-traced",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "DLV-NATIVE-HOST-POOLS-PRISM-MAXIMUMACTIVESCOPES",
+      "owner": "native-host",
+      "scope": {
+        "instance": "native-host",
+        "profile": "production deployment; alternate profiles proposed"
+      },
+      "class": "operator-setting",
+      "source": {
+        "path": "scripts/native-worker-node-policy.mjs",
+        "field": "pools.prism.maximumActiveScopes",
+        "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+        "line": null
+      },
+      "current": {
+        "valueOrDefault": "explicit native-worker-pools YAML policy; values not copied from deployment environment",
+        "precedence": "explicit POLICY_YAML \u2192 validated object \u2192 renderer projections; role pool selection not keywise merge"
+      },
+      "typeUnitDomain": "positive Number.isSafeInteger; no numeric defaults",
+      "reader": {
+        "operation": "nativePoolPolicy maximumActiveScopes \u2192 <role>-pool.json \u2192 worker native scope admission; not prepare cgroup control",
+        "references": [
+          {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1"
+          },
+          {
+            "path": "scripts/render-native-worker-node.mjs",
+            "sha256": "b32571ac43e893783a87002d473ecc3d3b9dd76d996ea3b26f76ec6a2ed748fc"
+          },
+          {
+            "path": "scripts/prepare-native-worker-pools.mjs",
+            "sha256": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3"
+          }
+        ]
+      },
+      "productiveCallerChain": "render-native-worker-node CLI POLICY_YAML NEW_OUTPUT_DIRECTORY \u2192 emitted pool/NRI/Kubelet/systemd artifacts \u2192 initial stage installer \u2192 native host preflight \u2192 worker pool loaders",
+      "validation": {
+        "schema": "handwritten source validators",
+        "semantic": "positive Number.isSafeInteger; no numeric defaults; exact buster,prism pool keys required. No general additionalProperties rejection: unknown fields pass current validator and participate in full selected JSON policyDigest",
+        "errorContract": "NATIVE_NODE_POLICY_LIMIT_INVALID"
+      },
+      "target": {
+        "author": "config/native-host/<selected-node>/policy.yaml (proposed placement of the EXISTING single selected node-policy YAML CLI input, referenced by pipeline.config.json; not a new host policy owner)",
+        "reference": "pools.prism.maximumActiveScopes",
+        "justification": "loadNativeNodePolicy existing YAML argument validates this exact root; renderer/preflight/install callers must consume identical selected file digest. New path selection does not introduce a new loader/default/index. Physical naming/selection must be reviewed in C0 and implemented only authorized C3."
+      },
+      "activationScope": {
+        "current": "host initial install; changes require drained host maintenance, not runtime reload",
+        "target": "H host maintenance: original node/runtime/pool/root/ownership identity retained; fence+quiesce before changing pool/reserve/node or native software. B cannot move active A records or cleanup, and Ready only after same-generation physical capacity/kernel readback. schemaVersion remains protocol."
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "native pool capacity, Kubernetes reservation, max active scopes and host ownership; D18 migration deferred after T",
+      "profileEvalSuitability": "alternate valid profiles appropriate; fixed-generation Eval requires immutable binding before dispatch Complete current source-definition A/B YAML files at native-host-definition-profiles-bce3f075/{A,B}.yaml are actual existing renderer inputs; synthetic resource figures not physical capacity. All adjustable authored fields differ, schemaVersion1 unchanged protocol; runtime containerd A2.2.0/B2.3.0 are supported renderer syntax NOT actual installed binary claims.",
+      "migrationAction": "retain inventoried host profile author under C3; D18 worker rewrite explicitly not C1",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-DELIVERY"
+      ],
+      "caseIds": [
+        "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+        "DLV-CASE-NATIVE-HOST-ACTIVATION"
+      ],
+      "evidence": [
+        "docs/review/evidence/config-acceptance/delivery/source-observations.txt"
+      ],
+      "status": "source-traced",
+      "targetDomain": {
+        "schema": "docs/review/evidence/config-acceptance/delivery/target-native-host-schema-20261013.json",
+        "domain": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "semanticRules": [
+          {
+            "id": "HOST-AGGREGATE-SAFE",
+            "expression": "for resource cpuMillicores,memoryBytes,tasks: BigInt(system)+BigInt(kubernetes)+sum(BigInt(role)) <=9007199254740991; never round overflow",
+            "reject": "NATIVE_NODE_TOTAL_RANGE_INVALID"
+          },
+          {
+            "id": "HOST-CFS-RATE",
+            "expression": "q=BigInt(pool.cpuMillicores)*BigInt(pool.cpuPeriodMicroseconds)/1000; product divisible by1000; q>=1000 and q<=9007199254740991; CFS period1000..1000000; currentcpuMillicores bound<=floor(MAX_SAFE/100) preserved until separately reviewed",
+            "reject": "NATIVE_NODE_CPU_QUOTA_RATE_INVALID (proposed producer semantic guard; existing Core/setup range diagnostics remain separate)"
+          },
+          {
+            "id": "HOST-CAPACITY",
+            "expression": "same physical node UID/machineId/bootId Ready; selected deployed containerd version equals sole versions.json selection; cgroupDriver systemd/cgroupsPerQOS/enforceNodeAllocatable pods; taskCapacity min(pidMax,threadsMax)>withheld and0<podTasksMax<=remaining; for CPU/memory capacity>withheld and0<allocatable<=capacity-withheld; host profile plus active scope reservations fit actual admission algorithm, not syntactic max alone",
+            "reject": "exact native-worker-node-capacity.mjs NATIVE_NODE_* and Core native pool readiness/limit mismatch diagnostics"
+          },
+          {
+            "id": "HOST-VERSION-SOLE",
+            "expression": "author schema has no runtime or software version property; selected versions.json#/nativeRuntime/containerd/version materializer ONLY adds current generated runtime.containerdVersion for real renderer/preflight/activation; no same-value exception for oldauthor",
+            "reject": "CONFIG_OLD_AUTHOR:runtime.containerdVersion (proposed)"
+          }
+        ],
+        "approval": "proposed C0 source-derived domain, independently unreviewed; not implementation",
+        "readerBoundary": "NATIVE_NODE_POLICY_LIMIT_INVALID"
+      },
+      "fragment": "delivery",
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/delivery/source-observations.txt"
+      ],
+      "semanticStatus": "source-traced",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "DLV-NATIVE-HOST-RUNTIME-CONTAINERDVERSION",
+      "owner": "native-host",
+      "scope": {
+        "instance": "native-host",
+        "profile": "production deployment; alternate profiles proposed"
+      },
+      "class": "version",
+      "source": {
+        "path": "scripts/native-worker-node-policy.mjs",
+        "field": "runtime.containerdVersion",
+        "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+        "line": null
+      },
+      "current": {
+        "valueOrDefault": "explicit native-worker-pools YAML policy; values not copied from deployment environment",
+        "precedence": "explicit POLICY_YAML \u2192 validated object \u2192 renderer projections; role pool selection not keywise merge"
+      },
+      "typeUnitDomain": "Selected version string matches existing renderer ^v?2.(?:[2-9]|[1-9][0-9]+).[0-9]+(?:[-+][A-Za-z0-9.-]+)?$ with dots literal in source; exact source regex retained. Target versions.json validator uses that exact supported syntax; deployed match normalizes only leading v in capacity helper, activation comparison currently exact. Distribution suffix preserved, no generic semver/image substitution. Authentic selected installed ABI/package/distribution compatibility required before host transition.",
+      "reader": {
+        "operation": "nriPolicy render-only validator, NOT validateNativeNodePolicy \u2192 native-nri.json/containerd native verification",
+        "references": [
+          {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1"
+          },
+          {
+            "path": "scripts/render-native-worker-node.mjs",
+            "sha256": "b32571ac43e893783a87002d473ecc3d3b9dd76d996ea3b26f76ec6a2ed748fc"
+          },
+          {
+            "path": "scripts/prepare-native-worker-pools.mjs",
+            "sha256": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3"
+          }
+        ]
+      },
+      "productiveCallerChain": "render-native-worker-node CLI POLICY_YAML NEW_OUTPUT_DIRECTORY \u2192 emitted pool/NRI/Kubelet/systemd artifacts \u2192 initial stage installer \u2192 native host preflight \u2192 worker pool loaders",
+      "validation": {
+        "schema": "handwritten source validators",
+        "semantic": "string /^v?2\\.(?:[2-9]|[1-9][0-9]+)\\.[0-9]+(?:[-+][A-Za-z0-9.-]+)?$/; 2.2+ intended support; exact buster,prism pool keys required. No general additionalProperties rejection: unknown fields pass current validator and participate in full selected JSON policyDigest",
+        "errorContract": "NATIVE_NODE_SELECTED_CONTAINERD_VERSION_REQUIRED"
+      },
+      "target": {
+        "author": "versions.json",
+        "reference": "/nativeRuntime/containerd/version",
+        "slice": "C1 new version-manifest member + every real host renderer/preflight/activation caller projection; C3 host maintenance execution only after approval",
+        "classification": "version",
+        "currentAbsence": "versions.json currently has no containerd member; native YAML currently authors runtime.containerdVersion. No existing entry, validator or projection claimed.",
+        "proposal": "add nativeRuntime.containerd.version under the existing sole software-version manifest, not infrastructure image-only map and not host YAML editable version. scripts/versions.mjs must explicitly validate/use this new member and reject unused/conflicting entries; host materializer emits read-only runtime.containerdVersion projection from the selected manifest generation. Native selection is a manifest reference/digest, not a free host-version string."
+      },
+      "activationScope": {
+        "current": "explicit selected YAML runtime.containerdVersion is validated/projected by renderer and compared with node status/activation; currently a competing version author",
+        "target": "H host maintenance: original node/runtime/pool/root/ownership identity retained; fence+quiesce before changing pool/reserve/node or native software. B cannot move active A records or cleanup, and Ready only after same-generation physical capacity/kernel readback. schemaVersion remains protocol.",
+        "runStable": "captured installed runtime identity/grants/native ownership remain A for running/recovery scopes; B cannot clear journals/cgroups or reuse A scope identity"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "native pool capacity, Kubernetes reservation, max active scopes and host ownership; D18 migration deferred after T",
+      "profileEvalSuitability": "alternate valid profiles appropriate; fixed-generation Eval requires immutable binding before dispatch",
+      "migrationAction": "Move sole editable containerd version to versions.json /nativeRuntime/containerd/version. Preserve current selected my-values/infra/native-worker-pools-ax41.yaml runtime.containerdVersion=2.3.4-k3s1.36 as migration source, NOT installed observation; project immutable same-generation host YAML and all native outputs. Reject old equal/different YAML author. Include versions validator/CI/deploy renderer/preflight/activation/capacity consumers together; no host upgrade authorized in C0.",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-DELIVERY"
+      ],
+      "caseIds": [
+        "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+        "DLV-CASE-NATIVE-HOST-ACTIVATION"
+      ],
+      "evidence": [
+        "docs/review/evidence/config-acceptance/delivery/source-observations.txt"
+      ],
+      "status": "source-traced",
+      "targetDomain": {
+        "schema": "docs/review/evidence/config-acceptance/delivery/target-native-host-schema-20261013.json",
+        "domain": {
+          "type": "string",
+          "pattern": "^2\\.(?:[2-9]|[1-9][0-9]+)\\.[0-9]+(?:[-+][A-Za-z0-9.-]+)?$",
+          "author": "versions.json#/nativeRuntime/containerd/version",
+          "noVersionAuthorInHostPolicy": true,
+          "canonicalRule": "sole versions entry has no leading v; current renderer accepts v but exact activation comparison does not normalize, so generatedversion must canonicalize at selected V author validation, not native silent fallback"
+        },
+        "semanticRules": [
+          {
+            "id": "HOST-AGGREGATE-SAFE",
+            "expression": "for resource cpuMillicores,memoryBytes,tasks: BigInt(system)+BigInt(kubernetes)+sum(BigInt(role)) <=9007199254740991; never round overflow",
+            "reject": "NATIVE_NODE_TOTAL_RANGE_INVALID"
+          },
+          {
+            "id": "HOST-CFS-RATE",
+            "expression": "q=BigInt(pool.cpuMillicores)*BigInt(pool.cpuPeriodMicroseconds)/1000; product divisible by1000; q>=1000 and q<=9007199254740991; CFS period1000..1000000; currentcpuMillicores bound<=floor(MAX_SAFE/100) preserved until separately reviewed",
+            "reject": "NATIVE_NODE_CPU_QUOTA_RATE_INVALID (proposed producer semantic guard; existing Core/setup range diagnostics remain separate)"
+          },
+          {
+            "id": "HOST-CAPACITY",
+            "expression": "same physical node UID/machineId/bootId Ready; selected deployed containerd version equals sole versions.json selection; cgroupDriver systemd/cgroupsPerQOS/enforceNodeAllocatable pods; taskCapacity min(pidMax,threadsMax)>withheld and0<podTasksMax<=remaining; for CPU/memory capacity>withheld and0<allocatable<=capacity-withheld; host profile plus active scope reservations fit actual admission algorithm, not syntactic max alone",
+            "reject": "exact native-worker-node-capacity.mjs NATIVE_NODE_* and Core native pool readiness/limit mismatch diagnostics"
+          },
+          {
+            "id": "HOST-VERSION-SOLE",
+            "expression": "author schema has no runtime or software version property; selected versions.json#/nativeRuntime/containerd/version materializer ONLY adds current generated runtime.containerdVersion for real renderer/preflight/activation; no same-value exception for oldauthor",
+            "reject": "CONFIG_OLD_AUTHOR:runtime.containerdVersion (proposed)"
+          }
+        ],
+        "approval": "proposed C0 source-derived domain, independently unreviewed; not implementation",
+        "readerBoundary": "NATIVE_NODE_SELECTED_CONTAINERD_VERSION_REQUIRED"
+      },
+      "fragment": "delivery",
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/delivery/source-observations.txt"
+      ],
+      "semanticStatus": "source-traced",
+      "reviewerConfirmation": null
+    }
+  ]
+}

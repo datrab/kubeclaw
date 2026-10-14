@@ -1,0 +1,1261 @@
+{
+  "fields": [
+    {
+      "id": "DLV-NATIVE-HOST-SCHEMAVERSION",
+      "originalBodyPointer": "/rows/0",
+      "originalRowBodySha256": "f854667d47331f5e1a99eff9ab908de7f3e0ba71a8afce477e55164609a87552",
+      "originalSourceField": "schemaVersion",
+      "originalCases": [
+        "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+        "DLV-CASE-NATIVE-HOST-ACTIVATION"
+      ],
+      "originalTargetHistory": {
+        "author": "config/native-host/<selected-node>/policy.yaml (proposed placement of the EXISTING single selected node-policy YAML CLI input, referenced by pipeline.config.json; not a new host policy owner)",
+        "reference": "schemaVersion",
+        "justification": "loadNativeNodePolicy existing YAML argument validates this exact root; renderer/preflight/install callers must consume identical selected file digest. New path selection does not introduce a new loader/default/index. Physical naming/selection must be reviewed in C0 and implemented only authorized C3."
+      },
+      "soleAuthorProspectiveCorrection": {
+        "currentExistingPath": "my-values/infra/native-worker-pools-ax41.yaml",
+        "proposedProfilePointer": "/profiles/<explicit>/schemaVersion",
+        "supersession": "original proposed config/native-host/<node>/policy.yaml placement remains history; do not install both authors. Existing selected YAML becomes one explicit complete profile wrapper only under a reviewed loader/root extension. Generic native-worker-pools.yaml is an incomplete reference template, never fallback/co-author.",
+        "phase": "H original host/admin install-time source; S host-service/role generation transport; R original task/scope/ownership/claim/grants/budgets immutable. No globalhotM or task ENV/source quota writer."
+      },
+      "physicalProfiles": {
+        "ax41-current": {
+          "artifact": "same-existing-owner.proposed.json",
+          "sha256": "1a17d5a68b7c9f9e5a3843787b6ea911f3bc1b546b693c1650ef2f6ba42f4886",
+          "pointer": "/profiles/ax41-current/schemaVersion",
+          "exactTypedNode": 1
+        },
+        "source-model-A": {
+          "artifact": "same-existing-owner.proposed.json",
+          "sha256": "1a17d5a68b7c9f9e5a3843787b6ea911f3bc1b546b693c1650ef2f6ba42f4886",
+          "pointer": "/profiles/source-model-A/schemaVersion",
+          "exactTypedNode": 1
+        },
+        "source-model-B": {
+          "artifact": "same-existing-owner.proposed.json",
+          "sha256": "1a17d5a68b7c9f9e5a3843787b6ea911f3bc1b546b693c1650ef2f6ba42f4886",
+          "pointer": "/profiles/source-model-B/schemaVersion",
+          "exactTypedNode": 1
+        },
+        "ax41-coupled-request": {
+          "artifact": "same-existing-owner.proposed.json",
+          "sha256": "1a17d5a68b7c9f9e5a3843787b6ea911f3bc1b546b693c1650ef2f6ba42f4886",
+          "pointer": "/profiles/ax41-coupled-request/schemaVersion",
+          "exactTypedNode": 1
+        }
+      },
+      "currentProductiveReaders": {
+        "operation": "validateNativeNodePolicy identity check; protocol format version, not adjustable operator policy",
+        "references": [
+          {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1"
+          },
+          {
+            "path": "scripts/render-native-worker-node.mjs",
+            "sha256": "b32571ac43e893783a87002d473ecc3d3b9dd76d996ea3b26f76ec6a2ed748fc"
+          },
+          {
+            "path": "scripts/prepare-native-worker-pools.mjs",
+            "sha256": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3"
+          }
+        ]
+      },
+      "sourceContract": "SOURCE-RECEIVING-CONTRACT.md",
+      "definitionAccepted": false
+    },
+    {
+      "id": "DLV-NATIVE-HOST-NODENAME",
+      "originalBodyPointer": "/rows/1",
+      "originalRowBodySha256": "d7e1b5bafc50c8c20d40195c35646b33f5a763862c1f584d2c978c370a2f96bc",
+      "originalSourceField": "nodeName",
+      "originalCases": [
+        "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+        "DLV-CASE-NATIVE-HOST-ACTIVATION"
+      ],
+      "originalTargetHistory": {
+        "author": "config/native-host/<selected-node>/policy.yaml (proposed placement of the EXISTING single selected node-policy YAML CLI input, referenced by pipeline.config.json; not a new host policy owner)",
+        "reference": "nodeName",
+        "justification": "loadNativeNodePolicy existing YAML argument validates this exact root; renderer/preflight/install callers must consume identical selected file digest. New path selection does not introduce a new loader/default/index. Physical naming/selection must be reviewed in C0 and implemented only authorized C3."
+      },
+      "soleAuthorProspectiveCorrection": {
+        "currentExistingPath": "my-values/infra/native-worker-pools-ax41.yaml",
+        "proposedProfilePointer": "/profiles/<explicit>/nodeName",
+        "supersession": "original proposed config/native-host/<node>/policy.yaml placement remains history; do not install both authors. Existing selected YAML becomes one explicit complete profile wrapper only under a reviewed loader/root extension. Generic native-worker-pools.yaml is an incomplete reference template, never fallback/co-author.",
+        "phase": "H original host/admin install-time source; S host-service/role generation transport; R original task/scope/ownership/claim/grants/budgets immutable. No globalhotM or task ENV/source quota writer."
+      },
+      "physicalProfiles": {
+        "ax41-current": {
+          "artifact": "same-existing-owner.proposed.json",
+          "sha256": "1a17d5a68b7c9f9e5a3843787b6ea911f3bc1b546b693c1650ef2f6ba42f4886",
+          "pointer": "/profiles/ax41-current/nodeName",
+          "exactTypedNode": "ax41-production"
+        },
+        "source-model-A": {
+          "artifact": "same-existing-owner.proposed.json",
+          "sha256": "1a17d5a68b7c9f9e5a3843787b6ea911f3bc1b546b693c1650ef2f6ba42f4886",
+          "pointer": "/profiles/source-model-A/nodeName",
+          "exactTypedNode": "dlv-native-a"
+        },
+        "source-model-B": {
+          "artifact": "same-existing-owner.proposed.json",
+          "sha256": "1a17d5a68b7c9f9e5a3843787b6ea911f3bc1b546b693c1650ef2f6ba42f4886",
+          "pointer": "/profiles/source-model-B/nodeName",
+          "exactTypedNode": "dlv-native-b"
+        },
+        "ax41-coupled-request": {
+          "artifact": "same-existing-owner.proposed.json",
+          "sha256": "1a17d5a68b7c9f9e5a3843787b6ea911f3bc1b546b693c1650ef2f6ba42f4886",
+          "pointer": "/profiles/ax41-coupled-request/nodeName",
+          "exactTypedNode": "ax41-production"
+        }
+      },
+      "currentProductiveReaders": {
+        "operation": "renderNativeWorkerNode busterNative/worker.native.nodeName placement projection; selected node physical capacity separately verified",
+        "references": [
+          {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1"
+          },
+          {
+            "path": "scripts/render-native-worker-node.mjs",
+            "sha256": "b32571ac43e893783a87002d473ecc3d3b9dd76d996ea3b26f76ec6a2ed748fc"
+          },
+          {
+            "path": "scripts/prepare-native-worker-pools.mjs",
+            "sha256": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3"
+          }
+        ]
+      },
+      "sourceContract": "SOURCE-RECEIVING-CONTRACT.md",
+      "definitionAccepted": false
+    },
+    {
+      "id": "DLV-NATIVE-HOST-SYSTEMRESERVE-CPUMILLICORES",
+      "originalBodyPointer": "/rows/2",
+      "originalRowBodySha256": "526dc799236f6db8ef167ac6f0e29ca06ec9b6b909085017bb429f69099cd575",
+      "originalSourceField": "systemReserve.cpuMillicores",
+      "originalCases": [
+        "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+        "DLV-CASE-NATIVE-HOST-ACTIVATION"
+      ],
+      "originalTargetHistory": {
+        "author": "config/native-host/<selected-node>/policy.yaml (proposed placement of the EXISTING single selected node-policy YAML CLI input, referenced by pipeline.config.json; not a new host policy owner)",
+        "reference": "systemReserve.cpuMillicores",
+        "justification": "loadNativeNodePolicy existing YAML argument validates this exact root; renderer/preflight/install callers must consume identical selected file digest. New path selection does not introduce a new loader/default/index. Physical naming/selection must be reviewed in C0 and implemented only authorized C3."
+      },
+      "soleAuthorProspectiveCorrection": {
+        "currentExistingPath": "my-values/infra/native-worker-pools-ax41.yaml",
+        "proposedProfilePointer": "/profiles/<explicit>/systemReserve/cpuMillicores",
+        "supersession": "original proposed config/native-host/<node>/policy.yaml placement remains history; do not install both authors. Existing selected YAML becomes one explicit complete profile wrapper only under a reviewed loader/root extension. Generic native-worker-pools.yaml is an incomplete reference template, never fallback/co-author.",
+        "phase": "H original host/admin install-time source; S host-service/role generation transport; R original task/scope/ownership/claim/grants/budgets immutable. No globalhotM or task ENV/source quota writer."
+      },
+      "physicalProfiles": {
+        "ax41-current": {
+          "artifact": "same-existing-owner.proposed.json",
+          "sha256": "1a17d5a68b7c9f9e5a3843787b6ea911f3bc1b546b693c1650ef2f6ba42f4886",
+          "pointer": "/profiles/ax41-current/systemReserve/cpuMillicores",
+          "exactTypedNode": 1000
+        },
+        "source-model-A": {
+          "artifact": "same-existing-owner.proposed.json",
+          "sha256": "1a17d5a68b7c9f9e5a3843787b6ea911f3bc1b546b693c1650ef2f6ba42f4886",
+          "pointer": "/profiles/source-model-A/systemReserve/cpuMillicores",
+          "exactTypedNode": 100
+        },
+        "source-model-B": {
+          "artifact": "same-existing-owner.proposed.json",
+          "sha256": "1a17d5a68b7c9f9e5a3843787b6ea911f3bc1b546b693c1650ef2f6ba42f4886",
+          "pointer": "/profiles/source-model-B/systemReserve/cpuMillicores",
+          "exactTypedNode": 200
+        },
+        "ax41-coupled-request": {
+          "artifact": "same-existing-owner.proposed.json",
+          "sha256": "1a17d5a68b7c9f9e5a3843787b6ea911f3bc1b546b693c1650ef2f6ba42f4886",
+          "pointer": "/profiles/ax41-coupled-request/systemReserve/cpuMillicores",
+          "exactTypedNode": 1000
+        }
+      },
+      "currentProductiveReaders": {
+        "operation": "nativeNodeReservation systemReserve+all pool resources \u2192 kubelet-reservations.json systemReserved (CPU millicores suffixm,memory bytes,pid tasks)",
+        "references": [
+          {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1"
+          },
+          {
+            "path": "scripts/render-native-worker-node.mjs",
+            "sha256": "b32571ac43e893783a87002d473ecc3d3b9dd76d996ea3b26f76ec6a2ed748fc"
+          },
+          {
+            "path": "scripts/prepare-native-worker-pools.mjs",
+            "sha256": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3"
+          }
+        ]
+      },
+      "sourceContract": "SOURCE-RECEIVING-CONTRACT.md",
+      "definitionAccepted": false
+    },
+    {
+      "id": "DLV-NATIVE-HOST-SYSTEMRESERVE-MEMORYBYTES",
+      "originalBodyPointer": "/rows/3",
+      "originalRowBodySha256": "4eee6ebc43c8826ab6a84fe7a6dc20e0d04641c39bd97550d7de19021d51f972",
+      "originalSourceField": "systemReserve.memoryBytes",
+      "originalCases": [
+        "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+        "DLV-CASE-NATIVE-HOST-ACTIVATION"
+      ],
+      "originalTargetHistory": {
+        "author": "config/native-host/<selected-node>/policy.yaml (proposed placement of the EXISTING single selected node-policy YAML CLI input, referenced by pipeline.config.json; not a new host policy owner)",
+        "reference": "systemReserve.memoryBytes",
+        "justification": "loadNativeNodePolicy existing YAML argument validates this exact root; renderer/preflight/install callers must consume identical selected file digest. New path selection does not introduce a new loader/default/index. Physical naming/selection must be reviewed in C0 and implemented only authorized C3."
+      },
+      "soleAuthorProspectiveCorrection": {
+        "currentExistingPath": "my-values/infra/native-worker-pools-ax41.yaml",
+        "proposedProfilePointer": "/profiles/<explicit>/systemReserve/memoryBytes",
+        "supersession": "original proposed config/native-host/<node>/policy.yaml placement remains history; do not install both authors. Existing selected YAML becomes one explicit complete profile wrapper only under a reviewed loader/root extension. Generic native-worker-pools.yaml is an incomplete reference template, never fallback/co-author.",
+        "phase": "H original host/admin install-time source; S host-service/role generation transport; R original task/scope/ownership/claim/grants/budgets immutable. No globalhotM or task ENV/source quota writer."
+      },
+      "physicalProfiles": {
+        "ax41-current": {
+          "artifact": "same-existing-owner.proposed.json",
+          "sha256": "1a17d5a68b7c9f9e5a3843787b6ea911f3bc1b546b693c1650ef2f6ba42f4886",
+          "pointer": "/profiles/ax41-current/systemReserve/memoryBytes",
+          "exactTypedNode": 3221225472
+        },
+        "source-model-A": {
+          "artifact": "same-existing-owner.proposed.json",
+          "sha256": "1a17d5a68b7c9f9e5a3843787b6ea911f3bc1b546b693c1650ef2f6ba42f4886",
+          "pointer": "/profiles/source-model-A/systemReserve/memoryBytes",
+          "exactTypedNode": 1048576
+        },
+        "source-model-B": {
+          "artifact": "same-existing-owner.proposed.json",
+          "sha256": "1a17d5a68b7c9f9e5a3843787b6ea911f3bc1b546b693c1650ef2f6ba42f4886",
+          "pointer": "/profiles/source-model-B/systemReserve/memoryBytes",
+          "exactTypedNode": 2097152
+        },
+        "ax41-coupled-request": {
+          "artifact": "same-existing-owner.proposed.json",
+          "sha256": "1a17d5a68b7c9f9e5a3843787b6ea911f3bc1b546b693c1650ef2f6ba42f4886",
+          "pointer": "/profiles/ax41-coupled-request/systemReserve/memoryBytes",
+          "exactTypedNode": 3221225472
+        }
+      },
+      "currentProductiveReaders": {
+        "operation": "nativeNodeReservation systemReserve+all pool resources \u2192 kubelet-reservations.json systemReserved (CPU millicores suffixm,memory bytes,pid tasks)",
+        "references": [
+          {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1"
+          },
+          {
+            "path": "scripts/render-native-worker-node.mjs",
+            "sha256": "b32571ac43e893783a87002d473ecc3d3b9dd76d996ea3b26f76ec6a2ed748fc"
+          },
+          {
+            "path": "scripts/prepare-native-worker-pools.mjs",
+            "sha256": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3"
+          }
+        ]
+      },
+      "sourceContract": "SOURCE-RECEIVING-CONTRACT.md",
+      "definitionAccepted": false
+    },
+    {
+      "id": "DLV-NATIVE-HOST-SYSTEMRESERVE-TASKS",
+      "originalBodyPointer": "/rows/4",
+      "originalRowBodySha256": "128456047e4640763d103ceec6bb728091c3a53105966907182c5090e91779c6",
+      "originalSourceField": "systemReserve.tasks",
+      "originalCases": [
+        "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+        "DLV-CASE-NATIVE-HOST-ACTIVATION"
+      ],
+      "originalTargetHistory": {
+        "author": "config/native-host/<selected-node>/policy.yaml (proposed placement of the EXISTING single selected node-policy YAML CLI input, referenced by pipeline.config.json; not a new host policy owner)",
+        "reference": "systemReserve.tasks",
+        "justification": "loadNativeNodePolicy existing YAML argument validates this exact root; renderer/preflight/install callers must consume identical selected file digest. New path selection does not introduce a new loader/default/index. Physical naming/selection must be reviewed in C0 and implemented only authorized C3."
+      },
+      "soleAuthorProspectiveCorrection": {
+        "currentExistingPath": "my-values/infra/native-worker-pools-ax41.yaml",
+        "proposedProfilePointer": "/profiles/<explicit>/systemReserve/tasks",
+        "supersession": "original proposed config/native-host/<node>/policy.yaml placement remains history; do not install both authors. Existing selected YAML becomes one explicit complete profile wrapper only under a reviewed loader/root extension. Generic native-worker-pools.yaml is an incomplete reference template, never fallback/co-author.",
+        "phase": "H original host/admin install-time source; S host-service/role generation transport; R original task/scope/ownership/claim/grants/budgets immutable. No globalhotM or task ENV/source quota writer."
+      },
+      "physicalProfiles": {
+        "ax41-current": {
+          "artifact": "same-existing-owner.proposed.json",
+          "sha256": "1a17d5a68b7c9f9e5a3843787b6ea911f3bc1b546b693c1650ef2f6ba42f4886",
+          "pointer": "/profiles/ax41-current/systemReserve/tasks",
+          "exactTypedNode": 2048
+        },
+        "source-model-A": {
+          "artifact": "same-existing-owner.proposed.json",
+          "sha256": "1a17d5a68b7c9f9e5a3843787b6ea911f3bc1b546b693c1650ef2f6ba42f4886",
+          "pointer": "/profiles/source-model-A/systemReserve/tasks",
+          "exactTypedNode": 16
+        },
+        "source-model-B": {
+          "artifact": "same-existing-owner.proposed.json",
+          "sha256": "1a17d5a68b7c9f9e5a3843787b6ea911f3bc1b546b693c1650ef2f6ba42f4886",
+          "pointer": "/profiles/source-model-B/systemReserve/tasks",
+          "exactTypedNode": 32
+        },
+        "ax41-coupled-request": {
+          "artifact": "same-existing-owner.proposed.json",
+          "sha256": "1a17d5a68b7c9f9e5a3843787b6ea911f3bc1b546b693c1650ef2f6ba42f4886",
+          "pointer": "/profiles/ax41-coupled-request/systemReserve/tasks",
+          "exactTypedNode": 2048
+        }
+      },
+      "currentProductiveReaders": {
+        "operation": "nativeNodeReservation systemReserve+all pool resources \u2192 kubelet-reservations.json systemReserved (CPU millicores suffixm,memory bytes,pid tasks)",
+        "references": [
+          {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1"
+          },
+          {
+            "path": "scripts/render-native-worker-node.mjs",
+            "sha256": "b32571ac43e893783a87002d473ecc3d3b9dd76d996ea3b26f76ec6a2ed748fc"
+          },
+          {
+            "path": "scripts/prepare-native-worker-pools.mjs",
+            "sha256": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3"
+          }
+        ]
+      },
+      "sourceContract": "SOURCE-RECEIVING-CONTRACT.md",
+      "definitionAccepted": false
+    },
+    {
+      "id": "DLV-NATIVE-HOST-KUBERNETESRESERVE-CPUMILLICORES",
+      "originalBodyPointer": "/rows/5",
+      "originalRowBodySha256": "bf9bd870010810656b2ccd5cccff7a86d3e883a274eeac4867380de6f9162cf5",
+      "originalSourceField": "kubernetesReserve.cpuMillicores",
+      "originalCases": [
+        "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+        "DLV-CASE-NATIVE-HOST-ACTIVATION"
+      ],
+      "originalTargetHistory": {
+        "author": "config/native-host/<selected-node>/policy.yaml (proposed placement of the EXISTING single selected node-policy YAML CLI input, referenced by pipeline.config.json; not a new host policy owner)",
+        "reference": "kubernetesReserve.cpuMillicores",
+        "justification": "loadNativeNodePolicy existing YAML argument validates this exact root; renderer/preflight/install callers must consume identical selected file digest. New path selection does not introduce a new loader/default/index. Physical naming/selection must be reviewed in C0 and implemented only authorized C3."
+      },
+      "soleAuthorProspectiveCorrection": {
+        "currentExistingPath": "my-values/infra/native-worker-pools-ax41.yaml",
+        "proposedProfilePointer": "/profiles/<explicit>/kubernetesReserve/cpuMillicores",
+        "supersession": "original proposed config/native-host/<node>/policy.yaml placement remains history; do not install both authors. Existing selected YAML becomes one explicit complete profile wrapper only under a reviewed loader/root extension. Generic native-worker-pools.yaml is an incomplete reference template, never fallback/co-author.",
+        "phase": "H original host/admin install-time source; S host-service/role generation transport; R original task/scope/ownership/claim/grants/budgets immutable. No globalhotM or task ENV/source quota writer."
+      },
+      "physicalProfiles": {
+        "ax41-current": {
+          "artifact": "same-existing-owner.proposed.json",
+          "sha256": "1a17d5a68b7c9f9e5a3843787b6ea911f3bc1b546b693c1650ef2f6ba42f4886",
+          "pointer": "/profiles/ax41-current/kubernetesReserve/cpuMillicores",
+          "exactTypedNode": 500
+        },
+        "source-model-A": {
+          "artifact": "same-existing-owner.proposed.json",
+          "sha256": "1a17d5a68b7c9f9e5a3843787b6ea911f3bc1b546b693c1650ef2f6ba42f4886",
+          "pointer": "/profiles/source-model-A/kubernetesReserve/cpuMillicores",
+          "exactTypedNode": 100
+        },
+        "source-model-B": {
+          "artifact": "same-existing-owner.proposed.json",
+          "sha256": "1a17d5a68b7c9f9e5a3843787b6ea911f3bc1b546b693c1650ef2f6ba42f4886",
+          "pointer": "/profiles/source-model-B/kubernetesReserve/cpuMillicores",
+          "exactTypedNode": 200
+        },
+        "ax41-coupled-request": {
+          "artifact": "same-existing-owner.proposed.json",
+          "sha256": "1a17d5a68b7c9f9e5a3843787b6ea911f3bc1b546b693c1650ef2f6ba42f4886",
+          "pointer": "/profiles/ax41-coupled-request/kubernetesReserve/cpuMillicores",
+          "exactTypedNode": 500
+        }
+      },
+      "currentProductiveReaders": {
+        "operation": "nativeNodeReservation kubernetesReserve \u2192 kubelet-reservations.json kubeReserved (CPU millicores suffixm,memory bytes,pid tasks)",
+        "references": [
+          {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1"
+          },
+          {
+            "path": "scripts/render-native-worker-node.mjs",
+            "sha256": "b32571ac43e893783a87002d473ecc3d3b9dd76d996ea3b26f76ec6a2ed748fc"
+          },
+          {
+            "path": "scripts/prepare-native-worker-pools.mjs",
+            "sha256": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3"
+          }
+        ]
+      },
+      "sourceContract": "SOURCE-RECEIVING-CONTRACT.md",
+      "definitionAccepted": false
+    },
+    {
+      "id": "DLV-NATIVE-HOST-KUBERNETESRESERVE-MEMORYBYTES",
+      "originalBodyPointer": "/rows/6",
+      "originalRowBodySha256": "5fe85699652770e32418d62f21cfbddc0df8c7944ac63f8428c46113c875cdbb",
+      "originalSourceField": "kubernetesReserve.memoryBytes",
+      "originalCases": [
+        "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+        "DLV-CASE-NATIVE-HOST-ACTIVATION"
+      ],
+      "originalTargetHistory": {
+        "author": "config/native-host/<selected-node>/policy.yaml (proposed placement of the EXISTING single selected node-policy YAML CLI input, referenced by pipeline.config.json; not a new host policy owner)",
+        "reference": "kubernetesReserve.memoryBytes",
+        "justification": "loadNativeNodePolicy existing YAML argument validates this exact root; renderer/preflight/install callers must consume identical selected file digest. New path selection does not introduce a new loader/default/index. Physical naming/selection must be reviewed in C0 and implemented only authorized C3."
+      },
+      "soleAuthorProspectiveCorrection": {
+        "currentExistingPath": "my-values/infra/native-worker-pools-ax41.yaml",
+        "proposedProfilePointer": "/profiles/<explicit>/kubernetesReserve/memoryBytes",
+        "supersession": "original proposed config/native-host/<node>/policy.yaml placement remains history; do not install both authors. Existing selected YAML becomes one explicit complete profile wrapper only under a reviewed loader/root extension. Generic native-worker-pools.yaml is an incomplete reference template, never fallback/co-author.",
+        "phase": "H original host/admin install-time source; S host-service/role generation transport; R original task/scope/ownership/claim/grants/budgets immutable. No globalhotM or task ENV/source quota writer."
+      },
+      "physicalProfiles": {
+        "ax41-current": {
+          "artifact": "same-existing-owner.proposed.json",
+          "sha256": "1a17d5a68b7c9f9e5a3843787b6ea911f3bc1b546b693c1650ef2f6ba42f4886",
+          "pointer": "/profiles/ax41-current/kubernetesReserve/memoryBytes",
+          "exactTypedNode": 536870912
+        },
+        "source-model-A": {
+          "artifact": "same-existing-owner.proposed.json",
+          "sha256": "1a17d5a68b7c9f9e5a3843787b6ea911f3bc1b546b693c1650ef2f6ba42f4886",
+          "pointer": "/profiles/source-model-A/kubernetesReserve/memoryBytes",
+          "exactTypedNode": 1048576
+        },
+        "source-model-B": {
+          "artifact": "same-existing-owner.proposed.json",
+          "sha256": "1a17d5a68b7c9f9e5a3843787b6ea911f3bc1b546b693c1650ef2f6ba42f4886",
+          "pointer": "/profiles/source-model-B/kubernetesReserve/memoryBytes",
+          "exactTypedNode": 2097152
+        },
+        "ax41-coupled-request": {
+          "artifact": "same-existing-owner.proposed.json",
+          "sha256": "1a17d5a68b7c9f9e5a3843787b6ea911f3bc1b546b693c1650ef2f6ba42f4886",
+          "pointer": "/profiles/ax41-coupled-request/kubernetesReserve/memoryBytes",
+          "exactTypedNode": 536870912
+        }
+      },
+      "currentProductiveReaders": {
+        "operation": "nativeNodeReservation kubernetesReserve \u2192 kubelet-reservations.json kubeReserved (CPU millicores suffixm,memory bytes,pid tasks)",
+        "references": [
+          {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1"
+          },
+          {
+            "path": "scripts/render-native-worker-node.mjs",
+            "sha256": "b32571ac43e893783a87002d473ecc3d3b9dd76d996ea3b26f76ec6a2ed748fc"
+          },
+          {
+            "path": "scripts/prepare-native-worker-pools.mjs",
+            "sha256": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3"
+          }
+        ]
+      },
+      "sourceContract": "SOURCE-RECEIVING-CONTRACT.md",
+      "definitionAccepted": false
+    },
+    {
+      "id": "DLV-NATIVE-HOST-KUBERNETESRESERVE-TASKS",
+      "originalBodyPointer": "/rows/7",
+      "originalRowBodySha256": "b9c92457e663666f565d271336a54dbc2716236c66d3c222840dfe687df16013",
+      "originalSourceField": "kubernetesReserve.tasks",
+      "originalCases": [
+        "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+        "DLV-CASE-NATIVE-HOST-ACTIVATION"
+      ],
+      "originalTargetHistory": {
+        "author": "config/native-host/<selected-node>/policy.yaml (proposed placement of the EXISTING single selected node-policy YAML CLI input, referenced by pipeline.config.json; not a new host policy owner)",
+        "reference": "kubernetesReserve.tasks",
+        "justification": "loadNativeNodePolicy existing YAML argument validates this exact root; renderer/preflight/install callers must consume identical selected file digest. New path selection does not introduce a new loader/default/index. Physical naming/selection must be reviewed in C0 and implemented only authorized C3."
+      },
+      "soleAuthorProspectiveCorrection": {
+        "currentExistingPath": "my-values/infra/native-worker-pools-ax41.yaml",
+        "proposedProfilePointer": "/profiles/<explicit>/kubernetesReserve/tasks",
+        "supersession": "original proposed config/native-host/<node>/policy.yaml placement remains history; do not install both authors. Existing selected YAML becomes one explicit complete profile wrapper only under a reviewed loader/root extension. Generic native-worker-pools.yaml is an incomplete reference template, never fallback/co-author.",
+        "phase": "H original host/admin install-time source; S host-service/role generation transport; R original task/scope/ownership/claim/grants/budgets immutable. No globalhotM or task ENV/source quota writer."
+      },
+      "physicalProfiles": {
+        "ax41-current": {
+          "artifact": "same-existing-owner.proposed.json",
+          "sha256": "1a17d5a68b7c9f9e5a3843787b6ea911f3bc1b546b693c1650ef2f6ba42f4886",
+          "pointer": "/profiles/ax41-current/kubernetesReserve/tasks",
+          "exactTypedNode": 2048
+        },
+        "source-model-A": {
+          "artifact": "same-existing-owner.proposed.json",
+          "sha256": "1a17d5a68b7c9f9e5a3843787b6ea911f3bc1b546b693c1650ef2f6ba42f4886",
+          "pointer": "/profiles/source-model-A/kubernetesReserve/tasks",
+          "exactTypedNode": 16
+        },
+        "source-model-B": {
+          "artifact": "same-existing-owner.proposed.json",
+          "sha256": "1a17d5a68b7c9f9e5a3843787b6ea911f3bc1b546b693c1650ef2f6ba42f4886",
+          "pointer": "/profiles/source-model-B/kubernetesReserve/tasks",
+          "exactTypedNode": 32
+        },
+        "ax41-coupled-request": {
+          "artifact": "same-existing-owner.proposed.json",
+          "sha256": "1a17d5a68b7c9f9e5a3843787b6ea911f3bc1b546b693c1650ef2f6ba42f4886",
+          "pointer": "/profiles/ax41-coupled-request/kubernetesReserve/tasks",
+          "exactTypedNode": 2048
+        }
+      },
+      "currentProductiveReaders": {
+        "operation": "nativeNodeReservation kubernetesReserve \u2192 kubelet-reservations.json kubeReserved (CPU millicores suffixm,memory bytes,pid tasks)",
+        "references": [
+          {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1"
+          },
+          {
+            "path": "scripts/render-native-worker-node.mjs",
+            "sha256": "b32571ac43e893783a87002d473ecc3d3b9dd76d996ea3b26f76ec6a2ed748fc"
+          },
+          {
+            "path": "scripts/prepare-native-worker-pools.mjs",
+            "sha256": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3"
+          }
+        ]
+      },
+      "sourceContract": "SOURCE-RECEIVING-CONTRACT.md",
+      "definitionAccepted": false
+    },
+    {
+      "id": "DLV-NATIVE-HOST-POOLS-BUSTER-NAMESPACE",
+      "originalBodyPointer": "/rows/8",
+      "originalRowBodySha256": "31d94e3f612b282eeed04aada3dcd9c89da78be3f044bfd62f2698b36ed49804",
+      "originalSourceField": "pools.buster.namespace",
+      "originalCases": [
+        "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+        "DLV-CASE-NATIVE-HOST-ACTIVATION"
+      ],
+      "originalTargetHistory": {
+        "author": "config/native-host/<selected-node>/policy.yaml (proposed placement of the EXISTING single selected node-policy YAML CLI input, referenced by pipeline.config.json; not a new host policy owner)",
+        "reference": "pools.buster.namespace",
+        "justification": "loadNativeNodePolicy existing YAML argument validates this exact root; renderer/preflight/install callers must consume identical selected file digest. New path selection does not introduce a new loader/default/index. Physical naming/selection must be reviewed in C0 and implemented only authorized C3."
+      },
+      "soleAuthorProspectiveCorrection": {
+        "currentExistingPath": "my-values/infra/native-worker-pools-ax41.yaml",
+        "proposedProfilePointer": "/profiles/<explicit>/pools/buster/namespace",
+        "supersession": "original proposed config/native-host/<node>/policy.yaml placement remains history; do not install both authors. Existing selected YAML becomes one explicit complete profile wrapper only under a reviewed loader/root extension. Generic native-worker-pools.yaml is an incomplete reference template, never fallback/co-author.",
+        "phase": "H original host/admin install-time source; S host-service/role generation transport; R original task/scope/ownership/claim/grants/budgets immutable. No globalhotM or task ENV/source quota writer."
+      },
+      "physicalProfiles": {
+        "ax41-current": {
+          "artifact": "same-existing-owner.proposed.json",
+          "sha256": "1a17d5a68b7c9f9e5a3843787b6ea911f3bc1b546b693c1650ef2f6ba42f4886",
+          "pointer": "/profiles/ax41-current/pools/buster/namespace",
+          "exactTypedNode": "kubeclaw"
+        },
+        "source-model-A": {
+          "artifact": "same-existing-owner.proposed.json",
+          "sha256": "1a17d5a68b7c9f9e5a3843787b6ea911f3bc1b546b693c1650ef2f6ba42f4886",
+          "pointer": "/profiles/source-model-A/pools/buster/namespace",
+          "exactTypedNode": "dlv-buster-a"
+        },
+        "source-model-B": {
+          "artifact": "same-existing-owner.proposed.json",
+          "sha256": "1a17d5a68b7c9f9e5a3843787b6ea911f3bc1b546b693c1650ef2f6ba42f4886",
+          "pointer": "/profiles/source-model-B/pools/buster/namespace",
+          "exactTypedNode": "dlv-buster-b"
+        },
+        "ax41-coupled-request": {
+          "artifact": "same-existing-owner.proposed.json",
+          "sha256": "1a17d5a68b7c9f9e5a3843787b6ea911f3bc1b546b693c1650ef2f6ba42f4886",
+          "pointer": "/profiles/ax41-coupled-request/pools/buster/namespace",
+          "exactTypedNode": "kubeclaw"
+        }
+      },
+      "currentProductiveReaders": {
+        "operation": "nriPolicy roles.namespace \u2192 native-nri.json; rendered native Chart namespace; role admission identity",
+        "references": [
+          {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1"
+          },
+          {
+            "path": "scripts/render-native-worker-node.mjs",
+            "sha256": "b32571ac43e893783a87002d473ecc3d3b9dd76d996ea3b26f76ec6a2ed748fc"
+          },
+          {
+            "path": "scripts/prepare-native-worker-pools.mjs",
+            "sha256": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3"
+          }
+        ]
+      },
+      "sourceContract": "SOURCE-RECEIVING-CONTRACT.md",
+      "definitionAccepted": false
+    },
+    {
+      "id": "DLV-NATIVE-HOST-POOLS-BUSTER-CPUMILLICORES",
+      "originalBodyPointer": "/rows/9",
+      "originalRowBodySha256": "6dc1db6a36f2e97ca2d3741ba7f3fd171eada4375cde1297fdb20106c64b5aa9",
+      "originalSourceField": "pools.buster.cpuMillicores",
+      "originalCases": [
+        "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+        "DLV-CASE-NATIVE-HOST-ACTIVATION"
+      ],
+      "originalTargetHistory": {
+        "author": "config/native-host/<selected-node>/policy.yaml (proposed placement of the EXISTING single selected node-policy YAML CLI input, referenced by pipeline.config.json; not a new host policy owner)",
+        "reference": "pools.buster.cpuMillicores",
+        "justification": "loadNativeNodePolicy existing YAML argument validates this exact root; renderer/preflight/install callers must consume identical selected file digest. New path selection does not introduce a new loader/default/index. Physical naming/selection must be reviewed in C0 and implemented only authorized C3."
+      },
+      "soleAuthorProspectiveCorrection": {
+        "currentExistingPath": "my-values/infra/native-worker-pools-ax41.yaml",
+        "proposedProfilePointer": "/profiles/<explicit>/pools/buster/cpuMillicores",
+        "supersession": "original proposed config/native-host/<node>/policy.yaml placement remains history; do not install both authors. Existing selected YAML becomes one explicit complete profile wrapper only under a reviewed loader/root extension. Generic native-worker-pools.yaml is an incomplete reference template, never fallback/co-author.",
+        "phase": "H original host/admin install-time source; S host-service/role generation transport; R original task/scope/ownership/claim/grants/budgets immutable. No globalhotM or task ENV/source quota writer."
+      },
+      "physicalProfiles": {
+        "ax41-current": {
+          "artifact": "same-existing-owner.proposed.json",
+          "sha256": "1a17d5a68b7c9f9e5a3843787b6ea911f3bc1b546b693c1650ef2f6ba42f4886",
+          "pointer": "/profiles/ax41-current/pools/buster/cpuMillicores",
+          "exactTypedNode": 1500
+        },
+        "source-model-A": {
+          "artifact": "same-existing-owner.proposed.json",
+          "sha256": "1a17d5a68b7c9f9e5a3843787b6ea911f3bc1b546b693c1650ef2f6ba42f4886",
+          "pointer": "/profiles/source-model-A/pools/buster/cpuMillicores",
+          "exactTypedNode": 500
+        },
+        "source-model-B": {
+          "artifact": "same-existing-owner.proposed.json",
+          "sha256": "1a17d5a68b7c9f9e5a3843787b6ea911f3bc1b546b693c1650ef2f6ba42f4886",
+          "pointer": "/profiles/source-model-B/pools/buster/cpuMillicores",
+          "exactTypedNode": 1000
+        },
+        "ax41-coupled-request": {
+          "artifact": "same-existing-owner.proposed.json",
+          "sha256": "1a17d5a68b7c9f9e5a3843787b6ea911f3bc1b546b693c1650ef2f6ba42f4886",
+          "pointer": "/profiles/ax41-coupled-request/pools/buster/cpuMillicores",
+          "exactTypedNode": 1500
+        }
+      },
+      "currentProductiveReaders": {
+        "operation": "nativePoolPolicy limits: memoryBytes\u2192memory.max; tasks\u2192pids.max; cpuMillicores*100\u2192cpu.max quota /100000us period \u2192 prepare controls; plus nativeNodeReservation systemReserved pool sum",
+        "references": [
+          {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1"
+          },
+          {
+            "path": "scripts/render-native-worker-node.mjs",
+            "sha256": "b32571ac43e893783a87002d473ecc3d3b9dd76d996ea3b26f76ec6a2ed748fc"
+          },
+          {
+            "path": "scripts/prepare-native-worker-pools.mjs",
+            "sha256": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3"
+          }
+        ]
+      },
+      "sourceContract": "SOURCE-RECEIVING-CONTRACT.md",
+      "definitionAccepted": false
+    },
+    {
+      "id": "DLV-NATIVE-HOST-POOLS-BUSTER-MEMORYBYTES",
+      "originalBodyPointer": "/rows/10",
+      "originalRowBodySha256": "559bcac0b938a6d6dfd676a3566ea3603ff91f979111e5133498f9ec5ed8e35d",
+      "originalSourceField": "pools.buster.memoryBytes",
+      "originalCases": [
+        "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+        "DLV-CASE-NATIVE-HOST-ACTIVATION"
+      ],
+      "originalTargetHistory": {
+        "author": "config/native-host/<selected-node>/policy.yaml (proposed placement of the EXISTING single selected node-policy YAML CLI input, referenced by pipeline.config.json; not a new host policy owner)",
+        "reference": "pools.buster.memoryBytes",
+        "justification": "loadNativeNodePolicy existing YAML argument validates this exact root; renderer/preflight/install callers must consume identical selected file digest. New path selection does not introduce a new loader/default/index. Physical naming/selection must be reviewed in C0 and implemented only authorized C3."
+      },
+      "soleAuthorProspectiveCorrection": {
+        "currentExistingPath": "my-values/infra/native-worker-pools-ax41.yaml",
+        "proposedProfilePointer": "/profiles/<explicit>/pools/buster/memoryBytes",
+        "supersession": "original proposed config/native-host/<node>/policy.yaml placement remains history; do not install both authors. Existing selected YAML becomes one explicit complete profile wrapper only under a reviewed loader/root extension. Generic native-worker-pools.yaml is an incomplete reference template, never fallback/co-author.",
+        "phase": "H original host/admin install-time source; S host-service/role generation transport; R original task/scope/ownership/claim/grants/budgets immutable. No globalhotM or task ENV/source quota writer."
+      },
+      "physicalProfiles": {
+        "ax41-current": {
+          "artifact": "same-existing-owner.proposed.json",
+          "sha256": "1a17d5a68b7c9f9e5a3843787b6ea911f3bc1b546b693c1650ef2f6ba42f4886",
+          "pointer": "/profiles/ax41-current/pools/buster/memoryBytes",
+          "exactTypedNode": 8589934592
+        },
+        "source-model-A": {
+          "artifact": "same-existing-owner.proposed.json",
+          "sha256": "1a17d5a68b7c9f9e5a3843787b6ea911f3bc1b546b693c1650ef2f6ba42f4886",
+          "pointer": "/profiles/source-model-A/pools/buster/memoryBytes",
+          "exactTypedNode": 67108864
+        },
+        "source-model-B": {
+          "artifact": "same-existing-owner.proposed.json",
+          "sha256": "1a17d5a68b7c9f9e5a3843787b6ea911f3bc1b546b693c1650ef2f6ba42f4886",
+          "pointer": "/profiles/source-model-B/pools/buster/memoryBytes",
+          "exactTypedNode": 134217728
+        },
+        "ax41-coupled-request": {
+          "artifact": "same-existing-owner.proposed.json",
+          "sha256": "1a17d5a68b7c9f9e5a3843787b6ea911f3bc1b546b693c1650ef2f6ba42f4886",
+          "pointer": "/profiles/ax41-coupled-request/pools/buster/memoryBytes",
+          "exactTypedNode": 8589934592
+        }
+      },
+      "currentProductiveReaders": {
+        "operation": "nativePoolPolicy limits: memoryBytes\u2192memory.max; tasks\u2192pids.max; cpuMillicores*100\u2192cpu.max quota /100000us period \u2192 prepare controls; plus nativeNodeReservation systemReserved pool sum",
+        "references": [
+          {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1"
+          },
+          {
+            "path": "scripts/render-native-worker-node.mjs",
+            "sha256": "b32571ac43e893783a87002d473ecc3d3b9dd76d996ea3b26f76ec6a2ed748fc"
+          },
+          {
+            "path": "scripts/prepare-native-worker-pools.mjs",
+            "sha256": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3"
+          }
+        ]
+      },
+      "sourceContract": "SOURCE-RECEIVING-CONTRACT.md",
+      "definitionAccepted": false
+    },
+    {
+      "id": "DLV-NATIVE-HOST-POOLS-BUSTER-TASKS",
+      "originalBodyPointer": "/rows/11",
+      "originalRowBodySha256": "0b6ce0dc6f601ddc24d51b66e981f86ede5a4e9351d3660581e4b29214e82a89",
+      "originalSourceField": "pools.buster.tasks",
+      "originalCases": [
+        "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+        "DLV-CASE-NATIVE-HOST-ACTIVATION"
+      ],
+      "originalTargetHistory": {
+        "author": "config/native-host/<selected-node>/policy.yaml (proposed placement of the EXISTING single selected node-policy YAML CLI input, referenced by pipeline.config.json; not a new host policy owner)",
+        "reference": "pools.buster.tasks",
+        "justification": "loadNativeNodePolicy existing YAML argument validates this exact root; renderer/preflight/install callers must consume identical selected file digest. New path selection does not introduce a new loader/default/index. Physical naming/selection must be reviewed in C0 and implemented only authorized C3."
+      },
+      "soleAuthorProspectiveCorrection": {
+        "currentExistingPath": "my-values/infra/native-worker-pools-ax41.yaml",
+        "proposedProfilePointer": "/profiles/<explicit>/pools/buster/tasks",
+        "supersession": "original proposed config/native-host/<node>/policy.yaml placement remains history; do not install both authors. Existing selected YAML becomes one explicit complete profile wrapper only under a reviewed loader/root extension. Generic native-worker-pools.yaml is an incomplete reference template, never fallback/co-author.",
+        "phase": "H original host/admin install-time source; S host-service/role generation transport; R original task/scope/ownership/claim/grants/budgets immutable. No globalhotM or task ENV/source quota writer."
+      },
+      "physicalProfiles": {
+        "ax41-current": {
+          "artifact": "same-existing-owner.proposed.json",
+          "sha256": "1a17d5a68b7c9f9e5a3843787b6ea911f3bc1b546b693c1650ef2f6ba42f4886",
+          "pointer": "/profiles/ax41-current/pools/buster/tasks",
+          "exactTypedNode": 4096
+        },
+        "source-model-A": {
+          "artifact": "same-existing-owner.proposed.json",
+          "sha256": "1a17d5a68b7c9f9e5a3843787b6ea911f3bc1b546b693c1650ef2f6ba42f4886",
+          "pointer": "/profiles/source-model-A/pools/buster/tasks",
+          "exactTypedNode": 32
+        },
+        "source-model-B": {
+          "artifact": "same-existing-owner.proposed.json",
+          "sha256": "1a17d5a68b7c9f9e5a3843787b6ea911f3bc1b546b693c1650ef2f6ba42f4886",
+          "pointer": "/profiles/source-model-B/pools/buster/tasks",
+          "exactTypedNode": 64
+        },
+        "ax41-coupled-request": {
+          "artifact": "same-existing-owner.proposed.json",
+          "sha256": "1a17d5a68b7c9f9e5a3843787b6ea911f3bc1b546b693c1650ef2f6ba42f4886",
+          "pointer": "/profiles/ax41-coupled-request/pools/buster/tasks",
+          "exactTypedNode": 4096
+        }
+      },
+      "currentProductiveReaders": {
+        "operation": "nativePoolPolicy limits: memoryBytes\u2192memory.max; tasks\u2192pids.max; cpuMillicores*100\u2192cpu.max quota /100000us period \u2192 prepare controls; plus nativeNodeReservation systemReserved pool sum",
+        "references": [
+          {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1"
+          },
+          {
+            "path": "scripts/render-native-worker-node.mjs",
+            "sha256": "b32571ac43e893783a87002d473ecc3d3b9dd76d996ea3b26f76ec6a2ed748fc"
+          },
+          {
+            "path": "scripts/prepare-native-worker-pools.mjs",
+            "sha256": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3"
+          }
+        ]
+      },
+      "sourceContract": "SOURCE-RECEIVING-CONTRACT.md",
+      "definitionAccepted": false
+    },
+    {
+      "id": "DLV-NATIVE-HOST-POOLS-BUSTER-MAXIMUMACTIVESCOPES",
+      "originalBodyPointer": "/rows/12",
+      "originalRowBodySha256": "c5a8c9a4d8e3a970fd6d1e04214916f17c4937cf1b015b3311ed7cf76b736f8f",
+      "originalSourceField": "pools.buster.maximumActiveScopes",
+      "originalCases": [
+        "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+        "DLV-CASE-NATIVE-HOST-ACTIVATION"
+      ],
+      "originalTargetHistory": {
+        "author": "config/native-host/<selected-node>/policy.yaml (proposed placement of the EXISTING single selected node-policy YAML CLI input, referenced by pipeline.config.json; not a new host policy owner)",
+        "reference": "pools.buster.maximumActiveScopes",
+        "justification": "loadNativeNodePolicy existing YAML argument validates this exact root; renderer/preflight/install callers must consume identical selected file digest. New path selection does not introduce a new loader/default/index. Physical naming/selection must be reviewed in C0 and implemented only authorized C3."
+      },
+      "soleAuthorProspectiveCorrection": {
+        "currentExistingPath": "my-values/infra/native-worker-pools-ax41.yaml",
+        "proposedProfilePointer": "/profiles/<explicit>/pools/buster/maximumActiveScopes",
+        "supersession": "original proposed config/native-host/<node>/policy.yaml placement remains history; do not install both authors. Existing selected YAML becomes one explicit complete profile wrapper only under a reviewed loader/root extension. Generic native-worker-pools.yaml is an incomplete reference template, never fallback/co-author.",
+        "phase": "H original host/admin install-time source; S host-service/role generation transport; R original task/scope/ownership/claim/grants/budgets immutable. No globalhotM or task ENV/source quota writer."
+      },
+      "physicalProfiles": {
+        "ax41-current": {
+          "artifact": "same-existing-owner.proposed.json",
+          "sha256": "1a17d5a68b7c9f9e5a3843787b6ea911f3bc1b546b693c1650ef2f6ba42f4886",
+          "pointer": "/profiles/ax41-current/pools/buster/maximumActiveScopes",
+          "exactTypedNode": 1
+        },
+        "source-model-A": {
+          "artifact": "same-existing-owner.proposed.json",
+          "sha256": "1a17d5a68b7c9f9e5a3843787b6ea911f3bc1b546b693c1650ef2f6ba42f4886",
+          "pointer": "/profiles/source-model-A/pools/buster/maximumActiveScopes",
+          "exactTypedNode": 2
+        },
+        "source-model-B": {
+          "artifact": "same-existing-owner.proposed.json",
+          "sha256": "1a17d5a68b7c9f9e5a3843787b6ea911f3bc1b546b693c1650ef2f6ba42f4886",
+          "pointer": "/profiles/source-model-B/pools/buster/maximumActiveScopes",
+          "exactTypedNode": 4
+        },
+        "ax41-coupled-request": {
+          "artifact": "same-existing-owner.proposed.json",
+          "sha256": "1a17d5a68b7c9f9e5a3843787b6ea911f3bc1b546b693c1650ef2f6ba42f4886",
+          "pointer": "/profiles/ax41-coupled-request/pools/buster/maximumActiveScopes",
+          "exactTypedNode": 2
+        }
+      },
+      "currentProductiveReaders": {
+        "operation": "nativePoolPolicy maximumActiveScopes \u2192 <role>-pool.json \u2192 worker native scope admission; not prepare cgroup control",
+        "references": [
+          {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1"
+          },
+          {
+            "path": "scripts/render-native-worker-node.mjs",
+            "sha256": "b32571ac43e893783a87002d473ecc3d3b9dd76d996ea3b26f76ec6a2ed748fc"
+          },
+          {
+            "path": "scripts/prepare-native-worker-pools.mjs",
+            "sha256": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3"
+          }
+        ]
+      },
+      "sourceContract": "SOURCE-RECEIVING-CONTRACT.md",
+      "definitionAccepted": false
+    },
+    {
+      "id": "DLV-NATIVE-HOST-POOLS-PRISM-NAMESPACE",
+      "originalBodyPointer": "/rows/13",
+      "originalRowBodySha256": "497ddac9a4b974409bfba6c3ae488d3619a29eaef18ba207b3821943ab7cfd4f",
+      "originalSourceField": "pools.prism.namespace",
+      "originalCases": [
+        "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+        "DLV-CASE-NATIVE-HOST-ACTIVATION"
+      ],
+      "originalTargetHistory": {
+        "author": "config/native-host/<selected-node>/policy.yaml (proposed placement of the EXISTING single selected node-policy YAML CLI input, referenced by pipeline.config.json; not a new host policy owner)",
+        "reference": "pools.prism.namespace",
+        "justification": "loadNativeNodePolicy existing YAML argument validates this exact root; renderer/preflight/install callers must consume identical selected file digest. New path selection does not introduce a new loader/default/index. Physical naming/selection must be reviewed in C0 and implemented only authorized C3."
+      },
+      "soleAuthorProspectiveCorrection": {
+        "currentExistingPath": "my-values/infra/native-worker-pools-ax41.yaml",
+        "proposedProfilePointer": "/profiles/<explicit>/pools/prism/namespace",
+        "supersession": "original proposed config/native-host/<node>/policy.yaml placement remains history; do not install both authors. Existing selected YAML becomes one explicit complete profile wrapper only under a reviewed loader/root extension. Generic native-worker-pools.yaml is an incomplete reference template, never fallback/co-author.",
+        "phase": "H original host/admin install-time source; S host-service/role generation transport; R original task/scope/ownership/claim/grants/budgets immutable. No globalhotM or task ENV/source quota writer."
+      },
+      "physicalProfiles": {
+        "ax41-current": {
+          "artifact": "same-existing-owner.proposed.json",
+          "sha256": "1a17d5a68b7c9f9e5a3843787b6ea911f3bc1b546b693c1650ef2f6ba42f4886",
+          "pointer": "/profiles/ax41-current/pools/prism/namespace",
+          "exactTypedNode": "kubeclaw"
+        },
+        "source-model-A": {
+          "artifact": "same-existing-owner.proposed.json",
+          "sha256": "1a17d5a68b7c9f9e5a3843787b6ea911f3bc1b546b693c1650ef2f6ba42f4886",
+          "pointer": "/profiles/source-model-A/pools/prism/namespace",
+          "exactTypedNode": "dlv-prism-a"
+        },
+        "source-model-B": {
+          "artifact": "same-existing-owner.proposed.json",
+          "sha256": "1a17d5a68b7c9f9e5a3843787b6ea911f3bc1b546b693c1650ef2f6ba42f4886",
+          "pointer": "/profiles/source-model-B/pools/prism/namespace",
+          "exactTypedNode": "dlv-prism-b"
+        },
+        "ax41-coupled-request": {
+          "artifact": "same-existing-owner.proposed.json",
+          "sha256": "1a17d5a68b7c9f9e5a3843787b6ea911f3bc1b546b693c1650ef2f6ba42f4886",
+          "pointer": "/profiles/ax41-coupled-request/pools/prism/namespace",
+          "exactTypedNode": "kubeclaw"
+        }
+      },
+      "currentProductiveReaders": {
+        "operation": "nriPolicy roles.namespace \u2192 native-nri.json; rendered native Chart namespace; role admission identity",
+        "references": [
+          {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1"
+          },
+          {
+            "path": "scripts/render-native-worker-node.mjs",
+            "sha256": "b32571ac43e893783a87002d473ecc3d3b9dd76d996ea3b26f76ec6a2ed748fc"
+          },
+          {
+            "path": "scripts/prepare-native-worker-pools.mjs",
+            "sha256": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3"
+          }
+        ]
+      },
+      "sourceContract": "SOURCE-RECEIVING-CONTRACT.md",
+      "definitionAccepted": false
+    },
+    {
+      "id": "DLV-NATIVE-HOST-POOLS-PRISM-CPUMILLICORES",
+      "originalBodyPointer": "/rows/14",
+      "originalRowBodySha256": "4e934184813178db31aefd9332b49ca514aac758cc76d2cd9149fb8bc005f7b8",
+      "originalSourceField": "pools.prism.cpuMillicores",
+      "originalCases": [
+        "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+        "DLV-CASE-NATIVE-HOST-ACTIVATION"
+      ],
+      "originalTargetHistory": {
+        "author": "config/native-host/<selected-node>/policy.yaml (proposed placement of the EXISTING single selected node-policy YAML CLI input, referenced by pipeline.config.json; not a new host policy owner)",
+        "reference": "pools.prism.cpuMillicores",
+        "justification": "loadNativeNodePolicy existing YAML argument validates this exact root; renderer/preflight/install callers must consume identical selected file digest. New path selection does not introduce a new loader/default/index. Physical naming/selection must be reviewed in C0 and implemented only authorized C3."
+      },
+      "soleAuthorProspectiveCorrection": {
+        "currentExistingPath": "my-values/infra/native-worker-pools-ax41.yaml",
+        "proposedProfilePointer": "/profiles/<explicit>/pools/prism/cpuMillicores",
+        "supersession": "original proposed config/native-host/<node>/policy.yaml placement remains history; do not install both authors. Existing selected YAML becomes one explicit complete profile wrapper only under a reviewed loader/root extension. Generic native-worker-pools.yaml is an incomplete reference template, never fallback/co-author.",
+        "phase": "H original host/admin install-time source; S host-service/role generation transport; R original task/scope/ownership/claim/grants/budgets immutable. No globalhotM or task ENV/source quota writer."
+      },
+      "physicalProfiles": {
+        "ax41-current": {
+          "artifact": "same-existing-owner.proposed.json",
+          "sha256": "1a17d5a68b7c9f9e5a3843787b6ea911f3bc1b546b693c1650ef2f6ba42f4886",
+          "pointer": "/profiles/ax41-current/pools/prism/cpuMillicores",
+          "exactTypedNode": 2000
+        },
+        "source-model-A": {
+          "artifact": "same-existing-owner.proposed.json",
+          "sha256": "1a17d5a68b7c9f9e5a3843787b6ea911f3bc1b546b693c1650ef2f6ba42f4886",
+          "pointer": "/profiles/source-model-A/pools/prism/cpuMillicores",
+          "exactTypedNode": 500
+        },
+        "source-model-B": {
+          "artifact": "same-existing-owner.proposed.json",
+          "sha256": "1a17d5a68b7c9f9e5a3843787b6ea911f3bc1b546b693c1650ef2f6ba42f4886",
+          "pointer": "/profiles/source-model-B/pools/prism/cpuMillicores",
+          "exactTypedNode": 1000
+        },
+        "ax41-coupled-request": {
+          "artifact": "same-existing-owner.proposed.json",
+          "sha256": "1a17d5a68b7c9f9e5a3843787b6ea911f3bc1b546b693c1650ef2f6ba42f4886",
+          "pointer": "/profiles/ax41-coupled-request/pools/prism/cpuMillicores",
+          "exactTypedNode": 2000
+        }
+      },
+      "currentProductiveReaders": {
+        "operation": "nativePoolPolicy limits: memoryBytes\u2192memory.max; tasks\u2192pids.max; cpuMillicores*100\u2192cpu.max quota /100000us period \u2192 prepare controls; plus nativeNodeReservation systemReserved pool sum",
+        "references": [
+          {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1"
+          },
+          {
+            "path": "scripts/render-native-worker-node.mjs",
+            "sha256": "b32571ac43e893783a87002d473ecc3d3b9dd76d996ea3b26f76ec6a2ed748fc"
+          },
+          {
+            "path": "scripts/prepare-native-worker-pools.mjs",
+            "sha256": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3"
+          }
+        ]
+      },
+      "sourceContract": "SOURCE-RECEIVING-CONTRACT.md",
+      "definitionAccepted": false
+    },
+    {
+      "id": "DLV-NATIVE-HOST-POOLS-PRISM-MEMORYBYTES",
+      "originalBodyPointer": "/rows/15",
+      "originalRowBodySha256": "59b4a4680fd8f0c7545700f4e8e87778e360927e34a4f0578b84013387fc21a2",
+      "originalSourceField": "pools.prism.memoryBytes",
+      "originalCases": [
+        "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+        "DLV-CASE-NATIVE-HOST-ACTIVATION"
+      ],
+      "originalTargetHistory": {
+        "author": "config/native-host/<selected-node>/policy.yaml (proposed placement of the EXISTING single selected node-policy YAML CLI input, referenced by pipeline.config.json; not a new host policy owner)",
+        "reference": "pools.prism.memoryBytes",
+        "justification": "loadNativeNodePolicy existing YAML argument validates this exact root; renderer/preflight/install callers must consume identical selected file digest. New path selection does not introduce a new loader/default/index. Physical naming/selection must be reviewed in C0 and implemented only authorized C3."
+      },
+      "soleAuthorProspectiveCorrection": {
+        "currentExistingPath": "my-values/infra/native-worker-pools-ax41.yaml",
+        "proposedProfilePointer": "/profiles/<explicit>/pools/prism/memoryBytes",
+        "supersession": "original proposed config/native-host/<node>/policy.yaml placement remains history; do not install both authors. Existing selected YAML becomes one explicit complete profile wrapper only under a reviewed loader/root extension. Generic native-worker-pools.yaml is an incomplete reference template, never fallback/co-author.",
+        "phase": "H original host/admin install-time source; S host-service/role generation transport; R original task/scope/ownership/claim/grants/budgets immutable. No globalhotM or task ENV/source quota writer."
+      },
+      "physicalProfiles": {
+        "ax41-current": {
+          "artifact": "same-existing-owner.proposed.json",
+          "sha256": "1a17d5a68b7c9f9e5a3843787b6ea911f3bc1b546b693c1650ef2f6ba42f4886",
+          "pointer": "/profiles/ax41-current/pools/prism/memoryBytes",
+          "exactTypedNode": 17179869184
+        },
+        "source-model-A": {
+          "artifact": "same-existing-owner.proposed.json",
+          "sha256": "1a17d5a68b7c9f9e5a3843787b6ea911f3bc1b546b693c1650ef2f6ba42f4886",
+          "pointer": "/profiles/source-model-A/pools/prism/memoryBytes",
+          "exactTypedNode": 67108864
+        },
+        "source-model-B": {
+          "artifact": "same-existing-owner.proposed.json",
+          "sha256": "1a17d5a68b7c9f9e5a3843787b6ea911f3bc1b546b693c1650ef2f6ba42f4886",
+          "pointer": "/profiles/source-model-B/pools/prism/memoryBytes",
+          "exactTypedNode": 134217728
+        },
+        "ax41-coupled-request": {
+          "artifact": "same-existing-owner.proposed.json",
+          "sha256": "1a17d5a68b7c9f9e5a3843787b6ea911f3bc1b546b693c1650ef2f6ba42f4886",
+          "pointer": "/profiles/ax41-coupled-request/pools/prism/memoryBytes",
+          "exactTypedNode": 17179869184
+        }
+      },
+      "currentProductiveReaders": {
+        "operation": "nativePoolPolicy limits: memoryBytes\u2192memory.max; tasks\u2192pids.max; cpuMillicores*100\u2192cpu.max quota /100000us period \u2192 prepare controls; plus nativeNodeReservation systemReserved pool sum",
+        "references": [
+          {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1"
+          },
+          {
+            "path": "scripts/render-native-worker-node.mjs",
+            "sha256": "b32571ac43e893783a87002d473ecc3d3b9dd76d996ea3b26f76ec6a2ed748fc"
+          },
+          {
+            "path": "scripts/prepare-native-worker-pools.mjs",
+            "sha256": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3"
+          }
+        ]
+      },
+      "sourceContract": "SOURCE-RECEIVING-CONTRACT.md",
+      "definitionAccepted": false
+    },
+    {
+      "id": "DLV-NATIVE-HOST-POOLS-PRISM-TASKS",
+      "originalBodyPointer": "/rows/16",
+      "originalRowBodySha256": "db8241d3382d147e37c9478739fdadd398ef61c30f65400c19d3fdd6691d2600",
+      "originalSourceField": "pools.prism.tasks",
+      "originalCases": [
+        "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+        "DLV-CASE-NATIVE-HOST-ACTIVATION"
+      ],
+      "originalTargetHistory": {
+        "author": "config/native-host/<selected-node>/policy.yaml (proposed placement of the EXISTING single selected node-policy YAML CLI input, referenced by pipeline.config.json; not a new host policy owner)",
+        "reference": "pools.prism.tasks",
+        "justification": "loadNativeNodePolicy existing YAML argument validates this exact root; renderer/preflight/install callers must consume identical selected file digest. New path selection does not introduce a new loader/default/index. Physical naming/selection must be reviewed in C0 and implemented only authorized C3."
+      },
+      "soleAuthorProspectiveCorrection": {
+        "currentExistingPath": "my-values/infra/native-worker-pools-ax41.yaml",
+        "proposedProfilePointer": "/profiles/<explicit>/pools/prism/tasks",
+        "supersession": "original proposed config/native-host/<node>/policy.yaml placement remains history; do not install both authors. Existing selected YAML becomes one explicit complete profile wrapper only under a reviewed loader/root extension. Generic native-worker-pools.yaml is an incomplete reference template, never fallback/co-author.",
+        "phase": "H original host/admin install-time source; S host-service/role generation transport; R original task/scope/ownership/claim/grants/budgets immutable. No globalhotM or task ENV/source quota writer."
+      },
+      "physicalProfiles": {
+        "ax41-current": {
+          "artifact": "same-existing-owner.proposed.json",
+          "sha256": "1a17d5a68b7c9f9e5a3843787b6ea911f3bc1b546b693c1650ef2f6ba42f4886",
+          "pointer": "/profiles/ax41-current/pools/prism/tasks",
+          "exactTypedNode": 2048
+        },
+        "source-model-A": {
+          "artifact": "same-existing-owner.proposed.json",
+          "sha256": "1a17d5a68b7c9f9e5a3843787b6ea911f3bc1b546b693c1650ef2f6ba42f4886",
+          "pointer": "/profiles/source-model-A/pools/prism/tasks",
+          "exactTypedNode": 32
+        },
+        "source-model-B": {
+          "artifact": "same-existing-owner.proposed.json",
+          "sha256": "1a17d5a68b7c9f9e5a3843787b6ea911f3bc1b546b693c1650ef2f6ba42f4886",
+          "pointer": "/profiles/source-model-B/pools/prism/tasks",
+          "exactTypedNode": 64
+        },
+        "ax41-coupled-request": {
+          "artifact": "same-existing-owner.proposed.json",
+          "sha256": "1a17d5a68b7c9f9e5a3843787b6ea911f3bc1b546b693c1650ef2f6ba42f4886",
+          "pointer": "/profiles/ax41-coupled-request/pools/prism/tasks",
+          "exactTypedNode": 2048
+        }
+      },
+      "currentProductiveReaders": {
+        "operation": "nativePoolPolicy limits: memoryBytes\u2192memory.max; tasks\u2192pids.max; cpuMillicores*100\u2192cpu.max quota /100000us period \u2192 prepare controls; plus nativeNodeReservation systemReserved pool sum",
+        "references": [
+          {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1"
+          },
+          {
+            "path": "scripts/render-native-worker-node.mjs",
+            "sha256": "b32571ac43e893783a87002d473ecc3d3b9dd76d996ea3b26f76ec6a2ed748fc"
+          },
+          {
+            "path": "scripts/prepare-native-worker-pools.mjs",
+            "sha256": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3"
+          }
+        ]
+      },
+      "sourceContract": "SOURCE-RECEIVING-CONTRACT.md",
+      "definitionAccepted": false
+    },
+    {
+      "id": "DLV-NATIVE-HOST-POOLS-PRISM-MAXIMUMACTIVESCOPES",
+      "originalBodyPointer": "/rows/17",
+      "originalRowBodySha256": "bd5cb0c06dabb7aa83254961d02f161126aac9531bfccc1e3bdfda0fe08e8233",
+      "originalSourceField": "pools.prism.maximumActiveScopes",
+      "originalCases": [
+        "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+        "DLV-CASE-NATIVE-HOST-ACTIVATION"
+      ],
+      "originalTargetHistory": {
+        "author": "config/native-host/<selected-node>/policy.yaml (proposed placement of the EXISTING single selected node-policy YAML CLI input, referenced by pipeline.config.json; not a new host policy owner)",
+        "reference": "pools.prism.maximumActiveScopes",
+        "justification": "loadNativeNodePolicy existing YAML argument validates this exact root; renderer/preflight/install callers must consume identical selected file digest. New path selection does not introduce a new loader/default/index. Physical naming/selection must be reviewed in C0 and implemented only authorized C3."
+      },
+      "soleAuthorProspectiveCorrection": {
+        "currentExistingPath": "my-values/infra/native-worker-pools-ax41.yaml",
+        "proposedProfilePointer": "/profiles/<explicit>/pools/prism/maximumActiveScopes",
+        "supersession": "original proposed config/native-host/<node>/policy.yaml placement remains history; do not install both authors. Existing selected YAML becomes one explicit complete profile wrapper only under a reviewed loader/root extension. Generic native-worker-pools.yaml is an incomplete reference template, never fallback/co-author.",
+        "phase": "H original host/admin install-time source; S host-service/role generation transport; R original task/scope/ownership/claim/grants/budgets immutable. No globalhotM or task ENV/source quota writer."
+      },
+      "physicalProfiles": {
+        "ax41-current": {
+          "artifact": "same-existing-owner.proposed.json",
+          "sha256": "1a17d5a68b7c9f9e5a3843787b6ea911f3bc1b546b693c1650ef2f6ba42f4886",
+          "pointer": "/profiles/ax41-current/pools/prism/maximumActiveScopes",
+          "exactTypedNode": 1
+        },
+        "source-model-A": {
+          "artifact": "same-existing-owner.proposed.json",
+          "sha256": "1a17d5a68b7c9f9e5a3843787b6ea911f3bc1b546b693c1650ef2f6ba42f4886",
+          "pointer": "/profiles/source-model-A/pools/prism/maximumActiveScopes",
+          "exactTypedNode": 2
+        },
+        "source-model-B": {
+          "artifact": "same-existing-owner.proposed.json",
+          "sha256": "1a17d5a68b7c9f9e5a3843787b6ea911f3bc1b546b693c1650ef2f6ba42f4886",
+          "pointer": "/profiles/source-model-B/pools/prism/maximumActiveScopes",
+          "exactTypedNode": 4
+        },
+        "ax41-coupled-request": {
+          "artifact": "same-existing-owner.proposed.json",
+          "sha256": "1a17d5a68b7c9f9e5a3843787b6ea911f3bc1b546b693c1650ef2f6ba42f4886",
+          "pointer": "/profiles/ax41-coupled-request/pools/prism/maximumActiveScopes",
+          "exactTypedNode": 1
+        }
+      },
+      "currentProductiveReaders": {
+        "operation": "nativePoolPolicy maximumActiveScopes \u2192 <role>-pool.json \u2192 worker native scope admission; not prepare cgroup control",
+        "references": [
+          {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1"
+          },
+          {
+            "path": "scripts/render-native-worker-node.mjs",
+            "sha256": "b32571ac43e893783a87002d473ecc3d3b9dd76d996ea3b26f76ec6a2ed748fc"
+          },
+          {
+            "path": "scripts/prepare-native-worker-pools.mjs",
+            "sha256": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3"
+          }
+        ]
+      },
+      "sourceContract": "SOURCE-RECEIVING-CONTRACT.md",
+      "definitionAccepted": false
+    },
+    {
+      "id": "DLV-NATIVE-HOST-RUNTIME-CONTAINERDVERSION",
+      "originalBodyPointer": "/rows/18",
+      "originalRowBodySha256": "094418f221aae62bbf56c4cf03d2300cb0bf8f5bceed57144b4720a1b77ef3d0",
+      "originalSourceField": "runtime.containerdVersion",
+      "originalCases": [
+        "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+        "DLV-CASE-NATIVE-HOST-ACTIVATION"
+      ],
+      "originalTargetHistory": {
+        "author": "versions.json",
+        "reference": "/nativeRuntime/containerd/version",
+        "slice": "C1 new version-manifest member + every real host renderer/preflight/activation caller projection; C3 host maintenance execution only after approval",
+        "classification": "version",
+        "currentAbsence": "versions.json currently has no containerd member; native YAML currently authors runtime.containerdVersion. No existing entry, validator or projection claimed.",
+        "proposal": "add nativeRuntime.containerd.version under the existing sole software-version manifest, not infrastructure image-only map and not host YAML editable version. scripts/versions.mjs must explicitly validate/use this new member and reject unused/conflicting entries; host materializer emits read-only runtime.containerdVersion projection from the selected manifest generation. Native selection is a manifest reference/digest, not a free host-version string."
+      },
+      "soleAuthorProspectiveCorrection": {
+        "currentExistingPath": "my-values/infra/native-worker-pools-ax41.yaml",
+        "proposedProfilePointer": "/profiles/<explicit>/runtime/containerdVersion",
+        "supersession": "original proposed config/native-host/<node>/policy.yaml placement remains history; do not install both authors. Existing selected YAML becomes one explicit complete profile wrapper only under a reviewed loader/root extension. Generic native-worker-pools.yaml is an incomplete reference template, never fallback/co-author.",
+        "phase": "H original host/admin install-time source; S host-service/role generation transport; R original task/scope/ownership/claim/grants/budgets immutable. No globalhotM or task ENV/source quota writer."
+      },
+      "physicalProfiles": {
+        "ax41-current": {
+          "artifact": "same-existing-owner.proposed.json",
+          "sha256": "1a17d5a68b7c9f9e5a3843787b6ea911f3bc1b546b693c1650ef2f6ba42f4886",
+          "pointer": "/profiles/ax41-current/runtime/containerdVersion",
+          "exactTypedNode": "2.3.4-k3s1.36"
+        },
+        "source-model-A": {
+          "artifact": "same-existing-owner.proposed.json",
+          "sha256": "1a17d5a68b7c9f9e5a3843787b6ea911f3bc1b546b693c1650ef2f6ba42f4886",
+          "pointer": "/profiles/source-model-A/runtime/containerdVersion",
+          "exactTypedNode": "2.2.0"
+        },
+        "source-model-B": {
+          "artifact": "same-existing-owner.proposed.json",
+          "sha256": "1a17d5a68b7c9f9e5a3843787b6ea911f3bc1b546b693c1650ef2f6ba42f4886",
+          "pointer": "/profiles/source-model-B/runtime/containerdVersion",
+          "exactTypedNode": "2.3.0"
+        },
+        "ax41-coupled-request": {
+          "artifact": "same-existing-owner.proposed.json",
+          "sha256": "1a17d5a68b7c9f9e5a3843787b6ea911f3bc1b546b693c1650ef2f6ba42f4886",
+          "pointer": "/profiles/ax41-coupled-request/runtime/containerdVersion",
+          "exactTypedNode": "2.3.4-k3s1.36"
+        }
+      },
+      "currentProductiveReaders": {
+        "operation": "nriPolicy render-only validator, NOT validateNativeNodePolicy \u2192 native-nri.json/containerd native verification",
+        "references": [
+          {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1"
+          },
+          {
+            "path": "scripts/render-native-worker-node.mjs",
+            "sha256": "b32571ac43e893783a87002d473ecc3d3b9dd76d996ea3b26f76ec6a2ed748fc"
+          },
+          {
+            "path": "scripts/prepare-native-worker-pools.mjs",
+            "sha256": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3"
+          }
+        ]
+      },
+      "sourceContract": "SOURCE-RECEIVING-CONTRACT.md",
+      "definitionAccepted": false
+    }
+  ]
+}

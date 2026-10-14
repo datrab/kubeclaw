@@ -1,0 +1,176 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Complete required native-host original19 policy plus source/runtime receiving domains; no defaults, native role caps not hotM",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "nodeName",
+    "systemReserve",
+    "kubernetesReserve",
+    "pools",
+    "runtime"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "nodeName": {
+      "type": "string",
+      "pattern": "^[a-z0-9](?:[a-z0-9.-]{0,251}[a-z0-9])?$"
+    },
+    "systemReserve": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "cpuMillicores",
+        "memoryBytes",
+        "tasks"
+      ],
+      "properties": {
+        "cpuMillicores": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "memoryBytes": {
+          "type": "integer",
+          "minimum": 4096,
+          "maximum": 9007199254740991,
+          "multipleOf": 4096
+        },
+        "tasks": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        }
+      }
+    },
+    "kubernetesReserve": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "cpuMillicores",
+        "memoryBytes",
+        "tasks"
+      ],
+      "properties": {
+        "cpuMillicores": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "memoryBytes": {
+          "type": "integer",
+          "minimum": 4096,
+          "maximum": 9007199254740991,
+          "multipleOf": 4096
+        },
+        "tasks": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        }
+      }
+    },
+    "pools": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "buster",
+        "prism"
+      ],
+      "properties": {
+        "buster": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "cpuMillicores",
+            "memoryBytes",
+            "tasks",
+            "namespace",
+            "maximumActiveScopes"
+          ],
+          "properties": {
+            "cpuMillicores": {
+              "type": "integer",
+              "minimum": 10,
+              "maximum": 90071992547409
+            },
+            "memoryBytes": {
+              "type": "integer",
+              "minimum": 4096,
+              "maximum": 9007199254740991,
+              "multipleOf": 4096
+            },
+            "tasks": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "namespace": {
+              "type": "string",
+              "pattern": "^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$"
+            },
+            "maximumActiveScopes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            }
+          }
+        },
+        "prism": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "cpuMillicores",
+            "memoryBytes",
+            "tasks",
+            "namespace",
+            "maximumActiveScopes"
+          ],
+          "properties": {
+            "cpuMillicores": {
+              "type": "integer",
+              "minimum": 10,
+              "maximum": 90071992547409
+            },
+            "memoryBytes": {
+              "type": "integer",
+              "minimum": 4096,
+              "maximum": 9007199254740991,
+              "multipleOf": 4096
+            },
+            "tasks": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "namespace": {
+              "type": "string",
+              "pattern": "^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$"
+            },
+            "maximumActiveScopes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            }
+          }
+        }
+      }
+    },
+    "runtime": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "containerdVersion"
+      ],
+      "properties": {
+        "containerdVersion": {
+          "type": "string",
+          "pattern": "^v?2\\.(?:[2-9]|[1-9][0-9]+)\\.[0-9]+(?:[-+][A-Za-z0-9.-]+)?$"
+        }
+      }
+    }
+  }
+}

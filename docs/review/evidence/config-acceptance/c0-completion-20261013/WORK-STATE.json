@@ -20,7 +20,7 @@
   "unrelatedUntrackedExclude": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013 four preexisting files",
   "nativeTeam": [
     "/root/c1_case_oracle_review",
-    "/root/c0_canonical_source_join_review"
+    "/root/runtime_provider_contract_review"
   ],
   "integrationBaseline": "Frozen integration baseline preserves original 2,409 field IDs, 6,845 case IDs, requirements, bodies, canonical and historical hashes. Original checker snapshot preserved. New top-level exact-scope review references preserve all non-review properties; registry intentionally empty. 24 synthetic tooling controls and real unchanged-canonical structural pass, neither global acceptance. Native child/parent receipt DAG documented in review-transition-02. Fresh independent recheck pending.",
   "crossOwnerQueue": "Frozen cross-owner-join01 exactly90originalhandoffs+88knowncanonicalbodies(2newpublishedpairfieldsnotcanonicalyet); matchedsource/requirementidentitypreserved, allauthor/consumerjoinsunresolvedexplicit; Deliveryrequestedexactstable-ID/rootpointer/roleprojectionjoins.",
@@ -45,8 +45,8 @@
     "implementationAuthorized": false
   },
   "lastPushedCheckpoint": {
-    "checkpoint": 29,
-    "commit": "beda27eb69ce409ac37fe075edd4686980e39fd3",
+    "checkpoint": 30,
+    "commit": "c1707af3b37ca3ed93d3885d358e20013611ce63",
     "pr": "https://github.com/datrab/kubeclaw/pull/18",
     "pushed": true,
     "remoteHeadVerified": true,
@@ -64,7 +64,13 @@
       "errors": 0
     }
   },
-  "pendingNativeReviews": [],
+  "pendingNativeReviews": [
+    {
+      "path": "same-entry-agent-role-binding-01",
+      "reviewer": "/root/runtime_provider_contract_review",
+      "accepted": false
+    }
+  ],
   "checkpoint10Prepared": {
     "baseCommit": "ddd49add7eefd5fbbccac84360498a5ece8bae0a",
     "scope": "Swarm effective buffer cap28 independently20 verified; gateway19 source definitions29 and exact startup reader correction30 independently22 verified",
@@ -78,13 +84,13 @@
   "activeNativeWork": [
     {
       "task": "/root/c1_case_oracle_review",
-      "scope": "Original container-build/Kubernetes-fixture/Tailscale-exposure residual source domains/full owner profiles/actual caller authority and original future case oracles",
-      "status": "running source-definition author; fresh independent review required"
+      "scope": "CFX-01 additive five Tailscale source/future original-tuple transport/equality oracles and successful superseded no-off cleanup; preserve all original bodies",
+      "status": "running correction author; fresh independent recheck required"
     },
     {
-      "task": "/root/c0_canonical_source_join_review",
-      "scope": "One finite future root/schema/source/member/caller/output integration of independently reviewed Nova18 targets and Nova/Prism Gateway recipes onto frozen v8; no actual metadata adoption",
-      "status": "running author; fresh independent material review required"
+      "task": "/root/runtime_provider_contract_review",
+      "scope": "Frozen combined v9 Nova18/Gateway-role physical root/source/schema/fullprofiles/typedcaller/member/codec/outputreceipts and original410fields1888case reference scope",
+      "status": "running fresh independent full material review"
     }
   ],
   "completedLatestReviews": [
@@ -239,6 +245,16 @@
       "task": "/root/runtime_provider_contract_review",
       "verdict": "VERIFIED actual v8 canonical reference integration only; entire prior objects/rawprefix and physicalscope/historyrefs conserved,948inputs stable; no collectors rerun",
       "report": "independent-combined-generation-current-integration-review-02/README.md"
+    },
+    {
+      "task": "/root/policy_family_contract_review",
+      "verdict": "NOT ACCEPTED CFX-01: original-tuple equality not current guards and superseded cleanup is successful no-op; conservation49/329/367 passed,675endinputs stable; author13820 collector not rerun",
+      "report": "independent-container-fixture-exposure-contract-review-01/README.md"
+    },
+    {
+      "task": "/root/delivery_module_contract_review",
+      "verdict": "VERIFIED bounded NativeHost19 source/profile/receiver/case definitions; independent215 pure0,140inputs unchanged; no host activation/capacity/rootadoption proof",
+      "report": "independent-native-host-profile-review-01/README.md"
     }
   ],
   "checkpoint15Prepared": {
@@ -321,7 +337,13 @@
     "globalC0Accepted": false,
     "boundedReview": "independent-provider-field-dependency-adoption-review-01/README.md"
   },
-  "pendingAuthorCorrections": [],
+  "pendingAuthorCorrections": [
+    {
+      "path": "container-fixture-exposure-contracts-02",
+      "finding": "CFX-01",
+      "status": "running additive correction; frozen original01/review preserved; fresh independent recheck required"
+    }
+  ],
   "pendingIntegrationReview": {
     "path": "combined-generation-current-integration-02",
     "scope": "New v8 actual canonical references only; all other properties original, no runtime activation",
@@ -479,6 +501,23 @@
       "stdout": "checkpoint30-diff-check.stdout",
       "stderr": "checkpoint30-diff-check.stderr",
       "qualification": "Preserve exact frozen source snapshot bytes; no clean formatting claim when original EOF diagnostics occur"
+    },
+    "pushed": true,
+    "remoteWarning": "Existing canonical matrix97.12MB exceeds recommended50MB, push succeeded; no storage/LFS migration"
+  },
+  "checkpoint31Prepared": {
+    "baseCommit": "c1707af3b37ca3ed93d3885d358e20013611ce63",
+    "scope": "Native-host19 source profile definitions and independent bounded review, current navigation/state only",
+    "canonicalChanged": false,
+    "productionOrExistingTestsChanged": false,
+    "globalC0Accepted": false,
+    "implementationAuthorization": null,
+    "autoreview": "Codex CLI unavailable, no clean autoreview claim",
+    "checks": "76 author and107 review artifact pins exact; recorded independent215 source-pure checks0fail. No repeat structural/broad suite on unchanged canonical.",
+    "diffCheck": {
+      "exitCode": 0,
+      "stdout": "checkpoint31-diff-check.stdout",
+      "stderr": "checkpoint31-diff-check.stderr"
     }
   }
 }

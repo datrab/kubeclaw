@@ -1,0 +1,21 @@
+{
+  "exact": [
+    {
+      "id": "ax41-current",
+      "file": "/home/node/.openclaw/workspace/kubeclaw-config-c0/my-values/infra/native-worker-pools-ax41.yaml",
+      "wholeParsedObjectExact": true
+    },
+    {
+      "id": "source-model-A",
+      "file": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/A.yaml",
+      "wholeParsedObjectExact": true
+    },
+    {
+      "id": "source-model-B",
+      "file": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/B.yaml",
+      "wholeParsedObjectExact": true
+    }
+  ],
+  "coupledRequestOnlyDelta": "pools.buster.maximumActiveScopes 1->2",
+  "nativeProof": false
+}
