@@ -1,0 +1,539 @@
+{
+  "qualification": "Single proposed integrated v10 definition successor of correctedv9; patch/field-set/receiving contract, NOT runtime installation or C1-C6 implementation. Public fixture identities never authenticate native callers/grants.",
+  "baseRoot": {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-agent-role-binding-01/stand/config/pipeline.config.json",
+    "sha256": "b2f8be237c1a3cbe2f98aaf2378224afbf87b8910fbacd3047e17c1efc078ae1"
+  },
+  "baseRootSchema": {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-agent-role-binding-01/schemas/pipeline-entry.schema.json",
+    "sha256": "9225dbfeef0b40d7b703cfd783926d8f88f4175c3e6f2744a56a9bae36304547"
+  },
+  "baseAdmission": {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-agent-role-binding-02/admission-functions.mjs",
+    "sha256": "13679a4f0660b2a2f35b08114f929657196ac8482a5c873cfb20d17e240676ed"
+  },
+  "rootPatch": [
+    {
+      "op": "test",
+      "path": "/schemaVersion",
+      "value": "pipeline-entry.v9"
+    },
+    {
+      "op": "replace",
+      "path": "/schemaVersion",
+      "value": "pipeline-entry.v10"
+    },
+    {
+      "op": "add",
+      "path": "/pluginSelections/-",
+      "value": {
+        "kind": "test-provider",
+        "packageId": "kubeclaw.size-budget",
+        "registrationId": "kubeclaw.size-budget:artifact",
+        "instanceId": "fixture.size-budget",
+        "ownerPath": "plugins/kubeclaw.size-budget.config.json",
+        "profileId": "A",
+        "serviceInstanceId": "fixture.service.buster-runtime"
+      }
+    },
+    {
+      "op": "add",
+      "path": "/pluginSelections/-",
+      "value": {
+        "kind": "test-provider",
+        "packageId": "kubeclaw.coverage-budget",
+        "registrationId": "kubeclaw.coverage-budget:lcov",
+        "instanceId": "fixture.coverage-budget",
+        "ownerPath": "plugins/kubeclaw.coverage-budget.config.json",
+        "profileId": "A",
+        "serviceInstanceId": "fixture.service.buster-runtime"
+      }
+    },
+    {
+      "op": "add",
+      "path": "/novaCoreSelection",
+      "value": {
+        "role": "nova",
+        "instanceId": "fixture.core.nova",
+        "ownerPath": "nova/core.config.json",
+        "profileId": "local-A"
+      }
+    },
+    {
+      "op": "add",
+      "path": "/infrastructureSelections/-",
+      "value": {
+        "role": "secret-provisioning",
+        "deploymentInstanceId": "fixture.provisioning",
+        "ownerPath": "my-values/infra/secret-provisioning.yaml",
+        "profileId": "current-source-A"
+      }
+    }
+  ],
+  "rootSchemaPatch": [
+    {
+      "op": "replace",
+      "path": "/properties/schemaVersion/const",
+      "value": "pipeline-entry.v10"
+    },
+    {
+      "op": "add",
+      "path": "/properties/pluginSelections/items/properties/packageId/enum/-",
+      "value": "kubeclaw.size-budget"
+    },
+    {
+      "op": "add",
+      "path": "/properties/pluginSelections/items/properties/registrationId/enum/-",
+      "value": "kubeclaw.size-budget:artifact"
+    },
+    {
+      "op": "add",
+      "path": "/properties/pluginSelections/items/properties/ownerPath/enum/-",
+      "value": "plugins/kubeclaw.size-budget.config.json"
+    },
+    {
+      "op": "add",
+      "path": "/properties/pluginSelections/items/properties/packageId/enum/-",
+      "value": "kubeclaw.coverage-budget"
+    },
+    {
+      "op": "add",
+      "path": "/properties/pluginSelections/items/properties/registrationId/enum/-",
+      "value": "kubeclaw.coverage-budget:lcov"
+    },
+    {
+      "op": "add",
+      "path": "/properties/pluginSelections/items/properties/ownerPath/enum/-",
+      "value": "plugins/kubeclaw.coverage-budget.config.json"
+    },
+    {
+      "op": "add",
+      "path": "/properties/novaCoreSelection",
+      "value": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "role",
+          "instanceId",
+          "ownerPath",
+          "profileId"
+        ],
+        "properties": {
+          "role": {
+            "const": "nova"
+          },
+          "instanceId": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"
+          },
+          "ownerPath": {
+            "const": "nova/core.config.json"
+          },
+          "profileId": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"
+          }
+        }
+      }
+    },
+    {
+      "op": "add",
+      "path": "/required/-",
+      "value": "novaCoreSelection"
+    },
+    {
+      "op": "replace",
+      "path": "/properties/infrastructureSelections/items",
+      "value": {
+        "oneOf": [
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "role",
+              "deploymentInstanceId",
+              "ownerPath",
+              "profileId"
+            ],
+            "properties": {
+              "role": {
+                "const": "postgresql-recovery"
+              },
+              "deploymentInstanceId": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+              },
+              "ownerPath": {
+                "const": "my-values/infra/postgresql-recovery.yaml"
+              },
+              "profileId": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "role",
+              "deploymentInstanceId",
+              "ownerPath",
+              "profileId"
+            ],
+            "properties": {
+              "role": {
+                "const": "secret-provisioning"
+              },
+              "deploymentInstanceId": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+              },
+              "ownerPath": {
+                "const": "my-values/infra/secret-provisioning.yaml"
+              },
+              "profileId": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+              }
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "componentFiles": "All six existing Swarm owners retained; Core is evolved existing separate PlatformConfig authority, provisioning remains existing deployment owner, not seventh/eighth Swarm components.",
+  "qualityDelta": {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/quality-budget-contracts-01/coordinated-quality-generation-delta.json",
+    "sha256": "d5f384c8ce0c1b8bf3ca5639651816b0f2edd2fe2867b48b22111e1a10c82787"
+  },
+  "qualityReceiverArms": {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/quality-budget-contracts-01/schemas/quality-provider-receiver-arms.schema.json",
+    "sha256": "c8bf40a5ac552141252ae1da6975413a51cb340b24ba3f2132fe1b4084e821f4"
+  },
+  "core": {
+    "selection": {
+      "role": "nova",
+      "instanceId": "fixture.core.nova",
+      "ownerPath": "nova/core.config.json",
+      "profileId": "local-A"
+    },
+    "ownerSchema": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-02/nova-core-owner.schema.json",
+      "sha256": "77a6c011b92c9699ab68a394cdbac121c8c8fbac47c67bddf74943268e6e1973"
+    },
+    "completeOwner": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-02/residual-core-owner-fixtures.corrected.json",
+      "sha256": "420d2a5f32fe75700f1503c5b2775a0a972953f38df547008c5fe5db63140fa0"
+    },
+    "targetPath": "config/nova/core.config.json",
+    "sourceAuthority": "Actual loadPlatformConfig(--platform) and compiler; same-root new starts reject independent --platform, source paths relative canonical Core AUTHOR directory; schemas/roots/registry/grants exact original references. WFINAL-01 lock policies and WFINAL-02 source/cumulative/demo compiler timeout groups are explicit Core-owned leaves, not inferred from effectLockTtlMs or module execution timeout.",
+    "receiving": "Selected complete settings.platform goes to actual prepareRuntime/registry/capability source; settings.projectCompiler before compileProject; immutable graph/R, adapter/observer/effect-lock original histories before activation; actual source refs and exact member bindings in residual-anchor-joins +RESIDUAL-CORRECTIONS. runtimeLocks are resolved before FileJournal append mutex and run-mutation lock acquisition/renewal; projectCompiler.executionGroups are resolved before cumulative/source/demo helper stage emission.",
+    "caller": "scope nova-core,role nova,instanceId exact original Core request; actual authenticated original task/R role/grants must match selection before any compiler/native/registry effect; missing/foreign/composite rejects, no union grant"
+  },
+  "provisioning": {
+    "selection": {
+      "role": "secret-provisioning",
+      "deploymentInstanceId": "fixture.provisioning",
+      "ownerPath": "my-values/infra/secret-provisioning.yaml",
+      "profileId": "current-source-A"
+    },
+    "ownerSchema": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/PACKAGE-PROVISIONING-OWNER.schema.json",
+      "sha256": "57d795321a6d936de4395ea6ba897a13169edcb49ccf2b54eafa7d627a612e8d"
+    },
+    "completeOwner": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/PACKAGE-PROVISIONING-OWNER.json",
+      "sha256": "d375e2757a808ef13f88ecfd9f09c21ea989cfed970e26d20bbff79c3d8c4bbc"
+    },
+    "targetPath": "my-values/infra/secret-provisioning.yaml",
+    "ownerDocumentCodec": "JSON evidence object rendered as semantically identical YAML through existing normal same-entry materialization; raw delivered YAML/source/schema hashes bind same generation receipt, no independently editable JSON copy.",
+    "inputReferencesSchema": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/secret-provisioning-source-contracts-01/original-task-reference.bootstrap.schema.json",
+      "sha256": "c638387dcfe53452a88300de0a43e91271ec360a510a5817bf340ff072bed82e"
+    },
+    "receiving": "All actual helper/directtailscale/cmd_infra/setup/all paths use same original task guard/FD9 deployment receiver and per-family/BOOTSTRAP-ADMISSION states, no new private ledger or source authority.",
+    "caller": "scope provisioning,role secret-provisioning,deploymentInstanceId exact admitted original deployment task; per-object action/phase authorizations separate, same source namespace/selection; no Core or provider caller can inherit this scope"
+  },
+  "service10": {
+    "existingFinalOwner": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-agent-role-binding-01/stand/config/components/buster-engine.config.json",
+      "sha256": "db45c50264d80fad1972cae55d925bb281389ec02992b0f61f7be26b0dd07252"
+    },
+    "priorProfileCount": 94,
+    "existingFinalProfileCount": 95,
+    "all94PriorCompleteProfilesUnchanged": true,
+    "extraProfile": "browser-source-A is explicit inherited v9 addition, not service default merge",
+    "fieldProjections": [
+      {
+        "originalFieldIds": [
+          "DLV-BUSTER-ENTRYPOINT-RUNTIME-HOST"
+        ],
+        "side": "A",
+        "receivingPointer": "/profiles/local-A/settings/remotePlanService/host",
+        "sourceContract": {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/buster-remote-plan-profile-01/service10-field-contracts.json",
+          "sha256": "ac38fb4786d72884c3d2840dbebefc9b3e6b0fb6e4748970ba803e1866c29f43",
+          "pointer": "/fields/0"
+        },
+        "sameTypedNode": true
+      },
+      {
+        "originalFieldIds": [
+          "DLV-BUSTER-ENTRYPOINT-RUNTIME-HOST"
+        ],
+        "side": "B",
+        "receivingPointer": "/profiles/s-4740ae6347b0/settings/remotePlanService/host",
+        "sourceContract": {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/buster-remote-plan-profile-01/service10-field-contracts.json",
+          "sha256": "ac38fb4786d72884c3d2840dbebefc9b3e6b0fb6e4748970ba803e1866c29f43",
+          "pointer": "/fields/0"
+        },
+        "sameTypedNode": true
+      },
+      {
+        "originalFieldIds": [
+          "DLV-BUSTER-ENTRYPOINT-RUNTIME-PORT"
+        ],
+        "side": "A",
+        "receivingPointer": "/profiles/local-A/settings/remotePlanService/port",
+        "sourceContract": {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/buster-remote-plan-profile-01/service10-field-contracts.json",
+          "sha256": "ac38fb4786d72884c3d2840dbebefc9b3e6b0fb6e4748970ba803e1866c29f43",
+          "pointer": "/fields/1"
+        },
+        "sameTypedNode": true
+      },
+      {
+        "originalFieldIds": [
+          "DLV-BUSTER-ENTRYPOINT-RUNTIME-PORT"
+        ],
+        "side": "B",
+        "receivingPointer": "/profiles/s-f8d397a33fcb/settings/remotePlanService/port",
+        "sourceContract": {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/buster-remote-plan-profile-01/service10-field-contracts.json",
+          "sha256": "ac38fb4786d72884c3d2840dbebefc9b3e6b0fb6e4748970ba803e1866c29f43",
+          "pointer": "/fields/1"
+        },
+        "sameTypedNode": true
+      },
+      {
+        "originalFieldIds": [
+          "DLV-BUSTER-ENTRYPOINT-RUNTIME-RECORDLIMITS-MAXIMUMRECORDS"
+        ],
+        "side": "A",
+        "receivingPointer": "/profiles/local-A/settings/remotePlanService/recordLimits/maximumRecords",
+        "sourceContract": {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/buster-remote-plan-profile-01/service10-field-contracts.json",
+          "sha256": "ac38fb4786d72884c3d2840dbebefc9b3e6b0fb6e4748970ba803e1866c29f43",
+          "pointer": "/fields/2"
+        },
+        "sameTypedNode": true
+      },
+      {
+        "originalFieldIds": [
+          "DLV-BUSTER-ENTRYPOINT-RUNTIME-RECORDLIMITS-MAXIMUMRECORDS"
+        ],
+        "side": "B",
+        "receivingPointer": "/profiles/s-648c6607853d/settings/remotePlanService/recordLimits/maximumRecords",
+        "sourceContract": {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/buster-remote-plan-profile-01/service10-field-contracts.json",
+          "sha256": "ac38fb4786d72884c3d2840dbebefc9b3e6b0fb6e4748970ba803e1866c29f43",
+          "pointer": "/fields/2"
+        },
+        "sameTypedNode": true
+      },
+      {
+        "originalFieldIds": [
+          "DLV-BUSTER-ENTRYPOINT-RUNTIME-RECORDLIMITS-MAXIMUMBYTES"
+        ],
+        "side": "A",
+        "receivingPointer": "/profiles/local-A/settings/remotePlanService/recordLimits/maximumBytes",
+        "sourceContract": {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/buster-remote-plan-profile-01/service10-field-contracts.json",
+          "sha256": "ac38fb4786d72884c3d2840dbebefc9b3e6b0fb6e4748970ba803e1866c29f43",
+          "pointer": "/fields/3"
+        },
+        "sameTypedNode": true
+      },
+      {
+        "originalFieldIds": [
+          "DLV-BUSTER-ENTRYPOINT-RUNTIME-RECORDLIMITS-MAXIMUMBYTES"
+        ],
+        "side": "B",
+        "receivingPointer": "/profiles/s-f3335aafd745/settings/remotePlanService/recordLimits/maximumBytes",
+        "sourceContract": {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/buster-remote-plan-profile-01/service10-field-contracts.json",
+          "sha256": "ac38fb4786d72884c3d2840dbebefc9b3e6b0fb6e4748970ba803e1866c29f43",
+          "pointer": "/fields/3"
+        },
+        "sameTypedNode": true
+      },
+      {
+        "originalFieldIds": [
+          "DLV-BUSTER-ENTRYPOINT-RUNTIME-RECORDLIMITS-MAXIMUMRECORDBYTES"
+        ],
+        "side": "A",
+        "receivingPointer": "/profiles/local-A/settings/remotePlanService/recordLimits/maximumRecordBytes",
+        "sourceContract": {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/buster-remote-plan-profile-01/service10-field-contracts.json",
+          "sha256": "ac38fb4786d72884c3d2840dbebefc9b3e6b0fb6e4748970ba803e1866c29f43",
+          "pointer": "/fields/4"
+        },
+        "sameTypedNode": true
+      },
+      {
+        "originalFieldIds": [
+          "DLV-BUSTER-ENTRYPOINT-RUNTIME-RECORDLIMITS-MAXIMUMRECORDBYTES"
+        ],
+        "side": "B",
+        "receivingPointer": "/profiles/s-1092ebbb0c19/settings/remotePlanService/recordLimits/maximumRecordBytes",
+        "sourceContract": {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/buster-remote-plan-profile-01/service10-field-contracts.json",
+          "sha256": "ac38fb4786d72884c3d2840dbebefc9b3e6b0fb6e4748970ba803e1866c29f43",
+          "pointer": "/fields/4"
+        },
+        "sameTypedNode": true
+      },
+      {
+        "originalFieldIds": [
+          "DLV-BUSTER-ENTRYPOINT-RUNTIME-MAXIMUMRESULTBYTES"
+        ],
+        "side": "A",
+        "receivingPointer": "/profiles/local-A/settings/remotePlanService/maximumResultBytes",
+        "sourceContract": {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/buster-remote-plan-profile-01/service10-field-contracts.json",
+          "sha256": "ac38fb4786d72884c3d2840dbebefc9b3e6b0fb6e4748970ba803e1866c29f43",
+          "pointer": "/fields/5"
+        },
+        "sameTypedNode": true
+      },
+      {
+        "originalFieldIds": [
+          "DLV-BUSTER-ENTRYPOINT-RUNTIME-MAXIMUMRESULTBYTES"
+        ],
+        "side": "B",
+        "receivingPointer": "/profiles/s-7523b42a07dc/settings/remotePlanService/maximumResultBytes",
+        "sourceContract": {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/buster-remote-plan-profile-01/service10-field-contracts.json",
+          "sha256": "ac38fb4786d72884c3d2840dbebefc9b3e6b0fb6e4748970ba803e1866c29f43",
+          "pointer": "/fields/5"
+        },
+        "sameTypedNode": true
+      },
+      {
+        "originalFieldIds": [
+          "DLV-BUSTER-ENTRYPOINT-RUNTIME-MAXIMUMRESULTSTOREBYTES"
+        ],
+        "side": "A",
+        "receivingPointer": "/profiles/local-A/settings/remotePlanService/maximumResultStoreBytes",
+        "sourceContract": {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/buster-remote-plan-profile-01/service10-field-contracts.json",
+          "sha256": "ac38fb4786d72884c3d2840dbebefc9b3e6b0fb6e4748970ba803e1866c29f43",
+          "pointer": "/fields/6"
+        },
+        "sameTypedNode": true
+      },
+      {
+        "originalFieldIds": [
+          "DLV-BUSTER-ENTRYPOINT-RUNTIME-MAXIMUMRESULTSTOREBYTES"
+        ],
+        "side": "B",
+        "receivingPointer": "/profiles/s-897a04fc6ee2/settings/remotePlanService/maximumResultStoreBytes",
+        "sourceContract": {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/buster-remote-plan-profile-01/service10-field-contracts.json",
+          "sha256": "ac38fb4786d72884c3d2840dbebefc9b3e6b0fb6e4748970ba803e1866c29f43",
+          "pointer": "/fields/6"
+        },
+        "sameTypedNode": true
+      },
+      {
+        "originalFieldIds": [
+          "DLV-BUSTER-ENTRYPOINT-RUNTIME-MAXIMUMRESPONSEBYTES"
+        ],
+        "side": "A",
+        "receivingPointer": "/profiles/local-A/settings/remotePlanService/maximumResponseBytes",
+        "sourceContract": {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/buster-remote-plan-profile-01/service10-field-contracts.json",
+          "sha256": "ac38fb4786d72884c3d2840dbebefc9b3e6b0fb6e4748970ba803e1866c29f43",
+          "pointer": "/fields/7"
+        },
+        "sameTypedNode": true
+      },
+      {
+        "originalFieldIds": [
+          "DLV-BUSTER-ENTRYPOINT-RUNTIME-MAXIMUMRESPONSEBYTES"
+        ],
+        "side": "B",
+        "receivingPointer": "/profiles/s-543bff474a49/settings/remotePlanService/maximumResponseBytes",
+        "sourceContract": {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/buster-remote-plan-profile-01/service10-field-contracts.json",
+          "sha256": "ac38fb4786d72884c3d2840dbebefc9b3e6b0fb6e4748970ba803e1866c29f43",
+          "pointer": "/fields/7"
+        },
+        "sameTypedNode": true
+      },
+      {
+        "originalFieldIds": [
+          "DLV-BUSTER-ENTRYPOINT-RUNTIME-SHUTDOWNTIMEOUTMS"
+        ],
+        "side": "A",
+        "receivingPointer": "/profiles/local-A/settings/remotePlanService/shutdownTimeoutMs",
+        "sourceContract": {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/buster-remote-plan-profile-01/service10-field-contracts.json",
+          "sha256": "ac38fb4786d72884c3d2840dbebefc9b3e6b0fb6e4748970ba803e1866c29f43",
+          "pointer": "/fields/8"
+        },
+        "sameTypedNode": true
+      },
+      {
+        "originalFieldIds": [
+          "DLV-BUSTER-ENTRYPOINT-RUNTIME-SHUTDOWNTIMEOUTMS"
+        ],
+        "side": "B",
+        "receivingPointer": "/profiles/s-017eabfd0aa9/settings/remotePlanService/shutdownTimeoutMs",
+        "sourceContract": {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/buster-remote-plan-profile-01/service10-field-contracts.json",
+          "sha256": "ac38fb4786d72884c3d2840dbebefc9b3e6b0fb6e4748970ba803e1866c29f43",
+          "pointer": "/fields/8"
+        },
+        "sameTypedNode": true
+      },
+      {
+        "originalFieldIds": [
+          "DLV-BUSTER-ENTRYPOINT-RUNTIME-ALLOWEDCAPABILITIES"
+        ],
+        "side": "A",
+        "receivingPointer": "/profiles/local-A/settings/remotePlanService/allowedCapabilities",
+        "sourceContract": {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/buster-remote-plan-profile-01/service10-field-contracts.json",
+          "sha256": "ac38fb4786d72884c3d2840dbebefc9b3e6b0fb6e4748970ba803e1866c29f43",
+          "pointer": "/fields/9"
+        },
+        "sameTypedNode": true
+      },
+      {
+        "originalFieldIds": [
+          "DLV-BUSTER-ENTRYPOINT-RUNTIME-ALLOWEDCAPABILITIES"
+        ],
+        "side": "B",
+        "receivingPointer": "/profiles/s-fc64e2c51ca4/settings/remotePlanService/allowedCapabilities",
+        "sourceContract": {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/buster-remote-plan-profile-01/service10-field-contracts.json",
+          "sha256": "ac38fb4786d72884c3d2840dbebefc9b3e6b0fb6e4748970ba803e1866c29f43",
+          "pointer": "/fields/9"
+        },
+        "sameTypedNode": true
+      }
+    ],
+    "receiving": "actual S remotePlanService view uses unchanged exact ten typed leaves and reviewed original full record/response/cleanup envelopes; final schema/source/C3 receiver/output receipts derive same v10 root, not v7 fallback"
+  },
+  "fileSet": "Keep exact inherited v9 entire input-set and all six owner bytes. Append quality2owners+schemas/typed arms, Core selected owner/schema and provisioning selected YAML/schema/input-reference ABI; exact input hashes listed above. Root/schema patches are single coordinated replacement, no second active root or manual synchronization. Original deployment-selected Chart/host/recovery source roots remain explicit fixed anchors in same immutable tree.",
+  "pathResolution": "Core ownerPath nova/core.config.json relative config root; infrastructure ownerPath my-values/infra/... relative same declared repository/generation source root exactly like existing recovery selection, not raw relative to config or CWD. Closed allowed owner paths, no dotdot/symlink/arbitrary task roots.",
+  "allOwnerValidation": "Before selecting any caller validate complete inherited+added schemas/ALL profiles, source code/packages and cross-role/resource/source/tree relations. Unique exact tuples, service/role/profile/source proof, no competing original authors. JSON schema shape alone not authentic source/grant.",
+  "receiverClosure": "Every inherited provider/module/controller/launcher/recovery/gateway output and all new Core/provisioning receivers bind same root/schema/source/profile/package/tool/image input identities; update every readerVersion to v10 with actual versioned source migration, never mismatched v8/v9 output. Output/after-root receipt separate from stable root/input-set avoids digest cycle. Native adoption remains denied until genuine receipts and approved implementation.",
+  "originalHistory": "Started original v2/v8/v9 histories retain authentic original source/schema/package/config closure and spent/grants/deadlines/uncertain effects, including old limitations. No new default/currentB/implicit tuple receipt or backfill. New v10 role rejects missing original closure/mixed wire before effect; fixedEval selects original explicit generation.",
+  "delivery": "C1 same normal materializer->Chart/image input->mount/load plus actual CI/buildcontext/release guards; C2 Core/registry/compiler; C3 services/deployment/provisioning/source/native receivers; C4 registered policy/Quality; C5 durable binding; C6 full integrated accepted cases. No production/host/deploy/merge or paidEval authority.",
+  "implementationAuthorization": null,
+  "globalC0Accepted": false
+}

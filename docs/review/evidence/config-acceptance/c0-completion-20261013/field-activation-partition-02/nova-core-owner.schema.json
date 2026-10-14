@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://kubeclaw.dev/proposals/config-c0/field-activation-partition-02/nova-core-owner.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "owner",
+    "profiles"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "nova-core-policy.v1"
+    },
+    "owner": {
+      "const": "nova-core"
+    },
+    "profiles": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "settings"
+        ],
+        "properties": {
+          "settings": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "platform",
+              "projectCompiler",
+              "runtimeLocks"
+            ],
+            "properties": {
+              "platform": {
+                "$ref": "../../../../../../skills/common/plugin-runtime/foundation/config/platform.schema.json"
+              },
+              "projectCompiler": {
+                "$ref": "../runtime/batch-11-project-compiler/owned-compiler.schema.json#/properties/projectCompiler"
+              },
+              "runtimeLocks": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "journalAppendLockTimeoutMs",
+                  "runMutationLockTtlMs",
+                  "runMutationLockRenewEveryMs"
+                ],
+                "properties": {
+                  "journalAppendLockTimeoutMs": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 2147483647
+                  },
+                  "runMutationLockTtlMs": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 2147483647
+                  },
+                  "runMutationLockRenewEveryMs": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 2147483647
+                  }
+                },
+                "$comment": "C0 WFINAL-01 correction: values are sole-authored Nova Core lock policies. Semantic admission requires renewEveryMs < runMutationLockTtlMs and validation before FileJournal/FileResourceLockManager effects."
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "$comment": "Prospective C2 Core owner only; existing source schemas referenced, no copied platform, seventh Swarm component or current root adoption. Admission further checks actual registration/grants and full closure."
+}
