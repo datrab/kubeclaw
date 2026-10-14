@@ -1,0 +1,40 @@
+{
+  "time": "2026-10-14T03:47:59.275090+00:00",
+  "readPins": 215,
+  "changedInputs": [],
+  "original10FieldBodiesMismatch": [],
+  "original24CanonicalCaseBodiesMismatch": [],
+  "original10TransferAndRuntimeBodyMismatch": [],
+  "originalRuntime34CasesExact": true,
+  "originalC3CaseLineageExact": true,
+  "fullPhysical120MemberMismatch": [],
+  "full94BusterOwnerByteEqual": true,
+  "fullCanonicalBodyConservation": [
+    {
+      "path": "docs/review/remediation/config-semantic-inventory.json",
+      "arrays": {
+        "rows": {
+          "exactBodyEqual": true,
+          "members": 2409
+        }
+      }
+    },
+    {
+      "path": "docs/review/remediation/config-acceptance-matrix.json",
+      "arrays": {
+        "cases": {
+          "exactBodyEqual": true,
+          "members": 6845
+        },
+        "requirements": {
+          "exactBodyEqual": true,
+          "members": 50
+        }
+      }
+    }
+  ],
+  "knownMetadataDrift": "only currentCombinedDefinitionGeneration; exact before/current root metadata in canonical-metadata-drift.json; no old wholefile equality claim",
+  "productiveCasesExecuted": 0,
+  "freshIndependentReviewRequired": true,
+  "globalC0Accepted": false
+}

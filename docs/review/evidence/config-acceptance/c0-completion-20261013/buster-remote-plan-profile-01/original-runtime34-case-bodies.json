@@ -1,0 +1,1433 @@
+[
+  {
+    "id": "B16-FUTURE-DLV-B23-EMIT-2cdd4a3966ddf260",
+    "settingIds": [],
+    "sourceTransferIds": [
+      "DLV-B23-EMIT-2cdd4a3966ddf260"
+    ],
+    "relatedExistingSettingIds": [
+      "RT-PLATFORM-SCHEMAVERSION"
+    ],
+    "status": "not-run",
+    "testDigest": null,
+    "command": "proposed genuineentrypoint/Core/Buster rolefixture platform.json:schemaVersion (not implemented C1-C6 runner)",
+    "input": {
+      "baselineBodySha256": "929467e3a08311c83aec44e51200d3a4a9d9de8506af7eeec0694f76d3ecac34",
+      "originalASTRecord": {
+        "scope": "platform.json",
+        "field": "schemaVersion",
+        "source": "docker/buster-runtime-entrypoint.sh",
+        "line": 186,
+        "expression": "  schemaVersion: 'pipeline-platform.v2', effectLockTtlMs: 300_000,",
+        "valueExpression": "'pipeline-platform.v2'",
+        "sha256": "2630481f59214cd69d7cc09eeecea60ff06d4697a9f5d36b319847a21526f029",
+        "currentValue": "pipeline-platform.v2",
+        "currentIsStatic": true,
+        "class": "literal-software-policy-or-protocol",
+        "state": "exact individual source member; semantic field/type/unit/supported-domain/owner/realconsumer/phase disposition pending, no blanketsource closure"
+      },
+      "activeRevisionSha256": "281e6631d19c3171c10d54c5338b59e5a2a387231dbe703d1aed96e66537a170",
+      "exactDomain": {
+        "const": "pipeline-platform.v2"
+      },
+      "fixture": "actualselected existingCore/Buster completephysicaloperator profile, chart/entrypoint/env/package/source/pod/PVC/role/proxy/key/credential/grants/genuine prepared source/job/producer/record/result receipts; actualnewC3 fullprofile before effect vs frozenoldwireA",
+      "mutants": "exactrole/key/ref/domain/owner/version/unknown/unusedalias evenequal, missingtrustedpackage/sourceissuer/Ed25519key/ref, fakeproxypeer/ACL/grant, wrongnamespace/endpoint/PVC/versionedlocator, oldquotareset/resultreservation loss, impossibleframefloor/lateeffect, fixture-overridden-afteractivevalidation/mixedgeneration/originalbodychange"
+    },
+    "priorState": "originalA standingS/R/PVC/native/role/proxy/config fullwire/grants/software/registry/originalapprovedtask/source/keyrevision/plan/sourcefixture/producer/quotacounters/unfinished reservations/claim/deadline interrupted, B cannotrewriterecoverA",
+    "productiveBoundary": "actualentrypoint/generatedrole versionedloader->actualdiscovery/admission beforeeffects->Core or Buster role-specific native/listener/store/sourceauth/capability->realjob/report/producer receipts",
+    "oracle": "Actual Buster runtimeRegistry uses ONLY installationRoots/trustedBuiltinRoots/externalTrust. loadPlatformConfig validatesallfields andresolvespaths butremainingfields do NOT reach Buster service/native/authority consumers. RealCore engine-runtime/adapters/admin/lifecycle consumers forold stableID remain separateauthentic role; old Coreauthor preservednotsecondBustereditablebox. Target fullschema/profile/fixture/activebody agrees beforeactivation. Real genericCore effect must notattribute to Busterunusedrolefields. NewC3sameexistingBusterowner, currentliteralA retaineduntilmigration, no synthesizedC1. Individual quota/ports/capability alternate uses genuine supportedprofile underR/S/oldplan bounds; schema/constructor only notphysicalcapacity. OriginalA/fixedEvalA pinned, separatelyadmitB, no latest orresetreservations; missingoldclosure/forgedsource/key/peer/claim fails beforeeffect.",
+    "observer": "genuine rendered/generated/loadedrole bytes/domain/profile/version/PVC/native/host/listener/proxy/sourcekey/grants/claims/storecharges/record/result bytecounts/producer/planreceipt order, no secretcontents",
+    "reviewerConfirmation": null
+  },
+  {
+    "id": "B16-FUTURE-DLV-B23-EMIT-c8692036a2bb0fdf",
+    "settingIds": [],
+    "sourceTransferIds": [
+      "DLV-B23-EMIT-c8692036a2bb0fdf"
+    ],
+    "relatedExistingSettingIds": [
+      "RT-PLATFORM-EFFECTLOCKTTLMS"
+    ],
+    "status": "not-run",
+    "testDigest": null,
+    "command": "proposed genuineentrypoint/Core/Buster rolefixture platform.json:effectLockTtlMs (not implemented C1-C6 runner)",
+    "input": {
+      "baselineBodySha256": "2f9193976867a621b738d528bcb8c2ea28c479c69185547f1cb117549fe90f73",
+      "originalASTRecord": {
+        "scope": "platform.json",
+        "field": "effectLockTtlMs",
+        "source": "docker/buster-runtime-entrypoint.sh",
+        "line": 186,
+        "expression": "  schemaVersion: 'pipeline-platform.v2', effectLockTtlMs: 300_000,",
+        "valueExpression": "300_000",
+        "sha256": "2630481f59214cd69d7cc09eeecea60ff06d4697a9f5d36b319847a21526f029",
+        "currentValue": 300000,
+        "currentIsStatic": true,
+        "class": "literal-software-policy-or-protocol",
+        "state": "exact individual source member; semantic field/type/unit/supported-domain/owner/realconsumer/phase disposition pending, no blanketsource closure"
+      },
+      "activeRevisionSha256": "fd543f8da6e2b1549fe13e3212233dbec1df646c03ddd96aba80ff02c99c93ea",
+      "exactDomain": {
+        "type": "integer",
+        "minimum": 60000,
+        "maximum": 86400000
+      },
+      "fixture": "actualselected existingCore/Buster completephysicaloperator profile, chart/entrypoint/env/package/source/pod/PVC/role/proxy/key/credential/grants/genuine prepared source/job/producer/record/result receipts; actualnewC3 fullprofile before effect vs frozenoldwireA",
+      "mutants": "exactrole/key/ref/domain/owner/version/unknown/unusedalias evenequal, missingtrustedpackage/sourceissuer/Ed25519key/ref, fakeproxypeer/ACL/grant, wrongnamespace/endpoint/PVC/versionedlocator, oldquotareset/resultreservation loss, impossibleframefloor/lateeffect, fixture-overridden-afteractivevalidation/mixedgeneration/originalbodychange"
+    },
+    "priorState": "originalA standingS/R/PVC/native/role/proxy/config fullwire/grants/software/registry/originalapprovedtask/source/keyrevision/plan/sourcefixture/producer/quotacounters/unfinished reservations/claim/deadline interrupted, B cannotrewriterecoverA",
+    "productiveBoundary": "actualentrypoint/generatedrole versionedloader->actualdiscovery/admission beforeeffects->Core or Buster role-specific native/listener/store/sourceauth/capability->realjob/report/producer receipts",
+    "oracle": "Actual Buster runtimeRegistry uses ONLY installationRoots/trustedBuiltinRoots/externalTrust. loadPlatformConfig validatesallfields andresolvespaths butremainingfields do NOT reach Buster service/native/authority consumers. RealCore engine-runtime/adapters/admin/lifecycle consumers forold stableID remain separateauthentic role; old Coreauthor preservednotsecondBustereditablebox. Target fullschema/profile/fixture/activebody agrees beforeactivation. Real genericCore effect must notattribute to Busterunusedrolefields. NewC3sameexistingBusterowner, currentliteralA retaineduntilmigration, no synthesizedC1. Individual quota/ports/capability alternate uses genuine supportedprofile underR/S/oldplan bounds; schema/constructor only notphysicalcapacity. OriginalA/fixedEvalA pinned, separatelyadmitB, no latest orresetreservations; missingoldclosure/forgedsource/key/peer/claim fails beforeeffect.",
+    "observer": "genuine rendered/generated/loadedrole bytes/domain/profile/version/PVC/native/host/listener/proxy/sourcekey/grants/claims/storecharges/record/result bytecounts/producer/planreceipt order, no secretcontents",
+    "reviewerConfirmation": null
+  },
+  {
+    "id": "B16-FUTURE-DLV-B23-EMIT-8cc9d49e32aa42a3",
+    "settingIds": [],
+    "sourceTransferIds": [
+      "DLV-B23-EMIT-8cc9d49e32aa42a3"
+    ],
+    "relatedExistingSettingIds": [
+      "RT-PLATFORM-INSTALLATIONROOTS"
+    ],
+    "status": "not-run",
+    "testDigest": null,
+    "command": "proposed genuineentrypoint/Core/Buster rolefixture platform.json:installationRoots (not implemented C1-C6 runner)",
+    "input": {
+      "baselineBodySha256": "36475093ebe5eb84b0bacbd426d8d3d3f47fdfa46323db0773ae2280f26062b4",
+      "originalASTRecord": {
+        "scope": "platform.json",
+        "field": "installationRoots",
+        "source": "docker/buster-runtime-entrypoint.sh",
+        "line": 187,
+        "expression": "  installationRoots: [plugins], trustedBuiltinRoots: [plugins],",
+        "valueExpression": "[plugins]",
+        "sha256": "2630481f59214cd69d7cc09eeecea60ff06d4697a9f5d36b319847a21526f029",
+        "currentIsStatic": false,
+        "class": "explicit-generated-expression",
+        "state": "exact individual source member; semantic field/type/unit/supported-domain/owner/realconsumer/phase disposition pending, no blanketsource closure"
+      },
+      "activeRevisionSha256": "4673dd60e24db55ad8397af5f39c5397761de297dd412ed154452822564c22bc",
+      "exactDomain": {
+        "type": "array",
+        "minItems": 1,
+        "uniqueItems": true,
+        "items": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "fixture": "actualselected existingCore/Buster completephysicaloperator profile, chart/entrypoint/env/package/source/pod/PVC/role/proxy/key/credential/grants/genuine prepared source/job/producer/record/result receipts; actualnewC3 fullprofile before effect vs frozenoldwireA",
+      "mutants": "exactrole/key/ref/domain/owner/version/unknown/unusedalias evenequal, missingtrustedpackage/sourceissuer/Ed25519key/ref, fakeproxypeer/ACL/grant, wrongnamespace/endpoint/PVC/versionedlocator, oldquotareset/resultreservation loss, impossibleframefloor/lateeffect, fixture-overridden-afteractivevalidation/mixedgeneration/originalbodychange"
+    },
+    "priorState": "originalA standingS/R/PVC/native/role/proxy/config fullwire/grants/software/registry/originalapprovedtask/source/keyrevision/plan/sourcefixture/producer/quotacounters/unfinished reservations/claim/deadline interrupted, B cannotrewriterecoverA",
+    "productiveBoundary": "actualentrypoint/generatedrole versionedloader->actualdiscovery/admission beforeeffects->Core or Buster role-specific native/listener/store/sourceauth/capability->realjob/report/producer receipts",
+    "oracle": "Actual Buster runtimeRegistry uses ONLY installationRoots/trustedBuiltinRoots/externalTrust. loadPlatformConfig validatesallfields andresolvespaths butremainingfields do NOT reach Buster service/native/authority consumers. RealCore engine-runtime/adapters/admin/lifecycle consumers forold stableID remain separateauthentic role; old Coreauthor preservednotsecondBustereditablebox. Target fullschema/profile/fixture/activebody agrees beforeactivation. Real genericCore effect must notattribute to Busterunusedrolefields. NewC3sameexistingBusterowner, currentliteralA retaineduntilmigration, no synthesizedC1. Individual quota/ports/capability alternate uses genuine supportedprofile underR/S/oldplan bounds; schema/constructor only notphysicalcapacity. OriginalA/fixedEvalA pinned, separatelyadmitB, no latest orresetreservations; missingoldclosure/forgedsource/key/peer/claim fails beforeeffect.",
+    "observer": "genuine rendered/generated/loadedrole bytes/domain/profile/version/PVC/native/host/listener/proxy/sourcekey/grants/claims/storecharges/record/result bytecounts/producer/planreceipt order, no secretcontents",
+    "reviewerConfirmation": null
+  },
+  {
+    "id": "B16-FUTURE-DLV-B23-EMIT-73221a0587afc14c",
+    "settingIds": [],
+    "sourceTransferIds": [
+      "DLV-B23-EMIT-73221a0587afc14c"
+    ],
+    "relatedExistingSettingIds": [
+      "RT-PLATFORM-TRUSTEDBUILTINROOTS"
+    ],
+    "status": "not-run",
+    "testDigest": null,
+    "command": "proposed genuineentrypoint/Core/Buster rolefixture platform.json:trustedBuiltinRoots (not implemented C1-C6 runner)",
+    "input": {
+      "baselineBodySha256": "2e864aa08ca49e4aa89ad464a6bad4beb98f024b25228a45462d45d5becc0c3b",
+      "originalASTRecord": {
+        "scope": "platform.json",
+        "field": "trustedBuiltinRoots",
+        "source": "docker/buster-runtime-entrypoint.sh",
+        "line": 187,
+        "expression": "  installationRoots: [plugins], trustedBuiltinRoots: [plugins],",
+        "valueExpression": "[plugins]",
+        "sha256": "2630481f59214cd69d7cc09eeecea60ff06d4697a9f5d36b319847a21526f029",
+        "currentIsStatic": false,
+        "class": "explicit-generated-expression",
+        "state": "exact individual source member; semantic field/type/unit/supported-domain/owner/realconsumer/phase disposition pending, no blanketsource closure"
+      },
+      "activeRevisionSha256": "cb079afd737aff9125e20fa35f349169cc2e1bec08be539dbc78f4bbe9fa1905",
+      "exactDomain": {
+        "type": "array",
+        "minItems": 1,
+        "uniqueItems": true,
+        "items": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "fixture": "actualselected existingCore/Buster completephysicaloperator profile, chart/entrypoint/env/package/source/pod/PVC/role/proxy/key/credential/grants/genuine prepared source/job/producer/record/result receipts; actualnewC3 fullprofile before effect vs frozenoldwireA",
+      "mutants": "exactrole/key/ref/domain/owner/version/unknown/unusedalias evenequal, missingtrustedpackage/sourceissuer/Ed25519key/ref, fakeproxypeer/ACL/grant, wrongnamespace/endpoint/PVC/versionedlocator, oldquotareset/resultreservation loss, impossibleframefloor/lateeffect, fixture-overridden-afteractivevalidation/mixedgeneration/originalbodychange"
+    },
+    "priorState": "originalA standingS/R/PVC/native/role/proxy/config fullwire/grants/software/registry/originalapprovedtask/source/keyrevision/plan/sourcefixture/producer/quotacounters/unfinished reservations/claim/deadline interrupted, B cannotrewriterecoverA",
+    "productiveBoundary": "actualentrypoint/generatedrole versionedloader->actualdiscovery/admission beforeeffects->Core or Buster role-specific native/listener/store/sourceauth/capability->realjob/report/producer receipts",
+    "oracle": "Actual Buster runtimeRegistry uses ONLY installationRoots/trustedBuiltinRoots/externalTrust. loadPlatformConfig validatesallfields andresolvespaths butremainingfields do NOT reach Buster service/native/authority consumers. RealCore engine-runtime/adapters/admin/lifecycle consumers forold stableID remain separateauthentic role; old Coreauthor preservednotsecondBustereditablebox. Target fullschema/profile/fixture/activebody agrees beforeactivation. Real genericCore effect must notattribute to Busterunusedrolefields. NewC3sameexistingBusterowner, currentliteralA retaineduntilmigration, no synthesizedC1. Individual quota/ports/capability alternate uses genuine supportedprofile underR/S/oldplan bounds; schema/constructor only notphysicalcapacity. OriginalA/fixedEvalA pinned, separatelyadmitB, no latest orresetreservations; missingoldclosure/forgedsource/key/peer/claim fails beforeeffect.",
+    "observer": "genuine rendered/generated/loadedrole bytes/domain/profile/version/PVC/native/host/listener/proxy/sourcekey/grants/claims/storecharges/record/result bytecounts/producer/planreceipt order, no secretcontents",
+    "reviewerConfirmation": null
+  },
+  {
+    "id": "B16-FUTURE-DLV-B23-EMIT-2681a879cab253be",
+    "settingIds": [],
+    "sourceTransferIds": [
+      "DLV-B23-EMIT-2681a879cab253be"
+    ],
+    "relatedExistingSettingIds": [
+      "RT-PLATFORM-EXTERNALTRUST"
+    ],
+    "status": "not-run",
+    "testDigest": null,
+    "command": "proposed genuineentrypoint/Core/Buster rolefixture platform.json:externalTrust.allowedSourceDigests (not implemented C1-C6 runner)",
+    "input": {
+      "baselineBodySha256": "966a9bdd4172c54351436a29ee093e0423737248c89e419626c7da0588f38fb8",
+      "originalASTRecord": {
+        "scope": "platform.json",
+        "field": "externalTrust.allowedSourceDigests",
+        "source": "docker/buster-runtime-entrypoint.sh",
+        "line": 188,
+        "expression": "  externalTrust: { allowedSourceDigests: {}, verifiedAttestations: {} },",
+        "valueExpression": "{}",
+        "sha256": "2630481f59214cd69d7cc09eeecea60ff06d4697a9f5d36b319847a21526f029",
+        "currentValue": {},
+        "currentIsStatic": true,
+        "class": "literal-software-policy-or-protocol",
+        "state": "exact individual source member; semantic field/type/unit/supported-domain/owner/realconsumer/phase disposition pending, no blanketsource closure"
+      },
+      "activeRevisionSha256": "8ccd0d736318f16f55a29f9b2260ef7cd4c9e4b4eb7588cdd3d1d37bd57a305c",
+      "exactDomain": {
+        "type": "object",
+        "additionalProperties": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^sha256:[a-f0-9]{64}$"
+          }
+        }
+      },
+      "fixture": "actualselected existingCore/Buster completephysicaloperator profile, chart/entrypoint/env/package/source/pod/PVC/role/proxy/key/credential/grants/genuine prepared source/job/producer/record/result receipts; actualnewC3 fullprofile before effect vs frozenoldwireA",
+      "mutants": "exactrole/key/ref/domain/owner/version/unknown/unusedalias evenequal, missingtrustedpackage/sourceissuer/Ed25519key/ref, fakeproxypeer/ACL/grant, wrongnamespace/endpoint/PVC/versionedlocator, oldquotareset/resultreservation loss, impossibleframefloor/lateeffect, fixture-overridden-afteractivevalidation/mixedgeneration/originalbodychange"
+    },
+    "priorState": "originalA standingS/R/PVC/native/role/proxy/config fullwire/grants/software/registry/originalapprovedtask/source/keyrevision/plan/sourcefixture/producer/quotacounters/unfinished reservations/claim/deadline interrupted, B cannotrewriterecoverA",
+    "productiveBoundary": "actualentrypoint/generatedrole versionedloader->actualdiscovery/admission beforeeffects->Core or Buster role-specific native/listener/store/sourceauth/capability->realjob/report/producer receipts",
+    "oracle": "Actual Buster runtimeRegistry uses ONLY installationRoots/trustedBuiltinRoots/externalTrust. loadPlatformConfig validatesallfields andresolvespaths butremainingfields do NOT reach Buster service/native/authority consumers. RealCore engine-runtime/adapters/admin/lifecycle consumers forold stableID remain separateauthentic role; old Coreauthor preservednotsecondBustereditablebox. Target fullschema/profile/fixture/activebody agrees beforeactivation. Real genericCore effect must notattribute to Busterunusedrolefields. NewC3sameexistingBusterowner, currentliteralA retaineduntilmigration, no synthesizedC1. Individual quota/ports/capability alternate uses genuine supportedprofile underR/S/oldplan bounds; schema/constructor only notphysicalcapacity. OriginalA/fixedEvalA pinned, separatelyadmitB, no latest orresetreservations; missingoldclosure/forgedsource/key/peer/claim fails beforeeffect.",
+    "observer": "genuine rendered/generated/loadedrole bytes/domain/profile/version/PVC/native/host/listener/proxy/sourcekey/grants/claims/storecharges/record/result bytecounts/producer/planreceipt order, no secretcontents",
+    "reviewerConfirmation": null
+  },
+  {
+    "id": "B16-FUTURE-DLV-B23-EMIT-e44c7d1b5bac1392",
+    "settingIds": [],
+    "sourceTransferIds": [
+      "DLV-B23-EMIT-e44c7d1b5bac1392"
+    ],
+    "relatedExistingSettingIds": [
+      "RT-PLATFORM-EXTERNALTRUST"
+    ],
+    "status": "not-run",
+    "testDigest": null,
+    "command": "proposed genuineentrypoint/Core/Buster rolefixture platform.json:externalTrust.verifiedAttestations (not implemented C1-C6 runner)",
+    "input": {
+      "baselineBodySha256": "53e1136263f63cb3320c6b742a96056ea8007d0854b6717b1c0f45266a0e112d",
+      "originalASTRecord": {
+        "scope": "platform.json",
+        "field": "externalTrust.verifiedAttestations",
+        "source": "docker/buster-runtime-entrypoint.sh",
+        "line": 188,
+        "expression": "  externalTrust: { allowedSourceDigests: {}, verifiedAttestations: {} },",
+        "valueExpression": "{}",
+        "sha256": "2630481f59214cd69d7cc09eeecea60ff06d4697a9f5d36b319847a21526f029",
+        "currentValue": {},
+        "currentIsStatic": true,
+        "class": "literal-software-policy-or-protocol",
+        "state": "exact individual source member; semantic field/type/unit/supported-domain/owner/realconsumer/phase disposition pending, no blanketsource closure"
+      },
+      "activeRevisionSha256": "77fc4a5ab25c570e2015c0d8aeca087cc16f9d19df042527e7e3ebe0c7114142",
+      "exactDomain": {
+        "type": "object",
+        "propertyNames": {
+          "pattern": "^sha256:[a-f0-9]{64}$"
+        },
+        "additionalProperties": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$"
+        }
+      },
+      "fixture": "actualselected existingCore/Buster completephysicaloperator profile, chart/entrypoint/env/package/source/pod/PVC/role/proxy/key/credential/grants/genuine prepared source/job/producer/record/result receipts; actualnewC3 fullprofile before effect vs frozenoldwireA",
+      "mutants": "exactrole/key/ref/domain/owner/version/unknown/unusedalias evenequal, missingtrustedpackage/sourceissuer/Ed25519key/ref, fakeproxypeer/ACL/grant, wrongnamespace/endpoint/PVC/versionedlocator, oldquotareset/resultreservation loss, impossibleframefloor/lateeffect, fixture-overridden-afteractivevalidation/mixedgeneration/originalbodychange"
+    },
+    "priorState": "originalA standingS/R/PVC/native/role/proxy/config fullwire/grants/software/registry/originalapprovedtask/source/keyrevision/plan/sourcefixture/producer/quotacounters/unfinished reservations/claim/deadline interrupted, B cannotrewriterecoverA",
+    "productiveBoundary": "actualentrypoint/generatedrole versionedloader->actualdiscovery/admission beforeeffects->Core or Buster role-specific native/listener/store/sourceauth/capability->realjob/report/producer receipts",
+    "oracle": "Actual Buster runtimeRegistry uses ONLY installationRoots/trustedBuiltinRoots/externalTrust. loadPlatformConfig validatesallfields andresolvespaths butremainingfields do NOT reach Buster service/native/authority consumers. RealCore engine-runtime/adapters/admin/lifecycle consumers forold stableID remain separateauthentic role; old Coreauthor preservednotsecondBustereditablebox. Target fullschema/profile/fixture/activebody agrees beforeactivation. Real genericCore effect must notattribute to Busterunusedrolefields. NewC3sameexistingBusterowner, currentliteralA retaineduntilmigration, no synthesizedC1. Individual quota/ports/capability alternate uses genuine supportedprofile underR/S/oldplan bounds; schema/constructor only notphysicalcapacity. OriginalA/fixedEvalA pinned, separatelyadmitB, no latest orresetreservations; missingoldclosure/forgedsource/key/peer/claim fails beforeeffect.",
+    "observer": "genuine rendered/generated/loadedrole bytes/domain/profile/version/PVC/native/host/listener/proxy/sourcekey/grants/claims/storecharges/record/result bytecounts/producer/planreceipt order, no secretcontents",
+    "reviewerConfirmation": null
+  },
+  {
+    "id": "B16-FUTURE-DLV-B23-EMIT-79ef6be8518d4e88",
+    "settingIds": [],
+    "sourceTransferIds": [
+      "DLV-B23-EMIT-79ef6be8518d4e88"
+    ],
+    "relatedExistingSettingIds": [
+      "RT-PLATFORM-PROVIDERS"
+    ],
+    "status": "not-run",
+    "testDigest": null,
+    "command": "proposed genuineentrypoint/Core/Buster rolefixture platform.json:providers (not implemented C1-C6 runner)",
+    "input": {
+      "baselineBodySha256": "6527e39646fd131d79d83191c2998abcfdcd3f76a4e717ee7e0e19acb2bfe827",
+      "originalASTRecord": {
+        "scope": "platform.json",
+        "field": "providers",
+        "source": "docker/buster-runtime-entrypoint.sh",
+        "line": 189,
+        "expression": "  providers: {}, grants: {}, adapters: {}, activeAdapters: [], observers: {},",
+        "valueExpression": "{}",
+        "sha256": "2630481f59214cd69d7cc09eeecea60ff06d4697a9f5d36b319847a21526f029",
+        "currentValue": {},
+        "currentIsStatic": true,
+        "class": "literal-software-policy-or-protocol",
+        "state": "exact individual source member; semantic field/type/unit/supported-domain/owner/realconsumer/phase disposition pending, no blanketsource closure"
+      },
+      "activeRevisionSha256": "a4b93762e0512d5756ba3934cf30712f61896a59da1233018057b5af9278d98a",
+      "exactDomain": {
+        "type": "object",
+        "additionalProperties": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "fixture": "actualselected existingCore/Buster completephysicaloperator profile, chart/entrypoint/env/package/source/pod/PVC/role/proxy/key/credential/grants/genuine prepared source/job/producer/record/result receipts; actualnewC3 fullprofile before effect vs frozenoldwireA",
+      "mutants": "exactrole/key/ref/domain/owner/version/unknown/unusedalias evenequal, missingtrustedpackage/sourceissuer/Ed25519key/ref, fakeproxypeer/ACL/grant, wrongnamespace/endpoint/PVC/versionedlocator, oldquotareset/resultreservation loss, impossibleframefloor/lateeffect, fixture-overridden-afteractivevalidation/mixedgeneration/originalbodychange"
+    },
+    "priorState": "originalA standingS/R/PVC/native/role/proxy/config fullwire/grants/software/registry/originalapprovedtask/source/keyrevision/plan/sourcefixture/producer/quotacounters/unfinished reservations/claim/deadline interrupted, B cannotrewriterecoverA",
+    "productiveBoundary": "actualentrypoint/generatedrole versionedloader->actualdiscovery/admission beforeeffects->Core or Buster role-specific native/listener/store/sourceauth/capability->realjob/report/producer receipts",
+    "oracle": "Actual Buster runtimeRegistry uses ONLY installationRoots/trustedBuiltinRoots/externalTrust. loadPlatformConfig validatesallfields andresolvespaths butremainingfields do NOT reach Buster service/native/authority consumers. RealCore engine-runtime/adapters/admin/lifecycle consumers forold stableID remain separateauthentic role; old Coreauthor preservednotsecondBustereditablebox. Target fullschema/profile/fixture/activebody agrees beforeactivation. Real genericCore effect must notattribute to Busterunusedrolefields. NewC3sameexistingBusterowner, currentliteralA retaineduntilmigration, no synthesizedC1. Individual quota/ports/capability alternate uses genuine supportedprofile underR/S/oldplan bounds; schema/constructor only notphysicalcapacity. OriginalA/fixedEvalA pinned, separatelyadmitB, no latest orresetreservations; missingoldclosure/forgedsource/key/peer/claim fails beforeeffect.",
+    "observer": "genuine rendered/generated/loadedrole bytes/domain/profile/version/PVC/native/host/listener/proxy/sourcekey/grants/claims/storecharges/record/result bytecounts/producer/planreceipt order, no secretcontents",
+    "reviewerConfirmation": null
+  },
+  {
+    "id": "B16-FUTURE-DLV-B23-EMIT-e300c5ab469bd2a8",
+    "settingIds": [],
+    "sourceTransferIds": [
+      "DLV-B23-EMIT-e300c5ab469bd2a8"
+    ],
+    "relatedExistingSettingIds": [
+      "RT-PLATFORM-GRANTS"
+    ],
+    "status": "not-run",
+    "testDigest": null,
+    "command": "proposed genuineentrypoint/Core/Buster rolefixture platform.json:grants (not implemented C1-C6 runner)",
+    "input": {
+      "baselineBodySha256": "01b0e80d58b2eed0b7540ac89b66279777b825923c780b8978d2f2390f046fdc",
+      "originalASTRecord": {
+        "scope": "platform.json",
+        "field": "grants",
+        "source": "docker/buster-runtime-entrypoint.sh",
+        "line": 189,
+        "expression": "  providers: {}, grants: {}, adapters: {}, activeAdapters: [], observers: {},",
+        "valueExpression": "{}",
+        "sha256": "2630481f59214cd69d7cc09eeecea60ff06d4697a9f5d36b319847a21526f029",
+        "currentValue": {},
+        "currentIsStatic": true,
+        "class": "literal-software-policy-or-protocol",
+        "state": "exact individual source member; semantic field/type/unit/supported-domain/owner/realconsumer/phase disposition pending, no blanketsource closure"
+      },
+      "activeRevisionSha256": "27dfb30622925a5b451dc7537620fc2952bbf24fa23a44f8ee6b7ff362d0cb38",
+      "exactDomain": {
+        "type": "object",
+        "additionalProperties": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        }
+      },
+      "fixture": "actualselected existingCore/Buster completephysicaloperator profile, chart/entrypoint/env/package/source/pod/PVC/role/proxy/key/credential/grants/genuine prepared source/job/producer/record/result receipts; actualnewC3 fullprofile before effect vs frozenoldwireA",
+      "mutants": "exactrole/key/ref/domain/owner/version/unknown/unusedalias evenequal, missingtrustedpackage/sourceissuer/Ed25519key/ref, fakeproxypeer/ACL/grant, wrongnamespace/endpoint/PVC/versionedlocator, oldquotareset/resultreservation loss, impossibleframefloor/lateeffect, fixture-overridden-afteractivevalidation/mixedgeneration/originalbodychange"
+    },
+    "priorState": "originalA standingS/R/PVC/native/role/proxy/config fullwire/grants/software/registry/originalapprovedtask/source/keyrevision/plan/sourcefixture/producer/quotacounters/unfinished reservations/claim/deadline interrupted, B cannotrewriterecoverA",
+    "productiveBoundary": "actualentrypoint/generatedrole versionedloader->actualdiscovery/admission beforeeffects->Core or Buster role-specific native/listener/store/sourceauth/capability->realjob/report/producer receipts",
+    "oracle": "Actual Buster runtimeRegistry uses ONLY installationRoots/trustedBuiltinRoots/externalTrust. loadPlatformConfig validatesallfields andresolvespaths butremainingfields do NOT reach Buster service/native/authority consumers. RealCore engine-runtime/adapters/admin/lifecycle consumers forold stableID remain separateauthentic role; old Coreauthor preservednotsecondBustereditablebox. Target fullschema/profile/fixture/activebody agrees beforeactivation. Real genericCore effect must notattribute to Busterunusedrolefields. NewC3sameexistingBusterowner, currentliteralA retaineduntilmigration, no synthesizedC1. Individual quota/ports/capability alternate uses genuine supportedprofile underR/S/oldplan bounds; schema/constructor only notphysicalcapacity. OriginalA/fixedEvalA pinned, separatelyadmitB, no latest orresetreservations; missingoldclosure/forgedsource/key/peer/claim fails beforeeffect.",
+    "observer": "genuine rendered/generated/loadedrole bytes/domain/profile/version/PVC/native/host/listener/proxy/sourcekey/grants/claims/storecharges/record/result bytecounts/producer/planreceipt order, no secretcontents",
+    "reviewerConfirmation": null
+  },
+  {
+    "id": "B16-FUTURE-DLV-B23-EMIT-2fd7ebff664d0de0",
+    "settingIds": [],
+    "sourceTransferIds": [
+      "DLV-B23-EMIT-2fd7ebff664d0de0"
+    ],
+    "relatedExistingSettingIds": [
+      "RT-PLATFORM-ADAPTERS"
+    ],
+    "status": "not-run",
+    "testDigest": null,
+    "command": "proposed genuineentrypoint/Core/Buster rolefixture platform.json:adapters (not implemented C1-C6 runner)",
+    "input": {
+      "baselineBodySha256": "c2b5e44529086ed612b9c30a63a495b1ab8cda0f85eee8e8601e42f97c18a88d",
+      "originalASTRecord": {
+        "scope": "platform.json",
+        "field": "adapters",
+        "source": "docker/buster-runtime-entrypoint.sh",
+        "line": 189,
+        "expression": "  providers: {}, grants: {}, adapters: {}, activeAdapters: [], observers: {},",
+        "valueExpression": "{}",
+        "sha256": "2630481f59214cd69d7cc09eeecea60ff06d4697a9f5d36b319847a21526f029",
+        "currentValue": {},
+        "currentIsStatic": true,
+        "class": "literal-software-policy-or-protocol",
+        "state": "exact individual source member; semantic field/type/unit/supported-domain/owner/realconsumer/phase disposition pending, no blanketsource closure"
+      },
+      "activeRevisionSha256": "7d411424190f87128dc240af37bf98b899f05e8669eb9e9b6f63ee280f672e53",
+      "exactDomain": {
+        "type": "object",
+        "additionalProperties": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      },
+      "fixture": "actualselected existingCore/Buster completephysicaloperator profile, chart/entrypoint/env/package/source/pod/PVC/role/proxy/key/credential/grants/genuine prepared source/job/producer/record/result receipts; actualnewC3 fullprofile before effect vs frozenoldwireA",
+      "mutants": "exactrole/key/ref/domain/owner/version/unknown/unusedalias evenequal, missingtrustedpackage/sourceissuer/Ed25519key/ref, fakeproxypeer/ACL/grant, wrongnamespace/endpoint/PVC/versionedlocator, oldquotareset/resultreservation loss, impossibleframefloor/lateeffect, fixture-overridden-afteractivevalidation/mixedgeneration/originalbodychange"
+    },
+    "priorState": "originalA standingS/R/PVC/native/role/proxy/config fullwire/grants/software/registry/originalapprovedtask/source/keyrevision/plan/sourcefixture/producer/quotacounters/unfinished reservations/claim/deadline interrupted, B cannotrewriterecoverA",
+    "productiveBoundary": "actualentrypoint/generatedrole versionedloader->actualdiscovery/admission beforeeffects->Core or Buster role-specific native/listener/store/sourceauth/capability->realjob/report/producer receipts",
+    "oracle": "Actual Buster runtimeRegistry uses ONLY installationRoots/trustedBuiltinRoots/externalTrust. loadPlatformConfig validatesallfields andresolvespaths butremainingfields do NOT reach Buster service/native/authority consumers. RealCore engine-runtime/adapters/admin/lifecycle consumers forold stableID remain separateauthentic role; old Coreauthor preservednotsecondBustereditablebox. Target fullschema/profile/fixture/activebody agrees beforeactivation. Real genericCore effect must notattribute to Busterunusedrolefields. NewC3sameexistingBusterowner, currentliteralA retaineduntilmigration, no synthesizedC1. Individual quota/ports/capability alternate uses genuine supportedprofile underR/S/oldplan bounds; schema/constructor only notphysicalcapacity. OriginalA/fixedEvalA pinned, separatelyadmitB, no latest orresetreservations; missingoldclosure/forgedsource/key/peer/claim fails beforeeffect.",
+    "observer": "genuine rendered/generated/loadedrole bytes/domain/profile/version/PVC/native/host/listener/proxy/sourcekey/grants/claims/storecharges/record/result bytecounts/producer/planreceipt order, no secretcontents",
+    "reviewerConfirmation": null
+  },
+  {
+    "id": "B16-FUTURE-DLV-B23-EMIT-ba7e05a20d1167a7",
+    "settingIds": [],
+    "sourceTransferIds": [
+      "DLV-B23-EMIT-ba7e05a20d1167a7"
+    ],
+    "relatedExistingSettingIds": [
+      "RT-PLATFORM-ACTIVEADAPTERS"
+    ],
+    "status": "not-run",
+    "testDigest": null,
+    "command": "proposed genuineentrypoint/Core/Buster rolefixture platform.json:activeAdapters (not implemented C1-C6 runner)",
+    "input": {
+      "baselineBodySha256": "9eb47f1141b4e3180df7dc8bb0eff2c9c48f2d9936317b4c4f82e3bde9ee82d9",
+      "originalASTRecord": {
+        "scope": "platform.json",
+        "field": "activeAdapters",
+        "source": "docker/buster-runtime-entrypoint.sh",
+        "line": 189,
+        "expression": "  providers: {}, grants: {}, adapters: {}, activeAdapters: [], observers: {},",
+        "valueExpression": "[]",
+        "sha256": "2630481f59214cd69d7cc09eeecea60ff06d4697a9f5d36b319847a21526f029",
+        "currentValue": [],
+        "currentIsStatic": true,
+        "class": "literal-software-policy-or-protocol",
+        "state": "exact individual source member; semantic field/type/unit/supported-domain/owner/realconsumer/phase disposition pending, no blanketsource closure"
+      },
+      "activeRevisionSha256": "0c215d2983d5b0fd823761a6cf0ecc10075fe92b612c741c2db598851c44d1e9",
+      "exactDomain": {
+        "type": "array",
+        "uniqueItems": true,
+        "items": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "fixture": "actualselected existingCore/Buster completephysicaloperator profile, chart/entrypoint/env/package/source/pod/PVC/role/proxy/key/credential/grants/genuine prepared source/job/producer/record/result receipts; actualnewC3 fullprofile before effect vs frozenoldwireA",
+      "mutants": "exactrole/key/ref/domain/owner/version/unknown/unusedalias evenequal, missingtrustedpackage/sourceissuer/Ed25519key/ref, fakeproxypeer/ACL/grant, wrongnamespace/endpoint/PVC/versionedlocator, oldquotareset/resultreservation loss, impossibleframefloor/lateeffect, fixture-overridden-afteractivevalidation/mixedgeneration/originalbodychange"
+    },
+    "priorState": "originalA standingS/R/PVC/native/role/proxy/config fullwire/grants/software/registry/originalapprovedtask/source/keyrevision/plan/sourcefixture/producer/quotacounters/unfinished reservations/claim/deadline interrupted, B cannotrewriterecoverA",
+    "productiveBoundary": "actualentrypoint/generatedrole versionedloader->actualdiscovery/admission beforeeffects->Core or Buster role-specific native/listener/store/sourceauth/capability->realjob/report/producer receipts",
+    "oracle": "Actual Buster runtimeRegistry uses ONLY installationRoots/trustedBuiltinRoots/externalTrust. loadPlatformConfig validatesallfields andresolvespaths butremainingfields do NOT reach Buster service/native/authority consumers. RealCore engine-runtime/adapters/admin/lifecycle consumers forold stableID remain separateauthentic role; old Coreauthor preservednotsecondBustereditablebox. Target fullschema/profile/fixture/activebody agrees beforeactivation. Real genericCore effect must notattribute to Busterunusedrolefields. NewC3sameexistingBusterowner, currentliteralA retaineduntilmigration, no synthesizedC1. Individual quota/ports/capability alternate uses genuine supportedprofile underR/S/oldplan bounds; schema/constructor only notphysicalcapacity. OriginalA/fixedEvalA pinned, separatelyadmitB, no latest orresetreservations; missingoldclosure/forgedsource/key/peer/claim fails beforeeffect.",
+    "observer": "genuine rendered/generated/loadedrole bytes/domain/profile/version/PVC/native/host/listener/proxy/sourcekey/grants/claims/storecharges/record/result bytecounts/producer/planreceipt order, no secretcontents",
+    "reviewerConfirmation": null
+  },
+  {
+    "id": "B16-FUTURE-DLV-B23-EMIT-1e5a01172266913d",
+    "settingIds": [],
+    "sourceTransferIds": [
+      "DLV-B23-EMIT-1e5a01172266913d"
+    ],
+    "relatedExistingSettingIds": [
+      "RT-PLATFORM-OBSERVERS"
+    ],
+    "status": "not-run",
+    "testDigest": null,
+    "command": "proposed genuineentrypoint/Core/Buster rolefixture platform.json:observers (not implemented C1-C6 runner)",
+    "input": {
+      "baselineBodySha256": "612803bc82915bf1a2e586525a6cf341c51cc74d7f1ad3135b8d453561c9d084",
+      "originalASTRecord": {
+        "scope": "platform.json",
+        "field": "observers",
+        "source": "docker/buster-runtime-entrypoint.sh",
+        "line": 189,
+        "expression": "  providers: {}, grants: {}, adapters: {}, activeAdapters: [], observers: {},",
+        "valueExpression": "{}",
+        "sha256": "2630481f59214cd69d7cc09eeecea60ff06d4697a9f5d36b319847a21526f029",
+        "currentValue": {},
+        "currentIsStatic": true,
+        "class": "literal-software-policy-or-protocol",
+        "state": "exact individual source member; semantic field/type/unit/supported-domain/owner/realconsumer/phase disposition pending, no blanketsource closure"
+      },
+      "activeRevisionSha256": "d88c1913b8bbdb073bec9ad981fd72e88603196b6dc9250ff4f393eedf608a61",
+      "exactDomain": {
+        "type": "object",
+        "additionalProperties": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      },
+      "fixture": "actualselected existingCore/Buster completephysicaloperator profile, chart/entrypoint/env/package/source/pod/PVC/role/proxy/key/credential/grants/genuine prepared source/job/producer/record/result receipts; actualnewC3 fullprofile before effect vs frozenoldwireA",
+      "mutants": "exactrole/key/ref/domain/owner/version/unknown/unusedalias evenequal, missingtrustedpackage/sourceissuer/Ed25519key/ref, fakeproxypeer/ACL/grant, wrongnamespace/endpoint/PVC/versionedlocator, oldquotareset/resultreservation loss, impossibleframefloor/lateeffect, fixture-overridden-afteractivevalidation/mixedgeneration/originalbodychange"
+    },
+    "priorState": "originalA standingS/R/PVC/native/role/proxy/config fullwire/grants/software/registry/originalapprovedtask/source/keyrevision/plan/sourcefixture/producer/quotacounters/unfinished reservations/claim/deadline interrupted, B cannotrewriterecoverA",
+    "productiveBoundary": "actualentrypoint/generatedrole versionedloader->actualdiscovery/admission beforeeffects->Core or Buster role-specific native/listener/store/sourceauth/capability->realjob/report/producer receipts",
+    "oracle": "Actual Buster runtimeRegistry uses ONLY installationRoots/trustedBuiltinRoots/externalTrust. loadPlatformConfig validatesallfields andresolvespaths butremainingfields do NOT reach Buster service/native/authority consumers. RealCore engine-runtime/adapters/admin/lifecycle consumers forold stableID remain separateauthentic role; old Coreauthor preservednotsecondBustereditablebox. Target fullschema/profile/fixture/activebody agrees beforeactivation. Real genericCore effect must notattribute to Busterunusedrolefields. NewC3sameexistingBusterowner, currentliteralA retaineduntilmigration, no synthesizedC1. Individual quota/ports/capability alternate uses genuine supportedprofile underR/S/oldplan bounds; schema/constructor only notphysicalcapacity. OriginalA/fixedEvalA pinned, separatelyadmitB, no latest orresetreservations; missingoldclosure/forgedsource/key/peer/claim fails beforeeffect.",
+    "observer": "genuine rendered/generated/loadedrole bytes/domain/profile/version/PVC/native/host/listener/proxy/sourcekey/grants/claims/storecharges/record/result bytecounts/producer/planreceipt order, no secretcontents",
+    "reviewerConfirmation": null
+  },
+  {
+    "id": "B16-FUTURE-DLV-B23-EMIT-c49d3f3ca3735d9a",
+    "settingIds": [],
+    "sourceTransferIds": [
+      "DLV-B23-EMIT-c49d3f3ca3735d9a"
+    ],
+    "relatedExistingSettingIds": [
+      "RT-PLATFORM-STORAGEROOT"
+    ],
+    "status": "not-run",
+    "testDigest": null,
+    "command": "proposed genuineentrypoint/Core/Buster rolefixture platform.json:storageRoot (not implemented C1-C6 runner)",
+    "input": {
+      "baselineBodySha256": "65eddf55ab2771df90f362931d3d52263d9702fc9c5922ff12c48a5325a0ddb7",
+      "originalASTRecord": {
+        "scope": "platform.json",
+        "field": "storageRoot",
+        "source": "docker/buster-runtime-entrypoint.sh",
+        "line": 190,
+        "expression": "  storageRoot: '/tmp/buster-plan-platform', shutdownTimeoutMs: 10_000,",
+        "valueExpression": "'/tmp/buster-plan-platform'",
+        "sha256": "2630481f59214cd69d7cc09eeecea60ff06d4697a9f5d36b319847a21526f029",
+        "currentValue": "/tmp/buster-plan-platform",
+        "currentIsStatic": true,
+        "class": "literal-software-policy-or-protocol",
+        "state": "exact individual source member; semantic field/type/unit/supported-domain/owner/realconsumer/phase disposition pending, no blanketsource closure"
+      },
+      "activeRevisionSha256": "b9258b0cf043be99af988d07b03fd5b0fb34f7d7329fc80d1535aabf16dfc867",
+      "exactDomain": {
+        "type": "string",
+        "minLength": 1
+      },
+      "fixture": "actualselected existingCore/Buster completephysicaloperator profile, chart/entrypoint/env/package/source/pod/PVC/role/proxy/key/credential/grants/genuine prepared source/job/producer/record/result receipts; actualnewC3 fullprofile before effect vs frozenoldwireA",
+      "mutants": "exactrole/key/ref/domain/owner/version/unknown/unusedalias evenequal, missingtrustedpackage/sourceissuer/Ed25519key/ref, fakeproxypeer/ACL/grant, wrongnamespace/endpoint/PVC/versionedlocator, oldquotareset/resultreservation loss, impossibleframefloor/lateeffect, fixture-overridden-afteractivevalidation/mixedgeneration/originalbodychange"
+    },
+    "priorState": "originalA standingS/R/PVC/native/role/proxy/config fullwire/grants/software/registry/originalapprovedtask/source/keyrevision/plan/sourcefixture/producer/quotacounters/unfinished reservations/claim/deadline interrupted, B cannotrewriterecoverA",
+    "productiveBoundary": "actualentrypoint/generatedrole versionedloader->actualdiscovery/admission beforeeffects->Core or Buster role-specific native/listener/store/sourceauth/capability->realjob/report/producer receipts",
+    "oracle": "Actual Buster runtimeRegistry uses ONLY installationRoots/trustedBuiltinRoots/externalTrust. loadPlatformConfig validatesallfields andresolvespaths butremainingfields do NOT reach Buster service/native/authority consumers. RealCore engine-runtime/adapters/admin/lifecycle consumers forold stableID remain separateauthentic role; old Coreauthor preservednotsecondBustereditablebox. Target fullschema/profile/fixture/activebody agrees beforeactivation. Real genericCore effect must notattribute to Busterunusedrolefields. NewC3sameexistingBusterowner, currentliteralA retaineduntilmigration, no synthesizedC1. Individual quota/ports/capability alternate uses genuine supportedprofile underR/S/oldplan bounds; schema/constructor only notphysicalcapacity. OriginalA/fixedEvalA pinned, separatelyadmitB, no latest orresetreservations; missingoldclosure/forgedsource/key/peer/claim fails beforeeffect.",
+    "observer": "genuine rendered/generated/loadedrole bytes/domain/profile/version/PVC/native/host/listener/proxy/sourcekey/grants/claims/storecharges/record/result bytecounts/producer/planreceipt order, no secretcontents",
+    "reviewerConfirmation": null
+  },
+  {
+    "id": "B16-FUTURE-DLV-B23-EMIT-255b06196444899d",
+    "settingIds": [],
+    "sourceTransferIds": [
+      "DLV-B23-EMIT-255b06196444899d"
+    ],
+    "relatedExistingSettingIds": [
+      "RT-PLATFORM-SHUTDOWNTIMEOUTMS"
+    ],
+    "status": "not-run",
+    "testDigest": null,
+    "command": "proposed genuineentrypoint/Core/Buster rolefixture platform.json:shutdownTimeoutMs (not implemented C1-C6 runner)",
+    "input": {
+      "baselineBodySha256": "4076fbe20a2bba8a9b22f5a8e3e8a90a8b17681ab67a344bd86807f04b349249",
+      "originalASTRecord": {
+        "scope": "platform.json",
+        "field": "shutdownTimeoutMs",
+        "source": "docker/buster-runtime-entrypoint.sh",
+        "line": 190,
+        "expression": "  storageRoot: '/tmp/buster-plan-platform', shutdownTimeoutMs: 10_000,",
+        "valueExpression": "10_000",
+        "sha256": "2630481f59214cd69d7cc09eeecea60ff06d4697a9f5d36b319847a21526f029",
+        "currentValue": 10000,
+        "currentIsStatic": true,
+        "class": "literal-software-policy-or-protocol",
+        "state": "exact individual source member; semantic field/type/unit/supported-domain/owner/realconsumer/phase disposition pending, no blanketsource closure"
+      },
+      "activeRevisionSha256": "b988e057d6034a5d190af04b64bf6da26d2cb69dce8d63d8ce39ef38613184e1",
+      "exactDomain": {
+        "type": "integer",
+        "minimum": 1
+      },
+      "fixture": "actualselected existingCore/Buster completephysicaloperator profile, chart/entrypoint/env/package/source/pod/PVC/role/proxy/key/credential/grants/genuine prepared source/job/producer/record/result receipts; actualnewC3 fullprofile before effect vs frozenoldwireA",
+      "mutants": "exactrole/key/ref/domain/owner/version/unknown/unusedalias evenequal, missingtrustedpackage/sourceissuer/Ed25519key/ref, fakeproxypeer/ACL/grant, wrongnamespace/endpoint/PVC/versionedlocator, oldquotareset/resultreservation loss, impossibleframefloor/lateeffect, fixture-overridden-afteractivevalidation/mixedgeneration/originalbodychange"
+    },
+    "priorState": "originalA standingS/R/PVC/native/role/proxy/config fullwire/grants/software/registry/originalapprovedtask/source/keyrevision/plan/sourcefixture/producer/quotacounters/unfinished reservations/claim/deadline interrupted, B cannotrewriterecoverA",
+    "productiveBoundary": "actualentrypoint/generatedrole versionedloader->actualdiscovery/admission beforeeffects->Core or Buster role-specific native/listener/store/sourceauth/capability->realjob/report/producer receipts",
+    "oracle": "Actual Buster runtimeRegistry uses ONLY installationRoots/trustedBuiltinRoots/externalTrust. loadPlatformConfig validatesallfields andresolvespaths butremainingfields do NOT reach Buster service/native/authority consumers. RealCore engine-runtime/adapters/admin/lifecycle consumers forold stableID remain separateauthentic role; old Coreauthor preservednotsecondBustereditablebox. Target fullschema/profile/fixture/activebody agrees beforeactivation. Real genericCore effect must notattribute to Busterunusedrolefields. NewC3sameexistingBusterowner, currentliteralA retaineduntilmigration, no synthesizedC1. Individual quota/ports/capability alternate uses genuine supportedprofile underR/S/oldplan bounds; schema/constructor only notphysicalcapacity. OriginalA/fixedEvalA pinned, separatelyadmitB, no latest orresetreservations; missingoldclosure/forgedsource/key/peer/claim fails beforeeffect.",
+    "observer": "genuine rendered/generated/loadedrole bytes/domain/profile/version/PVC/native/host/listener/proxy/sourcekey/grants/claims/storecharges/record/result bytecounts/producer/planreceipt order, no secretcontents",
+    "reviewerConfirmation": null
+  },
+  {
+    "id": "B16-FUTURE-DLV-B23-EMIT-8cceda8f254d80e2",
+    "settingIds": [],
+    "sourceTransferIds": [
+      "DLV-B23-EMIT-8cceda8f254d80e2"
+    ],
+    "relatedExistingSettingIds": [
+      "RT-PLATFORM-ORCHESTRATORISSUERID"
+    ],
+    "status": "not-run",
+    "testDigest": null,
+    "command": "proposed genuineentrypoint/Core/Buster rolefixture platform.json:orchestratorIssuerId (not implemented C1-C6 runner)",
+    "input": {
+      "baselineBodySha256": "f36f23074fedd974066354205195c804d9afbdd05c0a48b4a865ae0e6ffcd052",
+      "originalASTRecord": {
+        "scope": "platform.json",
+        "field": "orchestratorIssuerId",
+        "source": "docker/buster-runtime-entrypoint.sh",
+        "line": 191,
+        "expression": "  orchestratorIssuerId: 'buster', administrativeDecisionIssuers: [],",
+        "valueExpression": "'buster'",
+        "sha256": "2630481f59214cd69d7cc09eeecea60ff06d4697a9f5d36b319847a21526f029",
+        "currentValue": "buster",
+        "currentIsStatic": true,
+        "class": "literal-software-policy-or-protocol",
+        "state": "exact individual source member; semantic field/type/unit/supported-domain/owner/realconsumer/phase disposition pending, no blanketsource closure"
+      },
+      "activeRevisionSha256": "5f2efde42c2f94c3d70210d0f658c38f9161535bee0d910b86baf3762f571dea",
+      "exactDomain": {
+        "type": "string",
+        "minLength": 1
+      },
+      "fixture": "actualselected existingCore/Buster completephysicaloperator profile, chart/entrypoint/env/package/source/pod/PVC/role/proxy/key/credential/grants/genuine prepared source/job/producer/record/result receipts; actualnewC3 fullprofile before effect vs frozenoldwireA",
+      "mutants": "exactrole/key/ref/domain/owner/version/unknown/unusedalias evenequal, missingtrustedpackage/sourceissuer/Ed25519key/ref, fakeproxypeer/ACL/grant, wrongnamespace/endpoint/PVC/versionedlocator, oldquotareset/resultreservation loss, impossibleframefloor/lateeffect, fixture-overridden-afteractivevalidation/mixedgeneration/originalbodychange"
+    },
+    "priorState": "originalA standingS/R/PVC/native/role/proxy/config fullwire/grants/software/registry/originalapprovedtask/source/keyrevision/plan/sourcefixture/producer/quotacounters/unfinished reservations/claim/deadline interrupted, B cannotrewriterecoverA",
+    "productiveBoundary": "actualentrypoint/generatedrole versionedloader->actualdiscovery/admission beforeeffects->Core or Buster role-specific native/listener/store/sourceauth/capability->realjob/report/producer receipts",
+    "oracle": "Actual Buster runtimeRegistry uses ONLY installationRoots/trustedBuiltinRoots/externalTrust. loadPlatformConfig validatesallfields andresolvespaths butremainingfields do NOT reach Buster service/native/authority consumers. RealCore engine-runtime/adapters/admin/lifecycle consumers forold stableID remain separateauthentic role; old Coreauthor preservednotsecondBustereditablebox. Target fullschema/profile/fixture/activebody agrees beforeactivation. Real genericCore effect must notattribute to Busterunusedrolefields. NewC3sameexistingBusterowner, currentliteralA retaineduntilmigration, no synthesizedC1. Individual quota/ports/capability alternate uses genuine supportedprofile underR/S/oldplan bounds; schema/constructor only notphysicalcapacity. OriginalA/fixedEvalA pinned, separatelyadmitB, no latest orresetreservations; missingoldclosure/forgedsource/key/peer/claim fails beforeeffect.",
+    "observer": "genuine rendered/generated/loadedrole bytes/domain/profile/version/PVC/native/host/listener/proxy/sourcekey/grants/claims/storecharges/record/result bytecounts/producer/planreceipt order, no secretcontents",
+    "reviewerConfirmation": null
+  },
+  {
+    "id": "B16-FUTURE-DLV-B23-EMIT-de9238bea6cfd2fe",
+    "settingIds": [],
+    "sourceTransferIds": [
+      "DLV-B23-EMIT-de9238bea6cfd2fe"
+    ],
+    "relatedExistingSettingIds": [
+      "RT-PLATFORM-ADMINISTRATIVEDECISIONISSUERS"
+    ],
+    "status": "not-run",
+    "testDigest": null,
+    "command": "proposed genuineentrypoint/Core/Buster rolefixture platform.json:administrativeDecisionIssuers (not implemented C1-C6 runner)",
+    "input": {
+      "baselineBodySha256": "0c0eb4173b71e1d2b1f1e503f5baa9eb4ad1798e52d0a3b9390e159697f557e5",
+      "originalASTRecord": {
+        "scope": "platform.json",
+        "field": "administrativeDecisionIssuers",
+        "source": "docker/buster-runtime-entrypoint.sh",
+        "line": 191,
+        "expression": "  orchestratorIssuerId: 'buster', administrativeDecisionIssuers: [],",
+        "valueExpression": "[]",
+        "sha256": "2630481f59214cd69d7cc09eeecea60ff06d4697a9f5d36b319847a21526f029",
+        "currentValue": [],
+        "currentIsStatic": true,
+        "class": "literal-software-policy-or-protocol",
+        "state": "exact individual source member; semantic field/type/unit/supported-domain/owner/realconsumer/phase disposition pending, no blanketsource closure"
+      },
+      "activeRevisionSha256": "059d4f58a7b7661e93fa76c26c653e76811006aff85927f8dce09c16f6247dae",
+      "exactDomain": {
+        "type": "array",
+        "uniqueItems": true,
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "type",
+            "id"
+          ],
+          "properties": {
+            "type": {
+              "enum": [
+                "operator",
+                "administrator"
+              ]
+            },
+            "id": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      },
+      "fixture": "actualselected existingCore/Buster completephysicaloperator profile, chart/entrypoint/env/package/source/pod/PVC/role/proxy/key/credential/grants/genuine prepared source/job/producer/record/result receipts; actualnewC3 fullprofile before effect vs frozenoldwireA",
+      "mutants": "exactrole/key/ref/domain/owner/version/unknown/unusedalias evenequal, missingtrustedpackage/sourceissuer/Ed25519key/ref, fakeproxypeer/ACL/grant, wrongnamespace/endpoint/PVC/versionedlocator, oldquotareset/resultreservation loss, impossibleframefloor/lateeffect, fixture-overridden-afteractivevalidation/mixedgeneration/originalbodychange"
+    },
+    "priorState": "originalA standingS/R/PVC/native/role/proxy/config fullwire/grants/software/registry/originalapprovedtask/source/keyrevision/plan/sourcefixture/producer/quotacounters/unfinished reservations/claim/deadline interrupted, B cannotrewriterecoverA",
+    "productiveBoundary": "actualentrypoint/generatedrole versionedloader->actualdiscovery/admission beforeeffects->Core or Buster role-specific native/listener/store/sourceauth/capability->realjob/report/producer receipts",
+    "oracle": "Actual Buster runtimeRegistry uses ONLY installationRoots/trustedBuiltinRoots/externalTrust. loadPlatformConfig validatesallfields andresolvespaths butremainingfields do NOT reach Buster service/native/authority consumers. RealCore engine-runtime/adapters/admin/lifecycle consumers forold stableID remain separateauthentic role; old Coreauthor preservednotsecondBustereditablebox. Target fullschema/profile/fixture/activebody agrees beforeactivation. Real genericCore effect must notattribute to Busterunusedrolefields. NewC3sameexistingBusterowner, currentliteralA retaineduntilmigration, no synthesizedC1. Individual quota/ports/capability alternate uses genuine supportedprofile underR/S/oldplan bounds; schema/constructor only notphysicalcapacity. OriginalA/fixedEvalA pinned, separatelyadmitB, no latest orresetreservations; missingoldclosure/forgedsource/key/peer/claim fails beforeeffect.",
+    "observer": "genuine rendered/generated/loadedrole bytes/domain/profile/version/PVC/native/host/listener/proxy/sourcekey/grants/claims/storecharges/record/result bytecounts/producer/planreceipt order, no secretcontents",
+    "reviewerConfirmation": null
+  },
+  {
+    "id": "B16-FUTURE-DLV-B23-EMIT-6256505c4337fc8c",
+    "settingIds": [],
+    "sourceTransferIds": [
+      "DLV-B23-EMIT-6256505c4337fc8c"
+    ],
+    "relatedExistingSettingIds": [],
+    "status": "not-run",
+    "testDigest": null,
+    "command": "proposed genuineentrypoint/Core/Buster rolefixture runtime.json:schemaVersion (not implemented C1-C6 runner)",
+    "input": {
+      "baselineBodySha256": "d975262bac3ad02f2c71a37a27435ad193cdd6835f965a9e06f17596924f9ba3",
+      "originalASTRecord": {
+        "scope": "runtime.json",
+        "field": "schemaVersion",
+        "source": "docker/buster-runtime-entrypoint.sh",
+        "line": 194,
+        "expression": "  schemaVersion: 'buster-remote-plan-runtime.v1', platformConfig: './platform.json',",
+        "valueExpression": "'buster-remote-plan-runtime.v1'",
+        "sha256": "2630481f59214cd69d7cc09eeecea60ff06d4697a9f5d36b319847a21526f029",
+        "currentValue": "buster-remote-plan-runtime.v1",
+        "currentIsStatic": true,
+        "class": "literal-software-policy-or-protocol",
+        "state": "exact individual source member; semantic field/type/unit/supported-domain/owner/realconsumer/phase disposition pending, no blanketsource closure"
+      },
+      "activeRevisionSha256": "f2a3af2295f91aa72afc48ee3673d20ff51eaa04c73b5216fb1dc036f993cf73",
+      "exactDomain": {
+        "const": "buster-remote-plan-runtime.v1"
+      },
+      "fixture": "actualselected existingCore/Buster completephysicaloperator profile, chart/entrypoint/env/package/source/pod/PVC/role/proxy/key/credential/grants/genuine prepared source/job/producer/record/result receipts; actualnewC3 fullprofile before effect vs frozenoldwireA",
+      "mutants": "exactrole/key/ref/domain/owner/version/unknown/unusedalias evenequal, missingtrustedpackage/sourceissuer/Ed25519key/ref, fakeproxypeer/ACL/grant, wrongnamespace/endpoint/PVC/versionedlocator, oldquotareset/resultreservation loss, impossibleframefloor/lateeffect, fixture-overridden-afteractivevalidation/mixedgeneration/originalbodychange"
+    },
+    "priorState": "originalA standingS/R/PVC/native/role/proxy/config fullwire/grants/software/registry/originalapprovedtask/source/keyrevision/plan/sourcefixture/producer/quotacounters/unfinished reservations/claim/deadline interrupted, B cannotrewriterecoverA",
+    "productiveBoundary": "actualentrypoint/generatedrole versionedloader->actualdiscovery/admission beforeeffects->Core or Buster role-specific native/listener/store/sourceauth/capability->realjob/report/producer receipts",
+    "oracle": "validateRuntimeRoot exact version, generatedcurrentreader metadata not operatorselector Target fullschema/profile/fixture/activebody agrees beforeactivation. Real genericCore effect must notattribute to Busterunusedrolefields. NewC3sameexistingBusterowner, currentliteralA retaineduntilmigration, no synthesizedC1. Individual quota/ports/capability alternate uses genuine supportedprofile underR/S/oldplan bounds; schema/constructor only notphysicalcapacity. OriginalA/fixedEvalA pinned, separatelyadmitB, no latest orresetreservations; missingoldclosure/forgedsource/key/peer/claim fails beforeeffect.",
+    "observer": "genuine rendered/generated/loadedrole bytes/domain/profile/version/PVC/native/host/listener/proxy/sourcekey/grants/claims/storecharges/record/result bytecounts/producer/planreceipt order, no secretcontents",
+    "reviewerConfirmation": null
+  },
+  {
+    "id": "B16-FUTURE-DLV-B23-EMIT-57d331d223535e59",
+    "settingIds": [],
+    "sourceTransferIds": [
+      "DLV-B23-EMIT-57d331d223535e59"
+    ],
+    "relatedExistingSettingIds": [],
+    "status": "not-run",
+    "testDigest": null,
+    "command": "proposed genuineentrypoint/Core/Buster rolefixture runtime.json:platformConfig (not implemented C1-C6 runner)",
+    "input": {
+      "baselineBodySha256": "b5e443f8ce26695e0e102ad9d9f87a948878532815d56ca17b35cd922afd2a44",
+      "originalASTRecord": {
+        "scope": "runtime.json",
+        "field": "platformConfig",
+        "source": "docker/buster-runtime-entrypoint.sh",
+        "line": 194,
+        "expression": "  schemaVersion: 'buster-remote-plan-runtime.v1', platformConfig: './platform.json',",
+        "valueExpression": "'./platform.json'",
+        "sha256": "2630481f59214cd69d7cc09eeecea60ff06d4697a9f5d36b319847a21526f029",
+        "currentValue": "./platform.json",
+        "currentIsStatic": true,
+        "class": "literal-software-policy-or-protocol",
+        "state": "exact individual source member; semantic field/type/unit/supported-domain/owner/realconsumer/phase disposition pending, no blanketsource closure"
+      },
+      "activeRevisionSha256": "62e2f07e9a4491dbbbdb4e1773f88738f0b3a4fbe9342bae7f8f2bf57b9d1fd8",
+      "exactDomain": {
+        "type": "string",
+        "minLength": 1
+      },
+      "fixture": "actualselected existingCore/Buster completephysicaloperator profile, chart/entrypoint/env/package/source/pod/PVC/role/proxy/key/credential/grants/genuine prepared source/job/producer/record/result receipts; actualnewC3 fullprofile before effect vs frozenoldwireA",
+      "mutants": "exactrole/key/ref/domain/owner/version/unknown/unusedalias evenequal, missingtrustedpackage/sourceissuer/Ed25519key/ref, fakeproxypeer/ACL/grant, wrongnamespace/endpoint/PVC/versionedlocator, oldquotareset/resultreservation loss, impossibleframefloor/lateeffect, fixture-overridden-afteractivevalidation/mixedgeneration/originalbodychange"
+    },
+    "priorState": "originalA standingS/R/PVC/native/role/proxy/config fullwire/grants/software/registry/originalapprovedtask/source/keyrevision/plan/sourcefixture/producer/quotacounters/unfinished reservations/claim/deadline interrupted, B cannotrewriterecoverA",
+    "productiveBoundary": "actualentrypoint/generatedrole versionedloader->actualdiscovery/admission beforeeffects->Core or Buster role-specific native/listener/store/sourceauth/capability->realjob/report/producer receipts",
+    "oracle": "runtimeRegistry resolves file relativecanonical runtimeconfigdirname ->loadPlatformConfig ->3registrydiscoverykeys only; no independent editableplatformfile, real package/version/path/role mount authorbinding Target fullschema/profile/fixture/activebody agrees beforeactivation. Real genericCore effect must notattribute to Busterunusedrolefields. NewC3sameexistingBusterowner, currentliteralA retaineduntilmigration, no synthesizedC1. Individual quota/ports/capability alternate uses genuine supportedprofile underR/S/oldplan bounds; schema/constructor only notphysicalcapacity. OriginalA/fixedEvalA pinned, separatelyadmitB, no latest orresetreservations; missingoldclosure/forgedsource/key/peer/claim fails beforeeffect.",
+    "observer": "genuine rendered/generated/loadedrole bytes/domain/profile/version/PVC/native/host/listener/proxy/sourcekey/grants/claims/storecharges/record/result bytecounts/producer/planreceipt order, no secretcontents",
+    "reviewerConfirmation": null
+  },
+  {
+    "id": "B16-FUTURE-DLV-B23-EMIT-954f93682167b0ae",
+    "settingIds": [],
+    "sourceTransferIds": [
+      "DLV-B23-EMIT-954f93682167b0ae"
+    ],
+    "relatedExistingSettingIds": [],
+    "status": "not-run",
+    "testDigest": null,
+    "command": "proposed genuineentrypoint/Core/Buster rolefixture runtime.json:host (not implemented C1-C6 runner)",
+    "input": {
+      "baselineBodySha256": "ca1b6af67bf71870411a744432ab7d9ec4561c2fe87f47ca5e8a45b12060bbb3",
+      "originalASTRecord": {
+        "scope": "runtime.json",
+        "field": "host",
+        "source": "docker/buster-runtime-entrypoint.sh",
+        "line": 195,
+        "expression": "  host: '0.0.0.0', port: Number(process.env.BUSTER_PLAN_PORT || 18891),",
+        "valueExpression": "'0.0.0.0'",
+        "sha256": "2630481f59214cd69d7cc09eeecea60ff06d4697a9f5d36b319847a21526f029",
+        "currentValue": "0.0.0.0",
+        "currentIsStatic": true,
+        "class": "literal-software-policy-or-protocol",
+        "state": "exact individual source member; semantic field/type/unit/supported-domain/owner/realconsumer/phase disposition pending, no blanketsource closure"
+      },
+      "activeRevisionSha256": "cbf00f3b804731324c3b10c409f451a34fd2e0a6d4c2904246dd456cc2a18f0f",
+      "exactDomain": {
+        "type": "string",
+        "minLength": 1
+      },
+      "fixture": "actualselected existingCore/Buster completephysicaloperator profile, chart/entrypoint/env/package/source/pod/PVC/role/proxy/key/credential/grants/genuine prepared source/job/producer/record/result receipts; actualnewC3 fullprofile before effect vs frozenoldwireA",
+      "mutants": "exactrole/key/ref/domain/owner/version/unknown/unusedalias evenequal, missingtrustedpackage/sourceissuer/Ed25519key/ref, fakeproxypeer/ACL/grant, wrongnamespace/endpoint/PVC/versionedlocator, oldquotareset/resultreservation loss, impossibleframefloor/lateeffect, fixture-overridden-afteractivevalidation/mixedgeneration/originalbodychange"
+    },
+    "priorState": "originalA standingS/R/PVC/native/role/proxy/config fullwire/grants/software/registry/originalapprovedtask/source/keyrevision/plan/sourcefixture/producer/quotacounters/unfinished reservations/claim/deadline interrupted, B cannotrewriterecoverA",
+    "productiveBoundary": "actualentrypoint/generatedrole versionedloader->actualdiscovery/admission beforeeffects->Core or Buster role-specific native/listener/store/sourceauth/capability->realjob/report/producer receipts",
+    "oracle": "runtimeconstructor nonemptyhost, actual listen occurs onlystart afterservice.recover; real address/route/network/TLS/proxy role compatibility beforeactivation, hostname metadata not bindingproof Target fullschema/profile/fixture/activebody agrees beforeactivation. Real genericCore effect must notattribute to Busterunusedrolefields. NewC3sameexistingBusterowner, currentliteralA retaineduntilmigration, no synthesizedC1. Individual quota/ports/capability alternate uses genuine supportedprofile underR/S/oldplan bounds; schema/constructor only notphysicalcapacity. OriginalA/fixedEvalA pinned, separatelyadmitB, no latest orresetreservations; missingoldclosure/forgedsource/key/peer/claim fails beforeeffect.",
+    "observer": "genuine rendered/generated/loadedrole bytes/domain/profile/version/PVC/native/host/listener/proxy/sourcekey/grants/claims/storecharges/record/result bytecounts/producer/planreceipt order, no secretcontents",
+    "reviewerConfirmation": null
+  },
+  {
+    "id": "B16-FUTURE-DLV-B23-EMIT-5cabf96825e7427a",
+    "settingIds": [],
+    "sourceTransferIds": [
+      "DLV-B23-EMIT-5cabf96825e7427a"
+    ],
+    "relatedExistingSettingIds": [],
+    "status": "not-run",
+    "testDigest": null,
+    "command": "proposed genuineentrypoint/Core/Buster rolefixture runtime.json:port (not implemented C1-C6 runner)",
+    "input": {
+      "baselineBodySha256": "4c925ff1e9ae3de66d0bfce69b2107f12e5168d71b8f1add7e542af46b60627e",
+      "originalASTRecord": {
+        "scope": "runtime.json",
+        "field": "port",
+        "source": "docker/buster-runtime-entrypoint.sh",
+        "line": 195,
+        "expression": "  host: '0.0.0.0', port: Number(process.env.BUSTER_PLAN_PORT || 18891),",
+        "valueExpression": "Number(process.env.BUSTER_PLAN_PORT || 18891)",
+        "sha256": "2630481f59214cd69d7cc09eeecea60ff06d4697a9f5d36b319847a21526f029",
+        "currentIsStatic": false,
+        "class": "explicit-generated-expression",
+        "state": "exact individual source member; semantic field/type/unit/supported-domain/owner/realconsumer/phase disposition pending, no blanketsource closure"
+      },
+      "activeRevisionSha256": "fcd1a2cf1f00797a1adc2918f88592b82bd12cecfd063a8c891593310b61ce44",
+      "exactDomain": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 65535
+      },
+      "fixture": "actualselected existingCore/Buster completephysicaloperator profile, chart/entrypoint/env/package/source/pod/PVC/role/proxy/key/credential/grants/genuine prepared source/job/producer/record/result receipts; actualnewC3 fullprofile before effect vs frozenoldwireA",
+      "mutants": "exactrole/key/ref/domain/owner/version/unknown/unusedalias evenequal, missingtrustedpackage/sourceissuer/Ed25519key/ref, fakeproxypeer/ACL/grant, wrongnamespace/endpoint/PVC/versionedlocator, oldquotareset/resultreservation loss, impossibleframefloor/lateeffect, fixture-overridden-afteractivevalidation/mixedgeneration/originalbodychange"
+    },
+    "priorState": "originalA standingS/R/PVC/native/role/proxy/config fullwire/grants/software/registry/originalapprovedtask/source/keyrevision/plan/sourcefixture/producer/quotacounters/unfinished reservations/claim/deadline interrupted, B cannotrewriterecoverA",
+    "productiveBoundary": "actualentrypoint/generatedrole versionedloader->actualdiscovery/admission beforeeffects->Core or Buster role-specific native/listener/store/sourceauth/capability->realjob/report/producer receipts",
+    "oracle": "productioninteger minimum0 thennative constructor safe0..65535;0 ephemeralnativeport supported but actual role advertisedroute/chart port matching required, no inferred productiondefault Target fullschema/profile/fixture/activebody agrees beforeactivation. Real genericCore effect must notattribute to Busterunusedrolefields. NewC3sameexistingBusterowner, currentliteralA retaineduntilmigration, no synthesizedC1. Individual quota/ports/capability alternate uses genuine supportedprofile underR/S/oldplan bounds; schema/constructor only notphysicalcapacity. OriginalA/fixedEvalA pinned, separatelyadmitB, no latest orresetreservations; missingoldclosure/forgedsource/key/peer/claim fails beforeeffect.",
+    "observer": "genuine rendered/generated/loadedrole bytes/domain/profile/version/PVC/native/host/listener/proxy/sourcekey/grants/claims/storecharges/record/result bytecounts/producer/planreceipt order, no secretcontents",
+    "reviewerConfirmation": null
+  },
+  {
+    "id": "B16-FUTURE-DLV-B23-EMIT-d3009277c3a823f0",
+    "settingIds": [],
+    "sourceTransferIds": [
+      "DLV-B23-EMIT-d3009277c3a823f0"
+    ],
+    "relatedExistingSettingIds": [],
+    "status": "not-run",
+    "testDigest": null,
+    "command": "proposed genuineentrypoint/Core/Buster rolefixture runtime.json:$spread (not implemented C1-C6 runner)",
+    "input": {
+      "baselineBodySha256": "055b805313271cbe97a9f64c6288dd22c2fced09e23de6d64f73015d90ec91da",
+      "originalASTRecord": {
+        "scope": "runtime.json",
+        "field": "$spread",
+        "source": "docker/buster-runtime-entrypoint.sh",
+        "line": 196,
+        "expression": "  ...(process.env.BUSTER_TRUSTED_PEER_SPIFFE_ID",
+        "valueExpression": "(process.env.BUSTER_TRUSTED_PEER_SPIFFE_ID\n    ? { trustedPeerSpiffeIds: [process.env.BUSTER_TRUSTED_PEER_SPIFFE_ID] }\n    : { tokenEnvironmentVariable: 'BUSTER_V2_TOKEN' })",
+        "sha256": "2630481f59214cd69d7cc09eeecea60ff06d4697a9f5d36b319847a21526f029",
+        "class": "explicit-generated-spread",
+        "state": "individual actualfield/role/consumer/schema/phase join required; not automatically merged author"
+      },
+      "activeRevisionSha256": "3539c2eb777e814ad91d15a0580e7c22ae3102c5c38955e88897e1504971e154",
+      "exactDomain": {
+        "description": "original generatedpeer-or-token branch exacttyped secret/identity refs"
+      },
+      "fixture": "actualselected existingCore/Buster completephysicaloperator profile, chart/entrypoint/env/package/source/pod/PVC/role/proxy/key/credential/grants/genuine prepared source/job/producer/record/result receipts; actualnewC3 fullprofile before effect vs frozenoldwireA",
+      "mutants": "exactrole/key/ref/domain/owner/version/unknown/unusedalias evenequal, missingtrustedpackage/sourceissuer/Ed25519key/ref, fakeproxypeer/ACL/grant, wrongnamespace/endpoint/PVC/versionedlocator, oldquotareset/resultreservation loss, impossibleframefloor/lateeffect, fixture-overridden-afteractivevalidation/mixedgeneration/originalbodychange"
+    },
+    "priorState": "originalA standingS/R/PVC/native/role/proxy/config fullwire/grants/software/registry/originalapprovedtask/source/keyrevision/plan/sourcefixture/producer/quotacounters/unfinished reservations/claim/deadline interrupted, B cannotrewriterecoverA",
+    "productiveBoundary": "actualentrypoint/generatedrole versionedloader->actualdiscovery/admission beforeeffects->Core or Buster role-specific native/listener/store/sourceauth/capability->realjob/report/producer receipts",
+    "oracle": "runtimeAuthority prefers suppliedpeerlist else token envname, separate publickeyenv required; HTTPconstructor XOR andtoken>=32. Peer auth authorizeProxiedSpiffePeer(headers,remoteAddress), not directTLS/mTLS proof. Target closedtaggedactualrole transport+secret/proxy sourcebindings, disabledotherbranch aliasesrejectevenequal Target fullschema/profile/fixture/activebody agrees beforeactivation. Real genericCore effect must notattribute to Busterunusedrolefields. NewC3sameexistingBusterowner, currentliteralA retaineduntilmigration, no synthesizedC1. Individual quota/ports/capability alternate uses genuine supportedprofile underR/S/oldplan bounds; schema/constructor only notphysicalcapacity. OriginalA/fixedEvalA pinned, separatelyadmitB, no latest orresetreservations; missingoldclosure/forgedsource/key/peer/claim fails beforeeffect.",
+    "observer": "genuine rendered/generated/loadedrole bytes/domain/profile/version/PVC/native/host/listener/proxy/sourcekey/grants/claims/storecharges/record/result bytecounts/producer/planreceipt order, no secretcontents",
+    "reviewerConfirmation": null
+  },
+  {
+    "id": "B16-FUTURE-DLV-B23-EMIT-413354ee8df19f41",
+    "settingIds": [],
+    "sourceTransferIds": [
+      "DLV-B23-EMIT-413354ee8df19f41"
+    ],
+    "relatedExistingSettingIds": [],
+    "status": "not-run",
+    "testDigest": null,
+    "command": "proposed genuineentrypoint/Core/Buster rolefixture runtime.json:sourceAttestationPublicKeyEnvironmentVariable (not implemented C1-C6 runner)",
+    "input": {
+      "baselineBodySha256": "9453034e8852530a9a49748522bc45f22d365f0ea8277e970a8b369630406d62",
+      "originalASTRecord": {
+        "scope": "runtime.json",
+        "field": "sourceAttestationPublicKeyEnvironmentVariable",
+        "source": "docker/buster-runtime-entrypoint.sh",
+        "line": 199,
+        "expression": "  sourceAttestationPublicKeyEnvironmentVariable: 'BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY',",
+        "valueExpression": "'BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY'",
+        "sha256": "2630481f59214cd69d7cc09eeecea60ff06d4697a9f5d36b319847a21526f029",
+        "currentValue": "BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY",
+        "currentIsStatic": true,
+        "class": "literal-software-policy-or-protocol",
+        "state": "exact individual source member; semantic field/type/unit/supported-domain/owner/realconsumer/phase disposition pending, no blanketsource closure"
+      },
+      "activeRevisionSha256": "917b4567776c4c37fb8e5d87c8d81e10708d06067275749f87c081ec2ae2fbaf",
+      "exactDomain": {
+        "type": "string",
+        "pattern": "^[A-Z][A-Z0-9_]*$"
+      },
+      "fixture": "actualselected existingCore/Buster completephysicaloperator profile, chart/entrypoint/env/package/source/pod/PVC/role/proxy/key/credential/grants/genuine prepared source/job/producer/record/result receipts; actualnewC3 fullprofile before effect vs frozenoldwireA",
+      "mutants": "exactrole/key/ref/domain/owner/version/unknown/unusedalias evenequal, missingtrustedpackage/sourceissuer/Ed25519key/ref, fakeproxypeer/ACL/grant, wrongnamespace/endpoint/PVC/versionedlocator, oldquotareset/resultreservation loss, impossibleframefloor/lateeffect, fixture-overridden-afteractivevalidation/mixedgeneration/originalbodychange"
+    },
+    "priorState": "originalA standingS/R/PVC/native/role/proxy/config fullwire/grants/software/registry/originalapprovedtask/source/keyrevision/plan/sourcefixture/producer/quotacounters/unfinished reservations/claim/deadline interrupted, B cannotrewriterecoverA",
+    "productiveBoundary": "actualentrypoint/generatedrole versionedloader->actualdiscovery/admission beforeeffects->Core or Buster role-specific native/listener/store/sourceauth/capability->realjob/report/producer receipts",
+    "oracle": "envref only no secret/keycontents emitted. runtimeAuthority requiresdistinct fromused tokenname/presentvalue, actualpreparedstore crypto.createPublicKey mustEd25519+authoritynonempty beforetrustedsource admit. Full keyrevision/provenance/history not authenticated byenvname Target fullschema/profile/fixture/activebody agrees beforeactivation. Real genericCore effect must notattribute to Busterunusedrolefields. NewC3sameexistingBusterowner, currentliteralA retaineduntilmigration, no synthesizedC1. Individual quota/ports/capability alternate uses genuine supportedprofile underR/S/oldplan bounds; schema/constructor only notphysicalcapacity. OriginalA/fixedEvalA pinned, separatelyadmitB, no latest orresetreservations; missingoldclosure/forgedsource/key/peer/claim fails beforeeffect.",
+    "observer": "genuine rendered/generated/loadedrole bytes/domain/profile/version/PVC/native/host/listener/proxy/sourcekey/grants/claims/storecharges/record/result bytecounts/producer/planreceipt order, no secretcontents",
+    "reviewerConfirmation": null
+  },
+  {
+    "id": "B16-FUTURE-DLV-B23-EMIT-2e519b454317e335",
+    "settingIds": [],
+    "sourceTransferIds": [
+      "DLV-B23-EMIT-2e519b454317e335"
+    ],
+    "relatedExistingSettingIds": [],
+    "status": "not-run",
+    "testDigest": null,
+    "command": "proposed genuineentrypoint/Core/Buster rolefixture runtime.json:trustedSourceAuthority (not implemented C1-C6 runner)",
+    "input": {
+      "baselineBodySha256": "5b73bf935bb5f2c3e639d51f03a41df513f7d767cf4a70f008c8a2b60d6a710f",
+      "originalASTRecord": {
+        "scope": "runtime.json",
+        "field": "trustedSourceAuthority",
+        "source": "docker/buster-runtime-entrypoint.sh",
+        "line": 200,
+        "expression": "  trustedSourceAuthority: process.env.BUSTER_PLAN_TRUSTED_SOURCE_AUTHORITY || 'nova:production',",
+        "valueExpression": "process.env.BUSTER_PLAN_TRUSTED_SOURCE_AUTHORITY || 'nova:production'",
+        "sha256": "2630481f59214cd69d7cc09eeecea60ff06d4697a9f5d36b319847a21526f029",
+        "currentIsStatic": false,
+        "class": "explicit-generated-expression",
+        "state": "exact individual source member; semantic field/type/unit/supported-domain/owner/realconsumer/phase disposition pending, no blanketsource closure"
+      },
+      "activeRevisionSha256": "4caac6b011483d9e21e3a60c2c494d27a695338de94e308c51b8515afb96f1a4",
+      "exactDomain": {
+        "type": "string",
+        "minLength": 1
+      },
+      "fixture": "actualselected existingCore/Buster completephysicaloperator profile, chart/entrypoint/env/package/source/pod/PVC/role/proxy/key/credential/grants/genuine prepared source/job/producer/record/result receipts; actualnewC3 fullprofile before effect vs frozenoldwireA",
+      "mutants": "exactrole/key/ref/domain/owner/version/unknown/unusedalias evenequal, missingtrustedpackage/sourceissuer/Ed25519key/ref, fakeproxypeer/ACL/grant, wrongnamespace/endpoint/PVC/versionedlocator, oldquotareset/resultreservation loss, impossibleframefloor/lateeffect, fixture-overridden-afteractivevalidation/mixedgeneration/originalbodychange"
+    },
+    "priorState": "originalA standingS/R/PVC/native/role/proxy/config fullwire/grants/software/registry/originalapprovedtask/source/keyrevision/plan/sourcefixture/producer/quotacounters/unfinished reservations/claim/deadline interrupted, B cannotrewriterecoverA",
+    "productiveBoundary": "actualentrypoint/generatedrole versionedloader->actualdiscovery/admission beforeeffects->Core or Buster role-specific native/listener/store/sourceauth/capability->realjob/report/producer receipts",
+    "oracle": "sourceverification inpreparedstore usesauthentic registered originalauthority+Ed25519key; defaultnova:production sourceemitter not permissionto acceptlatest arbitraryissuer or editableallowlist; exact originalsourceapproval/producer/key role binding Target fullschema/profile/fixture/activebody agrees beforeactivation. Real genericCore effect must notattribute to Busterunusedrolefields. NewC3sameexistingBusterowner, currentliteralA retaineduntilmigration, no synthesizedC1. Individual quota/ports/capability alternate uses genuine supportedprofile underR/S/oldplan bounds; schema/constructor only notphysicalcapacity. OriginalA/fixedEvalA pinned, separatelyadmitB, no latest orresetreservations; missingoldclosure/forgedsource/key/peer/claim fails beforeeffect.",
+    "observer": "genuine rendered/generated/loadedrole bytes/domain/profile/version/PVC/native/host/listener/proxy/sourcekey/grants/claims/storecharges/record/result bytecounts/producer/planreceipt order, no secretcontents",
+    "reviewerConfirmation": null
+  },
+  {
+    "id": "B16-FUTURE-DLV-B23-EMIT-9d44e0bf17617907",
+    "settingIds": [],
+    "sourceTransferIds": [
+      "DLV-B23-EMIT-9d44e0bf17617907"
+    ],
+    "relatedExistingSettingIds": [],
+    "status": "not-run",
+    "testDigest": null,
+    "command": "proposed genuineentrypoint/Core/Buster rolefixture runtime.json:stateRoot (not implemented C1-C6 runner)",
+    "input": {
+      "baselineBodySha256": "7a8267f4e147c1df8aae5081252821f1a7300daa2ebad8fb0a516345dad942bc",
+      "originalASTRecord": {
+        "scope": "runtime.json",
+        "field": "stateRoot",
+        "source": "docker/buster-runtime-entrypoint.sh",
+        "line": 201,
+        "expression": "  stateRoot: process.env.BUSTER_V2_STATE_DIR,",
+        "valueExpression": "process.env.BUSTER_V2_STATE_DIR",
+        "sha256": "2630481f59214cd69d7cc09eeecea60ff06d4697a9f5d36b319847a21526f029",
+        "currentIsStatic": false,
+        "class": "explicit-generated-expression",
+        "state": "exact individual source member; semantic field/type/unit/supported-domain/owner/realconsumer/phase disposition pending, no blanketsource closure"
+      },
+      "activeRevisionSha256": "61edc3118306525dea14cc98e20215894274fdbef5862d766cfbb28e96ca27ba",
+      "exactDomain": {
+        "type": "string",
+        "minLength": 1
+      },
+      "fixture": "actualselected existingCore/Buster completephysicaloperator profile, chart/entrypoint/env/package/source/pod/PVC/role/proxy/key/credential/grants/genuine prepared source/job/producer/record/result receipts; actualnewC3 fullprofile before effect vs frozenoldwireA",
+      "mutants": "exactrole/key/ref/domain/owner/version/unknown/unusedalias evenequal, missingtrustedpackage/sourceissuer/Ed25519key/ref, fakeproxypeer/ACL/grant, wrongnamespace/endpoint/PVC/versionedlocator, oldquotareset/resultreservation loss, impossibleframefloor/lateeffect, fixture-overridden-afteractivevalidation/mixedgeneration/originalbodychange"
+    },
+    "priorState": "originalA standingS/R/PVC/native/role/proxy/config fullwire/grants/software/registry/originalapprovedtask/source/keyrevision/plan/sourcefixture/producer/quotacounters/unfinished reservations/claim/deadline interrupted, B cannotrewriterecoverA",
+    "productiveBoundary": "actualentrypoint/generatedrole versionedloader->actualdiscovery/admission beforeeffects->Core or Buster role-specific native/listener/store/sourceauth/capability->realjob/report/producer receipts",
+    "oracle": "path.resolve thenpreparedPlanStateRoot converts tosameparent basename-v2 sibling, refusesfilesystemroot; jobrecords/results/admission lock need originalPVC/location/canonical role mapping, notoperator newroot toevadehistory/quota Target fullschema/profile/fixture/activebody agrees beforeactivation. Real genericCore effect must notattribute to Busterunusedrolefields. NewC3sameexistingBusterowner, currentliteralA retaineduntilmigration, no synthesizedC1. Individual quota/ports/capability alternate uses genuine supportedprofile underR/S/oldplan bounds; schema/constructor only notphysicalcapacity. OriginalA/fixedEvalA pinned, separatelyadmitB, no latest orresetreservations; missingoldclosure/forgedsource/key/peer/claim fails beforeeffect.",
+    "observer": "genuine rendered/generated/loadedrole bytes/domain/profile/version/PVC/native/host/listener/proxy/sourcekey/grants/claims/storecharges/record/result bytecounts/producer/planreceipt order, no secretcontents",
+    "reviewerConfirmation": null
+  },
+  {
+    "id": "B16-FUTURE-DLV-B23-EMIT-ad79a8742f8a4cef",
+    "settingIds": [],
+    "sourceTransferIds": [
+      "DLV-B23-EMIT-ad79a8742f8a4cef"
+    ],
+    "relatedExistingSettingIds": [],
+    "status": "not-run",
+    "testDigest": null,
+    "command": "proposed genuineentrypoint/Core/Buster rolefixture runtime.json:runtimeRoot (not implemented C1-C6 runner)",
+    "input": {
+      "baselineBodySha256": "fc3b9196078ab3d91730064482c905793145f24e20d9080dde04fe38ca04d210",
+      "originalASTRecord": {
+        "scope": "runtime.json",
+        "field": "runtimeRoot",
+        "source": "docker/buster-runtime-entrypoint.sh",
+        "line": 202,
+        "expression": "  runtimeRoot: process.env.BUSTER_V2_RUN_DIR,",
+        "valueExpression": "process.env.BUSTER_V2_RUN_DIR",
+        "sha256": "2630481f59214cd69d7cc09eeecea60ff06d4697a9f5d36b319847a21526f029",
+        "currentIsStatic": false,
+        "class": "explicit-generated-expression",
+        "state": "exact individual source member; semantic field/type/unit/supported-domain/owner/realconsumer/phase disposition pending, no blanketsource closure"
+      },
+      "activeRevisionSha256": "0a2d2b2304d4ee80f61ba105f8b3a62793bcf3f63ca85f42987eaa89ef1a6f09",
+      "exactDomain": {
+        "type": "string",
+        "minLength": 1
+      },
+      "fixture": "actualselected existingCore/Buster completephysicaloperator profile, chart/entrypoint/env/package/source/pod/PVC/role/proxy/key/credential/grants/genuine prepared source/job/producer/record/result receipts; actualnewC3 fullprofile before effect vs frozenoldwireA",
+      "mutants": "exactrole/key/ref/domain/owner/version/unknown/unusedalias evenequal, missingtrustedpackage/sourceissuer/Ed25519key/ref, fakeproxypeer/ACL/grant, wrongnamespace/endpoint/PVC/versionedlocator, oldquotareset/resultreservation loss, impossibleframefloor/lateeffect, fixture-overridden-afteractivevalidation/mixedgeneration/originalbodychange"
+    },
+    "priorState": "originalA standingS/R/PVC/native/role/proxy/config fullwire/grants/software/registry/originalapprovedtask/source/keyrevision/plan/sourcefixture/producer/quotacounters/unfinished reservations/claim/deadline interrupted, B cannotrewriterecoverA",
+    "productiveBoundary": "actualentrypoint/generatedrole versionedloader->actualdiscovery/admission beforeeffects->Core or Buster role-specific native/listener/store/sourceauth/capability->realjob/report/producer receipts",
+    "oracle": "path.resolve thenpreparedPlanRuntimeRoot sameversionedsibling; jobruntime/source/workspacesoriginalallocation/claim/grants preserved, not configurablelatestB newworkingdir bypass Target fullschema/profile/fixture/activebody agrees beforeactivation. Real genericCore effect must notattribute to Busterunusedrolefields. NewC3sameexistingBusterowner, currentliteralA retaineduntilmigration, no synthesizedC1. Individual quota/ports/capability alternate uses genuine supportedprofile underR/S/oldplan bounds; schema/constructor only notphysicalcapacity. OriginalA/fixedEvalA pinned, separatelyadmitB, no latest orresetreservations; missingoldclosure/forgedsource/key/peer/claim fails beforeeffect.",
+    "observer": "genuine rendered/generated/loadedrole bytes/domain/profile/version/PVC/native/host/listener/proxy/sourcekey/grants/claims/storecharges/record/result bytecounts/producer/planreceipt order, no secretcontents",
+    "reviewerConfirmation": null
+  },
+  {
+    "id": "B16-FUTURE-DLV-B23-EMIT-a0c3b98d8bfc696b",
+    "settingIds": [],
+    "sourceTransferIds": [
+      "DLV-B23-EMIT-a0c3b98d8bfc696b"
+    ],
+    "relatedExistingSettingIds": [],
+    "status": "not-run",
+    "testDigest": null,
+    "command": "proposed genuineentrypoint/Core/Buster rolefixture runtime.json:tarExecutable (not implemented C1-C6 runner)",
+    "input": {
+      "baselineBodySha256": "4c15b40d6182aa8fbb1e960721307d58328e8f18bcb5f762ca58e53f54c3fa50",
+      "originalASTRecord": {
+        "scope": "runtime.json",
+        "field": "tarExecutable",
+        "source": "docker/buster-runtime-entrypoint.sh",
+        "line": 203,
+        "expression": "  tarExecutable: '/usr/bin/tar',",
+        "valueExpression": "'/usr/bin/tar'",
+        "sha256": "2630481f59214cd69d7cc09eeecea60ff06d4697a9f5d36b319847a21526f029",
+        "currentValue": "/usr/bin/tar",
+        "currentIsStatic": true,
+        "class": "literal-software-policy-or-protocol",
+        "state": "exact individual source member; semantic field/type/unit/supported-domain/owner/realconsumer/phase disposition pending, no blanketsource closure"
+      },
+      "activeRevisionSha256": "d215d7ac440336906bdd86b27a36e90526dee271b88b9dc55b619cc08f5456e7",
+      "exactDomain": {
+        "type": "string",
+        "minLength": 1
+      },
+      "fixture": "actualselected existingCore/Buster completephysicaloperator profile, chart/entrypoint/env/package/source/pod/PVC/role/proxy/key/credential/grants/genuine prepared source/job/producer/record/result receipts; actualnewC3 fullprofile before effect vs frozenoldwireA",
+      "mutants": "exactrole/key/ref/domain/owner/version/unknown/unusedalias evenequal, missingtrustedpackage/sourceissuer/Ed25519key/ref, fakeproxypeer/ACL/grant, wrongnamespace/endpoint/PVC/versionedlocator, oldquotareset/resultreservation loss, impossibleframefloor/lateeffect, fixture-overridden-afteractivevalidation/mixedgeneration/originalbodychange"
+    },
+    "priorState": "originalA standingS/R/PVC/native/role/proxy/config fullwire/grants/software/registry/originalapprovedtask/source/keyrevision/plan/sourcefixture/producer/quotacounters/unfinished reservations/claim/deadline interrupted, B cannotrewriterecoverA",
+    "productiveBoundary": "actualentrypoint/generatedrole versionedloader->actualdiscovery/admission beforeeffects->Core or Buster role-specific native/listener/store/sourceauth/capability->realjob/report/producer receipts",
+    "oracle": "validateRuntimeRoot requiresnonempty string butproduction neverforwards/uses runtimevalue. Actualpreparation-config.ts assigns /usr/bin/tar independently topreparationcommand/source/archive. Target retire runtimealias evenequal, preserveold confighistory, actualnative softwarepath refowner separate; no newpolicydefault Target fullschema/profile/fixture/activebody agrees beforeactivation. Real genericCore effect must notattribute to Busterunusedrolefields. NewC3sameexistingBusterowner, currentliteralA retaineduntilmigration, no synthesizedC1. Individual quota/ports/capability alternate uses genuine supportedprofile underR/S/oldplan bounds; schema/constructor only notphysicalcapacity. OriginalA/fixedEvalA pinned, separatelyadmitB, no latest orresetreservations; missingoldclosure/forgedsource/key/peer/claim fails beforeeffect.",
+    "observer": "genuine rendered/generated/loadedrole bytes/domain/profile/version/PVC/native/host/listener/proxy/sourcekey/grants/claims/storecharges/record/result bytecounts/producer/planreceipt order, no secretcontents",
+    "reviewerConfirmation": null
+  },
+  {
+    "id": "B16-FUTURE-DLV-B23-EMIT-15d02d130b8b88ec",
+    "settingIds": [],
+    "sourceTransferIds": [
+      "DLV-B23-EMIT-15d02d130b8b88ec"
+    ],
+    "relatedExistingSettingIds": [],
+    "status": "not-run",
+    "testDigest": null,
+    "command": "proposed genuineentrypoint/Core/Buster rolefixture runtime.json:recordLimits.maximumRecords (not implemented C1-C6 runner)",
+    "input": {
+      "baselineBodySha256": "0b9c193938028d220def08a5266eff17252baefe44452a0ff3e0fb852cc80803",
+      "originalASTRecord": {
+        "scope": "runtime.json",
+        "field": "recordLimits.maximumRecords",
+        "source": "docker/buster-runtime-entrypoint.sh",
+        "line": 204,
+        "expression": "  recordLimits: { maximumRecords: 10000, maximumBytes: 1073741824, maximumRecordBytes: 67108864 },",
+        "valueExpression": "10000",
+        "sha256": "2630481f59214cd69d7cc09eeecea60ff06d4697a9f5d36b319847a21526f029",
+        "currentValue": 10000,
+        "currentIsStatic": true,
+        "class": "literal-software-policy-or-protocol",
+        "state": "exact individual source member; semantic field/type/unit/supported-domain/owner/realconsumer/phase disposition pending, no blanketsource closure"
+      },
+      "activeRevisionSha256": "92fdc8a9b489048f0e284abd84fbaa7443e3ada7d2a2141793b8acf86cc9c2a1",
+      "exactDomain": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 9007199254740991
+      },
+      "fixture": "actualselected existingCore/Buster completephysicaloperator profile, chart/entrypoint/env/package/source/pod/PVC/role/proxy/key/credential/grants/genuine prepared source/job/producer/record/result receipts; actualnewC3 fullprofile before effect vs frozenoldwireA",
+      "mutants": "exactrole/key/ref/domain/owner/version/unknown/unusedalias evenequal, missingtrustedpackage/sourceissuer/Ed25519key/ref, fakeproxypeer/ACL/grant, wrongnamespace/endpoint/PVC/versionedlocator, oldquotareset/resultreservation loss, impossibleframefloor/lateeffect, fixture-overridden-afteractivevalidation/mixedgeneration/originalbodychange"
+    },
+    "priorState": "originalA standingS/R/PVC/native/role/proxy/config fullwire/grants/software/registry/originalapprovedtask/source/keyrevision/plan/sourcefixture/producer/quotacounters/unfinished reservations/claim/deadline interrupted, B cannotrewriterecoverA",
+    "productiveBoundary": "actualentrypoint/generatedrole versionedloader->actualdiscovery/admission beforeeffects->Core or Buster role-specific native/listener/store/sourceauth/capability->realjob/report/producer receipts",
+    "oracle": "FileDurableRecordStore countquota, serializedrecordstore sharedjobs/source/identity/receipt history, no independentpreparedstore duplicate; actual retention/recovery history must survivecapacity rejection Target fullschema/profile/fixture/activebody agrees beforeactivation. Real genericCore effect must notattribute to Busterunusedrolefields. NewC3sameexistingBusterowner, currentliteralA retaineduntilmigration, no synthesizedC1. Individual quota/ports/capability alternate uses genuine supportedprofile underR/S/oldplan bounds; schema/constructor only notphysicalcapacity. OriginalA/fixedEvalA pinned, separatelyadmitB, no latest orresetreservations; missingoldclosure/forgedsource/key/peer/claim fails beforeeffect.",
+    "observer": "genuine rendered/generated/loadedrole bytes/domain/profile/version/PVC/native/host/listener/proxy/sourcekey/grants/claims/storecharges/record/result bytecounts/producer/planreceipt order, no secretcontents",
+    "reviewerConfirmation": null
+  },
+  {
+    "id": "B16-FUTURE-DLV-B23-EMIT-3b6c60a854df2161",
+    "settingIds": [],
+    "sourceTransferIds": [
+      "DLV-B23-EMIT-3b6c60a854df2161"
+    ],
+    "relatedExistingSettingIds": [],
+    "status": "not-run",
+    "testDigest": null,
+    "command": "proposed genuineentrypoint/Core/Buster rolefixture runtime.json:recordLimits.maximumBytes (not implemented C1-C6 runner)",
+    "input": {
+      "baselineBodySha256": "3f0360077c363ea01dcebc1ba1e9f3c50015729739d2a02c681d614d42fed3c2",
+      "originalASTRecord": {
+        "scope": "runtime.json",
+        "field": "recordLimits.maximumBytes",
+        "source": "docker/buster-runtime-entrypoint.sh",
+        "line": 204,
+        "expression": "  recordLimits: { maximumRecords: 10000, maximumBytes: 1073741824, maximumRecordBytes: 67108864 },",
+        "valueExpression": "1073741824",
+        "sha256": "2630481f59214cd69d7cc09eeecea60ff06d4697a9f5d36b319847a21526f029",
+        "currentValue": 1073741824,
+        "currentIsStatic": true,
+        "class": "literal-software-policy-or-protocol",
+        "state": "exact individual source member; semantic field/type/unit/supported-domain/owner/realconsumer/phase disposition pending, no blanketsource closure"
+      },
+      "activeRevisionSha256": "d8918a5e228dea98d3a48185e4b77e8caa2db663511cf0b587ff50bcf9f0f042",
+      "exactDomain": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 9007199254740991
+      },
+      "fixture": "actualselected existingCore/Buster completephysicaloperator profile, chart/entrypoint/env/package/source/pod/PVC/role/proxy/key/credential/grants/genuine prepared source/job/producer/record/result receipts; actualnewC3 fullprofile before effect vs frozenoldwireA",
+      "mutants": "exactrole/key/ref/domain/owner/version/unknown/unusedalias evenequal, missingtrustedpackage/sourceissuer/Ed25519key/ref, fakeproxypeer/ACL/grant, wrongnamespace/endpoint/PVC/versionedlocator, oldquotareset/resultreservation loss, impossibleframefloor/lateeffect, fixture-overridden-afteractivevalidation/mixedgeneration/originalbodychange"
+    },
+    "priorState": "originalA standingS/R/PVC/native/role/proxy/config fullwire/grants/software/registry/originalapprovedtask/source/keyrevision/plan/sourcefixture/producer/quotacounters/unfinished reservations/claim/deadline interrupted, B cannotrewriterecoverA",
+    "productiveBoundary": "actualentrypoint/generatedrole versionedloader->actualdiscovery/admission beforeeffects->Core or Buster role-specific native/listener/store/sourceauth/capability->realjob/report/producer receipts",
+    "oracle": "actualcanonicalJSON whole recordstate bytes, not disk/PVCcapacity. Snapshot/records+overhead budgets actualnew recordadmission, no assumed maxRecords*maxRecordBytes relation or separatestore Target fullschema/profile/fixture/activebody agrees beforeactivation. Real genericCore effect must notattribute to Busterunusedrolefields. NewC3sameexistingBusterowner, currentliteralA retaineduntilmigration, no synthesizedC1. Individual quota/ports/capability alternate uses genuine supportedprofile underR/S/oldplan bounds; schema/constructor only notphysicalcapacity. OriginalA/fixedEvalA pinned, separatelyadmitB, no latest orresetreservations; missingoldclosure/forgedsource/key/peer/claim fails beforeeffect.",
+    "observer": "genuine rendered/generated/loadedrole bytes/domain/profile/version/PVC/native/host/listener/proxy/sourcekey/grants/claims/storecharges/record/result bytecounts/producer/planreceipt order, no secretcontents",
+    "reviewerConfirmation": null
+  },
+  {
+    "id": "B16-FUTURE-DLV-B23-EMIT-c29f7f526c45b1c2",
+    "settingIds": [],
+    "sourceTransferIds": [
+      "DLV-B23-EMIT-c29f7f526c45b1c2"
+    ],
+    "relatedExistingSettingIds": [],
+    "status": "not-run",
+    "testDigest": null,
+    "command": "proposed genuineentrypoint/Core/Buster rolefixture runtime.json:recordLimits.maximumRecordBytes (not implemented C1-C6 runner)",
+    "input": {
+      "baselineBodySha256": "188c72b3a8603bde118a521c56b9ff2c5550d59ea4a4bf6c28cc6b788e0f8d2e",
+      "originalASTRecord": {
+        "scope": "runtime.json",
+        "field": "recordLimits.maximumRecordBytes",
+        "source": "docker/buster-runtime-entrypoint.sh",
+        "line": 204,
+        "expression": "  recordLimits: { maximumRecords: 10000, maximumBytes: 1073741824, maximumRecordBytes: 67108864 },",
+        "valueExpression": "67108864",
+        "sha256": "2630481f59214cd69d7cc09eeecea60ff06d4697a9f5d36b319847a21526f029",
+        "currentValue": 67108864,
+        "currentIsStatic": true,
+        "class": "literal-software-policy-or-protocol",
+        "state": "exact individual source member; semantic field/type/unit/supported-domain/owner/realconsumer/phase disposition pending, no blanketsource closure"
+      },
+      "activeRevisionSha256": "fcd6e5ef4f91c7d7dcb83eee70fcc8ebf6cb6b46b81d8157a5d0380656d9b52f",
+      "exactDomain": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 9007199254740991
+      },
+      "fixture": "actualselected existingCore/Buster completephysicaloperator profile, chart/entrypoint/env/package/source/pod/PVC/role/proxy/key/credential/grants/genuine prepared source/job/producer/record/result receipts; actualnewC3 fullprofile before effect vs frozenoldwireA",
+      "mutants": "exactrole/key/ref/domain/owner/version/unknown/unusedalias evenequal, missingtrustedpackage/sourceissuer/Ed25519key/ref, fakeproxypeer/ACL/grant, wrongnamespace/endpoint/PVC/versionedlocator, oldquotareset/resultreservation loss, impossibleframefloor/lateeffect, fixture-overridden-afteractivevalidation/mixedgeneration/originalbodychange"
+    },
+    "priorState": "originalA standingS/R/PVC/native/role/proxy/config fullwire/grants/software/registry/originalapprovedtask/source/keyrevision/plan/sourcefixture/producer/quotacounters/unfinished reservations/claim/deadline interrupted, B cannotrewriterecoverA",
+    "productiveBoundary": "actualentrypoint/generatedrole versionedloader->actualdiscovery/admission beforeeffects->Core or Buster role-specific native/listener/store/sourceauth/capability->realjob/report/producer receipts",
+    "oracle": "actual individual canonicalJSON snapshot body UTF8quota independent whole recordstate maximum; completeprotocol frame/wholecurrentrecord mustfit, notruncate or broaden physicalcapacity fromschema Target fullschema/profile/fixture/activebody agrees beforeactivation. Real genericCore effect must notattribute to Busterunusedrolefields. NewC3sameexistingBusterowner, currentliteralA retaineduntilmigration, no synthesizedC1. Individual quota/ports/capability alternate uses genuine supportedprofile underR/S/oldplan bounds; schema/constructor only notphysicalcapacity. OriginalA/fixedEvalA pinned, separatelyadmitB, no latest orresetreservations; missingoldclosure/forgedsource/key/peer/claim fails beforeeffect.",
+    "observer": "genuine rendered/generated/loadedrole bytes/domain/profile/version/PVC/native/host/listener/proxy/sourcekey/grants/claims/storecharges/record/result bytecounts/producer/planreceipt order, no secretcontents",
+    "reviewerConfirmation": null
+  },
+  {
+    "id": "B16-FUTURE-DLV-B23-EMIT-3bd167bc44b18ff9",
+    "settingIds": [],
+    "sourceTransferIds": [
+      "DLV-B23-EMIT-3bd167bc44b18ff9"
+    ],
+    "relatedExistingSettingIds": [],
+    "status": "not-run",
+    "testDigest": null,
+    "command": "proposed genuineentrypoint/Core/Buster rolefixture runtime.json:maximumResultBytes (not implemented C1-C6 runner)",
+    "input": {
+      "baselineBodySha256": "561f876bd36d86536e07b6a6914e0553a323c8a62204d6a7c360d6ca17f82949",
+      "originalASTRecord": {
+        "scope": "runtime.json",
+        "field": "maximumResultBytes",
+        "source": "docker/buster-runtime-entrypoint.sh",
+        "line": 205,
+        "expression": "  maximumResultBytes: 67108864, maximumResultStoreBytes: 1073741824,",
+        "valueExpression": "67108864",
+        "sha256": "2630481f59214cd69d7cc09eeecea60ff06d4697a9f5d36b319847a21526f029",
+        "currentValue": 67108864,
+        "currentIsStatic": true,
+        "class": "literal-software-policy-or-protocol",
+        "state": "exact individual source member; semantic field/type/unit/supported-domain/owner/realconsumer/phase disposition pending, no blanketsource closure"
+      },
+      "activeRevisionSha256": "b885430d77b358ebd835061b95e8b52c7609c61d553358d6650f42892f80af34",
+      "exactDomain": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 9007199254740991
+      },
+      "fixture": "actualselected existingCore/Buster completephysicaloperator profile, chart/entrypoint/env/package/source/pod/PVC/role/proxy/key/credential/grants/genuine prepared source/job/producer/record/result receipts; actualnewC3 fullprofile before effect vs frozenoldwireA",
+      "mutants": "exactrole/key/ref/domain/owner/version/unknown/unusedalias evenequal, missingtrustedpackage/sourceissuer/Ed25519key/ref, fakeproxypeer/ACL/grant, wrongnamespace/endpoint/PVC/versionedlocator, oldquotareset/resultreservation loss, impossibleframefloor/lateeffect, fixture-overridden-afteractivevalidation/mixedgeneration/originalbodychange"
+    },
+    "priorState": "originalA standingS/R/PVC/native/role/proxy/config fullwire/grants/software/registry/originalapprovedtask/source/keyrevision/plan/sourcefixture/producer/quotacounters/unfinished reservations/claim/deadline interrupted, B cannotrewriterecoverA",
+    "productiveBoundary": "actualentrypoint/generatedrole versionedloader->actualdiscovery/admission beforeeffects->Core or Buster role-specific native/listener/store/sourceauth/capability->realjob/report/producer receipts",
+    "oracle": "SAME solepolicy forwards toprepared resultblob store/reservation AND HTTPresultread; no copiedtwoauthors. Sharedresult admission reservedunfinished jobs atmaxResultBytes, terminalactualsize used; authenticatedsource/resultproducer remainsrequired Target fullschema/profile/fixture/activebody agrees beforeactivation. Real genericCore effect must notattribute to Busterunusedrolefields. NewC3sameexistingBusterowner, currentliteralA retaineduntilmigration, no synthesizedC1. Individual quota/ports/capability alternate uses genuine supportedprofile underR/S/oldplan bounds; schema/constructor only notphysicalcapacity. OriginalA/fixedEvalA pinned, separatelyadmitB, no latest orresetreservations; missingoldclosure/forgedsource/key/peer/claim fails beforeeffect.",
+    "observer": "genuine rendered/generated/loadedrole bytes/domain/profile/version/PVC/native/host/listener/proxy/sourcekey/grants/claims/storecharges/record/result bytecounts/producer/planreceipt order, no secretcontents",
+    "reviewerConfirmation": null
+  },
+  {
+    "id": "B16-FUTURE-DLV-B23-EMIT-1f1cd453f52e795e",
+    "settingIds": [],
+    "sourceTransferIds": [
+      "DLV-B23-EMIT-1f1cd453f52e795e"
+    ],
+    "relatedExistingSettingIds": [],
+    "status": "not-run",
+    "testDigest": null,
+    "command": "proposed genuineentrypoint/Core/Buster rolefixture runtime.json:maximumResultStoreBytes (not implemented C1-C6 runner)",
+    "input": {
+      "baselineBodySha256": "336866b7b17586c1a0bebb7dc438a18e5098f60887952e223d0bb97aa4945ef5",
+      "originalASTRecord": {
+        "scope": "runtime.json",
+        "field": "maximumResultStoreBytes",
+        "source": "docker/buster-runtime-entrypoint.sh",
+        "line": 205,
+        "expression": "  maximumResultBytes: 67108864, maximumResultStoreBytes: 1073741824,",
+        "valueExpression": "1073741824",
+        "sha256": "2630481f59214cd69d7cc09eeecea60ff06d4697a9f5d36b319847a21526f029",
+        "currentValue": 1073741824,
+        "currentIsStatic": true,
+        "class": "literal-software-policy-or-protocol",
+        "state": "exact individual source member; semantic field/type/unit/supported-domain/owner/realconsumer/phase disposition pending, no blanketsource closure"
+      },
+      "activeRevisionSha256": "572f5e6ab24590edbca7158a3a63d11e4062c557af2ee71575986a1137144593",
+      "exactDomain": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 9007199254740991
+      },
+      "fixture": "actualselected existingCore/Buster completephysicaloperator profile, chart/entrypoint/env/package/source/pod/PVC/role/proxy/key/credential/grants/genuine prepared source/job/producer/record/result receipts; actualnewC3 fullprofile before effect vs frozenoldwireA",
+      "mutants": "exactrole/key/ref/domain/owner/version/unknown/unusedalias evenequal, missingtrustedpackage/sourceissuer/Ed25519key/ref, fakeproxypeer/ACL/grant, wrongnamespace/endpoint/PVC/versionedlocator, oldquotareset/resultreservation loss, impossibleframefloor/lateeffect, fixture-overridden-afteractivevalidation/mixedgeneration/originalbodychange"
+    },
+    "priorState": "originalA standingS/R/PVC/native/role/proxy/config fullwire/grants/software/registry/originalapprovedtask/source/keyrevision/plan/sourcefixture/producer/quotacounters/unfinished reservations/claim/deadline interrupted, B cannotrewriterecoverA",
+    "productiveBoundary": "actualentrypoint/generatedrole versionedloader->actualdiscovery/admission beforeeffects->Core or Buster role-specific native/listener/store/sourceauth/capability->realjob/report/producer receipts",
+    "oracle": "actual resultblobstore quota plusunfinishedreserved result max, mustallow individualcompatible result plusoriginaljobreservation. Recordstore andresultstore independentbytes, notcombinedPVCdisk limit; physicalquota/PVC/retention/accounting sourcejoins separate Target fullschema/profile/fixture/activebody agrees beforeactivation. Real genericCore effect must notattribute to Busterunusedrolefields. NewC3sameexistingBusterowner, currentliteralA retaineduntilmigration, no synthesizedC1. Individual quota/ports/capability alternate uses genuine supportedprofile underR/S/oldplan bounds; schema/constructor only notphysicalcapacity. OriginalA/fixedEvalA pinned, separatelyadmitB, no latest orresetreservations; missingoldclosure/forgedsource/key/peer/claim fails beforeeffect.",
+    "observer": "genuine rendered/generated/loadedrole bytes/domain/profile/version/PVC/native/host/listener/proxy/sourcekey/grants/claims/storecharges/record/result bytecounts/producer/planreceipt order, no secretcontents",
+    "reviewerConfirmation": null
+  },
+  {
+    "id": "B16-FUTURE-DLV-B23-EMIT-c1ceb6ad909b0040",
+    "settingIds": [],
+    "sourceTransferIds": [
+      "DLV-B23-EMIT-c1ceb6ad909b0040"
+    ],
+    "relatedExistingSettingIds": [],
+    "status": "not-run",
+    "testDigest": null,
+    "command": "proposed genuineentrypoint/Core/Buster rolefixture runtime.json:maximumResponseBytes (not implemented C1-C6 runner)",
+    "input": {
+      "baselineBodySha256": "9f5395343685090efec7f45a70efcb1d0c9138ea3fcf0a78f8595fa504be6508",
+      "originalASTRecord": {
+        "scope": "runtime.json",
+        "field": "maximumResponseBytes",
+        "source": "docker/buster-runtime-entrypoint.sh",
+        "line": 206,
+        "expression": "  maximumResponseBytes: 67108864,",
+        "valueExpression": "67108864",
+        "sha256": "2630481f59214cd69d7cc09eeecea60ff06d4697a9f5d36b319847a21526f029",
+        "currentValue": 67108864,
+        "currentIsStatic": true,
+        "class": "literal-software-policy-or-protocol",
+        "state": "exact individual source member; semantic field/type/unit/supported-domain/owner/realconsumer/phase disposition pending, no blanketsource closure"
+      },
+      "activeRevisionSha256": "2063b5e4671a1c4c1b24dc184d89a61f9c13aa94e6bf2c50c3f6bd9f92a8f13d",
+      "exactDomain": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 9007199254740991
+      },
+      "fixture": "actualselected existingCore/Buster completephysicaloperator profile, chart/entrypoint/env/package/source/pod/PVC/role/proxy/key/credential/grants/genuine prepared source/job/producer/record/result receipts; actualnewC3 fullprofile before effect vs frozenoldwireA",
+      "mutants": "exactrole/key/ref/domain/owner/version/unknown/unusedalias evenequal, missingtrustedpackage/sourceissuer/Ed25519key/ref, fakeproxypeer/ACL/grant, wrongnamespace/endpoint/PVC/versionedlocator, oldquotareset/resultreservation loss, impossibleframefloor/lateeffect, fixture-overridden-afteractivevalidation/mixedgeneration/originalbodychange"
+    },
+    "priorState": "originalA standingS/R/PVC/native/role/proxy/config fullwire/grants/software/registry/originalapprovedtask/source/keyrevision/plan/sourcefixture/producer/quotacounters/unfinished reservations/claim/deadline interrupted, B cannotrewriterecoverA",
+    "productiveBoundary": "actualentrypoint/generatedrole versionedloader->actualdiscovery/admission beforeeffects->Core or Buster role-specific native/listener/store/sourceauth/capability->realjob/report/producer receipts",
+    "oracle": "HTTPsend primary Buffer UTF8JSON bound/evidence read. Currentfixedfallback BUSTER_REMOTE_RESPONSE_SIZE_EXCEEDED response canexceedtinypositivequota; targetpureactivation mustderive requiredprotocolframe floor orversionedboundedfallback, no strongercurrent guarantee/guessedbusinessfloor Target fullschema/profile/fixture/activebody agrees beforeactivation. Real genericCore effect must notattribute to Busterunusedrolefields. NewC3sameexistingBusterowner, currentliteralA retaineduntilmigration, no synthesizedC1. Individual quota/ports/capability alternate uses genuine supportedprofile underR/S/oldplan bounds; schema/constructor only notphysicalcapacity. OriginalA/fixedEvalA pinned, separatelyadmitB, no latest orresetreservations; missingoldclosure/forgedsource/key/peer/claim fails beforeeffect.",
+    "observer": "genuine rendered/generated/loadedrole bytes/domain/profile/version/PVC/native/host/listener/proxy/sourcekey/grants/claims/storecharges/record/result bytecounts/producer/planreceipt order, no secretcontents",
+    "reviewerConfirmation": null
+  },
+  {
+    "id": "B16-FUTURE-DLV-B23-EMIT-79bfabc7597d7bcd",
+    "settingIds": [],
+    "sourceTransferIds": [
+      "DLV-B23-EMIT-79bfabc7597d7bcd"
+    ],
+    "relatedExistingSettingIds": [],
+    "status": "not-run",
+    "testDigest": null,
+    "command": "proposed genuineentrypoint/Core/Buster rolefixture runtime.json:shutdownTimeoutMs (not implemented C1-C6 runner)",
+    "input": {
+      "baselineBodySha256": "926d8135611db4c30ed88d99061c8b48daeaa35af7b2d127eab192920c6bd6e9",
+      "originalASTRecord": {
+        "scope": "runtime.json",
+        "field": "shutdownTimeoutMs",
+        "source": "docker/buster-runtime-entrypoint.sh",
+        "line": 207,
+        "expression": "  shutdownTimeoutMs: 15000,",
+        "valueExpression": "15000",
+        "sha256": "2630481f59214cd69d7cc09eeecea60ff06d4697a9f5d36b319847a21526f029",
+        "currentValue": 15000,
+        "currentIsStatic": true,
+        "class": "literal-software-policy-or-protocol",
+        "state": "exact individual source member; semantic field/type/unit/supported-domain/owner/realconsumer/phase disposition pending, no blanketsource closure"
+      },
+      "activeRevisionSha256": "bd7bb7ea22ef03343ed4a1dc952b3f28c247ecc96eb61d270b5eeb21b165bbd7",
+      "exactDomain": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 9007199254740991
+      },
+      "fixture": "actualselected existingCore/Buster completephysicaloperator profile, chart/entrypoint/env/package/source/pod/PVC/role/proxy/key/credential/grants/genuine prepared source/job/producer/record/result receipts; actualnewC3 fullprofile before effect vs frozenoldwireA",
+      "mutants": "exactrole/key/ref/domain/owner/version/unknown/unusedalias evenequal, missingtrustedpackage/sourceissuer/Ed25519key/ref, fakeproxypeer/ACL/grant, wrongnamespace/endpoint/PVC/versionedlocator, oldquotareset/resultreservation loss, impossibleframefloor/lateeffect, fixture-overridden-afteractivevalidation/mixedgeneration/originalbodychange"
+    },
+    "priorState": "originalA standingS/R/PVC/native/role/proxy/config fullwire/grants/software/registry/originalapprovedtask/source/keyrevision/plan/sourcefixture/producer/quotacounters/unfinished reservations/claim/deadline interrupted, B cannotrewriterecoverA",
+    "productiveBoundary": "actualentrypoint/generatedrole versionedloader->actualdiscovery/admission beforeeffects->Core or Buster role-specific native/listener/store/sourceauth/capability->realjob/report/producer receipts",
+    "oracle": "standingS stop racedtimer closeAllConnections thenservice.shutdown, not originalplan deadline/cancellationproof. Target currentNode timercompatibility ceiling<=2147483647 untilreviewedalternative; complete originalactiveplan/grant/claim survivesrestart Target fullschema/profile/fixture/activebody agrees beforeactivation. Real genericCore effect must notattribute to Busterunusedrolefields. NewC3sameexistingBusterowner, currentliteralA retaineduntilmigration, no synthesizedC1. Individual quota/ports/capability alternate uses genuine supportedprofile underR/S/oldplan bounds; schema/constructor only notphysicalcapacity. OriginalA/fixedEvalA pinned, separatelyadmitB, no latest orresetreservations; missingoldclosure/forgedsource/key/peer/claim fails beforeeffect.",
+    "observer": "genuine rendered/generated/loadedrole bytes/domain/profile/version/PVC/native/host/listener/proxy/sourcekey/grants/claims/storecharges/record/result bytecounts/producer/planreceipt order, no secretcontents",
+    "reviewerConfirmation": null
+  },
+  {
+    "id": "B16-FUTURE-DLV-B23-EMIT-def999cd63a86988",
+    "settingIds": [],
+    "sourceTransferIds": [
+      "DLV-B23-EMIT-def999cd63a86988"
+    ],
+    "relatedExistingSettingIds": [],
+    "status": "not-run",
+    "testDigest": null,
+    "command": "proposed genuineentrypoint/Core/Buster rolefixture runtime.json:allowedCapabilities (not implemented C1-C6 runner)",
+    "input": {
+      "baselineBodySha256": "acabab47575cfa78222a5d27f517bbf8c1d2659582959d882139d1effc99d29b",
+      "originalASTRecord": {
+        "scope": "runtime.json",
+        "field": "allowedCapabilities",
+        "source": "docker/buster-runtime-entrypoint.sh",
+        "line": 208,
+        "expression": "  allowedCapabilities: ['command.execute', 'container.build', 'kubernetes.fixture', 'kubernetes.exposure', 'network.http', 'browser.axe', 'browser.lighthouse', 'browser.visual', 'browser.playwright', 'security.scan', 'kubernetes.runtime-security'],",
+        "valueExpression": "['command.execute', 'container.build', 'kubernetes.fixture', 'kubernetes.exposure', 'network.http', 'browser.axe', 'browser.lighthouse', 'browser.visual', 'browser.playwright', 'security.scan', 'kubernetes.runtime-security']",
+        "sha256": "2630481f59214cd69d7cc09eeecea60ff06d4697a9f5d36b319847a21526f029",
+        "currentValue": [
+          "command.execute",
+          "container.build",
+          "kubernetes.fixture",
+          "kubernetes.exposure",
+          "network.http",
+          "browser.axe",
+          "browser.lighthouse",
+          "browser.visual",
+          "browser.playwright",
+          "security.scan",
+          "kubernetes.runtime-security"
+        ],
+        "currentIsStatic": true,
+        "class": "literal-software-policy-or-protocol",
+        "state": "exact individual source member; semantic field/type/unit/supported-domain/owner/realconsumer/phase disposition pending, no blanketsource closure"
+      },
+      "activeRevisionSha256": "899e6502393e705c57a553ba351c321ccd82fd920e9ea5581ec5be6ad87638bd",
+      "exactDomain": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "uniqueItems": true
+      },
+      "fixture": "actualselected existingCore/Buster completephysicaloperator profile, chart/entrypoint/env/package/source/pod/PVC/role/proxy/key/credential/grants/genuine prepared source/job/producer/record/result receipts; actualnewC3 fullprofile before effect vs frozenoldwireA",
+      "mutants": "exactrole/key/ref/domain/owner/version/unknown/unusedalias evenequal, missingtrustedpackage/sourceissuer/Ed25519key/ref, fakeproxypeer/ACL/grant, wrongnamespace/endpoint/PVC/versionedlocator, oldquotareset/resultreservation loss, impossibleframefloor/lateeffect, fixture-overridden-afteractivevalidation/mixedgeneration/originalbodychange"
+    },
+    "priorState": "originalA standingS/R/PVC/native/role/proxy/config fullwire/grants/software/registry/originalapprovedtask/source/keyrevision/plan/sourcefixture/producer/quotacounters/unfinished reservations/claim/deadline interrupted, B cannotrewriterecoverA",
+    "productiveBoundary": "actualentrypoint/generatedrole versionedloader->actualdiscovery/admission beforeeffects->Core or Buster role-specific native/listener/store/sourceauth/capability->realjob/report/producer receipts",
+    "oracle": "productionstrings->Set (currentduplicatescollapse, unrecognizednamesnotvalidatedatthismapper). Knowndeclaredcaps require actualsource/native provider config; actual capabilityruntime checks membership, originalauthenticated job grants mustintersectinstalledsupported role. Target rejectunsupported/unused providerbranches beforeeffects, policy doesnotgenerateauthorization/ACLcapacity Target fullschema/profile/fixture/activebody agrees beforeactivation. Real genericCore effect must notattribute to Busterunusedrolefields. NewC3sameexistingBusterowner, currentliteralA retaineduntilmigration, no synthesizedC1. Individual quota/ports/capability alternate uses genuine supportedprofile underR/S/oldplan bounds; schema/constructor only notphysicalcapacity. OriginalA/fixedEvalA pinned, separatelyadmitB, no latest orresetreservations; missingoldclosure/forgedsource/key/peer/claim fails beforeeffect.",
+    "observer": "genuine rendered/generated/loadedrole bytes/domain/profile/version/PVC/native/host/listener/proxy/sourcekey/grants/claims/storecharges/record/result bytecounts/producer/planreceipt order, no secretcontents",
+    "reviewerConfirmation": null
+  },
+  {
+    "id": "B16-FUTURE-DLV-B23-EMIT-da196725a2aa679e",
+    "settingIds": [],
+    "sourceTransferIds": [
+      "DLV-B23-EMIT-da196725a2aa679e"
+    ],
+    "relatedExistingSettingIds": [],
+    "status": "not-run",
+    "testDigest": null,
+    "command": "proposed genuineentrypoint/Core/Buster rolefixture runtime.json:clusterBindings.controllerNamespace (not implemented C1-C6 runner)",
+    "input": {
+      "baselineBodySha256": "8d037a16b7f340981c2b95b0e48bf473fe73c269e99841549e4df528b91fab1c",
+      "originalASTRecord": {
+        "scope": "runtime.json",
+        "field": "clusterBindings.controllerNamespace",
+        "source": "docker/buster-runtime-entrypoint.sh",
+        "line": 237,
+        "expression": "  clusterBindings: { controllerNamespace: process.env.CONTROLLER_NAMESPACE },",
+        "valueExpression": "process.env.CONTROLLER_NAMESPACE",
+        "sha256": "2630481f59214cd69d7cc09eeecea60ff06d4697a9f5d36b319847a21526f029",
+        "currentIsStatic": false,
+        "class": "explicit-generated-expression",
+        "state": "exact individual source member; semantic field/type/unit/supported-domain/owner/realconsumer/phase disposition pending, no blanketsource closure"
+      },
+      "activeRevisionSha256": "65b3c1f4e31554a4f20cdfafd228439a265ddda352accf4a69fff05d2d434fcf",
+      "exactDomain": {
+        "type": "string",
+        "pattern": "^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$"
+      },
+      "fixture": "actualselected existingCore/Buster completephysicaloperator profile, chart/entrypoint/env/package/source/pod/PVC/role/proxy/key/credential/grants/genuine prepared source/job/producer/record/result receipts; actualnewC3 fullprofile before effect vs frozenoldwireA",
+      "mutants": "exactrole/key/ref/domain/owner/version/unknown/unusedalias evenequal, missingtrustedpackage/sourceissuer/Ed25519key/ref, fakeproxypeer/ACL/grant, wrongnamespace/endpoint/PVC/versionedlocator, oldquotareset/resultreservation loss, impossibleframefloor/lateeffect, fixture-overridden-afteractivevalidation/mixedgeneration/originalbodychange"
+    },
+    "priorState": "originalA standingS/R/PVC/native/role/proxy/config fullwire/grants/software/registry/originalapprovedtask/source/keyrevision/plan/sourcefixture/producer/quotacounters/unfinished reservations/claim/deadline interrupted, B cannotrewriterecoverA",
+    "productiveBoundary": "actualentrypoint/generatedrole versionedloader->actualdiscovery/admission beforeeffects->Core or Buster role-specific native/listener/store/sourceauth/capability->realjob/report/producer receipts",
+    "oracle": "actualclusterRuntimeBinding exactobjectonefield and namespace DNSlabel<=63; merges actualadmitted componentclusterInvokers.shared then subjectsnamespace+serviceaccount. Needed iff clusteredproviders active; suppliedvalidbinding canstillbevalidated whenallinactive currently. Target conditionalrolebranch rejectsunusedalias, authentic controller installation/issuer/lease/group/grants/PVC/source notsimple stringauthority Target fullschema/profile/fixture/activebody agrees beforeactivation. Real genericCore effect must notattribute to Busterunusedrolefields. NewC3sameexistingBusterowner, currentliteralA retaineduntilmigration, no synthesizedC1. Individual quota/ports/capability alternate uses genuine supportedprofile underR/S/oldplan bounds; schema/constructor only notphysicalcapacity. OriginalA/fixedEvalA pinned, separatelyadmitB, no latest orresetreservations; missingoldclosure/forgedsource/key/peer/claim fails beforeeffect.",
+    "observer": "genuine rendered/generated/loadedrole bytes/domain/profile/version/PVC/native/host/listener/proxy/sourcekey/grants/claims/storecharges/record/result bytecounts/producer/planreceipt order, no secretcontents",
+    "reviewerConfirmation": null
+  }
+]

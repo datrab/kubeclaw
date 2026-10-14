@@ -1,0 +1,743 @@
+{
+  "status": "explicit additive WCR02 target correction, not canonical mutation",
+  "joins": [
+    {
+      "transferId": "DLV-B23-EMIT-954f93682167b0ae",
+      "field": "host",
+      "originalFieldBodies": [
+        {
+          "settingId": "DLV-BUSTER-ENTRYPOINT-RUNTIME-HOST",
+          "originalBodySha256": "9bdd17e9fe4debf5377ff1075c4c718e7524a8d921d2dd342f534589407d690d",
+          "originalTarget": {
+            "author": "existing protocol/schema or generated deployment/credential/image binding",
+            "reference": "host"
+          },
+          "caseIds": [
+            "DLV-CASE-MISSING-OLD-AUTHOR",
+            "DLV-CASE-ALTERNATE-PROFILES",
+            "DLV-CASE-BUSTER-GENERATED-HOST"
+          ]
+        }
+      ],
+      "soleActiveTarget": {
+        "path": "config/components/buster-engine.config.json",
+        "pointer": "/profiles/<explicitSelectedProfile>/settings/remotePlanService/host",
+        "phase": "new-required C3 absent currentphysicalsettings, notC1/synthesized/seventhauthor",
+        "soleWriter": "existingselectedBuster componentauthor; distinct frompreparation/admission/execution capabilityProviders/launcher, parentallocationconfirmed; generatedruntime.json valuesnoteditableauthor"
+      },
+      "supersedesMeaning": "HOST/PORT generated-binding-only historical classification corrected to actual listener policies; eight runtimeService pointers prospectively superseded by remotePlanService, no alias accepted for newC3 generation",
+      "phase": "C3 new-required, not value-preservingC1",
+      "originalBodiesUnchanged": true
+    },
+    {
+      "transferId": "DLV-B23-EMIT-5cabf96825e7427a",
+      "field": "port",
+      "originalFieldBodies": [
+        {
+          "settingId": "DLV-BUSTER-ENTRYPOINT-RUNTIME-PORT",
+          "originalBodySha256": "dd92ad6a4d41d2d7804d659e0f1e7b7f18f8067138c6f723325ad85a93cd175f",
+          "originalTarget": {
+            "author": "existing protocol/schema or generated deployment/credential/image binding",
+            "reference": "port"
+          },
+          "caseIds": [
+            "DLV-CASE-MISSING-OLD-AUTHOR",
+            "DLV-CASE-ALTERNATE-PROFILES",
+            "DLV-CASE-BUSTER-GENERATED-PORT"
+          ]
+        }
+      ],
+      "soleActiveTarget": {
+        "path": "config/components/buster-engine.config.json",
+        "pointer": "/profiles/<explicitSelectedProfile>/settings/remotePlanService/port",
+        "phase": "new-required C3 absent currentphysicalsettings, notC1/synthesized/seventhauthor",
+        "soleWriter": "existingselectedBuster componentauthor; distinct frompreparation/admission/execution capabilityProviders/launcher, parentallocationconfirmed; generatedruntime.json valuesnoteditableauthor"
+      },
+      "supersedesMeaning": "HOST/PORT generated-binding-only historical classification corrected to actual listener policies; eight runtimeService pointers prospectively superseded by remotePlanService, no alias accepted for newC3 generation",
+      "phase": "C3 new-required, not value-preservingC1",
+      "originalBodiesUnchanged": true
+    },
+    {
+      "transferId": "DLV-B23-EMIT-15d02d130b8b88ec",
+      "field": "recordLimits.maximumRecords",
+      "originalFieldBodies": [
+        {
+          "settingId": "DLV-BUSTER-ENTRYPOINT-RUNTIME-RECORDLIMITS-MAXIMUMRECORDS",
+          "originalBodySha256": "409b3e52de563903cae864aaa9bc4ee24941d08e0abd8aade8165c4c4b57aa82",
+          "originalTarget": {
+            "author": "C3 same existing buster-engine owner physical extension /settings/runtimeService/recordLimits/maximumRecords",
+            "reference": "recordLimits.maximumRecords",
+            "physicalAuthor": "charts/kubeclaw/files/config/buster-engine.config.json (existing sole buster-engine author), runtime variant charts/kubeclaw/files/config/profiles/buster-engine.runtime.config.json; new runtimeCapabilities/runtimeService settings explicitly schema-required C3 extension, not another runtime owner"
+          },
+          "caseIds": [
+            "DLV-CASE-MISSING-OLD-AUTHOR",
+            "DLV-CASE-ALTERNATE-PROFILES",
+            "DLV-CASE-BUSTER-GENERATED-RECORDLIMITS"
+          ]
+        }
+      ],
+      "soleActiveTarget": {
+        "path": "config/components/buster-engine.config.json",
+        "pointer": "/profiles/<explicitSelectedProfile>/settings/remotePlanService/recordLimits/maximumRecords",
+        "phase": "new-required C3 absent currentphysicalsettings, notC1/synthesized/seventhauthor",
+        "soleWriter": "existingselectedBuster componentauthor; distinct frompreparation/admission/execution capabilityProviders/launcher, parentallocationconfirmed; generatedruntime.json valuesnoteditableauthor"
+      },
+      "supersedesMeaning": "HOST/PORT generated-binding-only historical classification corrected to actual listener policies; eight runtimeService pointers prospectively superseded by remotePlanService, no alias accepted for newC3 generation",
+      "phase": "C3 new-required, not value-preservingC1",
+      "originalBodiesUnchanged": true
+    },
+    {
+      "transferId": "DLV-B23-EMIT-3b6c60a854df2161",
+      "field": "recordLimits.maximumBytes",
+      "originalFieldBodies": [
+        {
+          "settingId": "DLV-BUSTER-ENTRYPOINT-RUNTIME-RECORDLIMITS-MAXIMUMBYTES",
+          "originalBodySha256": "facffe42c1b54f160ff7cd86bb478bb34ef32fed0337971a8ff74d29f95ee86d",
+          "originalTarget": {
+            "author": "C3 same existing buster-engine owner physical extension /settings/runtimeService/recordLimits/maximumBytes",
+            "reference": "recordLimits.maximumBytes",
+            "physicalAuthor": "charts/kubeclaw/files/config/buster-engine.config.json (existing sole buster-engine author), runtime variant charts/kubeclaw/files/config/profiles/buster-engine.runtime.config.json; new runtimeCapabilities/runtimeService settings explicitly schema-required C3 extension, not another runtime owner"
+          },
+          "caseIds": [
+            "DLV-CASE-MISSING-OLD-AUTHOR",
+            "DLV-CASE-ALTERNATE-PROFILES",
+            "DLV-CASE-BUSTER-GENERATED-RECORDLIMITS"
+          ]
+        }
+      ],
+      "soleActiveTarget": {
+        "path": "config/components/buster-engine.config.json",
+        "pointer": "/profiles/<explicitSelectedProfile>/settings/remotePlanService/recordLimits/maximumBytes",
+        "phase": "new-required C3 absent currentphysicalsettings, notC1/synthesized/seventhauthor",
+        "soleWriter": "existingselectedBuster componentauthor; distinct frompreparation/admission/execution capabilityProviders/launcher, parentallocationconfirmed; generatedruntime.json valuesnoteditableauthor"
+      },
+      "supersedesMeaning": "HOST/PORT generated-binding-only historical classification corrected to actual listener policies; eight runtimeService pointers prospectively superseded by remotePlanService, no alias accepted for newC3 generation",
+      "phase": "C3 new-required, not value-preservingC1",
+      "originalBodiesUnchanged": true
+    },
+    {
+      "transferId": "DLV-B23-EMIT-c29f7f526c45b1c2",
+      "field": "recordLimits.maximumRecordBytes",
+      "originalFieldBodies": [
+        {
+          "settingId": "DLV-BUSTER-ENTRYPOINT-RUNTIME-RECORDLIMITS-MAXIMUMRECORDBYTES",
+          "originalBodySha256": "d3f421410188fe5e424e24a5bbda74b6e3bf71c1649fb85dc7224c3d4c09540f",
+          "originalTarget": {
+            "author": "C3 same existing buster-engine owner physical extension /settings/runtimeService/recordLimits/maximumRecordBytes",
+            "reference": "recordLimits.maximumRecordBytes",
+            "physicalAuthor": "charts/kubeclaw/files/config/buster-engine.config.json (existing sole buster-engine author), runtime variant charts/kubeclaw/files/config/profiles/buster-engine.runtime.config.json; new runtimeCapabilities/runtimeService settings explicitly schema-required C3 extension, not another runtime owner"
+          },
+          "caseIds": [
+            "DLV-CASE-MISSING-OLD-AUTHOR",
+            "DLV-CASE-ALTERNATE-PROFILES",
+            "DLV-CASE-BUSTER-GENERATED-RECORDLIMITS"
+          ]
+        }
+      ],
+      "soleActiveTarget": {
+        "path": "config/components/buster-engine.config.json",
+        "pointer": "/profiles/<explicitSelectedProfile>/settings/remotePlanService/recordLimits/maximumRecordBytes",
+        "phase": "new-required C3 absent currentphysicalsettings, notC1/synthesized/seventhauthor",
+        "soleWriter": "existingselectedBuster componentauthor; distinct frompreparation/admission/execution capabilityProviders/launcher, parentallocationconfirmed; generatedruntime.json valuesnoteditableauthor"
+      },
+      "supersedesMeaning": "HOST/PORT generated-binding-only historical classification corrected to actual listener policies; eight runtimeService pointers prospectively superseded by remotePlanService, no alias accepted for newC3 generation",
+      "phase": "C3 new-required, not value-preservingC1",
+      "originalBodiesUnchanged": true
+    },
+    {
+      "transferId": "DLV-B23-EMIT-3bd167bc44b18ff9",
+      "field": "maximumResultBytes",
+      "originalFieldBodies": [
+        {
+          "settingId": "DLV-BUSTER-ENTRYPOINT-RUNTIME-MAXIMUMRESULTBYTES",
+          "originalBodySha256": "42f9f4ae3cd16c00e71cd3a9b90006e98750dc313595e0f8c0986cac3beb48fb",
+          "originalTarget": {
+            "author": "C3 same existing buster-engine owner physical extension /settings/runtimeService/maximumResultBytes",
+            "reference": "maximumResultBytes",
+            "physicalAuthor": "charts/kubeclaw/files/config/buster-engine.config.json (existing sole buster-engine author), runtime variant charts/kubeclaw/files/config/profiles/buster-engine.runtime.config.json; new runtimeCapabilities/runtimeService settings explicitly schema-required C3 extension, not another runtime owner"
+          },
+          "caseIds": [
+            "DLV-CASE-MISSING-OLD-AUTHOR",
+            "DLV-CASE-ALTERNATE-PROFILES",
+            "DLV-CASE-BUSTER-GENERATED-MAXIMUMRESULTBYTES"
+          ]
+        }
+      ],
+      "soleActiveTarget": {
+        "path": "config/components/buster-engine.config.json",
+        "pointer": "/profiles/<explicitSelectedProfile>/settings/remotePlanService/maximumResultBytes",
+        "phase": "new-required C3 absent currentphysicalsettings, notC1/synthesized/seventhauthor",
+        "soleWriter": "existingselectedBuster componentauthor; distinct frompreparation/admission/execution capabilityProviders/launcher, parentallocationconfirmed; generatedruntime.json valuesnoteditableauthor"
+      },
+      "supersedesMeaning": "HOST/PORT generated-binding-only historical classification corrected to actual listener policies; eight runtimeService pointers prospectively superseded by remotePlanService, no alias accepted for newC3 generation",
+      "phase": "C3 new-required, not value-preservingC1",
+      "originalBodiesUnchanged": true
+    },
+    {
+      "transferId": "DLV-B23-EMIT-1f1cd453f52e795e",
+      "field": "maximumResultStoreBytes",
+      "originalFieldBodies": [
+        {
+          "settingId": "DLV-BUSTER-ENTRYPOINT-RUNTIME-MAXIMUMRESULTSTOREBYTES",
+          "originalBodySha256": "70a6ac0a03d0539c3433a6a31a63fe9b8f4f65a2d0b0492ed8827725b4fbbf99",
+          "originalTarget": {
+            "author": "C3 same existing buster-engine owner physical extension /settings/runtimeService/maximumResultStoreBytes",
+            "reference": "maximumResultStoreBytes",
+            "physicalAuthor": "charts/kubeclaw/files/config/buster-engine.config.json (existing sole buster-engine author), runtime variant charts/kubeclaw/files/config/profiles/buster-engine.runtime.config.json; new runtimeCapabilities/runtimeService settings explicitly schema-required C3 extension, not another runtime owner"
+          },
+          "caseIds": [
+            "DLV-CASE-MISSING-OLD-AUTHOR",
+            "DLV-CASE-ALTERNATE-PROFILES",
+            "DLV-CASE-BUSTER-GENERATED-MAXIMUMRESULTSTOREBYTES"
+          ]
+        }
+      ],
+      "soleActiveTarget": {
+        "path": "config/components/buster-engine.config.json",
+        "pointer": "/profiles/<explicitSelectedProfile>/settings/remotePlanService/maximumResultStoreBytes",
+        "phase": "new-required C3 absent currentphysicalsettings, notC1/synthesized/seventhauthor",
+        "soleWriter": "existingselectedBuster componentauthor; distinct frompreparation/admission/execution capabilityProviders/launcher, parentallocationconfirmed; generatedruntime.json valuesnoteditableauthor"
+      },
+      "supersedesMeaning": "HOST/PORT generated-binding-only historical classification corrected to actual listener policies; eight runtimeService pointers prospectively superseded by remotePlanService, no alias accepted for newC3 generation",
+      "phase": "C3 new-required, not value-preservingC1",
+      "originalBodiesUnchanged": true
+    },
+    {
+      "transferId": "DLV-B23-EMIT-c1ceb6ad909b0040",
+      "field": "maximumResponseBytes",
+      "originalFieldBodies": [
+        {
+          "settingId": "DLV-BUSTER-ENTRYPOINT-RUNTIME-MAXIMUMRESPONSEBYTES",
+          "originalBodySha256": "e4ce151c912a6faf720b942909d12756f53ef44a636e496dabdbde17884b3eca",
+          "originalTarget": {
+            "author": "C3 same existing buster-engine owner physical extension /settings/runtimeService/maximumResponseBytes",
+            "reference": "maximumResponseBytes",
+            "physicalAuthor": "charts/kubeclaw/files/config/buster-engine.config.json (existing sole buster-engine author), runtime variant charts/kubeclaw/files/config/profiles/buster-engine.runtime.config.json; new runtimeCapabilities/runtimeService settings explicitly schema-required C3 extension, not another runtime owner"
+          },
+          "caseIds": [
+            "DLV-CASE-MISSING-OLD-AUTHOR",
+            "DLV-CASE-ALTERNATE-PROFILES",
+            "DLV-CASE-BUSTER-GENERATED-MAXIMUMRESPONSEBYTES"
+          ]
+        }
+      ],
+      "soleActiveTarget": {
+        "path": "config/components/buster-engine.config.json",
+        "pointer": "/profiles/<explicitSelectedProfile>/settings/remotePlanService/maximumResponseBytes",
+        "phase": "new-required C3 absent currentphysicalsettings, notC1/synthesized/seventhauthor",
+        "soleWriter": "existingselectedBuster componentauthor; distinct frompreparation/admission/execution capabilityProviders/launcher, parentallocationconfirmed; generatedruntime.json valuesnoteditableauthor"
+      },
+      "supersedesMeaning": "HOST/PORT generated-binding-only historical classification corrected to actual listener policies; eight runtimeService pointers prospectively superseded by remotePlanService, no alias accepted for newC3 generation",
+      "phase": "C3 new-required, not value-preservingC1",
+      "originalBodiesUnchanged": true
+    },
+    {
+      "transferId": "DLV-B23-EMIT-79bfabc7597d7bcd",
+      "field": "shutdownTimeoutMs",
+      "originalFieldBodies": [
+        {
+          "settingId": "DLV-BUSTER-ENTRYPOINT-RUNTIME-SHUTDOWNTIMEOUTMS",
+          "originalBodySha256": "95b5321c8a9b2f8b0171bcdb23db3ceeedd6a948c32590e7750836757b9284ff",
+          "originalTarget": {
+            "author": "C3 same existing buster-engine owner physical extension /settings/runtimeService/shutdownTimeoutMs",
+            "reference": "shutdownTimeoutMs",
+            "physicalAuthor": "charts/kubeclaw/files/config/buster-engine.config.json (existing sole buster-engine author), runtime variant charts/kubeclaw/files/config/profiles/buster-engine.runtime.config.json; new runtimeCapabilities/runtimeService settings explicitly schema-required C3 extension, not another runtime owner"
+          },
+          "caseIds": [
+            "DLV-CASE-MISSING-OLD-AUTHOR",
+            "DLV-CASE-ALTERNATE-PROFILES",
+            "DLV-CASE-BUSTER-GENERATED-SHUTDOWNTIMEOUTMS"
+          ]
+        }
+      ],
+      "soleActiveTarget": {
+        "path": "config/components/buster-engine.config.json",
+        "pointer": "/profiles/<explicitSelectedProfile>/settings/remotePlanService/shutdownTimeoutMs",
+        "phase": "new-required C3 absent currentphysicalsettings, notC1/synthesized/seventhauthor",
+        "soleWriter": "existingselectedBuster componentauthor; distinct frompreparation/admission/execution capabilityProviders/launcher, parentallocationconfirmed; generatedruntime.json valuesnoteditableauthor"
+      },
+      "supersedesMeaning": "HOST/PORT generated-binding-only historical classification corrected to actual listener policies; eight runtimeService pointers prospectively superseded by remotePlanService, no alias accepted for newC3 generation",
+      "phase": "C3 new-required, not value-preservingC1",
+      "originalBodiesUnchanged": true
+    },
+    {
+      "transferId": "DLV-B23-EMIT-def999cd63a86988",
+      "field": "allowedCapabilities",
+      "originalFieldBodies": [
+        {
+          "settingId": "DLV-BUSTER-ENTRYPOINT-RUNTIME-ALLOWEDCAPABILITIES",
+          "originalBodySha256": "68dd25e5466a1065490c0e5692cef670e8e8967ca8252eb002f3aa85e8d93b9f",
+          "originalTarget": {
+            "author": "C3 same existing buster-engine owner physical extension /settings/runtimeService/allowedCapabilities",
+            "reference": "allowedCapabilities"
+          },
+          "caseIds": [
+            "DLV-CASE-MISSING-OLD-AUTHOR",
+            "DLV-CASE-ALTERNATE-PROFILES",
+            "DLV-CASE-BUSTER-GENERATED-ALLOWEDCAPABILITIES"
+          ]
+        }
+      ],
+      "soleActiveTarget": {
+        "path": "config/components/buster-engine.config.json",
+        "pointer": "/profiles/<explicitSelectedProfile>/settings/remotePlanService/allowedCapabilities",
+        "phase": "new-required C3 absent currentphysicalsettings, notC1/synthesized/seventhauthor",
+        "soleWriter": "existingselectedBuster componentauthor; distinct frompreparation/admission/execution capabilityProviders/launcher, parentallocationconfirmed; generatedruntime.json valuesnoteditableauthor"
+      },
+      "supersedesMeaning": "HOST/PORT generated-binding-only historical classification corrected to actual listener policies; eight runtimeService pointers prospectively superseded by remotePlanService, no alias accepted for newC3 generation",
+      "phase": "C3 new-required, not value-preservingC1",
+      "originalBodiesUnchanged": true
+    }
+  ],
+  "provider64OriginalBodies": [
+    {
+      "fieldId": "DLV-B23-EMIT-9bc7dd684bcc0ac9",
+      "originalBodySha256": "f230bf9b4ca2f18cd45176223493f52edde6f3b432a7d6408f7e520bb2f56689",
+      "originalCaseSource": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/future-provider-cases.json",
+      "soleActivePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/directCommand/runtimeReadRoots",
+      "physicalAuthor": "config/components/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-e353921f59b947d2",
+      "originalBodySha256": "d97d28169fb86c079f42199b26f2df5923571082c87bcdf16525cac20255a7ca",
+      "originalCaseSource": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/future-provider-cases.json",
+      "soleActivePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/directCommand/maximumOutputBytes",
+      "physicalAuthor": "config/components/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-f3e081a10a005c6d",
+      "originalBodySha256": "a69f9d1b10180dcc263ab41579187e1d35ba659a0d80785e0b303bbaf27282a0",
+      "originalCaseSource": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/future-provider-cases.json",
+      "soleActivePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/directCommand/maximumExecutionMs",
+      "physicalAuthor": "config/components/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-8223d4f82ad78940",
+      "originalBodySha256": "8da27628b0e6b755ea8e2813d45680d5aaf6566c228d34e804b0a3ff7f291cdc",
+      "originalCaseSource": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/future-provider-cases.json",
+      "soleActivePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/directCommand/maximumProcesses",
+      "physicalAuthor": "config/components/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-15761fa4d74cfd14",
+      "originalBodySha256": "bc62f51cf9503d1fc881b0323fc517ba6f25b963082d0514f6b4461577295a4f",
+      "originalCaseSource": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/future-provider-cases.json",
+      "soleActivePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/directCommand/maximumMemoryBytes",
+      "physicalAuthor": "config/components/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-9e703e930074d2d9",
+      "originalBodySha256": "72aa2b4b964632ccd47de6b115b89ef007818c44c30adf9dba7af8cd39fbcb2f",
+      "originalCaseSource": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/future-provider-cases.json",
+      "soleActivePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/directCommand/maximumCpuMillis",
+      "physicalAuthor": "config/components/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-c7b8d91c6e32ca8a",
+      "originalBodySha256": "b6fc154bc051500c9cb871ad6d8510961da277674e0b96014ce547bcb98e8d2e",
+      "originalCaseSource": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/future-provider-cases.json",
+      "soleActivePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/directCommand/terminationGraceMs",
+      "physicalAuthor": "config/components/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-3133d45344799df6",
+      "originalBodySha256": "5b775af53fbac7135c3bd334c508f9411f0fd21e5dff816bcdd582f91a393c81",
+      "originalCaseSource": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/future-provider-cases.json",
+      "soleActivePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/directCommand/allowSampledProcessLimit",
+      "physicalAuthor": "config/components/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-45a77594a284944f",
+      "originalBodySha256": "6b9ff4d60b728f9947f9ba585e3264f7b69565d8e1c8e4ac9ed0cda70f76e362",
+      "originalCaseSource": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/future-provider-cases.json",
+      "soleActivePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/containerBuild/repositoryPrefix",
+      "physicalAuthor": "config/components/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-61b8952807a6ae64",
+      "originalBodySha256": "11caca150cdd7b8043620881774d07afeac7ff092f51622b315d42e1568ddbef",
+      "originalCaseSource": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/future-provider-cases.json",
+      "soleActivePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/containerBuild/allowedPlatforms",
+      "physicalAuthor": "config/components/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-32fdcf1249dece9d",
+      "originalBodySha256": "7f9c55012b4820dfed2d01ed40f10b6aa38938c47f7bd032efbe7f53af512d85",
+      "originalCaseSource": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/future-provider-cases.json",
+      "soleActivePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/containerBuild/allowedBuildArguments",
+      "physicalAuthor": "config/components/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-e1dbc20e704941b2",
+      "originalBodySha256": "317ff815170ae9501bc343ae89a9074ff16217ae45c21a2eb19274e2cac791e5",
+      "originalCaseSource": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/future-provider-cases.json",
+      "soleActivePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/containerBuild/maximumLogBytes",
+      "physicalAuthor": "config/components/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-e7411fa0b80cc0f9",
+      "originalBodySha256": "cba2cc9721551efc7a2b6265c1a5734c038ae8698027b46705f9118d82c49119",
+      "originalCaseSource": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/future-provider-cases.json",
+      "soleActivePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/containerBuild/maximumExecutionMs",
+      "physicalAuthor": "config/components/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-d310fed664330657",
+      "originalBodySha256": "a5def25b5eccc599cf360034cb243781d70ef533f36234ea4f135c48c3dd0015",
+      "originalCaseSource": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/future-provider-cases.json",
+      "soleActivePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/containerBuild/maximumManifestBytes",
+      "physicalAuthor": "config/components/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-e7c15e45c06e70a1",
+      "originalBodySha256": "4181d4abc50643919871695b423b7db7d9faab17f5f71199d3f08cc36de63131",
+      "originalCaseSource": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/future-provider-cases.json",
+      "soleActivePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/networkHttp/registryHealth",
+      "physicalAuthor": "config/components/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-154143b8310b9830",
+      "originalBodySha256": "792c99c215b21fa10d3499df0e1362e76bba8bc9a035de9ab8d7e8d6f1f50426",
+      "originalCaseSource": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/future-provider-cases.json",
+      "soleActivePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/networkHttp/allowedOrigins",
+      "physicalAuthor": "config/components/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-111b291a945ce10c",
+      "originalBodySha256": "524ff4c22ce728c97cfd74d35c1fcfbd8bb8b59898755ef0ebba7b44a38784a7",
+      "originalCaseSource": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/future-provider-cases.json",
+      "soleActivePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/networkHttp/allowedHostSuffixes",
+      "physicalAuthor": "config/components/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-b269fb17dbd3632a",
+      "originalBodySha256": "09b75e359c4534006f986a35c6b5a3fbcc4e3e5bf218acb64f21fdbaba7f4080",
+      "originalCaseSource": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/future-provider-cases.json",
+      "soleActivePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/networkHttp/allowedPorts",
+      "physicalAuthor": "config/components/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-0d6a21c1a0ffc5b0",
+      "originalBodySha256": "272498ff43c4b523c9e2d5632989761c649c4e11bc61c3d060a34c92c382d0ac",
+      "originalCaseSource": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/future-provider-cases.json",
+      "soleActivePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/networkHttp/allowedMethods",
+      "physicalAuthor": "config/components/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-9b6265411874b424",
+      "originalBodySha256": "f1495abae9177f661cbdbd1ad6b8e035e64d15a7c1a2bad71e8c968b29139052",
+      "originalCaseSource": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/future-provider-cases.json",
+      "soleActivePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/networkHttp/allowedRequestHeaders",
+      "physicalAuthor": "config/components/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-0979d52b234d6325",
+      "originalBodySha256": "38ffc171b6822b9d856a398b20de98d5a6314d75f31d267e1d8de17f0283b269",
+      "originalCaseSource": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/future-provider-cases.json",
+      "soleActivePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/networkHttp/allowWebSocket",
+      "physicalAuthor": "config/components/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-d595fc8a40ee1046",
+      "originalBodySha256": "16b9055357c894698008a61247f096651cade74fd988adfc5cb6e8a925ecbec5",
+      "originalCaseSource": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/future-provider-cases.json",
+      "soleActivePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/networkHttp/maximumRequestBytes",
+      "physicalAuthor": "config/components/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-1a0817aeebf4adf0",
+      "originalBodySha256": "d606dbe347ccc51dcb12f00807fa5f7a5bcfe61751e488b1c0a329792feae0c1",
+      "originalCaseSource": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/future-provider-cases.json",
+      "soleActivePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/networkHttp/maximumResponseBytes",
+      "physicalAuthor": "config/components/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-65ef6291b92e8ef3",
+      "originalBodySha256": "3103bdce99d5b07648573c85a706f67c98d02575ed8ac98a6c4553fb71c16c05",
+      "originalCaseSource": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/future-provider-cases.json",
+      "soleActivePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/networkHttp/maximumExecutionMs",
+      "physicalAuthor": "config/components/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-012c80b3ee7c1ca9",
+      "originalBodySha256": "50da5090a2557a3d33c5e2ebc6a37df35df86303f7b1f171392c36920ab0bfd8",
+      "originalCaseSource": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/future-provider-cases.json",
+      "soleActivePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/browserAccess/allowedOrigins",
+      "physicalAuthor": "config/components/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-8635b62d60b3554c",
+      "originalBodySha256": "ead6f8f5c1cfb316b04644b2e96fbe946adf4a8a737ed87779b85b6a47c00606",
+      "originalCaseSource": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/future-provider-cases.json",
+      "soleActivePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/browserAxe/allowedBrowsers",
+      "physicalAuthor": "config/components/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-20297db6672709e9",
+      "originalBodySha256": "2f636a3499d92338e7290ebce04072241bde1920bc8878f803d45a84e200cdf3",
+      "originalCaseSource": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/future-provider-cases.json",
+      "soleActivePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/browserAxe/maximumCombinations",
+      "physicalAuthor": "config/components/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-e67fb33445d34a6c",
+      "originalBodySha256": "9ff6b0d79c0a10dc1886ff9f6d3f9f9a321a2d699b6418bb6bb95365fd5e2baf",
+      "originalCaseSource": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/future-provider-cases.json",
+      "soleActivePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/browserAxe/maximumConcurrency",
+      "physicalAuthor": "config/components/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-034a34d6636f9f11",
+      "originalBodySha256": "132d430edbf8df62ba9aad69ab1f76d078d8f6fed2ba94b4f05f18c18a1baf9c",
+      "originalCaseSource": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/future-provider-cases.json",
+      "soleActivePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/browserAxe/maximumExecutionMs",
+      "physicalAuthor": "config/components/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-9a99771bafcecf49",
+      "originalBodySha256": "343fca553bd4ee171e3e20badf12734fbf5d8425758b354989cddeb013855e7a",
+      "originalCaseSource": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/future-provider-cases.json",
+      "soleActivePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/browserAxe/maximumResultBytes",
+      "physicalAuthor": "config/components/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-7990b7f85c86658f",
+      "originalBodySha256": "1d8ad60fb6cc41698d5a3e1780d7f1b5f639a872bd2584dd3134f68f0110400c",
+      "originalCaseSource": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/future-provider-cases.json",
+      "soleActivePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/browserAxe/maximumScreenshots",
+      "physicalAuthor": "config/components/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-41faa757cd9ee237",
+      "originalBodySha256": "0bc40cae1fd8a59db97a378122e970eded76c519536e49e72d05ac1f9a3530da",
+      "originalCaseSource": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/future-provider-cases.json",
+      "soleActivePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/browserAxe/maximumScreenshotBytes",
+      "physicalAuthor": "config/components/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-d730bfee84950ebe",
+      "originalBodySha256": "1843766887453e4d71c8c87272b0edb237cf8ffcabaa64bc6e482687d023240f",
+      "originalCaseSource": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/future-provider-cases.json",
+      "soleActivePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/browserAccess/allowedOrigins",
+      "physicalAuthor": "config/components/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-6acadb04e08e5a37",
+      "originalBodySha256": "1f8634b6d55efde7c5c6dc7890368b0975335635b223d11d0ba9f1dd4a5643f6",
+      "originalCaseSource": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/future-provider-cases.json",
+      "soleActivePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/browserLighthouse/maximumRuns",
+      "physicalAuthor": "config/components/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-ce4287919a2b4288",
+      "originalBodySha256": "4169ae45c6f0e240fd3f07fee1a09e83fd79e45fa05eccbb68cd40ef40160d9a",
+      "originalCaseSource": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/future-provider-cases.json",
+      "soleActivePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/browserLighthouse/maximumExecutionMs",
+      "physicalAuthor": "config/components/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-aebb7dbfafeb369f",
+      "originalBodySha256": "f87853452ed93efad55990005fbd3db829e204257479238f9456e542023c49c2",
+      "originalCaseSource": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/future-provider-cases.json",
+      "soleActivePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/browserLighthouse/maximumResultBytes",
+      "physicalAuthor": "config/components/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-ecb119b84d29252a",
+      "originalBodySha256": "8683161f4c8ea51b9d3b88ca636458c1b6ff0f829284880b252f32aa87948808",
+      "originalCaseSource": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/future-provider-cases.json",
+      "soleActivePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/browserAccess/allowedOrigins",
+      "physicalAuthor": "config/components/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-b07c1207100f06b1",
+      "originalBodySha256": "340604f31a037168e421788168d6c074934242926268bebbe95e6a1ade8a84bb",
+      "originalCaseSource": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/future-provider-cases.json",
+      "soleActivePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/browserVisual/allowedBrowsers",
+      "physicalAuthor": "config/components/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-e0d022fb56b5fbe8",
+      "originalBodySha256": "961f6aebdd178d598f832b9f87697fcdc014e24cd9fb84373dca16d460609891",
+      "originalCaseSource": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/future-provider-cases.json",
+      "soleActivePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/browserVisual/maximumCombinations",
+      "physicalAuthor": "config/components/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-79b0cc603f4fbf87",
+      "originalBodySha256": "8233c34e2d54f003c5ff2f1068f72e175dd25fe2fa59176dadde845a3490d1bf",
+      "originalCaseSource": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/future-provider-cases.json",
+      "soleActivePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/browserVisual/maximumConcurrency",
+      "physicalAuthor": "config/components/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-f8ed7defa73c2402",
+      "originalBodySha256": "857b106e87845c5eb19cf8854b05503a2ba58a9fd2a1299e259ea7c007e36652",
+      "originalCaseSource": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/future-provider-cases.json",
+      "soleActivePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/browserVisual/maximumExecutionMs",
+      "physicalAuthor": "config/components/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-d3499a44279d5bc2",
+      "originalBodySha256": "ce8225944f348693025b5bd435d17562d1c221ba7fcf0d78a3716468e99c1a59",
+      "originalCaseSource": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/future-provider-cases.json",
+      "soleActivePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/browserVisual/maximumResultBytes",
+      "physicalAuthor": "config/components/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-37fafda2e058ba33",
+      "originalBodySha256": "9b652e037e7d27464a96379cc28812fc14b03fa1dbf5e3e061e617842010e003",
+      "originalCaseSource": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/future-provider-cases.json",
+      "soleActivePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/browserVisual/maximumScreenshotBytes",
+      "physicalAuthor": "config/components/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-a877dd2d2afaaf41",
+      "originalBodySha256": "2e694f5e857a938501e935a04674fd1d9c926b4e1843efa0f02c27c436b3c63b",
+      "originalCaseSource": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/future-provider-cases.json",
+      "soleActivePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/browserVisual/maximumMasksPerCombination",
+      "physicalAuthor": "config/components/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-47d280f3edb1cac9",
+      "originalBodySha256": "1a3cdc69b6f91049faa3f59a181b4b87c6003c17dabdcbb6a470f905c63029d9",
+      "originalCaseSource": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/future-provider-cases.json",
+      "soleActivePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/browserAccess/allowedOrigins",
+      "physicalAuthor": "config/components/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-54b9344ebe322dc9",
+      "originalBodySha256": "d238e8dd2649235f12e32bdbc88cc08dfa4d914ed472c9aa809a9e27e0297585",
+      "originalCaseSource": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/future-provider-cases.json",
+      "soleActivePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/browserPlaywright/allowedTargetPorts",
+      "physicalAuthor": "config/components/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-502c39268e68e3ef",
+      "originalBodySha256": "8fb7c9e2cf19b42555b1f56b1dda877fa38d76b75f7a91cec65a694af8b4c508",
+      "originalCaseSource": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/future-provider-cases.json",
+      "soleActivePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/browserPlaywright/readOnlyRoots",
+      "physicalAuthor": "config/components/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-54d350f9bfe13448",
+      "originalBodySha256": "198f1c056693bb9e161b99bea9440625b659f159e01edabe54ea8dd69c789ca1",
+      "originalCaseSource": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/future-provider-cases.json",
+      "soleActivePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/browserPlaywright/maximumWorkers",
+      "physicalAuthor": "config/components/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-a8aecf9105975603",
+      "originalBodySha256": "61823c063692d1ecd9c79977914bbdd0ccd1aeabe545e5929e1276724ea3a83e",
+      "originalCaseSource": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/future-provider-cases.json",
+      "soleActivePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/browserPlaywright/maximumExecutionMs",
+      "physicalAuthor": "config/components/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-ea96a0298d24e7b3",
+      "originalBodySha256": "a968a386f5d0577205cd9e7356c5aa9dcff605f92e5472acd3cd352100838553",
+      "originalCaseSource": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/future-provider-cases.json",
+      "soleActivePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/browserPlaywright/maximumOutputBytes",
+      "physicalAuthor": "config/components/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-ecf16c9b684e0347",
+      "originalBodySha256": "2e3bbc1835c60e13fb9d008ae339c0ad56cc00f0b13072f688d9327c252d78e8",
+      "originalCaseSource": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/future-provider-cases.json",
+      "soleActivePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/browserPlaywright/maximumResultBytes",
+      "physicalAuthor": "config/components/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-b4e892429ff7af19",
+      "originalBodySha256": "38cbc2c60f3dbe691a69276f1e12eeb2d903687ff49eae227b75fcd2e3271f07",
+      "originalCaseSource": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/future-provider-cases.json",
+      "soleActivePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/browserPlaywright/maximumArtifactBytes",
+      "physicalAuthor": "config/components/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-abaf30c906eb3213",
+      "originalBodySha256": "21ec54e2c09b9306a7c1f2dc6399850b4846a27d2a593422501abfa1e403f93d",
+      "originalCaseSource": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/future-provider-cases.json",
+      "soleActivePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/browserPlaywright/maximumArtifactFiles",
+      "physicalAuthor": "config/components/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-c84c09092850dde5",
+      "originalBodySha256": "7206183e0350de4bfa08ef183c56a6dfbe629895207a5235822e4d2fa3848e74",
+      "originalCaseSource": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/future-provider-cases.json",
+      "soleActivePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/browserPlaywright/maximumProcesses",
+      "physicalAuthor": "config/components/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-5e12bfd1495232c2",
+      "originalBodySha256": "43bf718af6d283b627e79d2b12747f1a7eebe017099d39804d74ac924934ecdb",
+      "originalCaseSource": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/future-provider-cases.json",
+      "soleActivePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/browserPlaywright/maximumMemoryBytes",
+      "physicalAuthor": "config/components/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-b2bf013dd65b73e6",
+      "originalBodySha256": "2b67c7160113c91229fe12501fbbfcd78593bf29e27fce787a84b666c6527297",
+      "originalCaseSource": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/future-provider-cases.json",
+      "soleActivePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/browserPlaywright/maximumCpuMillis",
+      "physicalAuthor": "config/components/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-b9f7dff563f12066",
+      "originalBodySha256": "a2af1108d73e2d42d7470a8c7a17d779cf1935a6bdc0ace35f5ed759e49c23f7",
+      "originalCaseSource": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/future-provider-cases.json",
+      "soleActivePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/browserPlaywright/terminationGraceMs",
+      "physicalAuthor": "config/components/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-7a9dc3364cb189d1",
+      "originalBodySha256": "532f9b1b88e5e791539075f0814ebd21129dd26788ddc44869ffd2158e3d15af",
+      "originalCaseSource": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/future-provider-cases.json",
+      "soleActivePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/securityScan/allowedRegistryPrefixes",
+      "physicalAuthor": "config/components/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-ecb13abf6a54a6ec",
+      "originalBodySha256": "4e5318a837ae4dd043f1da461567d73a00f8d019e51417c8c6f63d6d3f54f4bf",
+      "originalCaseSource": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/future-provider-cases.json",
+      "soleActivePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/securityScan/maximumExecutionMs",
+      "physicalAuthor": "config/components/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-c8482b736ed56522",
+      "originalBodySha256": "3040810b7266f4f5fbc34c9989a4f041f9c23881943b092ce11c7558ee6cf76f",
+      "originalCaseSource": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/future-provider-cases.json",
+      "soleActivePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/securityScan/maximumOutputBytes",
+      "physicalAuthor": "config/components/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-6b7babe5458de645",
+      "originalBodySha256": "94e682efc616aa683a12a9f95f1e3290f1e98aea319a034210cb1fcc62d04e43",
+      "originalCaseSource": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/future-provider-cases.json",
+      "soleActivePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/securityScan/cacheDirectory",
+      "physicalAuthor": "config/components/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-a0b9c19a66131792",
+      "originalBodySha256": "120a633c452081222d2e068895f2acde39b2610a43d41cfc806be42324240795",
+      "originalCaseSource": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/future-provider-cases.json",
+      "soleActivePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/securityScan/databasePolicy/maximumVulnerabilityAgeMs",
+      "physicalAuthor": "config/components/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-f7874c1d6b49b6aa",
+      "originalBodySha256": "15e5738437b784190183e513fe4b324f8973592710a08e3247d471d578e8d6df",
+      "originalCaseSource": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/future-provider-cases.json",
+      "soleActivePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/securityScan/databasePolicy/maximumJavaAgeMs",
+      "physicalAuthor": "config/components/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-7b7ab708c5208cf7",
+      "originalBodySha256": "55ce7f3ede8cec0437e1d37d570934e7f88063d9b163a4fe98ee943d74ab00ec",
+      "originalCaseSource": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/future-provider-cases.json",
+      "soleActivePointer": "/profiles/<explicitSelectedProfile>/settings/execution/capabilityProviders/securityScan/databasePolicy/maximumDatabaseBytes",
+      "physicalAuthor": "config/components/buster-engine.config.json"
+    }
+  ],
+  "originalRuntime16Ref": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime/batch-16-runtime-emitter-joins/active-emitter-definitions.json"
+}

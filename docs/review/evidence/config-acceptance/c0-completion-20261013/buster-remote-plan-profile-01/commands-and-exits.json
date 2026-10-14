@@ -1,0 +1,94 @@
+{
+  "tool": "tools.exec_command via functions.exec",
+  "node": "v24.21.0",
+  "nodeExecutable": "/usr/local/bin/node",
+  "nodeExecutableSha256": "7fde7b8afa198da66257f42ee2001d874c7355631e6d1579a5fb5ef1f246df4c",
+  "python": "3.11.2",
+  "ajvVersion": "8.20.0",
+  "ajvEntrySha256": "908e9670b478b2ba126802a221b7e47006f50cf467e2c5dd7935d3dbef10a20a",
+  "commands": [
+    {
+      "command": "python3 docs/review/evidence/config-acceptance/c0-completion-20261013/buster-remote-plan-profile-01/build-collector.py",
+      "exitCode": 1,
+      "attemptSource": "raw/build-collector-attempt1.py",
+      "stdout": "raw/build-collector-attempt1.stdout",
+      "stderr": "raw/build-collector-attempt1.stderr",
+      "reason": "wrong extraction marker; corrected local authoring only"
+    },
+    {
+      "command": "python3 docs/review/evidence/config-acceptance/c0-completion-20261013/buster-remote-plan-profile-01/receiving-and-cases.py",
+      "exitCode": 1,
+      "attemptSource": "raw/receiving-and-cases-attempt1.py",
+      "stdout": "raw/receiving-attempt1.stdout",
+      "stderr": "raw/receiving-attempt1.stderr",
+      "reason": "fileset variable shadowed builtin set; corrected without semantic assertion change"
+    },
+    {
+      "command": "node docs/review/evidence/config-acceptance/c0-completion-20261013/buster-remote-plan-profile-01/check-service-definition.mjs",
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+      "exitCode": 0,
+      "stdout": "raw/check-01.json",
+      "stderr": "raw/check-01.stderr",
+      "scriptSha256": "f5bf804d42b92de9380afadbd4e3da38bc75ecd88422f2cf2bd404d21597ce41",
+      "scriptSnapshot": "raw/check-01.script.mjs",
+      "intermediateSnapshotQualification": "intermediate hashes/raw outputs retained; final5 and original1 source byte snapshots authoritative; intermediate green counts not native proof",
+      "observations": 146,
+      "failures": 0
+    },
+    {
+      "command": "node docs/review/evidence/config-acceptance/c0-completion-20261013/buster-remote-plan-profile-01/check-service-definition.mjs",
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+      "exitCode": 0,
+      "stdout": "raw/check-02.json",
+      "stderr": "raw/check-02.stderr",
+      "scriptSha256": "48dd71769d45bc0a4d430d0d6397b77ce0f98a07f2de757998b73abb497f449b",
+      "scriptSnapshot": null,
+      "intermediateSnapshotQualification": "intermediate hashes/raw outputs retained; final5 and original1 source byte snapshots authoritative; intermediate green counts not native proof",
+      "observations": 155,
+      "failures": 0
+    },
+    {
+      "command": "node docs/review/evidence/config-acceptance/c0-completion-20261013/buster-remote-plan-profile-01/check-service-definition.mjs",
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+      "exitCode": 0,
+      "stdout": "raw/check-03.json",
+      "stderr": "raw/check-03.stderr",
+      "scriptSha256": "298b7171f65ff4d08533c5f145e22335baacd860c3a609ed7c6ffc132b86d876",
+      "scriptSnapshot": null,
+      "intermediateSnapshotQualification": "intermediate hashes/raw outputs retained; final5 and original1 source byte snapshots authoritative; intermediate green counts not native proof",
+      "observations": 376,
+      "failures": 0
+    },
+    {
+      "command": "node docs/review/evidence/config-acceptance/c0-completion-20261013/buster-remote-plan-profile-01/check-service-definition.mjs",
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+      "exitCode": 0,
+      "stdout": "raw/check-04.json",
+      "stderr": "raw/check-04.stderr",
+      "scriptSha256": "47e135f94d77426f1932fe704b78e6d48170de88e14b7c72980a022ff4ad3e01",
+      "scriptSnapshot": null,
+      "intermediateSnapshotQualification": "intermediate hashes/raw outputs retained; final5 and original1 source byte snapshots authoritative; intermediate green counts not native proof",
+      "observations": 384,
+      "failures": 0
+    },
+    {
+      "command": "node docs/review/evidence/config-acceptance/c0-completion-20261013/buster-remote-plan-profile-01/check-service-definition.mjs",
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+      "exitCode": 0,
+      "stdout": "raw/check-05.json",
+      "stderr": "raw/check-05.stderr",
+      "scriptSha256": "47e135f94d77426f1932fe704b78e6d48170de88e14b7c72980a022ff4ad3e01",
+      "scriptSnapshot": "raw/check-05.script.mjs",
+      "intermediateSnapshotQualification": "intermediate hashes/raw outputs retained; final5 and original1 source byte snapshots authoritative; intermediate green counts not native proof",
+      "observations": 388,
+      "failures": 0
+    }
+  ],
+  "otherSuccessfulAuthoringCommands": [
+    "python3 author-definition.py exit0 stdout author-definition.stdout.json",
+    "python3 corrected build-collector.py exit0",
+    "python3 corrected receiving-and-cases.py exit0",
+    "python3 freeze-conservation.py exit0; final separate manifest freeze after stdout complete"
+  ],
+  "nativeCommandsExecuted": []
+}

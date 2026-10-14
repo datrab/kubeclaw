@@ -13,14 +13,14 @@
     "binding": "initial frozen + boundaries02(10controls), membership03(11/16actualcompiledstage maps), codec04(6controls), journal-bound05(11genericactualjournal/finiteencodingcontrols). Original error retained; wholefield/standalone/provider/harness joins unfinished. Demo-membership06 observed unchanged existing compiler test1pass0fail, exactsource/testhashesmatchHEAD; no realprovider or targetbinding acceptance. Captured original sourceapproval/retentioncrossdomainobligation."
   },
   "next": [
-    "Read fresh Gateway independent verdict; material findings corrected additively with fresh recheck.",
-    "Read combined v7 independent material verdict; fix actual findings additively and recheck before current adoption.",
-    "Complete browser105 originalfield/case source contracts and independent review.",
-    "Continue remaining wholeWCR01\u201308 source/field/profile/case/package obligations; no C1\u2013C6 implementation before concrete reviewed approval."
+    "Read complete independent v8 report, then separately integrate actual canonical references with fresh actual-root review; no silent adoption.",
+    "Collect fresh Nova18 material review; close material findings additively.",
+    "Complete and independently review local Nova/Prism Gateway source recipes.",
+    "Continue remaining WCR01\u201308 original source/field/case/package contracts, then whole C0-A\u2013E review and concrete C1\u2013C6 approval package."
   ],
   "unrelatedUntrackedExclude": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013 four preexisting files",
   "nativeTeam": [
-    "/root/c0_canonical_source_join_review",
+    "/root/policy_family_contract_review",
     "/root/whole_c0_readiness_review"
   ],
   "integrationBaseline": "Frozen integration baseline preserves original 2,409 field IDs, 6,845 case IDs, requirements, bodies, canonical and historical hashes. Original checker snapshot preserved. New top-level exact-scope review references preserve all non-review properties; registry intentionally empty. 24 synthetic tooling controls and real unchanged-canonical structural pass, neither global acceptance. Native child/parent receipt DAG documented in review-transition-02. Fresh independent recheck pending.",
@@ -46,8 +46,8 @@
     "implementationAuthorized": false
   },
   "lastPushedCheckpoint": {
-    "checkpoint": 27,
-    "commit": "e42dab0fa474d8bf7c726db2d100efff1c825a65",
+    "checkpoint": 28,
+    "commit": "eb4e8c06c3d3444a48840db55d977415f733d0f6",
     "pr": "https://github.com/datrab/kubeclaw/pull/18",
     "pushed": true,
     "remoteHeadVerified": true,
@@ -65,7 +65,13 @@
       "errors": 0
     }
   },
-  "pendingNativeReviews": [],
+  "pendingNativeReviews": [
+    {
+      "path": "nova-agent-target-contracts-01",
+      "reviewer": "/root/policy_family_contract_review",
+      "accepted": false
+    }
+  ],
   "checkpoint10Prepared": {
     "baseCommit": "ddd49add7eefd5fbbccac84360498a5ece8bae0a",
     "scope": "Swarm effective buffer cap28 independently20 verified; gateway19 source definitions29 and exact startup reader correction30 independently22 verified",
@@ -78,14 +84,14 @@
   "sourceSupplementIndex": "docs/review/remediation/config-source-supplement-current.md",
   "activeNativeWork": [
     {
-      "task": "/root/c0_canonical_source_join_review",
-      "scope": "Single next generation reviewedv7 + frozen reviewed Gateway02/Browser01 exactwholeexistingChart/allprofile/sourcecontext/currenttuple/schema/file-set/rolecase joins",
-      "status": "running author; fresh full material review required"
+      "task": "/root/policy_family_contract_review",
+      "scope": "Frozen Nova18 agent-target fields/144 original cases; diagnostic provenance vs actual dispatch/authority/profile/receiving domains",
+      "status": "running fresh independent material review"
     },
     {
       "task": "/root/whole_c0_readiness_review",
-      "scope": "WCR02 exact10 Buster remotePlan service fields/whole physicalstandard-runtime profile/block aliases/encodedresponse-store quotas/timer/capability/native source-transfer class/cases",
-      "status": "running author; independent material review required"
+      "scope": "Actual Nova/Prism Gateway source recipes and same existing Chart full-profile/context/bootstrap/credential/role joins",
+      "status": "running source-definition author; fresh review required"
     }
   ],
   "completedLatestReviews": [
@@ -215,6 +221,16 @@
     {
       "report": "independent-combined-generation-current-integration-review-01/README.md",
       "verdict": "ACCEPTED bounded actualrootREFERENCE integration only;55inputs6parentmanifest stable, bothentirepreviousobjects restored removingONLYnewmetadata, 168/1008 exactIDrosters and156/1114physicalnodes/Prism12/13 joins exact; no global/native/implementationapproval"
+    },
+    {
+      "task": "/root/delivery_module_contract_review",
+      "verdict": "VERIFIED bounded ten-service-field source/receiving/case-definition scope; no material findings",
+      "report": "independent-buster-remote-plan-profile-review-01/README.md"
+    },
+    {
+      "task": "/root/runtime_provider_contract_review",
+      "verdict": "VERIFIED bounded proposed v8 definition; not current canonical adoption",
+      "report": "independent-same-entry-role-browser-binding-review-01/README.md"
     }
   ],
   "checkpoint15Prepared": {
@@ -388,7 +404,7 @@
     "diffCheckExitCode": 0
   },
   "checkpoint28Prepared": {
-    "pushed": false,
+    "pushed": true,
     "baseCommit": "e42dab0fa474d8bf7c726db2d100efff1c825a65",
     "scope": "CombinedEngine01/rejected01/corrective02/closed02; Gateway01/rejected01/corrective02/closed02; Browser01/static VERIFIED review; actual current root reference integration/independent ACCEPTED reference review; current navigation/state",
     "onlyCanonicalChange": "Same new topmetadata currentCombinedDefinitionGeneration168fields1008cases, entirepreviousobjects conserved",
@@ -409,6 +425,23 @@
         "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stand/source-current/skills/buster/engine/test-gates/runner-worker-profile.ts:78: new blank line at EOF."
       ],
       "qualification": "Exact SHA-pinned current-source snapshot preserves original EOF bytes; no clean formatting claim, production source unchanged"
+    },
+    "remoteWarning": "Existing canonical matrix96.98MB exceeds recommended50MB, push succeeded; no LFS/format/storage migration"
+  },
+  "checkpoint29Prepared": {
+    "baseCommit": "eb4e8c06c3d3444a48840db55d977415f733d0f6",
+    "scope": "Ten Buster remote-plan service contracts, bounded independent VERIFIED review, current navigation/state",
+    "canonicalChanged": false,
+    "productionOrExistingTestsChanged": false,
+    "globalC0Accepted": false,
+    "implementationAuthorization": null,
+    "autoreview": "Codex CLI remains unavailable; no clean autoreview claim",
+    "checks": "Parent manifest replay 215 author and 228 reviewer artifact pins: zero mismatches. Independent 388 pure observations/zero failures, not native execution.",
+    "diffCheck": {
+      "exitCode": 2,
+      "qualification": "Only four blank-line-at-EOF diagnostics in immutable SHA-pinned source snapshots; original bytes preserved, no clean formatting claim",
+      "stdout": "checkpoint29-diff-check.stdout",
+      "stderr": "checkpoint29-diff-check.stderr"
     }
   }
 }
