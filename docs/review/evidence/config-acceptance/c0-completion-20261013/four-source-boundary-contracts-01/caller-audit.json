@@ -1,0 +1,2103 @@
+{
+  "symbols": {
+    "FileProducerOutbox": [
+      {
+        "path": "tests/verification/reliability/attempt-projection-review.test.mjs",
+        "line": 14,
+        "expression": "import {FileProducerOutbox,deliverPending} from '../../../skills/common/plugin-runtime/foundation/observability/durable-delivery.ts';",
+        "sourceSha256": "a92f9d257dafbd2fdf7402d5d3035da35dd9b04667f43cadc8cee927c00c7f63",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/reliability/attempt-projection-review.test.mjs",
+        "line": 24,
+        "expression": "  const outbox=new FileProducerOutbox(path.join(f.root,'independent-old-delivery'),{maximumRecords:10,maximumBytes:50000});",
+        "sourceSha256": "a92f9d257dafbd2fdf7402d5d3035da35dd9b04667f43cadc8cee927c00c7f63",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/reliability/admission-retirement.test.mjs",
+        "line": 15,
+        "expression": "import {FileObservabilityAdmissionStore,FileProducerOutbox,deliverPending} from '../../../skills/common/plugin-runtime/foundation/observability/durable-delivery.ts';",
+        "sourceSha256": "291c55e1777ea3881d00e2ea2f109d436409b82192d1ae15d528f014edd78451",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/reliability/admission-retirement.test.mjs",
+        "line": 43,
+        "expression": "  const outbox=new FileProducerOutbox(path.join(f.root,'replayed-outbox'),{maximumRecords:10,maximumBytes:50000});",
+        "sourceSha256": "291c55e1777ea3881d00e2ea2f109d436409b82192d1ae15d528f014edd78451",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/reliability/admission-retirement.test.mjs",
+        "line": 58,
+        "expression": "  const outbox=new FileProducerOutbox(path.join(f.root,'unconfirmed-outbox'),{maximumRecords:10,maximumBytes:50000});",
+        "sourceSha256": "291c55e1777ea3881d00e2ea2f109d436409b82192d1ae15d528f014edd78451",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/reliability/admission-retirement.test.mjs",
+        "line": 183,
+        "expression": "  const outbox = new FileProducerOutbox(path.join(f.root, 'result-retirement-negative-outbox'), {maximumRecords: 10, maximumBytes: 50000});",
+        "sourceSha256": "291c55e1777ea3881d00e2ea2f109d436409b82192d1ae15d528f014edd78451",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/contracts/check-pipeline-observability-clawdeck-view.mts",
+        "line": 9,
+        "expression": "  FileProducerOutbox,",
+        "sourceSha256": "fc4206e4e8a8b9de60c65955b977bed42318a4f905eb38a7ed8010c8feab2af8",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/contracts/check-pipeline-observability-clawdeck-view.mts",
+        "line": 34,
+        "expression": "  const outbox = new FileProducerOutbox(path.join(root, \"outbox\"), {",
+        "sourceSha256": "fc4206e4e8a8b9de60c65955b977bed42318a4f905eb38a7ed8010c8feab2af8",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/contracts/check-pipeline-observability-durable-delivery.mts",
+        "line": 6,
+        "expression": "import {deliverPending,FileObservabilityAdmissionStore,FileProducerOutbox} from '../../../skills/common/plugin-runtime/foundation/observability/durable-delivery.ts';",
+        "sourceSha256": "188a4d3396b7b3055cf867a0d5fcc813c2b9d4311d9290ca722b17cf070411ec",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/contracts/check-pipeline-observability-durable-delivery.mts",
+        "line": 11,
+        "expression": "  let outbox=new FileProducerOutbox(outboxDirectory,{maximumRecords:3,maximumBytes:100000});",
+        "sourceSha256": "188a4d3396b7b3055cf867a0d5fcc813c2b9d4311d9290ca722b17cf070411ec",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/contracts/check-pipeline-observability-durable-delivery.mts",
+        "line": 14,
+        "expression": "  outbox=new FileProducerOutbox(outboxDirectory,{maximumRecords:3,maximumBytes:100000});",
+        "sourceSha256": "188a4d3396b7b3055cf867a0d5fcc813c2b9d4311d9290ca722b17cf070411ec",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/contracts/check-pipeline-observability-durable-delivery.mts",
+        "line": 40,
+        "expression": "  const limited=new FileProducerOutbox(path.join(root,'limited'),{maximumRecords:1,maximumBytes:100000});",
+        "sourceSha256": "188a4d3396b7b3055cf867a0d5fcc813c2b9d4311d9290ca722b17cf070411ec",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/contracts/check-pipeline-observability-durable-delivery.mts",
+        "line": 43,
+        "expression": "  assert.throws(()=>new FileProducerOutbox(path.join(root,'invalid-limit'),{maximumRecords:Number.POSITIVE_INFINITY,maximumBytes:1}),/OBSERVABILITY_OUTBOX_LIMIT_INVALID/);",
+        "sourceSha256": "188a4d3396b7b3055cf867a0d5fcc813c2b9d4311d9290ca722b17cf070411ec",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/contracts/check-pipeline-observability-durable-delivery.mts",
+        "line": 45,
+        "expression": "  await assert.rejects(()=>new FileProducerOutbox(path.join(linkedStore,'outbox'),{maximumRecords:1,maximumBytes:10000}).append(base),/OBSERVABILITY_STORE_PATH_SYMLINK/,'durable stores must not follow a symlinked path component');",
+        "sourceSha256": "188a4d3396b7b3055cf867a0d5fcc813c2b9d4311d9290ca722b17cf070411ec",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/contracts/check-pipeline-observability-durable-delivery.mts",
+        "line": 46,
+        "expression": "  const ordered=new FileProducerOutbox(path.join(root,'ordered'),{maximumRecords:3,maximumBytes:100000});",
+        "sourceSha256": "188a4d3396b7b3055cf867a0d5fcc813c2b9d4311d9290ca722b17cf070411ec",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/contracts/check-pipeline-observability-durable-attempts.mts",
+        "line": 15,
+        "expression": "  FileProducerOutbox,",
+        "sourceSha256": "d66074de5eddad50e1b838c3562048566de574b1f53d3d68dfef53eb049d5dc6",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/contracts/check-pipeline-observability-durable-attempts.mts",
+        "line": 96,
+        "expression": "  const outbox = new FileProducerOutbox(path.join(root, \"worker-outbox\"), {",
+        "sourceSha256": "d66074de5eddad50e1b838c3562048566de574b1f53d3d68dfef53eb049d5dc6",
+        "scope": "test-only"
+      },
+      {
+        "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+        "line": 333,
+        "expression": "export class FileProducerOutbox {",
+        "sourceSha256": "5624aa2b5f980a373ab30fdf012dee1346418ac3b2537244475f2a496d3766a0",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+        "line": 830,
+        "expression": "  outbox: FileProducerOutbox,",
+        "sourceSha256": "5624aa2b5f980a373ab30fdf012dee1346418ac3b2537244475f2a496d3766a0",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      }
+    ],
+    "FileDurableBlobStore": [
+      {
+        "path": "tests/verification/reliability/blob-budget.test.mts",
+        "line": 7,
+        "expression": "import { FileDurableBlobStore } from '@kubeclaw/plugin-foundation/observability/durable-records';",
+        "sourceSha256": "1a596f8c4a17979921ecb818398be018069969a037947cec40cd318192bfc5ad",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/reliability/blob-budget.test.mts",
+        "line": 12,
+        "expression": "    const store = new FileDurableBlobStore(root, 40, 60);",
+        "sourceSha256": "1a596f8c4a17979921ecb818398be018069969a037947cec40cd318192bfc5ad",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/reliability/blob-budget.test.mts",
+        "line": 14,
+        "expression": "    const reloaded = new FileDurableBlobStore(root, 40, 60);",
+        "sourceSha256": "1a596f8c4a17979921ecb818398be018069969a037947cec40cd318192bfc5ad",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/reliability/blob-budget.test.mts",
+        "line": 18,
+        "expression": "      const code = `import { FileDurableBlobStore } from ${JSON.stringify(moduleUrl)};",
+        "sourceSha256": "1a596f8c4a17979921ecb818398be018069969a037947cec40cd318192bfc5ad",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/reliability/blob-budget.test.mts",
+        "line": 19,
+        "expression": "        try { await new FileDurableBlobStore(${JSON.stringify(root)}, 40, 60).put(Buffer.alloc(40, ${JSON.stringify(letter)})); }",
+        "sourceSha256": "1a596f8c4a17979921ecb818398be018069969a037947cec40cd318192bfc5ad",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/reliability/blob-budget.test.mts",
+        "line": 31,
+        "expression": "    await assert.rejects(() => new FileDurableBlobStore(root, 40, 60).put(Buffer.from('extra')), /STORE_LIMIT_EXCEEDED/);",
+        "sourceSha256": "1a596f8c4a17979921ecb818398be018069969a037947cec40cd318192bfc5ad",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/reliability/blob-read-boundary.test.mjs",
+        "line": 9,
+        "expression": "import { FileDurableBlobStore } from '../../../skills/common/plugin-runtime/foundation/observability/durable-records.ts';",
+        "sourceSha256": "07196b9858bcedbc12dcfb85aaefca04413cc3e82bcc8b0381b97a75983adab1",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/reliability/blob-read-boundary.test.mjs",
+        "line": 15,
+        "expression": "  const store = new FileDurableBlobStore(root, maximum, Math.max(maximum * 4, 1024));",
+        "sourceSha256": "07196b9858bcedbc12dcfb85aaefca04413cc3e82bcc8b0381b97a75983adab1",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/reliability/nova-store-boundaries.test.mts",
+        "line": 15,
+        "expression": "import { FileDurableBlobStore } from '../../../skills/common/plugin-runtime/foundation/observability/durable-records.ts';",
+        "sourceSha256": "43c2f51ea8d452f60dec9e08048420864c977746c6ee5d0d916e3c913ce1bdb5",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/reliability/nova-store-boundaries.test.mts",
+        "line": 97,
+        "expression": "    const blob = new FileDurableBlobStore(storeRoot, 100_000);",
+        "sourceSha256": "43c2f51ea8d452f60dec9e08048420864c977746c6ee5d0d916e3c913ce1bdb5",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/reliability/prism-reader-fixture.mjs",
+        "line": 15,
+        "expression": "import { FileDurableBlobStore } from '../../../skills/common/plugin-runtime/foundation/observability/durable-records.ts';",
+        "sourceSha256": "b19767987615299632b132da7d029fa91d3a5eed827a49489ed3d9bf1c9bdcfe",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/reliability/prism-reader-fixture.mjs",
+        "line": 69,
+        "expression": "    const stored=await new FileDurableBlobStore(path.join(directory,'artifacts'),16*1024*1024,256*1024*1024).get(ref.digest);",
+        "sourceSha256": "b19767987615299632b132da7d029fa91d3a5eed827a49489ed3d9bf1c9bdcfe",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/reliability/blob-read-independent.test.mjs",
+        "line": 9,
+        "expression": "import { FileDurableBlobStore } from '../../../skills/common/plugin-runtime/foundation/observability/durable-records.ts';",
+        "sourceSha256": "1da460f13a945cb90182237c73b814131586431f442b5ba4156b411fc6d21f9d",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/reliability/blob-read-independent.test.mjs",
+        "line": 18,
+        "expression": "    const store = new FileDurableBlobStore(root, 16);",
+        "sourceSha256": "1da460f13a945cb90182237c73b814131586431f442b5ba4156b411fc6d21f9d",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/e2e/real-run-evidence.mjs",
+        "line": 1,
+        "expression": "import { FileDurableRecordStore, FileDurableBlobStore } from '@kubeclaw/plugin-foundation/observability/durable-records';",
+        "sourceSha256": "a4bd4840337e6455f4011152c433b583d926fe9a38c4e1fe1c7034b75ef3fe56",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/e2e/real-run-evidence.mjs",
+        "line": 140,
+        "expression": "  const blobs = new FileDurableBlobStore(root, 16 * 1024 * 1024);",
+        "sourceSha256": "a4bd4840337e6455f4011152c433b583d926fe9a38c4e1fe1c7034b75ef3fe56",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/historical-branch-acceptance/run11-semantic-producer-child.mjs",
+        "line": 8,
+        "expression": "import {FileDurableBlobStore, FileDurableRecordStore} from '@kubeclaw/plugin-foundation/observability/durable-records';",
+        "sourceSha256": "467f3850a5983a84cdfc58a5fa2c750c1b10ffb530ec6888063388741067216f",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/historical-branch-acceptance/run11-semantic-producer-child.mjs",
+        "line": 85,
+        "expression": "  const blobs = new FileDurableBlobStore(artifactRoot, 16 * 1024 * 1024);",
+        "sourceSha256": "467f3850a5983a84cdfc58a5fa2c750c1b10ffb530ec6888063388741067216f",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/contracts/check-pipeline-observability-legacy-cutover.mjs",
+        "line": 12,
+        "expression": "const { FileDurableBlobStore, FileDurableRecordStore } = await import(moduleUrl);",
+        "sourceSha256": "f2bb0c8daa62a7f6c86640490bd64cb774f69b9bafa8693084d8be6dd93ffe1d",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/contracts/check-pipeline-observability-legacy-cutover.mjs",
+        "line": 52,
+        "expression": "  const blobs = new FileDurableBlobStore(root, 1024);",
+        "sourceSha256": "f2bb0c8daa62a7f6c86640490bd64cb774f69b9bafa8693084d8be6dd93ffe1d",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/contracts/check-pipeline-observability-legacy-cutover.mjs",
+        "line": 54,
+        "expression": "    new FileDurableBlobStore(root, 1024).put(Buffer.from('durable evidence'))));",
+        "sourceSha256": "f2bb0c8daa62a7f6c86640490bd64cb774f69b9bafa8693084d8be6dd93ffe1d",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/contracts/check-pipeline-observability-legacy-cutover.mjs",
+        "line": 57,
+        "expression": "  assert.equal((await new FileDurableBlobStore(root, 1024).get(stored.digest)).toString(), 'durable evidence');",
+        "sourceSha256": "f2bb0c8daa62a7f6c86640490bd64cb774f69b9bafa8693084d8be6dd93ffe1d",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/contracts/check-pipeline-observability-legacy-cutover.mjs",
+        "line": 60,
+        "expression": "  await assert.rejects(new FileDurableBlobStore(root, 1024).get(stored.digest), /DURABLE_BLOB_INTEGRITY_FAILED/);",
+        "sourceSha256": "f2bb0c8daa62a7f6c86640490bd64cb774f69b9bafa8693084d8be6dd93ffe1d",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/contracts/check-pipeline-manifest-lint-vertical.mts",
+        "line": 6,
+        "expression": "import { FileDurableBlobStore, FileDurableRecordStore } from '@kubeclaw/plugin-foundation/observability/durable-records';",
+        "sourceSha256": "febed63b5f36e32f6d28f76351d37574e7c7b6efb72a30710cce694455216692",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/contracts/check-pipeline-manifest-lint-vertical.mts",
+        "line": 166,
+        "expression": "  const blobs = new FileDurableBlobStore(artifacts, 16 * 1024 * 1024);",
+        "sourceSha256": "febed63b5f36e32f6d28f76351d37574e7c7b6efb72a30710cce694455216692",
+        "scope": "test-only"
+      },
+      {
+        "path": "skills/nova/core/test-gates/remote-dispatch-store.ts",
+        "line": 4,
+        "expression": "import { FileDurableBlobStore, FileDurableRecordStore, type DurableRecordLimits } from '@kubeclaw/plugin-foundation/observability/durable-records';",
+        "sourceSha256": "634dc70de20d811672f69f70b58a6b620e578ae7c1188fe10afec46d90bca069",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/nova/core/test-gates/remote-dispatch-store.ts",
+        "line": 13,
+        "expression": "  readonly #blobs: FileDurableBlobStore;",
+        "sourceSha256": "634dc70de20d811672f69f70b58a6b620e578ae7c1188fe10afec46d90bca069",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/nova/core/test-gates/remote-dispatch-store.ts",
+        "line": 25,
+        "expression": "    this.#blobs = new FileDurableBlobStore(root, options.maximumArchiveBytes, options.maximumArchiveStoreBytes);",
+        "sourceSha256": "634dc70de20d811672f69f70b58a6b620e578ae7c1188fe10afec46d90bca069",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/nova/core/test-gates/remote-result-import.ts",
+        "line": 20,
+        "expression": "  FileDurableBlobStore,",
+        "sourceSha256": "ddb1e749086128083a295c15790a1e666a614000b4650055e3374c9bf7edcc81",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/nova/core/test-gates/remote-result-import.ts",
+        "line": 98,
+        "expression": "  readonly #blobs: FileDurableBlobStore;",
+        "sourceSha256": "ddb1e749086128083a295c15790a1e666a614000b4650055e3374c9bf7edcc81",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/nova/core/test-gates/remote-result-import.ts",
+        "line": 103,
+        "expression": "    this.#blobs = new FileDurableBlobStore(root, options.maximumEvidenceStoreBytes, options.maximumEvidenceStoreBytes);",
+        "sourceSha256": "ddb1e749086128083a295c15790a1e666a614000b4650055e3374c9bf7edcc81",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/nova/plugins/review/tests/repository-review-io.test.ts",
+        "line": 5,
+        "expression": "import { FileDurableBlobStore, FileDurableRecordStore } from '@kubeclaw/plugin-foundation/observability/durable-records';",
+        "sourceSha256": "9cb2789e42560f95948b0714fd5ee0fe92d21db8946b8b08432c04330850abb8",
+        "scope": "test-only"
+      },
+      {
+        "path": "skills/nova/plugins/review/tests/repository-review-io.test.ts",
+        "line": 69,
+        "expression": "  const blobs = new FileDurableBlobStore(artifacts, 16 * 1024 * 1024, 256 * 1024 * 1024);",
+        "sourceSha256": "9cb2789e42560f95948b0714fd5ee0fe92d21db8946b8b08432c04330850abb8",
+        "scope": "test-only"
+      },
+      {
+        "path": "skills/nova/plugins/review/tests/live-function.test.ts",
+        "line": 12,
+        "expression": "  FileDurableBlobStore,",
+        "sourceSha256": "181ede16e4cadd8c8dc7af730dc2408e5337eef6f6f01cc2357086dd824a4a2d",
+        "scope": "test-only"
+      },
+      {
+        "path": "skills/nova/plugins/review/tests/live-function.test.ts",
+        "line": 184,
+        "expression": "const artifactBlobs = new FileDurableBlobStore(artifactRoot, 16 * 1024 * 1024);",
+        "sourceSha256": "181ede16e4cadd8c8dc7af730dc2408e5337eef6f6f01cc2357086dd824a4a2d",
+        "scope": "test-only"
+      },
+      {
+        "path": "skills/worker/core/worker/native-attempt-journal.ts",
+        "line": 3,
+        "expression": "import { FileDurableRecordStore, FileDurableBlobStore, type DurableRecord } from '@kubeclaw/plugin-foundation/observability/durable-records';",
+        "sourceSha256": "4c63283eb753d9840c4a6fce4126404a86df2e33dc357166531550059a57acf5",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/worker/core/worker/native-attempt-journal.ts",
+        "line": 25,
+        "expression": "  readonly #blobs: FileDurableBlobStore;",
+        "sourceSha256": "4c63283eb753d9840c4a6fce4126404a86df2e33dc357166531550059a57acf5",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/worker/core/worker/native-attempt-journal.ts",
+        "line": 35,
+        "expression": "    this.#blobs = new FileDurableBlobStore(path.join(this.#root, 'data'), Math.max(limits.maximumInputBytes, limits.maximumResultBytes), limits.maximumTotalBytes);",
+        "sourceSha256": "4c63283eb753d9840c4a6fce4126404a86df2e33dc357166531550059a57acf5",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/buster/engine/test-gates/prepared-plan-store.ts",
+        "line": 9,
+        "expression": "import { FileDurableBlobStore, FileDurableRecordStore, type DurableRecord, type DurableRecordLimits }",
+        "sourceSha256": "d9bbee538cd87a917f1c22ef7d89fb0bb313a73cd2fe096b7bc3390f19922067",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/buster/engine/test-gates/prepared-plan-store.ts",
+        "line": 57,
+        "expression": "  readonly #results: FileDurableBlobStore;",
+        "sourceSha256": "d9bbee538cd87a917f1c22ef7d89fb0bb313a73cd2fe096b7bc3390f19922067",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/buster/engine/test-gates/prepared-plan-store.ts",
+        "line": 72,
+        "expression": "    this.#results = new FileDurableBlobStore(path.join(writableRoot, 'results'), options.maximumResultBytes, options.maximumResultStoreBytes);",
+        "sourceSha256": "d9bbee538cd87a917f1c22ef7d89fb0bb313a73cd2fe096b7bc3390f19922067",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/buster/engine/test-gates/native-fixture-journal.ts",
+        "line": 3,
+        "expression": "import { FileDurableBlobStore, FileDurableRecordStore, type DurableRecord } from '@kubeclaw/plugin-foundation/observability/durable-records';",
+        "sourceSha256": "4c5fb76cb5d6a9f28c76338ccefd39f7bbb17e7607bb90a998a5a146f43237a7",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/buster/engine/test-gates/native-fixture-journal.ts",
+        "line": 24,
+        "expression": "  readonly #blobs: FileDurableBlobStore;",
+        "sourceSha256": "4c5fb76cb5d6a9f28c76338ccefd39f7bbb17e7607bb90a998a5a146f43237a7",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/buster/engine/test-gates/native-fixture-journal.ts",
+        "line": 34,
+        "expression": "    this.#blobs = new FileDurableBlobStore(path.join(this.#root, 'data'), limits.maximumBlobBytes, limits.maximumTotalBytes);",
+        "sourceSha256": "4c5fb76cb5d6a9f28c76338ccefd39f7bbb17e7607bb90a998a5a146f43237a7",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/common/plugins/wait-store/tests/package-boundary.test.mjs",
+        "line": 11,
+        "expression": "assert.match(records, /export \\{ FileDurableBlobStore, type DurableBlobStore \\} from '\\.\\/durable-blobs\\.ts'/);",
+        "sourceSha256": "f8c7f535103cd16f37ce8ab8c9dbc192262ff786f54fdfab7bad0a504c9e09f1",
+        "scope": "test-only"
+      },
+      {
+        "path": "skills/common/plugins/artifact-store/src/adapter.ts",
+        "line": 11,
+        "expression": "  FileDurableBlobStore,",
+        "sourceSha256": "12fa6150089d49da0a9065de560fb53436dc46e3f10f15da0f3fe8b112a50154",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/common/plugins/artifact-store/src/adapter.ts",
+        "line": 173,
+        "expression": "  const blobs = new FileDurableBlobStore(configured, Number(maximum), Number(maximumStoreBytes));",
+        "sourceSha256": "12fa6150089d49da0a9065de560fb53436dc46e3f10f15da0f3fe8b112a50154",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/buster/engine/test-gates/historical-plan-store.ts",
+        "line": 9,
+        "expression": "import { FileDurableBlobStore, FileDurableRecordStore, type DurableRecord, type DurableRecordLimits }",
+        "sourceSha256": "87806c4a582a07d9ed749d973ca66e489d2b36ffd6ead0fbfa65e15502a74f8f",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/buster/engine/test-gates/historical-plan-store.ts",
+        "line": 29,
+        "expression": "  readonly #results: FileDurableBlobStore;",
+        "sourceSha256": "87806c4a582a07d9ed749d973ca66e489d2b36ffd6ead0fbfa65e15502a74f8f",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/buster/engine/test-gates/historical-plan-store.ts",
+        "line": 47,
+        "expression": "    this.#results = new FileDurableBlobStore(path.join(root, 'results'), options.maximumResultBytes, options.maximumResultStoreBytes);",
+        "sourceSha256": "87806c4a582a07d9ed749d973ca66e489d2b36ffd6ead0fbfa65e15502a74f8f",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/common/plugin-runtime/foundation/observability/durable-blobs.ts",
+        "line": 26,
+        "expression": "export class FileDurableBlobStore implements DurableBlobStore {",
+        "sourceSha256": "5e1af13ee56ba905355f7f84e58b25d6a8ea5a1c7e77f5863a1a1ad18506c2ea",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+        "line": 1,
+        "expression": "export { FileDurableBlobStore, type DurableBlobStore } from './durable-blobs.ts';",
+        "sourceSha256": "ab407b028f3a22c96a436c3bdf2a9dd7bfee3b36d301de919669d2d1bf25c553",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/common/plugin-runtime/foundation/observability/durable-blob-read.ts",
+        "line": 51,
+        "expression": "/** The original FileDurableBlobStore.get reader, factored only for readability. */",
+        "sourceSha256": "5b736d337407890d27b547bc07bd514d378478589d4f56092ca9e5742fe2d285",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      }
+    ],
+    "FileBusterFixtureJournal": [
+      {
+        "path": "tests/fixtures/buster-fixture-writer.mts",
+        "line": 2,
+        "expression": "import { FileBusterFixtureJournal } from '../../skills/buster/engine/test-gates/native-fixture-journal.ts';",
+        "sourceSha256": "47ab502077b195d48a7272a65e1c5841517a16c7709939aeaa0f5fda3ebcd233",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/fixtures/buster-fixture-writer.mts",
+        "line": 7,
+        "expression": "const journal = new FileBusterFixtureJournal(root, { maximumRecords: 32, maximumStateBytes: 262144,",
+        "sourceSha256": "47ab502077b195d48a7272a65e1c5841517a16c7709939aeaa0f5fda3ebcd233",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/reliability/buster-fixture-journal.test.mts",
+        "line": 10,
+        "expression": "import { FileBusterFixtureJournal } from '../../../skills/buster/engine/test-gates/native-fixture-journal.ts';",
+        "sourceSha256": "ad008b35758697d36c95ce148df06a816e5c41f33dcf32415cde10411a395d02",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/reliability/buster-fixture-journal.test.mts",
+        "line": 30,
+        "expression": "      const journal = new FileBusterFixtureJournal(root, limits); const before = await journal.snapshot();",
+        "sourceSha256": "ad008b35758697d36c95ce148df06a816e5c41f33dcf32415cde10411a395d02",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/reliability/buster-fixture-journal.test.mts",
+        "line": 33,
+        "expression": "      assert.deepEqual(await new FileBusterFixtureJournal(root, limits).snapshot(), before);",
+        "sourceSha256": "ad008b35758697d36c95ce148df06a816e5c41f33dcf32415cde10411a395d02",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/reliability/buster-fixture-journal.test.mts",
+        "line": 45,
+        "expression": "  const root = path.join(directory, 'fixtures'); const journal = new FileBusterFixtureJournal(root, limits); const value = admission();",
+        "sourceSha256": "ad008b35758697d36c95ce148df06a816e5c41f33dcf32415cde10411a395d02",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/reliability/buster-fixture-journal.test.mts",
+        "line": 56,
+        "expression": "    const reopened = (await new FileBusterFixtureJournal(root, limits).snapshot())[0]!;",
+        "sourceSha256": "ad008b35758697d36c95ce148df06a816e5c41f33dcf32415cde10411a395d02",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/reliability/buster-fixture-journal.test.mts",
+        "line": 65,
+        "expression": "  const journal = new FileBusterFixtureJournal(path.join(directory, 'fixtures'), limits);",
+        "sourceSha256": "ad008b35758697d36c95ce148df06a816e5c41f33dcf32415cde10411a395d02",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/reliability/buster-fixture-journal.test.mts",
+        "line": 81,
+        "expression": "  const root = path.join(directory, 'fixtures'); const journal = new FileBusterFixtureJournal(root, { ...limits, maximumTotalBytes: 950000 });",
+        "sourceSha256": "ad008b35758697d36c95ce148df06a816e5c41f33dcf32415cde10411a395d02",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/reliability/buster-fixture-control.test.mts",
+        "line": 10,
+        "expression": "import { FileBusterFixtureJournal } from '../../../skills/buster/engine/test-gates/native-fixture-journal.ts';",
+        "sourceSha256": "c730bcffacef7b91a420278042f8a56a5a3d16ca42036f4755d0a19698afdd05",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/reliability/buster-fixture-control.test.mts",
+        "line": 16,
+        "expression": "  const journal = new FileBusterFixtureJournal(path.join(root, 'journal'), {",
+        "sourceSha256": "c730bcffacef7b91a420278042f8a56a5a3d16ca42036f4755d0a19698afdd05",
+        "scope": "test-only"
+      },
+      {
+        "path": "skills/buster/engine/test-gates/native-fixture-lifetime.ts",
+        "line": 4,
+        "expression": "import type { FileBusterFixtureJournal } from './native-fixture-journal.ts';",
+        "sourceSha256": "fb755b6a559c3eb4f34e9a6151cc26dd4a6e14ff0e4c16d9e727964547497297",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/buster/engine/test-gates/native-fixture-lifetime.ts",
+        "line": 12,
+        "expression": "  readonly fixtures: FileBusterFixtureJournal;",
+        "sourceSha256": "fb755b6a559c3eb4f34e9a6151cc26dd4a6e14ff0e4c16d9e727964547497297",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/buster/engine/test-gates/native-fixture-journal.ts",
+        "line": 20,
+        "expression": "export class FileBusterFixtureJournal {",
+        "sourceSha256": "4c5fb76cb5d6a9f28c76338ccefd39f7bbb17e7607bb90a998a5a146f43237a7",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/buster/engine/test-gates/native-fixture-control.ts",
+        "line": 2,
+        "expression": "import type { FileBusterFixtureJournal } from './native-fixture-journal.ts';",
+        "sourceSha256": "6d305ecd5509af0dc13b90e02d00339619822cb5551c17077b4503439bfd272d",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/buster/engine/test-gates/native-fixture-control.ts",
+        "line": 32,
+        "expression": "  readonly #journal: FileBusterFixtureJournal;",
+        "sourceSha256": "6d305ecd5509af0dc13b90e02d00339619822cb5551c17077b4503439bfd272d",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/buster/engine/test-gates/native-fixture-control.ts",
+        "line": 43,
+        "expression": "  constructor(admission: BusterFixtureAdmission, journal: FileBusterFixtureJournal) {",
+        "sourceSha256": "6d305ecd5509af0dc13b90e02d00339619822cb5551c17077b4503439bfd272d",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      }
+    ],
+    "HistoricalBusterPlanJobStore": [
+      {
+        "path": "tests/verification/reliability/buster-historical-import.test.mts",
+        "line": 11,
+        "expression": "import { HistoricalBusterPlanJobStore } from '../../../skills/buster/engine/test-gates/historical-plan-store.ts';",
+        "sourceSha256": "c40110774d150be2c7f997b48b05bc82b9d2062e72a519c6d8ff8303f1396c7b",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/reliability/buster-historical-import.test.mts",
+        "line": 41,
+        "expression": "  const store = new HistoricalBusterPlanJobStore(storeRoot, {",
+        "sourceSha256": "c40110774d150be2c7f997b48b05bc82b9d2062e72a519c6d8ff8303f1396c7b",
+        "scope": "test-only"
+      },
+      {
+        "path": "scripts/compact-buster-job.mjs",
+        "line": 3,
+        "expression": "import { HistoricalBusterPlanJobStore } from '../skills/buster/engine/test-gates/historical-plan-store.ts';",
+        "sourceSha256": "bf10ee8da2de22ac7463be04b77401ff71e4ee89632bf66b61c5852cf02bed47",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "scripts/compact-buster-job.mjs",
+        "line": 45,
+        "expression": "  const store = new HistoricalBusterPlanJobStore(input.storeRoot, { ...input.storeOptions, sourceAttestationPublicKey: publicKey });",
+        "sourceSha256": "bf10ee8da2de22ac7463be04b77401ff71e4ee89632bf66b61c5852cf02bed47",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/buster/engine/test-gates/historical-plan-store.ts",
+        "line": 27,
+        "expression": "export class HistoricalBusterPlanJobStore {",
+        "sourceSha256": "87806c4a582a07d9ed749d973ca66e489d2b36ffd6ead0fbfa65e15502a74f8f",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      }
+    ],
+    "NativeAttemptJournal": [
+      {
+        "path": "tests/verification/reliability/buster-fixture-journal.test.mts",
+        "line": 11,
+        "expression": "import { NativeAttemptJournal } from '../../../skills/worker/core/worker/native-attempt-journal.ts';",
+        "sourceSha256": "ad008b35758697d36c95ce148df06a816e5c41f33dcf32415cde10411a395d02",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/reliability/buster-fixture-journal.test.mts",
+        "line": 58,
+        "expression": "    const native = new NativeAttemptJournal(path.join(directory, 'native'), nativeLimits);",
+        "sourceSha256": "ad008b35758697d36c95ce148df06a816e5c41f33dcf32415cde10411a395d02",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/reliability/buster-fixture-journal.test.mts",
+        "line": 66,
+        "expression": "  const native = new NativeAttemptJournal(path.join(directory, 'native'), nativeLimits); const value = admission();",
+        "sourceSha256": "ad008b35758697d36c95ce148df06a816e5c41f33dcf32415cde10411a395d02",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/reliability/native-cleanup-fixture.mts",
+        "line": 6,
+        "expression": "import { NativeAttemptJournal } from '../../../skills/worker/core/worker/native-attempt-journal.ts';",
+        "sourceSha256": "38001b52df26bf030743768821185309f86250ca3cf57675d0c6eeee9faf6096",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/reliability/native-cleanup-fixture.mts",
+        "line": 31,
+        "expression": "  const journal = new NativeAttemptJournal(path.join(root, 'original'), limits);",
+        "sourceSha256": "38001b52df26bf030743768821185309f86250ca3cf57675d0c6eeee9faf6096",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/reliability/native-cleanup-fixture.mts",
+        "line": 38,
+        "expression": "  const cleanupJournal = new NativeAttemptJournal(path.join(root, 'cleanup'), limits);",
+        "sourceSha256": "38001b52df26bf030743768821185309f86250ca3cf57675d0c6eeee9faf6096",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/reliability/native-journal-capacity-fixture.mts",
+        "line": 6,
+        "expression": "import { NativeAttemptJournal } from '../../../skills/worker/core/worker/native-attempt-journal.ts';",
+        "sourceSha256": "73c86874ee6ba22a6ebc9e9682ae15ca8c2a718ce7c3111ac2162eef568222a3",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/reliability/native-journal-capacity-fixture.mts",
+        "line": 9,
+        "expression": "import type { NativeAttemptJournalLimits } from '../../../skills/worker/core/worker/native-journal-state.ts';",
+        "sourceSha256": "73c86874ee6ba22a6ebc9e9682ae15ca8c2a718ce7c3111ac2162eef568222a3",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/reliability/native-journal-capacity-fixture.mts",
+        "line": 11,
+        "expression": "export const limits: NativeAttemptJournalLimits = { maximumRecords: 32, maximumStateBytes: 262144,",
+        "sourceSha256": "73c86874ee6ba22a6ebc9e9682ae15ca8c2a718ce7c3111ac2162eef568222a3",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/reliability/native-journal-capacity-fixture.mts",
+        "line": 20,
+        "expression": "export async function finish(journal: NativeAttemptJournal, input: ReturnType<typeof envelope>) {",
+        "sourceSha256": "73c86874ee6ba22a6ebc9e9682ae15ca8c2a718ce7c3111ac2162eef568222a3",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/reliability/worker-native-journal.test.mts",
+        "line": 10,
+        "expression": "import { NativeAttemptJournal } from '../../../skills/worker/core/worker/native-attempt-journal.ts';",
+        "sourceSha256": "6ea7256fd52849106e153c272f2804717b5ae25b2234aba7345c84a67b08cb7a",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/reliability/worker-native-journal.test.mts",
+        "line": 23,
+        "expression": "  const journal = new NativeAttemptJournal(path.join(parent, 'journal'), limits);",
+        "sourceSha256": "6ea7256fd52849106e153c272f2804717b5ae25b2234aba7345c84a67b08cb7a",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/reliability/worker-native-journal.test.mts",
+        "line": 31,
+        "expression": "    const reopened = new NativeAttemptJournal(path.join(parent, 'journal'), limits);",
+        "sourceSha256": "6ea7256fd52849106e153c272f2804717b5ae25b2234aba7345c84a67b08cb7a",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/reliability/worker-native-journal.test.mts",
+        "line": 54,
+        "expression": "      const journal = new NativeAttemptJournal(root, limits);",
+        "sourceSha256": "6ea7256fd52849106e153c272f2804717b5ae25b2234aba7345c84a67b08cb7a",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/reliability/worker-native-journal.test.mts",
+        "line": 85,
+        "expression": "  const journal = new NativeAttemptJournal(root, { ...limits, maximumTotalBytes: 950000 });",
+        "sourceSha256": "6ea7256fd52849106e153c272f2804717b5ae25b2234aba7345c84a67b08cb7a",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/reliability/worker-native-journal.test.mts",
+        "line": 106,
+        "expression": "  const journal = new NativeAttemptJournal(path.join(parent, 'journal'), limits);",
+        "sourceSha256": "6ea7256fd52849106e153c272f2804717b5ae25b2234aba7345c84a67b08cb7a",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/reliability/worker-native-journal.test.mts",
+        "line": 144,
+        "expression": "    const journal = new NativeAttemptJournal(root, limits);",
+        "sourceSha256": "6ea7256fd52849106e153c272f2804717b5ae25b2234aba7345c84a67b08cb7a",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/reliability/worker-native-scope-live.mts",
+        "line": 15,
+        "expression": "import { NativeAttemptJournal } from '../../../skills/worker/core/worker/native-attempt-journal.ts';",
+        "sourceSha256": "e8f9cbc3e0adff5adf98573ff0c00a0724fd3e8f1967608d917ae81551f44458",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/reliability/worker-native-scope-live.mts",
+        "line": 166,
+        "expression": "  const journal = new NativeAttemptJournal(path.join(stateRoot, 'capacity-journal'), {",
+        "sourceSha256": "e8f9cbc3e0adff5adf98573ff0c00a0724fd3e8f1967608d917ae81551f44458",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/reliability/worker-native-journal-capacity.test.mts",
+        "line": 6,
+        "expression": "import { NativeAttemptJournal } from '../../../skills/worker/core/worker/native-attempt-journal.ts';",
+        "sourceSha256": "b2a1ea2bdfa4d222ef6037c0fc57699450fbb38f02a21e60d6eea2a2cd9ddc26",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/reliability/worker-native-journal-capacity.test.mts",
+        "line": 11,
+        "expression": "  const journal = new NativeAttemptJournal(root, limits);",
+        "sourceSha256": "b2a1ea2bdfa4d222ef6037c0fc57699450fbb38f02a21e60d6eea2a2cd9ddc26",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/reliability/worker-native-journal-capacity.test.mts",
+        "line": 23,
+        "expression": "      const short = new NativeAttemptJournal(rejectedRoot, { ...limits, maximumStateBytes: budget });",
+        "sourceSha256": "b2a1ea2bdfa4d222ef6037c0fc57699450fbb38f02a21e60d6eea2a2cd9ddc26",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/reliability/worker-native-journal-capacity.test.mts",
+        "line": 29,
+        "expression": "    const fit = new NativeAttemptJournal(root, { ...limits, maximumStateBytes: bound });",
+        "sourceSha256": "b2a1ea2bdfa4d222ef6037c0fc57699450fbb38f02a21e60d6eea2a2cd9ddc26",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/reliability/worker-native-journal-capacity.test.mts",
+        "line": 47,
+        "expression": "    const results = await Promise.allSettled(inputs.map(input => new NativeAttemptJournal(root, config).withAttempt(input, async () => {})));",
+        "sourceSha256": "b2a1ea2bdfa4d222ef6037c0fc57699450fbb38f02a21e60d6eea2a2cd9ddc26",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/reliability/worker-native-journal-capacity.test.mts",
+        "line": 51,
+        "expression": "    const journal = new NativeAttemptJournal(root, config);",
+        "sourceSha256": "b2a1ea2bdfa4d222ef6037c0fc57699450fbb38f02a21e60d6eea2a2cd9ddc26",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/reliability/worker-native-journal-capacity.test.mts",
+        "line": 61,
+        "expression": "    const original = new NativeAttemptJournal(parent, limits);",
+        "sourceSha256": "b2a1ea2bdfa4d222ef6037c0fc57699450fbb38f02a21e60d6eea2a2cd9ddc26",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/reliability/worker-native-journal-capacity.test.mts",
+        "line": 64,
+        "expression": "    const old = new NativeAttemptJournal(parent, { ...limits, maximumStateBytes: before.byteLength + 100 });",
+        "sourceSha256": "b2a1ea2bdfa4d222ef6037c0fc57699450fbb38f02a21e60d6eea2a2cd9ddc26",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/reliability/worker-native-journal-capacity.test.mts",
+        "line": 79,
+        "expression": "    const journal = new NativeAttemptJournal(root, limits);",
+        "sourceSha256": "b2a1ea2bdfa4d222ef6037c0fc57699450fbb38f02a21e60d6eea2a2cd9ddc26",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/reliability/worker-native-journal-capacity.test.mts",
+        "line": 88,
+        "expression": "    const constrained = new NativeAttemptJournal(root, { ...limits, maximumStateBytes: ceiling });",
+        "sourceSha256": "b2a1ea2bdfa4d222ef6037c0fc57699450fbb38f02a21e60d6eea2a2cd9ddc26",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/reliability/worker-native-cleanup-retry.test.mts",
+        "line": 5,
+        "expression": "import { NativeAttemptJournal } from '../../../skills/worker/core/worker/native-attempt-journal.ts';",
+        "sourceSha256": "6ea10420088089cf5d1652cead3fbb0a4a68930ceaeb80b56fefe582c2860d72",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/reliability/worker-native-cleanup-retry.test.mts",
+        "line": 13,
+        "expression": "  const journal = new NativeAttemptJournal(path.join(f.root, 'shared'), limits);",
+        "sourceSha256": "6ea10420088089cf5d1652cead3fbb0a4a68930ceaeb80b56fefe582c2860d72",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/fixtures/worker-journal-writer.mjs",
+        "line": 2,
+        "expression": "import { NativeAttemptJournal } from '../../skills/worker/core/worker/native-attempt-journal.ts';",
+        "sourceSha256": "53b82eb9f606ec22ba0f3d3a2463092c7523506266c495ff42c24e8a6ea0a62e",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/fixtures/worker-journal-writer.mjs",
+        "line": 9,
+        "expression": "const journal = new NativeAttemptJournal(root, limits);",
+        "sourceSha256": "53b82eb9f606ec22ba0f3d3a2463092c7523506266c495ff42c24e8a6ea0a62e",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/fixtures/test-gate/native-preparation.mts",
+        "line": 9,
+        "expression": "  FileWorkerOwnershipStore, NativeAttemptJournal, NativeWorkerOwnership,",
+        "sourceSha256": "38483633a7a5454dba0f527e16bd6a42bae36bf78077c03c7cf185ce9a9b5d9e",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/fixtures/test-gate/native-preparation.mts",
+        "line": 112,
+        "expression": "    const journal = new NativeAttemptJournal(path.join(root, 'journal'), {",
+        "sourceSha256": "38483633a7a5454dba0f527e16bd6a42bae36bf78077c03c7cf185ce9a9b5d9e",
+        "scope": "test-only"
+      },
+      {
+        "path": "skills/prism/tests/native/operation-journal.mts",
+        "line": 18,
+        "expression": "import { NativeAttemptJournal } from '../../../worker/core/worker/native-attempt-journal.ts';",
+        "sourceSha256": "ac0820646e49f29a131d6f73eee0f5afc26dbc414d73e3009f2fed576c5161a3",
+        "scope": "test-only"
+      },
+      {
+        "path": "skills/prism/tests/native/operation-journal.mts",
+        "line": 98,
+        "expression": "  const journal = new NativeAttemptJournal(path.join(directory, 'worker-journal'), { maximumRecords: 8, maximumStateBytes: 262144,",
+        "sourceSha256": "ac0820646e49f29a131d6f73eee0f5afc26dbc414d73e3009f2fed576c5161a3",
+        "scope": "test-only"
+      },
+      {
+        "path": "skills/prism/tests/swarm-result-journal.test.mts",
+        "line": 8,
+        "expression": "import { NativeAttemptJournal } from '../../worker/core/worker/native-attempt-journal.ts';",
+        "sourceSha256": "3d9cacabb68160ac91320d55fdf5af7c8d36b5de4db877a01f71d3c945e98155",
+        "scope": "test-only"
+      },
+      {
+        "path": "skills/prism/tests/swarm-result-journal.test.mts",
+        "line": 28,
+        "expression": "  const journal = new NativeAttemptJournal(path.join(root, 'journal'), { maximumRecords: 8, maximumStateBytes: 262144,",
+        "sourceSha256": "3d9cacabb68160ac91320d55fdf5af7c8d36b5de4db877a01f71d3c945e98155",
+        "scope": "test-only"
+      },
+      {
+        "path": "skills/prism/server/native-worker-execution.ts",
+        "line": 4,
+        "expression": "import { executeNativeWorkerAttempt, NativeAttemptJournal, recoverNativeWorkerAttempts, type NativeWorkerOwnership } from '@kubeclaw/worker-core';",
+        "sourceSha256": "d87eb7d05cdc40f3eb353dba63236fa8c20a02adf1b70512c81944bb7cb71a56",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/prism/server/native-worker-execution.ts",
+        "line": 13,
+        "expression": "  const journal = new NativeAttemptJournal(path.join(native.ownershipRoot, 'attempt-journal'), {",
+        "sourceSha256": "d87eb7d05cdc40f3eb353dba63236fa8c20a02adf1b70512c81944bb7cb71a56",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/buster/engine/test-gates/preparation-supervisor.ts",
+        "line": 10,
+        "expression": "  FileWorkerOwnershipStore, NativeWorkerOwnership, NativeAttemptJournal,",
+        "sourceSha256": "2a0c6e615d2b156ffad8be308613c7b16fa83daf8faf9ef393cc6e81b701f8ad",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/buster/engine/test-gates/preparation-supervisor.ts",
+        "line": 36,
+        "expression": "    const journal = new NativeAttemptJournal(path.join(native.pool.ownershipRoot, 'preparation-journal'), {",
+        "sourceSha256": "2a0c6e615d2b156ffad8be308613c7b16fa83daf8faf9ef393cc6e81b701f8ad",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/buster/engine/test-gates/native-fixture-lifetime.ts",
+        "line": 1,
+        "expression": "import { executeNativeWorkerAttempt, type NativeAttemptJournal, type NativeWorkerProcessOptions,",
+        "sourceSha256": "fb755b6a559c3eb4f34e9a6151cc26dd4a6e14ff0e4c16d9e727964547497297",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/buster/engine/test-gates/native-fixture-lifetime.ts",
+        "line": 11,
+        "expression": "  readonly journal: NativeAttemptJournal;",
+        "sourceSha256": "fb755b6a559c3eb4f34e9a6151cc26dd4a6e14ff0e4c16d9e727964547497297",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/buster/engine/test-gates/native-fixture-journal.ts",
+        "line": 5,
+        "expression": "import { canonicalJson, sha256Digest, type NativeAttemptJournal } from '@kubeclaw/worker-core';",
+        "sourceSha256": "4c5fb76cb5d6a9f28c76338ccefd39f7bbb17e7607bb90a998a5a146f43237a7",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/buster/engine/test-gates/native-fixture-journal.ts",
+        "line": 83,
+        "expression": "  async seal(input: BusterFixtureAdmission, journal: NativeAttemptJournal): Promise<BusterFixtureState> {",
+        "sourceSha256": "4c5fb76cb5d6a9f28c76338ccefd39f7bbb17e7607bb90a998a5a146f43237a7",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/buster/engine/test-gates/preparation-execution.ts",
+        "line": 2,
+        "expression": "import type { NativeAttemptJournal, NativeWorkerOwnership } from '@kubeclaw/worker-core';",
+        "sourceSha256": "e23033bcf78d19dfada0a25d7cffc9ba8133b97b686ffba24b362c601c8a6e93",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/buster/engine/test-gates/preparation-execution.ts",
+        "line": 15,
+        "expression": "  readonly journal: NativeAttemptJournal;",
+        "sourceSha256": "e23033bcf78d19dfada0a25d7cffc9ba8133b97b686ffba24b362c601c8a6e93",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/worker/core/src/index.ts",
+        "line": 14,
+        "expression": "export { NativeAttemptJournal, NativeWorkerAttemptBusy } from '../worker/native-attempt-journal.ts';",
+        "sourceSha256": "d1fdfef010a187fbcba74044215741edc538bfb046bcb5e946406ce0de5d016a",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/worker/core/src/index.ts",
+        "line": 18,
+        "expression": "export type { NativeAttemptJournalLimits } from '../worker/native-attempt-journal.ts';",
+        "sourceSha256": "d1fdfef010a187fbcba74044215741edc538bfb046bcb5e946406ce0de5d016a",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/worker/core/worker/native-attempt-journal.ts",
+        "line": 10,
+        "expression": "  type NativeAttemptJournalLimits, type NativeAttemptJournalState } from './native-journal-state.ts';",
+        "sourceSha256": "4c63283eb753d9840c4a6fce4126404a86df2e33dc357166531550059a57acf5",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/worker/core/worker/native-attempt-journal.ts",
+        "line": 14,
+        "expression": "export type { NativeAttemptJournalLimits } from './native-journal-state.ts';",
+        "sourceSha256": "4c63283eb753d9840c4a6fce4126404a86df2e33dc357166531550059a57acf5",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/worker/core/worker/native-attempt-journal.ts",
+        "line": 21,
+        "expression": "export class NativeAttemptJournal {",
+        "sourceSha256": "4c63283eb753d9840c4a6fce4126404a86df2e33dc357166531550059a57acf5",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/worker/core/worker/native-attempt-journal.ts",
+        "line": 23,
+        "expression": "  readonly #limits: NativeAttemptJournalLimits;",
+        "sourceSha256": "4c63283eb753d9840c4a6fce4126404a86df2e33dc357166531550059a57acf5",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/worker/core/worker/native-attempt-journal.ts",
+        "line": 27,
+        "expression": "  constructor(root: string, limits: NativeAttemptJournalLimits) {",
+        "sourceSha256": "4c63283eb753d9840c4a6fce4126404a86df2e33dc357166531550059a57acf5",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/worker/core/worker/native-attempt-journal.ts",
+        "line": 144,
+        "expression": "  async #all(): Promise<readonly DurableRecord<NativeAttemptJournalState>[]> {",
+        "sourceSha256": "4c63283eb753d9840c4a6fce4126404a86df2e33dc357166531550059a57acf5",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/worker/core/worker/native-attempt-journal.ts",
+        "line": 145,
+        "expression": "    const records = await this.#records.read<NativeAttemptJournalState>(stream);",
+        "sourceSha256": "4c63283eb753d9840c4a6fce4126404a86df2e33dc357166531550059a57acf5",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/worker/core/worker/native-attempt-journal.ts",
+        "line": 150,
+        "expression": "  async #lookup(envelope: WorkerAttemptEnvelopeV3): Promise<DurableRecord<NativeAttemptJournalState> | undefined> {",
+        "sourceSha256": "4c63283eb753d9840c4a6fce4126404a86df2e33dc357166531550059a57acf5",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/worker/core/worker/native-attempt-journal.ts",
+        "line": 158,
+        "expression": "  async #required(envelope: WorkerAttemptEnvelopeV3): Promise<DurableRecord<NativeAttemptJournalState>> {",
+        "sourceSha256": "4c63283eb753d9840c4a6fce4126404a86df2e33dc357166531550059a57acf5",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/worker/core/worker/native-attempt-journal.ts",
+        "line": 176,
+        "expression": "      const payload: NativeAttemptJournalState = { schemaVersion: 'native-attempt-journal.v1', identity: journalIdentity(envelope),",
+        "sourceSha256": "4c63283eb753d9840c4a6fce4126404a86df2e33dc357166531550059a57acf5",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/worker/core/worker/native-attempt-executor.ts",
+        "line": 5,
+        "expression": "import { NativeWorkerAttemptBusy, type NativeAttemptJournal } from './native-attempt-journal.ts';",
+        "sourceSha256": "bddc68aa370648c86e7b7301f4f31a083504217dd89bac7694c36c344a8e23a3",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/worker/core/worker/native-attempt-executor.ts",
+        "line": 14,
+        "expression": "  readonly journal: NativeAttemptJournal;",
+        "sourceSha256": "bddc68aa370648c86e7b7301f4f31a083504217dd89bac7694c36c344a8e23a3",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/worker/core/worker/native-journal-state.ts",
+        "line": 11,
+        "expression": "export interface NativeAttemptJournalLimits {",
+        "sourceSha256": "ae5cca21eb24261fa5389c7081bc3534e8e12b411d5bda0e97a69a94ead424d2",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/worker/core/worker/native-journal-state.ts",
+        "line": 22,
+        "expression": "export interface NativeAttemptJournalState {",
+        "sourceSha256": "ae5cca21eb24261fa5389c7081bc3534e8e12b411d5bda0e97a69a94ead424d2",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/worker/core/worker/native-journal-state.ts",
+        "line": 49,
+        "expression": "export function validateJournalState(value: unknown): asserts value is NativeAttemptJournalState {",
+        "sourceSha256": "ae5cca21eb24261fa5389c7081bc3534e8e12b411d5bda0e97a69a94ead424d2",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/worker/core/worker/native-attempt-recovery.ts",
+        "line": 3,
+        "expression": "import type { NativeAttemptJournal } from './native-attempt-journal.ts';",
+        "sourceSha256": "f6cef5767983497edd3865667a6b480e8ea75ed34b847bc4f44e8fae02d807bc",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/worker/core/worker/native-attempt-recovery.ts",
+        "line": 10,
+        "expression": "export async function recoverNativeWorkerAttempts(journal: NativeAttemptJournal, owner: NativeWorkerOwnership,",
+        "sourceSha256": "f6cef5767983497edd3865667a6b480e8ea75ed34b847bc4f44e8fae02d807bc",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/worker/core/worker/native-attempt-recovery.ts",
+        "line": 40,
+        "expression": "export async function recoverNativeAttempt(journal: NativeAttemptJournal, ownership: NativeWorkerOwnership, envelope: WorkerAttemptEnvelopeV3,",
+        "sourceSha256": "f6cef5767983497edd3865667a6b480e8ea75ed34b847bc4f44e8fae02d807bc",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/worker/core/worker/native-cleanup-reconciliation.ts",
+        "line": 5,
+        "expression": "import type { NativeAttemptJournal } from './native-attempt-journal.ts';",
+        "sourceSha256": "9cfc04ab25b0eecea23b75b9dcdbb4b87f87854c8b00b7346e7eafa33a0118f4",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/worker/core/worker/native-cleanup-reconciliation.ts",
+        "line": 24,
+        "expression": "  readonly journal: NativeAttemptJournal;",
+        "sourceSha256": "9cfc04ab25b0eecea23b75b9dcdbb4b87f87854c8b00b7346e7eafa33a0118f4",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/worker/core/worker/native-cleanup-reconciliation.ts",
+        "line": 79,
+        "expression": "export async function verifyNativeSourceCleanupResult(journal: NativeAttemptJournal, owner: NativeWorkerOwnership,",
+        "sourceSha256": "9cfc04ab25b0eecea23b75b9dcdbb4b87f87854c8b00b7346e7eafa33a0118f4",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/worker/core/worker/native-cleanup-reconciliation.ts",
+        "line": 126,
+        "expression": "export async function resolveFailedNativeCleanup(originalJournal: NativeAttemptJournal,",
+        "sourceSha256": "9cfc04ab25b0eecea23b75b9dcdbb4b87f87854c8b00b7346e7eafa33a0118f4",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/worker/core/worker/native-journal-capacity.ts",
+        "line": 4,
+        "expression": "import { nativeJournalMaximumDiagnosticUnits, validateJournalState, type NativeAttemptJournalLimits, type NativeAttemptJournalState } from './native-journal-state.ts';",
+        "sourceSha256": "a0369d6ac33fa5607b03125d52e50aa8172e0b338c528c90b4e1e13fac47b65a",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/worker/core/worker/native-journal-capacity.ts",
+        "line": 13,
+        "expression": "function futurePayload(payload: NativeAttemptJournalState, limits: NativeAttemptJournalLimits) {",
+        "sourceSha256": "a0369d6ac33fa5607b03125d52e50aa8172e0b338c528c90b4e1e13fac47b65a",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/worker/core/worker/native-journal-capacity.ts",
+        "line": 28,
+        "expression": "function futureRecordBytes(record: DurableRecord, limits: NativeAttemptJournalLimits): number {",
+        "sourceSha256": "a0369d6ac33fa5607b03125d52e50aa8172e0b338c528c90b4e1e13fac47b65a",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/worker/core/worker/native-journal-capacity.ts",
+        "line": 45,
+        "expression": "  limits: NativeAttemptJournalLimits): number {",
+        "sourceSha256": "a0369d6ac33fa5607b03125d52e50aa8172e0b338c528c90b4e1e13fac47b65a",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/worker/core/worker/native-journal-capacity.ts",
+        "line": 57,
+        "expression": "export async function reserveNativeJournalMetadata(file: string, payload: NativeAttemptJournalState,",
+        "sourceSha256": "a0369d6ac33fa5607b03125d52e50aa8172e0b338c528c90b4e1e13fac47b65a",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/worker/core/worker/native-journal-capacity.ts",
+        "line": 58,
+        "expression": "  idempotencyKey: string, owner: string, limits: NativeAttemptJournalLimits): Promise<void> {",
+        "sourceSha256": "a0369d6ac33fa5607b03125d52e50aa8172e0b338c528c90b4e1e13fac47b65a",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      }
+    ],
+    "FileNovaGateImportStore": [
+      {
+        "path": "tests/verification/reliability/nova-dispatch-projection.test.mjs",
+        "line": 18,
+        "expression": "import { FileNovaGateImportStore } from '../../../skills/nova/core/test-gates/remote-result-import.ts';",
+        "sourceSha256": "501bd977c14b12b1af01d75fe7e3b0667e6735386993b417c2a0cab07cda007d",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/reliability/nova-dispatch-projection.test.mjs",
+        "line": 200,
+        "expression": "  const imports = new FileNovaGateImportStore(f.scope.intent.importRoot, importOptions);",
+        "sourceSha256": "501bd977c14b12b1af01d75fe7e3b0667e6735386993b417c2a0cab07cda007d",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/reliability/nova-dispatch-projection.test.mjs",
+        "line": 206,
+        "expression": "  assert.deepEqual(await new FileNovaGateImportStore(f.scope.intent.importRoot, importOptions).readExecutionGraphs(), graphBefore);",
+        "sourceSha256": "501bd977c14b12b1af01d75fe7e3b0667e6735386993b417c2a0cab07cda007d",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/reliability/nova-store-boundaries.test.mts",
+        "line": 14,
+        "expression": "import { FileNovaGateImportStore, NovaRemoteGateImporter } from '../../../skills/nova/core/test-gates/remote-result-import.ts';",
+        "sourceSha256": "43c2f51ea8d452f60dec9e08048420864c977746c6ee5d0d916e3c913ce1bdb5",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/reliability/nova-store-boundaries.test.mts",
+        "line": 90,
+        "expression": "    const store = new FileNovaGateImportStore(storeRoot, options);",
+        "sourceSha256": "43c2f51ea8d452f60dec9e08048420864c977746c6ee5d0d916e3c913ce1bdb5",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/reliability/nova-store-boundaries.test.mts",
+        "line": 95,
+        "expression": "    const reopened = new FileNovaGateImportStore(storeRoot, options);",
+        "sourceSha256": "43c2f51ea8d452f60dec9e08048420864c977746c6ee5d0d916e3c913ce1bdb5",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/reliability/delivery-manifest-v3-stage-boundary-child.mjs",
+        "line": 149,
+        "expression": "  const store = new core.FileNovaGateImportStore(path.join(root, 'imports'), { recordLimits: { maximumRecords: 100, maximumBytes: 8 * 1024 ** 2, maximumRecordBytes: 2 * 1024 ** 2 }, maximumEvidenceStoreBytes: 2 * 1024 ** 2 });",
+        "sourceSha256": "648b696e37ee073c9b7e6870c05efc2f0ba7eed6f80bfcdae5b2f6c68a33d0af",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/reliability/delivery-manifest-v3-stage-boundary.test.mjs",
+        "line": 70,
+        "expression": "      fs.writeFileSync(path.join(output, 'phase-transcript.json'), JSON.stringify({ command: 'node --test tests/verification/reliability/delivery-manifest-v3-stage-boundary.test.mjs', expectedOverallExit: 0, expectedBoundary: 'real FileNovaGateImportStore verified import and original evidence adapter success', phases: outputs }, null, 2) + '\\n');",
+        "sourceSha256": "bc3c62c319a47cf7b147623f6d7a4166f4a1ab644096530ef6579a235d37fde9",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/reliability/nova-dispatch-retained-authority.test.mjs",
+        "line": 9,
+        "expression": "import { FileNovaGateImportStore } from '../../../skills/nova/core/test-gates/remote-result-import.ts';",
+        "sourceSha256": "61e593387a562459e57649b63a85aefaae82284f1e609b7e7474e9ce001e4c64",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/reliability/nova-dispatch-retained-authority.test.mjs",
+        "line": 29,
+        "expression": "  return { root, job, records, store: new FileNovaGateImportStore(root, { recordLimits: limits, maximumEvidenceStoreBytes: 1024 ** 2 }) };",
+        "sourceSha256": "61e593387a562459e57649b63a85aefaae82284f1e609b7e7474e9ce001e4c64",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/reliability/nova-remote-faults.mts",
+        "line": 10,
+        "expression": "  FileNovaGateImportStore, NovaRemoteGateImporter, NovaRemoteTestGate, RemotePlanTransportError } from '@kubeclaw/nova-core';",
+        "sourceSha256": "b14c845886e702ea23d12ed7b8b9231ddc2abfbf8411eb34d78b5b088d975e9a",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/reliability/nova-remote-faults.mts",
+        "line": 106,
+        "expression": "      const store = new FileNovaGateImportStore(path.join(fixture.temporary, `deadline-import-${fault}`), {",
+        "sourceSha256": "b14c845886e702ea23d12ed7b8b9231ddc2abfbf8411eb34d78b5b088d975e9a",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/contracts/check-pipeline-remote-real-provider.mts",
+        "line": 5,
+        "expression": "import { FileNovaGateImportStore } from '../../../skills/nova/core/test-gates/remote-result-import.ts';",
+        "sourceSha256": "bc0a7e29e1a39e2396749d9c7882a43eb1a387c9410269c0de37517f2e45b38b",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/contracts/check-pipeline-remote-real-provider.mts",
+        "line": 147,
+        "expression": "    const imported = new FileNovaGateImportStore(path.join(temporary, 'nova-state', 'imports'), { recordLimits: records, maximumEvidenceStoreBytes: 16 * 1024 * 1024 });",
+        "sourceSha256": "bc0a7e29e1a39e2396749d9c7882a43eb1a387c9410269c0de37517f2e45b38b",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/contracts/check-pipeline-remote-process-restart.mts",
+        "line": 9,
+        "expression": "import { FileNovaGateImportStore, buildCommittedSourceSnapshot, buildRegistry, createRemotePlanJob, discoverPackages } from '@kubeclaw/nova-core';",
+        "sourceSha256": "e96fac732e24d41dbbe46d782f9e870cae01b11a029e57f6e378fe5137b2021b",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/contracts/check-pipeline-remote-process-restart.mts",
+        "line": 223,
+        "expression": "  const graphs = await new FileNovaGateImportStore(path.join(temporary, 'nova-state', 'imports'), {",
+        "sourceSha256": "e96fac732e24d41dbbe46d782f9e870cae01b11a029e57f6e378fe5137b2021b",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/contracts/check-pipeline-remote-plan-runtime.mts",
+        "line": 21,
+        "expression": "  FileNovaGateImportStore,",
+        "sourceSha256": "e3ee66387ec2c36dd3bf779885819b7d2a84284afeab8ff4e56414d31e37a066",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/contracts/check-pipeline-remote-plan-runtime.mts",
+        "line": 387,
+        "expression": "  const evidenceImporter = new NovaRemoteGateImporter({ store: new FileNovaGateImportStore(",
+        "sourceSha256": "e3ee66387ec2c36dd3bf779885819b7d2a84284afeab8ff4e56414d31e37a066",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/contracts/buster-cluster-production-route.test.mjs",
+        "line": 13,
+        "expression": "import { FileNovaGateImportStore } from '../../../skills/nova/core/test-gates/remote-result-import.ts';",
+        "sourceSha256": "6a9a37a9963c6677318287fe7678fe1807a606d2b18cf857768ba94d63b44081",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/contracts/buster-cluster-production-route.test.mjs",
+        "line": 172,
+        "expression": "          const imports = new FileNovaGateImportStore(path.join(runRoot, 'nova-state/imports'), {",
+        "sourceSha256": "6a9a37a9963c6677318287fe7678fe1807a606d2b18cf857768ba94d63b44081",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/contracts/check-junit-executed-required.mts",
+        "line": 23,
+        "expression": "  FileNovaGateImportStore, NovaRemoteGateImporter, gateDecisionStageResult,",
+        "sourceSha256": "91c3bef282bf06ac44abe7d0320d330af10ec8c01d940a36134348458f7b18f7",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/contracts/check-junit-executed-required.mts",
+        "line": 161,
+        "expression": "          const store=new FileNovaGateImportStore(storePath,{recordLimits,maximumEvidenceStoreBytes:2*1024*1024});",
+        "sourceSha256": "91c3bef282bf06ac44abe7d0320d330af10ec8c01d940a36134348458f7b18f7",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/contracts/check-junit-executed-required.mts",
+        "line": 168,
+        "expression": "          const reopened=new FileNovaGateImportStore(storePath,{recordLimits,maximumEvidenceStoreBytes:2*1024*1024});",
+        "sourceSha256": "91c3bef282bf06ac44abe7d0320d330af10ec8c01d940a36134348458f7b18f7",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/contracts/check-pipeline-worker-local-config.mts",
+        "line": 4,
+        "expression": "import { FileNovaGateImportStore } from '../../../skills/nova/core/test-gates/remote-result-import.ts';",
+        "sourceSha256": "e3b8462e1190467d9bc16f771f81f356ba78fe07accefec8cd4292cb519d7d60",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/contracts/check-pipeline-worker-local-config.mts",
+        "line": 251,
+        "expression": "        const imported = new FileNovaGateImportStore(path.join(novaState, 'imports'),",
+        "sourceSha256": "e3b8462e1190467d9bc16f771f81f356ba78fe07accefec8cd4292cb519d7d60",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/contracts/check-pipeline-remote-result-import.mts",
+        "line": 16,
+        "expression": "  FileNovaGateImportStore, NovaRemoteGateImporter, NovaRemoteTestGate, gateDecisionStageResult,",
+        "sourceSha256": "6c3278f635bae5971bcae71183d9d3483cb4f786a9755b316a2eb61b14d0c58d",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/contracts/check-pipeline-remote-result-import.mts",
+        "line": 115,
+        "expression": "    store: new FileNovaGateImportStore(root, { recordLimits, maximumEvidenceStoreBytes: 1024 * 1024 }),",
+        "sourceSha256": "6c3278f635bae5971bcae71183d9d3483cb4f786a9755b316a2eb61b14d0c58d",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/contracts/check-pipeline-remote-result-import.mts",
+        "line": 134,
+        "expression": "  const store = new FileNovaGateImportStore(path.join(root, 'imports'), { recordLimits, maximumEvidenceStoreBytes: 1024 * 1024 });",
+        "sourceSha256": "6c3278f635bae5971bcae71183d9d3483cb4f786a9755b316a2eb61b14d0c58d",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/contracts/check-pipeline-remote-result-import.mts",
+        "line": 152,
+        "expression": "  const reopened = new FileNovaGateImportStore(path.join(root, 'imports'), { recordLimits, maximumEvidenceStoreBytes: 1024 * 1024 });",
+        "sourceSha256": "6c3278f635bae5971bcae71183d9d3483cb4f786a9755b316a2eb61b14d0c58d",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/contracts/check-pipeline-remote-result-import.mts",
+        "line": 158,
+        "expression": "  const importer = new NovaRemoteGateImporter({ store: new FileNovaGateImportStore(root,",
+        "sourceSha256": "6c3278f635bae5971bcae71183d9d3483cb4f786a9755b316a2eb61b14d0c58d",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/contracts/check-pipeline-remote-result-import.mts",
+        "line": 203,
+        "expression": "  const importer = new NovaRemoteGateImporter({ store: new FileNovaGateImportStore(root,",
+        "sourceSha256": "6c3278f635bae5971bcae71183d9d3483cb4f786a9755b316a2eb61b14d0c58d",
+        "scope": "test-only"
+      },
+      {
+        "path": "scripts/retire-nova-dispatch.mjs",
+        "line": 5,
+        "expression": "import { FileNovaGateImportStore } from '../skills/nova/core/test-gates/remote-result-import.ts';",
+        "sourceSha256": "96c2616a01b2169c4c6d16503013c74640700455d53dde0ed689f3b7eabc6fc4",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "scripts/retire-nova-dispatch.mjs",
+        "line": 80,
+        "expression": "    const imports = new FileNovaGateImportStore(scope.intent.importRoot, scope.importOptions);",
+        "sourceSha256": "96c2616a01b2169c4c6d16503013c74640700455d53dde0ed689f3b7eabc6fc4",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/nova/core/test-gates/production.ts",
+        "line": 13,
+        "expression": "  FileNovaGateImportStore,",
+        "sourceSha256": "886c5898b90473ac1f547a40136ed43de2e40bd556bb1acde025fcd95c2a0be1",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/nova/core/test-gates/production.ts",
+        "line": 112,
+        "expression": "    store: new FileNovaGateImportStore(path.join(options.stateRoot, 'imports'), {",
+        "sourceSha256": "886c5898b90473ac1f547a40136ed43de2e40bd556bb1acde025fcd95c2a0be1",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/nova/core/test-gates/remote-result-import.ts",
+        "line": 96,
+        "expression": "export class FileNovaGateImportStore {",
+        "sourceSha256": "ddb1e749086128083a295c15790a1e666a614000b4650055e3374c9bf7edcc81",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/nova/core/test-gates/remote-result-import.ts",
+        "line": 201,
+        "expression": "  readonly #store: FileNovaGateImportStore;",
+        "sourceSha256": "ddb1e749086128083a295c15790a1e666a614000b4650055e3374c9bf7edcc81",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/nova/core/test-gates/remote-result-import.ts",
+        "line": 206,
+        "expression": "  constructor(options: { store: FileNovaGateImportStore; evidence: RemotePlanEvidenceTransport;",
+        "sourceSha256": "ddb1e749086128083a295c15790a1e666a614000b4650055e3374c9bf7edcc81",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/nova/core/src/index.ts",
+        "line": 65,
+        "expression": "export { FileNovaGateImportStore, NovaRemoteGateImporter, NovaRemoteTestGate, gateDecisionStageResult } from '../test-gates/remote-result-import.ts';",
+        "sourceSha256": "2cd478afa23772e88241245bbab2f9f5bcd86fb75e216250a7a6364c19bac9b8",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/nova/plugins/remote-test-gate/src/demo-source-links.ts",
+        "line": 1,
+        "expression": "import type { FileNovaGateImportStore } from '@kubeclaw/nova-core';",
+        "sourceSha256": "de4808cd82d0e5c0dad7157289388ed72b7249b1fc21cd78987a1d9a701b7fd7",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/nova/plugins/remote-test-gate/src/demo-source-links.ts",
+        "line": 2,
+        "expression": "type Verified=Awaited<ReturnType<FileNovaGateImportStore['readVerifiedResult']>>;",
+        "sourceSha256": "de4808cd82d0e5c0dad7157289388ed72b7249b1fc21cd78987a1d9a701b7fd7",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/nova/plugins/remote-test-gate/tests/evidence-projection.test.ts",
+        "line": 12,
+        "expression": "import {buildRegistry,discoverPackages,resolveCapabilityGrants,FileNovaGateImportStore,NovaRemoteGateImporter,AdapterRuntime,EffectCoordinator,FileEffectJournal,FileResourceLockManager,activateRegistry} from '@kubeclaw/nova-core';",
+        "sourceSha256": "52124826a08e9dd7c5a6337203b0549fc590723f5ec6659b96fe848f29354407",
+        "scope": "test-only"
+      },
+      {
+        "path": "skills/nova/plugins/remote-test-gate/tests/evidence-projection.test.ts",
+        "line": 44,
+        "expression": " const store=new FileNovaGateImportStore(storePath,options);const importer=new NovaRemoteGateImporter({store,evidence:transport,results:transport,maximumEvidenceBytes:2*1024**2,maximumResultBytes:2*1024**2});",
+        "sourceSha256": "52124826a08e9dd7c5a6337203b0549fc590723f5ec6659b96fe848f29354407",
+        "scope": "test-only"
+      },
+      {
+        "path": "skills/nova/plugins/remote-test-gate/tests/evidence-projection.test.ts",
+        "line": 71,
+        "expression": "  const reopen=new FileNovaGateImportStore(storePath,options);const binding={jobId:job.jobId,runId:job.plan.runId,pipelineStageId:'final-test',sourceRevision:job.sourceSnapshot.revision,decisionDigest:decision.decisionDigest,resultDigest:result.resultDigest};",
+        "sourceSha256": "52124826a08e9dd7c5a6337203b0549fc590723f5ec6659b96fe848f29354407",
+        "scope": "test-only"
+      },
+      {
+        "path": "skills/nova/plugins/remote-test-gate/src/demo-evidence.ts",
+        "line": 3,
+        "expression": "import type { FileNovaGateImportStore } from '@kubeclaw/nova-core';",
+        "sourceSha256": "28fc430c4e7840ae1dc0c76698981ebfe35ce08011032ed3380b19799ceb6a63",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/nova/plugins/remote-test-gate/src/demo-evidence.ts",
+        "line": 5,
+        "expression": "type Verified = Awaited<ReturnType<FileNovaGateImportStore['readVerifiedResult']>>;",
+        "sourceSha256": "28fc430c4e7840ae1dc0c76698981ebfe35ce08011032ed3380b19799ceb6a63",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/nova/plugins/remote-test-gate/src/evidence-adapter.ts",
+        "line": 5,
+        "expression": "import { FileNovaGateImportStore } from '@kubeclaw/nova-core';",
+        "sourceSha256": "6afbc4274b2cbffa9fff2ed3c32deb9af3a381e7d3400e253fc3b871e139bffe",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/nova/plugins/remote-test-gate/src/evidence-adapter.ts",
+        "line": 31,
+        "expression": "async function project(context:AdapterActivationContext,invocation:AdapterInvocation,store:FileNovaGateImportStore) {",
+        "sourceSha256": "6afbc4274b2cbffa9fff2ed3c32deb9af3a381e7d3400e253fc3b871e139bffe",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/nova/plugins/remote-test-gate/src/evidence-adapter.ts",
+        "line": 57,
+        "expression": "  const store=new FileNovaGateImportStore(path.join(root,'imports'),{recordLimits:{maximumRecords:10000,maximumBytes:1024**3,maximumRecordBytes:64*1024**2},maximumEvidenceStoreBytes:1024**3});",
+        "sourceSha256": "6afbc4274b2cbffa9fff2ed3c32deb9af3a381e7d3400e253fc3b871e139bffe",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/nova/plugins/demo-handoff/tests/handoff.test.mts",
+        "line": 52,
+        "expression": "  const store=new core.FileNovaGateImportStore(path.join(root,'imports'),{recordLimits:{maximumRecords:100,maximumBytes:8*1024**2,maximumRecordBytes:2*1024**2},maximumEvidenceStoreBytes:2*1024**2});",
+        "sourceSha256": "299d952f3e7d857d5cda8de9a26cc43f3878915f8ea587680c58c38eaa761b26",
+        "scope": "test-only"
+      }
+    ],
+    "RegisteredTestProviderLoader": [
+      {
+        "path": "skills/buster/engine/src/index.ts",
+        "line": 6,
+        "expression": "export { RegisteredTestProviderLoader } from '../test-gates/provider-loader.ts';",
+        "sourceSha256": "51c35b9e5455f1c1d253c769f1f020c23b1d1a0fe8e3b30abe4158e43be09f6a",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/buster/engine/test-gates/runner.ts",
+        "line": 29,
+        "expression": "import { RegisteredTestProviderLoader, type LoadedTestProvider, type TestProviderLoader } from \"./provider-loader.ts\";",
+        "sourceSha256": "8db6fb069648014e1cfb2c63f33de1382219279b1358a76a15a1936e3b80732a",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/buster/engine/test-gates/runner.ts",
+        "line": 57,
+        "expression": "    this.#loader = options.loader ?? new RegisteredTestProviderLoader({ provider: executionPolicy.provider, observation: executionPolicy.observation });",
+        "sourceSha256": "8db6fb069648014e1cfb2c63f33de1382219279b1358a76a15a1936e3b80732a",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/buster/engine/test-gates/provider-loader.ts",
+        "line": 156,
+        "expression": "export class RegisteredTestProviderLoader implements TestProviderLoader {",
+        "sourceSha256": "b48f69d93fe663d9266576567939775cc830b225923a65d85e87de343a1ee25e",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "tests/verification/contracts/provider-disposal-unconfirmed.test.mjs",
+        "line": 6,
+        "expression": "import { RegisteredTestProviderLoader } from '../../../skills/buster/engine/test-gates/provider-loader.ts';",
+        "sourceSha256": "31234628c2266b28975407bef8c4164f673d672a75a0251ca07618f7189086ee",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/contracts/provider-disposal-unconfirmed.test.mjs",
+        "line": 89,
+        "expression": "      const loader = new RegisteredTestProviderLoader({ provider: options.executionPolicy.provider,",
+        "sourceSha256": "31234628c2266b28975407bef8c4164f673d672a75a0251ca07618f7189086ee",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/contracts/check-pipeline-test-plan-runner.mts",
+        "line": 6,
+        "expression": "import { createBusterWorkerProfiles, LocalWorkerRuntime, RegisteredTestProviderLoader, TestPlanRunner, type WorkerAttemptRuntime } from \"../../../skills/buster/engine/src/index.ts\";",
+        "sourceSha256": "989e6b8b5596938acf2a45ab0c600d3b936f2af85af60600a54852c2d415ac8d",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/contracts/check-pipeline-test-plan-runner.mts",
+        "line": 651,
+        "expression": "const realLogHangLoader = new RegisteredTestProviderLoader({ provider: runnerExecutionPolicy.provider, observation: runnerExecutionPolicy.observation });",
+        "sourceSha256": "989e6b8b5596938acf2a45ab0c600d3b936f2af85af60600a54852c2d415ac8d",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/contracts/check-pipeline-test-plan-runner.mts",
+        "line": 1484,
+        "expression": "const registeredLoader = new RegisteredTestProviderLoader({ provider: runnerExecutionPolicy.provider, observation: runnerExecutionPolicy.observation });",
+        "sourceSha256": "989e6b8b5596938acf2a45ab0c600d3b936f2af85af60600a54852c2d415ac8d",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/contracts/provider-disposal-recovery.test.mjs",
+        "line": 6,
+        "expression": "import { RegisteredTestProviderLoader } from '../../../skills/buster/engine/test-gates/provider-loader.ts';",
+        "sourceSha256": "2741d0de10e3089ec00cbb253ca11a690bf2d04770568827b58bcec389c9e2fe",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/contracts/provider-disposal-recovery.test.mjs",
+        "line": 17,
+        "expression": "    const loader = new RegisteredTestProviderLoader({ provider: options.executionPolicy.provider,",
+        "sourceSha256": "2741d0de10e3089ec00cbb253ca11a690bf2d04770568827b58bcec389c9e2fe",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/contracts/provider-disposal-recovery.test.mjs",
+        "line": 84,
+        "expression": "    const loader = new RegisteredTestProviderLoader({ provider: options.executionPolicy.provider,",
+        "sourceSha256": "2741d0de10e3089ec00cbb253ca11a690bf2d04770568827b58bcec389c9e2fe",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/contracts/provider-disposal-recovery.test.mjs",
+        "line": 126,
+        "expression": "  const loader = new RegisteredTestProviderLoader({ provider: options.executionPolicy.provider,",
+        "sourceSha256": "2741d0de10e3089ec00cbb253ca11a690bf2d04770568827b58bcec389c9e2fe",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/contracts/kubernetes-cleanup-runner.test.mjs",
+        "line": 6,
+        "expression": "import { RegisteredTestProviderLoader } from '../../../skills/buster/engine/test-gates/provider-loader.ts';",
+        "sourceSha256": "c5ad3ab397057d02a52a1d26d1b23486c4c59d9988b3410ed3768223cfa9e257",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/contracts/kubernetes-cleanup-runner.test.mjs",
+        "line": 16,
+        "expression": "    const loader = new RegisteredTestProviderLoader({ provider: options.executionPolicy.provider, observation: options.executionPolicy.observation });",
+        "sourceSha256": "c5ad3ab397057d02a52a1d26d1b23486c4c59d9988b3410ed3768223cfa9e257",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/contracts/kubernetes-cleanup-runner.test.mjs",
+        "line": 70,
+        "expression": "  const loader = new RegisteredTestProviderLoader({ provider: options.executionPolicy.provider, observation: options.executionPolicy.observation });",
+        "sourceSha256": "c5ad3ab397057d02a52a1d26d1b23486c4c59d9988b3410ed3768223cfa9e257",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/contracts/buster-provider-session-policy.test.mjs",
+        "line": 5,
+        "expression": "import { RegisteredTestProviderLoader } from '../../../skills/buster/engine/test-gates/provider-loader.ts';",
+        "sourceSha256": "aae15408dfb2ade28a0dc404a6361d828bc1a6de944041f1f561ecbb3bec1c29",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/contracts/buster-provider-session-policy.test.mjs",
+        "line": 20,
+        "expression": "    assert.throws(() => new RegisteredTestProviderLoader(candidate), /SWARM_CONFIG_BUSTER_PROVIDER_RUNTIME_INVALID/);",
+        "sourceSha256": "aae15408dfb2ade28a0dc404a6361d828bc1a6de944041f1f561ecbb3bec1c29",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/contracts/buster-provider-session-policy.test.mjs",
+        "line": 41,
+        "expression": "  assert.throws(() => new RegisteredTestProviderLoader(runnerExecutionPolicy.observation), /SWARM_CONFIG_BUSTER_PROVIDER_RUNTIME_INVALID/);",
+        "sourceSha256": "aae15408dfb2ade28a0dc404a6361d828bc1a6de944041f1f561ecbb3bec1c29",
+        "scope": "test-only"
+      }
+    ],
+    "validatePersistentVolumeClaim": [
+      {
+        "path": "skills/buster/engine/test-gates/kubernetes-fixture-storage.ts",
+        "line": 64,
+        "expression": "export function validatePersistentVolumeClaim(name: string, spec: JsonObject, policy: PersistentVolumePolicy): bigint {",
+        "sourceSha256": "da2858e192df14fc5d457ebd1f3414696c5a3be116f611216c214c0b6b194f1f",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/buster/engine/test-gates/kubernetes-fixture-inspection.ts",
+        "line": 5,
+        "expression": "import { persistentVolumeClaims, validatePersistentVolumeClaim, type PersistentVolumePolicy } from './kubernetes-fixture-storage.ts';",
+        "sourceSha256": "d2ea5344cca6f0e849dbe94b3bb455e170c7a0ec44d8e2f9f0517c5bd3ce0a74",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/buster/engine/test-gates/kubernetes-fixture-inspection.ts",
+        "line": 67,
+        "expression": "        state.persistentVolumeTotalBytes += validatePersistentVolumeClaim(claim.name, claim.spec, policy.persistentVolumePolicy)",
+        "sourceSha256": "d2ea5344cca6f0e849dbe94b3bb455e170c7a0ec44d8e2f9f0517c5bd3ce0a74",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      }
+    ],
+    "inspectManifest": [
+      {
+        "path": "tests/verification/contracts/check-pipeline-kubernetes-fixture-implementation.mts",
+        "line": 33,
+        "expression": "assert.match(fixtureSources.get('preparation')!, /inspectManifest\\(bytes,/u);",
+        "sourceSha256": "5cc4ec91787529dcd437e56d8cb1a22720a3b1569a32bafdc7ec9f372afba50d",
+        "scope": "test-only"
+      },
+      {
+        "path": "skills/buster/engine/test-gates/kubernetes-fixture-preparation.ts",
+        "line": 3,
+        "expression": "import { inspectManifest } from './kubernetes-fixture-inspection.ts';",
+        "sourceSha256": "1f41112db44a5135ff7c8d7a575e87699a854278a9e792d248ee91673d06fbd0",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/buster/engine/test-gates/kubernetes-fixture-preparation.ts",
+        "line": 112,
+        "expression": "    const facts = inspectManifest(bytes, { immutableImage, maximumResources: settings.maximumResources, manifest: settings.manifest,",
+        "sourceSha256": "1f41112db44a5135ff7c8d7a575e87699a854278a9e792d248ee91673d06fbd0",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/buster/engine/test-gates/kubernetes-fixture-inspection.ts",
+        "line": 37,
+        "expression": "export function inspectManifest(bytes: Buffer, policy: ManifestPolicy): {",
+        "sourceSha256": "d2ea5344cca6f0e849dbe94b3bb455e170c7a0ec44d8e2f9f0517c5bd3ce0a74",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      }
+    ],
+    "ProviderProcessSession": [
+      {
+        "path": "tests/verification/contracts/provider-disposal-recovery.test.mjs",
+        "line": 66,
+        "expression": "    const { ProviderProcessSession } = await import('../../../skills/buster/engine/test-gates/provider-process-session.ts');",
+        "sourceSha256": "2741d0de10e3089ec00cbb253ca11a690bf2d04770568827b58bcec389c9e2fe",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/contracts/provider-disposal-recovery.test.mjs",
+        "line": 74,
+        "expression": "    const originalTerminate = ProviderProcessSession.prototype.terminate;",
+        "sourceSha256": "2741d0de10e3089ec00cbb253ca11a690bf2d04770568827b58bcec389c9e2fe",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/contracts/provider-disposal-recovery.test.mjs",
+        "line": 77,
+        "expression": "    t.mock.method(ProviderProcessSession.prototype, 'terminate', async function () {",
+        "sourceSha256": "2741d0de10e3089ec00cbb253ca11a690bf2d04770568827b58bcec389c9e2fe",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/contracts/provider-disposal-recovery.test.mjs",
+        "line": 122,
+        "expression": "  const { ProviderProcessSession } = await import('../../../skills/buster/engine/test-gates/provider-process-session.ts');",
+        "sourceSha256": "2741d0de10e3089ec00cbb253ca11a690bf2d04770568827b58bcec389c9e2fe",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/contracts/provider-disposal-recovery.test.mjs",
+        "line": 128,
+        "expression": "  const originalTerminate = ProviderProcessSession.prototype.terminate;",
+        "sourceSha256": "2741d0de10e3089ec00cbb253ca11a690bf2d04770568827b58bcec389c9e2fe",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/contracts/provider-disposal-recovery.test.mjs",
+        "line": 132,
+        "expression": "  t.mock.method(ProviderProcessSession.prototype, 'terminate', function () {",
+        "sourceSha256": "2741d0de10e3089ec00cbb253ca11a690bf2d04770568827b58bcec389c9e2fe",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/contracts/provider-loader-ownership.test.mjs",
+        "line": 11,
+        "expression": "import { ProviderProcessSession } from '../../../skills/buster/engine/test-gates/provider-process-session.ts';",
+        "sourceSha256": "edbe313ffac1eb2b4d2435cca801ca1c9e711cfe5f23de0783f616a88460a050",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/contracts/provider-loader-ownership.test.mjs",
+        "line": 103,
+        "expression": "  session = new ProviderProcessSession({ package: { root: directory }, registration: {",
+        "sourceSha256": "edbe313ffac1eb2b4d2435cca801ca1c9e711cfe5f23de0783f616a88460a050",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/contracts/buster-provider-session-policy.test.mjs",
+        "line": 6,
+        "expression": "import { ProviderProcessSession } from '../../../skills/buster/engine/test-gates/provider-process-session.ts';",
+        "sourceSha256": "aae15408dfb2ade28a0dc404a6361d828bc1a6de944041f1f561ecbb3bec1c29",
+        "scope": "test-only"
+      },
+      {
+        "path": "tests/verification/contracts/buster-provider-session-policy.test.mjs",
+        "line": 22,
+        "expression": "    assert.throws(() => new ProviderProcessSession(null, null, '/does-not-exist', candidate), /SWARM_CONFIG_BUSTER_PROVIDER_RUNTIME_INVALID/);",
+        "sourceSha256": "aae15408dfb2ade28a0dc404a6361d828bc1a6de944041f1f561ecbb3bec1c29",
+        "scope": "test-only"
+      },
+      {
+        "path": "skills/buster/engine/test-gates/provider-process-session.ts",
+        "line": 47,
+        "expression": "export class ProviderProcessSession {",
+        "sourceSha256": "ea0ac4030fbcfb9428590bbc8f4a68c445596da9a56f6b4ad41c0df10cb7ca6d",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/buster/engine/test-gates/provider-loader.ts",
+        "line": 1,
+        "expression": "import { ProviderProcessSession, assertCleanupDisposition } from './provider-process-session.ts';",
+        "sourceSha256": "b48f69d93fe663d9266576567939775cc830b225923a65d85e87de343a1ee25e",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/buster/engine/test-gates/provider-loader.ts",
+        "line": 66,
+        "expression": "  #session: ProviderProcessSession;",
+        "sourceSha256": "b48f69d93fe663d9266576567939775cc830b225923a65d85e87de343a1ee25e",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/buster/engine/test-gates/provider-loader.ts",
+        "line": 68,
+        "expression": "  readonly #accountedSessions = new WeakSet<ProviderProcessSession>();",
+        "sourceSha256": "b48f69d93fe663d9266576567939775cc830b225923a65d85e87de343a1ee25e",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/buster/engine/test-gates/provider-loader.ts",
+        "line": 76,
+        "expression": "    this.#session = new ProviderProcessSession(entry, invocation, workspaceRoot, policy);",
+        "sourceSha256": "b48f69d93fe663d9266576567939775cc830b225923a65d85e87de343a1ee25e",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/buster/engine/test-gates/provider-loader.ts",
+        "line": 89,
+        "expression": "      this.#session = new ProviderProcessSession(this.#entry, this.#invocation, this.#workspaceRoot, this.#policy);",
+        "sourceSha256": "b48f69d93fe663d9266576567939775cc830b225923a65d85e87de343a1ee25e",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/buster/engine/test-gates/provider-loader.ts",
+        "line": 95,
+        "expression": "  async #cleanupSession(session: ProviderProcessSession, context: TestProviderExecutionContext,",
+        "sourceSha256": "b48f69d93fe663d9266576567939775cc830b225923a65d85e87de343a1ee25e",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/buster/engine/test-gates/provider-loader.ts",
+        "line": 116,
+        "expression": "  async #terminateSession(session: ProviderProcessSession): Promise<void> {",
+        "sourceSha256": "b48f69d93fe663d9266576567939775cc830b225923a65d85e87de343a1ee25e",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      },
+      {
+        "path": "skills/buster/engine/test-gates/provider-loader.ts",
+        "line": 142,
+        "expression": "  #combinedResources(session: ProviderProcessSession): ProviderProcessResources {",
+        "sourceSha256": "b48f69d93fe663d9266576567939775cc830b225923a65d85e87de343a1ee25e",
+        "scope": "productive-source-or-export (adjudicated per contract)"
+      }
+    ]
+  },
+  "commands": [
+    {
+      "argv": [
+        "rg",
+        "-n",
+        "FileProducerOutbox",
+        "skills",
+        "scripts",
+        "docker",
+        "tools",
+        "cmd",
+        "tests",
+        "--glob",
+        "*.{ts,mts,mjs,js,cjs,json,go}"
+      ],
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+      "exit": 0,
+      "stdout": "audit-FileProducerOutbox.stdout",
+      "stderr": "audit-FileProducerOutbox.stderr",
+      "purpose": "Read-only symbol/import/alias/caller audit; not execution"
+    },
+    {
+      "argv": [
+        "rg",
+        "-n",
+        "FileDurableBlobStore",
+        "skills",
+        "scripts",
+        "docker",
+        "tools",
+        "cmd",
+        "tests",
+        "--glob",
+        "*.{ts,mts,mjs,js,cjs,json,go}"
+      ],
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+      "exit": 0,
+      "stdout": "audit-FileDurableBlobStore.stdout",
+      "stderr": "audit-FileDurableBlobStore.stderr",
+      "purpose": "Read-only symbol/import/alias/caller audit; not execution"
+    },
+    {
+      "argv": [
+        "rg",
+        "-n",
+        "FileBusterFixtureJournal",
+        "skills",
+        "scripts",
+        "docker",
+        "tools",
+        "cmd",
+        "tests",
+        "--glob",
+        "*.{ts,mts,mjs,js,cjs,json,go}"
+      ],
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+      "exit": 0,
+      "stdout": "audit-FileBusterFixtureJournal.stdout",
+      "stderr": "audit-FileBusterFixtureJournal.stderr",
+      "purpose": "Read-only symbol/import/alias/caller audit; not execution"
+    },
+    {
+      "argv": [
+        "rg",
+        "-n",
+        "HistoricalBusterPlanJobStore",
+        "skills",
+        "scripts",
+        "docker",
+        "tools",
+        "cmd",
+        "tests",
+        "--glob",
+        "*.{ts,mts,mjs,js,cjs,json,go}"
+      ],
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+      "exit": 0,
+      "stdout": "audit-HistoricalBusterPlanJobStore.stdout",
+      "stderr": "audit-HistoricalBusterPlanJobStore.stderr",
+      "purpose": "Read-only symbol/import/alias/caller audit; not execution"
+    },
+    {
+      "argv": [
+        "rg",
+        "-n",
+        "NativeAttemptJournal",
+        "skills",
+        "scripts",
+        "docker",
+        "tools",
+        "cmd",
+        "tests",
+        "--glob",
+        "*.{ts,mts,mjs,js,cjs,json,go}"
+      ],
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+      "exit": 0,
+      "stdout": "audit-NativeAttemptJournal.stdout",
+      "stderr": "audit-NativeAttemptJournal.stderr",
+      "purpose": "Read-only symbol/import/alias/caller audit; not execution"
+    },
+    {
+      "argv": [
+        "rg",
+        "-n",
+        "FileNovaGateImportStore",
+        "skills",
+        "scripts",
+        "docker",
+        "tools",
+        "cmd",
+        "tests",
+        "--glob",
+        "*.{ts,mts,mjs,js,cjs,json,go}"
+      ],
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+      "exit": 0,
+      "stdout": "audit-FileNovaGateImportStore.stdout",
+      "stderr": "audit-FileNovaGateImportStore.stderr",
+      "purpose": "Read-only symbol/import/alias/caller audit; not execution"
+    },
+    {
+      "argv": [
+        "rg",
+        "-n",
+        "RegisteredTestProviderLoader",
+        "skills",
+        "scripts",
+        "docker",
+        "tools",
+        "cmd",
+        "tests",
+        "--glob",
+        "*.{ts,mts,mjs,js,cjs,json,go}"
+      ],
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+      "exit": 0,
+      "stdout": "audit-RegisteredTestProviderLoader.stdout",
+      "stderr": "audit-RegisteredTestProviderLoader.stderr",
+      "purpose": "Read-only symbol/import/alias/caller audit; not execution"
+    },
+    {
+      "argv": [
+        "rg",
+        "-n",
+        "validatePersistentVolumeClaim",
+        "skills",
+        "scripts",
+        "docker",
+        "tools",
+        "cmd",
+        "tests",
+        "--glob",
+        "*.{ts,mts,mjs,js,cjs,json,go}"
+      ],
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+      "exit": 0,
+      "stdout": "audit-validatePersistentVolumeClaim.stdout",
+      "stderr": "audit-validatePersistentVolumeClaim.stderr",
+      "purpose": "Read-only symbol/import/alias/caller audit; not execution"
+    },
+    {
+      "argv": [
+        "rg",
+        "-n",
+        "inspectManifest",
+        "skills",
+        "scripts",
+        "docker",
+        "tools",
+        "cmd",
+        "tests",
+        "--glob",
+        "*.{ts,mts,mjs,js,cjs,json,go}"
+      ],
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+      "exit": 0,
+      "stdout": "audit-inspectManifest.stdout",
+      "stderr": "audit-inspectManifest.stderr",
+      "purpose": "Read-only symbol/import/alias/caller audit; not execution"
+    },
+    {
+      "argv": [
+        "rg",
+        "-n",
+        "ProviderProcessSession",
+        "skills",
+        "scripts",
+        "docker",
+        "tools",
+        "cmd",
+        "tests",
+        "--glob",
+        "*.{ts,mts,mjs,js,cjs,json,go}"
+      ],
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+      "exit": 0,
+      "stdout": "audit-ProviderProcessSession.stdout",
+      "stderr": "audit-ProviderProcessSession.stderr",
+      "purpose": "Read-only symbol/import/alias/caller audit; not execution"
+    }
+  ],
+  "claim": "Repository roster includes mts and maintenance scripts; no installed dynamic consumer absence proof. Nested constructor site is not deployed instance."
+}

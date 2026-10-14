@@ -1,0 +1,50 @@
+tests/verification/reliability/nova-dispatch-projection.test.mjs:18:import { FileNovaGateImportStore } from '../../../skills/nova/core/test-gates/remote-result-import.ts';
+tests/verification/reliability/nova-dispatch-projection.test.mjs:200:  const imports = new FileNovaGateImportStore(f.scope.intent.importRoot, importOptions);
+tests/verification/reliability/nova-dispatch-projection.test.mjs:206:  assert.deepEqual(await new FileNovaGateImportStore(f.scope.intent.importRoot, importOptions).readExecutionGraphs(), graphBefore);
+tests/verification/reliability/nova-store-boundaries.test.mts:14:import { FileNovaGateImportStore, NovaRemoteGateImporter } from '../../../skills/nova/core/test-gates/remote-result-import.ts';
+tests/verification/reliability/nova-store-boundaries.test.mts:90:    const store = new FileNovaGateImportStore(storeRoot, options);
+tests/verification/reliability/nova-store-boundaries.test.mts:95:    const reopened = new FileNovaGateImportStore(storeRoot, options);
+tests/verification/reliability/delivery-manifest-v3-stage-boundary-child.mjs:149:  const store = new core.FileNovaGateImportStore(path.join(root, 'imports'), { recordLimits: { maximumRecords: 100, maximumBytes: 8 * 1024 ** 2, maximumRecordBytes: 2 * 1024 ** 2 }, maximumEvidenceStoreBytes: 2 * 1024 ** 2 });
+tests/verification/reliability/delivery-manifest-v3-stage-boundary.test.mjs:70:      fs.writeFileSync(path.join(output, 'phase-transcript.json'), JSON.stringify({ command: 'node --test tests/verification/reliability/delivery-manifest-v3-stage-boundary.test.mjs', expectedOverallExit: 0, expectedBoundary: 'real FileNovaGateImportStore verified import and original evidence adapter success', phases: outputs }, null, 2) + '\n');
+tests/verification/reliability/nova-dispatch-retained-authority.test.mjs:9:import { FileNovaGateImportStore } from '../../../skills/nova/core/test-gates/remote-result-import.ts';
+tests/verification/reliability/nova-dispatch-retained-authority.test.mjs:29:  return { root, job, records, store: new FileNovaGateImportStore(root, { recordLimits: limits, maximumEvidenceStoreBytes: 1024 ** 2 }) };
+tests/verification/reliability/nova-remote-faults.mts:10:  FileNovaGateImportStore, NovaRemoteGateImporter, NovaRemoteTestGate, RemotePlanTransportError } from '@kubeclaw/nova-core';
+tests/verification/reliability/nova-remote-faults.mts:106:      const store = new FileNovaGateImportStore(path.join(fixture.temporary, `deadline-import-${fault}`), {
+tests/verification/contracts/check-pipeline-remote-real-provider.mts:5:import { FileNovaGateImportStore } from '../../../skills/nova/core/test-gates/remote-result-import.ts';
+tests/verification/contracts/check-pipeline-remote-real-provider.mts:147:    const imported = new FileNovaGateImportStore(path.join(temporary, 'nova-state', 'imports'), { recordLimits: records, maximumEvidenceStoreBytes: 16 * 1024 * 1024 });
+tests/verification/contracts/check-pipeline-remote-process-restart.mts:9:import { FileNovaGateImportStore, buildCommittedSourceSnapshot, buildRegistry, createRemotePlanJob, discoverPackages } from '@kubeclaw/nova-core';
+tests/verification/contracts/check-pipeline-remote-process-restart.mts:223:  const graphs = await new FileNovaGateImportStore(path.join(temporary, 'nova-state', 'imports'), {
+tests/verification/contracts/check-pipeline-remote-plan-runtime.mts:21:  FileNovaGateImportStore,
+tests/verification/contracts/check-pipeline-remote-plan-runtime.mts:387:  const evidenceImporter = new NovaRemoteGateImporter({ store: new FileNovaGateImportStore(
+tests/verification/contracts/buster-cluster-production-route.test.mjs:13:import { FileNovaGateImportStore } from '../../../skills/nova/core/test-gates/remote-result-import.ts';
+tests/verification/contracts/buster-cluster-production-route.test.mjs:172:          const imports = new FileNovaGateImportStore(path.join(runRoot, 'nova-state/imports'), {
+tests/verification/contracts/check-junit-executed-required.mts:23:  FileNovaGateImportStore, NovaRemoteGateImporter, gateDecisionStageResult,
+tests/verification/contracts/check-junit-executed-required.mts:161:          const store=new FileNovaGateImportStore(storePath,{recordLimits,maximumEvidenceStoreBytes:2*1024*1024});
+tests/verification/contracts/check-junit-executed-required.mts:168:          const reopened=new FileNovaGateImportStore(storePath,{recordLimits,maximumEvidenceStoreBytes:2*1024*1024});
+tests/verification/contracts/check-pipeline-worker-local-config.mts:4:import { FileNovaGateImportStore } from '../../../skills/nova/core/test-gates/remote-result-import.ts';
+tests/verification/contracts/check-pipeline-worker-local-config.mts:251:        const imported = new FileNovaGateImportStore(path.join(novaState, 'imports'),
+tests/verification/contracts/check-pipeline-remote-result-import.mts:16:  FileNovaGateImportStore, NovaRemoteGateImporter, NovaRemoteTestGate, gateDecisionStageResult,
+tests/verification/contracts/check-pipeline-remote-result-import.mts:115:    store: new FileNovaGateImportStore(root, { recordLimits, maximumEvidenceStoreBytes: 1024 * 1024 }),
+tests/verification/contracts/check-pipeline-remote-result-import.mts:134:  const store = new FileNovaGateImportStore(path.join(root, 'imports'), { recordLimits, maximumEvidenceStoreBytes: 1024 * 1024 });
+tests/verification/contracts/check-pipeline-remote-result-import.mts:152:  const reopened = new FileNovaGateImportStore(path.join(root, 'imports'), { recordLimits, maximumEvidenceStoreBytes: 1024 * 1024 });
+tests/verification/contracts/check-pipeline-remote-result-import.mts:158:  const importer = new NovaRemoteGateImporter({ store: new FileNovaGateImportStore(root,
+tests/verification/contracts/check-pipeline-remote-result-import.mts:203:  const importer = new NovaRemoteGateImporter({ store: new FileNovaGateImportStore(root,
+scripts/retire-nova-dispatch.mjs:5:import { FileNovaGateImportStore } from '../skills/nova/core/test-gates/remote-result-import.ts';
+scripts/retire-nova-dispatch.mjs:80:    const imports = new FileNovaGateImportStore(scope.intent.importRoot, scope.importOptions);
+skills/nova/core/test-gates/production.ts:13:  FileNovaGateImportStore,
+skills/nova/core/test-gates/production.ts:112:    store: new FileNovaGateImportStore(path.join(options.stateRoot, 'imports'), {
+skills/nova/core/test-gates/remote-result-import.ts:96:export class FileNovaGateImportStore {
+skills/nova/core/test-gates/remote-result-import.ts:201:  readonly #store: FileNovaGateImportStore;
+skills/nova/core/test-gates/remote-result-import.ts:206:  constructor(options: { store: FileNovaGateImportStore; evidence: RemotePlanEvidenceTransport;
+skills/nova/core/src/index.ts:65:export { FileNovaGateImportStore, NovaRemoteGateImporter, NovaRemoteTestGate, gateDecisionStageResult } from '../test-gates/remote-result-import.ts';
+skills/nova/plugins/remote-test-gate/src/demo-source-links.ts:1:import type { FileNovaGateImportStore } from '@kubeclaw/nova-core';
+skills/nova/plugins/remote-test-gate/src/demo-source-links.ts:2:type Verified=Awaited<ReturnType<FileNovaGateImportStore['readVerifiedResult']>>;
+skills/nova/plugins/remote-test-gate/tests/evidence-projection.test.ts:12:import {buildRegistry,discoverPackages,resolveCapabilityGrants,FileNovaGateImportStore,NovaRemoteGateImporter,AdapterRuntime,EffectCoordinator,FileEffectJournal,FileResourceLockManager,activateRegistry} from '@kubeclaw/nova-core';
+skills/nova/plugins/remote-test-gate/tests/evidence-projection.test.ts:44: const store=new FileNovaGateImportStore(storePath,options);const importer=new NovaRemoteGateImporter({store,evidence:transport,results:transport,maximumEvidenceBytes:2*1024**2,maximumResultBytes:2*1024**2});
+skills/nova/plugins/remote-test-gate/tests/evidence-projection.test.ts:71:  const reopen=new FileNovaGateImportStore(storePath,options);const binding={jobId:job.jobId,runId:job.plan.runId,pipelineStageId:'final-test',sourceRevision:job.sourceSnapshot.revision,decisionDigest:decision.decisionDigest,resultDigest:result.resultDigest};
+skills/nova/plugins/remote-test-gate/src/demo-evidence.ts:3:import type { FileNovaGateImportStore } from '@kubeclaw/nova-core';
+skills/nova/plugins/remote-test-gate/src/demo-evidence.ts:5:type Verified = Awaited<ReturnType<FileNovaGateImportStore['readVerifiedResult']>>;
+skills/nova/plugins/remote-test-gate/src/evidence-adapter.ts:5:import { FileNovaGateImportStore } from '@kubeclaw/nova-core';
+skills/nova/plugins/remote-test-gate/src/evidence-adapter.ts:31:async function project(context:AdapterActivationContext,invocation:AdapterInvocation,store:FileNovaGateImportStore) {
+skills/nova/plugins/remote-test-gate/src/evidence-adapter.ts:57:  const store=new FileNovaGateImportStore(path.join(root,'imports'),{recordLimits:{maximumRecords:10000,maximumBytes:1024**3,maximumRecordBytes:64*1024**2},maximumEvidenceStoreBytes:1024**3});
+skills/nova/plugins/demo-handoff/tests/handoff.test.mts:52:  const store=new core.FileNovaGateImportStore(path.join(root,'imports'),{recordLimits:{maximumRecords:100,maximumBytes:8*1024**2,maximumRecordBytes:2*1024**2},maximumEvidenceStoreBytes:2*1024**2});

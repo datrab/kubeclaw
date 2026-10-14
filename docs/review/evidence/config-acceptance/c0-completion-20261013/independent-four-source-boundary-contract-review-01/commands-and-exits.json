@@ -1,0 +1,17 @@
+{
+  "pureReplay": {
+    "argv": [
+      "node",
+      "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/four-source-boundary-contracts-01/definition-shape-check.mjs"
+    ],
+    "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+    "exitCode": 0,
+    "stdout": "replay-shape.stdout",
+    "stderr": "replay-shape.stderr",
+    "sourceSha256": "4cdb1a7ce858b2864832e539d7db814fcf97e531ee7898805900637f1f8e64fa",
+    "node": "v24.21.0",
+    "ajvPackageSha256": "1f9033ee5a6515e7d76938b7072941862d1ed228a6879cc7fe10cdeb75107989",
+    "scope": "builtin reads/hash plus installed strict Ajv/formats; no productive imports/effects"
+  },
+  "additionalChecks": "Read-only source rg/sed/JSON pointer/body comparisons and finite literal Fraction arithmetic; no generalized validator or effectful helper."
+}

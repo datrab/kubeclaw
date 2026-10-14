@@ -1,0 +1,79 @@
+tests/verification/reliability/buster-fixture-journal.test.mts:11:import { NativeAttemptJournal } from '../../../skills/worker/core/worker/native-attempt-journal.ts';
+tests/verification/reliability/buster-fixture-journal.test.mts:58:    const native = new NativeAttemptJournal(path.join(directory, 'native'), nativeLimits);
+tests/verification/reliability/buster-fixture-journal.test.mts:66:  const native = new NativeAttemptJournal(path.join(directory, 'native'), nativeLimits); const value = admission();
+tests/verification/reliability/native-cleanup-fixture.mts:6:import { NativeAttemptJournal } from '../../../skills/worker/core/worker/native-attempt-journal.ts';
+tests/verification/reliability/native-cleanup-fixture.mts:31:  const journal = new NativeAttemptJournal(path.join(root, 'original'), limits);
+tests/verification/reliability/native-cleanup-fixture.mts:38:  const cleanupJournal = new NativeAttemptJournal(path.join(root, 'cleanup'), limits);
+tests/verification/reliability/native-journal-capacity-fixture.mts:6:import { NativeAttemptJournal } from '../../../skills/worker/core/worker/native-attempt-journal.ts';
+tests/verification/reliability/native-journal-capacity-fixture.mts:9:import type { NativeAttemptJournalLimits } from '../../../skills/worker/core/worker/native-journal-state.ts';
+tests/verification/reliability/native-journal-capacity-fixture.mts:11:export const limits: NativeAttemptJournalLimits = { maximumRecords: 32, maximumStateBytes: 262144,
+tests/verification/reliability/native-journal-capacity-fixture.mts:20:export async function finish(journal: NativeAttemptJournal, input: ReturnType<typeof envelope>) {
+tests/verification/reliability/worker-native-journal.test.mts:10:import { NativeAttemptJournal } from '../../../skills/worker/core/worker/native-attempt-journal.ts';
+tests/verification/reliability/worker-native-journal.test.mts:23:  const journal = new NativeAttemptJournal(path.join(parent, 'journal'), limits);
+tests/verification/reliability/worker-native-journal.test.mts:31:    const reopened = new NativeAttemptJournal(path.join(parent, 'journal'), limits);
+tests/verification/reliability/worker-native-journal.test.mts:54:      const journal = new NativeAttemptJournal(root, limits);
+tests/verification/reliability/worker-native-journal.test.mts:85:  const journal = new NativeAttemptJournal(root, { ...limits, maximumTotalBytes: 950000 });
+tests/verification/reliability/worker-native-journal.test.mts:106:  const journal = new NativeAttemptJournal(path.join(parent, 'journal'), limits);
+tests/verification/reliability/worker-native-journal.test.mts:144:    const journal = new NativeAttemptJournal(root, limits);
+tests/verification/reliability/worker-native-scope-live.mts:15:import { NativeAttemptJournal } from '../../../skills/worker/core/worker/native-attempt-journal.ts';
+tests/verification/reliability/worker-native-scope-live.mts:166:  const journal = new NativeAttemptJournal(path.join(stateRoot, 'capacity-journal'), {
+tests/verification/reliability/worker-native-journal-capacity.test.mts:6:import { NativeAttemptJournal } from '../../../skills/worker/core/worker/native-attempt-journal.ts';
+tests/verification/reliability/worker-native-journal-capacity.test.mts:11:  const journal = new NativeAttemptJournal(root, limits);
+tests/verification/reliability/worker-native-journal-capacity.test.mts:23:      const short = new NativeAttemptJournal(rejectedRoot, { ...limits, maximumStateBytes: budget });
+tests/verification/reliability/worker-native-journal-capacity.test.mts:29:    const fit = new NativeAttemptJournal(root, { ...limits, maximumStateBytes: bound });
+tests/verification/reliability/worker-native-journal-capacity.test.mts:47:    const results = await Promise.allSettled(inputs.map(input => new NativeAttemptJournal(root, config).withAttempt(input, async () => {})));
+tests/verification/reliability/worker-native-journal-capacity.test.mts:51:    const journal = new NativeAttemptJournal(root, config);
+tests/verification/reliability/worker-native-journal-capacity.test.mts:61:    const original = new NativeAttemptJournal(parent, limits);
+tests/verification/reliability/worker-native-journal-capacity.test.mts:64:    const old = new NativeAttemptJournal(parent, { ...limits, maximumStateBytes: before.byteLength + 100 });
+tests/verification/reliability/worker-native-journal-capacity.test.mts:79:    const journal = new NativeAttemptJournal(root, limits);
+tests/verification/reliability/worker-native-journal-capacity.test.mts:88:    const constrained = new NativeAttemptJournal(root, { ...limits, maximumStateBytes: ceiling });
+tests/verification/reliability/worker-native-cleanup-retry.test.mts:5:import { NativeAttemptJournal } from '../../../skills/worker/core/worker/native-attempt-journal.ts';
+tests/verification/reliability/worker-native-cleanup-retry.test.mts:13:  const journal = new NativeAttemptJournal(path.join(f.root, 'shared'), limits);
+tests/fixtures/worker-journal-writer.mjs:2:import { NativeAttemptJournal } from '../../skills/worker/core/worker/native-attempt-journal.ts';
+tests/fixtures/worker-journal-writer.mjs:9:const journal = new NativeAttemptJournal(root, limits);
+tests/fixtures/test-gate/native-preparation.mts:9:  FileWorkerOwnershipStore, NativeAttemptJournal, NativeWorkerOwnership,
+tests/fixtures/test-gate/native-preparation.mts:112:    const journal = new NativeAttemptJournal(path.join(root, 'journal'), {
+skills/prism/tests/native/operation-journal.mts:18:import { NativeAttemptJournal } from '../../../worker/core/worker/native-attempt-journal.ts';
+skills/prism/tests/native/operation-journal.mts:98:  const journal = new NativeAttemptJournal(path.join(directory, 'worker-journal'), { maximumRecords: 8, maximumStateBytes: 262144,
+skills/prism/tests/swarm-result-journal.test.mts:8:import { NativeAttemptJournal } from '../../worker/core/worker/native-attempt-journal.ts';
+skills/prism/tests/swarm-result-journal.test.mts:28:  const journal = new NativeAttemptJournal(path.join(root, 'journal'), { maximumRecords: 8, maximumStateBytes: 262144,
+skills/prism/server/native-worker-execution.ts:4:import { executeNativeWorkerAttempt, NativeAttemptJournal, recoverNativeWorkerAttempts, type NativeWorkerOwnership } from '@kubeclaw/worker-core';
+skills/prism/server/native-worker-execution.ts:13:  const journal = new NativeAttemptJournal(path.join(native.ownershipRoot, 'attempt-journal'), {
+skills/buster/engine/test-gates/preparation-supervisor.ts:10:  FileWorkerOwnershipStore, NativeWorkerOwnership, NativeAttemptJournal,
+skills/buster/engine/test-gates/preparation-supervisor.ts:36:    const journal = new NativeAttemptJournal(path.join(native.pool.ownershipRoot, 'preparation-journal'), {
+skills/buster/engine/test-gates/native-fixture-lifetime.ts:1:import { executeNativeWorkerAttempt, type NativeAttemptJournal, type NativeWorkerProcessOptions,
+skills/buster/engine/test-gates/native-fixture-lifetime.ts:11:  readonly journal: NativeAttemptJournal;
+skills/buster/engine/test-gates/native-fixture-journal.ts:5:import { canonicalJson, sha256Digest, type NativeAttemptJournal } from '@kubeclaw/worker-core';
+skills/buster/engine/test-gates/native-fixture-journal.ts:83:  async seal(input: BusterFixtureAdmission, journal: NativeAttemptJournal): Promise<BusterFixtureState> {
+skills/buster/engine/test-gates/preparation-execution.ts:2:import type { NativeAttemptJournal, NativeWorkerOwnership } from '@kubeclaw/worker-core';
+skills/buster/engine/test-gates/preparation-execution.ts:15:  readonly journal: NativeAttemptJournal;
+skills/worker/core/src/index.ts:14:export { NativeAttemptJournal, NativeWorkerAttemptBusy } from '../worker/native-attempt-journal.ts';
+skills/worker/core/src/index.ts:18:export type { NativeAttemptJournalLimits } from '../worker/native-attempt-journal.ts';
+skills/worker/core/worker/native-attempt-journal.ts:10:  type NativeAttemptJournalLimits, type NativeAttemptJournalState } from './native-journal-state.ts';
+skills/worker/core/worker/native-attempt-journal.ts:14:export type { NativeAttemptJournalLimits } from './native-journal-state.ts';
+skills/worker/core/worker/native-attempt-journal.ts:21:export class NativeAttemptJournal {
+skills/worker/core/worker/native-attempt-journal.ts:23:  readonly #limits: NativeAttemptJournalLimits;
+skills/worker/core/worker/native-attempt-journal.ts:27:  constructor(root: string, limits: NativeAttemptJournalLimits) {
+skills/worker/core/worker/native-attempt-journal.ts:144:  async #all(): Promise<readonly DurableRecord<NativeAttemptJournalState>[]> {
+skills/worker/core/worker/native-attempt-journal.ts:145:    const records = await this.#records.read<NativeAttemptJournalState>(stream);
+skills/worker/core/worker/native-attempt-journal.ts:150:  async #lookup(envelope: WorkerAttemptEnvelopeV3): Promise<DurableRecord<NativeAttemptJournalState> | undefined> {
+skills/worker/core/worker/native-attempt-journal.ts:158:  async #required(envelope: WorkerAttemptEnvelopeV3): Promise<DurableRecord<NativeAttemptJournalState>> {
+skills/worker/core/worker/native-attempt-journal.ts:176:      const payload: NativeAttemptJournalState = { schemaVersion: 'native-attempt-journal.v1', identity: journalIdentity(envelope),
+skills/worker/core/worker/native-attempt-executor.ts:5:import { NativeWorkerAttemptBusy, type NativeAttemptJournal } from './native-attempt-journal.ts';
+skills/worker/core/worker/native-attempt-executor.ts:14:  readonly journal: NativeAttemptJournal;
+skills/worker/core/worker/native-journal-state.ts:11:export interface NativeAttemptJournalLimits {
+skills/worker/core/worker/native-journal-state.ts:22:export interface NativeAttemptJournalState {
+skills/worker/core/worker/native-journal-state.ts:49:export function validateJournalState(value: unknown): asserts value is NativeAttemptJournalState {
+skills/worker/core/worker/native-attempt-recovery.ts:3:import type { NativeAttemptJournal } from './native-attempt-journal.ts';
+skills/worker/core/worker/native-attempt-recovery.ts:10:export async function recoverNativeWorkerAttempts(journal: NativeAttemptJournal, owner: NativeWorkerOwnership,
+skills/worker/core/worker/native-attempt-recovery.ts:40:export async function recoverNativeAttempt(journal: NativeAttemptJournal, ownership: NativeWorkerOwnership, envelope: WorkerAttemptEnvelopeV3,
+skills/worker/core/worker/native-cleanup-reconciliation.ts:5:import type { NativeAttemptJournal } from './native-attempt-journal.ts';
+skills/worker/core/worker/native-cleanup-reconciliation.ts:24:  readonly journal: NativeAttemptJournal;
+skills/worker/core/worker/native-cleanup-reconciliation.ts:79:export async function verifyNativeSourceCleanupResult(journal: NativeAttemptJournal, owner: NativeWorkerOwnership,
+skills/worker/core/worker/native-cleanup-reconciliation.ts:126:export async function resolveFailedNativeCleanup(originalJournal: NativeAttemptJournal,
+skills/worker/core/worker/native-journal-capacity.ts:4:import { nativeJournalMaximumDiagnosticUnits, validateJournalState, type NativeAttemptJournalLimits, type NativeAttemptJournalState } from './native-journal-state.ts';
+skills/worker/core/worker/native-journal-capacity.ts:13:function futurePayload(payload: NativeAttemptJournalState, limits: NativeAttemptJournalLimits) {
+skills/worker/core/worker/native-journal-capacity.ts:28:function futureRecordBytes(record: DurableRecord, limits: NativeAttemptJournalLimits): number {
+skills/worker/core/worker/native-journal-capacity.ts:45:  limits: NativeAttemptJournalLimits): number {
+skills/worker/core/worker/native-journal-capacity.ts:57:export async function reserveNativeJournalMetadata(file: string, payload: NativeAttemptJournalState,
+skills/worker/core/worker/native-journal-capacity.ts:58:  idempotencyKey: string, owner: string, limits: NativeAttemptJournalLimits): Promise<void> {

@@ -46,8 +46,8 @@
     "implementationAuthorized": false
   },
   "lastPushedCheckpoint": {
-    "checkpoint": 22,
-    "commit": "3ff47184c9cc446c7a15f7a434be7ea537677ee9",
+    "checkpoint": 23,
+    "commit": "1974537f370f776f11f67733de616a4217d5c720",
     "pr": "https://github.com/datrab/kubeclaw/pull/18",
     "pushed": true,
     "remoteHeadVerified": true,
@@ -65,7 +65,13 @@
       "errors": 0
     }
   },
-  "pendingNativeReviews": [],
+  "pendingNativeReviews": [
+    {
+      "path": "security-provider-contracts-01",
+      "reviewer": "/root/runtime_provider_contract_review",
+      "accepted": false
+    }
+  ],
   "checkpoint10Prepared": {
     "baseCommit": "ddd49add7eefd5fbbccac84360498a5ece8bae0a",
     "scope": "Swarm effective buffer cap28 independently20 verified; gateway19 source definitions29 and exact startup reader correction30 independently22 verified",
@@ -78,18 +84,18 @@
   "sourceSupplementIndex": "docs/review/remediation/config-source-supplement-current.md",
   "activeNativeWork": [
     {
-      "task": "/root/delivery_module_contract_review",
-      "scope": "One complete same-entry v6 root/schema/file-set/materializer receiving ABI for Controller02 + Recovery02 + verified Provider03",
-      "status": "running fresh independent review; Security remains pending-only"
+      "task": "/root/whole_c0_readiness_review",
+      "scope": "same-entry02 SEDB-01 independent requested-tuple caller authority and SEDB-02 complete inherited recovery semantic admission/equality",
+      "status": "running additive correction author; fresh independent recheck required"
     },
     {
-      "task": "/root/c1_case_oracle_review",
-      "scope": "Security five-provider package complete source/domain/profile/case contracts; genuine producer/evidence constraints",
-      "status": "running author; fresh independent review required"
+      "task": "/root/runtime_provider_contract_review",
+      "scope": "Security01 five registrations full package/profiles/typed source receiving/case contracts; HTTP-only producer, no guaranteed provider logs, unsupported alternates honestly preserved",
+      "status": "running fresh independent material review"
     },
     {
       "task": "/root/c0_canonical_source_join_review",
-      "scope": "Four original U capacity/accounting/Quantity/measurement source-boundary contracts with real callers",
+      "scope": "Complete sole-author Prism agent launcher fullprofile/domain/Control claim+CLI receiving/durable original authority/12 originalfields13case contracts",
       "status": "running author; fresh independent review required"
     }
   ],
@@ -170,6 +176,15 @@
     {
       "report": "independent-controller-role-profile-review-02/REPORT.md",
       "verdict": "CRPR-01 CLOSED bounded receiving-node correction; 98 exact nodes114 observations; parent rechecked all113 captured reads unchanged; coordinated complete ABI remains in separate review"
+    },
+    {
+      "report": "independent-same-entry-deployment-binding-review-01/README.md",
+      "verdict": "NOT CLOSED SEDB-01 composite/all-tuple caller authorization and SEDB-02 missing inherited recovery relations/changed equality; 74 observations pass does not close admission; 284 frozen inputs stable"
+    },
+    {
+      "report": "independent-four-source-boundary-contract-review-01/REPORT.md",
+      "reportSha256": "0c483e1a168b648620f9489ca6793695a1c1829efd08eddf3f121eea707c2643",
+      "verdict": "VERIFIED four original local source-boundary definitions; no material findings; parent174 input pins unchanged. Native quantities/storage/measurement/dynamic membership and all8futurecases remain open/not-run."
     }
   ],
   "checkpoint15Prepared": {
@@ -252,7 +267,17 @@
     "globalC0Accepted": false,
     "boundedReview": "independent-provider-field-dependency-adoption-review-01/README.md"
   },
-  "pendingAuthorCorrections": [],
+  "pendingAuthorCorrections": [
+    {
+      "path": "same-entry-deployment-binding-02",
+      "findings": [
+        "SEDB-01",
+        "SEDB-02"
+      ],
+      "author": "/root/whole_c0_readiness_review",
+      "status": "running"
+    }
+  ],
   "pendingIntegrationReview": {
     "path": "provider-field-current-integration-01",
     "scope": "Two actual root metadata refs + current reading precedence; previous bounded adoption review did not inspect new rootbytes",
@@ -278,7 +303,7 @@
     "remoteWarning": "GitHub reports existing canonical matrix96.91MiB exceeds recommended50MiB; actual push succeeded. No lossless storage migration/format change undertaken."
   },
   "checkpoint23Prepared": {
-    "pushed": false,
+    "pushed": true,
     "baseCommit": "3ff47184c9cc446c7a15f7a434be7ea537677ee9",
     "scope": "Recovery02 and fresh bounded review02; original Controller01/rejected review01 plus corrective02/fresh bounded review02; current navigation/state only",
     "originalCanonicalRootsUnchanged": true,
@@ -290,5 +315,23 @@
       "exitCode": 0,
       "qualification": "git diff --cached --check on selective docs/evidence cut; frozen prior failure artifacts remain unchanged"
     }
+  },
+  "fourOriginalSourceBoundaryDisposition": {
+    "definition": "four-source-boundary-contracts-01/contracts.json",
+    "review": "independent-four-source-boundary-contract-review-01/REPORT.md",
+    "localFourDefinitionReview": "verified boundedly",
+    "activation": "denied until genuine original issuer/source/clock/native/storage/scope/membership gates; originalcases not-run",
+    "historicalUClassification": "frozen fieldpartition02 unaccepted local-definition text is historical for these four ONLY; no class/body/requirement change or wholeWCR06 closure"
+  },
+  "checkpoint24Prepared": {
+    "pushed": false,
+    "baseCommit": "1974537f370f776f11f67733de616a4217d5c720",
+    "scope": "Four original source-boundary contracts and independently VERIFIED bounded review; current definition/progress references and actual state only",
+    "originalCanonicalRootsUnchanged": true,
+    "productionOrExistingTestsChanged": false,
+    "globalC0Accepted": false,
+    "implementationAuthorization": null,
+    "autoreview": "Codex CLI remains unavailable; no clean autoreview claim",
+    "diffCheckExitCode": 0
   }
 }

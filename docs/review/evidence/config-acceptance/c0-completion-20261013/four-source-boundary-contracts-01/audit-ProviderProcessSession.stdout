@@ -1,0 +1,19 @@
+tests/verification/contracts/provider-disposal-recovery.test.mjs:66:    const { ProviderProcessSession } = await import('../../../skills/buster/engine/test-gates/provider-process-session.ts');
+tests/verification/contracts/provider-disposal-recovery.test.mjs:74:    const originalTerminate = ProviderProcessSession.prototype.terminate;
+tests/verification/contracts/provider-disposal-recovery.test.mjs:77:    t.mock.method(ProviderProcessSession.prototype, 'terminate', async function () {
+tests/verification/contracts/provider-disposal-recovery.test.mjs:122:  const { ProviderProcessSession } = await import('../../../skills/buster/engine/test-gates/provider-process-session.ts');
+tests/verification/contracts/provider-disposal-recovery.test.mjs:128:  const originalTerminate = ProviderProcessSession.prototype.terminate;
+tests/verification/contracts/provider-disposal-recovery.test.mjs:132:  t.mock.method(ProviderProcessSession.prototype, 'terminate', function () {
+tests/verification/contracts/provider-loader-ownership.test.mjs:11:import { ProviderProcessSession } from '../../../skills/buster/engine/test-gates/provider-process-session.ts';
+tests/verification/contracts/provider-loader-ownership.test.mjs:103:  session = new ProviderProcessSession({ package: { root: directory }, registration: {
+tests/verification/contracts/buster-provider-session-policy.test.mjs:6:import { ProviderProcessSession } from '../../../skills/buster/engine/test-gates/provider-process-session.ts';
+tests/verification/contracts/buster-provider-session-policy.test.mjs:22:    assert.throws(() => new ProviderProcessSession(null, null, '/does-not-exist', candidate), /SWARM_CONFIG_BUSTER_PROVIDER_RUNTIME_INVALID/);
+skills/buster/engine/test-gates/provider-process-session.ts:47:export class ProviderProcessSession {
+skills/buster/engine/test-gates/provider-loader.ts:1:import { ProviderProcessSession, assertCleanupDisposition } from './provider-process-session.ts';
+skills/buster/engine/test-gates/provider-loader.ts:66:  #session: ProviderProcessSession;
+skills/buster/engine/test-gates/provider-loader.ts:68:  readonly #accountedSessions = new WeakSet<ProviderProcessSession>();
+skills/buster/engine/test-gates/provider-loader.ts:76:    this.#session = new ProviderProcessSession(entry, invocation, workspaceRoot, policy);
+skills/buster/engine/test-gates/provider-loader.ts:89:      this.#session = new ProviderProcessSession(this.#entry, this.#invocation, this.#workspaceRoot, this.#policy);
+skills/buster/engine/test-gates/provider-loader.ts:95:  async #cleanupSession(session: ProviderProcessSession, context: TestProviderExecutionContext,
+skills/buster/engine/test-gates/provider-loader.ts:116:  async #terminateSession(session: ProviderProcessSession): Promise<void> {
+skills/buster/engine/test-gates/provider-loader.ts:142:  #combinedResources(session: ProviderProcessSession): ProviderProcessResources {

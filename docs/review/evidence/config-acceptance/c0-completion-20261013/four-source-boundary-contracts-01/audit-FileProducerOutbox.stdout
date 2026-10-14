@@ -1,0 +1,19 @@
+tests/verification/reliability/attempt-projection-review.test.mjs:14:import {FileProducerOutbox,deliverPending} from '../../../skills/common/plugin-runtime/foundation/observability/durable-delivery.ts';
+tests/verification/reliability/attempt-projection-review.test.mjs:24:  const outbox=new FileProducerOutbox(path.join(f.root,'independent-old-delivery'),{maximumRecords:10,maximumBytes:50000});
+tests/verification/reliability/admission-retirement.test.mjs:15:import {FileObservabilityAdmissionStore,FileProducerOutbox,deliverPending} from '../../../skills/common/plugin-runtime/foundation/observability/durable-delivery.ts';
+tests/verification/reliability/admission-retirement.test.mjs:43:  const outbox=new FileProducerOutbox(path.join(f.root,'replayed-outbox'),{maximumRecords:10,maximumBytes:50000});
+tests/verification/reliability/admission-retirement.test.mjs:58:  const outbox=new FileProducerOutbox(path.join(f.root,'unconfirmed-outbox'),{maximumRecords:10,maximumBytes:50000});
+tests/verification/reliability/admission-retirement.test.mjs:183:  const outbox = new FileProducerOutbox(path.join(f.root, 'result-retirement-negative-outbox'), {maximumRecords: 10, maximumBytes: 50000});
+tests/verification/contracts/check-pipeline-observability-clawdeck-view.mts:9:  FileProducerOutbox,
+tests/verification/contracts/check-pipeline-observability-clawdeck-view.mts:34:  const outbox = new FileProducerOutbox(path.join(root, "outbox"), {
+tests/verification/contracts/check-pipeline-observability-durable-delivery.mts:6:import {deliverPending,FileObservabilityAdmissionStore,FileProducerOutbox} from '../../../skills/common/plugin-runtime/foundation/observability/durable-delivery.ts';
+tests/verification/contracts/check-pipeline-observability-durable-delivery.mts:11:  let outbox=new FileProducerOutbox(outboxDirectory,{maximumRecords:3,maximumBytes:100000});
+tests/verification/contracts/check-pipeline-observability-durable-delivery.mts:14:  outbox=new FileProducerOutbox(outboxDirectory,{maximumRecords:3,maximumBytes:100000});
+tests/verification/contracts/check-pipeline-observability-durable-delivery.mts:40:  const limited=new FileProducerOutbox(path.join(root,'limited'),{maximumRecords:1,maximumBytes:100000});
+tests/verification/contracts/check-pipeline-observability-durable-delivery.mts:43:  assert.throws(()=>new FileProducerOutbox(path.join(root,'invalid-limit'),{maximumRecords:Number.POSITIVE_INFINITY,maximumBytes:1}),/OBSERVABILITY_OUTBOX_LIMIT_INVALID/);
+tests/verification/contracts/check-pipeline-observability-durable-delivery.mts:45:  await assert.rejects(()=>new FileProducerOutbox(path.join(linkedStore,'outbox'),{maximumRecords:1,maximumBytes:10000}).append(base),/OBSERVABILITY_STORE_PATH_SYMLINK/,'durable stores must not follow a symlinked path component');
+tests/verification/contracts/check-pipeline-observability-durable-delivery.mts:46:  const ordered=new FileProducerOutbox(path.join(root,'ordered'),{maximumRecords:3,maximumBytes:100000});
+tests/verification/contracts/check-pipeline-observability-durable-attempts.mts:15:  FileProducerOutbox,
+tests/verification/contracts/check-pipeline-observability-durable-attempts.mts:96:  const outbox = new FileProducerOutbox(path.join(root, "worker-outbox"), {
+skills/common/plugin-runtime/foundation/observability/durable-delivery.ts:333:export class FileProducerOutbox {
+skills/common/plugin-runtime/foundation/observability/durable-delivery.ts:830:  outbox: FileProducerOutbox,
