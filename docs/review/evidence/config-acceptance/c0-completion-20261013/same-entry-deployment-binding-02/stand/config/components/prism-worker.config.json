@@ -1,0 +1,59 @@
+{
+  "schemaVersion": "pipeline-component.v3",
+  "owner": "prism-worker",
+  "profiles": {
+    "local-A": {
+      "settings": {
+        "ingress": {
+          "port": 8080,
+          "maximumActiveRequests": 16,
+          "maximumProbeRequests": 4,
+          "maximumConnections": 128,
+          "requestTimeoutMs": 120000,
+          "shutdownTimeoutMs": 120000,
+          "maximumInputBytes": 16777216
+        },
+        "supervisor": {
+          "uid": 1000,
+          "gid": 1000,
+          "maximumOwnershipRecords": 65536,
+          "maximumOwnershipBytes": 67108864,
+          "maximumOutputBytes": 33554432,
+          "maximumJournalBytes": 68719476736,
+          "pollIntervalMs": 20,
+          "drainTimeoutMs": 10000,
+          "closeTimeoutMs": 105000
+        },
+        "artifactClient": {
+          "maximumAcknowledgmentBytes": 8192
+        },
+        "installation": {
+          "browserRoot": "/ms-playwright"
+        },
+        "authentication": {
+          "hmacWindowMs": 300000,
+          "maximumNonceCleanupRows": 1000
+        },
+        "nonceDependency": {
+          "pool": {
+            "idleTimeoutMs": 10000,
+            "connectionLifetime": {
+              "mode": "unbounded"
+            },
+            "minimumIdleConnections": 0,
+            "connectionReuse": {
+              "mode": "unbounded"
+            }
+          },
+          "maximumActiveConnections": 4,
+          "timeoutMs": 750
+        }
+      },
+      "activation": {
+        "worker": "enabled",
+        "nativeHost": "enabled",
+        "nonceDatabase": "enabled"
+      }
+    }
+  }
+}

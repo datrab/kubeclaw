@@ -1,0 +1,51 @@
+{
+  "checks": [
+    {
+      "command": "node /home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-deployment-binding-02/check-selection-stands.mjs",
+      "exit": 0,
+      "stdout": "corrected-check-01.stdout.json",
+      "stderr": "corrected-check-01.stderr.log",
+      "scriptSha256": "f52be0c0ca11f312a61ac8e5dcf083a232a43d66b2e464bb69f8faa451144186",
+      "node": "v24.21.0",
+      "observations": 188,
+      "failures": 0,
+      "observedPriorFailures": null
+    },
+    {
+      "command": "node /home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-deployment-binding-02/check-selection-stands.mjs",
+      "exit": 0,
+      "stdout": "corrected-check-02.stdout.json",
+      "stderr": "corrected-check-02.stderr.log",
+      "scriptSha256": "870656b5bd1fd1baa7f242b97a0d6e18b416f222a68075dc6eee88afc75afcf4",
+      "node": "v24.21.0",
+      "observations": 195,
+      "failures": 0,
+      "observedPriorFailures": "explicit error strings from exact prior pure selector, not a native execution or changed prior collector history"
+    },
+    {
+      "command": "node /home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-deployment-binding-02/check-selection-stands.mjs",
+      "exit": 0,
+      "stdout": "corrected-check-03.stdout.json",
+      "stderr": "corrected-check-03.stderr.log",
+      "scriptSha256": "9ee2890cbd867940cad4657b1010e2e9358aaee1a6b8f53c7f7bbc7080ddf985",
+      "node": "v24.21.0",
+      "observations": 195,
+      "failures": 0,
+      "observedPriorFailures": "explicit error strings from exact prior pure selector, not a native execution or changed prior collector history"
+    }
+  ],
+  "tools": {
+    "nodeExecutable": "/usr/local/bin/node",
+    "nodeExecutableSha256": "7fde7b8afa198da66257f42ee2001d874c7355631e6d1579a5fb5ef1f246df4c",
+    "ajv": {
+      "version": "8.20.0",
+      "packageSha256": "1f9033ee5a6515e7d76938b7072941862d1ed228a6879cc7fe10cdeb75107989"
+    },
+    "ajv-formats": {
+      "version": "3.0.1",
+      "packageSha256": "402fb4bcfa457f0226813f3976ac42839dd619907c075c108efba8600d7edb69"
+    }
+  },
+  "sourceExtractionIdentity": "inherited-recovery-source-extraction.json",
+  "effects": "only this new absolute evidence directory written; no full renderer/Go/Helm/recovery/PG/Kube/provider/native/clock/CLI/API/network/credential/Eval; old pure function extraction uses no process/network VM"
+}

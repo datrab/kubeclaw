@@ -46,8 +46,8 @@
     "implementationAuthorized": false
   },
   "lastPushedCheckpoint": {
-    "checkpoint": 23,
-    "commit": "1974537f370f776f11f67733de616a4217d5c720",
+    "checkpoint": 24,
+    "commit": "60d520177c3de2e33a8c397e3d6e5f9e8e8e7bbf",
     "pr": "https://github.com/datrab/kubeclaw/pull/18",
     "pushed": true,
     "remoteHeadVerified": true,
@@ -65,13 +65,7 @@
       "errors": 0
     }
   },
-  "pendingNativeReviews": [
-    {
-      "path": "security-provider-contracts-01",
-      "reviewer": "/root/runtime_provider_contract_review",
-      "accepted": false
-    }
-  ],
+  "pendingNativeReviews": [],
   "checkpoint10Prepared": {
     "baseCommit": "ddd49add7eefd5fbbccac84360498a5ece8bae0a",
     "scope": "Swarm effective buffer cap28 independently20 verified; gateway19 source definitions29 and exact startup reader correction30 independently22 verified",
@@ -84,14 +78,9 @@
   "sourceSupplementIndex": "docs/review/remediation/config-source-supplement-current.md",
   "activeNativeWork": [
     {
-      "task": "/root/whole_c0_readiness_review",
-      "scope": "same-entry02 SEDB-01 independent requested-tuple caller authority and SEDB-02 complete inherited recovery semantic admission/equality",
-      "status": "running additive correction author; fresh independent recheck required"
-    },
-    {
-      "task": "/root/runtime_provider_contract_review",
-      "scope": "Security01 five registrations full package/profiles/typed source receiving/case contracts; HTTP-only producer, no guaranteed provider logs, unsupported alternates honestly preserved",
-      "status": "running fresh independent material review"
+      "task": "/root/c1_case_oracle_review",
+      "scope": "Security02 SEC-R01-01 unique resolved native header-set compatibility and SEC-R01-02 whole-package exact same-service/role/resource concordance",
+      "status": "running additive correction author; fresh recheck required"
     },
     {
       "task": "/root/c0_canonical_source_join_review",
@@ -185,6 +174,14 @@
       "report": "independent-four-source-boundary-contract-review-01/REPORT.md",
       "reportSha256": "0c483e1a168b648620f9489ca6793695a1c1829efd08eddf3f121eea707c2643",
       "verdict": "VERIFIED four original local source-boundary definitions; no material findings; parent174 input pins unchanged. Native quantities/storage/measurement/dynamic membership and all8futurecases remain open/not-run."
+    },
+    {
+      "report": "independent-security-provider-contract-review-01/README.md",
+      "verdict": "NOT ACCEPTED SEC-R01-01 unique resolved headers33/denied name pass proposed domain but native pure rejects; SEC-R01-02 split package service contexts admitted despite same-service contract; 3085 replay controls and1495 stable inputs not closure"
+    },
+    {
+      "report": "independent-same-entry-deployment-binding-review-02/README.md",
+      "verdict": "SEDB-01/02 CLOSED bounded coordinated selection/admission; 195 pure observations, parent387 frozen input pins unchanged; native/runtime/task/source-author/Security integration/fullC0 still unaccepted"
     }
   ],
   "checkpoint15Prepared": {
@@ -269,12 +266,12 @@
   },
   "pendingAuthorCorrections": [
     {
-      "path": "same-entry-deployment-binding-02",
+      "path": "security-provider-contracts-02",
       "findings": [
-        "SEDB-01",
-        "SEDB-02"
+        "SEC-R01-01",
+        "SEC-R01-02"
       ],
-      "author": "/root/whole_c0_readiness_review",
+      "author": "/root/c1_case_oracle_review",
       "status": "running"
     }
   ],
@@ -324,7 +321,7 @@
     "historicalUClassification": "frozen fieldpartition02 unaccepted local-definition text is historical for these four ONLY; no class/body/requirement change or wholeWCR06 closure"
   },
   "checkpoint24Prepared": {
-    "pushed": false,
+    "pushed": true,
     "baseCommit": "1974537f370f776f11f67733de616a4217d5c720",
     "scope": "Four original source-boundary contracts and independently VERIFIED bounded review; current definition/progress references and actual state only",
     "originalCanonicalRootsUnchanged": true,
@@ -332,6 +329,17 @@
     "globalC0Accepted": false,
     "implementationAuthorization": null,
     "autoreview": "Codex CLI remains unavailable; no clean autoreview claim",
+    "diffCheckExitCode": 0
+  },
+  "checkpoint25Prepared": {
+    "pushed": false,
+    "baseCommit": "60d520177c3de2e33a8c397e3d6e5f9e8e8e7bbf",
+    "scope": "Coordinated same-entry01/rejected review01/additive02/independent closed review02; current reading precedence/navigation/state only",
+    "originalCanonicalRootsUnchanged": true,
+    "productionOrExistingTestsChanged": false,
+    "globalC0Accepted": false,
+    "implementationAuthorization": null,
+    "autoreview": "Codex CLI unavailable; no clean autoreview claim",
     "diffCheckExitCode": 0
   }
 }

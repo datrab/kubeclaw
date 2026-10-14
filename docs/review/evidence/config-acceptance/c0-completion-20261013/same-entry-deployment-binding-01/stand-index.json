@@ -1,0 +1,181 @@
+[
+  {
+    "path": "stands/controller-local-A.json",
+    "kind": "controller",
+    "profileId": "local-A",
+    "sourceJoinEligible": true,
+    "reason": "source shape relation only; authentic activation gates remain missing"
+  },
+  {
+    "path": "stands/controller-local-B.json",
+    "kind": "controller",
+    "profileId": "local-B",
+    "sourceJoinEligible": true,
+    "reason": "source shape relation only; authentic activation gates remain missing"
+  },
+  {
+    "path": "stands/controller-Ready-port-contrast.json",
+    "kind": "controller",
+    "profileId": "Ready-port-contrast",
+    "sourceJoinEligible": true,
+    "reason": "source shape relation only; authentic activation gates remain missing"
+  },
+  {
+    "path": "stands/controller-ready-product-off.json",
+    "kind": "controller",
+    "profileId": "ready-product-off",
+    "sourceJoinEligible": false,
+    "reason": "ReadyProduct-off needs explicitly selected whole Control profile enabled=false, absent from frozen Provider03 owner; never fill from mutable newer owner"
+  },
+  {
+    "path": "stands/controller-role-off.json",
+    "kind": "controller",
+    "profileId": "role-off",
+    "sourceJoinEligible": true,
+    "reason": "source shape relation only; authentic activation gates remain missing"
+  },
+  {
+    "path": "stands/recovery-A.json",
+    "kind": "recovery",
+    "profileId": "A",
+    "sourceJoinEligible": true
+  },
+  {
+    "path": "stands/recovery-B-backupIntervalMinutes.json",
+    "kind": "recovery",
+    "profileId": "B-backupIntervalMinutes",
+    "sourceJoinEligible": true
+  },
+  {
+    "path": "stands/recovery-B-verificationIntervalMinutes.json",
+    "kind": "recovery",
+    "profileId": "B-verificationIntervalMinutes",
+    "sourceJoinEligible": true
+  },
+  {
+    "path": "stands/recovery-B-maximumAgeSeconds.json",
+    "kind": "recovery",
+    "profileId": "B-maximumAgeSeconds",
+    "sourceJoinEligible": true
+  },
+  {
+    "path": "stands/recovery-B-maximumDurationSeconds.json",
+    "kind": "recovery",
+    "profileId": "B-maximumDurationSeconds",
+    "sourceJoinEligible": true
+  },
+  {
+    "path": "stands/recovery-B-verificationDeadlineSeconds.json",
+    "kind": "recovery",
+    "profileId": "B-verificationDeadlineSeconds",
+    "sourceJoinEligible": true
+  },
+  {
+    "path": "stands/recovery-B-maximumBackupBytes.json",
+    "kind": "recovery",
+    "profileId": "B-maximumBackupBytes",
+    "sourceJoinEligible": true
+  },
+  {
+    "path": "stands/recovery-B-maximumRetainedBytes.json",
+    "kind": "recovery",
+    "profileId": "B-maximumRetainedBytes",
+    "sourceJoinEligible": true
+  },
+  {
+    "path": "stands/recovery-B-persistence-size.json",
+    "kind": "recovery",
+    "profileId": "B-persistence-size",
+    "sourceJoinEligible": true
+  },
+  {
+    "path": "stands/recovery-B-persistence-storageClass.json",
+    "kind": "recovery",
+    "profileId": "B-persistence-storageClass",
+    "sourceJoinEligible": true
+  },
+  {
+    "path": "stands/recovery-B-resources-requests-cpu.json",
+    "kind": "recovery",
+    "profileId": "B-resources-requests-cpu",
+    "sourceJoinEligible": true
+  },
+  {
+    "path": "stands/recovery-B-resources-requests-memory.json",
+    "kind": "recovery",
+    "profileId": "B-resources-requests-memory",
+    "sourceJoinEligible": true
+  },
+  {
+    "path": "stands/recovery-B-resources-limits-cpu.json",
+    "kind": "recovery",
+    "profileId": "B-resources-limits-cpu",
+    "sourceJoinEligible": true
+  },
+  {
+    "path": "stands/recovery-B-resources-limits-memory.json",
+    "kind": "recovery",
+    "profileId": "B-resources-limits-memory",
+    "sourceJoinEligible": true
+  },
+  {
+    "path": "stands/recovery-B-reserveBytes.json",
+    "kind": "recovery",
+    "profileId": "B-reserveBytes",
+    "sourceJoinEligible": true
+  },
+  {
+    "path": "stands/recovery-B-killAfterSeconds.json",
+    "kind": "recovery",
+    "profileId": "B-killAfterSeconds",
+    "sourceJoinEligible": true
+  },
+  {
+    "path": "stands/recovery-B-connectionTimeoutSeconds.json",
+    "kind": "recovery",
+    "profileId": "B-connectionTimeoutSeconds",
+    "sourceJoinEligible": true
+  },
+  {
+    "path": "stands/recovery-B-tocMaximumBytes.json",
+    "kind": "recovery",
+    "profileId": "B-tocMaximumBytes",
+    "sourceJoinEligible": true
+  },
+  {
+    "path": "stands/recovery-B-metadataMaximumBytesExclusive.json",
+    "kind": "recovery",
+    "profileId": "B-metadataMaximumBytesExclusive",
+    "sourceJoinEligible": true
+  },
+  {
+    "path": "stands/recovery-B-checksumIndexMaximumBytesExclusive.json",
+    "kind": "recovery",
+    "profileId": "B-checksumIndexMaximumBytesExclusive",
+    "sourceJoinEligible": true
+  },
+  {
+    "path": "stands/recovery-B-cronJobDeadlineOverheadSeconds.json",
+    "kind": "recovery",
+    "profileId": "B-cronJobDeadlineOverheadSeconds",
+    "sourceJoinEligible": true
+  },
+  {
+    "path": "stands/recovery-B-successfulJobsHistoryLimit.json",
+    "kind": "recovery",
+    "profileId": "B-successfulJobsHistoryLimit",
+    "sourceJoinEligible": true
+  },
+  {
+    "path": "stands/recovery-B-failedJobsHistoryLimit.json",
+    "kind": "recovery",
+    "profileId": "B-failedJobsHistoryLimit",
+    "sourceJoinEligible": true
+  },
+  {
+    "path": "stands/recovery-B-temporaryDirectorySize.json",
+    "kind": "recovery",
+    "profileId": "B-temporaryDirectorySize",
+    "sourceJoinEligible": true
+  }
+]

@@ -1,0 +1,72 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "onPass": {
+      "type": "array",
+      "uniqueItems": true,
+      "minItems": 2,
+      "maxItems": 2,
+      "items": {
+        "enum": [
+          "log",
+          "test-report"
+        ]
+      },
+      "allOf": [
+        {
+          "contains": {
+            "const": "log"
+          }
+        },
+        {
+          "contains": {
+            "const": "test-report"
+          }
+        }
+      ]
+    },
+    "onFail": {
+      "type": "array",
+      "uniqueItems": true,
+      "minItems": 2,
+      "maxItems": 2,
+      "items": {
+        "enum": [
+          "log",
+          "test-report"
+        ]
+      },
+      "allOf": [
+        {
+          "contains": {
+            "const": "log"
+          }
+        },
+        {
+          "contains": {
+            "const": "test-report"
+          }
+        }
+      ]
+    },
+    "onError": {
+      "type": "array",
+      "uniqueItems": true,
+      "minItems": 1,
+      "maxItems": 1,
+      "items": {
+        "enum": [
+          "log"
+        ]
+      },
+      "allOf": [
+        {
+          "contains": {
+            "const": "log"
+          }
+        }
+      ]
+    }
+  }
+}

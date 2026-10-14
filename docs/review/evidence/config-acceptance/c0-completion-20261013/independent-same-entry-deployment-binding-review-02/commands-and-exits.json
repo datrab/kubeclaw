@@ -1,0 +1,18 @@
+{
+  "scope": "exact existing finite02 collector only, no extra test or general validator",
+  "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+  "replays": [
+    {
+      "cmd": "node /home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-deployment-binding-02/check-selection-stands.mjs > /home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-same-entry-deployment-binding-review-02/replay.stdout.json 2> /home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-same-entry-deployment-binding-review-02/replay.stderr",
+      "chunk_id": "8392c6",
+      "wall_time_seconds": 2.274167263,
+      "exit_code": 0,
+      "original_token_count": 0,
+      "output": ""
+    }
+  ],
+  "rawStdout": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-same-entry-deployment-binding-review-02/replay.stdout.json",
+  "rawStderr": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-same-entry-deployment-binding-review-02/replay.stderr",
+  "inputAndToolIdentities": "initial-identities.json and end-identities.json",
+  "noOtherRuntimeExecution": true
+}

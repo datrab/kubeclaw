@@ -1,0 +1,16 @@
+{
+  "qualification": "exact finite original Recovery02 pure quantity/metadata/index/relations expressions; no full collector import/effects/native invocation",
+  "sourcePath": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/collect-definition-checks.mjs",
+  "sourceSha256": "3df0c2717af34991cff6d982a3c5d07691713ee17ed6bba9e96d92965630ff8b",
+  "sourceLines": [
+    12,
+    13,
+    14,
+    15,
+    16
+  ],
+  "fixturePath": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/public-fixtures/source-reference-stand.json",
+  "fixtureSha256": "b738b2095210cb8fcad4f69e7a906e2b2201330a6968a076dade7e5d8026c7ff",
+  "moduleSha256": "b1fabffa4c99c7936eedf4ae8290b467b71a507518cede1af69156d0e3f78494",
+  "onlyAdaptation": "public fixture JSON read replaced with exact frozen object literal; function/constant bytes preserved"
+}

@@ -1,0 +1,268 @@
+{
+  "schemaVersion": "pipeline-registration-policy.v1",
+  "packageId": "kubeclaw.network-http",
+  "registrationId": "kubeclaw.network-http:http",
+  "instanceId": "fixture.network-http",
+  "profiles": {
+    "A": {
+      "processing": {
+        "allowedOrigins": [
+          "https://fixture.invalid"
+        ],
+        "allowedMethods": [
+          "GET"
+        ],
+        "allowedHeaders": [
+          "accept",
+          "content-type",
+          "idempotency-key"
+        ],
+        "maxRequestBytes": 1048576,
+        "maxResponseBytes": 1048576,
+        "timeoutMs": 30000
+      }
+    },
+    "B": {
+      "processing": {
+        "allowedOrigins": [
+          "https://fixture.invalid",
+          "https://alternate.fixture.invalid"
+        ],
+        "allowedMethods": [
+          "GET",
+          "POST"
+        ],
+        "allowedHeaders": [
+          "accept",
+          "content-type",
+          "idempotency-key",
+          "x-proof"
+        ],
+        "maxRequestBytes": 524288,
+        "maxResponseBytes": 524288,
+        "timeoutMs": 15000
+      }
+    },
+    "field-allowedOrigins-A": {
+      "processing": {
+        "allowedOrigins": [
+          "https://fixture.invalid"
+        ],
+        "allowedMethods": [
+          "GET"
+        ],
+        "allowedHeaders": [
+          "accept",
+          "content-type",
+          "idempotency-key"
+        ],
+        "maxRequestBytes": 1048576,
+        "maxResponseBytes": 1048576,
+        "timeoutMs": 30000
+      }
+    },
+    "field-allowedOrigins-B": {
+      "processing": {
+        "allowedOrigins": [
+          "https://fixture.invalid",
+          "https://alternate.fixture.invalid"
+        ],
+        "allowedMethods": [
+          "GET"
+        ],
+        "allowedHeaders": [
+          "accept",
+          "content-type",
+          "idempotency-key"
+        ],
+        "maxRequestBytes": 1048576,
+        "maxResponseBytes": 1048576,
+        "timeoutMs": 30000
+      }
+    },
+    "field-allowedMethods-A": {
+      "processing": {
+        "allowedOrigins": [
+          "https://fixture.invalid"
+        ],
+        "allowedMethods": [
+          "GET"
+        ],
+        "allowedHeaders": [
+          "accept",
+          "content-type",
+          "idempotency-key"
+        ],
+        "maxRequestBytes": 1048576,
+        "maxResponseBytes": 1048576,
+        "timeoutMs": 30000
+      }
+    },
+    "field-allowedMethods-B": {
+      "processing": {
+        "allowedOrigins": [
+          "https://fixture.invalid"
+        ],
+        "allowedMethods": [
+          "GET",
+          "POST"
+        ],
+        "allowedHeaders": [
+          "accept",
+          "content-type",
+          "idempotency-key"
+        ],
+        "maxRequestBytes": 1048576,
+        "maxResponseBytes": 1048576,
+        "timeoutMs": 30000
+      }
+    },
+    "field-allowedHeaders-A": {
+      "processing": {
+        "allowedOrigins": [
+          "https://fixture.invalid"
+        ],
+        "allowedMethods": [
+          "GET"
+        ],
+        "allowedHeaders": [
+          "accept",
+          "content-type",
+          "idempotency-key"
+        ],
+        "maxRequestBytes": 1048576,
+        "maxResponseBytes": 1048576,
+        "timeoutMs": 30000
+      }
+    },
+    "field-allowedHeaders-B": {
+      "processing": {
+        "allowedOrigins": [
+          "https://fixture.invalid"
+        ],
+        "allowedMethods": [
+          "GET"
+        ],
+        "allowedHeaders": [
+          "accept",
+          "content-type",
+          "idempotency-key",
+          "x-proof"
+        ],
+        "maxRequestBytes": 1048576,
+        "maxResponseBytes": 1048576,
+        "timeoutMs": 30000
+      }
+    },
+    "field-maxRequestBytes-A": {
+      "processing": {
+        "allowedOrigins": [
+          "https://fixture.invalid"
+        ],
+        "allowedMethods": [
+          "GET",
+          "POST"
+        ],
+        "allowedHeaders": [
+          "accept",
+          "content-type",
+          "idempotency-key"
+        ],
+        "maxRequestBytes": 1048576,
+        "maxResponseBytes": 1048576,
+        "timeoutMs": 30000
+      }
+    },
+    "field-maxRequestBytes-B": {
+      "processing": {
+        "allowedOrigins": [
+          "https://fixture.invalid"
+        ],
+        "allowedMethods": [
+          "GET",
+          "POST"
+        ],
+        "allowedHeaders": [
+          "accept",
+          "content-type",
+          "idempotency-key"
+        ],
+        "maxRequestBytes": 524288,
+        "maxResponseBytes": 1048576,
+        "timeoutMs": 30000
+      }
+    },
+    "field-maxResponseBytes-A": {
+      "processing": {
+        "allowedOrigins": [
+          "https://fixture.invalid"
+        ],
+        "allowedMethods": [
+          "GET"
+        ],
+        "allowedHeaders": [
+          "accept",
+          "content-type",
+          "idempotency-key"
+        ],
+        "maxRequestBytes": 1048576,
+        "maxResponseBytes": 1048576,
+        "timeoutMs": 30000
+      }
+    },
+    "field-maxResponseBytes-B": {
+      "processing": {
+        "allowedOrigins": [
+          "https://fixture.invalid"
+        ],
+        "allowedMethods": [
+          "GET"
+        ],
+        "allowedHeaders": [
+          "accept",
+          "content-type",
+          "idempotency-key"
+        ],
+        "maxRequestBytes": 1048576,
+        "maxResponseBytes": 524288,
+        "timeoutMs": 30000
+      }
+    },
+    "field-timeoutMs-A": {
+      "processing": {
+        "allowedOrigins": [
+          "https://fixture.invalid"
+        ],
+        "allowedMethods": [
+          "GET"
+        ],
+        "allowedHeaders": [
+          "accept",
+          "content-type",
+          "idempotency-key"
+        ],
+        "maxRequestBytes": 1048576,
+        "maxResponseBytes": 1048576,
+        "timeoutMs": 30000
+      }
+    },
+    "field-timeoutMs-B": {
+      "processing": {
+        "allowedOrigins": [
+          "https://fixture.invalid"
+        ],
+        "allowedMethods": [
+          "GET"
+        ],
+        "allowedHeaders": [
+          "accept",
+          "content-type",
+          "idempotency-key"
+        ],
+        "maxRequestBytes": 1048576,
+        "maxResponseBytes": 1048576,
+        "timeoutMs": 15000
+      }
+    }
+  }
+}

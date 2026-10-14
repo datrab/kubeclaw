@@ -1,0 +1,88 @@
+{
+  "composeCommand": "python3 /home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-deployment-binding-01/compose.py",
+  "composeExit": 0,
+  "composeStdout": "compose.stdout.log",
+  "composeStderr": "compose.stderr.log",
+  "checks": [
+    {
+      "command": "node /home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-deployment-binding-01/check-selection-stands.mjs",
+      "exit": 1,
+      "stdout": "selection-check-01.stdout.json",
+      "stderr": "selection-check-01.stderr.log",
+      "scriptSha256AtRun": "94113ad9039084e9d5c52c27f457390dfdef8269282c703c544010c507c3f00e",
+      "node": "v24.21.0",
+      "observationCount": 63,
+      "failureCount": 29,
+      "qualification": "raw iterative narrow definition check, not native proof"
+    },
+    {
+      "command": "node /home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-deployment-binding-01/check-selection-stands.mjs",
+      "exit": 0,
+      "stdout": "selection-check-02.stdout.json",
+      "stderr": "selection-check-02.stderr.log",
+      "scriptSha256AtRun": "3892c86caf0f309d8008fdc80815ede3a83f40fa76b51634076ad1e33cedf305",
+      "node": "v24.21.0",
+      "observationCount": 63,
+      "failureCount": 0,
+      "qualification": "raw iterative narrow definition check, not native proof"
+    },
+    {
+      "command": "node /home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-deployment-binding-01/check-selection-stands.mjs",
+      "exit": 1,
+      "stdout": "selection-check-03.stdout.json",
+      "stderr": "selection-check-03.stderr.log",
+      "scriptSha256AtRun": "0a8f3d095e0e2f0a1a473c40caf06897667e478010d7175e60be83c39f9751aa",
+      "node": "v24.21.0",
+      "observationCount": 69,
+      "failureCount": 1,
+      "qualification": "raw iterative narrow definition check, not native proof"
+    },
+    {
+      "command": "node /home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-deployment-binding-01/check-selection-stands.mjs",
+      "exit": 0,
+      "stdout": "selection-check-04.stdout.json",
+      "stderr": "selection-check-04.stderr.log",
+      "scriptSha256AtRun": "0a8f3d095e0e2f0a1a473c40caf06897667e478010d7175e60be83c39f9751aa",
+      "node": "v24.21.0",
+      "observationCount": 69,
+      "failureCount": 0,
+      "qualification": "raw iterative narrow definition check, not native proof"
+    },
+    {
+      "command": "node /home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-deployment-binding-01/check-selection-stands.mjs",
+      "exit": 0,
+      "stdout": "selection-check-05.stdout.json",
+      "stderr": "selection-check-05.stderr.log",
+      "scriptSha256AtRun": "5f93e485e82dfa887331171ccd5185228d54c521a2749a90f7b9168dd1ec055f",
+      "node": "v24.21.0",
+      "observationCount": 72,
+      "failureCount": 0,
+      "qualification": "raw iterative narrow definition check, not native proof"
+    },
+    {
+      "command": "node /home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-deployment-binding-01/check-selection-stands.mjs",
+      "exit": 0,
+      "stdout": "selection-check-06.stdout.json",
+      "stderr": "selection-check-06.stderr.log",
+      "scriptSha256AtRun": "ca6cf2167273c280132fda4f53b1a2f08e25e39a298857633bf3b268f48193c0",
+      "node": "v24.21.0",
+      "observationCount": 74,
+      "failureCount": 0,
+      "qualification": "raw iterative narrow definition check, not native proof"
+    }
+  ],
+  "tools": {
+    "nodeExecutable": "/usr/local/bin/node",
+    "nodeExecutableSha256": "7fde7b8afa198da66257f42ee2001d874c7355631e6d1579a5fb5ef1f246df4c",
+    "nodeVersion": "v24.21.0",
+    "ajv": {
+      "version": "8.20.0",
+      "packageSha256": "1f9033ee5a6515e7d76938b7072941862d1ed228a6879cc7fe10cdeb75107989"
+    },
+    "ajv-formats": {
+      "version": "3.0.1",
+      "packageSha256": "402fb4bcfa457f0226813f3976ac42839dd619907c075c108efba8600d7edb69"
+    }
+  },
+  "nonEffects": "no full renderer/Helm/Go/staging/deploy/Kube/PG/controller/listener/clock/native/API/network/credential/Eval operations; no production/canonical/old artifact writes"
+}
