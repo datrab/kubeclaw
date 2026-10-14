@@ -46,6 +46,7 @@ WORKDIR /src
 RUN wget -O source.tar.gz "https://codeload.github.com/helm/helm/tar.gz/refs/tags/${HELM_VERSION}" \
     && printf '%s  source.tar.gz\n' "$OPS_HELM_SOURCE_SHA256" | sha256sum -c - \
     && tar -xzf source.tar.gz --strip-components=1 && rm source.tar.gz
+COPY helm-build/go.mod helm-build/go.sum ./
 RUN attempt=1; until GODEBUG=http2client=0 timeout 180 go mod download; do \
       if [ "$attempt" -ge 3 ]; then exit 1; fi; \
       sleep "$((attempt * 5))"; attempt="$((attempt + 1))"; \
