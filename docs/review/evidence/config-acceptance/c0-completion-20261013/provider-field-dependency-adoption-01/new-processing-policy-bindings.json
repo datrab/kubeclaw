@@ -1,0 +1,851 @@
+{
+  "status": "author proposal; fresh review required",
+  "fields": [
+    {
+      "fieldIdentity": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/source-processing-adjudication.json",
+        "sha256": "6f4b3749bf5c24ab3183af4673fe3d5457bd94a5575cdb44936cb13944bf0727",
+        "jsonPointer": "/members/0"
+      },
+      "canonicalSettingId": null,
+      "originalTaskContextId": "RT-351419f2c26e2696",
+      "isAliasOfTaskField": false,
+      "soleAuthor": {
+        "path": "config/plugins/kubeclaw.api-flow.config.json",
+        "pointer": "/profiles/<explicit>/processing/maximumFlowFileBytes"
+      },
+      "source": {
+        "path": "skills/buster/plugins/api-flow/src/provider.js",
+        "line": 49,
+        "lineText": "  if (bytes.byteLength > 1_048_576) throw new Error('API_FLOW_FILE_TOO_LARGE');",
+        "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+      },
+      "schema": {
+        "ref": {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/schemas/kubeclaw.api-flow.schema.json",
+          "sha256": "feda3e42ced475a7d1c7b4e86fb4750946d622d0e801bf6d279da3e7189e5b31",
+          "jsonPointer": "/properties/profiles/additionalProperties/properties/processing/properties/maximumFlowFileBytes"
+        },
+        "actualNode": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1048576
+        }
+      },
+      "current": "Fixed source literal, not a productive current CONFIG policy read",
+      "proposedScope": {
+        "classes": [
+          "M",
+          "J"
+        ],
+        "firstBoundary": "Complete authenticated unstarted module/group view before test-plan dispatch; standalone full Buster plan J before preparation/effect",
+        "foundation": "Original R registry/package/instance/grants/source/task/remaining budget/absolute deadline and S/H native resource/service/host ceiling stay unchanged",
+        "noHotInstanceMutation": true,
+        "receiver": {
+          "currentConsumer": "api-flow readFlow(repositoryPath, flowFile) byteLength guard",
+          "targetABI": "readFlow(repositoryPath, flowFile, selectedPolicy.processing.maximumFlowFileBytes); compare after captured bytes read, before parse; no fallback",
+          "fixtureResponse": null
+        },
+        "receivingABI": {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/receiving-abi.md",
+          "sha256": "8acd6af226dfd12024d44efe3742c110214605a596500eb03fb2f1f78668b416"
+        }
+      },
+      "boundary": "file bytes after complete read, before JSON parse",
+      "error": "API_FLOW_FILE_TOO_LARGE",
+      "completePair": {
+        "ownerPath": "config/plugins/kubeclaw.api-flow.config.json",
+        "A": "maximumFlowFileBytes-A",
+        "B": "maximumFlowFileBytes-B"
+      },
+      "entries": {
+        "A": "fixtures/entries/kubeclaw.api-flow.maximumFlowFileBytes-A.pipeline.config.json",
+        "B": "fixtures/entries/kubeclaw.api-flow.maximumFlowFileBytes-B.pipeline.config.json"
+      },
+      "fixture": "task-fixtures/repository/api-flow-513.json",
+      "originalCaseContexts": [
+        "RT-351419f2c26e2696-CURRENT-SCHEMA-FIELD",
+        "RT-351419f2c26e2696-NETWORK05-DEFINITION",
+        "RT-351419f2c26e2696-NETWORK05-CONTRACT",
+        "RT-351419f2c26e2696-NETWORK05-ALTERNATE",
+        "RT-351419f2c26e2696-NETWORK05-BINDING",
+        "RT-351419f2c26e2696-NETWORK05-MUTANT",
+        "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION"
+      ],
+      "caseApplicationRefs": [
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/70"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/74"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/73"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/71"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/72"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/75"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/192"
+        }
+      ],
+      "status": "future not-run; original context requirements unchanged, not canonical task-policy alias",
+      "activationStop": "Original authenticated module/plan/package/grant/source/role/resource/history capture before effects; no latest fill or renewed claim/deadline/budget"
+    },
+    {
+      "fieldIdentity": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/source-processing-adjudication.json",
+        "sha256": "6f4b3749bf5c24ab3183af4673fe3d5457bd94a5575cdb44936cb13944bf0727",
+        "jsonPointer": "/members/1"
+      },
+      "canonicalSettingId": null,
+      "originalTaskContextId": "RT-10f3f03208806c98",
+      "isAliasOfTaskField": false,
+      "soleAuthor": {
+        "path": "config/plugins/kubeclaw.openapi.config.json",
+        "pointer": "/profiles/<explicit>/processing/maximumSpecFileBytes"
+      },
+      "source": {
+        "path": "skills/buster/plugins/openapi/src/provider.js",
+        "line": 193,
+        "lineText": "  const bytes = fs.readFileSync(inside(fs.realpathSync(repositoryPath), config.specFile)); if (bytes.byteLength > 4_194_304) throw new Error('OPENAPI_FILE_TOO_LARGE');",
+        "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca"
+      },
+      "schema": {
+        "ref": {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/schemas/kubeclaw.openapi.schema.json",
+          "sha256": "5a0a92ad66b8340579a9523854a8c8e5f4b4014ca72548702eb52a5526d52ac6",
+          "jsonPointer": "/properties/profiles/additionalProperties/properties/processing/properties/maximumSpecFileBytes"
+        },
+        "actualNode": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4194304
+        }
+      },
+      "current": "Fixed source literal, not a productive current CONFIG policy read",
+      "proposedScope": {
+        "classes": [
+          "M",
+          "J"
+        ],
+        "firstBoundary": "Complete authenticated unstarted module/group view before test-plan dispatch; standalone full Buster plan J before preparation/effect",
+        "foundation": "Original R registry/package/instance/grants/source/task/remaining budget/absolute deadline and S/H native resource/service/host ceiling stay unchanged",
+        "noHotInstanceMutation": true,
+        "receiver": {
+          "currentConsumer": "openapi provider execute captured spec readFileSync byteLength guard",
+          "targetABI": "captured bytes byteLength > selectedPolicy.processing.maximumSpecFileBytes before JSON.parse; no fallback",
+          "fixtureResponse": null
+        },
+        "receivingABI": {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/receiving-abi.md",
+          "sha256": "8acd6af226dfd12024d44efe3742c110214605a596500eb03fb2f1f78668b416"
+        }
+      },
+      "boundary": "file bytes after complete read, before JSON parse",
+      "error": "OPENAPI_FILE_TOO_LARGE",
+      "completePair": {
+        "ownerPath": "config/plugins/kubeclaw.openapi.config.json",
+        "A": "maximumSpecFileBytes-A",
+        "B": "maximumSpecFileBytes-B"
+      },
+      "entries": {
+        "A": "fixtures/entries/kubeclaw.openapi.maximumSpecFileBytes-A.pipeline.config.json",
+        "B": "fixtures/entries/kubeclaw.openapi.maximumSpecFileBytes-B.pipeline.config.json"
+      },
+      "fixture": "task-fixtures/repository/openapi-513.json",
+      "originalCaseContexts": [
+        "RT-10f3f03208806c98-CURRENT-SCHEMA-FIELD",
+        "RT-10f3f03208806c98-BCE3F075-DEFINITION",
+        "RT-10f3f03208806c98-BCE3F075-CONTRACT",
+        "RT-10f3f03208806c98-BCE3F075-ALTERNATE",
+        "RT-10f3f03208806c98-BCE3F075-BINDING",
+        "RT-10f3f03208806c98-BCE3F075-MUTANT"
+      ],
+      "caseApplicationRefs": [
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/27"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/25"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/24"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/22"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/23"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/26"
+        }
+      ],
+      "status": "future not-run; original context requirements unchanged, not canonical task-policy alias",
+      "activationStop": "Original authenticated module/plan/package/grant/source/role/resource/history capture before effects; no latest fill or renewed claim/deadline/budget"
+    },
+    {
+      "fieldIdentity": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/source-processing-adjudication.json",
+        "sha256": "6f4b3749bf5c24ab3183af4673fe3d5457bd94a5575cdb44936cb13944bf0727",
+        "jsonPointer": "/members/2"
+      },
+      "canonicalSettingId": null,
+      "originalTaskContextId": "RT-396eb59b11141a9a",
+      "isAliasOfTaskField": false,
+      "soleAuthor": {
+        "path": "config/plugins/kubeclaw.openapi.config.json",
+        "pointer": "/profiles/<explicit>/processing/maximumSelections"
+      },
+      "source": {
+        "path": "skills/buster/plugins/openapi/src/provider.js",
+        "line": 202,
+        "lineText": "  if (!selections.length) throw new Error('OPENAPI_SELECTION_EMPTY'); if (selections.length > 128) throw new Error('OPENAPI_SELECTION_LIMIT_EXCEEDED');",
+        "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca"
+      },
+      "schema": {
+        "ref": {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/schemas/kubeclaw.openapi.schema.json",
+          "sha256": "5a0a92ad66b8340579a9523854a8c8e5f4b4014ca72548702eb52a5526d52ac6",
+          "jsonPointer": "/properties/profiles/additionalProperties/properties/processing/properties/maximumSelections"
+        },
+        "actualNode": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 128
+        }
+      },
+      "current": "Fixed source literal, not a productive current CONFIG policy read",
+      "proposedScope": {
+        "classes": [
+          "M",
+          "J"
+        ],
+        "firstBoundary": "Complete authenticated unstarted module/group view before test-plan dispatch; standalone full Buster plan J before preparation/effect",
+        "foundation": "Original R registry/package/instance/grants/source/task/remaining budget/absolute deadline and S/H native resource/service/host ceiling stay unchanged",
+        "noHotInstanceMutation": true,
+        "receiver": {
+          "currentConsumer": "openapi provider execute combined explicit operations and selected tags array length",
+          "targetABI": "combined selections.length > selectedPolicy.processing.maximumSelections after empty check and before operation loop; no fallback",
+          "fixtureResponse": null
+        },
+        "receivingABI": {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/receiving-abi.md",
+          "sha256": "8acd6af226dfd12024d44efe3742c110214605a596500eb03fb2f1f78668b416"
+        }
+      },
+      "boundary": "combined explicit+tag selections before per-operation invoke",
+      "error": "OPENAPI_SELECTION_LIMIT_EXCEEDED",
+      "completePair": {
+        "ownerPath": "config/plugins/kubeclaw.openapi.config.json",
+        "A": "maximumSelections-A",
+        "B": "maximumSelections-B"
+      },
+      "entries": {
+        "A": "fixtures/entries/kubeclaw.openapi.maximumSelections-A.pipeline.config.json",
+        "B": "fixtures/entries/kubeclaw.openapi.maximumSelections-B.pipeline.config.json"
+      },
+      "fixture": "task-fixtures/repository/spec-typed.json",
+      "originalCaseContexts": [
+        "RT-396eb59b11141a9a-CURRENT-SCHEMA-FIELD",
+        "RT-396eb59b11141a9a-BCE3F075-DEFINITION",
+        "RT-396eb59b11141a9a-BCE3F075-CONTRACT",
+        "RT-396eb59b11141a9a-BCE3F075-ALTERNATE",
+        "RT-396eb59b11141a9a-BCE3F075-BINDING",
+        "RT-396eb59b11141a9a-BCE3F075-MUTANT"
+      ],
+      "caseApplicationRefs": [
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/81"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/79"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/78"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/76"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/77"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/80"
+        }
+      ],
+      "status": "future not-run; original context requirements unchanged, not canonical task-policy alias",
+      "activationStop": "Original authenticated module/plan/package/grant/source/role/resource/history capture before effects; no latest fill or renewed claim/deadline/budget"
+    },
+    {
+      "fieldIdentity": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/source-processing-adjudication.json",
+        "sha256": "6f4b3749bf5c24ab3183af4673fe3d5457bd94a5575cdb44936cb13944bf0727",
+        "jsonPointer": "/members/3"
+      },
+      "canonicalSettingId": null,
+      "originalTaskContextId": "RT-10f3f03208806c98",
+      "isAliasOfTaskField": false,
+      "soleAuthor": {
+        "path": "config/plugins/kubeclaw.openapi.config.json",
+        "pointer": "/profiles/<explicit>/processing/maximumSchemaGraphDepth"
+      },
+      "source": {
+        "path": "skills/buster/plugins/openapi/src/schema-support.js",
+        "line": 47,
+        "lineText": "  if (depth > 64) throw new Error('OPENAPI_SCHEMA_DEPTH_EXCEEDED');",
+        "sha256": "05e27ae54dfd00cb9f1344eb171699a6e4fa87801f5c5f8ff97be18910377e4b"
+      },
+      "schema": {
+        "ref": {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/schemas/kubeclaw.openapi.schema.json",
+          "sha256": "5a0a92ad66b8340579a9523854a8c8e5f4b4014ca72548702eb52a5526d52ac6",
+          "jsonPointer": "/properties/profiles/additionalProperties/properties/processing/properties/maximumSchemaGraphDepth"
+        },
+        "actualNode": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 64
+        }
+      },
+      "current": "Fixed source literal, not a productive current CONFIG policy read",
+      "proposedScope": {
+        "classes": [
+          "M",
+          "J"
+        ],
+        "firstBoundary": "Complete authenticated unstarted module/group view before test-plan dispatch; standalone full Buster plan J before preparation/effect",
+        "foundation": "Original R registry/package/instance/grants/source/task/remaining budget/absolute deadline and S/H native resource/service/host ceiling stay unchanged",
+        "noHotInstanceMutation": true,
+        "receiver": {
+          "currentConsumer": "assertSupportedSchema raw graph traversal and child recursion",
+          "targetABI": "add explicit immutable processing budgets argument after depth parameter; every assertSupportedSchema child carries exact same budgets; preserve boolean/undefined shortcuts before depth > maximumSchemaGraphDepth; no fallback",
+          "fixtureResponse": "response-payload-depth9.json"
+        },
+        "receivingABI": {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/receiving-abi.md",
+          "sha256": "8acd6af226dfd12024d44efe3742c110214605a596500eb03fb2f1f78668b416"
+        }
+      },
+      "boundary": "assertSupportedSchema root0; boolean/undefined short circuit BEFORE depth>limit; traverses all supported children; response-body call post invoke",
+      "error": "OPENAPI_SCHEMA_DEPTH_EXCEEDED",
+      "completePair": {
+        "ownerPath": "config/plugins/kubeclaw.openapi.config.json",
+        "A": "maximumSchemaGraphDepth-A",
+        "B": "maximumSchemaGraphDepth-B"
+      },
+      "entries": {
+        "A": "fixtures/entries/kubeclaw.openapi.maximumSchemaGraphDepth-A.pipeline.config.json",
+        "B": "fixtures/entries/kubeclaw.openapi.maximumSchemaGraphDepth-B.pipeline.config.json"
+      },
+      "fixture": "task-fixtures/repository/spec-graph-depth9.json",
+      "originalCaseContexts": [
+        "RT-10f3f03208806c98-CURRENT-SCHEMA-FIELD",
+        "RT-10f3f03208806c98-BCE3F075-DEFINITION",
+        "RT-10f3f03208806c98-BCE3F075-CONTRACT",
+        "RT-10f3f03208806c98-BCE3F075-ALTERNATE",
+        "RT-10f3f03208806c98-BCE3F075-BINDING",
+        "RT-10f3f03208806c98-BCE3F075-MUTANT"
+      ],
+      "caseApplicationRefs": [
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/27"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/25"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/24"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/22"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/23"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/26"
+        }
+      ],
+      "status": "future not-run; original context requirements unchanged, not canonical task-policy alias",
+      "activationStop": "Original authenticated module/plan/package/grant/source/role/resource/history capture before effects; no latest fill or renewed claim/deadline/budget"
+    },
+    {
+      "fieldIdentity": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/source-processing-adjudication.json",
+        "sha256": "6f4b3749bf5c24ab3183af4673fe3d5457bd94a5575cdb44936cb13944bf0727",
+        "jsonPointer": "/members/4"
+      },
+      "canonicalSettingId": null,
+      "originalTaskContextId": "RT-10f3f03208806c98",
+      "isAliasOfTaskField": false,
+      "soleAuthor": {
+        "path": "config/plugins/kubeclaw.openapi.config.json",
+        "pointer": "/profiles/<explicit>/processing/maximumRefChainDepth"
+      },
+      "source": {
+        "path": "skills/buster/plugins/openapi/src/provider.js",
+        "line": 37,
+        "lineText": "  if (depth > 64) throw new Error('OPENAPI_SCHEMA_DEPTH_EXCEEDED');",
+        "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca"
+      },
+      "schema": {
+        "ref": {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/schemas/kubeclaw.openapi.schema.json",
+          "sha256": "5a0a92ad66b8340579a9523854a8c8e5f4b4014ca72548702eb52a5526d52ac6",
+          "jsonPointer": "/properties/profiles/additionalProperties/properties/processing/properties/maximumRefChainDepth"
+        },
+        "actualNode": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 64
+        }
+      },
+      "current": "Fixed source literal, not a productive current CONFIG policy read",
+      "proposedScope": {
+        "classes": [
+          "M",
+          "J"
+        ],
+        "firstBoundary": "Complete authenticated unstarted module/group view before test-plan dispatch; standalone full Buster plan J before preparation/effect",
+        "foundation": "Original R registry/package/instance/grants/source/task/remaining budget/absolute deadline and S/H native resource/service/host ceiling stay unchanged",
+        "noHotInstanceMutation": true,
+        "receiver": {
+          "currentConsumer": "resolveSchema local-ref recursion",
+          "targetABI": "add explicit immutable processing budgets argument after depth parameter; recursive resolve carries same budgets; preserve no-ref return before depth > maximumRefChainDepth; no fallback",
+          "fixtureResponse": "response-ref-string.json"
+        },
+        "receivingABI": {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/receiving-abi.md",
+          "sha256": "8acd6af226dfd12024d44efe3742c110214605a596500eb03fb2f1f78668b416"
+        }
+      },
+      "boundary": "resolveSchema depth0; no-ref return BEFORE depth guard, chain65 refs resolves, chain66 rejects current64; distinct from graph traversal",
+      "error": "OPENAPI_SCHEMA_DEPTH_EXCEEDED",
+      "completePair": {
+        "ownerPath": "config/plugins/kubeclaw.openapi.config.json",
+        "A": "maximumRefChainDepth-A",
+        "B": "maximumRefChainDepth-B"
+      },
+      "entries": {
+        "A": "fixtures/entries/kubeclaw.openapi.maximumRefChainDepth-A.pipeline.config.json",
+        "B": "fixtures/entries/kubeclaw.openapi.maximumRefChainDepth-B.pipeline.config.json"
+      },
+      "fixture": "task-fixtures/repository/spec-ref-chain10.json",
+      "originalCaseContexts": [
+        "RT-10f3f03208806c98-CURRENT-SCHEMA-FIELD",
+        "RT-10f3f03208806c98-BCE3F075-DEFINITION",
+        "RT-10f3f03208806c98-BCE3F075-CONTRACT",
+        "RT-10f3f03208806c98-BCE3F075-ALTERNATE",
+        "RT-10f3f03208806c98-BCE3F075-BINDING",
+        "RT-10f3f03208806c98-BCE3F075-MUTANT"
+      ],
+      "caseApplicationRefs": [
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/27"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/25"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/24"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/22"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/23"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/26"
+        }
+      ],
+      "status": "future not-run; original context requirements unchanged, not canonical task-policy alias",
+      "activationStop": "Original authenticated module/plan/package/grant/source/role/resource/history capture before effects; no latest fill or renewed claim/deadline/budget"
+    },
+    {
+      "fieldIdentity": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/source-processing-adjudication.json",
+        "sha256": "6f4b3749bf5c24ab3183af4673fe3d5457bd94a5575cdb44936cb13944bf0727",
+        "jsonPointer": "/members/5"
+      },
+      "canonicalSettingId": null,
+      "originalTaskContextId": "RT-10f3f03208806c98",
+      "isAliasOfTaskField": false,
+      "soleAuthor": {
+        "path": "config/plugins/kubeclaw.openapi.config.json",
+        "pointer": "/profiles/<explicit>/processing/maximumPayloadDepth"
+      },
+      "source": {
+        "path": "skills/buster/plugins/openapi/src/provider.js",
+        "line": 70,
+        "lineText": "  if (depth > 64) throw new Error('OPENAPI_SCHEMA_DEPTH_EXCEEDED');",
+        "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca"
+      },
+      "schema": {
+        "ref": {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/schemas/kubeclaw.openapi.schema.json",
+          "sha256": "5a0a92ad66b8340579a9523854a8c8e5f4b4014ca72548702eb52a5526d52ac6",
+          "jsonPointer": "/properties/profiles/additionalProperties/properties/processing/properties/maximumPayloadDepth"
+        },
+        "actualNode": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 64
+        }
+      },
+      "current": "Fixed source literal, not a productive current CONFIG policy read",
+      "proposedScope": {
+        "classes": [
+          "M",
+          "J"
+        ],
+        "firstBoundary": "Complete authenticated unstarted module/group view before test-plan dispatch; standalone full Buster plan J before preparation/effect",
+        "foundation": "Original R registry/package/instance/grants/source/task/remaining budget/absolute deadline and S/H native resource/service/host ceiling stay unchanged",
+        "noHotInstanceMutation": true,
+        "receiver": {
+          "currentConsumer": "schemaFailures visited value/schema recursion",
+          "targetABI": "add explicit immutable processing budgets argument after depth parameter; recursive schemaFailures carries same budgets; assertSupportedSchema receives graph budget not payload budget; preserve shortcut and depth > maximumPayloadDepth",
+          "fixtureResponse": "response-payload-depth9.json"
+        },
+        "receivingABI": {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/receiving-abi.md",
+          "sha256": "8acd6af226dfd12024d44efe3742c110214605a596500eb03fb2f1f78668b416"
+        }
+      },
+      "boundary": "schemaFailures root0; boolean/undefined/null shortcuts first; follows only visited payload plus combinators; graph preflight separately64",
+      "error": "OPENAPI_SCHEMA_DEPTH_EXCEEDED",
+      "completePair": {
+        "ownerPath": "config/plugins/kubeclaw.openapi.config.json",
+        "A": "maximumPayloadDepth-A",
+        "B": "maximumPayloadDepth-B"
+      },
+      "entries": {
+        "A": "fixtures/entries/kubeclaw.openapi.maximumPayloadDepth-A.pipeline.config.json",
+        "B": "fixtures/entries/kubeclaw.openapi.maximumPayloadDepth-B.pipeline.config.json"
+      },
+      "fixture": "task-fixtures/repository/spec-graph-depth9.json",
+      "originalCaseContexts": [
+        "RT-10f3f03208806c98-CURRENT-SCHEMA-FIELD",
+        "RT-10f3f03208806c98-BCE3F075-DEFINITION",
+        "RT-10f3f03208806c98-BCE3F075-CONTRACT",
+        "RT-10f3f03208806c98-BCE3F075-ALTERNATE",
+        "RT-10f3f03208806c98-BCE3F075-BINDING",
+        "RT-10f3f03208806c98-BCE3F075-MUTANT"
+      ],
+      "caseApplicationRefs": [
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/27"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/25"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/24"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/22"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/23"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/26"
+        }
+      ],
+      "status": "future not-run; original context requirements unchanged, not canonical task-policy alias",
+      "activationStop": "Original authenticated module/plan/package/grant/source/role/resource/history capture before effects; no latest fill or renewed claim/deadline/budget"
+    },
+    {
+      "fieldIdentity": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/source-processing-adjudication.json",
+        "sha256": "6f4b3749bf5c24ab3183af4673fe3d5457bd94a5575cdb44936cb13944bf0727",
+        "jsonPointer": "/members/6"
+      },
+      "canonicalSettingId": null,
+      "originalTaskContextId": "RT-10f3f03208806c98",
+      "isAliasOfTaskField": false,
+      "soleAuthor": {
+        "path": "config/plugins/kubeclaw.openapi.config.json",
+        "pointer": "/profiles/<explicit>/processing/maximumPatternCodeUnits"
+      },
+      "source": {
+        "path": "skills/buster/plugins/openapi/src/provider.js",
+        "line": 56,
+        "lineText": "  if (typeof source !== 'string' || source.length > 256 || /[()|]/u.test(source)",
+        "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca"
+      },
+      "schema": {
+        "ref": {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/schemas/kubeclaw.openapi.schema.json",
+          "sha256": "5a0a92ad66b8340579a9523854a8c8e5f4b4014ca72548702eb52a5526d52ac6",
+          "jsonPointer": "/properties/profiles/additionalProperties/properties/processing/properties/maximumPatternCodeUnits"
+        },
+        "actualNode": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 256
+        }
+      },
+      "current": "Fixed source literal, not a productive current CONFIG policy read",
+      "proposedScope": {
+        "classes": [
+          "M",
+          "J"
+        ],
+        "firstBoundary": "Complete authenticated unstarted module/group view before test-plan dispatch; standalone full Buster plan J before preparation/effect",
+        "foundation": "Original R registry/package/instance/grants/source/task/remaining budget/absolute deadline and S/H native resource/service/host ceiling stay unchanged",
+        "noHotInstanceMutation": true,
+        "receiver": {
+          "currentConsumer": "safePattern invoked inside visited string schemaFailures branch",
+          "targetABI": "safePattern(source, immutable processing budgets) uses source.length > maximumPatternCodeUnits; unchanged other regex security guards; no fallback",
+          "fixtureResponse": "response-pattern-length9.json"
+        },
+        "receivingABI": {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/receiving-abi.md",
+          "sha256": "8acd6af226dfd12024d44efe3742c110214605a596500eb03fb2f1f78668b416"
+        }
+      },
+      "boundary": "safePattern JS string.length UTF16 code units; guard only when visited value string",
+      "error": "OPENAPI_SCHEMA_PATTERN_UNSAFE",
+      "completePair": {
+        "ownerPath": "config/plugins/kubeclaw.openapi.config.json",
+        "A": "maximumPatternCodeUnits-A",
+        "B": "maximumPatternCodeUnits-B"
+      },
+      "entries": {
+        "A": "fixtures/entries/kubeclaw.openapi.maximumPatternCodeUnits-A.pipeline.config.json",
+        "B": "fixtures/entries/kubeclaw.openapi.maximumPatternCodeUnits-B.pipeline.config.json"
+      },
+      "fixture": "task-fixtures/repository/spec-pattern-length9.json",
+      "originalCaseContexts": [
+        "RT-10f3f03208806c98-CURRENT-SCHEMA-FIELD",
+        "RT-10f3f03208806c98-BCE3F075-DEFINITION",
+        "RT-10f3f03208806c98-BCE3F075-CONTRACT",
+        "RT-10f3f03208806c98-BCE3F075-ALTERNATE",
+        "RT-10f3f03208806c98-BCE3F075-BINDING",
+        "RT-10f3f03208806c98-BCE3F075-MUTANT"
+      ],
+      "caseApplicationRefs": [
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/27"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/25"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/24"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/22"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/23"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/26"
+        }
+      ],
+      "status": "future not-run; original context requirements unchanged, not canonical task-policy alias",
+      "activationStop": "Original authenticated module/plan/package/grant/source/role/resource/history capture before effects; no latest fill or renewed claim/deadline/budget"
+    },
+    {
+      "fieldIdentity": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/source-processing-adjudication.json",
+        "sha256": "6f4b3749bf5c24ab3183af4673fe3d5457bd94a5575cdb44936cb13944bf0727",
+        "jsonPointer": "/members/7"
+      },
+      "canonicalSettingId": null,
+      "originalTaskContextId": "RT-10f3f03208806c98",
+      "isAliasOfTaskField": false,
+      "soleAuthor": {
+        "path": "config/plugins/kubeclaw.openapi.config.json",
+        "pointer": "/profiles/<explicit>/processing/maximumPatternQuantifier"
+      },
+      "source": {
+        "path": "skills/buster/plugins/openapi/src/provider.js",
+        "line": 62,
+        "lineText": "    if (minimum > 1024 || maximum > 1024) throw new Error('OPENAPI_SCHEMA_PATTERN_UNSAFE');",
+        "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca"
+      },
+      "schema": {
+        "ref": {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/schemas/kubeclaw.openapi.schema.json",
+          "sha256": "5a0a92ad66b8340579a9523854a8c8e5f4b4014ca72548702eb52a5526d52ac6",
+          "jsonPointer": "/properties/profiles/additionalProperties/properties/processing/properties/maximumPatternQuantifier"
+        },
+        "actualNode": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1024
+        }
+      },
+      "current": "Fixed source literal, not a productive current CONFIG policy read",
+      "proposedScope": {
+        "classes": [
+          "M",
+          "J"
+        ],
+        "firstBoundary": "Complete authenticated unstarted module/group view before test-plan dispatch; standalone full Buster plan J before preparation/effect",
+        "foundation": "Original R registry/package/instance/grants/source/task/remaining budget/absolute deadline and S/H native resource/service/host ceiling stay unchanged",
+        "noHotInstanceMutation": true,
+        "receiver": {
+          "currentConsumer": "safePattern explicit bounded quantifier scan",
+          "targetABI": "safePattern(source, immutable processing budgets) compares each parsed min/max > maximumPatternQuantifier; infinity/security guards remain; no fallback",
+          "fixtureResponse": "response-pattern-quantifier9.json"
+        },
+        "receivingABI": {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/receiving-abi.md",
+          "sha256": "8acd6af226dfd12024d44efe3742c110214605a596500eb03fb2f1f78668b416"
+        }
+      },
+      "boundary": "safePattern parsed explicit quantifier min/max each <=limit; maximum infinity rejected; visited string only",
+      "error": "OPENAPI_SCHEMA_PATTERN_UNSAFE",
+      "completePair": {
+        "ownerPath": "config/plugins/kubeclaw.openapi.config.json",
+        "A": "maximumPatternQuantifier-A",
+        "B": "maximumPatternQuantifier-B"
+      },
+      "entries": {
+        "A": "fixtures/entries/kubeclaw.openapi.maximumPatternQuantifier-A.pipeline.config.json",
+        "B": "fixtures/entries/kubeclaw.openapi.maximumPatternQuantifier-B.pipeline.config.json"
+      },
+      "fixture": "task-fixtures/repository/spec-pattern-quantifier9.json",
+      "originalCaseContexts": [
+        "RT-10f3f03208806c98-CURRENT-SCHEMA-FIELD",
+        "RT-10f3f03208806c98-BCE3F075-DEFINITION",
+        "RT-10f3f03208806c98-BCE3F075-CONTRACT",
+        "RT-10f3f03208806c98-BCE3F075-ALTERNATE",
+        "RT-10f3f03208806c98-BCE3F075-BINDING",
+        "RT-10f3f03208806c98-BCE3F075-MUTANT"
+      ],
+      "caseApplicationRefs": [
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/27"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/25"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/24"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/22"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/23"
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+          "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+          "jsonPointer": "/cases/26"
+        }
+      ],
+      "status": "future not-run; original context requirements unchanged, not canonical task-policy alias",
+      "activationStop": "Original authenticated module/plan/package/grant/source/role/resource/history capture before effects; no latest fill or renewed claim/deadline/budget"
+    }
+  ]
+}

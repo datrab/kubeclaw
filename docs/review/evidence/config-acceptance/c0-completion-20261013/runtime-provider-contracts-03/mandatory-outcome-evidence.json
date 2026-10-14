@@ -1,0 +1,49 @@
+{
+  "baselines": {
+    "kubeclaw.api-flow": {
+      "onPass": [
+        "log",
+        "test-report"
+      ],
+      "onFail": [
+        "log",
+        "test-report"
+      ],
+      "onError": [
+        "log"
+      ]
+    },
+    "kubeclaw.http": {
+      "onPass": [
+        "log"
+      ],
+      "onFail": [
+        "log"
+      ],
+      "onError": [
+        "log"
+      ]
+    },
+    "kubeclaw.openapi": {
+      "onPass": [
+        "log",
+        "test-report"
+      ],
+      "onFail": [
+        "log",
+        "test-report"
+      ],
+      "onError": [
+        "log"
+      ]
+    }
+  },
+  "overridePrecedence": "node override, if supplied, replaces selected outcome list only after supported-type and mandatory-baseline checks; no erasure, no defaults union silently correcting invalid input",
+  "error": "proposed TEST_PLAN_EVIDENCE_INVALID at resolver evidencePolicy before runner admission",
+  "producedEvidence": {
+    "kubeclaw.http": "runner log only; provider evidenceFiles/reports empty",
+    "kubeclaw.api-flow": "api-flow-result.json test-report on returned pass/fail; runner log all outcomes",
+    "kubeclaw.openapi": "openapi-runtime-result.json test-report on returned pass/fail; runner log all outcomes"
+  },
+  "alternateDisposition": "No distinct valid evidence selection B in this package/outcome domain. Original ALT/F-EFFECT cases remain OPEN and unwaived; adding an unproduced error report is not a substitute."
+}

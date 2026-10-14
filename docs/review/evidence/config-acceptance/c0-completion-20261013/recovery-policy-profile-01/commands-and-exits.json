@@ -1,0 +1,47 @@
+{
+  "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+  "finalExecution": {
+    "command": "node docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/collect-definition-checks.mjs --output-dir docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/final-run",
+    "exit": 0,
+    "rawStdout": "final-run.stdout",
+    "rawStderr": "final-run.stderr",
+    "receipt": "final-run/definition-receipt.json",
+    "controls": 21,
+    "profiles": 24,
+    "fieldPairs": 23,
+    "sourceCandidates": 81
+  },
+  "earlierExecutions": [
+    {
+      "command": "node docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/collect-definition-checks.mjs --output-dir docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/final-run",
+      "exit": 0,
+      "controls": 15,
+      "qualification": "interim source/profile draft before expanded unit/task/handoff controls; raw overwritten and not used as final evidence"
+    },
+    {
+      "command": "node docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/collect-definition-checks.mjs --output-dir docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/final-run",
+      "exit": 0,
+      "controls": 16,
+      "qualification": "interim quantity expansion; raw overwritten and not used as final evidence"
+    },
+    {
+      "command": "node docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/collect-definition-checks.mjs --output-dir docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/final-run",
+      "exit": 0,
+      "controls": 19,
+      "qualification": "interim before DecimalSI K/E correction; raw overwritten and not used as final evidence"
+    },
+    {
+      "command": "node docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/collect-definition-checks.mjs --output-dir docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/final-run",
+      "exit": 0,
+      "controls": 19,
+      "qualification": "interim before final tuple/case/input oracle controls; unretained raw not used as final evidence"
+    },
+    {
+      "command": "node docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/collect-definition-checks.mjs --output-dir docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/final-run",
+      "exit": 0,
+      "controls": 21,
+      "qualification": "interim before practically bounded16MiB B backup contrast; raw unretained and not used as final receipt"
+    }
+  ],
+  "noOtherExecution": "No renderer main/exported full renderer, backup/verify/restore/migrate/deploy/preflight/Helm/Kube/PG/native/network/credential command run."
+}

@@ -1,0 +1,69 @@
+{
+  "originalRowsEqualAllThree": true,
+  "canonicalCasesEqualAllThree": true,
+  "nativeBodiesEqualAllThree": true,
+  "exactPrior02FieldBindingsRetainedAsHistory": true,
+  "exactPrior02MemberBindingsRetainedAsHistory": true,
+  "copiedC3SourceSchemaExact": true,
+  "copiedC3ReferenceContractExact": true,
+  "supersessionShaExact": true,
+  "independentReviewShaExact": true,
+  "views": [
+    {
+      "package": "kubeclaw.api-flow",
+      "rootDigestExact": true,
+      "ownerDigestExact": true,
+      "ownerSchemaExact": true,
+      "taskSchemaExact": true,
+      "C3Exact": true
+    },
+    {
+      "package": "kubeclaw.http",
+      "rootDigestExact": true,
+      "ownerDigestExact": true,
+      "ownerSchemaExact": true,
+      "taskSchemaExact": true,
+      "C3Exact": true
+    },
+    {
+      "package": "kubeclaw.openapi",
+      "rootDigestExact": true,
+      "ownerDigestExact": true,
+      "ownerSchemaExact": true,
+      "taskSchemaExact": true,
+      "C3Exact": true
+    }
+  ],
+  "components": [
+    {
+      "owner": "prism-worker.config.json",
+      "baseBodyEqualC3frozen03": true,
+      "busterExplicitCloneOnlyNetworkDelta": true
+    },
+    {
+      "owner": "worker-core.config.json",
+      "baseBodyEqualC3frozen03": true,
+      "busterExplicitCloneOnlyNetworkDelta": true
+    },
+    {
+      "owner": "prism-studio.config.json",
+      "baseBodyEqualC3frozen03": true,
+      "busterExplicitCloneOnlyNetworkDelta": true
+    },
+    {
+      "owner": "buster-engine.config.json",
+      "baseBodyEqualC3frozen03": true,
+      "busterExplicitCloneOnlyNetworkDelta": true
+    },
+    {
+      "owner": "prism-control.config.json",
+      "baseBodyEqualC3frozen03": true,
+      "busterExplicitCloneOnlyNetworkDelta": true
+    },
+    {
+      "owner": "prism-execution.config.json",
+      "baseBodyEqualC3frozen03": true,
+      "busterExplicitCloneOnlyNetworkDelta": true
+    }
+  ]
+}

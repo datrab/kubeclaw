@@ -1,0 +1,17 @@
+[
+  {
+    "package": "kubeclaw.api-flow",
+    "path": "fixtures/generated/kubeclaw.api-flow.provider-configuration.v2.json",
+    "qualification": "Schema/binding fixture only; local package bytes, no installed/external/granted activation assertion"
+  },
+  {
+    "package": "kubeclaw.http",
+    "path": "fixtures/generated/kubeclaw.http.provider-configuration.v2.json",
+    "qualification": "Schema/binding fixture only; local package bytes, no installed/external/granted activation assertion"
+  },
+  {
+    "package": "kubeclaw.openapi",
+    "path": "fixtures/generated/kubeclaw.openapi.provider-configuration.v2.json",
+    "qualification": "Schema/binding fixture only; local package bytes, no installed/external/granted activation assertion"
+  }
+]

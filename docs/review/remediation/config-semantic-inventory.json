@@ -650063,5 +650063,26 @@
         "sha256": "4aed2f8fddc04fd79291cc19e7929767c4b181a4e17f048b55fcc97497949921"
       }
     ]
+  },
+  "currentProviderFieldAdoption": {
+    "scope": "Current reference/source ownership adoption for67 original provider fields and eight distinct processing policies; all other map/wholeC0 gates open",
+    "adoption": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/provider-field-dependency-adoption-01/dependency-adoption.json",
+      "sha256": "bdf2d54a2bdb40bae1afa68e9e04376d89214421e35ba0b8e89796c605ebf39b"
+    },
+    "newProcessingBindings": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/provider-field-dependency-adoption-01/new-processing-policy-bindings.json",
+      "sha256": "7990705dcb3b6ba486d3a38bd582f5be5838b92c8cfc004f8db6a10700ecff30"
+    },
+    "additiveSourceOwnership": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/provider-field-dependency-adoption-01/additive-source-ownership.json",
+      "sha256": "82e3ab31259ef04806b776397238cd157e66ec5e321b4488d1248a8d1f5aa681"
+    },
+    "independentBoundedReview": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-provider-field-dependency-adoption-review-01/README.md",
+      "sha256": "3f2cbaee1b65445d142444f156ced11e7c4509092fa4e0798816587cbf00f80f"
+    },
+    "wholeC0Accepted": false,
+    "implementationAuthorization": null
   }
 }

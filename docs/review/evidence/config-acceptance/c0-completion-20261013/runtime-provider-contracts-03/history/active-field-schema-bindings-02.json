@@ -1,0 +1,1221 @@
+[
+  {
+    "id": "RT-351419f2c26e2696",
+    "priorActiveTargetSchemaBinding": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/schemas/kubeclaw.api-flow.task.schema.json",
+      "pointer": "/properties/flowFile",
+      "exactNode": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 1024,
+        "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+$"
+      },
+      "qualification": "Proposal only, not productive schema. Source semantic/activation predicates in source-consumer-contracts.md still required."
+    }
+  },
+  {
+    "id": "RT-ecc6714a5d1b8270",
+    "priorActiveTargetSchemaBinding": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/schemas/kubeclaw.api-flow.task.schema.json",
+      "pointer": "/properties/url",
+      "exactNode": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 2048
+      },
+      "qualification": "Proposal only, not productive schema. Source semantic/activation predicates in source-consumer-contracts.md still required."
+    }
+  },
+  {
+    "id": "RT-98800e708ba4ebcc",
+    "priorActiveTargetSchemaBinding": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/schemas/kubeclaw.api-flow.task.schema.json",
+      "pointer": "/properties/endpointName",
+      "exactNode": {
+        "type": "string",
+        "pattern": "^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$"
+      },
+      "qualification": "Proposal only, not productive schema. Source semantic/activation predicates in source-consumer-contracts.md still required."
+    }
+  },
+  {
+    "id": "RT-b8eb5e344f496d7c",
+    "priorActiveTargetSchemaBinding": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/schemas/kubeclaw.api-flow.schema.json",
+      "pointer": "/properties/profiles/additionalProperties/properties/processing/properties/requestTimeoutMs",
+      "exactNode": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 300000
+      },
+      "qualification": "Proposal only, not productive schema. Source semantic/activation predicates in source-consumer-contracts.md still required."
+    }
+  },
+  {
+    "id": "RT-98a5849759145124",
+    "priorActiveTargetSchemaBinding": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/schemas/kubeclaw.api-flow.schema.json",
+      "pointer": "/properties/profiles/additionalProperties/properties/processing/properties/maximumResponseBytes",
+      "exactNode": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 16777216
+      },
+      "qualification": "Proposal only, not productive schema. Source semantic/activation predicates in source-consumer-contracts.md still required."
+    }
+  },
+  {
+    "id": "RT-6e292c3c6f492f07",
+    "priorActiveTargetSchemaBinding": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/schemas/kubeclaw.api-flow.schema.json",
+      "pointer": "/properties/profiles/additionalProperties/properties/processing/properties/maximumSteps",
+      "exactNode": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 256
+      },
+      "qualification": "Proposal only, not productive schema. Source semantic/activation predicates in source-consumer-contracts.md still required."
+    }
+  },
+  {
+    "id": "RT-PROVIDER-EVIDENCE-KUBECLAW-API-FLOW-FLOW-EVIDENCEDEFAULTS-ONPASS",
+    "priorActiveTargetSchemaBinding": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/schemas/kubeclaw.api-flow.schema.json",
+      "pointer": "/properties/profiles/additionalProperties/properties/declarations/properties/evidenceDefaults/properties/onPass",
+      "exactNode": {
+        "type": "array",
+        "uniqueItems": true,
+        "minItems": 2,
+        "maxItems": 2,
+        "items": {
+          "enum": [
+            "log",
+            "test-report"
+          ]
+        },
+        "allOf": [
+          {
+            "contains": {
+              "const": "log"
+            }
+          },
+          {
+            "contains": {
+              "const": "test-report"
+            }
+          }
+        ]
+      },
+      "semanticRelation": "Selected package native retrySafe contract ceiling must hold; matrixFields must name genuine task fields and cannot create policy second author. Proposed relation, not implemented current loader."
+    }
+  },
+  {
+    "id": "RT-PROVIDER-EVIDENCE-KUBECLAW-API-FLOW-FLOW-EVIDENCEDEFAULTS-ONFAIL",
+    "priorActiveTargetSchemaBinding": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/schemas/kubeclaw.api-flow.schema.json",
+      "pointer": "/properties/profiles/additionalProperties/properties/declarations/properties/evidenceDefaults/properties/onFail",
+      "exactNode": {
+        "type": "array",
+        "uniqueItems": true,
+        "minItems": 2,
+        "maxItems": 2,
+        "items": {
+          "enum": [
+            "log",
+            "test-report"
+          ]
+        },
+        "allOf": [
+          {
+            "contains": {
+              "const": "log"
+            }
+          },
+          {
+            "contains": {
+              "const": "test-report"
+            }
+          }
+        ]
+      },
+      "semanticRelation": "Selected package native retrySafe contract ceiling must hold; matrixFields must name genuine task fields and cannot create policy second author. Proposed relation, not implemented current loader."
+    }
+  },
+  {
+    "id": "RT-PROVIDER-EVIDENCE-KUBECLAW-API-FLOW-FLOW-EVIDENCEDEFAULTS-ONERROR",
+    "priorActiveTargetSchemaBinding": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/schemas/kubeclaw.api-flow.schema.json",
+      "pointer": "/properties/profiles/additionalProperties/properties/declarations/properties/evidenceDefaults/properties/onError",
+      "exactNode": {
+        "type": "array",
+        "uniqueItems": true,
+        "minItems": 1,
+        "maxItems": 1,
+        "items": {
+          "enum": [
+            "log"
+          ]
+        },
+        "allOf": [
+          {
+            "contains": {
+              "const": "log"
+            }
+          }
+        ]
+      },
+      "semanticRelation": "Selected package native retrySafe contract ceiling must hold; matrixFields must name genuine task fields and cannot create policy second author. Proposed relation, not implemented current loader."
+    }
+  },
+  {
+    "id": "RT-PROVIDER-CONTRACT-KUBECLAW-API-FLOW-FLOW-RETRYSAFE",
+    "priorActiveTargetSchemaBinding": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/schemas/kubeclaw.api-flow.schema.json",
+      "pointer": "/properties/profiles/additionalProperties/properties/declarations/properties/retrySafe",
+      "exactNode": {
+        "const": false
+      },
+      "semanticRelation": "Selected package native retrySafe contract ceiling must hold; matrixFields must name genuine task fields and cannot create policy second author. Proposed relation, not implemented current loader."
+    }
+  },
+  {
+    "id": "RT-PROVIDER-CONTRACT-KUBECLAW-API-FLOW-FLOW-MATRIXFIELDS",
+    "priorActiveTargetSchemaBinding": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/schemas/kubeclaw.api-flow.schema.json",
+      "pointer": "/properties/profiles/additionalProperties/properties/declarations/properties/matrixFields",
+      "exactNode": {
+        "type": "array",
+        "maxItems": 0,
+        "items": {
+          "type": "string"
+        }
+      },
+      "semanticRelation": "Selected package native retrySafe contract ceiling must hold; matrixFields must name genuine task fields and cannot create policy second author. Proposed relation, not implemented current loader."
+    }
+  },
+  {
+    "id": "RT-2089ad1c8390909b",
+    "priorActiveTargetSchemaBinding": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/schemas/kubeclaw.http.task.schema.json",
+      "pointer": "/properties/url",
+      "exactNode": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 2048
+      },
+      "qualification": "Proposal only, not productive schema. Source semantic/activation predicates in source-consumer-contracts.md still required."
+    }
+  },
+  {
+    "id": "RT-e821665e0a2aedb9",
+    "priorActiveTargetSchemaBinding": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/schemas/kubeclaw.http.task.schema.json",
+      "pointer": "/properties/endpointName",
+      "exactNode": {
+        "type": "string",
+        "pattern": "^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$"
+      },
+      "qualification": "Proposal only, not productive schema. Source semantic/activation predicates in source-consumer-contracts.md still required."
+    }
+  },
+  {
+    "id": "RT-c66db038b75b910a",
+    "priorActiveTargetSchemaBinding": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/schemas/kubeclaw.http.task.schema.json",
+      "pointer": "/properties/path",
+      "exactNode": {
+        "type": "string",
+        "pattern": "^/(?!/)",
+        "maxLength": 2048
+      },
+      "qualification": "Proposal only, not productive schema. Source semantic/activation predicates in source-consumer-contracts.md still required."
+    }
+  },
+  {
+    "id": "RT-a6feb259112b5574",
+    "priorActiveTargetSchemaBinding": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/schemas/kubeclaw.http.task.schema.json",
+      "pointer": "/properties/method",
+      "exactNode": {
+        "enum": [
+          "GET",
+          "HEAD"
+        ]
+      },
+      "qualification": "Proposal only, not productive schema. Source semantic/activation predicates in source-consumer-contracts.md still required."
+    }
+  },
+  {
+    "id": "RT-d9e562dd50c1f9b3",
+    "priorActiveTargetSchemaBinding": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/schemas/kubeclaw.http.task.schema.json",
+      "pointer": "/properties/accept",
+      "exactNode": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 512,
+        "pattern": "^[^\\r\\n]+$"
+      },
+      "qualification": "Proposal only, not productive schema. Source semantic/activation predicates in source-consumer-contracts.md still required."
+    }
+  },
+  {
+    "id": "RT-fcc77b9c29ab0230",
+    "priorActiveTargetSchemaBinding": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/schemas/kubeclaw.http.task.schema.json",
+      "pointer": "/properties/expectedStatuses",
+      "exactNode": {
+        "type": "array",
+        "minItems": 1,
+        "maxItems": 32,
+        "uniqueItems": true,
+        "items": {
+          "type": "integer",
+          "minimum": 100,
+          "maximum": 599
+        }
+      },
+      "qualification": "Proposal only, not productive schema. Source semantic/activation predicates in source-consumer-contracts.md still required."
+    }
+  },
+  {
+    "id": "RT-259ec75a40f57a0b",
+    "priorActiveTargetSchemaBinding": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/schemas/kubeclaw.http.task.schema.json",
+      "pointer": "/properties/expectedStatuses/items",
+      "exactNode": {
+        "type": "integer",
+        "minimum": 100,
+        "maximum": 599
+      },
+      "qualification": "Proposal only, not productive schema. Source semantic/activation predicates in source-consumer-contracts.md still required."
+    }
+  },
+  {
+    "id": "RT-c7fdaab3e3e6c833",
+    "priorActiveTargetSchemaBinding": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/schemas/kubeclaw.http.task.schema.json",
+      "pointer": "/properties/expectedText",
+      "exactNode": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 4096
+      },
+      "qualification": "Proposal only, not productive schema. Source semantic/activation predicates in source-consumer-contracts.md still required."
+    }
+  },
+  {
+    "id": "RT-b2f5e06d53448731",
+    "priorActiveTargetSchemaBinding": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/schemas/kubeclaw.http.task.schema.json",
+      "pointer": "/properties/expectedContentType",
+      "exactNode": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 128,
+        "pattern": "^[a-z0-9!#$&^_.+-]+/[a-z0-9!#$&^_.+-]+$"
+      },
+      "qualification": "Proposal only, not productive schema. Source semantic/activation predicates in source-consumer-contracts.md still required."
+    }
+  },
+  {
+    "id": "RT-6b6f0761a77de324",
+    "priorActiveTargetSchemaBinding": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/schemas/kubeclaw.http.schema.json",
+      "pointer": "/properties/profiles/additionalProperties/properties/processing/properties/maximumResponseBytes",
+      "exactNode": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 16777216
+      },
+      "qualification": "Proposal only, not productive schema. Source semantic/activation predicates in source-consumer-contracts.md still required."
+    }
+  },
+  {
+    "id": "RT-6a3cdfc223a3c24b",
+    "priorActiveTargetSchemaBinding": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/schemas/kubeclaw.http.schema.json",
+      "pointer": "/properties/profiles/additionalProperties/properties/processing/properties/requestTimeoutMs",
+      "exactNode": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 300000
+      },
+      "qualification": "Proposal only, not productive schema. Source semantic/activation predicates in source-consumer-contracts.md still required."
+    }
+  },
+  {
+    "id": "RT-PROVIDER-EVIDENCE-KUBECLAW-HTTP-REQUEST-EVIDENCEDEFAULTS-ONPASS",
+    "priorActiveTargetSchemaBinding": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/schemas/kubeclaw.http.schema.json",
+      "pointer": "/properties/profiles/additionalProperties/properties/declarations/properties/evidenceDefaults/properties/onPass",
+      "exactNode": {
+        "type": "array",
+        "uniqueItems": true,
+        "minItems": 1,
+        "maxItems": 1,
+        "items": {
+          "enum": [
+            "log"
+          ]
+        },
+        "allOf": [
+          {
+            "contains": {
+              "const": "log"
+            }
+          }
+        ]
+      },
+      "semanticRelation": "Selected package native retrySafe contract ceiling must hold; matrixFields must name genuine task fields and cannot create policy second author. Proposed relation, not implemented current loader."
+    }
+  },
+  {
+    "id": "RT-PROVIDER-EVIDENCE-KUBECLAW-HTTP-REQUEST-EVIDENCEDEFAULTS-ONFAIL",
+    "priorActiveTargetSchemaBinding": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/schemas/kubeclaw.http.schema.json",
+      "pointer": "/properties/profiles/additionalProperties/properties/declarations/properties/evidenceDefaults/properties/onFail",
+      "exactNode": {
+        "type": "array",
+        "uniqueItems": true,
+        "minItems": 1,
+        "maxItems": 1,
+        "items": {
+          "enum": [
+            "log"
+          ]
+        },
+        "allOf": [
+          {
+            "contains": {
+              "const": "log"
+            }
+          }
+        ]
+      },
+      "semanticRelation": "Selected package native retrySafe contract ceiling must hold; matrixFields must name genuine task fields and cannot create policy second author. Proposed relation, not implemented current loader."
+    }
+  },
+  {
+    "id": "RT-PROVIDER-EVIDENCE-KUBECLAW-HTTP-REQUEST-EVIDENCEDEFAULTS-ONERROR",
+    "priorActiveTargetSchemaBinding": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/schemas/kubeclaw.http.schema.json",
+      "pointer": "/properties/profiles/additionalProperties/properties/declarations/properties/evidenceDefaults/properties/onError",
+      "exactNode": {
+        "type": "array",
+        "uniqueItems": true,
+        "minItems": 1,
+        "maxItems": 1,
+        "items": {
+          "enum": [
+            "log"
+          ]
+        },
+        "allOf": [
+          {
+            "contains": {
+              "const": "log"
+            }
+          }
+        ]
+      },
+      "semanticRelation": "Selected package native retrySafe contract ceiling must hold; matrixFields must name genuine task fields and cannot create policy second author. Proposed relation, not implemented current loader."
+    }
+  },
+  {
+    "id": "RT-PROVIDER-CONTRACT-KUBECLAW-HTTP-REQUEST-RETRYSAFE",
+    "priorActiveTargetSchemaBinding": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/schemas/kubeclaw.http.schema.json",
+      "pointer": "/properties/profiles/additionalProperties/properties/declarations/properties/retrySafe",
+      "exactNode": {
+        "type": "boolean"
+      },
+      "semanticRelation": "Selected package native retrySafe contract ceiling must hold; matrixFields must name genuine task fields and cannot create policy second author. Proposed relation, not implemented current loader."
+    }
+  },
+  {
+    "id": "RT-PROVIDER-CONTRACT-KUBECLAW-HTTP-REQUEST-MATRIXFIELDS",
+    "priorActiveTargetSchemaBinding": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/schemas/kubeclaw.http.schema.json",
+      "pointer": "/properties/profiles/additionalProperties/properties/declarations/properties/matrixFields",
+      "exactNode": {
+        "type": "array",
+        "uniqueItems": true,
+        "items": {
+          "enum": [
+            "path"
+          ]
+        }
+      },
+      "semanticRelation": "Selected package native retrySafe contract ceiling must hold; matrixFields must name genuine task fields and cannot create policy second author. Proposed relation, not implemented current loader."
+    }
+  },
+  {
+    "id": "RT-10f3f03208806c98",
+    "priorActiveTargetSchemaBinding": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/schemas/kubeclaw.openapi.task.schema.json",
+      "pointer": "/properties/specFile",
+      "exactNode": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 1024,
+        "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+$"
+      },
+      "qualification": "Proposal only, not productive schema. Source semantic/activation predicates in source-consumer-contracts.md still required."
+    }
+  },
+  {
+    "id": "RT-1609b6ce9dfde15b",
+    "priorActiveTargetSchemaBinding": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/schemas/kubeclaw.openapi.task.schema.json",
+      "pointer": "/properties/url",
+      "exactNode": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 2048
+      },
+      "qualification": "Proposal only, not productive schema. Source semantic/activation predicates in source-consumer-contracts.md still required."
+    }
+  },
+  {
+    "id": "RT-d2dfede67afe22ac",
+    "priorActiveTargetSchemaBinding": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/schemas/kubeclaw.openapi.task.schema.json",
+      "pointer": "/properties/endpointName",
+      "exactNode": {
+        "type": "string",
+        "pattern": "^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$"
+      },
+      "qualification": "Proposal only, not productive schema. Source semantic/activation predicates in source-consumer-contracts.md still required."
+    }
+  },
+  {
+    "id": "RT-396eb59b11141a9a",
+    "priorActiveTargetSchemaBinding": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/schemas/kubeclaw.openapi.task.schema.json",
+      "pointer": "/properties/operations",
+      "exactNode": {
+        "type": "array",
+        "minItems": 1,
+        "maxItems": 128,
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "operationId"
+          ],
+          "properties": {
+            "operationId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "pathParameters": {
+              "type": "object",
+              "maxProperties": 32,
+              "additionalProperties": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "boolean"
+                  }
+                ]
+              }
+            },
+            "query": {
+              "type": "object",
+              "maxProperties": 32,
+              "additionalProperties": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "boolean"
+                  }
+                ]
+              }
+            },
+            "headers": {
+              "type": "object",
+              "maxProperties": 32,
+              "additionalProperties": {
+                "type": "string",
+                "maxLength": 4096
+              }
+            },
+            "body": {},
+            "cleanup": {
+              "type": "boolean",
+              "default": false
+            },
+            "expectedStatuses": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 16,
+              "uniqueItems": true,
+              "items": {
+                "type": "integer",
+                "minimum": 100,
+                "maximum": 599
+              }
+            }
+          }
+        }
+      },
+      "qualification": "Proposal only, not productive schema. Source semantic/activation predicates in source-consumer-contracts.md still required."
+    }
+  },
+  {
+    "id": "RT-1d1c5da45ebf7a59",
+    "priorActiveTargetSchemaBinding": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/schemas/kubeclaw.openapi.task.schema.json",
+      "pointer": "/properties/operations/items",
+      "exactNode": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "operationId"
+        ],
+        "properties": {
+          "operationId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "pathParameters": {
+            "type": "object",
+            "maxProperties": 32,
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "boolean"
+                }
+              ]
+            }
+          },
+          "query": {
+            "type": "object",
+            "maxProperties": 32,
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "boolean"
+                }
+              ]
+            }
+          },
+          "headers": {
+            "type": "object",
+            "maxProperties": 32,
+            "additionalProperties": {
+              "type": "string",
+              "maxLength": 4096
+            }
+          },
+          "body": {},
+          "cleanup": {
+            "type": "boolean",
+            "default": false
+          },
+          "expectedStatuses": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 16,
+            "uniqueItems": true,
+            "items": {
+              "type": "integer",
+              "minimum": 100,
+              "maximum": 599
+            }
+          }
+        }
+      },
+      "qualification": "Proposal only, not productive schema. Source semantic/activation predicates in source-consumer-contracts.md still required."
+    }
+  },
+  {
+    "id": "RT-039cd17e18207028",
+    "priorActiveTargetSchemaBinding": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/schemas/kubeclaw.openapi.task.schema.json",
+      "pointer": "/properties/operations/items/properties/operationId",
+      "exactNode": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 128
+      },
+      "qualification": "Proposal only, not productive schema. Source semantic/activation predicates in source-consumer-contracts.md still required."
+    }
+  },
+  {
+    "id": "RT-4ad5dd8a7cfccc1c",
+    "priorActiveTargetSchemaBinding": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/schemas/kubeclaw.openapi.task.schema.json",
+      "pointer": "/properties/operations/items/properties/pathParameters",
+      "exactNode": {
+        "type": "object",
+        "maxProperties": 32,
+        "additionalProperties": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "boolean"
+            }
+          ]
+        }
+      },
+      "qualification": "Proposal only, not productive schema. Source semantic/activation predicates in source-consumer-contracts.md still required."
+    }
+  },
+  {
+    "id": "RT-496f09de742b998e",
+    "priorActiveTargetSchemaBinding": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/schemas/kubeclaw.openapi.task.schema.json",
+      "pointer": "/properties/operations/items/properties/pathParameters/additionalProperties",
+      "exactNode": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "number"
+          },
+          {
+            "type": "boolean"
+          }
+        ]
+      },
+      "qualification": "Proposal only, not productive schema. Source semantic/activation predicates in source-consumer-contracts.md still required."
+    }
+  },
+  {
+    "id": "RT-d077dd499ce84e1c",
+    "priorActiveTargetSchemaBinding": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/schemas/kubeclaw.openapi.task.schema.json",
+      "pointer": "/properties/operations/items/properties/pathParameters/additionalProperties/anyOf/0",
+      "exactNode": {
+        "type": "string"
+      },
+      "qualification": "Proposal only, not productive schema. Source semantic/activation predicates in source-consumer-contracts.md still required."
+    }
+  },
+  {
+    "id": "RT-9cec05672cab2d0d",
+    "priorActiveTargetSchemaBinding": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/schemas/kubeclaw.openapi.task.schema.json",
+      "pointer": "/properties/operations/items/properties/pathParameters/additionalProperties/anyOf/1",
+      "exactNode": {
+        "type": "number"
+      },
+      "qualification": "Proposal only, not productive schema. Source semantic/activation predicates in source-consumer-contracts.md still required."
+    }
+  },
+  {
+    "id": "RT-148251b72f4d24e0",
+    "priorActiveTargetSchemaBinding": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/schemas/kubeclaw.openapi.task.schema.json",
+      "pointer": "/properties/operations/items/properties/pathParameters/additionalProperties/anyOf/2",
+      "exactNode": {
+        "type": "boolean"
+      },
+      "qualification": "Proposal only, not productive schema. Source semantic/activation predicates in source-consumer-contracts.md still required."
+    }
+  },
+  {
+    "id": "RT-153e53cbf58a2c3b",
+    "priorActiveTargetSchemaBinding": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/schemas/kubeclaw.openapi.task.schema.json",
+      "pointer": "/properties/operations/items/properties/query",
+      "exactNode": {
+        "type": "object",
+        "maxProperties": 32,
+        "additionalProperties": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "boolean"
+            }
+          ]
+        }
+      },
+      "qualification": "Proposal only, not productive schema. Source semantic/activation predicates in source-consumer-contracts.md still required."
+    }
+  },
+  {
+    "id": "RT-03b79ef05f21760b",
+    "priorActiveTargetSchemaBinding": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/schemas/kubeclaw.openapi.task.schema.json",
+      "pointer": "/properties/operations/items/properties/query/additionalProperties",
+      "exactNode": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "number"
+          },
+          {
+            "type": "boolean"
+          }
+        ]
+      },
+      "qualification": "Proposal only, not productive schema. Source semantic/activation predicates in source-consumer-contracts.md still required."
+    }
+  },
+  {
+    "id": "RT-9d2b7832df8521b8",
+    "priorActiveTargetSchemaBinding": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/schemas/kubeclaw.openapi.task.schema.json",
+      "pointer": "/properties/operations/items/properties/query/additionalProperties/anyOf/0",
+      "exactNode": {
+        "type": "string"
+      },
+      "qualification": "Proposal only, not productive schema. Source semantic/activation predicates in source-consumer-contracts.md still required."
+    }
+  },
+  {
+    "id": "RT-88373ef30a584869",
+    "priorActiveTargetSchemaBinding": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/schemas/kubeclaw.openapi.task.schema.json",
+      "pointer": "/properties/operations/items/properties/query/additionalProperties/anyOf/1",
+      "exactNode": {
+        "type": "number"
+      },
+      "qualification": "Proposal only, not productive schema. Source semantic/activation predicates in source-consumer-contracts.md still required."
+    }
+  },
+  {
+    "id": "RT-3168b8463b219872",
+    "priorActiveTargetSchemaBinding": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/schemas/kubeclaw.openapi.task.schema.json",
+      "pointer": "/properties/operations/items/properties/query/additionalProperties/anyOf/2",
+      "exactNode": {
+        "type": "boolean"
+      },
+      "qualification": "Proposal only, not productive schema. Source semantic/activation predicates in source-consumer-contracts.md still required."
+    }
+  },
+  {
+    "id": "RT-6c40eb311c36aa18",
+    "priorActiveTargetSchemaBinding": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/schemas/kubeclaw.openapi.task.schema.json",
+      "pointer": "/properties/operations/items/properties/headers",
+      "exactNode": {
+        "type": "object",
+        "maxProperties": 32,
+        "additionalProperties": {
+          "type": "string",
+          "maxLength": 4096
+        }
+      },
+      "qualification": "Proposal only, not productive schema. Source semantic/activation predicates in source-consumer-contracts.md still required."
+    }
+  },
+  {
+    "id": "RT-67427bf80b25f14f",
+    "priorActiveTargetSchemaBinding": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/schemas/kubeclaw.openapi.task.schema.json",
+      "pointer": "/properties/operations/items/properties/headers/additionalProperties",
+      "exactNode": {
+        "type": "string",
+        "maxLength": 4096
+      },
+      "qualification": "Proposal only, not productive schema. Source semantic/activation predicates in source-consumer-contracts.md still required."
+    }
+  },
+  {
+    "id": "RT-da87e9da52e239b4",
+    "priorActiveTargetSchemaBinding": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/schemas/kubeclaw.openapi.task.schema.json",
+      "pointer": "/properties/operations/items/properties/body",
+      "exactNode": {},
+      "qualification": "Proposal only, not productive schema. Source semantic/activation predicates in source-consumer-contracts.md still required."
+    }
+  },
+  {
+    "id": "RT-795b89c50339c532",
+    "priorActiveTargetSchemaBinding": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/schemas/kubeclaw.openapi.task.schema.json",
+      "pointer": "/properties/operations/items/properties/cleanup",
+      "exactNode": {
+        "type": "boolean",
+        "default": false
+      },
+      "qualification": "Proposal only, not productive schema. Source semantic/activation predicates in source-consumer-contracts.md still required."
+    }
+  },
+  {
+    "id": "RT-0dfdeb7fe789b20b",
+    "priorActiveTargetSchemaBinding": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/schemas/kubeclaw.openapi.task.schema.json",
+      "pointer": "/properties/operations/items/properties/expectedStatuses",
+      "exactNode": {
+        "type": "array",
+        "minItems": 1,
+        "maxItems": 16,
+        "uniqueItems": true,
+        "items": {
+          "type": "integer",
+          "minimum": 100,
+          "maximum": 599
+        }
+      },
+      "qualification": "Proposal only, not productive schema. Source semantic/activation predicates in source-consumer-contracts.md still required."
+    }
+  },
+  {
+    "id": "RT-93fe557af6f46c3f",
+    "priorActiveTargetSchemaBinding": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/schemas/kubeclaw.openapi.task.schema.json",
+      "pointer": "/properties/operations/items/properties/expectedStatuses/items",
+      "exactNode": {
+        "type": "integer",
+        "minimum": 100,
+        "maximum": 599
+      },
+      "qualification": "Proposal only, not productive schema. Source semantic/activation predicates in source-consumer-contracts.md still required."
+    }
+  },
+  {
+    "id": "RT-d67d1281071db148",
+    "priorActiveTargetSchemaBinding": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/schemas/kubeclaw.openapi.task.schema.json",
+      "pointer": "/properties/tags",
+      "exactNode": {
+        "type": "array",
+        "minItems": 1,
+        "maxItems": 32,
+        "uniqueItems": true,
+        "items": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        }
+      },
+      "qualification": "Proposal only, not productive schema. Source semantic/activation predicates in source-consumer-contracts.md still required."
+    }
+  },
+  {
+    "id": "RT-96b1400c6db325d0",
+    "priorActiveTargetSchemaBinding": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/schemas/kubeclaw.openapi.task.schema.json",
+      "pointer": "/properties/tags/items",
+      "exactNode": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 128
+      },
+      "qualification": "Proposal only, not productive schema. Source semantic/activation predicates in source-consumer-contracts.md still required."
+    }
+  },
+  {
+    "id": "RT-550d941bb663f8fc",
+    "priorActiveTargetSchemaBinding": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/schemas/kubeclaw.openapi.schema.json",
+      "pointer": "/properties/profiles/additionalProperties/properties/processing/properties/requestTimeoutMs",
+      "exactNode": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 300000
+      },
+      "qualification": "Proposal only, not productive schema. Source semantic/activation predicates in source-consumer-contracts.md still required."
+    }
+  },
+  {
+    "id": "RT-63d5aafbda9b5281",
+    "priorActiveTargetSchemaBinding": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/schemas/kubeclaw.openapi.schema.json",
+      "pointer": "/properties/profiles/additionalProperties/properties/processing/properties/maximumResponseBytes",
+      "exactNode": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 16777216
+      },
+      "qualification": "Proposal only, not productive schema. Source semantic/activation predicates in source-consumer-contracts.md still required."
+    }
+  },
+  {
+    "id": "RT-PROVIDER-EVIDENCE-KUBECLAW-OPENAPI-OPERATIONS-EVIDENCEDEFAULTS-ONPASS",
+    "priorActiveTargetSchemaBinding": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/schemas/kubeclaw.openapi.schema.json",
+      "pointer": "/properties/profiles/additionalProperties/properties/declarations/properties/evidenceDefaults/properties/onPass",
+      "exactNode": {
+        "type": "array",
+        "uniqueItems": true,
+        "minItems": 2,
+        "maxItems": 2,
+        "items": {
+          "enum": [
+            "log",
+            "test-report"
+          ]
+        },
+        "allOf": [
+          {
+            "contains": {
+              "const": "log"
+            }
+          },
+          {
+            "contains": {
+              "const": "test-report"
+            }
+          }
+        ]
+      },
+      "semanticRelation": "Selected package native retrySafe contract ceiling must hold; matrixFields must name genuine task fields and cannot create policy second author. Proposed relation, not implemented current loader."
+    }
+  },
+  {
+    "id": "RT-PROVIDER-EVIDENCE-KUBECLAW-OPENAPI-OPERATIONS-EVIDENCEDEFAULTS-ONFAIL",
+    "priorActiveTargetSchemaBinding": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/schemas/kubeclaw.openapi.schema.json",
+      "pointer": "/properties/profiles/additionalProperties/properties/declarations/properties/evidenceDefaults/properties/onFail",
+      "exactNode": {
+        "type": "array",
+        "uniqueItems": true,
+        "minItems": 2,
+        "maxItems": 2,
+        "items": {
+          "enum": [
+            "log",
+            "test-report"
+          ]
+        },
+        "allOf": [
+          {
+            "contains": {
+              "const": "log"
+            }
+          },
+          {
+            "contains": {
+              "const": "test-report"
+            }
+          }
+        ]
+      },
+      "semanticRelation": "Selected package native retrySafe contract ceiling must hold; matrixFields must name genuine task fields and cannot create policy second author. Proposed relation, not implemented current loader."
+    }
+  },
+  {
+    "id": "RT-PROVIDER-EVIDENCE-KUBECLAW-OPENAPI-OPERATIONS-EVIDENCEDEFAULTS-ONERROR",
+    "priorActiveTargetSchemaBinding": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/schemas/kubeclaw.openapi.schema.json",
+      "pointer": "/properties/profiles/additionalProperties/properties/declarations/properties/evidenceDefaults/properties/onError",
+      "exactNode": {
+        "type": "array",
+        "uniqueItems": true,
+        "minItems": 1,
+        "maxItems": 1,
+        "items": {
+          "enum": [
+            "log"
+          ]
+        },
+        "allOf": [
+          {
+            "contains": {
+              "const": "log"
+            }
+          }
+        ]
+      },
+      "semanticRelation": "Selected package native retrySafe contract ceiling must hold; matrixFields must name genuine task fields and cannot create policy second author. Proposed relation, not implemented current loader."
+    }
+  },
+  {
+    "id": "RT-PROVIDER-CONTRACT-KUBECLAW-OPENAPI-OPERATIONS-RETRYSAFE",
+    "priorActiveTargetSchemaBinding": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/schemas/kubeclaw.openapi.schema.json",
+      "pointer": "/properties/profiles/additionalProperties/properties/declarations/properties/retrySafe",
+      "exactNode": {
+        "const": false
+      },
+      "semanticRelation": "Selected package native retrySafe contract ceiling must hold; matrixFields must name genuine task fields and cannot create policy second author. Proposed relation, not implemented current loader."
+    }
+  },
+  {
+    "id": "RT-PROVIDER-CONTRACT-KUBECLAW-OPENAPI-OPERATIONS-MATRIXFIELDS",
+    "priorActiveTargetSchemaBinding": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/schemas/kubeclaw.openapi.schema.json",
+      "pointer": "/properties/profiles/additionalProperties/properties/declarations/properties/matrixFields",
+      "exactNode": {
+        "type": "array",
+        "maxItems": 0,
+        "items": {
+          "type": "string"
+        }
+      },
+      "semanticRelation": "Selected package native retrySafe contract ceiling must hold; matrixFields must name genuine task fields and cannot create policy second author. Proposed relation, not implemented current loader."
+    }
+  },
+  {
+    "id": "RT-0b11b3282059d1db",
+    "priorActiveTargetSchemaBinding": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/schemas/kubeclaw.network-http.schema.json",
+      "pointer": "/properties/profiles/additionalProperties/properties/processing/properties/allowedOrigins",
+      "exactNode": {
+        "type": "array",
+        "minItems": 1,
+        "uniqueItems": true,
+        "items": {
+          "type": "string",
+          "format": "uri"
+        }
+      },
+      "qualification": "Proposal only, not productive schema. Source semantic/activation predicates in source-consumer-contracts.md still required."
+    }
+  },
+  {
+    "id": "RT-db4ff06654e4c996",
+    "priorActiveTargetSchemaBinding": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/schemas/kubeclaw.network-http.schema.json",
+      "pointer": "/properties/profiles/additionalProperties/properties/processing/properties/allowedOrigins/items",
+      "exactNode": {
+        "type": "string",
+        "format": "uri"
+      },
+      "qualification": "Proposal only, not productive schema. Source semantic/activation predicates in source-consumer-contracts.md still required."
+    }
+  },
+  {
+    "id": "RT-8510aae902279dfa",
+    "priorActiveTargetSchemaBinding": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/schemas/kubeclaw.network-http.schema.json",
+      "pointer": "/properties/profiles/additionalProperties/properties/processing/properties/allowedMethods",
+      "exactNode": {
+        "type": "array",
+        "minItems": 1,
+        "uniqueItems": true,
+        "items": {
+          "enum": [
+            "GET",
+            "POST",
+            "PUT",
+            "PATCH",
+            "DELETE"
+          ]
+        }
+      },
+      "qualification": "Proposal only, not productive schema. Source semantic/activation predicates in source-consumer-contracts.md still required."
+    }
+  },
+  {
+    "id": "RT-8e9540f20d6b3e93",
+    "priorActiveTargetSchemaBinding": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/schemas/kubeclaw.network-http.schema.json",
+      "pointer": "/properties/profiles/additionalProperties/properties/processing/properties/allowedMethods/items",
+      "exactNode": {
+        "enum": [
+          "GET",
+          "POST",
+          "PUT",
+          "PATCH",
+          "DELETE"
+        ]
+      },
+      "qualification": "Proposal only, not productive schema. Source semantic/activation predicates in source-consumer-contracts.md still required."
+    }
+  },
+  {
+    "id": "RT-bdbb356d7dbdb05b",
+    "priorActiveTargetSchemaBinding": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/schemas/kubeclaw.network-http.schema.json",
+      "pointer": "/properties/profiles/additionalProperties/properties/processing/properties/allowedHeaders",
+      "exactNode": {
+        "type": "array",
+        "uniqueItems": true,
+        "items": {
+          "type": "string",
+          "pattern": "^[a-z0-9-]+$"
+        }
+      },
+      "qualification": "Proposal only, not productive schema. Source semantic/activation predicates in source-consumer-contracts.md still required."
+    }
+  },
+  {
+    "id": "RT-129d37457d0a92b8",
+    "priorActiveTargetSchemaBinding": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/schemas/kubeclaw.network-http.schema.json",
+      "pointer": "/properties/profiles/additionalProperties/properties/processing/properties/allowedHeaders/items",
+      "exactNode": {
+        "type": "string",
+        "pattern": "^[a-z0-9-]+$"
+      },
+      "qualification": "Proposal only, not productive schema. Source semantic/activation predicates in source-consumer-contracts.md still required."
+    }
+  },
+  {
+    "id": "RT-3e41afae2fdc5889",
+    "priorActiveTargetSchemaBinding": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/schemas/kubeclaw.network-http.schema.json",
+      "pointer": "/properties/profiles/additionalProperties/properties/processing/properties/maxRequestBytes",
+      "exactNode": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 9007199254740991,
+        "description": "Current parseConfig positiveInteger requires Number.isSafeInteger. Later timer/fetch/Buffer domains remain separately recorded, not claimed by this schema."
+      },
+      "qualification": "Proposal only, not productive schema. Source semantic/activation predicates in source-consumer-contracts.md still required."
+    }
+  },
+  {
+    "id": "RT-a21fee46884b7194",
+    "priorActiveTargetSchemaBinding": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/schemas/kubeclaw.network-http.schema.json",
+      "pointer": "/properties/profiles/additionalProperties/properties/processing/properties/maxResponseBytes",
+      "exactNode": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 9007199254740991,
+        "description": "Current parseConfig positiveInteger requires Number.isSafeInteger. Later timer/fetch/Buffer domains remain separately recorded, not claimed by this schema."
+      },
+      "qualification": "Proposal only, not productive schema. Source semantic/activation predicates in source-consumer-contracts.md still required."
+    }
+  },
+  {
+    "id": "RT-e8382fb0497a39a3",
+    "priorActiveTargetSchemaBinding": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/schemas/kubeclaw.network-http.schema.json",
+      "pointer": "/properties/profiles/additionalProperties/properties/processing/properties/timeoutMs",
+      "exactNode": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 2147483647,
+        "description": "Current parseConfig positiveInteger requires Number.isSafeInteger. Later timer/fetch/Buffer domains remain separately recorded, not claimed by this schema."
+      },
+      "qualification": "Proposal only, not productive schema. Source semantic/activation predicates in source-consumer-contracts.md still required."
+    }
+  }
+]

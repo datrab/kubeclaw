@@ -1,0 +1,479 @@
+{
+  "status": "complete23-leaf proposed definitions; source/source-case IDs conserved, not canonical acceptance",
+  "fields": [
+    {
+      "field": "backupIntervalMinutes",
+      "sameOwnerPointer": "/profiles/<explicit>/settings/backupIntervalMinutes",
+      "units": "minutes\u2192integerseconds \u00d760",
+      "sourceWitness": {
+        "path": "scripts/render-postgresql-recovery.mjs",
+        "line": 29,
+        "expression": "    || 2 * policy.maximumDurationSeconds + policy.verificationIntervalMinutes * 60 + policy.verificationDeadlineSeconds + 60 >= policy.maximumAgeSeconds) throw new Error('POSTGRES_RECOVERY_SCHEDULE_RPO_INVALID');",
+        "sha256": "3e0d30b0c0888c4039f176ddb80d19e00b7b7064ead979d5bb9122d4df19e14f"
+      },
+      "exactRelatedOriginalCandidateIds": [
+        "SRC-5fafd3145cb96392",
+        "SRC-c9011c2cdd3229ec",
+        "SRC-74e008a2790c0d8e"
+      ],
+      "consumerAndProposedDelta": "BACKUP_INTERVAL_SECONDS\u2192scheduled age < interval",
+      "supportedDomainAndStop": "1..60; verification interval <= backup interval",
+      "profileA": "A",
+      "profileB": "B-backupIntervalMinutes",
+      "result": "not-run",
+      "canonicalId": "none invented; original source IDs reused; parent full-universe adoption still open"
+    },
+    {
+      "field": "verificationIntervalMinutes",
+      "sameOwnerPointer": "/profiles/<explicit>/settings/verificationIntervalMinutes",
+      "units": "minutes",
+      "sourceWitness": {
+        "path": "scripts/render-postgresql-recovery.mjs",
+        "line": 29,
+        "expression": "    || 2 * policy.maximumDurationSeconds + policy.verificationIntervalMinutes * 60 + policy.verificationDeadlineSeconds + 60 >= policy.maximumAgeSeconds) throw new Error('POSTGRES_RECOVERY_SCHEDULE_RPO_INVALID');",
+        "sha256": "3e0d30b0c0888c4039f176ddb80d19e00b7b7064ead979d5bb9122d4df19e14f"
+      },
+      "exactRelatedOriginalCandidateIds": [
+        "SRC-74e008a2790c0d8e",
+        "SRC-ec863eb798302cfb"
+      ],
+      "consumerAndProposedDelta": "Cron */N minute field; RPO \u00d760",
+      "supportedDomainAndStop": "1..30; <=backup interval",
+      "profileA": "A",
+      "profileB": "B-verificationIntervalMinutes",
+      "result": "not-run",
+      "canonicalId": "none invented; original source IDs reused; parent full-universe adoption still open"
+    },
+    {
+      "field": "maximumAgeSeconds",
+      "sameOwnerPointer": "/profiles/<explicit>/settings/maximumAgeSeconds",
+      "units": "seconds",
+      "sourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 127,
+        "expression": "  (( age <= BACKUP_MAXIMUM_AGE_SECONDS )) || fail BACKUP_RPO_EXCEEDED",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "exactRelatedOriginalCandidateIds": [
+        "SRC-a914f2f70a318ab5",
+        "SRC-cf05a9938c341d97"
+      ],
+      "consumerAndProposedDelta": "BACKUP_MAXIMUM_AGE_SECONDS\u2192age now-started <= cap",
+      "supportedDomainAndStop": "positive canonical 13digit; strict RPO relation",
+      "profileA": "A",
+      "profileB": "B-maximumAgeSeconds",
+      "result": "not-run",
+      "canonicalId": "none invented; original source IDs reused; parent full-universe adoption still open"
+    },
+    {
+      "field": "maximumDurationSeconds",
+      "sameOwnerPointer": "/profiles/<explicit>/settings/maximumDurationSeconds",
+      "units": "seconds",
+      "sourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 71,
+        "expression": "    timeout --signal=TERM --kill-after=15 \"$BACKUP_MAXIMUM_DURATION_SECONDS\" \\",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "exactRelatedOriginalCandidateIds": [
+        "SRC-a914f2f70a318ab5",
+        "SRC-c58e691b6958fd24",
+        "SRC-a5370b639ba30b4d"
+      ],
+      "consumerAndProposedDelta": "BACKUP_MAXIMUM_DURATION_SECONDS\u2192GNU timeout dump/restore; Cron deadline",
+      "supportedDomainAndStop": "positive canonical13digit; integer seconds/no suffix/fraction; selected GNUtimeout time_t/native compatibility required",
+      "profileA": "A",
+      "profileB": "B-maximumDurationSeconds",
+      "result": "not-run",
+      "canonicalId": "none invented; original source IDs reused; parent full-universe adoption still open"
+    },
+    {
+      "field": "verificationDeadlineSeconds",
+      "sameOwnerPointer": "/profiles/<explicit>/settings/verificationDeadlineSeconds",
+      "units": "seconds",
+      "sourceWitness": {
+        "path": "scripts/render-postgresql-recovery.mjs",
+        "line": 75,
+        "expression": "    startingDeadlineSeconds: policy.verificationDeadlineSeconds, successfulJobsHistoryLimit: 3, failedJobsHistoryLimit: 10,",
+        "sha256": "3e0d30b0c0888c4039f176ddb80d19e00b7b7064ead979d5bb9122d4df19e14f"
+      },
+      "exactRelatedOriginalCandidateIds": [
+        "SRC-74e008a2790c0d8e",
+        "SRC-ec863eb798302cfb"
+      ],
+      "consumerAndProposedDelta": "Cron startingDeadlineSeconds; queue/starting allowance not SQL timeout",
+      "supportedDomainAndStop": "positive13digit; RPO",
+      "profileA": "A",
+      "profileB": "B-verificationDeadlineSeconds",
+      "result": "not-run",
+      "canonicalId": "none invented; original source IDs reused; parent full-universe adoption still open"
+    },
+    {
+      "field": "maximumBackupBytes",
+      "sameOwnerPointer": "/profiles/<explicit>/settings/maximumBackupBytes",
+      "units": "bytes",
+      "sourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 63,
+        "expression": "  (( allowance <= BACKUP_MAXIMUM_BYTES )) || allowance=$BACKUP_MAXIMUM_BYTES",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "exactRelatedOriginalCandidateIds": [
+        "SRC-b1bffe9417fac280",
+        "SRC-3becce028d299daa",
+        "SRC-c7dac0ae577ca91f",
+        "SRC-9c1504be3ba77b9b"
+      ],
+      "consumerAndProposedDelta": "dump min allocation / floor1024 and verify <=",
+      "supportedDomainAndStop": "1024..9999999999999; native signed64 safe; <= retained-reserve",
+      "profileA": "A",
+      "profileB": "B-maximumBackupBytes",
+      "result": "not-run",
+      "canonicalId": "none invented; original source IDs reused; parent full-universe adoption still open"
+    },
+    {
+      "field": "maximumRetainedBytes",
+      "sameOwnerPointer": "/profiles/<explicit>/settings/maximumRetainedBytes",
+      "units": "bytes",
+      "sourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 61,
+        "expression": "  allowance=$(( BACKUP_MAXIMUM_RETAINED_BYTES - used - 67108864 ))",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "exactRelatedOriginalCandidateIds": [
+        "SRC-b1bffe9417fac280",
+        "SRC-dc2aa0ceab92d18c",
+        "SRC-865461bfc9850dcb",
+        "SRC-bae98e10a68c4921"
+      ],
+      "consumerAndProposedDelta": "du used+incomplete; subtraction, no deletion",
+      "supportedDomainAndStop": "positive13digit; <=PV requested/actual capacity; backup+reserve <= retained",
+      "profileA": "A",
+      "profileB": "B-maximumRetainedBytes",
+      "result": "not-run",
+      "canonicalId": "none invented; original source IDs reused; parent full-universe adoption still open"
+    },
+    {
+      "field": "persistence.size",
+      "sameOwnerPointer": "/profiles/<explicit>/settings/persistence/size",
+      "units": "positive integer Gi|Ti, 2^30/2^40 bytes",
+      "sourceWitness": {
+        "path": "scripts/render-postgresql-recovery.mjs",
+        "line": 33,
+        "expression": "  if (!/^[1-9][0-9]*(?:Gi|Ti)$/.test(policy.persistence?.size)",
+        "sha256": "3e0d30b0c0888c4039f176ddb80d19e00b7b7064ead979d5bb9122d4df19e14f"
+      },
+      "exactRelatedOriginalCandidateIds": [],
+      "consumerAndProposedDelta": "existing RWO PVC request; no resize/adoption",
+      "supportedDomainAndStop": "exact current renderer Gi/Ti domain; converted PV capacity <=signed64; >=maxRetained; actual volume bound/owner/mode/storageClass proof",
+      "profileA": "A",
+      "profileB": "B-persistence-size",
+      "result": "not-run",
+      "canonicalId": "none invented; original source IDs reused; parent full-universe adoption still open"
+    },
+    {
+      "field": "persistence.storageClass",
+      "sameOwnerPointer": "/profiles/<explicit>/settings/persistence/storageClass",
+      "units": "null or DNS-label name",
+      "sourceWitness": {
+        "path": "scripts/render-postgresql-recovery.mjs",
+        "line": 34,
+        "expression": "    || (policy.persistence.storageClass !== null && !identifier(policy.persistence.storageClass))) throw new Error('POSTGRES_RECOVERY_STORAGE_INVALID');",
+        "sha256": "3e0d30b0c0888c4039f176ddb80d19e00b7b7064ead979d5bb9122d4df19e14f"
+      },
+      "exactRelatedOriginalCandidateIds": [],
+      "consumerAndProposedDelta": "null omits storageClassName; otherwise exact",
+      "supportedDomainAndStop": "null means default/admission storageclass route captured, not immutable class equality or capacity proof",
+      "profileA": "A",
+      "profileB": "B-persistence-storageClass",
+      "result": "not-run",
+      "canonicalId": "none invented; original source IDs reused; parent full-universe adoption still open"
+    },
+    {
+      "field": "resources.requests.cpu",
+      "sameOwnerPointer": "/profiles/<explicit>/settings/resources/requests/cpu",
+      "units": "Kubernetes Quantity CPU cores",
+      "sourceWitness": {
+        "path": "scripts/render-postgresql-recovery.mjs",
+        "line": 35,
+        "expression": "  if (!policy.resources?.requests?.cpu || !policy.resources.requests.memory || !policy.resources.limits?.cpu || !policy.resources.limits.memory) throw new Error('POSTGRES_RECOVERY_RESOURCES_REQUIRED');",
+        "sha256": "3e0d30b0c0888c4039f176ddb80d19e00b7b7064ead979d5bb9122d4df19e14f"
+      },
+      "exactRelatedOriginalCandidateIds": [],
+      "consumerAndProposedDelta": "Cron container.resources.requests.cpu",
+      "supportedDomainAndStop": "positive supported DecimalSI/BinarySI/DecimalExponent syntax; actual Kubernetes CPU quantity admission/rounding and native tool budget receipt; request<=limit",
+      "profileA": "A",
+      "profileB": "B-resources-requests-cpu",
+      "result": "not-run",
+      "canonicalId": "none invented; original source IDs reused; parent full-universe adoption still open"
+    },
+    {
+      "field": "resources.requests.memory",
+      "sameOwnerPointer": "/profiles/<explicit>/settings/resources/requests/memory",
+      "units": "Kubernetes Quantity bytes",
+      "sourceWitness": {
+        "path": "scripts/render-postgresql-recovery.mjs",
+        "line": 35,
+        "expression": "  if (!policy.resources?.requests?.cpu || !policy.resources.requests.memory || !policy.resources.limits?.cpu || !policy.resources.limits.memory) throw new Error('POSTGRES_RECOVERY_RESOURCES_REQUIRED');",
+        "sha256": "3e0d30b0c0888c4039f176ddb80d19e00b7b7064ead979d5bb9122d4df19e14f"
+      },
+      "exactRelatedOriginalCandidateIds": [],
+      "consumerAndProposedDelta": "Cron container.resources.requests.memory",
+      "supportedDomainAndStop": "positive supported Quantity grammar; effective byte accounting/native admission; request<=limit, actual tool working set",
+      "profileA": "A",
+      "profileB": "B-resources-requests-memory",
+      "result": "not-run",
+      "canonicalId": "none invented; original source IDs reused; parent full-universe adoption still open"
+    },
+    {
+      "field": "resources.limits.cpu",
+      "sameOwnerPointer": "/profiles/<explicit>/settings/resources/limits/cpu",
+      "units": "Kubernetes Quantity CPU cores",
+      "sourceWitness": {
+        "path": "scripts/render-postgresql-recovery.mjs",
+        "line": 35,
+        "expression": "  if (!policy.resources?.requests?.cpu || !policy.resources.requests.memory || !policy.resources.limits?.cpu || !policy.resources.limits.memory) throw new Error('POSTGRES_RECOVERY_RESOURCES_REQUIRED');",
+        "sha256": "3e0d30b0c0888c4039f176ddb80d19e00b7b7064ead979d5bb9122d4df19e14f"
+      },
+      "exactRelatedOriginalCandidateIds": [],
+      "consumerAndProposedDelta": "Cron container.resources.limits.cpu",
+      "supportedDomainAndStop": "positive Quantity supported syntax; request<=limit, actual runtime controller limit/tool feasibility",
+      "profileA": "A",
+      "profileB": "B-resources-limits-cpu",
+      "result": "not-run",
+      "canonicalId": "none invented; original source IDs reused; parent full-universe adoption still open"
+    },
+    {
+      "field": "resources.limits.memory",
+      "sameOwnerPointer": "/profiles/<explicit>/settings/resources/limits/memory",
+      "units": "Kubernetes Quantity bytes",
+      "sourceWitness": {
+        "path": "scripts/render-postgresql-recovery.mjs",
+        "line": 35,
+        "expression": "  if (!policy.resources?.requests?.cpu || !policy.resources.requests.memory || !policy.resources.limits?.cpu || !policy.resources.limits.memory) throw new Error('POSTGRES_RECOVERY_RESOURCES_REQUIRED');",
+        "sha256": "3e0d30b0c0888c4039f176ddb80d19e00b7b7064ead979d5bb9122d4df19e14f"
+      },
+      "exactRelatedOriginalCandidateIds": [],
+      "consumerAndProposedDelta": "Cron container.resources.limits.memory",
+      "supportedDomainAndStop": "positive Quantity supported syntax; request<=limit; OOM/working-set/crash must preserve history",
+      "profileA": "A",
+      "profileB": "B-resources-limits-memory",
+      "result": "not-run",
+      "canonicalId": "none invented; original source IDs reused; parent full-universe adoption still open"
+    },
+    {
+      "field": "reserveBytes",
+      "sameOwnerPointer": "/profiles/<explicit>/settings/reserveBytes",
+      "units": "bytes",
+      "sourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 61,
+        "expression": "  allowance=$(( BACKUP_MAXIMUM_RETAINED_BYTES - used - 67108864 ))",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "exactRelatedOriginalCandidateIds": [
+        "SRC-dc2aa0ceab92d18c",
+        "SRC-bae98e10a68c4921",
+        "SRC-c7dac0ae577ca91f"
+      ],
+      "consumerAndProposedDelta": "new BACKUP_RESERVE_BYTES replaces allowance subtraction67108864",
+      "supportedDomainAndStop": "positive13digit; >=floor(TOC/1024)*1024 +metadataExclusive-1+indexExclusive-1 + authentic directory/accounting overhead; backup+reserve<=retained",
+      "profileA": "A",
+      "profileB": "B-reserveBytes",
+      "result": "not-run",
+      "canonicalId": "none invented; original source IDs reused; parent full-universe adoption still open"
+    },
+    {
+      "field": "killAfterSeconds",
+      "sameOwnerPointer": "/profiles/<explicit>/settings/killAfterSeconds",
+      "units": "seconds",
+      "sourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 71,
+        "expression": "    timeout --signal=TERM --kill-after=15 \"$BACKUP_MAXIMUM_DURATION_SECONDS\" \\",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "exactRelatedOriginalCandidateIds": [
+        "SRC-c58e691b6958fd24",
+        "SRC-a5370b639ba30b4d"
+      ],
+      "consumerAndProposedDelta": "new BACKUP_KILL_AFTER_SECONDS replaces timeout --kill-after=15 at both calls",
+      "supportedDomainAndStop": "positive13digit; <=Cronoverhead; selected actual GNUtimeout/native descendant quiescence receipt; timeout alone insufficient",
+      "profileA": "A",
+      "profileB": "B-killAfterSeconds",
+      "result": "not-run",
+      "canonicalId": "none invented; original source IDs reused; parent full-universe adoption still open"
+    },
+    {
+      "field": "connectionTimeoutSeconds",
+      "sameOwnerPointer": "/profiles/<explicit>/settings/connectionTimeoutSeconds",
+      "units": "seconds libpq PGCONNECT_TIMEOUT",
+      "sourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 30,
+        "expression": "  export PGCONNECT_TIMEOUT=15",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "exactRelatedOriginalCandidateIds": [
+        "SRC-07e60170641cef92",
+        "SRC-735ca02ea38021c2"
+      ],
+      "consumerAndProposedDelta": "replace configuration export PGCONNECT_TIMEOUT=15",
+      "supportedDomainAndStop": "1..2147483647 libpq signed-int seconds; positive1 has native effective minimum2, compare effective max(2,value) to duration/overhead; original selected client/version receipt must establish these libpq semantics, not assume a one-second connect. Zero/negative indefinite wait forbidden.",
+      "profileA": "A",
+      "profileB": "B-connectionTimeoutSeconds",
+      "result": "not-run",
+      "canonicalId": "none invented; original source IDs reused; parent full-universe adoption still open"
+    },
+    {
+      "field": "tocMaximumBytes",
+      "sameOwnerPointer": "/profiles/<explicit>/settings/tocMaximumBytes",
+      "units": "bytes, effective floor(value/1024)*1024",
+      "sourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 74,
+        "expression": "  (ulimit -f 64512; pg_restore --list \"$stage/database.dump\" >\"$stage/archive-toc.txt\")",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "exactRelatedOriginalCandidateIds": [
+        "SRC-c7dac0ae577ca91f",
+        "SRC-a409eeca2cea8dc8"
+      ],
+      "consumerAndProposedDelta": "replace ulimit -f64512 with computed blocks; v2 verify guard <=effective cap",
+      "supportedDomainAndStop": "1024..13digitmax; Bash default -f1024-byte units required, not POSIX512; measured native rlim_t/image support",
+      "profileA": "A",
+      "profileB": "B-tocMaximumBytes",
+      "result": "not-run",
+      "canonicalId": "none invented; original source IDs reused; parent full-universe adoption still open"
+    },
+    {
+      "field": "metadataMaximumBytesExclusive",
+      "sameOwnerPointer": "/profiles/<explicit>/settings/metadataMaximumBytesExclusive",
+      "units": "exclusive bytes",
+      "sourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 108,
+        "expression": "  (( $(stat -c %s \"$directory/metadata.env\") < 65536 )) || fail METADATA_TOO_LARGE",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "exactRelatedOriginalCandidateIds": [
+        "SRC-0cdaaeed65ae178c"
+      ],
+      "consumerAndProposedDelta": "replace metadata.env stat-size <65536; publication guard before rename",
+      "supportedDomainAndStop": "positive13digit; actual complete selected source metadata serialized size < threshold; retains original format/age/source/credentials markers",
+      "profileA": "A",
+      "profileB": "B-metadataMaximumBytesExclusive",
+      "result": "not-run",
+      "canonicalId": "none invented; original source IDs reused; parent full-universe adoption still open"
+    },
+    {
+      "field": "checksumIndexMaximumBytesExclusive",
+      "sameOwnerPointer": "/profiles/<explicit>/settings/checksumIndexMaximumBytesExclusive",
+      "units": "exclusive bytes",
+      "sourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 109,
+        "expression": "  (( $(stat -c %s \"$directory/SHA256SUMS\") < 1024 )) || fail CHECKSUM_INDEX_INVALID",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "exactRelatedOriginalCandidateIds": [
+        "SRC-6531b764a135ea0e",
+        "SRC-d3ed8066c34b7cb2",
+        "SRC-ddd9a725360d052d"
+      ],
+      "consumerAndProposedDelta": "replace SHA256SUMS stat-size <1024; publication guard",
+      "supportedDomainAndStop": "positive13digit; exact3 named SHA256 lines total241 bytes must be < threshold; no widened arbitrary filename index",
+      "profileA": "A",
+      "profileB": "B-checksumIndexMaximumBytesExclusive",
+      "result": "not-run",
+      "canonicalId": "none invented; original source IDs reused; parent full-universe adoption still open"
+    },
+    {
+      "field": "cronJobDeadlineOverheadSeconds",
+      "sameOwnerPointer": "/profiles/<explicit>/settings/cronJobDeadlineOverheadSeconds",
+      "units": "seconds",
+      "sourceWitness": {
+        "path": "scripts/render-postgresql-recovery.mjs",
+        "line": 76,
+        "expression": "    jobTemplate: { spec: { backoffLimit: 0, activeDeadlineSeconds: policy.maximumDurationSeconds + 60,",
+        "sha256": "3e0d30b0c0888c4039f176ddb80d19e00b7b7064ead979d5bb9122d4df19e14f"
+      },
+      "exactRelatedOriginalCandidateIds": [
+        "SRC-c58e691b6958fd24",
+        "SRC-a5370b639ba30b4d",
+        "SRC-ec863eb798302cfb"
+      ],
+      "consumerAndProposedDelta": "replace activeDeadlineSeconds duration+60; RPO +60",
+      "supportedDomainAndStop": "positive13digit; >=connection and kill each; duration+overhead checked native job deadline; measured remaining phases/quiescence fit",
+      "profileA": "A",
+      "profileB": "B-cronJobDeadlineOverheadSeconds",
+      "result": "not-run",
+      "canonicalId": "none invented; original source IDs reused; parent full-universe adoption still open"
+    },
+    {
+      "field": "successfulJobsHistoryLimit",
+      "sameOwnerPointer": "/profiles/<explicit>/settings/successfulJobsHistoryLimit",
+      "units": "nonnegative int32 Job count",
+      "sourceWitness": {
+        "path": "scripts/render-postgresql-recovery.mjs",
+        "line": 75,
+        "expression": "    startingDeadlineSeconds: policy.verificationDeadlineSeconds, successfulJobsHistoryLimit: 3, failedJobsHistoryLimit: 10,",
+        "sha256": "3e0d30b0c0888c4039f176ddb80d19e00b7b7064ead979d5bb9122d4df19e14f"
+      },
+      "exactRelatedOriginalCandidateIds": [],
+      "consumerAndProposedDelta": "replace successfulJobsHistoryLimit3",
+      "supportedDomainAndStop": "0..2147483647; Job deletion policy not backup directory/archive authority deletion",
+      "profileA": "A",
+      "profileB": "B-successfulJobsHistoryLimit",
+      "result": "not-run",
+      "canonicalId": "none invented; original source IDs reused; parent full-universe adoption still open"
+    },
+    {
+      "field": "failedJobsHistoryLimit",
+      "sameOwnerPointer": "/profiles/<explicit>/settings/failedJobsHistoryLimit",
+      "units": "nonnegative int32 Job count",
+      "sourceWitness": {
+        "path": "scripts/render-postgresql-recovery.mjs",
+        "line": 75,
+        "expression": "    startingDeadlineSeconds: policy.verificationDeadlineSeconds, successfulJobsHistoryLimit: 3, failedJobsHistoryLimit: 10,",
+        "sha256": "3e0d30b0c0888c4039f176ddb80d19e00b7b7064ead979d5bb9122d4df19e14f"
+      },
+      "exactRelatedOriginalCandidateIds": [],
+      "consumerAndProposedDelta": "replace failedJobsHistoryLimit10",
+      "supportedDomainAndStop": "0..2147483647; original recovery evidence/source archive retained independently",
+      "profileA": "A",
+      "profileB": "B-failedJobsHistoryLimit",
+      "result": "not-run",
+      "canonicalId": "none invented; original source IDs reused; parent full-universe adoption still open"
+    },
+    {
+      "field": "temporaryDirectorySize",
+      "sameOwnerPointer": "/profiles/<explicit>/settings/temporaryDirectorySize",
+      "units": "Kubernetes Quantity bytes (default disk emptyDir)",
+      "sourceWitness": {
+        "path": "scripts/render-postgresql-recovery.mjs",
+        "line": 81,
+        "expression": "          { name: 'script', configMap: { name: `${name}-script`, defaultMode: 0o444 } }, { name: 'tmp', emptyDir: { sizeLimit: '256Mi' } }] },",
+        "sha256": "3e0d30b0c0888c4039f176ddb80d19e00b7b7064ead979d5bb9122d4df19e14f"
+      },
+      "exactRelatedOriginalCandidateIds": [],
+      "consumerAndProposedDelta": "replace tmp sizeLimit256Mi",
+      "supportedDomainAndStop": "positive Quantity; actual node disk/ephemeral/tool temporary budget receipt; not memory tmpfs or invented resources",
+      "profileA": "A",
+      "profileB": "B-temporaryDirectorySize",
+      "result": "not-run",
+      "canonicalId": "none invented; original source IDs reused; parent full-universe adoption still open"
+    }
+  ],
+  "relations": [
+    "verification<=backup; backup<=60/verification<=30",
+    "2*duration+verification*60+deadline+overhead<age",
+    "maxBackup+reserve<=maxRetained<=actual/requestedPVcapacity",
+    "reserve>=effectiveTOC+metadataMaxExclusive-1+indexMaxExclusive-1+actualaccountingOverhead",
+    "dump allowance=min(maxBackup,maxRetained-used-including-incomplete-reserve); effectivefloor1024; no delete/reset",
+    "metadata selected source bound<threshold; SHA256SUMS exact241 bytes<threshold",
+    "cpu/memory request<=limit; positive Kubernetes quantities plus authentic API/native/tool budget; tmp effective bytes <=actual node ephemeral budget",
+    "connect<=duration and overhead; kill<=overhead; measured phases+quiescence fit actual task/job deadline"
+  ]
+}

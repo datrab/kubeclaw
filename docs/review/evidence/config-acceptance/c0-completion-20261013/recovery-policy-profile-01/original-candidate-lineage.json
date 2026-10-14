@@ -1,0 +1,2188 @@
+{
+  "source": "docs/review/evidence/config-acceptance/author/candidate-ledger.json",
+  "candidateCount": 81,
+  "rows": [
+    {
+      "candidateId": "SRC-0d7abe28ee2e690b",
+      "originalBody": {
+        "id": "SRC-0d7abe28ee2e690b",
+        "source": "scripts/postgresql-recovery.sh",
+        "line": 1,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": null
+      },
+      "originalBodySha256": "1e6a4ce8d87d77f565ba8da70c29681332a6742921cfc01048e1b4f6b0f3fdf7",
+      "currentSourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 1,
+        "expression": "#!/usr/bin/env bash",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "sourceContractClause": "shell-protocol-and-diagnostic",
+      "definitionAcceptance": false,
+      "proposedExactPolicyDependencies": [],
+      "receivingOrHistoryOracle": "canonical13digit parser / selected Bash native mode and known operation grammar; diagnostics/versioned format are not adjustable quota exemption"
+    },
+    {
+      "candidateId": "SRC-d3d1ffc3ae0c26c7",
+      "originalBody": {
+        "id": "SRC-d3d1ffc3ae0c26c7",
+        "source": "scripts/postgresql-recovery.sh",
+        "line": 8,
+        "kinds": [
+          "fallback-or-expression"
+        ],
+        "sourceSha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": null
+      },
+      "originalBodySha256": "a930138d09cad1ee1a74f3f5cdfe83764f59e376ebf2a6bb80a694f89556eea8",
+      "currentSourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 8,
+        "expression": "positive() { [[ $2 =~ ^[1-9][0-9]{0,12}$ ]] || fail \"INVALID_$1\"; }",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "sourceContractClause": "shell-protocol-and-diagnostic",
+      "definitionAcceptance": false,
+      "proposedExactPolicyDependencies": [],
+      "receivingOrHistoryOracle": "canonical13digit parser / selected Bash native mode and known operation grammar; diagnostics/versioned format are not adjustable quota exemption"
+    },
+    {
+      "candidateId": "SRC-b1bffe9417fac280",
+      "originalBody": {
+        "id": "SRC-b1bffe9417fac280",
+        "source": "scripts/postgresql-recovery.sh",
+        "line": 12,
+        "kinds": [
+          "environment"
+        ],
+        "sourceSha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": null
+      },
+      "originalBodySha256": "2f8f41d74aba4926d9914eab206a1f6def473209d6f43dd543f7da5f0253e1a5",
+      "currentSourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 12,
+        "expression": "  : \"${BACKUP_ROOT:?}\" \"${BACKUP_MAXIMUM_BYTES:?}\" \"${BACKUP_MAXIMUM_RETAINED_BYTES:?}\"",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "sourceContractClause": "source-selected-required-authority",
+      "definitionAcceptance": false,
+      "proposedExactPolicyDependencies": [
+        "maximumBackupBytes",
+        "maximumRetainedBytes"
+      ],
+      "receivingOrHistoryOracle": "capture original generated source/task/credential reference before any command; private sameowner root/mount/tool receipts required"
+    },
+    {
+      "candidateId": "SRC-a914f2f70a318ab5",
+      "originalBody": {
+        "id": "SRC-a914f2f70a318ab5",
+        "source": "scripts/postgresql-recovery.sh",
+        "line": 13,
+        "kinds": [
+          "environment"
+        ],
+        "sourceSha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": null
+      },
+      "originalBodySha256": "f0ac160b53e434c52b46354d629c1c2429ae4550eee06f6cd9a04639dc53fe05",
+      "currentSourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 13,
+        "expression": "  : \"${BACKUP_MAXIMUM_AGE_SECONDS:?}\" \"${BACKUP_MAXIMUM_DURATION_SECONDS:?}\"",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "sourceContractClause": "source-selected-required-authority",
+      "definitionAcceptance": false,
+      "proposedExactPolicyDependencies": [
+        "maximumAgeSeconds",
+        "maximumDurationSeconds"
+      ],
+      "receivingOrHistoryOracle": "capture original generated source/task/credential reference before any command; private sameowner root/mount/tool receipts required"
+    },
+    {
+      "candidateId": "SRC-4472730422f8903e",
+      "originalBody": {
+        "id": "SRC-4472730422f8903e",
+        "source": "scripts/postgresql-recovery.sh",
+        "line": 14,
+        "kinds": [
+          "environment"
+        ],
+        "sourceSha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": null
+      },
+      "originalBodySha256": "5cdca2f22aad30d33aaa012aaa64a64d39bd44dc9d3b0b4ab012644e18de6927",
+      "currentSourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 14,
+        "expression": "  : \"${BACKUP_EXPECTED_SERVER_VERSION:?}\" \"${BACKUP_APPLICATION_IMAGE:?}\"",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "sourceContractClause": "source-selected-required-authority",
+      "definitionAcceptance": false,
+      "proposedExactPolicyDependencies": [],
+      "receivingOrHistoryOracle": "capture original generated source/task/credential reference before any command; private sameowner root/mount/tool receipts required"
+    },
+    {
+      "candidateId": "SRC-a6f7eb6d95952828",
+      "originalBody": {
+        "id": "SRC-a6f7eb6d95952828",
+        "source": "scripts/postgresql-recovery.sh",
+        "line": 15,
+        "kinds": [
+          "environment"
+        ],
+        "sourceSha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": null
+      },
+      "originalBodySha256": "d586a777fdf4091081f34bbe5da2437c428224e0ab592249d389e3e116863b32",
+      "currentSourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 15,
+        "expression": "  : \"${BACKUP_CREDENTIAL_AUTHORITY_REF:?}\" \"${LITELLM_MASTER_KEY:?}\"",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "sourceContractClause": "source-selected-required-authority",
+      "definitionAcceptance": false,
+      "proposedExactPolicyDependencies": [],
+      "receivingOrHistoryOracle": "capture original generated source/task/credential reference before any command; private sameowner root/mount/tool receipts required"
+    },
+    {
+      "candidateId": "SRC-07e60170641cef92",
+      "originalBody": {
+        "id": "SRC-07e60170641cef92",
+        "source": "scripts/postgresql-recovery.sh",
+        "line": 16,
+        "kinds": [
+          "environment"
+        ],
+        "sourceSha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": null
+      },
+      "originalBodySha256": "b61c4be15fe3747580a93158d3d0939ecf3fcc4e9ed23049caade8b314678714",
+      "currentSourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 16,
+        "expression": "  : \"${PGHOST:?}\" \"${PGDATABASE:?}\" \"${PGUSER:?}\"",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "sourceContractClause": "source-selected-required-authority",
+      "definitionAcceptance": false,
+      "proposedExactPolicyDependencies": [
+        "connectionTimeoutSeconds"
+      ],
+      "receivingOrHistoryOracle": "capture original generated source/task/credential reference before any command; private sameowner root/mount/tool receipts required"
+    },
+    {
+      "candidateId": "SRC-ac0cb519fc2a19e1",
+      "originalBody": {
+        "id": "SRC-ac0cb519fc2a19e1",
+        "source": "scripts/postgresql-recovery.sh",
+        "line": 20,
+        "kinds": [
+          "environment",
+          "fallback-or-expression"
+        ],
+        "sourceSha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": null
+      },
+      "originalBodySha256": "da9d89aac77fbe7a634dc1bd306b62cbda66b2ad983b2374c9076846bc1e0e7d",
+      "currentSourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 20,
+        "expression": "  [[ $BACKUP_ROOT == /* && $BACKUP_ROOT != / && ! -L $BACKUP_ROOT ]] || fail ROOT_INVALID",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "sourceContractClause": "source-selected-required-authority",
+      "definitionAcceptance": false,
+      "proposedExactPolicyDependencies": [],
+      "receivingOrHistoryOracle": "capture original generated source/task/credential reference before any command; private sameowner root/mount/tool receipts required"
+    },
+    {
+      "candidateId": "SRC-1526476da09be460",
+      "originalBody": {
+        "id": "SRC-1526476da09be460",
+        "source": "scripts/postgresql-recovery.sh",
+        "line": 21,
+        "kinds": [
+          "environment",
+          "fallback-or-expression"
+        ],
+        "sourceSha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": null
+      },
+      "originalBodySha256": "a40811f031b59895473fc118af73ed82996908f19420afe5a34d779eec464d21",
+      "currentSourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 21,
+        "expression": "  [[ $PGDATABASE =~ ^[a-z][a-z0-9_]{0,62}$ ]] || fail DATABASE_NAME_INVALID",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "sourceContractClause": "source-selected-required-authority",
+      "definitionAcceptance": false,
+      "proposedExactPolicyDependencies": [],
+      "receivingOrHistoryOracle": "capture original generated source/task/credential reference before any command; private sameowner root/mount/tool receipts required"
+    },
+    {
+      "candidateId": "SRC-b50fe9a568c67581",
+      "originalBody": {
+        "id": "SRC-b50fe9a568c67581",
+        "source": "scripts/postgresql-recovery.sh",
+        "line": 22,
+        "kinds": [
+          "environment",
+          "fallback-or-expression"
+        ],
+        "sourceSha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": null
+      },
+      "originalBodySha256": "3da8634290c62208cc4e5c15816a9210acae26578d20dd77bb6560a0ae08789d",
+      "currentSourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 22,
+        "expression": "  [[ $BACKUP_APPLICATION_IMAGE =~ ^[a-zA-Z0-9._/-]+@sha256:[a-f0-9]{64}$ ]] || fail APPLICATION_IMAGE_INVALID",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "sourceContractClause": "source-selected-required-authority",
+      "definitionAcceptance": false,
+      "proposedExactPolicyDependencies": [],
+      "receivingOrHistoryOracle": "capture original generated source/task/credential reference before any command; private sameowner root/mount/tool receipts required"
+    },
+    {
+      "candidateId": "SRC-e3332c8a75ad6cd7",
+      "originalBody": {
+        "id": "SRC-e3332c8a75ad6cd7",
+        "source": "scripts/postgresql-recovery.sh",
+        "line": 23,
+        "kinds": [
+          "environment",
+          "fallback-or-expression"
+        ],
+        "sourceSha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": null
+      },
+      "originalBodySha256": "4ecfc85bbe5cc94a8339af908ec38e967a11748649aeab87f82e03855272d49a",
+      "currentSourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 23,
+        "expression": "  [[ $BACKUP_CREDENTIAL_AUTHORITY_REF =~ ^[a-zA-Z0-9._:/-]{1,256}$ ]] || fail CREDENTIAL_AUTHORITY_INVALID",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "sourceContractClause": "source-selected-required-authority",
+      "definitionAcceptance": false,
+      "proposedExactPolicyDependencies": [],
+      "receivingOrHistoryOracle": "capture original generated source/task/credential reference before any command; private sameowner root/mount/tool receipts required"
+    },
+    {
+      "candidateId": "SRC-735ca02ea38021c2",
+      "originalBody": {
+        "id": "SRC-735ca02ea38021c2",
+        "source": "scripts/postgresql-recovery.sh",
+        "line": 24,
+        "kinds": [
+          "fallback-or-expression",
+          "policy-or-input"
+        ],
+        "sourceSha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": null
+      },
+      "originalBodySha256": "77d8fc726e9d4dabd1d07e269750add19d6c3578357150d62c0045aa58df06d1",
+      "currentSourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 24,
+        "expression": "  for tool in psql pg_dump pg_restore flock sha256sum stat du timeout sync; do command -v \"$tool\" >/dev/null || fail \"TOOL_MISSING_$tool\"; done",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "sourceContractClause": "source-selected-required-authority",
+      "definitionAcceptance": false,
+      "proposedExactPolicyDependencies": [
+        "connectionTimeoutSeconds"
+      ],
+      "receivingOrHistoryOracle": "capture original generated source/task/credential reference before any command; private sameowner root/mount/tool receipts required"
+    },
+    {
+      "candidateId": "SRC-dcb04dba01d6251b",
+      "originalBody": {
+        "id": "SRC-dcb04dba01d6251b",
+        "source": "scripts/postgresql-recovery.sh",
+        "line": 25,
+        "kinds": [
+          "environment",
+          "fallback-or-expression"
+        ],
+        "sourceSha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": null
+      },
+      "originalBodySha256": "aa81e715a964902426c7c0a5875422ce7df928b957f42d43eef2c5e71f8ea544",
+      "currentSourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 25,
+        "expression": "  if [[ $1 == verify ]]; then [[ -d $BACKUP_ROOT ]] || fail BACKUP_MISSING;",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "sourceContractClause": "source-selected-required-authority",
+      "definitionAcceptance": false,
+      "proposedExactPolicyDependencies": [],
+      "receivingOrHistoryOracle": "capture original generated source/task/credential reference before any command; private sameowner root/mount/tool receipts required"
+    },
+    {
+      "candidateId": "SRC-2f8e248500f09f2c",
+      "originalBody": {
+        "id": "SRC-2f8e248500f09f2c",
+        "source": "scripts/postgresql-recovery.sh",
+        "line": 26,
+        "kinds": [
+          "environment"
+        ],
+        "sourceSha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": null
+      },
+      "originalBodySha256": "bedcb11a51b54fe6fa49af8a3d3053ad5fb0fd04ee133674093239fe92e69859",
+      "currentSourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 26,
+        "expression": "  else mkdir -p -- \"$BACKUP_ROOT\"; fi",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "sourceContractClause": "source-selected-required-authority",
+      "definitionAcceptance": false,
+      "proposedExactPolicyDependencies": [],
+      "receivingOrHistoryOracle": "capture original generated source/task/credential reference before any command; private sameowner root/mount/tool receipts required"
+    },
+    {
+      "candidateId": "SRC-88e68616d9679bfe",
+      "originalBody": {
+        "id": "SRC-88e68616d9679bfe",
+        "source": "scripts/postgresql-recovery.sh",
+        "line": 27,
+        "kinds": [
+          "environment",
+          "fallback-or-expression"
+        ],
+        "sourceSha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": null
+      },
+      "originalBodySha256": "79b1b992ef4e4dd163a9d864a4b72be8f3d0545db0f180bc2268b49c65a1268e",
+      "currentSourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 27,
+        "expression": "  [[ $(stat -c %u \"$BACKUP_ROOT\") == \"$(id -u)\" ]] || fail ROOT_OWNER_INVALID",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "sourceContractClause": "source-selected-required-authority",
+      "definitionAcceptance": false,
+      "proposedExactPolicyDependencies": [],
+      "receivingOrHistoryOracle": "capture original generated source/task/credential reference before any command; private sameowner root/mount/tool receipts required"
+    },
+    {
+      "candidateId": "SRC-7f0cb736758934e3",
+      "originalBody": {
+        "id": "SRC-7f0cb736758934e3",
+        "source": "scripts/postgresql-recovery.sh",
+        "line": 28,
+        "kinds": [
+          "environment"
+        ],
+        "sourceSha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": null
+      },
+      "originalBodySha256": "6ee51f29898bb9ed6e7a7f29d38c3e661995d61c77028bf54862e126d8340663",
+      "currentSourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 28,
+        "expression": "  local mode; mode=$(stat -c %a \"$BACKUP_ROOT\")",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "sourceContractClause": "source-selected-required-authority",
+      "definitionAcceptance": false,
+      "proposedExactPolicyDependencies": [],
+      "receivingOrHistoryOracle": "capture original generated source/task/credential reference before any command; private sameowner root/mount/tool receipts required"
+    },
+    {
+      "candidateId": "SRC-22c8ce8a9860718e",
+      "originalBody": {
+        "id": "SRC-22c8ce8a9860718e",
+        "source": "scripts/postgresql-recovery.sh",
+        "line": 29,
+        "kinds": [
+          "fallback-or-expression"
+        ],
+        "sourceSha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": null
+      },
+      "originalBodySha256": "4e95fa871d5d74425384575a3cc1360db09bb4e5b4299888036367e29ea8e769",
+      "currentSourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 29,
+        "expression": "  (( (8#$mode & 077) == 0 )) || fail ROOT_NOT_PRIVATE",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "sourceContractClause": "source-selected-required-authority",
+      "definitionAcceptance": false,
+      "proposedExactPolicyDependencies": [],
+      "receivingOrHistoryOracle": "capture original generated source/task/credential reference before any command; private sameowner root/mount/tool receipts required"
+    },
+    {
+      "candidateId": "SRC-a58ee8f4d998d8d7",
+      "originalBody": {
+        "id": "SRC-a58ee8f4d998d8d7",
+        "source": "scripts/postgresql-recovery.sh",
+        "line": 36,
+        "kinds": [
+          "environment"
+        ],
+        "sourceSha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": null
+      },
+      "originalBodySha256": "27d1fe59fb89f4fefb0b77cdc3abcb239c984d6824133d70f631e00743806d13",
+      "currentSourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 36,
+        "expression": "  printf 'kubeclaw-recovery-credential-binding.v1\\0%s\\0%s' \"$LITELLM_MASTER_KEY\" \"${LITELLM_SALT_KEY-$LITELLM_MASTER_KEY}\" | sha256sum | cut -d' ' -f1",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "sourceContractClause": "credential-reference-and-binding",
+      "definitionAcceptance": false,
+      "proposedExactPolicyDependencies": [],
+      "receivingOrHistoryOracle": "original domain-separated fingerprint, unset-only salt branch and authentic revision required; do not snapshot encryption key or rotate"
+    },
+    {
+      "candidateId": "SRC-4d8c554cedefe7e3",
+      "originalBody": {
+        "id": "SRC-4d8c554cedefe7e3",
+        "source": "scripts/postgresql-recovery.sh",
+        "line": 42,
+        "kinds": [
+          "environment",
+          "fallback-or-expression"
+        ],
+        "sourceSha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": null
+      },
+      "originalBodySha256": "1bd660a06c105db895bc11cf8327618e9e02dde70824727e1c22038c6fde2909",
+      "currentSourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 42,
+        "expression": "  [[ $version == \"$BACKUP_EXPECTED_SERVER_VERSION\" ]] || fail SERVER_VERSION_NOT_SELECTED",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "sourceContractClause": "server-and-client-version-identity",
+      "definitionAcceptance": false,
+      "proposedExactPolicyDependencies": [],
+      "receivingOrHistoryOracle": "exact original server system/client/image/version association and forward migration target compatibility before native effect"
+    },
+    {
+      "candidateId": "SRC-2cc6ae187b1c4620",
+      "originalBody": {
+        "id": "SRC-2cc6ae187b1c4620",
+        "source": "scripts/postgresql-recovery.sh",
+        "line": 45,
+        "kinds": [
+          "fallback-or-expression"
+        ],
+        "sourceSha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": null
+      },
+      "originalBodySha256": "9d3164770f4a63a91bacdcb74664fa00a01169444b55d93206b99757328ae5c6",
+      "currentSourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 45,
+        "expression": "  [[ $identifier =~ ^[0-9]{1,20}$ ]] || fail SERVER_IDENTITY_INVALID",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "sourceContractClause": "server-and-client-version-identity",
+      "definitionAcceptance": false,
+      "proposedExactPolicyDependencies": [],
+      "receivingOrHistoryOracle": "exact original server system/client/image/version association and forward migration target compatibility before native effect"
+    },
+    {
+      "candidateId": "SRC-e143e45ac9f8cf1a",
+      "originalBody": {
+        "id": "SRC-e143e45ac9f8cf1a",
+        "source": "scripts/postgresql-recovery.sh",
+        "line": 52,
+        "kinds": [
+          "fallback-or-expression"
+        ],
+        "sourceSha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": null
+      },
+      "originalBodySha256": "16cd4da5ed6766cc99b5ebe8ce8ceb63515b814c62a3bf68f2e32b9bdae1ae08",
+      "currentSourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 52,
+        "expression": "  [[ $value =~ PostgreSQL\\)\\ ([0-9]+)\\.([0-9]+) ]] || fail CLIENT_VERSION_INVALID",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "sourceContractClause": "server-and-client-version-identity",
+      "definitionAcceptance": false,
+      "proposedExactPolicyDependencies": [],
+      "receivingOrHistoryOracle": "exact original server system/client/image/version association and forward migration target compatibility before native effect"
+    },
+    {
+      "candidateId": "SRC-1bd94f9eb8109fb8",
+      "originalBody": {
+        "id": "SRC-1bd94f9eb8109fb8",
+        "source": "scripts/postgresql-recovery.sh",
+        "line": 53,
+        "kinds": [
+          "environment"
+        ],
+        "sourceSha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": null
+      },
+      "originalBodySha256": "d20f0e06d3fefba43a623643def0d849dfa62bc9e15d9620f1d0e1a7037fd1bb",
+      "currentSourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 53,
+        "expression": "  printf '%s\\n' \"$(( 10#${BASH_REMATCH[1]} * 10000 + 10#${BASH_REMATCH[2]} ))\"",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "sourceContractClause": "server-and-client-version-identity",
+      "definitionAcceptance": false,
+      "proposedExactPolicyDependencies": [],
+      "receivingOrHistoryOracle": "exact original server system/client/image/version association and forward migration target compatibility before native effect"
+    },
+    {
+      "candidateId": "SRC-dc2aa0ceab92d18c",
+      "originalBody": {
+        "id": "SRC-dc2aa0ceab92d18c",
+        "source": "scripts/postgresql-recovery.sh",
+        "line": 59,
+        "kinds": [
+          "environment"
+        ],
+        "sourceSha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": null
+      },
+      "originalBodySha256": "f348006554c68293f307fd6a287f8bc2856ef377cbaa8a4ca764b6ab4ebacfe9",
+      "currentSourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 59,
+        "expression": "  used=$(du --summarize --bytes \"$BACKUP_ROOT\" | cut -f1)",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "sourceContractClause": "retained-capacity-and-dump",
+      "definitionAcceptance": false,
+      "proposedExactPolicyDependencies": [
+        "maximumRetainedBytes",
+        "reserveBytes"
+      ],
+      "receivingOrHistoryOracle": "used+incomplete charge + reserve/effectiveBash blocks; keep previous complete and failed incomplete tree; native dump timer/kill/cap/mutant proof"
+    },
+    {
+      "candidateId": "SRC-865461bfc9850dcb",
+      "originalBody": {
+        "id": "SRC-865461bfc9850dcb",
+        "source": "scripts/postgresql-recovery.sh",
+        "line": 60,
+        "kinds": [
+          "fallback-or-expression"
+        ],
+        "sourceSha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": null
+      },
+      "originalBodySha256": "2b94ef1456c9beddd56bee90e8620a1c122355b0e0dcc62739736e0c8f3b2bad",
+      "currentSourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 60,
+        "expression": "  [[ $used =~ ^[0-9]+$ ]] || fail RETAINED_SIZE_INVALID",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "sourceContractClause": "retained-capacity-and-dump",
+      "definitionAcceptance": false,
+      "proposedExactPolicyDependencies": [
+        "maximumRetainedBytes"
+      ],
+      "receivingOrHistoryOracle": "used+incomplete charge + reserve/effectiveBash blocks; keep previous complete and failed incomplete tree; native dump timer/kill/cap/mutant proof"
+    },
+    {
+      "candidateId": "SRC-bae98e10a68c4921",
+      "originalBody": {
+        "id": "SRC-bae98e10a68c4921",
+        "source": "scripts/postgresql-recovery.sh",
+        "line": 62,
+        "kinds": [
+          "fallback-or-expression"
+        ],
+        "sourceSha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": null
+      },
+      "originalBodySha256": "656efdb043413b88cf8a3c825a37a1d756e5730c4a961eb8f887d4fa6315089b",
+      "currentSourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 62,
+        "expression": "  (( allowance > 0 )) || fail RETAINED_CAPACITY_EXCEEDED",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "sourceContractClause": "retained-capacity-and-dump",
+      "definitionAcceptance": false,
+      "proposedExactPolicyDependencies": [
+        "maximumRetainedBytes",
+        "reserveBytes"
+      ],
+      "receivingOrHistoryOracle": "used+incomplete charge + reserve/effectiveBash blocks; keep previous complete and failed incomplete tree; native dump timer/kill/cap/mutant proof"
+    },
+    {
+      "candidateId": "SRC-3becce028d299daa",
+      "originalBody": {
+        "id": "SRC-3becce028d299daa",
+        "source": "scripts/postgresql-recovery.sh",
+        "line": 63,
+        "kinds": [
+          "environment",
+          "fallback-or-expression"
+        ],
+        "sourceSha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": null
+      },
+      "originalBodySha256": "036600d203c0ca1fa6287c384459b1602db21db26502d9df1fe8258171b928d9",
+      "currentSourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 63,
+        "expression": "  (( allowance <= BACKUP_MAXIMUM_BYTES )) || allowance=$BACKUP_MAXIMUM_BYTES",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "sourceContractClause": "retained-capacity-and-dump",
+      "definitionAcceptance": false,
+      "proposedExactPolicyDependencies": [
+        "maximumBackupBytes"
+      ],
+      "receivingOrHistoryOracle": "used+incomplete charge + reserve/effectiveBash blocks; keep previous complete and failed incomplete tree; native dump timer/kill/cap/mutant proof"
+    },
+    {
+      "candidateId": "SRC-c7dac0ae577ca91f",
+      "originalBody": {
+        "id": "SRC-c7dac0ae577ca91f",
+        "source": "scripts/postgresql-recovery.sh",
+        "line": 64,
+        "kinds": [
+          "fallback-or-expression"
+        ],
+        "sourceSha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": null
+      },
+      "originalBodySha256": "30c6bb9f695a1da50eab94c9d05ff9d44bf0cf82df8e67136a773b1525d75768",
+      "currentSourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 64,
+        "expression": "  blocks=$(( allowance / 1024 )); (( blocks > 0 )) || fail RETAINED_CAPACITY_EXCEEDED",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "sourceContractClause": "retained-capacity-and-dump",
+      "definitionAcceptance": false,
+      "proposedExactPolicyDependencies": [
+        "maximumBackupBytes",
+        "reserveBytes",
+        "tocMaximumBytes"
+      ],
+      "receivingOrHistoryOracle": "used+incomplete charge + reserve/effectiveBash blocks; keep previous complete and failed incomplete tree; native dump timer/kill/cap/mutant proof"
+    },
+    {
+      "candidateId": "SRC-22e707e25624bbbb",
+      "originalBody": {
+        "id": "SRC-22e707e25624bbbb",
+        "source": "scripts/postgresql-recovery.sh",
+        "line": 65,
+        "kinds": [
+          "environment"
+        ],
+        "sourceSha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": null
+      },
+      "originalBodySha256": "ea68ddfbb438fe0b7a1d7167e4b660d3c208ab720ea04b446c0381ed8ad6b939",
+      "currentSourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 65,
+        "expression": "  stage=$(mktemp -d \"$BACKUP_ROOT/.incomplete-$(date -u +%Y%m%dT%H%M%SZ)-XXXXXXXX\")",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "sourceContractClause": "retained-capacity-and-dump",
+      "definitionAcceptance": false,
+      "proposedExactPolicyDependencies": [],
+      "receivingOrHistoryOracle": "used+incomplete charge + reserve/effectiveBash blocks; keep previous complete and failed incomplete tree; native dump timer/kill/cap/mutant proof"
+    },
+    {
+      "candidateId": "SRC-c58e691b6958fd24",
+      "originalBody": {
+        "id": "SRC-c58e691b6958fd24",
+        "source": "scripts/postgresql-recovery.sh",
+        "line": 71,
+        "kinds": [
+          "environment",
+          "policy-or-input"
+        ],
+        "sourceSha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": null
+      },
+      "originalBodySha256": "60444f9548d911993b98a357e1936e5dca1c104024effda45c66754468bd4f08",
+      "currentSourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 71,
+        "expression": "    timeout --signal=TERM --kill-after=15 \"$BACKUP_MAXIMUM_DURATION_SECONDS\" \\",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "sourceContractClause": "retained-capacity-and-dump",
+      "definitionAcceptance": false,
+      "proposedExactPolicyDependencies": [
+        "maximumDurationSeconds",
+        "killAfterSeconds",
+        "cronJobDeadlineOverheadSeconds"
+      ],
+      "receivingOrHistoryOracle": "used+incomplete charge + reserve/effectiveBash blocks; keep previous complete and failed incomplete tree; native dump timer/kill/cap/mutant proof"
+    },
+    {
+      "candidateId": "SRC-c208a01d6410a6d1",
+      "originalBody": {
+        "id": "SRC-c208a01d6410a6d1",
+        "source": "scripts/postgresql-recovery.sh",
+        "line": 73,
+        "kinds": [
+          "fallback-or-expression"
+        ],
+        "sourceSha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": null
+      },
+      "originalBodySha256": "18675fb2d3ebadd3f0de77efb904d4760df45f71c3a5d883d1c13fb14fa11e75",
+      "currentSourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 73,
+        "expression": "  ) || fail DUMP_FAILED_INCOMPLETE_RETAINED",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "sourceContractClause": "retained-capacity-and-dump",
+      "definitionAcceptance": false,
+      "proposedExactPolicyDependencies": [],
+      "receivingOrHistoryOracle": "used+incomplete charge + reserve/effectiveBash blocks; keep previous complete and failed incomplete tree; native dump timer/kill/cap/mutant proof"
+    },
+    {
+      "candidateId": "SRC-591a043efba571f6",
+      "originalBody": {
+        "id": "SRC-591a043efba571f6",
+        "source": "scripts/postgresql-recovery.sh",
+        "line": 75,
+        "kinds": [
+          "fallback-or-expression"
+        ],
+        "sourceSha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": null
+      },
+      "originalBodySha256": "dd0d67b8c067596b8d27c8a3ac37d2d198c21dc3753196bc97f180ee4fbbbef5",
+      "currentSourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 75,
+        "expression": "  [[ $(server_identity) == \"$identity\" ]] || fail SOURCE_IDENTITY_CHANGED",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "sourceContractClause": "retained-capacity-and-dump",
+      "definitionAcceptance": false,
+      "proposedExactPolicyDependencies": [],
+      "receivingOrHistoryOracle": "used+incomplete charge + reserve/effectiveBash blocks; keep previous complete and failed incomplete tree; native dump timer/kill/cap/mutant proof"
+    },
+    {
+      "candidateId": "SRC-6fb43eec3cb1376e",
+      "originalBody": {
+        "id": "SRC-6fb43eec3cb1376e",
+        "source": "scripts/postgresql-recovery.sh",
+        "line": 78,
+        "kinds": [
+          "environment"
+        ],
+        "sourceSha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": null
+      },
+      "originalBodySha256": "76658c75b56aff12fa817a4e4df10ed74ac0df96026b893ca1a7eacf354b57da",
+      "currentSourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 78,
+        "expression": "    printf 'database=%s\\n' \"$PGDATABASE\"",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "sourceContractClause": "manifest-and-atomic-publication",
+      "definitionAcceptance": false,
+      "proposedExactPolicyDependencies": [],
+      "receivingOrHistoryOracle": "original format/source/credential/time metadata, exact3file index, cap checks before rename, fsync/atomicity and source stability; no generated metadata authority replacement"
+    },
+    {
+      "candidateId": "SRC-573a7e376fa91689",
+      "originalBody": {
+        "id": "SRC-573a7e376fa91689",
+        "source": "scripts/postgresql-recovery.sh",
+        "line": 80,
+        "kinds": [
+          "environment"
+        ],
+        "sourceSha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": null
+      },
+      "originalBodySha256": "38765944e9c4d2000396cf51dd1ed0a625f2b2c4a667c7d05d781a183bbf3999",
+      "currentSourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 80,
+        "expression": "    printf 'server_version_num=%s\\n' \"$BACKUP_EXPECTED_SERVER_VERSION\"",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "sourceContractClause": "manifest-and-atomic-publication",
+      "definitionAcceptance": false,
+      "proposedExactPolicyDependencies": [],
+      "receivingOrHistoryOracle": "original format/source/credential/time metadata, exact3file index, cap checks before rename, fsync/atomicity and source stability; no generated metadata authority replacement"
+    },
+    {
+      "candidateId": "SRC-06237b68508a983e",
+      "originalBody": {
+        "id": "SRC-06237b68508a983e",
+        "source": "scripts/postgresql-recovery.sh",
+        "line": 82,
+        "kinds": [
+          "environment"
+        ],
+        "sourceSha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": null
+      },
+      "originalBodySha256": "0d2a76cd5c72085066eab3fa313e3e3db2689e06c081d6afef4e15200cf08cc1",
+      "currentSourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 82,
+        "expression": "    printf 'application_image=%s\\n' \"$BACKUP_APPLICATION_IMAGE\"",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "sourceContractClause": "manifest-and-atomic-publication",
+      "definitionAcceptance": false,
+      "proposedExactPolicyDependencies": [],
+      "receivingOrHistoryOracle": "original format/source/credential/time metadata, exact3file index, cap checks before rename, fsync/atomicity and source stability; no generated metadata authority replacement"
+    },
+    {
+      "candidateId": "SRC-479a13f29af54508",
+      "originalBody": {
+        "id": "SRC-479a13f29af54508",
+        "source": "scripts/postgresql-recovery.sh",
+        "line": 83,
+        "kinds": [
+          "environment"
+        ],
+        "sourceSha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": null
+      },
+      "originalBodySha256": "7cdf83db7c8a562d0d13c9ff3a4e25413f600a783e0fd33791c937da08d70b57",
+      "currentSourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 83,
+        "expression": "    printf 'credential_authority_ref=%s\\ncredential_binding=%s\\n' \"$BACKUP_CREDENTIAL_AUTHORITY_REF\" \"$(credential_binding)\"",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "sourceContractClause": "manifest-and-atomic-publication",
+      "definitionAcceptance": false,
+      "proposedExactPolicyDependencies": [],
+      "receivingOrHistoryOracle": "original format/source/credential/time metadata, exact3file index, cap checks before rename, fsync/atomicity and source stability; no generated metadata authority replacement"
+    },
+    {
+      "candidateId": "SRC-fa55b1e389e16f99",
+      "originalBody": {
+        "id": "SRC-fa55b1e389e16f99",
+        "source": "scripts/postgresql-recovery.sh",
+        "line": 87,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": null
+      },
+      "originalBodySha256": "01adc64674086fba490b384603f8f69ada231b0e2b436138855b5ec7db6bf835",
+      "currentSourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 87,
+        "expression": "  (cd \"$stage\"; sha256sum database.dump archive-toc.txt metadata.env >SHA256SUMS)",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "sourceContractClause": "manifest-and-atomic-publication",
+      "definitionAcceptance": false,
+      "proposedExactPolicyDependencies": [],
+      "receivingOrHistoryOracle": "original format/source/credential/time metadata, exact3file index, cap checks before rename, fsync/atomicity and source stability; no generated metadata authority replacement"
+    },
+    {
+      "candidateId": "SRC-4e0f972de1f455c5",
+      "originalBody": {
+        "id": "SRC-4e0f972de1f455c5",
+        "source": "scripts/postgresql-recovery.sh",
+        "line": 89,
+        "kinds": [
+          "environment"
+        ],
+        "sourceSha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": null
+      },
+      "originalBodySha256": "f032b6f0cedee12192ac353e25da15e45221566d9639aee530564c8760ccde23",
+      "currentSourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 89,
+        "expression": "  final=\"$BACKUP_ROOT/backup-${stage##*/.incomplete-}\"",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "sourceContractClause": "manifest-and-atomic-publication",
+      "definitionAcceptance": false,
+      "proposedExactPolicyDependencies": [],
+      "receivingOrHistoryOracle": "original format/source/credential/time metadata, exact3file index, cap checks before rename, fsync/atomicity and source stability; no generated metadata authority replacement"
+    },
+    {
+      "candidateId": "SRC-baff595666850340",
+      "originalBody": {
+        "id": "SRC-baff595666850340",
+        "source": "scripts/postgresql-recovery.sh",
+        "line": 90,
+        "kinds": [
+          "fallback-or-expression"
+        ],
+        "sourceSha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": null
+      },
+      "originalBodySha256": "213b2c00efa9fe4323e7a1ab089805f56a3b8d07231675749cf4437ffa905c2d",
+      "currentSourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 90,
+        "expression": "  [[ ! -e $final ]] || fail BACKUP_ID_ALREADY_EXISTS",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "sourceContractClause": "manifest-and-atomic-publication",
+      "definitionAcceptance": false,
+      "proposedExactPolicyDependencies": [],
+      "receivingOrHistoryOracle": "original format/source/credential/time metadata, exact3file index, cap checks before rename, fsync/atomicity and source stability; no generated metadata authority replacement"
+    },
+    {
+      "candidateId": "SRC-f941d1df0b289d1c",
+      "originalBody": {
+        "id": "SRC-f941d1df0b289d1c",
+        "source": "scripts/postgresql-recovery.sh",
+        "line": 92,
+        "kinds": [
+          "fallback-or-expression"
+        ],
+        "sourceSha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": null
+      },
+      "originalBodySha256": "01a3d1893fd164803a44ccee0306edee3fc8834f5c1d090ededc12673fb08b5f",
+      "currentSourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 92,
+        "expression": "  [[ ! -e $stage ]] || fail BACKUP_PUBLICATION_FAILED",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "sourceContractClause": "manifest-and-atomic-publication",
+      "definitionAcceptance": false,
+      "proposedExactPolicyDependencies": [],
+      "receivingOrHistoryOracle": "original format/source/credential/time metadata, exact3file index, cap checks before rename, fsync/atomicity and source stability; no generated metadata authority replacement"
+    },
+    {
+      "candidateId": "SRC-f81bf24a5b954742",
+      "originalBody": {
+        "id": "SRC-f81bf24a5b954742",
+        "source": "scripts/postgresql-recovery.sh",
+        "line": 93,
+        "kinds": [
+          "environment"
+        ],
+        "sourceSha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": null
+      },
+      "originalBodySha256": "8273f9f7c26b92e8bc098b93137029d602842b1219a15cd77b296ee7e87fbec8",
+      "currentSourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 93,
+        "expression": "  sync -f \"$BACKUP_ROOT\"",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "sourceContractClause": "manifest-and-atomic-publication",
+      "definitionAcceptance": false,
+      "proposedExactPolicyDependencies": [],
+      "receivingOrHistoryOracle": "original format/source/credential/time metadata, exact3file index, cap checks before rename, fsync/atomicity and source stability; no generated metadata authority replacement"
+    },
+    {
+      "candidateId": "SRC-bc353b442b591d54",
+      "originalBody": {
+        "id": "SRC-bc353b442b591d54",
+        "source": "scripts/postgresql-recovery.sh",
+        "line": 103,
+        "kinds": [
+          "environment",
+          "fallback-or-expression"
+        ],
+        "sourceSha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": null
+      },
+      "originalBodySha256": "5943141b836e3aa7dbc953cae5cc542a65f661b026de61b37f5195c79a0a0963",
+      "currentSourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 103,
+        "expression": "  [[ $directory == \"$BACKUP_ROOT\"/backup-* && -d $directory && ! -L $directory ]] || fail BACKUP_PATH_INVALID",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "sourceContractClause": "verify-file-metadata-and-identity",
+      "definitionAcceptance": false,
+      "proposedExactPolicyDependencies": [],
+      "receivingOrHistoryOracle": "direct immutable child/no symlink/nlink1/exactnames/checksums/source/credentials/absolute started-age, read-only/unlocked; altered bound fails no rewrite"
+    },
+    {
+      "candidateId": "SRC-69c73b6869554ffb",
+      "originalBody": {
+        "id": "SRC-69c73b6869554ffb",
+        "source": "scripts/postgresql-recovery.sh",
+        "line": 104,
+        "kinds": [
+          "environment",
+          "fallback-or-expression"
+        ],
+        "sourceSha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": null
+      },
+      "originalBodySha256": "f51d8a0ee7b0e7a8e520a4e0886172d82cd153cfaaec87fb798a6b3a8639cd54",
+      "currentSourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 104,
+        "expression": "  [[ ${directory#\"$BACKUP_ROOT\"/} != */* ]] || fail BACKUP_PATH_INVALID",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "sourceContractClause": "verify-file-metadata-and-identity",
+      "definitionAcceptance": false,
+      "proposedExactPolicyDependencies": [],
+      "receivingOrHistoryOracle": "direct immutable child/no symlink/nlink1/exactnames/checksums/source/credentials/absolute started-age, read-only/unlocked; altered bound fails no rewrite"
+    },
+    {
+      "candidateId": "SRC-a409eeca2cea8dc8",
+      "originalBody": {
+        "id": "SRC-a409eeca2cea8dc8",
+        "source": "scripts/postgresql-recovery.sh",
+        "line": 105,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": null
+      },
+      "originalBodySha256": "f75f41233337076d0241f92af73b743e56a42d1cc00b7d398978431115cb1074",
+      "currentSourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 105,
+        "expression": "  for name in database.dump archive-toc.txt metadata.env SHA256SUMS; do",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "sourceContractClause": "verify-file-metadata-and-identity",
+      "definitionAcceptance": false,
+      "proposedExactPolicyDependencies": [
+        "tocMaximumBytes"
+      ],
+      "receivingOrHistoryOracle": "direct immutable child/no symlink/nlink1/exactnames/checksums/source/credentials/absolute started-age, read-only/unlocked; altered bound fails no rewrite"
+    },
+    {
+      "candidateId": "SRC-3b41f4a9c95fa77f",
+      "originalBody": {
+        "id": "SRC-3b41f4a9c95fa77f",
+        "source": "scripts/postgresql-recovery.sh",
+        "line": 106,
+        "kinds": [
+          "fallback-or-expression"
+        ],
+        "sourceSha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": null
+      },
+      "originalBodySha256": "8f1cc67b68fca4567ce9842c4f243c5cd335c07210f71f27170f842f9204ba36",
+      "currentSourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 106,
+        "expression": "    [[ -f $directory/$name && ! -L $directory/$name && $(stat -c %h \"$directory/$name\") == 1 ]] || fail BACKUP_FILE_INVALID",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "sourceContractClause": "verify-file-metadata-and-identity",
+      "definitionAcceptance": false,
+      "proposedExactPolicyDependencies": [],
+      "receivingOrHistoryOracle": "direct immutable child/no symlink/nlink1/exactnames/checksums/source/credentials/absolute started-age, read-only/unlocked; altered bound fails no rewrite"
+    },
+    {
+      "candidateId": "SRC-0cdaaeed65ae178c",
+      "originalBody": {
+        "id": "SRC-0cdaaeed65ae178c",
+        "source": "scripts/postgresql-recovery.sh",
+        "line": 108,
+        "kinds": [
+          "fallback-or-expression"
+        ],
+        "sourceSha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": null
+      },
+      "originalBodySha256": "bbf0bc705991ffd6708663e7c6b9f31125d11906ed03382b740bd4e202f18413",
+      "currentSourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 108,
+        "expression": "  (( $(stat -c %s \"$directory/metadata.env\") < 65536 )) || fail METADATA_TOO_LARGE",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "sourceContractClause": "verify-file-metadata-and-identity",
+      "definitionAcceptance": false,
+      "proposedExactPolicyDependencies": [
+        "metadataMaximumBytesExclusive"
+      ],
+      "receivingOrHistoryOracle": "direct immutable child/no symlink/nlink1/exactnames/checksums/source/credentials/absolute started-age, read-only/unlocked; altered bound fails no rewrite"
+    },
+    {
+      "candidateId": "SRC-6531b764a135ea0e",
+      "originalBody": {
+        "id": "SRC-6531b764a135ea0e",
+        "source": "scripts/postgresql-recovery.sh",
+        "line": 109,
+        "kinds": [
+          "fallback-or-expression"
+        ],
+        "sourceSha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": null
+      },
+      "originalBodySha256": "7f45e9b289d4318742b65bc5d384570316cc0bf3e891f9601ef02aac1e303e6f",
+      "currentSourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 109,
+        "expression": "  (( $(stat -c %s \"$directory/SHA256SUMS\") < 1024 )) || fail CHECKSUM_INDEX_INVALID",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "sourceContractClause": "verify-file-metadata-and-identity",
+      "definitionAcceptance": false,
+      "proposedExactPolicyDependencies": [
+        "checksumIndexMaximumBytesExclusive"
+      ],
+      "receivingOrHistoryOracle": "direct immutable child/no symlink/nlink1/exactnames/checksums/source/credentials/absolute started-age, read-only/unlocked; altered bound fails no rewrite"
+    },
+    {
+      "candidateId": "SRC-9c1504be3ba77b9b",
+      "originalBody": {
+        "id": "SRC-9c1504be3ba77b9b",
+        "source": "scripts/postgresql-recovery.sh",
+        "line": 110,
+        "kinds": [
+          "fallback-or-expression"
+        ],
+        "sourceSha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": null
+      },
+      "originalBodySha256": "aa8efaca7c1b93ed10ca2172116467ac324a4a306623ba65c773a0d8bc57cd9d",
+      "currentSourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 110,
+        "expression": "  (( $(stat -c %s \"$directory/database.dump\") <= BACKUP_MAXIMUM_BYTES )) || fail BACKUP_SIZE_EXCEEDED",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "sourceContractClause": "verify-file-metadata-and-identity",
+      "definitionAcceptance": false,
+      "proposedExactPolicyDependencies": [
+        "maximumBackupBytes"
+      ],
+      "receivingOrHistoryOracle": "direct immutable child/no symlink/nlink1/exactnames/checksums/source/credentials/absolute started-age, read-only/unlocked; altered bound fails no rewrite"
+    },
+    {
+      "candidateId": "SRC-d3ed8066c34b7cb2",
+      "originalBody": {
+        "id": "SRC-d3ed8066c34b7cb2",
+        "source": "scripts/postgresql-recovery.sh",
+        "line": 112,
+        "kinds": [
+          "fallback-or-expression"
+        ],
+        "sourceSha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": null
+      },
+      "originalBodySha256": "d33766844116a6eb5f888bb52897e918836eeb2f7a982fbb2578cd485a43b477",
+      "currentSourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 112,
+        "expression": "  [[ $(wc -l <\"$directory/SHA256SUMS\") == 3 ]] || fail CHECKSUM_INDEX_INVALID",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "sourceContractClause": "verify-file-metadata-and-identity",
+      "definitionAcceptance": false,
+      "proposedExactPolicyDependencies": [
+        "checksumIndexMaximumBytesExclusive"
+      ],
+      "receivingOrHistoryOracle": "direct immutable child/no symlink/nlink1/exactnames/checksums/source/credentials/absolute started-age, read-only/unlocked; altered bound fails no rewrite"
+    },
+    {
+      "candidateId": "SRC-ddd9a725360d052d",
+      "originalBody": {
+        "id": "SRC-ddd9a725360d052d",
+        "source": "scripts/postgresql-recovery.sh",
+        "line": 115,
+        "kinds": [
+          "fallback-or-expression"
+        ],
+        "sourceSha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": null
+      },
+      "originalBodySha256": "6bf8dd97ede4334d9952d496a352912443885935c8ff97817739445948c8a409",
+      "currentSourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 115,
+        "expression": "    [[ $(grep -Ec \"^[a-f0-9]{64}  $escaped$\" \"$directory/SHA256SUMS\") == 1 ]] || fail CHECKSUM_INDEX_INVALID",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "sourceContractClause": "verify-file-metadata-and-identity",
+      "definitionAcceptance": false,
+      "proposedExactPolicyDependencies": [
+        "checksumIndexMaximumBytesExclusive"
+      ],
+      "receivingOrHistoryOracle": "direct immutable child/no symlink/nlink1/exactnames/checksums/source/credentials/absolute started-age, read-only/unlocked; altered bound fails no rewrite"
+    },
+    {
+      "candidateId": "SRC-8555ba38df7bf98d",
+      "originalBody": {
+        "id": "SRC-8555ba38df7bf98d",
+        "source": "scripts/postgresql-recovery.sh",
+        "line": 117,
+        "kinds": [
+          "fallback-or-expression"
+        ],
+        "sourceSha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": null
+      },
+      "originalBodySha256": "a2dde0266b0efb5feb2a3c2a4be504fa4d5f3306f0a9a125f416ac273e371d19",
+      "currentSourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 117,
+        "expression": "  (cd \"$directory\"; sha256sum --check --status SHA256SUMS) || fail BACKUP_CHECKSUM_MISMATCH",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "sourceContractClause": "verify-file-metadata-and-identity",
+      "definitionAcceptance": false,
+      "proposedExactPolicyDependencies": [],
+      "receivingOrHistoryOracle": "direct immutable child/no symlink/nlink1/exactnames/checksums/source/credentials/absolute started-age, read-only/unlocked; altered bound fails no rewrite"
+    },
+    {
+      "candidateId": "SRC-2312c1a2937988a8",
+      "originalBody": {
+        "id": "SRC-2312c1a2937988a8",
+        "source": "scripts/postgresql-recovery.sh",
+        "line": 118,
+        "kinds": [
+          "fallback-or-expression"
+        ],
+        "sourceSha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": null
+      },
+      "originalBodySha256": "d57634243799a2d2e7121a6ff472b74e32098346ce5b10cf029192680ca8ef80",
+      "currentSourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 118,
+        "expression": "  [[ $(metadata \"$directory\" format) == postgresql-recovery-v1 ]] || fail BACKUP_FORMAT_INVALID",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "sourceContractClause": "verify-file-metadata-and-identity",
+      "definitionAcceptance": false,
+      "proposedExactPolicyDependencies": [],
+      "receivingOrHistoryOracle": "direct immutable child/no symlink/nlink1/exactnames/checksums/source/credentials/absolute started-age, read-only/unlocked; altered bound fails no rewrite"
+    },
+    {
+      "candidateId": "SRC-a4c0248736f03728",
+      "originalBody": {
+        "id": "SRC-a4c0248736f03728",
+        "source": "scripts/postgresql-recovery.sh",
+        "line": 119,
+        "kinds": [
+          "environment",
+          "fallback-or-expression"
+        ],
+        "sourceSha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": null
+      },
+      "originalBodySha256": "45a08f7f2d5cbf74cb3b486cee91e7ad28d90d5795ccf7cd5126065ec5316ad3",
+      "currentSourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 119,
+        "expression": "  [[ $(metadata \"$directory\" database) == \"$PGDATABASE\" ]] || fail BACKUP_DATABASE_MISMATCH",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "sourceContractClause": "verify-file-metadata-and-identity",
+      "definitionAcceptance": false,
+      "proposedExactPolicyDependencies": [],
+      "receivingOrHistoryOracle": "direct immutable child/no symlink/nlink1/exactnames/checksums/source/credentials/absolute started-age, read-only/unlocked; altered bound fails no rewrite"
+    },
+    {
+      "candidateId": "SRC-2e6cada8b5f2f927",
+      "originalBody": {
+        "id": "SRC-2e6cada8b5f2f927",
+        "source": "scripts/postgresql-recovery.sh",
+        "line": 120,
+        "kinds": [
+          "environment",
+          "fallback-or-expression"
+        ],
+        "sourceSha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": null
+      },
+      "originalBodySha256": "3b4586572e2dcfee305aba9054915002febfa0f9b57ed7fa69b0273469e65b49",
+      "currentSourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 120,
+        "expression": "  [[ $(metadata \"$directory\" application_image) == \"$BACKUP_APPLICATION_IMAGE\" ]] || fail BACKUP_APPLICATION_MISMATCH",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "sourceContractClause": "verify-file-metadata-and-identity",
+      "definitionAcceptance": false,
+      "proposedExactPolicyDependencies": [],
+      "receivingOrHistoryOracle": "direct immutable child/no symlink/nlink1/exactnames/checksums/source/credentials/absolute started-age, read-only/unlocked; altered bound fails no rewrite"
+    },
+    {
+      "candidateId": "SRC-c1379a7688011f88",
+      "originalBody": {
+        "id": "SRC-c1379a7688011f88",
+        "source": "scripts/postgresql-recovery.sh",
+        "line": 121,
+        "kinds": [
+          "fallback-or-expression"
+        ],
+        "sourceSha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": null
+      },
+      "originalBodySha256": "5d00d595bcaa7d1c3346eacd4307fb647cb02651dfd0fbb3e79ea6006cc3854b",
+      "currentSourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 121,
+        "expression": "  [[ $(metadata \"$directory\" credential_binding) == \"$(credential_binding)\" ]] || fail BACKUP_CREDENTIAL_SET_MISMATCH",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "sourceContractClause": "verify-file-metadata-and-identity",
+      "definitionAcceptance": false,
+      "proposedExactPolicyDependencies": [],
+      "receivingOrHistoryOracle": "direct immutable child/no symlink/nlink1/exactnames/checksums/source/credentials/absolute started-age, read-only/unlocked; altered bound fails no rewrite"
+    },
+    {
+      "candidateId": "SRC-eb5e9cf6e8c8dcb9",
+      "originalBody": {
+        "id": "SRC-eb5e9cf6e8c8dcb9",
+        "source": "scripts/postgresql-recovery.sh",
+        "line": 122,
+        "kinds": [
+          "fallback-or-expression"
+        ],
+        "sourceSha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": null
+      },
+      "originalBodySha256": "039ecbede67b2db991304d1588326fa8e03c85dba7417bcef4fab91b801867ef",
+      "currentSourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 122,
+        "expression": "  [[ $(metadata \"$directory\" server_version_num) == \"$source_version\" ]] || fail BACKUP_VERSION_MISMATCH",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "sourceContractClause": "verify-file-metadata-and-identity",
+      "definitionAcceptance": false,
+      "proposedExactPolicyDependencies": [],
+      "receivingOrHistoryOracle": "direct immutable child/no symlink/nlink1/exactnames/checksums/source/credentials/absolute started-age, read-only/unlocked; altered bound fails no rewrite"
+    },
+    {
+      "candidateId": "SRC-091a4feb13622f84",
+      "originalBody": {
+        "id": "SRC-091a4feb13622f84",
+        "source": "scripts/postgresql-recovery.sh",
+        "line": 126,
+        "kinds": [
+          "fallback-or-expression"
+        ],
+        "sourceSha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": null
+      },
+      "originalBodySha256": "b7f6186c123df06e6ec2b189d12928939386f605610aed8d1dfc22c8f189df67",
+      "currentSourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 126,
+        "expression": "  (( age >= 0 && completed >= started && completed <= $(date +%s) )) || fail BACKUP_TIMESTAMP_INVALID",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "sourceContractClause": "verify-file-metadata-and-identity",
+      "definitionAcceptance": false,
+      "proposedExactPolicyDependencies": [],
+      "receivingOrHistoryOracle": "direct immutable child/no symlink/nlink1/exactnames/checksums/source/credentials/absolute started-age, read-only/unlocked; altered bound fails no rewrite"
+    },
+    {
+      "candidateId": "SRC-cf05a9938c341d97",
+      "originalBody": {
+        "id": "SRC-cf05a9938c341d97",
+        "source": "scripts/postgresql-recovery.sh",
+        "line": 127,
+        "kinds": [
+          "fallback-or-expression"
+        ],
+        "sourceSha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": null
+      },
+      "originalBodySha256": "4d7bc398fb758284fcfb9526116595ef6ef9a49eeb61c620af171006e5c6d022",
+      "currentSourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 127,
+        "expression": "  (( age <= BACKUP_MAXIMUM_AGE_SECONDS )) || fail BACKUP_RPO_EXCEEDED",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "sourceContractClause": "verify-file-metadata-and-identity",
+      "definitionAcceptance": false,
+      "proposedExactPolicyDependencies": [
+        "maximumAgeSeconds"
+      ],
+      "receivingOrHistoryOracle": "direct immutable child/no symlink/nlink1/exactnames/checksums/source/credentials/absolute started-age, read-only/unlocked; altered bound fails no rewrite"
+    },
+    {
+      "candidateId": "SRC-518b8a2a0da00886",
+      "originalBody": {
+        "id": "SRC-518b8a2a0da00886",
+        "source": "scripts/postgresql-recovery.sh",
+        "line": 133,
+        "kinds": [
+          "environment"
+        ],
+        "sourceSha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": null
+      },
+      "originalBodySha256": "8159a50c00fbd67911e7a2c96f24d7c6647788b0e4198ec154698bec4cbf7413",
+      "currentSourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 133,
+        "expression": "  for candidate in \"$BACKUP_ROOT\"/backup-*; do",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "sourceContractClause": "backup-selection",
+      "definitionAcceptance": false,
+      "proposedExactPolicyDependencies": [],
+      "receivingOrHistoryOracle": "lexical latest only selects, never proves valid; preserve invalid historical candidate when scheduled creates new backup"
+    },
+    {
+      "candidateId": "SRC-2fe46bba23f39cba",
+      "originalBody": {
+        "id": "SRC-2fe46bba23f39cba",
+        "source": "scripts/postgresql-recovery.sh",
+        "line": 134,
+        "kinds": [
+          "fallback-or-expression"
+        ],
+        "sourceSha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": null
+      },
+      "originalBodySha256": "ad74c03cc76a8dea414d20543481eeaa7f7834cf22bb08e5fba356583918c6dc",
+      "currentSourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 134,
+        "expression": "    [[ -d $candidate && ! -L $candidate ]] || continue",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "sourceContractClause": "backup-selection",
+      "definitionAcceptance": false,
+      "proposedExactPolicyDependencies": [],
+      "receivingOrHistoryOracle": "lexical latest only selects, never proves valid; preserve invalid historical candidate when scheduled creates new backup"
+    },
+    {
+      "candidateId": "SRC-b1851f81d2d012d4",
+      "originalBody": {
+        "id": "SRC-b1851f81d2d012d4",
+        "source": "scripts/postgresql-recovery.sh",
+        "line": 137,
+        "kinds": [
+          "fallback-or-expression"
+        ],
+        "sourceSha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": null
+      },
+      "originalBodySha256": "95c88c41c5572641ddfec1362c850a54cca9ed6be430b2828e34da660e3506c2",
+      "currentSourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 137,
+        "expression": "  [[ -n $selected ]] || fail BACKUP_MISSING",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "sourceContractClause": "backup-selection",
+      "definitionAcceptance": false,
+      "proposedExactPolicyDependencies": [],
+      "receivingOrHistoryOracle": "lexical latest only selects, never proves valid; preserve invalid historical candidate when scheduled creates new backup"
+    },
+    {
+      "candidateId": "SRC-08e68e7a6af91ab7",
+      "originalBody": {
+        "id": "SRC-08e68e7a6af91ab7",
+        "source": "scripts/postgresql-recovery.sh",
+        "line": 144,
+        "kinds": [
+          "environment"
+        ],
+        "sourceSha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": null
+      },
+      "originalBodySha256": "a1e18318833cc5a6b82fda65c5bf771f83d1291824d2019c7afd3b7531236c66",
+      "currentSourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 144,
+        "expression": "  if [[ $source_version != \"$BACKUP_EXPECTED_SERVER_VERSION\" ]]; then",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "sourceContractClause": "restore-and-migration",
+      "definitionAcceptance": false,
+      "proposedExactPolicyDependencies": [],
+      "receivingOrHistoryOracle": "distinct empty target, retained roles/ACLs, explicit original sourceVersion and newer selected client; transactional fail rollback; no application acceptance"
+    },
+    {
+      "candidateId": "SRC-4e9360fb95f76fb4",
+      "originalBody": {
+        "id": "SRC-4e9360fb95f76fb4",
+        "source": "scripts/postgresql-recovery.sh",
+        "line": 145,
+        "kinds": [
+          "environment"
+        ],
+        "sourceSha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": null
+      },
+      "originalBodySha256": "5c4b01d1e8033cbab933bd8ce716aa91040fb02427b3069b4072019f0951c6d9",
+      "currentSourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 145,
+        "expression": "    [[ $(metadata \"$directory\" dump_client_version_num) == \"$BACKUP_EXPECTED_SERVER_VERSION\" \\",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "sourceContractClause": "restore-and-migration",
+      "definitionAcceptance": false,
+      "proposedExactPolicyDependencies": [],
+      "receivingOrHistoryOracle": "distinct empty target, retained roles/ACLs, explicit original sourceVersion and newer selected client; transactional fail rollback; no application acceptance"
+    },
+    {
+      "candidateId": "SRC-f8c9c3db0d8dd8dd",
+      "originalBody": {
+        "id": "SRC-f8c9c3db0d8dd8dd",
+        "source": "scripts/postgresql-recovery.sh",
+        "line": 146,
+        "kinds": [
+          "environment",
+          "fallback-or-expression"
+        ],
+        "sourceSha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": null
+      },
+      "originalBodySha256": "97c4740798786f1c9a88f0856c9fb92435ac5b3f55644b3c3e3eefcee761e5bf",
+      "currentSourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 146,
+        "expression": "      && $(client_version pg_restore) == \"$BACKUP_EXPECTED_SERVER_VERSION\" ]] || fail MIGRATION_SELECTED_CLIENT_REQUIRED",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "sourceContractClause": "restore-and-migration",
+      "definitionAcceptance": false,
+      "proposedExactPolicyDependencies": [],
+      "receivingOrHistoryOracle": "distinct empty target, retained roles/ACLs, explicit original sourceVersion and newer selected client; transactional fail rollback; no application acceptance"
+    },
+    {
+      "candidateId": "SRC-af92651c4e651180",
+      "originalBody": {
+        "id": "SRC-af92651c4e651180",
+        "source": "scripts/postgresql-recovery.sh",
+        "line": 149,
+        "kinds": [
+          "fallback-or-expression"
+        ],
+        "sourceSha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": null
+      },
+      "originalBodySha256": "8ae32a72bbf4cf7140b4d69016f42ebca9fe182c0eeae2d2740dae56ad53497c",
+      "currentSourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 149,
+        "expression": "  [[ $target != \"$(metadata \"$directory\" source_system_identifier)\" ]] || fail SAME_SERVER_RESTORE_FORBIDDEN",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "sourceContractClause": "restore-and-migration",
+      "definitionAcceptance": false,
+      "proposedExactPolicyDependencies": [],
+      "receivingOrHistoryOracle": "distinct empty target, retained roles/ACLs, explicit original sourceVersion and newer selected client; transactional fail rollback; no application acceptance"
+    },
+    {
+      "candidateId": "SRC-86e89035cd4d6766",
+      "originalBody": {
+        "id": "SRC-86e89035cd4d6766",
+        "source": "scripts/postgresql-recovery.sh",
+        "line": 151,
+        "kinds": [
+          "fallback-or-expression"
+        ],
+        "sourceSha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": null
+      },
+      "originalBodySha256": "a05fdf1e2b8b295e88f4f5bb7b857de63b3731c4f9ff902ec60a107b223fec50",
+      "currentSourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 151,
+        "expression": "  [[ $count == 0 ]] || fail RESTORE_REQUIRES_EMPTY_DATABASE",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "sourceContractClause": "restore-and-migration",
+      "definitionAcceptance": false,
+      "proposedExactPolicyDependencies": [],
+      "receivingOrHistoryOracle": "distinct empty target, retained roles/ACLs, explicit original sourceVersion and newer selected client; transactional fail rollback; no application acceptance"
+    },
+    {
+      "candidateId": "SRC-a5370b639ba30b4d",
+      "originalBody": {
+        "id": "SRC-a5370b639ba30b4d",
+        "source": "scripts/postgresql-recovery.sh",
+        "line": 154,
+        "kinds": [
+          "environment",
+          "policy-or-input"
+        ],
+        "sourceSha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": null
+      },
+      "originalBodySha256": "c5893d0e6e3dfbafef8a304ff5a70475eaeb5b18dba7370da2e105e7fd7e6857",
+      "currentSourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 154,
+        "expression": "  timeout --signal=TERM --kill-after=15 \"$BACKUP_MAXIMUM_DURATION_SECONDS\" \\",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "sourceContractClause": "restore-and-migration",
+      "definitionAcceptance": false,
+      "proposedExactPolicyDependencies": [
+        "maximumDurationSeconds",
+        "killAfterSeconds",
+        "cronJobDeadlineOverheadSeconds"
+      ],
+      "receivingOrHistoryOracle": "distinct empty target, retained roles/ACLs, explicit original sourceVersion and newer selected client; transactional fail rollback; no application acceptance"
+    },
+    {
+      "candidateId": "SRC-123927521eb863e2",
+      "originalBody": {
+        "id": "SRC-123927521eb863e2",
+        "source": "scripts/postgresql-recovery.sh",
+        "line": 155,
+        "kinds": [
+          "environment"
+        ],
+        "sourceSha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": null
+      },
+      "originalBodySha256": "36a169dafd3703bedc6da8107f7e599461e378c37ca10357ee36ca2aa1fa6339",
+      "currentSourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 155,
+        "expression": "    pg_restore --exit-on-error --single-transaction --dbname=\"$PGDATABASE\" \"$directory/database.dump\"",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "sourceContractClause": "restore-and-migration",
+      "definitionAcceptance": false,
+      "proposedExactPolicyDependencies": [],
+      "receivingOrHistoryOracle": "distinct empty target, retained roles/ACLs, explicit original sourceVersion and newer selected client; transactional fail rollback; no application acceptance"
+    },
+    {
+      "candidateId": "SRC-f4abb1c717871125",
+      "originalBody": {
+        "id": "SRC-f4abb1c717871125",
+        "source": "scripts/postgresql-recovery.sh",
+        "line": 162,
+        "kinds": [
+          "fallback-or-expression"
+        ],
+        "sourceSha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": null
+      },
+      "originalBodySha256": "f1e03992b49704e54bcf8968f6154b313c4c516c91b6e7539b9879741559dee1",
+      "currentSourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 162,
+        "expression": "  (( source_version >= 100000 && source_version < BACKUP_EXPECTED_SERVER_VERSION )) || fail FORWARD_MIGRATION_REQUIRED",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "sourceContractClause": "restore-and-migration",
+      "definitionAcceptance": false,
+      "proposedExactPolicyDependencies": [],
+      "receivingOrHistoryOracle": "distinct empty target, retained roles/ACLs, explicit original sourceVersion and newer selected client; transactional fail rollback; no application acceptance"
+    },
+    {
+      "candidateId": "SRC-5fafd3145cb96392",
+      "originalBody": {
+        "id": "SRC-5fafd3145cb96392",
+        "source": "scripts/postgresql-recovery.sh",
+        "line": 167,
+        "kinds": [
+          "environment"
+        ],
+        "sourceSha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": null
+      },
+      "originalBodySha256": "8f62140b6e27a6e892b2832163162dea7e5a5ba75dad5a129cb1644f4ac567dc",
+      "currentSourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 167,
+        "expression": "  : \"${BACKUP_INTERVAL_SECONDS:?}\"",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "sourceContractClause": "scheduled-and-operation-admission",
+      "definitionAcceptance": false,
+      "proposedExactPolicyDependencies": [
+        "backupIntervalMinutes"
+      ],
+      "receivingOrHistoryOracle": "strict original argv; age source beforecurrent; no reset/deletion; stable FD9 kernel flock/no takeover, scheduled/verify native phase limits"
+    },
+    {
+      "candidateId": "SRC-c9011c2cdd3229ec",
+      "originalBody": {
+        "id": "SRC-c9011c2cdd3229ec",
+        "source": "scripts/postgresql-recovery.sh",
+        "line": 168,
+        "kinds": [
+          "environment"
+        ],
+        "sourceSha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": null
+      },
+      "originalBodySha256": "895f478185684341f748d0c10cd657b37eea45ba6ea0f2091e038c6982d478e1",
+      "currentSourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 168,
+        "expression": "  positive BACKUP_INTERVAL_SECONDS \"$BACKUP_INTERVAL_SECONDS\"",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "sourceContractClause": "scheduled-and-operation-admission",
+      "definitionAcceptance": false,
+      "proposedExactPolicyDependencies": [
+        "backupIntervalMinutes"
+      ],
+      "receivingOrHistoryOracle": "strict original argv; age source beforecurrent; no reset/deletion; stable FD9 kernel flock/no takeover, scheduled/verify native phase limits"
+    },
+    {
+      "candidateId": "SRC-74e008a2790c0d8e",
+      "originalBody": {
+        "id": "SRC-74e008a2790c0d8e",
+        "source": "scripts/postgresql-recovery.sh",
+        "line": 170,
+        "kinds": [
+          "environment"
+        ],
+        "sourceSha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": null
+      },
+      "originalBodySha256": "ecac0ea63272a5e11770b5ad4f8bec436d92571081a26c40802876fb320d8cce",
+      "currentSourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 170,
+        "expression": "  if selected=$(latest) && (verify \"$selected\" \"$BACKUP_EXPECTED_SERVER_VERSION\"); then",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "sourceContractClause": "scheduled-and-operation-admission",
+      "definitionAcceptance": false,
+      "proposedExactPolicyDependencies": [
+        "backupIntervalMinutes",
+        "verificationIntervalMinutes",
+        "verificationDeadlineSeconds"
+      ],
+      "receivingOrHistoryOracle": "strict original argv; age source beforecurrent; no reset/deletion; stable FD9 kernel flock/no takeover, scheduled/verify native phase limits"
+    },
+    {
+      "candidateId": "SRC-ec863eb798302cfb",
+      "originalBody": {
+        "id": "SRC-ec863eb798302cfb",
+        "source": "scripts/postgresql-recovery.sh",
+        "line": 175,
+        "kinds": [
+          "environment"
+        ],
+        "sourceSha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": null
+      },
+      "originalBodySha256": "cba51b086f62c439a8d20d8ecf476220021e548c27b411e851658b38f7668d45",
+      "currentSourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 175,
+        "expression": "  verify \"$selected\" \"$BACKUP_EXPECTED_SERVER_VERSION\"",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "sourceContractClause": "scheduled-and-operation-admission",
+      "definitionAcceptance": false,
+      "proposedExactPolicyDependencies": [
+        "verificationIntervalMinutes",
+        "verificationDeadlineSeconds",
+        "cronJobDeadlineOverheadSeconds"
+      ],
+      "receivingOrHistoryOracle": "strict original argv; age source beforecurrent; no reset/deletion; stable FD9 kernel flock/no takeover, scheduled/verify native phase limits"
+    },
+    {
+      "candidateId": "SRC-534f90586b701d11",
+      "originalBody": {
+        "id": "SRC-534f90586b701d11",
+        "source": "scripts/postgresql-recovery.sh",
+        "line": 183,
+        "kinds": [
+          "fallback-or-expression"
+        ],
+        "sourceSha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": null
+      },
+      "originalBodySha256": "4cf3b0522a585bded0c82fa746f76050a7ec014f274a088ab63fe6c0fe4a9ccc",
+      "currentSourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 183,
+        "expression": "  [[ $# == 1 ]] || fail ARGUMENTS_INVALID",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "sourceContractClause": "scheduled-and-operation-admission",
+      "definitionAcceptance": false,
+      "proposedExactPolicyDependencies": [],
+      "receivingOrHistoryOracle": "strict original argv; age source beforecurrent; no reset/deletion; stable FD9 kernel flock/no takeover, scheduled/verify native phase limits"
+    },
+    {
+      "candidateId": "SRC-7dcc343a4f45f583",
+      "originalBody": {
+        "id": "SRC-7dcc343a4f45f583",
+        "source": "scripts/postgresql-recovery.sh",
+        "line": 184,
+        "kinds": [
+          "environment"
+        ],
+        "sourceSha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": null
+      },
+      "originalBodySha256": "40cc227e89d4c48f08aac15c924a061ddeeefa24f01a92c4e8ca25fe55b8f258",
+      "currentSourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 184,
+        "expression": "  selected=$(latest); verify \"$selected\" \"$BACKUP_EXPECTED_SERVER_VERSION\"; printf '%s\\n' \"$selected\"; exit 0",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "sourceContractClause": "scheduled-and-operation-admission",
+      "definitionAcceptance": false,
+      "proposedExactPolicyDependencies": [],
+      "receivingOrHistoryOracle": "strict original argv; age source beforecurrent; no reset/deletion; stable FD9 kernel flock/no takeover, scheduled/verify native phase limits"
+    },
+    {
+      "candidateId": "SRC-0669fe04356161b6",
+      "originalBody": {
+        "id": "SRC-0669fe04356161b6",
+        "source": "scripts/postgresql-recovery.sh",
+        "line": 187,
+        "kinds": [
+          "environment",
+          "fallback-or-expression"
+        ],
+        "sourceSha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": null
+      },
+      "originalBodySha256": "b4e3e3a55fab2d384a7dc5f6a3fd874031f3f7c5b2cb57018e09b83a98c07985",
+      "currentSourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 187,
+        "expression": "[[ ! -L $BACKUP_ROOT/.recovery.lock ]] || fail LOCK_PATH_INVALID",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "sourceContractClause": "scheduled-and-operation-admission",
+      "definitionAcceptance": false,
+      "proposedExactPolicyDependencies": [],
+      "receivingOrHistoryOracle": "strict original argv; age source beforecurrent; no reset/deletion; stable FD9 kernel flock/no takeover, scheduled/verify native phase limits"
+    },
+    {
+      "candidateId": "SRC-c7da4365f24d1e9b",
+      "originalBody": {
+        "id": "SRC-c7da4365f24d1e9b",
+        "source": "scripts/postgresql-recovery.sh",
+        "line": 188,
+        "kinds": [
+          "environment"
+        ],
+        "sourceSha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": null
+      },
+      "originalBodySha256": "01002c6e930a8a49bd6b195e18a79fc397a20d65c4d8b5c053216ffe7b1d1d6f",
+      "currentSourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 188,
+        "expression": "exec 9>\"$BACKUP_ROOT/.recovery.lock\"",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "sourceContractClause": "scheduled-and-operation-admission",
+      "definitionAcceptance": false,
+      "proposedExactPolicyDependencies": [],
+      "receivingOrHistoryOracle": "strict original argv; age source beforecurrent; no reset/deletion; stable FD9 kernel flock/no takeover, scheduled/verify native phase limits"
+    },
+    {
+      "candidateId": "SRC-dae6d50e7223a038",
+      "originalBody": {
+        "id": "SRC-dae6d50e7223a038",
+        "source": "scripts/postgresql-recovery.sh",
+        "line": 189,
+        "kinds": [
+          "fallback-or-expression"
+        ],
+        "sourceSha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": null
+      },
+      "originalBodySha256": "cd935e5d9b958dd18f69a70a7083ab1d3a3f5568046666701732cdb33b782cf5",
+      "currentSourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 189,
+        "expression": "flock --exclusive --nonblock 9 || fail BUSY",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "sourceContractClause": "scheduled-and-operation-admission",
+      "definitionAcceptance": false,
+      "proposedExactPolicyDependencies": [],
+      "receivingOrHistoryOracle": "strict original argv; age source beforecurrent; no reset/deletion; stable FD9 kernel flock/no takeover, scheduled/verify native phase limits"
+    },
+    {
+      "candidateId": "SRC-e37b407a298a90f1",
+      "originalBody": {
+        "id": "SRC-e37b407a298a90f1",
+        "source": "scripts/postgresql-recovery.sh",
+        "line": 191,
+        "kinds": [
+          "fallback-or-expression"
+        ],
+        "sourceSha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": null
+      },
+      "originalBodySha256": "f654877111a68fcdd6f5a3d25585f981a9d0901eb65dd2fc12e9e22a4bfcdcd1",
+      "currentSourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 191,
+        "expression": "  backup) [[ $# == 1 ]] || fail ARGUMENTS_INVALID; backup ;;",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "sourceContractClause": "scheduled-and-operation-admission",
+      "definitionAcceptance": false,
+      "proposedExactPolicyDependencies": [],
+      "receivingOrHistoryOracle": "strict original argv; age source beforecurrent; no reset/deletion; stable FD9 kernel flock/no takeover, scheduled/verify native phase limits"
+    },
+    {
+      "candidateId": "SRC-fd778743a7bc40ac",
+      "originalBody": {
+        "id": "SRC-fd778743a7bc40ac",
+        "source": "scripts/postgresql-recovery.sh",
+        "line": 192,
+        "kinds": [
+          "fallback-or-expression"
+        ],
+        "sourceSha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": null
+      },
+      "originalBodySha256": "c7ecc9d8bf069af12df308bc9d6d83058e0c57293f8562e577a9e653e1ff4ed6",
+      "currentSourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 192,
+        "expression": "  scheduled) [[ $# == 1 ]] || fail ARGUMENTS_INVALID; scheduled ;;",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "sourceContractClause": "scheduled-and-operation-admission",
+      "definitionAcceptance": false,
+      "proposedExactPolicyDependencies": [],
+      "receivingOrHistoryOracle": "strict original argv; age source beforecurrent; no reset/deletion; stable FD9 kernel flock/no takeover, scheduled/verify native phase limits"
+    },
+    {
+      "candidateId": "SRC-f27b77f6a2f38b7e",
+      "originalBody": {
+        "id": "SRC-f27b77f6a2f38b7e",
+        "source": "scripts/postgresql-recovery.sh",
+        "line": 193,
+        "kinds": [
+          "environment",
+          "fallback-or-expression"
+        ],
+        "sourceSha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": null
+      },
+      "originalBodySha256": "599b0bc95b7c6e18a3c38b85dafca118daf896bc4354b29258a364e016d3250b",
+      "currentSourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 193,
+        "expression": "  restore) [[ $# == 2 ]] || fail ARGUMENTS_INVALID; restore \"$2\" \"$BACKUP_EXPECTED_SERVER_VERSION\" ;;",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "sourceContractClause": "scheduled-and-operation-admission",
+      "definitionAcceptance": false,
+      "proposedExactPolicyDependencies": [],
+      "receivingOrHistoryOracle": "strict original argv; age source beforecurrent; no reset/deletion; stable FD9 kernel flock/no takeover, scheduled/verify native phase limits"
+    },
+    {
+      "candidateId": "SRC-12384df0dcc2708c",
+      "originalBody": {
+        "id": "SRC-12384df0dcc2708c",
+        "source": "scripts/postgresql-recovery.sh",
+        "line": 194,
+        "kinds": [
+          "fallback-or-expression"
+        ],
+        "sourceSha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": null
+      },
+      "originalBodySha256": "92fac7edef8dbb046ec1497383139cea3ec3a556d445ee08339fd9c172d4ed8c",
+      "currentSourceWitness": {
+        "path": "scripts/postgresql-recovery.sh",
+        "line": 194,
+        "expression": "  migrate) [[ $# == 3 ]] || fail ARGUMENTS_INVALID; migrate \"$2\" \"$3\" ;;",
+        "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+      },
+      "sourceContractClause": "scheduled-and-operation-admission",
+      "definitionAcceptance": false,
+      "proposedExactPolicyDependencies": [],
+      "receivingOrHistoryOracle": "strict original argv; age source beforecurrent; no reset/deletion; stable FD9 kernel flock/no takeover, scheduled/verify native phase limits"
+    }
+  ]
+}

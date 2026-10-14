@@ -1,0 +1,39 @@
+{
+  "finalInputDrift": 0,
+  "oldRecoverySourcePinsMatched": 9,
+  "canonicalOriginalArrays": [
+    {
+      "path": "docs/review/remediation/config-semantic-inventory.json",
+      "array": "rows",
+      "unchangedCount": 2409,
+      "original": "git a0d5588c4",
+      "qualification": "root metadata intentionally not compared to original file digest"
+    },
+    {
+      "path": "docs/review/remediation/config-acceptance-matrix.json",
+      "array": "cases",
+      "unchangedCount": 6845,
+      "original": "git a0d5588c4",
+      "qualification": "root metadata intentionally not compared to original file digest"
+    }
+  ],
+  "frozenInputs": [
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-source-contracts-01/README.md",
+      "sha256": "15f0ecf19c9a804b01dff515dac42715249531d61b6c7db801fc013544ab643d"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-source-contracts-01/candidate-dispositions.json",
+      "sha256": "98893de074072657c6bb832f84fee88eefa9d35276c6ecaa5ac8fdbb1d814fc0"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-source-contracts-01/source-identities.json",
+      "sha256": "9c52de0a1310f68717deb418171d60a2153adcbc31dd1fd157e510942330349b"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-provisioning-source-review-01/README.md",
+      "sha256": "8febd988fd2153a0bf49ea448ac07bb1d70e30df4155c8eef157c2e28e36ca9f"
+    }
+  ],
+  "finalReceiptSha256": "9f3982984727a4ed1b6cf63bd9a4419ad7d5f76d0fbf3fce1c2eede8ba9f5eb6"
+}

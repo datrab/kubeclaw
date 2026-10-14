@@ -1,0 +1,98 @@
+diff --git a/docs/review/evidence/config-acceptance/c0-completion-20261013/WORK-STATE.json b/docs/review/evidence/config-acceptance/c0-completion-20261013/WORK-STATE.json
+index 73d005c44..d509ca4e0 100644
+--- a/docs/review/evidence/config-acceptance/c0-completion-20261013/WORK-STATE.json
++++ b/docs/review/evidence/config-acceptance/c0-completion-20261013/WORK-STATE.json
+@@ -13,7 +13,7 @@
+     "binding": "initial frozen + boundaries02(10controls), membership03(11/16actualcompiledstage maps), codec04(6controls), journal-bound05(11genericactualjournal/finiteencodingcontrols). Original error retained; wholefield/standalone/provider/harness joins unfinished. Demo-membership06 observed unchanged existing compiler test1pass0fail, exactsource/testhashesmatchHEAD; no realprovider or targetbinding acceptance. Captured original sourceapproval/retentioncrossdomainobligation."
+   },
+   "next": [
+-    "Collect provider03 and recovery profile01 authored contracts then independent reviews; collect partition02 verdict and explicitly rejoin affected frozen processing/case dependencies after provider correction review.",
++    "Finish parent dependency independent review, dispatch recovery02 correction at next native slot, independently review controller/security full proposals; no current-map adoption before bounded material review.",
+     "Complete remaining WCR01-08 source/provider/operator/agent/case/package contracts, without new generic validation infrastructure.",
+     "Selective meaningful checkpoint20 push to existing draft PR18; final whole-C0 review and concrete C1-C6 approval package remain open."
+   ],
+@@ -46,8 +46,8 @@
+     "implementationAuthorized": false
+   },
+   "lastPushedCheckpoint": {
+-    "checkpoint": 20,
+-    "commit": "d396d56ad1c92a82a3ebd8346eb6d4c5764db8da",
++    "checkpoint": 21,
++    "commit": "19b1da7f75f51a05a16e25a7ce3d5421768f7c3a",
+     "pr": "https://github.com/datrab/kubeclaw/pull/18",
+     "pushed": true,
+     "remoteHeadVerified": true,
+@@ -78,19 +78,19 @@
+   "sourceSupplementIndex": "docs/review/remediation/config-source-supplement-current.md",
+   "activeNativeWork": [
+     {
+-      "task": "/root/c1_case_oracle_review",
+-      "scope": "Provider03 RPR02-01/02 wholeprofile and active schema-node concordance plus C3profile03 dependency",
+-      "status": "running author; fresh recheck required"
++      "task": "/root/policy_family_contract_review",
++      "scope": "Independent root-authored provider-field-dependency-adoption01,67 currentrefs/eight new source policy bindings/threeT contexts",
++      "status": "running reviewer"
+     },
+     {
+-      "task": "/root/source_concordance_layout_recheck",
+-      "scope": "Recovery-policy-profile01 13 current scalar leaves+10 source adjustments; fullrendererHelm not executed",
+-      "status": "running author; fresh review required"
++      "task": "/root/whole_c0_readiness_review",
++      "scope": "Controller roleprofile01 final source/schema/projection/case authoring; Ready8443 actual Chart policy and retained CRD/domain guard",
++      "status": "running author; independent review required"
+     },
+     {
+-      "task": "/root/whole_c0_readiness_review",
+-      "scope": "WCR03 Namespacecontroller original49-group actual role/profile/domain/receiving/case definition",
+-      "status": "running author; fresh review required"
++      "task": "/root/c1_case_oracle_review",
++      "scope": "Security-provider-contracts01 original89members/five actualregistrations/processing-verdict-manifest domains",
++      "status": "running author; independent review required"
+     }
+   ],
+   "completedLatestReviews": [
+@@ -145,6 +145,15 @@
+     {
+       "report": "independent-field-activation-partition-review-02/README.md",
+       "verdict": "FAPR01\u201303 CLOSED bounded source/activation-definition/exact-case joins; processing/C3/provider dependency integration and local exceptions OPEN"
++    },
++    {
++      "report": "independent-runtime-provider-contract-review-03/README.md",
++      "verdict": "RPR02-01/02 CLOSED bounded definition; independent1074pure controls/60profiles22entries454active nodes; explicitC3generation verified, no global/native acceptance"
++    },
++    {
++      "report": "independent-recovery-policy-profile-review-01/README.md",
++      "verdict": "NOT ACCEPTED WCR05-R01 task-regexp escaping/R02 measured-used arithmetic domain/R03 whole-task scheduled/manual deadline receiver",
++      "reportRelocation": "recovery-review01-relocation.json exact bytecopies of two reviewer files accidentally written workspace-relative; original retained, reviewmanifest unmodified"
+     }
+   ],
+   "checkpoint15Prepared": {
+@@ -205,7 +214,7 @@
+     "diffCheck": "Two deliberate byte-count JSON response fixtures retain trailing whitespace: nova-response-524289.json and response-256.json. git diff --cached --check exit2; exact frozen fixture bytes preserved. No clean formatting claim."
+   },
+   "checkpoint21Prepared": {
+-    "pushed": false,
++    "pushed": true,
+     "scope": "C3profile03/verified registry recheck03; fieldpartition02/verified bounded recheck02; provider02/rejected independent recheck02",
+     "globalC0Accepted": false,
+     "implementationAuthorization": null,
+@@ -219,5 +228,18 @@
+       ],
+       "qualification": "Exact pinned byte-count/pure-source fixtures preserved; no clean formatting claim if nonzero"
+     }
+-  }
++  },
++  "parentAuthoredPendingReview": {
++    "path": "provider-field-dependency-adoption-01",
++    "scope": "Current03 consumer/schema/C3 references replace prior01 active references for67 originalproviderfields (including retired task-step-timeout ban); unchanged original scopes/history; eight separate processing identities and additive source ownership",
++    "independentReviewRequired": true,
++    "globalC0Accepted": false
++  },
++  "pendingAuthorCorrections": [
++    {
++      "task": "/root/source_concordance_layout_recheck",
++      "scope": "Recovery02 WCR05-R01\u201303 after next available native slot; regex real timestamp/NUL, canonical measured used before checked arithmetic, concrete original whole-task deadline/phase/publication/quiescence protocol plus Provider03 frozen rejoin",
++      "status": "not yet dispatched; reviewer report now available at exact repo path"
++    }
++  ]
+ }
