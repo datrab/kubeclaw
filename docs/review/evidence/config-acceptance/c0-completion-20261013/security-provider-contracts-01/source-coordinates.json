@@ -1,0 +1,2336 @@
+[
+  {
+    "path": "skills/buster/plugins/security-providers/src/image.js",
+    "line": 1,
+    "text": "import { databaseEvidence } from './database-evidence.js';",
+    "sha256": "7e54a7a0140628c26d2e81572ef8959fb0816cd5cd9cb663759c4b175bc71588"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/image.js",
+    "line": 2,
+    "text": "import { findingId, integer, object, policy, result } from './common.js';",
+    "sha256": "7e54a7a0140628c26d2e81572ef8959fb0816cd5cd9cb663759c4b175bc71588"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/image.js",
+    "line": 14,
+    "text": "function configuration(invocation) {",
+    "sha256": "7e54a7a0140628c26d2e81572ef8959fb0816cd5cd9cb663759c4b175bc71588"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/image.js",
+    "line": 15,
+    "text": "  const value = object(invocation.configuration.values, 'IMAGE_SCAN_CONFIG_INVALID');",
+    "sha256": "7e54a7a0140628c26d2e81572ef8959fb0816cd5cd9cb663759c4b175bc71588"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/image.js",
+    "line": 16,
+    "text": "  return { timeoutMs: integer(value.timeoutMs, 300_000, 1000, 900_000, 'IMAGE_SCAN_TIMEOUT_INVALID'), policy: policy(value.policy) };",
+    "sha256": "7e54a7a0140628c26d2e81572ef8959fb0816cd5cd9cb663759c4b175bc71588"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/image.js",
+    "line": 19,
+    "text": "function findings(value) {",
+    "sha256": "7e54a7a0140628c26d2e81572ef8959fb0816cd5cd9cb663759c4b175bc71588"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/image.js",
+    "line": 23,
+    "text": "    const id = findingId('image', item.id, item.package, item.sourceFile);",
+    "sha256": "7e54a7a0140628c26d2e81572ef8959fb0816cd5cd9cb663759c4b175bc71588"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/image.js",
+    "line": 33,
+    "text": "    const config = configuration(invocation); const image = imageInput(invocation);",
+    "sha256": "7e54a7a0140628c26d2e81572ef8959fb0816cd5cd9cb663759c4b175bc71588"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/image.js",
+    "line": 34,
+    "text": "    const response = object(await context.invoke('security.scan', { operation: 'image',",
+    "sha256": "7e54a7a0140628c26d2e81572ef8959fb0816cd5cd9cb663759c4b175bc71588"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/image.js",
+    "line": 35,
+    "text": "      resource: { type: 'container.image', canonicalId: image.image }, payload: { ...image, timeoutMs: config.timeoutMs } }),",
+    "sha256": "7e54a7a0140628c26d2e81572ef8959fb0816cd5cd9cb663759c4b175bc71588"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/image.js",
+    "line": 37,
+    "text": "    if (response.scanner !== 'trivy' || response.operation !== 'image') throw new Error('IMAGE_SCAN_RESPONSE_INVALID');",
+    "sha256": "7e54a7a0140628c26d2e81572ef8959fb0816cd5cd9cb663759c4b175bc71588"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/image.js",
+    "line": 38,
+    "text": "    return result(invocation, 'image-trivy', findings(response.findings), config.policy,",
+    "sha256": "7e54a7a0140628c26d2e81572ef8959fb0816cd5cd9cb663759c4b175bc71588"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/image.js",
+    "line": 39,
+    "text": "      { databaseEvidence: databaseEvidence(response), resultDigest: response.resultDigest, image: image.image, imageDigest: image.digest });",
+    "sha256": "7e54a7a0140628c26d2e81572ef8959fb0816cd5cd9cb663759c4b175bc71588"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/image.js",
+    "line": 43,
+    "text": "export const testContract = Object.freeze({ configuration, imageInput, findings });",
+    "sha256": "7e54a7a0140628c26d2e81572ef8959fb0816cd5cd9cb663759c4b175bc71588"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/kubernetes-policy.js",
+    "line": 3,
+    "text": "import { findingId, integer, object, policy, result } from './common.js';",
+    "sha256": "aac3c6388e4238df46b5cc9b59f62b6fd0df4192061d29ff5be6625f26f392fd"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/kubernetes-policy.js",
+    "line": 18,
+    "text": "function configuration(invocation) {",
+    "sha256": "aac3c6388e4238df46b5cc9b59f62b6fd0df4192061d29ff5be6625f26f392fd"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/kubernetes-policy.js",
+    "line": 19,
+    "text": "  const value = object(invocation.configuration.values, 'KUBERNETES_POLICY_CONFIG_INVALID');",
+    "sha256": "aac3c6388e4238df46b5cc9b59f62b6fd0df4192061d29ff5be6625f26f392fd"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/kubernetes-policy.js",
+    "line": 20,
+    "text": "  return { timeoutMs: integer(value.timeoutMs, 120_000, 1000, 300_000, 'KUBERNETES_POLICY_TIMEOUT_INVALID'), policy: policy(value.policy) };",
+    "sha256": "aac3c6388e4238df46b5cc9b59f62b6fd0df4192061d29ff5be6625f26f392fd"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/kubernetes-policy.js",
+    "line": 23,
+    "text": "function findings(value) {",
+    "sha256": "aac3c6388e4238df46b5cc9b59f62b6fd0df4192061d29ff5be6625f26f392fd"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/kubernetes-policy.js",
+    "line": 27,
+    "text": "    return { id: findingId('kubernetes-policy', item.id, item.sourceFile, item.line),",
+    "sha256": "aac3c6388e4238df46b5cc9b59f62b6fd0df4192061d29ff5be6625f26f392fd"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/kubernetes-policy.js",
+    "line": 30,
+    "text": "      line: Number.isSafeInteger(item.line) ? item.line : undefined, category: 'kubernetes-policy', status: item.status };",
+    "sha256": "aac3c6388e4238df46b5cc9b59f62b6fd0df4192061d29ff5be6625f26f392fd"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/kubernetes-policy.js",
+    "line": 36,
+    "text": "    const config = configuration(invocation); const manifest = manifestInput(invocation);",
+    "sha256": "aac3c6388e4238df46b5cc9b59f62b6fd0df4192061d29ff5be6625f26f392fd"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/kubernetes-policy.js",
+    "line": 37,
+    "text": "    const response = object(await context.invoke('security.scan', { operation: 'kubernetes-policy',",
+    "sha256": "aac3c6388e4238df46b5cc9b59f62b6fd0df4192061d29ff5be6625f26f392fd"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/kubernetes-policy.js",
+    "line": 39,
+    "text": "      payload: { manifestPath: manifest.file, manifestDigest: manifest.digest, timeoutMs: config.timeoutMs } }),",
+    "sha256": "aac3c6388e4238df46b5cc9b59f62b6fd0df4192061d29ff5be6625f26f392fd"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/kubernetes-policy.js",
+    "line": 41,
+    "text": "    if (response.scanner !== 'trivy' || response.operation !== 'kubernetes-policy') throw new Error('KUBERNETES_POLICY_RESPONSE_INVALID');",
+    "sha256": "aac3c6388e4238df46b5cc9b59f62b6fd0df4192061d29ff5be6625f26f392fd"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/kubernetes-policy.js",
+    "line": 42,
+    "text": "    return result(invocation, 'kubernetes-policy-trivy', findings(response.findings), config.policy,",
+    "sha256": "aac3c6388e4238df46b5cc9b59f62b6fd0df4192061d29ff5be6625f26f392fd"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/kubernetes-policy.js",
+    "line": 47,
+    "text": "export const testContract = Object.freeze({ configuration, manifestInput, findings });",
+    "sha256": "aac3c6388e4238df46b5cc9b59f62b6fd0df4192061d29ff5be6625f26f392fd"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/common.js",
+    "line": 4,
+    "text": "const POLICY = Object.freeze({ profile: 'strict-v1', blockingSeverities: Object.freeze(['critical', 'high']),",
+    "sha256": "74fd765615fdee3f5876cfffa0b7baca6405b57fc3830e39dd56293fdc8d04b3"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/common.js",
+    "line": 5,
+    "text": "  blockActiveThreats: true, blockMissingFixes: true, scannerError: 'error' });",
+    "sha256": "74fd765615fdee3f5876cfffa0b7baca6405b57fc3830e39dd56293fdc8d04b3"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/common.js",
+    "line": 12,
+    "text": "export function integer(value, fallback, minimum, maximum, code) {",
+    "sha256": "74fd765615fdee3f5876cfffa0b7baca6405b57fc3830e39dd56293fdc8d04b3"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/common.js",
+    "line": 14,
+    "text": "  if (!Number.isSafeInteger(result) || result < minimum || result > maximum) throw new Error(code);",
+    "sha256": "74fd765615fdee3f5876cfffa0b7baca6405b57fc3830e39dd56293fdc8d04b3"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/common.js",
+    "line": 18,
+    "text": "function acceptances(value) {",
+    "sha256": "74fd765615fdee3f5876cfffa0b7baca6405b57fc3830e39dd56293fdc8d04b3"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/common.js",
+    "line": 24,
+    "text": "    if (typeof item.findingId !== 'string' || item.findingId.length < 1 || item.findingId.length > 256",
+    "sha256": "74fd765615fdee3f5876cfffa0b7baca6405b57fc3830e39dd56293fdc8d04b3"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/common.js",
+    "line": 25,
+    "text": "      || !/^[A-Za-z0-9._:@/-]+$/u.test(item.findingId) || seen.has(item.findingId)",
+    "sha256": "74fd765615fdee3f5876cfffa0b7baca6405b57fc3830e39dd56293fdc8d04b3"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/common.js",
+    "line": 27,
+    "text": "      || typeof item.expiresAt !== 'string' || !Number.isFinite(Date.parse(item.expiresAt))) {",
+    "sha256": "74fd765615fdee3f5876cfffa0b7baca6405b57fc3830e39dd56293fdc8d04b3"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/common.js",
+    "line": 30,
+    "text": "    seen.add(item.findingId);",
+    "sha256": "74fd765615fdee3f5876cfffa0b7baca6405b57fc3830e39dd56293fdc8d04b3"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/common.js",
+    "line": 31,
+    "text": "    return { findingId: item.findingId, reason: item.reason.trim(), expiresAt: new Date(item.expiresAt).toISOString() };",
+    "sha256": "74fd765615fdee3f5876cfffa0b7baca6405b57fc3830e39dd56293fdc8d04b3"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/common.js",
+    "line": 35,
+    "text": "export function policy(value) {",
+    "sha256": "74fd765615fdee3f5876cfffa0b7baca6405b57fc3830e39dd56293fdc8d04b3"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/common.js",
+    "line": 37,
+    "text": "  if (item.profile !== POLICY.profile || Object.keys(item).some((key) => !['profile', 'acceptances'].includes(key))) {",
+    "sha256": "74fd765615fdee3f5876cfffa0b7baca6405b57fc3830e39dd56293fdc8d04b3"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/common.js",
+    "line": 40,
+    "text": "  return { ...POLICY, acceptances: acceptances(item.acceptances) };",
+    "sha256": "74fd765615fdee3f5876cfffa0b7baca6405b57fc3830e39dd56293fdc8d04b3"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/common.js",
+    "line": 47,
+    "text": "export function result(invocation, scanner, rawFindings, resolvedPolicy, detailValues = {}) {",
+    "sha256": "74fd765615fdee3f5876cfffa0b7baca6405b57fc3830e39dd56293fdc8d04b3"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/common.js",
+    "line": 49,
+    "text": "  const accepted = new Map(resolvedPolicy.acceptances.map((item) => [item.findingId, item]));",
+    "sha256": "74fd765615fdee3f5876cfffa0b7baca6405b57fc3830e39dd56293fdc8d04b3"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/common.js",
+    "line": 50,
+    "text": "  const now = Date.now();",
+    "sha256": "74fd765615fdee3f5876cfffa0b7baca6405b57fc3830e39dd56293fdc8d04b3"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/common.js",
+    "line": 51,
+    "text": "  const findings = [];",
+    "sha256": "74fd765615fdee3f5876cfffa0b7baca6405b57fc3830e39dd56293fdc8d04b3"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/common.js",
+    "line": 57,
+    "text": "    const finding = object(raw, 'SECURITY_SCANNER_RESPONSE_INVALID');",
+    "sha256": "74fd765615fdee3f5876cfffa0b7baca6405b57fc3830e39dd56293fdc8d04b3"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/common.js",
+    "line": 58,
+    "text": "    if (typeof finding.id !== 'string' || finding.id.length < 1 || finding.id.length > 256 || ids.has(finding.id)",
+    "sha256": "74fd765615fdee3f5876cfffa0b7baca6405b57fc3830e39dd56293fdc8d04b3"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/common.js",
+    "line": 59,
+    "text": "      || !SEVERITIES.includes(finding.severity) || typeof finding.message !== 'string'",
+    "sha256": "74fd765615fdee3f5876cfffa0b7baca6405b57fc3830e39dd56293fdc8d04b3"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/common.js",
+    "line": 60,
+    "text": "      || finding.message.length < 1 || finding.message.length > 4096) {",
+    "sha256": "74fd765615fdee3f5876cfffa0b7baca6405b57fc3830e39dd56293fdc8d04b3"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/common.js",
+    "line": 63,
+    "text": "    ids.add(finding.id);",
+    "sha256": "74fd765615fdee3f5876cfffa0b7baca6405b57fc3830e39dd56293fdc8d04b3"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/common.js",
+    "line": 64,
+    "text": "    const waiver = accepted.get(finding.id);",
+    "sha256": "74fd765615fdee3f5876cfffa0b7baca6405b57fc3830e39dd56293fdc8d04b3"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/common.js",
+    "line": 65,
+    "text": "    const isAccepted = Boolean(waiver && Date.parse(waiver.expiresAt) > now);",
+    "sha256": "74fd765615fdee3f5876cfffa0b7baca6405b57fc3830e39dd56293fdc8d04b3"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/common.js",
+    "line": 66,
+    "text": "    const isBlocking = resolvedPolicy.blockingSeverities.includes(finding.severity)",
+    "sha256": "74fd765615fdee3f5876cfffa0b7baca6405b57fc3830e39dd56293fdc8d04b3"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/common.js",
+    "line": 67,
+    "text": "      || (resolvedPolicy.blockActiveThreats && finding.status === 'affected')",
+    "sha256": "74fd765615fdee3f5876cfffa0b7baca6405b57fc3830e39dd56293fdc8d04b3"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/common.js",
+    "line": 68,
+    "text": "      || (resolvedPolicy.blockMissingFixes && finding.category === 'vulnerability' && !finding.fixedVersion);",
+    "sha256": "74fd765615fdee3f5876cfffa0b7baca6405b57fc3830e39dd56293fdc8d04b3"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/common.js",
+    "line": 69,
+    "text": "    findings.push({ id: finding.id, severity: finding.severity, message: finding.message,",
+    "sha256": "74fd765615fdee3f5876cfffa0b7baca6405b57fc3830e39dd56293fdc8d04b3"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/common.js",
+    "line": 70,
+    "text": "      ...(typeof finding.rule === 'string' ? { rule: finding.rule } : {}),",
+    "sha256": "74fd765615fdee3f5876cfffa0b7baca6405b57fc3830e39dd56293fdc8d04b3"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/common.js",
+    "line": 71,
+    "text": "      ...(typeof finding.file === 'string' ? { file: finding.file } : {}),",
+    "sha256": "74fd765615fdee3f5876cfffa0b7baca6405b57fc3830e39dd56293fdc8d04b3"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/common.js",
+    "line": 72,
+    "text": "      ...(Number.isSafeInteger(finding.line) ? { line: finding.line } : {}) });",
+    "sha256": "74fd765615fdee3f5876cfffa0b7baca6405b57fc3830e39dd56293fdc8d04b3"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/common.js",
+    "line": 73,
+    "text": "    normalizedFindings.push({ id: finding.id, severity: finding.severity, message: finding.message,",
+    "sha256": "74fd765615fdee3f5876cfffa0b7baca6405b57fc3830e39dd56293fdc8d04b3"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/common.js",
+    "line": 74,
+    "text": "      ...(typeof finding.category === 'string' ? { category: finding.category.slice(0, 128) } : {}),",
+    "sha256": "74fd765615fdee3f5876cfffa0b7baca6405b57fc3830e39dd56293fdc8d04b3"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/common.js",
+    "line": 75,
+    "text": "      ...(typeof finding.package === 'string' ? { package: finding.package.slice(0, 512) } : {}),",
+    "sha256": "74fd765615fdee3f5876cfffa0b7baca6405b57fc3830e39dd56293fdc8d04b3"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/common.js",
+    "line": 76,
+    "text": "      ...(typeof finding.installedVersion === 'string' ? { installedVersion: finding.installedVersion.slice(0, 512) } : {}),",
+    "sha256": "74fd765615fdee3f5876cfffa0b7baca6405b57fc3830e39dd56293fdc8d04b3"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/common.js",
+    "line": 77,
+    "text": "      ...(typeof finding.fixedVersion === 'string' ? { fixedVersion: finding.fixedVersion.slice(0, 512) } : {}),",
+    "sha256": "74fd765615fdee3f5876cfffa0b7baca6405b57fc3830e39dd56293fdc8d04b3"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/common.js",
+    "line": 78,
+    "text": "      ...(typeof finding.file === 'string' ? { sourceFile: finding.file } : {}),",
+    "sha256": "74fd765615fdee3f5876cfffa0b7baca6405b57fc3830e39dd56293fdc8d04b3"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/common.js",
+    "line": 79,
+    "text": "      ...(finding.reachability === null || typeof finding.reachability === 'string'",
+    "sha256": "74fd765615fdee3f5876cfffa0b7baca6405b57fc3830e39dd56293fdc8d04b3"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/common.js",
+    "line": 80,
+    "text": "        ? { reachability: finding.reachability === null ? null : finding.reachability.slice(0, 512) } : {}),",
+    "sha256": "74fd765615fdee3f5876cfffa0b7baca6405b57fc3830e39dd56293fdc8d04b3"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/common.js",
+    "line": 81,
+    "text": "      ...(typeof finding.status === 'string' ? { status: finding.status.slice(0, 128) } : {}) });",
+    "sha256": "74fd765615fdee3f5876cfffa0b7baca6405b57fc3830e39dd56293fdc8d04b3"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/common.js",
+    "line": 82,
+    "text": "    if (isAccepted) acceptedFindings.push({ findingId: finding.id, reason: waiver.reason, expiresAt: waiver.expiresAt });",
+    "sha256": "74fd765615fdee3f5876cfffa0b7baca6405b57fc3830e39dd56293fdc8d04b3"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/common.js",
+    "line": 83,
+    "text": "    else if (isBlocking) blocking.push(finding.id);",
+    "sha256": "74fd765615fdee3f5876cfffa0b7baca6405b57fc3830e39dd56293fdc8d04b3"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/common.js",
+    "line": 85,
+    "text": "  const expiredAcceptances = resolvedPolicy.acceptances.filter((item) => Date.parse(item.expiresAt) <= now);",
+    "sha256": "74fd765615fdee3f5876cfffa0b7baca6405b57fc3830e39dd56293fdc8d04b3"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/common.js",
+    "line": 86,
+    "text": "  const unusedAcceptances = resolvedPolicy.acceptances.filter((item) => !ids.has(item.findingId));",
+    "sha256": "74fd765615fdee3f5876cfffa0b7baca6405b57fc3830e39dd56293fdc8d04b3"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/common.js",
+    "line": 87,
+    "text": "  const total = Math.max(1, findings.length);",
+    "sha256": "74fd765615fdee3f5876cfffa0b7baca6405b57fc3830e39dd56293fdc8d04b3"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/common.js",
+    "line": 90,
+    "text": "    summary: failed > 0 ? `${failed} blocking security finding${failed === 1 ? '' : 's'} remain.`",
+    "sha256": "74fd765615fdee3f5876cfffa0b7baca6405b57fc3830e39dd56293fdc8d04b3"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/common.js",
+    "line": 91,
+    "text": "      : findings.length > 0 ? `${findings.length} visible security finding${findings.length === 1 ? '' : 's'} do not block.`",
+    "sha256": "74fd765615fdee3f5876cfffa0b7baca6405b57fc3830e39dd56293fdc8d04b3"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/common.js",
+    "line": 92,
+    "text": "        : 'No security finding was reported.',",
+    "sha256": "74fd765615fdee3f5876cfffa0b7baca6405b57fc3830e39dd56293fdc8d04b3"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/common.js",
+    "line": 93,
+    "text": "    counts: { total, passed: total - failed, failed, skipped: 0 }, findings, metrics: [",
+    "sha256": "74fd765615fdee3f5876cfffa0b7baca6405b57fc3830e39dd56293fdc8d04b3"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/common.js",
+    "line": 94,
+    "text": "      { name: 'security_findings', value: findings.length }, { name: 'security_blocking_findings', value: failed },",
+    "sha256": "74fd765615fdee3f5876cfffa0b7baca6405b57fc3830e39dd56293fdc8d04b3"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/common.js",
+    "line": 95,
+    "text": "      { name: 'security_accepted_findings', value: acceptedFindings.length }],",
+    "sha256": "74fd765615fdee3f5876cfffa0b7baca6405b57fc3830e39dd56293fdc8d04b3"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/common.js",
+    "line": 96,
+    "text": "    evidenceFiles: [], reports: [], outputs: [], exitCode: null, signal: null,",
+    "sha256": "74fd765615fdee3f5876cfffa0b7baca6405b57fc3830e39dd56293fdc8d04b3"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/common.js",
+    "line": 97,
+    "text": "    providerDetails: details(`kubeclaw.${scanner}-security-details.v1`, { scanner, policy: resolvedPolicy,",
+    "sha256": "74fd765615fdee3f5876cfffa0b7baca6405b57fc3830e39dd56293fdc8d04b3"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/common.js",
+    "line": 108,
+    "text": "export function findingId(...parts) {",
+    "sha256": "74fd765615fdee3f5876cfffa0b7baca6405b57fc3830e39dd56293fdc8d04b3"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/kubernetes-runtime.js",
+    "line": 3,
+    "text": "import { integer, object, policy, result, safePart } from './common.js';",
+    "sha256": "0694947eb3fcfb8637ad8a80be41e7b9985fae79df1b348a5279b9c6959203c5"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/kubernetes-runtime.js",
+    "line": 25,
+    "text": "function configuration(invocation) {",
+    "sha256": "0694947eb3fcfb8637ad8a80be41e7b9985fae79df1b348a5279b9c6959203c5"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/kubernetes-runtime.js",
+    "line": 26,
+    "text": "  const value = object(invocation.configuration.values, 'KUBERNETES_RUNTIME_SECURITY_CONFIG_INVALID');",
+    "sha256": "0694947eb3fcfb8637ad8a80be41e7b9985fae79df1b348a5279b9c6959203c5"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/kubernetes-runtime.js",
+    "line": 27,
+    "text": "  return { timeoutMs: integer(value.timeoutMs, 120_000, 1000, 300_000, 'KUBERNETES_RUNTIME_SECURITY_TIMEOUT_INVALID'),",
+    "sha256": "0694947eb3fcfb8637ad8a80be41e7b9985fae79df1b348a5279b9c6959203c5"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/kubernetes-runtime.js",
+    "line": 28,
+    "text": "    policy: policy(value.policy) };",
+    "sha256": "0694947eb3fcfb8637ad8a80be41e7b9985fae79df1b348a5279b9c6959203c5"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/kubernetes-runtime.js",
+    "line": 31,
+    "text": "function findings(value) {",
+    "sha256": "0694947eb3fcfb8637ad8a80be41e7b9985fae79df1b348a5279b9c6959203c5"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/kubernetes-runtime.js",
+    "line": 42,
+    "text": "    const config = configuration(invocation); const input = inputs(invocation);",
+    "sha256": "0694947eb3fcfb8637ad8a80be41e7b9985fae79df1b348a5279b9c6959203c5"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/kubernetes-runtime.js",
+    "line": 43,
+    "text": "    const response = object(await context.invoke('kubernetes.runtime-security', { operation: 'inspect',",
+    "sha256": "0694947eb3fcfb8637ad8a80be41e7b9985fae79df1b348a5279b9c6959203c5"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/kubernetes-runtime.js",
+    "line": 47,
+    "text": "        manifestDigest: input.digest, timeoutMs: config.timeoutMs,",
+    "sha256": "0694947eb3fcfb8637ad8a80be41e7b9985fae79df1b348a5279b9c6959203c5"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/kubernetes-runtime.js",
+    "line": 49,
+    "text": "    if (response.scanner !== 'kubernetes-runtime-security' || response.leaseName !== input.deployment.leaseName",
+    "sha256": "0694947eb3fcfb8637ad8a80be41e7b9985fae79df1b348a5279b9c6959203c5"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/kubernetes-runtime.js",
+    "line": 53,
+    "text": "    return result(invocation, 'kubernetes-runtime', findings(response.findings), config.policy,",
+    "sha256": "0694947eb3fcfb8637ad8a80be41e7b9985fae79df1b348a5279b9c6959203c5"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/kubernetes-runtime.js",
+    "line": 59,
+    "text": "export const testContract = Object.freeze({ configuration, inputs, findings });",
+    "sha256": "0694947eb3fcfb8637ad8a80be41e7b9985fae79df1b348a5279b9c6959203c5"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/dependency.js",
+    "line": 1,
+    "text": "import { databaseEvidence } from './database-evidence.js';",
+    "sha256": "e44c6d32e9609c914493108ecbbe14de459d0eb57f917cdbe95c9ff81836af55"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/dependency.js",
+    "line": 3,
+    "text": "import { findingId, integer, object, policy, result } from './common.js';",
+    "sha256": "e44c6d32e9609c914493108ecbbe14de459d0eb57f917cdbe95c9ff81836af55"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/dependency.js",
+    "line": 5,
+    "text": "function configuration(invocation, context) {",
+    "sha256": "e44c6d32e9609c914493108ecbbe14de459d0eb57f917cdbe95c9ff81836af55"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/dependency.js",
+    "line": 6,
+    "text": "  const value = object(invocation.configuration.values, 'DEPENDENCY_SCAN_CONFIG_INVALID');",
+    "sha256": "e44c6d32e9609c914493108ecbbe14de459d0eb57f917cdbe95c9ff81836af55"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/dependency.js",
+    "line": 12,
+    "text": "  return { projectDirectory, timeoutMs: integer(value.timeoutMs, 300_000, 1000, 900_000, 'DEPENDENCY_SCAN_TIMEOUT_INVALID'),",
+    "sha256": "e44c6d32e9609c914493108ecbbe14de459d0eb57f917cdbe95c9ff81836af55"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/dependency.js",
+    "line": 13,
+    "text": "    policy: policy(value.policy) };",
+    "sha256": "e44c6d32e9609c914493108ecbbe14de459d0eb57f917cdbe95c9ff81836af55"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/dependency.js",
+    "line": 16,
+    "text": "function findings(value) {",
+    "sha256": "e44c6d32e9609c914493108ecbbe14de459d0eb57f917cdbe95c9ff81836af55"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/dependency.js",
+    "line": 20,
+    "text": "    const id = findingId('dependency', item.id, item.package, item.sourceFile);",
+    "sha256": "e44c6d32e9609c914493108ecbbe14de459d0eb57f917cdbe95c9ff81836af55"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/dependency.js",
+    "line": 30,
+    "text": "    const config = configuration(invocation, context);",
+    "sha256": "e44c6d32e9609c914493108ecbbe14de459d0eb57f917cdbe95c9ff81836af55"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/dependency.js",
+    "line": 31,
+    "text": "    const response = object(await context.invoke('security.scan', { operation: 'dependency',",
+    "sha256": "e44c6d32e9609c914493108ecbbe14de459d0eb57f917cdbe95c9ff81836af55"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/dependency.js",
+    "line": 33,
+    "text": "      payload: { projectDirectory: config.projectDirectory, timeoutMs: config.timeoutMs } }), 'DEPENDENCY_SCAN_RESPONSE_INVALID');",
+    "sha256": "e44c6d32e9609c914493108ecbbe14de459d0eb57f917cdbe95c9ff81836af55"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/dependency.js",
+    "line": 34,
+    "text": "    if (response.scanner !== 'trivy' || response.operation !== 'dependency') throw new Error('DEPENDENCY_SCAN_RESPONSE_INVALID');",
+    "sha256": "e44c6d32e9609c914493108ecbbe14de459d0eb57f917cdbe95c9ff81836af55"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/dependency.js",
+    "line": 35,
+    "text": "    return result(invocation, 'dependency-trivy', findings(response.findings), config.policy,",
+    "sha256": "e44c6d32e9609c914493108ecbbe14de459d0eb57f917cdbe95c9ff81836af55"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/dependency.js",
+    "line": 36,
+    "text": "      { databaseEvidence: databaseEvidence(response), resultDigest: response.resultDigest, projectDirectory: invocation.configuration.values.projectDirectory });",
+    "sha256": "e44c6d32e9609c914493108ecbbe14de459d0eb57f917cdbe95c9ff81836af55"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/dependency.js",
+    "line": 40,
+    "text": "export const testContract = Object.freeze({ configuration, findings });",
+    "sha256": "e44c6d32e9609c914493108ecbbe14de459d0eb57f917cdbe95c9ff81836af55"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/database-evidence.js",
+    "line": 4,
+    "text": "/** Missing snapshot evidence cannot be interpreted as a clean advisory scan. */",
+    "sha256": "2aa34c8cfe07618191408a280ca7e9b36169056f33cf441e233cae6bba4dad57"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/database-evidence.js",
+    "line": 5,
+    "text": "export function databaseEvidence(response) {",
+    "sha256": "2aa34c8cfe07618191408a280ca7e9b36169056f33cf441e233cae6bba4dad57"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/database-evidence.js",
+    "line": 6,
+    "text": "  const evidence = object(response.databaseEvidence, 'SECURITY_DATABASE_EVIDENCE_REQUIRED');",
+    "sha256": "2aa34c8cfe07618191408a280ca7e9b36169056f33cf441e233cae6bba4dad57"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/database-evidence.js",
+    "line": 7,
+    "text": "  const evaluated = Date.parse(evidence.evaluatedAt);",
+    "sha256": "2aa34c8cfe07618191408a280ca7e9b36169056f33cf441e233cae6bba4dad57"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/database-evidence.js",
+    "line": 8,
+    "text": "  if (typeof evidence.evaluatedAt !== 'string' || evidence.schemaVersion !== 'trivy-database-evidence.v1' || !Number.isFinite(evaluated) || evaluated > Date.now()",
+    "sha256": "2aa34c8cfe07618191408a280ca7e9b36169056f33cf441e233cae6bba4dad57"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/database-evidence.js",
+    "line": 9,
+    "text": "    || !Array.isArray(evidence.databases) || evidence.databases.length !== 2) throw new Error('SECURITY_DATABASE_EVIDENCE_INVALID');",
+    "sha256": "2aa34c8cfe07618191408a280ca7e9b36169056f33cf441e233cae6bba4dad57"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/database-evidence.js",
+    "line": 11,
+    "text": "  for (const raw of evidence.databases) {",
+    "sha256": "2aa34c8cfe07618191408a280ca7e9b36169056f33cf441e233cae6bba4dad57"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/database-evidence.js",
+    "line": 19,
+    "text": "  return evidence;",
+    "sha256": "2aa34c8cfe07618191408a280ca7e9b36169056f33cf441e233cae6bba4dad57"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/database-evidence.js",
+    "line": 24,
+    "text": "  const updated = Date.parse(item.updatedAt), next = Date.parse(item.nextUpdate);",
+    "sha256": "2aa34c8cfe07618191408a280ca7e9b36169056f33cf441e233cae6bba4dad57"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/database-evidence.js",
+    "line": 27,
+    "text": "    || !Number.isSafeInteger(item.maximumAgeMs) || item.maximumAgeMs < 1 || item.maximumAgeMs > 30 * 86400000",
+    "sha256": "2aa34c8cfe07618191408a280ca7e9b36169056f33cf441e233cae6bba4dad57"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/database-evidence.js",
+    "line": 28,
+    "text": "    || item.sourceAgeMs !== evaluated - updated || Date.now() - updated > item.maximumAgeMs) {",
+    "sha256": "2aa34c8cfe07618191408a280ca7e9b36169056f33cf441e233cae6bba4dad57"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/database-evidence.js",
+    "line": 33,
+    "text": "  if (!Number.isSafeInteger(item.databaseBytes) || item.databaseBytes < 1 || item.databaseBytes > 32 * 1024 ** 3",
+    "sha256": "2aa34c8cfe07618191408a280ca7e9b36169056f33cf441e233cae6bba4dad57"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/database-evidence.js",
+    "line": 34,
+    "text": "    || !DIGEST.test(item.databaseDigest) || !DIGEST.test(item.metadataDigest)) throw new Error('SECURITY_DATABASE_EVIDENCE_INVALID');",
+    "sha256": "2aa34c8cfe07618191408a280ca7e9b36169056f33cf441e233cae6bba4dad57"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/headers.js",
+    "line": 1,
+    "text": "import { integer, object, policy, result, safePart, SEVERITIES } from './common.js';",
+    "sha256": "7799951ab8165572b3779b0a97306e33597115069de51400f7476df03ac2b7e7"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/headers.js",
+    "line": 3,
+    "text": "const PROFILES = Object.freeze({",
+    "sha256": "7799951ab8165572b3779b0a97306e33597115069de51400f7476df03ac2b7e7"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/headers.js",
+    "line": 6,
+    "text": "    { id: 'content-security-policy', header: 'content-security-policy', severity: 'high', kind: 'present' },",
+    "sha256": "7799951ab8165572b3779b0a97306e33597115069de51400f7476df03ac2b7e7"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/headers.js",
+    "line": 7,
+    "text": "    { id: 'referrer-policy', header: 'referrer-policy', severity: 'medium', kind: 'present' },",
+    "sha256": "7799951ab8165572b3779b0a97306e33597115069de51400f7476df03ac2b7e7"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/headers.js",
+    "line": 8,
+    "text": "    { id: 'permissions-policy', header: 'permissions-policy', severity: 'medium', kind: 'present' },",
+    "sha256": "7799951ab8165572b3779b0a97306e33597115069de51400f7476df03ac2b7e7"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/headers.js",
+    "line": 13,
+    "text": "    { id: 'content-security-policy', header: 'content-security-policy', severity: 'high', kind: 'present' },",
+    "sha256": "7799951ab8165572b3779b0a97306e33597115069de51400f7476df03ac2b7e7"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/headers.js",
+    "line": 15,
+    "text": "    { id: 'referrer-policy', header: 'referrer-policy', severity: 'medium', kind: 'present' },",
+    "sha256": "7799951ab8165572b3779b0a97306e33597115069de51400f7476df03ac2b7e7"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/headers.js",
+    "line": 16,
+    "text": "    { id: 'permissions-policy', header: 'permissions-policy', severity: 'medium', kind: 'present' },",
+    "sha256": "7799951ab8165572b3779b0a97306e33597115069de51400f7476df03ac2b7e7"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/headers.js",
+    "line": 33,
+    "text": "function rules(profileName, overrides) {",
+    "sha256": "7799951ab8165572b3779b0a97306e33597115069de51400f7476df03ac2b7e7"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/headers.js",
+    "line": 34,
+    "text": "  const base = PROFILES[profileName];",
+    "sha256": "7799951ab8165572b3779b0a97306e33597115069de51400f7476df03ac2b7e7"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/headers.js",
+    "line": 71,
+    "text": "function configuration(invocation) {",
+    "sha256": "7799951ab8165572b3779b0a97306e33597115069de51400f7476df03ac2b7e7"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/headers.js",
+    "line": 72,
+    "text": "  const value = object(invocation.configuration.values, 'SECURITY_HEADERS_CONFIG_INVALID');",
+    "sha256": "7799951ab8165572b3779b0a97306e33597115069de51400f7476df03ac2b7e7"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/headers.js",
+    "line": 79,
+    "text": "  if (value.profile === 'web-https-v1' && !origin.startsWith('https://')) throw new Error('SECURITY_HEADERS_HTTPS_REQUIRED');",
+    "sha256": "7799951ab8165572b3779b0a97306e33597115069de51400f7476df03ac2b7e7"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/headers.js",
+    "line": 80,
+    "text": "  return { origin, profile: value.profile, paths: value.paths, rules: rules(value.profile, value.rules),",
+    "sha256": "7799951ab8165572b3779b0a97306e33597115069de51400f7476df03ac2b7e7"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/headers.js",
+    "line": 82,
+    "text": "    policy: policy(value.policy) };",
+    "sha256": "7799951ab8165572b3779b0a97306e33597115069de51400f7476df03ac2b7e7"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/headers.js",
+    "line": 96,
+    "text": "    const config = configuration(invocation); const findings = []; const observations = [];",
+    "sha256": "7799951ab8165572b3779b0a97306e33597115069de51400f7476df03ac2b7e7"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/headers.js",
+    "line": 97,
+    "text": "    const responseHeaders = [...new Set(config.rules.map((item) => item.header))];",
+    "sha256": "7799951ab8165572b3779b0a97306e33597115069de51400f7476df03ac2b7e7"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/headers.js",
+    "line": 102,
+    "text": "      const response = object(await context.invoke('network.http', { operation: 'request',",
+    "sha256": "7799951ab8165572b3779b0a97306e33597115069de51400f7476df03ac2b7e7"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/headers.js",
+    "line": 103,
+    "text": "        resource: { type: 'network.url', canonicalId: url }, payload: { method: 'GET', timeoutMs: config.requestTimeoutMs,",
+    "sha256": "7799951ab8165572b3779b0a97306e33597115069de51400f7476df03ac2b7e7"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/headers.js",
+    "line": 104,
+    "text": "          maximumResponseBytes: 65_536, responseHeaders } }), 'SECURITY_HEADERS_RESPONSE_INVALID');",
+    "sha256": "7799951ab8165572b3779b0a97306e33597115069de51400f7476df03ac2b7e7"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/headers.js",
+    "line": 107,
+    "text": "      for (const item of config.rules) if (!check(headers[item.header], item)) findings.push({",
+    "sha256": "7799951ab8165572b3779b0a97306e33597115069de51400f7476df03ac2b7e7"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/headers.js",
+    "line": 113,
+    "text": "    return result(invocation, 'headers', findings, config.policy,",
+    "sha256": "7799951ab8165572b3779b0a97306e33597115069de51400f7476df03ac2b7e7"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/headers.js",
+    "line": 114,
+    "text": "      { profile: config.profile, resolvedRules: config.rules, observations });",
+    "sha256": "7799951ab8165572b3779b0a97306e33597115069de51400f7476df03ac2b7e7"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/headers.js",
+    "line": 118,
+    "text": "export const testContract = Object.freeze({ configuration, rules });",
+    "sha256": "7799951ab8165572b3779b0a97306e33597115069de51400f7476df03ac2b7e7"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+    "line": 5,
+    "text": "import { assertStableDatabases, databasePolicy, inspectTrivyDatabases, type TrivyDatabasePolicy } from './trivy-database.ts';",
+    "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+    "line": 14,
+    "text": "  readonly maximumExecutionMs: number;",
+    "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+    "line": 15,
+    "text": "  readonly maximumOutputBytes: number;",
+    "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+    "line": 17,
+    "text": "  readonly databasePolicy?: TrivyDatabasePolicy;",
+    "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+    "line": 19,
+    "text": "  readonly registryAccess?: {readonly registryReference:string;readonly username:string;readonly password:string;readonly caFile?:string};",
+    "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+    "line": 30,
+    "text": "function text(value: unknown, label: string, maximum: number): string {",
+    "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+    "line": 31,
+    "text": "  if (typeof value !== 'string' || value.length < 1 || value.length > maximum) throw new Error(`SECURITY_SCAN_REQUEST_INVALID:${label}`);",
+    "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+    "line": 54,
+    "text": "async function execute(executable: string, args: readonly string[], cwd: string, cache: {directory:string;registryEnvironment:Record<string,string>},",
+    "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+    "line": 55,
+    "text": "  timeoutMs: number, maximumBytes: number, signal: AbortSignal): Promise<Buffer> {",
+    "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+    "line": 56,
+    "text": "  const {directory:cacheDirectory,registryEnvironment}=cache;",
+    "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+    "line": 62,
+    "text": "      env: { ...registryEnvironment, PATH: '/usr/local/bin:/usr/bin:/bin', HOME: cacheDirectory, TRIVY_CACHE_DIR: cacheDirectory,",
+    "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+    "line": 69,
+    "text": "    const timer = setTimeout(() => controller.abort(), timeoutMs);",
+    "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+    "line": 78,
+    "text": "      if (bytes > maximumBytes) {",
+    "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+    "line": 111,
+    "text": "  const findings: JsonObject[] = [];",
+    "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+    "line": 116,
+    "text": "      findings.push({",
+    "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+    "line": 124,
+    "text": "  return findings;",
+    "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+    "line": 127,
+    "text": "function policyFindings(root: string, results: JsonObject[]): JsonObject[] {",
+    "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+    "line": 128,
+    "text": "  const findings: JsonObject[] = [];",
+    "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+    "line": 131,
+    "text": "    for (const raw of Array.isArray(result.Misconfigurations) ? result.Misconfigurations : []) {",
+    "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+    "line": 132,
+    "text": "      const item = object(raw, 'trivy-misconfiguration');",
+    "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+    "line": 135,
+    "text": "      findings.push({ id: text(item.ID, 'misconfiguration-id', 256), severity: severity(item.Severity),",
+    "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+    "line": 142,
+    "text": "  return findings;",
+    "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+    "line": 153,
+    "text": "  readonly #registryAccess: SecurityScanCapabilityInvokerOptions['registryAccess'];",
+    "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+    "line": 154,
+    "text": "  readonly #registryPrefixes: readonly string[];",
+    "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+    "line": 155,
+    "text": "  readonly #maximumExecutionMs: number;",
+    "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+    "line": 156,
+    "text": "  readonly #maximumOutputBytes: number;",
+    "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+    "line": 158,
+    "text": "  readonly #databasePolicy: TrivyDatabasePolicy;",
+    "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+    "line": 164,
+    "text": "    if (!Number.isSafeInteger(options.maximumExecutionMs) || options.maximumExecutionMs < 1 || options.maximumExecutionMs > 2147483647",
+    "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+    "line": 165,
+    "text": "      || !Number.isSafeInteger(options.maximumOutputBytes) || options.maximumOutputBytes < 1024) {",
+    "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+    "line": 170,
+    "text": "    this.#registryAccess=options.registryAccess;",
+    "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+    "line": 171,
+    "text": "    if(options.registryAccess){",
+    "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+    "line": 172,
+    "text": "      if(!/^[A-Za-z0-9.-]+(?::[0-9]{1,5})?$/u.test(options.registryAccess.registryReference) || !options.registryAccess.username || !options.registryAccess.password)throw new Error('SECURITY_SCAN_REGISTRY_AUTH_INVALID');",
+    "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+    "line": 173,
+    "text": "      if(options.registryAccess.caFile)fs.accessSync(options.registryAccess.caFile,fs.constants.R_OK);",
+    "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+    "line": 175,
+    "text": "    this.#registryPrefixes = [...options.allowedRegistryPrefixes];",
+    "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+    "line": 176,
+    "text": "    this.#maximumExecutionMs = options.maximumExecutionMs;",
+    "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+    "line": 177,
+    "text": "    this.#maximumOutputBytes = options.maximumOutputBytes;",
+    "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+    "line": 179,
+    "text": "    this.#databasePolicy = databasePolicy(options.databasePolicy);",
+    "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+    "line": 182,
+    "text": "  async invoke(capability: string, request: unknown, signal: AbortSignal): Promise<Readonly<Record<string, unknown>>> {",
+    "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+    "line": 187,
+    "text": "    const timeoutMs = Math.min(this.#maximumExecutionMs,",
+    "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+    "line": 188,
+    "text": "      Number.isSafeInteger(payload.timeoutMs) && Number(payload.timeoutMs) > 0 ? Number(payload.timeoutMs) : this.#maximumExecutionMs);",
+    "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+    "line": 193,
+    "text": "      args = ['fs', '--scanners', 'vuln', '--format', 'json', '--quiet', '--skip-db-update', '--skip-java-db-update', '--offline-scan',",
+    "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+    "line": 194,
+    "text": "        '--skip-version-check', '--disable-telemetry', '--timeout', `${Math.ceil(timeoutMs / 1000)}s`, target];",
+    "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+    "line": 199,
+    "text": "        || !this.#registryPrefixes.some((prefix) => parsed[1] === prefix || parsed[1]!.startsWith(`${prefix}/`))) {",
+    "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+    "line": 202,
+    "text": "      if(image.split('/')[0]===this.#unsupportedHttpRegistry)throw new Error('SECURITY_SCAN_HTTP_LAB_UNSUPPORTED: pinned scanner transport cannot be restricted to plaintext without relaxing TLS verification; configure an authenticated HTTPS registry');",
+    "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+    "line": 204,
+    "text": "      args = ['image', '--image-src', 'remote', '--scanners', 'vuln', '--format', 'json', '--quiet', '--skip-db-update', '--skip-java-db-update', '--offline-scan',",
+    "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+    "line": 205,
+    "text": "        '--skip-version-check', '--disable-telemetry', '--timeout', `${Math.ceil(timeoutMs / 1000)}s`, image];",
+    "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+    "line": 206,
+    "text": "    } else if (operation === 'kubernetes-policy') {",
+    "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+    "line": 215,
+    "text": "        '--misconfig-scanners', 'kubernetes', '--timeout', `${Math.ceil(timeoutMs / 1000)}s`, target];",
+    "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+    "line": 217,
+    "text": "    return this.#scan(operation, target, args, timeoutMs, signal);",
+    "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+    "line": 220,
+    "text": "  #registryConfiguration(operation:string,target:string,args:string[]){",
+    "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+    "line": 222,
+    "text": "      const registryEnvironment:Record<string,string>={};",
+    "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+    "line": 223,
+    "text": "      const access=this.#registryAccess;",
+    "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+    "line": 224,
+    "text": "      if(operation==='image' && access && target.split('/')[0]===access.registryReference){",
+    "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+    "line": 225,
+    "text": "        credentialDirectory=fs.mkdtempSync(path.join(this.#cache,'.registry-auth-'));fs.chmodSync(credentialDirectory,0o700);",
+    "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+    "line": 226,
+    "text": "        fs.writeFileSync(path.join(credentialDirectory,'config.json'),JSON.stringify({auths:{[access.registryReference]:{auth:Buffer.from(`${access.username}:${access.password}`).toString('base64')}}}),{mode:0o600});",
+    "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+    "line": 227,
+    "text": "        registryEnvironment.DOCKER_CONFIG=credentialDirectory;",
+    "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+    "line": 230,
+    "text": "    return {directory:credentialDirectory,environment:registryEnvironment};",
+    "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+    "line": 233,
+    "text": "  async #scan(operation: string, target: string, args: string[], timeoutMs: number, signal: AbortSignal) {",
+    "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+    "line": 234,
+    "text": "    const deadline = Date.now() + timeoutMs;",
+    "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+    "line": 235,
+    "text": "    const bounded = AbortSignal.any([signal, AbortSignal.timeout(timeoutMs)]);",
+    "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+    "line": 238,
+    "text": "      const registryConfig=this.#registryConfiguration(operation,target,args);",
+    "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+    "line": 239,
+    "text": "      credentialDirectory=registryConfig.directory;",
+    "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+    "line": 240,
+    "text": "      const before = operation === 'kubernetes-policy' ? undefined",
+    "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+    "line": 241,
+    "text": "        : await inspectTrivyDatabases(this.#cache, this.#databasePolicy, bounded);",
+    "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+    "line": 242,
+    "text": "      const remaining = deadline - Date.now();",
+    "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+    "line": 244,
+    "text": "      const output = trivyResults(await execute(this.#trivy, args, this.#root, {directory:this.#cache,registryEnvironment:registryConfig.environment},",
+    "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+    "line": 245,
+    "text": "        remaining, this.#maximumOutputBytes, bounded));",
+    "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+    "line": 246,
+    "text": "      const findings = operation === 'kubernetes-policy' ? policyFindings(this.#root, output) : dependencyFindings(this.#root, output);",
+    "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+    "line": 247,
+    "text": "      const databaseEvidence = before ? await inspectTrivyDatabases(this.#cache, this.#databasePolicy, bounded) : undefined;",
+    "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+    "line": 248,
+    "text": "      if (before && databaseEvidence) assertStableDatabases(before, databaseEvidence);",
+    "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+    "line": 250,
+    "text": "      const result = Object.freeze({ scanner: 'trivy', operation, target: reportedTarget,",
+    "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+    "line": 251,
+    "text": "        resultDigest: `sha256:${crypto.createHash('sha256').update(JSON.stringify(databaseEvidence ? { findings, databaseEvidence } : findings)).digest('hex')}`,",
+    "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+    "line": 252,
+    "text": "        findings, ...(databaseEvidence ? { databaseEvidence } : {}) });",
+    "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+    "line": 254,
+    "text": "      if (Date.now() >= deadline) throw new Error('SECURITY_SCAN_TIMEOUT');",
+    "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+    "line": 258,
+    "text": "      if (bounded.aborted || Date.now() >= deadline) throw new Error('SECURITY_SCAN_TIMEOUT', { cause: error });",
+    "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+    "line": 8,
+    "text": "import { validateBusterRuntimeSecuritySettings, type BusterRuntimeSecuritySettings } from '../../../common/plugin-runtime/foundation/config/buster-cluster-invokers.ts';",
+    "sha256": "de1b0f70e5590eedf9cf01f68d797c34912a0778f0d2a91de2b475673573e004"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+    "line": 21,
+    "text": "  const policy = validateBusterRuntimeSecuritySettings(settings);",
+    "sha256": "de1b0f70e5590eedf9cf01f68d797c34912a0778f0d2a91de2b475673573e004"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+    "line": 28,
+    "text": "  return policy;",
+    "sha256": "de1b0f70e5590eedf9cf01f68d797c34912a0778f0d2a91de2b475673573e004"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+    "line": 36,
+    "text": "function text(value: unknown, label: string, maximum = 2048): string {",
+    "sha256": "de1b0f70e5590eedf9cf01f68d797c34912a0778f0d2a91de2b475673573e004"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+    "line": 37,
+    "text": "  if (typeof value !== 'string' || value.length < 1 || value.length > maximum) {",
+    "sha256": "de1b0f70e5590eedf9cf01f68d797c34912a0778f0d2a91de2b475673573e004"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+    "line": 54,
+    "text": "  const payload = { findings: snapshot.findings, omittedFindingCount: snapshot.omittedFindingCount,",
+    "sha256": "de1b0f70e5590eedf9cf01f68d797c34912a0778f0d2a91de2b475673573e004"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+    "line": 61,
+    "text": "  if (!Array.isArray(snapshot.findings) || !Number.isSafeInteger(snapshot.totalFindingCount)",
+    "sha256": "de1b0f70e5590eedf9cf01f68d797c34912a0778f0d2a91de2b475673573e004"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+    "line": 65,
+    "text": "  if (omitted === 0) return total === snapshot.findings.length;",
+    "sha256": "de1b0f70e5590eedf9cf01f68d797c34912a0778f0d2a91de2b475673573e004"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+    "line": 66,
+    "text": "  const overflow = snapshot.findings.at(-1);",
+    "sha256": "de1b0f70e5590eedf9cf01f68d797c34912a0778f0d2a91de2b475673573e004"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+    "line": 67,
+    "text": "  return snapshot.findings.length > 0 && total - omitted === snapshot.findings.length - 1",
+    "sha256": "de1b0f70e5590eedf9cf01f68d797c34912a0778f0d2a91de2b475673573e004"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+    "line": 69,
+    "text": "      && (overflow as JsonObject).id === 'runtime:findings:overflow'",
+    "sha256": "de1b0f70e5590eedf9cf01f68d797c34912a0778f0d2a91de2b475673573e004"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+    "line": 82,
+    "text": "async function kubectl(executable: string, args: readonly string[], timeoutMs: number, policy: BusterRuntimeSecuritySettings,",
+    "sha256": "de1b0f70e5590eedf9cf01f68d797c34912a0778f0d2a91de2b475673573e004"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+    "line": 88,
+    "text": "      env: { PATH: policy.executableSearchPath.join(path.delimiter), ...kubernetesCredentialEnvironment(), LANG: 'C.UTF-8', LC_ALL: 'C.UTF-8' } });",
+    "sha256": "de1b0f70e5590eedf9cf01f68d797c34912a0778f0d2a91de2b475673573e004"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+    "line": 90,
+    "text": "    const timer = setTimeout(() => controller.abort(), timeoutMs);",
+    "sha256": "de1b0f70e5590eedf9cf01f68d797c34912a0778f0d2a91de2b475673573e004"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+    "line": 96,
+    "text": "      if (bytes > policy.maximumOutputBytes) { finish(new Error('KUBERNETES_RUNTIME_SECURITY_OUTPUT_LIMIT_EXCEEDED')); controller.abort(); }",
+    "sha256": "de1b0f70e5590eedf9cf01f68d797c34912a0778f0d2a91de2b475673573e004"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+    "line": 107,
+    "text": "      if (code !== 0 || childSignal) return finish(new Error(`KUBERNETES_RUNTIME_SECURITY_EXECUTION_FAILED:${Buffer.concat(stderr).toString('utf8').slice(0, policy.diagnosticCodeUnits)}`));",
+    "sha256": "de1b0f70e5590eedf9cf01f68d797c34912a0778f0d2a91de2b475673573e004"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+    "line": 123,
+    "text": "  policy: BusterRuntimeSecuritySettings): snapshot is JsonObject {",
+    "sha256": "de1b0f70e5590eedf9cf01f68d797c34912a0778f0d2a91de2b475673573e004"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+    "line": 125,
+    "text": "    && snapshot.immutableImage === immutableImage && Array.isArray(snapshot.findings)",
+    "sha256": "de1b0f70e5590eedf9cf01f68d797c34912a0778f0d2a91de2b475673573e004"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+    "line": 129,
+    "text": "    && runtimeSecurityObservationIsFresh(snapshot.observedAt, Date.now(), policy.maximumObservationAgeMs, policy.maximumFutureSkewMs)",
+    "sha256": "de1b0f70e5590eedf9cf01f68d797c34912a0778f0d2a91de2b475673573e004"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+    "line": 136,
+    "text": "  readonly #policy: BusterRuntimeSecuritySettings;",
+    "sha256": "de1b0f70e5590eedf9cf01f68d797c34912a0778f0d2a91de2b475673573e004"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+    "line": 139,
+    "text": "    this.#policy = capturedOptions(options);",
+    "sha256": "de1b0f70e5590eedf9cf01f68d797c34912a0778f0d2a91de2b475673573e004"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+    "line": 145,
+    "text": "  async invoke(capability: string, request: unknown, signal: AbortSignal): Promise<Readonly<Record<string, unknown>>> {",
+    "sha256": "de1b0f70e5590eedf9cf01f68d797c34912a0778f0d2a91de2b475673573e004"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+    "line": 151,
+    "text": "    if (!this.#policy.allowedNamespacePrefixes.some((prefix) => namespace.startsWith(`${prefix}-`))) throw new Error('KUBERNETES_RUNTIME_SECURITY_NAMESPACE_DENIED');",
+    "sha256": "de1b0f70e5590eedf9cf01f68d797c34912a0778f0d2a91de2b475673573e004"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+    "line": 157,
+    "text": "    const timeoutMs = Math.min(this.#policy.maximumExecutionMs,",
+    "sha256": "de1b0f70e5590eedf9cf01f68d797c34912a0778f0d2a91de2b475673573e004"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+    "line": 158,
+    "text": "      Number.isSafeInteger(payload.timeoutMs) ? Number(payload.timeoutMs) : this.#policy.maximumExecutionMs);",
+    "sha256": "de1b0f70e5590eedf9cf01f68d797c34912a0778f0d2a91de2b475673573e004"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+    "line": 160,
+    "text": "    const deadline = Date.now() + timeoutMs;",
+    "sha256": "de1b0f70e5590eedf9cf01f68d797c34912a0778f0d2a91de2b475673573e004"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+    "line": 161,
+    "text": "    while (Date.now() < deadline) {",
+    "sha256": "de1b0f70e5590eedf9cf01f68d797c34912a0778f0d2a91de2b475673573e004"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+    "line": 164,
+    "text": "        Math.max(1, deadline - Date.now()), this.#policy, signal)).toString('utf8')));",
+    "sha256": "de1b0f70e5590eedf9cf01f68d797c34912a0778f0d2a91de2b475673573e004"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+    "line": 166,
+    "text": "      if (observationMatches(snapshot, digest, immutableImage, this.#policy)) {",
+    "sha256": "de1b0f70e5590eedf9cf01f68d797c34912a0778f0d2a91de2b475673573e004"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+    "line": 170,
+    "text": "        return Object.freeze({ scanner: 'kubernetes-runtime-security', leaseName, namespace, manifestDigest: digest,",
+    "sha256": "de1b0f70e5590eedf9cf01f68d797c34912a0778f0d2a91de2b475673573e004"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+    "line": 173,
+    "text": "          findings: snapshot.findings, resultDigest: snapshot.resultDigest });",
+    "sha256": "de1b0f70e5590eedf9cf01f68d797c34912a0778f0d2a91de2b475673573e004"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+    "line": 178,
+    "text": "          Math.min(this.#policy.pollIntervalMs, Math.max(1, deadline - Date.now())));",
+    "sha256": "de1b0f70e5590eedf9cf01f68d797c34912a0778f0d2a91de2b475673573e004"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+    "line": 186,
+    "text": "export function runtimeSecurityObservationIsFresh(value: unknown, nowMs: number, maximumAgeMs: number, maximumFutureSkewMs: number): boolean {",
+    "sha256": "de1b0f70e5590eedf9cf01f68d797c34912a0778f0d2a91de2b475673573e004"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+    "line": 188,
+    "text": "  const observedMs = Date.parse(value);",
+    "sha256": "de1b0f70e5590eedf9cf01f68d797c34912a0778f0d2a91de2b475673573e004"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+    "line": 190,
+    "text": "  return observedMs <= nowMs + maximumFutureSkewMs && nowMs - observedMs <= maximumAgeMs;",
+    "sha256": "de1b0f70e5590eedf9cf01f68d797c34912a0778f0d2a91de2b475673573e004"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/registry/configuration.ts",
+    "line": 116,
+    "text": "    schemaVersion: 'provider-configuration.v1',",
+    "sha256": "94f711ce386148d0aa3e114512afb3fcf8b69ef41c14b7e5215d17881fe66a2f"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/registry/build.ts",
+    "line": 62,
+    "text": "    ...('configSchema' in registration ? [['configuration schema', registration.configSchema] as const] : []),",
+    "sha256": "c65248d6d4dc09dcfe762e9cddd6dd27d5864cbdab7cc421d87256e712873867"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/registry/build.ts",
+    "line": 119,
+    "text": "  const configSchemaPath = assertPackageFile(pkg, declaration.configSchema, 'configuration schema');",
+    "sha256": "c65248d6d4dc09dcfe762e9cddd6dd27d5864cbdab7cc421d87256e712873867"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/registry/build.ts",
+    "line": 123,
+    "text": "  const supportedEvidence = new Set(declaration.evidenceTypes);",
+    "sha256": "c65248d6d4dc09dcfe762e9cddd6dd27d5864cbdab7cc421d87256e712873867"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/registry/build.ts",
+    "line": 125,
+    "text": "    throw new RegistryError('REGISTRY_MANIFEST_INVALID', `Report provider must support test-report evidence: ${globalId}`);",
+    "sha256": "c65248d6d4dc09dcfe762e9cddd6dd27d5864cbdab7cc421d87256e712873867"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/registry/build.ts",
+    "line": 127,
+    "text": "  for (const evidenceType of [",
+    "sha256": "c65248d6d4dc09dcfe762e9cddd6dd27d5864cbdab7cc421d87256e712873867"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/registry/build.ts",
+    "line": 128,
+    "text": "    ...declaration.evidenceDefaults.onPass,",
+    "sha256": "c65248d6d4dc09dcfe762e9cddd6dd27d5864cbdab7cc421d87256e712873867"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/registry/build.ts",
+    "line": 129,
+    "text": "    ...declaration.evidenceDefaults.onFail,",
+    "sha256": "c65248d6d4dc09dcfe762e9cddd6dd27d5864cbdab7cc421d87256e712873867"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/registry/build.ts",
+    "line": 130,
+    "text": "    ...declaration.evidenceDefaults.onError,",
+    "sha256": "c65248d6d4dc09dcfe762e9cddd6dd27d5864cbdab7cc421d87256e712873867"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/registry/build.ts",
+    "line": 132,
+    "text": "    if (!supportedEvidence.has(evidenceType)) {",
+    "sha256": "c65248d6d4dc09dcfe762e9cddd6dd27d5864cbdab7cc421d87256e712873867"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/registry/build.ts",
+    "line": 133,
+    "text": "      throw new RegistryError('REGISTRY_MANIFEST_INVALID', `Evidence default is not supported: ${globalId}:${evidenceType}`);",
+    "sha256": "c65248d6d4dc09dcfe762e9cddd6dd27d5864cbdab7cc421d87256e712873867"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/registry/build.ts",
+    "line": 148,
+    "text": "    retrySafe: declaration.retrySafe,",
+    "sha256": "c65248d6d4dc09dcfe762e9cddd6dd27d5864cbdab7cc421d87256e712873867"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/registry/build.ts",
+    "line": 149,
+    "text": "    matrixFields: [...declaration.matrixFields],",
+    "sha256": "c65248d6d4dc09dcfe762e9cddd6dd27d5864cbdab7cc421d87256e712873867"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/registry/build.ts",
+    "line": 151,
+    "text": "    evidenceTypes: [...declaration.evidenceTypes],",
+    "sha256": "c65248d6d4dc09dcfe762e9cddd6dd27d5864cbdab7cc421d87256e712873867"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/registry/build.ts",
+    "line": 152,
+    "text": "    evidenceDefaults: { onPass: [...declaration.evidenceDefaults.onPass],",
+    "sha256": "c65248d6d4dc09dcfe762e9cddd6dd27d5864cbdab7cc421d87256e712873867"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/registry/build.ts",
+    "line": 153,
+    "text": "      onFail: [...declaration.evidenceDefaults.onFail], onError: [...declaration.evidenceDefaults.onError] },",
+    "sha256": "c65248d6d4dc09dcfe762e9cddd6dd27d5864cbdab7cc421d87256e712873867"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/registry/build.ts",
+    "line": 208,
+    "text": "function registrySnapshot({ schemas, packageEntries, stageEntries, observerEntries, adapterEntries, capabilityEntries, testProviderEntries, testProviderContractEntries, reportAdapterEntries, reportAdapterFormatEntries }: RegistryCollections): RegistrySnapshot {",
+    "sha256": "c65248d6d4dc09dcfe762e9cddd6dd27d5864cbdab7cc421d87256e712873867"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/registry/build.ts",
+    "line": 317,
+    "text": "  return registrySnapshot({ schemas, packageEntries, stageEntries, observerEntries, adapterEntries, capabilityEntries, testProviderEntries, testProviderContractEntries, reportAdapterEntries, reportAdapterFormatEntries });",
+    "sha256": "c65248d6d4dc09dcfe762e9cddd6dd27d5864cbdab7cc421d87256e712873867"
+  },
+  {
+    "path": "skills/nova/core/test-gates/resolver.ts",
+    "line": 15,
+    "text": "import { resolveTestProviderConfiguration } from '@kubeclaw/plugin-foundation/registry/configuration';",
+    "sha256": "56eab5e577fe39e157a2117ad4fddd96d5282d4ff5a8270a3677ee0361a385c3"
+  },
+  {
+    "path": "skills/nova/core/test-gates/resolver.ts",
+    "line": 16,
+    "text": "import type { ReportAdapterRegistryEntry, TestProviderRegistryEntry } from '@kubeclaw/plugin-foundation/registry/types';",
+    "sha256": "56eab5e577fe39e157a2117ad4fddd96d5282d4ff5a8270a3677ee0361a385c3"
+  },
+  {
+    "path": "skills/nova/core/test-gates/resolver.ts",
+    "line": 35,
+    "text": "const NODE_KEYS = new Set(['uses', 'config', 'mode', 'review', 'needs', 'inputs', 'when', 'timeoutMs', 'limits', 'retries', 'acceptUnsafeRetry', 'concurrencyGroup', 'matrix', 'evidence']);",
+    "sha256": "56eab5e577fe39e157a2117ad4fddd96d5282d4ff5a8270a3677ee0361a385c3"
+  },
+  {
+    "path": "skills/nova/core/test-gates/resolver.ts",
+    "line": 188,
+    "text": "  const matrix = item.matrix === undefined ? undefined : (() => {",
+    "sha256": "56eab5e577fe39e157a2117ad4fddd96d5282d4ff5a8270a3677ee0361a385c3"
+  },
+  {
+    "path": "skills/nova/core/test-gates/resolver.ts",
+    "line": 189,
+    "text": "    const values = record(item.matrix, `${label}.matrix`);",
+    "sha256": "56eab5e577fe39e157a2117ad4fddd96d5282d4ff5a8270a3677ee0361a385c3"
+  },
+  {
+    "path": "skills/nova/core/test-gates/resolver.ts",
+    "line": 191,
+    "text": "      stableId(field, `${label}.matrix.${field}`);",
+    "sha256": "56eab5e577fe39e157a2117ad4fddd96d5282d4ff5a8270a3677ee0361a385c3"
+  },
+  {
+    "path": "skills/nova/core/test-gates/resolver.ts",
+    "line": 192,
+    "text": "      if (!Array.isArray(entries) || entries.length === 0) fail('TEST_PLAN_MATRIX_INVALID', `${label}.matrix.${field}`);",
+    "sha256": "56eab5e577fe39e157a2117ad4fddd96d5282d4ff5a8270a3677ee0361a385c3"
+  },
+  {
+    "path": "skills/nova/core/test-gates/resolver.ts",
+    "line": 193,
+    "text": "      if (!entries.every(isJsonValue)) fail('TEST_PLAN_MATRIX_INVALID', `${label}.matrix.${field}`);",
+    "sha256": "56eab5e577fe39e157a2117ad4fddd96d5282d4ff5a8270a3677ee0361a385c3"
+  },
+  {
+    "path": "skills/nova/core/test-gates/resolver.ts",
+    "line": 209,
+    "text": "    ...(item.timeoutMs === undefined ? {} : { timeoutMs: typeof item.timeoutMs === 'number'",
+    "sha256": "56eab5e577fe39e157a2117ad4fddd96d5282d4ff5a8270a3677ee0361a385c3"
+  },
+  {
+    "path": "skills/nova/core/test-gates/resolver.ts",
+    "line": 210,
+    "text": "      ? item.timeoutMs : fail('TEST_PLAN_TIMEOUT_INVALID', label) }),",
+    "sha256": "56eab5e577fe39e157a2117ad4fddd96d5282d4ff5a8270a3677ee0361a385c3"
+  },
+  {
+    "path": "skills/nova/core/test-gates/resolver.ts",
+    "line": 217,
+    "text": "    ...(matrix === undefined ? {} : { matrix }),",
+    "sha256": "56eab5e577fe39e157a2117ad4fddd96d5282d4ff5a8270a3677ee0361a385c3"
+  },
+  {
+    "path": "skills/nova/core/test-gates/resolver.ts",
+    "line": 218,
+    "text": "    ...(item.evidence === undefined ? {} : { evidence: parseEvidence(item.evidence, `${label}.evidence`) }),",
+    "sha256": "56eab5e577fe39e157a2117ad4fddd96d5282d4ff5a8270a3677ee0361a385c3"
+  },
+  {
+    "path": "skills/nova/core/test-gates/resolver.ts",
+    "line": 242,
+    "text": "    evidence: { ...(base.evidence ?? {}), ...(override.evidence ?? {}) },",
+    "sha256": "56eab5e577fe39e157a2117ad4fddd96d5282d4ff5a8270a3677ee0361a385c3"
+  },
+  {
+    "path": "skills/nova/core/test-gates/resolver.ts",
+    "line": 426,
+    "text": "function resolvedLimits(requested: Partial<ExecutionLimitsV1> | undefined, policy: ResolverPolicy, nodeId: string): ExecutionLimitsV1 {",
+    "sha256": "56eab5e577fe39e157a2117ad4fddd96d5282d4ff5a8270a3677ee0361a385c3"
+  },
+  {
+    "path": "skills/nova/core/test-gates/resolver.ts",
+    "line": 428,
+    "text": "    const value = requested?.[key] ?? policy.defaultLimits[key];",
+    "sha256": "56eab5e577fe39e157a2117ad4fddd96d5282d4ff5a8270a3677ee0361a385c3"
+  },
+  {
+    "path": "skills/nova/core/test-gates/resolver.ts",
+    "line": 430,
+    "text": "    if (!Number.isSafeInteger(value) || value < minimum || value > policy.maximumLimits[key]) fail('TEST_PLAN_LIMIT_INVALID', `${nodeId}.${key}`);",
+    "sha256": "56eab5e577fe39e157a2117ad4fddd96d5282d4ff5a8270a3677ee0361a385c3"
+  },
+  {
+    "path": "skills/nova/core/test-gates/resolver.ts",
+    "line": 435,
+    "text": "function validateResolverPolicy(policy: ResolverPolicy): void {",
+    "sha256": "56eab5e577fe39e157a2117ad4fddd96d5282d4ff5a8270a3677ee0361a385c3"
+  },
+  {
+    "path": "skills/nova/core/test-gates/resolver.ts",
+    "line": 440,
+    "text": "  const defaultTimeout = positiveInteger(policy.defaultTimeoutMs, 'policy.defaultTimeoutMs');",
+    "sha256": "56eab5e577fe39e157a2117ad4fddd96d5282d4ff5a8270a3677ee0361a385c3"
+  },
+  {
+    "path": "skills/nova/core/test-gates/resolver.ts",
+    "line": 441,
+    "text": "  const maximumTimeout = positiveInteger(policy.maximumTimeoutMs, 'policy.maximumTimeoutMs');",
+    "sha256": "56eab5e577fe39e157a2117ad4fddd96d5282d4ff5a8270a3677ee0361a385c3"
+  },
+  {
+    "path": "skills/nova/core/test-gates/resolver.ts",
+    "line": 442,
+    "text": "  if (defaultTimeout > maximumTimeout) fail('TEST_PLAN_POLICY_INVALID', 'policy.defaultTimeoutMs');",
+    "sha256": "56eab5e577fe39e157a2117ad4fddd96d5282d4ff5a8270a3677ee0361a385c3"
+  },
+  {
+    "path": "skills/nova/core/test-gates/resolver.ts",
+    "line": 445,
+    "text": "    const defaultValue = positiveInteger(policy.defaultLimits[key], `policy.defaultLimits.${key}`, minimum);",
+    "sha256": "56eab5e577fe39e157a2117ad4fddd96d5282d4ff5a8270a3677ee0361a385c3"
+  },
+  {
+    "path": "skills/nova/core/test-gates/resolver.ts",
+    "line": 446,
+    "text": "    const maximumValue = positiveInteger(policy.maximumLimits[key], `policy.maximumLimits.${key}`, minimum);",
+    "sha256": "56eab5e577fe39e157a2117ad4fddd96d5282d4ff5a8270a3677ee0361a385c3"
+  },
+  {
+    "path": "skills/nova/core/test-gates/resolver.ts",
+    "line": 447,
+    "text": "    if (defaultValue > maximumValue) fail('TEST_PLAN_POLICY_INVALID', `policy.defaultLimits.${key}`);",
+    "sha256": "56eab5e577fe39e157a2117ad4fddd96d5282d4ff5a8270a3677ee0361a385c3"
+  },
+  {
+    "path": "skills/nova/core/test-gates/resolver.ts",
+    "line": 449,
+    "text": "  positiveInteger(policy.maximumRetryCount, 'policy.maximumRetryCount');",
+    "sha256": "56eab5e577fe39e157a2117ad4fddd96d5282d4ff5a8270a3677ee0361a385c3"
+  },
+  {
+    "path": "skills/nova/core/test-gates/resolver.ts",
+    "line": 450,
+    "text": "  positiveInteger(policy.maximumMatrixSize, 'policy.maximumMatrixSize');",
+    "sha256": "56eab5e577fe39e157a2117ad4fddd96d5282d4ff5a8270a3677ee0361a385c3"
+  },
+  {
+    "path": "skills/nova/core/test-gates/resolver.ts",
+    "line": 451,
+    "text": "  positiveInteger(policy.maximumNodes, 'policy.maximumNodes');",
+    "sha256": "56eab5e577fe39e157a2117ad4fddd96d5282d4ff5a8270a3677ee0361a385c3"
+  },
+  {
+    "path": "skills/nova/core/test-gates/resolver.ts",
+    "line": 452,
+    "text": "  positiveInteger(policy.defaultConcurrencyLimit, 'policy.defaultConcurrencyLimit');",
+    "sha256": "56eab5e577fe39e157a2117ad4fddd96d5282d4ff5a8270a3677ee0361a385c3"
+  },
+  {
+    "path": "skills/nova/core/test-gates/resolver.ts",
+    "line": 453,
+    "text": "  for (const [group, maximum] of Object.entries(policy.maximumConcurrencyLimits)) {",
+    "sha256": "56eab5e577fe39e157a2117ad4fddd96d5282d4ff5a8270a3677ee0361a385c3"
+  },
+  {
+    "path": "skills/nova/core/test-gates/resolver.ts",
+    "line": 454,
+    "text": "    stableId(group, `policy.maximumConcurrencyLimits.${group}`);",
+    "sha256": "56eab5e577fe39e157a2117ad4fddd96d5282d4ff5a8270a3677ee0361a385c3"
+  },
+  {
+    "path": "skills/nova/core/test-gates/resolver.ts",
+    "line": 455,
+    "text": "    positiveInteger(maximum, `policy.maximumConcurrencyLimits.${group}`);",
+    "sha256": "56eab5e577fe39e157a2117ad4fddd96d5282d4ff5a8270a3677ee0361a385c3"
+  },
+  {
+    "path": "skills/nova/core/test-gates/resolver.ts",
+    "line": 479,
+    "text": "function evidencePolicy(provider: TestProviderRegistryEntry, override: EvidenceOverride | undefined, nodeId: string): EvidencePolicyV1 {",
+    "sha256": "56eab5e577fe39e157a2117ad4fddd96d5282d4ff5a8270a3677ee0361a385c3"
+  },
+  {
+    "path": "skills/nova/core/test-gates/resolver.ts",
+    "line": 480,
+    "text": "  const policy = {",
+    "sha256": "56eab5e577fe39e157a2117ad4fddd96d5282d4ff5a8270a3677ee0361a385c3"
+  },
+  {
+    "path": "skills/nova/core/test-gates/resolver.ts",
+    "line": 481,
+    "text": "    onPass: [...(override?.onPass ?? provider.registration.evidenceDefaults.onPass)],",
+    "sha256": "56eab5e577fe39e157a2117ad4fddd96d5282d4ff5a8270a3677ee0361a385c3"
+  },
+  {
+    "path": "skills/nova/core/test-gates/resolver.ts",
+    "line": 482,
+    "text": "    onFail: [...(override?.onFail ?? provider.registration.evidenceDefaults.onFail)],",
+    "sha256": "56eab5e577fe39e157a2117ad4fddd96d5282d4ff5a8270a3677ee0361a385c3"
+  },
+  {
+    "path": "skills/nova/core/test-gates/resolver.ts",
+    "line": 483,
+    "text": "    onError: [...(override?.onError ?? provider.registration.evidenceDefaults.onError)],",
+    "sha256": "56eab5e577fe39e157a2117ad4fddd96d5282d4ff5a8270a3677ee0361a385c3"
+  },
+  {
+    "path": "skills/nova/core/test-gates/resolver.ts",
+    "line": 485,
+    "text": "  const supported = new Set(provider.registration.evidenceTypes);",
+    "sha256": "56eab5e577fe39e157a2117ad4fddd96d5282d4ff5a8270a3677ee0361a385c3"
+  },
+  {
+    "path": "skills/nova/core/test-gates/resolver.ts",
+    "line": 486,
+    "text": "  for (const type of [...policy.onPass, ...policy.onFail, ...policy.onError]) if (!supported.has(type)) fail('TEST_PLAN_EVIDENCE_INVALID', `${nodeId}:${type}`);",
+    "sha256": "56eab5e577fe39e157a2117ad4fddd96d5282d4ff5a8270a3677ee0361a385c3"
+  },
+  {
+    "path": "skills/nova/core/test-gates/resolver.ts",
+    "line": 487,
+    "text": "  return policy;",
+    "sha256": "56eab5e577fe39e157a2117ad4fddd96d5282d4ff5a8270a3677ee0361a385c3"
+  },
+  {
+    "path": "skills/nova/core/test-gates/resolver.ts",
+    "line": 490,
+    "text": "function matrixValues(node: DraftNode, provider: TestProviderRegistryEntry, maximum: number): readonly Record<string, JsonValue>[] {",
+    "sha256": "56eab5e577fe39e157a2117ad4fddd96d5282d4ff5a8270a3677ee0361a385c3"
+  },
+  {
+    "path": "skills/nova/core/test-gates/resolver.ts",
+    "line": 491,
+    "text": "  const matrix = node.declaration.matrix ?? {};",
+    "sha256": "56eab5e577fe39e157a2117ad4fddd96d5282d4ff5a8270a3677ee0361a385c3"
+  },
+  {
+    "path": "skills/nova/core/test-gates/resolver.ts",
+    "line": 492,
+    "text": "  const fields = Object.keys(matrix).sort();",
+    "sha256": "56eab5e577fe39e157a2117ad4fddd96d5282d4ff5a8270a3677ee0361a385c3"
+  },
+  {
+    "path": "skills/nova/core/test-gates/resolver.ts",
+    "line": 493,
+    "text": "  for (const field of fields) if (!provider.registration.matrixFields.includes(field)) fail('TEST_PLAN_MATRIX_INVALID', `${node.id}:${field}`);",
+    "sha256": "56eab5e577fe39e157a2117ad4fddd96d5282d4ff5a8270a3677ee0361a385c3"
+  },
+  {
+    "path": "skills/nova/core/test-gates/resolver.ts",
+    "line": 496,
+    "text": "    values = values.flatMap((current) => matrix[field]!.map((value) => ({ ...current, [field]: structuredClone(value) })));",
+    "sha256": "56eab5e577fe39e157a2117ad4fddd96d5282d4ff5a8270a3677ee0361a385c3"
+  },
+  {
+    "path": "skills/nova/core/test-gates/resolver.ts",
+    "line": 497,
+    "text": "    if (values.length > maximum) fail('TEST_PLAN_MATRIX_LIMIT', node.id);",
+    "sha256": "56eab5e577fe39e157a2117ad4fddd96d5282d4ff5a8270a3677ee0361a385c3"
+  },
+  {
+    "path": "skills/nova/core/test-gates/resolver.ts",
+    "line": 523,
+    "text": "    const selectedId = input.policy.reportAdapters?.get(format);",
+    "sha256": "56eab5e577fe39e157a2117ad4fddd96d5282d4ff5a8270a3677ee0361a385c3"
+  },
+  {
+    "path": "skills/nova/core/test-gates/resolver.ts",
+    "line": 525,
+    "text": "      const entry = input.registry.reportAdapters.get(selectedId);",
+    "sha256": "56eab5e577fe39e157a2117ad4fddd96d5282d4ff5a8270a3677ee0361a385c3"
+  },
+  {
+    "path": "skills/nova/core/test-gates/resolver.ts",
+    "line": 529,
+    "text": "    const candidates = input.registry.reportAdapterFormats.get(format) ?? [];",
+    "sha256": "56eab5e577fe39e157a2117ad4fddd96d5282d4ff5a8270a3677ee0361a385c3"
+  },
+  {
+    "path": "skills/nova/core/test-gates/resolver.ts",
+    "line": 541,
+    "text": "    const provider = input.registry.testProviderContracts.get(draft.declaration.uses);",
+    "sha256": "56eab5e577fe39e157a2117ad4fddd96d5282d4ff5a8270a3677ee0361a385c3"
+  },
+  {
+    "path": "skills/nova/core/test-gates/resolver.ts",
+    "line": 546,
+    "text": "    const variations = matrixValues(draft, provider, input.policy.maximumMatrixSize);",
+    "sha256": "56eab5e577fe39e157a2117ad4fddd96d5282d4ff5a8270a3677ee0361a385c3"
+  },
+  {
+    "path": "skills/nova/core/test-gates/resolver.ts",
+    "line": 549,
+    "text": "      const id = hasMatrix ? `${draft.id}/matrix-${String(index + 1).padStart(3, '0')}` : draft.id;",
+    "sha256": "56eab5e577fe39e157a2117ad4fddd96d5282d4ff5a8270a3677ee0361a385c3"
+  },
+  {
+    "path": "skills/nova/core/test-gates/resolver.ts",
+    "line": 553,
+    "text": "      const requestedTimeout = draft.declaration.timeoutMs ?? input.policy.defaultTimeoutMs;",
+    "sha256": "56eab5e577fe39e157a2117ad4fddd96d5282d4ff5a8270a3677ee0361a385c3"
+  },
+  {
+    "path": "skills/nova/core/test-gates/resolver.ts",
+    "line": 554,
+    "text": "      if (!Number.isSafeInteger(requestedTimeout) || requestedTimeout < 1 || requestedTimeout > input.policy.maximumTimeoutMs) fail('TEST_PLAN_TIMEOUT_INVALID', id);",
+    "sha256": "56eab5e577fe39e157a2117ad4fddd96d5282d4ff5a8270a3677ee0361a385c3"
+  },
+  {
+    "path": "skills/nova/core/test-gates/resolver.ts",
+    "line": 556,
+    "text": "      let retryCount = requestedRetries ?? DEFAULT_RETRY_COUNT;",
+    "sha256": "56eab5e577fe39e157a2117ad4fddd96d5282d4ff5a8270a3677ee0361a385c3"
+  },
+  {
+    "path": "skills/nova/core/test-gates/resolver.ts",
+    "line": 557,
+    "text": "      if (!provider.registration.retrySafe && requestedRetries === undefined) retryCount = 0;",
+    "sha256": "56eab5e577fe39e157a2117ad4fddd96d5282d4ff5a8270a3677ee0361a385c3"
+  },
+  {
+    "path": "skills/nova/core/test-gates/resolver.ts",
+    "line": 558,
+    "text": "      if (!Number.isSafeInteger(retryCount) || retryCount < 0 || retryCount > input.policy.maximumRetryCount) fail('TEST_PLAN_RETRY_INVALID', id);",
+    "sha256": "56eab5e577fe39e157a2117ad4fddd96d5282d4ff5a8270a3677ee0361a385c3"
+  },
+  {
+    "path": "skills/nova/core/test-gates/resolver.ts",
+    "line": 559,
+    "text": "      if (!provider.registration.retrySafe && retryCount > 0 && draft.declaration.acceptUnsafeRetry !== true) fail('TEST_PLAN_RETRY_UNSAFE', id);",
+    "sha256": "56eab5e577fe39e157a2117ad4fddd96d5282d4ff5a8270a3677ee0361a385c3"
+  },
+  {
+    "path": "skills/nova/core/test-gates/resolver.ts",
+    "line": 561,
+    "text": "      let configuration;",
+    "sha256": "56eab5e577fe39e157a2117ad4fddd96d5282d4ff5a8270a3677ee0361a385c3"
+  },
+  {
+    "path": "skills/nova/core/test-gates/resolver.ts",
+    "line": 563,
+    "text": "        configuration = resolveTestProviderConfiguration(input.registry, provider.registration.contractId, config);",
+    "sha256": "56eab5e577fe39e157a2117ad4fddd96d5282d4ff5a8270a3677ee0361a385c3"
+  },
+  {
+    "path": "skills/nova/core/test-gates/resolver.ts",
+    "line": 569,
+    "text": "        && mode === 'blocking' && configuration.values.minimumLinePercent === undefined) {",
+    "sha256": "56eab5e577fe39e157a2117ad4fddd96d5282d4ff5a8270a3677ee0361a385c3"
+  },
+  {
+    "path": "skills/nova/core/test-gates/resolver.ts",
+    "line": 573,
+    "text": "        && mode === 'blocking' && configuration.values.purpose === 'performance'",
+    "sha256": "56eab5e577fe39e157a2117ad4fddd96d5282d4ff5a8270a3677ee0361a385c3"
+  },
+  {
+    "path": "skills/nova/core/test-gates/resolver.ts",
+    "line": 574,
+    "text": "        && configuration.values.budget === undefined) {",
+    "sha256": "56eab5e577fe39e157a2117ad4fddd96d5282d4ff5a8270a3677ee0361a385c3"
+  },
+  {
+    "path": "skills/nova/core/test-gates/resolver.ts",
+    "line": 588,
+    "text": "        configuration,",
+    "sha256": "56eab5e577fe39e157a2117ad4fddd96d5282d4ff5a8270a3677ee0361a385c3"
+  },
+  {
+    "path": "skills/nova/core/test-gates/resolver.ts",
+    "line": 590,
+    "text": "        timeoutMs: requestedTimeout,",
+    "sha256": "56eab5e577fe39e157a2117ad4fddd96d5282d4ff5a8270a3677ee0361a385c3"
+  },
+  {
+    "path": "skills/nova/core/test-gates/resolver.ts",
+    "line": 591,
+    "text": "        limits: resolvedLimits(draft.declaration.limits, input.policy, id),",
+    "sha256": "56eab5e577fe39e157a2117ad4fddd96d5282d4ff5a8270a3677ee0361a385c3"
+  },
+  {
+    "path": "skills/nova/core/test-gates/resolver.ts",
+    "line": 592,
+    "text": "        retryCount,",
+    "sha256": "56eab5e577fe39e157a2117ad4fddd96d5282d4ff5a8270a3677ee0361a385c3"
+  },
+  {
+    "path": "skills/nova/core/test-gates/resolver.ts",
+    "line": 596,
+    "text": "        evidence: evidencePolicy(provider, draft.declaration.evidence, id),",
+    "sha256": "56eab5e577fe39e157a2117ad4fddd96d5282d4ff5a8270a3677ee0361a385c3"
+  },
+  {
+    "path": "skills/nova/core/test-gates/resolver.ts",
+    "line": 608,
+    "text": "  if (expanded.length > input.policy.maximumNodes) fail('TEST_PLAN_NODE_LIMIT', String(expanded.length));",
+    "sha256": "56eab5e577fe39e157a2117ad4fddd96d5282d4ff5a8270a3677ee0361a385c3"
+  },
+  {
+    "path": "skills/nova/core/test-gates/resolver.ts",
+    "line": 696,
+    "text": "function concurrencyLimits(expanded: readonly ExpandedNode[], requested: ReadonlyMap<string, number>, projectGroups: ReadonlySet<string>, policy: ResolverPolicy): Record<string, number> {",
+    "sha256": "56eab5e577fe39e157a2117ad4fddd96d5282d4ff5a8270a3677ee0361a385c3"
+  },
+  {
+    "path": "skills/nova/core/test-gates/resolver.ts",
+    "line": 700,
+    "text": "    const maximum = policy.maximumConcurrencyLimits[group] ?? policy.defaultConcurrencyLimit;",
+    "sha256": "56eab5e577fe39e157a2117ad4fddd96d5282d4ff5a8270a3677ee0361a385c3"
+  },
+  {
+    "path": "skills/nova/core/test-gates/resolver.ts",
+    "line": 701,
+    "text": "    const value = requested.get(group) ?? maximum;",
+    "sha256": "56eab5e577fe39e157a2117ad4fddd96d5282d4ff5a8270a3677ee0361a385c3"
+  },
+  {
+    "path": "skills/nova/core/test-gates/resolver.ts",
+    "line": 702,
+    "text": "    if (!Number.isSafeInteger(value) || value < 1 || value > maximum) fail('TEST_PLAN_CONCURRENCY_INVALID', group);",
+    "sha256": "56eab5e577fe39e157a2117ad4fddd96d5282d4ff5a8270a3677ee0361a385c3"
+  },
+  {
+    "path": "skills/nova/core/test-gates/resolver.ts",
+    "line": 721,
+    "text": "  validateResolverPolicy(input.policy);",
+    "sha256": "56eab5e577fe39e157a2117ad4fddd96d5282d4ff5a8270a3677ee0361a385c3"
+  },
+  {
+    "path": "skills/nova/core/test-gates/resolver.ts",
+    "line": 729,
+    "text": "  if (!Number.isFinite(Date.parse(input.createdAt))) fail('TEST_PLAN_CREATED_AT_INVALID', input.createdAt);",
+    "sha256": "56eab5e577fe39e157a2117ad4fddd96d5282d4ff5a8270a3677ee0361a385c3"
+  },
+  {
+    "path": "skills/nova/core/test-gates/resolver.ts",
+    "line": 736,
+    "text": "    ...(input.declaration.coverage ? { coverage: { policy: structuredClone(input.declaration.coverage), excludedNodeIds: draft.excludedNodeIds.sort() } } : {}),",
+    "sha256": "56eab5e577fe39e157a2117ad4fddd96d5282d4ff5a8270a3677ee0361a385c3"
+  },
+  {
+    "path": "skills/nova/core/test-gates/resolver.ts",
+    "line": 741,
+    "text": "    registrySnapshotDigest: input.registry.snapshotDigest,",
+    "sha256": "56eab5e577fe39e157a2117ad4fddd96d5282d4ff5a8270a3677ee0361a385c3"
+  },
+  {
+    "path": "skills/nova/core/test-gates/resolver.ts",
+    "line": 746,
+    "text": "    concurrencyLimits: concurrencyLimits(expanded, draft.requestedConcurrency, draft.projectConcurrencyGroups, input.policy),",
+    "sha256": "56eab5e577fe39e157a2117ad4fddd96d5282d4ff5a8270a3677ee0361a385c3"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/runner.ts",
+    "line": 10,
+    "text": "export { createBusterWorkerProfiles } from './runner-worker-profile.ts';",
+    "sha256": "8db6fb069648014e1cfb2c63f33de1382219279b1358a76a15a1936e3b80732a"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/runner.ts",
+    "line": 25,
+    "text": "import type { TestProviderRegistryEntry } from \"@kubeclaw/plugin-foundation/registry/types\";",
+    "sha256": "8db6fb069648014e1cfb2c63f33de1382219279b1358a76a15a1936e3b80732a"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/runner.ts",
+    "line": 58,
+    "text": "    this.#store = options.evidenceStore ?? new FileEvidenceStore(artifactRoot);",
+    "sha256": "8db6fb069648014e1cfb2c63f33de1382219279b1358a76a15a1936e3b80732a"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/runner.ts",
+    "line": 68,
+    "text": "    this.#now = options.now ?? (() => new Date());",
+    "sha256": "8db6fb069648014e1cfb2c63f33de1382219279b1358a76a15a1936e3b80732a"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/runner.ts",
+    "line": 117,
+    "text": "    const { attemptId, attemptRepository, stagingBase, evidenceDirectory, stagedEvidenceDirectory,",
+    "sha256": "8db6fb069648014e1cfb2c63f33de1382219279b1358a76a15a1936e3b80732a"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/runner.ts",
+    "line": 121,
+    "text": "    const providerResultLimit = this.#options.executionPolicy.provider.maximumResultBytes;",
+    "sha256": "8db6fb069648014e1cfb2c63f33de1382219279b1358a76a15a1936e3b80732a"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/runner.ts",
+    "line": 123,
+    "text": "    const retainAnyLog = entry.registration.evidenceTypes.includes(\"log\") &&",
+    "sha256": "8db6fb069648014e1cfb2c63f33de1382219279b1358a76a15a1936e3b80732a"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/runner.ts",
+    "line": 124,
+    "text": "      [...node.evidence.onPass, ...node.evidence.onFail, ...node.evidence.onError].includes(\"log\");",
+    "sha256": "8db6fb069648014e1cfb2c63f33de1382219279b1358a76a15a1936e3b80732a"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/runner.ts",
+    "line": 128,
+    "text": "      attemptId, evidenceDirectory, stagedEvidenceDirectory, stagedErrorEvidenceDirectory,",
+    "sha256": "8db6fb069648014e1cfb2c63f33de1382219279b1358a76a15a1936e3b80732a"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/runner.ts",
+    "line": 163,
+    "text": "      invoke: async (",
+    "sha256": "8db6fb069648014e1cfb2c63f33de1382219279b1358a76a15a1936e3b80732a"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/runner.ts",
+    "line": 172,
+    "text": "        return this.#options.capabilityInvoker.invoke(",
+    "sha256": "8db6fb069648014e1cfb2c63f33de1382219279b1358a76a15a1936e3b80732a"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/runner.ts",
+    "line": 185,
+    "text": "    evidenceDirectory: string,",
+    "sha256": "8db6fb069648014e1cfb2c63f33de1382219279b1358a76a15a1936e3b80732a"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/runner.ts",
+    "line": 187,
+    "text": "    maximumFiles: number,",
+    "sha256": "8db6fb069648014e1cfb2c63f33de1382219279b1358a76a15a1936e3b80732a"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/runner.ts",
+    "line": 188,
+    "text": "    maximumBytes: number,",
+    "sha256": "8db6fb069648014e1cfb2c63f33de1382219279b1358a76a15a1936e3b80732a"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/runner.ts",
+    "line": 192,
+    "text": "    if (declarations.length > maximumFiles)",
+    "sha256": "8db6fb069648014e1cfb2c63f33de1382219279b1358a76a15a1936e3b80732a"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/runner.ts",
+    "line": 196,
+    "text": "    const evidence: EvidenceRefV1[] = [];",
+    "sha256": "8db6fb069648014e1cfb2c63f33de1382219279b1358a76a15a1936e3b80732a"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/runner.ts",
+    "line": 200,
+    "text": "      if (ids.has(declaration.evidenceId) || files.has(declaration.file))",
+    "sha256": "8db6fb069648014e1cfb2c63f33de1382219279b1358a76a15a1936e3b80732a"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/runner.ts",
+    "line": 202,
+    "text": "          `TEST_PROVIDER_EVIDENCE_DUPLICATE:${declaration.evidenceId}`,",
+    "sha256": "8db6fb069648014e1cfb2c63f33de1382219279b1358a76a15a1936e3b80732a"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/runner.ts",
+    "line": 204,
+    "text": "      ids.add(declaration.evidenceId);",
+    "sha256": "8db6fb069648014e1cfb2c63f33de1382219279b1358a76a15a1936e3b80732a"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/runner.ts",
+    "line": 206,
+    "text": "      if (!entry.registration.evidenceTypes.includes(declaration.type))",
+    "sha256": "8db6fb069648014e1cfb2c63f33de1382219279b1358a76a15a1936e3b80732a"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/runner.ts",
+    "line": 212,
+    "text": "        evidenceDirectory,",
+    "sha256": "8db6fb069648014e1cfb2c63f33de1382219279b1358a76a15a1936e3b80732a"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/runner.ts",
+    "line": 214,
+    "text": "        maximumBytes - total,",
+    "sha256": "8db6fb069648014e1cfb2c63f33de1382219279b1358a76a15a1936e3b80732a"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/runner.ts",
+    "line": 219,
+    "text": "      if (total > maximumBytes)",
+    "sha256": "8db6fb069648014e1cfb2c63f33de1382219279b1358a76a15a1936e3b80732a"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/runner.ts",
+    "line": 221,
+    "text": "      evidence.push(",
+    "sha256": "8db6fb069648014e1cfb2c63f33de1382219279b1358a76a15a1936e3b80732a"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/runner.ts",
+    "line": 223,
+    "text": "          evidenceId: declaration.evidenceId,",
+    "sha256": "8db6fb069648014e1cfb2c63f33de1382219279b1358a76a15a1936e3b80732a"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/runner.ts",
+    "line": 229,
+    "text": "    return evidence;",
+    "sha256": "8db6fb069648014e1cfb2c63f33de1382219279b1358a76a15a1936e3b80732a"
+  },
+  {
+    "path": "skills/nova/core/execution/adapter-startup.ts",
+    "line": 7,
+    "text": "import { validateContractValue, validateReferencedValue } from '@kubeclaw/plugin-foundation/registry/schema';",
+    "sha256": "ec0ee03f9b740865da79e9ba558fc9447f0354ecd14b4e36eedc5320edac34f0"
+  },
+  {
+    "path": "skills/nova/core/execution/adapter-startup.ts",
+    "line": 8,
+    "text": "import { isConfidentialCapability } from '@kubeclaw/plugin-foundation/registry/capabilities';",
+    "sha256": "ec0ee03f9b740865da79e9ba558fc9447f0354ecd14b4e36eedc5320edac34f0"
+  },
+  {
+    "path": "skills/nova/core/execution/adapter-startup.ts",
+    "line": 80,
+    "text": "      invoke: (capability: string, request: CapabilityInvocation, options?: AdapterDependencyOptions) => this.#invokeDependency(adapterId, lifecycle, active, capability, request, false, options),",
+    "sha256": "ec0ee03f9b740865da79e9ba558fc9447f0354ecd14b4e36eedc5320edac34f0"
+  },
+  {
+    "path": "skills/nova/core/execution/adapter-startup.ts",
+    "line": 81,
+    "text": "      invokeConfidential: (capability: string, request: CapabilityInvocation, options?: AdapterDependencyOptions) => this.#invokeDependency(adapterId, lifecycle, active, capability, request, true, options),",
+    "sha256": "ec0ee03f9b740865da79e9ba558fc9447f0354ecd14b4e36eedc5320edac34f0"
+  },
+  {
+    "path": "skills/nova/core/execution/adapter-startup.ts",
+    "line": 86,
+    "text": "  async #invokeDependency(adapterId: string, lifecycle: AbortController, active: () => void, capability: string, request: CapabilityInvocation, confidential: boolean, options?: AdapterDependencyOptions): Promise<Readonly<Record<string, unknown>>> {",
+    "sha256": "ec0ee03f9b740865da79e9ba558fc9447f0354ecd14b4e36eedc5320edac34f0"
+  },
+  {
+    "path": "skills/nova/core/execution/adapter-startup.ts",
+    "line": 101,
+    "text": "      ? await this.#options.runtime.effects.invokeConfidential(adapter, adapterOwner(this.#options.runtime, dependencyId), invocation, signal)",
+    "sha256": "ec0ee03f9b740865da79e9ba558fc9447f0354ecd14b4e36eedc5320edac34f0"
+  },
+  {
+    "path": "skills/nova/core/execution/adapter-startup.ts",
+    "line": 106,
+    "text": "  async #durable(adapter: AdapterInstance, dependencyId: string, invocation: Parameters<AdapterRuntimeOptions['effects']['invoke']>[2], signal: AbortSignal): Promise<Readonly<Record<string, unknown>>> {",
+    "sha256": "ec0ee03f9b740865da79e9ba558fc9447f0354ecd14b4e36eedc5320edac34f0"
+  },
+  {
+    "path": "skills/nova/core/execution/adapter-startup.ts",
+    "line": 107,
+    "text": "    const receipt = await this.#options.runtime.effects.invoke(adapter, adapterOwner(this.#options.runtime, dependencyId), invocation, signal);",
+    "sha256": "ec0ee03f9b740865da79e9ba558fc9447f0354ecd14b4e36eedc5320edac34f0"
+  },
+  {
+    "path": "skills/nova/core/execution/adapter-startup.ts",
+    "line": 118,
+    "text": "    return { ready: () => raw.ready(), invoke: async (invocation) => {",
+    "sha256": "ec0ee03f9b740865da79e9ba558fc9447f0354ecd14b4e36eedc5320edac34f0"
+  },
+  {
+    "path": "skills/nova/core/execution/adapter-startup.ts",
+    "line": 124,
+    "text": "        () => raw.invoke({ ...invocation, signal }));",
+    "sha256": "ec0ee03f9b740865da79e9ba558fc9447f0354ecd14b4e36eedc5320edac34f0"
+  },
+  {
+    "path": "skills/nova/core/execution/adapter-startup.ts",
+    "line": 145,
+    "text": "      const invoke = (capability: string, request: CapabilityInvocation, confidential: boolean, options?: AdapterDependencyOptions) =>",
+    "sha256": "ec0ee03f9b740865da79e9ba558fc9447f0354ecd14b4e36eedc5320edac34f0"
+  },
+  {
+    "path": "skills/nova/core/execution/adapter-startup.ts",
+    "line": 146,
+    "text": "        this.#options.invocationContext.run(owner, () => this.#invokeDependency(adapterId, lifecycle, active, capability, request, confidential, options));",
+    "sha256": "ec0ee03f9b740865da79e9ba558fc9447f0354ecd14b4e36eedc5320edac34f0"
+  },
+  {
+    "path": "skills/nova/core/execution/adapter-startup.ts",
+    "line": 148,
+    "text": "        invoke: (capability: string, request: CapabilityInvocation, options?: AdapterDependencyOptions) => invoke(capability, request, false, options),",
+    "sha256": "ec0ee03f9b740865da79e9ba558fc9447f0354ecd14b4e36eedc5320edac34f0"
+  },
+  {
+    "path": "skills/nova/core/execution/adapter-startup.ts",
+    "line": 149,
+    "text": "        invokeConfidential: (capability: string, request: CapabilityInvocation, options?: AdapterDependencyOptions) => invoke(capability, request, true, options),",
+    "sha256": "ec0ee03f9b740865da79e9ba558fc9447f0354ecd14b4e36eedc5320edac34f0"
+  }
+]

@@ -1,0 +1,27 @@
+[
+  {
+    "registrationId": "kubeclaw.security-providers:headers",
+    "path": "fixtures/generated/headers.provider-configuration.v2.json",
+    "qualification": "local C0 receiving shape only; actual package digest filled by inspected pure digest pass before final receipt, no installed/role/grant assertion"
+  },
+  {
+    "registrationId": "kubeclaw.security-providers:dependency-trivy",
+    "path": "fixtures/generated/dependency-trivy.provider-configuration.v2.json",
+    "qualification": "local C0 receiving shape only; actual package digest filled by inspected pure digest pass before final receipt, no installed/role/grant assertion"
+  },
+  {
+    "registrationId": "kubeclaw.security-providers:image-trivy",
+    "path": "fixtures/generated/image-trivy.provider-configuration.v2.json",
+    "qualification": "local C0 receiving shape only; actual package digest filled by inspected pure digest pass before final receipt, no installed/role/grant assertion"
+  },
+  {
+    "registrationId": "kubeclaw.security-providers:kubernetes-policy",
+    "path": "fixtures/generated/kubernetes-policy.provider-configuration.v2.json",
+    "qualification": "local C0 receiving shape only; actual package digest filled by inspected pure digest pass before final receipt, no installed/role/grant assertion"
+  },
+  {
+    "registrationId": "kubeclaw.security-providers:kubernetes-runtime",
+    "path": "fixtures/generated/kubernetes-runtime.provider-configuration.v2.json",
+    "qualification": "local C0 receiving shape only; actual package digest filled by inspected pure digest pass before final receipt, no installed/role/grant assertion"
+  }
+]

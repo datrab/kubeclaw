@@ -1,0 +1,10 @@
+{
+  "normativeBaseExact": true,
+  "normativeFields": 89,
+  "allNormativeFieldRefsAndSchemaBindingsExact": true,
+  "normativeCases": 587,
+  "allNormativeCaseRefsExact": true,
+  "03ProviderArmsUnchanged": true,
+  "wholeEntryClosures": 163,
+  "scope": "Exact captured HTTP/TLS fixture stand identity only, not universal Buster domain or physical source/grant/trust/namespace/producer admission"
+}

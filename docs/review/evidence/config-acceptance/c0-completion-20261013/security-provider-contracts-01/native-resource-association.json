@@ -1,0 +1,110 @@
+{
+  "soleC3Author": "config/components/buster-engine.config.json#/profiles/security-source-A/settings",
+  "completeWholeStand": "Explicit complete local-A clone changing only source-derived HTTP nginx fixture origin/port80; timer/byte/scanner/registry/cluster ceilings unchanged. Grant/real producer receipt absent. Secondary security-https-source-A preserves unsigned HTTPS shape stand, no current matching authenticated producer invented.",
+  "network": {
+    "registryHealth": true,
+    "allowedOrigins": [
+      "http://real-pipeline-e2e-nginx.test-security-source-fixture.svc.cluster.local"
+    ],
+    "allowedHostSuffixes": [
+      ".svc.cluster.local",
+      ".ts.net"
+    ],
+    "allowedPorts": [
+      80
+    ],
+    "allowedMethods": [
+      "DELETE",
+      "GET",
+      "HEAD",
+      "OPTIONS",
+      "PATCH",
+      "POST",
+      "PUT"
+    ],
+    "allowedRequestHeaders": [
+      "accept",
+      "authorization",
+      "content-type",
+      "cookie",
+      "x-api-key"
+    ],
+    "allowWebSocket": false,
+    "maximumRequestBytes": 1048576,
+    "maximumResponseBytes": 16777216,
+    "maximumExecutionMs": 120000
+  },
+  "securityScan": {
+    "allowedRegistryPrefixes": [
+      "fixture-registry.invalid/kubeclaw"
+    ],
+    "maximumExecutionMs": 900000,
+    "maximumOutputBytes": 67108864,
+    "cacheDirectory": "/home/builder/.cache/trivy",
+    "databasePolicy": {
+      "maximumVulnerabilityAgeMs": 172800000,
+      "maximumJavaAgeMs": 604800000,
+      "maximumDatabaseBytes": 8589934592
+    }
+  },
+  "runtimeSecurity": {
+    "allowedNamespacePrefixes": [
+      "test"
+    ],
+    "maximumExecutionMs": 300000,
+    "maximumOutputBytes": 16777216,
+    "pollIntervalMs": 1000,
+    "maximumObservationAgeMs": 10000,
+    "maximumFutureSkewMs": 5000,
+    "diagnosticCodeUnits": 1024,
+    "executableSearchPath": [
+      "/usr/local/bin",
+      "/usr/bin",
+      "/bin"
+    ]
+  },
+  "support": "headers network.http; dependency/image/kubernetes-policy security.scan; kubernetes-runtime kubernetes.runtime-security; no browser adapter/server/npm audit substitution",
+  "externalActivation": {
+    "installedRoster": null,
+    "trivyExecutableIdentity": null,
+    "kubectlExecutableIdentity": null,
+    "databaseSnapshots": null,
+    "registryCredentialRevision": null,
+    "deploymentLeaseReceipt": null,
+    "capabilityGrants": null
+  },
+  "nativeCases": "not-run",
+  "httpsStand": {
+    "registryHealth": true,
+    "allowedOrigins": [
+      "https://fixture.invalid"
+    ],
+    "allowedHostSuffixes": [
+      ".svc.cluster.local",
+      ".ts.net"
+    ],
+    "allowedPorts": [
+      443
+    ],
+    "allowedMethods": [
+      "DELETE",
+      "GET",
+      "HEAD",
+      "OPTIONS",
+      "PATCH",
+      "POST",
+      "PUT"
+    ],
+    "allowedRequestHeaders": [
+      "accept",
+      "authorization",
+      "content-type",
+      "cookie",
+      "x-api-key"
+    ],
+    "allowWebSocket": false,
+    "maximumRequestBytes": 1048576,
+    "maximumResponseBytes": 16777216,
+    "maximumExecutionMs": 120000
+  }
+}

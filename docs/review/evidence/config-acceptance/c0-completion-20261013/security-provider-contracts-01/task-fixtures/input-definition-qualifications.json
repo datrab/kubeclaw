@@ -1,0 +1,22 @@
+[
+  {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/inputs/image.json",
+    "qualification": "typed unsigned task reference/digest, digest reused from actual live-function source. NOT evidence of copied/installed registry image or clean findings; authenticated immutable source/registry receipt missing"
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/inputs/manifest.artifact.json",
+    "qualification": "actual source YAML bytes/local input parser definition; no checked-manifest producer receipt or admission assertion"
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/inputs/headers.deployment.json",
+    "qualification": "unsigned source-input definition only; no authenticated deployment/availability/exposure/lease fact"
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/inputs/runtime.deployment.json",
+    "qualification": "same unsigned fixture-only full value shape, original copied manifest digest and typed image ref; NOT cluster lease/checked producer/authenticated history/availability proof; expiry is local24h source-parser fixture window, real source receipt remains mandatory"
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/inputs/headers.https-shape-only.deployment.json",
+    "qualification": "Unsigned SOURCE parser fixture only. Existing canonical producer is HTTP; authentic HTTPS deployment producer is missing. Retention mode/delete release string follows source grammar with fixture-only controller namespace, NOT actual lease/grant or runnable cleanup receipt."
+  }
+]

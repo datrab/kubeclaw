@@ -1,0 +1,142 @@
+{
+  "packageId": "kubeclaw.security-providers",
+  "packageVersion": "1.0.0",
+  "contentDigest": "sha256:1f49bf0aba5957df255facd6d7a6a869d3c85cb27366ebe77b114dcc7cc08314",
+  "manifestSha256": "14d1e66e0ee7a0063964555222332d7345bf172bfc8186f9a12fdca7d2c9d510",
+  "targetOwnerSchemaSha256": "26b0b332f24e7ce6610321be5a089a180057713650a9f1f92597d8af23be3129",
+  "registrations": [
+    {
+      "registrationId": "kubeclaw.security-providers:headers",
+      "contractId": "kubeclaw.security-headers@1",
+      "module": "src/headers.js",
+      "export": "provider",
+      "sourceSchemaSha256": "d85b934ca0577f4ca2ac170efbe9157e7ccb46a1bae36cca3e36843f336e0191",
+      "requiredCapabilities": [
+        "network.http"
+      ],
+      "retrySafe": true,
+      "matrixFields": [
+        "path"
+      ],
+      "evidenceTypes": [
+        "log"
+      ],
+      "evidenceDefaults": {
+        "onPass": [
+          "log"
+        ],
+        "onFail": [
+          "log"
+        ],
+        "onError": [
+          "log"
+        ]
+      }
+    },
+    {
+      "registrationId": "kubeclaw.security-providers:dependency-trivy",
+      "contractId": "kubeclaw.dependency-scan-trivy@1",
+      "module": "src/dependency.js",
+      "export": "provider",
+      "sourceSchemaSha256": "e28b92a94df642a3527df914c9406a215684fb099bf98ded536d1e5743873ee4",
+      "requiredCapabilities": [
+        "security.scan"
+      ],
+      "retrySafe": true,
+      "matrixFields": [],
+      "evidenceTypes": [
+        "log"
+      ],
+      "evidenceDefaults": {
+        "onPass": [
+          "log"
+        ],
+        "onFail": [
+          "log"
+        ],
+        "onError": [
+          "log"
+        ]
+      }
+    },
+    {
+      "registrationId": "kubeclaw.security-providers:image-trivy",
+      "contractId": "kubeclaw.image-scan-trivy@1",
+      "module": "src/image.js",
+      "export": "provider",
+      "sourceSchemaSha256": "1215ea1d598f31ebe569812962c66b1a75f506fd1d63eeecee5ec523beb1b9ca",
+      "requiredCapabilities": [
+        "security.scan"
+      ],
+      "retrySafe": true,
+      "matrixFields": [],
+      "evidenceTypes": [
+        "log"
+      ],
+      "evidenceDefaults": {
+        "onPass": [
+          "log"
+        ],
+        "onFail": [
+          "log"
+        ],
+        "onError": [
+          "log"
+        ]
+      }
+    },
+    {
+      "registrationId": "kubeclaw.security-providers:kubernetes-policy",
+      "contractId": "kubeclaw.kubernetes-policy-security@1",
+      "module": "src/kubernetes-policy.js",
+      "export": "provider",
+      "sourceSchemaSha256": "8dece95ab9c5062a62269a6dc85528017fe7b65f71433b612058a52b7e4ff6ea",
+      "requiredCapabilities": [
+        "security.scan"
+      ],
+      "retrySafe": true,
+      "matrixFields": [],
+      "evidenceTypes": [
+        "log"
+      ],
+      "evidenceDefaults": {
+        "onPass": [
+          "log"
+        ],
+        "onFail": [
+          "log"
+        ],
+        "onError": [
+          "log"
+        ]
+      }
+    },
+    {
+      "registrationId": "kubeclaw.security-providers:kubernetes-runtime",
+      "contractId": "kubeclaw.kubernetes-runtime-security@1",
+      "module": "src/kubernetes-runtime.js",
+      "export": "provider",
+      "sourceSchemaSha256": "8dece95ab9c5062a62269a6dc85528017fe7b65f71433b612058a52b7e4ff6ea",
+      "requiredCapabilities": [
+        "kubernetes.runtime-security"
+      ],
+      "retrySafe": true,
+      "matrixFields": [],
+      "evidenceTypes": [
+        "log"
+      ],
+      "evidenceDefaults": {
+        "onPass": [
+          "log"
+        ],
+        "onFail": [
+          "log"
+        ],
+        "onError": [
+          "log"
+        ]
+      }
+    }
+  ],
+  "qualification": "Actual LOCAL package/schema/source facts; installed roster/role/grant/tool/credential/advisory/image/deployment are not asserted"
+}

@@ -1,0 +1,11 @@
+{
+  "status": 200,
+  "headers": {
+    "referrer-policy": "no-referrer",
+    "permissions-policy": "geolocation=()",
+    "x-custom": "a",
+    "strict-transport-security": "max-age=31536000",
+    "x-frame-options": "deny"
+  },
+  "qualification": "Same actual headers caller/source predicates produce exactly two genuine header findings IF future authenticated endpoint serves this definition; no scanner mock or served response claimed"
+}

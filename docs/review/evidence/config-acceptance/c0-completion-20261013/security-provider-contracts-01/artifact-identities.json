@@ -1,0 +1,2385 @@
+{
+  "qualification": "Frozen security01 additive definition files; manifest excluded from self-hash",
+  "files": [
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/COMMANDS.md",
+      "sha256": "2f851939cac3aff77b3fe686b8938c1ec65dc33c7d688cd8fabbf160c8d73f0b",
+      "bytes": 2058
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/README.md",
+      "sha256": "b98f4774fe901c121d63755ef119aaa2f14037a5e973b95a7c174a7a39d7f55c",
+      "bytes": 5690
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/active-concordance-index.json",
+      "sha256": "81b3e3b4ac1d8d5e304df29c582a5f5c1201628e5a4188dc18c0d40955d97d4b",
+      "bytes": 216357
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/adjudicate-oracles.py",
+      "sha256": "48ae63c76e5974677c05d76e8a78e40c8132a223af2f8cbd70994f60e2c6b044",
+      "bytes": 10898
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/bind-source-package.mjs",
+      "sha256": "077d0ca39d9ad6c1c9a67f051b42ce0e5f85f0538d47c1ccc8f9a4323b083ce0",
+      "bytes": 1665
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/c3-integrated-reference-generation.json",
+      "sha256": "f8d9d08f60acfaf884c183b560398f018b5463b52a984214a4bbaa4d75dc993f",
+      "bytes": 1941
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/c3-registry-peer-reference-contract.json",
+      "sha256": "d1ba44788070a8300c6081fb448184d8cba8d3a38a6d20ff11583cb64bfd38c2",
+      "bytes": 3889
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/case-definitions.json",
+      "sha256": "c2851120b2fd2a6068407a38b7cef810260369e52e2e4732c3339db45bd72265",
+      "bytes": 12686009
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/check-definition.mjs",
+      "sha256": "563b1e57dddaa480fb21ba9699682ec8f0264d311c974afe4c1c889c07c7e705",
+      "bytes": 24528
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/collect-final-receipt.py",
+      "sha256": "bad554a2473ff8c1477786c1ec56e59b20fdbe334a95515a51baf6426256f715",
+      "bytes": 5485
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/commands-and-exits.json",
+      "sha256": "8e267c171fbe66e2be0446c04d100e0b90d9db9996f12827241eef037ef1ffd3",
+      "bytes": 980
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/config/components/buster-engine.config.json",
+      "sha256": "849d4848f2dccfe19d5d6c4a421b6001ee0f59ff4905b646b9dd3b93f3b0cc84",
+      "bytes": 1165082
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/config/components/prism-control.config.json",
+      "sha256": "524ca90d6b62c656b5f279c27b8b49250d93869636aa71f73d5891429e01e1e4",
+      "bytes": 4597
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/config/components/prism-execution.config.json",
+      "sha256": "225d2d31235f0996196da2f2b7d25a0605d59087427b997ab487d648ddf89ce3",
+      "bytes": 1606
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/config/components/prism-studio.config.json",
+      "sha256": "b41a9113d26384ee0dd07d5defac180b8a52d67315c738d0a5459c49bead0fac",
+      "bytes": 976
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/config/components/prism-worker.config.json",
+      "sha256": "61da3c7b2b81033ed9c350f593cf1ab58f3630a39b109a9b251f1b2e0ba28220",
+      "bytes": 1581
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/config/components/worker-core.config.json",
+      "sha256": "f59c7ec6798e853f9fb87a494cdd245193c50d19f90275fe5b530706adcb8934",
+      "bytes": 1270
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/config/pipeline.config.json",
+      "sha256": "115f5cf5dd5fb0eecf7852439501998258ae2554ba1b1a3d827ded27ba1017b6",
+      "bytes": 5259
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/config/plugins/kubeclaw.api-flow.config.json",
+      "sha256": "6d0d39c516128aefb8e94edf6c8f68c43caa0bf9aade74628c6fc49d3c5fe917",
+      "bytes": 7218
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/config/plugins/kubeclaw.http.config.json",
+      "sha256": "e8eb48798dd3b126b32962b1e17882109a289420a3ad87d82f65b8aefbe87517",
+      "bytes": 6020
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/config/plugins/kubeclaw.network-http.config.json",
+      "sha256": "26b4fb9495edd6b6c60ff9acbfc866f43e953b9e013781950ff9c6708e4e64c4",
+      "bytes": 6133
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/config/plugins/kubeclaw.openapi.config.json",
+      "sha256": "f575e0431736bb0ff20cd6e6f615b3595ab366c45858dc1712436dabcafe98e3",
+      "bytes": 17513
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/config/plugins/kubeclaw.security-providers.config.json",
+      "sha256": "53bde50ac26c05328b7c09c3a855bfbf5e8aca7760646f5c2511f28b8d6eeb01",
+      "bytes": 954479
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/define.py",
+      "sha256": "5f49dfb4322346eae69ed0663abb2a8cc57118e59f12c64180772adf58dc09f0",
+      "bytes": 23436
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/definition-observations.json",
+      "sha256": "4d29c81bf13fe9106c743943dc0f647314e070595cfccc661283522d8a082fc8",
+      "bytes": 1306776
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/extend-receiving.py",
+      "sha256": "74f0e63054155284f62d9ed5f013c94afc1952566c08f383347ab41d3fa1e29c",
+      "bytes": 10927
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/failed-attempt-01/check-definition.mjs",
+      "sha256": "297faaa07ed4c981cd39ee17505d11b633bc39c0d77aa855ba4cd119d902fc85",
+      "bytes": 18471
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/failed-attempt-01/command.json",
+      "sha256": "4623766a7c5d8443c9e6f1544654064d0df99a13b34536abff39d29f555642ff",
+      "bytes": 393
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/failed-attempt-01/schemas/kubeclaw.security-providers.schema.json",
+      "sha256": "3a059e698139ec0e0c03c3a5528ce9a166c1bd2c3f5185ea1ebf3b8c6f9ec37d",
+      "bytes": 41561
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/failed-attempt-01/schemas/provider-configuration.v2.schema.json",
+      "sha256": "7b6363194cd9d352053eaa63f9c580ee38128eab73e1c6f2a2501bf6c67a44b8",
+      "bytes": 93257
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/failed-attempt-01/stderr",
+      "sha256": "6acdb7c4d8d33e384d3634e9d0aec56ba4ea179507b2d4698d440ffd021d7176",
+      "bytes": 1645
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/failed-attempt-01/stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/field-definitions.json",
+      "sha256": "fa8aa73d2de3d9b0b4cfc37f11785ffe10e363f5b87c4e5d7574798b9f96d3fd",
+      "bytes": 4404568
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/field-receiving-concordance.py",
+      "sha256": "3567a2f40d5b0c975d545db3ce0e05029da0e337ab9f901ccb2f91fd977fe2f2",
+      "bytes": 2750
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/final-conservation-receipt.json",
+      "sha256": "e7a265c167de9f345b5a027d162306e6982b99a21b0a50df13a37136cd96d2d2",
+      "bytes": 1189
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-0a39f16498c38979-A.pipeline.config.json",
+      "sha256": "00de3e692fa48c6dc8f9fabaa0a71c2932e20282258dbe8acbafda7b6a563f7e",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-0a39f16498c38979-B.pipeline.config.json",
+      "sha256": "a1f591a73b5aaa7c163f1edf8d66e788bf8fe29cf866509791abf3a0805172da",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-0c0b02b6fbc2160c-A.pipeline.config.json",
+      "sha256": "ee13070757c6d431d7631c26626fe593e0a23644cfd324c0b5bc86d505a49b11",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-0c0b02b6fbc2160c-B.pipeline.config.json",
+      "sha256": "f65232793c380cc5d8b4e0d348f8bf6558873cb730aff881441f9a1356c57771",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-0da96fe7ba066ccb-A.pipeline.config.json",
+      "sha256": "019cc921ae36344adad964620a9c30e7ccab859d770c7fb3d17ac4fe32b562a5",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-0da96fe7ba066ccb-B.pipeline.config.json",
+      "sha256": "816df04395844b13574045ea1487e62ac67ec111b482b38a941b5bede9891703",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-0e050207e6faa65c-A.pipeline.config.json",
+      "sha256": "525ea01b1e2f457febf7dc1ce73b1421eac44b15da3b3eff401cb2f311f8a7fa",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-0e050207e6faa65c-B.pipeline.config.json",
+      "sha256": "baadb5f806ce53fbef8b61c6f836b4490bd5ad50393d2525f75c151e51d915b3",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-101f7a1f1f29236a-A.pipeline.config.json",
+      "sha256": "3802f3b4ffa36bb06f473a7d937be0d85a2a2b8d565d76101fa21be786312ec8",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-101f7a1f1f29236a-B.pipeline.config.json",
+      "sha256": "e417e609d01d7819becb794a7a1aa3ef0910088cadd475201ed39af8caf2661e",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-1242f6b3245f130e-A.pipeline.config.json",
+      "sha256": "324ab15b82cd168a051d8c8906811cb7c31b74d06fec82201485b755f1be3a43",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-163ebc138c768e21-A.pipeline.config.json",
+      "sha256": "4dae7c74bb11de4b2f530e68df7be2a80beeae38c413c0f5f6d281cbede1991b",
+      "bytes": 5365
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-163ebc138c768e21-B.pipeline.config.json",
+      "sha256": "b4daa6e419a0c899be5d1f33f979354fdaf96d0199fc9cb9fbbacfc866982d58",
+      "bytes": 5365
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-25155a8525353895-A.pipeline.config.json",
+      "sha256": "275bc7d1045515b36af52ba37d87dd07d50fd9bb6efb9dad00d28b809217ee83",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-25155a8525353895-B.pipeline.config.json",
+      "sha256": "54a016840b1ac3165b32ead9a6c1e8d6cb9e676b8a656d2430aa21d2cc50f117",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-2672b24a1df6464d-A.pipeline.config.json",
+      "sha256": "47cdba770aad3590bc55b7936d7183ba28d243fbf482884e4082bb72f9cd3ec9",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-2672b24a1df6464d-B.pipeline.config.json",
+      "sha256": "0bfe168edc1cc936146bad4d8aa7397745490d2b379179304af6615d5e53f5ba",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-2dc4f91b61e79184-A.pipeline.config.json",
+      "sha256": "aa0c524ee71b359cc960ca372c6b31cfbe66b06dcf838b663d35b2efcfd053eb",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-2dc4f91b61e79184-B.pipeline.config.json",
+      "sha256": "efa9db73a718314d707f1ca5e574a658fc00adc8846ce319165abda8b651c58a",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-2fe8190f12f15510-A.pipeline.config.json",
+      "sha256": "8928f84cf86d550992b9c268bfcee42e4ec38ebbb40e23cef7b3c05c1af0b2f3",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-2fe8190f12f15510-B.pipeline.config.json",
+      "sha256": "cdffeee084de2f01259aa3e10a2615cb2ea49262ce6176fce7dd0c42f687193c",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-376a55c52779beed-A.pipeline.config.json",
+      "sha256": "02b0704b6883422610ca0ae6436a03ba76a9226cb0608c0a6cd74e3883b00608",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-376a55c52779beed-B.pipeline.config.json",
+      "sha256": "e290069d6b4742d27cc8f29f01561978ee187b4e4abc128860d41bf97ea42ecf",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-3caa1e915a125dcd-A.pipeline.config.json",
+      "sha256": "a002138b2adfbe5ebd52ecd2e469ae09e811a0989ff0dcfdda0bc016594d731e",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-3caa1e915a125dcd-B.pipeline.config.json",
+      "sha256": "2eb42bfc409eef7e3769e1224baddf34936f769eba329b1030856baced2af9ae",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-3f66e997ecc380c1-A.pipeline.config.json",
+      "sha256": "ca4830f2a9408116de4f83ca7a73c52f3c7fedc217dcef0abefdf7f8fc3cdeed",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-3f66e997ecc380c1-B.pipeline.config.json",
+      "sha256": "ee7438a56d672329adc310fa28c987b3ee1df9bfb18625c1e6c3320b5f92ce77",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-4a23015d6ca86669-A.pipeline.config.json",
+      "sha256": "44cb5365d76ddb348c4be761799003720f5eb6f17fd3efbdbb77186088467610",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-4a23015d6ca86669-B.pipeline.config.json",
+      "sha256": "ecf16e05c65ea1a17ac2421f46cd5d51a2822d493f0b39deb198c14ea6869e93",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-4c38b23dda98be93-A.pipeline.config.json",
+      "sha256": "115f5cf5dd5fb0eecf7852439501998258ae2554ba1b1a3d827ded27ba1017b6",
+      "bytes": 5259
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-4c38b23dda98be93-B.pipeline.config.json",
+      "sha256": "115f5cf5dd5fb0eecf7852439501998258ae2554ba1b1a3d827ded27ba1017b6",
+      "bytes": 5259
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-5118b56e0742663b-A.pipeline.config.json",
+      "sha256": "99fc63ba40f0b8bfd4b83caa29f8790ce8c9658f6e30df97193dde7682777f81",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-5118b56e0742663b-B.pipeline.config.json",
+      "sha256": "0e1072477b25abd531837711d88fe9bfed612e1789fd71a2bfc88b77572e0fc1",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-513bbd46b45156b7-A.pipeline.config.json",
+      "sha256": "fd0be49da3bad8543c76b9ff4f4e9d5964eda01c265cc282f0dfd35e6d03dcb4",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-513bbd46b45156b7-B.pipeline.config.json",
+      "sha256": "4ae8c8acb74302341d087ca39b07b28b74948f48a6c0ee6b490d04b9d5df6d7b",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-52731740c2eb92d2-A.pipeline.config.json",
+      "sha256": "8f0c838832ed596df20468204919e30e3cdc6dbda7156228ea8c7f5de592831c",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-52731740c2eb92d2-B.pipeline.config.json",
+      "sha256": "eb7802c96a483b8a33c653bbd14861c6acbc9098e13f525c4e113329738515be",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-53653aa9d3f03c8f-A.pipeline.config.json",
+      "sha256": "5c7f268c2c8d0d10d8543169576b5f44309ed0765a7dfebb0ff623ebabb9d67a",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-53653aa9d3f03c8f-B.pipeline.config.json",
+      "sha256": "1cc8944a79be1cfb0074a6f676089c458141c6cee5a15ea4ed70b9ec0a383851",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-584baa9f0f15c058-A.pipeline.config.json",
+      "sha256": "b6c5220f5184db64ebc19e8fb97be4c90ff5388e74f2d90c5d02782fe258fbd1",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-584baa9f0f15c058-B.pipeline.config.json",
+      "sha256": "5c013ef67d24d1b39155c5cc46652c4d30b6b065865d3392eee1c072f9ff5903",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-58a77efdd8cd5820-A.pipeline.config.json",
+      "sha256": "4b5a8c9b5a663635b52ec750c5b4d8121ad44db1a619a5eb410ee9545609ab3e",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-58a77efdd8cd5820-B.pipeline.config.json",
+      "sha256": "1844db088f9879a1d83df41776d6aff12436472316569cbd72d7d3702b3e7f15",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-611f5b01895a7c90-A.pipeline.config.json",
+      "sha256": "bac50f797156d0a752ebeb10355d7ab825aca1be1677e0f6b1747cd5aa6e6989",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-611f5b01895a7c90-B.pipeline.config.json",
+      "sha256": "19a7475bcf8b3ee2129b2058dd388bfa9222c63a85ba25c3120e6d4df1b5d062",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-6afb26eb1a7b7271-A.pipeline.config.json",
+      "sha256": "9abe5c62e98dc61b626d88b3035fc63ae645a1d12d3b824a4304fc5336b41e3f",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-6afb26eb1a7b7271-B.pipeline.config.json",
+      "sha256": "8f39bd8eaeb3da508ed390ddbdccbba0cbdb7c3442dad5cfda267ae9bf6bbb84",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-6b059c9d6ad52058-A.pipeline.config.json",
+      "sha256": "e13b7012122a1fe26565bdadb801f1793c23146124733764f5aad83e27f327b4",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-6b059c9d6ad52058-B.pipeline.config.json",
+      "sha256": "1d13f9bf9fbee62e488db387a47aaf1d9c91ce8af1031e86894ab62dfc7c813a",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-6d1bc088852536a7-A.pipeline.config.json",
+      "sha256": "332f51b0b1a27abb3e82f350806500ae42f50ce56dc0feb58fdc04518b9dd7c5",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-6eac87138fc57ac9-A.pipeline.config.json",
+      "sha256": "115f5cf5dd5fb0eecf7852439501998258ae2554ba1b1a3d827ded27ba1017b6",
+      "bytes": 5259
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-6eac87138fc57ac9-B.pipeline.config.json",
+      "sha256": "115f5cf5dd5fb0eecf7852439501998258ae2554ba1b1a3d827ded27ba1017b6",
+      "bytes": 5259
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-6ecf22c1afd37e91-A.pipeline.config.json",
+      "sha256": "75c2923138043e2d062a373857f26cdae160444fce4eb051199807ab4159425b",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-6ecf22c1afd37e91-B.pipeline.config.json",
+      "sha256": "6462b541fd4b4ec67f7935a8a637dbf91a565f2aa757e1b6f5b7ee86d31c9025",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-76d0d20d46b9a8e6-A.pipeline.config.json",
+      "sha256": "c6a52a328f71f3215fa862ff6fb9ecc71129eb5a12ee6f19bc012a0e09d7dcf6",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-773179d734f2eb77-A.pipeline.config.json",
+      "sha256": "a5b2b85f424677a3e096173a0942b9873476637825b8c3604c44e2554e3d1d65",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-773179d734f2eb77-B.pipeline.config.json",
+      "sha256": "2ca257c8d4953c7c0651e694356aef530a1efd3a14e130120b6d1ca8cc16747e",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-81f4bdf5f3872b9e-A.pipeline.config.json",
+      "sha256": "c0217b2508097c1ecec232b3cb525483e9d5026831c3241cec31c41c7b1caf57",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-81f4bdf5f3872b9e-B.pipeline.config.json",
+      "sha256": "24f213912d3fb46a8ad3cd93a08bbdd296824d6116be659531894224b86ead9c",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-8a73cb4fa2939ad4-A.pipeline.config.json",
+      "sha256": "5d1b2953f1d97da05f7cd8e24e3bb086706e556c81f0ed4b800ad551d59fcae8",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-8a73cb4fa2939ad4-B.pipeline.config.json",
+      "sha256": "1d15e6ca797e511c0c938888a05b9f7bd49dfcfca54cdff0907a99d05355d6c9",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-8d1e26bc5360c737-A.pipeline.config.json",
+      "sha256": "4bde897f0286bc80f9fbceb99547c9ac281432a3883a23772d27db32a96ba576",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-8d1e26bc5360c737-B.pipeline.config.json",
+      "sha256": "a22e7af976ce84b053e6a7d74be73ae8b820be14fe64ad4632f91c9dab2871c0",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-8de947a02be68652-A.pipeline.config.json",
+      "sha256": "3d7aaed8df4e166d9710938626fd97a79de562edc985989c26a50b313ab85644",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-8de947a02be68652-B.pipeline.config.json",
+      "sha256": "86bfbdb224564143792206ccf98b223f5a2f7c97816f572fed28ea18b7af3a2b",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-9370858078281283-A.pipeline.config.json",
+      "sha256": "11dc62556d4f7a381ee2dd321c41d376edd9664b6e15cc70fa945b377adfbf30",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-9370858078281283-B.pipeline.config.json",
+      "sha256": "d2a6fa4e72cbc365a3efb962647c0ec307a0cc77cb1aec27125bd53750177956",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-93c925a29f21dd8d-A.pipeline.config.json",
+      "sha256": "04f760ffcf600307ff5b68ba6cc63706b5d804b711fb87ff2e0810ce13817305",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-93c925a29f21dd8d-B.pipeline.config.json",
+      "sha256": "223172d535a7f9380af12df71abcad481900890d3ce4fd4c176baa139225ff2b",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-95a1b17121581a49-A.pipeline.config.json",
+      "sha256": "b814554d39364d58dbfbcea2e69fd616fb463548d01f0a266fe236c498d141ee",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-95a1b17121581a49-B.pipeline.config.json",
+      "sha256": "59b06b3864b66c879938ec00c1761cdd89d72eb158d8c9c53ab6018fecebf6b7",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-95d37d46c3d99337-A.pipeline.config.json",
+      "sha256": "debe9dd24ffe060477170b2f6efaf14246f11fa038f000c733b58e7140c73899",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-95d37d46c3d99337-B.pipeline.config.json",
+      "sha256": "49574acf504d44099630b1023b390fc325d45ec52d4da5e753cb76b9edb28481",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-9941fbebdaea1c41-A.pipeline.config.json",
+      "sha256": "081bba16e0e3e7ab5d4daff62573e9c1eb44c4b7a9805165b40a96c7f3b72025",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-9941fbebdaea1c41-B.pipeline.config.json",
+      "sha256": "1975ea1db12e98e1c01fe2e57ef157db5bb61089d1a00baa007c33ba5aa1385d",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-MATRIXFIELDS-A.pipeline.config.json",
+      "sha256": "d096c448171ecb222358aac92339bc77844ac66e25437f1c780c2f9a65f9614a",
+      "bytes": 5654
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-RETRYSAFE-A.pipeline.config.json",
+      "sha256": "1f9e22ec468541119b79d276065cb58bccd2d0ac79b593a7677fd304e69eb3f4",
+      "bytes": 5639
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-RETRYSAFE-B.pipeline.config.json",
+      "sha256": "426e24bd7f83d4ffbaa1c74d19ae83c9c3da7a8949a685c65dff978dc8c7ae0f",
+      "bytes": 5639
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-HEADERS-MATRIXFIELDS-A.pipeline.config.json",
+      "sha256": "6b9a680ca0b8155c7456c02251c0600ab16f328723568e4fbbf743809e206eb6",
+      "bytes": 5609
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-HEADERS-RETRYSAFE-A.pipeline.config.json",
+      "sha256": "aa6b9e23eae3fe81de812d33da9294288a7ddca466e926e6609e36a3b03e3a3d",
+      "bytes": 5594
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-HEADERS-RETRYSAFE-B.pipeline.config.json",
+      "sha256": "3bbce0118a99e316014c1acca22445c044436b3b8d7160cfa185927f28020252",
+      "bytes": 5594
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-MATRIXFIELDS-A.pipeline.config.json",
+      "sha256": "fa36938be87e1f1a1d61552f64dd5bb2f65cf7f61ebe74a3aef6ec6cb4332a9f",
+      "bytes": 5629
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-RETRYSAFE-A.pipeline.config.json",
+      "sha256": "510206adf80a0c8d990e5d317962535ae445ce0ead9240f6deb9d2fd64fa6fb6",
+      "bytes": 5614
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-RETRYSAFE-B.pipeline.config.json",
+      "sha256": "2bee90d1aa8e468adc00ad81abdf4cce87447ee9a43ea059600adecceb6f67da",
+      "bytes": 5614
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-MATRIXFIELDS-A.pipeline.config.json",
+      "sha256": "121f7001bec661332b1bcf90291179c2af02cfafbd9d730bc840c1ca3ce8b905",
+      "bytes": 5659
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-RETRYSAFE-A.pipeline.config.json",
+      "sha256": "37433738c3d6c22e66e1837d428381bc8e72775e26beda757282e6780f7e864e",
+      "bytes": 5644
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-RETRYSAFE-B.pipeline.config.json",
+      "sha256": "a999a74532c24bd15e24d2456d143e26b565473e59818b6f77a13d15241ded85",
+      "bytes": 5644
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-MATRIXFIELDS-A.pipeline.config.json",
+      "sha256": "7d8e9797dfa11bf39336d13ec16ff10a7c8eed6e0133a526c248c6f16dec5f4d",
+      "bytes": 5664
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-RETRYSAFE-A.pipeline.config.json",
+      "sha256": "324bb83aa5cd0c12637f21e476c8675c034b0ad40c2d6268d5d11ac4b8a5acf6",
+      "bytes": 5649
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-RETRYSAFE-B.pipeline.config.json",
+      "sha256": "fa6463a25ac44720f4420bd174bc687532f2d35ccf2e1959cf4fea781d7af187",
+      "bytes": 5649
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONERROR-A.pipeline.config.json",
+      "sha256": "c200ba2031573bf486bc11d755dc0a9a7f1efb60816a3ee482e7f0011abf4319",
+      "bytes": 5714
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONFAIL-A.pipeline.config.json",
+      "sha256": "d0e6f6cee486d0d76a536a671e24b4e203f0c13b6014a0ecd12f4c64e033b924",
+      "bytes": 5709
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONPASS-A.pipeline.config.json",
+      "sha256": "06c781d12e98d35d67add0cd5b393e732233ad6bee25dabbf00ff913d0bf3b63",
+      "bytes": 5709
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONERROR-A.pipeline.config.json",
+      "sha256": "2271389d5a293f42eb3bbb0d369369b7f49de6db7d4a9c71543e6ded36de6d59",
+      "bytes": 5669
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONFAIL-A.pipeline.config.json",
+      "sha256": "d546c1256e17819740441426b6277bacc496c20835dffbfc478073a4a3c2742b",
+      "bytes": 5664
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONPASS-A.pipeline.config.json",
+      "sha256": "64cd71e0c14c8b3d53bd130a56c4941d2fc4034cd8fab6a99a53d2085872b835",
+      "bytes": 5664
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONERROR-A.pipeline.config.json",
+      "sha256": "6b2dae933473c07c3cabb06308bb8cb9f00fd97e60aaa13acd7ccc6fa22b1a86",
+      "bytes": 5689
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONFAIL-A.pipeline.config.json",
+      "sha256": "a10529e9709e833ec699202987dbd4d5ea133abee18259e973c3e2961f78816a",
+      "bytes": 5684
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONPASS-A.pipeline.config.json",
+      "sha256": "8e185bed52e14f3669958fdb060b601cba396f91ba8b63727a4b938b36392e53",
+      "bytes": 5684
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONERROR-A.pipeline.config.json",
+      "sha256": "a05e1bdf3554f977c8bed509df22be9d6186d927b186cc077ebfc4c35de5ad20",
+      "bytes": 5719
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONFAIL-A.pipeline.config.json",
+      "sha256": "0153751f8ee714aa5c4e13e8f95c70cad4124caa193c662ac5897c7ea6471cfd",
+      "bytes": 5714
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONPASS-A.pipeline.config.json",
+      "sha256": "7089e73a7cae6873e2e17d0f4ab094703f44be41c69fef9833a90ee8f4df3e1b",
+      "bytes": 5714
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONERROR-A.pipeline.config.json",
+      "sha256": "d7ceaf36a78923f4667b0ad0555a55cddc8a2bcfb0ad03abb2786df233e152f5",
+      "bytes": 5724
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONFAIL-A.pipeline.config.json",
+      "sha256": "bdb8244ffaccf5b03793de32985556fa48c1c81046fb54ca334ae96db8691553",
+      "bytes": 5719
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONPASS-A.pipeline.config.json",
+      "sha256": "94c2724da8ebe467e26441c434d1bb6ff201a5bf43fff581a5aea8e9f5ef00e8",
+      "bytes": 5719
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-SECURITY-COMMON-BLOCKACTIVETHREATS-A.pipeline.config.json",
+      "sha256": "abf59d404ac309ecd67a604ee81b357f4dc7ecc97a7a4a5ce364756c9a1ae954",
+      "bytes": 5449
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-SECURITY-COMMON-BLOCKACTIVETHREATS-B.pipeline.config.json",
+      "sha256": "43032215f4d57078af989e826e942f49137d696c3a2097506d738260e98d05c6",
+      "bytes": 5449
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-SECURITY-COMMON-BLOCKINGSEVERITIES-A.pipeline.config.json",
+      "sha256": "c93284240ac1fb4bfb1b5178d142468066b2b1e1ae4fd96ad1ca107e951e0676",
+      "bytes": 5449
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-SECURITY-COMMON-BLOCKINGSEVERITIES-B.pipeline.config.json",
+      "sha256": "f089b2271c9a745b88a4f8a561c1e12dabbffcd3f3d104d1659df1a34c6b96ea",
+      "bytes": 5449
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-SECURITY-COMMON-BLOCKMISSINGFIXES-A.pipeline.config.json",
+      "sha256": "1562e72352879d9bea8db9f24391ded5f41b9adb1a1844bbcb723485537d5f24",
+      "bytes": 5444
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-SECURITY-COMMON-BLOCKMISSINGFIXES-B.pipeline.config.json",
+      "sha256": "d407191a57c136eb744a35057416805ed55fec6535af3a16747fa849b5655fab",
+      "bytes": 5444
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-a3dc4204fd2dbc99-A.pipeline.config.json",
+      "sha256": "51102f07d51b106cd42a5095546905ce7a12ee835097ff8ece30430bcc16155a",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-a3dc4204fd2dbc99-B.pipeline.config.json",
+      "sha256": "279befa046db57c1915f33cec478b27b5de1ff20a0c01636bcd86e9a4cf146e1",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-ae78d041c3d0fbd6-A.pipeline.config.json",
+      "sha256": "5347809888a6f54ea3d480d5eeea412c288aacd066a0e680cf65fb17a90762df",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-bd7eee80bc8feca2-A.pipeline.config.json",
+      "sha256": "ad9da43406a51dda06feb6e681b3ddde329a5628414c9e4333b1c93192a3466b",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-bd7eee80bc8feca2-B.pipeline.config.json",
+      "sha256": "d1b2ab068ec9a461f91077ec08e97629f26e3ec68aab891a5c0a4280278c031f",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-c00914a2402f91bf-A.pipeline.config.json",
+      "sha256": "2c318f75130bee3f56e89a979cab97760fd80d3cbdaf2f0e1c95068d3ce69413",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-c00914a2402f91bf-B.pipeline.config.json",
+      "sha256": "1647abf83909aa9b704d6a02c2006998afb0c7752d30b427ff126ef02a29cf00",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-c9bc44d00a7b9c90-A.pipeline.config.json",
+      "sha256": "b1ff8ce6cfaa6a44f554da13681b3d717440e04407fb28c10eb90f778b181da4",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-cc64dd898be55e05-A.pipeline.config.json",
+      "sha256": "05a2b4be8b05e18fbabc56bd1d4d18d4514de47ba3b1af5b470dd3b26e5aa982",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-cc64dd898be55e05-B.pipeline.config.json",
+      "sha256": "d6d610cb82c3bf6f5ea55a21c9590663d6c125dbd1d8419411ee71489b096c81",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-cd92cb7109a38c4a-A.pipeline.config.json",
+      "sha256": "4370ccd9de7e9ae8a2efd3703a9a53693f4a18558bd85bfc4e8379bb48464fa7",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-cd92cb7109a38c4a-B.pipeline.config.json",
+      "sha256": "f09db05f683420db5acba19958f87b5ce641c974c4b965250bd416cab44197f7",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-cdfcefd44e87996b-A.pipeline.config.json",
+      "sha256": "2a4dc4d24bcf56565a29d0c5409916a180e2cb157c17b302253fdac7d5caf491",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-cdfcefd44e87996b-B.pipeline.config.json",
+      "sha256": "6fe6adcc9de1e61df4eefa2b424b12325c337bd318f80758dd30ebbad82f035d",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-d233d3039be3adc4-A.pipeline.config.json",
+      "sha256": "115f5cf5dd5fb0eecf7852439501998258ae2554ba1b1a3d827ded27ba1017b6",
+      "bytes": 5259
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-d233d3039be3adc4-B.pipeline.config.json",
+      "sha256": "115f5cf5dd5fb0eecf7852439501998258ae2554ba1b1a3d827ded27ba1017b6",
+      "bytes": 5259
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-d852318fd5b15892-A.pipeline.config.json",
+      "sha256": "4906accdc5a143985e0ded01d2f455b288f1037434a3f54cb8a9ba68b10d893f",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-d852318fd5b15892-B.pipeline.config.json",
+      "sha256": "421bcaad8056a62c0171c445ad73a26eee979c3d189f6a7b281124837ad411ae",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-d87b67b33610f619-A.pipeline.config.json",
+      "sha256": "5692574ff9e7903d6c815999b150fb28c8e309c136a88921ecb493041ec79fad",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-d87b67b33610f619-B.pipeline.config.json",
+      "sha256": "f0168900bf0e95558298e8f94c20972c654ed177477fe5f0c0890c2ca88c825d",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-d912c283aeea31d8-A.pipeline.config.json",
+      "sha256": "0731e6f50db878edcaa3bf648c79e2334884c3c9a19176eff077d5858b74d1af",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-d912c283aeea31d8-B.pipeline.config.json",
+      "sha256": "50ec4d4444b91d96ae88686c2417d80ef9fbb24bd99b98388ee00456dcf5f43b",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-e702d189d1282e3b-A.pipeline.config.json",
+      "sha256": "42701ee461d08320f0460afc963a5962012a908c72d30039f796be6f44282cc4",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-e702d189d1282e3b-B.pipeline.config.json",
+      "sha256": "4e7bb2a406fa3a0a596ceca604488efea0b15b2203c6530d4de2000b74f2afc0",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-e8358fe85c80d3d0-A.pipeline.config.json",
+      "sha256": "c8f8ee14fd366e393c3b411712b1047d4f8e4ebd69dd8ac59d9a3564c70cb06c",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-e8358fe85c80d3d0-B.pipeline.config.json",
+      "sha256": "753d14b25d450515ae5e6b845a490a287e56bd03859b2863538d26efce8bf061",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-ea0bcd6957dbc556-A.pipeline.config.json",
+      "sha256": "b60023b217f26edd472edad4705315a962dfaea85badbfaea1217fda4d1af17a",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-ea0bcd6957dbc556-B.pipeline.config.json",
+      "sha256": "94a65e2ba73f150c276394a329c5496e442ae8b7bc089d068866f34f1440ab8e",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-ebb85facca8d1b1b-A.pipeline.config.json",
+      "sha256": "c6fdb91efbb7c65ca816f384c19e074750fa5db5eeafba915ff373efcd522db4",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-ebb85facca8d1b1b-B.pipeline.config.json",
+      "sha256": "69557920fc9af1d9fbb461ea031025a8993b09ab953a4f92229a09dc638313f0",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-ec0fc91072a8b630-A.pipeline.config.json",
+      "sha256": "620bef71a80929c9f3cfea7a3bf618494167c7a331c4a8c70e0c3cb483b82741",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-ec0fc91072a8b630-B.pipeline.config.json",
+      "sha256": "d29ab5eb51dc0ecad951d482aca5728863d413268756155051076d76222c9a1d",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-ef66623413223fef-A.pipeline.config.json",
+      "sha256": "954b2e6f82869da2037d1dbba068e3e3b3189a1101d4b2777b4d8bfae6eb38be",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-ef66623413223fef-B.pipeline.config.json",
+      "sha256": "95daec03a62de2a11805865e9d0cd851f1e479fbd55d7fd7de774503caaad696",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-f036e66205a0fa61-A.pipeline.config.json",
+      "sha256": "6ee6bd9446f29e5ef67fa954f93c31b0b70fe2c18469edb2bd4a8b8ec3c65f16",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-f036e66205a0fa61-B.pipeline.config.json",
+      "sha256": "4026d8c90e7c0cf57dc19faa1521beb437f597f527bb685fbadd7115a68ab11f",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-f365121af3c2af9e-A.pipeline.config.json",
+      "sha256": "ce5cfe23e354f3c673f8e69b4c6fa368c42dae1665093e1cd039b42f7fed11fd",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-f365121af3c2af9e-B.pipeline.config.json",
+      "sha256": "2128f8bc3c5f1f38c0dddae2e8e8f05a43bcbe6d8ec8493f7ea2dfc2189c279d",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-f4e73c3bb3c19c65-A.pipeline.config.json",
+      "sha256": "15c93f928589f6e4ee445e63375098205e5573b9848cd8ada979181826a8886b",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-f4e73c3bb3c19c65-B.pipeline.config.json",
+      "sha256": "02d445fccd555d5d2276e5245d44a5607539935e089d2da409f790dc39a83dc8",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-ffc33c06d6b6a1c2-A.pipeline.config.json",
+      "sha256": "5475afc73598cc725d186f77cf242c3b62ae1723f5551910b90b1389d3b3cb52",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/RT-ffc33c06d6b6a1c2-B.pipeline.config.json",
+      "sha256": "e7bab974b8bad9def538cacff559e538ee3d2d19ba138eb9c31da54a6324caf6",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/source-maximumFindings-A.pipeline.config.json",
+      "sha256": "b55967ee68ecf8b54d84d5f45861e1e5e8822389630c6a6075d8b3ecd0eef4d3",
+      "bytes": 5374
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/source-maximumFindings-B.pipeline.config.json",
+      "sha256": "dcc4ac5c3b8f68e9791be3a38171040da28dd874cc836ec312c59ac5a7be1c58",
+      "bytes": 5374
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/source-maximumPaths-A.pipeline.config.json",
+      "sha256": "86cad442b999f25f75d9e2eda9da125d2681c91d41a721cb843c604d799371d1",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/source-maximumPaths-B.pipeline.config.json",
+      "sha256": "d7e13a8a41a446d00a74e3387262427ae1b88539d16aaeb780ddf6c3d596668b",
+      "bytes": 5359
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/source-maximumResponseBytes-A.pipeline.config.json",
+      "sha256": "347b1098ab64e64da0f51f46ba17812d74179c6629dc922258b1b5c5840a1ec9",
+      "bytes": 5399
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/source-maximumResponseBytes-B.pipeline.config.json",
+      "sha256": "679ac9fa9dce8d2ebfd1d8e99ca9e0aadbd936f843c4cea46dcf4d081789c56d",
+      "bytes": 5399
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/source-preset-hsts-age-A.pipeline.config.json",
+      "sha256": "9742208613de733680ca4df458cda87d244795d4d5ed26b120d824eda9577d27",
+      "bytes": 5380
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/source-preset-hsts-age-B.pipeline.config.json",
+      "sha256": "deb04024502711c06b2d98a886f74a177e170de3384a3354660475ce2b59636c",
+      "bytes": 5380
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/source-preset-nosniff-A.pipeline.config.json",
+      "sha256": "766e47d595d8fecdb47190566a7c1833702ab1f4301066444ed606fa3290285b",
+      "bytes": 5369
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/entries/source-preset-nosniff-B.pipeline.config.json",
+      "sha256": "12c757224a7e2c7b4cafc946de71ddbd06b3eeaa413d2ed2973fd47ba2a46ce5",
+      "bytes": 5369
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/generated/dependency-trivy.provider-configuration.v2.json",
+      "sha256": "4a6f1aff78f7a90af349b241d25ba193639130bbf9abe296bf86a44b18d84cba",
+      "bytes": 2416
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/generated/headers.provider-configuration.v2.json",
+      "sha256": "e711b8bcd3a38326355360c114921c170d96d45ac522167da1dae5164d5e7f10",
+      "bytes": 4397
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/generated/image-trivy.provider-configuration.v2.json",
+      "sha256": "bc3c53f76c45acf73c4a2d4e3f7b0c91cd87ff941b35dad8fd8d5f97a599a334",
+      "bytes": 2253
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/generated/kubernetes-policy.provider-configuration.v2.json",
+      "sha256": "61522aa51ee7bbcdc1a1c4d6e7a51c7b37a7a742547b5b0bed3650b3aedc35cd",
+      "bytes": 2269
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/generated/kubernetes-runtime.provider-configuration.v2.json",
+      "sha256": "f133b4cd622ca09298366593dcf48591fe07ea972939d9a655f5468ef1752b85",
+      "bytes": 2271
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/header-oracles/RT-0da96fe7ba066ccb.json",
+      "sha256": "4e1983faf1f14035e5cf359bde25d59e02a6893d8836e01d8758a64222ac8dee",
+      "bytes": 445
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/header-oracles/RT-101f7a1f1f29236a.json",
+      "sha256": "033397507ebb2a35079a1aaf3daf97c0fa6afe3d528077c85ddad6c7c273e310",
+      "bytes": 483
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/header-oracles/RT-163ebc138c768e21.json",
+      "sha256": "640598e44e791f3d22432d52354ec0159fd81407de401ad12f586851f5e0d4ce",
+      "bytes": 399
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/header-oracles/RT-5118b56e0742663b.json",
+      "sha256": "033397507ebb2a35079a1aaf3daf97c0fa6afe3d528077c85ddad6c7c273e310",
+      "bytes": 483
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/header-oracles/RT-584baa9f0f15c058.json",
+      "sha256": "4aeacf09d210e2885dbefba2a156c176a30689b6159d0de0ca6815f44f2a8d1f",
+      "bytes": 442
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/header-oracles/RT-58a77efdd8cd5820.json",
+      "sha256": "52e3edfd673d36351a4dbb5abd4c8050017f5b2a6998efd5b5513c3f91160ff6",
+      "bytes": 490
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/header-oracles/RT-611f5b01895a7c90.json",
+      "sha256": "9c5782090ba6a0cc94e96af802dc7b8761d439333f460e9855776d13e4057f20",
+      "bytes": 462
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/header-oracles/RT-6ecf22c1afd37e91.json",
+      "sha256": "033397507ebb2a35079a1aaf3daf97c0fa6afe3d528077c85ddad6c7c273e310",
+      "bytes": 483
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/header-oracles/RT-8a73cb4fa2939ad4.json",
+      "sha256": "033397507ebb2a35079a1aaf3daf97c0fa6afe3d528077c85ddad6c7c273e310",
+      "bytes": 483
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/header-oracles/RT-93c925a29f21dd8d.json",
+      "sha256": "033397507ebb2a35079a1aaf3daf97c0fa6afe3d528077c85ddad6c7c273e310",
+      "bytes": 483
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/header-oracles/RT-95a1b17121581a49.json",
+      "sha256": "ead3fc94245a3985976bb2907fc96d856143be7762335482188589355fad101b",
+      "bytes": 477
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/header-oracles/RT-cd92cb7109a38c4a.json",
+      "sha256": "9c5782090ba6a0cc94e96af802dc7b8761d439333f460e9855776d13e4057f20",
+      "bytes": 462
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/header-oracles/RT-d852318fd5b15892.json",
+      "sha256": "033397507ebb2a35079a1aaf3daf97c0fa6afe3d528077c85ddad6c7c273e310",
+      "bytes": 483
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/header-oracles/RT-d87b67b33610f619.json",
+      "sha256": "e74c61a4a761dff94fa0eae04bea244f138ebc59058eb18d50f1d6258b35c3fa",
+      "bytes": 490
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/header-oracles/RT-e702d189d1282e3b.json",
+      "sha256": "4aeacf09d210e2885dbefba2a156c176a30689b6159d0de0ca6815f44f2a8d1f",
+      "bytes": 442
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/header-oracles/RT-ebb85facca8d1b1b.json",
+      "sha256": "9c5782090ba6a0cc94e96af802dc7b8761d439333f460e9855776d13e4057f20",
+      "bytes": 462
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/header-oracles/RT-ef66623413223fef.json",
+      "sha256": "290461a06ce9f882010a841613e9c38312d2ae4f3a3b872dcefaddd9a978709c",
+      "bytes": 483
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/header-oracles/RT-f4e73c3bb3c19c65.json",
+      "sha256": "4e1983faf1f14035e5cf359bde25d59e02a6893d8836e01d8758a64222ac8dee",
+      "bytes": 445
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/header-oracles/source-maximumFindings.json",
+      "sha256": "9eb9525e8aad282fe35f10def4e5e91c96543eb231ce5cdef755a2848e381276",
+      "bytes": 437
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/header-response-headers.json",
+      "sha256": "6aa1dc857ab404af1ca512992a44f0d97891635b2f5449a44c6b1f978036d579",
+      "bytes": 270
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/fixtures/pure-mapped-findings.json",
+      "sha256": "a93165fefecfc124ebd71cf70f6906f37bfa111b970313b20dd196f59026eb27",
+      "bytes": 1155
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/frozen-input-identities.json",
+      "sha256": "f39ae7821080c964e4e303844bc47eee1b4d8e56e6265054020e9ae9089967cb",
+      "bytes": 283345
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/future-command-contracts.json",
+      "sha256": "42e40a1f997689071211ed778ea9980cbce8f595f41ec03708f935cf9d215f0f",
+      "bytes": 5272
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/generated-view-index.json",
+      "sha256": "e4b44d0229a8b0bbeeccf63b438d2a78a0d2ddf6ed706c479eca870d43e9d7d9",
+      "bytes": 1631
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/header-source-oracle-observations.json",
+      "sha256": "4c0f8694cb1f15bb55217e320727fda503b01d5cf83bf08b95dfaabedcfa09e7",
+      "bytes": 49934
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/history/legacy-security02-contracts.json",
+      "sha256": "6bc45d9e1ded329522aa45a6179ee1942f0f24a1f4b6f03114dd945d656cf6a1",
+      "bytes": 1440672
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/history/legacy-security02-owned-controls.json",
+      "sha256": "42a3e0555351c7766d4ec46f4d835283ed8846fb440ee7e4a5ccead5bb36a529",
+      "bytes": 189043
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/history/pre-oracle-refinement-package-profiles.json",
+      "sha256": "a5d287b0607c2cf548c1aa3d604623422f3926637ad81da48e67e86b79794589",
+      "bytes": 955145
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/input-producer-reachability.json",
+      "sha256": "e43769f8f7b97cf1dcfd0e658a3ee9edfa7e47fac48d65a66d86213f1bc9f913",
+      "bytes": 1140
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/logs/final-replay.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/logs/final-replay.stdout",
+      "sha256": "95454b85a86b8de8564f3a349f853e225bb7592ebe4594da6b40647bca7fdc32",
+      "bytes": 145
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/native-resource-association.json",
+      "sha256": "4709520292e6444cc76ee4bac53c60f853680456f3cc88d1698aaacd3c4653e6",
+      "bytes": 3005
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/original-member-oracle-contracts.json",
+      "sha256": "00d0e9cfc2d2128caa84597a7dda034a22aee1af3919954c35132d84965db2e0",
+      "bytes": 195914
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/profile-task-pair-index.json",
+      "sha256": "5b8a0c51a559e25eb678fc24ab30da6fa0f69e7861497b8d9885236e835fc817",
+      "bytes": 58646
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/receiving-abi.md",
+      "sha256": "9ecf35be3481729dce927b9ea838342906ee98393ae5bc0ef488fba93d1e2e95",
+      "bytes": 10237
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/schemas/c3-generated-runtime.schema.json",
+      "sha256": "af8e9bded1aef68ebe88e0ded835b202e0a4591099eda89fa4ea99a31b1b1740",
+      "bytes": 66369
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/schemas/components/buster-engine.schema.json",
+      "sha256": "115982f18efb75f7ea5e2e05a5dee7a574707400469aaf5de4b88721d3b9cb97",
+      "bytes": 97220
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/schemas/components/prism-control.schema.json",
+      "sha256": "235717a7621de85c3933b095b0724c53eb27afa791ed5f094bf47a53bee39d85",
+      "bytes": 74117
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/schemas/components/prism-execution.schema.json",
+      "sha256": "c6dfe88a3518f6819f5840b7e6739796c6fc0e6a0711ab1fc42cf19df4e76cbe",
+      "bytes": 48715
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/schemas/components/prism-studio.schema.json",
+      "sha256": "72921bb9de970f5eccec5b7889a26501c8614e96304179dc54a5eef0375abe7b",
+      "bytes": 44639
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/schemas/components/prism-worker.schema.json",
+      "sha256": "5b7fca15563fb20ad2b5dcef67724b62c68648a67fa7e5b0d34276f5472faa5b",
+      "bytes": 49101
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/schemas/components/worker-core.schema.json",
+      "sha256": "22c665a659ae8af436b642ef8959e3f2ca6aebcefd1e9858ff718386dbd65630",
+      "bytes": 45730
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/schemas/dependency-trivy.evidence-override.schema.json",
+      "sha256": "0c498b79f74c154ad931ea5e98931a0c61f0f6ece948a7bc47039264935a8b82",
+      "bytes": 568
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/schemas/dependency-trivy.task.schema.json",
+      "sha256": "45e1f5671f96b887ac58c43d2bfd5833339e48ae6a5c1f924a54ece66b5eeb01",
+      "bytes": 225
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/schemas/headers.evidence-override.schema.json",
+      "sha256": "0c498b79f74c154ad931ea5e98931a0c61f0f6ece948a7bc47039264935a8b82",
+      "bytes": 568
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/schemas/headers.task.schema.json",
+      "sha256": "038d08f7b9fd41bdf05b4ee30a5e0b02fb56d50a3b7a94040defe09e7bb4707c",
+      "bytes": 333
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/schemas/image-trivy.evidence-override.schema.json",
+      "sha256": "0c498b79f74c154ad931ea5e98931a0c61f0f6ece948a7bc47039264935a8b82",
+      "bytes": 568
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/schemas/image-trivy.task.schema.json",
+      "sha256": "a62b6116959321526dacde1d9e07e191dcd029af2bf5238be3eeac619818719a",
+      "bytes": 94
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/schemas/kubeclaw.api-flow.evidence-override.schema.json",
+      "sha256": "831f8c25a87165080759fb805825d2e1a1fbcf13dd1171bcf7b9600d12ab8eda",
+      "bytes": 1192
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/schemas/kubeclaw.api-flow.schema.json",
+      "sha256": "feda3e42ced475a7d1c7b4e86fb4750946d622d0e801bf6d279da3e7189e5b31",
+      "bytes": 4959
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/schemas/kubeclaw.api-flow.task.schema.json",
+      "sha256": "64be3ae79bed9a97a4fe51615ab66a403413c0f0b09ddf3a2e922a67d6b80198",
+      "bytes": 527
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/schemas/kubeclaw.http.evidence-override.schema.json",
+      "sha256": "03920b7906d96bc998f2423877daa88b9fc178481d509c7f4908c291fc576204",
+      "bytes": 958
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/schemas/kubeclaw.http.schema.json",
+      "sha256": "dbe452c5aebf4fc3fbe7ce1dc68cb05f08193694df23b09f122461f4d87de10c",
+      "bytes": 4231
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/schemas/kubeclaw.http.task.schema.json",
+      "sha256": "a6307a45ffea3b999575efe27ba11c28bc9bb47f82cdfeb71645bcb2706c1e44",
+      "bytes": 1128
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/schemas/kubeclaw.network-http.schema.json",
+      "sha256": "dce2ee99d8e3bbaa073b8cfb5aee20715b96bb2e3838a259a7c05c5ccf982892",
+      "bytes": 3193
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/schemas/kubeclaw.openapi.evidence-override.schema.json",
+      "sha256": "831f8c25a87165080759fb805825d2e1a1fbcf13dd1171bcf7b9600d12ab8eda",
+      "bytes": 1192
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/schemas/kubeclaw.openapi.schema.json",
+      "sha256": "5a0a92ad66b8340579a9523854a8c8e5f4b4014ca72548702eb52a5526d52ac6",
+      "bytes": 5944
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/schemas/kubeclaw.openapi.task.schema.json",
+      "sha256": "a97d83747a5319a85720d444c0c9aa836b4dfe37d01479a9fe4916e3b0c099d8",
+      "bytes": 2832
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/schemas/kubeclaw.security-providers.schema.json",
+      "sha256": "26b0b332f24e7ce6610321be5a089a180057713650a9f1f92597d8af23be3129",
+      "bytes": 42713
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/schemas/kubernetes-policy.evidence-override.schema.json",
+      "sha256": "0c498b79f74c154ad931ea5e98931a0c61f0f6ece948a7bc47039264935a8b82",
+      "bytes": 568
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/schemas/kubernetes-policy.task.schema.json",
+      "sha256": "a62b6116959321526dacde1d9e07e191dcd029af2bf5238be3eeac619818719a",
+      "bytes": 94
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/schemas/kubernetes-runtime.evidence-override.schema.json",
+      "sha256": "0c498b79f74c154ad931ea5e98931a0c61f0f6ece948a7bc47039264935a8b82",
+      "bytes": 568
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/schemas/kubernetes-runtime.task.schema.json",
+      "sha256": "a62b6116959321526dacde1d9e07e191dcd029af2bf5238be3eeac619818719a",
+      "bytes": 94
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/schemas/pipeline-entry.schema.json",
+      "sha256": "4516ecbc2e2aec6971ebbcd9a0df3fbaa3de02e00d8fedb385c037c56588df4e",
+      "bytes": 4467
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/schemas/provider-configuration.v2.schema.json",
+      "sha256": "057d0b99a71c50642d294896b054c751d13817a84b28d11b3aac07c1dc879292",
+      "bytes": 94265
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/scope.json",
+      "sha256": "874fcff3d3d0700701e3c32a6edbbd3a13dce0946af9bc9fb593fe9856876a74",
+      "bytes": 46302
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/source-consumer-contracts.md",
+      "sha256": "7892c18ff71108701d3f3f3d450c8685c8e72bdd89eacec102afddf09e833f00",
+      "bytes": 13564
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/source-coordinates.json",
+      "sha256": "34bdff059015a31870827a48825fd5d3e826bcd5017f45e179311d29830362db",
+      "bytes": 107813
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/source-package-binding.json",
+      "sha256": "65e87c92628691fd799de45956cf0c612e82b835ca37a77a8c46ede2dc556f0f",
+      "bytes": 3780
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/source-pins.json",
+      "sha256": "522bc6aa0f1baafda8703fff0c4c5607e14a3641aec9f608601657d38bf0b872",
+      "bytes": 5791
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/source-processing-contracts.json",
+      "sha256": "8033cf42ac68cc7aef210a911ad019f162c72fc4046394582eb8cfb8fb198574",
+      "bytes": 17799
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/config/dependency-trivy.task.json",
+      "sha256": "158ef057b0d710c38d4b460f334f52f35a801d06b82c6c9c71c53a2bf26d9bbd",
+      "bytes": 152
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/config/headers.task.json",
+      "sha256": "0b9a6a3b9cf7f8154323ca642b6ebaf8d9ba9e29cd0bb8bb1e5ad7093b0113c2",
+      "bytes": 30
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/config/image-trivy.task.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/config/kubernetes-policy.task.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/config/kubernetes-runtime.task.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/config/source-maximumFindings.task.json",
+      "sha256": "0b9a6a3b9cf7f8154323ca642b6ebaf8d9ba9e29cd0bb8bb1e5ad7093b0113c2",
+      "bytes": 30
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/config/source-maximumPaths.task.json",
+      "sha256": "2260ad5ffa15553be5ea06e09adca7eee21a9ec02f96c887e527c94c7ebf296e",
+      "bytes": 40
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/config/source-maximumResponseBytes.task.json",
+      "sha256": "0b9a6a3b9cf7f8154323ca642b6ebaf8d9ba9e29cd0bb8bb1e5ad7093b0113c2",
+      "bytes": 30
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/config/source-preset-hsts-age.task.json",
+      "sha256": "0b9a6a3b9cf7f8154323ca642b6ebaf8d9ba9e29cd0bb8bb1e5ad7093b0113c2",
+      "bytes": 30
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/config/source-preset-nosniff.task.json",
+      "sha256": "0b9a6a3b9cf7f8154323ca642b6ebaf8d9ba9e29cd0bb8bb1e5ad7093b0113c2",
+      "bytes": 30
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/header-body32768.txt",
+      "sha256": "e8ff7e9b520474a6f067f1c6c8a6ba49ec191b9b7ae24ce74ccc1bf7543d250a",
+      "bytes": 32768
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/header-body32769.txt",
+      "sha256": "b929f15ca4f3fa28f54991ed0cb8ac5f430e388ee08bf401a853d8af91e44538",
+      "bytes": 32769
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/input-definition-qualifications.json",
+      "sha256": "630a8263a6107a44474e219cb2a3529481123e7001cc0ded12fb788d23f8b9a9",
+      "bytes": 1892
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/inputs/headers.deployment.json",
+      "sha256": "6219bdd253c58db82a11b1da67d98551e14670aea5a9176f269c6d3e2eca173f",
+      "bytes": 988
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/inputs/headers.https-shape-only.deployment.json",
+      "sha256": "e263bea1cd464161374b047ad2a9f130d6932406a735a1b79dc6957dc1860b69",
+      "bytes": 915
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/inputs/image.json",
+      "sha256": "be0d97619b3a7826c0b87e65fb33d485ffd93fbf98d7c81525a8968ec2b076d4",
+      "bytes": 375
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/inputs/manifest.artifact.json",
+      "sha256": "a0559db623c03bc5d8f77206c9c7e5407d28a016c8b9c33953050567adf8418a",
+      "bytes": 559
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/inputs/runtime.deployment.json",
+      "sha256": "6219bdd253c58db82a11b1da67d98551e14670aea5a9176f269c6d3e2eca173f",
+      "bytes": 988
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-0a39f16498c38979/A.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-0a39f16498c38979/B.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-0c0b02b6fbc2160c/A.json",
+      "sha256": "0b9a6a3b9cf7f8154323ca642b6ebaf8d9ba9e29cd0bb8bb1e5ad7093b0113c2",
+      "bytes": 30
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-0c0b02b6fbc2160c/B.json",
+      "sha256": "0b9a6a3b9cf7f8154323ca642b6ebaf8d9ba9e29cd0bb8bb1e5ad7093b0113c2",
+      "bytes": 30
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-0da96fe7ba066ccb/A.json",
+      "sha256": "0b9a6a3b9cf7f8154323ca642b6ebaf8d9ba9e29cd0bb8bb1e5ad7093b0113c2",
+      "bytes": 30
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-0da96fe7ba066ccb/B.json",
+      "sha256": "0b9a6a3b9cf7f8154323ca642b6ebaf8d9ba9e29cd0bb8bb1e5ad7093b0113c2",
+      "bytes": 30
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-0e050207e6faa65c/A.json",
+      "sha256": "158ef057b0d710c38d4b460f334f52f35a801d06b82c6c9c71c53a2bf26d9bbd",
+      "bytes": 152
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-0e050207e6faa65c/B.json",
+      "sha256": "158ef057b0d710c38d4b460f334f52f35a801d06b82c6c9c71c53a2bf26d9bbd",
+      "bytes": 152
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-101f7a1f1f29236a/A.json",
+      "sha256": "0b9a6a3b9cf7f8154323ca642b6ebaf8d9ba9e29cd0bb8bb1e5ad7093b0113c2",
+      "bytes": 30
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-101f7a1f1f29236a/B.json",
+      "sha256": "0b9a6a3b9cf7f8154323ca642b6ebaf8d9ba9e29cd0bb8bb1e5ad7093b0113c2",
+      "bytes": 30
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-1242f6b3245f130e/A.json",
+      "sha256": "158ef057b0d710c38d4b460f334f52f35a801d06b82c6c9c71c53a2bf26d9bbd",
+      "bytes": 152
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-1242f6b3245f130e/B.json",
+      "sha256": "158ef057b0d710c38d4b460f334f52f35a801d06b82c6c9c71c53a2bf26d9bbd",
+      "bytes": 152
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-163ebc138c768e21/A.json",
+      "sha256": "0b9a6a3b9cf7f8154323ca642b6ebaf8d9ba9e29cd0bb8bb1e5ad7093b0113c2",
+      "bytes": 30
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-163ebc138c768e21/B.json",
+      "sha256": "0b9a6a3b9cf7f8154323ca642b6ebaf8d9ba9e29cd0bb8bb1e5ad7093b0113c2",
+      "bytes": 30
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-25155a8525353895/A.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-25155a8525353895/B.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-2672b24a1df6464d/A.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-2672b24a1df6464d/B.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-2dc4f91b61e79184/A.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-2dc4f91b61e79184/B.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-2fe8190f12f15510/A.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-2fe8190f12f15510/B.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-376a55c52779beed/A.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-376a55c52779beed/B.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-3caa1e915a125dcd/A.json",
+      "sha256": "0b9a6a3b9cf7f8154323ca642b6ebaf8d9ba9e29cd0bb8bb1e5ad7093b0113c2",
+      "bytes": 30
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-3caa1e915a125dcd/B.json",
+      "sha256": "0b9a6a3b9cf7f8154323ca642b6ebaf8d9ba9e29cd0bb8bb1e5ad7093b0113c2",
+      "bytes": 30
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-3f66e997ecc380c1/A.json",
+      "sha256": "158ef057b0d710c38d4b460f334f52f35a801d06b82c6c9c71c53a2bf26d9bbd",
+      "bytes": 152
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-3f66e997ecc380c1/B.json",
+      "sha256": "158ef057b0d710c38d4b460f334f52f35a801d06b82c6c9c71c53a2bf26d9bbd",
+      "bytes": 152
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-4a23015d6ca86669/A.json",
+      "sha256": "158ef057b0d710c38d4b460f334f52f35a801d06b82c6c9c71c53a2bf26d9bbd",
+      "bytes": 152
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-4a23015d6ca86669/B.json",
+      "sha256": "158ef057b0d710c38d4b460f334f52f35a801d06b82c6c9c71c53a2bf26d9bbd",
+      "bytes": 152
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-4c38b23dda98be93/A.json",
+      "sha256": "158ef057b0d710c38d4b460f334f52f35a801d06b82c6c9c71c53a2bf26d9bbd",
+      "bytes": 152
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-4c38b23dda98be93/B.json",
+      "sha256": "be37b315285b712d786b4d8218b7ed4f393e919876ac1c1221d193544cc005a4",
+      "bytes": 157
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-5118b56e0742663b/A.json",
+      "sha256": "0b9a6a3b9cf7f8154323ca642b6ebaf8d9ba9e29cd0bb8bb1e5ad7093b0113c2",
+      "bytes": 30
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-5118b56e0742663b/B.json",
+      "sha256": "0b9a6a3b9cf7f8154323ca642b6ebaf8d9ba9e29cd0bb8bb1e5ad7093b0113c2",
+      "bytes": 30
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-513bbd46b45156b7/A.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-513bbd46b45156b7/B.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-52731740c2eb92d2/A.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-52731740c2eb92d2/B.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-53653aa9d3f03c8f/A.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-53653aa9d3f03c8f/B.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-584baa9f0f15c058/A.json",
+      "sha256": "0b9a6a3b9cf7f8154323ca642b6ebaf8d9ba9e29cd0bb8bb1e5ad7093b0113c2",
+      "bytes": 30
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-584baa9f0f15c058/B.json",
+      "sha256": "0b9a6a3b9cf7f8154323ca642b6ebaf8d9ba9e29cd0bb8bb1e5ad7093b0113c2",
+      "bytes": 30
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-58a77efdd8cd5820/A.json",
+      "sha256": "0b9a6a3b9cf7f8154323ca642b6ebaf8d9ba9e29cd0bb8bb1e5ad7093b0113c2",
+      "bytes": 30
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-58a77efdd8cd5820/B.json",
+      "sha256": "0b9a6a3b9cf7f8154323ca642b6ebaf8d9ba9e29cd0bb8bb1e5ad7093b0113c2",
+      "bytes": 30
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-611f5b01895a7c90/A.json",
+      "sha256": "0b9a6a3b9cf7f8154323ca642b6ebaf8d9ba9e29cd0bb8bb1e5ad7093b0113c2",
+      "bytes": 30
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-611f5b01895a7c90/B.json",
+      "sha256": "0b9a6a3b9cf7f8154323ca642b6ebaf8d9ba9e29cd0bb8bb1e5ad7093b0113c2",
+      "bytes": 30
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-6afb26eb1a7b7271/A.json",
+      "sha256": "0b9a6a3b9cf7f8154323ca642b6ebaf8d9ba9e29cd0bb8bb1e5ad7093b0113c2",
+      "bytes": 30
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-6afb26eb1a7b7271/B.json",
+      "sha256": "0b9a6a3b9cf7f8154323ca642b6ebaf8d9ba9e29cd0bb8bb1e5ad7093b0113c2",
+      "bytes": 30
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-6b059c9d6ad52058/A.json",
+      "sha256": "0b9a6a3b9cf7f8154323ca642b6ebaf8d9ba9e29cd0bb8bb1e5ad7093b0113c2",
+      "bytes": 30
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-6b059c9d6ad52058/B.json",
+      "sha256": "0b9a6a3b9cf7f8154323ca642b6ebaf8d9ba9e29cd0bb8bb1e5ad7093b0113c2",
+      "bytes": 30
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-6d1bc088852536a7/A.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-6d1bc088852536a7/B.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-6eac87138fc57ac9/A.json",
+      "sha256": "0b9a6a3b9cf7f8154323ca642b6ebaf8d9ba9e29cd0bb8bb1e5ad7093b0113c2",
+      "bytes": 30
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-6eac87138fc57ac9/B.json",
+      "sha256": "5e51d6f35b91e15bc2a0f7690e512fd0f97a0a6919287047598ff646f3664f97",
+      "bytes": 30
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-6ecf22c1afd37e91/A.json",
+      "sha256": "0b9a6a3b9cf7f8154323ca642b6ebaf8d9ba9e29cd0bb8bb1e5ad7093b0113c2",
+      "bytes": 30
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-6ecf22c1afd37e91/B.json",
+      "sha256": "0b9a6a3b9cf7f8154323ca642b6ebaf8d9ba9e29cd0bb8bb1e5ad7093b0113c2",
+      "bytes": 30
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-76d0d20d46b9a8e6/A.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-76d0d20d46b9a8e6/B.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-773179d734f2eb77/A.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-773179d734f2eb77/B.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-81f4bdf5f3872b9e/A.json",
+      "sha256": "158ef057b0d710c38d4b460f334f52f35a801d06b82c6c9c71c53a2bf26d9bbd",
+      "bytes": 152
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-81f4bdf5f3872b9e/B.json",
+      "sha256": "158ef057b0d710c38d4b460f334f52f35a801d06b82c6c9c71c53a2bf26d9bbd",
+      "bytes": 152
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-8a73cb4fa2939ad4/A.json",
+      "sha256": "0b9a6a3b9cf7f8154323ca642b6ebaf8d9ba9e29cd0bb8bb1e5ad7093b0113c2",
+      "bytes": 30
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-8a73cb4fa2939ad4/B.json",
+      "sha256": "0b9a6a3b9cf7f8154323ca642b6ebaf8d9ba9e29cd0bb8bb1e5ad7093b0113c2",
+      "bytes": 30
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-8d1e26bc5360c737/A.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-8d1e26bc5360c737/B.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-8de947a02be68652/A.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-8de947a02be68652/B.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-9370858078281283/A.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-9370858078281283/B.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-93c925a29f21dd8d/A.json",
+      "sha256": "0b9a6a3b9cf7f8154323ca642b6ebaf8d9ba9e29cd0bb8bb1e5ad7093b0113c2",
+      "bytes": 30
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-93c925a29f21dd8d/B.json",
+      "sha256": "0b9a6a3b9cf7f8154323ca642b6ebaf8d9ba9e29cd0bb8bb1e5ad7093b0113c2",
+      "bytes": 30
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-95a1b17121581a49/A.json",
+      "sha256": "0b9a6a3b9cf7f8154323ca642b6ebaf8d9ba9e29cd0bb8bb1e5ad7093b0113c2",
+      "bytes": 30
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-95a1b17121581a49/B.json",
+      "sha256": "0b9a6a3b9cf7f8154323ca642b6ebaf8d9ba9e29cd0bb8bb1e5ad7093b0113c2",
+      "bytes": 30
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-95d37d46c3d99337/A.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-95d37d46c3d99337/B.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-9941fbebdaea1c41/A.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-9941fbebdaea1c41/B.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-MATRIXFIELDS/A.json",
+      "sha256": "158ef057b0d710c38d4b460f334f52f35a801d06b82c6c9c71c53a2bf26d9bbd",
+      "bytes": 152
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-MATRIXFIELDS/B.json",
+      "sha256": "158ef057b0d710c38d4b460f334f52f35a801d06b82c6c9c71c53a2bf26d9bbd",
+      "bytes": 152
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-RETRYSAFE/A.json",
+      "sha256": "158ef057b0d710c38d4b460f334f52f35a801d06b82c6c9c71c53a2bf26d9bbd",
+      "bytes": 152
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-RETRYSAFE/B.json",
+      "sha256": "158ef057b0d710c38d4b460f334f52f35a801d06b82c6c9c71c53a2bf26d9bbd",
+      "bytes": 152
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-HEADERS-MATRIXFIELDS/A.json",
+      "sha256": "0b9a6a3b9cf7f8154323ca642b6ebaf8d9ba9e29cd0bb8bb1e5ad7093b0113c2",
+      "bytes": 30
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-HEADERS-MATRIXFIELDS/B.json",
+      "sha256": "0b9a6a3b9cf7f8154323ca642b6ebaf8d9ba9e29cd0bb8bb1e5ad7093b0113c2",
+      "bytes": 30
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-HEADERS-RETRYSAFE/A.json",
+      "sha256": "0b9a6a3b9cf7f8154323ca642b6ebaf8d9ba9e29cd0bb8bb1e5ad7093b0113c2",
+      "bytes": 30
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-HEADERS-RETRYSAFE/B.json",
+      "sha256": "0b9a6a3b9cf7f8154323ca642b6ebaf8d9ba9e29cd0bb8bb1e5ad7093b0113c2",
+      "bytes": 30
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-MATRIXFIELDS/A.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-MATRIXFIELDS/B.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-RETRYSAFE/A.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-RETRYSAFE/B.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-MATRIXFIELDS/A.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-MATRIXFIELDS/B.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-RETRYSAFE/A.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-RETRYSAFE/B.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-MATRIXFIELDS/A.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-MATRIXFIELDS/B.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-RETRYSAFE/A.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-RETRYSAFE/B.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONERROR/A.json",
+      "sha256": "158ef057b0d710c38d4b460f334f52f35a801d06b82c6c9c71c53a2bf26d9bbd",
+      "bytes": 152
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONERROR/B.json",
+      "sha256": "158ef057b0d710c38d4b460f334f52f35a801d06b82c6c9c71c53a2bf26d9bbd",
+      "bytes": 152
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONFAIL/A.json",
+      "sha256": "158ef057b0d710c38d4b460f334f52f35a801d06b82c6c9c71c53a2bf26d9bbd",
+      "bytes": 152
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONFAIL/B.json",
+      "sha256": "158ef057b0d710c38d4b460f334f52f35a801d06b82c6c9c71c53a2bf26d9bbd",
+      "bytes": 152
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONPASS/A.json",
+      "sha256": "158ef057b0d710c38d4b460f334f52f35a801d06b82c6c9c71c53a2bf26d9bbd",
+      "bytes": 152
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONPASS/B.json",
+      "sha256": "158ef057b0d710c38d4b460f334f52f35a801d06b82c6c9c71c53a2bf26d9bbd",
+      "bytes": 152
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONERROR/A.json",
+      "sha256": "0b9a6a3b9cf7f8154323ca642b6ebaf8d9ba9e29cd0bb8bb1e5ad7093b0113c2",
+      "bytes": 30
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONERROR/B.json",
+      "sha256": "0b9a6a3b9cf7f8154323ca642b6ebaf8d9ba9e29cd0bb8bb1e5ad7093b0113c2",
+      "bytes": 30
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONFAIL/A.json",
+      "sha256": "0b9a6a3b9cf7f8154323ca642b6ebaf8d9ba9e29cd0bb8bb1e5ad7093b0113c2",
+      "bytes": 30
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONFAIL/B.json",
+      "sha256": "0b9a6a3b9cf7f8154323ca642b6ebaf8d9ba9e29cd0bb8bb1e5ad7093b0113c2",
+      "bytes": 30
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONPASS/A.json",
+      "sha256": "0b9a6a3b9cf7f8154323ca642b6ebaf8d9ba9e29cd0bb8bb1e5ad7093b0113c2",
+      "bytes": 30
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONPASS/B.json",
+      "sha256": "0b9a6a3b9cf7f8154323ca642b6ebaf8d9ba9e29cd0bb8bb1e5ad7093b0113c2",
+      "bytes": 30
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONERROR/A.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONERROR/B.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONFAIL/A.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONFAIL/B.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONPASS/A.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONPASS/B.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONERROR/A.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONERROR/B.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONFAIL/A.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONFAIL/B.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONPASS/A.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONPASS/B.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONERROR/A.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONERROR/B.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONFAIL/A.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONFAIL/B.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONPASS/A.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONPASS/B.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-SECURITY-COMMON-BLOCKACTIVETHREATS/A.json",
+      "sha256": "0b9a6a3b9cf7f8154323ca642b6ebaf8d9ba9e29cd0bb8bb1e5ad7093b0113c2",
+      "bytes": 30
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-SECURITY-COMMON-BLOCKACTIVETHREATS/B.json",
+      "sha256": "0b9a6a3b9cf7f8154323ca642b6ebaf8d9ba9e29cd0bb8bb1e5ad7093b0113c2",
+      "bytes": 30
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-SECURITY-COMMON-BLOCKINGSEVERITIES/A.json",
+      "sha256": "0b9a6a3b9cf7f8154323ca642b6ebaf8d9ba9e29cd0bb8bb1e5ad7093b0113c2",
+      "bytes": 30
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-SECURITY-COMMON-BLOCKINGSEVERITIES/B.json",
+      "sha256": "0b9a6a3b9cf7f8154323ca642b6ebaf8d9ba9e29cd0bb8bb1e5ad7093b0113c2",
+      "bytes": 30
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-SECURITY-COMMON-BLOCKMISSINGFIXES/A.json",
+      "sha256": "0b9a6a3b9cf7f8154323ca642b6ebaf8d9ba9e29cd0bb8bb1e5ad7093b0113c2",
+      "bytes": 30
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-SECURITY-COMMON-BLOCKMISSINGFIXES/B.json",
+      "sha256": "0b9a6a3b9cf7f8154323ca642b6ebaf8d9ba9e29cd0bb8bb1e5ad7093b0113c2",
+      "bytes": 30
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-a3dc4204fd2dbc99/A.json",
+      "sha256": "158ef057b0d710c38d4b460f334f52f35a801d06b82c6c9c71c53a2bf26d9bbd",
+      "bytes": 152
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-a3dc4204fd2dbc99/B.json",
+      "sha256": "158ef057b0d710c38d4b460f334f52f35a801d06b82c6c9c71c53a2bf26d9bbd",
+      "bytes": 152
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-ae78d041c3d0fbd6/A.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-ae78d041c3d0fbd6/B.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-bd7eee80bc8feca2/A.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-bd7eee80bc8feca2/B.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-c00914a2402f91bf/A.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-c00914a2402f91bf/B.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-c9bc44d00a7b9c90/A.json",
+      "sha256": "0b9a6a3b9cf7f8154323ca642b6ebaf8d9ba9e29cd0bb8bb1e5ad7093b0113c2",
+      "bytes": 30
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-c9bc44d00a7b9c90/B.json",
+      "sha256": "0b9a6a3b9cf7f8154323ca642b6ebaf8d9ba9e29cd0bb8bb1e5ad7093b0113c2",
+      "bytes": 30
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-cc64dd898be55e05/A.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-cc64dd898be55e05/B.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-cd92cb7109a38c4a/A.json",
+      "sha256": "0b9a6a3b9cf7f8154323ca642b6ebaf8d9ba9e29cd0bb8bb1e5ad7093b0113c2",
+      "bytes": 30
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-cd92cb7109a38c4a/B.json",
+      "sha256": "0b9a6a3b9cf7f8154323ca642b6ebaf8d9ba9e29cd0bb8bb1e5ad7093b0113c2",
+      "bytes": 30
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-cdfcefd44e87996b/A.json",
+      "sha256": "0b9a6a3b9cf7f8154323ca642b6ebaf8d9ba9e29cd0bb8bb1e5ad7093b0113c2",
+      "bytes": 30
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-cdfcefd44e87996b/B.json",
+      "sha256": "0b9a6a3b9cf7f8154323ca642b6ebaf8d9ba9e29cd0bb8bb1e5ad7093b0113c2",
+      "bytes": 30
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-d233d3039be3adc4/A.json",
+      "sha256": "0b9a6a3b9cf7f8154323ca642b6ebaf8d9ba9e29cd0bb8bb1e5ad7093b0113c2",
+      "bytes": 30
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-d233d3039be3adc4/B.json",
+      "sha256": "5e51d6f35b91e15bc2a0f7690e512fd0f97a0a6919287047598ff646f3664f97",
+      "bytes": 30
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-d852318fd5b15892/A.json",
+      "sha256": "0b9a6a3b9cf7f8154323ca642b6ebaf8d9ba9e29cd0bb8bb1e5ad7093b0113c2",
+      "bytes": 30
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-d852318fd5b15892/B.json",
+      "sha256": "0b9a6a3b9cf7f8154323ca642b6ebaf8d9ba9e29cd0bb8bb1e5ad7093b0113c2",
+      "bytes": 30
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-d87b67b33610f619/A.json",
+      "sha256": "0b9a6a3b9cf7f8154323ca642b6ebaf8d9ba9e29cd0bb8bb1e5ad7093b0113c2",
+      "bytes": 30
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-d87b67b33610f619/B.json",
+      "sha256": "0b9a6a3b9cf7f8154323ca642b6ebaf8d9ba9e29cd0bb8bb1e5ad7093b0113c2",
+      "bytes": 30
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-d912c283aeea31d8/A.json",
+      "sha256": "158ef057b0d710c38d4b460f334f52f35a801d06b82c6c9c71c53a2bf26d9bbd",
+      "bytes": 152
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-d912c283aeea31d8/B.json",
+      "sha256": "158ef057b0d710c38d4b460f334f52f35a801d06b82c6c9c71c53a2bf26d9bbd",
+      "bytes": 152
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-e702d189d1282e3b/A.json",
+      "sha256": "0b9a6a3b9cf7f8154323ca642b6ebaf8d9ba9e29cd0bb8bb1e5ad7093b0113c2",
+      "bytes": 30
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-e702d189d1282e3b/B.json",
+      "sha256": "0b9a6a3b9cf7f8154323ca642b6ebaf8d9ba9e29cd0bb8bb1e5ad7093b0113c2",
+      "bytes": 30
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-e8358fe85c80d3d0/A.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-e8358fe85c80d3d0/B.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-ea0bcd6957dbc556/A.json",
+      "sha256": "0b9a6a3b9cf7f8154323ca642b6ebaf8d9ba9e29cd0bb8bb1e5ad7093b0113c2",
+      "bytes": 30
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-ea0bcd6957dbc556/B.json",
+      "sha256": "0b9a6a3b9cf7f8154323ca642b6ebaf8d9ba9e29cd0bb8bb1e5ad7093b0113c2",
+      "bytes": 30
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-ebb85facca8d1b1b/A.json",
+      "sha256": "0b9a6a3b9cf7f8154323ca642b6ebaf8d9ba9e29cd0bb8bb1e5ad7093b0113c2",
+      "bytes": 30
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-ebb85facca8d1b1b/B.json",
+      "sha256": "0b9a6a3b9cf7f8154323ca642b6ebaf8d9ba9e29cd0bb8bb1e5ad7093b0113c2",
+      "bytes": 30
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-ec0fc91072a8b630/A.json",
+      "sha256": "158ef057b0d710c38d4b460f334f52f35a801d06b82c6c9c71c53a2bf26d9bbd",
+      "bytes": 152
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-ec0fc91072a8b630/B.json",
+      "sha256": "158ef057b0d710c38d4b460f334f52f35a801d06b82c6c9c71c53a2bf26d9bbd",
+      "bytes": 152
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-ef66623413223fef/A.json",
+      "sha256": "0b9a6a3b9cf7f8154323ca642b6ebaf8d9ba9e29cd0bb8bb1e5ad7093b0113c2",
+      "bytes": 30
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-ef66623413223fef/B.json",
+      "sha256": "0b9a6a3b9cf7f8154323ca642b6ebaf8d9ba9e29cd0bb8bb1e5ad7093b0113c2",
+      "bytes": 30
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-f036e66205a0fa61/A.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-f036e66205a0fa61/B.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-f365121af3c2af9e/A.json",
+      "sha256": "0b9a6a3b9cf7f8154323ca642b6ebaf8d9ba9e29cd0bb8bb1e5ad7093b0113c2",
+      "bytes": 30
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-f365121af3c2af9e/B.json",
+      "sha256": "0b9a6a3b9cf7f8154323ca642b6ebaf8d9ba9e29cd0bb8bb1e5ad7093b0113c2",
+      "bytes": 30
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-f4e73c3bb3c19c65/A.json",
+      "sha256": "0b9a6a3b9cf7f8154323ca642b6ebaf8d9ba9e29cd0bb8bb1e5ad7093b0113c2",
+      "bytes": 30
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-f4e73c3bb3c19c65/B.json",
+      "sha256": "0b9a6a3b9cf7f8154323ca642b6ebaf8d9ba9e29cd0bb8bb1e5ad7093b0113c2",
+      "bytes": 30
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-ffc33c06d6b6a1c2/A.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/pairs/RT-ffc33c06d6b6a1c2/B.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/repository/checked-manifest.yaml",
+      "sha256": "ce78cf08e049ada50176ef87af300937434a23111fee6af4845221e4759525d6",
+      "bytes": 1384
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/repository/clean/package-lock.json",
+      "sha256": "28b54b18dec676430ac0d5bb6aae885f6d0842a350cc64aaeda70cb27481ff93",
+      "bytes": 189
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/repository/clean/package.json",
+      "sha256": "c6a5c69036e5145dff9b62d5d8125a6b1f8bb44db52d7156646404fe64f77663",
+      "bytes": 71
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/repository/lock-fixture-definition.json",
+      "sha256": "8d6e6f2b852bc42754a0d5568507e042f4807863765f141218a8a9aa1f912f14",
+      "bytes": 434
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/repository/vulnerable/package-lock.json",
+      "sha256": "11e062bbe40144e207b3962a46d00be913059d48e65076c773099d413605717b",
+      "bytes": 313
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/repository/vulnerable/package.json",
+      "sha256": "b85f328c8e18e8f618eee74ab55a8568620a9951fbecf51a9a2eab4e2411ee08",
+      "bytes": 120
+    }
+  ]
+}

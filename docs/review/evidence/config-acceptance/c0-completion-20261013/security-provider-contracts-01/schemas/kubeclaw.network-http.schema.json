@@ -1,0 +1,104 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "packageId",
+    "registrationId",
+    "instanceId",
+    "profiles"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "pipeline-registration-policy.v1"
+    },
+    "packageId": {
+      "const": "kubeclaw.network-http"
+    },
+    "registrationId": {
+      "const": "kubeclaw.network-http:http"
+    },
+    "instanceId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._-]*$"
+    },
+    "profiles": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "processing"
+        ],
+        "properties": {
+          "processing": {
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "allowedOrigins",
+              "allowedMethods",
+              "allowedHeaders",
+              "maxRequestBytes",
+              "maxResponseBytes",
+              "timeoutMs"
+            ],
+            "properties": {
+              "allowedOrigins": {
+                "type": "array",
+                "minItems": 1,
+                "uniqueItems": true,
+                "items": {
+                  "type": "string",
+                  "format": "uri"
+                }
+              },
+              "allowedMethods": {
+                "type": "array",
+                "minItems": 1,
+                "uniqueItems": true,
+                "items": {
+                  "enum": [
+                    "GET",
+                    "POST",
+                    "PUT",
+                    "PATCH",
+                    "DELETE"
+                  ]
+                }
+              },
+              "allowedHeaders": {
+                "type": "array",
+                "uniqueItems": true,
+                "items": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9-]+$"
+                }
+              },
+              "maxRequestBytes": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 9007199254740991,
+                "description": "Current parseConfig positiveInteger requires Number.isSafeInteger. Later timer/fetch/Buffer domains remain separately recorded, not claimed by this schema."
+              },
+              "maxResponseBytes": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 9007199254740991,
+                "description": "Current parseConfig positiveInteger requires Number.isSafeInteger. Later timer/fetch/Buffer domains remain separately recorded, not claimed by this schema."
+              },
+              "timeoutMs": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 2147483647,
+                "description": "Current parseConfig positiveInteger requires Number.isSafeInteger. Later timer/fetch/Buffer domains remain separately recorded, not claimed by this schema."
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

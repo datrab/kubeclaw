@@ -1,0 +1,4635 @@
+{
+  "head": "60d520177c3de2e33a8c397e3d6e5f9e8e8e7bbf",
+  "at": "2026-10-14T01:27:04.811688+00:00",
+  "qualification": "Independent full body/source/schema join conservation, not semantic/native acceptance",
+  "currentArtifactPins": 476,
+  "changedCurrentPins": [],
+  "historicalPins": 978,
+  "changedHistoricalPins": [],
+  "sourcePins": 33,
+  "changedSourcePins": [],
+  "originalFields": 89,
+  "originalRowsEqualCanonical": true,
+  "originalCases": 587,
+  "canonicalBodiesAndLifecyclesEqual": true,
+  "nativeBodyMismatches": [],
+  "memberChecks": [
+    {
+      "case": "RT-0a39f16498c38979-BCE3F075-SECURITY-ALTERNATE",
+      "field": "RT-0a39f16498c38979",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-0a39f16498c38979-BCE3F075-SECURITY-BINDING",
+      "field": "RT-0a39f16498c38979",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-0a39f16498c38979-BCE3F075-SECURITY-CONTRACT",
+      "field": "RT-0a39f16498c38979",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-0a39f16498c38979-BCE3F075-SECURITY-DEFINITION",
+      "field": "RT-0a39f16498c38979",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-0a39f16498c38979-BCE3F075-SECURITY-MUTANT",
+      "field": "RT-0a39f16498c38979",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-0a39f16498c38979-CURRENT-SCHEMA-FIELD",
+      "field": "RT-0a39f16498c38979",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-0c0b02b6fbc2160c-BCE3F075-SECURITY-ALTERNATE",
+      "field": "RT-0c0b02b6fbc2160c",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-0c0b02b6fbc2160c-BCE3F075-SECURITY-BINDING",
+      "field": "RT-0c0b02b6fbc2160c",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-0c0b02b6fbc2160c-BCE3F075-SECURITY-CONTRACT",
+      "field": "RT-0c0b02b6fbc2160c",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-0c0b02b6fbc2160c-BCE3F075-SECURITY-DEFINITION",
+      "field": "RT-0c0b02b6fbc2160c",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-0c0b02b6fbc2160c-BCE3F075-SECURITY-MUTANT",
+      "field": "RT-0c0b02b6fbc2160c",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-0c0b02b6fbc2160c-CURRENT-SCHEMA-FIELD",
+      "field": "RT-0c0b02b6fbc2160c",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-0da96fe7ba066ccb-BCE3F075-SECURITY-ALTERNATE",
+      "field": "RT-0da96fe7ba066ccb",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-0da96fe7ba066ccb-BCE3F075-SECURITY-BINDING",
+      "field": "RT-0da96fe7ba066ccb",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-0da96fe7ba066ccb-BCE3F075-SECURITY-CONTRACT",
+      "field": "RT-0da96fe7ba066ccb",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-0da96fe7ba066ccb-BCE3F075-SECURITY-DEFINITION",
+      "field": "RT-0da96fe7ba066ccb",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-0da96fe7ba066ccb-BCE3F075-SECURITY-MUTANT",
+      "field": "RT-0da96fe7ba066ccb",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-0da96fe7ba066ccb-CURRENT-SCHEMA-FIELD",
+      "field": "RT-0da96fe7ba066ccb",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-0e050207e6faa65c-BCE3F075-SECURITY-ALTERNATE",
+      "field": "RT-0e050207e6faa65c",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-0e050207e6faa65c-BCE3F075-SECURITY-BINDING",
+      "field": "RT-0e050207e6faa65c",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-0e050207e6faa65c-BCE3F075-SECURITY-CONTRACT",
+      "field": "RT-0e050207e6faa65c",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-0e050207e6faa65c-BCE3F075-SECURITY-DEFINITION",
+      "field": "RT-0e050207e6faa65c",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-0e050207e6faa65c-BCE3F075-SECURITY-MUTANT",
+      "field": "RT-0e050207e6faa65c",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-0e050207e6faa65c-CURRENT-SCHEMA-FIELD",
+      "field": "RT-0e050207e6faa65c",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-101f7a1f1f29236a-BCE3F075-SECURITY-ALTERNATE",
+      "field": "RT-101f7a1f1f29236a",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-101f7a1f1f29236a-BCE3F075-SECURITY-BINDING",
+      "field": "RT-101f7a1f1f29236a",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-101f7a1f1f29236a-BCE3F075-SECURITY-CONTRACT",
+      "field": "RT-101f7a1f1f29236a",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-101f7a1f1f29236a-BCE3F075-SECURITY-DEFINITION",
+      "field": "RT-101f7a1f1f29236a",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-101f7a1f1f29236a-BCE3F075-SECURITY-MUTANT",
+      "field": "RT-101f7a1f1f29236a",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-101f7a1f1f29236a-CURRENT-SCHEMA-FIELD",
+      "field": "RT-101f7a1f1f29236a",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-1242f6b3245f130e-BCE3F075-SECURITY-ALTERNATE",
+      "field": "RT-1242f6b3245f130e",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-1242f6b3245f130e-BCE3F075-SECURITY-BINDING",
+      "field": "RT-1242f6b3245f130e",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-1242f6b3245f130e-BCE3F075-SECURITY-CONTRACT",
+      "field": "RT-1242f6b3245f130e",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-1242f6b3245f130e-BCE3F075-SECURITY-DEFINITION",
+      "field": "RT-1242f6b3245f130e",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-1242f6b3245f130e-BCE3F075-SECURITY-MUTANT",
+      "field": "RT-1242f6b3245f130e",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-1242f6b3245f130e-CURRENT-SCHEMA-FIELD",
+      "field": "RT-1242f6b3245f130e",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-163ebc138c768e21-BCE3F075-SECURITY-ALTERNATE",
+      "field": "RT-163ebc138c768e21",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-163ebc138c768e21-BCE3F075-SECURITY-BINDING",
+      "field": "RT-163ebc138c768e21",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-163ebc138c768e21-BCE3F075-SECURITY-CONTRACT",
+      "field": "RT-163ebc138c768e21",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-163ebc138c768e21-BCE3F075-SECURITY-DEFINITION",
+      "field": "RT-163ebc138c768e21",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-163ebc138c768e21-BCE3F075-SECURITY-MUTANT",
+      "field": "RT-163ebc138c768e21",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-163ebc138c768e21-CURRENT-SCHEMA-FIELD",
+      "field": "RT-163ebc138c768e21",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-25155a8525353895-BCE3F075-SECURITY-ALTERNATE",
+      "field": "RT-25155a8525353895",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-25155a8525353895-BCE3F075-SECURITY-BINDING",
+      "field": "RT-25155a8525353895",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-25155a8525353895-BCE3F075-SECURITY-CONTRACT",
+      "field": "RT-25155a8525353895",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-25155a8525353895-BCE3F075-SECURITY-DEFINITION",
+      "field": "RT-25155a8525353895",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-25155a8525353895-BCE3F075-SECURITY-MUTANT",
+      "field": "RT-25155a8525353895",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-25155a8525353895-CURRENT-SCHEMA-FIELD",
+      "field": "RT-25155a8525353895",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-2672b24a1df6464d-BCE3F075-SECURITY-ALTERNATE",
+      "field": "RT-2672b24a1df6464d",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-2672b24a1df6464d-BCE3F075-SECURITY-BINDING",
+      "field": "RT-2672b24a1df6464d",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-2672b24a1df6464d-BCE3F075-SECURITY-CONTRACT",
+      "field": "RT-2672b24a1df6464d",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-2672b24a1df6464d-BCE3F075-SECURITY-DEFINITION",
+      "field": "RT-2672b24a1df6464d",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-2672b24a1df6464d-BCE3F075-SECURITY-MUTANT",
+      "field": "RT-2672b24a1df6464d",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-2672b24a1df6464d-CURRENT-SCHEMA-FIELD",
+      "field": "RT-2672b24a1df6464d",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-2dc4f91b61e79184-BCE3F075-SECURITY-ALTERNATE",
+      "field": "RT-2dc4f91b61e79184",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-2dc4f91b61e79184-BCE3F075-SECURITY-BINDING",
+      "field": "RT-2dc4f91b61e79184",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-2dc4f91b61e79184-BCE3F075-SECURITY-CONTRACT",
+      "field": "RT-2dc4f91b61e79184",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-2dc4f91b61e79184-BCE3F075-SECURITY-DEFINITION",
+      "field": "RT-2dc4f91b61e79184",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-2dc4f91b61e79184-BCE3F075-SECURITY-MUTANT",
+      "field": "RT-2dc4f91b61e79184",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-2dc4f91b61e79184-CURRENT-SCHEMA-FIELD",
+      "field": "RT-2dc4f91b61e79184",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-2fe8190f12f15510-BCE3F075-SECURITY-ALTERNATE",
+      "field": "RT-2fe8190f12f15510",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-2fe8190f12f15510-BCE3F075-SECURITY-BINDING",
+      "field": "RT-2fe8190f12f15510",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-2fe8190f12f15510-BCE3F075-SECURITY-CONTRACT",
+      "field": "RT-2fe8190f12f15510",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-2fe8190f12f15510-BCE3F075-SECURITY-DEFINITION",
+      "field": "RT-2fe8190f12f15510",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-2fe8190f12f15510-BCE3F075-SECURITY-MUTANT",
+      "field": "RT-2fe8190f12f15510",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-2fe8190f12f15510-CURRENT-SCHEMA-FIELD",
+      "field": "RT-2fe8190f12f15510",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-376a55c52779beed-BCE3F075-SECURITY-ALTERNATE",
+      "field": "RT-376a55c52779beed",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-376a55c52779beed-BCE3F075-SECURITY-BINDING",
+      "field": "RT-376a55c52779beed",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-376a55c52779beed-BCE3F075-SECURITY-CONTRACT",
+      "field": "RT-376a55c52779beed",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-376a55c52779beed-BCE3F075-SECURITY-DEFINITION",
+      "field": "RT-376a55c52779beed",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-376a55c52779beed-BCE3F075-SECURITY-MUTANT",
+      "field": "RT-376a55c52779beed",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-376a55c52779beed-CURRENT-SCHEMA-FIELD",
+      "field": "RT-376a55c52779beed",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-3caa1e915a125dcd-BCE3F075-SECURITY-ALTERNATE",
+      "field": "RT-3caa1e915a125dcd",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-3caa1e915a125dcd-BCE3F075-SECURITY-BINDING",
+      "field": "RT-3caa1e915a125dcd",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-3caa1e915a125dcd-BCE3F075-SECURITY-CONTRACT",
+      "field": "RT-3caa1e915a125dcd",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-3caa1e915a125dcd-BCE3F075-SECURITY-DEFINITION",
+      "field": "RT-3caa1e915a125dcd",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-3caa1e915a125dcd-BCE3F075-SECURITY-MUTANT",
+      "field": "RT-3caa1e915a125dcd",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-3caa1e915a125dcd-CURRENT-SCHEMA-FIELD",
+      "field": "RT-3caa1e915a125dcd",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-3f66e997ecc380c1-BCE3F075-SECURITY-ALTERNATE",
+      "field": "RT-3f66e997ecc380c1",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-3f66e997ecc380c1-BCE3F075-SECURITY-BINDING",
+      "field": "RT-3f66e997ecc380c1",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-3f66e997ecc380c1-BCE3F075-SECURITY-CONTRACT",
+      "field": "RT-3f66e997ecc380c1",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-3f66e997ecc380c1-BCE3F075-SECURITY-DEFINITION",
+      "field": "RT-3f66e997ecc380c1",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-3f66e997ecc380c1-BCE3F075-SECURITY-MUTANT",
+      "field": "RT-3f66e997ecc380c1",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-3f66e997ecc380c1-CURRENT-SCHEMA-FIELD",
+      "field": "RT-3f66e997ecc380c1",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-4a23015d6ca86669-BCE3F075-SECURITY-ALTERNATE",
+      "field": "RT-4a23015d6ca86669",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-4a23015d6ca86669-BCE3F075-SECURITY-BINDING",
+      "field": "RT-4a23015d6ca86669",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-4a23015d6ca86669-BCE3F075-SECURITY-CONTRACT",
+      "field": "RT-4a23015d6ca86669",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-4a23015d6ca86669-BCE3F075-SECURITY-DEFINITION",
+      "field": "RT-4a23015d6ca86669",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-4a23015d6ca86669-BCE3F075-SECURITY-MUTANT",
+      "field": "RT-4a23015d6ca86669",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-4a23015d6ca86669-CURRENT-SCHEMA-FIELD",
+      "field": "RT-4a23015d6ca86669",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-4c38b23dda98be93-BCE3F075-SECURITY-ALTERNATE",
+      "field": "RT-4c38b23dda98be93",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-4c38b23dda98be93-BCE3F075-SECURITY-BINDING",
+      "field": "RT-4c38b23dda98be93",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-4c38b23dda98be93-BCE3F075-SECURITY-CONTRACT",
+      "field": "RT-4c38b23dda98be93",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-4c38b23dda98be93-BCE3F075-SECURITY-DEFINITION",
+      "field": "RT-4c38b23dda98be93",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-4c38b23dda98be93-BCE3F075-SECURITY-MUTANT",
+      "field": "RT-4c38b23dda98be93",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-4c38b23dda98be93-CURRENT-SCHEMA-FIELD",
+      "field": "RT-4c38b23dda98be93",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-5118b56e0742663b-BCE3F075-SECURITY-ALTERNATE",
+      "field": "RT-5118b56e0742663b",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-5118b56e0742663b-BCE3F075-SECURITY-BINDING",
+      "field": "RT-5118b56e0742663b",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-5118b56e0742663b-BCE3F075-SECURITY-CONTRACT",
+      "field": "RT-5118b56e0742663b",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-5118b56e0742663b-BCE3F075-SECURITY-DEFINITION",
+      "field": "RT-5118b56e0742663b",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-5118b56e0742663b-BCE3F075-SECURITY-MUTANT",
+      "field": "RT-5118b56e0742663b",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-5118b56e0742663b-CURRENT-SCHEMA-FIELD",
+      "field": "RT-5118b56e0742663b",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-513bbd46b45156b7-BCE3F075-SECURITY-ALTERNATE",
+      "field": "RT-513bbd46b45156b7",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-513bbd46b45156b7-BCE3F075-SECURITY-BINDING",
+      "field": "RT-513bbd46b45156b7",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-513bbd46b45156b7-BCE3F075-SECURITY-CONTRACT",
+      "field": "RT-513bbd46b45156b7",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-513bbd46b45156b7-BCE3F075-SECURITY-DEFINITION",
+      "field": "RT-513bbd46b45156b7",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-513bbd46b45156b7-BCE3F075-SECURITY-MUTANT",
+      "field": "RT-513bbd46b45156b7",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-513bbd46b45156b7-CURRENT-SCHEMA-FIELD",
+      "field": "RT-513bbd46b45156b7",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-52731740c2eb92d2-BCE3F075-SECURITY-ALTERNATE",
+      "field": "RT-52731740c2eb92d2",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-52731740c2eb92d2-BCE3F075-SECURITY-BINDING",
+      "field": "RT-52731740c2eb92d2",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-52731740c2eb92d2-BCE3F075-SECURITY-CONTRACT",
+      "field": "RT-52731740c2eb92d2",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-52731740c2eb92d2-BCE3F075-SECURITY-DEFINITION",
+      "field": "RT-52731740c2eb92d2",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-52731740c2eb92d2-BCE3F075-SECURITY-MUTANT",
+      "field": "RT-52731740c2eb92d2",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-52731740c2eb92d2-CURRENT-SCHEMA-FIELD",
+      "field": "RT-52731740c2eb92d2",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-53653aa9d3f03c8f-BCE3F075-SECURITY-ALTERNATE",
+      "field": "RT-53653aa9d3f03c8f",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-53653aa9d3f03c8f-BCE3F075-SECURITY-BINDING",
+      "field": "RT-53653aa9d3f03c8f",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-53653aa9d3f03c8f-BCE3F075-SECURITY-CONTRACT",
+      "field": "RT-53653aa9d3f03c8f",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-53653aa9d3f03c8f-BCE3F075-SECURITY-DEFINITION",
+      "field": "RT-53653aa9d3f03c8f",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-53653aa9d3f03c8f-BCE3F075-SECURITY-MUTANT",
+      "field": "RT-53653aa9d3f03c8f",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-53653aa9d3f03c8f-CURRENT-SCHEMA-FIELD",
+      "field": "RT-53653aa9d3f03c8f",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-584baa9f0f15c058-BCE3F075-SECURITY-ALTERNATE",
+      "field": "RT-584baa9f0f15c058",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-584baa9f0f15c058-BCE3F075-SECURITY-BINDING",
+      "field": "RT-584baa9f0f15c058",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-584baa9f0f15c058-BCE3F075-SECURITY-CONTRACT",
+      "field": "RT-584baa9f0f15c058",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-584baa9f0f15c058-BCE3F075-SECURITY-DEFINITION",
+      "field": "RT-584baa9f0f15c058",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-584baa9f0f15c058-BCE3F075-SECURITY-MUTANT",
+      "field": "RT-584baa9f0f15c058",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-584baa9f0f15c058-CURRENT-SCHEMA-FIELD",
+      "field": "RT-584baa9f0f15c058",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-58a77efdd8cd5820-BCE3F075-SECURITY-ALTERNATE",
+      "field": "RT-58a77efdd8cd5820",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-58a77efdd8cd5820-BCE3F075-SECURITY-BINDING",
+      "field": "RT-58a77efdd8cd5820",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-58a77efdd8cd5820-BCE3F075-SECURITY-CONTRACT",
+      "field": "RT-58a77efdd8cd5820",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-58a77efdd8cd5820-BCE3F075-SECURITY-DEFINITION",
+      "field": "RT-58a77efdd8cd5820",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-58a77efdd8cd5820-BCE3F075-SECURITY-MUTANT",
+      "field": "RT-58a77efdd8cd5820",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-58a77efdd8cd5820-CURRENT-SCHEMA-FIELD",
+      "field": "RT-58a77efdd8cd5820",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-611f5b01895a7c90-BCE3F075-SECURITY-ALTERNATE",
+      "field": "RT-611f5b01895a7c90",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-611f5b01895a7c90-BCE3F075-SECURITY-BINDING",
+      "field": "RT-611f5b01895a7c90",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-611f5b01895a7c90-BCE3F075-SECURITY-CONTRACT",
+      "field": "RT-611f5b01895a7c90",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-611f5b01895a7c90-BCE3F075-SECURITY-DEFINITION",
+      "field": "RT-611f5b01895a7c90",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-611f5b01895a7c90-BCE3F075-SECURITY-MUTANT",
+      "field": "RT-611f5b01895a7c90",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-611f5b01895a7c90-CURRENT-SCHEMA-FIELD",
+      "field": "RT-611f5b01895a7c90",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-6afb26eb1a7b7271-BCE3F075-SECURITY-ALTERNATE",
+      "field": "RT-6afb26eb1a7b7271",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-6afb26eb1a7b7271-BCE3F075-SECURITY-BINDING",
+      "field": "RT-6afb26eb1a7b7271",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-6afb26eb1a7b7271-BCE3F075-SECURITY-CONTRACT",
+      "field": "RT-6afb26eb1a7b7271",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-6afb26eb1a7b7271-BCE3F075-SECURITY-DEFINITION",
+      "field": "RT-6afb26eb1a7b7271",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-6afb26eb1a7b7271-BCE3F075-SECURITY-MUTANT",
+      "field": "RT-6afb26eb1a7b7271",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-6afb26eb1a7b7271-CURRENT-SCHEMA-FIELD",
+      "field": "RT-6afb26eb1a7b7271",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-6b059c9d6ad52058-BCE3F075-SECURITY-ALTERNATE",
+      "field": "RT-6b059c9d6ad52058",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-6b059c9d6ad52058-BCE3F075-SECURITY-BINDING",
+      "field": "RT-6b059c9d6ad52058",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-6b059c9d6ad52058-BCE3F075-SECURITY-CONTRACT",
+      "field": "RT-6b059c9d6ad52058",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-6b059c9d6ad52058-BCE3F075-SECURITY-DEFINITION",
+      "field": "RT-6b059c9d6ad52058",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-6b059c9d6ad52058-BCE3F075-SECURITY-MUTANT",
+      "field": "RT-6b059c9d6ad52058",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-6b059c9d6ad52058-CURRENT-SCHEMA-FIELD",
+      "field": "RT-6b059c9d6ad52058",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-6d1bc088852536a7-BCE3F075-SECURITY-ALTERNATE",
+      "field": "RT-6d1bc088852536a7",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-6d1bc088852536a7-BCE3F075-SECURITY-BINDING",
+      "field": "RT-6d1bc088852536a7",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-6d1bc088852536a7-BCE3F075-SECURITY-CONTRACT",
+      "field": "RT-6d1bc088852536a7",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-6d1bc088852536a7-BCE3F075-SECURITY-DEFINITION",
+      "field": "RT-6d1bc088852536a7",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-6d1bc088852536a7-BCE3F075-SECURITY-MUTANT",
+      "field": "RT-6d1bc088852536a7",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-6d1bc088852536a7-CURRENT-SCHEMA-FIELD",
+      "field": "RT-6d1bc088852536a7",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-6eac87138fc57ac9-BCE3F075-SECURITY-ALTERNATE",
+      "field": "RT-6eac87138fc57ac9",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-6eac87138fc57ac9-BCE3F075-SECURITY-BINDING",
+      "field": "RT-6eac87138fc57ac9",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-6eac87138fc57ac9-BCE3F075-SECURITY-CONTRACT",
+      "field": "RT-6eac87138fc57ac9",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-6eac87138fc57ac9-BCE3F075-SECURITY-DEFINITION",
+      "field": "RT-6eac87138fc57ac9",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-6eac87138fc57ac9-BCE3F075-SECURITY-MUTANT",
+      "field": "RT-6eac87138fc57ac9",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-6eac87138fc57ac9-CURRENT-SCHEMA-FIELD",
+      "field": "RT-6eac87138fc57ac9",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-6ecf22c1afd37e91-BCE3F075-SECURITY-ALTERNATE",
+      "field": "RT-6ecf22c1afd37e91",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-6ecf22c1afd37e91-BCE3F075-SECURITY-BINDING",
+      "field": "RT-6ecf22c1afd37e91",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-6ecf22c1afd37e91-BCE3F075-SECURITY-CONTRACT",
+      "field": "RT-6ecf22c1afd37e91",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-6ecf22c1afd37e91-BCE3F075-SECURITY-DEFINITION",
+      "field": "RT-6ecf22c1afd37e91",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-6ecf22c1afd37e91-BCE3F075-SECURITY-MUTANT",
+      "field": "RT-6ecf22c1afd37e91",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-6ecf22c1afd37e91-CURRENT-SCHEMA-FIELD",
+      "field": "RT-6ecf22c1afd37e91",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-76d0d20d46b9a8e6-BCE3F075-SECURITY-ALTERNATE",
+      "field": "RT-76d0d20d46b9a8e6",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-76d0d20d46b9a8e6-BCE3F075-SECURITY-BINDING",
+      "field": "RT-76d0d20d46b9a8e6",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-76d0d20d46b9a8e6-BCE3F075-SECURITY-CONTRACT",
+      "field": "RT-76d0d20d46b9a8e6",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-76d0d20d46b9a8e6-BCE3F075-SECURITY-DEFINITION",
+      "field": "RT-76d0d20d46b9a8e6",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-76d0d20d46b9a8e6-BCE3F075-SECURITY-MUTANT",
+      "field": "RT-76d0d20d46b9a8e6",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-76d0d20d46b9a8e6-CURRENT-SCHEMA-FIELD",
+      "field": "RT-76d0d20d46b9a8e6",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-773179d734f2eb77-BCE3F075-SECURITY-ALTERNATE",
+      "field": "RT-773179d734f2eb77",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-773179d734f2eb77-BCE3F075-SECURITY-BINDING",
+      "field": "RT-773179d734f2eb77",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-773179d734f2eb77-BCE3F075-SECURITY-CONTRACT",
+      "field": "RT-773179d734f2eb77",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-773179d734f2eb77-BCE3F075-SECURITY-DEFINITION",
+      "field": "RT-773179d734f2eb77",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-773179d734f2eb77-BCE3F075-SECURITY-MUTANT",
+      "field": "RT-773179d734f2eb77",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-773179d734f2eb77-CURRENT-SCHEMA-FIELD",
+      "field": "RT-773179d734f2eb77",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-81f4bdf5f3872b9e-BCE3F075-SECURITY-ALTERNATE",
+      "field": "RT-81f4bdf5f3872b9e",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-81f4bdf5f3872b9e-BCE3F075-SECURITY-BINDING",
+      "field": "RT-81f4bdf5f3872b9e",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-81f4bdf5f3872b9e-BCE3F075-SECURITY-CONTRACT",
+      "field": "RT-81f4bdf5f3872b9e",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-81f4bdf5f3872b9e-BCE3F075-SECURITY-DEFINITION",
+      "field": "RT-81f4bdf5f3872b9e",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-81f4bdf5f3872b9e-BCE3F075-SECURITY-MUTANT",
+      "field": "RT-81f4bdf5f3872b9e",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-81f4bdf5f3872b9e-CURRENT-SCHEMA-FIELD",
+      "field": "RT-81f4bdf5f3872b9e",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-8a73cb4fa2939ad4-BCE3F075-SECURITY-ALTERNATE",
+      "field": "RT-8a73cb4fa2939ad4",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-8a73cb4fa2939ad4-BCE3F075-SECURITY-BINDING",
+      "field": "RT-8a73cb4fa2939ad4",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-8a73cb4fa2939ad4-BCE3F075-SECURITY-CONTRACT",
+      "field": "RT-8a73cb4fa2939ad4",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-8a73cb4fa2939ad4-BCE3F075-SECURITY-DEFINITION",
+      "field": "RT-8a73cb4fa2939ad4",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-8a73cb4fa2939ad4-BCE3F075-SECURITY-MUTANT",
+      "field": "RT-8a73cb4fa2939ad4",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-8a73cb4fa2939ad4-CURRENT-SCHEMA-FIELD",
+      "field": "RT-8a73cb4fa2939ad4",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-8d1e26bc5360c737-BCE3F075-SECURITY-ALTERNATE",
+      "field": "RT-8d1e26bc5360c737",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-8d1e26bc5360c737-BCE3F075-SECURITY-BINDING",
+      "field": "RT-8d1e26bc5360c737",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-8d1e26bc5360c737-BCE3F075-SECURITY-CONTRACT",
+      "field": "RT-8d1e26bc5360c737",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-8d1e26bc5360c737-BCE3F075-SECURITY-DEFINITION",
+      "field": "RT-8d1e26bc5360c737",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-8d1e26bc5360c737-BCE3F075-SECURITY-MUTANT",
+      "field": "RT-8d1e26bc5360c737",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-8d1e26bc5360c737-CURRENT-SCHEMA-FIELD",
+      "field": "RT-8d1e26bc5360c737",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-8de947a02be68652-BCE3F075-SECURITY-ALTERNATE",
+      "field": "RT-8de947a02be68652",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-8de947a02be68652-BCE3F075-SECURITY-BINDING",
+      "field": "RT-8de947a02be68652",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-8de947a02be68652-BCE3F075-SECURITY-CONTRACT",
+      "field": "RT-8de947a02be68652",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-8de947a02be68652-BCE3F075-SECURITY-DEFINITION",
+      "field": "RT-8de947a02be68652",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-8de947a02be68652-BCE3F075-SECURITY-MUTANT",
+      "field": "RT-8de947a02be68652",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-8de947a02be68652-CURRENT-SCHEMA-FIELD",
+      "field": "RT-8de947a02be68652",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-9370858078281283-BCE3F075-SECURITY-ALTERNATE",
+      "field": "RT-9370858078281283",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-9370858078281283-BCE3F075-SECURITY-BINDING",
+      "field": "RT-9370858078281283",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-9370858078281283-BCE3F075-SECURITY-CONTRACT",
+      "field": "RT-9370858078281283",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-9370858078281283-BCE3F075-SECURITY-DEFINITION",
+      "field": "RT-9370858078281283",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-9370858078281283-BCE3F075-SECURITY-MUTANT",
+      "field": "RT-9370858078281283",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-9370858078281283-CURRENT-SCHEMA-FIELD",
+      "field": "RT-9370858078281283",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-93c925a29f21dd8d-BCE3F075-SECURITY-ALTERNATE",
+      "field": "RT-93c925a29f21dd8d",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-93c925a29f21dd8d-BCE3F075-SECURITY-BINDING",
+      "field": "RT-93c925a29f21dd8d",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-93c925a29f21dd8d-BCE3F075-SECURITY-CONTRACT",
+      "field": "RT-93c925a29f21dd8d",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-93c925a29f21dd8d-BCE3F075-SECURITY-DEFINITION",
+      "field": "RT-93c925a29f21dd8d",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-93c925a29f21dd8d-BCE3F075-SECURITY-MUTANT",
+      "field": "RT-93c925a29f21dd8d",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-93c925a29f21dd8d-CURRENT-SCHEMA-FIELD",
+      "field": "RT-93c925a29f21dd8d",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-95a1b17121581a49-BCE3F075-SECURITY-ALTERNATE",
+      "field": "RT-95a1b17121581a49",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-95a1b17121581a49-BCE3F075-SECURITY-BINDING",
+      "field": "RT-95a1b17121581a49",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-95a1b17121581a49-BCE3F075-SECURITY-CONTRACT",
+      "field": "RT-95a1b17121581a49",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-95a1b17121581a49-BCE3F075-SECURITY-DEFINITION",
+      "field": "RT-95a1b17121581a49",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-95a1b17121581a49-BCE3F075-SECURITY-MUTANT",
+      "field": "RT-95a1b17121581a49",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-95a1b17121581a49-CURRENT-SCHEMA-FIELD",
+      "field": "RT-95a1b17121581a49",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-95d37d46c3d99337-BCE3F075-SECURITY-ALTERNATE",
+      "field": "RT-95d37d46c3d99337",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-95d37d46c3d99337-BCE3F075-SECURITY-BINDING",
+      "field": "RT-95d37d46c3d99337",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-95d37d46c3d99337-BCE3F075-SECURITY-CONTRACT",
+      "field": "RT-95d37d46c3d99337",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-95d37d46c3d99337-BCE3F075-SECURITY-DEFINITION",
+      "field": "RT-95d37d46c3d99337",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-95d37d46c3d99337-BCE3F075-SECURITY-MUTANT",
+      "field": "RT-95d37d46c3d99337",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-95d37d46c3d99337-CURRENT-SCHEMA-FIELD",
+      "field": "RT-95d37d46c3d99337",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-9941fbebdaea1c41-BCE3F075-SECURITY-ALTERNATE",
+      "field": "RT-9941fbebdaea1c41",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-9941fbebdaea1c41-BCE3F075-SECURITY-BINDING",
+      "field": "RT-9941fbebdaea1c41",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-9941fbebdaea1c41-BCE3F075-SECURITY-CONTRACT",
+      "field": "RT-9941fbebdaea1c41",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-9941fbebdaea1c41-BCE3F075-SECURITY-DEFINITION",
+      "field": "RT-9941fbebdaea1c41",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-9941fbebdaea1c41-BCE3F075-SECURITY-MUTANT",
+      "field": "RT-9941fbebdaea1c41",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-9941fbebdaea1c41-CURRENT-SCHEMA-FIELD",
+      "field": "RT-9941fbebdaea1c41",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+      "field": "RT-163ebc138c768e21",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+      "field": "RT-d233d3039be3adc4",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+      "field": "RT-6eac87138fc57ac9",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+      "field": "RT-6afb26eb1a7b7271",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+      "field": "RT-611f5b01895a7c90",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+      "field": "RT-93c925a29f21dd8d",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+      "field": "RT-d852318fd5b15892",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+      "field": "RT-cd92cb7109a38c4a",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+      "field": "RT-8a73cb4fa2939ad4",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+      "field": "RT-ebb85facca8d1b1b",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+      "field": "RT-d87b67b33610f619",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+      "field": "RT-ef66623413223fef",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+      "field": "RT-101f7a1f1f29236a",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+      "field": "RT-5118b56e0742663b",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+      "field": "RT-584baa9f0f15c058",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+      "field": "RT-6ecf22c1afd37e91",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+      "field": "RT-e702d189d1282e3b",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+      "field": "RT-58a77efdd8cd5820",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+      "field": "RT-95a1b17121581a49",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+      "field": "RT-f4e73c3bb3c19c65",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+      "field": "RT-0da96fe7ba066ccb",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+      "field": "RT-0c0b02b6fbc2160c",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+      "field": "RT-c9bc44d00a7b9c90",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+      "field": "RT-6b059c9d6ad52058",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+      "field": "RT-cdfcefd44e87996b",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+      "field": "RT-f365121af3c2af9e",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+      "field": "RT-3caa1e915a125dcd",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+      "field": "RT-ea0bcd6957dbc556",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+      "field": "RT-4c38b23dda98be93",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+      "field": "RT-0e050207e6faa65c",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+      "field": "RT-ec0fc91072a8b630",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+      "field": "RT-1242f6b3245f130e",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+      "field": "RT-3f66e997ecc380c1",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+      "field": "RT-81f4bdf5f3872b9e",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+      "field": "RT-4a23015d6ca86669",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+      "field": "RT-a3dc4204fd2dbc99",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+      "field": "RT-d912c283aeea31d8",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+      "field": "RT-25155a8525353895",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+      "field": "RT-513bbd46b45156b7",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+      "field": "RT-6d1bc088852536a7",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+      "field": "RT-2dc4f91b61e79184",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+      "field": "RT-bd7eee80bc8feca2",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+      "field": "RT-53653aa9d3f03c8f",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+      "field": "RT-376a55c52779beed",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+      "field": "RT-e8358fe85c80d3d0",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+      "field": "RT-2fe8190f12f15510",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+      "field": "RT-8de947a02be68652",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+      "field": "RT-76d0d20d46b9a8e6",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+      "field": "RT-773179d734f2eb77",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+      "field": "RT-9370858078281283",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+      "field": "RT-f036e66205a0fa61",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+      "field": "RT-ffc33c06d6b6a1c2",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+      "field": "RT-0a39f16498c38979",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+      "field": "RT-c00914a2402f91bf",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+      "field": "RT-8d1e26bc5360c737",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+      "field": "RT-ae78d041c3d0fbd6",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+      "field": "RT-9941fbebdaea1c41",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+      "field": "RT-2672b24a1df6464d",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+      "field": "RT-52731740c2eb92d2",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+      "field": "RT-cc64dd898be55e05",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+      "field": "RT-95d37d46c3d99337",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+      "field": "RT-SECURITY-COMMON-BLOCKINGSEVERITIES",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+      "field": "RT-SECURITY-COMMON-BLOCKACTIVETHREATS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+      "field": "RT-SECURITY-COMMON-BLOCKMISSINGFIXES",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-MATRIXFIELDS-ALT",
+      "field": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-MATRIXFIELDS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-MATRIXFIELDS-DECLARATIONS10-ALTERNATE",
+      "field": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-MATRIXFIELDS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-MATRIXFIELDS-DECLARATIONS10-BINDING",
+      "field": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-MATRIXFIELDS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-MATRIXFIELDS-DECLARATIONS10-CONTRACT",
+      "field": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-MATRIXFIELDS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-MATRIXFIELDS-DECLARATIONS10-DEFINITION",
+      "field": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-MATRIXFIELDS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-MATRIXFIELDS-DECLARATIONS10-MUTANT",
+      "field": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-MATRIXFIELDS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-MATRIXFIELDS-MISSING",
+      "field": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-MATRIXFIELDS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-MATRIXFIELDS-MUTANT",
+      "field": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-MATRIXFIELDS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-RETRYSAFE-ALT",
+      "field": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-RETRYSAFE",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-RETRYSAFE-DECLARATIONS10-ALTERNATE",
+      "field": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-RETRYSAFE",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-RETRYSAFE-DECLARATIONS10-BINDING",
+      "field": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-RETRYSAFE",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-RETRYSAFE-DECLARATIONS10-CONTRACT",
+      "field": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-RETRYSAFE",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-RETRYSAFE-DECLARATIONS10-DEFINITION",
+      "field": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-RETRYSAFE",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-RETRYSAFE-DECLARATIONS10-MUTANT",
+      "field": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-RETRYSAFE",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-RETRYSAFE-MISSING",
+      "field": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-RETRYSAFE",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-RETRYSAFE-MUTANT",
+      "field": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-RETRYSAFE",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-HEADERS-MATRIXFIELDS-ALT",
+      "field": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-HEADERS-MATRIXFIELDS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-HEADERS-MATRIXFIELDS-DECLARATIONS10-ALTERNATE",
+      "field": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-HEADERS-MATRIXFIELDS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-HEADERS-MATRIXFIELDS-DECLARATIONS10-BINDING",
+      "field": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-HEADERS-MATRIXFIELDS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-HEADERS-MATRIXFIELDS-DECLARATIONS10-CONTRACT",
+      "field": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-HEADERS-MATRIXFIELDS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-HEADERS-MATRIXFIELDS-DECLARATIONS10-DEFINITION",
+      "field": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-HEADERS-MATRIXFIELDS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-HEADERS-MATRIXFIELDS-DECLARATIONS10-MUTANT",
+      "field": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-HEADERS-MATRIXFIELDS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-HEADERS-MATRIXFIELDS-MISSING",
+      "field": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-HEADERS-MATRIXFIELDS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-HEADERS-MATRIXFIELDS-MUTANT",
+      "field": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-HEADERS-MATRIXFIELDS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-HEADERS-RETRYSAFE-ALT",
+      "field": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-HEADERS-RETRYSAFE",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-HEADERS-RETRYSAFE-DECLARATIONS10-ALTERNATE",
+      "field": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-HEADERS-RETRYSAFE",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-HEADERS-RETRYSAFE-DECLARATIONS10-BINDING",
+      "field": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-HEADERS-RETRYSAFE",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-HEADERS-RETRYSAFE-DECLARATIONS10-CONTRACT",
+      "field": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-HEADERS-RETRYSAFE",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-HEADERS-RETRYSAFE-DECLARATIONS10-DEFINITION",
+      "field": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-HEADERS-RETRYSAFE",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-HEADERS-RETRYSAFE-DECLARATIONS10-MUTANT",
+      "field": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-HEADERS-RETRYSAFE",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-HEADERS-RETRYSAFE-MISSING",
+      "field": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-HEADERS-RETRYSAFE",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-HEADERS-RETRYSAFE-MUTANT",
+      "field": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-HEADERS-RETRYSAFE",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-MATRIXFIELDS-ALT",
+      "field": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-MATRIXFIELDS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-MATRIXFIELDS-DECLARATIONS10-ALTERNATE",
+      "field": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-MATRIXFIELDS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-MATRIXFIELDS-DECLARATIONS10-BINDING",
+      "field": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-MATRIXFIELDS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-MATRIXFIELDS-DECLARATIONS10-CONTRACT",
+      "field": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-MATRIXFIELDS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-MATRIXFIELDS-DECLARATIONS10-DEFINITION",
+      "field": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-MATRIXFIELDS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-MATRIXFIELDS-DECLARATIONS10-MUTANT",
+      "field": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-MATRIXFIELDS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-MATRIXFIELDS-MISSING",
+      "field": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-MATRIXFIELDS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-MATRIXFIELDS-MUTANT",
+      "field": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-MATRIXFIELDS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-RETRYSAFE-ALT",
+      "field": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-RETRYSAFE",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-RETRYSAFE-DECLARATIONS10-ALTERNATE",
+      "field": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-RETRYSAFE",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-RETRYSAFE-DECLARATIONS10-BINDING",
+      "field": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-RETRYSAFE",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-RETRYSAFE-DECLARATIONS10-CONTRACT",
+      "field": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-RETRYSAFE",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-RETRYSAFE-DECLARATIONS10-DEFINITION",
+      "field": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-RETRYSAFE",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-RETRYSAFE-DECLARATIONS10-MUTANT",
+      "field": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-RETRYSAFE",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-RETRYSAFE-MISSING",
+      "field": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-RETRYSAFE",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-RETRYSAFE-MUTANT",
+      "field": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-RETRYSAFE",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-MATRIXFIELDS-ALT",
+      "field": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-MATRIXFIELDS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-MATRIXFIELDS-DECLARATIONS10-ALTERNATE",
+      "field": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-MATRIXFIELDS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-MATRIXFIELDS-DECLARATIONS10-BINDING",
+      "field": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-MATRIXFIELDS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-MATRIXFIELDS-DECLARATIONS10-CONTRACT",
+      "field": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-MATRIXFIELDS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-MATRIXFIELDS-DECLARATIONS10-DEFINITION",
+      "field": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-MATRIXFIELDS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-MATRIXFIELDS-DECLARATIONS10-MUTANT",
+      "field": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-MATRIXFIELDS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-MATRIXFIELDS-MISSING",
+      "field": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-MATRIXFIELDS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-MATRIXFIELDS-MUTANT",
+      "field": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-MATRIXFIELDS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-RETRYSAFE-ALT",
+      "field": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-RETRYSAFE",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-RETRYSAFE-DECLARATIONS10-ALTERNATE",
+      "field": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-RETRYSAFE",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-RETRYSAFE-DECLARATIONS10-BINDING",
+      "field": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-RETRYSAFE",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-RETRYSAFE-DECLARATIONS10-CONTRACT",
+      "field": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-RETRYSAFE",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-RETRYSAFE-DECLARATIONS10-DEFINITION",
+      "field": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-RETRYSAFE",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-RETRYSAFE-DECLARATIONS10-MUTANT",
+      "field": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-RETRYSAFE",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-RETRYSAFE-MISSING",
+      "field": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-RETRYSAFE",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-RETRYSAFE-MUTANT",
+      "field": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-RETRYSAFE",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-MATRIXFIELDS-ALT",
+      "field": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-MATRIXFIELDS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-MATRIXFIELDS-DECLARATIONS10-ALTERNATE",
+      "field": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-MATRIXFIELDS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-MATRIXFIELDS-DECLARATIONS10-BINDING",
+      "field": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-MATRIXFIELDS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-MATRIXFIELDS-DECLARATIONS10-CONTRACT",
+      "field": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-MATRIXFIELDS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-MATRIXFIELDS-DECLARATIONS10-DEFINITION",
+      "field": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-MATRIXFIELDS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-MATRIXFIELDS-DECLARATIONS10-MUTANT",
+      "field": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-MATRIXFIELDS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-MATRIXFIELDS-MISSING",
+      "field": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-MATRIXFIELDS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-MATRIXFIELDS-MUTANT",
+      "field": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-MATRIXFIELDS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-RETRYSAFE-ALT",
+      "field": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-RETRYSAFE",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-RETRYSAFE-DECLARATIONS10-ALTERNATE",
+      "field": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-RETRYSAFE",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-RETRYSAFE-DECLARATIONS10-BINDING",
+      "field": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-RETRYSAFE",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-RETRYSAFE-DECLARATIONS10-CONTRACT",
+      "field": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-RETRYSAFE",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-RETRYSAFE-DECLARATIONS10-DEFINITION",
+      "field": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-RETRYSAFE",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-RETRYSAFE-DECLARATIONS10-MUTANT",
+      "field": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-RETRYSAFE",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-RETRYSAFE-MISSING",
+      "field": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-RETRYSAFE",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-RETRYSAFE-MUTANT",
+      "field": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-RETRYSAFE",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONERROR-ALT",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONERROR",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONERROR-DECLARATIONS10-ALTERNATE",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONERROR",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONERROR-DECLARATIONS10-BINDING",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONERROR",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONERROR-DECLARATIONS10-CONTRACT",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONERROR",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONERROR-DECLARATIONS10-DEFINITION",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONERROR",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONERROR-DECLARATIONS10-MUTANT",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONERROR",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONERROR-MISSING",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONERROR",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONERROR-MUTANT",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONERROR",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONFAIL-ALT",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONFAIL",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONFAIL-DECLARATIONS10-ALTERNATE",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONFAIL",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONFAIL-DECLARATIONS10-BINDING",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONFAIL",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONFAIL-DECLARATIONS10-CONTRACT",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONFAIL",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONFAIL-DECLARATIONS10-DEFINITION",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONFAIL",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONFAIL-DECLARATIONS10-MUTANT",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONFAIL",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONFAIL-MISSING",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONFAIL",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONFAIL-MUTANT",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONFAIL",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONPASS-ALT",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONPASS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONPASS-DECLARATIONS10-ALTERNATE",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONPASS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONPASS-DECLARATIONS10-BINDING",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONPASS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONPASS-DECLARATIONS10-CONTRACT",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONPASS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONPASS-DECLARATIONS10-DEFINITION",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONPASS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONPASS-DECLARATIONS10-MUTANT",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONPASS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONPASS-MISSING",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONPASS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONPASS-MUTANT",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONPASS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONERROR-ALT",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONERROR",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONERROR-DECLARATIONS10-ALTERNATE",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONERROR",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONERROR-DECLARATIONS10-BINDING",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONERROR",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONERROR-DECLARATIONS10-CONTRACT",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONERROR",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONERROR-DECLARATIONS10-DEFINITION",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONERROR",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONERROR-DECLARATIONS10-MUTANT",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONERROR",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONERROR-MISSING",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONERROR",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONERROR-MUTANT",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONERROR",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONFAIL-ALT",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONFAIL",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONFAIL-DECLARATIONS10-ALTERNATE",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONFAIL",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONFAIL-DECLARATIONS10-BINDING",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONFAIL",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONFAIL-DECLARATIONS10-CONTRACT",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONFAIL",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONFAIL-DECLARATIONS10-DEFINITION",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONFAIL",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONFAIL-DECLARATIONS10-MUTANT",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONFAIL",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONFAIL-MISSING",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONFAIL",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONFAIL-MUTANT",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONFAIL",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONPASS-ALT",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONPASS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONPASS-DECLARATIONS10-ALTERNATE",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONPASS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONPASS-DECLARATIONS10-BINDING",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONPASS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONPASS-DECLARATIONS10-CONTRACT",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONPASS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONPASS-DECLARATIONS10-DEFINITION",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONPASS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONPASS-DECLARATIONS10-MUTANT",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONPASS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONPASS-MISSING",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONPASS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONPASS-MUTANT",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONPASS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONERROR-ALT",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONERROR",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONERROR-DECLARATIONS10-ALTERNATE",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONERROR",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONERROR-DECLARATIONS10-BINDING",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONERROR",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONERROR-DECLARATIONS10-CONTRACT",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONERROR",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONERROR-DECLARATIONS10-DEFINITION",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONERROR",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONERROR-DECLARATIONS10-MUTANT",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONERROR",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONERROR-MISSING",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONERROR",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONERROR-MUTANT",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONERROR",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONFAIL-ALT",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONFAIL",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONFAIL-DECLARATIONS10-ALTERNATE",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONFAIL",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONFAIL-DECLARATIONS10-BINDING",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONFAIL",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONFAIL-DECLARATIONS10-CONTRACT",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONFAIL",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONFAIL-DECLARATIONS10-DEFINITION",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONFAIL",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONFAIL-DECLARATIONS10-MUTANT",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONFAIL",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONFAIL-MISSING",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONFAIL",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONFAIL-MUTANT",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONFAIL",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONPASS-ALT",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONPASS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONPASS-DECLARATIONS10-ALTERNATE",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONPASS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONPASS-DECLARATIONS10-BINDING",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONPASS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONPASS-DECLARATIONS10-CONTRACT",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONPASS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONPASS-DECLARATIONS10-DEFINITION",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONPASS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONPASS-DECLARATIONS10-MUTANT",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONPASS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONPASS-MISSING",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONPASS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONPASS-MUTANT",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONPASS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONERROR-ALT",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONERROR",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONERROR-DECLARATIONS10-ALTERNATE",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONERROR",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONERROR-DECLARATIONS10-BINDING",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONERROR",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONERROR-DECLARATIONS10-CONTRACT",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONERROR",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONERROR-DECLARATIONS10-DEFINITION",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONERROR",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONERROR-DECLARATIONS10-MUTANT",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONERROR",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONERROR-MISSING",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONERROR",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONERROR-MUTANT",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONERROR",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONFAIL-ALT",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONFAIL",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONFAIL-DECLARATIONS10-ALTERNATE",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONFAIL",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONFAIL-DECLARATIONS10-BINDING",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONFAIL",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONFAIL-DECLARATIONS10-CONTRACT",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONFAIL",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONFAIL-DECLARATIONS10-DEFINITION",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONFAIL",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONFAIL-DECLARATIONS10-MUTANT",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONFAIL",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONFAIL-MISSING",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONFAIL",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONFAIL-MUTANT",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONFAIL",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONPASS-ALT",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONPASS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONPASS-DECLARATIONS10-ALTERNATE",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONPASS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONPASS-DECLARATIONS10-BINDING",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONPASS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONPASS-DECLARATIONS10-CONTRACT",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONPASS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONPASS-DECLARATIONS10-DEFINITION",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONPASS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONPASS-DECLARATIONS10-MUTANT",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONPASS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONPASS-MISSING",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONPASS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONPASS-MUTANT",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONPASS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONERROR-ALT",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONERROR",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONERROR-DECLARATIONS10-ALTERNATE",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONERROR",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONERROR-DECLARATIONS10-BINDING",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONERROR",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONERROR-DECLARATIONS10-CONTRACT",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONERROR",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONERROR-DECLARATIONS10-DEFINITION",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONERROR",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONERROR-DECLARATIONS10-MUTANT",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONERROR",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONERROR-MISSING",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONERROR",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONERROR-MUTANT",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONERROR",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONFAIL-ALT",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONFAIL",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONFAIL-DECLARATIONS10-ALTERNATE",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONFAIL",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONFAIL-DECLARATIONS10-BINDING",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONFAIL",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONFAIL-DECLARATIONS10-CONTRACT",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONFAIL",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONFAIL-DECLARATIONS10-DEFINITION",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONFAIL",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONFAIL-DECLARATIONS10-MUTANT",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONFAIL",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONFAIL-MISSING",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONFAIL",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONFAIL-MUTANT",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONFAIL",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONPASS-ALT",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONPASS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONPASS-DECLARATIONS10-ALTERNATE",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONPASS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONPASS-DECLARATIONS10-BINDING",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONPASS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONPASS-DECLARATIONS10-CONTRACT",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONPASS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONPASS-DECLARATIONS10-DEFINITION",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONPASS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONPASS-DECLARATIONS10-MUTANT",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONPASS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONPASS-MISSING",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONPASS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONPASS-MUTANT",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONPASS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-POLICY10-3570f245d31280e9",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONPASS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-POLICY10-3570f245d31280e9",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONFAIL",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-POLICY10-3570f245d31280e9",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONERROR",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-POLICY10-6b769906ae4de25e",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONPASS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-POLICY10-6b769906ae4de25e",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONFAIL",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-POLICY10-6b769906ae4de25e",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONERROR",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-POLICY10-7c7857e402035d0c",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONPASS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-POLICY10-7c7857e402035d0c",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONFAIL",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-POLICY10-7c7857e402035d0c",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONERROR",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-POLICY10-a24be13871ec9023",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONPASS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-POLICY10-a24be13871ec9023",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONFAIL",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-POLICY10-a24be13871ec9023",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONERROR",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-POLICY10-b413e60898f42d6a",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONPASS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-POLICY10-b413e60898f42d6a",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONFAIL",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-PROVIDER-POLICY10-b413e60898f42d6a",
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONERROR",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-SECURITY-COMMON-BLOCKACTIVETHREATS-ALTERNATE",
+      "field": "RT-SECURITY-COMMON-BLOCKACTIVETHREATS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-SECURITY-COMMON-BLOCKACTIVETHREATS-BINDING",
+      "field": "RT-SECURITY-COMMON-BLOCKACTIVETHREATS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-SECURITY-COMMON-BLOCKACTIVETHREATS-CONTRACT",
+      "field": "RT-SECURITY-COMMON-BLOCKACTIVETHREATS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-SECURITY-COMMON-BLOCKACTIVETHREATS-MUTANT",
+      "field": "RT-SECURITY-COMMON-BLOCKACTIVETHREATS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-SECURITY-COMMON-BLOCKACTIVETHREATS-SOURCE",
+      "field": "RT-SECURITY-COMMON-BLOCKACTIVETHREATS",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-SECURITY-COMMON-BLOCKINGSEVERITIES-ALTERNATE",
+      "field": "RT-SECURITY-COMMON-BLOCKINGSEVERITIES",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-SECURITY-COMMON-BLOCKINGSEVERITIES-BINDING",
+      "field": "RT-SECURITY-COMMON-BLOCKINGSEVERITIES",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-SECURITY-COMMON-BLOCKINGSEVERITIES-CONTRACT",
+      "field": "RT-SECURITY-COMMON-BLOCKINGSEVERITIES",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-SECURITY-COMMON-BLOCKINGSEVERITIES-MUTANT",
+      "field": "RT-SECURITY-COMMON-BLOCKINGSEVERITIES",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-SECURITY-COMMON-BLOCKINGSEVERITIES-SOURCE",
+      "field": "RT-SECURITY-COMMON-BLOCKINGSEVERITIES",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-SECURITY-COMMON-BLOCKMISSINGFIXES-ALTERNATE",
+      "field": "RT-SECURITY-COMMON-BLOCKMISSINGFIXES",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-SECURITY-COMMON-BLOCKMISSINGFIXES-BINDING",
+      "field": "RT-SECURITY-COMMON-BLOCKMISSINGFIXES",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-SECURITY-COMMON-BLOCKMISSINGFIXES-CONTRACT",
+      "field": "RT-SECURITY-COMMON-BLOCKMISSINGFIXES",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-SECURITY-COMMON-BLOCKMISSINGFIXES-MUTANT",
+      "field": "RT-SECURITY-COMMON-BLOCKMISSINGFIXES",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-SECURITY-COMMON-BLOCKMISSINGFIXES-SOURCE",
+      "field": "RT-SECURITY-COMMON-BLOCKMISSINGFIXES",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-a3dc4204fd2dbc99-BCE3F075-SECURITY-ALTERNATE",
+      "field": "RT-a3dc4204fd2dbc99",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-a3dc4204fd2dbc99-BCE3F075-SECURITY-BINDING",
+      "field": "RT-a3dc4204fd2dbc99",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-a3dc4204fd2dbc99-BCE3F075-SECURITY-CONTRACT",
+      "field": "RT-a3dc4204fd2dbc99",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-a3dc4204fd2dbc99-BCE3F075-SECURITY-DEFINITION",
+      "field": "RT-a3dc4204fd2dbc99",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-a3dc4204fd2dbc99-BCE3F075-SECURITY-MUTANT",
+      "field": "RT-a3dc4204fd2dbc99",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-a3dc4204fd2dbc99-CURRENT-SCHEMA-FIELD",
+      "field": "RT-a3dc4204fd2dbc99",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-ae78d041c3d0fbd6-BCE3F075-SECURITY-ALTERNATE",
+      "field": "RT-ae78d041c3d0fbd6",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-ae78d041c3d0fbd6-BCE3F075-SECURITY-BINDING",
+      "field": "RT-ae78d041c3d0fbd6",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-ae78d041c3d0fbd6-BCE3F075-SECURITY-CONTRACT",
+      "field": "RT-ae78d041c3d0fbd6",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-ae78d041c3d0fbd6-BCE3F075-SECURITY-DEFINITION",
+      "field": "RT-ae78d041c3d0fbd6",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-ae78d041c3d0fbd6-BCE3F075-SECURITY-MUTANT",
+      "field": "RT-ae78d041c3d0fbd6",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-ae78d041c3d0fbd6-CURRENT-SCHEMA-FIELD",
+      "field": "RT-ae78d041c3d0fbd6",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-bd7eee80bc8feca2-BCE3F075-SECURITY-ALTERNATE",
+      "field": "RT-bd7eee80bc8feca2",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-bd7eee80bc8feca2-BCE3F075-SECURITY-BINDING",
+      "field": "RT-bd7eee80bc8feca2",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-bd7eee80bc8feca2-BCE3F075-SECURITY-CONTRACT",
+      "field": "RT-bd7eee80bc8feca2",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-bd7eee80bc8feca2-BCE3F075-SECURITY-DEFINITION",
+      "field": "RT-bd7eee80bc8feca2",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-bd7eee80bc8feca2-BCE3F075-SECURITY-MUTANT",
+      "field": "RT-bd7eee80bc8feca2",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-bd7eee80bc8feca2-CURRENT-SCHEMA-FIELD",
+      "field": "RT-bd7eee80bc8feca2",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-c00914a2402f91bf-BCE3F075-SECURITY-ALTERNATE",
+      "field": "RT-c00914a2402f91bf",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-c00914a2402f91bf-BCE3F075-SECURITY-BINDING",
+      "field": "RT-c00914a2402f91bf",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-c00914a2402f91bf-BCE3F075-SECURITY-CONTRACT",
+      "field": "RT-c00914a2402f91bf",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-c00914a2402f91bf-BCE3F075-SECURITY-DEFINITION",
+      "field": "RT-c00914a2402f91bf",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-c00914a2402f91bf-BCE3F075-SECURITY-MUTANT",
+      "field": "RT-c00914a2402f91bf",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-c00914a2402f91bf-CURRENT-SCHEMA-FIELD",
+      "field": "RT-c00914a2402f91bf",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-c9bc44d00a7b9c90-BCE3F075-SECURITY-ALTERNATE",
+      "field": "RT-c9bc44d00a7b9c90",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-c9bc44d00a7b9c90-BCE3F075-SECURITY-BINDING",
+      "field": "RT-c9bc44d00a7b9c90",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-c9bc44d00a7b9c90-BCE3F075-SECURITY-CONTRACT",
+      "field": "RT-c9bc44d00a7b9c90",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-c9bc44d00a7b9c90-BCE3F075-SECURITY-DEFINITION",
+      "field": "RT-c9bc44d00a7b9c90",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-c9bc44d00a7b9c90-BCE3F075-SECURITY-MUTANT",
+      "field": "RT-c9bc44d00a7b9c90",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-c9bc44d00a7b9c90-CURRENT-SCHEMA-FIELD",
+      "field": "RT-c9bc44d00a7b9c90",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-cc64dd898be55e05-BCE3F075-SECURITY-ALTERNATE",
+      "field": "RT-cc64dd898be55e05",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-cc64dd898be55e05-BCE3F075-SECURITY-BINDING",
+      "field": "RT-cc64dd898be55e05",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-cc64dd898be55e05-BCE3F075-SECURITY-CONTRACT",
+      "field": "RT-cc64dd898be55e05",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-cc64dd898be55e05-BCE3F075-SECURITY-DEFINITION",
+      "field": "RT-cc64dd898be55e05",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-cc64dd898be55e05-BCE3F075-SECURITY-MUTANT",
+      "field": "RT-cc64dd898be55e05",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-cc64dd898be55e05-CURRENT-SCHEMA-FIELD",
+      "field": "RT-cc64dd898be55e05",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-cd92cb7109a38c4a-BCE3F075-SECURITY-ALTERNATE",
+      "field": "RT-cd92cb7109a38c4a",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-cd92cb7109a38c4a-BCE3F075-SECURITY-BINDING",
+      "field": "RT-cd92cb7109a38c4a",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-cd92cb7109a38c4a-BCE3F075-SECURITY-CONTRACT",
+      "field": "RT-cd92cb7109a38c4a",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-cd92cb7109a38c4a-BCE3F075-SECURITY-DEFINITION",
+      "field": "RT-cd92cb7109a38c4a",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-cd92cb7109a38c4a-BCE3F075-SECURITY-MUTANT",
+      "field": "RT-cd92cb7109a38c4a",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-cd92cb7109a38c4a-CURRENT-SCHEMA-FIELD",
+      "field": "RT-cd92cb7109a38c4a",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-cdfcefd44e87996b-BCE3F075-SECURITY-ALTERNATE",
+      "field": "RT-cdfcefd44e87996b",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-cdfcefd44e87996b-BCE3F075-SECURITY-BINDING",
+      "field": "RT-cdfcefd44e87996b",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-cdfcefd44e87996b-BCE3F075-SECURITY-CONTRACT",
+      "field": "RT-cdfcefd44e87996b",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-cdfcefd44e87996b-BCE3F075-SECURITY-DEFINITION",
+      "field": "RT-cdfcefd44e87996b",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-cdfcefd44e87996b-BCE3F075-SECURITY-MUTANT",
+      "field": "RT-cdfcefd44e87996b",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-cdfcefd44e87996b-CURRENT-SCHEMA-FIELD",
+      "field": "RT-cdfcefd44e87996b",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-d233d3039be3adc4-BCE3F075-SECURITY-ALTERNATE",
+      "field": "RT-d233d3039be3adc4",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-d233d3039be3adc4-BCE3F075-SECURITY-BINDING",
+      "field": "RT-d233d3039be3adc4",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-d233d3039be3adc4-BCE3F075-SECURITY-CONTRACT",
+      "field": "RT-d233d3039be3adc4",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-d233d3039be3adc4-BCE3F075-SECURITY-DEFINITION",
+      "field": "RT-d233d3039be3adc4",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-d233d3039be3adc4-BCE3F075-SECURITY-MUTANT",
+      "field": "RT-d233d3039be3adc4",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-d233d3039be3adc4-CURRENT-SCHEMA-FIELD",
+      "field": "RT-d233d3039be3adc4",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-d852318fd5b15892-BCE3F075-SECURITY-ALTERNATE",
+      "field": "RT-d852318fd5b15892",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-d852318fd5b15892-BCE3F075-SECURITY-BINDING",
+      "field": "RT-d852318fd5b15892",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-d852318fd5b15892-BCE3F075-SECURITY-CONTRACT",
+      "field": "RT-d852318fd5b15892",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-d852318fd5b15892-BCE3F075-SECURITY-DEFINITION",
+      "field": "RT-d852318fd5b15892",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-d852318fd5b15892-BCE3F075-SECURITY-MUTANT",
+      "field": "RT-d852318fd5b15892",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-d852318fd5b15892-CURRENT-SCHEMA-FIELD",
+      "field": "RT-d852318fd5b15892",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-d87b67b33610f619-BCE3F075-SECURITY-ALTERNATE",
+      "field": "RT-d87b67b33610f619",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-d87b67b33610f619-BCE3F075-SECURITY-BINDING",
+      "field": "RT-d87b67b33610f619",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-d87b67b33610f619-BCE3F075-SECURITY-CONTRACT",
+      "field": "RT-d87b67b33610f619",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-d87b67b33610f619-BCE3F075-SECURITY-DEFINITION",
+      "field": "RT-d87b67b33610f619",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-d87b67b33610f619-BCE3F075-SECURITY-MUTANT",
+      "field": "RT-d87b67b33610f619",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-d87b67b33610f619-CURRENT-SCHEMA-FIELD",
+      "field": "RT-d87b67b33610f619",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-d912c283aeea31d8-BCE3F075-SECURITY-ALTERNATE",
+      "field": "RT-d912c283aeea31d8",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-d912c283aeea31d8-BCE3F075-SECURITY-BINDING",
+      "field": "RT-d912c283aeea31d8",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-d912c283aeea31d8-BCE3F075-SECURITY-CONTRACT",
+      "field": "RT-d912c283aeea31d8",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-d912c283aeea31d8-BCE3F075-SECURITY-DEFINITION",
+      "field": "RT-d912c283aeea31d8",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-d912c283aeea31d8-BCE3F075-SECURITY-MUTANT",
+      "field": "RT-d912c283aeea31d8",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-d912c283aeea31d8-CURRENT-SCHEMA-FIELD",
+      "field": "RT-d912c283aeea31d8",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-e702d189d1282e3b-BCE3F075-SECURITY-ALTERNATE",
+      "field": "RT-e702d189d1282e3b",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-e702d189d1282e3b-BCE3F075-SECURITY-BINDING",
+      "field": "RT-e702d189d1282e3b",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-e702d189d1282e3b-BCE3F075-SECURITY-CONTRACT",
+      "field": "RT-e702d189d1282e3b",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-e702d189d1282e3b-BCE3F075-SECURITY-DEFINITION",
+      "field": "RT-e702d189d1282e3b",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-e702d189d1282e3b-BCE3F075-SECURITY-MUTANT",
+      "field": "RT-e702d189d1282e3b",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-e702d189d1282e3b-CURRENT-SCHEMA-FIELD",
+      "field": "RT-e702d189d1282e3b",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-e8358fe85c80d3d0-BCE3F075-SECURITY-ALTERNATE",
+      "field": "RT-e8358fe85c80d3d0",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-e8358fe85c80d3d0-BCE3F075-SECURITY-BINDING",
+      "field": "RT-e8358fe85c80d3d0",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-e8358fe85c80d3d0-BCE3F075-SECURITY-CONTRACT",
+      "field": "RT-e8358fe85c80d3d0",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-e8358fe85c80d3d0-BCE3F075-SECURITY-DEFINITION",
+      "field": "RT-e8358fe85c80d3d0",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-e8358fe85c80d3d0-BCE3F075-SECURITY-MUTANT",
+      "field": "RT-e8358fe85c80d3d0",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-e8358fe85c80d3d0-CURRENT-SCHEMA-FIELD",
+      "field": "RT-e8358fe85c80d3d0",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-ea0bcd6957dbc556-BCE3F075-SECURITY-ALTERNATE",
+      "field": "RT-ea0bcd6957dbc556",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-ea0bcd6957dbc556-BCE3F075-SECURITY-BINDING",
+      "field": "RT-ea0bcd6957dbc556",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-ea0bcd6957dbc556-BCE3F075-SECURITY-CONTRACT",
+      "field": "RT-ea0bcd6957dbc556",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-ea0bcd6957dbc556-BCE3F075-SECURITY-DEFINITION",
+      "field": "RT-ea0bcd6957dbc556",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-ea0bcd6957dbc556-BCE3F075-SECURITY-MUTANT",
+      "field": "RT-ea0bcd6957dbc556",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-ea0bcd6957dbc556-CURRENT-SCHEMA-FIELD",
+      "field": "RT-ea0bcd6957dbc556",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-ebb85facca8d1b1b-BCE3F075-SECURITY-ALTERNATE",
+      "field": "RT-ebb85facca8d1b1b",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-ebb85facca8d1b1b-BCE3F075-SECURITY-BINDING",
+      "field": "RT-ebb85facca8d1b1b",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-ebb85facca8d1b1b-BCE3F075-SECURITY-CONTRACT",
+      "field": "RT-ebb85facca8d1b1b",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-ebb85facca8d1b1b-BCE3F075-SECURITY-DEFINITION",
+      "field": "RT-ebb85facca8d1b1b",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-ebb85facca8d1b1b-BCE3F075-SECURITY-MUTANT",
+      "field": "RT-ebb85facca8d1b1b",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-ebb85facca8d1b1b-CURRENT-SCHEMA-FIELD",
+      "field": "RT-ebb85facca8d1b1b",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-ec0fc91072a8b630-BCE3F075-SECURITY-ALTERNATE",
+      "field": "RT-ec0fc91072a8b630",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-ec0fc91072a8b630-BCE3F075-SECURITY-BINDING",
+      "field": "RT-ec0fc91072a8b630",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-ec0fc91072a8b630-BCE3F075-SECURITY-CONTRACT",
+      "field": "RT-ec0fc91072a8b630",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-ec0fc91072a8b630-BCE3F075-SECURITY-DEFINITION",
+      "field": "RT-ec0fc91072a8b630",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-ec0fc91072a8b630-BCE3F075-SECURITY-MUTANT",
+      "field": "RT-ec0fc91072a8b630",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-ec0fc91072a8b630-CURRENT-SCHEMA-FIELD",
+      "field": "RT-ec0fc91072a8b630",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-ef66623413223fef-BCE3F075-SECURITY-ALTERNATE",
+      "field": "RT-ef66623413223fef",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-ef66623413223fef-BCE3F075-SECURITY-BINDING",
+      "field": "RT-ef66623413223fef",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-ef66623413223fef-BCE3F075-SECURITY-CONTRACT",
+      "field": "RT-ef66623413223fef",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-ef66623413223fef-BCE3F075-SECURITY-DEFINITION",
+      "field": "RT-ef66623413223fef",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-ef66623413223fef-BCE3F075-SECURITY-MUTANT",
+      "field": "RT-ef66623413223fef",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-ef66623413223fef-CURRENT-SCHEMA-FIELD",
+      "field": "RT-ef66623413223fef",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-f036e66205a0fa61-BCE3F075-SECURITY-ALTERNATE",
+      "field": "RT-f036e66205a0fa61",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-f036e66205a0fa61-BCE3F075-SECURITY-BINDING",
+      "field": "RT-f036e66205a0fa61",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-f036e66205a0fa61-BCE3F075-SECURITY-CONTRACT",
+      "field": "RT-f036e66205a0fa61",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-f036e66205a0fa61-BCE3F075-SECURITY-DEFINITION",
+      "field": "RT-f036e66205a0fa61",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-f036e66205a0fa61-BCE3F075-SECURITY-MUTANT",
+      "field": "RT-f036e66205a0fa61",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-f036e66205a0fa61-CURRENT-SCHEMA-FIELD",
+      "field": "RT-f036e66205a0fa61",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-f365121af3c2af9e-BCE3F075-SECURITY-ALTERNATE",
+      "field": "RT-f365121af3c2af9e",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-f365121af3c2af9e-BCE3F075-SECURITY-BINDING",
+      "field": "RT-f365121af3c2af9e",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-f365121af3c2af9e-BCE3F075-SECURITY-CONTRACT",
+      "field": "RT-f365121af3c2af9e",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-f365121af3c2af9e-BCE3F075-SECURITY-DEFINITION",
+      "field": "RT-f365121af3c2af9e",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-f365121af3c2af9e-BCE3F075-SECURITY-MUTANT",
+      "field": "RT-f365121af3c2af9e",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-f365121af3c2af9e-CURRENT-SCHEMA-FIELD",
+      "field": "RT-f365121af3c2af9e",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-f4e73c3bb3c19c65-BCE3F075-SECURITY-ALTERNATE",
+      "field": "RT-f4e73c3bb3c19c65",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-f4e73c3bb3c19c65-BCE3F075-SECURITY-BINDING",
+      "field": "RT-f4e73c3bb3c19c65",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-f4e73c3bb3c19c65-BCE3F075-SECURITY-CONTRACT",
+      "field": "RT-f4e73c3bb3c19c65",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-f4e73c3bb3c19c65-BCE3F075-SECURITY-DEFINITION",
+      "field": "RT-f4e73c3bb3c19c65",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-f4e73c3bb3c19c65-BCE3F075-SECURITY-MUTANT",
+      "field": "RT-f4e73c3bb3c19c65",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-f4e73c3bb3c19c65-CURRENT-SCHEMA-FIELD",
+      "field": "RT-f4e73c3bb3c19c65",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-ffc33c06d6b6a1c2-BCE3F075-SECURITY-ALTERNATE",
+      "field": "RT-ffc33c06d6b6a1c2",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-ffc33c06d6b6a1c2-BCE3F075-SECURITY-BINDING",
+      "field": "RT-ffc33c06d6b6a1c2",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-ffc33c06d6b6a1c2-BCE3F075-SECURITY-CONTRACT",
+      "field": "RT-ffc33c06d6b6a1c2",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-ffc33c06d6b6a1c2-BCE3F075-SECURITY-DEFINITION",
+      "field": "RT-ffc33c06d6b6a1c2",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-ffc33c06d6b6a1c2-BCE3F075-SECURITY-MUTANT",
+      "field": "RT-ffc33c06d6b6a1c2",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    },
+    {
+      "case": "RT-ffc33c06d6b6a1c2-CURRENT-SCHEMA-FIELD",
+      "field": "RT-ffc33c06d6b6a1c2",
+      "actualSchemaShaMatches": true,
+      "pointedNodeEqualsField": true
+    }
+  ],
+  "receiverChecks": [
+    {
+      "field": "RT-163ebc138c768e21",
+      "registration": "kubeclaw.security-providers:headers",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-d233d3039be3adc4",
+      "registration": "kubeclaw.security-providers:headers",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-6eac87138fc57ac9",
+      "registration": "kubeclaw.security-providers:headers",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-6afb26eb1a7b7271",
+      "registration": "kubeclaw.security-providers:headers",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-611f5b01895a7c90",
+      "registration": "kubeclaw.security-providers:headers",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-93c925a29f21dd8d",
+      "registration": "kubeclaw.security-providers:headers",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-d852318fd5b15892",
+      "registration": "kubeclaw.security-providers:headers",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-cd92cb7109a38c4a",
+      "registration": "kubeclaw.security-providers:headers",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-8a73cb4fa2939ad4",
+      "registration": "kubeclaw.security-providers:headers",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-ebb85facca8d1b1b",
+      "registration": "kubeclaw.security-providers:headers",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-d87b67b33610f619",
+      "registration": "kubeclaw.security-providers:headers",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-ef66623413223fef",
+      "registration": "kubeclaw.security-providers:headers",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-101f7a1f1f29236a",
+      "registration": "kubeclaw.security-providers:headers",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-5118b56e0742663b",
+      "registration": "kubeclaw.security-providers:headers",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-584baa9f0f15c058",
+      "registration": "kubeclaw.security-providers:headers",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-6ecf22c1afd37e91",
+      "registration": "kubeclaw.security-providers:headers",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-e702d189d1282e3b",
+      "registration": "kubeclaw.security-providers:headers",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-58a77efdd8cd5820",
+      "registration": "kubeclaw.security-providers:headers",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-95a1b17121581a49",
+      "registration": "kubeclaw.security-providers:headers",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-f4e73c3bb3c19c65",
+      "registration": "kubeclaw.security-providers:headers",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-0da96fe7ba066ccb",
+      "registration": "kubeclaw.security-providers:headers",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-0c0b02b6fbc2160c",
+      "registration": "kubeclaw.security-providers:headers",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-c9bc44d00a7b9c90",
+      "registration": "kubeclaw.security-providers:headers",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-6b059c9d6ad52058",
+      "registration": "kubeclaw.security-providers:headers",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-cdfcefd44e87996b",
+      "registration": "kubeclaw.security-providers:headers",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-f365121af3c2af9e",
+      "registration": "kubeclaw.security-providers:headers",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-3caa1e915a125dcd",
+      "registration": "kubeclaw.security-providers:headers",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-ea0bcd6957dbc556",
+      "registration": "kubeclaw.security-providers:headers",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-4c38b23dda98be93",
+      "registration": "kubeclaw.security-providers:dependency-trivy",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-0e050207e6faa65c",
+      "registration": "kubeclaw.security-providers:dependency-trivy",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-ec0fc91072a8b630",
+      "registration": "kubeclaw.security-providers:dependency-trivy",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-1242f6b3245f130e",
+      "registration": "kubeclaw.security-providers:dependency-trivy",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-3f66e997ecc380c1",
+      "registration": "kubeclaw.security-providers:dependency-trivy",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-81f4bdf5f3872b9e",
+      "registration": "kubeclaw.security-providers:dependency-trivy",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-4a23015d6ca86669",
+      "registration": "kubeclaw.security-providers:dependency-trivy",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-a3dc4204fd2dbc99",
+      "registration": "kubeclaw.security-providers:dependency-trivy",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-d912c283aeea31d8",
+      "registration": "kubeclaw.security-providers:dependency-trivy",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-25155a8525353895",
+      "registration": "kubeclaw.security-providers:image-trivy",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-513bbd46b45156b7",
+      "registration": "kubeclaw.security-providers:image-trivy",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-6d1bc088852536a7",
+      "registration": "kubeclaw.security-providers:image-trivy",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-2dc4f91b61e79184",
+      "registration": "kubeclaw.security-providers:image-trivy",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-bd7eee80bc8feca2",
+      "registration": "kubeclaw.security-providers:image-trivy",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-53653aa9d3f03c8f",
+      "registration": "kubeclaw.security-providers:image-trivy",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-376a55c52779beed",
+      "registration": "kubeclaw.security-providers:image-trivy",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-e8358fe85c80d3d0",
+      "registration": "kubeclaw.security-providers:image-trivy",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-2fe8190f12f15510",
+      "registration": "kubeclaw.security-providers:kubernetes-policy",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-8de947a02be68652",
+      "registration": "kubeclaw.security-providers:kubernetes-policy",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-76d0d20d46b9a8e6",
+      "registration": "kubeclaw.security-providers:kubernetes-policy",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-773179d734f2eb77",
+      "registration": "kubeclaw.security-providers:kubernetes-policy",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-9370858078281283",
+      "registration": "kubeclaw.security-providers:kubernetes-policy",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-f036e66205a0fa61",
+      "registration": "kubeclaw.security-providers:kubernetes-policy",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-ffc33c06d6b6a1c2",
+      "registration": "kubeclaw.security-providers:kubernetes-policy",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-0a39f16498c38979",
+      "registration": "kubeclaw.security-providers:kubernetes-policy",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-c00914a2402f91bf",
+      "registration": "kubeclaw.security-providers:kubernetes-runtime",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-8d1e26bc5360c737",
+      "registration": "kubeclaw.security-providers:kubernetes-runtime",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-ae78d041c3d0fbd6",
+      "registration": "kubeclaw.security-providers:kubernetes-runtime",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-9941fbebdaea1c41",
+      "registration": "kubeclaw.security-providers:kubernetes-runtime",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-2672b24a1df6464d",
+      "registration": "kubeclaw.security-providers:kubernetes-runtime",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-52731740c2eb92d2",
+      "registration": "kubeclaw.security-providers:kubernetes-runtime",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-cc64dd898be55e05",
+      "registration": "kubeclaw.security-providers:kubernetes-runtime",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-95d37d46c3d99337",
+      "registration": "kubeclaw.security-providers:kubernetes-runtime",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONPASS",
+      "registration": "kubeclaw.security-providers:headers",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONFAIL",
+      "registration": "kubeclaw.security-providers:headers",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONERROR",
+      "registration": "kubeclaw.security-providers:headers",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-HEADERS-RETRYSAFE",
+      "registration": "kubeclaw.security-providers:headers",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-HEADERS-MATRIXFIELDS",
+      "registration": "kubeclaw.security-providers:headers",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONPASS",
+      "registration": "kubeclaw.security-providers:dependency-trivy",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONFAIL",
+      "registration": "kubeclaw.security-providers:dependency-trivy",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONERROR",
+      "registration": "kubeclaw.security-providers:dependency-trivy",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-RETRYSAFE",
+      "registration": "kubeclaw.security-providers:dependency-trivy",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-MATRIXFIELDS",
+      "registration": "kubeclaw.security-providers:dependency-trivy",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONPASS",
+      "registration": "kubeclaw.security-providers:image-trivy",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONFAIL",
+      "registration": "kubeclaw.security-providers:image-trivy",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONERROR",
+      "registration": "kubeclaw.security-providers:image-trivy",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-RETRYSAFE",
+      "registration": "kubeclaw.security-providers:image-trivy",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-MATRIXFIELDS",
+      "registration": "kubeclaw.security-providers:image-trivy",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONPASS",
+      "registration": "kubeclaw.security-providers:kubernetes-policy",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONFAIL",
+      "registration": "kubeclaw.security-providers:kubernetes-policy",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONERROR",
+      "registration": "kubeclaw.security-providers:kubernetes-policy",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-RETRYSAFE",
+      "registration": "kubeclaw.security-providers:kubernetes-policy",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-MATRIXFIELDS",
+      "registration": "kubeclaw.security-providers:kubernetes-policy",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONPASS",
+      "registration": "kubeclaw.security-providers:kubernetes-runtime",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONFAIL",
+      "registration": "kubeclaw.security-providers:kubernetes-runtime",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONERROR",
+      "registration": "kubeclaw.security-providers:kubernetes-runtime",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-RETRYSAFE",
+      "registration": "kubeclaw.security-providers:kubernetes-runtime",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-MATRIXFIELDS",
+      "registration": "kubeclaw.security-providers:kubernetes-runtime",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-SECURITY-COMMON-BLOCKINGSEVERITIES",
+      "registration": "kubeclaw.security-providers:headers",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-SECURITY-COMMON-BLOCKINGSEVERITIES",
+      "registration": "kubeclaw.security-providers:dependency-trivy",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-SECURITY-COMMON-BLOCKINGSEVERITIES",
+      "registration": "kubeclaw.security-providers:image-trivy",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-SECURITY-COMMON-BLOCKINGSEVERITIES",
+      "registration": "kubeclaw.security-providers:kubernetes-policy",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-SECURITY-COMMON-BLOCKINGSEVERITIES",
+      "registration": "kubeclaw.security-providers:kubernetes-runtime",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-SECURITY-COMMON-BLOCKACTIVETHREATS",
+      "registration": "kubeclaw.security-providers:headers",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-SECURITY-COMMON-BLOCKACTIVETHREATS",
+      "registration": "kubeclaw.security-providers:dependency-trivy",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-SECURITY-COMMON-BLOCKACTIVETHREATS",
+      "registration": "kubeclaw.security-providers:image-trivy",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-SECURITY-COMMON-BLOCKACTIVETHREATS",
+      "registration": "kubeclaw.security-providers:kubernetes-policy",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-SECURITY-COMMON-BLOCKACTIVETHREATS",
+      "registration": "kubeclaw.security-providers:kubernetes-runtime",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-SECURITY-COMMON-BLOCKMISSINGFIXES",
+      "registration": "kubeclaw.security-providers:headers",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-SECURITY-COMMON-BLOCKMISSINGFIXES",
+      "registration": "kubeclaw.security-providers:dependency-trivy",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-SECURITY-COMMON-BLOCKMISSINGFIXES",
+      "registration": "kubeclaw.security-providers:image-trivy",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-SECURITY-COMMON-BLOCKMISSINGFIXES",
+      "registration": "kubeclaw.security-providers:kubernetes-policy",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    },
+    {
+      "field": "RT-SECURITY-COMMON-BLOCKMISSINGFIXES",
+      "registration": "kubeclaw.security-providers:kubernetes-runtime",
+      "schemaShaMatches": true,
+      "actualPointedNodeEqualsField": true
+    }
+  ],
+  "processing": [
+    {
+      "name": "maximumFindings",
+      "sourceShaMatches": true,
+      "lineMatches": true,
+      "candidateBodiesEqualActual": true,
+      "originalCaseJoinsMatch": true,
+      "candidateIds": [
+        "SRC-0b8c25f6a191fbfd"
+      ]
+    },
+    {
+      "name": "maximumPaths",
+      "sourceShaMatches": true,
+      "lineMatches": true,
+      "candidateBodiesEqualActual": true,
+      "originalCaseJoinsMatch": true,
+      "candidateIds": [
+        "SRC-cda367e348ff9c4a"
+      ]
+    },
+    {
+      "name": "maximumResponseBytes",
+      "sourceShaMatches": true,
+      "lineMatches": true,
+      "candidateBodiesEqualActual": true,
+      "originalCaseJoinsMatch": true,
+      "candidateIds": []
+    },
+    {
+      "name": "preset-nosniff",
+      "sourceShaMatches": true,
+      "lineMatches": true,
+      "candidateBodiesEqualActual": true,
+      "originalCaseJoinsMatch": true,
+      "candidateIds": []
+    },
+    {
+      "name": "preset-hsts-age",
+      "sourceShaMatches": true,
+      "lineMatches": true,
+      "candidateBodiesEqualActual": true,
+      "originalCaseJoinsMatch": true,
+      "candidateIds": []
+    }
+  ],
+  "nodeExecutableSha256": "7fde7b8afa198da66257f42ee2001d874c7355631e6d1579a5fb5ef1f246df4c",
+  "ajvEntrySha256": "908e9670b478b2ba126802a221b7e47006f50cf467e2c5dd7935d3dbef10a20a",
+  "ajvVersion": "8.20.0"
+}

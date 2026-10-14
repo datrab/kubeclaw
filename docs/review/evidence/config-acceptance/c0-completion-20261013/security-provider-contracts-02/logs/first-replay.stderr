@@ -1,0 +1,12 @@
+file:///home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-02/check-definition.mjs:13
+const ajv=new Ajv2020({strict:true,allowUnionTypes:true,allErrors:true,useDefaults:false,coerceTypes:false,removeAdditional:false});addFormats(ajv);const observations=[];function record(check,valid,detail={}){observations.push({check,valid,...detail});if(!valid)throw Error(check+': '+JSON.stringify(detail));}function errorOf(fn){try{fn();return null;}catch(e){return e.message;}}
+                                                                                                                                                                                                                                                                            ^
+
+Error: SEC01-complete-owner-control-rules-64-shared-names: {"schemaAccepts":false,"nativeError":null,"semanticErrors":[],"ruleCount":64,"uniqueRequestedHeaderNames":4}
+    at record (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-02/check-definition.mjs:13:269)
+    at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-02/check-definition.mjs:75:2
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.21.0

@@ -1,0 +1,188 @@
+{
+  "headerControls": [
+    {
+      "id": "unique-32",
+      "ownerPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-02/fixtures/owners/unique-32.json",
+      "expectedNativeError": null,
+      "admit": true,
+      "expectedRules": 32,
+      "expectedUnique": 32,
+      "currentSourceComparable": true
+    },
+    {
+      "id": "unique-33",
+      "ownerPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-02/fixtures/owners/unique-33.json",
+      "expectedNativeError": "HTTP_RESPONSE_HEADERS_INVALID",
+      "admit": false,
+      "expectedRules": 33,
+      "expectedUnique": 33,
+      "currentSourceComparable": true
+    },
+    {
+      "id": "denied-connection",
+      "ownerPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-02/fixtures/owners/denied-connection.json",
+      "expectedNativeError": "HTTP_RESPONSE_HEADERS_INVALID",
+      "admit": false,
+      "expectedRules": 5,
+      "expectedUnique": 5,
+      "currentSourceComparable": true
+    },
+    {
+      "id": "content-length-exception",
+      "ownerPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-02/fixtures/owners/content-length-exception.json",
+      "expectedNativeError": null,
+      "admit": true,
+      "expectedRules": 5,
+      "expectedUnique": 5,
+      "currentSourceComparable": true
+    },
+    {
+      "id": "rules-64-shared-names",
+      "ownerPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-02/fixtures/owners/rules-64-shared-names.json",
+      "expectedNativeError": null,
+      "admit": true,
+      "expectedRules": 64,
+      "expectedUnique": 4,
+      "currentSourceComparable": false
+    },
+    {
+      "id": "denied-host",
+      "ownerPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-02/fixtures/owners/denied-host.json",
+      "expectedNativeError": "HTTP_RESPONSE_HEADERS_INVALID",
+      "admit": false,
+      "expectedRules": 5,
+      "expectedUnique": 5,
+      "currentSourceComparable": true
+    },
+    {
+      "id": "denied-proxy-authorization",
+      "ownerPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-02/fixtures/owners/denied-proxy-authorization.json",
+      "expectedNativeError": "HTTP_RESPONSE_HEADERS_INVALID",
+      "admit": false,
+      "expectedRules": 5,
+      "expectedUnique": 5,
+      "currentSourceComparable": true
+    },
+    {
+      "id": "denied-transfer-encoding",
+      "ownerPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-02/fixtures/owners/denied-transfer-encoding.json",
+      "expectedNativeError": "HTTP_RESPONSE_HEADERS_INVALID",
+      "admit": false,
+      "expectedRules": 5,
+      "expectedUnique": 5,
+      "currentSourceComparable": true
+    },
+    {
+      "id": "denied-upgrade",
+      "ownerPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-02/fixtures/owners/denied-upgrade.json",
+      "expectedNativeError": "HTTP_RESPONSE_HEADERS_INVALID",
+      "admit": false,
+      "expectedRules": 5,
+      "expectedUnique": 5,
+      "currentSourceComparable": true
+    },
+    {
+      "id": "replace-denied",
+      "ownerPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-02/fixtures/owners/replace-denied.json",
+      "expectedNativeError": "HTTP_RESPONSE_HEADERS_INVALID",
+      "admit": false,
+      "expectedRules": 4,
+      "expectedUnique": 4,
+      "currentSourceComparable": true
+    },
+    {
+      "id": "remove-before-replace-denied",
+      "ownerPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-02/fixtures/owners/remove-before-replace-denied.json",
+      "expectedNativeError": null,
+      "admit": true,
+      "expectedRules": 3,
+      "expectedUnique": 3,
+      "currentSourceComparable": true
+    },
+    {
+      "id": "selected-preset-denied",
+      "ownerPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-02/fixtures/owners/selected-preset-denied.json",
+      "expectedNativeError": "HTTP_RESPONSE_HEADERS_INVALID",
+      "admit": false,
+      "expectedRules": 4,
+      "expectedUnique": 4,
+      "currentSourceComparable": false
+    }
+  ],
+  "bindingControls": [
+    {
+      "id": "same-runtime-five",
+      "entryPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-02/fixtures/entries/same-runtime-five.json",
+      "admit": true,
+      "expectedError": null
+    },
+    {
+      "id": "split-service",
+      "entryPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-02/fixtures/entries/split-service.json",
+      "admit": false,
+      "expectedError": "split-one-package-service-context"
+    },
+    {
+      "id": "missing-service",
+      "entryPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-02/fixtures/entries/missing-service.json",
+      "admit": false,
+      "expectedError": "missing-exact-runtime-receiving-closure"
+    },
+    {
+      "id": "all-preparation-context",
+      "entryPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-02/fixtures/entries/all-preparation-context.json",
+      "admit": false,
+      "expectedError": "missing-exact-runtime-receiving-closure"
+    },
+    {
+      "id": "wrong-role",
+      "entryPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-02/fixtures/entries/wrong-role.json",
+      "admit": false,
+      "expectedError": "wrong-runtime-role"
+    },
+    {
+      "id": "wrong-worker-role",
+      "entryPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-02/fixtures/entries/wrong-worker-role.json",
+      "admit": false,
+      "expectedError": "wrong-runtime-role"
+    },
+    {
+      "id": "wrong-native-context",
+      "entryPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-02/fixtures/entries/wrong-native-context.json",
+      "admit": false,
+      "expectedError": "wrong-captured-runtime-context"
+    },
+    {
+      "id": "missing-worker",
+      "entryPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-02/fixtures/entries/missing-worker.json",
+      "admit": false,
+      "expectedError": "missing-exact-runtime-receiving-closure"
+    },
+    {
+      "id": "duplicate-runtime",
+      "entryPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-02/fixtures/entries/duplicate-runtime.json",
+      "admit": false,
+      "expectedError": "missing-exact-runtime-receiving-closure"
+    },
+    {
+      "id": "split-owner",
+      "entryPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-02/fixtures/entries/split-owner.json",
+      "admit": false,
+      "expectedError": "split-one-package-owner-path"
+    },
+    {
+      "id": "same-TLS-runtime-five",
+      "entryPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-02/fixtures/entries/same-TLS-runtime-five.json",
+      "admit": true,
+      "expectedError": null
+    },
+    {
+      "id": "resource-projection-mismatch",
+      "entryPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-02/fixtures/entries/resource-projection-mismatch.json",
+      "admit": false,
+      "expectedError": "wrong-captured-native-resource-projection",
+      "componentsPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-02/fixtures/components/resource-mismatch.json"
+    }
+  ],
+  "qualification": "Author-local complete fixture definitions; invalid admission controls are NOT proposed safe B profiles. Native/effect cases unchanged not-run."
+}

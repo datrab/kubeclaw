@@ -1,0 +1,18 @@
+{
+  "source": {
+    "path": "skills/buster/engine/test-gates/kubernetes-fixture-preparation.ts",
+    "line": 42,
+    "sha256": "1f41112db44a5135ff7c8d7a575e87699a854278a9e792d248ee91673d06fbd0"
+  },
+  "currentProducer": "http://serviceName.namespaceName.svc.cluster.local:servicePort",
+  "primaryTaskFixture": "actual existing nginx Service port80; full native HTTP port80 source stand, not an installed/granted endpoint assertion",
+  "HTTPSDomain": "supported current header parser/rule grammar; requires genuine authenticated HTTPS deployment input. None supplied by inspected canonical producer; native original F-EFFECT/ALT remains OPEN, no arbitrary narrowing of api/web domains.",
+  "cannotSubstitute": "Tailscale emits public-endpoint-fixture, not security headers required deployment schema",
+  "TLSWholeEntries": [
+    "fixtures/entries/RT-163ebc138c768e21-A.pipeline.config.json",
+    "fixtures/entries/RT-163ebc138c768e21-B.pipeline.config.json",
+    "fixtures/entries/source-preset-hsts-age-A.pipeline.config.json",
+    "fixtures/entries/source-preset-hsts-age-B.pipeline.config.json"
+  ],
+  "currentNativeResults": "not-run"
+}

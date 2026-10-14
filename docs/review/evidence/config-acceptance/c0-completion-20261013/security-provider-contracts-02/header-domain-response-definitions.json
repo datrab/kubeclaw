@@ -1,0 +1,476 @@
+{
+  "controls": [
+    {
+      "id": "unique-32",
+      "completeOwnerPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-02/fixtures/owners/unique-32.json",
+      "taskPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/config/headers.task.json",
+      "typedInputPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/inputs/headers.deployment.json",
+      "nativeStand": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/native-resource-association.json",
+      "responseDefinition": {
+        "status": 200,
+        "headers": {
+          "content-security-policy": "fixture-present",
+          "permissions-policy": "fixture-present",
+          "referrer-policy": "fixture-present",
+          "x-content-type-options": "nosniff",
+          "x-extra-0": "fixture-present",
+          "x-extra-1": "fixture-present",
+          "x-extra-10": "fixture-present",
+          "x-extra-11": "fixture-present",
+          "x-extra-12": "fixture-present",
+          "x-extra-13": "fixture-present",
+          "x-extra-14": "fixture-present",
+          "x-extra-15": "fixture-present",
+          "x-extra-16": "fixture-present",
+          "x-extra-17": "fixture-present",
+          "x-extra-18": "fixture-present",
+          "x-extra-19": "fixture-present",
+          "x-extra-2": "fixture-present",
+          "x-extra-20": "fixture-present",
+          "x-extra-21": "fixture-present",
+          "x-extra-22": "fixture-present",
+          "x-extra-23": "fixture-present",
+          "x-extra-24": "fixture-present",
+          "x-extra-25": "fixture-present",
+          "x-extra-26": "fixture-present",
+          "x-extra-27": "fixture-present",
+          "x-extra-3": "fixture-present",
+          "x-extra-4": "fixture-present",
+          "x-extra-5": "fixture-present",
+          "x-extra-6": "fixture-present",
+          "x-extra-7": "fixture-present",
+          "x-extra-8": "fixture-present",
+          "x-extra-9": "fixture-present",
+          "content-type": "text/plain"
+        },
+        "body": ""
+      },
+      "expectedArgumentAdmission": true,
+      "nativeError": null,
+      "exactExpectedHeaderSet": [
+        "content-security-policy",
+        "permissions-policy",
+        "referrer-policy",
+        "x-content-type-options",
+        "x-extra-0",
+        "x-extra-1",
+        "x-extra-10",
+        "x-extra-11",
+        "x-extra-12",
+        "x-extra-13",
+        "x-extra-14",
+        "x-extra-15",
+        "x-extra-16",
+        "x-extra-17",
+        "x-extra-18",
+        "x-extra-19",
+        "x-extra-2",
+        "x-extra-20",
+        "x-extra-21",
+        "x-extra-22",
+        "x-extra-23",
+        "x-extra-24",
+        "x-extra-25",
+        "x-extra-26",
+        "x-extra-27",
+        "x-extra-3",
+        "x-extra-4",
+        "x-extra-5",
+        "x-extra-6",
+        "x-extra-7",
+        "x-extra-8",
+        "x-extra-9"
+      ],
+      "syntheticDefinitionNotObservedTransport": true,
+      "futureEffectStatus": "not-run",
+      "positivePredicateIntent": "All present predicates satisfied and baseline nosniff equals source value; argument admission does NOT prove provider/grant/native eligibility; transport framing/content length/body guards separate."
+    },
+    {
+      "id": "unique-33",
+      "completeOwnerPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-02/fixtures/owners/unique-33.json",
+      "taskPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/config/headers.task.json",
+      "typedInputPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/inputs/headers.deployment.json",
+      "nativeStand": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/native-resource-association.json",
+      "responseDefinition": {
+        "status": 200,
+        "headers": {
+          "content-security-policy": "fixture-present",
+          "permissions-policy": "fixture-present",
+          "referrer-policy": "fixture-present",
+          "x-content-type-options": "nosniff",
+          "x-extra-0": "fixture-present",
+          "x-extra-1": "fixture-present",
+          "x-extra-10": "fixture-present",
+          "x-extra-11": "fixture-present",
+          "x-extra-12": "fixture-present",
+          "x-extra-13": "fixture-present",
+          "x-extra-14": "fixture-present",
+          "x-extra-15": "fixture-present",
+          "x-extra-16": "fixture-present",
+          "x-extra-17": "fixture-present",
+          "x-extra-18": "fixture-present",
+          "x-extra-19": "fixture-present",
+          "x-extra-2": "fixture-present",
+          "x-extra-20": "fixture-present",
+          "x-extra-21": "fixture-present",
+          "x-extra-22": "fixture-present",
+          "x-extra-23": "fixture-present",
+          "x-extra-24": "fixture-present",
+          "x-extra-25": "fixture-present",
+          "x-extra-26": "fixture-present",
+          "x-extra-27": "fixture-present",
+          "x-extra-28": "fixture-present",
+          "x-extra-3": "fixture-present",
+          "x-extra-4": "fixture-present",
+          "x-extra-5": "fixture-present",
+          "x-extra-6": "fixture-present",
+          "x-extra-7": "fixture-present",
+          "x-extra-8": "fixture-present",
+          "x-extra-9": "fixture-present",
+          "content-type": "text/plain"
+        },
+        "body": ""
+      },
+      "expectedArgumentAdmission": false,
+      "nativeError": "HTTP_RESPONSE_HEADERS_INVALID",
+      "exactExpectedHeaderSet": [
+        "content-security-policy",
+        "permissions-policy",
+        "referrer-policy",
+        "x-content-type-options",
+        "x-extra-0",
+        "x-extra-1",
+        "x-extra-10",
+        "x-extra-11",
+        "x-extra-12",
+        "x-extra-13",
+        "x-extra-14",
+        "x-extra-15",
+        "x-extra-16",
+        "x-extra-17",
+        "x-extra-18",
+        "x-extra-19",
+        "x-extra-2",
+        "x-extra-20",
+        "x-extra-21",
+        "x-extra-22",
+        "x-extra-23",
+        "x-extra-24",
+        "x-extra-25",
+        "x-extra-26",
+        "x-extra-27",
+        "x-extra-28",
+        "x-extra-3",
+        "x-extra-4",
+        "x-extra-5",
+        "x-extra-6",
+        "x-extra-7",
+        "x-extra-8",
+        "x-extra-9"
+      ],
+      "syntheticDefinitionNotObservedTransport": true,
+      "futureEffectStatus": "not-run",
+      "positivePredicateIntent": "All present predicates satisfied and baseline nosniff equals source value; argument admission does NOT prove provider/grant/native eligibility; transport framing/content length/body guards separate."
+    },
+    {
+      "id": "denied-connection",
+      "completeOwnerPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-02/fixtures/owners/denied-connection.json",
+      "taskPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/config/headers.task.json",
+      "typedInputPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/inputs/headers.deployment.json",
+      "nativeStand": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/native-resource-association.json",
+      "responseDefinition": {
+        "status": 200,
+        "headers": {
+          "connection": "fixture-present",
+          "content-security-policy": "fixture-present",
+          "permissions-policy": "fixture-present",
+          "referrer-policy": "fixture-present",
+          "x-content-type-options": "nosniff",
+          "content-type": "text/plain"
+        },
+        "body": ""
+      },
+      "expectedArgumentAdmission": false,
+      "nativeError": "HTTP_RESPONSE_HEADERS_INVALID",
+      "exactExpectedHeaderSet": [
+        "connection",
+        "content-security-policy",
+        "permissions-policy",
+        "referrer-policy",
+        "x-content-type-options"
+      ],
+      "syntheticDefinitionNotObservedTransport": true,
+      "futureEffectStatus": "not-run",
+      "positivePredicateIntent": "All present predicates satisfied and baseline nosniff equals source value; argument admission does NOT prove provider/grant/native eligibility; transport framing/content length/body guards separate."
+    },
+    {
+      "id": "content-length-exception",
+      "completeOwnerPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-02/fixtures/owners/content-length-exception.json",
+      "taskPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/config/headers.task.json",
+      "typedInputPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/inputs/headers.deployment.json",
+      "nativeStand": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/native-resource-association.json",
+      "responseDefinition": {
+        "status": 200,
+        "headers": {
+          "content-length": "0",
+          "content-security-policy": "fixture-present",
+          "permissions-policy": "fixture-present",
+          "referrer-policy": "fixture-present",
+          "x-content-type-options": "nosniff",
+          "content-type": "text/plain"
+        },
+        "body": ""
+      },
+      "expectedArgumentAdmission": true,
+      "nativeError": null,
+      "exactExpectedHeaderSet": [
+        "content-length",
+        "content-security-policy",
+        "permissions-policy",
+        "referrer-policy",
+        "x-content-type-options"
+      ],
+      "syntheticDefinitionNotObservedTransport": true,
+      "futureEffectStatus": "not-run",
+      "positivePredicateIntent": "All present predicates satisfied and baseline nosniff equals source value; argument admission does NOT prove provider/grant/native eligibility; transport framing/content length/body guards separate."
+    },
+    {
+      "id": "rules-64-shared-names",
+      "completeOwnerPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-02/fixtures/owners/rules-64-shared-names.json",
+      "taskPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/config/headers.task.json",
+      "typedInputPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/inputs/headers.deployment.json",
+      "nativeStand": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/native-resource-association.json",
+      "responseDefinition": {
+        "status": 200,
+        "headers": {
+          "content-security-policy": "fixture-present",
+          "permissions-policy": "fixture-present",
+          "referrer-policy": "fixture-present",
+          "x-content-type-options": "nosniff",
+          "content-type": "text/plain"
+        },
+        "body": ""
+      },
+      "expectedArgumentAdmission": true,
+      "nativeError": null,
+      "exactExpectedHeaderSet": [
+        "content-security-policy",
+        "permissions-policy",
+        "referrer-policy",
+        "x-content-type-options"
+      ],
+      "syntheticDefinitionNotObservedTransport": true,
+      "futureEffectStatus": "not-run",
+      "positivePredicateIntent": "All present predicates satisfied and baseline nosniff equals source value; argument admission does NOT prove provider/grant/native eligibility; transport framing/content length/body guards separate."
+    },
+    {
+      "id": "denied-host",
+      "completeOwnerPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-02/fixtures/owners/denied-host.json",
+      "taskPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/config/headers.task.json",
+      "typedInputPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/inputs/headers.deployment.json",
+      "nativeStand": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/native-resource-association.json",
+      "responseDefinition": {
+        "status": 200,
+        "headers": {
+          "content-security-policy": "fixture-present",
+          "host": "fixture-present",
+          "permissions-policy": "fixture-present",
+          "referrer-policy": "fixture-present",
+          "x-content-type-options": "nosniff",
+          "content-type": "text/plain"
+        },
+        "body": ""
+      },
+      "expectedArgumentAdmission": false,
+      "nativeError": "HTTP_RESPONSE_HEADERS_INVALID",
+      "exactExpectedHeaderSet": [
+        "content-security-policy",
+        "host",
+        "permissions-policy",
+        "referrer-policy",
+        "x-content-type-options"
+      ],
+      "syntheticDefinitionNotObservedTransport": true,
+      "futureEffectStatus": "not-run",
+      "positivePredicateIntent": "All present predicates satisfied and baseline nosniff equals source value; argument admission does NOT prove provider/grant/native eligibility; transport framing/content length/body guards separate."
+    },
+    {
+      "id": "denied-proxy-authorization",
+      "completeOwnerPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-02/fixtures/owners/denied-proxy-authorization.json",
+      "taskPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/config/headers.task.json",
+      "typedInputPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/inputs/headers.deployment.json",
+      "nativeStand": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/native-resource-association.json",
+      "responseDefinition": {
+        "status": 200,
+        "headers": {
+          "content-security-policy": "fixture-present",
+          "permissions-policy": "fixture-present",
+          "proxy-authorization": "fixture-present",
+          "referrer-policy": "fixture-present",
+          "x-content-type-options": "nosniff",
+          "content-type": "text/plain"
+        },
+        "body": ""
+      },
+      "expectedArgumentAdmission": false,
+      "nativeError": "HTTP_RESPONSE_HEADERS_INVALID",
+      "exactExpectedHeaderSet": [
+        "content-security-policy",
+        "permissions-policy",
+        "proxy-authorization",
+        "referrer-policy",
+        "x-content-type-options"
+      ],
+      "syntheticDefinitionNotObservedTransport": true,
+      "futureEffectStatus": "not-run",
+      "positivePredicateIntent": "All present predicates satisfied and baseline nosniff equals source value; argument admission does NOT prove provider/grant/native eligibility; transport framing/content length/body guards separate."
+    },
+    {
+      "id": "denied-transfer-encoding",
+      "completeOwnerPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-02/fixtures/owners/denied-transfer-encoding.json",
+      "taskPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/config/headers.task.json",
+      "typedInputPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/inputs/headers.deployment.json",
+      "nativeStand": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/native-resource-association.json",
+      "responseDefinition": {
+        "status": 200,
+        "headers": {
+          "content-security-policy": "fixture-present",
+          "permissions-policy": "fixture-present",
+          "referrer-policy": "fixture-present",
+          "transfer-encoding": "fixture-present",
+          "x-content-type-options": "nosniff",
+          "content-type": "text/plain"
+        },
+        "body": ""
+      },
+      "expectedArgumentAdmission": false,
+      "nativeError": "HTTP_RESPONSE_HEADERS_INVALID",
+      "exactExpectedHeaderSet": [
+        "content-security-policy",
+        "permissions-policy",
+        "referrer-policy",
+        "transfer-encoding",
+        "x-content-type-options"
+      ],
+      "syntheticDefinitionNotObservedTransport": true,
+      "futureEffectStatus": "not-run",
+      "positivePredicateIntent": "All present predicates satisfied and baseline nosniff equals source value; argument admission does NOT prove provider/grant/native eligibility; transport framing/content length/body guards separate."
+    },
+    {
+      "id": "denied-upgrade",
+      "completeOwnerPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-02/fixtures/owners/denied-upgrade.json",
+      "taskPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/config/headers.task.json",
+      "typedInputPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/inputs/headers.deployment.json",
+      "nativeStand": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/native-resource-association.json",
+      "responseDefinition": {
+        "status": 200,
+        "headers": {
+          "content-security-policy": "fixture-present",
+          "permissions-policy": "fixture-present",
+          "referrer-policy": "fixture-present",
+          "upgrade": "fixture-present",
+          "x-content-type-options": "nosniff",
+          "content-type": "text/plain"
+        },
+        "body": ""
+      },
+      "expectedArgumentAdmission": false,
+      "nativeError": "HTTP_RESPONSE_HEADERS_INVALID",
+      "exactExpectedHeaderSet": [
+        "content-security-policy",
+        "permissions-policy",
+        "referrer-policy",
+        "upgrade",
+        "x-content-type-options"
+      ],
+      "syntheticDefinitionNotObservedTransport": true,
+      "futureEffectStatus": "not-run",
+      "positivePredicateIntent": "All present predicates satisfied and baseline nosniff equals source value; argument admission does NOT prove provider/grant/native eligibility; transport framing/content length/body guards separate."
+    },
+    {
+      "id": "replace-denied",
+      "completeOwnerPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-02/fixtures/owners/replace-denied.json",
+      "taskPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/config/headers.task.json",
+      "typedInputPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/inputs/headers.deployment.json",
+      "nativeStand": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/native-resource-association.json",
+      "responseDefinition": {
+        "status": 200,
+        "headers": {
+          "connection": "fixture-present",
+          "permissions-policy": "fixture-present",
+          "referrer-policy": "fixture-present",
+          "x-content-type-options": "nosniff",
+          "content-type": "text/plain"
+        },
+        "body": ""
+      },
+      "expectedArgumentAdmission": false,
+      "nativeError": "HTTP_RESPONSE_HEADERS_INVALID",
+      "exactExpectedHeaderSet": [
+        "connection",
+        "permissions-policy",
+        "referrer-policy",
+        "x-content-type-options"
+      ],
+      "syntheticDefinitionNotObservedTransport": true,
+      "futureEffectStatus": "not-run",
+      "positivePredicateIntent": "All present predicates satisfied and baseline nosniff equals source value; argument admission does NOT prove provider/grant/native eligibility; transport framing/content length/body guards separate."
+    },
+    {
+      "id": "remove-before-replace-denied",
+      "completeOwnerPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-02/fixtures/owners/remove-before-replace-denied.json",
+      "taskPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/config/headers.task.json",
+      "typedInputPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/inputs/headers.deployment.json",
+      "nativeStand": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/native-resource-association.json",
+      "responseDefinition": {
+        "status": 200,
+        "headers": {
+          "permissions-policy": "fixture-present",
+          "referrer-policy": "fixture-present",
+          "x-content-type-options": "nosniff",
+          "content-type": "text/plain"
+        },
+        "body": ""
+      },
+      "expectedArgumentAdmission": true,
+      "nativeError": null,
+      "exactExpectedHeaderSet": [
+        "permissions-policy",
+        "referrer-policy",
+        "x-content-type-options"
+      ],
+      "syntheticDefinitionNotObservedTransport": true,
+      "futureEffectStatus": "not-run",
+      "positivePredicateIntent": "All present predicates satisfied and baseline nosniff equals source value; argument admission does NOT prove provider/grant/native eligibility; transport framing/content length/body guards separate."
+    },
+    {
+      "id": "selected-preset-denied",
+      "completeOwnerPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-02/fixtures/owners/selected-preset-denied.json",
+      "taskPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/config/headers.task.json",
+      "typedInputPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/task-fixtures/inputs/headers.deployment.json",
+      "nativeStand": "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/native-resource-association.json",
+      "responseDefinition": {
+        "status": 200,
+        "headers": {
+          "connection": "fixture-present",
+          "permissions-policy": "fixture-present",
+          "referrer-policy": "fixture-present",
+          "x-content-type-options": "nosniff",
+          "content-type": "text/plain"
+        },
+        "body": ""
+      },
+      "expectedArgumentAdmission": false,
+      "nativeError": "HTTP_RESPONSE_HEADERS_INVALID",
+      "exactExpectedHeaderSet": [
+        "connection",
+        "permissions-policy",
+        "referrer-policy",
+        "x-content-type-options"
+      ],
+      "syntheticDefinitionNotObservedTransport": true,
+      "futureEffectStatus": "not-run",
+      "positivePredicateIntent": "All present predicates satisfied and baseline nosniff equals source value; argument admission does NOT prove provider/grant/native eligibility; transport framing/content length/body guards separate."
+    }
+  ]
+}
