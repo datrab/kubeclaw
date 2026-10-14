@@ -1,0 +1,43 @@
+{
+  "qualification": "public unsealed refs/ticks only; no clock/proc/Job/grant/native/credential read. Placeholder originalC1 binding cannot authorize effect. Original argv intact; new envelope reference required.",
+  "tasks": [
+    {
+      "operation": "backup",
+      "taskAuthorityRef": {
+        "artifactSha256": "4d6928560a287b09a01d19851af8f56945ec9eec2262147637133fbbb5fd5955",
+        "memberPointer": "/receipts/0"
+      }
+    },
+    {
+      "operation": "scheduled",
+      "taskAuthorityRef": {
+        "artifactSha256": "4d6928560a287b09a01d19851af8f56945ec9eec2262147637133fbbb5fd5955",
+        "memberPointer": "/receipts/1"
+      }
+    },
+    {
+      "operation": "verify",
+      "taskAuthorityRef": {
+        "artifactSha256": "4d6928560a287b09a01d19851af8f56945ec9eec2262147637133fbbb5fd5955",
+        "memberPointer": "/receipts/2"
+      }
+    },
+    {
+      "operation": "restore",
+      "taskAuthorityRef": {
+        "artifactSha256": "4d6928560a287b09a01d19851af8f56945ec9eec2262147637133fbbb5fd5955",
+        "memberPointer": "/receipts/3"
+      },
+      "directory": "/backups/litellm/backup-fixture-A"
+    },
+    {
+      "operation": "migrate",
+      "taskAuthorityRef": {
+        "artifactSha256": "4d6928560a287b09a01d19851af8f56945ec9eec2262147637133fbbb5fd5955",
+        "memberPointer": "/receipts/4"
+      },
+      "directory": "/backups/litellm/backup-fixture-A",
+      "sourceVersion": 170005
+    }
+  ]
+}

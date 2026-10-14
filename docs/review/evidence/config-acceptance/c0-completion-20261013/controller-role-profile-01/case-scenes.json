@@ -1,0 +1,74 @@
+{
+  "status": "future source-specific exact-original case scene definitions, notrun; every original body/history preserved separately",
+  "scenes": [
+    {
+      "originalCaseId": "DLV-CASE-CONTROLLER-POLICY-VALIDATION",
+      "input": "full A/B plus required field removed, oldENV equal/different, null/string/fraction/overflow seconds/ms, wrong role/image/API/subject/selector, prefixes reordered, role/name/source-secret schema mismatch, Ready absentTLS, Product sameproducer or missingderivedAUTH",
+      "priorState": "no started business mutation for positive admission; invalid never reads credentials/CA/listener/API",
+      "procedure": "real future generated-profile loader/Go typed decoder then actual newController: inspect exact injected fields with native counters/phase trace, no mock loader; same real Helm/render/package mount reached for positive",
+      "observer": "exact file-set/profile/role/identity, native effective fields/units, zero side-effect entry for negatives, no credential bytes",
+      "mutants": [
+        "restore envInt malformed->7200 or apply missing policy code literal; missing/old equal-input negatives must fail intended",
+        "bypass role/sharedcomponent equality/ReadyProductrelation; negative must fail before CA/TokenReview/business API",
+        "mask invalid file by retryoldENV/default or omit root deployment binding; normal selected-start rejects rather than success"
+      ]
+    },
+    {
+      "originalCaseId": "DLV-CASE-CONTROLLER-LEASE-RECOVERY",
+      "input": "captured Aepoch UID/generation/spec/absoluteexpiry creationt0; Bvalid/new default3600/max43200 and Binvalid/absent; special A ttl72000 under installedmax86400",
+      "priorState": "A active/Ready/uncertain cleanup/RBAC/credential/exposure and readonlyold source/key/grants",
+      "procedure": "crash before/after epoch CAS/readback/finalizer/namespace mutation and before/after cleanup; restartold authenticA before reading B; new true no-effects lease may admit B; conflict sameUID originalwins, differentUID fails",
+      "observer": "same original epoch/expiry/namespaceUID/finalizer/RBAC/Secretselector/ReadyProductdecisions/cleanup start and deadline/counters/uncertain outcome; no extra native mutation or budget reset",
+      "mutants": [
+        "use c.defaultTTL/currentmax or time.Now for oldmissing timestamp; oldAexpiry observation fails",
+        "read Bfirst or validate Aagainst Blowermax/deleteoldnamespace; original-first recovery fails",
+        "remove original cleanup deadline/contextremaining; actual delayedAPI/sleep allows late request, fails old absolute deadline"
+      ]
+    },
+    {
+      "originalCaseId": "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT",
+      "input": "selected A8MiB/B16MiB decoded response, 4MiB/8MiB request, exactcap/cap+1 UTF8/body/control/nativeEOF and truncated/malformederror/status surfaces; TokenReview/rawSecret payload classified confidential; persistedepoch priorstate",
+      "priorState": "some accepted mutation with oversized or disconnected response, existing409/404 readback, oldReady.v1/v2 and Product ordered receipts",
+      "procedure": "real current kube/requestPayload/response handler receiving patched policy, actual controlled native peer/API returns complete/truncated/oversized success,error,out=nil; CASreadback and oldepoch transitions tested; actual JSON request count beforeDo; selected API phase instrumentation external afterimplementation only",
+      "observer": "decoded bytes vs ContentLength/compression, close on allpaths, status uncertain vs verifiednotfound/conflict, original mutation identity/readback before retry; redacted diagnostic byte cap and no logged/hashed token/privateSecret, serialized finding count/compactbytes/criticaloverflow/digest",
+      "mutants": [
+        "restore io.ReadAll/unboundedmarshal/fullupstream diagnostic; exactcap+1 guard or no-secret-output assertion fails",
+        "treat oversize as404/409clean/defaultempty; original uncertain/readback oracle fails",
+        "derive epoch digest by API JSON map ordering instead of captured original bytes; unchanged reordered actual statusmust not invent B epoch"
+      ]
+    },
+    {
+      "originalCaseId": "DLV-CASE-SHARED-LEASE-PROTOCOL",
+      "input": "selected CMPgroup/version \u2192 CRD/RBAC/Go/client real samegeneration; mismatch evenequaloldAlias; Aretained nativecap/max binding",
+      "priorState": "installed originalCRD/status/grants and oldAleases UID/admittedspec",
+      "procedure": "normal materializer/pkg/render/mount/Go loader/client handshake + original nativeCRDcreate/update/status limits; dependencypublication cannot move API group or max and lose cleanup source",
+      "observer": "exactauthored CMPvalues selectedschema/group/version, allactualprojections/CRDserved/storageversion/CEL/status; independent controllerENV author absent; native schema regression negative unchanged",
+      "mutants": [
+        "introduce controllerprivategroup/version or by-valueindependentroot; samegenerationalias/oldwriter negative fails",
+        "render B CRD max without retainingadmissibleAstatustransition; oldlease status/finalizer recovery fails"
+      ]
+    },
+    {
+      "originalCaseId": "DLV-CASE-MISSING-OLD-AUTHOR",
+      "input": "missing file/profile/generation/role/field; retired BUSTERENV or oldHelm inline/equalcapturedprofile; managed profile hasunknown/duplicates/escapingrefs",
+      "priorState": "valid admitted serviceA and candidate newserviceB; originalrecoveryA not confused with legacynewstart fallback",
+      "procedure": "actual normal receivingloader beforecredential/listener/controller effect; validcontrolssamepipeline/materializer route",
+      "observer": "typed rejecting pointer/source atactual boundary; startedA unchanged, invalidB haszero partialrole activation",
+      "mutants": [
+        "old equalENVoverride allowed or newestfile/defaultprofile fallback; exact rejecting boundary fails"
+      ]
+    },
+    {
+      "originalCaseId": "DLV-CASE-ALTERNATE-PROFILES",
+      "input": "full A/B and role-off/ReadyProduct-off only under explicit noactive-original-state gate; policycontrasts retain same API/SA/issuer/TLS/executable/image/grants",
+      "priorState": "oldArunning nativecontroller/allacceptedleases, plus authenticatedtrue newBinstance",
+      "procedure": "observe selectedfullrole render/pkg/mount/go effectiveTTL/poll/client/handler/byte/findingwindow/time constraints; conditionalRoleabsence; separate P1 schema/native parser/liveness not substituted controllerpolicy",
+      "observer": "A startupcaptured policy not hotmutated, B newlimits atrealcounter/time/byte/typedrealm; droppedmetadata/secrets/nativeidentity false fixture cannotPASS",
+      "mutants": [
+        "hardcode original poll3000 or caller60s/handler15s/body16384/marshal512KiB; corresponding exactchangedconsumer refuses B",
+        "keep disabledrole controllerRBAC/TLS/mounts/unusedkeys, or Productbooltwowriters; realrender/loader omissionnegative fails"
+      ]
+    }
+  ],
+  "scopeLimits": "These six real original IDs are not six anonymous proof counts. Each49 row maps its exact source field/receiving profile/ref and preserved original membership; implementation harness must collect every applicable named scene/member, plus original standalone/observer obligations not waived."
+}

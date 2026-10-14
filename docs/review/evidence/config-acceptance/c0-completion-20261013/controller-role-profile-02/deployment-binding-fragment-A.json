@@ -1,0 +1,17 @@
+{
+  "schemaVersion": "pipeline-entry.v6-controller-proposal",
+  "deploymentBindings": {
+    "kubeclaw": {
+      "file": "charts/kubeclaw/values.yaml",
+      "profile": "local-A",
+      "bindings": [
+        {
+          "role": "buster",
+          "instanceId": "agent-buster",
+          "consumer": "namespace-controller",
+          "serviceInstanceId": "agent-buster-namespace-controller"
+        }
+      ]
+    }
+  }
+}

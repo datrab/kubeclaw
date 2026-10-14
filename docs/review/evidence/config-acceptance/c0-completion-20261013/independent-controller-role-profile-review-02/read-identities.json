@@ -1,0 +1,683 @@
+{
+  "scope": "Fresh CRPR-01 exact material definition recheck only",
+  "inputs": [
+    {
+      "path": "charts/kubeclaw/files/config/buster-engine.config.json",
+      "sha256": "d43c96506287ade07e23a38bf3d24764e81c16a2ebe8e5bb8a347ac640a3aaa5",
+      "bytes": 5319,
+      "snapshot": "frozen-inputs/d43c96506287ade07e23a38bf3d24764e81c16a2ebe8e5bb8a347ac640a3aaa5.gz"
+    },
+    {
+      "path": "charts/kubeclaw/files/config/profiles/buster-engine.runtime.config.json",
+      "sha256": "177c4ba8a115dd296689b412bfaf453d3154bd780f43effd0f297e2cbe38899b",
+      "bytes": 5501,
+      "snapshot": "frozen-inputs/177c4ba8a115dd296689b412bfaf453d3154bd780f43effd0f297e2cbe38899b.gz"
+    },
+    {
+      "path": "charts/kubeclaw/templates/_helpers.tpl",
+      "sha256": "69986722975a973479b9fb1a2c35ab1a1ecb972662e8c19dd03718ac441f5103",
+      "bytes": 3671,
+      "snapshot": "frozen-inputs/69986722975a973479b9fb1a2c35ab1a1ecb972662e8c19dd03718ac441f5103.gz"
+    },
+    {
+      "path": "charts/kubeclaw/templates/_swarm-config.tpl",
+      "sha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472",
+      "bytes": 26278,
+      "snapshot": "frozen-inputs/87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472.gz"
+    },
+    {
+      "path": "charts/kubeclaw/templates/buster-namespace-controller.yaml",
+      "sha256": "e003c7bf4eb938988391d9af0c955b2338cef29781e1d8e932bdcc753ee50d13",
+      "bytes": 12158,
+      "snapshot": "frozen-inputs/e003c7bf4eb938988391d9af0c955b2338cef29781e1d8e932bdcc753ee50d13.gz"
+    },
+    {
+      "path": "charts/kubeclaw/templates/buster-namespace-lease-crd.yaml",
+      "sha256": "2f869c74204c86676c5cfe852c99be803cf5a669ebae4c9758bc05e90f268d45",
+      "bytes": 24943,
+      "snapshot": "frozen-inputs/2f869c74204c86676c5cfe852c99be803cf5a669ebae4c9758bc05e90f268d45.gz"
+    },
+    {
+      "path": "charts/kubeclaw/values.yaml",
+      "sha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1",
+      "bytes": 18792,
+      "snapshot": "frozen-inputs/e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1.gz"
+    },
+    {
+      "path": "cmd/buster-namespace-controller/demo-credentials.go",
+      "sha256": "170356e6abad1547a973b34211fea24a10ad51e00a93906bce3bee12b6f78f26",
+      "bytes": 8928,
+      "snapshot": "frozen-inputs/170356e6abad1547a973b34211fea24a10ad51e00a93906bce3bee12b6f78f26.gz"
+    },
+    {
+      "path": "cmd/buster-namespace-controller/demo-product.go",
+      "sha256": "127c82f150c8277a931ae9fba701b7a1c6cc368d9e8290f9fb2082efd74cc49c",
+      "bytes": 17019,
+      "snapshot": "frozen-inputs/127c82f150c8277a931ae9fba701b7a1c6cc368d9e8290f9fb2082efd74cc49c.gz"
+    },
+    {
+      "path": "cmd/buster-namespace-controller/demo-readiness-lifecycle.go",
+      "sha256": "6c79d6dd6d94ed7df8903c2d617eeec2574bb9789bf6ac2c0c34d6059a8c8ba2",
+      "bytes": 8667,
+      "snapshot": "frozen-inputs/6c79d6dd6d94ed7df8903c2d617eeec2574bb9789bf6ac2c0c34d6059a8c8ba2.gz"
+    },
+    {
+      "path": "cmd/buster-namespace-controller/demo-readiness-sources.go",
+      "sha256": "d1aca629a3c5c739e84a9116a95af6d0a0bbc7b0782cc0b0ee680a004f621628",
+      "bytes": 5747,
+      "snapshot": "frozen-inputs/d1aca629a3c5c739e84a9116a95af6d0a0bbc7b0782cc0b0ee680a004f621628.gz"
+    },
+    {
+      "path": "cmd/buster-namespace-controller/demo-readiness.go",
+      "sha256": "a0838b433b686307159055d07684657a87524f54e125de23bbe82895853fd34e",
+      "bytes": 14838,
+      "snapshot": "frozen-inputs/a0838b433b686307159055d07684657a87524f54e125de23bbe82895853fd34e.gz"
+    },
+    {
+      "path": "cmd/buster-namespace-controller/demo-retention.go",
+      "sha256": "4a173d7f2012e8c9d58a0c2f93ceda77629bacac384e5f56fdbec9c459a7c2a7",
+      "bytes": 1632,
+      "snapshot": "frozen-inputs/4a173d7f2012e8c9d58a0c2f93ceda77629bacac384e5f56fdbec9c459a7c2a7.gz"
+    },
+    {
+      "path": "cmd/buster-namespace-controller/exposure-generation.go",
+      "sha256": "063922ee15724270e88a63edd93e1817330804f04aebce448204f8baf5ee1fea",
+      "bytes": 5180,
+      "snapshot": "frozen-inputs/063922ee15724270e88a63edd93e1817330804f04aebce448204f8baf5ee1fea.gz"
+    },
+    {
+      "path": "cmd/buster-namespace-controller/main.go",
+      "sha256": "c93bcc15f56bf6c5a9266c48835018b42589489846642bede2eb93851c4b6624",
+      "bytes": 73929,
+      "snapshot": "frozen-inputs/c93bcc15f56bf6c5a9266c48835018b42589489846642bede2eb93851c4b6624.gz"
+    },
+    {
+      "path": "cmd/buster-namespace-controller/rbac.go",
+      "sha256": "8269bc44ca1cfec92d5eefa4a9f6915cbd22f31ac6b3a91657829ddbe5542086",
+      "bytes": 3186,
+      "snapshot": "frozen-inputs/8269bc44ca1cfec92d5eefa4a9f6915cbd22f31ac6b3a91657829ddbe5542086.gz"
+    },
+    {
+      "path": "docker/Dockerfile.namespace-controller",
+      "sha256": "7d11f9ddce2ba3c5083645531a59b298a1996743306fbadb7f3b47819ab68384",
+      "bytes": 1251,
+      "snapshot": "frozen-inputs/7d11f9ddce2ba3c5083645531a59b298a1996743306fbadb7f3b47819ab68384.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-03/frozen-supersession.json",
+      "sha256": "6333028861c7bfa51963d7edce2c4b4ba52f74e38397a2f1fe2ce84d4304fb44",
+      "bytes": 1333,
+      "snapshot": "frozen-inputs/6333028861c7bfa51963d7edce2c4b4ba52f74e38397a2f1fe2ce84d4304fb44.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-03/whole-profile-index.json",
+      "sha256": "d048dcd6399aa3bd47d8119d75b4dadf32bac4cb4e0d917afd297698c9a7958f",
+      "bytes": 54642,
+      "snapshot": "frozen-inputs/d048dcd6399aa3bd47d8119d75b4dadf32bac4cb4e0d917afd297698c9a7958f.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-15/fixtures/variants/AUTH-PRISM-PRODUCT-ENABLE/A/prism-control.config.json",
+      "sha256": "524ca90d6b62c656b5f279c27b8b49250d93869636aa71f73d5891429e01e1e4",
+      "bytes": 4597,
+      "snapshot": "frozen-inputs/524ca90d6b62c656b5f279c27b8b49250d93869636aa71f73d5891429e01e1e4.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-15/fixtures/variants/AUTH-PRISM-PRODUCT-ENABLE/B/prism-control.config.json",
+      "sha256": "6f76ce3cd6dc016b2266e795c266edc567d11b27d7e96f29b50d659b961bd012",
+      "bytes": 4244,
+      "snapshot": "frozen-inputs/6f76ce3cd6dc016b2266e795c266edc567d11b27d7e96f29b50d659b961bd012.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-17/active-component-semantic-bodies.json",
+      "sha256": "d7d402e328eab25d1d61cbfd70861bdde8d700090d94aad63f35c3057bdc688b",
+      "bytes": 8157735,
+      "snapshot": "frozen-inputs/d7d402e328eab25d1d61cbfd70861bdde8d700090d94aad63f35c3057bdc688b.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/README.md",
+      "sha256": "f0da3ac99e7ccc286a9dd7ea4349041d60f91c6d721656d9b614db65aa1359aa",
+      "bytes": 18246,
+      "snapshot": "frozen-inputs/f0da3ac99e7ccc286a9dd7ea4349041d60f91c6d721656d9b614db65aa1359aa.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/case-scenes.json",
+      "sha256": "2d343d2a8906c3267c4e91e3f20b11a0bf636a658203a76ad5d44f77c39cc84c",
+      "bytes": 7330,
+      "snapshot": "frozen-inputs/2d343d2a8906c3267c4e91e3f20b11a0bf636a658203a76ad5d44f77c39cc84c.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/check-attempt1.stderr",
+      "sha256": "aa39c60c70eef39249b96f370bf34de1b3f1707ca0c390399ccaa865a4f4d80f",
+      "bytes": 1582,
+      "snapshot": "frozen-inputs/aa39c60c70eef39249b96f370bf34de1b3f1707ca0c390399ccaa865a4f4d80f.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/check-attempt1.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "snapshot": "frozen-inputs/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/check-attempt2.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "snapshot": "frozen-inputs/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/check-attempt2.stdout",
+      "sha256": "5b13f4bcb658f4616ccf4c5b9560e8ecf943bb7fd483526381ded615145fe752",
+      "bytes": 211,
+      "snapshot": "frozen-inputs/5b13f4bcb658f4616ccf4c5b9560e8ecf943bb7fd483526381ded615145fe752.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/check-final.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2,
+      "snapshot": "frozen-inputs/9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/check-final.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "snapshot": "frozen-inputs/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/check-final.stdout",
+      "sha256": "d66db8c8715ebd385e24244d965f7b4dfed66309c119e8ddc1dfe90021221fad",
+      "bytes": 211,
+      "snapshot": "frozen-inputs/d66db8c8715ebd385e24244d965f7b4dfed66309c119e8ddc1dfe90021221fad.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/check-local-definitions.mjs",
+      "sha256": "d5a2fae9566acc15bd489598d33c0ecb93520ff570ae16bcd766923a653f5f5f",
+      "bytes": 10278,
+      "snapshot": "frozen-inputs/d5a2fae9566acc15bd489598d33c0ecb93520ff570ae16bcd766923a653f5f5f.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/co-selected-control-fixture-inputs.json",
+      "sha256": "c35eacedb96cf591d63cd13a7cfffbb7827319766f5bbb2b1c5ab66df6c012e0",
+      "bytes": 2315,
+      "snapshot": "frozen-inputs/c35eacedb96cf591d63cd13a7cfffbb7827319766f5bbb2b1c5ab66df6c012e0.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/commands-and-exits.json",
+      "sha256": "ef6167c1bd288eede4dc9e090ffee7bb300e72f04071b1393715584b87474156",
+      "bytes": 3870,
+      "snapshot": "frozen-inputs/ef6167c1bd288eede4dc9e090ffee7bb300e72f04071b1393715584b87474156.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/compose-definition.py",
+      "sha256": "1088474d0c428b5ff402231105180c80f302d52c51c2349e6eff9f09a1169a95",
+      "bytes": 20733,
+      "snapshot": "frozen-inputs/1088474d0c428b5ff402231105180c80f302d52c51c2349e6eff9f09a1169a95.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/compose.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "snapshot": "frozen-inputs/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/compose.stdout",
+      "sha256": "917b7797a8427f407b1281265efabbc4eaa8a738ac9f79fe7be61266467030d6",
+      "bytes": 191,
+      "snapshot": "frozen-inputs/917b7797a8427f407b1281265efabbc4eaa8a738ac9f79fe7be61266467030d6.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/controller-role-profiles.schema.json",
+      "sha256": "745798dbf789c7789069fca891b11523c69df5bd054530ca9486768cc2257000",
+      "bytes": 56810,
+      "snapshot": "frozen-inputs/745798dbf789c7789069fca891b11523c69df5bd054530ca9486768cc2257000.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/end-read-and-conservation.json",
+      "sha256": "981aecac549e30b8f25f7d7e8bb030c265c2cef89718326f443fef2458cb93e9",
+      "bytes": 895,
+      "snapshot": "frozen-inputs/981aecac549e30b8f25f7d7e8bb030c265c2cef89718326f443fef2458cb93e9.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/local-definition-observations.json",
+      "sha256": "2ff1df1d1f1b0a2172e3c707ec0f94a4c7801fbc9a360e7a1dd1b3749ff58db1",
+      "bytes": 9030,
+      "snapshot": "frozen-inputs/2ff1df1d1f1b0a2172e3c707ec0f94a4c7801fbc9a360e7a1dd1b3749ff58db1.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/manifest.json",
+      "sha256": "90ae11d60633fc55c58af1db6d18f23dba042391c3bbb6ea2cc30dc291b43d36",
+      "bytes": 6871,
+      "snapshot": "frozen-inputs/90ae11d60633fc55c58af1db6d18f23dba042391c3bbb6ea2cc30dc291b43d36.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/original-case-refinements.json",
+      "sha256": "6129e69b64e4d3034565ef5f1f4c3e8253368f482ab01aa304cbbff698028aac",
+      "bytes": 88240,
+      "snapshot": "frozen-inputs/6129e69b64e4d3034565ef5f1f4c3e8253368f482ab01aa304cbbff698028aac.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/original49-field-contracts.json",
+      "sha256": "d41452a11b9ff244ff1828677819286ef9465705b9c646c1ba643e47f20fa585",
+      "bytes": 738867,
+      "snapshot": "frozen-inputs/d41452a11b9ff244ff1828677819286ef9465705b9c646c1ba643e47f20fa585.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/A.json",
+      "sha256": "3940482d5697bab7b1cc779c602714c43b6f99c68c4ca6b7ed735cf6cde6cc06",
+      "bytes": 5474,
+      "snapshot": "frozen-inputs/3940482d5697bab7b1cc779c602714c43b6f99c68c4ca6b7ed735cf6cde6cc06.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/B.json",
+      "sha256": "308ee851ccf6f70ed4b02cbb4f8e56c2614ab53eb3fad2656eb1a80b093b4f95",
+      "bytes": 5477,
+      "snapshot": "frozen-inputs/308ee851ccf6f70ed4b02cbb4f8e56c2614ab53eb3fad2656eb1a80b093b4f95.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/Ready-port-contrast.json",
+      "sha256": "6c8bbcd57f7551e04a592ac5073443f54aa0b4e86c0c27e8cfb9fa55915ea141",
+      "bytes": 5486,
+      "snapshot": "frozen-inputs/6c8bbcd57f7551e04a592ac5073443f54aa0b4e86c0c27e8cfb9fa55915ea141.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/ready-product-off.json",
+      "sha256": "41f7a6aec90a662ba757db0e8068f5f98f321ee6912cd09446f5dcfa80f01c86",
+      "bytes": 3972,
+      "snapshot": "frozen-inputs/41f7a6aec90a662ba757db0e8068f5f98f321ee6912cd09446f5dcfa80f01c86.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/role-off.json",
+      "sha256": "2154b03a6b2792d378357f5ca6a62de925634d668ada8cd3649675b49aba1c80",
+      "bytes": 624,
+      "snapshot": "frozen-inputs/2154b03a6b2792d378357f5ca6a62de925634d668ada8cd3649675b49aba1c80.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/projection-plan.json",
+      "sha256": "20c4f079f0e5a66303b9cd6155b437968e26db4b813f2c8ce8ab9ff5a661ad39",
+      "bytes": 3880,
+      "snapshot": "frozen-inputs/20c4f079f0e5a66303b9cd6155b437968e26db4b813f2c8ce8ab9ff5a661ad39.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/read-identities.json",
+      "sha256": "e1d60d8fe5683a1c4f58bf3a4a90cb8320580ff3df7697a5d7425e8a9965fa9b",
+      "bytes": 14247,
+      "snapshot": "frozen-inputs/e1d60d8fe5683a1c4f58bf3a4a90cb8320580ff3df7697a5d7425e8a9965fa9b.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/receiver-and-epoch-contract.json",
+      "sha256": "d6a8c0223795a435a24570169cf7f9e3a5d9f788558e362c85b9704b027bc40d",
+      "bytes": 24215,
+      "snapshot": "frozen-inputs/d6a8c0223795a435a24570169cf7f9e3a5d9f788558e362c85b9704b027bc40d.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/schema-attempt1.json.snapshot",
+      "sha256": "d1b9e09075e1bc59aaa57496dc17fc4d0d08643293466276114bc30bf4647698",
+      "bytes": 47327,
+      "snapshot": "frozen-inputs/d1b9e09075e1bc59aaa57496dc17fc4d0d08643293466276114bc30bf4647698.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/stand50-check-final.exit.snapshot",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2,
+      "snapshot": "frozen-inputs/9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/stand50-check-final.stderr.snapshot",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "snapshot": "frozen-inputs/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/stand50-check-final.stdout.snapshot",
+      "sha256": "46bb730b342b814191724864ade553733526a291087cff1661d65bbd909403b8",
+      "bytes": 211,
+      "snapshot": "frozen-inputs/46bb730b342b814191724864ade553733526a291087cff1661d65bbd909403b8.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/stand50-check-local-definitions.mjs.snapshot",
+      "sha256": "79407677c5b92a423ffd85f6c049eff5d6f308079f9077fc8b0834b6d418f11f",
+      "bytes": 8508,
+      "snapshot": "frozen-inputs/79407677c5b92a423ffd85f6c049eff5d6f308079f9077fc8b0834b6d418f11f.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/stand50-controller-role-profiles.schema.json.snapshot",
+      "sha256": "5570a4831c1915a6305ac1363c88c98c4bf57d467c0f72a8bafb691097a7981d",
+      "bytes": 56311,
+      "snapshot": "frozen-inputs/5570a4831c1915a6305ac1363c88c98c4bf57d467c0f72a8bafb691097a7981d.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/stand50-local-definition-observations.json.snapshot",
+      "sha256": "d44e428706582eea09711d65f3f63e13c5d79e126d0295fb3d5e5c56536a28c7",
+      "bytes": 8097,
+      "snapshot": "frozen-inputs/d44e428706582eea09711d65f3f63e13c5d79e126d0295fb3d5e5c56536a28c7.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/stand54-check-final.exit.snapshot",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2,
+      "snapshot": "frozen-inputs/9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/stand54-check-final.stderr.snapshot",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "snapshot": "frozen-inputs/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/stand54-check-final.stdout.snapshot",
+      "sha256": "a20165f1f4c8cd111a3b52bc3e4b660eb4e0e1b7b02569b5f2900762c273d2ce",
+      "bytes": 211,
+      "snapshot": "frozen-inputs/a20165f1f4c8cd111a3b52bc3e4b660eb4e0e1b7b02569b5f2900762c273d2ce.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/stand54-check-local-definitions.mjs.snapshot",
+      "sha256": "c0cfe8c10ced2cf49af865a0f1561f775fc8ce1c842275ef77dce73334a0feab",
+      "bytes": 9016,
+      "snapshot": "frozen-inputs/c0cfe8c10ced2cf49af865a0f1561f775fc8ce1c842275ef77dce73334a0feab.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/stand54-controller-role-profiles.schema.json.snapshot",
+      "sha256": "b33412254df162ddbf822c8d47ddf3a42f993649a9de86ed607c008bf5991651",
+      "bytes": 56556,
+      "snapshot": "frozen-inputs/b33412254df162ddbf822c8d47ddf3a42f993649a9de86ed607c008bf5991651.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/stand54-local-definition-observations.json.snapshot",
+      "sha256": "51266451480bd99920dda7e5c736ac35e960f411a21cd22adadeeaa9b6089601",
+      "bytes": 8697,
+      "snapshot": "frozen-inputs/51266451480bd99920dda7e5c736ac35e960f411a21cd22adadeeaa9b6089601.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-02/README.md",
+      "sha256": "5e4c40fad95c44489c6f61e7ec31013f804d36e3af99401ef34c4cd3c15b415d",
+      "bytes": 7355,
+      "snapshot": "frozen-inputs/5e4c40fad95c44489c6f61e7ec31013f804d36e3af99401ef34c4cd3c15b415d.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-02/author-correction.py",
+      "sha256": "ce0a0b1a39164543aa3091a91b5b5f6bd4b480f3b5f040ff22ca578660b997f2",
+      "bytes": 11160,
+      "snapshot": "frozen-inputs/ce0a0b1a39164543aa3091a91b5b5f6bd4b480f3b5f040ff22ca578660b997f2.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-02/author.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "snapshot": "frozen-inputs/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-02/author.stdout.log",
+      "sha256": "7f9babe7bff8273c0595278d369729c43f48dd418bf273d3b650d491884d3396",
+      "bytes": 224,
+      "snapshot": "frozen-inputs/7f9babe7bff8273c0595278d369729c43f48dd418bf273d3b650d491884d3396.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-02/canonical-metadata-drift.json",
+      "sha256": "c29d441ccf623914944b1e890e540654cb0cd632f9310024b810d924456b9613",
+      "bytes": 3356,
+      "snapshot": "frozen-inputs/c29d441ccf623914944b1e890e540654cb0cd632f9310024b810d924456b9613.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-02/case-scenes.json",
+      "sha256": "139ea894bb263020901887f32ad7bb3cb8fe9730d529b2163f946915ca762658",
+      "bytes": 8225,
+      "snapshot": "frozen-inputs/139ea894bb263020901887f32ad7bb3cb8fe9730d529b2163f946915ca762658.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-02/check-receiving-identities.mjs",
+      "sha256": "4bcd1d5890eb0ccde7431455d5fe38a7b23d92eefd75c27ed6feb3d5685c6323",
+      "bytes": 6915,
+      "snapshot": "frozen-inputs/4bcd1d5890eb0ccde7431455d5fe38a7b23d92eefd75c27ed6feb3d5685c6323.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-02/commands-and-exits.json",
+      "sha256": "785694daee2c7a1ad6174fedb7f405f27615a72dcc3ff8931b45e368a27b41bf",
+      "bytes": 1794,
+      "snapshot": "frozen-inputs/785694daee2c7a1ad6174fedb7f405f27615a72dcc3ff8931b45e368a27b41bf.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-02/conservation.json",
+      "sha256": "581bb4e5dd0e6f54b91020ea9a49f0135327e516eac45e41ebe2019760b1f6b8",
+      "bytes": 12861,
+      "snapshot": "frozen-inputs/581bb4e5dd0e6f54b91020ea9a49f0135327e516eac45e41ebe2019760b1f6b8.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-02/deployment-binding-abi-contract.json",
+      "sha256": "7480360276427a21038a6390c9b37d3d4cfc4636a032b3a8c8a29d1cba2a9fb5",
+      "bytes": 6335,
+      "snapshot": "frozen-inputs/7480360276427a21038a6390c9b37d3d4cfc4636a032b3a8c8a29d1cba2a9fb5.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-02/deployment-binding-fragment-A.json",
+      "sha256": "a7147dbccba5bbe9da0c5ee514c0cba6f23b2e7dea0c4b5f492fa659d02cb054",
+      "bytes": 420,
+      "snapshot": "frozen-inputs/a7147dbccba5bbe9da0c5ee514c0cba6f23b2e7dea0c4b5f492fa659d02cb054.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-02/deployment-binding-fragment-B.json",
+      "sha256": "7bf0b132a4f8fd3a3255e315cce4d7e3733e30e0025a991361d10578e2c713a6",
+      "bytes": 420,
+      "snapshot": "frozen-inputs/7bf0b132a4f8fd3a3255e315cce4d7e3733e30e0025a991361d10578e2c713a6.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-02/deployment-binding-fragment.schema.json",
+      "sha256": "3f4eee14217ba4d9e4e7c06d9f2890d8a2343e6c1a11b7a713b3324406416594",
+      "bytes": 1823,
+      "snapshot": "frozen-inputs/3f4eee14217ba4d9e4e7c06d9f2890d8a2343e6c1a11b7a713b3324406416594.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-02/end-read-and-conservation.json",
+      "sha256": "3c1160433ca518922988ccb2c637b1b40627a2e0d62ccb998b6fd140c79c0020",
+      "bytes": 1051,
+      "snapshot": "frozen-inputs/3c1160433ca518922988ccb2c637b1b40627a2e0d62ccb998b6fd140c79c0020.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-02/manifest.json",
+      "sha256": "e2d6a4926a9210631aa94663f49af1830d53010c0c917657322fb9371643a190",
+      "bytes": 21578,
+      "snapshot": "frozen-inputs/e2d6a4926a9210631aa94663f49af1830d53010c0c917657322fb9371643a190.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-02/original-case-refinements.json",
+      "sha256": "6129e69b64e4d3034565ef5f1f4c3e8253368f482ab01aa304cbbff698028aac",
+      "bytes": 88240,
+      "snapshot": "frozen-inputs/6129e69b64e4d3034565ef5f1f4c3e8253368f482ab01aa304cbbff698028aac.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-02/original49-field-contracts.json",
+      "sha256": "da86022e59920fd5a313fa08159a66ff366aa3daf517bde25c54a9941155585b",
+      "bytes": 747156,
+      "snapshot": "frozen-inputs/da86022e59920fd5a313fa08159a66ff366aa3daf517bde25c54a9941155585b.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-02/read-identities.json",
+      "sha256": "25ad9a29419ea6c63ab1e80a672314e0191a146db6c40909116fe21a4e8e4c1c",
+      "bytes": 30278,
+      "snapshot": "frozen-inputs/25ad9a29419ea6c63ab1e80a672314e0191a146db6c40909116fe21a4e8e4c1c.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-02/receiver-and-epoch-contract.json",
+      "sha256": "c06109fa99b10e3ab6dd8db1a5388432057911f94dd5d1bf54e67cf37718b10e",
+      "bytes": 24393,
+      "snapshot": "frozen-inputs/c06109fa99b10e3ab6dd8db1a5388432057911f94dd5d1bf54e67cf37718b10e.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-02/receiving-corrected.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "snapshot": "frozen-inputs/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-02/receiving-corrected.stdout.json",
+      "sha256": "9367374afe207e2fa45d79096e17de8251bfc4eda03c15a2e5fa401d3d37b390",
+      "bytes": 58383,
+      "snapshot": "frozen-inputs/9367374afe207e2fa45d79096e17de8251bfc4eda03c15a2e5fa401d3d37b390.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-02/receiving-prior.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "snapshot": "frozen-inputs/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-02/receiving-prior.stdout.json",
+      "sha256": "ae50bfd5c08a02b4be1e1c1a034efc8ee45d9ba175c9728295b3788531b2e3f5",
+      "bytes": 44928,
+      "snapshot": "frozen-inputs/ae50bfd5c08a02b4be1e1c1a034efc8ee45d9ba175c9728295b3788531b2e3f5.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-17/field-contracts.json",
+      "sha256": "baa56f273c88a2df56e5c01c1e5bfc89c63da1ed1b4d064a8912e5f0cc0cf02f",
+      "bytes": 292898,
+      "snapshot": "frozen-inputs/baa56f273c88a2df56e5c01c1e5bfc89c63da1ed1b4d064a8912e5f0cc0cf02f.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-17/loader-callsite-obligations.json",
+      "sha256": "f2ac6e877e90fdbeed47c7fbc046dd33ea8c0ab0bf147096c18368db77e92e11",
+      "bytes": 6320,
+      "snapshot": "frozen-inputs/f2ac6e877e90fdbeed47c7fbc046dd33ea8c0ab0bf147096c18368db77e92e11.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-17/product-enable-supersession.json",
+      "sha256": "465c6f1cdd4f02ccba2d5bc3e6cf7d4b9c84e4c5070589282984e5379b2535e2",
+      "bytes": 1164,
+      "snapshot": "frozen-inputs/465c6f1cdd4f02ccba2d5bc3e6cf7d4b9c84e4c5070589282984e5379b2535e2.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-22/field-contracts.json",
+      "sha256": "8f91622150a6baedbfe95a11f76501782aa6482181b3f457070e03436ade0d0d",
+      "bytes": 187751,
+      "snapshot": "frozen-inputs/8f91622150a6baedbfe95a11f76501782aa6482181b3f457070e03436ade0d0d.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-24/case-specifications.json",
+      "sha256": "6fbe3f65bea98fc6b1a722ccf54dc40e0388a6c08fd4d4bf6664bd1439fcf830",
+      "bytes": 529435,
+      "snapshot": "frozen-inputs/6fbe3f65bea98fc6b1a722ccf54dc40e0388a6c08fd4d4bf6664bd1439fcf830.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-24/field-contracts.json",
+      "sha256": "976c0b4d2b98032585a754061a2e3c796c176fde08e36dae92cf384ede16c251",
+      "bytes": 155217,
+      "snapshot": "frozen-inputs/976c0b4d2b98032585a754061a2e3c796c176fde08e36dae92cf384ede16c251.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-24/operator-C3-A.json",
+      "sha256": "4723f2e7a95066cf3cc91d78b3816bec0db52eeb6bc750b7bdfd8c57dd3ccc01",
+      "bytes": 1513,
+      "snapshot": "frozen-inputs/4723f2e7a95066cf3cc91d78b3816bec0db52eeb6bc750b7bdfd8c57dd3ccc01.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-24/operator-slices.schema.json",
+      "sha256": "4c5e1da957a566aa43f0674e6097454038b21e0ca6a791709ed1484f6f05ddf7",
+      "bytes": 8789,
+      "snapshot": "frozen-inputs/4c5e1da957a566aa43f0674e6097454038b21e0ca6a791709ed1484f6f05ddf7.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-controller-fields-16/REPORT.md",
+      "sha256": "613d0dc2cacc6b3ca9c922c930148381a973b3be4e2a43e0b2442f34c7bfcc46",
+      "bytes": 7113,
+      "snapshot": "frozen-inputs/613d0dc2cacc6b3ca9c922c930148381a973b3be4e2a43e0b2442f34c7bfcc46.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-controller-role-profile-review-01/REPORT.md",
+      "sha256": "722538109e49e95497370c77df40e85d000d04b5e30cba392ef0fecf57617ff8",
+      "bytes": 7159,
+      "snapshot": "frozen-inputs/722538109e49e95497370c77df40e85d000d04b5e30cba392ef0fecf57617ff8.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-controller-role-profile-review-01/conservation.json",
+      "sha256": "4746b2181f21a9695ccb5797d92f8815072c03b15babbac46f35aab1e3ed60ff",
+      "bytes": 13552,
+      "snapshot": "frozen-inputs/4746b2181f21a9695ccb5797d92f8815072c03b15babbac46f35aab1e3ed60ff.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-controller-role-profile-review-01/read-identities.json",
+      "sha256": "848ff563dc784af5f044e692f1f7bfbd884941cf0f4968cab4305f5dbb5c343e",
+      "bytes": 29737,
+      "snapshot": "frozen-inputs/848ff563dc784af5f044e692f1f7bfbd884941cf0f4968cab4305f5dbb5c343e.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-controller-role-profile-review-01/receiving-node-challenge.json",
+      "sha256": "2f346730801746a5a6d1588aebc943e1140e04dfc83da164e46434530cd641c0",
+      "bytes": 23403,
+      "snapshot": "frozen-inputs/2f346730801746a5a6d1588aebc943e1140e04dfc83da164e46434530cd641c0.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/schemas/pipeline-entry.schema.json",
+      "sha256": "650dfba7c8030edfa1d3bf75dcf5820c6b1c88aefe50d1b01ef5c8267c062e23",
+      "bytes": 4058,
+      "snapshot": "frozen-inputs/650dfba7c8030edfa1d3bf75dcf5820c6b1c88aefe50d1b01ef5c8267c062e23.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/source-supplement-index.json",
+      "sha256": "25397a60e4462fc1bbe0cbef2c76ca4629d15ec10b312dbd5268b0da16ddbae6",
+      "bytes": 232780,
+      "snapshot": "frozen-inputs/25397a60e4462fc1bbe0cbef2c76ca4629d15ec10b312dbd5268b0da16ddbae6.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/controller-response-epoch-contracts-6606af9-20261013.json",
+      "sha256": "1765df65527f65f5a152e61a8466f52569bc5e17b77956bdaadb900b137c23cb",
+      "bytes": 78256,
+      "snapshot": "frozen-inputs/1765df65527f65f5a152e61a8466f52569bc5e17b77956bdaadb900b137c23cb.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/controller-response-epoch-definition-schema-6606af9-20261013.json",
+      "sha256": "e122724fea861ad5ce8751f6ed89778230c0a24631b097d967bf891d66642d8d",
+      "bytes": 23928,
+      "snapshot": "frozen-inputs/e122724fea861ad5ce8751f6ed89778230c0a24631b097d967bf891d66642d8d.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/controller-response-epoch-profiles-6606af9-20261013/A.json",
+      "sha256": "dbaffde17d18c220c237216cfccdc335d33d572a0b9973b8bc8d0fd15ef61a4d",
+      "bytes": 14414,
+      "snapshot": "frozen-inputs/dbaffde17d18c220c237216cfccdc335d33d572a0b9973b8bc8d0fd15ef61a4d.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/controller-response-epoch-profiles-6606af9-20261013/B.json",
+      "sha256": "67f26310eb5a89cd4ec736d9a690a50dd0f50ac359e89b651a449aae9b0f3a94",
+      "bytes": 14417,
+      "snapshot": "frozen-inputs/67f26310eb5a89cd4ec736d9a690a50dd0f50ac359e89b651a449aae9b0f3a94.gz"
+    },
+    {
+      "path": "docs/review/remediation/config-acceptance-matrix.json",
+      "sha256": "ab559aee906e4f72085031a84bb618c01941bc6e2d613175f235af0a18289227",
+      "bytes": 101614219,
+      "snapshot": "frozen-inputs/ab559aee906e4f72085031a84bb618c01941bc6e2d613175f235af0a18289227.gz"
+    },
+    {
+      "path": "docs/review/remediation/config-semantic-inventory.json",
+      "sha256": "c6316b87f87b292db0ae1165eb3178ae0a32bf8db3111294398139c3f112be63",
+      "bytes": 37908408,
+      "snapshot": "frozen-inputs/c6316b87f87b292db0ae1165eb3178ae0a32bf8db3111294398139c3f112be63.gz"
+    },
+    {
+      "path": "go.mod",
+      "sha256": "cfc02fe76ba47aadcb622e3d6fc7acaba6358b8d5d8a950b7dc5d67bb2d5c91f",
+      "bytes": 43,
+      "snapshot": "frozen-inputs/cfc02fe76ba47aadcb622e3d6fc7acaba6358b8d5d8a950b7dc5d67bb2d5c91f.gz"
+    },
+    {
+      "path": "my-values/buster-values.yaml",
+      "sha256": "23106a0d42310ad7aa5e2ce22a7bc940e88beac0eb486130b6f728dd84e0472f",
+      "bytes": 7546,
+      "snapshot": "frozen-inputs/23106a0d42310ad7aa5e2ce22a7bc940e88beac0eb486130b6f728dd84e0472f.gz"
+    },
+    {
+      "path": "node_modules/ajv/dist/2020.js",
+      "sha256": "908e9670b478b2ba126802a221b7e47006f50cf467e2c5dd7935d3dbef10a20a",
+      "bytes": 2894,
+      "snapshot": "frozen-inputs/908e9670b478b2ba126802a221b7e47006f50cf467e2c5dd7935d3dbef10a20a.gz"
+    },
+    {
+      "path": "node_modules/ajv/package.json",
+      "sha256": "1f9033ee5a6515e7d76938b7072941862d1ed228a6879cc7fe10cdeb75107989",
+      "bytes": 4405,
+      "snapshot": "frozen-inputs/1f9033ee5a6515e7d76938b7072941862d1ed228a6879cc7fe10cdeb75107989.gz"
+    },
+    {
+      "path": "versions.json",
+      "sha256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d",
+      "bytes": 12594,
+      "snapshot": "frozen-inputs/40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d.gz"
+    }
+  ]
+}

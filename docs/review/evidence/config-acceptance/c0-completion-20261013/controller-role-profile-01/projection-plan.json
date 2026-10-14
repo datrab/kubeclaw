@@ -1,0 +1,57 @@
+{
+  "status": "source-based future projection plan, not Helm render/image/load proof",
+  "physicalAuthor": "charts/kubeclaw/values.yaml selected complete profiles settings.busterNamespaceBroker",
+  "actualTemplates": [
+    "charts/kubeclaw/templates/buster-namespace-controller.yaml",
+    "charts/kubeclaw/templates/buster-namespace-lease-crd.yaml",
+    "charts/kubeclaw/templates/_swarm-config.tpl"
+  ],
+  "package": {
+    "source": "docker/Dockerfile.namespace-controller + go.mod + cmd/buster-namespace-controller",
+    "runtime": "linux/amd64 current build, versions.json buildArgs authority, no controller OCI digest established",
+    "configMount": "future same selected generation managed readonly /etc/kubeclaw/buster-namespace-controller/policy.json; includes declared existing root receipt and selected profile, not editable ConfigMap or ENV authority"
+  },
+  "resources": {
+    "actualGuard": ".Values.busterNamespaceBroker.enabled && .Values.agentRole==buster",
+    "enabled": [
+      "ServiceAccount <release>-namespace-controller",
+      "ClusterRole <release>-controller-secrets (get/create/patch Secret; namespace RoleBinding only where lease permits)",
+      "ClusterRoles <release>-namespace-deployer/tester + exact verbs/source-defined authority",
+      "ClusterRole controller tokenreviews iff Ready, lease/status group fromCMP alias, resource named bind only three exact roles",
+      "ClusterRoleBinding controller SA in original .Release.Namespace",
+      "sourceSecret Role/get resourceNames and RoleBinding iff nonempty allowlist",
+      "Deployment replicas1 nonroot1000, chosencontroller image/pullPolicy/resources, API SA projected token/CA/namespace",
+      "TLS Ready Secret0440/readonly mount +8443 port iff Ready; Product no auto-enableReady",
+      "existing lease CRD actual group/version/CEL/status projections, no deletion/reset on publish"
+    ],
+    "disabled": "omit controller role resources/ENV/mount/listener policies; parent-owned client/root resources separately scoped, cleanup quiescence gate before actual omission"
+  },
+  "existingBusterAliases": "lease group/version materialized identically into CRD/RBAC/Go/client from existing CMP primary IDs; no competing controller or root value",
+  "productAliases": "soleAUTH-PRISM-PRODUCT-ENABLE + original signer issuer/operator/key authority; no raw editable verificationkey or controller product bool",
+  "readOnlyBindingsAreNotStandaloneAuthor": true,
+  "readyPortPolicy": {
+    "sourceCoordinates": [
+      {
+        "path": "charts/kubeclaw/templates/buster-namespace-controller.yaml",
+        "sha256": "e003c7bf4eb938988391d9af0c955b2338cef29781e1d8e932bdcc753ee50d13",
+        "line": 226,
+        "text": "              value: \":8443\""
+      },
+      {
+        "path": "charts/kubeclaw/templates/buster-namespace-controller.yaml",
+        "sha256": "e003c7bf4eb938988391d9af0c955b2338cef29781e1d8e932bdcc753ee50d13",
+        "line": 257,
+        "text": "            - { name: demo-ready, containerPort: 8443, protocol: TCP }"
+      }
+    ],
+    "authorPointer": "charts/kubeclaw/values.yaml#/profiles/<selected>/settings/busterNamespaceBroker/controller/readiness/port",
+    "projection": "enabledReady address :<port>, containerPort and co-selected actual Ready client route all derive same sole explicit policy; offReady omitsport; no8443 fallback",
+    "sourceMode": "actual template literal migrated C3 source coordinate, original BUSTER_READY_LISTEN context/cases, not invented canonical ID",
+    "scope": "S topology bind/quiescence/new supported instance; oldA originalReady route/grants remain, no module retarget"
+  },
+  "roleNameSource": {
+    "path": "charts/kubeclaw/templates/_helpers.tpl",
+    "sha256": "69986722975a973479b9fb1a2c35ab1a1ecb972662e8c19dd03718ac441f5103",
+    "derivation": "kubeclaw.fullname agent-<validated agentRole>, not Release.Name"
+  }
+}

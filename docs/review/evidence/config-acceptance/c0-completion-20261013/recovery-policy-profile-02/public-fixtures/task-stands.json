@@ -1,0 +1,42 @@
+{
+  "qualification": "public argv/path/version shape only, not database/files/native availability",
+  "tasks": [
+    {
+      "operation": "backup",
+      "argv": [
+        "backup"
+      ]
+    },
+    {
+      "operation": "scheduled",
+      "argv": [
+        "scheduled"
+      ]
+    },
+    {
+      "operation": "verify",
+      "argv": [
+        "verify"
+      ]
+    },
+    {
+      "operation": "restore",
+      "argv": [
+        "restore",
+        "/backups/litellm/backup-fixture-A"
+      ],
+      "target": "distinct empty disposable target required"
+    },
+    {
+      "operation": "migrate",
+      "argv": [
+        "migrate",
+        "/backups/litellm/backup-fixture-A",
+        "170005"
+      ],
+      "sourceVersion": 170005,
+      "targetVersion": 180006,
+      "selectedDumpAndRestoreClientVersion": 180006
+    }
+  ]
+}

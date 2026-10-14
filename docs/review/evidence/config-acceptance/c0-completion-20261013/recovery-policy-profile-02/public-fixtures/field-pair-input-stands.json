@@ -1,0 +1,468 @@
+{
+  "stands": [
+    {
+      "field": "backupIntervalMinutes",
+      "profileA": "A",
+      "profileB": "B-backupIntervalMinutes",
+      "policyFile": "my-values/infra/postgresql-recovery.yaml",
+      "entryTupleRole": "postgresql-recovery",
+      "sourceStand": "public-fixtures/source-reference-stand.json",
+      "BReceivingStand": "same original captured source authority; authentic native field-boundary input required",
+      "operations": [
+        "scheduled",
+        "backup",
+        "verify",
+        "restore",
+        "migrate"
+      ],
+      "originalSourceCandidateIds": [
+        "SRC-5fafd3145cb96392",
+        "SRC-c9011c2cdd3229ec",
+        "SRC-74e008a2790c0d8e"
+      ],
+      "qualification": "reference plan only; no installed DB/volume/class/secret/client/node or actual dump/TOC available"
+    },
+    {
+      "field": "verificationIntervalMinutes",
+      "profileA": "A",
+      "profileB": "B-verificationIntervalMinutes",
+      "policyFile": "my-values/infra/postgresql-recovery.yaml",
+      "entryTupleRole": "postgresql-recovery",
+      "sourceStand": "public-fixtures/source-reference-stand.json",
+      "BReceivingStand": "same original captured source authority; authentic native field-boundary input required",
+      "operations": [
+        "scheduled",
+        "backup",
+        "verify",
+        "restore",
+        "migrate"
+      ],
+      "originalSourceCandidateIds": [
+        "SRC-74e008a2790c0d8e",
+        "SRC-ec863eb798302cfb"
+      ],
+      "qualification": "reference plan only; no installed DB/volume/class/secret/client/node or actual dump/TOC available"
+    },
+    {
+      "field": "maximumAgeSeconds",
+      "profileA": "A",
+      "profileB": "B-maximumAgeSeconds",
+      "policyFile": "my-values/infra/postgresql-recovery.yaml",
+      "entryTupleRole": "postgresql-recovery",
+      "sourceStand": "public-fixtures/source-reference-stand.json",
+      "BReceivingStand": "same original captured source authority; authentic native field-boundary input required",
+      "operations": [
+        "scheduled",
+        "backup",
+        "verify",
+        "restore",
+        "migrate"
+      ],
+      "originalSourceCandidateIds": [
+        "SRC-a914f2f70a318ab5",
+        "SRC-cf05a9938c341d97"
+      ],
+      "qualification": "reference plan only; no installed DB/volume/class/secret/client/node or actual dump/TOC available"
+    },
+    {
+      "field": "maximumDurationSeconds",
+      "profileA": "A",
+      "profileB": "B-maximumDurationSeconds",
+      "policyFile": "my-values/infra/postgresql-recovery.yaml",
+      "entryTupleRole": "postgresql-recovery",
+      "sourceStand": "public-fixtures/source-reference-stand.json",
+      "BReceivingStand": "same original captured source authority; authentic native field-boundary input required",
+      "operations": [
+        "scheduled",
+        "backup",
+        "verify",
+        "restore",
+        "migrate"
+      ],
+      "originalSourceCandidateIds": [
+        "SRC-a914f2f70a318ab5",
+        "SRC-c58e691b6958fd24",
+        "SRC-a5370b639ba30b4d"
+      ],
+      "qualification": "reference plan only; no installed DB/volume/class/secret/client/node or actual dump/TOC available"
+    },
+    {
+      "field": "verificationDeadlineSeconds",
+      "profileA": "A",
+      "profileB": "B-verificationDeadlineSeconds",
+      "policyFile": "my-values/infra/postgresql-recovery.yaml",
+      "entryTupleRole": "postgresql-recovery",
+      "sourceStand": "public-fixtures/source-reference-stand.json",
+      "BReceivingStand": "same original captured source authority; authentic native field-boundary input required",
+      "operations": [
+        "scheduled",
+        "backup",
+        "verify",
+        "restore",
+        "migrate"
+      ],
+      "originalSourceCandidateIds": [
+        "SRC-74e008a2790c0d8e",
+        "SRC-ec863eb798302cfb"
+      ],
+      "qualification": "reference plan only; no installed DB/volume/class/secret/client/node or actual dump/TOC available"
+    },
+    {
+      "field": "maximumBackupBytes",
+      "profileA": "A",
+      "profileB": "B-maximumBackupBytes",
+      "policyFile": "my-values/infra/postgresql-recovery.yaml",
+      "entryTupleRole": "postgresql-recovery",
+      "sourceStand": "public-fixtures/source-reference-stand.json",
+      "BReceivingStand": "same original captured source authority; authentic native field-boundary input required",
+      "operations": [
+        "scheduled",
+        "backup",
+        "verify",
+        "restore",
+        "migrate"
+      ],
+      "originalSourceCandidateIds": [
+        "SRC-b1bffe9417fac280",
+        "SRC-3becce028d299daa",
+        "SRC-c7dac0ae577ca91f",
+        "SRC-9c1504be3ba77b9b"
+      ],
+      "qualification": "reference plan only; no installed DB/volume/class/secret/client/node or actual dump/TOC available"
+    },
+    {
+      "field": "maximumRetainedBytes",
+      "profileA": "A",
+      "profileB": "B-maximumRetainedBytes",
+      "policyFile": "my-values/infra/postgresql-recovery.yaml",
+      "entryTupleRole": "postgresql-recovery",
+      "sourceStand": "public-fixtures/source-reference-stand.json",
+      "BReceivingStand": "same original captured source authority; authentic native field-boundary input required",
+      "operations": [
+        "scheduled",
+        "backup",
+        "verify",
+        "restore",
+        "migrate"
+      ],
+      "originalSourceCandidateIds": [
+        "SRC-b1bffe9417fac280",
+        "SRC-dc2aa0ceab92d18c",
+        "SRC-865461bfc9850dcb",
+        "SRC-bae98e10a68c4921"
+      ],
+      "qualification": "reference plan only; no installed DB/volume/class/secret/client/node or actual dump/TOC available"
+    },
+    {
+      "field": "persistence.size",
+      "profileA": "A",
+      "profileB": "B-persistence-size",
+      "policyFile": "my-values/infra/postgresql-recovery.yaml",
+      "entryTupleRole": "postgresql-recovery",
+      "sourceStand": "public-fixtures/source-reference-stand.json",
+      "BReceivingStand": "separately approved distinct namespace/claim/source receipt",
+      "operations": [
+        "scheduled",
+        "backup",
+        "verify",
+        "restore",
+        "migrate"
+      ],
+      "originalSourceCandidateIds": [],
+      "qualification": "reference plan only; no installed DB/volume/class/secret/client/node or actual dump/TOC available"
+    },
+    {
+      "field": "persistence.storageClass",
+      "profileA": "A",
+      "profileB": "B-persistence-storageClass",
+      "policyFile": "my-values/infra/postgresql-recovery.yaml",
+      "entryTupleRole": "postgresql-recovery",
+      "sourceStand": "public-fixtures/source-reference-stand.json",
+      "BReceivingStand": "separately approved distinct namespace/claim/source receipt",
+      "operations": [
+        "scheduled",
+        "backup",
+        "verify",
+        "restore",
+        "migrate"
+      ],
+      "originalSourceCandidateIds": [],
+      "qualification": "reference plan only; no installed DB/volume/class/secret/client/node or actual dump/TOC available"
+    },
+    {
+      "field": "resources.requests.cpu",
+      "profileA": "A",
+      "profileB": "B-resources-requests-cpu",
+      "policyFile": "my-values/infra/postgresql-recovery.yaml",
+      "entryTupleRole": "postgresql-recovery",
+      "sourceStand": "public-fixtures/source-reference-stand.json",
+      "BReceivingStand": "same original captured source authority; authentic native field-boundary input required",
+      "operations": [
+        "scheduled",
+        "backup",
+        "verify",
+        "restore",
+        "migrate"
+      ],
+      "originalSourceCandidateIds": [],
+      "qualification": "reference plan only; no installed DB/volume/class/secret/client/node or actual dump/TOC available"
+    },
+    {
+      "field": "resources.requests.memory",
+      "profileA": "A",
+      "profileB": "B-resources-requests-memory",
+      "policyFile": "my-values/infra/postgresql-recovery.yaml",
+      "entryTupleRole": "postgresql-recovery",
+      "sourceStand": "public-fixtures/source-reference-stand.json",
+      "BReceivingStand": "same original captured source authority; authentic native field-boundary input required",
+      "operations": [
+        "scheduled",
+        "backup",
+        "verify",
+        "restore",
+        "migrate"
+      ],
+      "originalSourceCandidateIds": [],
+      "qualification": "reference plan only; no installed DB/volume/class/secret/client/node or actual dump/TOC available"
+    },
+    {
+      "field": "resources.limits.cpu",
+      "profileA": "A",
+      "profileB": "B-resources-limits-cpu",
+      "policyFile": "my-values/infra/postgresql-recovery.yaml",
+      "entryTupleRole": "postgresql-recovery",
+      "sourceStand": "public-fixtures/source-reference-stand.json",
+      "BReceivingStand": "same original captured source authority; authentic native field-boundary input required",
+      "operations": [
+        "scheduled",
+        "backup",
+        "verify",
+        "restore",
+        "migrate"
+      ],
+      "originalSourceCandidateIds": [],
+      "qualification": "reference plan only; no installed DB/volume/class/secret/client/node or actual dump/TOC available"
+    },
+    {
+      "field": "resources.limits.memory",
+      "profileA": "A",
+      "profileB": "B-resources-limits-memory",
+      "policyFile": "my-values/infra/postgresql-recovery.yaml",
+      "entryTupleRole": "postgresql-recovery",
+      "sourceStand": "public-fixtures/source-reference-stand.json",
+      "BReceivingStand": "same original captured source authority; authentic native field-boundary input required",
+      "operations": [
+        "scheduled",
+        "backup",
+        "verify",
+        "restore",
+        "migrate"
+      ],
+      "originalSourceCandidateIds": [],
+      "qualification": "reference plan only; no installed DB/volume/class/secret/client/node or actual dump/TOC available"
+    },
+    {
+      "field": "reserveBytes",
+      "profileA": "A",
+      "profileB": "B-reserveBytes",
+      "policyFile": "my-values/infra/postgresql-recovery.yaml",
+      "entryTupleRole": "postgresql-recovery",
+      "sourceStand": "public-fixtures/source-reference-stand.json",
+      "BReceivingStand": "same original captured source authority; authentic native field-boundary input required",
+      "operations": [
+        "scheduled",
+        "backup",
+        "verify",
+        "restore",
+        "migrate"
+      ],
+      "originalSourceCandidateIds": [
+        "SRC-dc2aa0ceab92d18c",
+        "SRC-bae98e10a68c4921",
+        "SRC-c7dac0ae577ca91f"
+      ],
+      "qualification": "reference plan only; no installed DB/volume/class/secret/client/node or actual dump/TOC available"
+    },
+    {
+      "field": "killAfterSeconds",
+      "profileA": "A",
+      "profileB": "B-killAfterSeconds",
+      "policyFile": "my-values/infra/postgresql-recovery.yaml",
+      "entryTupleRole": "postgresql-recovery",
+      "sourceStand": "public-fixtures/source-reference-stand.json",
+      "BReceivingStand": "same original captured source authority; authentic native field-boundary input required",
+      "operations": [
+        "scheduled",
+        "backup",
+        "verify",
+        "restore",
+        "migrate"
+      ],
+      "originalSourceCandidateIds": [
+        "SRC-c58e691b6958fd24",
+        "SRC-a5370b639ba30b4d"
+      ],
+      "qualification": "reference plan only; no installed DB/volume/class/secret/client/node or actual dump/TOC available"
+    },
+    {
+      "field": "connectionTimeoutSeconds",
+      "profileA": "A",
+      "profileB": "B-connectionTimeoutSeconds",
+      "policyFile": "my-values/infra/postgresql-recovery.yaml",
+      "entryTupleRole": "postgresql-recovery",
+      "sourceStand": "public-fixtures/source-reference-stand.json",
+      "BReceivingStand": "same original captured source authority; authentic native field-boundary input required",
+      "operations": [
+        "scheduled",
+        "backup",
+        "verify",
+        "restore",
+        "migrate"
+      ],
+      "originalSourceCandidateIds": [
+        "SRC-07e60170641cef92",
+        "SRC-735ca02ea38021c2"
+      ],
+      "qualification": "reference plan only; no installed DB/volume/class/secret/client/node or actual dump/TOC available"
+    },
+    {
+      "field": "tocMaximumBytes",
+      "profileA": "A",
+      "profileB": "B-tocMaximumBytes",
+      "policyFile": "my-values/infra/postgresql-recovery.yaml",
+      "entryTupleRole": "postgresql-recovery",
+      "sourceStand": "public-fixtures/source-reference-stand.json",
+      "BReceivingStand": "same original captured source authority; authentic native field-boundary input required",
+      "operations": [
+        "scheduled",
+        "backup",
+        "verify",
+        "restore",
+        "migrate"
+      ],
+      "originalSourceCandidateIds": [
+        "SRC-c7dac0ae577ca91f",
+        "SRC-a409eeca2cea8dc8"
+      ],
+      "qualification": "reference plan only; no installed DB/volume/class/secret/client/node or actual dump/TOC available"
+    },
+    {
+      "field": "metadataMaximumBytesExclusive",
+      "profileA": "A",
+      "profileB": "B-metadataMaximumBytesExclusive",
+      "policyFile": "my-values/infra/postgresql-recovery.yaml",
+      "entryTupleRole": "postgresql-recovery",
+      "sourceStand": "public-fixtures/source-reference-stand.json",
+      "BReceivingStand": "same original captured source authority; authentic native field-boundary input required",
+      "operations": [
+        "scheduled",
+        "backup",
+        "verify",
+        "restore",
+        "migrate"
+      ],
+      "originalSourceCandidateIds": [
+        "SRC-0cdaaeed65ae178c"
+      ],
+      "qualification": "reference plan only; no installed DB/volume/class/secret/client/node or actual dump/TOC available"
+    },
+    {
+      "field": "checksumIndexMaximumBytesExclusive",
+      "profileA": "A",
+      "profileB": "B-checksumIndexMaximumBytesExclusive",
+      "policyFile": "my-values/infra/postgresql-recovery.yaml",
+      "entryTupleRole": "postgresql-recovery",
+      "sourceStand": "public-fixtures/source-reference-stand.json",
+      "BReceivingStand": "same original captured source authority; authentic native field-boundary input required",
+      "operations": [
+        "scheduled",
+        "backup",
+        "verify",
+        "restore",
+        "migrate"
+      ],
+      "originalSourceCandidateIds": [
+        "SRC-6531b764a135ea0e",
+        "SRC-d3ed8066c34b7cb2",
+        "SRC-ddd9a725360d052d"
+      ],
+      "qualification": "reference plan only; no installed DB/volume/class/secret/client/node or actual dump/TOC available"
+    },
+    {
+      "field": "cronJobDeadlineOverheadSeconds",
+      "profileA": "A",
+      "profileB": "B-cronJobDeadlineOverheadSeconds",
+      "policyFile": "my-values/infra/postgresql-recovery.yaml",
+      "entryTupleRole": "postgresql-recovery",
+      "sourceStand": "public-fixtures/source-reference-stand.json",
+      "BReceivingStand": "same original captured source authority; authentic native field-boundary input required",
+      "operations": [
+        "scheduled",
+        "backup",
+        "verify",
+        "restore",
+        "migrate"
+      ],
+      "originalSourceCandidateIds": [
+        "SRC-c58e691b6958fd24",
+        "SRC-a5370b639ba30b4d",
+        "SRC-ec863eb798302cfb"
+      ],
+      "qualification": "reference plan only; no installed DB/volume/class/secret/client/node or actual dump/TOC available"
+    },
+    {
+      "field": "successfulJobsHistoryLimit",
+      "profileA": "A",
+      "profileB": "B-successfulJobsHistoryLimit",
+      "policyFile": "my-values/infra/postgresql-recovery.yaml",
+      "entryTupleRole": "postgresql-recovery",
+      "sourceStand": "public-fixtures/source-reference-stand.json",
+      "BReceivingStand": "same original captured source authority; authentic native field-boundary input required",
+      "operations": [
+        "scheduled",
+        "backup",
+        "verify",
+        "restore",
+        "migrate"
+      ],
+      "originalSourceCandidateIds": [],
+      "qualification": "reference plan only; no installed DB/volume/class/secret/client/node or actual dump/TOC available"
+    },
+    {
+      "field": "failedJobsHistoryLimit",
+      "profileA": "A",
+      "profileB": "B-failedJobsHistoryLimit",
+      "policyFile": "my-values/infra/postgresql-recovery.yaml",
+      "entryTupleRole": "postgresql-recovery",
+      "sourceStand": "public-fixtures/source-reference-stand.json",
+      "BReceivingStand": "same original captured source authority; authentic native field-boundary input required",
+      "operations": [
+        "scheduled",
+        "backup",
+        "verify",
+        "restore",
+        "migrate"
+      ],
+      "originalSourceCandidateIds": [],
+      "qualification": "reference plan only; no installed DB/volume/class/secret/client/node or actual dump/TOC available"
+    },
+    {
+      "field": "temporaryDirectorySize",
+      "profileA": "A",
+      "profileB": "B-temporaryDirectorySize",
+      "policyFile": "my-values/infra/postgresql-recovery.yaml",
+      "entryTupleRole": "postgresql-recovery",
+      "sourceStand": "public-fixtures/source-reference-stand.json",
+      "BReceivingStand": "same original captured source authority; authentic native field-boundary input required",
+      "operations": [
+        "scheduled",
+        "backup",
+        "verify",
+        "restore",
+        "migrate"
+      ],
+      "originalSourceCandidateIds": [],
+      "qualification": "reference plan only; no installed DB/volume/class/secret/client/node or actual dump/TOC available"
+    }
+  ]
+}

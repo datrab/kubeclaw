@@ -1,0 +1,228 @@
+{
+  "status": "C0 author proposed complete controller role receiving/epoch contract; fresh independent review required, no implementation",
+  "soleAuthor": {
+    "path": "charts/kubeclaw/values.yaml",
+    "profilePointer": "/profiles/<explicitSelectedProfile>/settings/busterNamespaceBroker",
+    "currentProducer": "actual Chart + my-values selected override; target selected full profile replaces fragments, old Helm values/ENV overrides reject even equal",
+    "sharedLeaseAliases": [
+      {
+        "controllerOriginalId": "DLV-NAMESPACE-CONTROLLER-BUSTER-LEASE-API-GROUP",
+        "primaryOriginalId": "CMP-buster-engine-clusterInvokers.shared.leaseApiGroup",
+        "primaryAuthor": "config/components/buster-engine.config.json#/profiles/<explicitSelectedProfile>/settings/clusterInvokers/shared/leaseApiGroup"
+      },
+      {
+        "controllerOriginalId": "DLV-NAMESPACE-CONTROLLER-BUSTER-LEASE-API-VERSION",
+        "primaryOriginalId": "CMP-buster-engine-clusterInvokers.shared.leaseApiVersion",
+        "primaryAuthor": "config/components/buster-engine.config.json#/profiles/<explicitSelectedProfile>/settings/clusterInvokers/shared/leaseApiVersion"
+      }
+    ],
+    "productAuthority": "AUTH-PRISM-PRODUCT-ENABLE sole prism-control selected profile; original signer/issuer/operator/key authority projected to controller verifier, not another Product bool or raw verifyKey writer"
+  },
+  "entrySelectionABI": {
+    "existingPhysicalRoot": "config/pipeline.config.json",
+    "alreadyFrozenContracts": "C1entry.v3/component.v2 and C3entry.v4/component.v3 plus separately authored Provider03 root extension; no second root/index",
+    "proposedExtension": "same root complete generation must explicitly bind existing Chart kubeclaw selected deployment profile/instance to role=buster and controllerRole=namespace-controller, co-select same shared Buster owner and Control Product owner; exact root version/schema field names must be coordinated with parent active generation before implementation, no silent new required fields in older version",
+    "tuple": [
+      "role=buster",
+      "chartOwner=kubeclaw",
+      "deploymentInstance=agent-buster",
+      "profile=local-A or local-B",
+      "controllerServiceInstance=agent-buster-namespace-controller"
+    ],
+    "generationClosure": "root+all six selected component owners+existing Chart selected full controller deployment profile+generated policy/profile/CRD/RBAC/env/mount/image references one materialized file-set manifest; fixed relative refs, no symlink/include/default/merge/Latest",
+    "processStartProposal": [
+      "/app/buster-namespace-controller",
+      "--config",
+      "/etc/kubeclaw/buster-namespace-controller/policy.json"
+    ],
+    "actualCurrent": "main.go currently has no --config/JSON loader/entry consumer. This ABI requires coordinated approved C3 changes, not current support",
+    "proofBeforeEffect": "Go managed decoder verifies actual immutable generation/role/profile/root/settings/ref/source/image/schema file-set receipt, role applicability and all semantic relations effect-free before SA token/CA/key reads/listener/newController business mutation; local named ref alone not proof",
+    "proposedExactSelectionFragment": {
+      "deploymentBindings": {
+        "kubeclaw": {
+          "file": "charts/kubeclaw/values.yaml",
+          "profile": "local-A",
+          "bindings": [
+            {
+              "role": "buster",
+              "instanceId": "agent-buster",
+              "consumer": "namespace-controller",
+              "serviceInstanceId": "agent-buster-namespace-controller"
+            }
+          ]
+        }
+      }
+    },
+    "fragmentMeaning": "Finite proposed same-root deploymentBindings extension, not a second root or present accepted v3/v4/v5 syntax. Parent must integrate its closed root/version with existing component/plugin generation schema and whole preservation before implementation approval.",
+    "actualHelperAuthority": {
+      "source": "charts/kubeclaw/templates/_helpers.tpl",
+      "meaning": "kubeclaw.fullname = agent-<validated agentRole>, not Release.Name; buster role gives agent-buster; SA/Role names derive this exact helper prefix while namespace remains .Release.Namespace",
+      "guard": "readonlyBindings.resourceNamePrefix must equal helper(actual role), all bind resource names equal template suffixes. Labels/releaseName remain metadata, not authenticated principal."
+    },
+    "coSelectedControlSourceFixtures": {
+      "enabled": "components/batch-15/fixtures/variants/AUTH-PRISM-PRODUCT-ENABLE/A/prism-control.config.json#/profiles/local-A/settings/productAuthority/enabled",
+      "disabled": "components/batch-15/fixtures/variants/AUTH-PRISM-PRODUCT-ENABLE/B/prism-control.config.json#/profiles/local-A/settings/productAuthority/enabled",
+      "qualification": "Actual captured public fixture false/true profile bytes. Not claimed already integrated with generated full root/operator/deployment role; normal generation materialization must select this exact owner source before projection, never arbitrary missing profile or Boolean from controller."
+    }
+  },
+  "decoderMigration": {
+    "current": "ENV env/envInt trim+fallback; malformed TTL fallback, nonpositive TTL accepted at constructor, unchecked duration multiplication; splitCSV trim/drop empties/order preserved; bare access subject default kubeclaw; intValue float truncation/string coercion; currentReady missinglisten off, raw Ready bytes/producer shapes; Product exact true/false and strict base6432bytes; credentials/token/CA reads before all policy validation",
+    "target": "reuse actual finite productJSON duplicate-key/unknown/trailing/UTF8 token validation for typed managed role decoder plus closed known fields; all required settings explicit, numeric JSON integers, exact unit and overflow-safe ranges, no coercion/default/ENV fallback. Task omitted TTL/Ready retention selects explicit original admitted A owner default once, never current B. Protocol legacy-v1 retention604800 remains historical, not operator default. Reject malformed/missing prior CreationTimestamp before new admission, no time.Now reset",
+    "env": "new-managed starts retire BUSTER policy/Ready/Product ENV authorities even equal; Kubernetes host/port/namespace and mounted files are transport/ref projections only matched against selected receipt, never policy override; old authentic versioned recovery preserves its captured old reader/ENV/image without accepting it as new default"
+  },
+  "nativeDomainAndRelations": {
+    "durationSecondsMaximum": 9223372036,
+    "durationMillisecondsMaximum": 9223372036854,
+    "jsonNumericBytesCountDomain": "positive safe integers <=9007199254740991 and actual captured linux/amd64 Go integer/limit+1/provider/allocation supported predicates; shape is not memory/capacity permission",
+    "domainRelations": [
+      "defaultTTL<=maxTTL, both>=60s; task TTL immutable and allowed <=originalA maximum before namespace mutation",
+      "ordered prefix target<=42 from preserved batch24 profile contract, not universal Go/Kubernetes guarantee; same first-match/prefer literal test/first fallback source semantics; do not reorder/normalize silently",
+      "exact generated API origin/host/port with proper IPv6 host joining; actual original cluster/SA/token/CA identity must match native receipt",
+      "unique fully qualified allowedAccess subjects/modes; generated named bind roles and narrow source-secret GET resourceNames agree same role; no widening old grants",
+      "readHeader<=read, handler<=write, authHeader<=maxHeader; full TLS/auth/body/write timing overhead/Go buffer allowance needs actual future native test, not arithmetic proof",
+      "runtimeSecurity findings cap>=1, full compact JSON array must fit actual overflow sentinel at maximum supported omitted count, stable sorting/total/omitted/digest; not bound on full input list/heap accumulation",
+      "apiRequest serialized counted/limited before Do (including TokenReview/Secret values never log/hash); response decoded limit+1 for every success/error/out=nil with close; oversized mutation response remains uncertain, not 404/success/rollback",
+      "diagnostic<=response and redact sensitive/upstream content without losing trusted statusCode when complete response outcome is known; invalid/oversized body cannot induce conflict/404 fallback",
+      "Ready observed age and Product signed validity separate<=selected independent windows; Ready retention/calendar1..9999 validation; old original expiry and ordered product decisions preserved",
+      "disabled controller has no controller image/SA/RBAC/ENV/listener/mount/profile keys; disabled Ready forbids TLS/audience/producer/ready policies and TokenReview grant; Product requires enabled Ready plus distinct producer and derivedAUTHtrue, false Product forbids all Product-only inputs/policies"
+    ],
+    "nativeUnsupported": "No invented32bit/container architecture, alternate API/Role/UID/issuer/CA/grant/key/secret revision/window or installed controller OCI. Unsupported implementation/native domain fails before activation, does not acquire fallback",
+    "installedCrdMaximumRetentionSeam": {
+      "current": "Chart buster-namespace-lease-crd.yaml spec.ttlSeconds.maximum is .Values.busterNamespaceBroker.maxTtlSeconds; lowering B changes cluster-global validation for existing A status/finalizer patches",
+      "requiredTarget": "Do not publish lower native schema maximum over retained A whose spec would become invalid. Preserve authenticated installed/original CRD domain and status schema/grant across B by explicit same-generation readonly native API schema reference, while selected owner B max is enforced for genuinely new lease admission before effects. If exact native-schema/owner receiving split is not implemented/verified, reject incompatible B schema publication or require explicit original A drain; never relax/delete original create/update negative obligations or silently rewrite oldTTL. No separate editable CRD ceiling author.",
+      "localVsExternal": "Full profile values are locally typed valid only. Installed original CRD domain/schema/status compatibility and admissible B publication require authentic existing API receipt. Native proof and materializer/CRD receiving patch are future; no API installed claim.",
+      "futureCaseIds": [
+        "DLV-CASE-CONTROLLER-LEASE-RECOVERY",
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT",
+        "DLV-CASE-SHARED-LEASE-PROTOCOL"
+      ],
+      "decisiveScene": "A accepted ttl72000 under originalmax86400; candidateBmax43200 cannot prune/reject A patch or recompute A expiry. Either native domain remains original authenticated86400 and new B72000 admission rejects under Bpolicy43200 before effects, or incompatible schema publication rejects before rollover and oldA retained. SameUID/resourceVersion/immutableSpec/epoch/grants unchanged."
+    }
+  },
+  "serviceVersusLease": {
+    "S": "global serial reconcile/listener/pool/client/parser/byte/TTL admission policy; current one worker/no separate queue; new full valid B service may change admission/observer resources for genuinely new work",
+    "R": "each accepted lease epoch/spec UID/generation/creationTimestamp/grants/resource UIDs/finalizer/namespace/access/source-secret/TTL/absolute expiry/Ready/Product/cleanup remains original; a fresh S observer budget may report unavailable, never authorize replay/reset or rewrite accepted A",
+    "H": "original cluster/API/namespaceUID/controllerSA/Role/RBAC/CA/tokenprovider lineage/Secret TLS revision/public signingkey authority and physical resources; names/digests are references, not attestation"
+  },
+  "originalEpoch": {
+    "schemaVersion": "dlv-controller-policy-epoch.v1-proposal",
+    "physicalSeam": "BusterNamespaceLease.status.deliveryPolicyEpoch; proposed explicit structural CRD member/CEL immutability/RBAC writer discipline, absent today; materialized policy file is NOT itself persisted original binding",
+    "author": "same existing Chart deployment controller policy; lease gets typed read-only captured projection and authentic receipt, not editable task/controller index",
+    "firstCapture": "before ensureFinalizer/namespace/RBAC/credential/exposure/status business mutations and before new Ready/Product admission; CAS metadata.resourceVersion + UID/generation + initial immutable spec digest + original delivery policy digest/ref. Current ensureFinalizer happens before validateLeaseSpec and there is no epoch carrier.",
+    "requiredTuple": {
+      "schemaVersion": "dlv-controller-policy-epoch.v1",
+      "leaseIdentity": [
+        "lease API group/version/plural",
+        "controller namespaceUID",
+        "lease name/UID/generation",
+        "original CreationTimestamp UTC",
+        "initial immutable leaseSpecDigest plus initial fullSpecDigest; exposure/purpose changes separately CAS fenced"
+      ],
+      "authorIdentity": [
+        "immutable sourceRevision/config compiler/profile settings digest, never token/privatekey bytes",
+        "original authenticated deployment/build/OCI/Go/stdlib receipt references; parent originalModule/grant/cleanup carrier OPEN"
+      ],
+      "initialLeasePolicy": [
+        "explicit ttlSeconds if present else exact A default7200",
+        "A max86400 clamp and validation snapshot",
+        "persist original absolute deadline and calendar check",
+        "A namespace prefix/access/sourceSecret allowed selection/finalizer/Role names"
+      ],
+      "runtimeAuthority": [
+        "A canonical API origin/cluster identity/namespaceUID",
+        "A controller SA UID/Role/RBAC/TokenReview/secret-selector provider+grant receipt references, not arbitrary authored string assertions",
+        "CA trust set revision loaded once; rotating token provider identity/issuer/audience/revision validated within authorized original lineage",
+        "A Ready producer/audience TLS-provider, Product producer/audience/issuer/public-key/actor roster reference"
+      ],
+      "lifetimeState": [
+        "original namespace/resource UIDs/finalizers/credential selectors and exposure fences recorded when effects occur",
+        "Ready request exact raw requestDigest/readyAt/retention/schema-version/expiry/receipt preserved",
+        "Product decisions ordered receipt revision/previousExpiry/expiry and original issuer/key lineage",
+        "cleanup attempt original ID/start/deadline/UID-preconditions and mutation uncertainty"
+      ]
+    },
+    "writeOrdering": [
+      "strict policy+typed aliases+selected real image/tool/API/provider/grant prerequisites validated before listener/controller business effects",
+      "new source lease with no effects -> CAS epoch once, readback exact equality; CAS409 refetch sameUID/spec, return original if identical else conflict; missingreadback -> uncertain no namespace/RBAC effect",
+      "all later reconcile/admission/replay/cleanup resolve stored epoch and verify authentic allowed grant lineage, never latestdefault/max/access/issuer/API fallback",
+      "B new leases/admissions may select B; old A lease and original cleanup remain A-authorized, observational process budgets can fail unavailable but cannot extend deadline/authorize new effects",
+      "rotation uses explicitly authenticated original provider lineage and revocation readback; failed/unknown access rejects and preserves uncertainty, no bypass"
+    ],
+    "legacyMigration": {
+      "mode": "explicit C1 scoped maintenance migration before C3 policy changes; requires actual current API/CRD stored object backups/readback/operator grant; NOT run",
+      "inputs": [
+        "exact UID/RV/generation/CreationTimestamp/namespaceUID/finalizers/spec/status/readiness/product receipts",
+        "authentic archived original A profile/config/build/author/grant/provider identity at first provision; not currentB, filename, equal numeric default, latesttag or unverified original status expiry"
+      ],
+      "ordinaryLease": "recover authentic original default7200/max86400 or explicit task ttl plus originalmax from A receipt; validate timestamp/calendar; preserve original expiration, do not infer default from current process. Existing status.expiresAt alone is not authenticated policy provenance",
+      "readyV1": "historical schema-v1 absentretention fixed604800 only if validstoredReady UID/digest/readyAt/exactexpected expiry; persist v2 explicit604800 without changing requestDigest/readyAt/expiry/receipt/exposure owner. Current function shares operationaldefault; target separates historicalconst. Invalidready state quarantine no TTL fallback",
+      "readyV2": "exact stored explicitretention validated; preserve original expiry including signed Product receipt chain, no defaultB reinterpretation",
+      "missingOriginal": "POLICY_EPOCH_UNRECOVERABLE: deny provisioning/admission/destructive cleanup and mark controlled uncertainty; no fabricated A/G/currentwriter. Maintenance remediation separately requires authenticated original authority and reviewed plan, not inference fromnewprofile",
+      "concurrency": "CAS UID/RV/generation+ready/product/exposure state; verify exact readback; crash afterpersist before response replay oldepoch; conflictingstored digest refuses, no rollback overwrite; deletion preconditions actual original UID+RV"
+    },
+    "currentCRD": "newstatus.deliveryPolicyEpoch schema absent; current native CRD rejects/prunes/ignores according actual deployedAPI validation; no current persisted capability claimed",
+    "globalOpen": "universal parent originalModule/task-operator carrier/grant/cleanup schema and acceptance remain OPEN, explicitly no fabricated IDs or general alias; local per-lease proposal does not close parent contract"
+  },
+  "config_epochMeaning": "No current Go/CRD config_epoch field exists. Config epoch means exactly the original accepted deliveryPolicyEpoch author/settings/ref digest/receipt; do not invent a second task field/status ledger/ENV author. API/status schema expansion must use the preserved same deliveryPolicyEpoch seam with actual CEL immutability/writer/RBAC discipline.",
+  "epochImplementationOrdering": [
+    "resolve authenticated original lease/state before currentB policy activation for recovery; require original epoch readback, UID/generation/spec equality and allowed original provider/grant lineage",
+    "for genuine no-effect new lease, validate complete role/generation/grants/task before CAS epoch; accept once under resourceVersion UID/generation immutable spec and original config receipt; refetch conflict, identical original wins; unknown readback blocks all finalizer/namespace/RBAC/credential/exposure mutations",
+    "validate exact already installed structural CRD preserves proposed member/status subresource and immutable typed bounds before use; unknown/pruned/missing epoch cannot activate",
+    "later reconcile never derives expiresAt from current default/max or invalid timestamp/time.Now; cleanup start original deadline constrains each kube call/sleep, scoped same epoch and exact owned namespace UID CAS. Old A denial on new B must not delete A as an invalid current policy",
+    "retainReady.v1 implicit historical604800 with authentic legacy reader; Ready.v2 explicitretention and complete state validity; invalidcommittedstate quarantines/reconciles rather than c.expiresAt current fallback",
+    "later Ready/Product admissions reuse exact source/image/grant/credential/exposure UID/generation/request bytes receipt and original issuer/key/actors; signed request replay existing receipt, no new default/window for started result",
+    "API response overlimit/timeout/callerdisconnect/CAS acceptance missing readback retains original uncertain mutation and resolves authenticated outcome; no blind retry or false rolledback receipt"
+  ],
+  "storageAndDrain": {
+    "state": "Kubernetes original CR status/resourceVersion/namespace and resourceUID are business state; controller has no new private store/PVC/epoch ledger. Mounted config and TLS/SA volumes are readonly references, not durable lease author",
+    "current": "context.Background()+serial foreverloop+Sleep; readinessServer only closes when context cancellation actually occurs; no signal-aware drain path implemented",
+    "target": "existing selected global Chart shutdown/termination grace projection, not independent controller knob. Signal handler stops new lease/Ready/Product admissions, joins current original reconcile/mutation/cleanup or records authenticated uncertainty, bounded requests/waits under original deadlines; preserve server outcome/readback before shutdown. Restart resolves A first. Do not delete old deployment/CRD/namespace/Secrets or terminate unresolved mutation simply because roleOff B rendered",
+    "disabledActivationGate": "broker/Ready/Product omission only when no active original leases/grants/claimed/uncertain effects or explicit original-A recovery/drain generation remains authenticated until reconciled; no automatic legacy synthesis or credential rotation"
+  },
+  "externalActivationInputs": [
+    "genuine installed exact controller binary/OCI/Go stdlib+architecture/build/source receipt; current sources/mvalues use latest tag and no controller artifact digest proved",
+    "actual cluster/API/provider/namespaceUID/SAUID/Role/RBAC/grants/installedCRD/schema/status/UID/CAS/priorlease state",
+    "actual mounted CA/SAN/SA token provider issuer/audience/authorized rotating revision lineage; token read each request vs CA startup capture remains distinction",
+    "authentic NovaReady producer and distinct ControlProduct producer TokenReview tokens/audiences/grants; no metadatalabel authentication",
+    "genuine Ready TLS Secret/key/cert/access/revision and sameProduct signing private authority-derived public key32bytes/issuer/actors provenance; no invented key fingerprint",
+    "physical pod/process/sharedAPI/resource/accounting and full-list/findings/concurrentHTTP allocation measurements sufficient for requested profile; byte schema valid does not prove available512MiB memory"
+  ],
+  "localDefinitionStillUnaccepted": "root/deployment binding coordinated version/schema/file-set exact physical delivery and source-specific control independent review; all C3 Go/Chart/CRD/code/native future implementation checks notrun; native missing inputs not excuse these definition interfaces",
+  "implementationAuthorization": null,
+  "globalC0Accepted": false,
+  "actualNewPolicyCoordinates": [
+    {
+      "identity": "actual source coordinate + selected Chart field pointer, no fabricated canonical settingID",
+      "source": "charts/kubeclaw/templates/buster-namespace-controller.yaml BUSTER_READY_LISTEN value and containerPort8443",
+      "field": "charts/kubeclaw/values.yaml#/profiles/<explicitSelectedProfile>/settings/busterNamespaceBroker/controller/readiness/port",
+      "originalContextId": "DLV-NAMESPACE-CONTROLLER-BUSTER-READY-LISTEN",
+      "domain": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 65535
+      },
+      "cases": [
+        "DLV-CASE-MISSING-OLD-AUTHOR",
+        "DLV-CASE-ALTERNATE-PROFILES",
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
+      ],
+      "sameWriter": "sole existing Chart owner, address/container/client refs immutable generation projections; no separate ENV author",
+      "disabled": "explicit Readyfalse forbidsport and other Ready inputs",
+      "nativeGate": "actual UID/sysctl/CAP/address bind/native fixture supported before startup, old Readyroute A retained or fully drained before changingS to8444",
+      "sourceCoordinates": [
+        {
+          "path": "charts/kubeclaw/templates/buster-namespace-controller.yaml",
+          "sha256": "e003c7bf4eb938988391d9af0c955b2338cef29781e1d8e932bdcc753ee50d13",
+          "line": 226,
+          "text": "              value: \":8443\""
+        },
+        {
+          "path": "charts/kubeclaw/templates/buster-namespace-controller.yaml",
+          "sha256": "e003c7bf4eb938988391d9af0c955b2338cef29781e1d8e932bdcc753ee50d13",
+          "line": 257,
+          "text": "            - { name: demo-ready, containerPort: 8443, protocol: TCP }"
+        }
+      ]
+    }
+  ]
+}

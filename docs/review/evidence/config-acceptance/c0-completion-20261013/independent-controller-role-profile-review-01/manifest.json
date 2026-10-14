@@ -1,0 +1,103 @@
+{
+  "scope": "bounded independent WCR03 definition/source review only",
+  "verdict": "NOT ACCEPTED",
+  "findings": [
+    "CRPR-01"
+  ],
+  "artifacts": [
+    {
+      "path": "README.md",
+      "sha256": "692fd59322ee816c31dd3f07104d792ef9b60066f23f61d67c7624ec4db843ab",
+      "bytes": 288
+    },
+    {
+      "path": "REPORT.md",
+      "sha256": "722538109e49e95497370c77df40e85d000d04b5e30cba392ef0fecf57617ff8",
+      "bytes": 7159
+    },
+    {
+      "path": "conservation.json",
+      "sha256": "4746b2181f21a9695ccb5797d92f8815072c03b15babbac46f35aab1e3ed60ff",
+      "bytes": 13552
+    },
+    {
+      "path": "end-identities.json",
+      "sha256": "ec9ef85b7dd2cfa50f906f36ffd8e725fe47c00ad8cd94c37db10f388bfc9cd0",
+      "bytes": 28303
+    },
+    {
+      "path": "read-identities.json",
+      "sha256": "848ff563dc784af5f044e692f1f7bfbd884941cf0f4968cab4305f5dbb5c343e",
+      "bytes": 29737
+    },
+    {
+      "path": "receiving-node-challenge.json",
+      "sha256": "2f346730801746a5a6d1588aebc943e1140e04dfc83da164e46434530cd641c0",
+      "bytes": 23403
+    },
+    {
+      "path": "replay/check-local-definitions.mjs",
+      "sha256": "d5a2fae9566acc15bd489598d33c0ecb93520ff570ae16bcd766923a653f5f5f",
+      "bytes": 10278
+    },
+    {
+      "path": "replay/co-selected-control-fixture-inputs.json",
+      "sha256": "c35eacedb96cf591d63cd13a7cfffbb7827319766f5bbb2b1c5ab66df6c012e0",
+      "bytes": 2315
+    },
+    {
+      "path": "replay/controller-role-profiles.schema.json",
+      "sha256": "745798dbf789c7789069fca891b11523c69df5bd054530ca9486768cc2257000",
+      "bytes": 56810
+    },
+    {
+      "path": "replay/local-definition-observations.json",
+      "sha256": "2ff1df1d1f1b0a2172e3c707ec0f94a4c7801fbc9a360e7a1dd1b3749ff58db1",
+      "bytes": 9030
+    },
+    {
+      "path": "replay/profiles/A.json",
+      "sha256": "3940482d5697bab7b1cc779c602714c43b6f99c68c4ca6b7ed735cf6cde6cc06",
+      "bytes": 5474
+    },
+    {
+      "path": "replay/profiles/B.json",
+      "sha256": "308ee851ccf6f70ed4b02cbb4f8e56c2614ab53eb3fad2656eb1a80b093b4f95",
+      "bytes": 5477
+    },
+    {
+      "path": "replay/profiles/Ready-port-contrast.json",
+      "sha256": "6c8bbcd57f7551e04a592ac5073443f54aa0b4e86c0c27e8cfb9fa55915ea141",
+      "bytes": 5486
+    },
+    {
+      "path": "replay/profiles/ready-product-off.json",
+      "sha256": "41f7a6aec90a662ba757db0e8068f5f98f321ee6912cd09446f5dcfa80f01c86",
+      "bytes": 3972
+    },
+    {
+      "path": "replay/profiles/role-off.json",
+      "sha256": "2154b03a6b2792d378357f5ca6a62de925634d668ada8cd3649675b49aba1c80",
+      "bytes": 624
+    },
+    {
+      "path": "replay-execution.json",
+      "sha256": "e86800ce05c2dd7c76df6f57d4988d3bef86708e28deb5562f50107f2ef0dce3",
+      "bytes": 450
+    },
+    {
+      "path": "replay.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "replay.stdout",
+      "sha256": "d66db8c8715ebd385e24244d965f7b4dfed66309c119e8ddc1dfe90021221fad",
+      "bytes": 211
+    }
+  ],
+  "readIdentities": "read-identities.json",
+  "inputEndIdentities": "end-identities.json",
+  "implementationAuthorization": null,
+  "globalC0Accepted": false
+}

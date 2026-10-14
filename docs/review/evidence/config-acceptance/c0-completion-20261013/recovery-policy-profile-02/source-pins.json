@@ -1,0 +1,276 @@
+{
+  "inputs": [
+    {
+      "path": "scripts/postgresql-recovery.sh",
+      "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+    },
+    {
+      "path": "scripts/render-postgresql-recovery.mjs",
+      "sha256": "3e0d30b0c0888c4039f176ddb80d19e00b7b7064ead979d5bb9122d4df19e14f"
+    },
+    {
+      "path": "scripts/postgresql-recovery-preflight.mjs",
+      "sha256": "fef2fed9b07fb7731c58d69c744a418130882cc5507d16616a3b516ff9485fd4"
+    },
+    {
+      "path": "scripts/deploy.sh",
+      "sha256": "c90cc9c082b3adba89c458a9e28853afa77682a6c7066a7641c70aac749d0960"
+    },
+    {
+      "path": "scripts/stateful-database-service.mjs",
+      "sha256": "fd96f1a30f997d4a6a71a23b81cad2dc4ccca69b223e4945e22c9261819bbfa8"
+    },
+    {
+      "path": "scripts/infrastructure-chart.mjs",
+      "sha256": "6a136a40cced70d63de028e635bd5b9e4fb30f1a632cd725175385faf9c57e25"
+    },
+    {
+      "path": "scripts/infrastructure-release.mjs",
+      "sha256": "a03aa7721f871473effbb0f79de84bc7ebcb2877c68fa023675ea335e27936f8"
+    },
+    {
+      "path": "scripts/infrastructure-chart-lock.mjs",
+      "sha256": "8884d8e41166f9739ea8f5986cbd8a4c8ae66e8756f0fa3ccb8712e9124601e5"
+    },
+    {
+      "path": "my-values/infra/postgresql-recovery.yaml",
+      "sha256": "5f0ffb0cdf5acdbd814da726060d5125c5cae912554f27de57251ea90ae8d438"
+    },
+    {
+      "path": "my-values/infra/postgresql-values.yaml",
+      "sha256": "b7c1445d47350c6fcae2fc7de901e930dec1f8309331bf0db69c70c1f3404994"
+    },
+    {
+      "path": "my-values/infra/litellm-deployment.yaml",
+      "sha256": "21136d7cc63b549db0d9e1f3a32d449c5bf3c2644790d144d47d476372c56bab"
+    },
+    {
+      "path": "my-values/infra/litellm-config.yaml",
+      "sha256": "70356ac84fef937d6cfad5ea54583a16342784d8299406e155524128542baa6d"
+    },
+    {
+      "path": "versions.json",
+      "sha256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-source-contracts-01/candidate-dispositions.json",
+      "sha256": "98893de074072657c6bb832f84fee88eefa9d35276c6ecaa5ac8fdbb1d814fc0"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-source-contracts-01/source-identities.json",
+      "sha256": "9c52de0a1310f68717deb418171d60a2153adcbc31dd1fd157e510942330349b"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-source-contracts-01/README.md",
+      "sha256": "15f0ecf19c9a804b01dff515dac42715249531d61b6c7db801fc013544ab643d"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-provisioning-source-review-01/README.md",
+      "sha256": "8febd988fd2153a0bf49ea448ac07bb1d70e30df4155c8eef157c2e28e36ca9f"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/package-manifest.json",
+      "sha256": "3e6cd8ad0590fbb45f9bfa68a910c6b099959404aef3af89002cdcde6ffa34d7"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/my-values/infra/postgresql-recovery.yaml",
+      "sha256": "ce029433a76e6e4edc5d67086ab1293277ea852ca83a2e9bdccadf15232acae7"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/original-candidate-lineage.json",
+      "sha256": "ace11c5d6e0f04dcaec568962bedeb1005e7e3404267f424116931defec80c09"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/case-definitions.json",
+      "sha256": "8e0cfc8c01f1f879beaf1b98a09e71ec08c2cb246ced60d8be29f03c1b16622e"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/README.md",
+      "sha256": "d8c027f59db0bfd247b71eecd4db8a831e5ab4140ef539fa84af175eee5fc30a"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-review01-relocation.json",
+      "sha256": "5aab46fabf47b527dad963b6a375ecbd022800207078f84c03d9d4e6ba5332d7"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/artifact-identities.json",
+      "sha256": "21f14842c3fc5c5b7480e7b134a54d09d686816cdd52bb9b63afdc99e0fdaa7b"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/config/pipeline.config.json",
+      "sha256": "355ea24016a9fec3ead3e845d28a95925f3fc7fd337f1a970d5a788bf1c5b0e5"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/active-concordance-index.json",
+      "sha256": "99f7272b9cccc46ab10824f0cbf869b07910fb3cf5039c42d7f588d473a9b557"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+      "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/field-definitions.json",
+      "sha256": "19c9b61497aecfc0097b167fffdc371afc179016ec1122626f196191cc96ae42"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/generated-view-index.json",
+      "sha256": "fbe5763907300c00e271783836071d15c77d0a0e4091e0d3ff0c2f5ab4332ede"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/package-binding-identities.json",
+      "sha256": "01efa50eeae30613e0e80caf7132d904fb200daa452103110c4f74ec9554665d"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/c3-integrated-reference-generation.json",
+      "sha256": "f8d9d08f60acfaf884c183b560398f018b5463b52a984214a4bbaa4d75dc993f"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/c3-registry-peer-reference-contract.json",
+      "sha256": "d1ba44788070a8300c6081fb448184d8cba8d3a38a6d20ff11583cb64bfd38c2"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-runtime-provider-contract-review-03/README.md",
+      "sha256": "bee4775dd4e065c7f7f623c8b5a4d20b7183f2d2ad01c57ca0447fac9c87dd55"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-c3-buster-complete-profile-review-03/README.md",
+      "sha256": "78ac60f8a3e395360493cc42915570841e4623a0459a8dbb473fce7dac0b4d62"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/provider-field-dependency-adoption-01/dependency-adoption.json",
+      "sha256": "bdf2d54a2bdb40bae1afa68e9e04376d89214421e35ba0b8e89796c605ebf39b"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-provider-field-dependency-adoption-review-01/README.md",
+      "sha256": "3f2cbaee1b65445d142444f156ced11e7c4509092fa4e0798816587cbf00f80f"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/config/components/buster-engine.config.json",
+      "sha256": "100d63939fa1eb164053a0c0d205ab534a5b592c3d8ecc5ba43b0ee5f83a6ebf"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/config/components/prism-control.config.json",
+      "sha256": "524ca90d6b62c656b5f279c27b8b49250d93869636aa71f73d5891429e01e1e4"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/config/components/prism-execution.config.json",
+      "sha256": "225d2d31235f0996196da2f2b7d25a0605d59087427b997ab487d648ddf89ce3"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/config/components/prism-studio.config.json",
+      "sha256": "b41a9113d26384ee0dd07d5defac180b8a52d67315c738d0a5459c49bead0fac"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/config/components/prism-worker.config.json",
+      "sha256": "61da3c7b2b81033ed9c350f593cf1ab58f3630a39b109a9b251f1b2e0ba28220"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/config/components/worker-core.config.json",
+      "sha256": "f59c7ec6798e853f9fb87a494cdd245193c50d19f90275fe5b530706adcb8934"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/config/plugins/kubeclaw.api-flow.config.json",
+      "sha256": "6d0d39c516128aefb8e94edf6c8f68c43caa0bf9aade74628c6fc49d3c5fe917"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/config/plugins/kubeclaw.http.config.json",
+      "sha256": "e8eb48798dd3b126b32962b1e17882109a289420a3ad87d82f65b8aefbe87517"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/config/plugins/kubeclaw.network-http.config.json",
+      "sha256": "26b4fb9495edd6b6c60ff9acbfc866f43e953b9e013781950ff9c6708e4e64c4"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/config/plugins/kubeclaw.openapi.config.json",
+      "sha256": "f575e0431736bb0ff20cd6e6f615b3595ab366c45858dc1712436dabcafe98e3"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/schemas/api-flow.target-task-file.schema.json",
+      "sha256": "5c95926961def5f457273595f6c56daa6f9fe0c15f46379473a514aa996cce45"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/schemas/buster-network-resource.schema.json",
+      "sha256": "dab39fb1a420514c879ecb1722e31c84923e1bf08c41fa676a002a2a76b56fae"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/schemas/c3-generated-runtime.schema.json",
+      "sha256": "af8e9bded1aef68ebe88e0ded835b202e0a4591099eda89fa4ea99a31b1b1740"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/schemas/components/buster-engine.schema.json",
+      "sha256": "115982f18efb75f7ea5e2e05a5dee7a574707400469aaf5de4b88721d3b9cb97"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/schemas/components/prism-control.schema.json",
+      "sha256": "235717a7621de85c3933b095b0724c53eb27afa791ed5f094bf47a53bee39d85"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/schemas/components/prism-execution.schema.json",
+      "sha256": "c6dfe88a3518f6819f5840b7e6739796c6fc0e6a0711ab1fc42cf19df4e76cbe"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/schemas/components/prism-studio.schema.json",
+      "sha256": "72921bb9de970f5eccec5b7889a26501c8614e96304179dc54a5eef0375abe7b"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/schemas/components/prism-worker.schema.json",
+      "sha256": "5b7fca15563fb20ad2b5dcef67724b62c68648a67fa7e5b0d34276f5472faa5b"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/schemas/components/worker-core.schema.json",
+      "sha256": "22c665a659ae8af436b642ef8959e3f2ca6aebcefd1e9858ff718386dbd65630"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/schemas/kubeclaw.api-flow.evidence-override.schema.json",
+      "sha256": "831f8c25a87165080759fb805825d2e1a1fbcf13dd1171bcf7b9600d12ab8eda"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/schemas/kubeclaw.api-flow.schema.json",
+      "sha256": "feda3e42ced475a7d1c7b4e86fb4750946d622d0e801bf6d279da3e7189e5b31"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/schemas/kubeclaw.api-flow.task.schema.json",
+      "sha256": "64be3ae79bed9a97a4fe51615ab66a403413c0f0b09ddf3a2e922a67d6b80198"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/schemas/kubeclaw.http.evidence-override.schema.json",
+      "sha256": "03920b7906d96bc998f2423877daa88b9fc178481d509c7f4908c291fc576204"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/schemas/kubeclaw.http.schema.json",
+      "sha256": "dbe452c5aebf4fc3fbe7ce1dc68cb05f08193694df23b09f122461f4d87de10c"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/schemas/kubeclaw.http.task.schema.json",
+      "sha256": "a6307a45ffea3b999575efe27ba11c28bc9bb47f82cdfeb71645bcb2706c1e44"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/schemas/kubeclaw.network-http.schema.json",
+      "sha256": "dce2ee99d8e3bbaa073b8cfb5aee20715b96bb2e3838a259a7c05c5ccf982892"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/schemas/kubeclaw.openapi.evidence-override.schema.json",
+      "sha256": "831f8c25a87165080759fb805825d2e1a1fbcf13dd1171bcf7b9600d12ab8eda"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/schemas/kubeclaw.openapi.schema.json",
+      "sha256": "5a0a92ad66b8340579a9523854a8c8e5f4b4014ca72548702eb52a5526d52ac6"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/schemas/kubeclaw.openapi.task.schema.json",
+      "sha256": "a97d83747a5319a85720d444c0c9aa836b4dfe37d01479a9fe4916e3b0c099d8"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/schemas/nova-adapter-processing.schema.json",
+      "sha256": "09671db157edcd889a62c485f0083113c796cb2eca23d13b6c5ab5cc32d0fdf3"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/schemas/pipeline-entry.schema.json",
+      "sha256": "650dfba7c8030edfa1d3bf75dcf5820c6b1c88aefe50d1b01ef5c8267c062e23"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/schemas/provider-configuration.v2.schema.json",
+      "sha256": "2548f1b8edf8aa36cbccecfc5101aa2927718d1f0a03096f90fb59131f91bc58"
+    }
+  ]
+}

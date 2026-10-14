@@ -1,0 +1,308 @@
+{
+  "status": "finite correction oracles only; native implementation/API unavailable and all original results not-run",
+  "R01": {
+    "originalCases": [
+      {
+        "candidateId": "SRC-bc353b442b591d54",
+        "originalBodySha256": "5943141b836e3aa7dbc953cae5cc542a65f661b026de61b37f5195c79a0a0963",
+        "sourceWitness": {
+          "path": "scripts/postgresql-recovery.sh",
+          "line": 103,
+          "expression": "  [[ $directory == \"$BACKUP_ROOT\"/backup-* && -d $directory && ! -L $directory ]] || fail BACKUP_PATH_INVALID",
+          "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+        }
+      },
+      {
+        "candidateId": "SRC-69c73b6869554ffb",
+        "originalBodySha256": "f51d8a0ee7b0e7a8e520a4e0886172d82cd153cfaaec87fb798a6b3a8639cd54",
+        "sourceWitness": {
+          "path": "scripts/postgresql-recovery.sh",
+          "line": 104,
+          "expression": "  [[ ${directory#\"$BACKUP_ROOT\"/} != */* ]] || fail BACKUP_PATH_INVALID",
+          "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+        }
+      },
+      {
+        "candidateId": "SRC-f27b77f6a2f38b7e",
+        "originalBodySha256": "599b0bc95b7c6e18a3c38b85dafca118daf896bc4354b29258a364e016d3250b",
+        "sourceWitness": {
+          "path": "scripts/postgresql-recovery.sh",
+          "line": 193,
+          "expression": "  restore) [[ $# == 2 ]] || fail ARGUMENTS_INVALID; restore \"$2\" \"$BACKUP_EXPECTED_SERVER_VERSION\" ;;",
+          "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+        }
+      },
+      {
+        "candidateId": "SRC-12384df0dcc2708c",
+        "originalBodySha256": "92fac7edef8dbb046ec1497383139cea3ec3a556d445ee08339fd9c172d4ed8c",
+        "sourceWitness": {
+          "path": "scripts/postgresql-recovery.sh",
+          "line": 194,
+          "expression": "  migrate) [[ $# == 3 ]] || fail ARGUMENTS_INVALID; migrate \"$2\" \"$3\" ;;",
+          "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+        }
+      }
+    ],
+    "oracles": [
+      "authentic timestamp suffix containing0/u admitted with required originaltaskref",
+      "actual NUL/nested/parentescape rejected",
+      "original public argv counts/version retained; missing authorityref rejected; old v1 replay never new-start fallback"
+    ]
+  },
+  "R02": {
+    "originalCases": [
+      {
+        "candidateId": "SRC-dc2aa0ceab92d18c",
+        "originalBodySha256": "f348006554c68293f307fd6a287f8bc2856ef377cbaa8a4ca764b6ab4ebacfe9",
+        "sourceWitness": {
+          "path": "scripts/postgresql-recovery.sh",
+          "line": 59,
+          "expression": "  used=$(du --summarize --bytes \"$BACKUP_ROOT\" | cut -f1)",
+          "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+        }
+      },
+      {
+        "candidateId": "SRC-865461bfc9850dcb",
+        "originalBodySha256": "2b94ef1456c9beddd56bee90e8620a1c122355b0e0dcc62739736e0c8f3b2bad",
+        "sourceWitness": {
+          "path": "scripts/postgresql-recovery.sh",
+          "line": 60,
+          "expression": "  [[ $used =~ ^[0-9]+$ ]] || fail RETAINED_SIZE_INVALID",
+          "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+        }
+      },
+      {
+        "candidateId": "SRC-bae98e10a68c4921",
+        "originalBodySha256": "656efdb043413b88cf8a3c825a37a1d756e5730c4a961eb8f887d4fa6315089b",
+        "sourceWitness": {
+          "path": "scripts/postgresql-recovery.sh",
+          "line": 62,
+          "expression": "  (( allowance > 0 )) || fail RETAINED_CAPACITY_EXCEEDED",
+          "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+        }
+      },
+      {
+        "candidateId": "SRC-3becce028d299daa",
+        "originalBodySha256": "036600d203c0ca1fa6287c384459b1602db21db26502d9df1fe8258171b928d9",
+        "sourceWitness": {
+          "path": "scripts/postgresql-recovery.sh",
+          "line": 63,
+          "expression": "  (( allowance <= BACKUP_MAXIMUM_BYTES )) || allowance=$BACKUP_MAXIMUM_BYTES",
+          "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+        }
+      },
+      {
+        "candidateId": "SRC-c7dac0ae577ca91f",
+        "originalBodySha256": "30c6bb9f695a1da50eab94c9d05ff9d44bf0cf82df8e67136a773b1525d75768",
+        "sourceWitness": {
+          "path": "scripts/postgresql-recovery.sh",
+          "line": 64,
+          "expression": "  blocks=$(( allowance / 1024 )); (( blocks > 0 )) || fail RETAINED_CAPACITY_EXCEEDED",
+          "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+        }
+      },
+      {
+        "candidateId": "SRC-c208a01d6410a6d1",
+        "originalBodySha256": "18675fb2d3ebadd3f0de77efb904d4760df45f71c3a5d883d1c13fb14fa11e75",
+        "sourceWitness": {
+          "path": "scripts/postgresql-recovery.sh",
+          "line": 73,
+          "expression": "  ) || fail DUMP_FAILED_INCOMPLETE_RETAINED",
+          "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+        }
+      }
+    ],
+    "oracles": [
+      "authentic same-root complete accounting exit0 before any arithmetic, no du/native run here",
+      "zero supported; exact-retained/exact-reserve/subblock denied; exact1024block admitted as arithmetic only",
+      "leadingzero/sign/fraction/whitespace/newline/oversized/native+1 rejected beforeconversion",
+      "used>retained rejects beforechecked subtract; nativeMode mismatch/capturefail denied",
+      "actual oldcomplete/incomplete history alwayscharged and neverdeleted/reset; boundarynative dump/claim fixtures required"
+    ]
+  },
+  "R03": {
+    "originalCases": [
+      {
+        "candidateId": "SRC-4d8c554cedefe7e3",
+        "originalBodySha256": "1bd660a06c105db895bc11cf8327618e9e02dde70824727e1c22038c6fde2909",
+        "sourceWitness": {
+          "path": "scripts/postgresql-recovery.sh",
+          "line": 42,
+          "expression": "  [[ $version == \"$BACKUP_EXPECTED_SERVER_VERSION\" ]] || fail SERVER_VERSION_NOT_SELECTED",
+          "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+        }
+      },
+      {
+        "candidateId": "SRC-2cc6ae187b1c4620",
+        "originalBodySha256": "9d3164770f4a63a91bacdcb74664fa00a01169444b55d93206b99757328ae5c6",
+        "sourceWitness": {
+          "path": "scripts/postgresql-recovery.sh",
+          "line": 45,
+          "expression": "  [[ $identifier =~ ^[0-9]{1,20}$ ]] || fail SERVER_IDENTITY_INVALID",
+          "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+        }
+      },
+      {
+        "candidateId": "SRC-dc2aa0ceab92d18c",
+        "originalBodySha256": "f348006554c68293f307fd6a287f8bc2856ef377cbaa8a4ca764b6ab4ebacfe9",
+        "sourceWitness": {
+          "path": "scripts/postgresql-recovery.sh",
+          "line": 59,
+          "expression": "  used=$(du --summarize --bytes \"$BACKUP_ROOT\" | cut -f1)",
+          "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+        }
+      },
+      {
+        "candidateId": "SRC-c58e691b6958fd24",
+        "originalBodySha256": "60444f9548d911993b98a357e1936e5dca1c104024effda45c66754468bd4f08",
+        "sourceWitness": {
+          "path": "scripts/postgresql-recovery.sh",
+          "line": 71,
+          "expression": "    timeout --signal=TERM --kill-after=15 \"$BACKUP_MAXIMUM_DURATION_SECONDS\" \\",
+          "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+        }
+      },
+      {
+        "candidateId": "SRC-591a043efba571f6",
+        "originalBodySha256": "dd0d67b8c067596b8d27c8a3ac37d2d198c21dc3753196bc97f180ee4fbbbef5",
+        "sourceWitness": {
+          "path": "scripts/postgresql-recovery.sh",
+          "line": 75,
+          "expression": "  [[ $(server_identity) == \"$identity\" ]] || fail SOURCE_IDENTITY_CHANGED",
+          "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+        }
+      },
+      {
+        "candidateId": "SRC-fa55b1e389e16f99",
+        "originalBodySha256": "01adc64674086fba490b384603f8f69ada231b0e2b436138855b5ec7db6bf835",
+        "sourceWitness": {
+          "path": "scripts/postgresql-recovery.sh",
+          "line": 87,
+          "expression": "  (cd \"$stage\"; sha256sum database.dump archive-toc.txt metadata.env >SHA256SUMS)",
+          "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+        }
+      },
+      {
+        "candidateId": "SRC-4e0f972de1f455c5",
+        "originalBodySha256": "f032b6f0cedee12192ac353e25da15e45221566d9639aee530564c8760ccde23",
+        "sourceWitness": {
+          "path": "scripts/postgresql-recovery.sh",
+          "line": 89,
+          "expression": "  final=\"$BACKUP_ROOT/backup-${stage##*/.incomplete-}\"",
+          "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+        }
+      },
+      {
+        "candidateId": "SRC-f81bf24a5b954742",
+        "originalBodySha256": "8273f9f7c26b92e8bc098b93137029d602842b1219a15cd77b296ee7e87fbec8",
+        "sourceWitness": {
+          "path": "scripts/postgresql-recovery.sh",
+          "line": 93,
+          "expression": "  sync -f \"$BACKUP_ROOT\"",
+          "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+        }
+      },
+      {
+        "candidateId": "SRC-8555ba38df7bf98d",
+        "originalBodySha256": "a2dde0266b0efb5feb2a3c2a4be504fa4d5f3306f0a9a125f416ac273e371d19",
+        "sourceWitness": {
+          "path": "scripts/postgresql-recovery.sh",
+          "line": 117,
+          "expression": "  (cd \"$directory\"; sha256sum --check --status SHA256SUMS) || fail BACKUP_CHECKSUM_MISMATCH",
+          "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+        }
+      },
+      {
+        "candidateId": "SRC-af92651c4e651180",
+        "originalBodySha256": "8ae32a72bbf4cf7140b4d69016f42ebca9fe182c0eeae2d2740dae56ad53497c",
+        "sourceWitness": {
+          "path": "scripts/postgresql-recovery.sh",
+          "line": 149,
+          "expression": "  [[ $target != \"$(metadata \"$directory\" source_system_identifier)\" ]] || fail SAME_SERVER_RESTORE_FORBIDDEN",
+          "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+        }
+      },
+      {
+        "candidateId": "SRC-86e89035cd4d6766",
+        "originalBodySha256": "a05fdf1e2b8b295e88f4f5bb7b857de63b3731c4f9ff902ec60a107b223fec50",
+        "sourceWitness": {
+          "path": "scripts/postgresql-recovery.sh",
+          "line": 151,
+          "expression": "  [[ $count == 0 ]] || fail RESTORE_REQUIRES_EMPTY_DATABASE",
+          "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+        }
+      },
+      {
+        "candidateId": "SRC-a5370b639ba30b4d",
+        "originalBodySha256": "c5893d0e6e3dfbafef8a304ff5a70475eaeb5b18dba7370da2e105e7fd7e6857",
+        "sourceWitness": {
+          "path": "scripts/postgresql-recovery.sh",
+          "line": 154,
+          "expression": "  timeout --signal=TERM --kill-after=15 \"$BACKUP_MAXIMUM_DURATION_SECONDS\" \\",
+          "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+        }
+      },
+      {
+        "candidateId": "SRC-74e008a2790c0d8e",
+        "originalBodySha256": "ecac0ea63272a5e11770b5ad4f8bec436d92571081a26c40802876fb320d8cce",
+        "sourceWitness": {
+          "path": "scripts/postgresql-recovery.sh",
+          "line": 170,
+          "expression": "  if selected=$(latest) && (verify \"$selected\" \"$BACKUP_EXPECTED_SERVER_VERSION\"); then",
+          "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+        }
+      },
+      {
+        "candidateId": "SRC-ec863eb798302cfb",
+        "originalBodySha256": "cba51b086f62c439a8d20d8ecf476220021e548c27b411e851658b38f7668d45",
+        "sourceWitness": {
+          "path": "scripts/postgresql-recovery.sh",
+          "line": 175,
+          "expression": "  verify \"$selected\" \"$BACKUP_EXPECTED_SERVER_VERSION\"",
+          "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+        }
+      },
+      {
+        "candidateId": "SRC-7dcc343a4f45f583",
+        "originalBodySha256": "40cc227e89d4c48f08aac15c924a061ddeeefa24f01a92c4e8ca25fe55b8f258",
+        "sourceWitness": {
+          "path": "scripts/postgresql-recovery.sh",
+          "line": 184,
+          "expression": "  selected=$(latest); verify \"$selected\" \"$BACKUP_EXPECTED_SERVER_VERSION\"; printf '%s\\n' \"$selected\"; exit 0",
+          "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+        }
+      },
+      {
+        "candidateId": "SRC-c7da4365f24d1e9b",
+        "originalBodySha256": "01002c6e930a8a49bd6b195e18a79fc397a20d65c4d8b5c053216ffe7b1d1d6f",
+        "sourceWitness": {
+          "path": "scripts/postgresql-recovery.sh",
+          "line": 188,
+          "expression": "exec 9>\"$BACKUP_ROOT/.recovery.lock\"",
+          "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+        }
+      },
+      {
+        "candidateId": "SRC-dae6d50e7223a038",
+        "originalBodySha256": "cd935e5d9b958dd18f69a70a7083ab1d3a3f5568046666701732cdb33b782cf5",
+        "sourceWitness": {
+          "path": "scripts/postgresql-recovery.sh",
+          "line": 189,
+          "expression": "flock --exclusive --nonblock 9 || fail BUSY",
+          "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+        }
+      }
+    ],
+    "oracles": [
+      "bind original task grant once in existing C1 task binding: scheduledJobUID/manualrequest UID, wholegeneration/policy/profile/argv/source, samekernelclock and immutableanchor/expiry",
+      "all blocking SQL/connect/accounting/TOC/list/hash/sync/verify/restore phases consume same remainingoriginalbudget; child launch delay revalidatesbeforecommand",
+      "expiry-before-initialverify/dump/postverify/publication/restore denies operation; no new budget on same-task restart",
+      "TERM/KILL grace inside original budget, actual absolute scope supervisor notCron alone; native descendants/FD9 scope quiescence required",
+      "accepted rename or restore completing late becomes uncertain/no timely acknowledgement; preservestage/final/target/history; no automatic replay/rotation/reset",
+      "original C1/task/clock/source/grant/ref mismatch/missing/unsafemode deniesbeforeeffect; publiczero/unsealed references cannot authorize nativeoperation",
+      "mutants resetanchor, appendkillgrace, useCrononly, omitpostverify/revalidate-before-mv, treatunknownrestorecommit asrollback or take PIDover => originalnativeoracle mustfail"
+    ]
+  },
+  "phasePlan": "phase-plan.json",
+  "currentReferenceGeneration": "dependency-rejoin.json verifiedProvider03+C3reference03 exact refs, no transitive C0/native approval"
+}

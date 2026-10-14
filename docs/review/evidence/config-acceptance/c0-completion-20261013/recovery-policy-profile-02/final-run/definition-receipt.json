@@ -1,0 +1,557 @@
+{
+  "qualification": "pure definition/current extracted source functions; full renderer NOT called; no Helm/chartstage/preflight/backup/verify/restore/migrate/deploy/API/PG/network/credential/native effects",
+  "command": "/usr/local/bin/node /home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/collect-definition-checks.mjs --output-dir /home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/final-run",
+  "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+  "recordedAt": "2026-10-14T00:49:22.703Z",
+  "tools": {
+    "node": "v24.21.0",
+    "nodeExecutable": "/usr/local/bin/node",
+    "nodeSha256": "7fde7b8afa198da66257f42ee2001d874c7355631e6d1579a5fb5ef1f246df4c",
+    "ajv": "8.20.0",
+    "ajvEntry": "/home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/ajv/dist/2020.js",
+    "ajvSha256": "908e9670b478b2ba126802a221b7e47006f50cf467e2c5dd7935d3dbef10a20a",
+    "yaml": "4.3.1",
+    "yamlEntry": "/home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/js-yaml/index.js",
+    "yamlSha256": "e85d524fcd45466669dfc37618284e0c53ccaaf3f4bef1e23cd25ec6c43120bc"
+  },
+  "collectorSha256": "3df0c2717af34991cff6d982a3c5d07691713ee17ed6bba9e96d92965630ff8b",
+  "isolatedNamedSourceSha256": "a5281583df4370c27439c6a038011b11b652d73f96b236a6ac8d81c96f25025d",
+  "metadataBound": 549,
+  "indexBytes": 241,
+  "profileCount": 24,
+  "fieldPairs": 23,
+  "originalCandidates": 81,
+  "inputDrift": 0,
+  "controls": [
+    {
+      "name": "closed-required-all24-full-profiles-and-local-policy-relations",
+      "result": "passed",
+      "qualification": "narrow source/profile pure definition only; no productive renderer/script/Helm/API/DB/credentials/native execution"
+    },
+    {
+      "name": "all23-causal-full-B-pairs",
+      "result": "passed",
+      "qualification": "narrow source/profile pure definition only; no productive renderer/script/Helm/API/DB/credentials/native execution"
+    },
+    {
+      "name": "missing-selected-and-unselected-every23-leaf-negatives",
+      "result": "passed",
+      "qualification": "narrow source/profile pure definition only; no productive renderer/script/Helm/API/DB/credentials/native execution"
+    },
+    {
+      "name": "unknown-alias-and-script-native-domain-negatives",
+      "result": "passed",
+      "qualification": "narrow source/profile pure definition only; no productive renderer/script/Helm/API/DB/credentials/native execution"
+    },
+    {
+      "name": "all-independent-RPO-reserve-metadata-index-PV-resource-phase-negatives",
+      "result": "passed",
+      "qualification": "narrow source/profile pure definition only; no productive renderer/script/Helm/API/DB/credentials/native execution"
+    },
+    {
+      "name": "actual-source-canonical-positive13digit-definition",
+      "result": "passed",
+      "qualification": "narrow source/profile pure definition only; no productive renderer/script/Helm/API/DB/credentials/native execution"
+    },
+    {
+      "name": "original-flat-A-plus-ten-exact-literals",
+      "result": "passed",
+      "qualification": "narrow source/profile pure definition only; no productive renderer/script/Helm/API/DB/credentials/native execution"
+    },
+    {
+      "name": "public-Quantity-SI-BinarySI-exponent-equivalence-no-native-admission",
+      "result": "passed",
+      "qualification": "narrow source/profile pure definition only; no productive renderer/script/Helm/API/DB/credentials/native execution"
+    },
+    {
+      "name": "current-pure-configuration24-public-source-receivers",
+      "result": "passed",
+      "qualification": "narrow source/profile pure definition only; no productive renderer/script/Helm/API/DB/credentials/native execution"
+    },
+    {
+      "name": "actual-pure-current-Cron-A-security-mount-literal-receiving",
+      "result": "passed",
+      "qualification": "narrow source/profile pure definition only; no productive renderer/script/Helm/API/DB/credentials/native execution"
+    },
+    {
+      "name": "actual-pure-renderer-invalid-source-budget-negatives",
+      "result": "passed",
+      "qualification": "narrow source/profile pure definition only; no productive renderer/script/Helm/API/DB/credentials/native execution"
+    },
+    {
+      "name": "actual-pure-network-policy-service-port-projection",
+      "result": "passed",
+      "qualification": "narrow source/profile pure definition only; no productive renderer/script/Helm/API/DB/credentials/native execution"
+    },
+    {
+      "name": "actual-pure-PVC-no-adoption-resize-control",
+      "result": "passed",
+      "qualification": "narrow source/profile pure definition only; no productive renderer/script/Helm/API/DB/credentials/native execution"
+    },
+    {
+      "name": "root-v6-exact-verified-Provider03-v5-reference-rejoin-bounded-only",
+      "result": "passed",
+      "qualification": "narrow source/profile pure definition only; no productive renderer/script/Helm/API/DB/credentials/native execution"
+    },
+    {
+      "name": "exact81-original-bodies-and-current-witnesses",
+      "result": "passed",
+      "qualification": "narrow source/profile pure definition only; no productive renderer/script/Helm/API/DB/credentials/native execution"
+    },
+    {
+      "name": "all23-definitions-use-exact-current-literal-witnesses",
+      "result": "passed",
+      "qualification": "narrow source/profile pure definition only; no productive renderer/script/Helm/API/DB/credentials/native execution"
+    },
+    {
+      "name": "corrected-direct-child-real-publication-0-u-NUL-task-authority-controls",
+      "result": "passed",
+      "qualification": "narrow source/profile pure definition only; no productive renderer/script/Helm/API/DB/credentials/native execution"
+    },
+    {
+      "name": "pure-exact-public-runtime-reference-handoff-no-eval",
+      "result": "passed",
+      "qualification": "narrow source/profile pure definition only; no productive renderer/script/Helm/API/DB/credentials/native execution"
+    },
+    {
+      "name": "public-application-credential-authority-source-predicate-no-secret-read",
+      "result": "passed",
+      "qualification": "narrow source/profile pure definition only; no productive renderer/script/Helm/API/DB/credentials/native execution"
+    },
+    {
+      "name": "selection-tuple-semantic-profile-duplicates-controls",
+      "result": "passed",
+      "qualification": "narrow source/profile pure definition only; no productive renderer/script/Helm/API/DB/credentials/native execution"
+    },
+    {
+      "name": "finite23-and81-case-oracles-retain-exact-original-identities",
+      "result": "passed",
+      "qualification": "narrow source/profile pure definition only; no productive renderer/script/Helm/API/DB/credentials/native execution"
+    },
+    {
+      "name": "canonical-accounting-native-range-then-retained-compare-negatives",
+      "result": "passed",
+      "qualification": "narrow source/profile pure definition only; no productive renderer/script/Helm/API/DB/credentials/native execution"
+    },
+    {
+      "name": "checked-accounting-zero-exact-reserve-and-block-boundaries-no-cleanup",
+      "result": "passed",
+      "qualification": "narrow source/profile pure definition only; no productive renderer/script/Helm/API/DB/credentials/native execution"
+    },
+    {
+      "name": "accounting-incomplete-failed-multi-record-wrong-root-capture-denied",
+      "result": "passed",
+      "qualification": "narrow source/profile pure definition only; no productive renderer/script/Helm/API/DB/credentials/native execution"
+    },
+    {
+      "name": "mandatory-task-grant-schema-original-clock-ceilings-and-all5-argv-binding",
+      "result": "passed",
+      "qualification": "narrow source/profile pure definition only; no productive renderer/script/Helm/API/DB/credentials/native execution"
+    },
+    {
+      "name": "absolute-common-budget-phase-boundary-grace-no-reset-or-boot-switch",
+      "result": "passed",
+      "qualification": "narrow source/profile pure definition only; no productive renderer/script/Helm/API/DB/credentials/native execution"
+    },
+    {
+      "name": "publication-restore-expiry-uncertain-completion-initial-postverify-oracles",
+      "result": "passed",
+      "qualification": "narrow source/profile pure definition only; no productive renderer/script/Helm/API/DB/credentials/native execution"
+    },
+    {
+      "name": "fixed-phase-plan-covers-current-original-source-ids-not-native-execution",
+      "result": "passed",
+      "qualification": "narrow source/profile pure definition only; no productive renderer/script/Helm/API/DB/credentials/native execution"
+    },
+    {
+      "name": "verified-provider03-rejoin-all-recorded-physical-current-references",
+      "result": "passed",
+      "qualification": "narrow source/profile pure definition only; no productive renderer/script/Helm/API/DB/credentials/native execution"
+    },
+    {
+      "name": "declared-uptime-10ms-string-codec-canonical-native-range-no-proc-read",
+      "result": "passed",
+      "qualification": "narrow source/profile pure definition only; no productive renderer/script/Helm/API/DB/credentials/native execution"
+    },
+    {
+      "name": "correction-source-oracle-identity-and-original-policy-lineage-conserved",
+      "result": "passed",
+      "qualification": "narrow source/profile pure definition only; no productive renderer/script/Helm/API/DB/credentials/native execution"
+    }
+  ],
+  "inputs": [
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/my-values/infra/postgresql-recovery.yaml",
+      "sha256": "ce029433a76e6e4edc5d67086ab1293277ea852ca83a2e9bdccadf15232acae7"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/schemas/postgresql-recovery-policy.schema.json",
+      "sha256": "36bfaba20ffe0e258f75a345873aacbbbccdb8fb710436d6e8b692101f97b34a"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/profile-index.json",
+      "sha256": "0c0cd57f3601f96e0889d25e971805c5314db7458c911f9e457cc8dac3007bf6"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/public-fixtures/source-reference-stand.json",
+      "sha256": "b738b2095210cb8fcad4f69e7a906e2b2201330a6968a076dade7e5d8026c7ff"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/scripts/postgresql-recovery.sh",
+      "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/my-values/infra/postgresql-recovery.yaml",
+      "sha256": "5f0ffb0cdf5acdbd814da726060d5125c5cae912554f27de57251ea90ae8d438"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/scripts/render-postgresql-recovery.mjs",
+      "sha256": "3e0d30b0c0888c4039f176ddb80d19e00b7b7064ead979d5bb9122d4df19e14f"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/versions.json",
+      "sha256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/my-values/infra/postgresql-values.yaml",
+      "sha256": "b7c1445d47350c6fcae2fc7de901e930dec1f8309331bf0db69c70c1f3404994"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/my-values/infra/litellm-deployment.yaml",
+      "sha256": "21136d7cc63b549db0d9e1f3a32d449c5bf3c2644790d144d47d476372c56bab"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/config/pipeline.config.json",
+      "sha256": "9acd5845d808effd7b5f2f04815620ab3a17459652b5561bdf4f17903af030ff"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/schemas/pipeline-entry.schema.json",
+      "sha256": "2d9c7e5f11924f4ada516475bcec89c695edeced076343b332647d2b9b1ee6fb"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/config/pipeline.config.json",
+      "sha256": "355ea24016a9fec3ead3e845d28a95925f3fc7fd337f1a970d5a788bf1c5b0e5"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/original-candidate-lineage.json",
+      "sha256": "ace11c5d6e0f04dcaec568962bedeb1005e7e3404267f424116931defec80c09"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/author/candidate-ledger.json",
+      "sha256": "a5066c74fe2dbd60c88c75d1e17264b98f05df352823cf3b6e39bc206fae09d1"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/field-definitions.json",
+      "sha256": "adb871ea14bf84f2c24f73037fea8b358f9337a39f5fdb3f1d070962efcf78fe"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/schemas/recovery-task.schema.json",
+      "sha256": "1629b9c23a471e855d9b22f980fc71d1fc29082bea4ee0f72aaa6e7b25bdf57f"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/public-fixtures/task-envelopes.json",
+      "sha256": "86c6768c91b6013825811f19ebe8c3a82f1287873624b962e0576919f32b8f8e"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/generated-handoff-definition.json",
+      "sha256": "91b1f175695180faaafa8d57e246ecfbd53f9b00d45d4d511e9d404a6ea0403c"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/public-fixtures/runtime-A.env",
+      "sha256": "bcc4842e5125556bc49d02c88da3612dae6a3af97b2e0f1d4ebd69f9a7cf9d62"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/my-values/infra/litellm-config.yaml",
+      "sha256": "70356ac84fef937d6cfad5ea54583a16342784d8299406e155524128542baa6d"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/case-definitions.json",
+      "sha256": "8e0cfc8c01f1f879beaf1b98a09e71ec08c2cb246ced60d8be29f03c1b16622e"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/public-fixtures/field-pair-input-stands.json",
+      "sha256": "fa5139150fd455ba831113f40147c53b76b2e6c573bb48b286a0e260aba24a2b"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/public-fixtures/task-authority.json",
+      "sha256": "4d6928560a287b09a01d19851af8f56945ec9eec2262147637133fbbb5fd5955"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/schemas/recovery-task-authority.schema.json",
+      "sha256": "3f249dee2776e5782f2c9531fba4b61db659a3f9f20625b9b071d9731b9aa635"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/public-fixtures/task-stands.json",
+      "sha256": "7704b4d6a9f9b07615e712a424c5e91f89eae3a8003f8fdb3c6ab58e7a6ea606"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/phase-plan.json",
+      "sha256": "2439b184da7d0e4c016254127e910b5b111f803b55c68ed648c918662accf106"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/dependency-rejoin.json",
+      "sha256": "fa71481faa97d90a9d9be0761a5be6f74b18ada1db203826d6a05ab73bc4e28a"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/artifact-identities.json",
+      "sha256": "21f14842c3fc5c5b7480e7b134a54d09d686816cdd52bb9b63afdc99e0fdaa7b"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/active-concordance-index.json",
+      "sha256": "99f7272b9cccc46ab10824f0cbf869b07910fb3cf5039c42d7f588d473a9b557"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+      "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/field-definitions.json",
+      "sha256": "19c9b61497aecfc0097b167fffdc371afc179016ec1122626f196191cc96ae42"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/generated-view-index.json",
+      "sha256": "fbe5763907300c00e271783836071d15c77d0a0e4091e0d3ff0c2f5ab4332ede"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/package-binding-identities.json",
+      "sha256": "01efa50eeae30613e0e80caf7132d904fb200daa452103110c4f74ec9554665d"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/c3-integrated-reference-generation.json",
+      "sha256": "f8d9d08f60acfaf884c183b560398f018b5463b52a984214a4bbaa4d75dc993f"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/c3-registry-peer-reference-contract.json",
+      "sha256": "d1ba44788070a8300c6081fb448184d8cba8d3a38a6d20ff11583cb64bfd38c2"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-runtime-provider-contract-review-03/README.md",
+      "sha256": "bee4775dd4e065c7f7f623c8b5a4d20b7183f2d2ad01c57ca0447fac9c87dd55"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-c3-buster-complete-profile-review-03/README.md",
+      "sha256": "78ac60f8a3e395360493cc42915570841e4623a0459a8dbb473fce7dac0b4d62"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/provider-field-dependency-adoption-01/dependency-adoption.json",
+      "sha256": "bdf2d54a2bdb40bae1afa68e9e04376d89214421e35ba0b8e89796c605ebf39b"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-provider-field-dependency-adoption-review-01/README.md",
+      "sha256": "3f2cbaee1b65445d142444f156ced11e7c4509092fa4e0798816587cbf00f80f"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/config/components/buster-engine.config.json",
+      "sha256": "100d63939fa1eb164053a0c0d205ab534a5b592c3d8ecc5ba43b0ee5f83a6ebf"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/config/components/prism-control.config.json",
+      "sha256": "524ca90d6b62c656b5f279c27b8b49250d93869636aa71f73d5891429e01e1e4"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/config/components/prism-execution.config.json",
+      "sha256": "225d2d31235f0996196da2f2b7d25a0605d59087427b997ab487d648ddf89ce3"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/config/components/prism-studio.config.json",
+      "sha256": "b41a9113d26384ee0dd07d5defac180b8a52d67315c738d0a5459c49bead0fac"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/config/components/prism-worker.config.json",
+      "sha256": "61da3c7b2b81033ed9c350f593cf1ab58f3630a39b109a9b251f1b2e0ba28220"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/config/components/worker-core.config.json",
+      "sha256": "f59c7ec6798e853f9fb87a494cdd245193c50d19f90275fe5b530706adcb8934"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/config/plugins/kubeclaw.api-flow.config.json",
+      "sha256": "6d0d39c516128aefb8e94edf6c8f68c43caa0bf9aade74628c6fc49d3c5fe917"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/config/plugins/kubeclaw.http.config.json",
+      "sha256": "e8eb48798dd3b126b32962b1e17882109a289420a3ad87d82f65b8aefbe87517"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/config/plugins/kubeclaw.network-http.config.json",
+      "sha256": "26b4fb9495edd6b6c60ff9acbfc866f43e953b9e013781950ff9c6708e4e64c4"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/config/plugins/kubeclaw.openapi.config.json",
+      "sha256": "f575e0431736bb0ff20cd6e6f615b3595ab366c45858dc1712436dabcafe98e3"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/schemas/api-flow.target-task-file.schema.json",
+      "sha256": "5c95926961def5f457273595f6c56daa6f9fe0c15f46379473a514aa996cce45"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/schemas/buster-network-resource.schema.json",
+      "sha256": "dab39fb1a420514c879ecb1722e31c84923e1bf08c41fa676a002a2a76b56fae"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/schemas/c3-generated-runtime.schema.json",
+      "sha256": "af8e9bded1aef68ebe88e0ded835b202e0a4591099eda89fa4ea99a31b1b1740"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/schemas/components/buster-engine.schema.json",
+      "sha256": "115982f18efb75f7ea5e2e05a5dee7a574707400469aaf5de4b88721d3b9cb97"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/schemas/components/prism-control.schema.json",
+      "sha256": "235717a7621de85c3933b095b0724c53eb27afa791ed5f094bf47a53bee39d85"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/schemas/components/prism-execution.schema.json",
+      "sha256": "c6dfe88a3518f6819f5840b7e6739796c6fc0e6a0711ab1fc42cf19df4e76cbe"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/schemas/components/prism-studio.schema.json",
+      "sha256": "72921bb9de970f5eccec5b7889a26501c8614e96304179dc54a5eef0375abe7b"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/schemas/components/prism-worker.schema.json",
+      "sha256": "5b7fca15563fb20ad2b5dcef67724b62c68648a67fa7e5b0d34276f5472faa5b"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/schemas/components/worker-core.schema.json",
+      "sha256": "22c665a659ae8af436b642ef8959e3f2ca6aebcefd1e9858ff718386dbd65630"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/schemas/kubeclaw.api-flow.evidence-override.schema.json",
+      "sha256": "831f8c25a87165080759fb805825d2e1a1fbcf13dd1171bcf7b9600d12ab8eda"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/schemas/kubeclaw.api-flow.schema.json",
+      "sha256": "feda3e42ced475a7d1c7b4e86fb4750946d622d0e801bf6d279da3e7189e5b31"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/schemas/kubeclaw.api-flow.task.schema.json",
+      "sha256": "64be3ae79bed9a97a4fe51615ab66a403413c0f0b09ddf3a2e922a67d6b80198"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/schemas/kubeclaw.http.evidence-override.schema.json",
+      "sha256": "03920b7906d96bc998f2423877daa88b9fc178481d509c7f4908c291fc576204"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/schemas/kubeclaw.http.schema.json",
+      "sha256": "dbe452c5aebf4fc3fbe7ce1dc68cb05f08193694df23b09f122461f4d87de10c"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/schemas/kubeclaw.http.task.schema.json",
+      "sha256": "a6307a45ffea3b999575efe27ba11c28bc9bb47f82cdfeb71645bcb2706c1e44"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/schemas/kubeclaw.network-http.schema.json",
+      "sha256": "dce2ee99d8e3bbaa073b8cfb5aee20715b96bb2e3838a259a7c05c5ccf982892"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/schemas/kubeclaw.openapi.evidence-override.schema.json",
+      "sha256": "831f8c25a87165080759fb805825d2e1a1fbcf13dd1171bcf7b9600d12ab8eda"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/schemas/kubeclaw.openapi.schema.json",
+      "sha256": "5a0a92ad66b8340579a9523854a8c8e5f4b4014ca72548702eb52a5526d52ac6"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/schemas/kubeclaw.openapi.task.schema.json",
+      "sha256": "a97d83747a5319a85720d444c0c9aa836b4dfe37d01479a9fe4916e3b0c099d8"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/schemas/nova-adapter-processing.schema.json",
+      "sha256": "09671db157edcd889a62c485f0083113c796cb2eca23d13b6c5ab5cc32d0fdf3"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/schemas/pipeline-entry.schema.json",
+      "sha256": "650dfba7c8030edfa1d3bf75dcf5820c6b1c88aefe50d1b01ef5c8267c062e23"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/schemas/provider-configuration.v2.schema.json",
+      "sha256": "2548f1b8edf8aa36cbccecfc5101aa2927718d1f0a03096f90fb59131f91bc58"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/my-values/infra/postgresql-recovery.yaml",
+      "sha256": "ce029433a76e6e4edc5d67086ab1293277ea852ca83a2e9bdccadf15232acae7"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/correction-case-addendum.json",
+      "sha256": "41562bee35b2b278b6d3fd516237498e753513707239496cbd90d52912a8c3fd"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/original-candidate-lineage.json",
+      "sha256": "ace11c5d6e0f04dcaec568962bedeb1005e7e3404267f424116931defec80c09"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/case-definitions.json",
+      "sha256": "8e0cfc8c01f1f879beaf1b98a09e71ec08c2cb246ced60d8be29f03c1b16622e"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/accounting-admission.md",
+      "sha256": "eff8bff309ad76ba7cd4569dc4a49a4636723babd0875bd8ffa08afdd09578e1"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/task-deadline-authority.md",
+      "sha256": "09223d428522d4bf525cc600a9bd26095ef0a49cc40fae631cdb68db7b9efd5f"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/receiving-abi.md",
+      "sha256": "d010c4ea67b0705c227a23e6ec07d43bd053a677db324a5c90f3821fbd7ecdff"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/source-pins.json",
+      "sha256": "aa26f863a8eb17d8bef4ac852d58b78f585d07c7a8caca3e2ae4274d565093b2"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/scripts/postgresql-recovery-preflight.mjs",
+      "sha256": "fef2fed9b07fb7731c58d69c744a418130882cc5507d16616a3b516ff9485fd4"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/scripts/deploy.sh",
+      "sha256": "c90cc9c082b3adba89c458a9e28853afa77682a6c7066a7641c70aac749d0960"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/scripts/stateful-database-service.mjs",
+      "sha256": "fd96f1a30f997d4a6a71a23b81cad2dc4ccca69b223e4945e22c9261819bbfa8"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/scripts/infrastructure-chart.mjs",
+      "sha256": "6a136a40cced70d63de028e635bd5b9e4fb30f1a632cd725175385faf9c57e25"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/scripts/infrastructure-release.mjs",
+      "sha256": "a03aa7721f871473effbb0f79de84bc7ebcb2877c68fa023675ea335e27936f8"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/scripts/infrastructure-chart-lock.mjs",
+      "sha256": "8884d8e41166f9739ea8f5986cbd8a4c8ae66e8756f0fa3ccb8712e9124601e5"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-source-contracts-01/candidate-dispositions.json",
+      "sha256": "98893de074072657c6bb832f84fee88eefa9d35276c6ecaa5ac8fdbb1d814fc0"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-source-contracts-01/source-identities.json",
+      "sha256": "9c52de0a1310f68717deb418171d60a2153adcbc31dd1fd157e510942330349b"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-source-contracts-01/README.md",
+      "sha256": "15f0ecf19c9a804b01dff515dac42715249531d61b6c7db801fc013544ab643d"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-provisioning-source-review-01/README.md",
+      "sha256": "8febd988fd2153a0bf49ea448ac07bb1d70e30df4155c8eef157c2e28e36ca9f"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/package-manifest.json",
+      "sha256": "3e6cd8ad0590fbb45f9bfa68a910c6b099959404aef3af89002cdcde6ffa34d7"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/README.md",
+      "sha256": "d8c027f59db0bfd247b71eecd4db8a831e5ab4140ef539fa84af175eee5fc30a"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-review01-relocation.json",
+      "sha256": "5aab46fabf47b527dad963b6a375ecbd022800207078f84c03d9d4e6ba5332d7"
+    }
+  ],
+  "futureNativeResults": "not-run"
+}

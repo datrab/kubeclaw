@@ -1,0 +1,36 @@
+{
+  "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+  "intermediateExecutions": [
+    {
+      "command": "node /home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/collect-definition-checks.mjs --output-dir /home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/final-run",
+      "exit": 0,
+      "controls": 29,
+      "qualification": "intermediate before clock/source-lineage additions; overwritten raw not used as final receipt"
+    },
+    {
+      "command": "node /home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/collect-definition-checks.mjs --output-dir /home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/final-run",
+      "exit": 0,
+      "controls": 31,
+      "qualification": "intermediate before final liveauthority/readonly verification/provenance wording and explicit NUL datum; overwritten raw not used as final receipt"
+    },
+    {
+      "command": "node /home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/collect-definition-checks.mjs --output-dir /home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/final-run",
+      "exit": 0,
+      "controls": 31,
+      "qualification": "intermediate before removing legacy accounting shorthand from02 inherited ABI; overwritten raw not used as final receipt"
+    }
+  ],
+  "finalExecution": {
+    "command": "node /home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/collect-definition-checks.mjs --output-dir /home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/final-run",
+    "exit": 0,
+    "rawStdout": "final-run.stdout",
+    "rawStderr": "final-run.stderr",
+    "receipt": "final-run/definition-receipt.json",
+    "controls": 31,
+    "inputEntries": 93,
+    "profiles": 24,
+    "fieldPairs": 23,
+    "originalCandidates": 81
+  },
+  "authorNavigationFailure": "author-observations.json records directory hashing error and corrected recursive file-only enumeration; no productive/native operation"
+}

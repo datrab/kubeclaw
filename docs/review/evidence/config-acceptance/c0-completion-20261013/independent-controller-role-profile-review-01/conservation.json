@@ -1,0 +1,392 @@
+{
+  "fields": [
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-KUBERNETES-SERVICE-PORT",
+      "exactOriginalRowEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true,
+      "originalCaseMembershipEquals": true,
+      "perFieldSceneJoinExists": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-LEASE-API-GROUP",
+      "exactOriginalRowEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true,
+      "originalCaseMembershipEquals": true,
+      "perFieldSceneJoinExists": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-LEASE-API-VERSION",
+      "exactOriginalRowEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true,
+      "originalCaseMembershipEquals": true,
+      "perFieldSceneJoinExists": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-ALLOWED-NAMESPACE-PREFIXES",
+      "exactOriginalRowEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true,
+      "originalCaseMembershipEquals": true,
+      "perFieldSceneJoinExists": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-DEFAULT-TTL-SECONDS",
+      "exactOriginalRowEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true,
+      "originalCaseMembershipEquals": true,
+      "perFieldSceneJoinExists": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-MAX-TTL-SECONDS",
+      "exactOriginalRowEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true,
+      "originalCaseMembershipEquals": true,
+      "perFieldSceneJoinExists": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-CONTROLLER-SERVICE-ACCOUNT",
+      "exactOriginalRowEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true,
+      "originalCaseMembershipEquals": true,
+      "perFieldSceneJoinExists": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-SECRET-ROLE-NAME",
+      "exactOriginalRowEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true,
+      "originalCaseMembershipEquals": true,
+      "perFieldSceneJoinExists": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-DEPLOYER-ROLE-NAME",
+      "exactOriginalRowEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true,
+      "originalCaseMembershipEquals": true,
+      "perFieldSceneJoinExists": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-TESTER-ROLE-NAME",
+      "exactOriginalRowEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true,
+      "originalCaseMembershipEquals": true,
+      "perFieldSceneJoinExists": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-ALLOWED-ACCESS-JSON",
+      "exactOriginalRowEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true,
+      "originalCaseMembershipEquals": true,
+      "perFieldSceneJoinExists": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-KUBECLAW-NAMESPACE",
+      "exactOriginalRowEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true,
+      "originalCaseMembershipEquals": true,
+      "perFieldSceneJoinExists": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-CONTROLLER-POLL-MS",
+      "exactOriginalRowEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true,
+      "originalCaseMembershipEquals": true,
+      "perFieldSceneJoinExists": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-KUBERNETES-SERVICE-HOST",
+      "exactOriginalRowEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true,
+      "originalCaseMembershipEquals": true,
+      "perFieldSceneJoinExists": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-ALLOWED-SOURCE-SECRETS",
+      "exactOriginalRowEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true,
+      "originalCaseMembershipEquals": true,
+      "perFieldSceneJoinExists": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-READY-LISTEN",
+      "exactOriginalRowEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true,
+      "originalCaseMembershipEquals": true,
+      "perFieldSceneJoinExists": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-READY-AUDIENCE",
+      "exactOriginalRowEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true,
+      "originalCaseMembershipEquals": true,
+      "perFieldSceneJoinExists": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-READY-PRODUCER",
+      "exactOriginalRowEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true,
+      "originalCaseMembershipEquals": true,
+      "perFieldSceneJoinExists": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-READY-TLS-CERT",
+      "exactOriginalRowEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true,
+      "originalCaseMembershipEquals": true,
+      "perFieldSceneJoinExists": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-READY-TLS-KEY",
+      "exactOriginalRowEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true,
+      "originalCaseMembershipEquals": true,
+      "perFieldSceneJoinExists": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-PRODUCT-ENABLED",
+      "exactOriginalRowEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true,
+      "originalCaseMembershipEquals": true,
+      "perFieldSceneJoinExists": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-PRODUCT-VERIFY-KEY",
+      "exactOriginalRowEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true,
+      "originalCaseMembershipEquals": true,
+      "perFieldSceneJoinExists": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-PRODUCT-AUDIENCE",
+      "exactOriginalRowEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true,
+      "originalCaseMembershipEquals": true,
+      "perFieldSceneJoinExists": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-PRODUCT-PRODUCER",
+      "exactOriginalRowEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true,
+      "originalCaseMembershipEquals": true,
+      "perFieldSceneJoinExists": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-PRODUCT-ISSUER",
+      "exactOriginalRowEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true,
+      "originalCaseMembershipEquals": true,
+      "perFieldSceneJoinExists": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-PRODUCT-ACTORS-JSON",
+      "exactOriginalRowEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true,
+      "originalCaseMembershipEquals": true,
+      "perFieldSceneJoinExists": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-HTTPCLIENTTIMEOUTSECONDS",
+      "exactOriginalRowEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true,
+      "originalCaseMembershipEquals": true,
+      "perFieldSceneJoinExists": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-RUNTIMESECURITYREFRESHSECONDS",
+      "exactOriginalRowEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true,
+      "originalCaseMembershipEquals": true,
+      "perFieldSceneJoinExists": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-RUNTIMESECURITYFUTURESKEWSECONDS",
+      "exactOriginalRowEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true,
+      "originalCaseMembershipEquals": true,
+      "perFieldSceneJoinExists": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-RUNTIMESECURITYMAXIMUMFINDINGS",
+      "exactOriginalRowEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true,
+      "originalCaseMembershipEquals": true,
+      "perFieldSceneJoinExists": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-RUNTIMESECURITYMAXIMUMSERIALIZEDBYTES",
+      "exactOriginalRowEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true,
+      "originalCaseMembershipEquals": true,
+      "perFieldSceneJoinExists": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-READYREADHEADERTIMEOUTSECONDS",
+      "exactOriginalRowEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true,
+      "originalCaseMembershipEquals": true,
+      "perFieldSceneJoinExists": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-READYREADTIMEOUTSECONDS",
+      "exactOriginalRowEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true,
+      "originalCaseMembershipEquals": true,
+      "perFieldSceneJoinExists": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-READYWRITETIMEOUTSECONDS",
+      "exactOriginalRowEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true,
+      "originalCaseMembershipEquals": true,
+      "perFieldSceneJoinExists": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-READYIDLETIMEOUTSECONDS",
+      "exactOriginalRowEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true,
+      "originalCaseMembershipEquals": true,
+      "perFieldSceneJoinExists": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-READYMAXHEADERBYTES",
+      "exactOriginalRowEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true,
+      "originalCaseMembershipEquals": true,
+      "perFieldSceneJoinExists": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-READYHANDLERTIMEOUTSECONDS",
+      "exactOriginalRowEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true,
+      "originalCaseMembershipEquals": true,
+      "perFieldSceneJoinExists": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-READYMAXIMUMBODYBYTES",
+      "exactOriginalRowEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true,
+      "originalCaseMembershipEquals": true,
+      "perFieldSceneJoinExists": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-PRODUCTHANDLERTIMEOUTSECONDS",
+      "exactOriginalRowEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true,
+      "originalCaseMembershipEquals": true,
+      "perFieldSceneJoinExists": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-PRODUCTMAXIMUMBODYBYTES",
+      "exactOriginalRowEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true,
+      "originalCaseMembershipEquals": true,
+      "perFieldSceneJoinExists": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-DEFAULTDEMORETENTIONSECONDS",
+      "exactOriginalRowEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true,
+      "originalCaseMembershipEquals": true,
+      "perFieldSceneJoinExists": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-MAXIMUMDEMORETENTIONSECONDS",
+      "exactOriginalRowEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true,
+      "originalCaseMembershipEquals": true,
+      "perFieldSceneJoinExists": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-API-RESPONSE-MAXIMUM-BYTES",
+      "exactOriginalRowEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true,
+      "originalCaseMembershipEquals": true,
+      "perFieldSceneJoinExists": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-API-REQUEST-MAXIMUM-BYTES",
+      "exactOriginalRowEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true,
+      "originalCaseMembershipEquals": true,
+      "perFieldSceneJoinExists": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-API-DIAGNOSTIC-MAXIMUM-BYTES",
+      "exactOriginalRowEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true,
+      "originalCaseMembershipEquals": true,
+      "perFieldSceneJoinExists": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-AUTHORIZATION-MAXIMUM-BYTES",
+      "exactOriginalRowEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true,
+      "originalCaseMembershipEquals": true,
+      "perFieldSceneJoinExists": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-NAMESPACE-DELETION-TIMEOUT-SECONDS",
+      "exactOriginalRowEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true,
+      "originalCaseMembershipEquals": true,
+      "perFieldSceneJoinExists": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-READY-OBSERVATION-MAXIMUM-AGE-SECONDS",
+      "exactOriginalRowEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true,
+      "originalCaseMembershipEquals": true,
+      "perFieldSceneJoinExists": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-PRODUCT-DECISION-MAXIMUM-VALIDITY-SECONDS",
+      "exactOriginalRowEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true,
+      "originalCaseMembershipEquals": true,
+      "perFieldSceneJoinExists": true
+    }
+  ],
+  "cases": [
+    {
+      "id": "DLV-CASE-ALTERNATE-PROFILES",
+      "exactOriginalBodyEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true,
+      "scopeMemberJoinsExact": true
+    },
+    {
+      "id": "DLV-CASE-CONTROLLER-LEASE-RECOVERY",
+      "exactOriginalBodyEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true,
+      "scopeMemberJoinsExact": true
+    },
+    {
+      "id": "DLV-CASE-CONTROLLER-POLICY-VALIDATION",
+      "exactOriginalBodyEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true,
+      "scopeMemberJoinsExact": true
+    },
+    {
+      "id": "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT",
+      "exactOriginalBodyEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true,
+      "scopeMemberJoinsExact": true
+    },
+    {
+      "id": "DLV-CASE-MISSING-OLD-AUTHOR",
+      "exactOriginalBodyEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true,
+      "scopeMemberJoinsExact": true
+    },
+    {
+      "id": "DLV-CASE-SHARED-LEASE-PROTOCOL",
+      "exactOriginalBodyEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true,
+      "scopeMemberJoinsExact": true
+    }
+  ],
+  "totals": {
+    "fields": 49,
+    "cases": 6,
+    "rootRows": 2409,
+    "rootCases": 6845
+  },
+  "caseMembershipComparison": "Set membership; source original arrays unchanged, two target arrays reordered only."
+}

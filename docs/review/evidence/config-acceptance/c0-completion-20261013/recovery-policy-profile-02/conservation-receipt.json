@@ -1,0 +1,55 @@
+{
+  "old01ManifestSha256": "3e6cd8ad0590fbb45f9bfa68a910c6b099959404aef3af89002cdcde6ffa34d7",
+  "old01ArtifactsMatching": 26,
+  "unchanged02Files": [
+    {
+      "path": "my-values/infra/postgresql-recovery.yaml",
+      "sha256": "ce029433a76e6e4edc5d67086ab1293277ea852ca83a2e9bdccadf15232acae7"
+    },
+    {
+      "path": "schemas/postgresql-recovery-policy.schema.json",
+      "sha256": "36bfaba20ffe0e258f75a345873aacbbbccdb8fb710436d6e8b692101f97b34a"
+    },
+    {
+      "path": "profile-index.json",
+      "sha256": "0c0cd57f3601f96e0889d25e971805c5314db7458c911f9e457cc8dac3007bf6"
+    },
+    {
+      "path": "field-definitions.json",
+      "sha256": "adb871ea14bf84f2c24f73037fea8b358f9337a39f5fdb3f1d070962efcf78fe"
+    },
+    {
+      "path": "original-candidate-lineage.json",
+      "sha256": "ace11c5d6e0f04dcaec568962bedeb1005e7e3404267f424116931defec80c09"
+    },
+    {
+      "path": "case-definitions.json",
+      "sha256": "8e0cfc8c01f1f879beaf1b98a09e71ec08c2cb246ced60d8be29f03c1b16622e"
+    }
+  ],
+  "canonicalOriginalArrays": [
+    {
+      "path": "docs/review/remediation/config-semantic-inventory.json",
+      "array": "rows",
+      "sameCount": 2409,
+      "baseline": "git a0d5588c4",
+      "qualification": "root metadata intentionally not compared as original wholefile digest"
+    },
+    {
+      "path": "docs/review/remediation/config-acceptance-matrix.json",
+      "array": "cases",
+      "sameCount": 6845,
+      "baseline": "git a0d5588c4",
+      "qualification": "root metadata intentionally not compared as original wholefile digest"
+    }
+  ],
+  "review01Copy": {
+    "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/README.md",
+    "sha256": "d8c027f59db0bfd247b71eecd4db8a831e5ab4140ef539fa84af175eee5fc30a",
+    "expectedShaVerified": "d8c027f59db0bfd247b71eecd4db8a831e5ab4140ef539fa84af175eee5fc30a",
+    "relocationProvenance": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-review01-relocation.json",
+    "qualification": "parent exactbyte repository copy; original outside retained; reviewer manifest not retroactively altered"
+  },
+  "finalReceiptSha256": "7fc344826f91958b03c6bca91b4b0d5378da79656b755ab9b8d4e88d2c64aa52",
+  "finalInputDrift": 0
+}

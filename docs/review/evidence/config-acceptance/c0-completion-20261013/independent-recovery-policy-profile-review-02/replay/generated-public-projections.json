@@ -1,0 +1,4826 @@
+{
+  "A": {
+    "qualification": "pure current source subfunctions + explicit expected future policy delta, not full renderer/installed closure",
+    "currentConfiguration": {
+      "PGHOST": "fixture-postgresql",
+      "PGPORT": "5432",
+      "PGDATABASE": "litellm",
+      "PGUSER": "postgres",
+      "BACKUP_ROOT": "/backups/litellm",
+      "BACKUP_INTERVAL_SECONDS": "900",
+      "BACKUP_MAXIMUM_BYTES": "68719476736",
+      "BACKUP_MAXIMUM_RETAINED_BYTES": "96636764160",
+      "BACKUP_MAXIMUM_AGE_SECONDS": "7200",
+      "BACKUP_MAXIMUM_DURATION_SECONDS": "1800",
+      "BACKUP_EXPECTED_SERVER_VERSION": "180006",
+      "BACKUP_CREDENTIAL_AUTHORITY_REF": "kubernetes-secret:fixture-recovery/litellm-secrets",
+      "BACKUP_APPLICATION_IMAGE": "ghcr.io/berriai/litellm@sha256:690f24800e2208e4f31b01483b9d0521d79dc508c8191f1c0b2f21549400c580"
+    },
+    "currentCron": {
+      "apiVersion": "batch/v1",
+      "kind": "CronJob",
+      "metadata": {
+        "namespace": "fixture-recovery",
+        "labels": {
+          "app": "litellm-postgresql-backup",
+          "app.kubernetes.io/managed-by": "kubeclaw-infrastructure"
+        },
+        "name": "litellm-postgresql-backup"
+      },
+      "spec": {
+        "schedule": "*/5 * * * *",
+        "timeZone": "Etc/UTC",
+        "concurrencyPolicy": "Forbid",
+        "startingDeadlineSeconds": 900,
+        "successfulJobsHistoryLimit": 3,
+        "failedJobsHistoryLimit": 10,
+        "jobTemplate": {
+          "spec": {
+            "backoffLimit": 0,
+            "activeDeadlineSeconds": 1860,
+            "template": {
+              "metadata": {
+                "labels": {
+                  "app": "litellm-postgresql-backup",
+                  "app.kubernetes.io/managed-by": "kubeclaw-infrastructure"
+                },
+                "annotations": {
+                  "checksum/recovery": "public-unsealed-structure-only"
+                }
+              },
+              "spec": {
+                "automountServiceAccountToken": false,
+                "restartPolicy": "Never",
+                "securityContext": {
+                  "runAsNonRoot": true,
+                  "runAsUser": 1001,
+                  "runAsGroup": 1001,
+                  "fsGroup": 1001,
+                  "fsGroupChangePolicy": "OnRootMismatch",
+                  "seccompProfile": {
+                    "type": "RuntimeDefault"
+                  }
+                },
+                "containers": [
+                  {
+                    "name": "backup",
+                    "image": "registry-1.docker.io/bitnami/postgresql@sha256:65d7506622ce2649914947b698d822d56c208295ba7ee80c1b34e48b251ba0c1",
+                    "imagePullPolicy": "IfNotPresent",
+                    "command": [
+                      "bash",
+                      "/recovery/postgresql-recovery.sh",
+                      "scheduled"
+                    ],
+                    "envFrom": [
+                      {
+                        "configMapRef": {
+                          "name": "litellm-postgresql-backup-settings"
+                        }
+                      }
+                    ],
+                    "resources": {
+                      "requests": {
+                        "cpu": "250m",
+                        "memory": "256Mi"
+                      },
+                      "limits": {
+                        "cpu": "1",
+                        "memory": "1Gi"
+                      }
+                    },
+                    "securityContext": {
+                      "allowPrivilegeEscalation": false,
+                      "readOnlyRootFilesystem": true,
+                      "capabilities": {
+                        "drop": [
+                          "ALL"
+                        ]
+                      }
+                    },
+                    "volumeMounts": [
+                      {
+                        "name": "backups",
+                        "mountPath": "/backups",
+                        "readOnly": false
+                      },
+                      {
+                        "name": "script",
+                        "mountPath": "/recovery",
+                        "readOnly": true
+                      },
+                      {
+                        "name": "tmp",
+                        "mountPath": "/tmp"
+                      }
+                    ],
+                    "env": [
+                      {
+                        "name": "PGPASSWORD",
+                        "valueFrom": {
+                          "secretKeyRef": {
+                            "name": "postgresql-secrets",
+                            "key": "postgres-password"
+                          }
+                        }
+                      },
+                      {
+                        "name": "LITELLM_MASTER_KEY",
+                        "valueFrom": {
+                          "secretKeyRef": {
+                            "name": "litellm-secrets",
+                            "key": "LITELLM_MASTER_KEY"
+                          }
+                        }
+                      },
+                      {
+                        "name": "LITELLM_SALT_KEY",
+                        "valueFrom": {
+                          "secretKeyRef": {
+                            "name": "litellm-secrets",
+                            "key": "LITELLM_SALT_KEY",
+                            "optional": true
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "volumes": [
+                  {
+                    "name": "backups",
+                    "persistentVolumeClaim": {
+                      "claimName": "litellm-postgresql-backup"
+                    }
+                  },
+                  {
+                    "name": "script",
+                    "configMap": {
+                      "name": "litellm-postgresql-backup-script",
+                      "defaultMode": 292
+                    }
+                  },
+                  {
+                    "name": "tmp",
+                    "emptyDir": {
+                      "sizeLimit": "256Mi"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "proposedScriptKeys": {
+      "PGHOST": "fixture-postgresql",
+      "PGPORT": "5432",
+      "PGDATABASE": "litellm",
+      "PGUSER": "postgres",
+      "BACKUP_ROOT": "/backups/litellm",
+      "BACKUP_INTERVAL_SECONDS": "900",
+      "BACKUP_MAXIMUM_BYTES": "68719476736",
+      "BACKUP_MAXIMUM_RETAINED_BYTES": "96636764160",
+      "BACKUP_MAXIMUM_AGE_SECONDS": "7200",
+      "BACKUP_MAXIMUM_DURATION_SECONDS": "1800",
+      "BACKUP_EXPECTED_SERVER_VERSION": "180006",
+      "BACKUP_CREDENTIAL_AUTHORITY_REF": "kubernetes-secret:fixture-recovery/litellm-secrets",
+      "BACKUP_APPLICATION_IMAGE": "ghcr.io/berriai/litellm@sha256:690f24800e2208e4f31b01483b9d0521d79dc508c8191f1c0b2f21549400c580",
+      "BACKUP_RESERVE_BYTES": "67108864",
+      "BACKUP_KILL_AFTER_SECONDS": "15",
+      "PGCONNECT_TIMEOUT": "15",
+      "BACKUP_TOC_MAXIMUM_BYTES": "66060288",
+      "BACKUP_METADATA_MAXIMUM_BYTES_EXCLUSIVE": "65536",
+      "BACKUP_CHECKSUM_INDEX_MAXIMUM_BYTES_EXCLUSIVE": "1024"
+    },
+    "expectedFutureCronDeltas": {
+      "activeDeadlineSeconds": 1860,
+      "successfulJobsHistoryLimit": 3,
+      "failedJobsHistoryLimit": 10,
+      "tmpSizeLimit": "256Mi"
+    }
+  },
+  "B-backupIntervalMinutes": {
+    "qualification": "pure current source subfunctions + explicit expected future policy delta, not full renderer/installed closure",
+    "currentConfiguration": {
+      "PGHOST": "fixture-postgresql",
+      "PGPORT": "5432",
+      "PGDATABASE": "litellm",
+      "PGUSER": "postgres",
+      "BACKUP_ROOT": "/backups/litellm",
+      "BACKUP_INTERVAL_SECONDS": "600",
+      "BACKUP_MAXIMUM_BYTES": "68719476736",
+      "BACKUP_MAXIMUM_RETAINED_BYTES": "96636764160",
+      "BACKUP_MAXIMUM_AGE_SECONDS": "7200",
+      "BACKUP_MAXIMUM_DURATION_SECONDS": "1800",
+      "BACKUP_EXPECTED_SERVER_VERSION": "180006",
+      "BACKUP_CREDENTIAL_AUTHORITY_REF": "kubernetes-secret:fixture-recovery/litellm-secrets",
+      "BACKUP_APPLICATION_IMAGE": "ghcr.io/berriai/litellm@sha256:690f24800e2208e4f31b01483b9d0521d79dc508c8191f1c0b2f21549400c580"
+    },
+    "currentCron": {
+      "apiVersion": "batch/v1",
+      "kind": "CronJob",
+      "metadata": {
+        "namespace": "fixture-recovery",
+        "labels": {
+          "app": "litellm-postgresql-backup",
+          "app.kubernetes.io/managed-by": "kubeclaw-infrastructure"
+        },
+        "name": "litellm-postgresql-backup"
+      },
+      "spec": {
+        "schedule": "*/5 * * * *",
+        "timeZone": "Etc/UTC",
+        "concurrencyPolicy": "Forbid",
+        "startingDeadlineSeconds": 900,
+        "successfulJobsHistoryLimit": 3,
+        "failedJobsHistoryLimit": 10,
+        "jobTemplate": {
+          "spec": {
+            "backoffLimit": 0,
+            "activeDeadlineSeconds": 1860,
+            "template": {
+              "metadata": {
+                "labels": {
+                  "app": "litellm-postgresql-backup",
+                  "app.kubernetes.io/managed-by": "kubeclaw-infrastructure"
+                },
+                "annotations": {
+                  "checksum/recovery": "public-unsealed-structure-only"
+                }
+              },
+              "spec": {
+                "automountServiceAccountToken": false,
+                "restartPolicy": "Never",
+                "securityContext": {
+                  "runAsNonRoot": true,
+                  "runAsUser": 1001,
+                  "runAsGroup": 1001,
+                  "fsGroup": 1001,
+                  "fsGroupChangePolicy": "OnRootMismatch",
+                  "seccompProfile": {
+                    "type": "RuntimeDefault"
+                  }
+                },
+                "containers": [
+                  {
+                    "name": "backup",
+                    "image": "registry-1.docker.io/bitnami/postgresql@sha256:65d7506622ce2649914947b698d822d56c208295ba7ee80c1b34e48b251ba0c1",
+                    "imagePullPolicy": "IfNotPresent",
+                    "command": [
+                      "bash",
+                      "/recovery/postgresql-recovery.sh",
+                      "scheduled"
+                    ],
+                    "envFrom": [
+                      {
+                        "configMapRef": {
+                          "name": "litellm-postgresql-backup-settings"
+                        }
+                      }
+                    ],
+                    "resources": {
+                      "requests": {
+                        "cpu": "250m",
+                        "memory": "256Mi"
+                      },
+                      "limits": {
+                        "cpu": "1",
+                        "memory": "1Gi"
+                      }
+                    },
+                    "securityContext": {
+                      "allowPrivilegeEscalation": false,
+                      "readOnlyRootFilesystem": true,
+                      "capabilities": {
+                        "drop": [
+                          "ALL"
+                        ]
+                      }
+                    },
+                    "volumeMounts": [
+                      {
+                        "name": "backups",
+                        "mountPath": "/backups",
+                        "readOnly": false
+                      },
+                      {
+                        "name": "script",
+                        "mountPath": "/recovery",
+                        "readOnly": true
+                      },
+                      {
+                        "name": "tmp",
+                        "mountPath": "/tmp"
+                      }
+                    ],
+                    "env": [
+                      {
+                        "name": "PGPASSWORD",
+                        "valueFrom": {
+                          "secretKeyRef": {
+                            "name": "postgresql-secrets",
+                            "key": "postgres-password"
+                          }
+                        }
+                      },
+                      {
+                        "name": "LITELLM_MASTER_KEY",
+                        "valueFrom": {
+                          "secretKeyRef": {
+                            "name": "litellm-secrets",
+                            "key": "LITELLM_MASTER_KEY"
+                          }
+                        }
+                      },
+                      {
+                        "name": "LITELLM_SALT_KEY",
+                        "valueFrom": {
+                          "secretKeyRef": {
+                            "name": "litellm-secrets",
+                            "key": "LITELLM_SALT_KEY",
+                            "optional": true
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "volumes": [
+                  {
+                    "name": "backups",
+                    "persistentVolumeClaim": {
+                      "claimName": "litellm-postgresql-backup"
+                    }
+                  },
+                  {
+                    "name": "script",
+                    "configMap": {
+                      "name": "litellm-postgresql-backup-script",
+                      "defaultMode": 292
+                    }
+                  },
+                  {
+                    "name": "tmp",
+                    "emptyDir": {
+                      "sizeLimit": "256Mi"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "proposedScriptKeys": {
+      "PGHOST": "fixture-postgresql",
+      "PGPORT": "5432",
+      "PGDATABASE": "litellm",
+      "PGUSER": "postgres",
+      "BACKUP_ROOT": "/backups/litellm",
+      "BACKUP_INTERVAL_SECONDS": "600",
+      "BACKUP_MAXIMUM_BYTES": "68719476736",
+      "BACKUP_MAXIMUM_RETAINED_BYTES": "96636764160",
+      "BACKUP_MAXIMUM_AGE_SECONDS": "7200",
+      "BACKUP_MAXIMUM_DURATION_SECONDS": "1800",
+      "BACKUP_EXPECTED_SERVER_VERSION": "180006",
+      "BACKUP_CREDENTIAL_AUTHORITY_REF": "kubernetes-secret:fixture-recovery/litellm-secrets",
+      "BACKUP_APPLICATION_IMAGE": "ghcr.io/berriai/litellm@sha256:690f24800e2208e4f31b01483b9d0521d79dc508c8191f1c0b2f21549400c580",
+      "BACKUP_RESERVE_BYTES": "67108864",
+      "BACKUP_KILL_AFTER_SECONDS": "15",
+      "PGCONNECT_TIMEOUT": "15",
+      "BACKUP_TOC_MAXIMUM_BYTES": "66060288",
+      "BACKUP_METADATA_MAXIMUM_BYTES_EXCLUSIVE": "65536",
+      "BACKUP_CHECKSUM_INDEX_MAXIMUM_BYTES_EXCLUSIVE": "1024"
+    },
+    "expectedFutureCronDeltas": {
+      "activeDeadlineSeconds": 1860,
+      "successfulJobsHistoryLimit": 3,
+      "failedJobsHistoryLimit": 10,
+      "tmpSizeLimit": "256Mi"
+    }
+  },
+  "B-verificationIntervalMinutes": {
+    "qualification": "pure current source subfunctions + explicit expected future policy delta, not full renderer/installed closure",
+    "currentConfiguration": {
+      "PGHOST": "fixture-postgresql",
+      "PGPORT": "5432",
+      "PGDATABASE": "litellm",
+      "PGUSER": "postgres",
+      "BACKUP_ROOT": "/backups/litellm",
+      "BACKUP_INTERVAL_SECONDS": "900",
+      "BACKUP_MAXIMUM_BYTES": "68719476736",
+      "BACKUP_MAXIMUM_RETAINED_BYTES": "96636764160",
+      "BACKUP_MAXIMUM_AGE_SECONDS": "7200",
+      "BACKUP_MAXIMUM_DURATION_SECONDS": "1800",
+      "BACKUP_EXPECTED_SERVER_VERSION": "180006",
+      "BACKUP_CREDENTIAL_AUTHORITY_REF": "kubernetes-secret:fixture-recovery/litellm-secrets",
+      "BACKUP_APPLICATION_IMAGE": "ghcr.io/berriai/litellm@sha256:690f24800e2208e4f31b01483b9d0521d79dc508c8191f1c0b2f21549400c580"
+    },
+    "currentCron": {
+      "apiVersion": "batch/v1",
+      "kind": "CronJob",
+      "metadata": {
+        "namespace": "fixture-recovery",
+        "labels": {
+          "app": "litellm-postgresql-backup",
+          "app.kubernetes.io/managed-by": "kubeclaw-infrastructure"
+        },
+        "name": "litellm-postgresql-backup"
+      },
+      "spec": {
+        "schedule": "*/4 * * * *",
+        "timeZone": "Etc/UTC",
+        "concurrencyPolicy": "Forbid",
+        "startingDeadlineSeconds": 900,
+        "successfulJobsHistoryLimit": 3,
+        "failedJobsHistoryLimit": 10,
+        "jobTemplate": {
+          "spec": {
+            "backoffLimit": 0,
+            "activeDeadlineSeconds": 1860,
+            "template": {
+              "metadata": {
+                "labels": {
+                  "app": "litellm-postgresql-backup",
+                  "app.kubernetes.io/managed-by": "kubeclaw-infrastructure"
+                },
+                "annotations": {
+                  "checksum/recovery": "public-unsealed-structure-only"
+                }
+              },
+              "spec": {
+                "automountServiceAccountToken": false,
+                "restartPolicy": "Never",
+                "securityContext": {
+                  "runAsNonRoot": true,
+                  "runAsUser": 1001,
+                  "runAsGroup": 1001,
+                  "fsGroup": 1001,
+                  "fsGroupChangePolicy": "OnRootMismatch",
+                  "seccompProfile": {
+                    "type": "RuntimeDefault"
+                  }
+                },
+                "containers": [
+                  {
+                    "name": "backup",
+                    "image": "registry-1.docker.io/bitnami/postgresql@sha256:65d7506622ce2649914947b698d822d56c208295ba7ee80c1b34e48b251ba0c1",
+                    "imagePullPolicy": "IfNotPresent",
+                    "command": [
+                      "bash",
+                      "/recovery/postgresql-recovery.sh",
+                      "scheduled"
+                    ],
+                    "envFrom": [
+                      {
+                        "configMapRef": {
+                          "name": "litellm-postgresql-backup-settings"
+                        }
+                      }
+                    ],
+                    "resources": {
+                      "requests": {
+                        "cpu": "250m",
+                        "memory": "256Mi"
+                      },
+                      "limits": {
+                        "cpu": "1",
+                        "memory": "1Gi"
+                      }
+                    },
+                    "securityContext": {
+                      "allowPrivilegeEscalation": false,
+                      "readOnlyRootFilesystem": true,
+                      "capabilities": {
+                        "drop": [
+                          "ALL"
+                        ]
+                      }
+                    },
+                    "volumeMounts": [
+                      {
+                        "name": "backups",
+                        "mountPath": "/backups",
+                        "readOnly": false
+                      },
+                      {
+                        "name": "script",
+                        "mountPath": "/recovery",
+                        "readOnly": true
+                      },
+                      {
+                        "name": "tmp",
+                        "mountPath": "/tmp"
+                      }
+                    ],
+                    "env": [
+                      {
+                        "name": "PGPASSWORD",
+                        "valueFrom": {
+                          "secretKeyRef": {
+                            "name": "postgresql-secrets",
+                            "key": "postgres-password"
+                          }
+                        }
+                      },
+                      {
+                        "name": "LITELLM_MASTER_KEY",
+                        "valueFrom": {
+                          "secretKeyRef": {
+                            "name": "litellm-secrets",
+                            "key": "LITELLM_MASTER_KEY"
+                          }
+                        }
+                      },
+                      {
+                        "name": "LITELLM_SALT_KEY",
+                        "valueFrom": {
+                          "secretKeyRef": {
+                            "name": "litellm-secrets",
+                            "key": "LITELLM_SALT_KEY",
+                            "optional": true
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "volumes": [
+                  {
+                    "name": "backups",
+                    "persistentVolumeClaim": {
+                      "claimName": "litellm-postgresql-backup"
+                    }
+                  },
+                  {
+                    "name": "script",
+                    "configMap": {
+                      "name": "litellm-postgresql-backup-script",
+                      "defaultMode": 292
+                    }
+                  },
+                  {
+                    "name": "tmp",
+                    "emptyDir": {
+                      "sizeLimit": "256Mi"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "proposedScriptKeys": {
+      "PGHOST": "fixture-postgresql",
+      "PGPORT": "5432",
+      "PGDATABASE": "litellm",
+      "PGUSER": "postgres",
+      "BACKUP_ROOT": "/backups/litellm",
+      "BACKUP_INTERVAL_SECONDS": "900",
+      "BACKUP_MAXIMUM_BYTES": "68719476736",
+      "BACKUP_MAXIMUM_RETAINED_BYTES": "96636764160",
+      "BACKUP_MAXIMUM_AGE_SECONDS": "7200",
+      "BACKUP_MAXIMUM_DURATION_SECONDS": "1800",
+      "BACKUP_EXPECTED_SERVER_VERSION": "180006",
+      "BACKUP_CREDENTIAL_AUTHORITY_REF": "kubernetes-secret:fixture-recovery/litellm-secrets",
+      "BACKUP_APPLICATION_IMAGE": "ghcr.io/berriai/litellm@sha256:690f24800e2208e4f31b01483b9d0521d79dc508c8191f1c0b2f21549400c580",
+      "BACKUP_RESERVE_BYTES": "67108864",
+      "BACKUP_KILL_AFTER_SECONDS": "15",
+      "PGCONNECT_TIMEOUT": "15",
+      "BACKUP_TOC_MAXIMUM_BYTES": "66060288",
+      "BACKUP_METADATA_MAXIMUM_BYTES_EXCLUSIVE": "65536",
+      "BACKUP_CHECKSUM_INDEX_MAXIMUM_BYTES_EXCLUSIVE": "1024"
+    },
+    "expectedFutureCronDeltas": {
+      "activeDeadlineSeconds": 1860,
+      "successfulJobsHistoryLimit": 3,
+      "failedJobsHistoryLimit": 10,
+      "tmpSizeLimit": "256Mi"
+    }
+  },
+  "B-maximumAgeSeconds": {
+    "qualification": "pure current source subfunctions + explicit expected future policy delta, not full renderer/installed closure",
+    "currentConfiguration": {
+      "PGHOST": "fixture-postgresql",
+      "PGPORT": "5432",
+      "PGDATABASE": "litellm",
+      "PGUSER": "postgres",
+      "BACKUP_ROOT": "/backups/litellm",
+      "BACKUP_INTERVAL_SECONDS": "900",
+      "BACKUP_MAXIMUM_BYTES": "68719476736",
+      "BACKUP_MAXIMUM_RETAINED_BYTES": "96636764160",
+      "BACKUP_MAXIMUM_AGE_SECONDS": "7100",
+      "BACKUP_MAXIMUM_DURATION_SECONDS": "1800",
+      "BACKUP_EXPECTED_SERVER_VERSION": "180006",
+      "BACKUP_CREDENTIAL_AUTHORITY_REF": "kubernetes-secret:fixture-recovery/litellm-secrets",
+      "BACKUP_APPLICATION_IMAGE": "ghcr.io/berriai/litellm@sha256:690f24800e2208e4f31b01483b9d0521d79dc508c8191f1c0b2f21549400c580"
+    },
+    "currentCron": {
+      "apiVersion": "batch/v1",
+      "kind": "CronJob",
+      "metadata": {
+        "namespace": "fixture-recovery",
+        "labels": {
+          "app": "litellm-postgresql-backup",
+          "app.kubernetes.io/managed-by": "kubeclaw-infrastructure"
+        },
+        "name": "litellm-postgresql-backup"
+      },
+      "spec": {
+        "schedule": "*/5 * * * *",
+        "timeZone": "Etc/UTC",
+        "concurrencyPolicy": "Forbid",
+        "startingDeadlineSeconds": 900,
+        "successfulJobsHistoryLimit": 3,
+        "failedJobsHistoryLimit": 10,
+        "jobTemplate": {
+          "spec": {
+            "backoffLimit": 0,
+            "activeDeadlineSeconds": 1860,
+            "template": {
+              "metadata": {
+                "labels": {
+                  "app": "litellm-postgresql-backup",
+                  "app.kubernetes.io/managed-by": "kubeclaw-infrastructure"
+                },
+                "annotations": {
+                  "checksum/recovery": "public-unsealed-structure-only"
+                }
+              },
+              "spec": {
+                "automountServiceAccountToken": false,
+                "restartPolicy": "Never",
+                "securityContext": {
+                  "runAsNonRoot": true,
+                  "runAsUser": 1001,
+                  "runAsGroup": 1001,
+                  "fsGroup": 1001,
+                  "fsGroupChangePolicy": "OnRootMismatch",
+                  "seccompProfile": {
+                    "type": "RuntimeDefault"
+                  }
+                },
+                "containers": [
+                  {
+                    "name": "backup",
+                    "image": "registry-1.docker.io/bitnami/postgresql@sha256:65d7506622ce2649914947b698d822d56c208295ba7ee80c1b34e48b251ba0c1",
+                    "imagePullPolicy": "IfNotPresent",
+                    "command": [
+                      "bash",
+                      "/recovery/postgresql-recovery.sh",
+                      "scheduled"
+                    ],
+                    "envFrom": [
+                      {
+                        "configMapRef": {
+                          "name": "litellm-postgresql-backup-settings"
+                        }
+                      }
+                    ],
+                    "resources": {
+                      "requests": {
+                        "cpu": "250m",
+                        "memory": "256Mi"
+                      },
+                      "limits": {
+                        "cpu": "1",
+                        "memory": "1Gi"
+                      }
+                    },
+                    "securityContext": {
+                      "allowPrivilegeEscalation": false,
+                      "readOnlyRootFilesystem": true,
+                      "capabilities": {
+                        "drop": [
+                          "ALL"
+                        ]
+                      }
+                    },
+                    "volumeMounts": [
+                      {
+                        "name": "backups",
+                        "mountPath": "/backups",
+                        "readOnly": false
+                      },
+                      {
+                        "name": "script",
+                        "mountPath": "/recovery",
+                        "readOnly": true
+                      },
+                      {
+                        "name": "tmp",
+                        "mountPath": "/tmp"
+                      }
+                    ],
+                    "env": [
+                      {
+                        "name": "PGPASSWORD",
+                        "valueFrom": {
+                          "secretKeyRef": {
+                            "name": "postgresql-secrets",
+                            "key": "postgres-password"
+                          }
+                        }
+                      },
+                      {
+                        "name": "LITELLM_MASTER_KEY",
+                        "valueFrom": {
+                          "secretKeyRef": {
+                            "name": "litellm-secrets",
+                            "key": "LITELLM_MASTER_KEY"
+                          }
+                        }
+                      },
+                      {
+                        "name": "LITELLM_SALT_KEY",
+                        "valueFrom": {
+                          "secretKeyRef": {
+                            "name": "litellm-secrets",
+                            "key": "LITELLM_SALT_KEY",
+                            "optional": true
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "volumes": [
+                  {
+                    "name": "backups",
+                    "persistentVolumeClaim": {
+                      "claimName": "litellm-postgresql-backup"
+                    }
+                  },
+                  {
+                    "name": "script",
+                    "configMap": {
+                      "name": "litellm-postgresql-backup-script",
+                      "defaultMode": 292
+                    }
+                  },
+                  {
+                    "name": "tmp",
+                    "emptyDir": {
+                      "sizeLimit": "256Mi"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "proposedScriptKeys": {
+      "PGHOST": "fixture-postgresql",
+      "PGPORT": "5432",
+      "PGDATABASE": "litellm",
+      "PGUSER": "postgres",
+      "BACKUP_ROOT": "/backups/litellm",
+      "BACKUP_INTERVAL_SECONDS": "900",
+      "BACKUP_MAXIMUM_BYTES": "68719476736",
+      "BACKUP_MAXIMUM_RETAINED_BYTES": "96636764160",
+      "BACKUP_MAXIMUM_AGE_SECONDS": "7100",
+      "BACKUP_MAXIMUM_DURATION_SECONDS": "1800",
+      "BACKUP_EXPECTED_SERVER_VERSION": "180006",
+      "BACKUP_CREDENTIAL_AUTHORITY_REF": "kubernetes-secret:fixture-recovery/litellm-secrets",
+      "BACKUP_APPLICATION_IMAGE": "ghcr.io/berriai/litellm@sha256:690f24800e2208e4f31b01483b9d0521d79dc508c8191f1c0b2f21549400c580",
+      "BACKUP_RESERVE_BYTES": "67108864",
+      "BACKUP_KILL_AFTER_SECONDS": "15",
+      "PGCONNECT_TIMEOUT": "15",
+      "BACKUP_TOC_MAXIMUM_BYTES": "66060288",
+      "BACKUP_METADATA_MAXIMUM_BYTES_EXCLUSIVE": "65536",
+      "BACKUP_CHECKSUM_INDEX_MAXIMUM_BYTES_EXCLUSIVE": "1024"
+    },
+    "expectedFutureCronDeltas": {
+      "activeDeadlineSeconds": 1860,
+      "successfulJobsHistoryLimit": 3,
+      "failedJobsHistoryLimit": 10,
+      "tmpSizeLimit": "256Mi"
+    }
+  },
+  "B-maximumDurationSeconds": {
+    "qualification": "pure current source subfunctions + explicit expected future policy delta, not full renderer/installed closure",
+    "currentConfiguration": {
+      "PGHOST": "fixture-postgresql",
+      "PGPORT": "5432",
+      "PGDATABASE": "litellm",
+      "PGUSER": "postgres",
+      "BACKUP_ROOT": "/backups/litellm",
+      "BACKUP_INTERVAL_SECONDS": "900",
+      "BACKUP_MAXIMUM_BYTES": "68719476736",
+      "BACKUP_MAXIMUM_RETAINED_BYTES": "96636764160",
+      "BACKUP_MAXIMUM_AGE_SECONDS": "7200",
+      "BACKUP_MAXIMUM_DURATION_SECONDS": "1799",
+      "BACKUP_EXPECTED_SERVER_VERSION": "180006",
+      "BACKUP_CREDENTIAL_AUTHORITY_REF": "kubernetes-secret:fixture-recovery/litellm-secrets",
+      "BACKUP_APPLICATION_IMAGE": "ghcr.io/berriai/litellm@sha256:690f24800e2208e4f31b01483b9d0521d79dc508c8191f1c0b2f21549400c580"
+    },
+    "currentCron": {
+      "apiVersion": "batch/v1",
+      "kind": "CronJob",
+      "metadata": {
+        "namespace": "fixture-recovery",
+        "labels": {
+          "app": "litellm-postgresql-backup",
+          "app.kubernetes.io/managed-by": "kubeclaw-infrastructure"
+        },
+        "name": "litellm-postgresql-backup"
+      },
+      "spec": {
+        "schedule": "*/5 * * * *",
+        "timeZone": "Etc/UTC",
+        "concurrencyPolicy": "Forbid",
+        "startingDeadlineSeconds": 900,
+        "successfulJobsHistoryLimit": 3,
+        "failedJobsHistoryLimit": 10,
+        "jobTemplate": {
+          "spec": {
+            "backoffLimit": 0,
+            "activeDeadlineSeconds": 1859,
+            "template": {
+              "metadata": {
+                "labels": {
+                  "app": "litellm-postgresql-backup",
+                  "app.kubernetes.io/managed-by": "kubeclaw-infrastructure"
+                },
+                "annotations": {
+                  "checksum/recovery": "public-unsealed-structure-only"
+                }
+              },
+              "spec": {
+                "automountServiceAccountToken": false,
+                "restartPolicy": "Never",
+                "securityContext": {
+                  "runAsNonRoot": true,
+                  "runAsUser": 1001,
+                  "runAsGroup": 1001,
+                  "fsGroup": 1001,
+                  "fsGroupChangePolicy": "OnRootMismatch",
+                  "seccompProfile": {
+                    "type": "RuntimeDefault"
+                  }
+                },
+                "containers": [
+                  {
+                    "name": "backup",
+                    "image": "registry-1.docker.io/bitnami/postgresql@sha256:65d7506622ce2649914947b698d822d56c208295ba7ee80c1b34e48b251ba0c1",
+                    "imagePullPolicy": "IfNotPresent",
+                    "command": [
+                      "bash",
+                      "/recovery/postgresql-recovery.sh",
+                      "scheduled"
+                    ],
+                    "envFrom": [
+                      {
+                        "configMapRef": {
+                          "name": "litellm-postgresql-backup-settings"
+                        }
+                      }
+                    ],
+                    "resources": {
+                      "requests": {
+                        "cpu": "250m",
+                        "memory": "256Mi"
+                      },
+                      "limits": {
+                        "cpu": "1",
+                        "memory": "1Gi"
+                      }
+                    },
+                    "securityContext": {
+                      "allowPrivilegeEscalation": false,
+                      "readOnlyRootFilesystem": true,
+                      "capabilities": {
+                        "drop": [
+                          "ALL"
+                        ]
+                      }
+                    },
+                    "volumeMounts": [
+                      {
+                        "name": "backups",
+                        "mountPath": "/backups",
+                        "readOnly": false
+                      },
+                      {
+                        "name": "script",
+                        "mountPath": "/recovery",
+                        "readOnly": true
+                      },
+                      {
+                        "name": "tmp",
+                        "mountPath": "/tmp"
+                      }
+                    ],
+                    "env": [
+                      {
+                        "name": "PGPASSWORD",
+                        "valueFrom": {
+                          "secretKeyRef": {
+                            "name": "postgresql-secrets",
+                            "key": "postgres-password"
+                          }
+                        }
+                      },
+                      {
+                        "name": "LITELLM_MASTER_KEY",
+                        "valueFrom": {
+                          "secretKeyRef": {
+                            "name": "litellm-secrets",
+                            "key": "LITELLM_MASTER_KEY"
+                          }
+                        }
+                      },
+                      {
+                        "name": "LITELLM_SALT_KEY",
+                        "valueFrom": {
+                          "secretKeyRef": {
+                            "name": "litellm-secrets",
+                            "key": "LITELLM_SALT_KEY",
+                            "optional": true
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "volumes": [
+                  {
+                    "name": "backups",
+                    "persistentVolumeClaim": {
+                      "claimName": "litellm-postgresql-backup"
+                    }
+                  },
+                  {
+                    "name": "script",
+                    "configMap": {
+                      "name": "litellm-postgresql-backup-script",
+                      "defaultMode": 292
+                    }
+                  },
+                  {
+                    "name": "tmp",
+                    "emptyDir": {
+                      "sizeLimit": "256Mi"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "proposedScriptKeys": {
+      "PGHOST": "fixture-postgresql",
+      "PGPORT": "5432",
+      "PGDATABASE": "litellm",
+      "PGUSER": "postgres",
+      "BACKUP_ROOT": "/backups/litellm",
+      "BACKUP_INTERVAL_SECONDS": "900",
+      "BACKUP_MAXIMUM_BYTES": "68719476736",
+      "BACKUP_MAXIMUM_RETAINED_BYTES": "96636764160",
+      "BACKUP_MAXIMUM_AGE_SECONDS": "7200",
+      "BACKUP_MAXIMUM_DURATION_SECONDS": "1799",
+      "BACKUP_EXPECTED_SERVER_VERSION": "180006",
+      "BACKUP_CREDENTIAL_AUTHORITY_REF": "kubernetes-secret:fixture-recovery/litellm-secrets",
+      "BACKUP_APPLICATION_IMAGE": "ghcr.io/berriai/litellm@sha256:690f24800e2208e4f31b01483b9d0521d79dc508c8191f1c0b2f21549400c580",
+      "BACKUP_RESERVE_BYTES": "67108864",
+      "BACKUP_KILL_AFTER_SECONDS": "15",
+      "PGCONNECT_TIMEOUT": "15",
+      "BACKUP_TOC_MAXIMUM_BYTES": "66060288",
+      "BACKUP_METADATA_MAXIMUM_BYTES_EXCLUSIVE": "65536",
+      "BACKUP_CHECKSUM_INDEX_MAXIMUM_BYTES_EXCLUSIVE": "1024"
+    },
+    "expectedFutureCronDeltas": {
+      "activeDeadlineSeconds": 1859,
+      "successfulJobsHistoryLimit": 3,
+      "failedJobsHistoryLimit": 10,
+      "tmpSizeLimit": "256Mi"
+    }
+  },
+  "B-verificationDeadlineSeconds": {
+    "qualification": "pure current source subfunctions + explicit expected future policy delta, not full renderer/installed closure",
+    "currentConfiguration": {
+      "PGHOST": "fixture-postgresql",
+      "PGPORT": "5432",
+      "PGDATABASE": "litellm",
+      "PGUSER": "postgres",
+      "BACKUP_ROOT": "/backups/litellm",
+      "BACKUP_INTERVAL_SECONDS": "900",
+      "BACKUP_MAXIMUM_BYTES": "68719476736",
+      "BACKUP_MAXIMUM_RETAINED_BYTES": "96636764160",
+      "BACKUP_MAXIMUM_AGE_SECONDS": "7200",
+      "BACKUP_MAXIMUM_DURATION_SECONDS": "1800",
+      "BACKUP_EXPECTED_SERVER_VERSION": "180006",
+      "BACKUP_CREDENTIAL_AUTHORITY_REF": "kubernetes-secret:fixture-recovery/litellm-secrets",
+      "BACKUP_APPLICATION_IMAGE": "ghcr.io/berriai/litellm@sha256:690f24800e2208e4f31b01483b9d0521d79dc508c8191f1c0b2f21549400c580"
+    },
+    "currentCron": {
+      "apiVersion": "batch/v1",
+      "kind": "CronJob",
+      "metadata": {
+        "namespace": "fixture-recovery",
+        "labels": {
+          "app": "litellm-postgresql-backup",
+          "app.kubernetes.io/managed-by": "kubeclaw-infrastructure"
+        },
+        "name": "litellm-postgresql-backup"
+      },
+      "spec": {
+        "schedule": "*/5 * * * *",
+        "timeZone": "Etc/UTC",
+        "concurrencyPolicy": "Forbid",
+        "startingDeadlineSeconds": 899,
+        "successfulJobsHistoryLimit": 3,
+        "failedJobsHistoryLimit": 10,
+        "jobTemplate": {
+          "spec": {
+            "backoffLimit": 0,
+            "activeDeadlineSeconds": 1860,
+            "template": {
+              "metadata": {
+                "labels": {
+                  "app": "litellm-postgresql-backup",
+                  "app.kubernetes.io/managed-by": "kubeclaw-infrastructure"
+                },
+                "annotations": {
+                  "checksum/recovery": "public-unsealed-structure-only"
+                }
+              },
+              "spec": {
+                "automountServiceAccountToken": false,
+                "restartPolicy": "Never",
+                "securityContext": {
+                  "runAsNonRoot": true,
+                  "runAsUser": 1001,
+                  "runAsGroup": 1001,
+                  "fsGroup": 1001,
+                  "fsGroupChangePolicy": "OnRootMismatch",
+                  "seccompProfile": {
+                    "type": "RuntimeDefault"
+                  }
+                },
+                "containers": [
+                  {
+                    "name": "backup",
+                    "image": "registry-1.docker.io/bitnami/postgresql@sha256:65d7506622ce2649914947b698d822d56c208295ba7ee80c1b34e48b251ba0c1",
+                    "imagePullPolicy": "IfNotPresent",
+                    "command": [
+                      "bash",
+                      "/recovery/postgresql-recovery.sh",
+                      "scheduled"
+                    ],
+                    "envFrom": [
+                      {
+                        "configMapRef": {
+                          "name": "litellm-postgresql-backup-settings"
+                        }
+                      }
+                    ],
+                    "resources": {
+                      "requests": {
+                        "cpu": "250m",
+                        "memory": "256Mi"
+                      },
+                      "limits": {
+                        "cpu": "1",
+                        "memory": "1Gi"
+                      }
+                    },
+                    "securityContext": {
+                      "allowPrivilegeEscalation": false,
+                      "readOnlyRootFilesystem": true,
+                      "capabilities": {
+                        "drop": [
+                          "ALL"
+                        ]
+                      }
+                    },
+                    "volumeMounts": [
+                      {
+                        "name": "backups",
+                        "mountPath": "/backups",
+                        "readOnly": false
+                      },
+                      {
+                        "name": "script",
+                        "mountPath": "/recovery",
+                        "readOnly": true
+                      },
+                      {
+                        "name": "tmp",
+                        "mountPath": "/tmp"
+                      }
+                    ],
+                    "env": [
+                      {
+                        "name": "PGPASSWORD",
+                        "valueFrom": {
+                          "secretKeyRef": {
+                            "name": "postgresql-secrets",
+                            "key": "postgres-password"
+                          }
+                        }
+                      },
+                      {
+                        "name": "LITELLM_MASTER_KEY",
+                        "valueFrom": {
+                          "secretKeyRef": {
+                            "name": "litellm-secrets",
+                            "key": "LITELLM_MASTER_KEY"
+                          }
+                        }
+                      },
+                      {
+                        "name": "LITELLM_SALT_KEY",
+                        "valueFrom": {
+                          "secretKeyRef": {
+                            "name": "litellm-secrets",
+                            "key": "LITELLM_SALT_KEY",
+                            "optional": true
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "volumes": [
+                  {
+                    "name": "backups",
+                    "persistentVolumeClaim": {
+                      "claimName": "litellm-postgresql-backup"
+                    }
+                  },
+                  {
+                    "name": "script",
+                    "configMap": {
+                      "name": "litellm-postgresql-backup-script",
+                      "defaultMode": 292
+                    }
+                  },
+                  {
+                    "name": "tmp",
+                    "emptyDir": {
+                      "sizeLimit": "256Mi"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "proposedScriptKeys": {
+      "PGHOST": "fixture-postgresql",
+      "PGPORT": "5432",
+      "PGDATABASE": "litellm",
+      "PGUSER": "postgres",
+      "BACKUP_ROOT": "/backups/litellm",
+      "BACKUP_INTERVAL_SECONDS": "900",
+      "BACKUP_MAXIMUM_BYTES": "68719476736",
+      "BACKUP_MAXIMUM_RETAINED_BYTES": "96636764160",
+      "BACKUP_MAXIMUM_AGE_SECONDS": "7200",
+      "BACKUP_MAXIMUM_DURATION_SECONDS": "1800",
+      "BACKUP_EXPECTED_SERVER_VERSION": "180006",
+      "BACKUP_CREDENTIAL_AUTHORITY_REF": "kubernetes-secret:fixture-recovery/litellm-secrets",
+      "BACKUP_APPLICATION_IMAGE": "ghcr.io/berriai/litellm@sha256:690f24800e2208e4f31b01483b9d0521d79dc508c8191f1c0b2f21549400c580",
+      "BACKUP_RESERVE_BYTES": "67108864",
+      "BACKUP_KILL_AFTER_SECONDS": "15",
+      "PGCONNECT_TIMEOUT": "15",
+      "BACKUP_TOC_MAXIMUM_BYTES": "66060288",
+      "BACKUP_METADATA_MAXIMUM_BYTES_EXCLUSIVE": "65536",
+      "BACKUP_CHECKSUM_INDEX_MAXIMUM_BYTES_EXCLUSIVE": "1024"
+    },
+    "expectedFutureCronDeltas": {
+      "activeDeadlineSeconds": 1860,
+      "successfulJobsHistoryLimit": 3,
+      "failedJobsHistoryLimit": 10,
+      "tmpSizeLimit": "256Mi"
+    }
+  },
+  "B-maximumBackupBytes": {
+    "qualification": "pure current source subfunctions + explicit expected future policy delta, not full renderer/installed closure",
+    "currentConfiguration": {
+      "PGHOST": "fixture-postgresql",
+      "PGPORT": "5432",
+      "PGDATABASE": "litellm",
+      "PGUSER": "postgres",
+      "BACKUP_ROOT": "/backups/litellm",
+      "BACKUP_INTERVAL_SECONDS": "900",
+      "BACKUP_MAXIMUM_BYTES": "16777216",
+      "BACKUP_MAXIMUM_RETAINED_BYTES": "96636764160",
+      "BACKUP_MAXIMUM_AGE_SECONDS": "7200",
+      "BACKUP_MAXIMUM_DURATION_SECONDS": "1800",
+      "BACKUP_EXPECTED_SERVER_VERSION": "180006",
+      "BACKUP_CREDENTIAL_AUTHORITY_REF": "kubernetes-secret:fixture-recovery/litellm-secrets",
+      "BACKUP_APPLICATION_IMAGE": "ghcr.io/berriai/litellm@sha256:690f24800e2208e4f31b01483b9d0521d79dc508c8191f1c0b2f21549400c580"
+    },
+    "currentCron": {
+      "apiVersion": "batch/v1",
+      "kind": "CronJob",
+      "metadata": {
+        "namespace": "fixture-recovery",
+        "labels": {
+          "app": "litellm-postgresql-backup",
+          "app.kubernetes.io/managed-by": "kubeclaw-infrastructure"
+        },
+        "name": "litellm-postgresql-backup"
+      },
+      "spec": {
+        "schedule": "*/5 * * * *",
+        "timeZone": "Etc/UTC",
+        "concurrencyPolicy": "Forbid",
+        "startingDeadlineSeconds": 900,
+        "successfulJobsHistoryLimit": 3,
+        "failedJobsHistoryLimit": 10,
+        "jobTemplate": {
+          "spec": {
+            "backoffLimit": 0,
+            "activeDeadlineSeconds": 1860,
+            "template": {
+              "metadata": {
+                "labels": {
+                  "app": "litellm-postgresql-backup",
+                  "app.kubernetes.io/managed-by": "kubeclaw-infrastructure"
+                },
+                "annotations": {
+                  "checksum/recovery": "public-unsealed-structure-only"
+                }
+              },
+              "spec": {
+                "automountServiceAccountToken": false,
+                "restartPolicy": "Never",
+                "securityContext": {
+                  "runAsNonRoot": true,
+                  "runAsUser": 1001,
+                  "runAsGroup": 1001,
+                  "fsGroup": 1001,
+                  "fsGroupChangePolicy": "OnRootMismatch",
+                  "seccompProfile": {
+                    "type": "RuntimeDefault"
+                  }
+                },
+                "containers": [
+                  {
+                    "name": "backup",
+                    "image": "registry-1.docker.io/bitnami/postgresql@sha256:65d7506622ce2649914947b698d822d56c208295ba7ee80c1b34e48b251ba0c1",
+                    "imagePullPolicy": "IfNotPresent",
+                    "command": [
+                      "bash",
+                      "/recovery/postgresql-recovery.sh",
+                      "scheduled"
+                    ],
+                    "envFrom": [
+                      {
+                        "configMapRef": {
+                          "name": "litellm-postgresql-backup-settings"
+                        }
+                      }
+                    ],
+                    "resources": {
+                      "requests": {
+                        "cpu": "250m",
+                        "memory": "256Mi"
+                      },
+                      "limits": {
+                        "cpu": "1",
+                        "memory": "1Gi"
+                      }
+                    },
+                    "securityContext": {
+                      "allowPrivilegeEscalation": false,
+                      "readOnlyRootFilesystem": true,
+                      "capabilities": {
+                        "drop": [
+                          "ALL"
+                        ]
+                      }
+                    },
+                    "volumeMounts": [
+                      {
+                        "name": "backups",
+                        "mountPath": "/backups",
+                        "readOnly": false
+                      },
+                      {
+                        "name": "script",
+                        "mountPath": "/recovery",
+                        "readOnly": true
+                      },
+                      {
+                        "name": "tmp",
+                        "mountPath": "/tmp"
+                      }
+                    ],
+                    "env": [
+                      {
+                        "name": "PGPASSWORD",
+                        "valueFrom": {
+                          "secretKeyRef": {
+                            "name": "postgresql-secrets",
+                            "key": "postgres-password"
+                          }
+                        }
+                      },
+                      {
+                        "name": "LITELLM_MASTER_KEY",
+                        "valueFrom": {
+                          "secretKeyRef": {
+                            "name": "litellm-secrets",
+                            "key": "LITELLM_MASTER_KEY"
+                          }
+                        }
+                      },
+                      {
+                        "name": "LITELLM_SALT_KEY",
+                        "valueFrom": {
+                          "secretKeyRef": {
+                            "name": "litellm-secrets",
+                            "key": "LITELLM_SALT_KEY",
+                            "optional": true
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "volumes": [
+                  {
+                    "name": "backups",
+                    "persistentVolumeClaim": {
+                      "claimName": "litellm-postgresql-backup"
+                    }
+                  },
+                  {
+                    "name": "script",
+                    "configMap": {
+                      "name": "litellm-postgresql-backup-script",
+                      "defaultMode": 292
+                    }
+                  },
+                  {
+                    "name": "tmp",
+                    "emptyDir": {
+                      "sizeLimit": "256Mi"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "proposedScriptKeys": {
+      "PGHOST": "fixture-postgresql",
+      "PGPORT": "5432",
+      "PGDATABASE": "litellm",
+      "PGUSER": "postgres",
+      "BACKUP_ROOT": "/backups/litellm",
+      "BACKUP_INTERVAL_SECONDS": "900",
+      "BACKUP_MAXIMUM_BYTES": "16777216",
+      "BACKUP_MAXIMUM_RETAINED_BYTES": "96636764160",
+      "BACKUP_MAXIMUM_AGE_SECONDS": "7200",
+      "BACKUP_MAXIMUM_DURATION_SECONDS": "1800",
+      "BACKUP_EXPECTED_SERVER_VERSION": "180006",
+      "BACKUP_CREDENTIAL_AUTHORITY_REF": "kubernetes-secret:fixture-recovery/litellm-secrets",
+      "BACKUP_APPLICATION_IMAGE": "ghcr.io/berriai/litellm@sha256:690f24800e2208e4f31b01483b9d0521d79dc508c8191f1c0b2f21549400c580",
+      "BACKUP_RESERVE_BYTES": "67108864",
+      "BACKUP_KILL_AFTER_SECONDS": "15",
+      "PGCONNECT_TIMEOUT": "15",
+      "BACKUP_TOC_MAXIMUM_BYTES": "66060288",
+      "BACKUP_METADATA_MAXIMUM_BYTES_EXCLUSIVE": "65536",
+      "BACKUP_CHECKSUM_INDEX_MAXIMUM_BYTES_EXCLUSIVE": "1024"
+    },
+    "expectedFutureCronDeltas": {
+      "activeDeadlineSeconds": 1860,
+      "successfulJobsHistoryLimit": 3,
+      "failedJobsHistoryLimit": 10,
+      "tmpSizeLimit": "256Mi"
+    }
+  },
+  "B-maximumRetainedBytes": {
+    "qualification": "pure current source subfunctions + explicit expected future policy delta, not full renderer/installed closure",
+    "currentConfiguration": {
+      "PGHOST": "fixture-postgresql",
+      "PGPORT": "5432",
+      "PGDATABASE": "litellm",
+      "PGUSER": "postgres",
+      "BACKUP_ROOT": "/backups/litellm",
+      "BACKUP_INTERVAL_SECONDS": "900",
+      "BACKUP_MAXIMUM_BYTES": "68719476736",
+      "BACKUP_MAXIMUM_RETAINED_BYTES": "95563022336",
+      "BACKUP_MAXIMUM_AGE_SECONDS": "7200",
+      "BACKUP_MAXIMUM_DURATION_SECONDS": "1800",
+      "BACKUP_EXPECTED_SERVER_VERSION": "180006",
+      "BACKUP_CREDENTIAL_AUTHORITY_REF": "kubernetes-secret:fixture-recovery/litellm-secrets",
+      "BACKUP_APPLICATION_IMAGE": "ghcr.io/berriai/litellm@sha256:690f24800e2208e4f31b01483b9d0521d79dc508c8191f1c0b2f21549400c580"
+    },
+    "currentCron": {
+      "apiVersion": "batch/v1",
+      "kind": "CronJob",
+      "metadata": {
+        "namespace": "fixture-recovery",
+        "labels": {
+          "app": "litellm-postgresql-backup",
+          "app.kubernetes.io/managed-by": "kubeclaw-infrastructure"
+        },
+        "name": "litellm-postgresql-backup"
+      },
+      "spec": {
+        "schedule": "*/5 * * * *",
+        "timeZone": "Etc/UTC",
+        "concurrencyPolicy": "Forbid",
+        "startingDeadlineSeconds": 900,
+        "successfulJobsHistoryLimit": 3,
+        "failedJobsHistoryLimit": 10,
+        "jobTemplate": {
+          "spec": {
+            "backoffLimit": 0,
+            "activeDeadlineSeconds": 1860,
+            "template": {
+              "metadata": {
+                "labels": {
+                  "app": "litellm-postgresql-backup",
+                  "app.kubernetes.io/managed-by": "kubeclaw-infrastructure"
+                },
+                "annotations": {
+                  "checksum/recovery": "public-unsealed-structure-only"
+                }
+              },
+              "spec": {
+                "automountServiceAccountToken": false,
+                "restartPolicy": "Never",
+                "securityContext": {
+                  "runAsNonRoot": true,
+                  "runAsUser": 1001,
+                  "runAsGroup": 1001,
+                  "fsGroup": 1001,
+                  "fsGroupChangePolicy": "OnRootMismatch",
+                  "seccompProfile": {
+                    "type": "RuntimeDefault"
+                  }
+                },
+                "containers": [
+                  {
+                    "name": "backup",
+                    "image": "registry-1.docker.io/bitnami/postgresql@sha256:65d7506622ce2649914947b698d822d56c208295ba7ee80c1b34e48b251ba0c1",
+                    "imagePullPolicy": "IfNotPresent",
+                    "command": [
+                      "bash",
+                      "/recovery/postgresql-recovery.sh",
+                      "scheduled"
+                    ],
+                    "envFrom": [
+                      {
+                        "configMapRef": {
+                          "name": "litellm-postgresql-backup-settings"
+                        }
+                      }
+                    ],
+                    "resources": {
+                      "requests": {
+                        "cpu": "250m",
+                        "memory": "256Mi"
+                      },
+                      "limits": {
+                        "cpu": "1",
+                        "memory": "1Gi"
+                      }
+                    },
+                    "securityContext": {
+                      "allowPrivilegeEscalation": false,
+                      "readOnlyRootFilesystem": true,
+                      "capabilities": {
+                        "drop": [
+                          "ALL"
+                        ]
+                      }
+                    },
+                    "volumeMounts": [
+                      {
+                        "name": "backups",
+                        "mountPath": "/backups",
+                        "readOnly": false
+                      },
+                      {
+                        "name": "script",
+                        "mountPath": "/recovery",
+                        "readOnly": true
+                      },
+                      {
+                        "name": "tmp",
+                        "mountPath": "/tmp"
+                      }
+                    ],
+                    "env": [
+                      {
+                        "name": "PGPASSWORD",
+                        "valueFrom": {
+                          "secretKeyRef": {
+                            "name": "postgresql-secrets",
+                            "key": "postgres-password"
+                          }
+                        }
+                      },
+                      {
+                        "name": "LITELLM_MASTER_KEY",
+                        "valueFrom": {
+                          "secretKeyRef": {
+                            "name": "litellm-secrets",
+                            "key": "LITELLM_MASTER_KEY"
+                          }
+                        }
+                      },
+                      {
+                        "name": "LITELLM_SALT_KEY",
+                        "valueFrom": {
+                          "secretKeyRef": {
+                            "name": "litellm-secrets",
+                            "key": "LITELLM_SALT_KEY",
+                            "optional": true
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "volumes": [
+                  {
+                    "name": "backups",
+                    "persistentVolumeClaim": {
+                      "claimName": "litellm-postgresql-backup"
+                    }
+                  },
+                  {
+                    "name": "script",
+                    "configMap": {
+                      "name": "litellm-postgresql-backup-script",
+                      "defaultMode": 292
+                    }
+                  },
+                  {
+                    "name": "tmp",
+                    "emptyDir": {
+                      "sizeLimit": "256Mi"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "proposedScriptKeys": {
+      "PGHOST": "fixture-postgresql",
+      "PGPORT": "5432",
+      "PGDATABASE": "litellm",
+      "PGUSER": "postgres",
+      "BACKUP_ROOT": "/backups/litellm",
+      "BACKUP_INTERVAL_SECONDS": "900",
+      "BACKUP_MAXIMUM_BYTES": "68719476736",
+      "BACKUP_MAXIMUM_RETAINED_BYTES": "95563022336",
+      "BACKUP_MAXIMUM_AGE_SECONDS": "7200",
+      "BACKUP_MAXIMUM_DURATION_SECONDS": "1800",
+      "BACKUP_EXPECTED_SERVER_VERSION": "180006",
+      "BACKUP_CREDENTIAL_AUTHORITY_REF": "kubernetes-secret:fixture-recovery/litellm-secrets",
+      "BACKUP_APPLICATION_IMAGE": "ghcr.io/berriai/litellm@sha256:690f24800e2208e4f31b01483b9d0521d79dc508c8191f1c0b2f21549400c580",
+      "BACKUP_RESERVE_BYTES": "67108864",
+      "BACKUP_KILL_AFTER_SECONDS": "15",
+      "PGCONNECT_TIMEOUT": "15",
+      "BACKUP_TOC_MAXIMUM_BYTES": "66060288",
+      "BACKUP_METADATA_MAXIMUM_BYTES_EXCLUSIVE": "65536",
+      "BACKUP_CHECKSUM_INDEX_MAXIMUM_BYTES_EXCLUSIVE": "1024"
+    },
+    "expectedFutureCronDeltas": {
+      "activeDeadlineSeconds": 1860,
+      "successfulJobsHistoryLimit": 3,
+      "failedJobsHistoryLimit": 10,
+      "tmpSizeLimit": "256Mi"
+    }
+  },
+  "B-persistence-size": {
+    "qualification": "pure current source subfunctions + explicit expected future policy delta, not full renderer/installed closure",
+    "currentConfiguration": {
+      "PGHOST": "fixture-postgresql",
+      "PGPORT": "5432",
+      "PGDATABASE": "litellm",
+      "PGUSER": "postgres",
+      "BACKUP_ROOT": "/backups/litellm",
+      "BACKUP_INTERVAL_SECONDS": "900",
+      "BACKUP_MAXIMUM_BYTES": "68719476736",
+      "BACKUP_MAXIMUM_RETAINED_BYTES": "96636764160",
+      "BACKUP_MAXIMUM_AGE_SECONDS": "7200",
+      "BACKUP_MAXIMUM_DURATION_SECONDS": "1800",
+      "BACKUP_EXPECTED_SERVER_VERSION": "180006",
+      "BACKUP_CREDENTIAL_AUTHORITY_REF": "kubernetes-secret:fixture-recovery/litellm-secrets",
+      "BACKUP_APPLICATION_IMAGE": "ghcr.io/berriai/litellm@sha256:690f24800e2208e4f31b01483b9d0521d79dc508c8191f1c0b2f21549400c580"
+    },
+    "currentCron": {
+      "apiVersion": "batch/v1",
+      "kind": "CronJob",
+      "metadata": {
+        "namespace": "fixture-recovery",
+        "labels": {
+          "app": "litellm-postgresql-backup",
+          "app.kubernetes.io/managed-by": "kubeclaw-infrastructure"
+        },
+        "name": "litellm-postgresql-backup"
+      },
+      "spec": {
+        "schedule": "*/5 * * * *",
+        "timeZone": "Etc/UTC",
+        "concurrencyPolicy": "Forbid",
+        "startingDeadlineSeconds": 900,
+        "successfulJobsHistoryLimit": 3,
+        "failedJobsHistoryLimit": 10,
+        "jobTemplate": {
+          "spec": {
+            "backoffLimit": 0,
+            "activeDeadlineSeconds": 1860,
+            "template": {
+              "metadata": {
+                "labels": {
+                  "app": "litellm-postgresql-backup",
+                  "app.kubernetes.io/managed-by": "kubeclaw-infrastructure"
+                },
+                "annotations": {
+                  "checksum/recovery": "public-unsealed-structure-only"
+                }
+              },
+              "spec": {
+                "automountServiceAccountToken": false,
+                "restartPolicy": "Never",
+                "securityContext": {
+                  "runAsNonRoot": true,
+                  "runAsUser": 1001,
+                  "runAsGroup": 1001,
+                  "fsGroup": 1001,
+                  "fsGroupChangePolicy": "OnRootMismatch",
+                  "seccompProfile": {
+                    "type": "RuntimeDefault"
+                  }
+                },
+                "containers": [
+                  {
+                    "name": "backup",
+                    "image": "registry-1.docker.io/bitnami/postgresql@sha256:65d7506622ce2649914947b698d822d56c208295ba7ee80c1b34e48b251ba0c1",
+                    "imagePullPolicy": "IfNotPresent",
+                    "command": [
+                      "bash",
+                      "/recovery/postgresql-recovery.sh",
+                      "scheduled"
+                    ],
+                    "envFrom": [
+                      {
+                        "configMapRef": {
+                          "name": "litellm-postgresql-backup-settings"
+                        }
+                      }
+                    ],
+                    "resources": {
+                      "requests": {
+                        "cpu": "250m",
+                        "memory": "256Mi"
+                      },
+                      "limits": {
+                        "cpu": "1",
+                        "memory": "1Gi"
+                      }
+                    },
+                    "securityContext": {
+                      "allowPrivilegeEscalation": false,
+                      "readOnlyRootFilesystem": true,
+                      "capabilities": {
+                        "drop": [
+                          "ALL"
+                        ]
+                      }
+                    },
+                    "volumeMounts": [
+                      {
+                        "name": "backups",
+                        "mountPath": "/backups",
+                        "readOnly": false
+                      },
+                      {
+                        "name": "script",
+                        "mountPath": "/recovery",
+                        "readOnly": true
+                      },
+                      {
+                        "name": "tmp",
+                        "mountPath": "/tmp"
+                      }
+                    ],
+                    "env": [
+                      {
+                        "name": "PGPASSWORD",
+                        "valueFrom": {
+                          "secretKeyRef": {
+                            "name": "postgresql-secrets",
+                            "key": "postgres-password"
+                          }
+                        }
+                      },
+                      {
+                        "name": "LITELLM_MASTER_KEY",
+                        "valueFrom": {
+                          "secretKeyRef": {
+                            "name": "litellm-secrets",
+                            "key": "LITELLM_MASTER_KEY"
+                          }
+                        }
+                      },
+                      {
+                        "name": "LITELLM_SALT_KEY",
+                        "valueFrom": {
+                          "secretKeyRef": {
+                            "name": "litellm-secrets",
+                            "key": "LITELLM_SALT_KEY",
+                            "optional": true
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "volumes": [
+                  {
+                    "name": "backups",
+                    "persistentVolumeClaim": {
+                      "claimName": "litellm-postgresql-backup"
+                    }
+                  },
+                  {
+                    "name": "script",
+                    "configMap": {
+                      "name": "litellm-postgresql-backup-script",
+                      "defaultMode": 292
+                    }
+                  },
+                  {
+                    "name": "tmp",
+                    "emptyDir": {
+                      "sizeLimit": "256Mi"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "proposedScriptKeys": {
+      "PGHOST": "fixture-postgresql",
+      "PGPORT": "5432",
+      "PGDATABASE": "litellm",
+      "PGUSER": "postgres",
+      "BACKUP_ROOT": "/backups/litellm",
+      "BACKUP_INTERVAL_SECONDS": "900",
+      "BACKUP_MAXIMUM_BYTES": "68719476736",
+      "BACKUP_MAXIMUM_RETAINED_BYTES": "96636764160",
+      "BACKUP_MAXIMUM_AGE_SECONDS": "7200",
+      "BACKUP_MAXIMUM_DURATION_SECONDS": "1800",
+      "BACKUP_EXPECTED_SERVER_VERSION": "180006",
+      "BACKUP_CREDENTIAL_AUTHORITY_REF": "kubernetes-secret:fixture-recovery/litellm-secrets",
+      "BACKUP_APPLICATION_IMAGE": "ghcr.io/berriai/litellm@sha256:690f24800e2208e4f31b01483b9d0521d79dc508c8191f1c0b2f21549400c580",
+      "BACKUP_RESERVE_BYTES": "67108864",
+      "BACKUP_KILL_AFTER_SECONDS": "15",
+      "PGCONNECT_TIMEOUT": "15",
+      "BACKUP_TOC_MAXIMUM_BYTES": "66060288",
+      "BACKUP_METADATA_MAXIMUM_BYTES_EXCLUSIVE": "65536",
+      "BACKUP_CHECKSUM_INDEX_MAXIMUM_BYTES_EXCLUSIVE": "1024"
+    },
+    "expectedFutureCronDeltas": {
+      "activeDeadlineSeconds": 1860,
+      "successfulJobsHistoryLimit": 3,
+      "failedJobsHistoryLimit": 10,
+      "tmpSizeLimit": "256Mi"
+    }
+  },
+  "B-persistence-storageClass": {
+    "qualification": "pure current source subfunctions + explicit expected future policy delta, not full renderer/installed closure",
+    "currentConfiguration": {
+      "PGHOST": "fixture-postgresql",
+      "PGPORT": "5432",
+      "PGDATABASE": "litellm",
+      "PGUSER": "postgres",
+      "BACKUP_ROOT": "/backups/litellm",
+      "BACKUP_INTERVAL_SECONDS": "900",
+      "BACKUP_MAXIMUM_BYTES": "68719476736",
+      "BACKUP_MAXIMUM_RETAINED_BYTES": "96636764160",
+      "BACKUP_MAXIMUM_AGE_SECONDS": "7200",
+      "BACKUP_MAXIMUM_DURATION_SECONDS": "1800",
+      "BACKUP_EXPECTED_SERVER_VERSION": "180006",
+      "BACKUP_CREDENTIAL_AUTHORITY_REF": "kubernetes-secret:fixture-recovery/litellm-secrets",
+      "BACKUP_APPLICATION_IMAGE": "ghcr.io/berriai/litellm@sha256:690f24800e2208e4f31b01483b9d0521d79dc508c8191f1c0b2f21549400c580"
+    },
+    "currentCron": {
+      "apiVersion": "batch/v1",
+      "kind": "CronJob",
+      "metadata": {
+        "namespace": "fixture-recovery",
+        "labels": {
+          "app": "litellm-postgresql-backup",
+          "app.kubernetes.io/managed-by": "kubeclaw-infrastructure"
+        },
+        "name": "litellm-postgresql-backup"
+      },
+      "spec": {
+        "schedule": "*/5 * * * *",
+        "timeZone": "Etc/UTC",
+        "concurrencyPolicy": "Forbid",
+        "startingDeadlineSeconds": 900,
+        "successfulJobsHistoryLimit": 3,
+        "failedJobsHistoryLimit": 10,
+        "jobTemplate": {
+          "spec": {
+            "backoffLimit": 0,
+            "activeDeadlineSeconds": 1860,
+            "template": {
+              "metadata": {
+                "labels": {
+                  "app": "litellm-postgresql-backup",
+                  "app.kubernetes.io/managed-by": "kubeclaw-infrastructure"
+                },
+                "annotations": {
+                  "checksum/recovery": "public-unsealed-structure-only"
+                }
+              },
+              "spec": {
+                "automountServiceAccountToken": false,
+                "restartPolicy": "Never",
+                "securityContext": {
+                  "runAsNonRoot": true,
+                  "runAsUser": 1001,
+                  "runAsGroup": 1001,
+                  "fsGroup": 1001,
+                  "fsGroupChangePolicy": "OnRootMismatch",
+                  "seccompProfile": {
+                    "type": "RuntimeDefault"
+                  }
+                },
+                "containers": [
+                  {
+                    "name": "backup",
+                    "image": "registry-1.docker.io/bitnami/postgresql@sha256:65d7506622ce2649914947b698d822d56c208295ba7ee80c1b34e48b251ba0c1",
+                    "imagePullPolicy": "IfNotPresent",
+                    "command": [
+                      "bash",
+                      "/recovery/postgresql-recovery.sh",
+                      "scheduled"
+                    ],
+                    "envFrom": [
+                      {
+                        "configMapRef": {
+                          "name": "litellm-postgresql-backup-settings"
+                        }
+                      }
+                    ],
+                    "resources": {
+                      "requests": {
+                        "cpu": "250m",
+                        "memory": "256Mi"
+                      },
+                      "limits": {
+                        "cpu": "1",
+                        "memory": "1Gi"
+                      }
+                    },
+                    "securityContext": {
+                      "allowPrivilegeEscalation": false,
+                      "readOnlyRootFilesystem": true,
+                      "capabilities": {
+                        "drop": [
+                          "ALL"
+                        ]
+                      }
+                    },
+                    "volumeMounts": [
+                      {
+                        "name": "backups",
+                        "mountPath": "/backups",
+                        "readOnly": false
+                      },
+                      {
+                        "name": "script",
+                        "mountPath": "/recovery",
+                        "readOnly": true
+                      },
+                      {
+                        "name": "tmp",
+                        "mountPath": "/tmp"
+                      }
+                    ],
+                    "env": [
+                      {
+                        "name": "PGPASSWORD",
+                        "valueFrom": {
+                          "secretKeyRef": {
+                            "name": "postgresql-secrets",
+                            "key": "postgres-password"
+                          }
+                        }
+                      },
+                      {
+                        "name": "LITELLM_MASTER_KEY",
+                        "valueFrom": {
+                          "secretKeyRef": {
+                            "name": "litellm-secrets",
+                            "key": "LITELLM_MASTER_KEY"
+                          }
+                        }
+                      },
+                      {
+                        "name": "LITELLM_SALT_KEY",
+                        "valueFrom": {
+                          "secretKeyRef": {
+                            "name": "litellm-secrets",
+                            "key": "LITELLM_SALT_KEY",
+                            "optional": true
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "volumes": [
+                  {
+                    "name": "backups",
+                    "persistentVolumeClaim": {
+                      "claimName": "litellm-postgresql-backup"
+                    }
+                  },
+                  {
+                    "name": "script",
+                    "configMap": {
+                      "name": "litellm-postgresql-backup-script",
+                      "defaultMode": 292
+                    }
+                  },
+                  {
+                    "name": "tmp",
+                    "emptyDir": {
+                      "sizeLimit": "256Mi"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "proposedScriptKeys": {
+      "PGHOST": "fixture-postgresql",
+      "PGPORT": "5432",
+      "PGDATABASE": "litellm",
+      "PGUSER": "postgres",
+      "BACKUP_ROOT": "/backups/litellm",
+      "BACKUP_INTERVAL_SECONDS": "900",
+      "BACKUP_MAXIMUM_BYTES": "68719476736",
+      "BACKUP_MAXIMUM_RETAINED_BYTES": "96636764160",
+      "BACKUP_MAXIMUM_AGE_SECONDS": "7200",
+      "BACKUP_MAXIMUM_DURATION_SECONDS": "1800",
+      "BACKUP_EXPECTED_SERVER_VERSION": "180006",
+      "BACKUP_CREDENTIAL_AUTHORITY_REF": "kubernetes-secret:fixture-recovery/litellm-secrets",
+      "BACKUP_APPLICATION_IMAGE": "ghcr.io/berriai/litellm@sha256:690f24800e2208e4f31b01483b9d0521d79dc508c8191f1c0b2f21549400c580",
+      "BACKUP_RESERVE_BYTES": "67108864",
+      "BACKUP_KILL_AFTER_SECONDS": "15",
+      "PGCONNECT_TIMEOUT": "15",
+      "BACKUP_TOC_MAXIMUM_BYTES": "66060288",
+      "BACKUP_METADATA_MAXIMUM_BYTES_EXCLUSIVE": "65536",
+      "BACKUP_CHECKSUM_INDEX_MAXIMUM_BYTES_EXCLUSIVE": "1024"
+    },
+    "expectedFutureCronDeltas": {
+      "activeDeadlineSeconds": 1860,
+      "successfulJobsHistoryLimit": 3,
+      "failedJobsHistoryLimit": 10,
+      "tmpSizeLimit": "256Mi"
+    }
+  },
+  "B-resources-requests-cpu": {
+    "qualification": "pure current source subfunctions + explicit expected future policy delta, not full renderer/installed closure",
+    "currentConfiguration": {
+      "PGHOST": "fixture-postgresql",
+      "PGPORT": "5432",
+      "PGDATABASE": "litellm",
+      "PGUSER": "postgres",
+      "BACKUP_ROOT": "/backups/litellm",
+      "BACKUP_INTERVAL_SECONDS": "900",
+      "BACKUP_MAXIMUM_BYTES": "68719476736",
+      "BACKUP_MAXIMUM_RETAINED_BYTES": "96636764160",
+      "BACKUP_MAXIMUM_AGE_SECONDS": "7200",
+      "BACKUP_MAXIMUM_DURATION_SECONDS": "1800",
+      "BACKUP_EXPECTED_SERVER_VERSION": "180006",
+      "BACKUP_CREDENTIAL_AUTHORITY_REF": "kubernetes-secret:fixture-recovery/litellm-secrets",
+      "BACKUP_APPLICATION_IMAGE": "ghcr.io/berriai/litellm@sha256:690f24800e2208e4f31b01483b9d0521d79dc508c8191f1c0b2f21549400c580"
+    },
+    "currentCron": {
+      "apiVersion": "batch/v1",
+      "kind": "CronJob",
+      "metadata": {
+        "namespace": "fixture-recovery",
+        "labels": {
+          "app": "litellm-postgresql-backup",
+          "app.kubernetes.io/managed-by": "kubeclaw-infrastructure"
+        },
+        "name": "litellm-postgresql-backup"
+      },
+      "spec": {
+        "schedule": "*/5 * * * *",
+        "timeZone": "Etc/UTC",
+        "concurrencyPolicy": "Forbid",
+        "startingDeadlineSeconds": 900,
+        "successfulJobsHistoryLimit": 3,
+        "failedJobsHistoryLimit": 10,
+        "jobTemplate": {
+          "spec": {
+            "backoffLimit": 0,
+            "activeDeadlineSeconds": 1860,
+            "template": {
+              "metadata": {
+                "labels": {
+                  "app": "litellm-postgresql-backup",
+                  "app.kubernetes.io/managed-by": "kubeclaw-infrastructure"
+                },
+                "annotations": {
+                  "checksum/recovery": "public-unsealed-structure-only"
+                }
+              },
+              "spec": {
+                "automountServiceAccountToken": false,
+                "restartPolicy": "Never",
+                "securityContext": {
+                  "runAsNonRoot": true,
+                  "runAsUser": 1001,
+                  "runAsGroup": 1001,
+                  "fsGroup": 1001,
+                  "fsGroupChangePolicy": "OnRootMismatch",
+                  "seccompProfile": {
+                    "type": "RuntimeDefault"
+                  }
+                },
+                "containers": [
+                  {
+                    "name": "backup",
+                    "image": "registry-1.docker.io/bitnami/postgresql@sha256:65d7506622ce2649914947b698d822d56c208295ba7ee80c1b34e48b251ba0c1",
+                    "imagePullPolicy": "IfNotPresent",
+                    "command": [
+                      "bash",
+                      "/recovery/postgresql-recovery.sh",
+                      "scheduled"
+                    ],
+                    "envFrom": [
+                      {
+                        "configMapRef": {
+                          "name": "litellm-postgresql-backup-settings"
+                        }
+                      }
+                    ],
+                    "resources": {
+                      "requests": {
+                        "cpu": "300m",
+                        "memory": "256Mi"
+                      },
+                      "limits": {
+                        "cpu": "1",
+                        "memory": "1Gi"
+                      }
+                    },
+                    "securityContext": {
+                      "allowPrivilegeEscalation": false,
+                      "readOnlyRootFilesystem": true,
+                      "capabilities": {
+                        "drop": [
+                          "ALL"
+                        ]
+                      }
+                    },
+                    "volumeMounts": [
+                      {
+                        "name": "backups",
+                        "mountPath": "/backups",
+                        "readOnly": false
+                      },
+                      {
+                        "name": "script",
+                        "mountPath": "/recovery",
+                        "readOnly": true
+                      },
+                      {
+                        "name": "tmp",
+                        "mountPath": "/tmp"
+                      }
+                    ],
+                    "env": [
+                      {
+                        "name": "PGPASSWORD",
+                        "valueFrom": {
+                          "secretKeyRef": {
+                            "name": "postgresql-secrets",
+                            "key": "postgres-password"
+                          }
+                        }
+                      },
+                      {
+                        "name": "LITELLM_MASTER_KEY",
+                        "valueFrom": {
+                          "secretKeyRef": {
+                            "name": "litellm-secrets",
+                            "key": "LITELLM_MASTER_KEY"
+                          }
+                        }
+                      },
+                      {
+                        "name": "LITELLM_SALT_KEY",
+                        "valueFrom": {
+                          "secretKeyRef": {
+                            "name": "litellm-secrets",
+                            "key": "LITELLM_SALT_KEY",
+                            "optional": true
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "volumes": [
+                  {
+                    "name": "backups",
+                    "persistentVolumeClaim": {
+                      "claimName": "litellm-postgresql-backup"
+                    }
+                  },
+                  {
+                    "name": "script",
+                    "configMap": {
+                      "name": "litellm-postgresql-backup-script",
+                      "defaultMode": 292
+                    }
+                  },
+                  {
+                    "name": "tmp",
+                    "emptyDir": {
+                      "sizeLimit": "256Mi"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "proposedScriptKeys": {
+      "PGHOST": "fixture-postgresql",
+      "PGPORT": "5432",
+      "PGDATABASE": "litellm",
+      "PGUSER": "postgres",
+      "BACKUP_ROOT": "/backups/litellm",
+      "BACKUP_INTERVAL_SECONDS": "900",
+      "BACKUP_MAXIMUM_BYTES": "68719476736",
+      "BACKUP_MAXIMUM_RETAINED_BYTES": "96636764160",
+      "BACKUP_MAXIMUM_AGE_SECONDS": "7200",
+      "BACKUP_MAXIMUM_DURATION_SECONDS": "1800",
+      "BACKUP_EXPECTED_SERVER_VERSION": "180006",
+      "BACKUP_CREDENTIAL_AUTHORITY_REF": "kubernetes-secret:fixture-recovery/litellm-secrets",
+      "BACKUP_APPLICATION_IMAGE": "ghcr.io/berriai/litellm@sha256:690f24800e2208e4f31b01483b9d0521d79dc508c8191f1c0b2f21549400c580",
+      "BACKUP_RESERVE_BYTES": "67108864",
+      "BACKUP_KILL_AFTER_SECONDS": "15",
+      "PGCONNECT_TIMEOUT": "15",
+      "BACKUP_TOC_MAXIMUM_BYTES": "66060288",
+      "BACKUP_METADATA_MAXIMUM_BYTES_EXCLUSIVE": "65536",
+      "BACKUP_CHECKSUM_INDEX_MAXIMUM_BYTES_EXCLUSIVE": "1024"
+    },
+    "expectedFutureCronDeltas": {
+      "activeDeadlineSeconds": 1860,
+      "successfulJobsHistoryLimit": 3,
+      "failedJobsHistoryLimit": 10,
+      "tmpSizeLimit": "256Mi"
+    }
+  },
+  "B-resources-requests-memory": {
+    "qualification": "pure current source subfunctions + explicit expected future policy delta, not full renderer/installed closure",
+    "currentConfiguration": {
+      "PGHOST": "fixture-postgresql",
+      "PGPORT": "5432",
+      "PGDATABASE": "litellm",
+      "PGUSER": "postgres",
+      "BACKUP_ROOT": "/backups/litellm",
+      "BACKUP_INTERVAL_SECONDS": "900",
+      "BACKUP_MAXIMUM_BYTES": "68719476736",
+      "BACKUP_MAXIMUM_RETAINED_BYTES": "96636764160",
+      "BACKUP_MAXIMUM_AGE_SECONDS": "7200",
+      "BACKUP_MAXIMUM_DURATION_SECONDS": "1800",
+      "BACKUP_EXPECTED_SERVER_VERSION": "180006",
+      "BACKUP_CREDENTIAL_AUTHORITY_REF": "kubernetes-secret:fixture-recovery/litellm-secrets",
+      "BACKUP_APPLICATION_IMAGE": "ghcr.io/berriai/litellm@sha256:690f24800e2208e4f31b01483b9d0521d79dc508c8191f1c0b2f21549400c580"
+    },
+    "currentCron": {
+      "apiVersion": "batch/v1",
+      "kind": "CronJob",
+      "metadata": {
+        "namespace": "fixture-recovery",
+        "labels": {
+          "app": "litellm-postgresql-backup",
+          "app.kubernetes.io/managed-by": "kubeclaw-infrastructure"
+        },
+        "name": "litellm-postgresql-backup"
+      },
+      "spec": {
+        "schedule": "*/5 * * * *",
+        "timeZone": "Etc/UTC",
+        "concurrencyPolicy": "Forbid",
+        "startingDeadlineSeconds": 900,
+        "successfulJobsHistoryLimit": 3,
+        "failedJobsHistoryLimit": 10,
+        "jobTemplate": {
+          "spec": {
+            "backoffLimit": 0,
+            "activeDeadlineSeconds": 1860,
+            "template": {
+              "metadata": {
+                "labels": {
+                  "app": "litellm-postgresql-backup",
+                  "app.kubernetes.io/managed-by": "kubeclaw-infrastructure"
+                },
+                "annotations": {
+                  "checksum/recovery": "public-unsealed-structure-only"
+                }
+              },
+              "spec": {
+                "automountServiceAccountToken": false,
+                "restartPolicy": "Never",
+                "securityContext": {
+                  "runAsNonRoot": true,
+                  "runAsUser": 1001,
+                  "runAsGroup": 1001,
+                  "fsGroup": 1001,
+                  "fsGroupChangePolicy": "OnRootMismatch",
+                  "seccompProfile": {
+                    "type": "RuntimeDefault"
+                  }
+                },
+                "containers": [
+                  {
+                    "name": "backup",
+                    "image": "registry-1.docker.io/bitnami/postgresql@sha256:65d7506622ce2649914947b698d822d56c208295ba7ee80c1b34e48b251ba0c1",
+                    "imagePullPolicy": "IfNotPresent",
+                    "command": [
+                      "bash",
+                      "/recovery/postgresql-recovery.sh",
+                      "scheduled"
+                    ],
+                    "envFrom": [
+                      {
+                        "configMapRef": {
+                          "name": "litellm-postgresql-backup-settings"
+                        }
+                      }
+                    ],
+                    "resources": {
+                      "requests": {
+                        "cpu": "250m",
+                        "memory": "320Mi"
+                      },
+                      "limits": {
+                        "cpu": "1",
+                        "memory": "1Gi"
+                      }
+                    },
+                    "securityContext": {
+                      "allowPrivilegeEscalation": false,
+                      "readOnlyRootFilesystem": true,
+                      "capabilities": {
+                        "drop": [
+                          "ALL"
+                        ]
+                      }
+                    },
+                    "volumeMounts": [
+                      {
+                        "name": "backups",
+                        "mountPath": "/backups",
+                        "readOnly": false
+                      },
+                      {
+                        "name": "script",
+                        "mountPath": "/recovery",
+                        "readOnly": true
+                      },
+                      {
+                        "name": "tmp",
+                        "mountPath": "/tmp"
+                      }
+                    ],
+                    "env": [
+                      {
+                        "name": "PGPASSWORD",
+                        "valueFrom": {
+                          "secretKeyRef": {
+                            "name": "postgresql-secrets",
+                            "key": "postgres-password"
+                          }
+                        }
+                      },
+                      {
+                        "name": "LITELLM_MASTER_KEY",
+                        "valueFrom": {
+                          "secretKeyRef": {
+                            "name": "litellm-secrets",
+                            "key": "LITELLM_MASTER_KEY"
+                          }
+                        }
+                      },
+                      {
+                        "name": "LITELLM_SALT_KEY",
+                        "valueFrom": {
+                          "secretKeyRef": {
+                            "name": "litellm-secrets",
+                            "key": "LITELLM_SALT_KEY",
+                            "optional": true
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "volumes": [
+                  {
+                    "name": "backups",
+                    "persistentVolumeClaim": {
+                      "claimName": "litellm-postgresql-backup"
+                    }
+                  },
+                  {
+                    "name": "script",
+                    "configMap": {
+                      "name": "litellm-postgresql-backup-script",
+                      "defaultMode": 292
+                    }
+                  },
+                  {
+                    "name": "tmp",
+                    "emptyDir": {
+                      "sizeLimit": "256Mi"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "proposedScriptKeys": {
+      "PGHOST": "fixture-postgresql",
+      "PGPORT": "5432",
+      "PGDATABASE": "litellm",
+      "PGUSER": "postgres",
+      "BACKUP_ROOT": "/backups/litellm",
+      "BACKUP_INTERVAL_SECONDS": "900",
+      "BACKUP_MAXIMUM_BYTES": "68719476736",
+      "BACKUP_MAXIMUM_RETAINED_BYTES": "96636764160",
+      "BACKUP_MAXIMUM_AGE_SECONDS": "7200",
+      "BACKUP_MAXIMUM_DURATION_SECONDS": "1800",
+      "BACKUP_EXPECTED_SERVER_VERSION": "180006",
+      "BACKUP_CREDENTIAL_AUTHORITY_REF": "kubernetes-secret:fixture-recovery/litellm-secrets",
+      "BACKUP_APPLICATION_IMAGE": "ghcr.io/berriai/litellm@sha256:690f24800e2208e4f31b01483b9d0521d79dc508c8191f1c0b2f21549400c580",
+      "BACKUP_RESERVE_BYTES": "67108864",
+      "BACKUP_KILL_AFTER_SECONDS": "15",
+      "PGCONNECT_TIMEOUT": "15",
+      "BACKUP_TOC_MAXIMUM_BYTES": "66060288",
+      "BACKUP_METADATA_MAXIMUM_BYTES_EXCLUSIVE": "65536",
+      "BACKUP_CHECKSUM_INDEX_MAXIMUM_BYTES_EXCLUSIVE": "1024"
+    },
+    "expectedFutureCronDeltas": {
+      "activeDeadlineSeconds": 1860,
+      "successfulJobsHistoryLimit": 3,
+      "failedJobsHistoryLimit": 10,
+      "tmpSizeLimit": "256Mi"
+    }
+  },
+  "B-resources-limits-cpu": {
+    "qualification": "pure current source subfunctions + explicit expected future policy delta, not full renderer/installed closure",
+    "currentConfiguration": {
+      "PGHOST": "fixture-postgresql",
+      "PGPORT": "5432",
+      "PGDATABASE": "litellm",
+      "PGUSER": "postgres",
+      "BACKUP_ROOT": "/backups/litellm",
+      "BACKUP_INTERVAL_SECONDS": "900",
+      "BACKUP_MAXIMUM_BYTES": "68719476736",
+      "BACKUP_MAXIMUM_RETAINED_BYTES": "96636764160",
+      "BACKUP_MAXIMUM_AGE_SECONDS": "7200",
+      "BACKUP_MAXIMUM_DURATION_SECONDS": "1800",
+      "BACKUP_EXPECTED_SERVER_VERSION": "180006",
+      "BACKUP_CREDENTIAL_AUTHORITY_REF": "kubernetes-secret:fixture-recovery/litellm-secrets",
+      "BACKUP_APPLICATION_IMAGE": "ghcr.io/berriai/litellm@sha256:690f24800e2208e4f31b01483b9d0521d79dc508c8191f1c0b2f21549400c580"
+    },
+    "currentCron": {
+      "apiVersion": "batch/v1",
+      "kind": "CronJob",
+      "metadata": {
+        "namespace": "fixture-recovery",
+        "labels": {
+          "app": "litellm-postgresql-backup",
+          "app.kubernetes.io/managed-by": "kubeclaw-infrastructure"
+        },
+        "name": "litellm-postgresql-backup"
+      },
+      "spec": {
+        "schedule": "*/5 * * * *",
+        "timeZone": "Etc/UTC",
+        "concurrencyPolicy": "Forbid",
+        "startingDeadlineSeconds": 900,
+        "successfulJobsHistoryLimit": 3,
+        "failedJobsHistoryLimit": 10,
+        "jobTemplate": {
+          "spec": {
+            "backoffLimit": 0,
+            "activeDeadlineSeconds": 1860,
+            "template": {
+              "metadata": {
+                "labels": {
+                  "app": "litellm-postgresql-backup",
+                  "app.kubernetes.io/managed-by": "kubeclaw-infrastructure"
+                },
+                "annotations": {
+                  "checksum/recovery": "public-unsealed-structure-only"
+                }
+              },
+              "spec": {
+                "automountServiceAccountToken": false,
+                "restartPolicy": "Never",
+                "securityContext": {
+                  "runAsNonRoot": true,
+                  "runAsUser": 1001,
+                  "runAsGroup": 1001,
+                  "fsGroup": 1001,
+                  "fsGroupChangePolicy": "OnRootMismatch",
+                  "seccompProfile": {
+                    "type": "RuntimeDefault"
+                  }
+                },
+                "containers": [
+                  {
+                    "name": "backup",
+                    "image": "registry-1.docker.io/bitnami/postgresql@sha256:65d7506622ce2649914947b698d822d56c208295ba7ee80c1b34e48b251ba0c1",
+                    "imagePullPolicy": "IfNotPresent",
+                    "command": [
+                      "bash",
+                      "/recovery/postgresql-recovery.sh",
+                      "scheduled"
+                    ],
+                    "envFrom": [
+                      {
+                        "configMapRef": {
+                          "name": "litellm-postgresql-backup-settings"
+                        }
+                      }
+                    ],
+                    "resources": {
+                      "requests": {
+                        "cpu": "250m",
+                        "memory": "256Mi"
+                      },
+                      "limits": {
+                        "cpu": "1500m",
+                        "memory": "1Gi"
+                      }
+                    },
+                    "securityContext": {
+                      "allowPrivilegeEscalation": false,
+                      "readOnlyRootFilesystem": true,
+                      "capabilities": {
+                        "drop": [
+                          "ALL"
+                        ]
+                      }
+                    },
+                    "volumeMounts": [
+                      {
+                        "name": "backups",
+                        "mountPath": "/backups",
+                        "readOnly": false
+                      },
+                      {
+                        "name": "script",
+                        "mountPath": "/recovery",
+                        "readOnly": true
+                      },
+                      {
+                        "name": "tmp",
+                        "mountPath": "/tmp"
+                      }
+                    ],
+                    "env": [
+                      {
+                        "name": "PGPASSWORD",
+                        "valueFrom": {
+                          "secretKeyRef": {
+                            "name": "postgresql-secrets",
+                            "key": "postgres-password"
+                          }
+                        }
+                      },
+                      {
+                        "name": "LITELLM_MASTER_KEY",
+                        "valueFrom": {
+                          "secretKeyRef": {
+                            "name": "litellm-secrets",
+                            "key": "LITELLM_MASTER_KEY"
+                          }
+                        }
+                      },
+                      {
+                        "name": "LITELLM_SALT_KEY",
+                        "valueFrom": {
+                          "secretKeyRef": {
+                            "name": "litellm-secrets",
+                            "key": "LITELLM_SALT_KEY",
+                            "optional": true
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "volumes": [
+                  {
+                    "name": "backups",
+                    "persistentVolumeClaim": {
+                      "claimName": "litellm-postgresql-backup"
+                    }
+                  },
+                  {
+                    "name": "script",
+                    "configMap": {
+                      "name": "litellm-postgresql-backup-script",
+                      "defaultMode": 292
+                    }
+                  },
+                  {
+                    "name": "tmp",
+                    "emptyDir": {
+                      "sizeLimit": "256Mi"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "proposedScriptKeys": {
+      "PGHOST": "fixture-postgresql",
+      "PGPORT": "5432",
+      "PGDATABASE": "litellm",
+      "PGUSER": "postgres",
+      "BACKUP_ROOT": "/backups/litellm",
+      "BACKUP_INTERVAL_SECONDS": "900",
+      "BACKUP_MAXIMUM_BYTES": "68719476736",
+      "BACKUP_MAXIMUM_RETAINED_BYTES": "96636764160",
+      "BACKUP_MAXIMUM_AGE_SECONDS": "7200",
+      "BACKUP_MAXIMUM_DURATION_SECONDS": "1800",
+      "BACKUP_EXPECTED_SERVER_VERSION": "180006",
+      "BACKUP_CREDENTIAL_AUTHORITY_REF": "kubernetes-secret:fixture-recovery/litellm-secrets",
+      "BACKUP_APPLICATION_IMAGE": "ghcr.io/berriai/litellm@sha256:690f24800e2208e4f31b01483b9d0521d79dc508c8191f1c0b2f21549400c580",
+      "BACKUP_RESERVE_BYTES": "67108864",
+      "BACKUP_KILL_AFTER_SECONDS": "15",
+      "PGCONNECT_TIMEOUT": "15",
+      "BACKUP_TOC_MAXIMUM_BYTES": "66060288",
+      "BACKUP_METADATA_MAXIMUM_BYTES_EXCLUSIVE": "65536",
+      "BACKUP_CHECKSUM_INDEX_MAXIMUM_BYTES_EXCLUSIVE": "1024"
+    },
+    "expectedFutureCronDeltas": {
+      "activeDeadlineSeconds": 1860,
+      "successfulJobsHistoryLimit": 3,
+      "failedJobsHistoryLimit": 10,
+      "tmpSizeLimit": "256Mi"
+    }
+  },
+  "B-resources-limits-memory": {
+    "qualification": "pure current source subfunctions + explicit expected future policy delta, not full renderer/installed closure",
+    "currentConfiguration": {
+      "PGHOST": "fixture-postgresql",
+      "PGPORT": "5432",
+      "PGDATABASE": "litellm",
+      "PGUSER": "postgres",
+      "BACKUP_ROOT": "/backups/litellm",
+      "BACKUP_INTERVAL_SECONDS": "900",
+      "BACKUP_MAXIMUM_BYTES": "68719476736",
+      "BACKUP_MAXIMUM_RETAINED_BYTES": "96636764160",
+      "BACKUP_MAXIMUM_AGE_SECONDS": "7200",
+      "BACKUP_MAXIMUM_DURATION_SECONDS": "1800",
+      "BACKUP_EXPECTED_SERVER_VERSION": "180006",
+      "BACKUP_CREDENTIAL_AUTHORITY_REF": "kubernetes-secret:fixture-recovery/litellm-secrets",
+      "BACKUP_APPLICATION_IMAGE": "ghcr.io/berriai/litellm@sha256:690f24800e2208e4f31b01483b9d0521d79dc508c8191f1c0b2f21549400c580"
+    },
+    "currentCron": {
+      "apiVersion": "batch/v1",
+      "kind": "CronJob",
+      "metadata": {
+        "namespace": "fixture-recovery",
+        "labels": {
+          "app": "litellm-postgresql-backup",
+          "app.kubernetes.io/managed-by": "kubeclaw-infrastructure"
+        },
+        "name": "litellm-postgresql-backup"
+      },
+      "spec": {
+        "schedule": "*/5 * * * *",
+        "timeZone": "Etc/UTC",
+        "concurrencyPolicy": "Forbid",
+        "startingDeadlineSeconds": 900,
+        "successfulJobsHistoryLimit": 3,
+        "failedJobsHistoryLimit": 10,
+        "jobTemplate": {
+          "spec": {
+            "backoffLimit": 0,
+            "activeDeadlineSeconds": 1860,
+            "template": {
+              "metadata": {
+                "labels": {
+                  "app": "litellm-postgresql-backup",
+                  "app.kubernetes.io/managed-by": "kubeclaw-infrastructure"
+                },
+                "annotations": {
+                  "checksum/recovery": "public-unsealed-structure-only"
+                }
+              },
+              "spec": {
+                "automountServiceAccountToken": false,
+                "restartPolicy": "Never",
+                "securityContext": {
+                  "runAsNonRoot": true,
+                  "runAsUser": 1001,
+                  "runAsGroup": 1001,
+                  "fsGroup": 1001,
+                  "fsGroupChangePolicy": "OnRootMismatch",
+                  "seccompProfile": {
+                    "type": "RuntimeDefault"
+                  }
+                },
+                "containers": [
+                  {
+                    "name": "backup",
+                    "image": "registry-1.docker.io/bitnami/postgresql@sha256:65d7506622ce2649914947b698d822d56c208295ba7ee80c1b34e48b251ba0c1",
+                    "imagePullPolicy": "IfNotPresent",
+                    "command": [
+                      "bash",
+                      "/recovery/postgresql-recovery.sh",
+                      "scheduled"
+                    ],
+                    "envFrom": [
+                      {
+                        "configMapRef": {
+                          "name": "litellm-postgresql-backup-settings"
+                        }
+                      }
+                    ],
+                    "resources": {
+                      "requests": {
+                        "cpu": "250m",
+                        "memory": "256Mi"
+                      },
+                      "limits": {
+                        "cpu": "1",
+                        "memory": "2Gi"
+                      }
+                    },
+                    "securityContext": {
+                      "allowPrivilegeEscalation": false,
+                      "readOnlyRootFilesystem": true,
+                      "capabilities": {
+                        "drop": [
+                          "ALL"
+                        ]
+                      }
+                    },
+                    "volumeMounts": [
+                      {
+                        "name": "backups",
+                        "mountPath": "/backups",
+                        "readOnly": false
+                      },
+                      {
+                        "name": "script",
+                        "mountPath": "/recovery",
+                        "readOnly": true
+                      },
+                      {
+                        "name": "tmp",
+                        "mountPath": "/tmp"
+                      }
+                    ],
+                    "env": [
+                      {
+                        "name": "PGPASSWORD",
+                        "valueFrom": {
+                          "secretKeyRef": {
+                            "name": "postgresql-secrets",
+                            "key": "postgres-password"
+                          }
+                        }
+                      },
+                      {
+                        "name": "LITELLM_MASTER_KEY",
+                        "valueFrom": {
+                          "secretKeyRef": {
+                            "name": "litellm-secrets",
+                            "key": "LITELLM_MASTER_KEY"
+                          }
+                        }
+                      },
+                      {
+                        "name": "LITELLM_SALT_KEY",
+                        "valueFrom": {
+                          "secretKeyRef": {
+                            "name": "litellm-secrets",
+                            "key": "LITELLM_SALT_KEY",
+                            "optional": true
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "volumes": [
+                  {
+                    "name": "backups",
+                    "persistentVolumeClaim": {
+                      "claimName": "litellm-postgresql-backup"
+                    }
+                  },
+                  {
+                    "name": "script",
+                    "configMap": {
+                      "name": "litellm-postgresql-backup-script",
+                      "defaultMode": 292
+                    }
+                  },
+                  {
+                    "name": "tmp",
+                    "emptyDir": {
+                      "sizeLimit": "256Mi"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "proposedScriptKeys": {
+      "PGHOST": "fixture-postgresql",
+      "PGPORT": "5432",
+      "PGDATABASE": "litellm",
+      "PGUSER": "postgres",
+      "BACKUP_ROOT": "/backups/litellm",
+      "BACKUP_INTERVAL_SECONDS": "900",
+      "BACKUP_MAXIMUM_BYTES": "68719476736",
+      "BACKUP_MAXIMUM_RETAINED_BYTES": "96636764160",
+      "BACKUP_MAXIMUM_AGE_SECONDS": "7200",
+      "BACKUP_MAXIMUM_DURATION_SECONDS": "1800",
+      "BACKUP_EXPECTED_SERVER_VERSION": "180006",
+      "BACKUP_CREDENTIAL_AUTHORITY_REF": "kubernetes-secret:fixture-recovery/litellm-secrets",
+      "BACKUP_APPLICATION_IMAGE": "ghcr.io/berriai/litellm@sha256:690f24800e2208e4f31b01483b9d0521d79dc508c8191f1c0b2f21549400c580",
+      "BACKUP_RESERVE_BYTES": "67108864",
+      "BACKUP_KILL_AFTER_SECONDS": "15",
+      "PGCONNECT_TIMEOUT": "15",
+      "BACKUP_TOC_MAXIMUM_BYTES": "66060288",
+      "BACKUP_METADATA_MAXIMUM_BYTES_EXCLUSIVE": "65536",
+      "BACKUP_CHECKSUM_INDEX_MAXIMUM_BYTES_EXCLUSIVE": "1024"
+    },
+    "expectedFutureCronDeltas": {
+      "activeDeadlineSeconds": 1860,
+      "successfulJobsHistoryLimit": 3,
+      "failedJobsHistoryLimit": 10,
+      "tmpSizeLimit": "256Mi"
+    }
+  },
+  "B-reserveBytes": {
+    "qualification": "pure current source subfunctions + explicit expected future policy delta, not full renderer/installed closure",
+    "currentConfiguration": {
+      "PGHOST": "fixture-postgresql",
+      "PGPORT": "5432",
+      "PGDATABASE": "litellm",
+      "PGUSER": "postgres",
+      "BACKUP_ROOT": "/backups/litellm",
+      "BACKUP_INTERVAL_SECONDS": "900",
+      "BACKUP_MAXIMUM_BYTES": "68719476736",
+      "BACKUP_MAXIMUM_RETAINED_BYTES": "96636764160",
+      "BACKUP_MAXIMUM_AGE_SECONDS": "7200",
+      "BACKUP_MAXIMUM_DURATION_SECONDS": "1800",
+      "BACKUP_EXPECTED_SERVER_VERSION": "180006",
+      "BACKUP_CREDENTIAL_AUTHORITY_REF": "kubernetes-secret:fixture-recovery/litellm-secrets",
+      "BACKUP_APPLICATION_IMAGE": "ghcr.io/berriai/litellm@sha256:690f24800e2208e4f31b01483b9d0521d79dc508c8191f1c0b2f21549400c580"
+    },
+    "currentCron": {
+      "apiVersion": "batch/v1",
+      "kind": "CronJob",
+      "metadata": {
+        "namespace": "fixture-recovery",
+        "labels": {
+          "app": "litellm-postgresql-backup",
+          "app.kubernetes.io/managed-by": "kubeclaw-infrastructure"
+        },
+        "name": "litellm-postgresql-backup"
+      },
+      "spec": {
+        "schedule": "*/5 * * * *",
+        "timeZone": "Etc/UTC",
+        "concurrencyPolicy": "Forbid",
+        "startingDeadlineSeconds": 900,
+        "successfulJobsHistoryLimit": 3,
+        "failedJobsHistoryLimit": 10,
+        "jobTemplate": {
+          "spec": {
+            "backoffLimit": 0,
+            "activeDeadlineSeconds": 1860,
+            "template": {
+              "metadata": {
+                "labels": {
+                  "app": "litellm-postgresql-backup",
+                  "app.kubernetes.io/managed-by": "kubeclaw-infrastructure"
+                },
+                "annotations": {
+                  "checksum/recovery": "public-unsealed-structure-only"
+                }
+              },
+              "spec": {
+                "automountServiceAccountToken": false,
+                "restartPolicy": "Never",
+                "securityContext": {
+                  "runAsNonRoot": true,
+                  "runAsUser": 1001,
+                  "runAsGroup": 1001,
+                  "fsGroup": 1001,
+                  "fsGroupChangePolicy": "OnRootMismatch",
+                  "seccompProfile": {
+                    "type": "RuntimeDefault"
+                  }
+                },
+                "containers": [
+                  {
+                    "name": "backup",
+                    "image": "registry-1.docker.io/bitnami/postgresql@sha256:65d7506622ce2649914947b698d822d56c208295ba7ee80c1b34e48b251ba0c1",
+                    "imagePullPolicy": "IfNotPresent",
+                    "command": [
+                      "bash",
+                      "/recovery/postgresql-recovery.sh",
+                      "scheduled"
+                    ],
+                    "envFrom": [
+                      {
+                        "configMapRef": {
+                          "name": "litellm-postgresql-backup-settings"
+                        }
+                      }
+                    ],
+                    "resources": {
+                      "requests": {
+                        "cpu": "250m",
+                        "memory": "256Mi"
+                      },
+                      "limits": {
+                        "cpu": "1",
+                        "memory": "1Gi"
+                      }
+                    },
+                    "securityContext": {
+                      "allowPrivilegeEscalation": false,
+                      "readOnlyRootFilesystem": true,
+                      "capabilities": {
+                        "drop": [
+                          "ALL"
+                        ]
+                      }
+                    },
+                    "volumeMounts": [
+                      {
+                        "name": "backups",
+                        "mountPath": "/backups",
+                        "readOnly": false
+                      },
+                      {
+                        "name": "script",
+                        "mountPath": "/recovery",
+                        "readOnly": true
+                      },
+                      {
+                        "name": "tmp",
+                        "mountPath": "/tmp"
+                      }
+                    ],
+                    "env": [
+                      {
+                        "name": "PGPASSWORD",
+                        "valueFrom": {
+                          "secretKeyRef": {
+                            "name": "postgresql-secrets",
+                            "key": "postgres-password"
+                          }
+                        }
+                      },
+                      {
+                        "name": "LITELLM_MASTER_KEY",
+                        "valueFrom": {
+                          "secretKeyRef": {
+                            "name": "litellm-secrets",
+                            "key": "LITELLM_MASTER_KEY"
+                          }
+                        }
+                      },
+                      {
+                        "name": "LITELLM_SALT_KEY",
+                        "valueFrom": {
+                          "secretKeyRef": {
+                            "name": "litellm-secrets",
+                            "key": "LITELLM_SALT_KEY",
+                            "optional": true
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "volumes": [
+                  {
+                    "name": "backups",
+                    "persistentVolumeClaim": {
+                      "claimName": "litellm-postgresql-backup"
+                    }
+                  },
+                  {
+                    "name": "script",
+                    "configMap": {
+                      "name": "litellm-postgresql-backup-script",
+                      "defaultMode": 292
+                    }
+                  },
+                  {
+                    "name": "tmp",
+                    "emptyDir": {
+                      "sizeLimit": "256Mi"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "proposedScriptKeys": {
+      "PGHOST": "fixture-postgresql",
+      "PGPORT": "5432",
+      "PGDATABASE": "litellm",
+      "PGUSER": "postgres",
+      "BACKUP_ROOT": "/backups/litellm",
+      "BACKUP_INTERVAL_SECONDS": "900",
+      "BACKUP_MAXIMUM_BYTES": "68719476736",
+      "BACKUP_MAXIMUM_RETAINED_BYTES": "96636764160",
+      "BACKUP_MAXIMUM_AGE_SECONDS": "7200",
+      "BACKUP_MAXIMUM_DURATION_SECONDS": "1800",
+      "BACKUP_EXPECTED_SERVER_VERSION": "180006",
+      "BACKUP_CREDENTIAL_AUTHORITY_REF": "kubernetes-secret:fixture-recovery/litellm-secrets",
+      "BACKUP_APPLICATION_IMAGE": "ghcr.io/berriai/litellm@sha256:690f24800e2208e4f31b01483b9d0521d79dc508c8191f1c0b2f21549400c580",
+      "BACKUP_RESERVE_BYTES": "68157440",
+      "BACKUP_KILL_AFTER_SECONDS": "15",
+      "PGCONNECT_TIMEOUT": "15",
+      "BACKUP_TOC_MAXIMUM_BYTES": "66060288",
+      "BACKUP_METADATA_MAXIMUM_BYTES_EXCLUSIVE": "65536",
+      "BACKUP_CHECKSUM_INDEX_MAXIMUM_BYTES_EXCLUSIVE": "1024"
+    },
+    "expectedFutureCronDeltas": {
+      "activeDeadlineSeconds": 1860,
+      "successfulJobsHistoryLimit": 3,
+      "failedJobsHistoryLimit": 10,
+      "tmpSizeLimit": "256Mi"
+    }
+  },
+  "B-killAfterSeconds": {
+    "qualification": "pure current source subfunctions + explicit expected future policy delta, not full renderer/installed closure",
+    "currentConfiguration": {
+      "PGHOST": "fixture-postgresql",
+      "PGPORT": "5432",
+      "PGDATABASE": "litellm",
+      "PGUSER": "postgres",
+      "BACKUP_ROOT": "/backups/litellm",
+      "BACKUP_INTERVAL_SECONDS": "900",
+      "BACKUP_MAXIMUM_BYTES": "68719476736",
+      "BACKUP_MAXIMUM_RETAINED_BYTES": "96636764160",
+      "BACKUP_MAXIMUM_AGE_SECONDS": "7200",
+      "BACKUP_MAXIMUM_DURATION_SECONDS": "1800",
+      "BACKUP_EXPECTED_SERVER_VERSION": "180006",
+      "BACKUP_CREDENTIAL_AUTHORITY_REF": "kubernetes-secret:fixture-recovery/litellm-secrets",
+      "BACKUP_APPLICATION_IMAGE": "ghcr.io/berriai/litellm@sha256:690f24800e2208e4f31b01483b9d0521d79dc508c8191f1c0b2f21549400c580"
+    },
+    "currentCron": {
+      "apiVersion": "batch/v1",
+      "kind": "CronJob",
+      "metadata": {
+        "namespace": "fixture-recovery",
+        "labels": {
+          "app": "litellm-postgresql-backup",
+          "app.kubernetes.io/managed-by": "kubeclaw-infrastructure"
+        },
+        "name": "litellm-postgresql-backup"
+      },
+      "spec": {
+        "schedule": "*/5 * * * *",
+        "timeZone": "Etc/UTC",
+        "concurrencyPolicy": "Forbid",
+        "startingDeadlineSeconds": 900,
+        "successfulJobsHistoryLimit": 3,
+        "failedJobsHistoryLimit": 10,
+        "jobTemplate": {
+          "spec": {
+            "backoffLimit": 0,
+            "activeDeadlineSeconds": 1860,
+            "template": {
+              "metadata": {
+                "labels": {
+                  "app": "litellm-postgresql-backup",
+                  "app.kubernetes.io/managed-by": "kubeclaw-infrastructure"
+                },
+                "annotations": {
+                  "checksum/recovery": "public-unsealed-structure-only"
+                }
+              },
+              "spec": {
+                "automountServiceAccountToken": false,
+                "restartPolicy": "Never",
+                "securityContext": {
+                  "runAsNonRoot": true,
+                  "runAsUser": 1001,
+                  "runAsGroup": 1001,
+                  "fsGroup": 1001,
+                  "fsGroupChangePolicy": "OnRootMismatch",
+                  "seccompProfile": {
+                    "type": "RuntimeDefault"
+                  }
+                },
+                "containers": [
+                  {
+                    "name": "backup",
+                    "image": "registry-1.docker.io/bitnami/postgresql@sha256:65d7506622ce2649914947b698d822d56c208295ba7ee80c1b34e48b251ba0c1",
+                    "imagePullPolicy": "IfNotPresent",
+                    "command": [
+                      "bash",
+                      "/recovery/postgresql-recovery.sh",
+                      "scheduled"
+                    ],
+                    "envFrom": [
+                      {
+                        "configMapRef": {
+                          "name": "litellm-postgresql-backup-settings"
+                        }
+                      }
+                    ],
+                    "resources": {
+                      "requests": {
+                        "cpu": "250m",
+                        "memory": "256Mi"
+                      },
+                      "limits": {
+                        "cpu": "1",
+                        "memory": "1Gi"
+                      }
+                    },
+                    "securityContext": {
+                      "allowPrivilegeEscalation": false,
+                      "readOnlyRootFilesystem": true,
+                      "capabilities": {
+                        "drop": [
+                          "ALL"
+                        ]
+                      }
+                    },
+                    "volumeMounts": [
+                      {
+                        "name": "backups",
+                        "mountPath": "/backups",
+                        "readOnly": false
+                      },
+                      {
+                        "name": "script",
+                        "mountPath": "/recovery",
+                        "readOnly": true
+                      },
+                      {
+                        "name": "tmp",
+                        "mountPath": "/tmp"
+                      }
+                    ],
+                    "env": [
+                      {
+                        "name": "PGPASSWORD",
+                        "valueFrom": {
+                          "secretKeyRef": {
+                            "name": "postgresql-secrets",
+                            "key": "postgres-password"
+                          }
+                        }
+                      },
+                      {
+                        "name": "LITELLM_MASTER_KEY",
+                        "valueFrom": {
+                          "secretKeyRef": {
+                            "name": "litellm-secrets",
+                            "key": "LITELLM_MASTER_KEY"
+                          }
+                        }
+                      },
+                      {
+                        "name": "LITELLM_SALT_KEY",
+                        "valueFrom": {
+                          "secretKeyRef": {
+                            "name": "litellm-secrets",
+                            "key": "LITELLM_SALT_KEY",
+                            "optional": true
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "volumes": [
+                  {
+                    "name": "backups",
+                    "persistentVolumeClaim": {
+                      "claimName": "litellm-postgresql-backup"
+                    }
+                  },
+                  {
+                    "name": "script",
+                    "configMap": {
+                      "name": "litellm-postgresql-backup-script",
+                      "defaultMode": 292
+                    }
+                  },
+                  {
+                    "name": "tmp",
+                    "emptyDir": {
+                      "sizeLimit": "256Mi"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "proposedScriptKeys": {
+      "PGHOST": "fixture-postgresql",
+      "PGPORT": "5432",
+      "PGDATABASE": "litellm",
+      "PGUSER": "postgres",
+      "BACKUP_ROOT": "/backups/litellm",
+      "BACKUP_INTERVAL_SECONDS": "900",
+      "BACKUP_MAXIMUM_BYTES": "68719476736",
+      "BACKUP_MAXIMUM_RETAINED_BYTES": "96636764160",
+      "BACKUP_MAXIMUM_AGE_SECONDS": "7200",
+      "BACKUP_MAXIMUM_DURATION_SECONDS": "1800",
+      "BACKUP_EXPECTED_SERVER_VERSION": "180006",
+      "BACKUP_CREDENTIAL_AUTHORITY_REF": "kubernetes-secret:fixture-recovery/litellm-secrets",
+      "BACKUP_APPLICATION_IMAGE": "ghcr.io/berriai/litellm@sha256:690f24800e2208e4f31b01483b9d0521d79dc508c8191f1c0b2f21549400c580",
+      "BACKUP_RESERVE_BYTES": "67108864",
+      "BACKUP_KILL_AFTER_SECONDS": "14",
+      "PGCONNECT_TIMEOUT": "15",
+      "BACKUP_TOC_MAXIMUM_BYTES": "66060288",
+      "BACKUP_METADATA_MAXIMUM_BYTES_EXCLUSIVE": "65536",
+      "BACKUP_CHECKSUM_INDEX_MAXIMUM_BYTES_EXCLUSIVE": "1024"
+    },
+    "expectedFutureCronDeltas": {
+      "activeDeadlineSeconds": 1860,
+      "successfulJobsHistoryLimit": 3,
+      "failedJobsHistoryLimit": 10,
+      "tmpSizeLimit": "256Mi"
+    }
+  },
+  "B-connectionTimeoutSeconds": {
+    "qualification": "pure current source subfunctions + explicit expected future policy delta, not full renderer/installed closure",
+    "currentConfiguration": {
+      "PGHOST": "fixture-postgresql",
+      "PGPORT": "5432",
+      "PGDATABASE": "litellm",
+      "PGUSER": "postgres",
+      "BACKUP_ROOT": "/backups/litellm",
+      "BACKUP_INTERVAL_SECONDS": "900",
+      "BACKUP_MAXIMUM_BYTES": "68719476736",
+      "BACKUP_MAXIMUM_RETAINED_BYTES": "96636764160",
+      "BACKUP_MAXIMUM_AGE_SECONDS": "7200",
+      "BACKUP_MAXIMUM_DURATION_SECONDS": "1800",
+      "BACKUP_EXPECTED_SERVER_VERSION": "180006",
+      "BACKUP_CREDENTIAL_AUTHORITY_REF": "kubernetes-secret:fixture-recovery/litellm-secrets",
+      "BACKUP_APPLICATION_IMAGE": "ghcr.io/berriai/litellm@sha256:690f24800e2208e4f31b01483b9d0521d79dc508c8191f1c0b2f21549400c580"
+    },
+    "currentCron": {
+      "apiVersion": "batch/v1",
+      "kind": "CronJob",
+      "metadata": {
+        "namespace": "fixture-recovery",
+        "labels": {
+          "app": "litellm-postgresql-backup",
+          "app.kubernetes.io/managed-by": "kubeclaw-infrastructure"
+        },
+        "name": "litellm-postgresql-backup"
+      },
+      "spec": {
+        "schedule": "*/5 * * * *",
+        "timeZone": "Etc/UTC",
+        "concurrencyPolicy": "Forbid",
+        "startingDeadlineSeconds": 900,
+        "successfulJobsHistoryLimit": 3,
+        "failedJobsHistoryLimit": 10,
+        "jobTemplate": {
+          "spec": {
+            "backoffLimit": 0,
+            "activeDeadlineSeconds": 1860,
+            "template": {
+              "metadata": {
+                "labels": {
+                  "app": "litellm-postgresql-backup",
+                  "app.kubernetes.io/managed-by": "kubeclaw-infrastructure"
+                },
+                "annotations": {
+                  "checksum/recovery": "public-unsealed-structure-only"
+                }
+              },
+              "spec": {
+                "automountServiceAccountToken": false,
+                "restartPolicy": "Never",
+                "securityContext": {
+                  "runAsNonRoot": true,
+                  "runAsUser": 1001,
+                  "runAsGroup": 1001,
+                  "fsGroup": 1001,
+                  "fsGroupChangePolicy": "OnRootMismatch",
+                  "seccompProfile": {
+                    "type": "RuntimeDefault"
+                  }
+                },
+                "containers": [
+                  {
+                    "name": "backup",
+                    "image": "registry-1.docker.io/bitnami/postgresql@sha256:65d7506622ce2649914947b698d822d56c208295ba7ee80c1b34e48b251ba0c1",
+                    "imagePullPolicy": "IfNotPresent",
+                    "command": [
+                      "bash",
+                      "/recovery/postgresql-recovery.sh",
+                      "scheduled"
+                    ],
+                    "envFrom": [
+                      {
+                        "configMapRef": {
+                          "name": "litellm-postgresql-backup-settings"
+                        }
+                      }
+                    ],
+                    "resources": {
+                      "requests": {
+                        "cpu": "250m",
+                        "memory": "256Mi"
+                      },
+                      "limits": {
+                        "cpu": "1",
+                        "memory": "1Gi"
+                      }
+                    },
+                    "securityContext": {
+                      "allowPrivilegeEscalation": false,
+                      "readOnlyRootFilesystem": true,
+                      "capabilities": {
+                        "drop": [
+                          "ALL"
+                        ]
+                      }
+                    },
+                    "volumeMounts": [
+                      {
+                        "name": "backups",
+                        "mountPath": "/backups",
+                        "readOnly": false
+                      },
+                      {
+                        "name": "script",
+                        "mountPath": "/recovery",
+                        "readOnly": true
+                      },
+                      {
+                        "name": "tmp",
+                        "mountPath": "/tmp"
+                      }
+                    ],
+                    "env": [
+                      {
+                        "name": "PGPASSWORD",
+                        "valueFrom": {
+                          "secretKeyRef": {
+                            "name": "postgresql-secrets",
+                            "key": "postgres-password"
+                          }
+                        }
+                      },
+                      {
+                        "name": "LITELLM_MASTER_KEY",
+                        "valueFrom": {
+                          "secretKeyRef": {
+                            "name": "litellm-secrets",
+                            "key": "LITELLM_MASTER_KEY"
+                          }
+                        }
+                      },
+                      {
+                        "name": "LITELLM_SALT_KEY",
+                        "valueFrom": {
+                          "secretKeyRef": {
+                            "name": "litellm-secrets",
+                            "key": "LITELLM_SALT_KEY",
+                            "optional": true
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "volumes": [
+                  {
+                    "name": "backups",
+                    "persistentVolumeClaim": {
+                      "claimName": "litellm-postgresql-backup"
+                    }
+                  },
+                  {
+                    "name": "script",
+                    "configMap": {
+                      "name": "litellm-postgresql-backup-script",
+                      "defaultMode": 292
+                    }
+                  },
+                  {
+                    "name": "tmp",
+                    "emptyDir": {
+                      "sizeLimit": "256Mi"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "proposedScriptKeys": {
+      "PGHOST": "fixture-postgresql",
+      "PGPORT": "5432",
+      "PGDATABASE": "litellm",
+      "PGUSER": "postgres",
+      "BACKUP_ROOT": "/backups/litellm",
+      "BACKUP_INTERVAL_SECONDS": "900",
+      "BACKUP_MAXIMUM_BYTES": "68719476736",
+      "BACKUP_MAXIMUM_RETAINED_BYTES": "96636764160",
+      "BACKUP_MAXIMUM_AGE_SECONDS": "7200",
+      "BACKUP_MAXIMUM_DURATION_SECONDS": "1800",
+      "BACKUP_EXPECTED_SERVER_VERSION": "180006",
+      "BACKUP_CREDENTIAL_AUTHORITY_REF": "kubernetes-secret:fixture-recovery/litellm-secrets",
+      "BACKUP_APPLICATION_IMAGE": "ghcr.io/berriai/litellm@sha256:690f24800e2208e4f31b01483b9d0521d79dc508c8191f1c0b2f21549400c580",
+      "BACKUP_RESERVE_BYTES": "67108864",
+      "BACKUP_KILL_AFTER_SECONDS": "15",
+      "PGCONNECT_TIMEOUT": "14",
+      "BACKUP_TOC_MAXIMUM_BYTES": "66060288",
+      "BACKUP_METADATA_MAXIMUM_BYTES_EXCLUSIVE": "65536",
+      "BACKUP_CHECKSUM_INDEX_MAXIMUM_BYTES_EXCLUSIVE": "1024"
+    },
+    "expectedFutureCronDeltas": {
+      "activeDeadlineSeconds": 1860,
+      "successfulJobsHistoryLimit": 3,
+      "failedJobsHistoryLimit": 10,
+      "tmpSizeLimit": "256Mi"
+    }
+  },
+  "B-tocMaximumBytes": {
+    "qualification": "pure current source subfunctions + explicit expected future policy delta, not full renderer/installed closure",
+    "currentConfiguration": {
+      "PGHOST": "fixture-postgresql",
+      "PGPORT": "5432",
+      "PGDATABASE": "litellm",
+      "PGUSER": "postgres",
+      "BACKUP_ROOT": "/backups/litellm",
+      "BACKUP_INTERVAL_SECONDS": "900",
+      "BACKUP_MAXIMUM_BYTES": "68719476736",
+      "BACKUP_MAXIMUM_RETAINED_BYTES": "96636764160",
+      "BACKUP_MAXIMUM_AGE_SECONDS": "7200",
+      "BACKUP_MAXIMUM_DURATION_SECONDS": "1800",
+      "BACKUP_EXPECTED_SERVER_VERSION": "180006",
+      "BACKUP_CREDENTIAL_AUTHORITY_REF": "kubernetes-secret:fixture-recovery/litellm-secrets",
+      "BACKUP_APPLICATION_IMAGE": "ghcr.io/berriai/litellm@sha256:690f24800e2208e4f31b01483b9d0521d79dc508c8191f1c0b2f21549400c580"
+    },
+    "currentCron": {
+      "apiVersion": "batch/v1",
+      "kind": "CronJob",
+      "metadata": {
+        "namespace": "fixture-recovery",
+        "labels": {
+          "app": "litellm-postgresql-backup",
+          "app.kubernetes.io/managed-by": "kubeclaw-infrastructure"
+        },
+        "name": "litellm-postgresql-backup"
+      },
+      "spec": {
+        "schedule": "*/5 * * * *",
+        "timeZone": "Etc/UTC",
+        "concurrencyPolicy": "Forbid",
+        "startingDeadlineSeconds": 900,
+        "successfulJobsHistoryLimit": 3,
+        "failedJobsHistoryLimit": 10,
+        "jobTemplate": {
+          "spec": {
+            "backoffLimit": 0,
+            "activeDeadlineSeconds": 1860,
+            "template": {
+              "metadata": {
+                "labels": {
+                  "app": "litellm-postgresql-backup",
+                  "app.kubernetes.io/managed-by": "kubeclaw-infrastructure"
+                },
+                "annotations": {
+                  "checksum/recovery": "public-unsealed-structure-only"
+                }
+              },
+              "spec": {
+                "automountServiceAccountToken": false,
+                "restartPolicy": "Never",
+                "securityContext": {
+                  "runAsNonRoot": true,
+                  "runAsUser": 1001,
+                  "runAsGroup": 1001,
+                  "fsGroup": 1001,
+                  "fsGroupChangePolicy": "OnRootMismatch",
+                  "seccompProfile": {
+                    "type": "RuntimeDefault"
+                  }
+                },
+                "containers": [
+                  {
+                    "name": "backup",
+                    "image": "registry-1.docker.io/bitnami/postgresql@sha256:65d7506622ce2649914947b698d822d56c208295ba7ee80c1b34e48b251ba0c1",
+                    "imagePullPolicy": "IfNotPresent",
+                    "command": [
+                      "bash",
+                      "/recovery/postgresql-recovery.sh",
+                      "scheduled"
+                    ],
+                    "envFrom": [
+                      {
+                        "configMapRef": {
+                          "name": "litellm-postgresql-backup-settings"
+                        }
+                      }
+                    ],
+                    "resources": {
+                      "requests": {
+                        "cpu": "250m",
+                        "memory": "256Mi"
+                      },
+                      "limits": {
+                        "cpu": "1",
+                        "memory": "1Gi"
+                      }
+                    },
+                    "securityContext": {
+                      "allowPrivilegeEscalation": false,
+                      "readOnlyRootFilesystem": true,
+                      "capabilities": {
+                        "drop": [
+                          "ALL"
+                        ]
+                      }
+                    },
+                    "volumeMounts": [
+                      {
+                        "name": "backups",
+                        "mountPath": "/backups",
+                        "readOnly": false
+                      },
+                      {
+                        "name": "script",
+                        "mountPath": "/recovery",
+                        "readOnly": true
+                      },
+                      {
+                        "name": "tmp",
+                        "mountPath": "/tmp"
+                      }
+                    ],
+                    "env": [
+                      {
+                        "name": "PGPASSWORD",
+                        "valueFrom": {
+                          "secretKeyRef": {
+                            "name": "postgresql-secrets",
+                            "key": "postgres-password"
+                          }
+                        }
+                      },
+                      {
+                        "name": "LITELLM_MASTER_KEY",
+                        "valueFrom": {
+                          "secretKeyRef": {
+                            "name": "litellm-secrets",
+                            "key": "LITELLM_MASTER_KEY"
+                          }
+                        }
+                      },
+                      {
+                        "name": "LITELLM_SALT_KEY",
+                        "valueFrom": {
+                          "secretKeyRef": {
+                            "name": "litellm-secrets",
+                            "key": "LITELLM_SALT_KEY",
+                            "optional": true
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "volumes": [
+                  {
+                    "name": "backups",
+                    "persistentVolumeClaim": {
+                      "claimName": "litellm-postgresql-backup"
+                    }
+                  },
+                  {
+                    "name": "script",
+                    "configMap": {
+                      "name": "litellm-postgresql-backup-script",
+                      "defaultMode": 292
+                    }
+                  },
+                  {
+                    "name": "tmp",
+                    "emptyDir": {
+                      "sizeLimit": "256Mi"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "proposedScriptKeys": {
+      "PGHOST": "fixture-postgresql",
+      "PGPORT": "5432",
+      "PGDATABASE": "litellm",
+      "PGUSER": "postgres",
+      "BACKUP_ROOT": "/backups/litellm",
+      "BACKUP_INTERVAL_SECONDS": "900",
+      "BACKUP_MAXIMUM_BYTES": "68719476736",
+      "BACKUP_MAXIMUM_RETAINED_BYTES": "96636764160",
+      "BACKUP_MAXIMUM_AGE_SECONDS": "7200",
+      "BACKUP_MAXIMUM_DURATION_SECONDS": "1800",
+      "BACKUP_EXPECTED_SERVER_VERSION": "180006",
+      "BACKUP_CREDENTIAL_AUTHORITY_REF": "kubernetes-secret:fixture-recovery/litellm-secrets",
+      "BACKUP_APPLICATION_IMAGE": "ghcr.io/berriai/litellm@sha256:690f24800e2208e4f31b01483b9d0521d79dc508c8191f1c0b2f21549400c580",
+      "BACKUP_RESERVE_BYTES": "67108864",
+      "BACKUP_KILL_AFTER_SECONDS": "15",
+      "PGCONNECT_TIMEOUT": "15",
+      "BACKUP_TOC_MAXIMUM_BYTES": "66059264",
+      "BACKUP_METADATA_MAXIMUM_BYTES_EXCLUSIVE": "65536",
+      "BACKUP_CHECKSUM_INDEX_MAXIMUM_BYTES_EXCLUSIVE": "1024"
+    },
+    "expectedFutureCronDeltas": {
+      "activeDeadlineSeconds": 1860,
+      "successfulJobsHistoryLimit": 3,
+      "failedJobsHistoryLimit": 10,
+      "tmpSizeLimit": "256Mi"
+    }
+  },
+  "B-metadataMaximumBytesExclusive": {
+    "qualification": "pure current source subfunctions + explicit expected future policy delta, not full renderer/installed closure",
+    "currentConfiguration": {
+      "PGHOST": "fixture-postgresql",
+      "PGPORT": "5432",
+      "PGDATABASE": "litellm",
+      "PGUSER": "postgres",
+      "BACKUP_ROOT": "/backups/litellm",
+      "BACKUP_INTERVAL_SECONDS": "900",
+      "BACKUP_MAXIMUM_BYTES": "68719476736",
+      "BACKUP_MAXIMUM_RETAINED_BYTES": "96636764160",
+      "BACKUP_MAXIMUM_AGE_SECONDS": "7200",
+      "BACKUP_MAXIMUM_DURATION_SECONDS": "1800",
+      "BACKUP_EXPECTED_SERVER_VERSION": "180006",
+      "BACKUP_CREDENTIAL_AUTHORITY_REF": "kubernetes-secret:fixture-recovery/litellm-secrets",
+      "BACKUP_APPLICATION_IMAGE": "ghcr.io/berriai/litellm@sha256:690f24800e2208e4f31b01483b9d0521d79dc508c8191f1c0b2f21549400c580"
+    },
+    "currentCron": {
+      "apiVersion": "batch/v1",
+      "kind": "CronJob",
+      "metadata": {
+        "namespace": "fixture-recovery",
+        "labels": {
+          "app": "litellm-postgresql-backup",
+          "app.kubernetes.io/managed-by": "kubeclaw-infrastructure"
+        },
+        "name": "litellm-postgresql-backup"
+      },
+      "spec": {
+        "schedule": "*/5 * * * *",
+        "timeZone": "Etc/UTC",
+        "concurrencyPolicy": "Forbid",
+        "startingDeadlineSeconds": 900,
+        "successfulJobsHistoryLimit": 3,
+        "failedJobsHistoryLimit": 10,
+        "jobTemplate": {
+          "spec": {
+            "backoffLimit": 0,
+            "activeDeadlineSeconds": 1860,
+            "template": {
+              "metadata": {
+                "labels": {
+                  "app": "litellm-postgresql-backup",
+                  "app.kubernetes.io/managed-by": "kubeclaw-infrastructure"
+                },
+                "annotations": {
+                  "checksum/recovery": "public-unsealed-structure-only"
+                }
+              },
+              "spec": {
+                "automountServiceAccountToken": false,
+                "restartPolicy": "Never",
+                "securityContext": {
+                  "runAsNonRoot": true,
+                  "runAsUser": 1001,
+                  "runAsGroup": 1001,
+                  "fsGroup": 1001,
+                  "fsGroupChangePolicy": "OnRootMismatch",
+                  "seccompProfile": {
+                    "type": "RuntimeDefault"
+                  }
+                },
+                "containers": [
+                  {
+                    "name": "backup",
+                    "image": "registry-1.docker.io/bitnami/postgresql@sha256:65d7506622ce2649914947b698d822d56c208295ba7ee80c1b34e48b251ba0c1",
+                    "imagePullPolicy": "IfNotPresent",
+                    "command": [
+                      "bash",
+                      "/recovery/postgresql-recovery.sh",
+                      "scheduled"
+                    ],
+                    "envFrom": [
+                      {
+                        "configMapRef": {
+                          "name": "litellm-postgresql-backup-settings"
+                        }
+                      }
+                    ],
+                    "resources": {
+                      "requests": {
+                        "cpu": "250m",
+                        "memory": "256Mi"
+                      },
+                      "limits": {
+                        "cpu": "1",
+                        "memory": "1Gi"
+                      }
+                    },
+                    "securityContext": {
+                      "allowPrivilegeEscalation": false,
+                      "readOnlyRootFilesystem": true,
+                      "capabilities": {
+                        "drop": [
+                          "ALL"
+                        ]
+                      }
+                    },
+                    "volumeMounts": [
+                      {
+                        "name": "backups",
+                        "mountPath": "/backups",
+                        "readOnly": false
+                      },
+                      {
+                        "name": "script",
+                        "mountPath": "/recovery",
+                        "readOnly": true
+                      },
+                      {
+                        "name": "tmp",
+                        "mountPath": "/tmp"
+                      }
+                    ],
+                    "env": [
+                      {
+                        "name": "PGPASSWORD",
+                        "valueFrom": {
+                          "secretKeyRef": {
+                            "name": "postgresql-secrets",
+                            "key": "postgres-password"
+                          }
+                        }
+                      },
+                      {
+                        "name": "LITELLM_MASTER_KEY",
+                        "valueFrom": {
+                          "secretKeyRef": {
+                            "name": "litellm-secrets",
+                            "key": "LITELLM_MASTER_KEY"
+                          }
+                        }
+                      },
+                      {
+                        "name": "LITELLM_SALT_KEY",
+                        "valueFrom": {
+                          "secretKeyRef": {
+                            "name": "litellm-secrets",
+                            "key": "LITELLM_SALT_KEY",
+                            "optional": true
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "volumes": [
+                  {
+                    "name": "backups",
+                    "persistentVolumeClaim": {
+                      "claimName": "litellm-postgresql-backup"
+                    }
+                  },
+                  {
+                    "name": "script",
+                    "configMap": {
+                      "name": "litellm-postgresql-backup-script",
+                      "defaultMode": 292
+                    }
+                  },
+                  {
+                    "name": "tmp",
+                    "emptyDir": {
+                      "sizeLimit": "256Mi"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "proposedScriptKeys": {
+      "PGHOST": "fixture-postgresql",
+      "PGPORT": "5432",
+      "PGDATABASE": "litellm",
+      "PGUSER": "postgres",
+      "BACKUP_ROOT": "/backups/litellm",
+      "BACKUP_INTERVAL_SECONDS": "900",
+      "BACKUP_MAXIMUM_BYTES": "68719476736",
+      "BACKUP_MAXIMUM_RETAINED_BYTES": "96636764160",
+      "BACKUP_MAXIMUM_AGE_SECONDS": "7200",
+      "BACKUP_MAXIMUM_DURATION_SECONDS": "1800",
+      "BACKUP_EXPECTED_SERVER_VERSION": "180006",
+      "BACKUP_CREDENTIAL_AUTHORITY_REF": "kubernetes-secret:fixture-recovery/litellm-secrets",
+      "BACKUP_APPLICATION_IMAGE": "ghcr.io/berriai/litellm@sha256:690f24800e2208e4f31b01483b9d0521d79dc508c8191f1c0b2f21549400c580",
+      "BACKUP_RESERVE_BYTES": "67108864",
+      "BACKUP_KILL_AFTER_SECONDS": "15",
+      "PGCONNECT_TIMEOUT": "15",
+      "BACKUP_TOC_MAXIMUM_BYTES": "66060288",
+      "BACKUP_METADATA_MAXIMUM_BYTES_EXCLUSIVE": "65535",
+      "BACKUP_CHECKSUM_INDEX_MAXIMUM_BYTES_EXCLUSIVE": "1024"
+    },
+    "expectedFutureCronDeltas": {
+      "activeDeadlineSeconds": 1860,
+      "successfulJobsHistoryLimit": 3,
+      "failedJobsHistoryLimit": 10,
+      "tmpSizeLimit": "256Mi"
+    }
+  },
+  "B-checksumIndexMaximumBytesExclusive": {
+    "qualification": "pure current source subfunctions + explicit expected future policy delta, not full renderer/installed closure",
+    "currentConfiguration": {
+      "PGHOST": "fixture-postgresql",
+      "PGPORT": "5432",
+      "PGDATABASE": "litellm",
+      "PGUSER": "postgres",
+      "BACKUP_ROOT": "/backups/litellm",
+      "BACKUP_INTERVAL_SECONDS": "900",
+      "BACKUP_MAXIMUM_BYTES": "68719476736",
+      "BACKUP_MAXIMUM_RETAINED_BYTES": "96636764160",
+      "BACKUP_MAXIMUM_AGE_SECONDS": "7200",
+      "BACKUP_MAXIMUM_DURATION_SECONDS": "1800",
+      "BACKUP_EXPECTED_SERVER_VERSION": "180006",
+      "BACKUP_CREDENTIAL_AUTHORITY_REF": "kubernetes-secret:fixture-recovery/litellm-secrets",
+      "BACKUP_APPLICATION_IMAGE": "ghcr.io/berriai/litellm@sha256:690f24800e2208e4f31b01483b9d0521d79dc508c8191f1c0b2f21549400c580"
+    },
+    "currentCron": {
+      "apiVersion": "batch/v1",
+      "kind": "CronJob",
+      "metadata": {
+        "namespace": "fixture-recovery",
+        "labels": {
+          "app": "litellm-postgresql-backup",
+          "app.kubernetes.io/managed-by": "kubeclaw-infrastructure"
+        },
+        "name": "litellm-postgresql-backup"
+      },
+      "spec": {
+        "schedule": "*/5 * * * *",
+        "timeZone": "Etc/UTC",
+        "concurrencyPolicy": "Forbid",
+        "startingDeadlineSeconds": 900,
+        "successfulJobsHistoryLimit": 3,
+        "failedJobsHistoryLimit": 10,
+        "jobTemplate": {
+          "spec": {
+            "backoffLimit": 0,
+            "activeDeadlineSeconds": 1860,
+            "template": {
+              "metadata": {
+                "labels": {
+                  "app": "litellm-postgresql-backup",
+                  "app.kubernetes.io/managed-by": "kubeclaw-infrastructure"
+                },
+                "annotations": {
+                  "checksum/recovery": "public-unsealed-structure-only"
+                }
+              },
+              "spec": {
+                "automountServiceAccountToken": false,
+                "restartPolicy": "Never",
+                "securityContext": {
+                  "runAsNonRoot": true,
+                  "runAsUser": 1001,
+                  "runAsGroup": 1001,
+                  "fsGroup": 1001,
+                  "fsGroupChangePolicy": "OnRootMismatch",
+                  "seccompProfile": {
+                    "type": "RuntimeDefault"
+                  }
+                },
+                "containers": [
+                  {
+                    "name": "backup",
+                    "image": "registry-1.docker.io/bitnami/postgresql@sha256:65d7506622ce2649914947b698d822d56c208295ba7ee80c1b34e48b251ba0c1",
+                    "imagePullPolicy": "IfNotPresent",
+                    "command": [
+                      "bash",
+                      "/recovery/postgresql-recovery.sh",
+                      "scheduled"
+                    ],
+                    "envFrom": [
+                      {
+                        "configMapRef": {
+                          "name": "litellm-postgresql-backup-settings"
+                        }
+                      }
+                    ],
+                    "resources": {
+                      "requests": {
+                        "cpu": "250m",
+                        "memory": "256Mi"
+                      },
+                      "limits": {
+                        "cpu": "1",
+                        "memory": "1Gi"
+                      }
+                    },
+                    "securityContext": {
+                      "allowPrivilegeEscalation": false,
+                      "readOnlyRootFilesystem": true,
+                      "capabilities": {
+                        "drop": [
+                          "ALL"
+                        ]
+                      }
+                    },
+                    "volumeMounts": [
+                      {
+                        "name": "backups",
+                        "mountPath": "/backups",
+                        "readOnly": false
+                      },
+                      {
+                        "name": "script",
+                        "mountPath": "/recovery",
+                        "readOnly": true
+                      },
+                      {
+                        "name": "tmp",
+                        "mountPath": "/tmp"
+                      }
+                    ],
+                    "env": [
+                      {
+                        "name": "PGPASSWORD",
+                        "valueFrom": {
+                          "secretKeyRef": {
+                            "name": "postgresql-secrets",
+                            "key": "postgres-password"
+                          }
+                        }
+                      },
+                      {
+                        "name": "LITELLM_MASTER_KEY",
+                        "valueFrom": {
+                          "secretKeyRef": {
+                            "name": "litellm-secrets",
+                            "key": "LITELLM_MASTER_KEY"
+                          }
+                        }
+                      },
+                      {
+                        "name": "LITELLM_SALT_KEY",
+                        "valueFrom": {
+                          "secretKeyRef": {
+                            "name": "litellm-secrets",
+                            "key": "LITELLM_SALT_KEY",
+                            "optional": true
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "volumes": [
+                  {
+                    "name": "backups",
+                    "persistentVolumeClaim": {
+                      "claimName": "litellm-postgresql-backup"
+                    }
+                  },
+                  {
+                    "name": "script",
+                    "configMap": {
+                      "name": "litellm-postgresql-backup-script",
+                      "defaultMode": 292
+                    }
+                  },
+                  {
+                    "name": "tmp",
+                    "emptyDir": {
+                      "sizeLimit": "256Mi"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "proposedScriptKeys": {
+      "PGHOST": "fixture-postgresql",
+      "PGPORT": "5432",
+      "PGDATABASE": "litellm",
+      "PGUSER": "postgres",
+      "BACKUP_ROOT": "/backups/litellm",
+      "BACKUP_INTERVAL_SECONDS": "900",
+      "BACKUP_MAXIMUM_BYTES": "68719476736",
+      "BACKUP_MAXIMUM_RETAINED_BYTES": "96636764160",
+      "BACKUP_MAXIMUM_AGE_SECONDS": "7200",
+      "BACKUP_MAXIMUM_DURATION_SECONDS": "1800",
+      "BACKUP_EXPECTED_SERVER_VERSION": "180006",
+      "BACKUP_CREDENTIAL_AUTHORITY_REF": "kubernetes-secret:fixture-recovery/litellm-secrets",
+      "BACKUP_APPLICATION_IMAGE": "ghcr.io/berriai/litellm@sha256:690f24800e2208e4f31b01483b9d0521d79dc508c8191f1c0b2f21549400c580",
+      "BACKUP_RESERVE_BYTES": "67108864",
+      "BACKUP_KILL_AFTER_SECONDS": "15",
+      "PGCONNECT_TIMEOUT": "15",
+      "BACKUP_TOC_MAXIMUM_BYTES": "66060288",
+      "BACKUP_METADATA_MAXIMUM_BYTES_EXCLUSIVE": "65536",
+      "BACKUP_CHECKSUM_INDEX_MAXIMUM_BYTES_EXCLUSIVE": "1023"
+    },
+    "expectedFutureCronDeltas": {
+      "activeDeadlineSeconds": 1860,
+      "successfulJobsHistoryLimit": 3,
+      "failedJobsHistoryLimit": 10,
+      "tmpSizeLimit": "256Mi"
+    }
+  },
+  "B-cronJobDeadlineOverheadSeconds": {
+    "qualification": "pure current source subfunctions + explicit expected future policy delta, not full renderer/installed closure",
+    "currentConfiguration": {
+      "PGHOST": "fixture-postgresql",
+      "PGPORT": "5432",
+      "PGDATABASE": "litellm",
+      "PGUSER": "postgres",
+      "BACKUP_ROOT": "/backups/litellm",
+      "BACKUP_INTERVAL_SECONDS": "900",
+      "BACKUP_MAXIMUM_BYTES": "68719476736",
+      "BACKUP_MAXIMUM_RETAINED_BYTES": "96636764160",
+      "BACKUP_MAXIMUM_AGE_SECONDS": "7200",
+      "BACKUP_MAXIMUM_DURATION_SECONDS": "1800",
+      "BACKUP_EXPECTED_SERVER_VERSION": "180006",
+      "BACKUP_CREDENTIAL_AUTHORITY_REF": "kubernetes-secret:fixture-recovery/litellm-secrets",
+      "BACKUP_APPLICATION_IMAGE": "ghcr.io/berriai/litellm@sha256:690f24800e2208e4f31b01483b9d0521d79dc508c8191f1c0b2f21549400c580"
+    },
+    "currentCron": {
+      "apiVersion": "batch/v1",
+      "kind": "CronJob",
+      "metadata": {
+        "namespace": "fixture-recovery",
+        "labels": {
+          "app": "litellm-postgresql-backup",
+          "app.kubernetes.io/managed-by": "kubeclaw-infrastructure"
+        },
+        "name": "litellm-postgresql-backup"
+      },
+      "spec": {
+        "schedule": "*/5 * * * *",
+        "timeZone": "Etc/UTC",
+        "concurrencyPolicy": "Forbid",
+        "startingDeadlineSeconds": 900,
+        "successfulJobsHistoryLimit": 3,
+        "failedJobsHistoryLimit": 10,
+        "jobTemplate": {
+          "spec": {
+            "backoffLimit": 0,
+            "activeDeadlineSeconds": 1860,
+            "template": {
+              "metadata": {
+                "labels": {
+                  "app": "litellm-postgresql-backup",
+                  "app.kubernetes.io/managed-by": "kubeclaw-infrastructure"
+                },
+                "annotations": {
+                  "checksum/recovery": "public-unsealed-structure-only"
+                }
+              },
+              "spec": {
+                "automountServiceAccountToken": false,
+                "restartPolicy": "Never",
+                "securityContext": {
+                  "runAsNonRoot": true,
+                  "runAsUser": 1001,
+                  "runAsGroup": 1001,
+                  "fsGroup": 1001,
+                  "fsGroupChangePolicy": "OnRootMismatch",
+                  "seccompProfile": {
+                    "type": "RuntimeDefault"
+                  }
+                },
+                "containers": [
+                  {
+                    "name": "backup",
+                    "image": "registry-1.docker.io/bitnami/postgresql@sha256:65d7506622ce2649914947b698d822d56c208295ba7ee80c1b34e48b251ba0c1",
+                    "imagePullPolicy": "IfNotPresent",
+                    "command": [
+                      "bash",
+                      "/recovery/postgresql-recovery.sh",
+                      "scheduled"
+                    ],
+                    "envFrom": [
+                      {
+                        "configMapRef": {
+                          "name": "litellm-postgresql-backup-settings"
+                        }
+                      }
+                    ],
+                    "resources": {
+                      "requests": {
+                        "cpu": "250m",
+                        "memory": "256Mi"
+                      },
+                      "limits": {
+                        "cpu": "1",
+                        "memory": "1Gi"
+                      }
+                    },
+                    "securityContext": {
+                      "allowPrivilegeEscalation": false,
+                      "readOnlyRootFilesystem": true,
+                      "capabilities": {
+                        "drop": [
+                          "ALL"
+                        ]
+                      }
+                    },
+                    "volumeMounts": [
+                      {
+                        "name": "backups",
+                        "mountPath": "/backups",
+                        "readOnly": false
+                      },
+                      {
+                        "name": "script",
+                        "mountPath": "/recovery",
+                        "readOnly": true
+                      },
+                      {
+                        "name": "tmp",
+                        "mountPath": "/tmp"
+                      }
+                    ],
+                    "env": [
+                      {
+                        "name": "PGPASSWORD",
+                        "valueFrom": {
+                          "secretKeyRef": {
+                            "name": "postgresql-secrets",
+                            "key": "postgres-password"
+                          }
+                        }
+                      },
+                      {
+                        "name": "LITELLM_MASTER_KEY",
+                        "valueFrom": {
+                          "secretKeyRef": {
+                            "name": "litellm-secrets",
+                            "key": "LITELLM_MASTER_KEY"
+                          }
+                        }
+                      },
+                      {
+                        "name": "LITELLM_SALT_KEY",
+                        "valueFrom": {
+                          "secretKeyRef": {
+                            "name": "litellm-secrets",
+                            "key": "LITELLM_SALT_KEY",
+                            "optional": true
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "volumes": [
+                  {
+                    "name": "backups",
+                    "persistentVolumeClaim": {
+                      "claimName": "litellm-postgresql-backup"
+                    }
+                  },
+                  {
+                    "name": "script",
+                    "configMap": {
+                      "name": "litellm-postgresql-backup-script",
+                      "defaultMode": 292
+                    }
+                  },
+                  {
+                    "name": "tmp",
+                    "emptyDir": {
+                      "sizeLimit": "256Mi"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "proposedScriptKeys": {
+      "PGHOST": "fixture-postgresql",
+      "PGPORT": "5432",
+      "PGDATABASE": "litellm",
+      "PGUSER": "postgres",
+      "BACKUP_ROOT": "/backups/litellm",
+      "BACKUP_INTERVAL_SECONDS": "900",
+      "BACKUP_MAXIMUM_BYTES": "68719476736",
+      "BACKUP_MAXIMUM_RETAINED_BYTES": "96636764160",
+      "BACKUP_MAXIMUM_AGE_SECONDS": "7200",
+      "BACKUP_MAXIMUM_DURATION_SECONDS": "1800",
+      "BACKUP_EXPECTED_SERVER_VERSION": "180006",
+      "BACKUP_CREDENTIAL_AUTHORITY_REF": "kubernetes-secret:fixture-recovery/litellm-secrets",
+      "BACKUP_APPLICATION_IMAGE": "ghcr.io/berriai/litellm@sha256:690f24800e2208e4f31b01483b9d0521d79dc508c8191f1c0b2f21549400c580",
+      "BACKUP_RESERVE_BYTES": "67108864",
+      "BACKUP_KILL_AFTER_SECONDS": "15",
+      "PGCONNECT_TIMEOUT": "15",
+      "BACKUP_TOC_MAXIMUM_BYTES": "66060288",
+      "BACKUP_METADATA_MAXIMUM_BYTES_EXCLUSIVE": "65536",
+      "BACKUP_CHECKSUM_INDEX_MAXIMUM_BYTES_EXCLUSIVE": "1024"
+    },
+    "expectedFutureCronDeltas": {
+      "activeDeadlineSeconds": 1861,
+      "successfulJobsHistoryLimit": 3,
+      "failedJobsHistoryLimit": 10,
+      "tmpSizeLimit": "256Mi"
+    }
+  },
+  "B-successfulJobsHistoryLimit": {
+    "qualification": "pure current source subfunctions + explicit expected future policy delta, not full renderer/installed closure",
+    "currentConfiguration": {
+      "PGHOST": "fixture-postgresql",
+      "PGPORT": "5432",
+      "PGDATABASE": "litellm",
+      "PGUSER": "postgres",
+      "BACKUP_ROOT": "/backups/litellm",
+      "BACKUP_INTERVAL_SECONDS": "900",
+      "BACKUP_MAXIMUM_BYTES": "68719476736",
+      "BACKUP_MAXIMUM_RETAINED_BYTES": "96636764160",
+      "BACKUP_MAXIMUM_AGE_SECONDS": "7200",
+      "BACKUP_MAXIMUM_DURATION_SECONDS": "1800",
+      "BACKUP_EXPECTED_SERVER_VERSION": "180006",
+      "BACKUP_CREDENTIAL_AUTHORITY_REF": "kubernetes-secret:fixture-recovery/litellm-secrets",
+      "BACKUP_APPLICATION_IMAGE": "ghcr.io/berriai/litellm@sha256:690f24800e2208e4f31b01483b9d0521d79dc508c8191f1c0b2f21549400c580"
+    },
+    "currentCron": {
+      "apiVersion": "batch/v1",
+      "kind": "CronJob",
+      "metadata": {
+        "namespace": "fixture-recovery",
+        "labels": {
+          "app": "litellm-postgresql-backup",
+          "app.kubernetes.io/managed-by": "kubeclaw-infrastructure"
+        },
+        "name": "litellm-postgresql-backup"
+      },
+      "spec": {
+        "schedule": "*/5 * * * *",
+        "timeZone": "Etc/UTC",
+        "concurrencyPolicy": "Forbid",
+        "startingDeadlineSeconds": 900,
+        "successfulJobsHistoryLimit": 3,
+        "failedJobsHistoryLimit": 10,
+        "jobTemplate": {
+          "spec": {
+            "backoffLimit": 0,
+            "activeDeadlineSeconds": 1860,
+            "template": {
+              "metadata": {
+                "labels": {
+                  "app": "litellm-postgresql-backup",
+                  "app.kubernetes.io/managed-by": "kubeclaw-infrastructure"
+                },
+                "annotations": {
+                  "checksum/recovery": "public-unsealed-structure-only"
+                }
+              },
+              "spec": {
+                "automountServiceAccountToken": false,
+                "restartPolicy": "Never",
+                "securityContext": {
+                  "runAsNonRoot": true,
+                  "runAsUser": 1001,
+                  "runAsGroup": 1001,
+                  "fsGroup": 1001,
+                  "fsGroupChangePolicy": "OnRootMismatch",
+                  "seccompProfile": {
+                    "type": "RuntimeDefault"
+                  }
+                },
+                "containers": [
+                  {
+                    "name": "backup",
+                    "image": "registry-1.docker.io/bitnami/postgresql@sha256:65d7506622ce2649914947b698d822d56c208295ba7ee80c1b34e48b251ba0c1",
+                    "imagePullPolicy": "IfNotPresent",
+                    "command": [
+                      "bash",
+                      "/recovery/postgresql-recovery.sh",
+                      "scheduled"
+                    ],
+                    "envFrom": [
+                      {
+                        "configMapRef": {
+                          "name": "litellm-postgresql-backup-settings"
+                        }
+                      }
+                    ],
+                    "resources": {
+                      "requests": {
+                        "cpu": "250m",
+                        "memory": "256Mi"
+                      },
+                      "limits": {
+                        "cpu": "1",
+                        "memory": "1Gi"
+                      }
+                    },
+                    "securityContext": {
+                      "allowPrivilegeEscalation": false,
+                      "readOnlyRootFilesystem": true,
+                      "capabilities": {
+                        "drop": [
+                          "ALL"
+                        ]
+                      }
+                    },
+                    "volumeMounts": [
+                      {
+                        "name": "backups",
+                        "mountPath": "/backups",
+                        "readOnly": false
+                      },
+                      {
+                        "name": "script",
+                        "mountPath": "/recovery",
+                        "readOnly": true
+                      },
+                      {
+                        "name": "tmp",
+                        "mountPath": "/tmp"
+                      }
+                    ],
+                    "env": [
+                      {
+                        "name": "PGPASSWORD",
+                        "valueFrom": {
+                          "secretKeyRef": {
+                            "name": "postgresql-secrets",
+                            "key": "postgres-password"
+                          }
+                        }
+                      },
+                      {
+                        "name": "LITELLM_MASTER_KEY",
+                        "valueFrom": {
+                          "secretKeyRef": {
+                            "name": "litellm-secrets",
+                            "key": "LITELLM_MASTER_KEY"
+                          }
+                        }
+                      },
+                      {
+                        "name": "LITELLM_SALT_KEY",
+                        "valueFrom": {
+                          "secretKeyRef": {
+                            "name": "litellm-secrets",
+                            "key": "LITELLM_SALT_KEY",
+                            "optional": true
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "volumes": [
+                  {
+                    "name": "backups",
+                    "persistentVolumeClaim": {
+                      "claimName": "litellm-postgresql-backup"
+                    }
+                  },
+                  {
+                    "name": "script",
+                    "configMap": {
+                      "name": "litellm-postgresql-backup-script",
+                      "defaultMode": 292
+                    }
+                  },
+                  {
+                    "name": "tmp",
+                    "emptyDir": {
+                      "sizeLimit": "256Mi"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "proposedScriptKeys": {
+      "PGHOST": "fixture-postgresql",
+      "PGPORT": "5432",
+      "PGDATABASE": "litellm",
+      "PGUSER": "postgres",
+      "BACKUP_ROOT": "/backups/litellm",
+      "BACKUP_INTERVAL_SECONDS": "900",
+      "BACKUP_MAXIMUM_BYTES": "68719476736",
+      "BACKUP_MAXIMUM_RETAINED_BYTES": "96636764160",
+      "BACKUP_MAXIMUM_AGE_SECONDS": "7200",
+      "BACKUP_MAXIMUM_DURATION_SECONDS": "1800",
+      "BACKUP_EXPECTED_SERVER_VERSION": "180006",
+      "BACKUP_CREDENTIAL_AUTHORITY_REF": "kubernetes-secret:fixture-recovery/litellm-secrets",
+      "BACKUP_APPLICATION_IMAGE": "ghcr.io/berriai/litellm@sha256:690f24800e2208e4f31b01483b9d0521d79dc508c8191f1c0b2f21549400c580",
+      "BACKUP_RESERVE_BYTES": "67108864",
+      "BACKUP_KILL_AFTER_SECONDS": "15",
+      "PGCONNECT_TIMEOUT": "15",
+      "BACKUP_TOC_MAXIMUM_BYTES": "66060288",
+      "BACKUP_METADATA_MAXIMUM_BYTES_EXCLUSIVE": "65536",
+      "BACKUP_CHECKSUM_INDEX_MAXIMUM_BYTES_EXCLUSIVE": "1024"
+    },
+    "expectedFutureCronDeltas": {
+      "activeDeadlineSeconds": 1860,
+      "successfulJobsHistoryLimit": 4,
+      "failedJobsHistoryLimit": 10,
+      "tmpSizeLimit": "256Mi"
+    }
+  },
+  "B-failedJobsHistoryLimit": {
+    "qualification": "pure current source subfunctions + explicit expected future policy delta, not full renderer/installed closure",
+    "currentConfiguration": {
+      "PGHOST": "fixture-postgresql",
+      "PGPORT": "5432",
+      "PGDATABASE": "litellm",
+      "PGUSER": "postgres",
+      "BACKUP_ROOT": "/backups/litellm",
+      "BACKUP_INTERVAL_SECONDS": "900",
+      "BACKUP_MAXIMUM_BYTES": "68719476736",
+      "BACKUP_MAXIMUM_RETAINED_BYTES": "96636764160",
+      "BACKUP_MAXIMUM_AGE_SECONDS": "7200",
+      "BACKUP_MAXIMUM_DURATION_SECONDS": "1800",
+      "BACKUP_EXPECTED_SERVER_VERSION": "180006",
+      "BACKUP_CREDENTIAL_AUTHORITY_REF": "kubernetes-secret:fixture-recovery/litellm-secrets",
+      "BACKUP_APPLICATION_IMAGE": "ghcr.io/berriai/litellm@sha256:690f24800e2208e4f31b01483b9d0521d79dc508c8191f1c0b2f21549400c580"
+    },
+    "currentCron": {
+      "apiVersion": "batch/v1",
+      "kind": "CronJob",
+      "metadata": {
+        "namespace": "fixture-recovery",
+        "labels": {
+          "app": "litellm-postgresql-backup",
+          "app.kubernetes.io/managed-by": "kubeclaw-infrastructure"
+        },
+        "name": "litellm-postgresql-backup"
+      },
+      "spec": {
+        "schedule": "*/5 * * * *",
+        "timeZone": "Etc/UTC",
+        "concurrencyPolicy": "Forbid",
+        "startingDeadlineSeconds": 900,
+        "successfulJobsHistoryLimit": 3,
+        "failedJobsHistoryLimit": 10,
+        "jobTemplate": {
+          "spec": {
+            "backoffLimit": 0,
+            "activeDeadlineSeconds": 1860,
+            "template": {
+              "metadata": {
+                "labels": {
+                  "app": "litellm-postgresql-backup",
+                  "app.kubernetes.io/managed-by": "kubeclaw-infrastructure"
+                },
+                "annotations": {
+                  "checksum/recovery": "public-unsealed-structure-only"
+                }
+              },
+              "spec": {
+                "automountServiceAccountToken": false,
+                "restartPolicy": "Never",
+                "securityContext": {
+                  "runAsNonRoot": true,
+                  "runAsUser": 1001,
+                  "runAsGroup": 1001,
+                  "fsGroup": 1001,
+                  "fsGroupChangePolicy": "OnRootMismatch",
+                  "seccompProfile": {
+                    "type": "RuntimeDefault"
+                  }
+                },
+                "containers": [
+                  {
+                    "name": "backup",
+                    "image": "registry-1.docker.io/bitnami/postgresql@sha256:65d7506622ce2649914947b698d822d56c208295ba7ee80c1b34e48b251ba0c1",
+                    "imagePullPolicy": "IfNotPresent",
+                    "command": [
+                      "bash",
+                      "/recovery/postgresql-recovery.sh",
+                      "scheduled"
+                    ],
+                    "envFrom": [
+                      {
+                        "configMapRef": {
+                          "name": "litellm-postgresql-backup-settings"
+                        }
+                      }
+                    ],
+                    "resources": {
+                      "requests": {
+                        "cpu": "250m",
+                        "memory": "256Mi"
+                      },
+                      "limits": {
+                        "cpu": "1",
+                        "memory": "1Gi"
+                      }
+                    },
+                    "securityContext": {
+                      "allowPrivilegeEscalation": false,
+                      "readOnlyRootFilesystem": true,
+                      "capabilities": {
+                        "drop": [
+                          "ALL"
+                        ]
+                      }
+                    },
+                    "volumeMounts": [
+                      {
+                        "name": "backups",
+                        "mountPath": "/backups",
+                        "readOnly": false
+                      },
+                      {
+                        "name": "script",
+                        "mountPath": "/recovery",
+                        "readOnly": true
+                      },
+                      {
+                        "name": "tmp",
+                        "mountPath": "/tmp"
+                      }
+                    ],
+                    "env": [
+                      {
+                        "name": "PGPASSWORD",
+                        "valueFrom": {
+                          "secretKeyRef": {
+                            "name": "postgresql-secrets",
+                            "key": "postgres-password"
+                          }
+                        }
+                      },
+                      {
+                        "name": "LITELLM_MASTER_KEY",
+                        "valueFrom": {
+                          "secretKeyRef": {
+                            "name": "litellm-secrets",
+                            "key": "LITELLM_MASTER_KEY"
+                          }
+                        }
+                      },
+                      {
+                        "name": "LITELLM_SALT_KEY",
+                        "valueFrom": {
+                          "secretKeyRef": {
+                            "name": "litellm-secrets",
+                            "key": "LITELLM_SALT_KEY",
+                            "optional": true
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "volumes": [
+                  {
+                    "name": "backups",
+                    "persistentVolumeClaim": {
+                      "claimName": "litellm-postgresql-backup"
+                    }
+                  },
+                  {
+                    "name": "script",
+                    "configMap": {
+                      "name": "litellm-postgresql-backup-script",
+                      "defaultMode": 292
+                    }
+                  },
+                  {
+                    "name": "tmp",
+                    "emptyDir": {
+                      "sizeLimit": "256Mi"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "proposedScriptKeys": {
+      "PGHOST": "fixture-postgresql",
+      "PGPORT": "5432",
+      "PGDATABASE": "litellm",
+      "PGUSER": "postgres",
+      "BACKUP_ROOT": "/backups/litellm",
+      "BACKUP_INTERVAL_SECONDS": "900",
+      "BACKUP_MAXIMUM_BYTES": "68719476736",
+      "BACKUP_MAXIMUM_RETAINED_BYTES": "96636764160",
+      "BACKUP_MAXIMUM_AGE_SECONDS": "7200",
+      "BACKUP_MAXIMUM_DURATION_SECONDS": "1800",
+      "BACKUP_EXPECTED_SERVER_VERSION": "180006",
+      "BACKUP_CREDENTIAL_AUTHORITY_REF": "kubernetes-secret:fixture-recovery/litellm-secrets",
+      "BACKUP_APPLICATION_IMAGE": "ghcr.io/berriai/litellm@sha256:690f24800e2208e4f31b01483b9d0521d79dc508c8191f1c0b2f21549400c580",
+      "BACKUP_RESERVE_BYTES": "67108864",
+      "BACKUP_KILL_AFTER_SECONDS": "15",
+      "PGCONNECT_TIMEOUT": "15",
+      "BACKUP_TOC_MAXIMUM_BYTES": "66060288",
+      "BACKUP_METADATA_MAXIMUM_BYTES_EXCLUSIVE": "65536",
+      "BACKUP_CHECKSUM_INDEX_MAXIMUM_BYTES_EXCLUSIVE": "1024"
+    },
+    "expectedFutureCronDeltas": {
+      "activeDeadlineSeconds": 1860,
+      "successfulJobsHistoryLimit": 3,
+      "failedJobsHistoryLimit": 11,
+      "tmpSizeLimit": "256Mi"
+    }
+  },
+  "B-temporaryDirectorySize": {
+    "qualification": "pure current source subfunctions + explicit expected future policy delta, not full renderer/installed closure",
+    "currentConfiguration": {
+      "PGHOST": "fixture-postgresql",
+      "PGPORT": "5432",
+      "PGDATABASE": "litellm",
+      "PGUSER": "postgres",
+      "BACKUP_ROOT": "/backups/litellm",
+      "BACKUP_INTERVAL_SECONDS": "900",
+      "BACKUP_MAXIMUM_BYTES": "68719476736",
+      "BACKUP_MAXIMUM_RETAINED_BYTES": "96636764160",
+      "BACKUP_MAXIMUM_AGE_SECONDS": "7200",
+      "BACKUP_MAXIMUM_DURATION_SECONDS": "1800",
+      "BACKUP_EXPECTED_SERVER_VERSION": "180006",
+      "BACKUP_CREDENTIAL_AUTHORITY_REF": "kubernetes-secret:fixture-recovery/litellm-secrets",
+      "BACKUP_APPLICATION_IMAGE": "ghcr.io/berriai/litellm@sha256:690f24800e2208e4f31b01483b9d0521d79dc508c8191f1c0b2f21549400c580"
+    },
+    "currentCron": {
+      "apiVersion": "batch/v1",
+      "kind": "CronJob",
+      "metadata": {
+        "namespace": "fixture-recovery",
+        "labels": {
+          "app": "litellm-postgresql-backup",
+          "app.kubernetes.io/managed-by": "kubeclaw-infrastructure"
+        },
+        "name": "litellm-postgresql-backup"
+      },
+      "spec": {
+        "schedule": "*/5 * * * *",
+        "timeZone": "Etc/UTC",
+        "concurrencyPolicy": "Forbid",
+        "startingDeadlineSeconds": 900,
+        "successfulJobsHistoryLimit": 3,
+        "failedJobsHistoryLimit": 10,
+        "jobTemplate": {
+          "spec": {
+            "backoffLimit": 0,
+            "activeDeadlineSeconds": 1860,
+            "template": {
+              "metadata": {
+                "labels": {
+                  "app": "litellm-postgresql-backup",
+                  "app.kubernetes.io/managed-by": "kubeclaw-infrastructure"
+                },
+                "annotations": {
+                  "checksum/recovery": "public-unsealed-structure-only"
+                }
+              },
+              "spec": {
+                "automountServiceAccountToken": false,
+                "restartPolicy": "Never",
+                "securityContext": {
+                  "runAsNonRoot": true,
+                  "runAsUser": 1001,
+                  "runAsGroup": 1001,
+                  "fsGroup": 1001,
+                  "fsGroupChangePolicy": "OnRootMismatch",
+                  "seccompProfile": {
+                    "type": "RuntimeDefault"
+                  }
+                },
+                "containers": [
+                  {
+                    "name": "backup",
+                    "image": "registry-1.docker.io/bitnami/postgresql@sha256:65d7506622ce2649914947b698d822d56c208295ba7ee80c1b34e48b251ba0c1",
+                    "imagePullPolicy": "IfNotPresent",
+                    "command": [
+                      "bash",
+                      "/recovery/postgresql-recovery.sh",
+                      "scheduled"
+                    ],
+                    "envFrom": [
+                      {
+                        "configMapRef": {
+                          "name": "litellm-postgresql-backup-settings"
+                        }
+                      }
+                    ],
+                    "resources": {
+                      "requests": {
+                        "cpu": "250m",
+                        "memory": "256Mi"
+                      },
+                      "limits": {
+                        "cpu": "1",
+                        "memory": "1Gi"
+                      }
+                    },
+                    "securityContext": {
+                      "allowPrivilegeEscalation": false,
+                      "readOnlyRootFilesystem": true,
+                      "capabilities": {
+                        "drop": [
+                          "ALL"
+                        ]
+                      }
+                    },
+                    "volumeMounts": [
+                      {
+                        "name": "backups",
+                        "mountPath": "/backups",
+                        "readOnly": false
+                      },
+                      {
+                        "name": "script",
+                        "mountPath": "/recovery",
+                        "readOnly": true
+                      },
+                      {
+                        "name": "tmp",
+                        "mountPath": "/tmp"
+                      }
+                    ],
+                    "env": [
+                      {
+                        "name": "PGPASSWORD",
+                        "valueFrom": {
+                          "secretKeyRef": {
+                            "name": "postgresql-secrets",
+                            "key": "postgres-password"
+                          }
+                        }
+                      },
+                      {
+                        "name": "LITELLM_MASTER_KEY",
+                        "valueFrom": {
+                          "secretKeyRef": {
+                            "name": "litellm-secrets",
+                            "key": "LITELLM_MASTER_KEY"
+                          }
+                        }
+                      },
+                      {
+                        "name": "LITELLM_SALT_KEY",
+                        "valueFrom": {
+                          "secretKeyRef": {
+                            "name": "litellm-secrets",
+                            "key": "LITELLM_SALT_KEY",
+                            "optional": true
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "volumes": [
+                  {
+                    "name": "backups",
+                    "persistentVolumeClaim": {
+                      "claimName": "litellm-postgresql-backup"
+                    }
+                  },
+                  {
+                    "name": "script",
+                    "configMap": {
+                      "name": "litellm-postgresql-backup-script",
+                      "defaultMode": 292
+                    }
+                  },
+                  {
+                    "name": "tmp",
+                    "emptyDir": {
+                      "sizeLimit": "256Mi"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "proposedScriptKeys": {
+      "PGHOST": "fixture-postgresql",
+      "PGPORT": "5432",
+      "PGDATABASE": "litellm",
+      "PGUSER": "postgres",
+      "BACKUP_ROOT": "/backups/litellm",
+      "BACKUP_INTERVAL_SECONDS": "900",
+      "BACKUP_MAXIMUM_BYTES": "68719476736",
+      "BACKUP_MAXIMUM_RETAINED_BYTES": "96636764160",
+      "BACKUP_MAXIMUM_AGE_SECONDS": "7200",
+      "BACKUP_MAXIMUM_DURATION_SECONDS": "1800",
+      "BACKUP_EXPECTED_SERVER_VERSION": "180006",
+      "BACKUP_CREDENTIAL_AUTHORITY_REF": "kubernetes-secret:fixture-recovery/litellm-secrets",
+      "BACKUP_APPLICATION_IMAGE": "ghcr.io/berriai/litellm@sha256:690f24800e2208e4f31b01483b9d0521d79dc508c8191f1c0b2f21549400c580",
+      "BACKUP_RESERVE_BYTES": "67108864",
+      "BACKUP_KILL_AFTER_SECONDS": "15",
+      "PGCONNECT_TIMEOUT": "15",
+      "BACKUP_TOC_MAXIMUM_BYTES": "66060288",
+      "BACKUP_METADATA_MAXIMUM_BYTES_EXCLUSIVE": "65536",
+      "BACKUP_CHECKSUM_INDEX_MAXIMUM_BYTES_EXCLUSIVE": "1024"
+    },
+    "expectedFutureCronDeltas": {
+      "activeDeadlineSeconds": 1860,
+      "successfulJobsHistoryLimit": 3,
+      "failedJobsHistoryLimit": 10,
+      "tmpSizeLimit": "257Mi"
+    }
+  }
+}

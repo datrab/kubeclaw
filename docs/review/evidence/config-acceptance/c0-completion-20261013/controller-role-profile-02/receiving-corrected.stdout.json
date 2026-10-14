@@ -1,0 +1,1600 @@
+{
+  "qualification": "Narrow physical receiver/schema/source identity evidence only, no Go/native/semantic/global PASS",
+  "mode": "corrected",
+  "input": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-02/original49-field-contracts.json",
+  "inputSha256": "da86022e59920fd5a313fa08159a66ff366aa3daf517bde25c54a9941155585b",
+  "scriptSha256": "4bcd1d5890eb0ccde7431455d5fe38a7b23d92eefd75c27ed6feb3d5685c6323",
+  "node": "v24.21.0",
+  "receivingNodes": [
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-KUBERNETES-SERVICE-PORT",
+      "profile": "A",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/A.json",
+      "pointer": "/readonlyBindings/api/port",
+      "declared": 18443,
+      "actual": 18443,
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-KUBERNETES-SERVICE-PORT",
+      "profile": "B",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/B.json",
+      "pointer": "/readonlyBindings/api/port",
+      "declared": 18443,
+      "actual": 18443,
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-LEASE-API-GROUP",
+      "profile": "A",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/A.json",
+      "pointer": "/readonlyBindings/sharedLease/apiGroup",
+      "declared": "kubeclaw.forgestack.ai",
+      "actual": "kubeclaw.forgestack.ai",
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-LEASE-API-GROUP",
+      "profile": "B",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/B.json",
+      "pointer": "/readonlyBindings/sharedLease/apiGroup",
+      "declared": "kubeclaw.forgestack.ai",
+      "actual": "kubeclaw.forgestack.ai",
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-LEASE-API-VERSION",
+      "profile": "A",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/A.json",
+      "pointer": "/readonlyBindings/sharedLease/apiVersion",
+      "declared": "v1alpha1",
+      "actual": "v1alpha1",
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-LEASE-API-VERSION",
+      "profile": "B",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/B.json",
+      "pointer": "/readonlyBindings/sharedLease/apiVersion",
+      "declared": "v1alpha1",
+      "actual": "v1alpha1",
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-ALLOWED-NAMESPACE-PREFIXES",
+      "profile": "A",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/A.json",
+      "pointer": "/settings/busterNamespaceBroker/allowedPrefixes",
+      "declared": [
+        "test"
+      ],
+      "actual": [
+        "test"
+      ],
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-ALLOWED-NAMESPACE-PREFIXES",
+      "profile": "B",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/B.json",
+      "pointer": "/settings/busterNamespaceBroker/allowedPrefixes",
+      "declared": [
+        "test"
+      ],
+      "actual": [
+        "test"
+      ],
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-DEFAULT-TTL-SECONDS",
+      "profile": "A",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/A.json",
+      "pointer": "/settings/busterNamespaceBroker/defaultTtlSeconds",
+      "declared": 7200,
+      "actual": 7200,
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-DEFAULT-TTL-SECONDS",
+      "profile": "B",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/B.json",
+      "pointer": "/settings/busterNamespaceBroker/defaultTtlSeconds",
+      "declared": 3600,
+      "actual": 3600,
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-MAX-TTL-SECONDS",
+      "profile": "A",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/A.json",
+      "pointer": "/settings/busterNamespaceBroker/maxTtlSeconds",
+      "declared": 86400,
+      "actual": 86400,
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-MAX-TTL-SECONDS",
+      "profile": "B",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/B.json",
+      "pointer": "/settings/busterNamespaceBroker/maxTtlSeconds",
+      "declared": 43200,
+      "actual": 43200,
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-CONTROLLER-SERVICE-ACCOUNT",
+      "profile": "A",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/A.json",
+      "pointer": "/readonlyBindings/roles/controllerServiceAccount",
+      "declared": "agent-buster-namespace-controller",
+      "actual": "agent-buster-namespace-controller",
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-CONTROLLER-SERVICE-ACCOUNT",
+      "profile": "B",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/B.json",
+      "pointer": "/readonlyBindings/roles/controllerServiceAccount",
+      "declared": "agent-buster-namespace-controller",
+      "actual": "agent-buster-namespace-controller",
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-SECRET-ROLE-NAME",
+      "profile": "A",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/A.json",
+      "pointer": "/readonlyBindings/roles/secretRole",
+      "declared": "agent-buster-controller-secrets",
+      "actual": "agent-buster-controller-secrets",
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-SECRET-ROLE-NAME",
+      "profile": "B",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/B.json",
+      "pointer": "/readonlyBindings/roles/secretRole",
+      "declared": "agent-buster-controller-secrets",
+      "actual": "agent-buster-controller-secrets",
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-DEPLOYER-ROLE-NAME",
+      "profile": "A",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/A.json",
+      "pointer": "/readonlyBindings/roles/deployerRole",
+      "declared": "agent-buster-namespace-deployer",
+      "actual": "agent-buster-namespace-deployer",
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-DEPLOYER-ROLE-NAME",
+      "profile": "B",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/B.json",
+      "pointer": "/readonlyBindings/roles/deployerRole",
+      "declared": "agent-buster-namespace-deployer",
+      "actual": "agent-buster-namespace-deployer",
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-TESTER-ROLE-NAME",
+      "profile": "A",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/A.json",
+      "pointer": "/readonlyBindings/roles/testerRole",
+      "declared": "agent-buster-namespace-tester",
+      "actual": "agent-buster-namespace-tester",
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-TESTER-ROLE-NAME",
+      "profile": "B",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/B.json",
+      "pointer": "/readonlyBindings/roles/testerRole",
+      "declared": "agent-buster-namespace-tester",
+      "actual": "agent-buster-namespace-tester",
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-ALLOWED-ACCESS-JSON",
+      "profile": "A",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/A.json",
+      "pointer": "/settings/busterNamespaceBroker/controller/allowedAccess",
+      "declared": [
+        {
+          "subject": "kubeclaw/agent-nova",
+          "modes": [
+            "deployer"
+          ]
+        },
+        {
+          "subject": "kubeclaw/agent-buster",
+          "modes": [
+            "deployer",
+            "tester"
+          ]
+        }
+      ],
+      "actual": [
+        {
+          "subject": "kubeclaw/agent-nova",
+          "modes": [
+            "deployer"
+          ]
+        },
+        {
+          "subject": "kubeclaw/agent-buster",
+          "modes": [
+            "deployer",
+            "tester"
+          ]
+        }
+      ],
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-ALLOWED-ACCESS-JSON",
+      "profile": "B",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/B.json",
+      "pointer": "/settings/busterNamespaceBroker/controller/allowedAccess",
+      "declared": [
+        {
+          "subject": "kubeclaw/agent-nova",
+          "modes": [
+            "deployer"
+          ]
+        },
+        {
+          "subject": "kubeclaw/agent-buster",
+          "modes": [
+            "deployer",
+            "tester"
+          ]
+        }
+      ],
+      "actual": [
+        {
+          "subject": "kubeclaw/agent-nova",
+          "modes": [
+            "deployer"
+          ]
+        },
+        {
+          "subject": "kubeclaw/agent-buster",
+          "modes": [
+            "deployer",
+            "tester"
+          ]
+        }
+      ],
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-KUBECLAW-NAMESPACE",
+      "profile": "A",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/A.json",
+      "pointer": "/readonlyBindings/releaseNamespace",
+      "declared": "kubeclaw",
+      "actual": "kubeclaw",
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-KUBECLAW-NAMESPACE",
+      "profile": "B",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/B.json",
+      "pointer": "/readonlyBindings/releaseNamespace",
+      "declared": "kubeclaw",
+      "actual": "kubeclaw",
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-CONTROLLER-POLL-MS",
+      "profile": "A",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/A.json",
+      "pointer": "/settings/busterNamespaceBroker/controller/pollIntervalMs",
+      "declared": 3000,
+      "actual": 3000,
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-CONTROLLER-POLL-MS",
+      "profile": "B",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/B.json",
+      "pointer": "/settings/busterNamespaceBroker/controller/pollIntervalMs",
+      "declared": 6000,
+      "actual": 6000,
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-KUBERNETES-SERVICE-HOST",
+      "profile": "A",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/A.json",
+      "pointer": "/readonlyBindings/api/host",
+      "declared": "127.0.0.1",
+      "actual": "127.0.0.1",
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-KUBERNETES-SERVICE-HOST",
+      "profile": "B",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/B.json",
+      "pointer": "/readonlyBindings/api/host",
+      "declared": "127.0.0.1",
+      "actual": "127.0.0.1",
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-ALLOWED-SOURCE-SECRETS",
+      "profile": "A",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/A.json",
+      "pointer": "/settings/busterNamespaceBroker/controller/allowedSourceSecrets",
+      "declared": [
+        "kubeclaw-fixture-preflight",
+        "prism-test-provider",
+        "prism-test-runtime",
+        "prism-test-postgresql-auth",
+        "prism-test-ghcr"
+      ],
+      "actual": [
+        "kubeclaw-fixture-preflight",
+        "prism-test-provider",
+        "prism-test-runtime",
+        "prism-test-postgresql-auth",
+        "prism-test-ghcr"
+      ],
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-ALLOWED-SOURCE-SECRETS",
+      "profile": "B",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/B.json",
+      "pointer": "/settings/busterNamespaceBroker/controller/allowedSourceSecrets",
+      "declared": [
+        "kubeclaw-fixture-preflight",
+        "prism-test-provider",
+        "prism-test-runtime",
+        "prism-test-postgresql-auth",
+        "prism-test-ghcr"
+      ],
+      "actual": [
+        "kubeclaw-fixture-preflight",
+        "prism-test-provider",
+        "prism-test-runtime",
+        "prism-test-postgresql-auth",
+        "prism-test-ghcr"
+      ],
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-READY-LISTEN",
+      "profile": "A",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/A.json",
+      "pointer": "/settings/busterNamespaceBroker/controller/readiness/port",
+      "declared": 8443,
+      "actual": 8443,
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-READY-LISTEN",
+      "profile": "B",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/B.json",
+      "pointer": "/settings/busterNamespaceBroker/controller/readiness/port",
+      "declared": 8443,
+      "actual": 8443,
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-READY-AUDIENCE",
+      "profile": "A",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/A.json",
+      "pointer": "/settings/busterNamespaceBroker/controller/readiness/audience",
+      "declared": "fixture-ready",
+      "actual": "fixture-ready",
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-READY-AUDIENCE",
+      "profile": "B",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/B.json",
+      "pointer": "/settings/busterNamespaceBroker/controller/readiness/audience",
+      "declared": "fixture-ready",
+      "actual": "fixture-ready",
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-READY-PRODUCER",
+      "profile": "A",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/A.json",
+      "pointer": "/settings/busterNamespaceBroker/controller/readiness",
+      "declared": {
+        "enabled": true,
+        "audience": "fixture-ready",
+        "producerNamespace": "kubeclaw",
+        "producerServiceAccount": "agent-nova",
+        "tlsSecretRef": {
+          "namespace": "kubeclaw",
+          "name": "fixture-controller-ready-tls",
+          "keys": [
+            "tls.crt",
+            "tls.key"
+          ],
+          "providerRef": "fixture-ready-tls-authority",
+          "revisionCapability": "must-resolve-original-revision-at-activation"
+        },
+        "port": 8443
+      },
+      "actual": {
+        "enabled": true,
+        "audience": "fixture-ready",
+        "producerNamespace": "kubeclaw",
+        "producerServiceAccount": "agent-nova",
+        "tlsSecretRef": {
+          "namespace": "kubeclaw",
+          "name": "fixture-controller-ready-tls",
+          "keys": [
+            "tls.crt",
+            "tls.key"
+          ],
+          "providerRef": "fixture-ready-tls-authority",
+          "revisionCapability": "must-resolve-original-revision-at-activation"
+        },
+        "port": 8443
+      },
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-READY-PRODUCER",
+      "profile": "B",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/B.json",
+      "pointer": "/settings/busterNamespaceBroker/controller/readiness",
+      "declared": {
+        "enabled": true,
+        "audience": "fixture-ready",
+        "producerNamespace": "kubeclaw",
+        "producerServiceAccount": "agent-nova",
+        "tlsSecretRef": {
+          "namespace": "kubeclaw",
+          "name": "fixture-controller-ready-tls",
+          "keys": [
+            "tls.crt",
+            "tls.key"
+          ],
+          "providerRef": "fixture-ready-tls-authority",
+          "revisionCapability": "must-resolve-original-revision-at-activation"
+        },
+        "port": 8443
+      },
+      "actual": {
+        "enabled": true,
+        "audience": "fixture-ready",
+        "producerNamespace": "kubeclaw",
+        "producerServiceAccount": "agent-nova",
+        "tlsSecretRef": {
+          "namespace": "kubeclaw",
+          "name": "fixture-controller-ready-tls",
+          "keys": [
+            "tls.crt",
+            "tls.key"
+          ],
+          "providerRef": "fixture-ready-tls-authority",
+          "revisionCapability": "must-resolve-original-revision-at-activation"
+        },
+        "port": 8443
+      },
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-READY-TLS-CERT",
+      "profile": "A",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/A.json",
+      "pointer": "/settings/busterNamespaceBroker/controller/readiness/tlsSecretRef",
+      "declared": {
+        "namespace": "kubeclaw",
+        "name": "fixture-controller-ready-tls",
+        "keys": [
+          "tls.crt",
+          "tls.key"
+        ],
+        "providerRef": "fixture-ready-tls-authority",
+        "revisionCapability": "must-resolve-original-revision-at-activation"
+      },
+      "actual": {
+        "namespace": "kubeclaw",
+        "name": "fixture-controller-ready-tls",
+        "keys": [
+          "tls.crt",
+          "tls.key"
+        ],
+        "providerRef": "fixture-ready-tls-authority",
+        "revisionCapability": "must-resolve-original-revision-at-activation"
+      },
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-READY-TLS-CERT",
+      "profile": "B",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/B.json",
+      "pointer": "/settings/busterNamespaceBroker/controller/readiness/tlsSecretRef",
+      "declared": {
+        "namespace": "kubeclaw",
+        "name": "fixture-controller-ready-tls",
+        "keys": [
+          "tls.crt",
+          "tls.key"
+        ],
+        "providerRef": "fixture-ready-tls-authority",
+        "revisionCapability": "must-resolve-original-revision-at-activation"
+      },
+      "actual": {
+        "namespace": "kubeclaw",
+        "name": "fixture-controller-ready-tls",
+        "keys": [
+          "tls.crt",
+          "tls.key"
+        ],
+        "providerRef": "fixture-ready-tls-authority",
+        "revisionCapability": "must-resolve-original-revision-at-activation"
+      },
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-READY-TLS-KEY",
+      "profile": "A",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/A.json",
+      "pointer": "/settings/busterNamespaceBroker/controller/readiness/tlsSecretRef",
+      "declared": {
+        "namespace": "kubeclaw",
+        "name": "fixture-controller-ready-tls",
+        "keys": [
+          "tls.crt",
+          "tls.key"
+        ],
+        "providerRef": "fixture-ready-tls-authority",
+        "revisionCapability": "must-resolve-original-revision-at-activation"
+      },
+      "actual": {
+        "namespace": "kubeclaw",
+        "name": "fixture-controller-ready-tls",
+        "keys": [
+          "tls.crt",
+          "tls.key"
+        ],
+        "providerRef": "fixture-ready-tls-authority",
+        "revisionCapability": "must-resolve-original-revision-at-activation"
+      },
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-READY-TLS-KEY",
+      "profile": "B",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/B.json",
+      "pointer": "/settings/busterNamespaceBroker/controller/readiness/tlsSecretRef",
+      "declared": {
+        "namespace": "kubeclaw",
+        "name": "fixture-controller-ready-tls",
+        "keys": [
+          "tls.crt",
+          "tls.key"
+        ],
+        "providerRef": "fixture-ready-tls-authority",
+        "revisionCapability": "must-resolve-original-revision-at-activation"
+      },
+      "actual": {
+        "namespace": "kubeclaw",
+        "name": "fixture-controller-ready-tls",
+        "keys": [
+          "tls.crt",
+          "tls.key"
+        ],
+        "providerRef": "fixture-ready-tls-authority",
+        "revisionCapability": "must-resolve-original-revision-at-activation"
+      },
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-PRODUCT-ENABLED",
+      "profile": "A",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/A.json",
+      "pointer": "/readonlyBindings/product/enabled",
+      "declared": true,
+      "actual": true,
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-PRODUCT-ENABLED",
+      "profile": "B",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/B.json",
+      "pointer": "/readonlyBindings/product/enabled",
+      "declared": true,
+      "actual": true,
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-PRODUCT-VERIFY-KEY",
+      "profile": "A",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/A.json",
+      "pointer": "/readonlyBindings/product/verifyKeyRef",
+      "declared": {
+        "originalSigningAuthorityRef": "fixture-product-signing-Ed25519-authority",
+        "decodedPublicKeyBytes": 32,
+        "proofStatus": "external-required-no-private-bytes"
+      },
+      "actual": {
+        "originalSigningAuthorityRef": "fixture-product-signing-Ed25519-authority",
+        "decodedPublicKeyBytes": 32,
+        "proofStatus": "external-required-no-private-bytes"
+      },
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-PRODUCT-VERIFY-KEY",
+      "profile": "B",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/B.json",
+      "pointer": "/readonlyBindings/product/verifyKeyRef",
+      "declared": {
+        "originalSigningAuthorityRef": "fixture-product-signing-Ed25519-authority",
+        "decodedPublicKeyBytes": 32,
+        "proofStatus": "external-required-no-private-bytes"
+      },
+      "actual": {
+        "originalSigningAuthorityRef": "fixture-product-signing-Ed25519-authority",
+        "decodedPublicKeyBytes": 32,
+        "proofStatus": "external-required-no-private-bytes"
+      },
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-PRODUCT-AUDIENCE",
+      "profile": "A",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/A.json",
+      "pointer": "/readonlyBindings/product/audience",
+      "declared": "fixture-product",
+      "actual": "fixture-product",
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-PRODUCT-AUDIENCE",
+      "profile": "B",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/B.json",
+      "pointer": "/readonlyBindings/product/audience",
+      "declared": "fixture-product",
+      "actual": "fixture-product",
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-PRODUCT-PRODUCER",
+      "profile": "A",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/A.json",
+      "pointer": "/readonlyBindings/product/producer",
+      "declared": "system:serviceaccount:kubeclaw:prism-control",
+      "actual": "system:serviceaccount:kubeclaw:prism-control",
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-PRODUCT-PRODUCER",
+      "profile": "B",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/B.json",
+      "pointer": "/readonlyBindings/product/producer",
+      "declared": "system:serviceaccount:kubeclaw:prism-control",
+      "actual": "system:serviceaccount:kubeclaw:prism-control",
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-PRODUCT-ISSUER",
+      "profile": "A",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/A.json",
+      "pointer": "/readonlyBindings/product/issuer",
+      "declared": "fixture-human-authority",
+      "actual": "fixture-human-authority",
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-PRODUCT-ISSUER",
+      "profile": "B",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/B.json",
+      "pointer": "/readonlyBindings/product/issuer",
+      "declared": "fixture-human-authority",
+      "actual": "fixture-human-authority",
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-PRODUCT-ACTORS-JSON",
+      "profile": "A",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/A.json",
+      "pointer": "/readonlyBindings/product/actors",
+      "declared": [
+        "fixture-operator"
+      ],
+      "actual": [
+        "fixture-operator"
+      ],
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-PRODUCT-ACTORS-JSON",
+      "profile": "B",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/B.json",
+      "pointer": "/readonlyBindings/product/actors",
+      "declared": [
+        "fixture-operator"
+      ],
+      "actual": [
+        "fixture-operator"
+      ],
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-HTTPCLIENTTIMEOUTSECONDS",
+      "profile": "A",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/A.json",
+      "pointer": "/settings/busterNamespaceBroker/controller/policy/httpClientTimeoutSeconds",
+      "declared": 60,
+      "actual": 60,
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-HTTPCLIENTTIMEOUTSECONDS",
+      "profile": "B",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/B.json",
+      "pointer": "/settings/busterNamespaceBroker/controller/policy/httpClientTimeoutSeconds",
+      "declared": 120,
+      "actual": 120,
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-RUNTIMESECURITYREFRESHSECONDS",
+      "profile": "A",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/A.json",
+      "pointer": "/settings/busterNamespaceBroker/controller/policy/runtimeSecurityRefreshSeconds",
+      "declared": 5,
+      "actual": 5,
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-RUNTIMESECURITYREFRESHSECONDS",
+      "profile": "B",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/B.json",
+      "pointer": "/settings/busterNamespaceBroker/controller/policy/runtimeSecurityRefreshSeconds",
+      "declared": 10,
+      "actual": 10,
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-RUNTIMESECURITYFUTURESKEWSECONDS",
+      "profile": "A",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/A.json",
+      "pointer": "/settings/busterNamespaceBroker/controller/policy/runtimeSecurityFutureSkewSeconds",
+      "declared": 5,
+      "actual": 5,
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-RUNTIMESECURITYFUTURESKEWSECONDS",
+      "profile": "B",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/B.json",
+      "pointer": "/settings/busterNamespaceBroker/controller/policy/runtimeSecurityFutureSkewSeconds",
+      "declared": 2,
+      "actual": 2,
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-RUNTIMESECURITYMAXIMUMFINDINGS",
+      "profile": "A",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/A.json",
+      "pointer": "/settings/busterNamespaceBroker/controller/policy/runtimeSecurityMaximumFindings",
+      "declared": 4096,
+      "actual": 4096,
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-RUNTIMESECURITYMAXIMUMFINDINGS",
+      "profile": "B",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/B.json",
+      "pointer": "/settings/busterNamespaceBroker/controller/policy/runtimeSecurityMaximumFindings",
+      "declared": 2048,
+      "actual": 2048,
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-RUNTIMESECURITYMAXIMUMSERIALIZEDBYTES",
+      "profile": "A",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/A.json",
+      "pointer": "/settings/busterNamespaceBroker/controller/policy/runtimeSecurityMaximumSerializedBytes",
+      "declared": 65536,
+      "actual": 65536,
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-RUNTIMESECURITYMAXIMUMSERIALIZEDBYTES",
+      "profile": "B",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/B.json",
+      "pointer": "/settings/busterNamespaceBroker/controller/policy/runtimeSecurityMaximumSerializedBytes",
+      "declared": 131072,
+      "actual": 131072,
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-READYREADHEADERTIMEOUTSECONDS",
+      "profile": "A",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/A.json",
+      "pointer": "/settings/busterNamespaceBroker/controller/policy/readyReadHeaderTimeoutSeconds",
+      "declared": 5,
+      "actual": 5,
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-READYREADHEADERTIMEOUTSECONDS",
+      "profile": "B",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/B.json",
+      "pointer": "/settings/busterNamespaceBroker/controller/policy/readyReadHeaderTimeoutSeconds",
+      "declared": 10,
+      "actual": 10,
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-READYREADTIMEOUTSECONDS",
+      "profile": "A",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/A.json",
+      "pointer": "/settings/busterNamespaceBroker/controller/policy/readyReadTimeoutSeconds",
+      "declared": 20,
+      "actual": 20,
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-READYREADTIMEOUTSECONDS",
+      "profile": "B",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/B.json",
+      "pointer": "/settings/busterNamespaceBroker/controller/policy/readyReadTimeoutSeconds",
+      "declared": 40,
+      "actual": 40,
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-READYWRITETIMEOUTSECONDS",
+      "profile": "A",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/A.json",
+      "pointer": "/settings/busterNamespaceBroker/controller/policy/readyWriteTimeoutSeconds",
+      "declared": 20,
+      "actual": 20,
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-READYWRITETIMEOUTSECONDS",
+      "profile": "B",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/B.json",
+      "pointer": "/settings/busterNamespaceBroker/controller/policy/readyWriteTimeoutSeconds",
+      "declared": 40,
+      "actual": 40,
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-READYIDLETIMEOUTSECONDS",
+      "profile": "A",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/A.json",
+      "pointer": "/settings/busterNamespaceBroker/controller/policy/readyIdleTimeoutSeconds",
+      "declared": 30,
+      "actual": 30,
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-READYIDLETIMEOUTSECONDS",
+      "profile": "B",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/B.json",
+      "pointer": "/settings/busterNamespaceBroker/controller/policy/readyIdleTimeoutSeconds",
+      "declared": 60,
+      "actual": 60,
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-READYMAXHEADERBYTES",
+      "profile": "A",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/A.json",
+      "pointer": "/settings/busterNamespaceBroker/controller/policy/readyMaxHeaderBytes",
+      "declared": 20480,
+      "actual": 20480,
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-READYMAXHEADERBYTES",
+      "profile": "B",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/B.json",
+      "pointer": "/settings/busterNamespaceBroker/controller/policy/readyMaxHeaderBytes",
+      "declared": 40960,
+      "actual": 40960,
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-READYHANDLERTIMEOUTSECONDS",
+      "profile": "A",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/A.json",
+      "pointer": "/settings/busterNamespaceBroker/controller/policy/readyHandlerTimeoutSeconds",
+      "declared": 15,
+      "actual": 15,
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-READYHANDLERTIMEOUTSECONDS",
+      "profile": "B",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/B.json",
+      "pointer": "/settings/busterNamespaceBroker/controller/policy/readyHandlerTimeoutSeconds",
+      "declared": 30,
+      "actual": 30,
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-READYMAXIMUMBODYBYTES",
+      "profile": "A",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/A.json",
+      "pointer": "/settings/busterNamespaceBroker/controller/policy/readyMaximumBodyBytes",
+      "declared": 16384,
+      "actual": 16384,
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-READYMAXIMUMBODYBYTES",
+      "profile": "B",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/B.json",
+      "pointer": "/settings/busterNamespaceBroker/controller/policy/readyMaximumBodyBytes",
+      "declared": 8192,
+      "actual": 8192,
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-PRODUCTHANDLERTIMEOUTSECONDS",
+      "profile": "A",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/A.json",
+      "pointer": "/settings/busterNamespaceBroker/controller/policy/productHandlerTimeoutSeconds",
+      "declared": 15,
+      "actual": 15,
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-PRODUCTHANDLERTIMEOUTSECONDS",
+      "profile": "B",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/B.json",
+      "pointer": "/settings/busterNamespaceBroker/controller/policy/productHandlerTimeoutSeconds",
+      "declared": 30,
+      "actual": 30,
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-PRODUCTMAXIMUMBODYBYTES",
+      "profile": "A",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/A.json",
+      "pointer": "/settings/busterNamespaceBroker/controller/policy/productMaximumBodyBytes",
+      "declared": 16384,
+      "actual": 16384,
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-PRODUCTMAXIMUMBODYBYTES",
+      "profile": "B",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/B.json",
+      "pointer": "/settings/busterNamespaceBroker/controller/policy/productMaximumBodyBytes",
+      "declared": 8192,
+      "actual": 8192,
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-DEFAULTDEMORETENTIONSECONDS",
+      "profile": "A",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/A.json",
+      "pointer": "/settings/busterNamespaceBroker/controller/policy/defaultDemoRetentionSeconds",
+      "declared": 604800,
+      "actual": 604800,
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-DEFAULTDEMORETENTIONSECONDS",
+      "profile": "B",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/B.json",
+      "pointer": "/settings/busterNamespaceBroker/controller/policy/defaultDemoRetentionSeconds",
+      "declared": 1209600,
+      "actual": 1209600,
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-MAXIMUMDEMORETENTIONSECONDS",
+      "profile": "A",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/A.json",
+      "pointer": "/readonlyBindings/maximumDemoRetentionSeconds",
+      "declared": 9223372036,
+      "actual": 9223372036,
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-MAXIMUMDEMORETENTIONSECONDS",
+      "profile": "B",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/B.json",
+      "pointer": "/readonlyBindings/maximumDemoRetentionSeconds",
+      "declared": 9223372036,
+      "actual": 9223372036,
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-API-RESPONSE-MAXIMUM-BYTES",
+      "profile": "A",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/A.json",
+      "pointer": "/settings/busterNamespaceBroker/controller/policy/apiResponseMaximumBytes",
+      "declared": 8388608,
+      "actual": 8388608,
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-API-RESPONSE-MAXIMUM-BYTES",
+      "profile": "B",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/B.json",
+      "pointer": "/settings/busterNamespaceBroker/controller/policy/apiResponseMaximumBytes",
+      "declared": 16777216,
+      "actual": 16777216,
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-API-REQUEST-MAXIMUM-BYTES",
+      "profile": "A",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/A.json",
+      "pointer": "/settings/busterNamespaceBroker/controller/policy/apiRequestMaximumBytes",
+      "declared": 4194304,
+      "actual": 4194304,
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-API-REQUEST-MAXIMUM-BYTES",
+      "profile": "B",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/B.json",
+      "pointer": "/settings/busterNamespaceBroker/controller/policy/apiRequestMaximumBytes",
+      "declared": 8388608,
+      "actual": 8388608,
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-API-DIAGNOSTIC-MAXIMUM-BYTES",
+      "profile": "A",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/A.json",
+      "pointer": "/settings/busterNamespaceBroker/controller/policy/apiDiagnosticMaximumBytes",
+      "declared": 1024,
+      "actual": 1024,
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-API-DIAGNOSTIC-MAXIMUM-BYTES",
+      "profile": "B",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/B.json",
+      "pointer": "/settings/busterNamespaceBroker/controller/policy/apiDiagnosticMaximumBytes",
+      "declared": 2048,
+      "actual": 2048,
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-AUTHORIZATION-MAXIMUM-BYTES",
+      "profile": "A",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/A.json",
+      "pointer": "/settings/busterNamespaceBroker/controller/policy/authorizationMaximumBytes",
+      "declared": 16384,
+      "actual": 16384,
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-AUTHORIZATION-MAXIMUM-BYTES",
+      "profile": "B",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/B.json",
+      "pointer": "/settings/busterNamespaceBroker/controller/policy/authorizationMaximumBytes",
+      "declared": 8192,
+      "actual": 8192,
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-NAMESPACE-DELETION-TIMEOUT-SECONDS",
+      "profile": "A",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/A.json",
+      "pointer": "/settings/busterNamespaceBroker/controller/policy/namespaceDeletionTimeoutSeconds",
+      "declared": 120,
+      "actual": 120,
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-NAMESPACE-DELETION-TIMEOUT-SECONDS",
+      "profile": "B",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/B.json",
+      "pointer": "/settings/busterNamespaceBroker/controller/policy/namespaceDeletionTimeoutSeconds",
+      "declared": 180,
+      "actual": 180,
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-READY-OBSERVATION-MAXIMUM-AGE-SECONDS",
+      "profile": "A",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/A.json",
+      "pointer": "/settings/busterNamespaceBroker/controller/policy/readyObservationMaximumAgeSeconds",
+      "declared": 300,
+      "actual": 300,
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-READY-OBSERVATION-MAXIMUM-AGE-SECONDS",
+      "profile": "B",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/B.json",
+      "pointer": "/settings/busterNamespaceBroker/controller/policy/readyObservationMaximumAgeSeconds",
+      "declared": 180,
+      "actual": 180,
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-PRODUCT-DECISION-MAXIMUM-VALIDITY-SECONDS",
+      "profile": "A",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/A.json",
+      "pointer": "/settings/busterNamespaceBroker/controller/policy/productDecisionMaximumValiditySeconds",
+      "declared": 300,
+      "actual": 300,
+      "errors": []
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-PRODUCT-DECISION-MAXIMUM-VALIDITY-SECONDS",
+      "profile": "B",
+      "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/profiles/B.json",
+      "pointer": "/settings/busterNamespaceBroker/controller/policy/productDecisionMaximumValiditySeconds",
+      "declared": 120,
+      "actual": 120,
+      "errors": []
+    }
+  ],
+  "observations": [
+    {
+      "name": "all original49 receiver identities explicit and 98 nodes exact",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-KUBERNETES-SERVICE-PORT/A",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-KUBERNETES-SERVICE-PORT/B",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-BUSTER-LEASE-API-GROUP/A",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-BUSTER-LEASE-API-GROUP/B",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-BUSTER-LEASE-API-VERSION/A",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-BUSTER-LEASE-API-VERSION/B",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-BUSTER-ALLOWED-NAMESPACE-PREFIXES/A",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-BUSTER-ALLOWED-NAMESPACE-PREFIXES/B",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-BUSTER-DEFAULT-TTL-SECONDS/A",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-BUSTER-DEFAULT-TTL-SECONDS/B",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-BUSTER-MAX-TTL-SECONDS/A",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-BUSTER-MAX-TTL-SECONDS/B",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-BUSTER-CONTROLLER-SERVICE-ACCOUNT/A",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-BUSTER-CONTROLLER-SERVICE-ACCOUNT/B",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-BUSTER-SECRET-ROLE-NAME/A",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-BUSTER-SECRET-ROLE-NAME/B",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-BUSTER-DEPLOYER-ROLE-NAME/A",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-BUSTER-DEPLOYER-ROLE-NAME/B",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-BUSTER-TESTER-ROLE-NAME/A",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-BUSTER-TESTER-ROLE-NAME/B",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-BUSTER-ALLOWED-ACCESS-JSON/A",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-BUSTER-ALLOWED-ACCESS-JSON/B",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-KUBECLAW-NAMESPACE/A",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-KUBECLAW-NAMESPACE/B",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-BUSTER-CONTROLLER-POLL-MS/A",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-BUSTER-CONTROLLER-POLL-MS/B",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-KUBERNETES-SERVICE-HOST/A",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-KUBERNETES-SERVICE-HOST/B",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-BUSTER-ALLOWED-SOURCE-SECRETS/A",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-BUSTER-ALLOWED-SOURCE-SECRETS/B",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-BUSTER-READY-LISTEN/A",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-BUSTER-READY-LISTEN/B",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-BUSTER-READY-AUDIENCE/A",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-BUSTER-READY-AUDIENCE/B",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-BUSTER-READY-PRODUCER/A",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-BUSTER-READY-PRODUCER/B",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-BUSTER-READY-TLS-CERT/A",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-BUSTER-READY-TLS-CERT/B",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-BUSTER-READY-TLS-KEY/A",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-BUSTER-READY-TLS-KEY/B",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-BUSTER-PRODUCT-ENABLED/A",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-BUSTER-PRODUCT-ENABLED/B",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-BUSTER-PRODUCT-VERIFY-KEY/A",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-BUSTER-PRODUCT-VERIFY-KEY/B",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-BUSTER-PRODUCT-AUDIENCE/A",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-BUSTER-PRODUCT-AUDIENCE/B",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-BUSTER-PRODUCT-PRODUCER/A",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-BUSTER-PRODUCT-PRODUCER/B",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-BUSTER-PRODUCT-ISSUER/A",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-BUSTER-PRODUCT-ISSUER/B",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-BUSTER-PRODUCT-ACTORS-JSON/A",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-BUSTER-PRODUCT-ACTORS-JSON/B",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-HTTPCLIENTTIMEOUTSECONDS/A",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-HTTPCLIENTTIMEOUTSECONDS/B",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-RUNTIMESECURITYREFRESHSECONDS/A",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-RUNTIMESECURITYREFRESHSECONDS/B",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-RUNTIMESECURITYFUTURESKEWSECONDS/A",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-RUNTIMESECURITYFUTURESKEWSECONDS/B",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-RUNTIMESECURITYMAXIMUMFINDINGS/A",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-RUNTIMESECURITYMAXIMUMFINDINGS/B",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-RUNTIMESECURITYMAXIMUMSERIALIZEDBYTES/A",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-RUNTIMESECURITYMAXIMUMSERIALIZEDBYTES/B",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-READYREADHEADERTIMEOUTSECONDS/A",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-READYREADHEADERTIMEOUTSECONDS/B",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-READYREADTIMEOUTSECONDS/A",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-READYREADTIMEOUTSECONDS/B",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-READYWRITETIMEOUTSECONDS/A",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-READYWRITETIMEOUTSECONDS/B",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-READYIDLETIMEOUTSECONDS/A",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-READYIDLETIMEOUTSECONDS/B",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-READYMAXHEADERBYTES/A",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-READYMAXHEADERBYTES/B",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-READYHANDLERTIMEOUTSECONDS/A",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-READYHANDLERTIMEOUTSECONDS/B",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-READYMAXIMUMBODYBYTES/A",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-READYMAXIMUMBODYBYTES/B",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-PRODUCTHANDLERTIMEOUTSECONDS/A",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-PRODUCTHANDLERTIMEOUTSECONDS/B",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-PRODUCTMAXIMUMBODYBYTES/A",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-PRODUCTMAXIMUMBODYBYTES/B",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-DEFAULTDEMORETENTIONSECONDS/A",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-DEFAULTDEMORETENTIONSECONDS/B",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-MAXIMUMDEMORETENTIONSECONDS/A",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-MAXIMUMDEMORETENTIONSECONDS/B",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-API-RESPONSE-MAXIMUM-BYTES/A",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-API-RESPONSE-MAXIMUM-BYTES/B",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-API-REQUEST-MAXIMUM-BYTES/A",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-API-REQUEST-MAXIMUM-BYTES/B",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-API-DIAGNOSTIC-MAXIMUM-BYTES/A",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-API-DIAGNOSTIC-MAXIMUM-BYTES/B",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-AUTHORIZATION-MAXIMUM-BYTES/A",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-AUTHORIZATION-MAXIMUM-BYTES/B",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-NAMESPACE-DELETION-TIMEOUT-SECONDS/A",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-NAMESPACE-DELETION-TIMEOUT-SECONDS/B",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-READY-OBSERVATION-MAXIMUM-AGE-SECONDS/A",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-READY-OBSERVATION-MAXIMUM-AGE-SECONDS/B",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-PRODUCT-DECISION-MAXIMUM-VALIDITY-SECONDS/A",
+      "pass": true
+    },
+    {
+      "name": "negative altered node DLV-NAMESPACE-CONTROLLER-PRODUCT-DECISION-MAXIMUM-VALIDITY-SECONDS/B",
+      "pass": true
+    },
+    {
+      "name": "negative sha",
+      "pass": true
+    },
+    {
+      "name": "negative pointer",
+      "pass": true
+    },
+    {
+      "name": "negative stale producer whole-node missing port",
+      "pass": true
+    },
+    {
+      "name": "complete 8444 contrast changes only selected profileId/one same Chart S policy",
+      "pass": true
+    },
+    {
+      "name": "broker-off controller omitted",
+      "pass": true
+    },
+    {
+      "name": "Ready-off port and TLS omitted/Product false",
+      "pass": true
+    },
+    {
+      "name": "source actual error-first branch precedes out=nil and typed decode",
+      "pass": true
+    },
+    {
+      "name": "proposal-only closed ABI fragment A",
+      "pass": true
+    },
+    {
+      "name": "proposal-only closed ABI fragment B",
+      "pass": true
+    },
+    {
+      "name": "negative ABI old-version",
+      "pass": true
+    },
+    {
+      "name": "negative ABI missing-profile",
+      "pass": true
+    },
+    {
+      "name": "negative ABI unknown-writer",
+      "pass": true
+    },
+    {
+      "name": "current closed v5 explicitly lacks deploymentBindings support",
+      "pass": true
+    },
+    {
+      "name": "unchanged49 original bodies/six original cases",
+      "pass": true
+    },
+    {
+      "name": "no field semantic acceptance inferred",
+      "pass": true
+    }
+  ],
+  "failedNodes": 0,
+  "failedObservations": 0
+}
