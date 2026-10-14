@@ -46,8 +46,8 @@
     "implementationAuthorized": false
   },
   "lastPushedCheckpoint": {
-    "checkpoint": 24,
-    "commit": "60d520177c3de2e33a8c397e3d6e5f9e8e8e7bbf",
+    "checkpoint": 25,
+    "commit": "d2b8b25ba3da515ac5b9d233a0cbfba4df20faa4",
     "pr": "https://github.com/datrab/kubeclaw/pull/18",
     "pushed": true,
     "remoteHeadVerified": true,
@@ -65,7 +65,13 @@
       "errors": 0
     }
   },
-  "pendingNativeReviews": [],
+  "pendingNativeReviews": [
+    {
+      "path": "security-provider-contracts-02",
+      "reviewer": "/root/runtime_provider_contract_review",
+      "accepted": false
+    }
+  ],
   "checkpoint10Prepared": {
     "baseCommit": "ddd49add7eefd5fbbccac84360498a5ece8bae0a",
     "scope": "Swarm effective buffer cap28 independently20 verified; gateway19 source definitions29 and exact startup reader correction30 independently22 verified",
@@ -78,14 +84,19 @@
   "sourceSupplementIndex": "docs/review/remediation/config-source-supplement-current.md",
   "activeNativeWork": [
     {
-      "task": "/root/c1_case_oracle_review",
-      "scope": "Security02 SEC-R01-01 unique resolved native header-set compatibility and SEC-R01-02 whole-package exact same-service/role/resource concordance",
-      "status": "running additive correction author; fresh recheck required"
+      "task": "/root/runtime_provider_contract_review",
+      "scope": "Security02 independent correction review: actual resolved native headercatalogue and exact wholepackage service/role/resource closure",
+      "status": "running fresh independent review"
     },
     {
       "task": "/root/c0_canonical_source_join_review",
-      "scope": "Complete sole-author Prism agent launcher fullprofile/domain/Control claim+CLI receiving/durable original authority/12 originalfields13case contracts",
-      "status": "running author; fresh independent review required"
+      "scope": "One complete same-entry engine selection/file-set/Control-J receiving extension on verified v6+Prism01; no private root, Security/Gateway explicit pending integration",
+      "status": "running author; independent material review required"
+    },
+    {
+      "task": "/root/whole_c0_readiness_review",
+      "scope": "Gateway/OpenClaw70 full original sole-author managedstartup/credential/role/service domains/profiles/case contracts",
+      "status": "running author; independent review required"
     }
   ],
   "completedLatestReviews": [
@@ -182,6 +193,11 @@
     {
       "report": "independent-same-entry-deployment-binding-review-02/README.md",
       "verdict": "SEDB-01/02 CLOSED bounded coordinated selection/admission; 195 pure observations, parent387 frozen input pins unchanged; native/runtime/task/source-author/Security integration/fullC0 still unaccepted"
+    },
+    {
+      "report": "independent-prism-agent-launcher-profile-review-01/REPORT.md",
+      "reportSha256": "6f94534a83c11da3d7093bf67d35ad46471f144c8ef4d2a4f50e7661acce6b7a",
+      "verdict": "VERIFIED bounded launcher12field13case fullprofile/receiving/domain/oracles; parent85 frozeninputs stable; rootintegration and unfulfilled original F-EFFECT/native obligations remain open"
     }
   ],
   "checkpoint15Prepared": {
@@ -264,17 +280,7 @@
     "globalC0Accepted": false,
     "boundedReview": "independent-provider-field-dependency-adoption-review-01/README.md"
   },
-  "pendingAuthorCorrections": [
-    {
-      "path": "security-provider-contracts-02",
-      "findings": [
-        "SEC-R01-01",
-        "SEC-R01-02"
-      ],
-      "author": "/root/c1_case_oracle_review",
-      "status": "running"
-    }
-  ],
+  "pendingAuthorCorrections": [],
   "pendingIntegrationReview": {
     "path": "provider-field-current-integration-01",
     "scope": "Two actual root metadata refs + current reading precedence; previous bounded adoption review did not inspect new rootbytes",
@@ -332,7 +338,7 @@
     "diffCheckExitCode": 0
   },
   "checkpoint25Prepared": {
-    "pushed": false,
+    "pushed": true,
     "baseCommit": "60d520177c3de2e33a8c397e3d6e5f9e8e8e7bbf",
     "scope": "Coordinated same-entry01/rejected review01/additive02/independent closed review02; current reading precedence/navigation/state only",
     "originalCanonicalRootsUnchanged": true,
@@ -340,6 +346,17 @@
     "globalC0Accepted": false,
     "implementationAuthorization": null,
     "autoreview": "Codex CLI unavailable; no clean autoreview claim",
+    "diffCheckExitCode": 0
+  },
+  "checkpoint26Prepared": {
+    "pushed": false,
+    "baseCommit": "d2b8b25ba3da515ac5b9d233a0cbfba4df20faa4",
+    "scope": "Complete Prism launcher profile01 and independently verified bounded review01, current navigation/state only",
+    "originalCanonicalRootsUnchanged": true,
+    "productionOrExistingTestsChanged": false,
+    "globalC0Accepted": false,
+    "implementationAuthorization": null,
+    "autoreview": "Codex CLI unavailable; no clean claim",
     "diffCheckExitCode": 0
   }
 }

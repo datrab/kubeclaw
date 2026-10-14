@@ -1,0 +1,164 @@
+{
+  "baseWholeDocument": "fixtures/prism-agent.config.json",
+  "pairs": [
+    {
+      "id": "AUTH-PRISM-AGENT-LIMIT-timeoutMs",
+      "file": "fixtures/pairs/AUTH-PRISM-AGENT-LIMIT-timeoutMs.config.json",
+      "sha256": "151c77066b5e7a124b15e65e29ce306b1130a27e965525513e9e2c0dbd198732",
+      "profileA": "standard",
+      "profileB": "runtime",
+      "changedPolicyPointers": [
+        "limits.timeoutMs"
+      ],
+      "sameAllUnrelatedPolicyFields": true,
+      "nativeEffectSupported": true,
+      "claim": "Full same sole-author documents, not snippets/root stand/native receipts"
+    },
+    {
+      "id": "AUTH-PRISM-AGENT-LIMIT-cleanupTimeoutMs",
+      "file": "fixtures/pairs/AUTH-PRISM-AGENT-LIMIT-cleanupTimeoutMs.config.json",
+      "sha256": "2c787dc3575461c525e69588ae23281ebee2d6e41596625e1b098a33561d5559",
+      "profileA": "standard",
+      "profileB": "runtime",
+      "changedPolicyPointers": [
+        "limits.cleanupTimeoutMs"
+      ],
+      "sameAllUnrelatedPolicyFields": true,
+      "nativeEffectSupported": true,
+      "claim": "Full same sole-author documents, not snippets/root stand/native receipts"
+    },
+    {
+      "id": "AUTH-PRISM-AGENT-LIMIT-logBytes",
+      "file": "fixtures/pairs/AUTH-PRISM-AGENT-LIMIT-logBytes.config.json",
+      "sha256": "c44c44f98a93170a4c9c62b4d2c5d0df2ed231988f5d07669d229601f5b88d11",
+      "profileA": "standard",
+      "profileB": "runtime",
+      "changedPolicyPointers": [
+        "limits.logBytes"
+      ],
+      "sameAllUnrelatedPolicyFields": true,
+      "nativeEffectSupported": true,
+      "claim": "Full same sole-author documents, not snippets/root stand/native receipts"
+    },
+    {
+      "id": "AUTH-PRISM-AGENT-LIMIT-resultBytes",
+      "file": "fixtures/pairs/AUTH-PRISM-AGENT-LIMIT-resultBytes.config.json",
+      "sha256": "1fcacf179733110663be2411dadcd231b744a2d9ef74061a6a28f325131735d3",
+      "profileA": "standard",
+      "profileB": "runtime",
+      "changedPolicyPointers": [
+        "limits.resultBytes"
+      ],
+      "sameAllUnrelatedPolicyFields": true,
+      "nativeEffectSupported": false,
+      "claim": "Full same sole-author documents, not snippets/root stand/native receipts"
+    },
+    {
+      "id": "AUTH-PRISM-AGENT-LIMIT-evidenceBytes",
+      "file": "fixtures/pairs/AUTH-PRISM-AGENT-LIMIT-evidenceBytes.config.json",
+      "sha256": "1a4b917907b7b8082e4b7ba6ba405a6d259ccec0bd452da05785b85d55684531",
+      "profileA": "standard",
+      "profileB": "runtime",
+      "changedPolicyPointers": [
+        "limits.evidenceBytes"
+      ],
+      "sameAllUnrelatedPolicyFields": true,
+      "nativeEffectSupported": false,
+      "claim": "Full same sole-author documents, not snippets/root stand/native receipts"
+    },
+    {
+      "id": "AUTH-PRISM-AGENT-LIMIT-evidenceFiles",
+      "file": "fixtures/pairs/AUTH-PRISM-AGENT-LIMIT-evidenceFiles.config.json",
+      "sha256": "40cfe910f350424b1f81e9d9b86d943ebb4c3d2b4d36b53199e04fc6bdd8782d",
+      "profileA": "standard",
+      "profileB": "runtime",
+      "changedPolicyPointers": [
+        "limits.evidenceFiles"
+      ],
+      "sameAllUnrelatedPolicyFields": true,
+      "nativeEffectSupported": false,
+      "claim": "Full same sole-author documents, not snippets/root stand/native receipts"
+    },
+    {
+      "id": "AUTH-PRISM-AGENT-CLAIM-LIFETIME",
+      "file": "fixtures/pairs/AUTH-PRISM-AGENT-CLAIM-LIFETIME.config.json",
+      "sha256": "ae31df073bb51bf22878313942be710b0660b09257cb269f3d53655a53a8a72e",
+      "profileA": "standard",
+      "profileB": "runtime",
+      "changedPolicyPointers": [
+        "claimLifetimeMs"
+      ],
+      "sameAllUnrelatedPolicyFields": true,
+      "nativeEffectSupported": true,
+      "claim": "Full same sole-author documents, not snippets/root stand/native receipts"
+    },
+    {
+      "id": "AUTH-PRISM-AGENT-KILL-GRACE",
+      "file": "fixtures/pairs/AUTH-PRISM-AGENT-KILL-GRACE.config.json",
+      "sha256": "459905eba990086c7bda0545d8f4ff94d62aac2cdab4f13507f20405f53b73ad",
+      "profileA": "standard",
+      "profileB": "runtime",
+      "changedPolicyPointers": [
+        "terminationGraceMs"
+      ],
+      "sameAllUnrelatedPolicyFields": true,
+      "nativeEffectSupported": true,
+      "claim": "Full same sole-author documents, not snippets/root stand/native receipts"
+    },
+    {
+      "id": "AUTH-PRISM-AGENT-CLI-OWNER",
+      "file": "fixtures/pairs/AUTH-PRISM-AGENT-CLI-OWNER.config.json",
+      "sha256": "6ad3564edab7146824e7a1e03b8d02b4e138d54a545fec4d9850cd5dd46465b4",
+      "profileA": "standard",
+      "profileB": "runtime",
+      "changedPolicyPointers": [],
+      "sameAllUnrelatedPolicyFields": true,
+      "nativeEffectSupported": false,
+      "claim": "Full same sole-author documents, not snippets/root stand/native receipts"
+    },
+    {
+      "id": "AUTH-PRISM-AGENT-CLAIM-HTTP",
+      "file": "fixtures/pairs/AUTH-PRISM-AGENT-CLAIM-HTTP.config.json",
+      "sha256": "7990e21259237f4107a5664a6c79ff8ae22095c9e7574b45fa782e9889f5ce7e",
+      "profileA": "standard",
+      "profileB": "runtime",
+      "changedPolicyPointers": [
+        "claimHttpTimeoutMs"
+      ],
+      "sameAllUnrelatedPolicyFields": true,
+      "nativeEffectSupported": true,
+      "claim": "Full same sole-author documents, not snippets/root stand/native receipts"
+    },
+    {
+      "id": "AUTH-PRISM-AGENT-FINISH-HTTP",
+      "file": "fixtures/pairs/AUTH-PRISM-AGENT-FINISH-HTTP.config.json",
+      "sha256": "73158771fc70d8f6815ada23514ba6f7293b4b20ea7eeb06595384d80cef6a8a",
+      "profileA": "standard",
+      "profileB": "runtime",
+      "changedPolicyPointers": [
+        "finishHttpTimeoutMs"
+      ],
+      "sameAllUnrelatedPolicyFields": true,
+      "nativeEffectSupported": true,
+      "claim": "Full same sole-author documents, not snippets/root stand/native receipts"
+    }
+  ],
+  "fieldToPair": {
+    "AUTH-PRISM-AGENT-LIMIT-timeoutMs": "fixtures/pairs/AUTH-PRISM-AGENT-LIMIT-timeoutMs.config.json",
+    "AUTH-PRISM-AGENT-LIMIT-cleanupTimeoutMs": "fixtures/pairs/AUTH-PRISM-AGENT-LIMIT-cleanupTimeoutMs.config.json",
+    "AUTH-PRISM-AGENT-LIMIT-logBytes": "fixtures/pairs/AUTH-PRISM-AGENT-LIMIT-logBytes.config.json",
+    "AUTH-PRISM-AGENT-LIMIT-resultBytes": "fixtures/pairs/AUTH-PRISM-AGENT-LIMIT-resultBytes.config.json",
+    "AUTH-PRISM-AGENT-LIMIT-evidenceBytes": "fixtures/pairs/AUTH-PRISM-AGENT-LIMIT-evidenceBytes.config.json",
+    "AUTH-PRISM-AGENT-LIMIT-evidenceFiles": "fixtures/pairs/AUTH-PRISM-AGENT-LIMIT-evidenceFiles.config.json",
+    "AUTH-PRISM-AGENT-CLAIM-LIFETIME": "fixtures/pairs/AUTH-PRISM-AGENT-CLAIM-LIFETIME.config.json",
+    "AUTH-PRISM-AGENT-KILL-GRACE": "fixtures/pairs/AUTH-PRISM-AGENT-KILL-GRACE.config.json",
+    "AUTH-PRISM-AGENT-CLI-TIMEOUT": "fixtures/pairs/AUTH-PRISM-AGENT-LIMIT-timeoutMs.config.json",
+    "AUTH-PRISM-AGENT-CLI-OWNER": "fixtures/pairs/AUTH-PRISM-AGENT-CLI-OWNER.config.json",
+    "AUTH-PRISM-AGENT-CLAIM-HTTP": "fixtures/pairs/AUTH-PRISM-AGENT-CLAIM-HTTP.config.json",
+    "AUTH-PRISM-AGENT-FINISH-HTTP": "fixtures/pairs/AUTH-PRISM-AGENT-FINISH-HTTP.config.json"
+  },
+  "CLIaliasSharedTimeoutPair": true,
+  "diagnosticTimeoutWholeDocument": "fixtures/diagnostic-timeout.config.json",
+  "allCompleteProfilesDefaultFree": true,
+  "originalEffectObligationsRetained": true
+}

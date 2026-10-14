@@ -1,0 +1,18 @@
+{
+  "status": "Definition author only; fresh independent review required",
+  "counts": {
+    "fields": 12,
+    "cases": 13,
+    "uniqueWholePairDocuments": 11,
+    "baseDocuments": 1,
+    "diagnosticDocuments": 1,
+    "exactSourceLines": 1054,
+    "inputs": 43
+  },
+  "fixedClosureBytes": 171,
+  "scriptSHA": "eb9904534f2dddade1ca5184d45064c60b821500a49954a4135980e12c033e92",
+  "allFutureCasesNotRun": true,
+  "globalC0Accepted": false,
+  "implementationAuthorization": false,
+  "hostOpenClawVersion": "2026.9.9"
+}

@@ -1,0 +1,65 @@
+{
+  "runs": [
+    {
+      "argv": [
+        "python",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/author-definition.py"
+      ],
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+      "exit": 0,
+      "stdout": "definition.stdout",
+      "stderr": "definition.stderr",
+      "inspectedSafety": "Finite builtin JSON/hash/source/Ajv and inspected pure string/arithmetic only; no process/CLI/PG/native/network/model/credential execution",
+      "toolSources": {
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/author-definition.py": "eb9904534f2dddade1ca5184d45064c60b821500a49954a4135980e12c033e92",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/definition-check.mjs": "a097fdf054783b74b4a5b1e024b9dad4eadc694e69a5521bfaafb79fbdd95227",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/extracted-host-timeout-helpers.mjs": "57dff5653c661c0e437ecaed09c5d3f6739cca3ad7bde84fd5849f393b0a8cca"
+      },
+      "toolEndPins": {
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/author-definition.py": "eb9904534f2dddade1ca5184d45064c60b821500a49954a4135980e12c033e92",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/definition-check.mjs": "a097fdf054783b74b4a5b1e024b9dad4eadc694e69a5521bfaafb79fbdd95227",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/extracted-host-timeout-helpers.mjs": "57dff5653c661c0e437ecaed09c5d3f6739cca3ad7bde84fd5849f393b0a8cca"
+      }
+    },
+    {
+      "argv": [
+        "node",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/definition-check.mjs"
+      ],
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+      "exit": 0,
+      "stdout": "checks.stdout",
+      "stderr": "checks.stderr",
+      "inspectedSafety": "Finite builtin JSON/hash/source/Ajv and inspected pure string/arithmetic only; no process/CLI/PG/native/network/model/credential execution",
+      "toolSources": {
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/author-definition.py": "eb9904534f2dddade1ca5184d45064c60b821500a49954a4135980e12c033e92",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/definition-check.mjs": "a097fdf054783b74b4a5b1e024b9dad4eadc694e69a5521bfaafb79fbdd95227",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/extracted-host-timeout-helpers.mjs": "57dff5653c661c0e437ecaed09c5d3f6739cca3ad7bde84fd5849f393b0a8cca"
+      },
+      "toolEndPins": {
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/author-definition.py": "eb9904534f2dddade1ca5184d45064c60b821500a49954a4135980e12c033e92",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/definition-check.mjs": "a097fdf054783b74b4a5b1e024b9dad4eadc694e69a5521bfaafb79fbdd95227",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/extracted-host-timeout-helpers.mjs": "57dff5653c661c0e437ecaed09c5d3f6739cca3ad7bde84fd5849f393b0a8cca"
+      }
+    }
+  ],
+  "earlierFailure": {
+    "argv": [
+      "node",
+      "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/definition-check.mjs"
+    ],
+    "exit": 1,
+    "scriptSnapshot": "definition-check-attempt1.mjs.snapshot",
+    "scriptSHA256": "b3c8dc978fe6b258ef707e707c683acc4ed9fdcd2357f74b76e8280b2a8bc70d",
+    "stdout": "definition-check-attempt1.stdout",
+    "stderr": "definition-check-attempt1.stderr",
+    "cause": "Author negative control invoked throwing native pure parser outside try/catch; corrected control catches expected rejection. Not a source/schema/runtime failure or accepted negative before correction."
+  },
+  "python": "3.11.2 (main, Oct  7 2026, 12:35:07) [GCC 12.2.0]",
+  "node": "v24.21.0",
+  "ajvPackageSHA": "1f9033ee5a6515e7d76938b7072941862d1ed228a6879cc7fe10cdeb75107989",
+  "ajv2020SHA": "908e9670b478b2ba126802a221b7e47006f50cf467e2c5dd7935d3dbef10a20a",
+  "executedFutureCases": 0,
+  "globalC0Accepted": false,
+  "implementationAuthorization": false
+}

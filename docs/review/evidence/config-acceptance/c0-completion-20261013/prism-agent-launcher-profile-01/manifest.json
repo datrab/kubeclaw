@@ -1,0 +1,158 @@
+{
+  "status": "Fresh independent review required, no self/global acceptance",
+  "artifacts": [
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/README.md",
+      "sha256": "ce95f0a13a69c7fc0be286c219b7d3c6e9e8215b9f627efd6d31e050b2e1823c"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/author-definition.py",
+      "sha256": "eb9904534f2dddade1ca5184d45064c60b821500a49954a4135980e12c033e92"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/author-receipt.json",
+      "sha256": "110febb5e1c9a322430e9178618e2d2fd593b4cfb7e7c3770dd913dd524bb3ac"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/case-contracts.json",
+      "sha256": "bd2447e5f6db32ba8681f28093b1d4eb55d17f2d66004d9344c3dfce8299c5f3"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/checks.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/checks.stdout",
+      "sha256": "bd240126aca37125745cc2817d5bd9e8b0ff1bf152386f4f020c1cd9bc0cccd2"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/commands-and-exits.json",
+      "sha256": "486b9df27bc19e573f47ba09bfd4953af47b515163de76ad45882eb42be94c4f"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/definition-check-attempt1.mjs.snapshot",
+      "sha256": "b3c8dc978fe6b258ef707e707c683acc4ed9fdcd2357f74b76e8280b2a8bc70d"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/definition-check-attempt1.stderr",
+      "sha256": "a321a47c79a8f55d0c2bf9bdd243241d47bcb17f6594a6541a0b1c4dfaf7d590"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/definition-check-attempt1.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/definition-check.mjs",
+      "sha256": "a097fdf054783b74b4a5b1e024b9dad4eadc694e69a5521bfaafb79fbdd95227"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/definition.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/definition.stdout",
+      "sha256": "46d426ffa79ba73b084d45e6ddf3219d8c407c002eff0782e2a955ea3d870ce2"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/extracted-host-timeout-helpers.mjs",
+      "sha256": "57dff5653c661c0e437ecaed09c5d3f6739cca3ad7bde84fd5849f393b0a8cca"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/field-contracts.json",
+      "sha256": "0111239c60bb337ec9cedd6a1301425649c024b8d3a3a8823017b81291d4e9eb"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/fixtures/diagnostic-timeout.config.json",
+      "sha256": "b70ed6d4caaee65317ccd84e3cefd01c6ce2c8b479df51e03e2570982efc1c2e"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/fixtures/pairs/AUTH-PRISM-AGENT-CLAIM-HTTP.config.json",
+      "sha256": "7990e21259237f4107a5664a6c79ff8ae22095c9e7574b45fa782e9889f5ce7e"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/fixtures/pairs/AUTH-PRISM-AGENT-CLAIM-LIFETIME.config.json",
+      "sha256": "ae31df073bb51bf22878313942be710b0660b09257cb269f3d53655a53a8a72e"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/fixtures/pairs/AUTH-PRISM-AGENT-CLI-OWNER.config.json",
+      "sha256": "6ad3564edab7146824e7a1e03b8d02b4e138d54a545fec4d9850cd5dd46465b4"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/fixtures/pairs/AUTH-PRISM-AGENT-FINISH-HTTP.config.json",
+      "sha256": "73158771fc70d8f6815ada23514ba6f7293b4b20ea7eeb06595384d80cef6a8a"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/fixtures/pairs/AUTH-PRISM-AGENT-KILL-GRACE.config.json",
+      "sha256": "459905eba990086c7bda0545d8f4ff94d62aac2cdab4f13507f20405f53b73ad"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/fixtures/pairs/AUTH-PRISM-AGENT-LIMIT-cleanupTimeoutMs.config.json",
+      "sha256": "2c787dc3575461c525e69588ae23281ebee2d6e41596625e1b098a33561d5559"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/fixtures/pairs/AUTH-PRISM-AGENT-LIMIT-evidenceBytes.config.json",
+      "sha256": "1a4b917907b7b8082e4b7ba6ba405a6d259ccec0bd452da05785b85d55684531"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/fixtures/pairs/AUTH-PRISM-AGENT-LIMIT-evidenceFiles.config.json",
+      "sha256": "40cfe910f350424b1f81e9d9b86d943ebb4c3d2b4d36b53199e04fc6bdd8782d"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/fixtures/pairs/AUTH-PRISM-AGENT-LIMIT-logBytes.config.json",
+      "sha256": "c44c44f98a93170a4c9c62b4d2c5d0df2ed231988f5d07669d229601f5b88d11"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/fixtures/pairs/AUTH-PRISM-AGENT-LIMIT-resultBytes.config.json",
+      "sha256": "1fcacf179733110663be2411dadcd231b744a2d9ef74061a6a28f325131735d3"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/fixtures/pairs/AUTH-PRISM-AGENT-LIMIT-timeoutMs.config.json",
+      "sha256": "151c77066b5e7a124b15e65e29ce306b1130a27e965525513e9e2c0dbd198732"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/fixtures/prism-agent.config.json",
+      "sha256": "b6309c71d73c87a5598f00f2f16612c4b8bed2d705da84ca782459b4d5902f39"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/host-helper-extraction.json",
+      "sha256": "feb8b501446cd1600030dd1e3cce1c49562b082ddb816deec4390244906aa250"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/input-identities.json",
+      "sha256": "040080ba0b82d22864cf32cafb0d63dc2234722a6f3e06d94b65856a1fc8bf66"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/original-bodies.json",
+      "sha256": "7d62d7c6818869f2c54328d479675a195ddc32e80b57cfa3fa37dc3c8e3b4d76"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/profile-index.json",
+      "sha256": "304d84bc57e3c9350e5254d00d6306be952d2ff0afb2fa19ed0e0e007ed57463"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/receiving-contract.json",
+      "sha256": "2881fa4f68a44b1e874ed9d1bc12443c14edce6738e8c9892dcf71767f48cd8d"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/schemas/launcher-policy-binding.schema.json",
+      "sha256": "ef9b31532a3a4fc0b340996dd20fcb8933f9f050a7bb1a702c417caa07151918"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/schemas/prism-agent-launcher.schema.json",
+      "sha256": "6515bd1a041dfb885c157e9b1ebcca4eee455c81fd01f4265cbb6930e666b97d"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/serialization-witnesses.json",
+      "sha256": "c249d6b05671023845414a2ea547e3b1963cd12856cd14f6e7ac5f71378723a5"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/source-witnesses.json",
+      "sha256": "072c6453c6828befe522f682ac3f3cbbc3e46c2fdaa687322517352a13eeda04"
+    }
+  ],
+  "originalInputEndPinsEqual": true,
+  "fields": 12,
+  "originalCases": 13,
+  "futureCasesExecuted": 0,
+  "implementationAuthorization": false
+}

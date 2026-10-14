@@ -1,0 +1,23 @@
+{
+  "pureReplay": {
+    "argv": [
+      "node",
+      "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/definition-check.mjs"
+    ],
+    "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+    "exitCode": 0,
+    "stdout": "replay-definition.stdout",
+    "stderr": "replay-definition.stderr",
+    "sourceSha256": "a097fdf054783b74b4a5b1e024b9dad4eadc694e69a5521bfaafb79fbdd95227",
+    "helperSha256": "57dff5653c661c0e437ecaed09c5d3f6739cca3ad7bde84fd5849f393b0a8cca",
+    "node": "v24.21.0",
+    "ajvPackageSha256": "1f9033ee5a6515e7d76938b7072941862d1ed228a6879cc7fe10cdeb75107989",
+    "qualification": "existing narrow JSON/source/conservation and extracted pure host arithmetic only"
+  },
+  "inspectionNavigation": {
+    "exitCode": 1,
+    "reason": "metadata print name key absent; actual key function subsequently read",
+    "record": "inspection-navigation-error.txt"
+  },
+  "otherChecks": "read-only actual source/schema/profile reads, narrow JSON original body/isolated-pair comparisons only; no new generalized validator"
+}

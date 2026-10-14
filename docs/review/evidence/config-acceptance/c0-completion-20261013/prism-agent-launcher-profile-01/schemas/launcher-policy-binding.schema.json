@@ -1,0 +1,174 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "launcher-policy-binding.proposed.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "owner",
+    "ownerFile",
+    "ownerSchemaVersion",
+    "selectedProfile",
+    "documentSHA256",
+    "schemaSHA256",
+    "profileDigest",
+    "originalGenerationReceiptRef",
+    "originalControlIdentityRef",
+    "originalRoleGrantRef",
+    "cliParserReceiptRef",
+    "authorizedAgentRosterReceiptRef",
+    "jobId",
+    "requestDigest",
+    "sessionKey",
+    "policy"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "launcher-policy-binding.v1"
+    },
+    "owner": {
+      "const": "prism-agent-launcher"
+    },
+    "ownerFile": {
+      "const": "config/engines/prism-agent.config.json"
+    },
+    "ownerSchemaVersion": {
+      "const": "prism-agent-launcher.v1"
+    },
+    "selectedProfile": {
+      "type": "string",
+      "pattern": "^[A-Za-z][A-Za-z0-9_-]*$"
+    },
+    "documentSHA256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "schemaSHA256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "profileDigest": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "originalGenerationReceiptRef": {
+      "type": "string",
+      "minLength": 1
+    },
+    "originalControlIdentityRef": {
+      "type": "string",
+      "minLength": 1
+    },
+    "originalRoleGrantRef": {
+      "type": "string",
+      "minLength": 1
+    },
+    "cliParserReceiptRef": {
+      "type": "string",
+      "minLength": 1
+    },
+    "authorizedAgentRosterReceiptRef": {
+      "type": "string",
+      "minLength": 1
+    },
+    "jobId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "requestDigest": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "sessionKey": {
+      "type": "string",
+      "minLength": 1
+    },
+    "policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "limits",
+        "claimLifetimeMs",
+        "terminationGraceMs",
+        "agentId",
+        "claimHttpTimeoutMs",
+        "finishHttpTimeoutMs"
+      ],
+      "properties": {
+        "limits": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "timeoutMs",
+            "cleanupTimeoutMs",
+            "logBytes",
+            "resultBytes",
+            "evidenceBytes",
+            "evidenceFiles"
+          ],
+          "properties": {
+            "timeoutMs": {
+              "type": "integer",
+              "minimum": 1000,
+              "maximum": 2146970000,
+              "multipleOf": 1000
+            },
+            "cleanupTimeoutMs": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2147483647
+            },
+            "logBytes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 16777216
+            },
+            "resultBytes": {
+              "type": "integer",
+              "minimum": 171,
+              "maximum": 9007199254740991
+            },
+            "evidenceBytes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "evidenceFiles": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            }
+          }
+        },
+        "claimLifetimeMs": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "terminationGraceMs": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "agentId": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9_-]{0,63}$",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "claimHttpTimeoutMs": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "finishHttpTimeoutMs": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        }
+      }
+    }
+  },
+  "readOnly": true,
+  "$comment": "Proposed readonly SAME agent_job.launcher_policy receiving field, captured by authenticated Control beforeclaim. Reference syntax is NOT an authentic receipt. Native/source/grant/tuple equality and original-first resolution mandatory in receiving-contract.json. Not a private ledger or extra editable author."
+}
