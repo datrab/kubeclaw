@@ -11,7 +11,7 @@ const policyPath = path.join(checkout, 'charts/kubeclaw/files/config/lint-policy
 const raw = JSON.parse(fs.readFileSync(policyPath, 'utf8'));
 const normalize = value => validateLintPolicy(value, policyPath);
 const jscpd = value => value.tools.find(tool => tool.id === 'jscpd');
-assert.deepEqual(jscpd(normalize(raw)).test_targets, ['tests']);
+assert.equal(jscpd(normalize(raw)).test_targets, undefined);
 for (const test_targets of [[], ['../escape'], ['/tmp/escape'], ['same', 'same'], ['same', './same'], null]) {
   const candidate = structuredClone(raw); jscpd(candidate).test_targets = test_targets;
   assert.throws(() => normalize(candidate), /test_targets/);
@@ -27,6 +27,8 @@ try {
   const tool = { id: 'jscpd', targets: ['src'], test_targets: ['packages/example/test'] };
   const policy = { tools: [tool], architecture: { layers: [] } };
   validatePolicyTargetPaths(root, policy, project);
+  // Omitted targets must not require root tests during unrelated-tool admission.
+  validatePolicyTargetPaths(root, { ...policy, tools: [{ id: 'jscpd', targets: ['src'] }] }, project);
   for (const target of ['missing', '../escape']) {
     assert.throws(() => validatePolicyTargetPaths(root, { ...policy, tools: [{ ...tool, test_targets: [target] }] }, project));
   }
@@ -43,5 +45,9 @@ try {
   const result = await adapter.run({ repoRoot: root, policyProject: { root: '.' }, tool: { ...tool, timeout_ms: 30000, config_path: path.join(root, 'jscpd.json') } });
   assert.ok(result.errors > 0, 'Non-root duplicate test files must retain blocking findings');
   assert.ok(result.findings.some(finding => finding.file.endsWith('first.ts') || finding.file.endsWith('second.ts')), JSON.stringify(result.findings));
+  fs.mkdirSync(path.join(root, 'nested/src'), { recursive: true });
+  fs.renameSync(path.join(root, 'packages/example/test'), path.join(root, 'tests'));
+  const legacy = await adapter.run({ repoRoot: root, policyProject: { root: 'nested' }, tool: { id: 'jscpd', targets: ['src'], timeout_ms: 30000, config_path: path.join(root, 'jscpd.json') } });
+  assert.ok(legacy.errors > 0, 'Omission must scan repository-root tests even with a non-dot project root');
   console.log('JSCPD actual non-root scan, normalization, missing paths and nested symlink containment passed');
 } finally { fs.rmSync(root, { recursive: true, force: true }); fs.rmSync(outside, { recursive: true, force: true }); }

@@ -269,7 +269,7 @@ function jscpdTool() {
       if (!fs.existsSync(testConfigPath)) failConfigMissing('jscpd-test-config-missing', 'JSCPD requires its dedicated test calibration.');
 
       const productionDuplicates = await executeJscpd(ctx, ctx.tool.config_path, configuredTargetPaths(ctx), 'production');
-      const testDuplicates = await executeJscpd(ctx, testConfigPath, configuredTargetPaths(ctx, { targets: ctx.tool.test_targets }), 'tests');
+      const testDuplicates = await executeJscpd(ctx, testConfigPath, ctx.tool.test_targets === undefined ? ['tests'] : configuredTargetPaths(ctx, { targets: ctx.tool.test_targets }), 'tests');
       return findingsResult(jscpdFindings({ duplicates: [...productionDuplicates, ...testDuplicates] }, ctx.repoRoot));
     },
   };
