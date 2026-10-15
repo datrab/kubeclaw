@@ -1,3 +1,4 @@
+import { TEST_CORE_POLICY, TEST_CORE_POLICY_SELECTION } from '../../fixtures/core-runtime-policy.mjs';
 import { runnerExecutionPolicy } from '../../fixtures/test-gate/execution-policy.mts';
 // Preparation authority is modeled here; parser, extraction and durable service/store remain real.
 import { ModeledPreparedPlanJobStore as FileBusterPlanJobStore, ModeledBusterRemotePlanService as BusterRemotePlanService } from '../../fixtures/test-gate/modeled-preparation.mts';
@@ -101,7 +102,7 @@ async function fixture(t, options = {}) {
   const artifactId = 'kubeclaw.artifact-store:artifact-store', remoteId = 'kubeclaw.remote-test-gate:plan';
   const runtimeId = 'kubeclaw.runtime-dispatch:runtime', networkId = 'kubeclaw.network-http:http', secretId = 'kubeclaw.secret-resolver:secrets';
   const gitId = 'kubeclaw.git-workspace:git';
-  const platform = { schemaVersion: 'pipeline-platform.v2', effectLockTtlMs: 300_000, installationRoots: roots, trustedBuiltinRoots: roots,
+  const platform = {corePolicySelection: TEST_CORE_POLICY_SELECTION, schemaVersion: 'pipeline-platform.v2', effectLockTtlMs: 300_000, installationRoots: roots, trustedBuiltinRoots: roots,
     externalTrust: { allowedSourceDigests: {}, verifiedAttestations: {} },
     providers: { 'test.plan.execute': remoteId, 'runtime.dispatch': runtimeId, 'network.http': networkId,
       'secrets.read': secretId, 'artifacts.read': artifactId, 'artifacts.write': artifactId,
@@ -121,8 +122,8 @@ async function fixture(t, options = {}) {
       sourceAuthority: 'nova:projection', stateRoot, allowedRepositoryRoots: [repository] },
       [artifactId]: { artifactRoot: path.join(root, 'artifacts') },
       [secretId]: { environment: { worker: envToken, source: envSource } },
-      [runtimeId]: { targets: { unused: { endpoint: `${endpoint}/dispatch`, tokenSecret: 'worker' },
-        ...(forgeOrigin ? { forge: { endpoint: `${forgeOrigin}/dispatch`, tokenSecret: 'worker' } } : {}) } },
+      [runtimeId]: { targets: { unused: { byteProfile:'standard', endpoint: `${endpoint}/dispatch`, tokenSecret: 'worker' },
+        ...(forgeOrigin ? { forge: { byteProfile:'standard', endpoint: `${forgeOrigin}/dispatch`, tokenSecret: 'worker' } } : {}) } },
       [networkId]: { allowedOrigins: [endpoint, ...(forgeOrigin ? [forgeOrigin] : [])], allowedMethods: ['POST'],
         allowedHeaders: ['content-type', 'authorization', 'idempotency-key', 'x-kubeclaw-signature'] },
       ...(options.derived ? { [gitId]: { allowedRepositoryRoots: [root], workspaceRoot: path.join(root, 'worktrees'),
@@ -235,7 +236,7 @@ test('manual scope rejects stale CAS/import/run, foreign and aliased paths, and 
   fs.renameSync(imports, saved); fs.symlinkSync(saved, imports);
   await assert.rejects(retireNovaDispatch(f.scope), /ROOT_DIRECTORY_INVALID/);
   fs.unlinkSync(imports); fs.renameSync(saved, imports);
-  await withRunMutationLock(f.run, async () => {
+  await withRunMutationLock(f.run, TEST_CORE_POLICY, async () => {
     await assert.rejects(retireNovaDispatch(f.scope), /PIPELINE_RUN_MUTATION_LOCKED/);
   });
   assert.deepEqual(fs.readFileSync(recordsFile(f.scope.intent.dispatchRoot)), before);
@@ -412,7 +413,7 @@ test('actual operator run/import/dispatch fence order rejects a competing dispat
   const operation = retireNovaDispatch(f.scope).finally(() => { finished = true; });
   const rejected = assert.rejects(operation, /NOVA_DISPATCH_RETENTION_BLOCKED:SNAPSHOT_CHANGED/);
   await delay(200); assert.equal(finished, false);
-  await assert.rejects(withRunMutationLock(f.run, async () => undefined), /PIPELINE_RUN_MUTATION_LOCKED/);
+  await assert.rejects(withRunMutationLock(f.run, TEST_CORE_POLICY, async () => undefined), /PIPELINE_RUN_MUTATION_LOCKED/);
   const concurrent = newJob(f.job, 'projection:concurrent-writer');
   await new FileNovaRemotePlanStore(f.scope.intent.dispatchRoot, dispatchOptions).persistBeforeDispatch(concurrent);
   const exited = once(child, 'exit'); child.send({ release: true });

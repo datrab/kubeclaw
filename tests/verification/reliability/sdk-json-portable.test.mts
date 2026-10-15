@@ -1,3 +1,6 @@
+import { TEST_CORE_POLICY as ARTIFACT_TEST_CORE_POLICY } from '../../fixtures/core-runtime-policy.mjs';
+const TEST_ARTIFACT_STORE_POLICY = ARTIFACT_TEST_CORE_POLICY.artifactStore;
+import { TEST_CORE_POLICY } from '../../fixtures/core-runtime-policy.mjs';
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import fs from 'node:fs';
@@ -15,7 +18,7 @@ const file = fileURLToPath(import.meta.url);
 const value = {status:'ready_for_testing',sourceRevision:'a'.repeat(40),headBefore:'b'.repeat(40),details:{a:3,ä:1,z:2,'😀':0,'𐀀':9}};
 function producer(stageId:string) {return {runId:'run:portable',stageId,attemptId:`attempt:${stageId}`,attemptNumber:1};}
 async function child(mode:string,root:string) {
-  const adapter=activate({config:{artifactRoot:path.join(root,'artifacts')}} as AdapterActivationContext);
+  const adapter=activate({config:{ ...TEST_ARTIFACT_STORE_POLICY,artifactRoot:path.join(root,'artifacts')}} as AdapterActivationContext);
   const invoke=(capability:string,request:any,attempt=producer('reader'))=>adapter.invoke({confidential:true,signal:new AbortController().signal,
     request:{...request,capability,attempt,idempotencyKey:request.idempotencyKey??`${mode}:${request.resource.canonicalId}`}} as AdapterInvocation);
   await adapter.ready();
@@ -31,7 +34,7 @@ async function child(mode:string,root:string) {
       const request:any={schemaVersion:'effect-request.v1',requestId:'request:portable',idempotencyKey:'effect:portable',attempt:producer('portable'),
         capability:'artifacts.write',operation:'put_json',resource:{type:'artifact.object',canonicalId:'implementation:portable'},payload:{value}};
       request.effectId=stableEffectId(request);
-      await new FileEffectJournal(path.join(root,'effects.jsonl')).requested(request);
+      await new FileEffectJournal(path.join(root,'effects.jsonl'), TEST_CORE_POLICY).requested(request);
       return {locale:Intl.DateTimeFormat().resolvedOptions().locale,legacy:refs[0]!.digest,portable:refs[1]!.digest};
     }
     const refs=JSON.parse(fs.readFileSync(path.join(root,'refs.json'),'utf8')) as ArtifactRef[];
@@ -68,7 +71,7 @@ async function child(mode:string,root:string) {
     assert.deepEqual((await invoke('artifacts.write',replayRequest,producer('portable'))).artifact,refs[1],'portable cross-locale write replay preserves original reference');
     await assert.rejects(invoke('artifacts.write',{...replayRequest,payload:{...replayRequest.payload,encoding:'unrecognized'}},producer('portable')),/ARTIFACT_ENCODING_UNSUPPORTED/);
     await assert.rejects(invoke('artifacts.write',{...replayRequest,payload:{...replayRequest.payload,encoding:undefined}},producer('portable')),/DURABLE_RECORD_IDEMPOTENCY_CONFLICT/);
-    const prior=await new FileEffectJournal(path.join(root,'effects.jsonl')).request('effect:portable');assert(prior);
+    const prior=await new FileEffectJournal(path.join(root,'effects.jsonl'), TEST_CORE_POLICY).request('effect:portable');assert(prior);
     assertMatchingRequest(prior,{...prior,payload:{value}});
     assert.throws(()=>assertMatchingRequest(prior,{...prior,payload:{value:{...value,details:{a:4}}}}),/EFFECT_IDEMPOTENCY_CONFLICT/);
     assert.equal(refs[1]!.encoding,PORTABLE_JSON_ENCODING);assert.equal(refs[1]!.digest,sha256Text(portableJson(value)));

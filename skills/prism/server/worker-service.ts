@@ -17,7 +17,7 @@ export interface NativePrismWorkerExecution {
   execute(envelope: WorkerAttemptEnvelopeV3, signal: AbortSignal): Promise<WorkerAttemptResultV3>;
 }
 
-export function createWorkerServer(auth: WorkerAuthentication, execution: NativePrismWorkerExecution, limits = workerIngressLimits()) {
+export function createWorkerServer(auth: WorkerAuthentication, execution: NativePrismWorkerExecution, limits: ReturnType<typeof workerIngressLimits>) {
   return createManagedWorkerServer(
     (request, response, signal) => handleWorkerRequest(auth, request, response, signal, { maximumInputBytes: limits.maximumInputBytes, native: execution }),
     () => auth.mode === 'hmac' ? auth.database.close() : Promise.resolve(),

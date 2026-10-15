@@ -1,3 +1,6 @@
+import { TEST_CORE_POLICY as ARTIFACT_TEST_CORE_POLICY } from '../../../../../tests/fixtures/core-runtime-policy.mjs';
+const TEST_ARTIFACT_STORE_POLICY = ARTIFACT_TEST_CORE_POLICY.artifactStore;
+import { TEST_CORE_POLICY } from '../../../../../tests/fixtures/core-runtime-policy.mjs';
 // Remote envelopes below are explicit contract vectors. Their auth payload comes
 // from the original controller + real local app test; no native worker execution is claimed.
 import test from 'node:test';
@@ -42,7 +45,7 @@ test('original HTTP importer, artifact store and evidence adapter preserve owner
  const transport=new HttpRemotePlanTransport({endpoint:`http://127.0.0.1:${address.port}`,authentication:'spiffe-proxy',maximumResponseBytes:2*1024**2});
  const storePath=path.join(root,'imports');const options={recordLimits:limits,maximumEvidenceStoreBytes:2*1024**2};
  const store=new FileNovaGateImportStore(storePath,options);const importer=new NovaRemoteGateImporter({store,evidence:transport,results:transport,maximumEvidenceBytes:2*1024**2,maximumResultBytes:2*1024**2});
- const artifacts=artifactStore({config:{artifactRoot:path.join(root,'artifacts')}} as any);await artifacts.ready();
+ const artifacts=artifactStore({config:{ ...TEST_ARTIFACT_STORE_POLICY,artifactRoot:path.join(root,'artifacts')}} as any);await artifacts.ready();
  try{
   const decision=await importer.import(job,status);assert.equal(decision.state,'passed');
   const producer=(stageId:string)=>({runId:job.plan.runId,stageId,attemptId:`attempt:${stageId}`,attemptNumber:1});
@@ -59,8 +62,8 @@ test('original HTTP importer, artifact store and evidence adapter preserve owner
   const granted=resolveCapabilityGrants(registry,{enabledRegistrations:new Set(['test.evidence-consumer:consume']),providers:new Map([['test.plan.evidence','kubeclaw.remote-test-gate:evidence'],['artifacts.read','kubeclaw.artifact-store:artifact-store']]),
    grants:new Map([['test.evidence-consumer:consume',new Map([['test.plan.evidence',{allowedNamespaces:['kubeclaw.project-summary']}]])],['kubeclaw.remote-test-gate:evidence',new Map([['artifacts.read',{allowedNamespaces:['kubeclaw.project-summary','kubeclaw.buster-quality-gate']}]])]])});
   const activated=await activateRegistry(granted.snapshot,new Set(granted.grants.keys()));
-  const durable=new AdapterRuntime({granted,activated,configs:new Map([['kubeclaw.remote-test-gate:evidence',{stateRoot:root,manifestStageId:'project-summary',gateStageId:'final-test'}],['kubeclaw.artifact-store:artifact-store',{artifactRoot:path.join(root,'artifacts')}]]),shutdownTimeoutMs:1000,async emitDomainEvent(){},
-   effects:new EffectCoordinator(new FileEffectJournal(path.join(root,'effects.jsonl')),undefined,undefined,new FileResourceLockManager(path.join(root,'locks')), 300_000)});
+  const durable=new AdapterRuntime({granted,activated,configs:new Map([['kubeclaw.remote-test-gate:evidence',{stateRoot:root,manifestStageId:'project-summary',gateStageId:'final-test'}],['kubeclaw.artifact-store:artifact-store',{ ...TEST_ARTIFACT_STORE_POLICY,artifactRoot:path.join(root,'artifacts')}]]),shutdownTimeoutMs:1000,async emitDomainEvent(){},
+   effects:new EffectCoordinator(new FileEffectJournal(path.join(root,'effects.jsonl'), TEST_CORE_POLICY),undefined,undefined,new FileResourceLockManager(path.join(root,'locks'), TEST_CORE_POLICY), 300_000)});
   await durable.start();try {
    assert.deepEqual(await durable.invoke('test.plan.evidence',producer('demo-evidence'),'original-effect:projection',request.request,new AbortController().signal),projected);
    assert.deepEqual(await durable.invoke('test.plan.evidence',producer('demo-evidence'),'original-effect:projection',request.request,new AbortController().signal),projected);

@@ -3,9 +3,12 @@ import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
+import { runtimeBundleFiles, validateRuntimeBundleReceipt } from '../skills/common/plugin-runtime/foundation/config/runtime-bundle-receipt.mjs';
 
 const root = path.resolve(import.meta.dirname, '..');
-const [role, outputValue, commit, contractVersion, builtAt] = process.argv.slice(2);
+const arguments_ = process.argv.slice(2);
+const [role, outputValue, commit, contractVersion, builtAt, authorValue, compositionValue, generationValue, publisherValue] = arguments_;
+if (![5, 9].includes(arguments_.length)) throw new Error('ROLE_BUNDLE_ARGUMENTS_INVALID');
 if (!['nova', 'buster', 'prism'].includes(role) || !outputValue || !commit || !contractVersion || !builtAt) {
   throw new Error('Usage: build-runtime-role-bundle.mjs <nova|buster|prism> <output-directory> <commit> <contract-version> <built-at>');
 }
@@ -193,15 +196,21 @@ const extensionSources = new Map([
 for (const extensionId of roleManifest.extensions) {
   const sourceRoot = extensionSources.get(extensionId);
   assert(sourceRoot, `unknown runtime extension: ${extensionId}`);
-  execFileSync(process.execPath, [path.join(sourceRoot, 'scripts/sync-contract.mjs')], { stdio: 'inherit' });
-  const files = selectedFiles(sourceRoot);
+  // Materialize generated contracts only in the new output, never overwrite source WIP.
+  const canonicalContract = path.join(root, 'contracts/agent-observability/v1/src');
+  const contractFiles = selectedFiles(canonicalContract);
+  const contractDigest = contentDigest(canonicalContract, contractFiles);
+  const excluded = ['dist', 'node_modules', 'tests', 'test-results', 'playwright-report', '.playwright', 'generated'];
+  const files = selectedFiles(sourceRoot, undefined, excluded);
   collectDependencies(sourceRoot);
   const before = contentDigest(sourceRoot, files);
   const target = path.posix.join('skills/plugins', path.basename(sourceRoot));
   copySelection(sourceRoot, files, target);
-  assertSelectionUnchanged(sourceRoot, files, before, `runtime extension ${extensionId}`);
-  trackSelection(sourceRoot, files, before, `runtime extension ${extensionId}`);
-  pluginRecords.push({ id: extensionId, sourceDigest: before, files: files.length, target });
+  copySelection(canonicalContract, contractFiles, `${target}/src/generated/agent-observability`);
+  trackSelection(sourceRoot, files, before, `runtime extension ${extensionId}`, undefined, excluded);
+  trackSelection(canonicalContract, contractFiles, contractDigest, `runtime extension ${extensionId} canonical contract`);
+  const sourceDigest = `sha256:${crypto.createHash('sha256').update(`${before}\0${contractDigest}`).digest('hex')}`;
+  pluginRecords.push({ id: extensionId, sourceDigest, files: files.length + contractFiles.length, target });
 }
 
 const dependencyRecords = [];
@@ -251,27 +260,44 @@ for (const check of finalSourceChecks) {
 }
 
 const bundleManifest = {
-  schemaVersion: 'pipeline-runtime-bundle.v1',
+  schemaVersion: 'pipeline-runtime-bundle.v2',
   contractVersion,
   bundleKind: 'app-skills-package-set',
-  runtimeSurface: '/app/skills',
+  runtimeSurface: role === 'prism' ? '/app/prism/skills' : '/app/skills',
   role,
   commit,
   builtAt,
-  entrypoint: `/app/skills/${roleManifest.entrypoint.output}`,
+  entrypoint: `${role === 'prism' ? '/app/prism' : '/app'}/skills/${roleManifest.entrypoint.output}`,
   packages: packageRecords,
   plugins: pluginRecords,
   dependencies: dependencyRecords,
   externalCapabilities: roleManifest.externalCapabilities,
 };
-writeFile('manifest.json', `${JSON.stringify(bundleManifest, null, 2)}\n`);
 
 function normalizeDirectoryModes(directory) {
   fs.chmodSync(directory, 0o755);
   for (const entry of fs.readdirSync(directory, { withFileTypes: true })) {
     if (entry.isDirectory()) normalizeDirectoryModes(path.join(directory, entry.name));
+    else if (entry.isFile()) {
+      const file = path.join(directory, entry.name);
+      fs.chmodSync(file, fs.statSync(file).mode & 0o111 ? 0o755 : 0o644);
+    }
   }
 }
 normalizeDirectoryModes(output);
+// Source digests retain original author identities; the emitted-file index binds actual installed modes and bytes.
+bundleManifest.files = runtimeBundleFiles(output, false);
+validateRuntimeBundleReceipt(bundleManifest, role, bundleManifest.runtimeSurface);
+writeFile('manifest.json', `${JSON.stringify(bundleManifest, null, 2)}\n`);
 
-console.log(JSON.stringify({ ok: true, phase: '5.6-D', role, files: written.size, packages: packageRecords.length, plugins: pluginRecords.length }));
+let generation;
+if (authorValue !== undefined) {
+  const { declaredPipelineServices, materializePipelineGeneration } = await import('./updates/pipeline-generation.mjs');
+  const composition = JSON.parse(fs.readFileSync(path.resolve(compositionValue), 'utf8'));
+  if (!composition || Object.keys(composition).sort().join(',') !== 'namespace,releaseName,role' || composition.role !== role) throw new Error('ROLE_RELEASE_COMPOSITION_INVALID');
+  const authorRoot = path.resolve(authorValue);
+  const services = declaredPipelineServices(authorRoot, composition);
+  generation = await materializePipelineGeneration({ authorRoot, packageRoot: output, output: path.resolve(generationValue),
+    services, publisher: path.resolve(publisherValue) });
+}
+console.log(JSON.stringify({ ok: true, generation, phase: '5.6-D', role, files: written.size, packages: packageRecords.length, plugins: pluginRecords.length }));

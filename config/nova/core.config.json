@@ -1,0 +1,93 @@
+{
+  "schemaVersion": "nova-core-runtime-policy.v1",
+  "profiles": {
+    "standard": {
+      "settings": {
+        "stageMemoryBytes": 536870912,
+        "observerMemoryBytes": 268435456,
+        "runMutationTtlMs": 60000,
+        "runMutationRenewalMs": 20000,
+        "journalAppendLockTimeoutMs": 5000,
+        "maximumAuditResultBytes": 16384,
+        "resourceLockMetadataTimeoutMs": 5000,
+        "resourceLockProvisionalTtlMs": 60000,
+        "effectJournalInlineResultBytes": 65536,
+        "recovery": {
+          "attempts": {
+            "maximumEvidenceObjects": 100000,
+            "maximumEvidenceBytes": 10737418240,
+            "maximumEvidenceObjectBytes": 1073741824,
+            "maximumResults": 100000,
+            "maximumClosures": 100000,
+            "maximumMetadataBytes": 1073741824,
+            "maximumPendingEvidenceAgeMs": 3600000
+          },
+          "admission": {
+            "maximumIngressBytes": 16777216,
+            "maximumRecords": 1000000,
+            "maximumBytes": 4294967296,
+            "maximumQuarantineRecords": 10000,
+            "maximumQuarantineBytes": 1073741824
+          }
+        },
+        "artifactStore": {
+          "maxArtifactBytes": 16777216,
+          "maximumRecords": 100000,
+          "maximumStoreBytes": 268435456,
+          "maximumRecordBytes": 65536
+        },
+        "stateStore": {
+          "maxEntryBytes": 1048576,
+          "maximumRecords": 100000,
+          "maximumStoreBytes": 268435456
+        },
+        "waitStore": {
+          "maxEntryBytes": 1048576,
+          "maximumRecords": 100000,
+          "maximumStoreBytes": 268435456
+        },
+        "telemetryStore": {
+          "maxRecordBytes": 1048576,
+          "maximumRecords": 100000,
+          "maximumStoreBytes": 268435456
+        },
+        "operatorMessagingStore": {
+          "maximumDeliveryRecords": 100000,
+          "maximumDeliveryBytes": 268435456
+        },
+        "transportPublisherStore": {
+          "maximumDeliveryRecords": 100000,
+          "maximumDeliveryBytes": 268435456
+        },
+        "openClawDispatch": {
+          "resultReadMaximumBytes": 1048576,
+          "collectorWaitTimeoutSeconds": 15,
+          "targetTimingProfiles": {
+            "standard": {
+              "spawnIntervalMs": 1500,
+              "pollMs": 1000,
+              "maxPollMs": 15000,
+              "maxPolls": 1800,
+              "sessionTimeoutMs": 1800000
+            },
+            "production-pipeline": {
+              "spawnIntervalMs": 1500,
+              "pollMs": 2000,
+              "maxPollMs": 15000,
+              "maxPolls": 1200,
+              "sessionTimeoutMs": 1800000
+            }
+          }
+        },
+        "httpDispatch": {
+          "targetByteProfiles": {
+            "standard": {
+              "maxRequestBytes": 1048576,
+              "maxResponseBytes": 1048576
+            }
+          }
+        }
+      }
+    }
+  }
+}

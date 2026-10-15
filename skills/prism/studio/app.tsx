@@ -1,5 +1,6 @@
+import { loadStudioBrowserPolicy, type StudioBrowserPolicy } from './browser-policy.ts';
 import {savedRevision,pendingRevision,submitRevision,waitForRevision,type RevisionClient} from './agent-revision-client.ts';
-import { savedRound, pendingRound, submitRound, currentDirections, loadRoundDocument, completeRound, waitForRound, type RoundClient, type StudioDirection } from "./design-round-client.ts";
+import { savedRound, pendingRound, submitRound, currentDirections, loadRoundDocument, completeRound, waitForRound, waitForInitialDirections, type RoundClient, type StudioDirection } from "./design-round-client.ts";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { createRoot } from "react-dom/client";
 import { Puck } from "@puckeditor/core";
@@ -19,7 +20,7 @@ import { config } from "./puck-config.tsx";
 import { studioFlows, previewActionTarget, previewSelection } from "./flows.ts";
 
 
-function App() {
+function App({ policy }: { policy: StudioBrowserPolicy }) {
   const [document, setDocument] = useState<PrismDocument | null>(null);
   const flows = useMemo(() => document ? studioFlows(document) : [], [document]);
   const [previewAssets, setPreviewAssets] = useState<{ document: PrismDocument; assets: PreviewAssets } | null>(null);
@@ -28,7 +29,7 @@ function App() {
     if (!document) return;
     const controller = new AbortController();
     setPreviewAssets(null); setPreviewAssetError(null);
-    void loadPreviewAssets(document, controller.signal).then(
+    void loadPreviewAssets(document, controller.signal, policy).then(
       (assets) => { if (!controller.signal.aborted) setPreviewAssets({ document, assets }); },
       (error: unknown) => { if (!controller.signal.aborted) setPreviewAssetError(error instanceof Error ? error.message : String(error)); },
     );
@@ -121,26 +122,22 @@ function App() {
       setDocument(
         ((await loaded.json()) as { document: PrismDocument }).document,
       );
-      const revisionClient:RevisionClient={documentId:id,userId:sessionData.userId,csrf:sessionData.csrf,origin:location.origin,storage:sessionStorage};
+      const revisionClient:RevisionClient={documentId:id,userId:sessionData.userId,csrf:sessionData.csrf,origin:location.origin,policy,storage:sessionStorage};
       const revision=savedRevision(revisionClient);
       if(revision){setRevisionPending(true);setInstruction(revision.input.instruction);setFailure("An existing Prism revision request is retained. Reconcile it before proposing another change.");}
       const projectId = new URLSearchParams(location.search).get("project");
       if (projectId) {
-        const client:RoundClient={projectId,userId:sessionData.userId,csrf:sessionData.csrf,origin:location.origin,storage:sessionStorage};
+        const client:RoundClient={projectId,userId:sessionData.userId,csrf:sessionData.csrf,origin:location.origin,policy,storage:sessionStorage};
         const pending=savedRound(client);
         if(pending){setRoundPending(true);setRoundMessage("Reconnecting to the same design round…");await submitRound(client,pending);}
         const briefResponse=await fetch(`/v1/projects/${encodeURIComponent(projectId)}/brief`);
         if(briefResponse.ok)setBrief(((await briefResponse.json()) as {request?:Record<string,unknown>}).request??null);
-        for(let attempt=0;attempt<300;attempt++){
-          const items=await currentDirections(client);
-          if(items.length){
-            const loadedRound=await loadRoundDocument(client,items,id);setDirections(items);setDocument(loadedRound.document);
-            const currentQuery=new URLSearchParams(location.search);currentQuery.set("document",loadedRound.documentId);history.replaceState(null,"",`?${currentQuery.toString()}`);
-            const completed=completeRound(client,items);setRoundPending(Boolean(savedRound(client)));
-            setRoundMessage(completed ? "New design round ready." : pending ? "Current round loaded; the previous request remains available for retry." : "");
-            break;
-          }
-          await new Promise(resolve=>setTimeout(resolve,2000));
+        const loadedRound=await waitForInitialDirections(client,id);
+        if(loadedRound){
+          const items=loadedRound.directions;setDirections(items);setDocument(loadedRound.document);
+          const currentQuery=new URLSearchParams(location.search);currentQuery.set("document",loadedRound.documentId);history.replaceState(null,"",`?${currentQuery.toString()}`);
+          const completed=completeRound(client,items);setRoundPending(Boolean(savedRound(client)));
+          setRoundMessage(completed ? "New design round ready." : pending ? "Current round loaded; the previous request remains available for retry." : "");
         }
       }
     })().catch((error) =>
@@ -186,7 +183,7 @@ function App() {
     if (!document || (!instruction.trim() && !revisionPending)) return;
     const id = new URLSearchParams(location.search).get("document");
     if (!id) throw new Error("Document ID is missing");
-    const client:RevisionClient={documentId:id,userId,csrf,origin:location.origin,storage:sessionStorage};
+    const client:RevisionClient={documentId:id,userId,csrf,origin:location.origin,policy,storage:sessionStorage};
     const pending=pendingRevision(client,document,instruction.trim());setRevisionPending(true);
     setWorking(true);
     try {
@@ -333,7 +330,7 @@ function App() {
     const query=new URLSearchParams(location.search);
     const projectId=query.get("project");const documentId=query.get("document");
     if (!projectId || !documentId || !document) throw new Error("Current design identity is missing");
-    const client:RoundClient={projectId,userId,csrf,origin:location.origin,storage:sessionStorage};
+    const client:RoundClient={projectId,userId,csrf,origin:location.origin,policy,storage:sessionStorage};
     const pending=pendingRound(client,{documentId,expectedRevision:document.meta.revision,parentRoundId:directions[0]?.generation_id});
     setRoundPending(true);setRoundBusy(true);setRoundMessage("Requesting the design round…");
     try {
@@ -886,4 +883,9 @@ function App() {
     </main>
   );
 }
-createRoot(document.getElementById("root")!).render(<App />);
+const root = document.getElementById("root")!;
+void loadStudioBrowserPolicy().then(policy => createRoot(root).render(<App policy={policy} />)).catch(error => {
+  const message = document.createElement('p'); message.setAttribute('role', 'alert');
+  message.textContent = `Studio configuration could not load: ${error instanceof Error ? error.message : String(error)}`;
+  root.replaceChildren(message);
+});

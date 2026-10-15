@@ -61,11 +61,16 @@ USER node
 # Reuse the repository lock for the real shared WorkerCore runtime and validators.
 # hadolint ignore=DL3006
 FROM ${OPENCLAW_BASE} AS prism-bridge-dependencies
+ARG DEBIAN_SNAPSHOT=20260901T000000Z
 USER root
 WORKDIR /build
 COPY . /build
-RUN npm ci --include=dev --ignore-scripts --no-audit --no-fund \
- && npm prune --omit=dev --ignore-scripts
+ARG KUBECLAW_BUILD_REVISION
+RUN sh docker/install-prism-build-tools.sh \
+ && npm ci --include=dev --ignore-scripts --no-audit --no-fund \
+ && npm run plugin-system:sandbox:build \
+ && npm run typecheck --prefix skills/prism \
+ && node scripts/build-prism-image-bundle.mjs prism-agent-bridge /image "$KUBECLAW_BUILD_REVISION"
 
 # hadolint ignore=DL3006
 FROM ${OPENCLAW_BASE}
@@ -117,11 +122,9 @@ HOME=/home/node
 USER node
 
 COPY skills/prism/openclaw-plugin/ /app/dist/extensions/kubeclaw-prism/
-COPY --from=prism-bridge-dependencies /build/node_modules /opt/kubeclaw-prism/node_modules
-COPY --from=prism-bridge-dependencies /build/contracts /opt/kubeclaw-prism/contracts
-COPY --from=prism-bridge-dependencies /build/skills/worker/core /opt/kubeclaw-prism/skills/worker/core
-COPY --from=prism-bridge-dependencies /build/skills/common/plugin-runtime /opt/kubeclaw-prism/skills/common/plugin-runtime
-COPY skills/prism/server/agent-bridge.mjs skills/prism/server/agent-job-runner.mjs skills/prism/server/agent-prompt.mjs skills/prism/server/preference-prompt.mjs skills/prism/server/agent-attempt.ts skills/prism/server/agent-process.ts skills/prism/server/worker-artifacts.ts /opt/kubeclaw-prism/
+COPY --from=prism-bridge-dependencies /image/role /app/prism
+COPY --from=prism-bridge-dependencies /image/generation/system /etc/kubeclaw/config
+COPY --from=prism-bridge-dependencies /image/delivery /run/pipeline-delivery
 
 LABEL org.opencontainers.image.title="KubeClaw Prism Agent"
 LABEL org.opencontainers.image.description="OpenClaw design agent and request bridge with Prism tools"

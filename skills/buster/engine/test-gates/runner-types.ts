@@ -1,4 +1,4 @@
-import type { BusterExecutionSettings } from '../../../common/plugin-runtime/foundation/config/buster-execution.ts';
+import type { BusterExecutionSettings } from '@kubeclaw/plugin-foundation/config/buster-execution';
 import type { AttemptResultV1, NodeResultV1, ProducedOutputV1, ProviderInvocationV1, ResolvedInputV1, ResolvedTestPlanV1 } from '@kubeclaw/pipeline-test-gate-contract';
 import type { TestProviderCapabilityRequest } from '@kubeclaw/plugin-sdk';
 import type { RegistrySnapshot } from '@kubeclaw/plugin-foundation/registry/types';

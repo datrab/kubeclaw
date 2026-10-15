@@ -2,7 +2,12 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "type": "object",
   "additionalProperties": false,
-  "required": ["targets"],
+  "required": [
+    "targets",
+    "resultReadMaximumBytes",
+    "collectorWaitTimeoutSeconds",
+    "targetTimingProfiles"
+  ],
   "properties": {
     "targets": {
       "type": "object",
@@ -11,47 +16,173 @@
         "type": "object",
         "additionalProperties": false,
         "required": [
-          "endpoint", "tokenSecret", "runtime", "model", "cwd", "repositoryRoot", "resultPathPrefix"
+          "endpoint",
+          "tokenSecret",
+          "runtime",
+          "model",
+          "cwd",
+          "repositoryRoot",
+          "resultPathPrefix",
+          "timingProfile"
         ],
         "properties": {
-          "endpoint": { "type": "string", "format": "uri" },
-          "tokenSecret": { "type": "string", "minLength": 1 },
-          "runtime": { "enum": ["acp", "subagent"] },
-          "agentId": { "type": "string", "minLength": 1 },
-          "agentRole": { "type": "string", "minLength": 1 },
-          "model": { "type": "string", "minLength": 1 },
-          "thinking": { "type": "string", "minLength": 1 },
-          "controllerSessionKey": { "type": "string", "minLength": 1, "maxLength": 512 },
-          "collectorMode": { "type": "boolean", "default": false },
-          "spawnIntervalMs": { "type": "integer", "minimum": 0, "maximum": 60000, "default": 1500 },
-          "tokenizerEncoding": { "const": "o200k_base", "default": "o200k_base" },
-          "maxPromptBytes": { "const": 900000, "default": 900000 },
-          "maxInputTokens": { "const": 120000, "default": 120000 },
-          "maxOutputTokens": { "const": 6000, "default": 6000 },
-          "maxContextTokens": { "const": 128000, "default": 128000 },
-          "cwd": { "type": "string", "pattern": "^/" },
-          "repositoryRoot": { "type": "string", "pattern": "^/" },
-          "workspaceRoot": { "type": "string", "pattern": "^/", "description": "Trusted Git workspace root required for attempt-owned runtime workspaces." },
-          "pollMs": { "type": "integer", "minimum": 10, "default": 1000 },
-          "maxPollMs": { "type": "integer", "minimum": 10, "default": 15000 },
-          "maxPolls": { "type": "integer", "minimum": 1, "default": 1800 },
-          "sessionTimeoutMs": {
-            "type": "integer",
-            "minimum": 10,
-            "maximum": 86400000,
-            "default": 1800000
+          "endpoint": {
+            "type": "string",
+            "format": "uri"
+          },
+          "tokenSecret": {
+            "type": "string",
+            "minLength": 1
+          },
+          "runtime": {
+            "enum": [
+              "acp",
+              "subagent"
+            ]
+          },
+          "agentId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "agentRole": {
+            "type": "string",
+            "minLength": 1
+          },
+          "model": {
+            "type": "string",
+            "minLength": 1
+          },
+          "thinking": {
+            "type": "string",
+            "minLength": 1
+          },
+          "controllerSessionKey": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 512
+          },
+          "collectorMode": {
+            "type": "boolean",
+            "default": false
+          },
+          "tokenizerEncoding": {
+            "const": "o200k_base",
+            "default": "o200k_base"
+          },
+          "maxPromptBytes": {
+            "const": 900000,
+            "default": 900000
+          },
+          "maxInputTokens": {
+            "const": 120000,
+            "default": 120000
+          },
+          "maxOutputTokens": {
+            "const": 6000,
+            "default": 6000
+          },
+          "maxContextTokens": {
+            "const": 128000,
+            "default": 128000
+          },
+          "cwd": {
+            "type": "string",
+            "pattern": "^/"
+          },
+          "repositoryRoot": {
+            "type": "string",
+            "pattern": "^/"
+          },
+          "workspaceRoot": {
+            "type": "string",
+            "pattern": "^/",
+            "description": "Trusted Git workspace root required for attempt-owned runtime workspaces."
           },
           "resultPathPrefix": {
             "type": "string",
             "minLength": 1,
             "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+$"
           },
-          "resultEndpoint": { "type": "string", "format": "uri" },
-          "resultTokenSecret": { "type": "string", "minLength": 1 }
+          "resultEndpoint": {
+            "type": "string",
+            "format": "uri"
+          },
+          "resultTokenSecret": {
+            "type": "string",
+            "minLength": 1
+          },
+          "timingProfile": {
+            "type": "string",
+            "minLength": 1
+          }
         },
         "dependentRequired": {
-          "resultEndpoint": ["resultTokenSecret"],
-          "resultTokenSecret": ["resultEndpoint"]
+          "resultEndpoint": [
+            "resultTokenSecret"
+          ],
+          "resultTokenSecret": [
+            "resultEndpoint"
+          ]
+        }
+      }
+    },
+    "resultReadMaximumBytes": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991
+    },
+    "collectorWaitTimeoutSeconds": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 2147483
+    },
+    "targetTimingProfiles": {
+      "type": "object",
+      "minProperties": 1,
+      "propertyNames": {
+        "pattern": "^[a-z0-9](?:[a-z0-9._:-]{0,126}[a-z0-9])?$"
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/targetTiming"
+      }
+    }
+  },
+  "$defs": {
+    "targetTiming": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "spawnIntervalMs",
+        "pollMs",
+        "maxPollMs",
+        "maxPolls",
+        "sessionTimeoutMs"
+      ],
+      "properties": {
+        "spawnIntervalMs": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 60000
+        },
+        "pollMs": {
+          "type": "integer",
+          "minimum": 10,
+          "maximum": 9007199254740991
+        },
+        "maxPollMs": {
+          "type": "integer",
+          "minimum": 10,
+          "maximum": 9007199254740991
+        },
+        "maxPolls": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "sessionTimeoutMs": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 86400000
         }
       }
     }

@@ -1,4 +1,5 @@
-import { readTestBundle, writeTestBundle } from '../../../tests/fixtures/config/swarm-bundle.mjs';
+import { fileURLToPath } from 'node:url';
+import { captureSwarmSettings, type PrismWorkerSettings } from '../../common/plugin-runtime/foundation/config/swarm.ts';
 import fs from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
@@ -8,7 +9,6 @@ import http from 'node:http';
 import { once } from 'node:events';
 import type { AddressInfo } from 'node:net';
 import { createManagedWorkerServer } from '../server/worker-lifecycle.ts';
-import { workerIngressLimits } from '../server/worker-config.ts';
 
 function response(request: http.ClientRequest): Promise<{ status: number; body: string }> {
   return new Promise((resolve, reject) => {
@@ -25,9 +25,19 @@ function response(request: http.ClientRequest): Promise<{ status: number; body: 
 test('actual HTTP ingress rejects excess unfinished bodies while reserving health capacity', { timeout: 15000 }, async t => {
   const root = fs.mkdtempSync(path.join(tmpdir(), 'prism-ingress-config-'));
   t.after(() => fs.rmSync(root, { recursive: true, force: true }));
-  const authored = readTestBundle(new URL('../../../charts/kubeclaw/files/config/swarm.config.json', import.meta.url));
-  Object.assign(authored['prism-worker'].settings.ingress, { maximumActiveRequests: 1, maximumProbeRequests: 1, maximumConnections: 4 });
-  const file = path.join(root, 'swarm.config.json'); writeTestBundle(file, authored);
+  fs.cpSync(fileURLToPath(new URL('../../../config/', import.meta.url)), root, { recursive: true });
+  const authorFile = path.join(root, 'components/prism-worker.config.json');
+  const authored = JSON.parse(fs.readFileSync(authorFile, 'utf8'));
+  Object.assign(authored.profiles.standard.settings.ingress, { maximumActiveRequests: 1, maximumProbeRequests: 1, maximumConnections: 4 });
+  fs.writeFileSync(authorFile, JSON.stringify(authored));
+  const entryFile = path.join(root, 'pipeline.config.json');
+  const entry = JSON.parse(fs.readFileSync(entryFile, 'utf8'));
+  const instanceId = 'kubeclaw/prism/prism-worker';
+  const captured = captureSwarmSettings(entryFile, { role: 'prism', callerId: 'prism-worker', serviceInstanceId: instanceId,
+    bindings: entry.bindings.filter((binding: { instanceId: string }) => binding.instanceId === instanceId)
+      .map(({ role: _role, ...binding }: { role: string; owner: string; instanceId: string; profileId: string }) => binding) });
+  // Real central selection for a consumer regression; not a privileged startup capability.
+  const ingress = captured.components['prism-worker']!.settings.ingress as unknown as PrismWorkerSettings;
   let accepted = 0;
   let notify: () => void = () => {};
   const receiving = new Promise<void>(resolve => { notify = resolve; });
@@ -37,7 +47,7 @@ test('actual HTTP ingress rejects excess unfinished bodies while reserving healt
     const chunks: Buffer[] = [];
     for await (const bytes of request) chunks.push(bytes);
     outgoing.end(Buffer.concat(chunks));
-  }, async () => {}, workerIngressLimits({ SWARM_CONFIG: file }));
+  }, async () => {}, ingress);
   server.listen(0, '127.0.0.1'); await once(server, 'listening');
   const port = (server.address() as AddressInfo).port;
   const options = { host: '127.0.0.1', port, agent: false as const };

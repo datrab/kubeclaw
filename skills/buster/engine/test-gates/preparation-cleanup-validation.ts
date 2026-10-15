@@ -1,6 +1,6 @@
 import { canonicalJson, validateWorkerResourceContractV3,
   type WorkerAttemptEnvelopeV3 } from '@kubeclaw/pipeline-worker-core-contract';
-import { validateBusterPreparationSettings } from '../../../common/plugin-runtime/foundation/config/swarm.ts';
+import { validateBusterPreparationSettings } from '@kubeclaw/plugin-foundation/config/swarm';
 import { preparationDigest } from './preparation-header.ts';
 import { assertPreparationCleanupEffects, type PreparationCleanupAssociation } from './preparation-cleanup-binding.ts';
 import type { PreparationGateBinding } from './preparation-gate.ts';

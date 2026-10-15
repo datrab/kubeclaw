@@ -1,4 +1,4 @@
-import { nativeResourcePolicy } from './native/resource-policy.mts';
+import { nativeResourcePolicy, nativeControlSettings } from './native/resource-policy.mts';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createServer, request, type Server, type ServerResponse } from 'node:http';
@@ -43,7 +43,7 @@ async function setup(t: { after(callback: () => Promise<void>): void }, stall?: 
         res.writeHead(200, { 'content-type': 'application/json' }); res.write('{');
         started.resolve(); return;
       }
-      await handleInternalArtifact(req, res, new URL(req.url!, 'http://control'), {
+      await handleInternalArtifact(req, res, new URL(req.url!, 'http://control'), {maximumInternalEvidenceBytes: nativeControlSettings.maximumInternalEvidenceBytes,
         artifacts: store, spiffeEnabled: false, workerSecret: 'local', trustedControlSpiffeId: '', trustedWorkerSpiffeId: '',
       });
     })().catch((error: unknown) => { res.writeHead(500); res.end(String(error)); });
@@ -54,7 +54,9 @@ async function setup(t: { after(callback: () => Promise<void>): void }, stall?: 
   t.after(async () => { stalled?.destroy(); await close(control); await close(worker); await rm(root, { recursive: true, force: true }); });
   const input = await store.put(Buffer.from(JSON.stringify({ document: fixture, view: 'home', state: 'default', viewport: 'wide' })));
   const envelope = prismNativeAttempt('render', { artifactId: input.artifactId, type: 'prism-engine-input', mediaType: 'application/json',
-    contentDigest: input.digest, sizeBytes: input.sizeBytes, storageUrl: new URL(`/v1/internal/artifacts/${input.digest}`, origin).href }, 'http-cancellation', nativeResourcePolicy);
+    contentDigest: input.digest, sizeBytes: input.sizeBytes, storageUrl: new URL(`/v1/internal/artifacts/${input.digest}`, origin).href }, 'http-cancellation', nativeResourcePolicy, nativeControlSettings.nativeAttemptLifetimeMs, nativeControlSettings.nativeAttemptTimeoutMs,
+    nativeControlSettings.nativeAttemptCleanupTimeoutMs, nativeControlSettings.nativeAttemptLogBytes,
+    nativeControlSettings.nativeAttemptResultBytes, nativeControlSettings.nativeAttemptEvidenceBytes, nativeControlSettings.nativeAttemptEvidenceFiles);
   return { store, envelope, worker, workerOrigin, started, drained, contacts, storedUpload: () => storedUpload };
 }
 const headers = { 'content-type': 'application/json', 'x-forwarded-client-cert': 'URI=spiffe://local/control' };

@@ -2,11 +2,27 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "type": "object",
   "additionalProperties": false,
-  "required": ["targets", "deliveryRoot"],
+  "required": [
+    "targets",
+    "deliveryRoot",
+    "maximumDeliveryRecords",
+    "maximumDeliveryBytes"
+  ],
   "properties": {
-    "deliveryRoot": { "type": "string", "minLength": 1 },
-    "maximumDeliveryRecords": { "type": "integer", "minimum": 1, "default": 100000 },
-    "maximumDeliveryBytes": { "type": "integer", "minimum": 1, "default": 268435456 },
+    "deliveryRoot": {
+      "type": "string",
+      "minLength": 1
+    },
+    "maximumDeliveryRecords": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991
+    },
+    "maximumDeliveryBytes": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991
+    },
     "targets": {
       "type": "object",
       "minProperties": 1,
@@ -21,18 +37,28 @@
                 "endpoint": {},
                 "tokenSecret": {}
               },
-              "required": ["endpoint", "tokenSecret"]
+              "required": [
+                "endpoint",
+                "tokenSecret"
+              ]
             },
             {
               "properties": {
                 "endpointOrigin": {},
                 "endpointSecret": {}
               },
-              "required": ["endpointOrigin", "endpointSecret"]
+              "required": [
+                "endpointOrigin",
+                "endpointSecret"
+              ]
             }
           ],
           "properties": {
-            "receiptEndpoint": { "type": "string", "format": "uri", "pattern": "^https?://" },
+            "receiptEndpoint": {
+              "type": "string",
+              "format": "uri",
+              "pattern": "^https?://"
+            },
             "endpoint": {
               "type": "string",
               "format": "uri",
@@ -59,7 +85,10 @@
             },
             "format": {
               "type": "string",
-              "enum": ["json", "discord_webhook"],
+              "enum": [
+                "json",
+                "discord_webhook"
+              ],
               "default": "json"
             }
           }

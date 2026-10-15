@@ -1,8 +1,10 @@
 import { Pool } from "pg";
 import { createConfiguredControlServer } from "./control-server.ts";
 import { loadControlCompositionConfig } from "./control-config.ts";
+import { verifyPipelineBootReceipt } from '@kubeclaw/plugin-foundation/config/pipeline-boot.mjs';
 
-const composition = await loadControlCompositionConfig();
+const capture = verifyPipelineBootReceipt('/run/pipeline-delivery', 'prism-control');
+const composition = await loadControlCompositionConfig(capture);
 const config = composition.listener;
 const pool = new Pool({ connectionString: config.databaseUrl });
 const server = createConfiguredControlServer(pool, composition);

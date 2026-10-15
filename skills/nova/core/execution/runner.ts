@@ -20,6 +20,7 @@ export interface PipelineRunResult {
   readonly status: 'succeeded' | 'failed' | 'blocked' | 'waiting' | 'cancelled'; readonly stages: ReadonlyMap<string, StageRuntimeState>;
 }
 export interface PipelineRunnerOptions {
+  readonly stageMemoryBytes: number;
   readonly runtimeDispatchProfile?: RuntimeDispatchProfile | undefined;
   readonly reviewCacheProfile?: ReviewCacheProfile | undefined;
   readonly graphSnapshotVersion?: ExecutionGraphSnapshot['schemaVersion'];
@@ -64,7 +65,7 @@ export class PipelineRunner {
         type, identity: eventIdentity, occurredAt: this.#now().toISOString(), causationId, payload })).entry;
     };
     const checkpoints = new ArtifactCheckpointRecorder(this.#options.journal, append);
-    const executor = new StageExecutor({ graph: this.#graph, registry: this.#options.registry, activated: this.#options.activated,
+    const executor = new StageExecutor({ stageMemoryBytes: this.#options.stageMemoryBytes, graph: this.#graph, registry: this.#options.registry, activated: this.#options.activated,
       adapters: this.#options.adapters, journal: this.#options.journal, checkpoints,
       ...(this.#options.runtimeDispatchProfile ? { runtimeDispatchProfile: this.#options.runtimeDispatchProfile } : {}),
       ...(this.#options.reviewCacheProfile ? { reviewCacheProfile: this.#options.reviewCacheProfile } : {}),

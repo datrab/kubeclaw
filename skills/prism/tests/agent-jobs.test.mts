@@ -1,3 +1,4 @@
+import { nativeControlSettings } from './native/resource-policy.mts';
 import {WorkerAttemptExecutor} from '@kubeclaw/worker-core';
 import {AgentProcess} from '../server/agent-process.ts';
 import type {AgentJob} from '../control/agent-jobs.ts';
@@ -19,7 +20,7 @@ import {agentSessionKey} from '../server/agent-session.ts';
 
 async function realProcessReceipt(job:AgentJob){
  assert.ok(job.attempt_envelope);
- return new WorkerAttemptExecutor({envelope:job.attempt_envelope,operation:new AgentProcess(process.execPath,['-e','process.exitCode=0']),retainLogs:false}).execute();
+ return new WorkerAttemptExecutor({envelope:job.attempt_envelope,operation:new AgentProcess(process.execPath,['-e','process.exitCode=0'],nativeControlSettings.agentLauncher.terminationGraceMs),retainLogs:false}).execute();
 }
 async function setup(path?:string){
  const db=new PGlite({dataDir:path,extensions:{vector}});await migrate(db);const repo=new RevisionRepository(db);
@@ -44,18 +45,18 @@ test('accepted jobs survive a real database reopen; running uncertainty is never
   assert.equal(queued.state,'accepted');assert.equal((await setupResult.admit()).id,queued.id);
   await assert.rejects(enqueueAgentJob(db,'spiffe://test/control/main/v2','project:one','design-set',{projectId:'changed',preferences:setupResult.preferences}),/conflicts/);
   await db.close();db=new PGlite({dataDir:path,extensions:{vector}});
-  const claimed=await claimAgentJob(db,'boot-two');assert.equal(claimed?.id,queued.id);assert.ok(claimed?.fence);
+  const claimed=await claimAgentJob(db,'boot-two',nativeControlSettings);assert.equal(claimed?.id,queued.id);assert.ok(claimed?.fence);
   await db.close();db=new PGlite({dataDir:path,extensions:{vector}});
   assert.deepEqual((await agentJob(db,queued.id)).attempt_envelope,claimed.attempt_envelope,'accepted policy survives database reopen');
-  assert.equal(await claimAgentJob(db,'boot-three'),null,'restart cannot replay a potentially started action');
+  assert.equal(await claimAgentJob(db,'boot-three',nativeControlSettings),null,'restart cannot replay a potentially started action');
   await db.query("UPDATE prism.agent_job SET expires_at=clock_timestamp()-interval '1 second' WHERE id=$1",[queued.id]);
-  assert.equal(await claimAgentJob(db,'boot-three'),null);
+  assert.equal(await claimAgentJob(db,'boot-three',nativeControlSettings),null);
   assert.equal((await agentJob(db,queued.id)).state,'needs_nova');
  }finally{await db?.close();await rm(path,{recursive:true,force:true});}
 });
 test('actual design commit and agent receipt are atomic; stale fence and changed retry cannot mutate',async()=>{
  const {db,repo,preferences,admit,designs}=await setup();try{
-  const queued=await admit();const claimed=await claimAgentJob(db,'runner');assert.ok(claimed?.fence);
+  const queued=await admit();const claimed=await claimAgentJob(db,'runner',nativeControlSettings);assert.ok(claimed?.fence);
   const identity={jobId:queued.id,fence:claimed.fence,payload:{designs}};
   await assert.rejects(repo.createDirectionSet('project:one',queued.id,designs,{...identity,fence:randomUUID()}),/fence/);
   assert.equal((await db.query('SELECT id FROM prism.design_document')).rows.length,0);
@@ -65,7 +66,7 @@ test('actual design commit and agent receipt are atomic; stale fence and changed
   await assert.rejects(repo.createDirectionSet('project:one',queued.id,designs,{...identity,payload:{changed:true}}),/conflicts/);
   await finishAgentRun(db,queued.id,claimed.fence,await realProcessReceipt(claimed));
   assert.equal((await agentJob(db,queued.id)).state,'completed');
-  assert.equal(await claimAgentJob(db,'restart'),null);
+  assert.equal(await claimAgentJob(db,'restart',nativeControlSettings),null);
   assert.equal((await db.query('SELECT id FROM prism.design_document')).rows.length,3);
   assert.equal((await admitDesignAgent(db,'spiffe://test/control/main/v2','project:one',{...preferences,result})).status,'completed');
   assert.equal((await enqueueAgentJob(db,'spiffe://test/control/main/v2','project:one','design-set',{projectId:'project:one',preferences:{...preferences,result} as typeof preferences})).id,queued.id);
@@ -73,7 +74,7 @@ test('actual design commit and agent receipt are atomic; stale fence and changed
 });
 test('expired agent cannot commit and missing tool result is explicitly NeedsNova',async()=>{
  const {db,repo,admit,designs}=await setup();try{
-  const queued=await admit();const job=await claimAgentJob(db,'runner');assert.ok(job?.fence);
+  const queued=await admit();const job=await claimAgentJob(db,'runner',nativeControlSettings);assert.ok(job?.fence);
   await db.query("UPDATE prism.agent_job SET expires_at=clock_timestamp()-interval '1 second' WHERE id=$1",[queued.id]);
   await assert.rejects(repo.createDirectionSet('project:one',queued.id,designs,{jobId:job.id,fence:job.fence,payload:designs}),/NeedsNova/);
   const outcome=await finishAgentRun(db,job.id,job.fence,await realProcessReceipt(job));
@@ -83,7 +84,7 @@ test('expired agent cannot commit and missing tool result is explicitly NeedsNov
 });
 test('revision retries bind actor, source and input and replay the actual committed repository receipt',async()=>{
  const {db,repo,admit,designs}=await setup();try{
-  const queued=await admit();const run=await claimAgentJob(db,'initial');assert.ok(run?.fence);
+  const queued=await admit();const run=await claimAgentJob(db,'initial',nativeControlSettings);assert.ok(run?.fence);
   const docs=await repo.createDirectionSet('project:one',queued.id,designs,{jobId:run.id,fence:run.fence,payload:designs});
   await finishAgentRun(db,run.id,run.fence,await realProcessReceipt(run));
   const current=await repo.current(docs.documentId);
@@ -91,7 +92,7 @@ test('revision retries bind actor, source and input and replay the actual commit
   const job=await startAgentRevision(db,'spiffe://test/control/main/v2','user-one','revision-one',input);
   assert.equal((await startAgentRevision(db,'spiffe://test/control/main/v2','user-one','revision-one',input)).id,job.id);
   await assert.rejects(startAgentRevision(db,'spiffe://test/control/main/v2','user-one','revision-one',{...input,instruction:'different'}),/conflicts/);
-  const claimed=await claimAgentJob(db,'revision');assert.equal(claimed?.id,job.id);assert.ok(claimed?.fence);
+  const claimed=await claimAgentJob(db,'revision',nativeControlSettings);assert.equal(claimed?.id,job.id);assert.ok(claimed?.fence);
   const next=structuredClone(current.document);next.meta.revision=2;
   const identity={jobId:job.id,fence:claimed.fence,payload:{...input,document:next}};
   await repo.replace(docs.documentId,current.id,next,{generationId:job.id},'agent:prism',identity);
@@ -107,7 +108,7 @@ test('provably unstarted superseded work is retired without taking over the new 
   await db.query("INSERT INTO prism.design_request(id,project_id,architecture_artifact_id,architecture_digest,architecture_revision,request) VALUES($1,$2,'artifact','next',2,'{}')",[randomUUID(),project]);
   const preferences=await startDesignRound(db,{projectId:'project:one',subjectId:null,startKey:'next',architectureDigest:'next',architectureRevision:2});
   const next=await enqueueAgentJob(db,'spiffe://test/control/main/v2','project:one','design-set',{projectId:'project:one',preferences});
-  const claim=await claimAgentJob(db,'runner');assert.equal(claim?.id,next.id);
+  const claim=await claimAgentJob(db,'runner',nativeControlSettings);assert.equal(claim?.id,next.id);
   const retired=await agentJob(db,old.id);assert.equal(retired.state,'superseded');assert.equal(retired.fence,null);
  }finally{await db.close();}
 });

@@ -8,7 +8,7 @@ import type {
 } from "./baseline-validation.ts";
 import type { ControlContext } from "./control-context.ts";
 export async function baselineArchive(
-  context: Pick<ControlContext, "artifacts" | "runWorker">,
+  context: Pick<ControlContext, "artifacts" | "runWorker" | "config">,
   approvalId: string,
   validated: Awaited<ReturnType<typeof validateBaseline>>,
   evidence: Awaited<ReturnType<typeof baselineSpecification>>,
@@ -25,7 +25,7 @@ export async function baselineArchive(
     }),
   };
   const { binaryFiles, manifestAssets, renderAssetSources } =
-    await baselineAssets(context.artifacts, currentDocument.document);
+    await baselineAssets(context.artifacts, currentDocument.document, context.config.maximumRenderAssetBytes);
   await baselinePreviews(
     context.runWorker,
     currentDocument.document,
@@ -64,6 +64,7 @@ import { sha256 } from "./control-http.ts";
 export async function baselineAssets(
   artifacts: ControlContext["artifacts"],
   document: PrismDocument,
+  maximumRenderAssetBytes: number,
 ) {
   const binaryFiles: Record<string, string> = {};
   const manifestAssets: Record<
@@ -78,8 +79,8 @@ export async function baselineAssets(
       throw new Error(`asset metadata is incomplete for ${assetId}`);
     const bytes = await artifacts.get(asset.artifact);
     renderAssetBytes += bytes.byteLength;
-    if (renderAssetBytes > 6_000_000)
-      throw new Error("render assets exceed the 6 MB baseline limit");
+    if (renderAssetBytes > maximumRenderAssetBytes)
+      throw new Error(`render assets exceed the ${maximumRenderAssetBytes / 1_000_000} MB baseline limit`);
     const extension =
       asset.mediaType === "image/png"
         ? "png"

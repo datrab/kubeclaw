@@ -1,0 +1,12 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import {verifyPipelineBootReceipt,captureBusterParentStartupHandoff} from '/app/skills/packages/plugin-foundation/config/pipeline-boot.mjs';
+import {projectBusterSettings} from '/app/skills/packages/plugin-foundation/config/pipeline-composition.ts';
+const capture=verifyPipelineBootReceipt('/run/pipeline-delivery','buster-preparation');
+const handoff=captureBusterParentStartupHandoff(capture);
+assert.equal(handoff.childSelection.callerId,'buster-runtime');
+assert.deepEqual(projectBusterSettings(capture,'buster-preparation'),capture.components['buster-engine'].settings);
+const metadata=JSON.parse(fs.readFileSync('/opt/buster-image-tools/buster-delivery.json','utf8'));
+assert.equal(metadata.revision,JSON.parse(fs.readFileSync('/app/manifest.json','utf8')).commit);
+assert.deepEqual(metadata.expected,capture.bootProvenance.expectedReceipt);
+console.log(JSON.stringify({ok:true,installedRole:true,parentSelection:true,childHandoff:true,generation:capture.selectionReceipt.generationDigest,nativeExecution:false}));

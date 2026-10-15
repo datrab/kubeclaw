@@ -36,7 +36,7 @@ if (process.argv.includes('--import-legacy')) {
         DELIVERY_MANIFEST_ENCODING);
     // Validate every stage's input, registration and grants from the actual
     // installed role before writing a graph or starting any external operation.
-    await validatePipelineRuntimeV2(platform, definition);
+    if (!args['--recover'] && !args['--signal']) await validatePipelineRuntimeV2(platform, definition);
     if (args['--compile']) {
       fs.writeFileSync(path.resolve(args['--compile']), `${canonicalJson(definition)}\n`, { flag: 'wx' });
       process.stdout.write(`${JSON.stringify({ status: 'compiled', completionScope: project.demo === undefined ? 'technical-only' : 'demo-handoff', runId, stageCount: definition.stages.length, definitionDigest: sha256Text(canonicalJson(definition)) })}\n`);

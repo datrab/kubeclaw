@@ -88,12 +88,12 @@ export function parseConfig(config: AdapterActivationContext['config']): Operato
   if (typeof config.deliveryRoot !== 'string' || config.deliveryRoot.length === 0) {
     throw new Error('OPERATOR_CONFIG_INVALID:deliveryRoot');
   }
-  const maximumDeliveryRecords = Number(config.maximumDeliveryRecords ?? 100_000);
-  const maximumDeliveryBytes = Number(config.maximumDeliveryBytes ?? 256 * 1024 * 1024);
-  if (!Number.isSafeInteger(maximumDeliveryRecords) || maximumDeliveryRecords < 1) {
+  const maximumDeliveryRecords = Number(config.maximumDeliveryRecords);
+  const maximumDeliveryBytes = Number(config.maximumDeliveryBytes);
+  if (typeof config.maximumDeliveryRecords !== 'number' || !Number.isSafeInteger(maximumDeliveryRecords) || maximumDeliveryRecords < 1) {
     throw new Error('OPERATOR_CONFIG_INVALID:maximumDeliveryRecords');
   }
-  if (!Number.isSafeInteger(maximumDeliveryBytes) || maximumDeliveryBytes < 1) {
+  if (typeof config.maximumDeliveryBytes !== 'number' || !Number.isSafeInteger(maximumDeliveryBytes) || maximumDeliveryBytes < 1) {
     throw new Error('OPERATOR_CONFIG_INVALID:maximumDeliveryBytes');
   }
   return Object.freeze({

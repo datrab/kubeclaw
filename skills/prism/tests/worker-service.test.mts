@@ -1,4 +1,5 @@
-import { nativeResourcePolicy } from './native/resource-policy.mts';
+import { nativeEngineSettings } from './native/resource-policy.mts';
+import { nativeResourcePolicy, nativeControlSettings } from './native/resource-policy.mts';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createServer } from 'node:http';
@@ -25,7 +26,7 @@ async function setup(t: { after(callback: () => Promise<void>): void }, port = 0
   const artifacts = new ContentAddressedArtifactStore(root); let contacts = 0;
   const server = createServer((request, response) => {
     contacts++;
-    void handleInternalArtifact(request, response, new URL(request.url!, 'http://control'), {
+    void handleInternalArtifact(request, response, new URL(request.url!, 'http://control'), {maximumInternalEvidenceBytes: nativeControlSettings.maximumInternalEvidenceBytes,
       artifacts, spiffeEnabled: false, workerSecret: 'local-worker-test', trustedControlSpiffeId: '', trustedWorkerSpiffeId: '',
     }).then((handled) => { if (!handled) { response.writeHead(404); response.end(); } }).catch((error: unknown) => {
       response.writeHead(422, { 'content-type': 'application/json' }); response.end(JSON.stringify({ error: error instanceof Error ? error.message : String(error) }));
@@ -35,13 +36,15 @@ async function setup(t: { after(callback: () => Promise<void>): void }, port = 0
   t.after(async () => { server.closeAllConnections(); await new Promise<void>((done) => server.close(() => done())); await rm(root, { recursive: true, force: true }); });
   const address = server.address(); assert.ok(address && typeof address !== 'string');
   const origin = new URL(`http://127.0.0.1:${address.port}`);
-  const client = new WorkerArtifactClient(origin, 'local-worker-test', false);
-  const engine = new PrismEngine(new DeterministicDesignProvider());
+  const client = new WorkerArtifactClient(origin, 'local-worker-test', false, nativeControlSettings.maximumArtifactAcknowledgmentBytes);
+  const engine = new PrismEngine(new DeterministicDesignProvider(), nativeEngineSettings);
   async function attempt(title = 'Deployments') {
     const document = structuredClone(fixture); document.views.home.root.children[0]!.props.content = title;
     const input = await artifacts.put(Buffer.from(JSON.stringify({ document, view: 'home', state: 'default', viewport: 'wide' })));
     return JSON.parse(JSON.stringify(prismNativeAttempt('render', { artifactId: input.artifactId, type: 'prism-engine-input', mediaType: 'application/json',
-      contentDigest: input.digest, sizeBytes: input.sizeBytes, storageUrl: new URL(`/v1/internal/artifacts/${input.digest}`, origin).href }, 'test-request', nativeResourcePolicy))) as import('@kubeclaw/pipeline-worker-core-contract').WorkerAttemptEnvelopeV3;
+      contentDigest: input.digest, sizeBytes: input.sizeBytes, storageUrl: new URL(`/v1/internal/artifacts/${input.digest}`, origin).href }, 'test-request', nativeResourcePolicy, nativeControlSettings.nativeAttemptLifetimeMs, nativeControlSettings.nativeAttemptTimeoutMs,
+    nativeControlSettings.nativeAttemptCleanupTimeoutMs, nativeControlSettings.nativeAttemptLogBytes,
+    nativeControlSettings.nativeAttemptResultBytes, nativeControlSettings.nativeAttemptEvidenceBytes, nativeControlSettings.nativeAttemptEvidenceFiles))) as import('@kubeclaw/pipeline-worker-core-contract').WorkerAttemptEnvelopeV3;
   }
   return { root, artifacts, client, engine, attempt, contacts: () => contacts };
 }
@@ -131,7 +134,9 @@ test('historical real receipts remain readable and cannot be reinterpreted as na
   const input = legacy.inputs[0]!;
   assert.equal(input.kind, 'artifact');
   if (input.kind !== 'artifact') throw new Error('test input must be the original retained artifact');
-  const native = prismNativeAttempt('render', input.artifact, 'version-boundary', nativeResourcePolicy);
+  const native = prismNativeAttempt('render', input.artifact, 'version-boundary', nativeResourcePolicy, nativeControlSettings.nativeAttemptLifetimeMs, nativeControlSettings.nativeAttemptTimeoutMs,
+    nativeControlSettings.nativeAttemptCleanupTimeoutMs, nativeControlSettings.nativeAttemptLogBytes,
+    nativeControlSettings.nativeAttemptResultBytes, nativeControlSettings.nativeAttemptEvidenceBytes, nativeControlSettings.nativeAttemptEvidenceFiles);
   const before = f.contacts();
   await assert.rejects(hydrateWorkerResult(native, result, f.client));
   assert.equal(f.contacts(), before, 'a version mismatch must fail before artifact I/O');

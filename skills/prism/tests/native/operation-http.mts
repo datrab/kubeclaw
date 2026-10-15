@@ -1,4 +1,4 @@
-import { fileURLToPath } from 'node:url';
+import { publishedControlConfig } from '../fixtures/published-config.mjs';
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { randomUUID } from 'node:crypto';
@@ -9,7 +9,6 @@ import os from 'node:os';
 import path from 'node:path';
 import { Pool } from 'pg';
 import { ContentAddressedArtifactStore } from '../../storage/artifacts.ts';
-import { loadControlServerConfig } from '../../server/control-config.ts';
 import { runNativePrismOperation } from '../../control/native-operation.ts';
 import historical from '../fixtures/historical-worker-v1.json' with { type: 'json' };
 
@@ -19,7 +18,7 @@ const selected = new URL(source);
 assert(['127.0.0.1', 'localhost', '[::1]'].includes(selected.hostname));
 assert.equal(selected.username, 'prism_runtime'); assert.equal(selected.pathname, '/prism');
 
-test('actual transport refusal preserves one durable V3 identity; SQL rejects replacement with a historical attempt', { timeout: 60000 }, async () => {
+test('actual transport refusal preserves one durable V3 identity; SQL rejects replacement with a historical attempt', { timeout: 60000 }, async t => {
   const directory = await fs.mkdtemp(path.join(os.tmpdir(), 'prism-native-http-'));
   const database = new Pool({ connectionString: source, connectionTimeoutMillis: 10000 });
   // Reserve and close an actual loopback listener: the original fetch sees a real
@@ -30,8 +29,8 @@ test('actual transport refusal preserves one durable V3 identity; SQL rejects re
   try {
     assert.equal((await database.query('SELECT current_user AS role')).rows[0].role, 'prism_runtime');
     const artifacts = new ContentAddressedArtifactStore(directory);
-    const config = loadControlServerConfig({ SWARM_CONFIG: fileURLToPath(new URL('../../../../charts/kubeclaw/files/config/swarm.config.json', import.meta.url)), PRISM_WORKER_SECRET: 'local-native-dispatch-http',
-      PRISM_WORKER_URL: `http://127.0.0.1:${address.port}`, PRISM_CONTROL_INTERNAL_URL: 'http://127.0.0.1:1',
+    const published = await publishedControlConfig(t,{workerUrl:`http://127.0.0.1:${address.port}`});
+    const config = published.loadControlServerConfig(published.capture,{ PRISM_WORKER_SECRET: 'local-native-dispatch-http',
       PRISM_SESSION_SECRET: 'local-session', PRISM_INGRESS_SECRET: 'local-ingress',
       PRISM_INGESTION_SECRET: 'local-ingestion', PRISM_DISPATCH_SECRET: 'local-dispatch' });
     const key = `native-http-${randomUUID()}`;

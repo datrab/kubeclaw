@@ -35,13 +35,15 @@ export async function nativePrismExecution(owner: NativeWorkerOwnership, native:
 }
 
 /** Build a closed child environment from the startup snapshot, never process.env. */
-export function nativePrismCommand(native: ReturnType<typeof nativePrismSupervisorConfig>, config: ReturnType<typeof loadWorkerConfig>) {
+export function nativePrismCommand(native: ReturnType<typeof nativePrismSupervisorConfig>, config: Pick<ReturnType<typeof loadWorkerConfig>, 'controlInternalUrl' | 'workerSecret' | 'spiffeEnabled' | 'maximumArtifactAcknowledgmentBytes'> & { readonly native: Pick<ReturnType<typeof loadWorkerConfig>['native'], 'enginePolicy'> }) {
   return { launcher: native.launcher, uid: native.uid, gid: native.gid, executable: process.execPath,
     arguments: [fileURLToPath(new URL('./native-worker-host.ts', import.meta.url))], cwd: process.cwd(),
     environment: { PATH: '/usr/local/bin:/usr/bin:/bin', HOME: '/tmp', NODE_ENV: 'production',
       PRISM_ENGINE_CONTENT_DIGEST: native.engineContentDigest,
       PLAYWRIGHT_BROWSERS_PATH: native.browserPath, PRISM_CONTROL_INTERNAL_URL: config.controlInternalUrl.toString(),
       PRISM_WORKER_SECRET: config.workerSecret, WORKER_TRUST_SPIFFE_ENABLED: String(config.spiffeEnabled),
+      PRISM_NATIVE_ASSIGNED_ENGINE_POLICY: JSON.stringify(config.native.enginePolicy),
+      PRISM_NATIVE_ASSIGNED_ARTIFACT_ACKNOWLEDGMENT_BYTES: String(config.maximumArtifactAcknowledgmentBytes),
       PRISM_NATIVE_ASSIGNED_INPUT_BYTES: String(native.maximumInputBytes) },
   };
 }

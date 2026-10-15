@@ -37,3 +37,12 @@ telemetry projection, not another canonical log store. Diagnostic text within
 budget, source artifact references, and explicit display truncation metadata
 are preserved in full. The sink never rewrites a referenced source artifact and
 cannot restore details already redacted or shortened by an upstream observer.
+
+
+Capacity config requires explicit `maxRecordBytes`, `maximumRecords` and
+`maximumStoreBytes` positive safe integers. No defaults or numeric strings are
+accepted. Nova selects these from `settings.telemetryStore` in its explicit Core
+file/profile; raw Platform entries keep installation `root` only. Duplicate raw
+policy leaves reject even when equal. Direct callers provide every limit.
+Retained runs use their original captured policy; no current-file fallback.
+This changes configuration receiving only, not redaction or ownership rules.

@@ -1,4 +1,5 @@
 {{- if .Values.ingestion.enabled }}
+{{- $settings := (include "prism.swarmConfig" . | mustFromJson).operator.prism.ingestion }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -9,7 +10,10 @@ spec:
   replicas: {{ .Values.ingestion.replicas }}
   selector: { matchLabels: { app: prism-ingestion } }
   template:
-    metadata: { labels: { app: prism-ingestion } }
+    metadata:
+      labels: { app: prism-ingestion }
+      annotations:
+        checksum/pipeline-config: {{ include "prism.swarmConfig" . | sha256sum }}
     spec:
       serviceAccountName: prism-ingestion
       imagePullSecrets: {{ toYaml .Values.imagePullSecrets | nindent 8 }}
@@ -28,13 +32,10 @@ spec:
               cpu: {{ required "ingestion.resources.limits.cpu requires operator sizing" .Values.ingestion.resources.limits.cpu | quote }}
               memory: {{ required "ingestion.resources.limits.memory requires operator sizing" .Values.ingestion.resources.limits.memory | quote }}
           env:
-            - { name: PORT, value: "8080" }
             - name: PRISM_INGESTION_SECRET
               valueFrom: { secretKeyRef: { name: {{ .Values.secrets.runtime }}, key: ingestion-secret } }
-            - { name: PRISM_QUARANTINE_ROOT, value: /quarantine }
-            - { name: PRISM_QUARANTINE_TTL_MS, value: {{ .Values.ingestion.quarantineTtlMs | quote }} }
-          volumeMounts: [{ name: quarantine, mountPath: /quarantine }]
-          readinessProbe: { httpGet: { path: /ready, port: 8080 }, initialDelaySeconds: 3 }
-          livenessProbe: { httpGet: { path: /health, port: 8080 }, initialDelaySeconds: 3 }
+          volumeMounts: [{ name: quarantine, mountPath: {{ $settings.quarantineRoot | quote }} }]
+          readinessProbe: { httpGet: { path: /ready, port: {{ $settings.port }} }, initialDelaySeconds: 3 }
+          livenessProbe: { httpGet: { path: /health, port: {{ $settings.port }} }, initialDelaySeconds: 3 }
       volumes: [{ name: quarantine, emptyDir: { sizeLimit: 4Gi } }]
 {{- end }}

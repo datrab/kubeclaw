@@ -1,6 +1,6 @@
-import type { BusterManifestPolicy } from '../../../common/plugin-runtime/foundation/config/buster-cluster-invokers.ts';
+import type { BusterManifestPolicy } from '@kubeclaw/plugin-foundation/config/buster-cluster-invokers';
 import fs from 'node:fs';
-import { validateBusterProcessInputSettings, type BusterProcessInputSettings } from '../../../common/plugin-runtime/foundation/config/buster-execution.ts';
+import { validateBusterProcessInputSettings, type BusterProcessInputSettings } from '@kubeclaw/plugin-foundation/config/buster-execution';
 import { runProcessInput } from './process-input.ts';
 import { DNS_LABEL, SECRET_NAME, MAX_TIMER_MS, MAX_NAMESPACE_PREFIX_LENGTH, STORAGE_CLASS_NAME } from './kubernetes-fixture-values.ts';
 type Execute = (command: string, args: readonly string[], options: Readonly<Record<string, unknown>>) => Promise<{

@@ -1,6 +1,7 @@
+import type { StudioBrowserPolicy } from './browser-policy.ts';
 import type {PrismDocument} from '@kubeclaw/prism-contracts-v1';
 import {roundResponse,responseObject} from './round-response.ts';
-export type RevisionClient={documentId:string;userId:string;csrf:string;origin:string;storage:Pick<Storage,'getItem'|'setItem'|'removeItem'>};
+export type RevisionClient={documentId:string;userId:string;csrf:string;origin:string;policy:StudioBrowserPolicy;storage:Pick<Storage,'getItem'|'setItem'|'removeItem'>};
 export type PendingRevision={operation:'generate';baseRevision:number;input:{instruction:string;mode:'refine'};idempotencyKey:string;jobId?:string};
 const key=(client:RevisionClient)=>`prism-agent-revision:${JSON.stringify([client.userId,client.documentId])}`;
 export function savedRevision(client:RevisionClient):PendingRevision|null {
@@ -21,14 +22,14 @@ export async function submitRevision(client:RevisionClient,pending:PendingRevisi
 }
 export async function waitForRevision(client:RevisionClient,pending:PendingRevision){
  if(!pending.jobId)throw new Error('Persisted Prism revision job identity is required');
- for(let attempt=0;attempt<300;attempt++){
+ for(let attempt=0;attempt<client.policy.revisionPolling.maximumAttempts;attempt++){
   const response=await fetch(new URL(`/v1/agent-jobs/${encodeURIComponent(pending.jobId)}`,client.origin));
   const receipt=await roundResponse<{status:string;result:PrismDocument|null}>(response,`Reconcile Prism revision job ${pending.jobId}`,value=>responseObject(value)&&typeof value.status==='string','an agent job status');
   if(receipt.status==='completed'){
    if(!receipt.result?.meta || receipt.result.meta.revision!==pending.baseRevision+1)throw new Error('Prism revision receipt has an invalid document; request retained');
    client.storage.removeItem(key(client));return receipt.result;
   }
-  await new Promise(resolve=>setTimeout(resolve,2000));
+  await new Promise(resolve=>setTimeout(resolve,client.policy.revisionPolling.intervalMs));
  }
  throw new Error(`Prism revision job ${pending.jobId} is still pending; the same request identity is retained for reconciliation`);
 }

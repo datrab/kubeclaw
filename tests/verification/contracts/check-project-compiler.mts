@@ -1,3 +1,4 @@
+import { TEST_CORE_POLICY_SELECTION } from '../../fixtures/core-runtime-policy.mjs';
 import { checkLegacyProjectImport } from './project-legacy-import-cases.mts';
 import { gateCoverageDigest } from '@kubeclaw/pipeline-test-gate-contract';
 import { PORTABLE_JSON_ENCODING } from '@kubeclaw/plugin-sdk';
@@ -131,7 +132,7 @@ try {
   }
   const artifact = (namespace: string) => ({ allowedNamespaces: [namespace] });
   const origins = ['http://127.0.0.1:9'];
-  const platform = {
+  const platform = {corePolicySelection: TEST_CORE_POLICY_SELECTION,
     schemaVersion: 'pipeline-platform.v2', effectLockTtlMs: 300_000, installationRoots: pluginRoots, trustedBuiltinRoots: pluginRoots,
     externalTrust: { allowedSourceDigests: {}, verifiedAttestations: {} },
     providers: {
@@ -157,7 +158,7 @@ try {
     },
     adapters: {
       'kubeclaw.state-store:state':{root:path.join(temporary,'state-adapter')},
-      'kubeclaw.runtime-dispatch:runtime': { targets: Object.fromEntries(['forge', 'echo', 'buster'].map(agent => [agent, { endpoint: `${origins[0]}/dispatch`, tokenSecret: 'worker' }])) },
+      'kubeclaw.runtime-dispatch:runtime': { targets: Object.fromEntries(['forge', 'echo', 'buster'].map(agent => [agent, { byteProfile:'standard', endpoint: `${origins[0]}/dispatch`, tokenSecret: 'worker' }])) },
       'kubeclaw.network-http:http': { allowedOrigins: origins, allowedMethods: ['POST'], allowedHeaders: ['authorization', 'content-type', 'idempotency-key'] },
       'kubeclaw.secret-resolver:secrets': { environment: { worker: 'PROJECT_TEST_TOKEN', 'source-key': 'PROJECT_TEST_SOURCE_KEY' } },
       'kubeclaw.artifact-store:artifact-store': { artifactRoot: path.join(temporary, 'artifacts') },

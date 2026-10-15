@@ -1,4 +1,5 @@
-import { nativeResourcePolicy } from './native/resource-policy.mts';
+import { nativeEngineSettings } from './native/resource-policy.mts';
+import { nativeResourcePolicy, nativeControlSettings } from './native/resource-policy.mts';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createServer } from 'node:http';
@@ -19,7 +20,7 @@ const request = (key: string) => ({ contract: 'kubeclaw.prism-design-engine@1' a
   operation: 'render' as const, input: { document: structuredClone(fixture), view: 'home', state: 'default', viewport: 'wide' }, idempotencyKey: key });
 
 test('only the admitted owner can cancel a pending original render; callers without cancellation still coalesce', async () => {
-  const engine = new PrismEngine(new DeterministicDesignProvider());
+  const engine = new PrismEngine(new DeterministicDesignProvider(), nativeEngineSettings);
   const owner = new AbortController(), stranger = new AbortController();
   const options = { signal: owner.signal };
   const first = engine.execute(request('owner'), options);
@@ -60,7 +61,7 @@ async function setup(t: { after(callback: () => Promise<void>): void }, stall: '
         started();
         return;
       }
-      await handleInternalArtifact(req, res, new URL(req.url!, 'http://control'), {
+      await handleInternalArtifact(req, res, new URL(req.url!, 'http://control'), {maximumInternalEvidenceBytes: nativeControlSettings.maximumInternalEvidenceBytes,
         artifacts: store, spiffeEnabled: false, workerSecret: 'local', trustedControlSpiffeId: '', trustedWorkerSpiffeId: '',
       });
     };
@@ -72,8 +73,10 @@ async function setup(t: { after(callback: () => Promise<void>): void }, stall: '
   const origin = new URL(`http://127.0.0.1:${address.port}`);
   const ref = await store.put(Buffer.from(JSON.stringify(request('input').input)));
   const envelope = structuredClone(prismNativeAttempt('render', { artifactId: ref.artifactId, type: 'prism-engine-input', mediaType: 'application/json',
-    contentDigest: ref.digest, sizeBytes: ref.sizeBytes, storageUrl: new URL(`/v1/internal/artifacts/${ref.digest}`, origin).href }, 'cancel-test', nativeResourcePolicy)) as WorkerAttemptEnvelopeV3;
-  return { store, envelope, client: new WorkerArtifactClient(origin, 'local', false), engine: new PrismEngine(new DeterministicDesignProvider()),
+    contentDigest: ref.digest, sizeBytes: ref.sizeBytes, storageUrl: new URL(`/v1/internal/artifacts/${ref.digest}`, origin).href }, 'cancel-test', nativeResourcePolicy, nativeControlSettings.nativeAttemptLifetimeMs, nativeControlSettings.nativeAttemptTimeoutMs,
+    nativeControlSettings.nativeAttemptCleanupTimeoutMs, nativeControlSettings.nativeAttemptLogBytes,
+    nativeControlSettings.nativeAttemptResultBytes, nativeControlSettings.nativeAttemptEvidenceBytes, nativeControlSettings.nativeAttemptEvidenceFiles)) as WorkerAttemptEnvelopeV3;
+  return { store, envelope, client: new WorkerArtifactClient(origin, 'local', false, nativeControlSettings.maximumArtifactAcknowledgmentBytes), engine: new PrismEngine(new DeterministicDesignProvider(), nativeEngineSettings),
     contact, uploadClosed: () => uploadClosed, storedUpload: () => storedUpload };
 }
 
@@ -105,7 +108,7 @@ test('terminate aborts and drains the original artifact read before any engine o
 
 
 test('owner cancellation before retention rejects every coalesced original-render caller', async () => {
-  const engine = new PrismEngine(new DeterministicDesignProvider());
+  const engine = new PrismEngine(new DeterministicDesignProvider(), nativeEngineSettings);
   const owner = new AbortController();
   const first = engine.execute(request('retention-cancel'), { signal: owner.signal });
   const duplicate = engine.execute(request('retention-cancel'), { signal: owner.signal });

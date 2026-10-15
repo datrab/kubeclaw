@@ -1,3 +1,8 @@
+import { TEST_CORE_POLICY as DELIVERY_TEST_CORE_POLICY } from '../../../../../tests/fixtures/core-runtime-policy.mjs';
+const TEST_OPERATOR_STORE_POLICY = DELIVERY_TEST_CORE_POLICY.operatorMessagingStore;
+import { TEST_CORE_POLICY as STATE_WAIT_TEST_CORE_POLICY } from '../../../../../tests/fixtures/core-runtime-policy.mjs';
+const TEST_WAIT_STORE_POLICY = STATE_WAIT_TEST_CORE_POLICY.waitStore;
+import { TEST_CORE_POLICY } from '../../../../../tests/fixtures/core-runtime-policy.mjs';
 import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
 import fs from 'node:fs';
@@ -93,7 +98,7 @@ async function run(id, guidance) {
     granted,
     activated,
     configs: new Map([
-      ['kubeclaw.operator-messaging:operator', {
+      ['kubeclaw.operator-messaging:operator', { ...TEST_OPERATOR_STORE_POLICY,
         deliveryRoot: path.join(temporary, `${id}-deliveries`),
         targets: {
           'release-operators': {
@@ -102,7 +107,7 @@ async function run(id, guidance) {
           },
         },
       }],
-      ['kubeclaw.wait-store:waits', { root: waitRoot }],
+      ['kubeclaw.wait-store:waits', { ...TEST_WAIT_STORE_POLICY, root: waitRoot }],
       ['kubeclaw.network-http:http', {
         allowedOrigins: [origin],
         allowedMethods: ['POST'],
@@ -113,7 +118,7 @@ async function run(id, guidance) {
       }],
     ]),
     effects: new core.EffectCoordinator(
-      new core.FileEffectJournal(effectsPath),
+      new core.FileEffectJournal(effectsPath, TEST_CORE_POLICY),
       undefined,
       undefined,
       new core.MemoryResourceLockManager(), 300_000,
@@ -124,7 +129,7 @@ async function run(id, guidance) {
   await adapters.start();
   const journalPath = path.join(temporary, `${id}-events.jsonl`);
   try {
-    const runner = new core.PipelineRunner({
+    const runner = new core.PipelineRunner({stageMemoryBytes: TEST_CORE_POLICY.stageMemoryBytes,
       definition: {
         schemaVersion: 'pipeline-definition.v2',
         id: `pipeline:${id}`,
@@ -145,7 +150,7 @@ async function run(id, guidance) {
       registry: granted,
       activated,
       adapters,
-      journal: new core.FileJournal(journalPath),
+      journal: new core.FileJournal(journalPath, TEST_CORE_POLICY.journalAppendLockTimeoutMs),
       ...(guidance === undefined
         ? {}
         : { resumeGuidance: new Map([['approval', guidance]]) }),

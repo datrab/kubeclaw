@@ -4,7 +4,7 @@ import { validateWorkerResourceContractV3 } from '@kubeclaw/pipeline-worker-core
 import { sha256Digest, workerAttemptSpecDigest, workerProfileDigest } from '@kubeclaw/worker-core';
 import { assertPreparationSlot, type PreparationSlot } from './preparation-slots.ts';
 import type { BusterInputReference } from './preparation-input.ts';
-import type { BusterPreparationSettings } from '../../../common/plugin-runtime/foundation/config/swarm.ts';
+import type { BusterPreparationSettings } from '@kubeclaw/plugin-foundation/config/swarm';
 
 export function preparationProfile(engineContentDigest: string): WorkerProfileV3 {
   if (!/^sha256:[a-f0-9]{64}$/u.test(engineContentDigest)) throw new Error('BUSTER_PREPARATION_ENGINE_IDENTITY_REQUIRED');

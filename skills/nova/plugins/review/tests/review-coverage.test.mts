@@ -1,3 +1,5 @@
+import { TEST_CORE_POLICY as ARTIFACT_TEST_CORE_POLICY } from '../../../../../tests/fixtures/core-runtime-policy.mjs';
+const TEST_ARTIFACT_STORE_POLICY = ARTIFACT_TEST_CORE_POLICY.artifactStore;
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -13,7 +15,7 @@ import { storeReviewBundle } from '../src/review-report-storage.ts';
 
 test('original review parser validates cumulative policy and stores its actual immutable bundle', async () => {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'review-coverage-'));
-  const adapter = activate({ config: { artifactRoot: root } } as never);
+  const adapter = activate({ config: { ...TEST_ARTIFACT_STORE_POLICY, artifactRoot: root } } as never);
   const attempt = { runId: 'run:coverage', stageId: 'final-review', attemptId: 'attempt:1', attemptNumber: 1 };
   let sequence = 0;
   const context = { contract: { lease: { attempt } }, async invoke(capability: string, request: object) {

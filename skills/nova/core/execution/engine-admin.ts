@@ -12,7 +12,7 @@ import { FileJournal } from '../state/journal.ts';
 import type { AdministrativeDecisionAuthenticator } from './engine.ts';
 import { createAdapterRuntime, drainObservers, prepareRuntime, type PreparedRuntime } from './engine-runtime.ts';
 import { executePrepared } from './engine-run.ts';
-import { canonicalJson, deepFreeze, recordedPackageUpgrades, verifyPinnedGraph, verifyPinnedPackages } from './engine-snapshots.ts';
+import { canonicalJson, deepFreeze, recordedPackageUpgrades, retainedRuntimePolicies, verifyPinnedGraph, verifyPinnedPackages } from './engine-snapshots.ts';
 import type { ExecutionGraphSnapshot } from './graph.ts';
 import type { PipelineRunResult } from './runner.ts';
 import { withRunMutationLock } from './run-mutation.ts';
@@ -25,9 +25,11 @@ interface Context { readonly platform: PlatformConfig; readonly definition: Pipe
 
 export async function reopenPipeline(platform: PlatformConfig, definitionInput: PipelineDefinition, decisionInput: AdministrativeReopenDecision, authenticate: AdministrativeDecisionAuthenticator): Promise<PipelineRunResult> {
   const definition = deepFreeze(structuredClone(definitionInput)); const decision = deepFreeze(structuredClone(decisionInput));
-  validateContractValue('administrativeReopenDecision', decision); const runtime = await prepareRuntime(platform, definition);
+  validateContractValue('administrativeReopenDecision', decision);
   const runRoot = resolveRunRoot(platform.storageRoot, decision.runId);
-  return withRunMutationLock(runRoot, async (lease) => new AdministrativeReopener(platform, definition, decision, runtime, runRoot, lease, authenticate).run());
+  const retained = retainedRuntimePolicies(runRoot);
+  const runtime = await prepareRuntime(platform, definition, retained.corePolicy, retained.timingSelections, retained.httpSelections);
+  return withRunMutationLock(runRoot, runtime.corePolicy, async (lease) => new AdministrativeReopener(platform, definition, decision, runtime, runRoot, lease, authenticate).run());
 }
 
 class AdministrativeReopener {
@@ -38,13 +40,13 @@ class AdministrativeReopener {
   }
 
   async run(): Promise<PipelineRunResult> {
-    const decisions = new FileJournal<AdministrativeReopenDecision>(path.join(this.#runRoot, 'administrative-decisions.jsonl'));
+    const decisions = new FileJournal<AdministrativeReopenDecision>(path.join(this.#runRoot, 'administrative-decisions.jsonl'), this.#runtime.corePolicy.journalAppendLockTimeoutMs);
     const recorded = this.#recorded(decisions); await this.#authorize(recorded);
     if (this.#decision.continuation === 'cancel' && this.#decision.packageUpgrades?.length) throw new Error('ADMIN_PACKAGE_UPGRADE_REQUIRES_RETRY');
     const approved = recordedPackageUpgrades(decisions.records().map(({ entry }) => entry));
     const upgrades = recorded ? approved : [...approved, ...(this.#decision.continuation === 'retry' ? this.#decision.packageUpgrades ?? [] : [])];
     verifyPinnedPackages(this.#runRoot, this.#runtime, upgrades); const graph = verifyPinnedGraph(this.#runRoot, this.#definition);
-    const events = new FileJournal<LifecycleEvent | PluginDomainEvent>(path.join(this.#runRoot, 'events.jsonl'));
+    const events = new FileJournal<LifecycleEvent | PluginDomainEvent>(path.join(this.#runRoot, 'events.jsonl'), this.#runtime.corePolicy.journalAppendLockTimeoutMs);
     const recovered = recoverStageStates(this.#definition, events.records(), this.#decision.runId, this.#platform.orchestratorIssuerId);
     const target = this.#validate(recovered, events, recorded);
     if (!recorded) { this.#lease.throwIfAborted(); decisions.append(Object.freeze(structuredClone(this.#decision))); }

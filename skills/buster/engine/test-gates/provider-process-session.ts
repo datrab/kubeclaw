@@ -7,7 +7,7 @@ import { fileURLToPath } from 'node:url';
 import type { ProviderInvocationV1, ProviderResultV1 } from '@kubeclaw/pipeline-test-gate-contract';
 import type { TestProviderExecutionContext, TestProviderCleanupDisposition } from '@kubeclaw/plugin-sdk';
 import type { TestProviderRegistryEntry } from '@kubeclaw/plugin-foundation/registry/types';
-import { validateBusterProviderRuntimeSettings, type BusterProviderRuntimeSettings } from '../../../common/plugin-runtime/foundation/config/buster-execution.ts';
+import { validateBusterProviderRuntimeSettings, type BusterProviderRuntimeSettings } from '@kubeclaw/plugin-foundation/config/buster-execution';
 import type { ProviderProcessResources } from './provider-loader.ts';
 import { ProviderCapabilities } from './provider-capabilities.ts';
 import { processFacts, signalProvider } from './provider-process-observation.ts';

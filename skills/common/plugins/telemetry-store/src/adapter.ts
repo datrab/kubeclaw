@@ -5,12 +5,12 @@ import { telemetryProjection } from './projection.ts';
 export function activate(context: AdapterActivationContext): AdapterInstance {
   const root = context.config.root;
   if (typeof root !== 'string' || root.length === 0) throw new Error('root is required');
-  const maxRecordBytes = Number(context.config.maxRecordBytes ?? 1_048_576);
-  const maximumRecords = Number(context.config.maximumRecords ?? 100_000);
-  const maximumStoreBytes = Number(context.config.maximumStoreBytes ?? 256 * 1024 * 1024);
-  if (!Number.isSafeInteger(maxRecordBytes) || maxRecordBytes < 1) throw new Error('maxRecordBytes is invalid');
-  if (!Number.isSafeInteger(maximumRecords) || maximumRecords < 1) throw new Error('maximumRecords is invalid');
-  if (!Number.isSafeInteger(maximumStoreBytes) || maximumStoreBytes < 1) throw new Error('maximumStoreBytes is invalid');
+  const maxRecordBytes = Number(context.config.maxRecordBytes);
+  const maximumRecords = Number(context.config.maximumRecords);
+  const maximumStoreBytes = Number(context.config.maximumStoreBytes);
+  if (typeof context.config.maxRecordBytes !== 'number' || !Number.isSafeInteger(maxRecordBytes) || maxRecordBytes < 1) throw new Error('maxRecordBytes is invalid');
+  if (typeof context.config.maximumRecords !== 'number' || !Number.isSafeInteger(maximumRecords) || maximumRecords < 1) throw new Error('maximumRecords is invalid');
+  if (typeof context.config.maximumStoreBytes !== 'number' || !Number.isSafeInteger(maximumStoreBytes) || maximumStoreBytes < 1) throw new Error('maximumStoreBytes is invalid');
   const store = new FileDurableRecordStore(root, {
     maximumRecords,
     maximumBytes: maximumStoreBytes,

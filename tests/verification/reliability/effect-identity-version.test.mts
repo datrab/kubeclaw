@@ -1,3 +1,4 @@
+import { TEST_CORE_POLICY } from '../../fixtures/core-runtime-policy.mjs';
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import fs from 'node:fs';
@@ -28,36 +29,36 @@ async function worker(mode:string,kind:string,root:string) {
   server.listen(0,'127.0.0.1');await once(server,'listening');const address=server.address();assert(address&&typeof address!=='string');
   const origin=`http://127.0.0.1:${address.port}`;
   const artifactRoot=path.join(root,'artifacts'),lockRoot=path.join(root,'locks'),journalFile=path.join(root,'effects.jsonl');
-  const artifact=artifacts({config:{artifactRoot}} as AdapterActivationContext);
+  const artifact=artifacts({config:{...TEST_CORE_POLICY.artifactStore,artifactRoot}} as AdapterActivationContext);
   const httpAdapter=network({config:{allowedOrigins:[origin],allowedMethods:['POST'],allowedHeaders:['content-type','idempotency-key']}} as AdapterActivationContext);
   const runtime=dispatch({config:{targets:{forge:{endpoint:origin+'/dispatch',authentication:'spiffe-proxy'}}},
     invokeConfidential:async(capability:string,request:Record<string,unknown>)=>httpAdapter.invoke({confidential:true,signal,
       request:{...request,capability,attempt:legacy.attempt,idempotencyKey:'inner:http'}} as AdapterInvocation)} as unknown as AdapterActivationContext);
   const adapter=kind==='dispatch'?runtime:artifact;
-  const coordinator=()=>new EffectCoordinator(new FileEffectJournal(journalFile),undefined,undefined,new FileResourceLockManager(lockRoot), 300_000);
+  const coordinator=()=>new EffectCoordinator(new FileEffectJournal(journalFile, TEST_CORE_POLICY),undefined,undefined,new FileResourceLockManager(lockRoot, TEST_CORE_POLICY), 300_000);
   const invoke=()=>coordinator().invoke(adapter,originalReceipt.adapter,legacy,signal);
   const locks=()=>fs.existsSync(path.join(lockRoot,'locks.jsonl'))?fs.readFileSync(path.join(lockRoot,'locks.jsonl'),'utf8').trim().split('\n').map(line=>JSON.parse(line).entry):[];
   try {
     if(mode==='new-write') {
       const receipt=await invoke();assert.equal(receipt.status,'completed');assert.match(receipt.effectId,/^effect:json-utf16-v1:[a-f0-9]{64}$/);
-      assert(validEffectIdentity((await new FileEffectJournal(journalFile).request(legacy.idempotencyKey))!));
+      assert(validEffectIdentity((await new FileEffectJournal(journalFile, TEST_CORE_POLICY).request(legacy.idempotencyKey))!));
       assert.equal(calls,kind==='dispatch'?1:0);return {id:receipt.effectId,locale:Intl.DateTimeFormat().resolvedOptions().locale};
     }
     if(mode==='new-replay') {
-      const before=fs.readFileSync(journalFile,'utf8');const journal=new FileEffectJournal(journalFile),prior=await journal.request(legacy.idempotencyKey);assert(prior);
+      const before=fs.readFileSync(journalFile,'utf8');const journal=new FileEffectJournal(journalFile, TEST_CORE_POLICY),prior=await journal.request(legacy.idempotencyKey);assert(prior);
       const receipt=await coordinator().invoke(adapter,originalReceipt.adapter,prior,signal);
       assert.deepEqual(receipt,await journal.receipt(legacy.idempotencyKey));assert.equal(fs.readFileSync(journalFile,'utf8'),before);assert.equal(calls,0);
       return {id:receipt.effectId,locale:Intl.DateTimeFormat().resolvedOptions().locale};
     }
     if(mode==='unknown'||mode==='changed-prior') {
       const invalid={...legacy,...(mode==='unknown'?{effectId:`effect:json-utf16-v2:${'a'.repeat(64)}`}:{operation:'foreign-operation'})};
-      const journal=new FileEffectJournal(journalFile);await journal.requested(invalid);
+      const journal=new FileEffectJournal(journalFile, TEST_CORE_POLICY);await journal.requested(invalid);
       const before=fs.readFileSync(journalFile,'utf8');assert.equal(validEffectIdentity(invalid),false);
       await assert.rejects(invoke(),/EFFECT_IDEMPOTENCY_CONFLICT/);assert.equal(fs.readFileSync(journalFile,'utf8'),before);assert.equal(calls,0);assert.deepEqual(locks(),[]);return;
     }
     if(mode==='admission-race') {
       assert.equal(kind,'dispatch');const pending=invoke();
-      await new FileEffectJournal(journalFile).requested(legacy);
+      await new FileEffectJournal(journalFile, TEST_CORE_POLICY).requested(legacy);
       await assert.rejects(pending,/EFFECT_IDENTITY_CHANGED_DURING_ADMISSION/);
       assert.equal(calls,0);const firstLocks=locks();assert.equal(firstLocks[0].resource.canonicalId,stableEffectId(legacy));assert.equal(firstLocks.at(-1).status,'released');
       const receipt=await invoke();assert.equal(receipt.effectId,legacy.effectId);assert.equal(calls,1);

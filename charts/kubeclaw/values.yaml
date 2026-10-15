@@ -1,4 +1,3 @@
-busterComponentFile: files/config/buster-engine.config.json
 # =============================================================================
 # KubeClaw Helm Chart — Default Values
 # =============================================================================
@@ -542,3 +541,6 @@ busterNative:
   nodeName: ""
   namespace: ""
   policyDigest: ""
+
+# Generated transport of the exact immutable image receipt, never operator settings.
+pipelineDelivery: {}

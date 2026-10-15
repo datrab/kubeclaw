@@ -1,3 +1,4 @@
+import { TEST_CORE_POLICY, TEST_CORE_POLICY_SELECTION } from '../../fixtures/core-runtime-policy.mjs';
 // Actual registered stages/Core/Git/ArtifactStore; no fabricated invocation context.
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -38,10 +39,10 @@ async function scenario(mixed, legacy, original) {
   const origin=`http://127.0.0.1:${server.address().port}`;
   const secretName='KUBECLAW_PRISM_READER_PROBE_TOKEN',beforeSecret=process.env[secretName];process.env[secretName]='local-probe-only';
   const namespaces={allowedNamespaces:['kubeclaw.preflight-contract','kubeclaw.prism']};
-  const platform={schemaVersion:'pipeline-platform.v2', effectLockTtlMs: 300_000,installationRoots:[installed],trustedBuiltinRoots:[installed],externalTrust:{allowedSourceDigests:{},verifiedAttestations:{}},
+  const platform={corePolicySelection: TEST_CORE_POLICY_SELECTION,schemaVersion:'pipeline-platform.v2', effectLockTtlMs: 300_000,installationRoots:[installed],trustedBuiltinRoots:[installed],externalTrust:{allowedSourceDigests:{},verifiedAttestations:{}},
     providers:{'artifacts.read':'kubeclaw.artifact-store:artifact-store','artifacts.write':'kubeclaw.artifact-store:artifact-store','signal.wait':'kubeclaw.wait-store:waits','operator.request':'kubeclaw.operator-messaging:operator','network.http':'kubeclaw.network-http:http','secrets.read':'kubeclaw.secret-resolver:secrets','runtime.dispatch':'kubeclaw.runtime-dispatch:runtime','git.repository.read':'kubeclaw.repository-adapter:repository'},
     grants:{'kubeclaw.preflight-contract:source':{'git.repository.read':{allowedPrefixes:['.']},'artifacts.write':namespaces},'kubeclaw.prism-design:design':{'runtime.dispatch':{allowedAgents:['prism']},'artifacts.read':namespaces,'artifacts.write':namespaces,'operator.request':{allowedTargets:['operators']},'signal.wait':{allowedSignalTypes:['prism.approval.resolved'],allowedIssuerIds:['operator:test']}},'kubeclaw.runtime-dispatch:runtime':{'network.http':{allowedOrigins:[origin]},'secrets.read':{allowedNames:['token']}},'kubeclaw.operator-messaging:operator':{'network.http':{allowedOrigins:[origin]},'secrets.read':{allowedNames:['token']}}},
-    adapters:{'kubeclaw.artifact-store:artifact-store':{artifactRoot:path.join(directory,'artifacts')},'kubeclaw.wait-store:waits':{root:path.join(directory,'waits')},'kubeclaw.operator-messaging:operator':{deliveryRoot:path.join(directory,'deliveries'),targets:{operators:{endpoint:`${origin}/operator`,tokenSecret:'token'}}},'kubeclaw.network-http:http':{allowedOrigins:[origin],allowedMethods:['POST'],allowedHeaders:['content-type','idempotency-key','x-kubeclaw-signature']},'kubeclaw.secret-resolver:secrets':{environment:{token:secretName}},'kubeclaw.runtime-dispatch:runtime':{targets:{prism:{endpoint:`${origin}/prism`,tokenSecret:'token'}}},'kubeclaw.repository-adapter:repository':{repositoryRoot:repository}},activeAdapters:[],observers:{},storageRoot:path.join(directory,'state'),shutdownTimeoutMs:5000,orchestratorIssuerId:'nova',administrativeDecisionIssuers:[]};
+    adapters:{'kubeclaw.artifact-store:artifact-store':{artifactRoot:path.join(directory,'artifacts')},'kubeclaw.wait-store:waits':{root:path.join(directory,'waits')},'kubeclaw.operator-messaging:operator':{deliveryRoot:path.join(directory,'deliveries'),targets:{operators:{endpoint:`${origin}/operator`,tokenSecret:'token'}}},'kubeclaw.network-http:http':{allowedOrigins:[origin],allowedMethods:['POST'],allowedHeaders:['content-type','idempotency-key','x-kubeclaw-signature']},'kubeclaw.secret-resolver:secrets':{environment:{token:secretName}},'kubeclaw.runtime-dispatch:runtime':{targets:{prism:{byteProfile:'standard',endpoint:`${origin}/prism`,tokenSecret:'token'}}},'kubeclaw.repository-adapter:repository':{repositoryRoot:repository}},activeAdapters:[],observers:{},storageRoot:path.join(directory,'state'),shutdownTimeoutMs:5000,orchestratorIssuerId:'nova',administrativeDecisionIssuers:[]};
   const runId='run:prism-reader-'+(mixed?'mixed':'fixed');
   const source={...(legacy?{}:{identityEncoding:PORTABLE_JSON_ENCODING}),projectId:'project',repositoryRoot:repository,architectureRef:'main',paths:['architecture.md','modules/api/FORGE.md']};
   const contract={projectId:'project',baseRevision:revision,requiredFiles:['architecture.md'],modules:[{moduleId:'api',modulePath:'modules/api',ownedPaths:['api.mjs'],serveDockerfile:'api.mjs',apiSpecFile:null}],policy:mixed?{I:1,i:2,å:3,z:4}:{}};
@@ -69,7 +70,7 @@ async function scenario(mixed, legacy, original) {
     const stored=await new FileDurableBlobStore(path.join(directory,'artifacts'),16*1024*1024,256*1024*1024).get(ref.digest);
     assert.equal(stored.toString('utf8'),bytes);assert.equal(ref.sizeBytes,stored.byteLength);
     const effectsFile=path.join(runDirectory,'effects.jsonl');
-    const journal=new FileEffectJournal(effectsFile);
+    const journal=new FileEffectJournal(effectsFile, TEST_CORE_POLICY);
     const rows=fs.readFileSync(effectsFile,'utf8').trim().split('\n').map(line=>JSON.parse(line).entry);
     const read=rows.find(row=>row.type==='requested'&&row.request.capability==='artifacts.read'&&row.request.attempt.stageId==='design');
     assert(read); const completed=rows.find(row=>row.type==='completed'&&row.receipt.effectId===read.request.effectId);

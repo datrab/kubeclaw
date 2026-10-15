@@ -8,7 +8,8 @@
     "tuning",
     "overrides",
     "schemaVersion",
-    "components"
+    "components",
+    "bindings"
   ],
   "properties": {
     "_doc": {
@@ -39,7 +40,7 @@
       "additionalProperties": false
     },
     "schemaVersion": {
-      "const": "swarm-entry.v2"
+      "const": "pipeline-entry.v3"
     },
     "components": {
       "type": "object",
@@ -54,22 +55,65 @@
       ],
       "properties": {
         "prism-control": {
-          "const": "prism-control.config.json"
+          "const": "components/prism-control.config.json"
         },
         "prism-studio": {
-          "const": "prism-studio.config.json"
+          "const": "components/prism-studio.config.json"
         },
         "prism-worker": {
-          "const": "prism-worker.config.json"
+          "const": "components/prism-worker.config.json"
         },
         "prism-execution": {
-          "const": "prism-execution.config.json"
+          "const": "components/prism-execution.config.json"
         },
         "buster-engine": {
-          "const": "buster-engine.config.json"
+          "const": "components/buster-engine.config.json"
         },
         "worker-core": {
-          "const": "worker-core.config.json"
+          "const": "components/worker-core.config.json"
+        }
+      }
+    },
+    "bindings": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "role",
+          "owner",
+          "instanceId",
+          "profileId"
+        ],
+        "properties": {
+          "role": {
+            "enum": [
+              "nova",
+              "buster",
+              "prism"
+            ]
+          },
+          "owner": {
+            "enum": [
+              "prism-control",
+              "prism-studio",
+              "prism-worker",
+              "prism-execution",
+              "buster-engine",
+              "worker-core"
+            ]
+          },
+          "instanceId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128,
+            "pattern": "^\\S(?:.*\\S)?$"
+          },
+          "profileId": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+          }
         }
       }
     }

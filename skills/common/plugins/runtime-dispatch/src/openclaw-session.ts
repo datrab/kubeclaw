@@ -207,9 +207,11 @@ async function wait(ms: number, signal: AbortSignal): Promise<void> {
 
 export async function readSessionState(context: OpenClawGatewayContext, target: OpenClawTarget,
   token: string, identity: OpenClawSessionIdentity, exactIdentity = false): Promise<OpenClawSessionState> {
+  if (target.runtime === 'subagent' && target.collectorMode && (!Number.isSafeInteger(target.collectorWaitTimeoutSeconds)
+    || target.collectorWaitTimeoutSeconds < 0 || target.collectorWaitTimeoutSeconds > 2147483)) throw new Error('OPENCLAW_COLLECTOR_WAIT_INVALID');
   const status = target.runtime === 'subagent'
       ? target.collectorMode
-        ? await gateway(context, target, token, 'agents_wait', { ids: [identity.runId], timeoutSeconds: 15 })
+        ? await gateway(context, target, token, 'agents_wait', { ids: [identity.runId], timeoutSeconds: target.collectorWaitTimeoutSeconds })
         : await gateway(context, target, token, 'subagents', { action: 'list', recentMinutes: Math.max(10, Math.ceil(target.sessionTimeoutMs / 60_000) + 5) })
       : await gateway(context, target, token, 'session_status', { sessionKey: identity.sessionKey });
   return target.collectorMode ? collectorTerminal(status, identity)

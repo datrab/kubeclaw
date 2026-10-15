@@ -1,3 +1,6 @@
+import { TEST_CORE_POLICY as DELIVERY_TEST_CORE_POLICY } from '../../fixtures/core-runtime-policy.mjs';
+const TEST_OPERATOR_STORE_POLICY = DELIVERY_TEST_CORE_POLICY.operatorMessagingStore;
+import { TEST_CORE_POLICY, TEST_CORE_POLICY_SELECTION } from '../../fixtures/core-runtime-policy.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -43,7 +46,7 @@ test('nested effects bind actual invocation and attempt, replay once after recon
     fs.writeFileSync(path.join(plugin,'config.json'),JSON.stringify({type:'object',properties:{origin:{type:'string'},marker:{type:'string'}},required:['origin','marker'],additionalProperties:false}));
     const roots=[path.resolve('skills/common/plugins'),pluginRoot];
     const adapterId='test.dependency-consumer:consumer',stageId='test.dependency-consumer:stage';
-    const platform:PlatformConfig={schemaVersion:'pipeline-platform.v2', effectLockTtlMs: 300_000,shutdownTimeoutMs:1000,administrativeDecisionIssuers:[],storageRoot:path.join(root,'state'),installationRoots:roots,trustedBuiltinRoots:roots,
+    const platform:PlatformConfig={corePolicySelection: TEST_CORE_POLICY_SELECTION,schemaVersion:'pipeline-platform.v2', effectLockTtlMs: 300_000,shutdownTimeoutMs:1000,administrativeDecisionIssuers:[],storageRoot:path.join(root,'state'),installationRoots:roots,trustedBuiltinRoots:roots,
       externalTrust:{allowedSourceDigests:{},verifiedAttestations:{}},orchestratorIssuerId:'test:operator',activeAdapters:[],observers:{},
       providers:{'runtime.dispatch':adapterId,'network.http':'kubeclaw.network-http:http'},
       grants:{[stageId]:{'runtime.dispatch':{allowedAgents:['probe']}},[adapterId]:{'network.http':{allowedOrigins:[origin]}}},
@@ -52,7 +55,7 @@ test('nested effects bind actual invocation and attempt, replay once after recon
     const prepared=await prepareRuntime(platform,definition);
     const observed:EffectRequest[]=[];
     const create=()=>new core.AdapterRuntime({granted:prepared.granted,activated:prepared.activated,configs:new Map(Object.entries(platform.adapters)),shutdownTimeoutMs:1000,async emitDomainEvent(){},
-      effects:new core.EffectCoordinator(new core.FileEffectJournal(path.join(root,'effects.jsonl')),undefined,{requested(request){observed.push(request);},accepted(request){if(request.idempotencyKey===interruptKey)throw new Error('TEST_ACCEPTED_PREFIX');},completed(){}},new core.FileResourceLockManager(path.join(root,'locks')), 300_000)});
+      effects:new core.EffectCoordinator(new core.FileEffectJournal(path.join(root,'effects.jsonl'), TEST_CORE_POLICY),undefined,{requested(request){observed.push(request);},accepted(request){if(request.idempotencyKey===interruptKey)throw new Error('TEST_ACCEPTED_PREFIX');},completed(){}},new core.FileResourceLockManager(path.join(root,'locks'), TEST_CORE_POLICY), 300_000)});
     runtime=create();await runtime.start();
     const attempt={runId:'run:dependency',stageId:'one',attemptId:'attempt:one',attemptNumber:1};
     const invocation={operation:'dispatch',resource:{type:'runtime.agent',canonicalId:'probe'},payload:{}};
@@ -136,14 +139,14 @@ test('explicit dependency delivery identity survives attempts while original ope
       grants:new Map([['test.delivery-consumer:stage',new Map([['runtime.dispatch',{allowedAgents:['probe']} ]])],[id,new Map([['operator.request',{allowedTargets:['operators','uncertain','large']}]])],
         [operator,new Map([['network.http',{allowedOrigins:[origin]}],['secrets.read',{allowedNames:['webhook']} ]])]])});
     const activated=await core.activateRegistry(snapshot,new Set(granted.grants.keys()));
-    const configs=new Map<string,Record<string,unknown>>([[id,{}],[operator,{deliveryRoot:path.join(root,'delivery'),targets:{
+    const configs=new Map<string,Record<string,unknown>>([[id,{}],[operator,{ ...TEST_OPERATOR_STORE_POLICY,deliveryRoot:path.join(root,'delivery'),targets:{
       large:{endpoint:origin+'/large',tokenSecret:'webhook',format:'json',maxPayloadBytes:1048576},
       operators:{endpoint:origin+'/messages',tokenSecret:'webhook',format:'discord_webhook'},uncertain:{endpoint:origin+'/uncertain',tokenSecret:'webhook',format:'discord_webhook'}}}],
       ['kubeclaw.network-http:http',{allowedOrigins:[origin],allowedMethods:['POST'],allowedHeaders:['content-type','idempotency-key','x-kubeclaw-signature']}],
       ['kubeclaw.secret-resolver:secrets',{environment:{webhook:secretName}}]]);
     const observed:EffectRequest[]=[];
     const create=(interruptKey?:string,quota?:number)=>new core.AdapterRuntime({granted,activated,configs:quota===undefined?configs:new Map([...configs,[operator,{...configs.get(operator),deliveryRoot:path.join(root,'quota'),maximumDeliveryBytes:quota}]]),shutdownTimeoutMs:1000,async emitDomainEvent(){},
-      effects:new core.EffectCoordinator(new core.FileEffectJournal(path.join(root,'effects.jsonl')),undefined,{requested(request){observed.push(request);},accepted(request){if(request.idempotencyKey===interruptKey)throw new Error('TEST_ACCEPTED_BEFORE_RESERVE');},completed(){}},new core.FileResourceLockManager(path.join(root,'locks')), 300_000)});
+      effects:new core.EffectCoordinator(new core.FileEffectJournal(path.join(root,'effects.jsonl'), TEST_CORE_POLICY),undefined,{requested(request){observed.push(request);},accepted(request){if(request.idempotencyKey===interruptKey)throw new Error('TEST_ACCEPTED_BEFORE_RESERVE');},completed(){}},new core.FileResourceLockManager(path.join(root,'locks'), TEST_CORE_POLICY), 300_000)});
     runtime=create();await runtime.start();
     const invoke=(number:number,summary='Full URL and generated demo credentials',target='operators',runId='run:one')=>runtime!.invoke('runtime.dispatch',
       {runId,stageId:'delivery',attemptId:`attempt:${runId}:${number}`,attemptNumber:number},`parent:${runId}:${number}`,
@@ -162,7 +165,7 @@ test('explicit dependency delivery identity survives attempts while original ope
       const query={operation:'publish',resource:{type:'operator.target',canonicalId:'operators'},payload:{type:'demo.access',summary:mode==='changed-payload'?'changed':'Full URL and generated demo credentials'}};
       await runtime.shutdown();runtime=create(key);await runtime.start();
       await assert.rejects(runtime.invoke('operator.request',attempt,key,query,new AbortController().signal,'stable:operators'),/TEST_ACCEPTED_BEFORE_RESERVE/);
-      const journal=new core.FileEffectJournal(path.join(root,'effects.jsonl'));
+      const journal=new core.FileEffectJournal(path.join(root,'effects.jsonl'), TEST_CORE_POLICY);
       assert(await journal.request(key));assert.equal(await journal.receipt(key),undefined,'real coordinator left accepted prefix with no completion');
       await runtime.shutdown();runtime=create();await runtime.start();
       const recovered=runtime.invoke('operator.request',attempt,key,query,new AbortController().signal,'stable:operators');

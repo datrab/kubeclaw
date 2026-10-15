@@ -1,3 +1,4 @@
+import { TEST_CORE_POLICY } from '../../fixtures/core-runtime-policy.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -21,12 +22,12 @@ test('independent administrative repair projection binds the original authorized
     const final = await reopenBlockedPipelineV2(f.platform, f.definition, decision, value => value.actor);
     assert.equal(final.status, 'succeeded');
     const file = path.join(runRoot(f.platform.storageRoot, runId), 'events.jsonl');
-    const events = new FileJournal(file).records().map(record => record.entry);
+    const events = new FileJournal(file, TEST_CORE_POLICY.journalAppendLockTimeoutMs).records().map(record => record.entry);
     const resumedIndex = events.findIndex(event => event.type === 'run.resumed' && event.payload.administrativeDecision);
     const projectionIndex = events.findIndex(event => event.type === 'stage.waiting' && event.payload.administrativeDecision);
     assert(resumedIndex > 0); assert(projectionIndex > resumedIndex);
     await context.test('real original blocked run reopens and final disk replay equals live result', () => {
-      const states = recoverStageStates(f.definition, new FileJournal(file).records(), runId, 'nova');
+      const states = recoverStageStates(f.definition, new FileJournal(file, TEST_CORE_POLICY.journalAppendLockTimeoutMs).records(), runId, 'nova');
       for (const [id, state] of final.stages) assert.deepEqual(states.get(id), state);
     });
     const mutations = [
@@ -47,7 +48,7 @@ test('independent administrative repair projection binds the original authorized
     let serial = 0;
     for (const [name, mutate] of mutations) await context.test(name, () => {
       const copy = structuredClone(events); mutate(copy);
-      const target = path.join(root, `admin-negative-${serial++}.jsonl`); const journal = new FileJournal(target);
+      const target = path.join(root, `admin-negative-${serial++}.jsonl`); const journal = new FileJournal(target, TEST_CORE_POLICY.journalAppendLockTimeoutMs);
       for (const event of copy) journal.append(event);
       assert.throws(() => recoverStageStates(f.definition, journal.records(), runId, 'nova'), /^Error: REPAIR_/u);
     });

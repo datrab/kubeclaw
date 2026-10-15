@@ -3,7 +3,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
 import type { RemotePlanJobV1 } from '@kubeclaw/pipeline-test-gate-contract';
-import type { BusterPreparationSettings } from '../../../common/plugin-runtime/foundation/config/swarm.ts';
+import type { BusterPreparationSettings } from '@kubeclaw/plugin-foundation/config/swarm';
 import { assertPreparationSlot, type PreparationSlot } from './preparation-slots.ts';
 import {
   assertPreparedHeader, preparedPlanHeader, preparationDigest, type PreparedPlanJob,

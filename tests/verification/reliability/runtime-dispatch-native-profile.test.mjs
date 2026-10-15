@@ -1,3 +1,4 @@
+import { TEST_CORE_POLICY, TEST_CORE_POLICY_SELECTION } from '../../fixtures/core-runtime-policy.mjs';
 // Actual original run creation, registered adapters, HTTP and process death.
 // The 503 ACP receiver is deliberately NOT a Gateway; no session success claim.
 import test from 'node:test';
@@ -26,7 +27,7 @@ const definition={schemaVersion:'pipeline-definition.v2',id:'pipeline:profile',m
 function platform(root,origin,kind){
   const runtimeId=`kubeclaw.runtime-dispatch:${kind==='generic'?'runtime':'openclaw'}`;
   const roots=['common','nova'].map(role=>path.join(source,'skills',role,'plugins'));
-  return {schemaVersion:'pipeline-platform.v2',installationRoots:roots,trustedBuiltinRoots:roots,
+  return {corePolicySelection: TEST_CORE_POLICY_SELECTION,schemaVersion:'pipeline-platform.v2',installationRoots:roots,trustedBuiltinRoots:roots,
     externalTrust:{allowedSourceDigests:{},verifiedAttestations:{}},providers:{'runtime.dispatch':runtimeId,
       'network.http':'kubeclaw.network-http:http','secrets.read':'kubeclaw.secret-resolver:secrets',
       'git.repository.read':'kubeclaw.repository-adapter:repository','artifacts.read':'kubeclaw.artifact-store:artifact-store','artifacts.write':'kubeclaw.artifact-store:artifact-store'},
@@ -95,9 +96,9 @@ if(process.argv[2]==='--child'){
       changeRelation:'introduced',scopeRelation:'inside',evidenceStrength:'direct',rootCauseHint:'unconditional-throw'};
     const proposal={id:sdk.sha256Text(sdk.canonicalJson(finding)),jobId:jobs[0].id,jobDigest:jobs[0].digest,finding};
     const verificationJobs=verification.buildScalableVerificationJobs({proposals:[proposal],integrityIssues:[],incompleteJobs:[]},jobs,sdk.sha256Text('policy'));
-    const prepared=await prepareRuntime(p,definition),journal=new core.FileEffectJournal(path.join(root,'helper-effects.jsonl'));
+    const prepared=await prepareRuntime(p,definition),journal=new core.FileEffectJournal(path.join(root,'helper-effects.jsonl'), TEST_CORE_POLICY);
     const runtime=new core.AdapterRuntime({granted:prepared.granted,activated:prepared.activated,configs:new Map(Object.entries(p.adapters)),
-      effects:new core.EffectCoordinator(journal,undefined,undefined,new core.FileResourceLockManager(path.join(root,'locks')),lockTtlMs),shutdownTimeoutMs:ioTimeoutMs,
+      effects:new core.EffectCoordinator(journal,undefined,undefined,new core.FileResourceLockManager(path.join(root,'locks'), TEST_CORE_POLICY),lockTtlMs),shutdownTimeoutMs:ioTimeoutMs,
       async emitDomainEvent(){throw Error('UNEXPECTED_EVENT');}});
     await runtime.start();const checked=[];
     try{
@@ -129,7 +130,7 @@ if(process.argv[2]==='--child'){
     if(mode==='pipeline'&&result.status!=='blocked')assert.fail(JSON.stringify({result,
       events:fs.readFileSync(path.join(location,'events.jsonl'),'utf8').trim().split('\n').slice(-5).map(line=>JSON.parse(line))}));
     const snapshot=snapshots.readRunSnapshot(location);
-    const journal=new core.FileEffectJournal(path.join(location,'effects.jsonl'));
+    const journal=new core.FileEffectJournal(path.join(location,'effects.jsonl'), TEST_CORE_POLICY);
     const request=(await journal.recoveryEntries()).find(x=>x.request.capability==='runtime.dispatch')?.request;
     assert.ok(request,'actual original stage dispatched');
     assert.equal(Object.hasOwn(request,'runtimeDispatchProfile'),['v3','v4'].includes(version));
@@ -153,14 +154,14 @@ if(process.argv[2]==='--child'){
       }
     }]));
     const runtime=new core.AdapterRuntime({granted:prepared.granted,activated:prepared.activated,configs:new Map(Object.entries(p.adapters)),
-      effects:new core.EffectCoordinator(new core.FileEffectJournal(journalPath),undefined,audit,new core.FileResourceLockManager(path.join(root,'locks')),lockTtlMs),
+      effects:new core.EffectCoordinator(new core.FileEffectJournal(journalPath, TEST_CORE_POLICY),undefined,audit,new core.FileResourceLockManager(path.join(root,'locks'), TEST_CORE_POLICY),lockTtlMs),
       shutdownTimeoutMs:ioTimeoutMs,async emitDomainEvent(){throw Error('UNEXPECTED_EVENT');}});
     await runtime.start();let result,error;
     const payload=buildArchitectureRequest('agent',definition.stages[0].input,undefined);
     try{result=await runtime.invoke('runtime.dispatch',{runId,stageId:'architecture',attemptId:'attempt:profile',attemptNumber:1},key,
       {operation:'dispatch',resource:{type:'runtime.agent',canonicalId:'agent'},payload,...(profile?{runtimeDispatchProfile:profile}:{})},new AbortController().signal);}
     catch(e){error=e.message;}finally{await runtime.shutdown();}
-    const journal=new core.FileEffectJournal(journalPath),request=await journal.request(key),receipt=await journal.receipt(key);
+    const journal=new core.FileEffectJournal(journalPath, TEST_CORE_POLICY),request=await journal.request(key),receipt=await journal.receipt(key);
     assert.equal(Object.hasOwn(request,'runtimeDispatchProfile'),['v3','v4'].includes(version));
     process.stdout.write(JSON.stringify({result,error,request,receipt,snapshotVersion:snapshot.schemaVersion}));
   }

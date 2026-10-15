@@ -1,4 +1,4 @@
-import { readTestBundle, writeTestBundle } from '../../../../tests/fixtures/config/swarm-bundle.mjs';
+import { publishedControlConfig } from './published-config.mjs';
 import assert from 'node:assert/strict';
 import type { TestContext } from 'node:test';
 import { spawn } from 'node:child_process';
@@ -28,13 +28,22 @@ export async function studio(t: TestContext, control: string, controlTimeoutMs =
   const port = selectedPort ?? reserved;
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'prism-studio-http-'));
   fs.writeFileSync(path.join(root, 'index.html'), '<!doctype html><title>Actual static fixture</title>');
-  const authored = readTestBundle(process.env.SWARM_CONFIG ?? new URL('../../../../charts/kubeclaw/files/config/swarm.config.json', import.meta.url));
-  authored['prism-studio'].settings = {port, controlUrl: control, controlTimeoutMs};
-  const configFile = path.join(root, 'swarm.config.json');
-  writeTestBundle(configFile, authored);
-  const child = spawn(process.execPath, [fileURLToPath(new URL('../../server/studio.ts', import.meta.url))], {
-    env: { ...process.env, SWARM_CONFIG: configFile, STUDIO_ROOT: root,
-      PRISM_INGRESS_SECRET: ingressSecret }, stdio: ['ignore', 'pipe', 'pipe'],
+  const fixture = await publishedControlConfig(t, {}, undefined, { port, controlUrl: control, controlTimeoutMs });
+  const code = path.join(fixture.root, 'role');
+  const moduleUrl = (relative: string) => new URL(relative, `file://${code}/`).href;
+  // Isolated child executes the emitted request handler and authenticates real
+  // receipts. Fixed /run entrypoint + UID1000 remain the separate image proof.
+  const script = `
+    import { createServer } from 'node:http';
+    import { capturePipelineBootReceipts } from ${JSON.stringify(moduleUrl('skills/packages/plugin-foundation/config/pipeline-boot.mjs'))};
+    import { loadStudioConfig } from ${JSON.stringify(moduleUrl('skills/packages/prism-engine/server/studio-config.ts'))};
+    import { handleStudioRequest, studioRequestFailed } from ${JSON.stringify(moduleUrl('skills/packages/prism-engine/server/studio-request.ts'))};
+    const capture=capturePipelineBootReceipts(${JSON.stringify(path.join(fixture.root,'studio-transport'))},${JSON.stringify(path.join(fixture.root,'generation/system'))},'prism-studio',${JSON.stringify(code)},'/app/prism/skills');
+    const options=loadStudioConfig(capture);
+    createServer((request,response)=>{void handleStudioRequest(request,response,options).catch(error=>studioRequestFailed(error,response));}).listen(options.port,'127.0.0.1');
+  `;
+  const child = spawn(process.execPath, ['--input-type=module', '-e', script], {
+    env: { ...process.env, STUDIO_ROOT: root, PRISM_INGRESS_SECRET: ingressSecret }, stdio: ['ignore', 'pipe', 'pipe'],
   });
   let stderr = ''; child.stderr.on('data', chunk => { stderr += chunk.toString(); }); child.stdout.resume();
   t.after(async () => {
@@ -52,7 +61,9 @@ export async function studio(t: TestContext, control: string, controlTimeoutMs =
     assert.match(await (await fetch(url)).text(), /Actual static fixture/u);
   }
   return { url, healthy, errors: () => stderr, rewritePolicy: (settings: object) => {
-    authored['prism-studio'].settings = settings; writeTestBundle(configFile, authored);
+    const file=path.join(fixture.author,'components/prism-studio.config.json');
+    const value=JSON.parse(fs.readFileSync(file,'utf8'));value.profiles.standard.settings=settings;
+    fs.writeFileSync(file,JSON.stringify(value));
   } };
 }
 

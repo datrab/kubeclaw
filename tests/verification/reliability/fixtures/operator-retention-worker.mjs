@@ -1,3 +1,4 @@
+import { TEST_CORE_POLICY } from '../../../fixtures/core-runtime-policy.mjs';
 import { once } from 'node:events';
 import { FileDurableRecordStore } from '../../../../skills/common/plugin-runtime/foundation/observability/durable-records.ts';
 import { withRunMutationLock } from '../../../../skills/nova/core/execution/run-mutation.ts';
@@ -6,7 +7,7 @@ import { completeDelivery, failDelivery } from '../../../../skills/common/plugin
 const [mode, raw] = process.argv.slice(2), data = JSON.parse(raw);
 const hold = async () => { process.send('held'); await once(process, 'message'); };
 const store = root => new FileDurableRecordStore(root, { maximumRecords: 100, maximumBytes: 1048576, maximumRecordBytes: 2 * 1048576 + 65536 });
-if (mode === 'hold-run') await withRunMutationLock(data.scope.intent.runRoot, hold);
+if (mode === 'hold-run') await withRunMutationLock(data.scope.intent.runRoot, TEST_CORE_POLICY, hold);
 else if (mode === 'hold-wait') await store(data.scope.intent.waitRoot).withRecords('waits/all', hold);
 else if (mode === 'hold-delivery') await store(data.scope.intent.deliveryRoot).withRecords('notifications/operators', hold);
 else {

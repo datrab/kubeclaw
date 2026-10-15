@@ -12,17 +12,20 @@ import { preparationSlots } from './preparation-slots.ts';
 import path from 'node:path';
 import { readDurableState, withDurableStoreLock, writeDurableState } from '@kubeclaw/plugin-foundation/observability/durable-delivery';
 import type { PreparationGateBinding } from './preparation-gate.ts';
-import type { BusterPreparationSettings } from '../../../common/plugin-runtime/foundation/config/swarm.ts';
+import type { NativeAttemptBootAssociation } from '@kubeclaw/worker-core';
+import type { BusterPreparationSettings } from '@kubeclaw/plugin-foundation/config/swarm';
 import { type PreparedSourceReference } from './preparation-header.ts';
 
 /** Root-owned metadata. Failed or uncertain lifetimes keep their full reservation. */
 export class PreparationSourceLedger {
   readonly #file: string;
   readonly #settings: BusterPreparationSettings;
+  readonly #originalBoot: NativeAttemptBootAssociation | undefined;
 
-  constructor(root: string, settings: BusterPreparationSettings) {
+  constructor(root: string, settings: BusterPreparationSettings, originalBoot?: NativeAttemptBootAssociation) {
     this.#file = path.join(root, 'source-ledger', 'state.json');
     this.#settings = structuredClone(settings);
+    this.#originalBoot = originalBoot;
   }
 
   async reserve(admissionId: string, profile: WorkerProfileV3, now: Date): Promise<WorkerAttemptEnvelopeV3> {
@@ -38,6 +41,7 @@ export class PreparationSourceLedger {
       if (slot === undefined) throw new Error('BUSTER_PREPARATION_SLOT_CAPACITY');
       const envelope = preparationEnvelope(admissionId, profile, this.#settings, now, slot, { kind: 'stage' });
       const reservation = initialSourceReservation(admissionId, envelope, slot, gateReservation(this.#settings));
+      await this.#originalBoot?.bind(envelope);
       await this.#write({ ...state, reservations: [...state.reservations, reservation] });
       return structuredClone(envelope);
     });
@@ -68,6 +72,7 @@ export class PreparationSourceLedger {
         phase: 'historical-reserved',
         historicalDescriptor: structuredClone(descriptor),
       };
+      await this.#originalBoot?.bind(envelope);
       await this.#write({ ...state, reservations: [...state.reservations, reservation] });
       return structuredClone(envelope);
     });
@@ -157,6 +162,7 @@ export class PreparationSourceLedger {
         extractionGeneration: (existing?.extractionGeneration ?? 0) + 1,
         previousExtractionDigest: existing ? preparationDigest(existing.envelope) : null,
       };
+      await this.#originalBoot?.bind(envelope);
       await this.#write({ ...state, reservations: [...state.reservations, reservation] });
       return structuredClone(envelope);
     });
@@ -258,7 +264,7 @@ export class PreparationSourceLedger {
   /** The association is fsynced before any cleanup process can remove owned source. */
   async reserveCleanup(admissionId: string, association: PreparationCleanupAssociation): Promise<void> {
     association = structuredClone(association);
-    await this.#transition(admissionId, current => {
+    await this.#transition(admissionId, async current => {
       if (current.slotReleased || !['staging', 'reserved'].includes(current.phase) || !current.gate) {
         throw new Error('BUSTER_PREPARATION_CLEANUP_INELIGIBLE');
       }
@@ -267,6 +273,7 @@ export class PreparationSourceLedger {
         if (preparationDigest(existing) !== preparationDigest(association)) throw new Error('BUSTER_PREPARATION_CLEANUP_CONFLICT');
         return current;
       }
+      await this.#originalBoot?.bind(association.envelope);
       return { ...current, cleanup: [...current.cleanup, association] };
     });
   }
@@ -289,13 +296,13 @@ export class PreparationSourceLedger {
     return withDurableStoreLock(this.#file, async () => structuredClone((await this.#read()).reservations));
   }
 
-  async #transition(admissionId: string, update: (value: SourceReservation) => SourceReservation): Promise<void> {
+  async #transition(admissionId: string, update: (value: SourceReservation) => SourceReservation | Promise<SourceReservation>): Promise<void> {
     await withDurableStoreLock(this.#file, async () => {
       const state = await this.#read();
       const index = state.reservations.findIndex(item => item.admissionId === admissionId);
       if (index < 0) throw new Error('BUSTER_PREPARATION_RESERVATION_MISSING');
       const reservations = [...state.reservations];
-      reservations[index] = update(reservations[index]!);
+      reservations[index] = await update(reservations[index]!);
       await this.#write({ ...state, reservations });
     });
   }
@@ -303,6 +310,10 @@ export class PreparationSourceLedger {
   async #read(): Promise<SourceLedger> {
     const state = await readDurableState<SourceLedger>(this.#file, empty, this.#settings.maximumMetadataBytes);
     validateSourceLedger(state);
+    for (const record of state.reservations) {
+      await this.#originalBoot?.verify(record.envelope);
+      for (const cleanup of record.cleanup) await this.#originalBoot?.verify(cleanup.envelope);
+    }
     return state;
   }
 

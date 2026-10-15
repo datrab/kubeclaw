@@ -1,4 +1,5 @@
-import { readTestBundle, writeTestBundle } from '../../../tests/fixtures/config/swarm-bundle.mjs';
+import { fileURLToPath } from 'node:url';
+import { captureSwarmSettings, type PrismResourcePolicy } from '../../common/plugin-runtime/foundation/config/swarm.ts';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -9,41 +10,57 @@ import { loadWorkerConfig } from '../server/worker-config.ts';
 import { prismNativeAttempt } from '../engine/worker-envelope.ts';
 import { prismAttemptResourceLimits, requirePrismResourcePoolCapacity } from '../config/resource-policy.ts';
 import { validateWorkerResourceContractV3 } from '@kubeclaw/pipeline-worker-core-contract';
-const authored = readTestBundle(new URL('../../../charts/kubeclaw/files/config/swarm.config.json', import.meta.url));
+const configRoot = fileURLToPath(new URL('../../../config/', import.meta.url));
+const policyDefaults = JSON.parse(fs.readFileSync(path.join(configRoot, 'components/prism-execution.config.json'), 'utf8')).profiles.standard.settings.resourcePolicy;
 const credentials = { PRISM_SESSION_SECRET: 'test', PRISM_INGRESS_SECRET: 'test', PRISM_INGESTION_SECRET: 'test',
   PRISM_DISPATCH_SECRET: 'test', PRISM_WORKER_SECRET: 'test', DATABASE_URL: 'postgresql://not-opened' };
 const artifact = { artifactId: 'input:policy', type: 'prism-engine-input', mediaType: 'application/json',
   contentDigest: `sha256:${'a'.repeat(64)}`, sizeBytes: 2, storageUrl: 'https://control.example/input' };
 function fixture(t: { after(fn: () => void): void }, policy: unknown) {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'prism-policy-')); t.after(() => fs.rmSync(root, { recursive: true, force: true }));
-  const value = structuredClone(authored); value['prism-execution'].settings.resourcePolicy = policy;
-  const file = path.join(root, 'swarm.config.json'); writeTestBundle(file, value);
-  return { file, value, env: { ...credentials, SWARM_CONFIG: file } };
+  fs.cpSync(configRoot, root, { recursive: true });
+  const file = path.join(root, 'components/prism-execution.config.json');
+  const value = JSON.parse(fs.readFileSync(file, 'utf8'));
+  value.profiles.standard.settings.resourcePolicy = policy;
+  const write = () => fs.writeFileSync(file, JSON.stringify(value));
+  write();
+  const load = (callerId: 'prism-control' | 'prism-worker') => {
+    const entryFile = path.join(root, 'pipeline.config.json');
+    const entry = JSON.parse(fs.readFileSync(entryFile, 'utf8'));
+    const instanceId = `kubeclaw/prism/${callerId}`;
+    const captured = captureSwarmSettings(entryFile, { role: 'prism', callerId, serviceInstanceId: instanceId,
+      bindings: entry.bindings.filter((binding: { instanceId: string }) => binding.instanceId === instanceId)
+        .map(({ role: _role, ...binding }: { role: string; owner: string; instanceId: string; profileId: string }) => binding) });
+    // Actual role-selected consumer policy, not a boot receipt or native-host admission.
+    const resourcePolicy = captured.components['prism-execution']!.settings.resourcePolicy as unknown as PrismResourcePolicy;
+    return Object.freeze({ nativeResourcePolicy: resourcePolicy, native: Object.freeze({ resourcePolicy }) });
+  };
+  return { file, value, write, load, env: credentials };
 }
 for (const key of ['cpuTimeMs', 'memoryBytes', 'tasks']) for (const value of [undefined, null, '5', 0, -1, 1.5, Number.MAX_SAFE_INTEGER + 1]) {
   test(`CP01 both roles reject ${key}=${String(value)}`, t => {
-    const f = fixture(t, { ...authored['prism-execution'].settings.resourcePolicy, [key]: value });
-    for (const load of [loadControlServerConfig, loadWorkerConfig]) assert.throws(() => load(f.env), /SWARM_CONFIG_INVALID/);
+    const f = fixture(t, { ...policyDefaults, [key]: value });
+    for (const role of ['prism-control', 'prism-worker'] as const) assert.throws(() => f.load(role), /SWARM_CONFIG_INVALID/);
   });
 }
-for (const value of [undefined, null, { ...authored['prism-execution'].settings.resourcePolicy, processes: 2048 }]) {
+for (const value of [undefined, null, { ...policyDefaults, processes: 2048 }]) {
   test('CP01 missing or competing resource policy fails', t => {
     const f = fixture(t, value);
-    for (const load of [loadControlServerConfig, loadWorkerConfig]) assert.throws(() => load(f.env), /SWARM_CONFIG_INVALID/);
+    for (const role of ['prism-control', 'prism-worker'] as const) assert.throws(() => f.load(role), /SWARM_CONFIG_INVALID/);
   });
 }
 for (const key of ['PRISM_NATIVE_CPU_TIME_MS', 'PRISM_NATIVE_MEMORY_BYTES', 'PRISM_NATIVE_TASKS']) test(`CP02 rejects ${key} even empty`, t => {
-  const f = fixture(t, authored['prism-execution'].settings.resourcePolicy);
+  const f = fixture(t, policyDefaults);
   for (const value of ['', '60000']) for (const load of [loadControlServerConfig, loadWorkerConfig]) {
-    assert.throws(() => load({ ...f.env, [key]: value }), /SWARM_CONFIG_LEGACY_OVERRIDE/);
+    assert.throws(() => load(undefined as never, { ...f.env, [key]: value }), /SWARM_CONFIG_LEGACY_OVERRIDE/);
   }
 });
 for (const policy of [{ cpuTimeMs: 123, memoryBytes: 4096, tasks: 7 }, { cpuTimeMs: 456, memoryBytes: 8192, tasks: 11 }]) {
   test(`CP04 actual admission maps authored policy ${JSON.stringify(policy)}`, t => {
-    const f = fixture(t, policy), control = loadControlServerConfig(f.env), worker = loadWorkerConfig(f.env);
+    const f = fixture(t, policy), control = f.load('prism-control'), worker = f.load('prism-worker');
     assert.ok(Object.isFrozen(control.nativeResourcePolicy)); assert.ok(Object.isFrozen(worker.native.resourcePolicy));
-    f.value['prism-execution'].settings.resourcePolicy = { cpuTimeMs: 1, memoryBytes: 1, tasks: 1 }; writeTestBundle(f.file, f.value);
-    const attempt = prismNativeAttempt('render', artifact, 'policy', control.nativeResourcePolicy);
+    f.value.profiles.standard.settings.resourcePolicy = { cpuTimeMs: 1, memoryBytes: 1, tasks: 1 }; f.write();
+    const attempt = prismNativeAttempt('render', artifact, 'policy', control.nativeResourcePolicy, 600000, 300000, 10000, 1048576, 16777216, 134217728, 64);
     validateWorkerResourceContractV3('workerAttemptEnvelope', attempt);
     assert.deepEqual(prismAttemptResourceLimits(attempt, worker.native.resourcePolicy, false), policy);
     assert.equal(attempt.profile.resourceCapabilities.maximumTasks.unit, 'linux-tasks');
@@ -63,16 +80,16 @@ for (const policy of [{ cpuTimeMs: 123, memoryBytes: 4096, tasks: 7 }, { cpuTime
 }
 test('CP01 resource safe-integer ceiling is independent of transport timer ceiling', t => {
   const policy = { cpuTimeMs: Number.MAX_SAFE_INTEGER, memoryBytes: Number.MAX_SAFE_INTEGER, tasks: Number.MAX_SAFE_INTEGER };
-  const f = fixture(t, policy), control = loadControlServerConfig(f.env), worker = loadWorkerConfig(f.env);
-  const attempt = prismNativeAttempt('render', artifact, 'safe-ceiling', control.nativeResourcePolicy);
+  const f = fixture(t, policy), control = f.load('prism-control'), worker = f.load('prism-worker');
+  const attempt = prismNativeAttempt('render', artifact, 'safe-ceiling', control.nativeResourcePolicy, 600000, 300000, 10000, 1048576, 16777216, 134217728, 64);
   validateWorkerResourceContractV3('workerAttemptEnvelope', attempt);
   assert.deepEqual(prismAttemptResourceLimits(attempt, worker.native.resourcePolicy, false), policy);
 });
 test('CP02 a loaded producer never consults later legacy environment changes', t => {
-  const f = fixture(t, authored['prism-execution'].settings.resourcePolicy), config = loadControlServerConfig(f.env);
+  const f = fixture(t, policyDefaults), config = f.load('prism-control');
   const key = 'PRISM_NATIVE_CPU_TIME_MS', previous = process.env[key]; process.env[key] = 'invalid';
   try {
-    const attempt = prismNativeAttempt('render', artifact, 'environment-independent', config.nativeResourcePolicy);
+    const attempt = prismNativeAttempt('render', artifact, 'environment-independent', config.nativeResourcePolicy, 600000, 300000, 10000, 1048576, 16777216, 134217728, 64);
     assert.deepEqual(prismAttemptResourceLimits(attempt, config.nativeResourcePolicy, false), config.nativeResourcePolicy);
   } finally { if (previous === undefined) delete process.env[key]; else process.env[key] = previous; }
 });

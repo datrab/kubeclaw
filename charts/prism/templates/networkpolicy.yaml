@@ -51,7 +51,7 @@ spec:
     - to: [{ podSelector: { matchLabels: { app: prism-postgresql } } }]
       ports: [{ protocol: TCP, port: 5432 }]
     - to: [{ podSelector: { matchLabels: { app: prism-ingestion } } }]
-      ports: [{ protocol: TCP, port: 8080 }]
+      ports: [{ protocol: TCP, port: {{ (include "prism.swarmConfig" . | fromJson).operator.prism.ingestion.port | int }} }]
     - to: [{ podSelector: { matchLabels: { app: prism-control } } }]
       ports: [{ protocol: TCP, port: {{ ternary 8443 $controlPort .Values.workerTrust.spiffe.enabled }} }]
     - to:

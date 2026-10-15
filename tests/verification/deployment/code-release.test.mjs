@@ -1,3 +1,4 @@
+import {fixtureBusterImageDelivery} from '../../fixtures/buster-image-delivery.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -37,12 +38,11 @@ function code(commit) {
       sha256: 'a'.repeat(64), contractVersion: 'v2',
     }])) };
 }
-test('agent changes and manifest changes do not rebuild tools; embedded service code does', () => {
-  for (const file of ['skills/nova/core/execution/engine.ts', 'skills/buster/engine/judge.ts',
-    'skills/common/plugins/artifact-store/src/adapter.ts', 'my-values/nova-values.yaml', 'charts/kubeclaw/values.yaml']) {
+test('nonembedded agent changes avoid rebuilds; actual Buster role and proof inputs rebuild images', () => {
+  for (const file of ['skills/nova/project/compiler.ts', 'my-values/nova-values.yaml', 'charts/kubeclaw/values.yaml']) {
     assert.equal(isImageInput(file), false, file); assert.equal(isDeploymentInput(file), true, file);
   }
-  for (const file of ['docker/Dockerfile.nova', 'package-lock.json', 'skills/nova/package.json',
+  for (const file of ['skills/nova/core/execution/engine.ts', 'skills/buster/engine/judge.ts', 'skills/common/plugins/artifact-store/src/adapter.ts', 'docker/Dockerfile.nova', 'package-lock.json', 'skills/nova/package.json',
     'skills/prism/server/worker.ts', 'skills/worker/core/worker/native-worker-launcher.c', 'contracts/worker/v1.ts']) {
     assert.equal(isImageInput(file), true, file);
   }
@@ -57,9 +57,9 @@ test('code selection reuses images only across unchanged image inputs, including
   const commit = () => { git(['add', '.']); git(['-c', 'user.name=Test', '-c', 'user.email=test@example.invalid', 'commit', '-qm', 'selection']); return git(['rev-parse', 'HEAD']); };
   try {
     git(['init', '-q']); git(['config', 'core.autocrlf', 'false']);
-    write('docker/Dockerfile.nova', 'FROM pinned-base\n'); write('skills/nova/core/engine.ts', 'old');
+    write('docker/Dockerfile.nova', 'FROM pinned-base\n'); write('skills/nova/project/compiler.ts', 'old');
     const imageCommit = commit();
-    write('skills/nova/core/engine.ts', 'new'); write('charts/kubeclaw/values.yaml', 'replicas: 1\n');
+    write('skills/nova/project/compiler.ts', 'new'); write('charts/kubeclaw/values.yaml', 'replicas: 1\n');
     const codeCommit = commit();
     const receipt = code(codeCommit); write('releases/runtime-code.json', JSON.stringify(receipt));
     assert.deepEqual(selectedCode(root, { commit: imageCommit }), receipt);
@@ -140,12 +140,14 @@ test('real materialization and Helm render enable pinned bundles for all three a
       fs.mkdirSync(path.dirname(path.join(root, schema)), { recursive: true });
       fs.copyFileSync(path.join(source, schema), path.join(root, schema));
     }
+    for (const name of ['config','packaging/runtime']) fs.cpSync(path.join(source,name),path.join(root,name),{recursive:true});
+    for (const name of ['scripts/build-buster-image-bundle.mjs','scripts/build-buster-proof-harness.mjs','scripts/generate-buster-chart-config.mjs','scripts/updates/buster-image-delivery.mjs','scripts/updates/write-image-receipt.mjs','scripts/updates/pipeline-generation.mjs','scripts/build-runtime-role-bundle.mjs','scripts/build-prism-image-bundle.mjs','scripts/generate-prism-chart-config.mjs','scripts/pipeline-publish.c']) { fs.mkdirSync(path.dirname(path.join(root,name)),{recursive:true});fs.copyFileSync(path.join(source,name),path.join(root,name)); }
     const busterFile = path.join(root, 'my-values/buster-values.yaml');
     const buster = yaml.load(fs.readFileSync(busterFile, 'utf8'));
     const policyFile = path.join(root, 'my-values/infra/native-worker-pools.yaml');
     const policy = yaml.load(fs.readFileSync(policyFile, 'utf8'));
     policy.nodeName = 'native-render-test';
-    policy.pools.buster.namespace = 'default';
+    policy.pools.buster.namespace = 'kubeclaw';
     fs.writeFileSync(policyFile, yaml.dump(policy));
     buster.busterNative = { ...buster.busterNative, nodeName: policy.nodeName,
       namespace: policy.pools.buster.namespace, policyDigest: nativePoolPolicy(policy, 'buster').policyDigest };
@@ -157,6 +159,7 @@ test('real materialization and Helm render enable pinned bundles for all three a
     const names = ['nova', 'prism-agent', 'buster-gateway', 'buster-runtime', 'namespace-controller', 'archviewer', 'prism-control', 'prism-studio', 'prism-worker', 'prism-ingestion'];
     const receipt = { schemaVersion: 1, commit: imageCommit, sourceRunId: 100, sourceRunAttempt: 1,
       images: Object.fromEntries(names.map(name => [name, `ghcr.io/datrab/kubeclaw-${name}@sha256:${'d'.repeat(64)}`])) };
+    receipt.imageDeliveries={'buster-runtime':fixtureBusterImageDelivery(imageCommit,path.join(root,'config'))};
     fs.writeFileSync(path.join(root, 'releases/runtime-images.json'), JSON.stringify(receipt));
     fs.writeFileSync(path.join(root, 'releases/runtime-code.json'), JSON.stringify(code(codeCommit)));
     execFileSync(process.execPath, [path.join(source, 'scripts/updates/materialize-release.mjs'), '--family=runtime'], { cwd: root });
@@ -167,7 +170,7 @@ test('real materialization and Helm render enable pinned bundles for all three a
       const values = yaml.load(fs.readFileSync(valuesFile, 'utf8'));
       assert.equal(values.codeBundle.enabled, true); assert.equal(values.codeBundle.expectedCommit, codeCommit);
       assert.equal(values.image.digest, `sha256:${'d'.repeat(64)}`);
-      const rendered = execFileSync('helm', ['template', `agent-${role}`, path.join(root, 'charts/kubeclaw'), '--namespace', 'default', '-f', valuesFile], { encoding: 'utf8', maxBuffer: 16 * 1024 * 1024 });
+      const rendered = execFileSync('helm', ['template', role==='prism-agent'?'agent-prism':`agent-${role}`, path.join(root, 'charts/kubeclaw'), '--namespace', 'kubeclaw', '-f', valuesFile], { encoding: 'utf8', maxBuffer: 16 * 1024 * 1024 });
       validateRenderedRelease(rendered, rendered, selected, true);
       assert.match(rendered, /sha256sum -c/);
     }

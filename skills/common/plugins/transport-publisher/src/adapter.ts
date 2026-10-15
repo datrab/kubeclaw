@@ -39,8 +39,8 @@ function positiveInteger(value: unknown, fallback: number): number {
   return Number(resolved);
 }
 
-function storeLimit(value: unknown, fallback: number, field: string): number {
-  const resolved = value ?? fallback;
+function storeLimit(value: unknown, field: string): number {
+  const resolved = value;
   if (!Number.isSafeInteger(resolved) || Number(resolved) < 1) {
     throw new Error(`TRANSPORT_CONFIG_INVALID:${field}`);
   }
@@ -89,8 +89,8 @@ function readConfig(config: Readonly<Record<string, unknown>>): {
   if (typeof config.deliveryRoot !== 'string' || config.deliveryRoot.length === 0) {
     throw new Error('TRANSPORT_CONFIG_INVALID:deliveryRoot');
   }
-  const maximumDeliveryRecords = storeLimit(config.maximumDeliveryRecords, 100_000, 'maximumDeliveryRecords');
-  const maximumDeliveryBytes = storeLimit(config.maximumDeliveryBytes, 256 * 1024 * 1024, 'maximumDeliveryBytes');
+  const maximumDeliveryRecords = storeLimit(config.maximumDeliveryRecords, 'maximumDeliveryRecords');
+  const maximumDeliveryBytes = storeLimit(config.maximumDeliveryBytes, 'maximumDeliveryBytes');
   return { targets, deliveryRoot: config.deliveryRoot, maximumDeliveryRecords, maximumDeliveryBytes };
 }
 

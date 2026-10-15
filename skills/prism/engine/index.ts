@@ -1,3 +1,5 @@
+import { readPrismEnginePolicy } from '../config/engine-policy.ts';
+import type { PrismEngineSettings } from '@kubeclaw/plugin-foundation/config/swarm';
 import { createHash } from "node:crypto";
 import type { PrismDocument } from "@kubeclaw/prism-contracts-v1";
 import { validatePrism } from "@kubeclaw/prism-contracts-v1";
@@ -5,7 +7,6 @@ import { applyOperation, type PrismOperation } from "../domain/index.ts";
 import { evaluate } from "../evaluation/index.ts";
 import {
   EngineExecutionCache,
-  type EngineCacheLimits,
 } from "./execution-cache.ts";
 import { renderOperation } from "./render-operation.ts";
 
@@ -69,9 +70,11 @@ function validateOperationInput(request: EngineRequest): void {
 export class PrismEngine {
   private readonly provider: DesignProvider;
   private readonly executions: EngineExecutionCache<EngineResult>;
-  constructor(provider: DesignProvider, cacheLimits?: EngineCacheLimits) {
+  private readonly policy: PrismEngineSettings;
+  constructor(provider: DesignProvider, policy: PrismEngineSettings) {
+    this.policy = readPrismEnginePolicy(policy);
     this.provider = provider;
-    this.executions = new EngineExecutionCache(cacheLimits);
+    this.executions = new EngineExecutionCache(this.policy.cache);
   }
   cacheUsage() {
     return this.executions.usage();
@@ -104,7 +107,7 @@ export class PrismEngine {
     signal?: AbortSignal,
   ): Promise<EngineResult> {
     const text = String(input.text ?? "").trim();
-    if (!text || text.length > 200_000)
+    if (!text || text.length > this.policy.maximumIngestTextCharacters)
       throw new Error("ingest text length is invalid");
     const embedded = await this.provider.embed(text, signal);
     if (
@@ -151,7 +154,7 @@ export class PrismEngine {
         },
       };
     } else if (request.operation === "render") {
-      result = await renderOperation(document, request.input, signal);
+      result = await renderOperation(document, request.input, this.policy.maximumAssetSourceCharacters, signal);
     } else if (request.operation === "evaluate") {
       const report = evaluate(document);
       result = {

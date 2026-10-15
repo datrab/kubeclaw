@@ -1,3 +1,8 @@
+import { TEST_CORE_POLICY as DELIVERY_TEST_CORE_POLICY } from '../../fixtures/core-runtime-policy.mjs';
+const TEST_OPERATOR_STORE_POLICY = DELIVERY_TEST_CORE_POLICY.operatorMessagingStore;
+import { TEST_CORE_POLICY as ARTIFACT_TEST_CORE_POLICY } from '../../fixtures/core-runtime-policy.mjs';
+const TEST_ARTIFACT_STORE_POLICY = ARTIFACT_TEST_CORE_POLICY.artifactStore;
+import { TEST_CORE_POLICY } from '../../fixtures/core-runtime-policy.mjs';
 import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
 import fs from 'node:fs';
@@ -45,17 +50,17 @@ async function scenario(mode: 'success' | 'lost' | 'invalid'): Promise<void> {
     ])]]) });
   const activated = await core.activateRegistry(granted.snapshot, new Set(granted.grants.keys()));
   const configs = new Map<string, Record<string, unknown>>([
-    ['kubeclaw.artifact-store:artifact-store', { artifactRoot: path.join(root, 'artifacts') }],
+    ['kubeclaw.artifact-store:artifact-store', { ...TEST_ARTIFACT_STORE_POLICY, artifactRoot: path.join(root, 'artifacts') }],
     ['kubeclaw.remote-test-gate:evidence', { stateRoot: root, manifestStageId: 'summary', gateStageId: 'final-test' }],
     ['kubeclaw.demo-handoff:handoff', { candidateStageId: 'candidate', deliveryStageId: 'demo-handoff', readyStageId: 'demo-ready', manifestStageId: 'summary', operatorTarget: 'operators', endpoint: 'https://127.0.0.1/v1/demo-ready', tokenPath: path.join(root, 'unused-token'), caPath: path.join(root, 'unused-ca'), stateRoot: path.join(root, 'intents'), timeoutMs: 1000 }],
-    [operatorId, { deliveryRoot: path.join(root, 'sender'), targets: { operators: {
+    [operatorId, { ...TEST_OPERATOR_STORE_POLICY, deliveryRoot: path.join(root, 'sender'), targets: { operators: {
       endpointOrigin: origin, endpointSecret: 'discord.webhook', format: 'discord_webhook',
     } } }],
     ['kubeclaw.network-http:http', { allowedOrigins: [origin], allowedMethods: ['POST'], allowedHeaders: ['content-type', 'idempotency-key', 'x-kubeclaw-signature'] }],
     ['kubeclaw.secret-resolver:secrets', { environment: { 'discord.webhook': environment } }],
   ]);
   const create = () => new core.AdapterRuntime({ granted, activated, configs,
-    effects: new core.EffectCoordinator(new core.FileEffectJournal(path.join(root, 'effects.jsonl')), undefined, undefined, new core.FileResourceLockManager(path.join(root, 'locks')), 300_000),
+    effects: new core.EffectCoordinator(new core.FileEffectJournal(path.join(root, 'effects.jsonl'), TEST_CORE_POLICY), undefined, undefined, new core.FileResourceLockManager(path.join(root, 'locks'), TEST_CORE_POLICY), 300_000),
     shutdownTimeoutMs: 1000, async emitDomainEvent() {} });
   let runtime = create();
   const payload = { type: 'demo.credentials', summary: 'Demo username: preview\nDemo password: pipeline-generated-test-value' };
@@ -85,7 +90,7 @@ async function scenario(mode: 'success' | 'lost' | 'invalid'): Promise<void> {
         resource: { type: 'operator.target', canonicalId: 'operators' },
         payload: { deliveryId: 'delivery:demo:stable', stageId: value.stageId, payload: value.message },
       }));
-      const journal = new core.FileEffectJournal(path.join(root, 'effects.jsonl'));
+      const journal = new core.FileEffectJournal(path.join(root, 'effects.jsonl'), TEST_CORE_POLICY);
       for (const invocation of lookups) {
         const request = { ...invocation, schemaVersion: 'effect-request.v2' as const,
           effectId: stableEffectId(invocation), requestedAt: new Date().toISOString() };
@@ -98,7 +103,7 @@ async function scenario(mode: 'success' | 'lost' | 'invalid'): Promise<void> {
         if (index === 0) assert.deepEqual(await recovered, receipt);
         else await assert.rejects(recovered, /OPERATOR_RECEIPT_REQUEST_UNBOUND/);
       }
-      assert.equal((await new core.FileEffectJournal(path.join(root, 'effects.jsonl')).receipt('lookup:recover'))?.status, 'completed');
+      assert.equal((await new core.FileEffectJournal(path.join(root, 'effects.jsonl'), TEST_CORE_POLICY).receipt('lookup:recover'))?.status, 'completed');
       await assert.rejects(publish(3, { ...payload, summary: 'changed credentials' }));
     } else {
       await assert.rejects(publish(1), mode === 'invalid' ? /OPERATOR_DISCORD_RECEIPT_INVALID/ : undefined);

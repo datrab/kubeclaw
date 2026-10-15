@@ -1,5 +1,5 @@
 import { ProviderProcessSession, assertCleanupDisposition } from './provider-process-session.ts';
-import { validateBusterProviderRuntimeSettings, type BusterProviderRuntimeSettings } from '../../../common/plugin-runtime/foundation/config/buster-execution.ts';
+import { validateBusterProviderRuntimeSettings, type BusterProviderRuntimeSettings } from '@kubeclaw/plugin-foundation/config/buster-execution';
 import { createHash } from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';

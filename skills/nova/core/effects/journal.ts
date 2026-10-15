@@ -1,3 +1,4 @@
+import type { CoreRuntimePolicy } from '@kubeclaw/plugin-foundation/config/core-runtime-policy';
 import type {
   EffectJournal,
   EffectReceipt,
@@ -10,7 +11,7 @@ import { FileJournal } from '../state/journal.ts';
 import { snapshotJson } from '../state/json-value.ts';
 import {DependencyRequestIndex, type DependencyQuery} from './dependency-journal.ts';
 
-const INLINE_RESULT_LIMIT_BYTES = 64 * 1024;
+
 
 interface EffectResultReference {
   readonly schemaVersion: 'effect-result-reference.v1';
@@ -82,6 +83,7 @@ export class MemoryEffectJournal implements EffectJournal {
 }
 
 export class FileEffectJournal implements EffectJournal {
+  readonly #inlineResultLimitBytes: number;
   readonly #dependencies = new DependencyRequestIndex();
   readonly #journal: FileJournal<EffectJournalEntry>;
   readonly #resultRoot: string;
@@ -90,8 +92,9 @@ export class FileEffectJournal implements EffectJournal {
   readonly #accepted = new Set<string>();
   #replayedRecords = 0;
 
-  constructor(file: string) {
-    this.#journal = new FileJournal(file);
+  constructor(file: string, policy: CoreRuntimePolicy) {
+    this.#inlineResultLimitBytes = policy.effectJournalInlineResultBytes;
+    this.#journal = new FileJournal(file, policy.journalAppendLockTimeoutMs);
     this.#resultRoot = path.join(path.dirname(path.resolve(file)), 'effect-results', 'sha256');
     this.#replay(this.#journal.records());
   }
@@ -146,7 +149,7 @@ export class FileEffectJournal implements EffectJournal {
   async completed(receipt: EffectReceipt): Promise<void> {
     receipt = snapshotJson(receipt);
     const serialized = receipt.result === undefined ? undefined : Buffer.from(JSON.stringify(receipt.result));
-    const reference = serialized && serialized.length > INLINE_RESULT_LIMIT_BYTES
+    const reference = serialized && serialized.length > this.#inlineResultLimitBytes
       ? this.#persistResult(serialized) : undefined;
     this.#journal.transact((records, append) => {
       this.#replay(records);

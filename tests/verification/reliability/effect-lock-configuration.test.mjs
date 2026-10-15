@@ -1,3 +1,4 @@
+import { TEST_CORE_POLICY } from '../../fixtures/core-runtime-policy.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -16,7 +17,7 @@ for (const ttl of [60_000, 120_000]) {
     fs.writeFileSync(file, JSON.stringify({ ...f.platform, effectLockTtlMs: ttl }));
     const platform = loadPlatformConfig(file), prepared = await prepareRuntime(platform, f.definition);
     const run = path.join(f.root, 'ttl-reader');
-    const runtime = createAdapterRuntime(platform, run, prepared, new FileJournal(path.join(run, 'events.jsonl')));
+    const runtime = createAdapterRuntime(platform, run, prepared, new FileJournal(path.join(run, 'events.jsonl'), TEST_CORE_POLICY.journalAppendLockTimeoutMs));
     const acquire = FileResourceLockManager.prototype.acquire, observed = [];
     FileResourceLockManager.prototype.acquire = function (resource, owner, value, ...rest) {
       observed.push(value);
@@ -48,7 +49,7 @@ test('missing and invalid TTL reject at platform, runtime and direct coordinator
   const missing = { ...f.platform }; delete missing.effectLockTtlMs;
   const run = path.join(f.root, 'missing-runtime');
   assert.throws(() => createAdapterRuntime(missing, run, prepared,
-    new FileJournal(path.join(run, 'events.jsonl'))), /EFFECT_LOCK_TTL_INVALID/);
+    new FileJournal(path.join(run, 'events.jsonl'), TEST_CORE_POLICY.journalAppendLockTimeoutMs)), /EFFECT_LOCK_TTL_INVALID/);
   const untouched = new Proxy({}, { get() { throw new Error('UNEXPECTED_JOURNAL_OR_LOCK_ACCESS'); } });
   assert.throws(() => new EffectCoordinator(untouched, undefined, undefined, untouched), /EFFECT_LOCK_TTL_INVALID/);
   for (const ttl of [undefined, null, 0, -1, 1.5, NaN, Infinity, Number.MAX_SAFE_INTEGER + 1]) {

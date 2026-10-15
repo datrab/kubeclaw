@@ -1958,7 +1958,7 @@ spec:
       containers:
         - name: runner
           image: ${control_image}
-          command: ["node", "/app/prism/tests/verification/live/prism-nova-production-e2e.mjs"]
+          command: ["node", "/opt/kubeclaw-prism-live/prism-nova-production-e2e.mjs"]
           env:
             - { name: PRISM_CONTROL_URL, value: "http://127.0.0.1:18443" }
             - { name: PRISM_AGENT_URL, value: "http://127.0.0.1:18444" }

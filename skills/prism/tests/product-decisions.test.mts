@@ -1,3 +1,5 @@
+import { nativeBrowserPolicy } from './native/resource-policy.mts';
+import { nativeControlSettings } from './native/resource-policy.mts';
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { createServer } from 'node:http';
@@ -17,7 +19,7 @@ const config: ProductConfig = {issuer: 'test-product-authority', operators: new 
   origin: 'https://studio.example.test', privateKey: keys.privateKey, controller: new URL('https://127.0.0.1:1'),
   caFile: '/definitely-absent-product-ca', tokenFile: '/definitely-absent-product-token'};
 const secret = 'local-session-test-secret';
-const token = exchangeTailscaleIdentity({'x-prism-ingress-secret': 'local-ingress-secret', 'tailscale-user-login': 'operator@example.test'}, 'local-ingress-secret', secret);
+const token = exchangeTailscaleIdentity({'x-prism-ingress-secret': 'local-ingress-secret', 'tailscale-user-login': 'operator@example.test'}, 'local-ingress-secret', secret, nativeControlSettings.sessionLifetimeSeconds);
 const headers = {cookie: `prism_session=${token}; prism_csrf=csrf`, origin: config.origin, 'x-prism-csrf': 'csrf'};
 const intent = parseProductIntent({decisionId: '00000000-0000-4000-8000-000000000001', action: 'extend', reason: 'Review needs another hour', extensionSeconds: 3600,
   subject: {leaseName: 'demo-test', leaseUID: 'lease-uid', sourceRevision: 'abc', candidateDigest: `sha256:${'a'.repeat(64)}`, resultDigest: `sha256:${'b'.repeat(64)}`, readyDigest: `sha256:${'c'.repeat(64)}`, generation: 3, expectedExpiry: '2026-09-09T10:20:30.123456789Z', expectedRevision: '12345', url: 'https://demo.example.test', runId: 'test-run'}});
@@ -35,7 +37,7 @@ test('real session issuer, explicit operator policy, origin and CSRF bind the si
   assert.throws(() => productActor(headers, config, secret, true, actor.expiresAt));
   assert.equal(await loadProductConfig({}), undefined);
   await assert.rejects(loadProductConfig({PRISM_PRODUCT_DECISIONS_ENABLED: 'true'}));
-  const signed = signProductIntent(intent, actor, config);
+  const signed = signProductIntent(intent, actor, config, nativeControlSettings.productDecisionLifetimeMs);
   const bytes = Buffer.from(signed.envelope.payload, 'base64');
   assert.equal(verify(null, Buffer.concat([Buffer.from(PRODUCT_DOMAIN), bytes]), keys.publicKey, Buffer.from(signed.envelope.signature, 'base64')), true);
   assert.equal(verify(null, bytes, keys.publicKey, Buffer.from(signed.envelope.signature, 'base64')), false);
@@ -48,10 +50,11 @@ test('real session issuer, explicit operator policy, origin and CSRF bind the si
 test('real HTTP authorization persists signed intent before failed transport and recovers identical bytes after durable database reopen', async () => {
   const directory = await mkdtemp(join(tmpdir(), 'prism-product-'));
   let db = await database(directory);
-  const server = createServer((request, response) => productAuthorityHandler(async (_request, nextResponse) => {nextResponse.writeHead(404); nextResponse.end();}, {db, config, sessionSecret: secret})(request, response));
+  let maximumProductInputBytes = nativeControlSettings.maximumProductInputBytes;
+  const server = createServer((request, response) => productAuthorityHandler(async (_request, nextResponse) => {nextResponse.writeHead(404); nextResponse.end();}, {db, config, sessionSecret: secret, productDecisionLifetimeMs: nativeControlSettings.productDecisionLifetimeMs, productDecisionHistoryLimit: nativeControlSettings.productDecisionHistoryLimit, maximumProductInputBytes, productControllerTimeoutMs: nativeControlSettings.productControllerTimeoutMs, maximumProductControllerResponseBytes: nativeControlSettings.maximumProductControllerResponseBytes, maximumProductControllerTokenCharacters: nativeControlSettings.maximumProductControllerTokenCharacters})(request, response));
   server.listen(0, '127.0.0.1'); await once(server, 'listening');
   const address = server.address(); assert(address && typeof address !== 'string');
-  const studio = createServer((request, response) => { void handleStudioRequest(request, response, {root: directory, control: new URL(`http://127.0.0.1:${address.port}`), ingressSecret: 'local-ingress-secret', controlTimeoutMs: 10_000}); });
+  const studio = createServer((request, response) => { void handleStudioRequest(request, response, {browserPolicy: nativeBrowserPolicy, root: directory, control: new URL(`http://127.0.0.1:${address.port}`), ingressSecret: 'local-ingress-secret', maximumRequestBodyBytes: 2_000_000, controlTimeoutMs: 10_000}); });
   studio.listen(0, '127.0.0.1'); await once(studio, 'listening');
   const studioAddress = studio.address(); assert(studioAddress && typeof studioAddress !== 'string');
   const post = (path: string, value: unknown, extra = {}) => fetch(`http://127.0.0.1:${studioAddress.port}${path}`, {method: 'POST', headers: {...headers, 'content-type': 'application/json', ...extra}, body: JSON.stringify(value)});
@@ -59,6 +62,10 @@ test('real HTTP authorization persists signed intent before failed transport and
     assert.equal((await post('/v1/session', {}, {origin: 'https://attacker.test'})).status, 403);
     const rejected = await post('/v1/product-decisions', intent, {origin: 'https://attacker.test'});
     assert.equal(rejected.status, 403); assert.equal(await storedProductDecision(db, intent.decisionId), undefined);
+    maximumProductInputBytes = Buffer.byteLength(JSON.stringify(intent)) - 1;
+    assert.equal((await post('/v1/product-decisions', intent)).status, 400);
+    assert.equal(await storedProductDecision(db, intent.decisionId), undefined);
+    maximumProductInputBytes += 1;
     const pending = await post('/v1/product-decisions', intent); assert.equal(pending.status, 202); assert.equal((await pending.json()).state, 'pending');
     const before = await storedProductDecision(db, intent.decisionId); assert(before); assert.equal(before.receipt, null);
     await db.close(); db = new PGlite(directory);
@@ -75,7 +82,7 @@ test('real HTTP authorization persists signed intent before failed transport and
 test('SQL receipt replay compares nested signature bytes and preserves append-only history', async () => {
   const db = await database();
   try {
-    const stored = await recordProductIntent(db, intent, productActor(headers, config, secret, true), config);
+    const stored = await recordProductIntent(db, intent, productActor(headers, config, secret, true), config, nativeControlSettings.productDecisionLifetimeMs);
     const receipt = {schemaVersion: 'sql-receipt-test', envelope: stored.envelope};
     await recordProductReceipt(db, intent.decisionId, receipt);
     await recordProductReceipt(db, intent.decisionId, structuredClone(receipt));
@@ -86,7 +93,7 @@ test('SQL receipt replay compares nested signature bytes and preserves append-on
 test('receipt contract preserves Go nanosecond expiry and rejects changed nested envelope', async () => {
   const db = await database();
   try {
-    const stored = await recordProductIntent(db, intent, productActor(headers, config, secret, true), config);
+    const stored = await recordProductIntent(db, intent, productActor(headers, config, secret, true), config, nativeControlSettings.productDecisionLifetimeMs);
     const receipt = {schemaVersion: 'demo-product-decision-receipt.v1', decisionId: intent.decisionId,
       payloadDigest: stored.payload_digest, action: 'extend', leaseName: intent.subject.leaseName,
       leaseUID: intent.subject.leaseUID, readyDigest: intent.subject.readyDigest, generation: intent.subject.generation,
@@ -96,4 +103,17 @@ test('receipt contract preserves Go nanosecond expiry and rejects changed nested
     assert.throws(() => receiptFor(stored, {...receipt, expiresAt: '2026-09-09T11:20:30.123Z'}));
     assert.throws(() => receiptFor(stored, {...receipt, envelope: {...receipt.envelope, signature: 'changed'}}));
   } finally {await db.close();}
+});
+
+
+test('selected product decision lifetime bounds issuance while session expiry and durable identity remain authoritative', () => {
+ const now=1800000000123, actor={user:'operator@example.test',expiresAt:now+900000};
+ for(const lifetime of [1500,300000]) {
+  const signed=signProductIntent(intent,actor,config,lifetime,now);
+  assert.equal(Date.parse(signed.payload.expiresAt),Math.floor((now+lifetime)/1000)*1000);
+ }
+ const capped=signProductIntent(intent,{...actor,expiresAt:now+2200},config,300000,now);
+ assert.equal(Date.parse(capped.payload.expiresAt),Math.floor((now+2200)/1000)*1000);
+ assert.throws(()=>signProductIntent(intent,actor,config,1,now),/session expires/);
+ for(const value of [undefined,0,-1,1.5,2147483648]) assert.throws(()=>signProductIntent(intent,actor,config,value as number,now),/valid product decision lifetime/);
 });

@@ -1,3 +1,4 @@
+import { nativeControlSettings } from './native/resource-policy.mts';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {randomUUID} from 'node:crypto';
@@ -14,13 +15,13 @@ import {handleInternalArtifact} from '../server/internal-artifacts.ts';
 
 async function boundary(){
  const root=await mkdtemp(join(tmpdir(),'prism-agent-process-'));const artifacts=new ContentAddressedArtifactStore(root);
- const server=createServer((req,res)=>{void handleInternalArtifact(req,res,new URL(req.url!,'http://localhost'),{artifacts,spiffeEnabled:false,workerSecret:'local-process-test',trustedWorkerSpiffeId:'',trustedControlSpiffeId:''}).catch(error=>{res.writeHead(500);res.end(String(error));});});
+ const server=createServer((req,res)=>{void handleInternalArtifact(req,res,new URL(req.url!,'http://localhost'),{maximumInternalEvidenceBytes: nativeControlSettings.maximumInternalEvidenceBytes, artifacts,spiffeEnabled:false,workerSecret:'local-process-test',trustedWorkerSpiffeId:'',trustedControlSpiffeId:''}).catch(error=>{res.writeHead(500);res.end(String(error));});});
  await new Promise<void>(resolve=>server.listen(0,'127.0.0.1',resolve));const port=(server.address() as {port:number}).port;
- const client=new WorkerArtifactClient(new URL(`http://127.0.0.1:${port}`),'local-process-test',false);
+ const client=new WorkerArtifactClient(new URL(`http://127.0.0.1:${port}`),'local-process-test',false,nativeControlSettings.maximumArtifactAcknowledgmentBytes);
  const execute=async(executable:string,args:string[],timeoutMs=5000,logBytes=4096)=>{
-  const envelope=await agentAttempt({id:randomUUID(),fence:randomUUID(),expires_at:new Date(Date.now()+60000),request_digest:sha256Digest({input:true}),request:{input:true}},'real-process-test');
+  const envelope=await agentAttempt({id:randomUUID(),fence:randomUUID(),expires_at:new Date(Date.now()+60000),request_digest:sha256Digest({input:true}),request:{input:true}},'real-process-test',nativeControlSettings);
   envelope.limits={...envelope.limits,timeoutMs,cleanupTimeoutMs:3000,logBytes};envelope.attemptSpecDigest=workerAttemptSpecDigest(envelope);
-  return new WorkerAttemptExecutor({envelope,operation:new AgentProcess(executable,args),storeFullLog:(id,text,{signal})=>client.upload(id,'worker-log','text/plain',Buffer.from(text),signal)}).execute();
+  return new WorkerAttemptExecutor({envelope,operation:new AgentProcess(executable,args,nativeControlSettings.agentLauncher.terminationGraceMs),storeFullLog:(id,text,{signal})=>client.upload(id,'worker-log','text/plain',Buffer.from(text),signal)}).execute();
  };
  const close=async()=>{await new Promise<void>((resolve,reject)=>server.close(error=>error?reject(error):resolve()));await rm(root,{recursive:true,force:true});};
  return {execute,close,artifacts};

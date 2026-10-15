@@ -15,6 +15,9 @@ function repository(run) {
     git(['init', '-q']);
     for (const chart of ['kubeclaw', 'prism', 'ops-pod']) write(`charts/${chart}/values.yaml`, 'enabled: true\n');
     for (const role of ['nova', 'buster', 'prism-agent', 'prism']) write(`my-values/${role}-values.yaml`, 'enabled: true\n');
+    write('config/pipeline.config.json', '{}\n');
+    write('packaging/runtime/roles/prism.json', '{}\n');
+    for (const script of ['scripts/build-buster-image-bundle.mjs','scripts/build-buster-proof-harness.mjs','scripts/generate-buster-chart-config.mjs','scripts/updates/buster-image-delivery.mjs','scripts/updates/write-image-receipt.mjs','scripts/updates/pipeline-generation.mjs','scripts/build-runtime-role-bundle.mjs','scripts/build-prism-image-bundle.mjs','scripts/generate-prism-chart-config.mjs','scripts/pipeline-publish.c']) write(script,'// source fixture\n');
     const source = commit();
     run({ root, git, write, commit, source });
   } finally { fs.rmSync(root, { recursive: true, force: true }); }
@@ -58,18 +61,8 @@ test('ops chart has its own source binding, independent of runtime-only changes'
 }));
 
 const aliases = {
-  'charts/prism/files/config/swarm.config.json': '../../../kubeclaw/files/config/swarm.config.json',
-  'charts/prism/files/config/swarm.schema.json': '../../../../skills/common/plugin-runtime/foundation/config/swarm.schema.json',
-  "charts/prism/templates/_swarm-bundle.tpl": "../../kubeclaw/templates/_swarm-config.tpl",
-  "charts/kubeclaw/files/config/swarm.schema.json": "../../../../skills/common/plugin-runtime/foundation/config/swarm.schema.json",
-  "charts/kubeclaw/files/config/swarm-components.schema.json": "../../../../skills/common/plugin-runtime/foundation/config/swarm-components.schema.json",
-  "charts/prism/files/config/swarm-components.schema.json": "../../../../skills/common/plugin-runtime/foundation/config/swarm-components.schema.json",
-  "charts/prism/files/config/prism-control.config.json": "../../../kubeclaw/files/config/prism-control.config.json",
-  "charts/prism/files/config/prism-studio.config.json": "../../../kubeclaw/files/config/prism-studio.config.json",
-  "charts/prism/files/config/prism-worker.config.json": "../../../kubeclaw/files/config/prism-worker.config.json",
-  "charts/prism/files/config/prism-execution.config.json": "../../../kubeclaw/files/config/prism-execution.config.json",
-  "charts/prism/files/config/buster-engine.config.json": "../../../kubeclaw/files/config/buster-engine.config.json",
-  "charts/prism/files/config/worker-core.config.json": "../../../kubeclaw/files/config/worker-core.config.json",
+  'charts/kubeclaw/files/config/swarm.schema.json': '../../../../skills/common/plugin-runtime/foundation/config/swarm.schema.json',
+  'charts/kubeclaw/files/config/swarm-components.schema.json': '../../../../skills/common/plugin-runtime/foundation/config/swarm-components.schema.json',
 };
 function withAliases(run) {
   return repository(context => {

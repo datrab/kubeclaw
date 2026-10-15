@@ -43,10 +43,12 @@ assert.match(read('tests/verification/e2e/nova-buildkit-production-preflight.mts
   /nova-container-build-production-preflight\.v4/u);
 
 const entrypoint = read('docker/buster-runtime-entrypoint.sh');
-assert.match(entrypoint, /remote-plan-cli\.ts/u);
+assert.match(entrypoint, /skills\/packages\/buster-engine\/native-parent\.ts/u);
+assert.match(read('skills/buster/engine/test-gates/preparation-supervisor.ts'), /new URL\('\.\.\/remote-plan-cli\.ts'/u);
 assert.match(entrypoint, /allowedCapabilities: \[[^\]]*'container\.build'[^\]]*\]/u);
 assert.doesNotMatch(entrypoint, /BUSTER_LEGACY_PORT|legacy_state_dir|legacy_run_dir/u);
-assert.match(entrypoint, /chown -R builder:builder "\$plan_state_dir" "\$plan_run_dir"/u);
+assert.match(entrypoint, /node \/usr\/local\/libexec\/buster-state-root\.mjs/u);
+assert.match(read('scripts/buster-state-root.mjs'), /directory\(path\.join\(root, 'runs-v2'\), 1000, 0o700\)/u);
 const busterValues = read('my-values/buster-values.yaml');
 assert.match(busterValues, /name: buster-plan[\s\S]*port: 18891/u);
 assert.doesNotMatch(busterValues, /buster-legacy|18892/u);
@@ -67,8 +69,9 @@ assert.match(busterValues, /CONTAINER_BUILD_BUILDKIT_HOST[\s\S]*buildkitd\.sock/
 assert.match(novaValues, /BUSTER_SOURCE_ATTESTATION_PRIVATE_KEY[\s\S]*pipeline-test-gate-source-attestation/u);
 assert.doesNotMatch(novaValues, /NODE_EXTRA_CA_CERTS|buster-plan-trust/u);
 const dockerfile = read('docker/Dockerfile.buster-runtime');
-assert.match(dockerfile, /check-pipeline-container-build-production\.mts/u);
-assert.match(dockerfile, /check-pipeline-container-build-recovery\.mts/u);
+assert.match(dockerfile, /COPY --from=buster-package \/proof \/opt\/buster-image-proofs/u);
+assert.match(read('scripts/build-buster-proof-harness.mjs'), /check-pipeline-container-build-production\.mts/u);
+assert.match(read('scripts/build-buster-proof-harness.mjs'), /check-pipeline-container-build-recovery\.mts/u);
 
 for (const file of [
   'tests/verification/contracts/check-pipeline-container-build-production.mts',

@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import { TEST_CORE_POLICY_SELECTION } from '../../fixtures/core-runtime-policy.mjs';
 import { coverageReviewPrefixes, coverageReviewRequirements, validatePipelineTestGateContract, type GateCoverageV1 } from '@kubeclaw/pipeline-test-gate-contract';
 import crypto from 'node:crypto';
 import { execFileSync } from 'node:child_process';
@@ -108,10 +109,7 @@ function runtimeTarget(
     thinking: openClawThinking,
     cwd,
     repositoryRoot,
-    pollMs: 2_000,
-    maxPollMs: 15_000,
-    maxPolls: 1_200,
-    sessionTimeoutMs: 1_800_000,
+    timingProfile: 'production-pipeline',
     resultPathPrefix,
     ...(resultEndpoint ? { resultEndpoint, resultTokenSecret } : {}),
   };
@@ -436,7 +434,7 @@ async function main(): Promise<void> {
   };
   const platformPath = path.join(stateRoot, 'platform.json');
   const pipelinePath = path.join(stateRoot, 'pipeline.json');
-  writeJson(platformPath, {
+  writeJson(platformPath, {corePolicySelection: TEST_CORE_POLICY_SELECTION,
     schemaVersion: 'pipeline-platform.v2', effectLockTtlMs: 300_000,
     installationRoots: pluginRoots,
     trustedBuiltinRoots: pluginRoots,

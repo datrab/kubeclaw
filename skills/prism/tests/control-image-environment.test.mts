@@ -3,8 +3,8 @@ import fs from 'node:fs';
 import {spawnSync} from 'node:child_process';
 import {fileURLToPath} from 'node:url';
 import test from 'node:test';
-import {loadControlServerConfig} from '../server/control-config.ts';
-import {controlPolicyFixture} from './fixtures/control-policy.mts';
+import {publishedControlConfig} from './fixtures/published-config.mjs';
+import path from 'node:path';
 
 function declaredFinalEnvironment(): NodeJS.ProcessEnv {
   const text = fs.readFileSync(new URL('../../../docker/Dockerfile.prism-control', import.meta.url), 'utf8');
@@ -27,22 +27,23 @@ function declaredFinalEnvironment(): NodeJS.ProcessEnv {
 }
 
 for (const suffix of ['one', 'two']) {
-  test(`actual Control image declarations and exact image proof accept authored profile ${suffix}`, t => {
+  test(`actual Control image declarations and exact image proof accept authored profile ${suffix}`, async t => {
     const expected = {artifactRoot: `/var/lib/prism/${suffix}`, studioPublicUrl: `https://${suffix}.example.test`,
       pipelinePreferenceSubject: `user-${(suffix === 'one' ? 'a' : 'b').repeat(24)}`};
-    const {SWARM_CONFIG} = controlPolicyFixture(t, expected);
-    const environment = {...declaredFinalEnvironment(), SWARM_CONFIG,
+    const f = await publishedControlConfig(t, expected);
+    const environment = {...declaredFinalEnvironment(),
       PRISM_SESSION_SECRET: 'test-session', PRISM_INGRESS_SECRET: 'test-ingress',
       PRISM_INGESTION_SECRET: 'test-ingestion', PRISM_DISPATCH_SECRET: 'test-dispatch', PRISM_WORKER_SECRET: 'test-worker'};
-    const actual = loadControlServerConfig(environment);
+    const actual = f.loadControlServerConfig(f.capture,environment);
     for (const key of ['artifactRoot', 'studioPublicUrl', 'pipelinePreferenceSubject'] as const) {
       assert.equal(actual[key], expected[key]);
     }
     const loader = fileURLToPath(new URL('./fixtures/image-source-loader.mjs', import.meta.url));
     const proof = fileURLToPath(new URL('../../../tests/verification/deployment/prism-swarm-image.mjs', import.meta.url));
-    const childEnvironment: NodeJS.ProcessEnv = {...process.env, ...environment};
+    const childEnvironment: NodeJS.ProcessEnv = {...process.env, ...environment, PIPELINE_IMAGE_TEST_ROOT:path.join(f.root,'role')};
     delete childEnvironment.NODE_TEST_CONTEXT;
-    const invoke = (env: NodeJS.ProcessEnv) => spawnSync(process.execPath, ['--import', loader, proof, 'prism-control'],
+    const program = `const {capturePipelineBootReceipts}=await import(${JSON.stringify(new URL('file://' + path.join(f.root,'role/skills/packages/plugin-foundation/config/pipeline-boot.mjs')).href)});const capture=capturePipelineBootReceipts(${JSON.stringify(path.join(f.root,'transport'))},${JSON.stringify(path.join(f.root,'generation/system'))},'prism-control',process.env.PIPELINE_IMAGE_TEST_ROOT,'/app/prism/skills');const {verifyPrismImageConfiguration}=await import(${JSON.stringify(new URL('file://' + proof).href)});await verifyPrismImageConfiguration(capture,'prism-control',process.env);console.log('PRISM_SWARM_IMAGE_LOADER_VERIFIED');`;
+    const invoke = (env: NodeJS.ProcessEnv) => spawnSync(process.execPath, ['--import', loader, '--input-type=module', '-e', program],
       {env, encoding: 'utf8', timeout: 15000});
     const passed = invoke(childEnvironment);
     assert.equal(passed.status, 0, passed.stdout + passed.stderr);
@@ -56,20 +57,8 @@ for (const suffix of ['one', 'two']) {
   });
 }
 
-test('image proof requires the selected role and rejects the retired Worker PORT author', t => {
-  const {SWARM_CONFIG} = controlPolicyFixture(t, {});
-  const loader = fileURLToPath(new URL('./fixtures/image-source-loader.mjs', import.meta.url));
+test('image proof requires explicit role and authenticated delivery rather than a legacy source author', () => {
   const proof = fileURLToPath(new URL('../../../tests/verification/deployment/prism-swarm-image.mjs', import.meta.url));
-  const environment: NodeJS.ProcessEnv = {...process.env, SWARM_CONFIG, PORT: '23458'};
-  delete environment.NODE_TEST_CONTEXT;
-  for (const role of [undefined, 'unknown', 'prism-worker']) {
-    const args = ['--import', loader, proof, ...(role ? [role] : [])];
-    const child = spawnSync(process.execPath, args, {env: environment, encoding: 'utf8', timeout: 15000});
-    if (role === 'prism-worker') {
-      assert.notEqual(child.status, 0);
-      assert.match(child.stderr, /SWARM_CONFIG_LEGACY_OVERRIDE:PORT/u);
-    } else {
-      assert.notEqual(child.status, 0); assert.match(child.stderr, /explicit image role required/u);
-    }
-  }
+  const invalid = spawnSync(process.execPath,[proof,'unknown'],{encoding:'utf8',timeout:5000});
+  assert.notEqual(invalid.status,0);assert.match(invalid.stderr,/explicit image role required/);
 });

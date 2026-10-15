@@ -1,3 +1,4 @@
+import type { PipelineBootCapture } from '@kubeclaw/plugin-foundation/config/pipeline-boot.mjs';
 import {
   createServer,
   type IncomingMessage,
@@ -57,11 +58,12 @@ async function handle(
 /** Compose the original HTTP service; the caller owns database/listener lifetime. */
 export async function createControlServer(
   pool: Database,
+  capture: PipelineBootCapture,
   environment?: NodeJS.ProcessEnv,
 ) {
   return createConfiguredControlServer(
     pool,
-    await loadControlCompositionConfig(environment),
+    await loadControlCompositionConfig(capture, environment),
   );
 }
 
@@ -75,7 +77,7 @@ export function createConfiguredControlServer(
   return createServer(
     productAuthorityHandler(
       (request, response) => handle(context, request, response),
-      { db: pool, config: productConfig, sessionSecret: config.sessionSecret },
+      { db: pool, config: productConfig, sessionSecret: config.sessionSecret, productDecisionLifetimeMs: config.productDecisionLifetimeMs, productDecisionHistoryLimit: config.productDecisionHistoryLimit, maximumProductInputBytes: config.maximumProductInputBytes, productControllerTimeoutMs: config.productControllerTimeoutMs, maximumProductControllerResponseBytes: config.maximumProductControllerResponseBytes, maximumProductControllerTokenCharacters: config.maximumProductControllerTokenCharacters },
     ),
   );
 }
@@ -104,6 +106,7 @@ async function handlePublic(
   } = context.config;
   if (
     await handleInternalArtifact(request, response, url, {
+      maximumInternalEvidenceBytes: context.config.maximumInternalEvidenceBytes,
       artifacts: context.artifacts,
       spiffeEnabled,
       workerSecret,

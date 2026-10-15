@@ -11,10 +11,10 @@ interface Target {
   readonly maxResponseBytes: number;
 }
 
-function boundedInteger(value: unknown, fallback: number, id: string, label: string): number {
-  const parsed = Number(value ?? fallback);
-  if (!Number.isSafeInteger(parsed) || parsed < 1 || parsed > 8_388_608) throw new Error(`RUNTIME_CONFIG_INVALID:${label}:${id}`);
-  return parsed;
+function boundedInteger(value: unknown, id: string, label: string): number {
+  const parsed = value;
+  if (!Number.isSafeInteger(parsed) || Number(parsed) < 1 || Number(parsed) > 8_388_608) throw new Error(`RUNTIME_CONFIG_INVALID:${label}:${id}`);
+  return Number(parsed);
 }
 
 function endpointFrom(value: unknown, id: string): URL {
@@ -60,10 +60,10 @@ function json(value: unknown, depth = 0): void {
   }
 }
 
-function targetFrom(id: string, value: unknown): Target {
+function targetFrom(id: string, value: unknown, profiles: ReadonlyMap<string,Readonly<{maxRequestBytes:number;maxResponseBytes:number}>>): Target {
     if (!ID.test(id) || !record(value)) throw new Error(`RUNTIME_CONFIG_INVALID:target:${id}`);
     exact(value, new Set([
-      'endpoint', 'tokenSecret', 'maxRequestBytes', 'maxResponseBytes',
+      'endpoint', 'tokenSecret', 'byteProfile',
       'authentication',
     ]), 'RUNTIME_CONFIG_UNKNOWN_TARGET_FIELD');
     const endpoint = endpointFrom(value.endpoint, id);
@@ -78,21 +78,28 @@ function targetFrom(id: string, value: unknown): Target {
       && !loopback(endpoint)) {
       throw new Error(`RUNTIME_CONFIG_INVALID:spiffeProxy:${id}`);
     }
-    const maxRequestBytes = boundedInteger(value.maxRequestBytes, 1_048_576, id, 'maxRequestBytes');
-    const maxResponseBytes = boundedInteger(value.maxResponseBytes, 1_048_576, id, 'maxResponseBytes');
-    return {
+    if (typeof value.byteProfile !== 'string' || !profiles.has(value.byteProfile)) throw new Error(`RUNTIME_CONFIG_INVALID:byteProfile:${id}`);
+    const {maxRequestBytes,maxResponseBytes} = profiles.get(value.byteProfile)!;
+    return Object.freeze({
       endpoint: endpoint.href,
       authentication,
       ...(authentication === 'hmac' ? { tokenSecret: value.tokenSecret as string } : {}),
       maxRequestBytes,
       maxResponseBytes,
-    };
+    });
 }
 
 function config(raw: Readonly<Record<string, unknown>>): ReadonlyMap<string, Target> {
-  exact(raw as Record<string, unknown>, new Set(['targets']), 'RUNTIME_CONFIG_UNKNOWN_FIELD');
+  exact(raw as Record<string, unknown>, new Set(['targets','targetByteProfiles']), 'RUNTIME_CONFIG_UNKNOWN_FIELD');
   if (!record(raw.targets) || Object.keys(raw.targets).length === 0) throw new Error('RUNTIME_CONFIG_INVALID:targets');
-  return new Map(Object.entries(raw.targets).map(([id, value]) => [id, targetFrom(id, value)]));
+  if (!record(raw.targetByteProfiles) || Object.keys(raw.targetByteProfiles).length === 0) throw new Error('RUNTIME_CONFIG_INVALID:targetByteProfiles');
+  const profiles = new Map<string,Readonly<{maxRequestBytes:number;maxResponseBytes:number}>>();
+  for (const [id,value] of Object.entries(raw.targetByteProfiles)) {
+    if (!/^[a-z][a-z0-9._-]{0,127}$/.test(id) || !record(value)) throw new Error('RUNTIME_CONFIG_INVALID:targetByteProfiles');
+    exact(value,new Set(['maxRequestBytes','maxResponseBytes']),'RUNTIME_CONFIG_UNKNOWN_PROFILE_FIELD');
+    profiles.set(id,Object.freeze({maxRequestBytes:boundedInteger(value.maxRequestBytes,id,'maxRequestBytes'),maxResponseBytes:boundedInteger(value.maxResponseBytes,id,'maxResponseBytes')}));
+  }
+  return new Map(Object.entries(raw.targets).map(([id, value]) => [id, targetFrom(id, value,profiles)]));
 }
 
 function assertRequest(request: EffectRequest): void {

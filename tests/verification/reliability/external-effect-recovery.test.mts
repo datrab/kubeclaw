@@ -1,3 +1,4 @@
+import { TEST_CORE_POLICY_SELECTION } from '../../fixtures/core-runtime-policy.mjs';
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import fs from 'node:fs';
@@ -56,11 +57,11 @@ for (const phase of ['before-receipt', 'after-receipt', 'lost-response'] as cons
     const common = path.resolve('skills/common/plugins');
     const secretName = `KUBECLAW_EFFECT_TEST_${phase.replaceAll('-', '_').toUpperCase()}`;
     process.env[secretName] = 'ephemeral-effect-test-token';
-    const platform: PlatformConfig = { schemaVersion: 'pipeline-platform.v2', effectLockTtlMs: 300_000, installationRoots: [install, common], trustedBuiltinRoots: [install, common], externalTrust: { allowedSourceDigests: {}, verifiedAttestations: {} },
+    const platform: PlatformConfig = {corePolicySelection: TEST_CORE_POLICY_SELECTION, schemaVersion: 'pipeline-platform.v2', effectLockTtlMs: 300_000, installationRoots: [install, common], trustedBuiltinRoots: [install, common], externalTrust: { allowedSourceDigests: {}, verifiedAttestations: {} },
       providers: { 'runtime.dispatch': 'kubeclaw.runtime-dispatch:runtime', 'network.http': 'kubeclaw.network-http:http', 'secrets.read': 'kubeclaw.secret-resolver:secrets' },
       grants: { 'test.external-effects:mutate': { 'runtime.dispatch': { allowedAgents: ['mutation-service'] } },
         'kubeclaw.runtime-dispatch:runtime': { 'network.http': { allowedOrigins: [origin] }, 'secrets.read': { allowedNames: ['mutation-service.token'] } } },
-      adapters: { 'kubeclaw.runtime-dispatch:runtime': { targets: { 'mutation-service': { endpoint: origin, tokenSecret: 'mutation-service.token' } } },
+      adapters: { 'kubeclaw.runtime-dispatch:runtime': { targets: { 'mutation-service': { byteProfile:'standard', endpoint: origin, tokenSecret: 'mutation-service.token' } } },
         'kubeclaw.network-http:http': { allowedOrigins: [origin], allowedMethods: ['POST'], allowedHeaders: ['content-type', 'idempotency-key', 'x-kubeclaw-signature'] },
         'kubeclaw.secret-resolver:secrets': { environment: { 'mutation-service.token': secretName } } },
       activeAdapters: [], observers: {}, storageRoot: path.join(root, 'state'), shutdownTimeoutMs: 1000, orchestratorIssuerId: 'nova', administrativeDecisionIssuers: [] };

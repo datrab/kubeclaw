@@ -5,7 +5,7 @@ import {
   type WorkerAttemptOperation,
 } from '@kubeclaw/worker-core';
 import { validateWorkerResourceContractV3, type WorkerAttemptEnvelopeV3 } from '@kubeclaw/pipeline-worker-core-contract';
-import { validateBusterPreparationSettings } from '../../../common/plugin-runtime/foundation/config/swarm.ts';
+import { validateBusterPreparationSettings } from '@kubeclaw/plugin-foundation/config/swarm';
 import { readPreparationInput, materializePreparedSource, preparationSourceDirectory } from './preparation-source.ts';
 import { PreparationHostInput, preparationHostChannelLimits } from './preparation-host-channel.ts';
 import { stagePreparationInput, stagedInputMetadata, assertBusterInput, wireDigest, type BusterInputReference } from './preparation-input.ts';

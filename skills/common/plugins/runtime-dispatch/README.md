@@ -42,3 +42,46 @@ established repository result location before workspace cleanup. The gateway mus
 share these filesystem paths; configuration does not itself provision mounts or
 sandbox the agent. Static requests without a workspace reference retain their
 configured cwd.
+
+
+The `openclaw` registration requires top-level `resultReadMaximumBytes` and
+`collectorWaitTimeoutSeconds` plus the required timing-profile map below. Nova supplies its selected Core `openClawDispatch`
+policy and retains the effective config; raw Platform/per-target duplicates
+reject. Direct callers author all required processing data explicitly. The result cap applies only to
+the existing local workspace file read. Collector seconds are a per-call
+`agents_wait` request (zero allowed), still clamped by the host maximum; not the
+session deadline. Missing/invalid direct values fail before read/request. No
+change to result source/identity, workspace authorization or session cleanup.
+The separate HTTP registration uses the required byte profiles described below; other target defaults remain unchanged.
+
+
+OpenClaw targets require an explicit `timingProfile` selecting one complete
+`targetTimingProfiles` entry (spawnIntervalMs, pollMs, maxPollMs, maxPolls,
+sessionTimeoutMs). Nova authors that map only in selected Core policy; direct
+callers explicitly supply it. Former target timing keys reject, even equal/null.
+All profiles are checked for original bounds/relations. The codec freezes the
+resolved target; existing timer consumers are unchanged. Recovery restores the
+recorded processing selector and values, without substituting current B; other
+target/endpoint/configuration mismatch checks remain unchanged. See operator
+guide for standard and preserved production-pipeline values. No native/model or
+whole-package acceptance is implied by local protocol-vector timer tests.
+
+### Explicit HTTP target byte profiles
+
+The HTTP `:runtime` registration requires a complete `targetByteProfiles` map
+and an explicit `byteProfile` on each target. Nova supplies this map from selected
+Core `httpDispatch.targetByteProfiles`; raw adapter maps are competing authors
+and reject even when equal/null. Both leaves `maxRequestBytes` and
+`maxResponseBytes` are required safe integers from1 through8388608; canonical
+`standard` explicitly preserves1048576 bytes each. Missing maps, incomplete or
+unknown profiles and the former target-level byte fields reject, without a
+default selection/merge/coercion. Different targets may select different profiles.
+
+Activation captures frozen caps. The existing JSON UTF-8 request check runs
+before secret/network access; the response check runs after status/body validation.
+These are serialized JSON body budgets, not streaming/wire/network-adapter caps.
+Authentication, endpoint and token-secret behavior remain separate and unchanged.
+Retained runs restore only original byteProfile and selected values from one
+recorded snapshot; current endpoint/authentication/token/grants and target-set
+changes still face the unchanged pinned configuration comparison. Older runs
+missing required policy/selector need their original runtime, not current defaults.

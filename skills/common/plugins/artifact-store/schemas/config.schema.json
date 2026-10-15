@@ -2,11 +2,37 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "type": "object",
   "additionalProperties": false,
-  "required": ["artifactRoot"],
+  "required": [
+    "artifactRoot",
+    "maxArtifactBytes",
+    "maximumRecords",
+    "maximumStoreBytes",
+    "maximumRecordBytes"
+  ],
   "properties": {
-    "artifactRoot": { "type": "string", "minLength": 1 },
-    "maxArtifactBytes": { "type": "integer", "minimum": 1 },
-    "maximumRecords": { "type": "integer", "minimum": 1, "default": 100000 },
-    "maximumStoreBytes": { "type": "integer", "minimum": 1, "default": 268435456 }
+    "artifactRoot": {
+      "type": "string",
+      "minLength": 1
+    },
+    "maxArtifactBytes": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991
+    },
+    "maximumRecords": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991
+    },
+    "maximumStoreBytes": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991
+    },
+    "maximumRecordBytes": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991
+    }
   }
 }

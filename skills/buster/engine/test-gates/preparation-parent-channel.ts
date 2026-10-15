@@ -20,7 +20,7 @@ export async function servePreparationRequests(channel: NativeWorkerControlChann
   readonly prepare: (ingress: PreparationIngress, signal: AbortSignal,
     admit: (job: PreparedPlanJob) => Promise<boolean>) => Promise<BusterStagedAdmission | null>;
   readonly extract: (staged: BusterStagedAdmission, signal: AbortSignal) => Promise<PreparedAdmission>;
-}): Promise<void> {
+}, messages: AsyncIterable<Buffer> = channel.messages()): Promise<void> {
   const admissions = new Map<string, Admission>();
   const pending = new Set<Promise<void>>();
   const failure = async (requestId: string, error: unknown) => {
@@ -55,7 +55,7 @@ export async function servePreparationRequests(channel: NativeWorkerControlChann
     if (!staged) await channel.send(encodePreparationMessage('ready', requestId));
   };
   try {
-    for await (const raw of channel.messages()) {
+    for await (const raw of messages) {
       const message = decodePreparationMessage(raw);
       if (message.kind === 'begin') await begin(message.admissionId);
       else if (message.kind === 'extract') {

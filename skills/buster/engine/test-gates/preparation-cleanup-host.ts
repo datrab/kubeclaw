@@ -3,7 +3,7 @@ import path from 'node:path';
 import { WorkerAttemptExecutor, observeNativeWorkerResources, nativeSourceCleanupResultSchema,
   sha256Digest, type WorkerAttemptOperation } from '@kubeclaw/worker-core';
 import { validateWorkerResourceContractV3, type WorkerAttemptEnvelopeV3 } from '@kubeclaw/pipeline-worker-core-contract';
-import { validateBusterPreparationSettings } from '../../../common/plugin-runtime/foundation/config/swarm.ts';
+import { validateBusterPreparationSettings } from '@kubeclaw/plugin-foundation/config/swarm';
 import { assertPreparationCleanupEffects, type PreparationCleanupEffects } from './preparation-cleanup-binding.ts';
 import { preparationSourceDirectory } from './preparation-source.ts';
 

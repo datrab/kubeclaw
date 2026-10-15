@@ -1,3 +1,5 @@
+import { TEST_CORE_POLICY as DELIVERY_TEST_CORE_POLICY } from '../../../../../tests/fixtures/core-runtime-policy.mjs';
+const TEST_OPERATOR_STORE_POLICY = DELIVERY_TEST_CORE_POLICY.operatorMessagingStore;
 import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
 import fs from 'node:fs';
@@ -114,7 +116,7 @@ const adapters = new core.AdapterRuntime({
   granted,
   activated,
   configs: new Map([
-    ['kubeclaw.operator-messaging:operator', {
+    ['kubeclaw.operator-messaging:operator', { ...TEST_OPERATOR_STORE_POLICY,
       deliveryRoot: path.join(temporary, 'deliveries'),
       targets: {
         operators: {
@@ -338,7 +340,7 @@ try {
   let directSends = 0;
   const direct = activateDirect({
     registration: {},
-    config: {
+    config: { ...TEST_OPERATOR_STORE_POLICY,
       deliveryRoot: path.join(temporary, 'direct-deliveries'),
       targets: {
         retry: {
@@ -395,7 +397,7 @@ try {
   let capacitySends = 0;
   const capacity = activateDirect({
     registration: {},
-    config: {
+    config: { ...TEST_OPERATOR_STORE_POLICY,
       deliveryRoot: path.join(temporary, 'capacity-deliveries'),
       maximumDeliveryRecords: 1,
       targets: {
@@ -435,7 +437,7 @@ try {
   let concurrentSends = 0;
   const concurrent = activateDirect({
     registration: {},
-    config: {
+    config: { ...TEST_OPERATOR_STORE_POLICY,
       deliveryRoot: path.join(temporary, 'concurrent-deliveries'),
       targets: {
         retry: {

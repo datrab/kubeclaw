@@ -28,3 +28,13 @@ with the same key fails as an idempotency conflict.
 
 This package is an HTTP publication foundation. It does **not** claim Redis
 stream compatibility, retry scheduling, or parity with the legacy transport.
+
+
+Durable store config requires explicit `maximumDeliveryRecords` and
+`maximumDeliveryBytes` positive safe integers; no defaults/numeric strings.
+Nova selects these from Core `settings.transportPublisherStore` before registry validation,
+uses the captured activation config and retains it with the run. Raw Platform
+adapter entries keep deliveryRoot/targets but reject duplicate store policy.
+Direct callers supply both limits. Existing target payload, sender identity,
+receiver receipt, durable reservation and idempotency semantics are unchanged.
+This store-only migration does not claim target-policy or native acceptance.

@@ -1,0 +1,422 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "stageMemoryBytes",
+    "observerMemoryBytes",
+    "runMutationTtlMs",
+    "runMutationRenewalMs",
+    "journalAppendLockTimeoutMs",
+    "maximumAuditResultBytes",
+    "resourceLockMetadataTimeoutMs",
+    "resourceLockProvisionalTtlMs",
+    "effectJournalInlineResultBytes",
+    "recovery",
+    "artifactStore",
+    "stateStore",
+    "waitStore",
+    "telemetryStore",
+    "operatorMessagingStore",
+    "transportPublisherStore",
+    "openClawDispatch",
+    "httpDispatch"
+  ],
+  "properties": {
+    "stageMemoryBytes": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991
+    },
+    "observerMemoryBytes": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991
+    },
+    "runMutationTtlMs": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 2147483647
+    },
+    "runMutationRenewalMs": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 2147483647
+    },
+    "journalAppendLockTimeoutMs": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 2147483647
+    },
+    "maximumAuditResultBytes": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991
+    },
+    "resourceLockMetadataTimeoutMs": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 2147483647
+    },
+    "resourceLockProvisionalTtlMs": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 2147483647
+    },
+    "effectJournalInlineResultBytes": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991
+    },
+    "recovery": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "attempts",
+        "admission"
+      ],
+      "properties": {
+        "attempts": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "maximumEvidenceObjects",
+            "maximumEvidenceBytes",
+            "maximumEvidenceObjectBytes",
+            "maximumResults",
+            "maximumClosures",
+            "maximumMetadataBytes",
+            "maximumPendingEvidenceAgeMs"
+          ],
+          "properties": {
+            "maximumEvidenceObjects": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "maximumEvidenceBytes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "maximumEvidenceObjectBytes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "maximumResults": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "maximumClosures": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "maximumMetadataBytes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "maximumPendingEvidenceAgeMs": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2147483647
+            }
+          }
+        },
+        "admission": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "maximumIngressBytes",
+            "maximumRecords",
+            "maximumBytes",
+            "maximumQuarantineRecords",
+            "maximumQuarantineBytes"
+          ],
+          "properties": {
+            "maximumIngressBytes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "maximumRecords": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "maximumBytes": {
+              "type": "integer",
+              "minimum": 1025,
+              "maximum": 9007199254740991
+            },
+            "maximumQuarantineRecords": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "maximumQuarantineBytes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            }
+          }
+        }
+      }
+    },
+    "artifactStore": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "maxArtifactBytes",
+        "maximumRecords",
+        "maximumStoreBytes",
+        "maximumRecordBytes"
+      ],
+      "properties": {
+        "maxArtifactBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "maximumRecords": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "maximumStoreBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "maximumRecordBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        }
+      }
+    },
+    "stateStore": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "maxEntryBytes",
+        "maximumRecords",
+        "maximumStoreBytes"
+      ],
+      "properties": {
+        "maxEntryBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "maximumRecords": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "maximumStoreBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        }
+      }
+    },
+    "waitStore": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "maxEntryBytes",
+        "maximumRecords",
+        "maximumStoreBytes"
+      ],
+      "properties": {
+        "maxEntryBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "maximumRecords": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "maximumStoreBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        }
+      }
+    },
+    "telemetryStore": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "maxRecordBytes",
+        "maximumRecords",
+        "maximumStoreBytes"
+      ],
+      "properties": {
+        "maxRecordBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "maximumRecords": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "maximumStoreBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        }
+      }
+    },
+    "operatorMessagingStore": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "maximumDeliveryRecords",
+        "maximumDeliveryBytes"
+      ],
+      "properties": {
+        "maximumDeliveryRecords": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "maximumDeliveryBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        }
+      }
+    },
+    "transportPublisherStore": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "maximumDeliveryRecords",
+        "maximumDeliveryBytes"
+      ],
+      "properties": {
+        "maximumDeliveryRecords": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "maximumDeliveryBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        }
+      }
+    },
+    "openClawDispatch": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "resultReadMaximumBytes",
+        "collectorWaitTimeoutSeconds",
+        "targetTimingProfiles"
+      ],
+      "properties": {
+        "resultReadMaximumBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "collectorWaitTimeoutSeconds": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2147483
+        },
+        "targetTimingProfiles": {
+          "type": "object",
+          "minProperties": 1,
+          "propertyNames": {
+            "pattern": "^[a-z0-9](?:[a-z0-9._:-]{0,126}[a-z0-9])?$"
+          },
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "spawnIntervalMs",
+              "pollMs",
+              "maxPollMs",
+              "maxPolls",
+              "sessionTimeoutMs"
+            ],
+            "properties": {
+              "spawnIntervalMs": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 60000
+              },
+              "pollMs": {
+                "type": "integer",
+                "minimum": 10,
+                "maximum": 9007199254740991
+              },
+              "maxPollMs": {
+                "type": "integer",
+                "minimum": 10,
+                "maximum": 9007199254740991
+              },
+              "maxPolls": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 9007199254740991
+              },
+              "sessionTimeoutMs": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 86400000
+              }
+            }
+          }
+        }
+      }
+    },
+    "httpDispatch": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "targetByteProfiles"
+      ],
+      "properties": {
+        "targetByteProfiles": {
+          "type": "object",
+          "minProperties": 1,
+          "propertyNames": {
+            "pattern": "^[a-z][a-z0-9._-]{0,127}$"
+          },
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "maxRequestBytes",
+              "maxResponseBytes"
+            ],
+            "properties": {
+              "maxRequestBytes": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 8388608
+              },
+              "maxResponseBytes": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 8388608
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -86,3 +86,13 @@ Human message, summary, footer and field values permit tab, LF and CR while othe
 control bytes and identity-field controls remain rejected. Display shortening
 uses an ellipsis inside its length limit. Original canonical event diagnostics
 remain in the event journal under the message's event identity.
+
+
+Durable store config requires explicit `maximumDeliveryRecords` and
+`maximumDeliveryBytes` positive safe integers; no defaults/numeric strings.
+Nova selects these from Core `settings.operatorMessagingStore` before registry validation,
+uses the captured activation config and retains it with the run. Raw Platform
+adapter entries keep deliveryRoot/targets but reject duplicate store policy.
+Direct callers supply both limits. Existing target payload, sender identity,
+receiver receipt, durable reservation and idempotency semantics are unchanged.
+This store-only migration does not claim target-policy or native acceptance.

@@ -7,7 +7,7 @@ import { body, json } from "./control-http.ts";
 type RouteContext = Pick<
   AuthenticatedControlContext,
   "pool" | "repository" | "actor"
->;
+ | "config">;
 
 export async function approvalRoute(
   context: RouteContext,
@@ -28,7 +28,7 @@ async function approveDocument(
 ) {
   const { pool, repository, actor } = context;
 
-  const input = (await body(request)) as {
+  const input = (await body(request, context.config.maximumJsonBodyBytes)) as {
     projectId?: string;
     documentId?: string;
     designDigest?: string;

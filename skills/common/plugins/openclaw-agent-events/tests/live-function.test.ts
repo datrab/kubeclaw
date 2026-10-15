@@ -1,3 +1,4 @@
+import { TEST_CORE_POLICY } from '../../../../../tests/fixtures/core-runtime-policy.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -34,7 +35,7 @@ const sdk = { on(hook, handler) { handlers.set(hook, handler); return () => { ha
 const events = [];
 const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-agent-events-'));
 const journalPath = path.join(temporary, 'events.jsonl');
-const journal = new core.FileJournal(journalPath);
+const journal = new core.FileJournal(journalPath, TEST_CORE_POLICY.journalAppendLockTimeoutMs);
 const adapter = activateWithSdk({
   registration: {}, config: { hooks: ['agent_end', 'session_end'] },
   async invoke() { throw new Error('unexpected dependency'); },

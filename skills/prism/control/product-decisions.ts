@@ -57,8 +57,9 @@ export function parseProductIntent(value: unknown): ProductIntent {
   if (value.action === 'extend' ? !Number.isSafeInteger(value.extensionSeconds) || Number(value.extensionSeconds) < 1 || Number(value.extensionSeconds) > 9223372036 : Object.hasOwn(value, 'extensionSeconds')) throw new Error('invalid product extension');
   return value as unknown as ProductIntent;
 }
-export function signProductIntent(intent: ProductIntent, actor: {user: string; expiresAt: number}, config: ProductConfig, now = Date.now()): {envelope: ProductEnvelope; payload: ProductPayload; payloadDigest: string} {
-  const expiry = Math.floor(Math.min(now + 300_000, actor.expiresAt) / 1000) * 1000;
+export function signProductIntent(intent: ProductIntent, actor: {user: string; expiresAt: number}, config: ProductConfig, lifetimeMs: number, now = Date.now()): {envelope: ProductEnvelope; payload: ProductPayload; payloadDigest: string} {
+  if (!Number.isSafeInteger(lifetimeMs) || lifetimeMs < 1 || lifetimeMs > 2147483647) throw new Error('valid product decision lifetime required');
+  const expiry = Math.floor(Math.min(now + lifetimeMs, actor.expiresAt) / 1000) * 1000;
   if (expiry <= now) throw new Error('operator session expires before decision issuance');
   const {url: _url, runId: _runId, ...subject} = intent.subject;
   const payload: ProductPayload = {schemaVersion: 'demo-product-decision.v1', issuer: config.issuer,

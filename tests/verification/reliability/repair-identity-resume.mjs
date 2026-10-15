@@ -1,3 +1,4 @@
+import { TEST_CORE_POLICY } from '../../fixtures/core-runtime-policy.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -14,7 +15,7 @@ const ledger = result.stages.get('source').repairLedger;
 assert.equal(ledger.length, 3);
 assert.equal(ledger.at(-1).authorization.signalId, stored.signal.signalId);
 assert.equal(ledger.at(-1).requestDigest, stored.digest);
-const replay = recoverStageStates(stored.definition, new FileJournal(stored.journal).records(), stored.runId, 'nova');
+const replay = recoverStageStates(stored.definition, new FileJournal(stored.journal, TEST_CORE_POLICY.journalAppendLockTimeoutMs).records(), stored.runId, 'nova');
 assert.deepEqual([...replay], [...result.stages]);
 console.log(JSON.stringify({ locale: Intl.DateTimeFormat().resolvedOptions().locale, status: result.status,
   sourceAttempts: result.stages.get('source').attemptsUsed, approvedOriginalDigest: ledger.at(-1).requestDigest,

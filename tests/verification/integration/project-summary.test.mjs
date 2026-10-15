@@ -1,3 +1,5 @@
+import { TEST_CORE_POLICY as ARTIFACT_TEST_CORE_POLICY } from '../../fixtures/core-runtime-policy.mjs';
+const TEST_ARTIFACT_STORE_POLICY = ARTIFACT_TEST_CORE_POLICY.artifactStore;
 import { coverageReviewRequirements, gateCoverageDigest } from '@kubeclaw/pipeline-test-gate-contract';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -9,7 +11,7 @@ import { buildSummary } from '../../../skills/nova/plugins/project-summary/src/s
 
 // Artifact-contract verification: these stored report fixtures do not execute providers or agents.
 const root = fs.mkdtempSync(path.join(os.tmpdir(), 'delivery-evidence-'));
-const adapter = activate({ config: { artifactRoot: root } });
+const adapter = activate({ config: { ...TEST_ARTIFACT_STORE_POLICY, artifactRoot: root } });
 const runId = 'delivery:run';
 const revision = 'a'.repeat(40);
 let sequence = 0;

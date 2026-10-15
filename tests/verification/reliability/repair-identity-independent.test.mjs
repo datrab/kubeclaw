@@ -1,3 +1,4 @@
+import { TEST_CORE_POLICY } from '../../fixtures/core-runtime-policy.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -16,7 +17,7 @@ if (process.argv[2] === '--fold') {
   const [root, journalFile] = process.argv.slice(3);
   const stored = JSON.parse(fs.readFileSync(path.join(root, 'case.json'), 'utf8'));
   try {
-    const records = new FileJournal(journalFile).records();
+    const records = new FileJournal(journalFile, TEST_CORE_POLICY.journalAppendLockTimeoutMs).records();
     const states = recoverStageStates(stored.definition, records, stored.runId, 'nova');
     const pending = states.get('lint').pendingRepair;
     const order = pending ? authorizedRepair(stored.definition.stages, states, states.get('lint'), stored.signal)?.budgetOrder : undefined;
@@ -36,13 +37,13 @@ if (process.argv[2] === '--fold') {
       const root = path.join(temporary, 'case'); fs.mkdirSync(root);
       legacyOperation(legacy, '--produce', root);
       const stored = JSON.parse(fs.readFileSync(path.join(root, 'case.json'), 'utf8'));
-      const original = new FileJournal(stored.journal).records().map(record => record.entry);
+      const original = new FileJournal(stored.journal, TEST_CORE_POLICY.journalAppendLockTimeoutMs).records().map(record => record.entry);
       const pendingIndex = original.findIndex(event => event.type === 'orchestrator.required' && event.payload.wait?.request?.repairAuthorization);
       const orderIndex = original.findIndex(event => event.type === 'stage.waiting' && event.payload.repairRequest?.budgetOrder);
       assert(pendingIndex > 0); assert(orderIndex > 0);
       let serial = 0;
       const write = events => {
-        const target = path.join(temporary, `probe-${serial++}.jsonl`); const journal = new FileJournal(target);
+        const target = path.join(temporary, `probe-${serial++}.jsonl`); const journal = new FileJournal(target, TEST_CORE_POLICY.journalAppendLockTimeoutMs);
         for (const event of events) journal.append(event);
         return target;
       };
@@ -104,7 +105,7 @@ if (process.argv[2] === '--fold') {
       const producer = materializeCurrentCore(path.join(root, 'producer'));
       legacyOperation(producer, '--produce', root);
       const stored = JSON.parse(fs.readFileSync(path.join(root, 'case.json'), 'utf8'));
-      const events = new FileJournal(stored.journal).records().map(record => record.entry);
+      const events = new FileJournal(stored.journal, TEST_CORE_POLICY.journalAppendLockTimeoutMs).records().map(record => record.entry);
       const pendingIndex = events.findIndex(event => event.type === 'orchestrator.required' && event.payload.wait?.request?.repairAuthorization);
       const orderIndex = events.findIndex(event => event.type === 'stage.waiting' && event.payload.repairRequest?.budgetOrder);
       const pending = events[pendingIndex].payload.wait.request.repairAuthorization;
@@ -128,7 +129,7 @@ if (process.argv[2] === '--fold') {
       let serial = 0;
       for (const [name, mutate] of mutations) await context.test(name, () => {
         const copy = structuredClone(events); mutate(copy);
-        const target = path.join(root, `tagged-${serial++}.jsonl`); const journal = new FileJournal(target);
+        const target = path.join(root, `tagged-${serial++}.jsonl`); const journal = new FileJournal(target, TEST_CORE_POLICY.journalAppendLockTimeoutMs);
         for (const event of copy) journal.append(event);
         const result = fold(file, root, target, 'sv_SE.UTF-8');
         assert.match(result.error ?? '', /^REPAIR_(PROJECTION|IDENTITY_ENCODING)/u, JSON.stringify(result));

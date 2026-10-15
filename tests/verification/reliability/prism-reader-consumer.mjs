@@ -1,3 +1,4 @@
+import { TEST_CORE_POLICY } from '../../fixtures/core-runtime-policy.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -8,9 +9,9 @@ import {canonicalJson,sha256Text} from '@kubeclaw/plugin-sdk';
 
 const [effectsFile,runDirectory,key]=process.argv.slice(2);
 const originalBytes=fs.readFileSync(effectsFile);
-const journal=new FileEffectJournal(effectsFile),receipt=await journal.receipt(key);
+const journal=new FileEffectJournal(effectsFile, TEST_CORE_POLICY),receipt=await journal.receipt(key);
 assert(receipt);
-const events=new FileJournal(path.join(runDirectory,'events.jsonl'));
+const events=new FileJournal(path.join(runDirectory,'events.jsonl'), TEST_CORE_POLICY.journalAppendLockTimeoutMs);
 const completed=events.records().find(({entry})=>entry.type==='attempt.completed'&&entry.identity.stageId==='source');
 assert(completed);
 const expected=completed.entry.payload.result.artifacts[0];

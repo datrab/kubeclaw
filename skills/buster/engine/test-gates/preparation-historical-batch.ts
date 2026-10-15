@@ -2,7 +2,7 @@ import { canonicalJson } from '@kubeclaw/pipeline-observability-contract';
 import { assertDurableRecordReplay, payloadDigest, type DurableRecordState } from '@kubeclaw/plugin-foundation/observability/record-retirement';
 import { remotePlanJobDigest, verifySourceSnapshotAttestation, validatePipelineTestGateContract,
   type RemotePlanJobV1 } from '@kubeclaw/pipeline-test-gate-contract';
-import type { BusterPreparationSettings } from '../../../common/plugin-runtime/foundation/config/swarm.ts';
+import type { BusterPreparationSettings } from '@kubeclaw/plugin-foundation/config/swarm';
 import { assertPreparedHeader, preparedPlanHeader, preparationDigest } from './preparation-header.ts';
 import { assertPreparationSlot, type PreparationSlot } from './preparation-slots.ts';
 import { assertCompactedPlanJobRecord, type StoredPlanJob } from './remote-plan-compaction.ts';

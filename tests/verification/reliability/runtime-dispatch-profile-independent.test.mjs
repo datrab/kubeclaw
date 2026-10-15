@@ -1,3 +1,4 @@
+import { TEST_CORE_POLICY } from '../../fixtures/core-runtime-policy.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
@@ -42,8 +43,8 @@ test('independent closed profile never consumes historical model keys on actual 
   const httpAdapter = network({config: {allowedOrigins: [origin], allowedMethods: ['POST'],
     allowedHeaders: ['content-type', 'idempotency-key', 'x-kubeclaw-signature']}});
   const journalFile = path.join(root, 'effects.jsonl');
-  const coordinator = () => new EffectCoordinator(new FileEffectJournal(journalFile), undefined, undefined,
-    new FileResourceLockManager(path.join(root, 'locks')), 300_000);
+  const coordinator = () => new EffectCoordinator(new FileEffectJournal(journalFile, TEST_CORE_POLICY), undefined, undefined,
+    new FileResourceLockManager(path.join(root, 'locks'), TEST_CORE_POLICY), 300_000);
   const adapter = dispatch({config: {targets: {forge: {endpoint: `${origin}/dispatch`, authentication: 'hmac', tokenSecret: 'review.secret'}}},
     invokeConfidential: async (capability, request) => {
       assert.ok(['network.http', 'secrets.read'].includes(capability));
@@ -61,7 +62,7 @@ test('independent closed profile never consumes historical model keys on actual 
       assert.equal(receipt.status, 'completed');
       assert.equal(received.length, before + 1);
       assert.equal(received.at(-1).body, JSON.stringify(payload));
-      const journal = new FileEffectJournal(journalFile), recorded = await journal.request(invocation.idempotencyKey);
+      const journal = new FileEffectJournal(journalFile, TEST_CORE_POLICY), recorded = await journal.request(invocation.idempotencyKey);
       assert.equal(Object.hasOwn(recorded, 'runtimeDispatchProfile'), current);
       if (current) assert.deepEqual(recorded.runtimeDispatchProfile, profile);
       assert.deepEqual(recorded.payload, payload);

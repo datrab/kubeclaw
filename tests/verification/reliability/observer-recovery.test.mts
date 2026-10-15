@@ -1,3 +1,4 @@
+import { TEST_CORE_POLICY, TEST_CORE_POLICY_SELECTION } from '../../fixtures/core-runtime-policy.mjs';
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import fs from 'node:fs';
@@ -39,21 +40,21 @@ test('observer retries stay bounded after reconstruction and completed deliverie
     observers: [{ id: 'files', module: 'src/observer.ts', export: 'observe', subscriptions: ['run.started'], delivery: 'at_least_once', ordering: 'per_run',
       failurePolicy: { mode: 'best_effort', maxAttempts: 2, backoffMs: 0, timeoutMs: 1000 }, requiredCapabilities: [],
       configSchema: 'schemas/config.json', checkpointSchema: 'schemas/checkpoint.json' }] }));
-  const platform: PlatformConfig = { schemaVersion: 'pipeline-platform.v2', effectLockTtlMs: 300_000, installationRoots: [path.dirname(plugin)], trustedBuiltinRoots: [path.dirname(plugin)],
+  const platform: PlatformConfig = {corePolicySelection: TEST_CORE_POLICY_SELECTION, schemaVersion: 'pipeline-platform.v2', effectLockTtlMs: 300_000, installationRoots: [path.dirname(plugin)], trustedBuiltinRoots: [path.dirname(plugin)],
     externalTrust: { allowedSourceDigests: {}, verifiedAttestations: {} }, providers: {}, grants: {}, adapters: {}, activeAdapters: [],
     observers: { [observerId]: { output } }, storageRoot: path.join(root, 'state'), shutdownTimeoutMs: 1000,
     orchestratorIssuerId: 'nova', administrativeDecisionIssuers: [] };
   const definition: PipelineDefinition = { schemaVersion: 'pipeline-definition.v2', id: 'observer-test', maxConcurrency: 1,
     stages: [{ id: 'unused', type: 'test.file-observer', dependsOn: [], config: { output }, input: {}, execution: { maxAttempts: 1, maxRemediationCycles: 0, timeoutMs: 1000 } }] };
   const prepared = await prepareRuntime(platform, definition);
-  const events = new FileJournal<CanonicalEvent>(path.join(root, 'events.jsonl'));
+  const events = new FileJournal<CanonicalEvent>(path.join(root, 'events.jsonl'), TEST_CORE_POLICY.journalAppendLockTimeoutMs);
   const event = (id: string) => events.append({ schemaVersion: 'lifecycle-event.v2', eventId: id, sequence: events.records().length + 1,
     type: 'run.started', identity: { runId: id }, occurredAt: new Date().toISOString(), causationId: null, payload: {} });
   const adapters = createAdapterRuntime(platform, root, prepared, events);
   const checkpointPath = path.join(root, 'checkpoints.jsonl');
   const deliveryPath = path.join(root, 'deliveries.jsonl');
-  const runtime = () => new ObserverRuntime({ registry: prepared.granted, activated: prepared.activated, adapters, events,
-    checkpoints: new FileJournal<ObserverCheckpoint>(checkpointPath), deliveries: new FileJournal<ObserverDeliveryRecord>(deliveryPath),
+  const runtime = () => new ObserverRuntime({memoryBytes: TEST_CORE_POLICY.observerMemoryBytes, registry: prepared.granted, activated: prepared.activated, adapters, events,
+    checkpoints: new FileJournal<ObserverCheckpoint>(checkpointPath, TEST_CORE_POLICY.journalAppendLockTimeoutMs), deliveries: new FileJournal<ObserverDeliveryRecord>(deliveryPath, TEST_CORE_POLICY.journalAppendLockTimeoutMs),
     configs: new Map([[observerId, { output }]]) });
   try {
     event('event:outage');
@@ -61,7 +62,7 @@ test('observer retries stay bounded after reconstruction and completed deliverie
     assert.equal(first.delivered, 0);
     assert.match(first.failures[0]!.error, /ENOENT/);
     const initialRecords = fs.readFileSync(deliveryPath, 'utf8');
-    assert.equal(new FileJournal<ObserverDeliveryRecord>(deliveryPath).records().filter(record => record.entry.status === 'started').length, 2);
+    assert.equal(new FileJournal<ObserverDeliveryRecord>(deliveryPath, TEST_CORE_POLICY.journalAppendLockTimeoutMs).records().filter(record => record.entry.status === 'started').length, 2);
     fs.mkdirSync(path.dirname(output));
     for (let attempt = 0; attempt < 3; attempt++) {
       const recovered = await runtime().drain();

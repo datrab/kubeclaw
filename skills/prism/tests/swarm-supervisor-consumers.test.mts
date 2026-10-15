@@ -1,4 +1,5 @@
-import { readTestBundle, writeTestBundle } from '../../../tests/fixtures/config/swarm-bundle.mjs';
+import { fileURLToPath } from 'node:url';
+import { captureSwarmSettings, type PrismWorkerSettings, type PrismSupervisorSettings, type PrismNonceDatabaseSettings, type PrismNativeSettings } from '../../common/plugin-runtime/foundation/config/swarm.ts';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -7,7 +8,6 @@ import path from 'node:path';
 import type { NativeWorkerOwnership } from '@kubeclaw/worker-core';
 import { observeNativeProcessBoundary, observedProcessLimits } from './fixtures/native-process-boundary.mts';
 import { ownershipTerminalCapacityBytes } from '../../worker/core/worker/ownership-capacity.ts';
-import { loadWorkerConfig } from '../server/worker-config.ts';
 import type { nativePrismSupervisorConfig } from '../config/native-worker.ts';
 const observation = observeNativeProcessBoundary();
 const { FileWorkerOwnershipStore } = await import('@kubeclaw/worker-core');
@@ -16,13 +16,29 @@ const { prismSupervisorSettings } = await import('../config/native-worker.ts');
 const { prismNativeAttempt } = await import('../engine/worker-envelope.ts');
 observation.deregister();
 
-const authored = readTestBundle(new URL('../../../charts/kubeclaw/files/config/swarm.config.json', import.meta.url));
 function fixture(t: test.TestContext, changes: Record<string, number>) {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'prism-supervisor-consumers-'));
   t.after(() => fs.rmSync(root, { recursive: true, force: true }));
-  const value = structuredClone(authored); Object.assign(value['prism-worker'].settings.supervisor, changes);
-  const file = path.join(root, 'swarm.config.json'); writeTestBundle(file, value);
-  const config = loadWorkerConfig({ SWARM_CONFIG: file, PRISM_WORKER_SECRET: 'test', DATABASE_URL: 'postgresql://not-opened' });
+  fs.cpSync(fileURLToPath(new URL('../../../config/', import.meta.url)), root, { recursive: true });
+  const authorFile = path.join(root, 'components/prism-worker.config.json');
+  const author = JSON.parse(fs.readFileSync(authorFile, 'utf8'));
+  Object.assign(author.profiles.standard.settings.supervisor, changes);
+  fs.writeFileSync(authorFile, JSON.stringify(author));
+  const entryFile = path.join(root, 'pipeline.config.json');
+  const entry = JSON.parse(fs.readFileSync(entryFile, 'utf8'));
+  const instanceId = 'kubeclaw/prism/prism-worker';
+  const captured = captureSwarmSettings(entryFile, { role: 'prism', callerId: 'prism-worker', serviceInstanceId: instanceId,
+    bindings: entry.bindings.filter((binding: { instanceId: string }) => binding.instanceId === instanceId)
+      .map(({ role: _role, ...binding }: { role: string; owner: string; instanceId: string; profileId: string }) => binding) });
+  const worker = captured.components['prism-worker']!.settings as unknown as {
+    ingress: PrismWorkerSettings; supervisor: PrismSupervisorSettings; nonceDatabase: PrismNonceDatabaseSettings };
+  const execution = captured.components['prism-execution']!.settings as unknown as Pick<PrismNativeSettings, 'resourcePolicy' | 'maximumResultBytes' | 'enginePolicy'>;
+  const control = captured.components['prism-control']!.settings;
+  // Consumer regression only: central selection, not a verified boot or privileged host capability.
+  const config = { maximumArtifactAcknowledgmentBytes: control.maximumArtifactAcknowledgmentBytes as number, ingress: worker.ingress, port: worker.ingress.port, shutdownTimeoutMs: worker.ingress.shutdownTimeoutMs,
+    native: { ...execution, supervisor: worker.supervisor, dispatchTimeoutMs: control.dispatchTimeoutMs as number },
+    nonceDatabase: worker.nonceDatabase, controlInternalUrl: new URL(control.controlInternalUrl as string),
+    spiffeEnabled: false, workerSecret: 'test', trustedControlSpiffeId: '', databaseUrl: 'postgresql://not-opened' };
   return { root, config, numeric: prismSupervisorSettings(config) };
 }
 const identity = (index: number) => ({ workerId: 'prism', attemptId: `attempt:${index}`, claimId: `claim:${index}`,
@@ -67,7 +83,7 @@ for (const factor of [1, 2]) test(`CS3 actual execution journal admission and pr
     engineContentDigest: `sha256:${'a'.repeat(64)}` } as ReturnType<typeof nativePrismSupervisorConfig>;
   const execution = await nativePrismExecution(owner, native, f.config);
   const attempt = prismNativeAttempt('render', { artifactId: 'input:supervisor', type: 'prism-engine-input', mediaType: 'application/json',
-    contentDigest: `sha256:${'a'.repeat(64)}`, sizeBytes: 2, storageUrl: 'https://control.example/input' }, `supervisor-${factor}`, f.config.native.resourcePolicy);
+    contentDigest: `sha256:${'a'.repeat(64)}`, sizeBytes: 2, storageUrl: 'https://control.example/input' }, `supervisor-${factor}`, f.config.native.resourcePolicy, 600000, 300000, 10000, 1048576, 16777216, 134217728, 64);
   if (factor === 1) {
     await assert.rejects(execution.execute(attempt, new AbortController().signal), /WORKER_NATIVE_JOURNAL_CAPACITY_EXCEEDED/);
     assert.equal(allocated, undefined);

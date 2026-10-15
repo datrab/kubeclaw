@@ -28,7 +28,10 @@ async function responseBytes(response: Response, maximum: number): Promise<Buffe
 export class WorkerArtifactClient {
   readonly origin: URL;
   readonly #headers: Record<string, string>;
-  constructor(origin: URL, secret: string, spiffeEnabled: boolean) {
+  readonly #maximumAcknowledgmentBytes: number;
+  constructor(origin: URL, secret: string, spiffeEnabled: boolean, maximumAcknowledgmentBytes: number) {
+    if (!Number.isSafeInteger(maximumAcknowledgmentBytes) || maximumAcknowledgmentBytes < 1 || maximumAcknowledgmentBytes > 2147483647) throw new Error('PRISM_ARTIFACT_ACKNOWLEDGMENT_LIMIT_REQUIRED');
+    this.#maximumAcknowledgmentBytes = maximumAcknowledgmentBytes;
     this.origin = new URL(origin);
     this.#headers = spiffeEnabled ? {} : { authorization: `Bearer ${secret}` };
   }
@@ -44,7 +47,7 @@ export class WorkerArtifactClient {
     const storageUrl = new URL(`/v1/internal/artifacts/${contentDigest}`, this.origin).toString();
     const response = await fetch(storageUrl, { method: 'POST', headers: { ...this.#headers, 'content-type': 'application/octet-stream' },
       body: new Uint8Array(bytes), signal, redirect: 'error' });
-    const acknowledgment = await responseBytes(response, 8192);
+    const acknowledgment = await responseBytes(response, this.#maximumAcknowledgmentBytes);
     if (!response.ok) throw new Error(`Prism artifact upload failed: ${response.status}: ${acknowledgment.toString('utf8')}`);
     const stored = JSON.parse(acknowledgment.toString('utf8')) as { artifactId?: string; digest?: string; sizeBytes?: number };
     if (stored.artifactId !== `artifact:${contentDigest}` || stored.digest !== contentDigest || stored.sizeBytes !== bytes.byteLength) {

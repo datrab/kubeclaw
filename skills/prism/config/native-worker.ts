@@ -1,3 +1,4 @@
+import { readPrismEnginePolicy } from './engine-policy.ts';
 import path from 'node:path';
 import { requirePrismResourcePoolCapacity } from './resource-policy.ts';
 import type { loadWorkerConfig } from '../server/worker-config.ts';
@@ -18,11 +19,17 @@ export function nativePrismHostConfig(environment: NodeJS.ProcessEnv = process.e
   if (environment.PRISM_NATIVE_MAXIMUM_INPUT_BYTES !== undefined) throw new Error('SWARM_CONFIG_LEGACY_OVERRIDE:PRISM_NATIVE_MAXIMUM_INPUT_BYTES');
   const maximumInputBytes = Number(environment.PRISM_NATIVE_ASSIGNED_INPUT_BYTES);
   if (!Number.isSafeInteger(maximumInputBytes) || maximumInputBytes < 1 || maximumInputBytes > 2_147_483_647) throw new Error('PRISM_NATIVE_INPUT_LIMIT_REQUIRED');
+  const maximumArtifactAcknowledgmentBytes = Number(environment.PRISM_NATIVE_ASSIGNED_ARTIFACT_ACKNOWLEDGMENT_BYTES);
+  if (!Number.isSafeInteger(maximumArtifactAcknowledgmentBytes) || maximumArtifactAcknowledgmentBytes < 1 || maximumArtifactAcknowledgmentBytes > 2147483647) throw new Error('PRISM_ARTIFACT_ACKNOWLEDGMENT_LIMIT_REQUIRED');
+  let assigned: unknown;
+  try { assigned = JSON.parse(environment.PRISM_NATIVE_ASSIGNED_ENGINE_POLICY ?? ''); }
+  catch { throw new Error('PRISM_ENGINE_POLICY_REQUIRED'); }
+  const enginePolicy = readPrismEnginePolicy(assigned);
   const controlInternalUrl = new URL(environment.PRISM_CONTROL_INTERNAL_URL!);
   const workerSecret = environment.PRISM_WORKER_SECRET ?? '';
   const spiffeEnabled = environment.WORKER_TRUST_SPIFFE_ENABLED === 'true';
   if (!spiffeEnabled && !workerSecret) throw new Error('PRISM_NATIVE_ARTIFACT_AUTH_REQUIRED');
-  return Object.freeze({ scope, maximumInputBytes, controlInternalUrl, workerSecret, spiffeEnabled });
+  return Object.freeze({ scope, enginePolicy, maximumInputBytes, maximumArtifactAcknowledgmentBytes, controlInternalUrl, workerSecret, spiffeEnabled });
 }
 
 export function nativePrismSupervisorConfig(config: ReturnType<typeof loadWorkerConfig>, environment: NodeJS.ProcessEnv = process.env) {

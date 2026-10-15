@@ -12,7 +12,7 @@ export const limits: NativeAttemptJournalLimits = { maximumRecords: 32, maximumS
   maximumTotalBytes: 8388608, maximumInputBytes: 65536, maximumOutputBytes: 65536, maximumResultBytes: 65536 };
 const artifact = { artifactId: 'input:journal-capacity', type: 'prism-engine-input', mediaType: 'application/json',
   contentDigest: `sha256:${'1'.repeat(64)}`, sizeBytes: 2, storageUrl: 'https://control.example/input' };
-export const envelope = (name: string) => prismNativeAttempt('render', artifact, name, nativeResourcePolicy);
+export const envelope = (name: string) => prismNativeAttempt('render', artifact, name, nativeResourcePolicy, 600000, 300000, 16777216, 134217728, 64);
 export const metadataFile = (root: string) => path.join(root, 'metadata', 'records', 'store.json');
 export const metadata = async (root: string) => JSON.parse(await fs.readFile(metadataFile(root), 'utf8'));
 export const temporary = () => fs.mkdtemp(path.join(os.tmpdir(), 'journal-capacity-'));

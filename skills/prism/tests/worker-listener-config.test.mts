@@ -1,3 +1,4 @@
+import { publishedControlConfig } from './fixtures/published-config.mjs';
 import assert from 'node:assert/strict';
 import { once } from 'node:events';
 import { spawnSync } from 'node:child_process';
@@ -6,8 +7,8 @@ import net from 'node:net';
 import os from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
+import { fileURLToPath } from 'node:url';
 import { readTestBundle, writeTestBundle } from '../../../tests/fixtures/config/swarm-bundle.mjs';
-import { loadWorkerConfig } from '../server/worker-config.ts';
 import { createWorkerServer } from '../server/worker-service.ts';
 
 async function unusedPort(): Promise<number> {
@@ -26,15 +27,15 @@ test('WL actual HTTP Worker consumes two authored listeners; native execution re
   for (let attempt = 0; second === first && attempt < 5; attempt++) second = await unusedPort();
   assert.notEqual(second, first, 'two distinct test ports required');
   for (const port of [first, second]) {
-    const bundle = readTestBundle(new URL('../../../charts/kubeclaw/files/config/swarm.config.json', import.meta.url));
-    bundle['prism-worker'].settings.ingress.port = port;
-    const file = path.join(root, `profile-${port}`, 'swarm.config.json');
-    writeTestBundle(file, bundle);
-    const environment = { SWARM_CONFIG: file, WORKER_TRUST_SPIFFE_ENABLED: 'true', PRISM_TRUSTED_CONTROL_SPIFFE_ID: 'spiffe://listener/control' };
-    const config = loadWorkerConfig(environment);
-    assert.equal(config.port, port); assert.ok(Object.isFrozen(config));
+    const selected = JSON.parse(fs.readFileSync(new URL('../../../config/components/prism-worker.config.json', import.meta.url), 'utf8'));
+    const ingress = {...selected.profiles.standard.settings.ingress, port};
+    const {author, workerCapture, loadWorkerConfig: authenticatedWorkerConfig} = await publishedControlConfig(t, {}, {ingress});
+    const file = path.join(author, 'components/prism-worker.config.json');
+    const environment = { WORKER_TRUST_SPIFFE_ENABLED: 'true', PRISM_TRUSTED_CONTROL_SPIFFE_ID: 'spiffe://listener/control' };
+    const config = authenticatedWorkerConfig(workerCapture, environment);
+    assert.equal(config.port, port); assert.ok(Object.isFrozen(config.ingress));
     for (const PORT of ['', '8080', String(port)]) {
-      assert.throws(() => loadWorkerConfig({ ...environment, PORT }), /SWARM_CONFIG_LEGACY_OVERRIDE:PORT/u);
+      assert.throws(() => authenticatedWorkerConfig(workerCapture, { ...environment, PORT }), /SWARM_CONFIG_LEGACY_OVERRIDE:PORT/u);
     }
     let executed = 0;
     const server = createWorkerServer({ mode: 'spiffe', trustedControlSpiffeId: config.trustedControlSpiffeId },

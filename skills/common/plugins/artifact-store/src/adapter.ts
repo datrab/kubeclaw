@@ -14,8 +14,6 @@ import {
   type DurableBlobStore,
 } from '@kubeclaw/plugin-foundation/observability/durable-records';
 
-const DEFAULT_MAXIMUM_RECORDS = 100_000;
-const DEFAULT_MAXIMUM_STORE_BYTES = 256 * 1024 * 1024;
 
 function requiredText(value: unknown, label: string): string {
   if (typeof value !== 'string' || value.length === 0 || value.includes('\0') || /[\r\n]/.test(value)) {
@@ -159,16 +157,19 @@ async function invokeArtifact(
 export function activate(context: AdapterActivationContext): AdapterInstance {
   const configured = context.config.artifactRoot;
   if (typeof configured !== 'string' || configured.length === 0) throw new Error('artifactRoot is required');
-  const maximum = context.config.maxArtifactBytes ?? 16 * 1024 * 1024;
+  const maximum = context.config.maxArtifactBytes;
   if (!Number.isSafeInteger(maximum) || Number(maximum) <= 0) throw new Error('maxArtifactBytes is invalid');
-  const maximumStoreBytes = context.config.maximumStoreBytes ?? DEFAULT_MAXIMUM_STORE_BYTES;
-  const maximumRecords = context.config.maximumRecords ?? DEFAULT_MAXIMUM_RECORDS;
+  const maximumStoreBytes = context.config.maximumStoreBytes;
+  const maximumRecords = context.config.maximumRecords;
   if (!Number.isSafeInteger(maximumStoreBytes) || Number(maximumStoreBytes) < 1) throw new Error('maximumStoreBytes is invalid');
   if (!Number.isSafeInteger(maximumRecords) || Number(maximumRecords) < 1) throw new Error('maximumRecords is invalid');
+  const maximumRecordBytes = context.config.maximumRecordBytes;
+  if (!Number.isSafeInteger(maximumRecordBytes) || Number(maximumRecordBytes) < 1) throw new Error('maximumRecordBytes is invalid');
+  if (Number(maximum) > Number(maximumStoreBytes) || Number(maximumRecordBytes) > Number(maximumStoreBytes)) throw new Error('artifact store limits are inconsistent');
   const records = new FileDurableRecordStore(configured, {
     maximumRecords: Number(maximumRecords),
     maximumBytes: Number(maximumStoreBytes),
-    maximumRecordBytes: 64 * 1024,
+    maximumRecordBytes: Number(maximumRecordBytes),
   });
   const blobs = new FileDurableBlobStore(configured, Number(maximum), Number(maximumStoreBytes));
   return {

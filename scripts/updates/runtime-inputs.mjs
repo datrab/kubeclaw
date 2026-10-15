@@ -5,10 +5,10 @@ import { execFileSync } from 'node:child_process';
 // Agent packages are delivered by bundles. These inputs still produce native
 // tools, dependencies, gateway extensions or services embedded in images.
 export function isImageInput(file) {
-  return /^(?:docker\/|cmd\/|contracts\/|go\.(?:mod|sum)$|\.dockerignore$|package(?:-lock)?\.json$|tsconfig\.base\.json$)/u.test(file)
-    || /^skills\/(?:prism\/|worker\/core\/|common\/plugin-runtime\/|common\/plugins\/openclaw-agent-observer\/)/u.test(file)
+  return /^tests\/(?:fixtures\/|verification\/contracts\/check-pipeline-container-build-(?:production|recovery)\.mts$)/u.test(file) || /^(?:config\/|packaging\/runtime\/|docker\/|cmd\/|contracts\/|go\.(?:mod|sum)$|\.dockerignore$|package(?:-lock)?\.json$|tsconfig\.base\.json$)/u.test(file)
+    || /^skills\/(?:buster\/|prism\/|worker\/core\/|common\/plugin-runtime\/|common\/plugins\/|nova\/core\/)/u.test(file)
     || /^skills\/.*\/(?:package(?:-lock)?\.json|.*\.(?:c|h))$/u.test(file)
-    || /^(?:scripts\/(?:versions|build-plugin-sandbox|registry-client-config|browser-archive-lock|trivy-database-lock)\.mjs|versions\.json)$/u.test(file);
+    || /^(?:scripts\/(?:versions|build-plugin-sandbox|build-runtime-role-bundle|build-prism-image-bundle|build-buster-image-bundle|build-buster-proof-harness|generate-buster-chart-config|generate-prism-chart-config|pipeline-publish|buster-cluster-preflight|buster-subordinate-ids|buster-state-root|buster-runtime-config-root|buster-lifetime-guardian|check-runtime-role-manifests|registry-client-config|browser-archive-lock|trivy-database-lock)\.(?:mjs|c)|scripts\/updates\/pipeline-generation\.mjs|versions\.json)$/u.test(file);
 }
 export function isDeploymentInput(file) {
   return isImageInput(file) || /^(?:skills\/|contracts\/|packaging\/runtime\/|charts\/(?:kubeclaw|prism)\/|my-values\/(?:nova|buster|prism-agent|prism)-values\.yaml$|gitops\/production\/(?:config\.json|overlays\/)|scripts\/(?:package-agent-skill-bundle\.sh|build-runtime-role-bundle\.mjs|deploy\.sh|gitops[^/]*\.mjs|updates\/)|\.github\/workflows\/(?:build-images|auto-promote-runtime)\.yaml$)/u.test(file);

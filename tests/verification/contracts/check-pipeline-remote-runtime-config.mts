@@ -1,3 +1,4 @@
+import { TEST_CORE_POLICY_SELECTION } from '../../fixtures/core-runtime-policy.mjs';
 import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
 import fs from 'node:fs';
@@ -79,7 +80,7 @@ try {
 
   const platformConfig = path.join(temporary, 'platform.json');
   const pluginRoot = path.join(root, 'skills/buster/plugins');
-  fs.writeFileSync(platformConfig, JSON.stringify({
+  fs.writeFileSync(platformConfig, JSON.stringify({corePolicySelection: TEST_CORE_POLICY_SELECTION,
     schemaVersion: 'pipeline-platform.v2', effectLockTtlMs: 300_000, installationRoots: [pluginRoot], trustedBuiltinRoots: [pluginRoot],
     externalTrust: { allowedSourceDigests: {}, verifiedAttestations: {} }, providers: {}, grants: {},
     adapters: {}, activeAdapters: [], observers: {}, storageRoot: './platform-state', shutdownTimeoutMs: 5_000,

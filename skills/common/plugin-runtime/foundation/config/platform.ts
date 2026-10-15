@@ -4,6 +4,7 @@ import Ajv2020 from 'ajv/dist/2020.js';
 import addFormats from 'ajv-formats';
 
 export interface PlatformConfig {
+  readonly corePolicySelection: Readonly<{ file: string; profile: string }>;
   readonly schemaVersion: 'pipeline-platform.v2';
   readonly installationRoots: readonly string[];
   readonly trustedBuiltinRoots: readonly string[];
@@ -53,6 +54,7 @@ function deepFreeze<T>(value: T): T {
 function resolvePaths(config: PlatformConfig, directory: string): PlatformConfig {
   return deepFreeze({
     ...config,
+    corePolicySelection: { ...config.corePolicySelection, file: path.resolve(directory, config.corePolicySelection.file) },
     installationRoots: config.installationRoots.map((value) => path.resolve(directory, value)),
     trustedBuiltinRoots: config.trustedBuiltinRoots.map((value) => path.resolve(directory, value)),
     storageRoot: path.resolve(directory, config.storageRoot),
@@ -63,8 +65,27 @@ function resolvePaths(config: PlatformConfig, directory: string): PlatformConfig
 export function loadPlatformConfig(file: string): PlatformConfig {
   const canonical = fs.realpathSync(file);
   const value = JSON.parse(fs.readFileSync(canonical, 'utf8')) as unknown;
+  return validatedPlatformConfig(value, path.dirname(canonical), canonical);
+}
+
+function validatedPlatformConfig(value: unknown, directory: string, diagnosticSource: string): PlatformConfig {
   if (!validate(value)) {
-    throw new Error(`PLATFORM_CONFIG_INVALID:${canonical}:${JSON.stringify(validate.errors ?? [])}`);
+    throw new Error(`PLATFORM_CONFIG_INVALID:${diagnosticSource}:${JSON.stringify(validate.errors ?? [])}`);
   }
-  return resolvePaths(value as PlatformConfig, path.dirname(canonical));
+  // Own the snapshot before deepFreeze; callers may retain authored raw values.
+  return resolvePaths(structuredClone(value) as PlatformConfig, directory);
+}
+
+/** Effect-free value preparation using the SAME original schema/path mapper.
+ * The caller must supply the original canonical AUTHOR directory, never the
+ * delivered generation directory or CWD. An absolute normalized string is a
+ * syntax prerequisite, NOT proof of canonical source provenance or a grant.
+ * No filesystem/registry/activation operation verifies that binding here.
+ */
+export function resolvePlatformConfigValue(value: unknown, canonicalAuthorDirectory: string): PlatformConfig {
+  if (typeof canonicalAuthorDirectory !== 'string' || canonicalAuthorDirectory.includes('\0') || !path.isAbsolute(canonicalAuthorDirectory)
+    || path.resolve(canonicalAuthorDirectory) !== canonicalAuthorDirectory) {
+    throw new Error('PLATFORM_AUTHOR_DIRECTORY_INVALID');
+  }
+  return validatedPlatformConfig(value, canonicalAuthorDirectory, canonicalAuthorDirectory);
 }

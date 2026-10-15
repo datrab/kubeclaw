@@ -62,18 +62,15 @@ service:
   bridgeEnabled: false
 
 extraEnv:
-  - { name: PRISM_CONTROL_URL, value: "http://127.0.0.1:28080" }
   - { name: PRISM_STUDIO_PUBLIC_URL, value: "https://prism-studio" }
 
+# Bridge command/probe fields are projections checked by config:prism:check.
 extraContainers:
   - name: prism-agent-bridge
     image: ghcr.io/datrab/kubeclaw-prism-agent:latest
     imagePullPolicy: Always
-    command: [node, /opt/kubeclaw-prism/agent-bridge.mjs]
+    command: [node, /app/prism/skills/packages/prism-engine/server/agent-bridge-entry.mjs]
     env:
-      - { name: PORT, value: "18080" }
-      - { name: PRISM_CONTROL_URL, value: "http://127.0.0.1:28080" }
-      - { name: PRISM_STUDIO_PUBLIC_URL, value: "https://prism-studio" }
       - name: OPENCLAW_GATEWAY_TOKEN
         valueFrom: { secretKeyRef: { name: openclaw-shared-secrets, key: gatewayToken-prism } }
     volumeMounts:

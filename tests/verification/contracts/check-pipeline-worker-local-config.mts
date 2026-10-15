@@ -1,3 +1,4 @@
+import { TEST_CORE_POLICY_SELECTION } from '../../fixtures/core-runtime-policy.mjs';
 import { runnerExecutionPolicy } from '../../fixtures/test-gate/execution-policy.mts';
 // Preparation authority is modeled here; parser, extraction and durable service/store remain real.
 import { ModeledPreparation, ModeledPreparedPlanJobStore as FileBusterPlanJobStore } from '../../fixtures/test-gate/modeled-preparation.mts';
@@ -138,7 +139,7 @@ export function provider() {
     const snapshot = loadSwarmSettings({ SWARM_CONFIG: entryFile });
     assert.equal(snapshot.workerCore.localRuntime.replayLimit, replayLimit);
     const platformConfig = path.join(profileRoot, 'platform.json');
-    fs.writeFileSync(platformConfig, JSON.stringify({
+    fs.writeFileSync(platformConfig, JSON.stringify({corePolicySelection: TEST_CORE_POLICY_SELECTION,
       schemaVersion: 'pipeline-platform.v2', effectLockTtlMs: 300_000,
       installationRoots: [installRoot], trustedBuiltinRoots: [installRoot],
       externalTrust: { allowedSourceDigests: {}, verifiedAttestations: {} },

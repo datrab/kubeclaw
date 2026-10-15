@@ -7,10 +7,12 @@ import { createWorkerServer } from './worker-service.ts';
 import type { ManagedWorkerServer } from './worker-lifecycle.ts';
 import { WorkerNonceDatabase } from './worker-readiness.ts';
 import { loadWorkerConfig } from './worker-config.ts';
+import { verifyPipelineBootReceipt } from '@kubeclaw/plugin-foundation/config/pipeline-boot.mjs';
 
 /** Native-only startup: durable ownership and journal recovery precede HTTP admission. */
 export async function runNativePrismWorker(): Promise<void> {
-  const config = loadWorkerConfig();
+  const capture = verifyPipelineBootReceipt('/run/pipeline-delivery', 'prism-worker');
+  const config = loadWorkerConfig(capture);
   const native = nativePrismSupervisorConfig(config);
   requireNativeWorkerSupervisorAuthority();
   requireNativeWorkerLauncher(native.launcher);
@@ -21,7 +23,7 @@ export async function runNativePrismWorker(): Promise<void> {
     const execution = await nativePrismExecution(owner, native, config);
     const authentication = config.spiffeEnabled
       ? { mode: 'spiffe' as const, trustedControlSpiffeId: config.trustedControlSpiffeId }
-      : { mode: 'hmac' as const, secret: config.workerSecret, database: new WorkerNonceDatabase(config.databaseUrl) };
+      : { mode: 'hmac' as const, secret: config.workerSecret, database: new WorkerNonceDatabase(config.databaseUrl, config.nonceDatabase) };
     const server = createWorkerServer(authentication, execution, config.ingress);
     await serve(server, owner, config);
   });

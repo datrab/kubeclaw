@@ -13,8 +13,6 @@ interface StoredStateValue {
   readonly value: Record<string, unknown>;
 }
 
-const DEFAULT_MAXIMUM_RECORDS = 100_000;
-const DEFAULT_MAXIMUM_STORE_BYTES = 256 * 1024 * 1024;
 
 function stream(namespace: string): string {
   if (!/^[a-z0-9][a-z0-9._-]*(?:\/[a-z0-9][a-z0-9._-]*)*$/.test(namespace)) {
@@ -26,12 +24,12 @@ function stream(namespace: string): string {
 export function activate(context: AdapterActivationContext): AdapterInstance {
   const configured = context.config.root;
   if (typeof configured !== 'string' || configured.length === 0) throw new Error('state root is required');
-  const maxEntryBytes = Number(context.config.maxEntryBytes ?? 1_048_576);
-  const maximumRecords = Number(context.config.maximumRecords ?? DEFAULT_MAXIMUM_RECORDS);
-  const maximumStoreBytes = Number(context.config.maximumStoreBytes ?? DEFAULT_MAXIMUM_STORE_BYTES);
-  if (!Number.isSafeInteger(maxEntryBytes) || maxEntryBytes < 1) throw new Error('maxEntryBytes is invalid');
-  if (!Number.isSafeInteger(maximumRecords) || maximumRecords < 1) throw new Error('maximumRecords is invalid');
-  if (!Number.isSafeInteger(maximumStoreBytes) || maximumStoreBytes < 1) throw new Error('maximumStoreBytes is invalid');
+  const maxEntryBytes = Number(context.config.maxEntryBytes);
+  const maximumRecords = Number(context.config.maximumRecords);
+  const maximumStoreBytes = Number(context.config.maximumStoreBytes);
+  if (typeof context.config.maxEntryBytes !== 'number' || !Number.isSafeInteger(maxEntryBytes) || maxEntryBytes < 1) throw new Error('maxEntryBytes is invalid');
+  if (typeof context.config.maximumRecords !== 'number' || !Number.isSafeInteger(maximumRecords) || maximumRecords < 1) throw new Error('maximumRecords is invalid');
+  if (typeof context.config.maximumStoreBytes !== 'number' || !Number.isSafeInteger(maximumStoreBytes) || maximumStoreBytes < 1) throw new Error('maximumStoreBytes is invalid');
   const store = new FileDurableRecordStore(configured, {
     maximumRecords,
     maximumBytes: maximumStoreBytes,

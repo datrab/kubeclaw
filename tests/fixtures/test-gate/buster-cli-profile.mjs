@@ -1,3 +1,4 @@
+import { TEST_CORE_POLICY_SELECTION } from '../core-runtime-policy.mjs';
 import { canonicalSwarmEntry, readTestBundle, writeTestBundle } from '../config/swarm-bundle.mjs';
 import crypto from 'node:crypto';
 import fs from 'node:fs';
@@ -10,7 +11,7 @@ export function cliProfile(root, admission) {
   const plugins = path.resolve('skills/buster/plugins');
   const keys = crypto.generateKeyPairSync('ed25519');
   writeTestBundle(swarm, document);
-  fs.writeFileSync(platform, JSON.stringify({ schemaVersion: 'pipeline-platform.v2', effectLockTtlMs: 300_000, installationRoots: [plugins],
+  fs.writeFileSync(platform, JSON.stringify({corePolicySelection: TEST_CORE_POLICY_SELECTION, schemaVersion: 'pipeline-platform.v2', effectLockTtlMs: 300_000, installationRoots: [plugins],
     trustedBuiltinRoots: [plugins], externalTrust: { allowedSourceDigests: {}, verifiedAttestations: {} },
     providers: {}, grants: {}, adapters: {}, activeAdapters: [], observers: {}, storageRoot: './platform-state',
     shutdownTimeoutMs: 5000, orchestratorIssuerId: 'admission-cli', administrativeDecisionIssuers: [] }));

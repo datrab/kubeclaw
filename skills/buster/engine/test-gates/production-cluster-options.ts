@@ -1,5 +1,5 @@
 import type { BusterCapabilityRuntimeOptions } from './capability-runtime.ts';
-import type { BusterClusterInvokerSettings } from '../../../common/plugin-runtime/foundation/config/buster-cluster-invokers.ts';
+import type { BusterClusterInvokerSettings } from '@kubeclaw/plugin-foundation/config/buster-cluster-invokers';
 import { object } from './production-config-values.ts';
 export interface ClusterRuntimeBinding {
   readonly kubectlExecutable: string;

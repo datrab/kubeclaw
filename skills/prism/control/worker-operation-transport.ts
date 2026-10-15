@@ -3,7 +3,7 @@ import type { WorkerAttemptEnvelopeV3 } from '@kubeclaw/pipeline-worker-core-con
 import type { loadControlServerConfig } from '../server/control-config.ts';
 import { signInternalRequest } from '../server/internal-auth.ts';
 
-type Config = ReturnType<typeof loadControlServerConfig>;
+type Config = Pick<ReturnType<typeof loadControlServerConfig>, 'workerUrl' | 'nativeWorkerDispatchTimeoutMs' | 'spiffeEnabled' | 'workerSecret' | 'maximumWorkerResponseBytes'>;
 
 export async function requestWorkerResult(config: Config, attempt: WorkerAttemptEnvelopeV3): Promise<unknown> {
   const body = Buffer.from(JSON.stringify(attempt)); const timestamp = Date.now(); const nonce = randomBytes(16).toString('hex');

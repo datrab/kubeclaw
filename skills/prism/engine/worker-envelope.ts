@@ -1,4 +1,4 @@
-import type { PrismResourcePolicy } from '../../common/plugin-runtime/foundation/config/swarm.ts';
+import type { PrismResourcePolicy } from '@kubeclaw/plugin-foundation/config/swarm';
 import { randomUUID } from "node:crypto";
 import type { WorkerArtifactRefV1, WorkerAttemptEnvelopeV1 } from "@kubeclaw/pipeline-worker-core-contract";
 import { canonicalJson, sha256Digest, workerAttemptSpecDigest, workerProfileDigest } from "@kubeclaw/worker-core";
@@ -31,8 +31,15 @@ export function prismRequestDigest(operation: WorkerAttemptEnvelopeV1['operation
   return sha256Digest(JSON.stringify({ operation: ordered, inputDigest }));
 }
 
-export function prismNativeAttempt(operation: EngineOperation, inputArtifact: WorkerArtifactRefV1, idempotencyKey: string, policy: PrismResourcePolicy): WorkerAttemptEnvelopeV3 {
-  const now = new Date(); const expires = new Date(now.getTime() + 10 * 60_000); const attemptId = `attempt-${randomUUID()}`;
+export function prismNativeAttempt(operation: EngineOperation, inputArtifact: WorkerArtifactRefV1, idempotencyKey: string, policy: PrismResourcePolicy, lifetimeMs: number, timeoutMs: number, cleanupTimeoutMs: number, logBytes: number, resultBytes: number, evidenceBytes: number, evidenceFiles: number): WorkerAttemptEnvelopeV3 {
+  if (!Number.isSafeInteger(lifetimeMs) || lifetimeMs < 1 || lifetimeMs > 2147483647) throw new Error('PRISM_NATIVE_ATTEMPT_LIFETIME_REQUIRED');
+  if (!Number.isSafeInteger(timeoutMs) || timeoutMs < 1 || timeoutMs > 2147483647) throw new Error('PRISM_NATIVE_ATTEMPT_TIMEOUT_REQUIRED');
+  if (!Number.isSafeInteger(cleanupTimeoutMs) || cleanupTimeoutMs < 1 || cleanupTimeoutMs > 2147483647) throw new Error('PRISM_NATIVE_ATTEMPT_CLEANUP_TIMEOUT_REQUIRED');
+  if (!Number.isSafeInteger(logBytes) || logBytes < 1) throw new Error('PRISM_NATIVE_ATTEMPT_LOG_BYTES_REQUIRED');
+  if (!Number.isSafeInteger(resultBytes) || resultBytes < 1) throw new Error('PRISM_NATIVE_ATTEMPT_RESULT_BYTES_REQUIRED');
+  if (!Number.isSafeInteger(evidenceBytes) || evidenceBytes < 1) throw new Error('PRISM_NATIVE_ATTEMPT_EVIDENCE_BYTES_REQUIRED');
+  if (!Number.isSafeInteger(evidenceFiles) || evidenceFiles < 1) throw new Error('PRISM_NATIVE_ATTEMPT_EVIDENCE_FILES_REQUIRED');
+  const now = new Date(); const expires = new Date(now.getTime() + lifetimeMs); const attemptId = `attempt-${randomUUID()}`;
   const request = engineRequestSchema(operation);
   const unsigned = {
     schemaVersion: "worker-attempt-envelope.v3" as const, protocolVersion: "worker-protocol.v1" as const,
@@ -40,7 +47,7 @@ export function prismNativeAttempt(operation: EngineOperation, inputArtifact: Wo
     nodeId: `node-${operation}`, executionId: `execution-${randomUUID()}`, attemptId, attemptNumber: 1,
     claim: { schemaVersion: "attempt-claim.v1" as const, claimId: `claim-${randomUUID()}`, attemptId, generation: 1, workerId: "prism-worker", claimedAt: now.toISOString(), expiresAt: expires.toISOString() },
     profile: prismNativeWorkerProfile, packages: [], grantedCapabilities: prismNativeWorkerProfile.capabilities,
-    limits: { timeoutMs: 300_000, cleanupTimeoutMs: 10_000, logBytes: 1_048_576, resultBytes: 16_777_216, evidenceBytes: 134_217_728, evidenceFiles: 64 },
+    limits: { timeoutMs, cleanupTimeoutMs, logBytes, resultBytes, evidenceBytes, evidenceFiles },
     resourceBudgets: { schemaVersion: 'worker-resource-budgets.v2' as const,
       cpuTimeMs: { state: 'requested' as const, limit: policy.cpuTimeMs },
       maximumMemoryBytes: { state: 'requested' as const, limit: policy.memoryBytes },

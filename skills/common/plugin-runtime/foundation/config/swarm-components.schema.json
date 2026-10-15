@@ -19,7 +19,42 @@
         "artifactRoot",
         "studioPublicUrl",
         "port",
-        "dispatchTimeoutMs"
+        "dispatchTimeoutMs",
+        "maximumJsonBodyBytes",
+        "maximumArtifactUploadBodyBytes",
+        "maximumArtifactBytes",
+        "maximumRenderAssetBytes",
+        "maximumDispatchBodyBytes",
+        "ingestionAcquireTimeoutMs",
+        "ingestionCleanupTimeoutMs",
+        "maximumInternalEvidenceBytes",
+        "sessionLifetimeSeconds",
+        "ingestionUrl",
+        "workerUrl",
+        "controlInternalUrl",
+        "maximumProductInputBytes",
+        "productControllerTimeoutMs",
+        "maximumProductControllerResponseBytes",
+        "productDecisionHistoryLimit",
+        "maximumProductControllerTokenCharacters",
+        "productDecisionLifetimeMs",
+        "nativeAttemptLifetimeMs",
+        "nativeAttemptTimeoutMs",
+        "nativeAttemptCleanupTimeoutMs",
+        "nativeAttemptLogBytes",
+        "nativeAttemptResultBytes",
+        "nativeAttemptEvidenceBytes",
+        "nativeAttemptEvidenceFiles",
+        "corpusSearchDefaultLimit",
+        "corpusSearchMaximumLimit",
+        "corpusSourceFamilyDefaultLimit",
+        "corpusSourceFamilyMaximumLimit",
+        "ingestionServer",
+        "maximumArtifactAcknowledgmentBytes",
+        "agentLauncher",
+        "databaseBootstrap",
+        "agentBridge",
+        "agentToolControlUrl"
       ],
       "properties": {
         "pipelinePreferenceSubject": {
@@ -44,6 +79,306 @@
         },
         "dispatchTimeoutMs": {
           "$ref": "#/$defs/positiveTimerInteger"
+        },
+        "maximumJsonBodyBytes": {
+          "$ref": "#/$defs/positiveSafeInteger"
+        },
+        "maximumArtifactUploadBodyBytes": {
+          "$ref": "#/$defs/positiveSafeInteger"
+        },
+        "maximumArtifactBytes": {
+          "$ref": "#/$defs/positiveSafeInteger"
+        },
+        "maximumRenderAssetBytes": {
+          "$ref": "#/$defs/positiveSafeInteger"
+        },
+        "maximumDispatchBodyBytes": {
+          "$ref": "#/$defs/positiveSafeInteger"
+        },
+        "ingestionAcquireTimeoutMs": {
+          "$ref": "#/$defs/positiveTimerInteger"
+        },
+        "ingestionCleanupTimeoutMs": {
+          "$ref": "#/$defs/positiveTimerInteger"
+        },
+        "maximumInternalEvidenceBytes": {
+          "$ref": "#/$defs/positiveSafeInteger"
+        },
+        "sessionLifetimeSeconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483
+        },
+        "ingestionUrl": {
+          "type": "string",
+          "pattern": "^https?://[^/?#\\s@]+(?:/[^?#\\s]*)?$"
+        },
+        "workerUrl": {
+          "type": "string",
+          "pattern": "^https?://[^/?#\\s@]+(?:/[^?#\\s]*)?$"
+        },
+        "controlInternalUrl": {
+          "type": "string",
+          "pattern": "^https?://[^/?#\\s@]+(?:/[^?#\\s]*)?$"
+        },
+        "maximumProductInputBytes": {
+          "$ref": "#/$defs/positiveSafeInteger"
+        },
+        "productControllerTimeoutMs": {
+          "$ref": "#/$defs/positiveTimerInteger"
+        },
+        "maximumProductControllerResponseBytes": {
+          "$ref": "#/$defs/positiveSafeInteger"
+        },
+        "productDecisionHistoryLimit": {
+          "$ref": "#/$defs/positiveSafeInteger"
+        },
+        "maximumProductControllerTokenCharacters": {
+          "$ref": "#/$defs/positiveSafeInteger"
+        },
+        "productDecisionLifetimeMs": {
+          "$ref": "#/$defs/positiveTimerInteger"
+        },
+        "nativeAttemptLifetimeMs": {
+          "$ref": "#/$defs/positiveTimerInteger"
+        },
+        "nativeAttemptTimeoutMs": {
+          "$ref": "#/$defs/positiveTimerInteger"
+        },
+        "nativeAttemptCleanupTimeoutMs": {
+          "$ref": "#/$defs/positiveTimerInteger"
+        },
+        "nativeAttemptLogBytes": {
+          "$ref": "#/$defs/positiveSafeInteger"
+        },
+        "nativeAttemptResultBytes": {
+          "$ref": "#/$defs/positiveSafeInteger"
+        },
+        "nativeAttemptEvidenceBytes": {
+          "$ref": "#/$defs/positiveSafeInteger"
+        },
+        "nativeAttemptEvidenceFiles": {
+          "$ref": "#/$defs/positiveSafeInteger"
+        },
+        "corpusSearchDefaultLimit": {
+          "$ref": "#/$defs/positiveSafeInteger"
+        },
+        "corpusSearchMaximumLimit": {
+          "$ref": "#/$defs/positiveSafeInteger"
+        },
+        "corpusSourceFamilyDefaultLimit": {
+          "$ref": "#/$defs/positiveSafeInteger"
+        },
+        "corpusSourceFamilyMaximumLimit": {
+          "$ref": "#/$defs/positiveSafeInteger"
+        },
+        "ingestionServer": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "port",
+            "quarantineRoot",
+            "quarantineTtlMs",
+            "reaperIntervalMs",
+            "maximumRequestBytes",
+            "maximumSourceBytes",
+            "sourceRequestTimeoutMs",
+            "maximumRedirects",
+            "allowedMediaTypes"
+          ],
+          "properties": {
+            "port": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 65535
+            },
+            "quarantineRoot": {
+              "type": "string",
+              "pattern": "^/[^\\u0000]+$"
+            },
+            "quarantineTtlMs": {
+              "type": "integer",
+              "minimum": 60000,
+              "maximum": 86400000
+            },
+            "reaperIntervalMs": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2147483647
+            },
+            "maximumRequestBytes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2147483647
+            },
+            "maximumSourceBytes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2147483647
+            },
+            "sourceRequestTimeoutMs": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2147483647
+            },
+            "maximumRedirects": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2147483647
+            },
+            "allowedMediaTypes": {
+              "type": "array",
+              "minItems": 1,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "pattern": "^[a-z0-9.+-]+/[a-z0-9.+-]+$"
+              }
+            }
+          }
+        },
+        "maximumArtifactAcknowledgmentBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "agentLauncher": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "attemptLifetimeMs",
+            "limits",
+            "terminationGraceMs"
+          ],
+          "properties": {
+            "attemptLifetimeMs": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2147483647
+            },
+            "limits": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "timeoutMs",
+                "cleanupTimeoutMs",
+                "logBytes",
+                "resultBytes",
+                "evidenceBytes",
+                "evidenceFiles"
+              ],
+              "properties": {
+                "timeoutMs": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 2147483647
+                },
+                "cleanupTimeoutMs": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 2147483647
+                },
+                "logBytes": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 2147483647
+                },
+                "resultBytes": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 2147483647
+                },
+                "evidenceBytes": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 2147483647
+                },
+                "evidenceFiles": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 2147483647
+                }
+              }
+            },
+            "terminationGraceMs": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2147483647
+            }
+          }
+        },
+        "databaseBootstrap": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "connectionTimeoutMs",
+            "maximumAttempts",
+            "retryDelayMs"
+          ],
+          "properties": {
+            "connectionTimeoutMs": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2147483647
+            },
+            "maximumAttempts": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2147483647
+            },
+            "retryDelayMs": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2147483647
+            }
+          }
+        },
+        "agentBridge": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "port",
+            "controlUrl",
+            "maximumRequestBytes",
+            "dispatchTimeoutMs",
+            "controlRequestTimeoutMs",
+            "pollIntervalMs"
+          ],
+          "properties": {
+            "port": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 65535
+            },
+            "controlUrl": {
+              "type": "string",
+              "pattern": "^https?://[^/?#\\s@\\\\\\x00-\\x20\\x7f]+/?$"
+            },
+            "maximumRequestBytes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2147483647
+            },
+            "dispatchTimeoutMs": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2147483647
+            },
+            "controlRequestTimeoutMs": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2147483647
+            },
+            "pollIntervalMs": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2147483647
+            }
+          }
+        },
+        "agentToolControlUrl": {
+          "type": "string",
+          "pattern": "^https?://[^/?#\\s@\\\\\\x00-\\x20\\x7f]+/?$"
         }
       }
     },
@@ -53,7 +388,9 @@
       "required": [
         "port",
         "controlTimeoutMs",
-        "controlUrl"
+        "controlUrl",
+        "maximumRequestBodyBytes",
+        "browserPolicy"
       ],
       "properties": {
         "port": {
@@ -69,6 +406,92 @@
         "controlUrl": {
           "type": "string",
           "pattern": "^https?://[^/?#\\s@\\\\\\x00-\\x20\\x7f]+/?$"
+        },
+        "maximumRequestBodyBytes": {
+          "$ref": "#/$defs/positiveSafeInteger"
+        },
+        "browserPolicy": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "maximumPreviewAssetBytes",
+            "previewAssetTimeoutMs",
+            "roundPolling",
+            "revisionPolling",
+            "initialDirectionPolling"
+          ],
+          "properties": {
+            "maximumPreviewAssetBytes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2147483647
+            },
+            "previewAssetTimeoutMs": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2147483647
+            },
+            "roundPolling": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "maximumAttempts",
+                "intervalMs"
+              ],
+              "properties": {
+                "maximumAttempts": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 2147483647
+                },
+                "intervalMs": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 2147483647
+                }
+              }
+            },
+            "revisionPolling": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "maximumAttempts",
+                "intervalMs"
+              ],
+              "properties": {
+                "maximumAttempts": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 2147483647
+                },
+                "intervalMs": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 2147483647
+                }
+              }
+            },
+            "initialDirectionPolling": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "maximumAttempts",
+                "intervalMs"
+              ],
+              "properties": {
+                "maximumAttempts": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 2147483647
+                },
+                "intervalMs": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 2147483647
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -77,7 +500,8 @@
       "additionalProperties": false,
       "required": [
         "ingress",
-        "supervisor"
+        "supervisor",
+        "nonceDatabase"
       ],
       "properties": {
         "ingress": {
@@ -161,6 +585,38 @@
               "$ref": "#/$defs/positiveTimerInteger"
             }
           }
+        },
+        "nonceDatabase": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "timeoutMs",
+            "maximumConnections",
+            "maximumCleanupRows",
+            "authenticationWindowMs",
+            "idleTimeoutMs"
+          ],
+          "properties": {
+            "timeoutMs": {
+              "$ref": "#/$defs/positiveTimerInteger"
+            },
+            "maximumConnections": {
+              "$ref": "#/$defs/positiveTimerInteger"
+            },
+            "maximumCleanupRows": {
+              "$ref": "#/$defs/positiveTimerInteger"
+            },
+            "authenticationWindowMs": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2147483647
+            },
+            "idleTimeoutMs": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2147483647
+            }
+          }
         }
       }
     },
@@ -169,7 +625,8 @@
       "additionalProperties": false,
       "required": [
         "resourcePolicy",
-        "maximumResultBytes"
+        "maximumResultBytes",
+        "enginePolicy"
       ],
       "properties": {
         "resourcePolicy": {
@@ -194,6 +651,43 @@
         },
         "maximumResultBytes": {
           "$ref": "#/$defs/positiveTimerInteger"
+        },
+        "enginePolicy": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "cache",
+            "maximumIngestTextCharacters",
+            "maximumAssetSourceCharacters"
+          ],
+          "properties": {
+            "cache": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "maximumInFlight",
+                "maximumCompletedEntries",
+                "maximumCompletedBytes"
+              ],
+              "properties": {
+                "maximumInFlight": {
+                  "$ref": "#/$defs/positiveSafeInteger"
+                },
+                "maximumCompletedEntries": {
+                  "$ref": "#/$defs/positiveSafeInteger"
+                },
+                "maximumCompletedBytes": {
+                  "$ref": "#/$defs/positiveSafeInteger"
+                }
+              }
+            },
+            "maximumIngestTextCharacters": {
+              "$ref": "#/$defs/positiveSafeInteger"
+            },
+            "maximumAssetSourceCharacters": {
+              "$ref": "#/$defs/positiveSafeInteger"
+            }
+          }
         }
       }
     },
@@ -1411,17 +1905,33 @@
       "required": [
         "schemaVersion",
         "owner",
-        "settings"
+        "profiles"
       ],
       "properties": {
         "schemaVersion": {
-          "const": "swarm-component.v1"
+          "const": "pipeline-component.v2"
         },
         "owner": {
           "const": "prism-control"
         },
-        "settings": {
-          "$ref": "#/$defs/prism-control"
+        "profiles": {
+          "type": "object",
+          "minProperties": 1,
+          "propertyNames": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+          },
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "settings"
+            ],
+            "properties": {
+              "settings": {
+                "$ref": "#/$defs/prism-control"
+              }
+            }
+          }
         }
       }
     },
@@ -1431,17 +1941,33 @@
       "required": [
         "schemaVersion",
         "owner",
-        "settings"
+        "profiles"
       ],
       "properties": {
         "schemaVersion": {
-          "const": "swarm-component.v1"
+          "const": "pipeline-component.v2"
         },
         "owner": {
           "const": "prism-studio"
         },
-        "settings": {
-          "$ref": "#/$defs/prism-studio"
+        "profiles": {
+          "type": "object",
+          "minProperties": 1,
+          "propertyNames": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+          },
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "settings"
+            ],
+            "properties": {
+              "settings": {
+                "$ref": "#/$defs/prism-studio"
+              }
+            }
+          }
         }
       }
     },
@@ -1451,17 +1977,33 @@
       "required": [
         "schemaVersion",
         "owner",
-        "settings"
+        "profiles"
       ],
       "properties": {
         "schemaVersion": {
-          "const": "swarm-component.v1"
+          "const": "pipeline-component.v2"
         },
         "owner": {
           "const": "prism-worker"
         },
-        "settings": {
-          "$ref": "#/$defs/prism-worker"
+        "profiles": {
+          "type": "object",
+          "minProperties": 1,
+          "propertyNames": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+          },
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "settings"
+            ],
+            "properties": {
+              "settings": {
+                "$ref": "#/$defs/prism-worker"
+              }
+            }
+          }
         }
       }
     },
@@ -1471,17 +2013,33 @@
       "required": [
         "schemaVersion",
         "owner",
-        "settings"
+        "profiles"
       ],
       "properties": {
         "schemaVersion": {
-          "const": "swarm-component.v1"
+          "const": "pipeline-component.v2"
         },
         "owner": {
           "const": "prism-execution"
         },
-        "settings": {
-          "$ref": "#/$defs/prism-execution"
+        "profiles": {
+          "type": "object",
+          "minProperties": 1,
+          "propertyNames": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+          },
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "settings"
+            ],
+            "properties": {
+              "settings": {
+                "$ref": "#/$defs/prism-execution"
+              }
+            }
+          }
         }
       }
     },
@@ -1491,17 +2049,33 @@
       "required": [
         "schemaVersion",
         "owner",
-        "settings"
+        "profiles"
       ],
       "properties": {
         "schemaVersion": {
-          "const": "swarm-component.v1"
+          "const": "pipeline-component.v2"
         },
         "owner": {
           "const": "buster-engine"
         },
-        "settings": {
-          "$ref": "#/$defs/buster-engine"
+        "profiles": {
+          "type": "object",
+          "minProperties": 1,
+          "propertyNames": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+          },
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "settings"
+            ],
+            "properties": {
+              "settings": {
+                "$ref": "#/$defs/buster-engine"
+              }
+            }
+          }
         }
       }
     },
@@ -1511,17 +2085,33 @@
       "required": [
         "schemaVersion",
         "owner",
-        "settings"
+        "profiles"
       ],
       "properties": {
         "schemaVersion": {
-          "const": "swarm-component.v1"
+          "const": "pipeline-component.v2"
         },
         "owner": {
           "const": "worker-core"
         },
-        "settings": {
-          "$ref": "#/$defs/worker-core"
+        "profiles": {
+          "type": "object",
+          "minProperties": 1,
+          "propertyNames": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+          },
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "settings"
+            ],
+            "properties": {
+              "settings": {
+                "$ref": "#/$defs/worker-core"
+              }
+            }
+          }
         }
       }
     }

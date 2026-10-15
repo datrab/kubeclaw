@@ -4,14 +4,16 @@ import { fileURLToPath } from 'node:url';
 import { createPublicKey } from 'node:crypto';
 import { readNativeWorkerNodeIdentity, readNativeWorkerPoolPolicy, requireNativeWorkerRuntimeIdentity,
   requireNativeWorkerLauncher } from '@kubeclaw/worker-core';
-import type { BusterPreparationSettings } from '../../../common/plugin-runtime/foundation/config/swarm.ts';
+import type { BusterPreparationSettings } from '@kubeclaw/plugin-foundation/config/swarm';
+import { portableJson } from '@kubeclaw/plugin-sdk/values';
 
 export const preparationStateRoot = '/var/lib/buster-v2/plan-jobs';
 export const preparationSourceRoot = '/var/lib/buster-v2/native-sources';
 export const preparationRuntimeConfig = '/run/kubeclaw-buster/config/runtime.json';
+const nativeTrustCaptures = new WeakMap<object, Readonly<{ poolFile: string; settings: string }>>();
 
 /** The root parent reads only bounded immutable configuration; it never constructs providers. */
-export function nativeBusterPreparationConfig(settings: BusterPreparationSettings, environment: NodeJS.ProcessEnv) {
+export function captureNativeBusterPreparationTrust(settings: BusterPreparationSettings, environment: NodeJS.ProcessEnv) {
   const poolFile = environment.BUSTER_NATIVE_POOL_POLICY_FILE;
   if (!poolFile) throw new Error('BUSTER_NATIVE_POOL_POLICY_REQUIRED');
   const pool = readNativeWorkerPoolPolicy(poolFile, 'buster');
@@ -22,8 +24,18 @@ export function nativeBusterPreparationConfig(settings: BusterPreparationSetting
   if (!/^sha256:[a-f0-9]{64}$/u.test(engineContentDigest ?? '')) throw new Error('BUSTER_NATIVE_ENGINE_IDENTITY_REQUIRED');
   const launcher = '/usr/local/libexec/kubeclaw-native-worker-launcher';
   requireNativeWorkerLauncher(launcher);
+  requireNativeWorkerLauncher('/usr/local/libexec/kubeclaw-buster-lifetime-guardian');
   requireNativeWorkerLauncher(process.execPath);
-  requireNativeWorkerLauncher(fileURLToPath(new URL('../../../common/plugin-runtime/foundation/isolation/plugin-sandbox', import.meta.url)));
+  requireNativeWorkerLauncher(fileURLToPath(import.meta.resolve('@kubeclaw/plugin-foundation/isolation/plugin-sandbox')));
+  const captured = Object.freeze({ pool, launcher, engineContentDigest: engineContentDigest!,
+    nodeIdentity: readNativeWorkerNodeIdentity(pool.nodeIdentityFile), tarExecutable: '/usr/bin/tar' });
+  nativeTrustCaptures.set(captured, Object.freeze({ poolFile, settings: portableJson(settings) }));
+  return captured;
+}
+
+/** Generated runtime read is separate from the recovery-only pool/node/code trust capture. */
+export function nativeBusterPreparationConfig(settings: BusterPreparationSettings, environment: NodeJS.ProcessEnv) {
+  const trusted = captureNativeBusterPreparationTrust(settings, environment);
   const runtime = readRootConfiguration(settings.maximumInputBytes);
   const publicKeyName = runtime.sourceAttestationPublicKeyEnvironmentVariable;
   if (typeof publicKeyName !== 'string' || !/^[A-Z][A-Z0-9_]*$/u.test(publicKeyName)
@@ -33,9 +45,36 @@ export function nativeBusterPreparationConfig(settings: BusterPreparationSetting
     throw new Error('BUSTER_SOURCE_ATTESTATION_CONFIG_INVALID');
   }
   if ((runtime.stateRoot !== preparationStateRoot || runtime.runtimeRoot !== '/var/lib/buster-v2/runs')) throw new Error('BUSTER_NATIVE_STATE_ROOT_INVALID');
-  return Object.freeze({ pool, launcher, engineContentDigest: engineContentDigest!, sourceAttestationPublicKey,
+  if (!Number.isSafeInteger(runtime.shutdownTimeoutMs) || Number(runtime.shutdownTimeoutMs) < 1
+    || Number(runtime.shutdownTimeoutMs) > 0x7fffffff) throw new Error('BUSTER_SERVICE_SHUTDOWN_TIMEOUT_REQUIRED');
+  const captured = Object.freeze({ ...trusted, sourceAttestationPublicKey,
     trustedSourceAuthority: runtime.trustedSourceAuthority, stateRoot: runtime.stateRoot,
-    nodeIdentity: readNativeWorkerNodeIdentity(pool.nodeIdentityFile), tarExecutable: '/usr/bin/tar' });
+    serviceShutdownTimeoutMs: Number(runtime.shutdownTimeoutMs) });
+  nativeTrustCaptures.set(captured, nativeTrustCaptures.get(trusted)!);
+  return captured;
+}
+
+/** Internal provenance for the archive creator, not an environment decoder. */
+export function originalNativeBusterHostPoolFile(captured: ReturnType<typeof captureNativeBusterPreparationTrust>,
+  settings: BusterPreparationSettings): string {
+  const original = nativeTrustCaptures.get(captured);
+  if (!original || original.settings !== portableJson(settings)) {
+    throw new Error('BUSTER_NATIVE_VERIFIED_TRUST_CAPTURE_REQUIRED');
+  }
+  return original.poolFile;
+}
+
+/** Full legacy fact capture additionally requires the runtime/source binding.
+ * A genuine HOST-only capture must never be promoted to source trust.
+ */
+export function originalNativeBusterPoolFile(captured: ReturnType<typeof nativeBusterPreparationConfig>,
+  settings: BusterPreparationSettings): string {
+  const poolFile = originalNativeBusterHostPoolFile(captured, settings);
+  if (typeof captured.sourceAttestationPublicKey !== 'string'
+    || typeof captured.trustedSourceAuthority !== 'string' || typeof captured.stateRoot !== 'string') {
+    throw new Error('BUSTER_NATIVE_VERIFIED_TRUST_CAPTURE_REQUIRED');
+  }
+  return poolFile;
 }
 
 function readRootConfiguration(maximumBytes: number): Record<string, unknown> {

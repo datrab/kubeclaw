@@ -1,3 +1,6 @@
+import { TEST_CORE_POLICY as ARTIFACT_TEST_CORE_POLICY } from '../../../../../tests/fixtures/core-runtime-policy.mjs';
+const TEST_ARTIFACT_STORE_POLICY = ARTIFACT_TEST_CORE_POLICY.artifactStore;
+import { TEST_CORE_POLICY } from '../../../../../tests/fixtures/core-runtime-policy.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import net from 'node:net';
@@ -54,12 +57,12 @@ const granted = core.resolveCapabilityGrants(snapshot, {
 const activated = await core.activateRegistry(granted.snapshot, new Set(granted.grants.keys()));
 const artifacts = path.join(temporary, 'artifacts');
 const adapters = new core.AdapterRuntime({ granted, activated, configs: new Map<string, any>([
-  ['kubeclaw.runtime-dispatch:runtime', { targets: { reviewer: { endpoint: `${origin}/dispatch`, authentication: 'spiffe-proxy' } } }],
+  ['kubeclaw.runtime-dispatch:runtime', { ...TEST_CORE_POLICY.httpDispatch, targets: { reviewer: { byteProfile:'standard', endpoint: `${origin}/dispatch`, authentication: 'spiffe-proxy' } } }],
   ['kubeclaw.network-http:http', { allowedOrigins: [origin], allowedMethods: ['POST'], allowedHeaders: ['content-type', 'idempotency-key', 'x-kubeclaw-signature'] }],
   ['kubeclaw.secret-resolver:secrets', { environment: {} }],
   ['kubeclaw.repository-adapter:repository', { repositoryRoot: project }],
-  ['kubeclaw.artifact-store:artifact-store', { artifactRoot: artifacts }],
-]), effects: new core.EffectCoordinator(new core.FileEffectJournal(path.join(temporary, 'effects.jsonl')),
+  ['kubeclaw.artifact-store:artifact-store', { ...TEST_ARTIFACT_STORE_POLICY, artifactRoot: artifacts }],
+]), effects: new core.EffectCoordinator(new core.FileEffectJournal(path.join(temporary, 'effects.jsonl'), TEST_CORE_POLICY),
   undefined, undefined, new core.MemoryResourceLockManager(), 300_000), shutdownTimeoutMs: 1000,
   async emitDomainEvent(event: unknown) { fs.appendFileSync(path.join(temporary, 'domain.jsonl'), `${JSON.stringify(event)}\n`); },
 });
@@ -74,8 +77,8 @@ try {
     { kind: 'path', prefixes: ['skills/nova/plugins/review'] },
   ];
   for (const [index, scope] of scopes.entries()) {
-    const journal = new core.FileJournal(path.join(temporary, `events-${index}.jsonl`));
-    const runner = new core.PipelineRunner({ definition: { schemaVersion: 'pipeline-definition.v2',
+    const journal = new core.FileJournal(path.join(temporary, `events-${index}.jsonl`), TEST_CORE_POLICY.journalAppendLockTimeoutMs);
+    const runner = new core.PipelineRunner({stageMemoryBytes: TEST_CORE_POLICY.stageMemoryBytes, definition: { schemaVersion: 'pipeline-definition.v2',
       id: `review-io-${index}`, maxConcurrency: 1, stages: [{ id: 'audit', type: 'kubeclaw.audit.repository-review',
         dependsOn: [], config: { agent: 'reviewer', reviewerModel: 'gpt-5.6-terra', profile: 'audit' }, input: { mode: 'plan', scope },
         execution: { maxAttempts: 1, maxRemediationCycles: 0, timeoutMs: 15000 } }] },
@@ -95,8 +98,8 @@ try {
     assert.deepEqual(included, expected.sort(), 'only canonically scoped paths enter the real inventory');
 
   }
-  const journal = new core.FileJournal(path.join(temporary, 'revalidation-events.jsonl'));
-  const retry = new core.PipelineRunner({ definition: { schemaVersion: 'pipeline-definition.v2',
+  const journal = new core.FileJournal(path.join(temporary, 'revalidation-events.jsonl'), TEST_CORE_POLICY.journalAppendLockTimeoutMs);
+  const retry = new core.PipelineRunner({stageMemoryBytes: TEST_CORE_POLICY.stageMemoryBytes, definition: { schemaVersion: 'pipeline-definition.v2',
     id: 'review-storage-error', maxConcurrency: 1, stages: [{ id: 'revalidate',
       type: 'kubeclaw.audit.repository-review-revalidation', dependsOn: [], config: { agent: 'reviewer', reviewerModel: 'gpt-5.6-terra', profile: 'audit' },
       input: { baselineReport: { artifactId: `repository-review:${'0'.repeat(64)}`, digest: `sha256:${'0'.repeat(64)}`,
@@ -129,8 +132,8 @@ try {
     { id: 'shared-retries', count: 1, overrides: { maxRetries: 1, maxRetryAttemptsPerPhase: 0 }, attempts: 1, calls: 1, reason: /core.effect_reconciliation_required/u },
     { id: 'transport', count: 1, overrides: { maxRetries: 0 }, attempts: 1, calls: 1, reason: /core.effect_reconciliation_required/u },
   ]) {
-    const testJournal = new core.FileJournal(path.join(temporary, `${test.id}-events.jsonl`));
-    const runner = new core.PipelineRunner({ definition: { schemaVersion: 'pipeline-definition.v2',
+    const testJournal = new core.FileJournal(path.join(temporary, `${test.id}-events.jsonl`), TEST_CORE_POLICY.journalAppendLockTimeoutMs);
+    const runner = new core.PipelineRunner({stageMemoryBytes: TEST_CORE_POLICY.stageMemoryBytes, definition: { schemaVersion: 'pipeline-definition.v2',
       id: `review-${test.id}`, maxConcurrency: 1, stages: [{ id: 'revalidate',
         type: 'kubeclaw.audit.repository-review-revalidation', dependsOn: [],
         config: { agent: 'reviewer', reviewerModel: 'gpt-5.6-terra', profile: 'audit' },
@@ -147,8 +150,8 @@ try {
     else for (const item of attempts) assert.equal((item.entry.payload as any).outcome, 'retry');
   }
 
-  const auditJournal = new core.FileJournal(path.join(temporary, 'audit-transport.jsonl'));
-  const auditRunner = new core.PipelineRunner({ definition: { schemaVersion: 'pipeline-definition.v2',
+  const auditJournal = new core.FileJournal(path.join(temporary, 'audit-transport.jsonl'), TEST_CORE_POLICY.journalAppendLockTimeoutMs);
+  const auditRunner = new core.PipelineRunner({stageMemoryBytes: TEST_CORE_POLICY.stageMemoryBytes, definition: { schemaVersion: 'pipeline-definition.v2',
     id: 'audit-transport', maxConcurrency: 1, stages: [{ id: 'audit', type: 'kubeclaw.audit.repository-review',
       dependsOn: [], config: { agent: 'reviewer', reviewerModel: 'gpt-5.6-terra', profile: 'audit' },
       input: { mode: 'execute', scope: { kind: 'plugin', names: ['review'], dependencyRadius: 0 },

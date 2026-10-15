@@ -1,3 +1,4 @@
+import { TEST_CORE_POLICY } from '../../fixtures/core-runtime-policy.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -49,7 +50,7 @@ test('runtime profile selector refuses absent/present Proxies and getters withou
 
 test('original plugin context and registered AdapterRuntime reject Proxy/getter input before real HTTP or effect writes', { timeout: 60000 }, async t => {
   const f = await fixture(t), prepared = await prepareRuntime(f.platform, f.definition);
-  const events = new FileJournal(path.join(f.run, 'profile-audit-events.jsonl'));
+  const events = new FileJournal(path.join(f.run, 'profile-audit-events.jsonl'), TEST_CORE_POLICY.journalAppendLockTimeoutMs);
   const adapters = createAdapterRuntime(f.platform, f.run, prepared, events);
   await adapters.start(); t.after(() => adapters.shutdown());
   const owner = prepared.granted.snapshot.stages.get('kubeclaw.decision.human-approval');

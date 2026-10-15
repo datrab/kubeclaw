@@ -1,0 +1,88 @@
+{
+  "schemaVersion": "pipeline-entry.v3",
+  "profile": "standard",
+  "features": {
+    "observability": true,
+    "buster": true,
+    "discord_alerts": true
+  },
+  "tuning": {
+    "safety_margins": "high",
+    "retention": "high",
+    "alerts": "rich",
+    "logs": "verbose",
+    "checks": "strict",
+    "determinism": "strict"
+  },
+  "overrides": {},
+  "components": {
+    "prism-control": "components/prism-control.config.json",
+    "prism-studio": "components/prism-studio.config.json",
+    "prism-worker": "components/prism-worker.config.json",
+    "prism-execution": "components/prism-execution.config.json",
+    "buster-engine": "components/buster-engine.config.json",
+    "worker-core": "components/worker-core.config.json"
+  },
+  "bindings": [
+    {
+      "role": "prism",
+      "owner": "prism-control",
+      "instanceId": "kubeclaw/prism/prism-control",
+      "profileId": "spiffe"
+    },
+    {
+      "role": "prism",
+      "owner": "prism-execution",
+      "instanceId": "kubeclaw/prism/prism-control",
+      "profileId": "standard"
+    },
+    {
+      "role": "prism",
+      "owner": "prism-worker",
+      "instanceId": "kubeclaw/prism/prism-worker",
+      "profileId": "standard"
+    },
+    {
+      "role": "prism",
+      "owner": "prism-control",
+      "instanceId": "kubeclaw/prism/prism-worker",
+      "profileId": "spiffe"
+    },
+    {
+      "role": "prism",
+      "owner": "prism-execution",
+      "instanceId": "kubeclaw/prism/prism-worker",
+      "profileId": "standard"
+    },
+    {
+      "role": "prism",
+      "owner": "prism-studio",
+      "instanceId": "kubeclaw/prism/prism-studio",
+      "profileId": "standard"
+    },
+    {
+      "role": "buster",
+      "owner": "buster-engine",
+      "instanceId": "kubeclaw/agent-buster/buster-v2-runtime",
+      "profileId": "runtime"
+    },
+    {
+      "role": "buster",
+      "owner": "worker-core",
+      "instanceId": "kubeclaw/agent-buster/buster-v2-runtime",
+      "profileId": "standard"
+    },
+    {
+      "role": "prism",
+      "owner": "prism-control",
+      "instanceId": "kubeclaw/prism/prism-ingestion",
+      "profileId": "standard"
+    },
+    {
+      "role": "prism",
+      "owner": "prism-control",
+      "instanceId": "kubeclaw/agent-prism/prism-agent-bridge",
+      "profileId": "standard"
+    }
+  ]
+}

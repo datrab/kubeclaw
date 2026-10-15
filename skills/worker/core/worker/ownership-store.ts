@@ -60,8 +60,10 @@ export class FileWorkerOwnershipStore {
   readonly #file: string;
   readonly #maximumRecords: number;
   readonly #maximumBytes: number;
+  readonly #additionalMetadataBytes: (() => number) | undefined;
 
-  constructor(root: string, limits: { maximumRecords: number; maximumBytes: number }) {
+  constructor(root: string, limits: { maximumRecords: number; maximumBytes: number },
+    additionalMetadataBytes?: () => number) {
     if (!path.isAbsolute(root) || !Number.isSafeInteger(limits.maximumRecords) || limits.maximumRecords < 1
       || !Number.isSafeInteger(limits.maximumBytes) || limits.maximumBytes < 1) {
       throw new Error('WORKER_OWNERSHIP_CONFIG_INVALID');
@@ -69,6 +71,30 @@ export class FileWorkerOwnershipStore {
     this.#file = path.join(path.resolve(root), 'owners.json');
     this.#maximumRecords = limits.maximumRecords;
     this.#maximumBytes = limits.maximumBytes;
+    this.#additionalMetadataBytes = additionalMetadataBytes;
+  }
+
+  /** Trusted in-process sidecar writer shares the EXACT owners.json fence and
+   * unchanged ceiling. Reserve the existing future-terminal bound, not merely
+   * today's file size. Callback must publish exactly the charged bytes; it is
+   * synchronous so no unbounded authority escapes this fenced operation.
+   */
+  async withMetadataReservation(addition: number | (() => number), operation: () => undefined): Promise<void> {
+    return withDurableStoreLock(this.#file, async () => {
+      const state = await this.#read();
+      const additionalBytes = typeof addition === 'function' ? addition() : addition;
+      if (!Number.isSafeInteger(additionalBytes) || additionalBytes < 0) throw new Error('WORKER_OWNERSHIP_CAPACITY_EXCEEDED');
+      ownershipTerminalCapacityBytes(state, this.#availableBytes() - additionalBytes);
+      operation();
+    });
+  }
+
+  #availableBytes(): number {
+    const additional = this.#additionalMetadataBytes ? this.#additionalMetadataBytes() : 0;
+    if (!Number.isSafeInteger(additional) || additional < 0 || additional >= this.#maximumBytes) {
+      throw new Error('WORKER_OWNERSHIP_CAPACITY_EXCEEDED');
+    }
+    return this.#maximumBytes - additional;
   }
 
   async records(): Promise<readonly WorkerOwnershipRecord[]> {
@@ -119,7 +145,7 @@ export class FileWorkerOwnershipStore {
         topology: { kind: 'aggregate.v1', children: [] },
       };
       state.records.push(record);
-      ownershipTerminalCapacityBytes(state, this.#maximumBytes);
+      ownershipTerminalCapacityBytes(state, this.#availableBytes());
       await this.#write(state);
       return structuredClone(record);
     });
@@ -186,7 +212,7 @@ export class FileWorkerOwnershipStore {
         topology: { kind: current.topology.kind, children: update(current) } };
       validateRecord(updated);
       state.records[index] = updated;
-      if (admission) ownershipTerminalCapacityBytes(state, this.#maximumBytes);
+      if (admission) ownershipTerminalCapacityBytes(state, this.#availableBytes());
       await this.#write(state);
       return structuredClone(updated);
     });
@@ -211,7 +237,7 @@ export class FileWorkerOwnershipStore {
   }
 
   async #write(state: State): Promise<void> {
-    if (state.records.length > this.#maximumRecords || Buffer.byteLength(canonicalJson(state)) > this.#maximumBytes) {
+    if (state.records.length > this.#maximumRecords || Buffer.byteLength(canonicalJson(state)) > this.#availableBytes()) {
       throw new Error('WORKER_OWNERSHIP_CAPACITY_EXCEEDED');
     }
     await writeDurableState(this.#file, state);

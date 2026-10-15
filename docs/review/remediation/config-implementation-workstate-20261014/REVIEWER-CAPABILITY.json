@@ -1,0 +1,23 @@
+{
+  "checkedAt": "2026-10-14T15:33:48.835518+00:00",
+  "availableTools": [
+    "clock__curr_time",
+    "openclaw__apply_patch",
+    "openclaw__automations",
+    "openclaw__memory_get",
+    "openclaw__memory_search",
+    "openclaw__session_status",
+    "openclaw__sessions_history",
+    "openclaw__sessions_list",
+    "openclaw__sessions_search",
+    "openclaw__subagents",
+    "openclaw_direct__exec",
+    "openclaw_direct__process",
+    "sessions_spawn"
+  ],
+  "requiredNativeSpawnToolPresent": false,
+  "nativeSpawnNotExposedInDirectNamespaces": true,
+  "existingNativeReviewers": 0,
+  "subagentsListStatus": "ok",
+  "acceptance": "BLOCKED; no self-acceptance"
+}

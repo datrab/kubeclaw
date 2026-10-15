@@ -1,4 +1,4 @@
-import type { BusterManifestPolicy } from '../../../common/plugin-runtime/foundation/config/buster-cluster-invokers.ts';
+import type { BusterManifestPolicy } from '@kubeclaw/plugin-foundation/config/buster-cluster-invokers';
 import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';

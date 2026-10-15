@@ -1,3 +1,6 @@
+import { TEST_CORE_POLICY as ARTIFACT_TEST_CORE_POLICY } from '../../../../../tests/fixtures/core-runtime-policy.mjs';
+const TEST_ARTIFACT_STORE_POLICY = ARTIFACT_TEST_CORE_POLICY.artifactStore;
+import { TEST_CORE_POLICY } from '../../../../../tests/fixtures/core-runtime-policy.mjs';
 import { gateCoverageDigest } from '@kubeclaw/pipeline-test-gate-contract';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';import os from 'node:os';import path from 'node:path';import {pathToFileURL} from 'node:url';
@@ -28,13 +31,13 @@ try{
   const granted=core.resolveCapabilityGrants(snapshot,{enabledRegistrations:enabled,providers:new Map([['artifacts.read','kubeclaw.artifact-store:artifact-store'],['artifacts.write','kubeclaw.artifact-store:artifact-store']]),
     grants:new Map([['kubeclaw.project-summary:summary',new Map([['artifacts.read',{allowedNamespaces:['kubeclaw.implementation-agent','kubeclaw.lint','kubeclaw.review','kubeclaw.buster-quality-gate']}],['artifacts.write',{allowedNamespaces:['kubeclaw.project-summary']}]])]])});
   const activated=await core.activateRegistry(granted.snapshot,new Set(granted.grants.keys()));
-  const adapters=new core.AdapterRuntime({granted,activated,configs:new Map([['kubeclaw.artifact-store:artifact-store',{artifactRoot:path.join(temporary,'artifacts')}]]),
-    effects:new core.EffectCoordinator(new core.FileEffectJournal(path.join(temporary,'effects.jsonl')),undefined,undefined,new core.MemoryResourceLockManager(), 300_000),shutdownTimeoutMs:1000,async emitDomainEvent(){}});
+  const adapters=new core.AdapterRuntime({granted,activated,configs:new Map([['kubeclaw.artifact-store:artifact-store',{ ...TEST_ARTIFACT_STORE_POLICY,artifactRoot:path.join(temporary,'artifacts')}]]),
+    effects:new core.EffectCoordinator(new core.FileEffectJournal(path.join(temporary,'effects.jsonl'), TEST_CORE_POLICY),undefined,undefined,new core.MemoryResourceLockManager(), 300_000),shutdownTimeoutMs:1000,async emitDomainEvent(){}});
   await adapters.start();
   try{
-    const runner=new core.PipelineRunner({definition:{schemaVersion:'pipeline-definition.v2',id:'pipeline:summary',maxConcurrency:1,stages:[{
+    const runner=new core.PipelineRunner({stageMemoryBytes: TEST_CORE_POLICY.stageMemoryBytes,definition:{schemaVersion:'pipeline-definition.v2',id:'pipeline:summary',maxConcurrency:1,stages:[{
       id:'summary',type:'kubeclaw.report.project-summary',dependsOn:[],config:{},input:{projectId:'api',modules:[{moduleId:'api',sourceStageId:'forge',testStageId:'test',expectedCoverage:coverage('module')}],final:{sourceStageId:'forge',testStageId:'test',lintStageId:'lint',reviewStageId:'review',expectedCoverage:coverage('cumulative')}},
-      execution:{maxAttempts:1,maxRemediationCycles:0,timeoutMs:5000}}]},registry:granted,activated,adapters,journal:new core.FileJournal(path.join(temporary,'events.jsonl'))});
+      execution:{maxAttempts:1,maxRemediationCycles:0,timeoutMs:5000}}]},registry:granted,activated,adapters,journal:new core.FileJournal(path.join(temporary,'events.jsonl'), TEST_CORE_POLICY.journalAppendLockTimeoutMs)});
     assert.equal((await runner.run('run:summary')).status,'blocked');
     assert.equal(fs.existsSync(path.join(temporary,'artifacts','records','store.json')),false);
   }finally{await adapters.shutdown();}

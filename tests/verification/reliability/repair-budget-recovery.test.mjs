@@ -1,3 +1,4 @@
+import { TEST_CORE_POLICY } from '../../fixtures/core-runtime-policy.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -43,7 +44,7 @@ test('administrative decision crash prefixes preserve exactly one category debit
       const result = await reopenBlockedPipelineV2(f.platform, f.definition, decision, value => value.actor);
       assert.equal(result.status, 'succeeded'); assert.equal(result.stages.get('source').attemptsUsed, 2);
       assert.equal(result.stages.get('source').repairLedger.length, 1);
-      const replay = recoverStageStates(f.definition, new FileJournal(path.join(currentRun, 'events.jsonl')).records(), runId, 'nova');
+      const replay = recoverStageStates(f.definition, new FileJournal(path.join(currentRun, 'events.jsonl'), TEST_CORE_POLICY.journalAppendLockTimeoutMs).records(), runId, 'nova');
       for (const [id, state] of result.stages) assert.deepEqual(replay.get(id), state);
     }
   } finally { fs.rmSync(root, { recursive: true, force: true }); fs.rmSync(backup, { recursive: true, force: true }); }
@@ -61,7 +62,7 @@ test('original completion and repair-intent crash prefixes debit each category o
       if (event.type === 'attempt.completed' && event.payload.result.outcome === 'request_fix') orders += 1;
       if (!(event.type === 'attempt.completed' && event.payload.result.outcome === 'request_fix') && !(event.type === 'stage.waiting' && event.payload.repairRequest)) continue;
       const file = path.join(root, `prefix-${index}.jsonl`); fs.writeFileSync(file, `${lines.slice(0, index + 1).join('\n')}\n`);
-      const records = new FileJournal(file).records();
+      const records = new FileJournal(file, TEST_CORE_POLICY.journalAppendLockTimeoutMs).records();
       const first = recoverStageStates(f.definition, records, runId, 'nova');
       const second = recoverStageStates(f.definition, records, runId, 'nova');
       assert.equal(first.get('source').repairLedger.length, orders);
@@ -93,7 +94,7 @@ test('restart before and after durable Nova signal projection schedules exactly 
       execFileSync('git', ['-C', f.repository, 'reset', '--hard', sourceRevision]);
       fs.writeFileSync(path.join(currentRun, 'signals.jsonl'), signals);
       if (projected) fs.writeFileSync(path.join(currentRun, 'events.jsonl'), `${lines.slice(0, resolved + 1).join('\n')}\n`);
-      const replay = recoverStageStates(f.definition, new FileJournal(path.join(currentRun, 'events.jsonl')).records(), runId, 'nova');
+      const replay = recoverStageStates(f.definition, new FileJournal(path.join(currentRun, 'events.jsonl'), TEST_CORE_POLICY.journalAppendLockTimeoutMs).records(), runId, 'nova');
       assert.equal(replay.get('source').repairLedger.length, projected ? 3 : 2);
       assert.equal(replay.get('source').status, projected ? 'pending' : 'succeeded');
       const result = projected ? await recoverPipelineV2(f.platform, f.definition, runId) : await resumePipelineV2(f.platform, f.definition, runId, signal);

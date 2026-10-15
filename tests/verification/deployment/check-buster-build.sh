@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
-cd /app
+cd /opt/buster-image-proofs
 mkdir -p /run/user/1000/proof /home/builder/.local/share/buildkit-proof
 chown -R builder:builder /run/user/1000/proof /home/builder/.local/share/buildkit-proof
 cat > /tmp/buildkit-proof.toml <<'TOML'
@@ -28,4 +28,4 @@ export CONTAINER_BUILD_REGISTRY_REFERENCE=127.0.0.1:5000
 export CONTAINER_BUILD_REGISTRY_BASE_URL=http://127.0.0.1:5000
 node tests/verification/contracts/check-pipeline-container-build-production.mts
 # Buster owns actual browser execution as well as image building.
-node --input-type=module -e 'import {chromium} from "playwright"; const b=await chromium.launch({args:["--no-sandbox"]}); try { const p=await b.newPage(); await p.setContent("<h1>Buster browser proof</h1>"); if(await p.locator("h1").textContent()!=="Buster browser proof") throw Error("Browser content mismatch"); } finally { await b.close(); }'
+node --input-type=module -e 'import {chromium} from "/app/skills/node_modules/playwright/index.mjs"; const b=await chromium.launch({args:["--no-sandbox"]}); try { const p=await b.newPage(); await p.setContent("<h1>Buster browser proof</h1>"); if(await p.locator("h1").textContent()!=="Buster browser proof") throw Error("Browser content mismatch"); } finally { await b.close(); }'

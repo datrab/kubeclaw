@@ -1,3 +1,6 @@
+import { TEST_CORE_POLICY as ARTIFACT_TEST_CORE_POLICY } from '../../fixtures/core-runtime-policy.mjs';
+const TEST_ARTIFACT_STORE_POLICY = ARTIFACT_TEST_CORE_POLICY.artifactStore;
+import { TEST_CORE_POLICY } from '../../fixtures/core-runtime-policy.mjs';
 // Real disk adapters and journal replay; no injected storage implementation.
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -10,7 +13,7 @@ import { canonicalJson, sha256Text } from '../../../skills/common/plugin-runtime
 
 const root = fs.mkdtempSync(path.join(os.tmpdir(), 'sdk-json-consumers-'));
 const attempt = { runId: 'run:test', stageId: 'stage:test', attemptId: 'attempt:test', attemptNumber: 1 };
-const adapter = activate({ config: { artifactRoot: path.join(root, 'artifacts') } } as Parameters<typeof activate>[0]);
+const adapter = activate({ config: { ...TEST_ARTIFACT_STORE_POLICY, artifactRoot: path.join(root, 'artifacts') } } as Parameters<typeof activate>[0]);
 const signal = new AbortController().signal;
 const request = {
   schemaVersion: 'effect-request.v1', requestId: 'request:test', effectId: '', idempotencyKey: 'effect:test', attempt,
@@ -41,9 +44,9 @@ try {
   const journalPath = path.join(root, 'effects.jsonl');
   const invocation = { ...request, payload: { x: null } };
   invocation.effectId = stableEffectId(invocation);
-  const journal = new FileEffectJournal(journalPath);
+  const journal = new FileEffectJournal(journalPath, TEST_CORE_POLICY);
   await journal.requested(invocation as Parameters<typeof journal.requested>[0]);
-  const replayed = await new FileEffectJournal(journalPath).request(invocation.idempotencyKey);
+  const replayed = await new FileEffectJournal(journalPath, TEST_CORE_POLICY).request(invocation.idempotencyKey);
   assertMatchingRequest(replayed, invocation);
   assert.throws(() => assertMatchingRequest(replayed, { ...invocation, payload: { x: undefined } }), /CANONICAL_JSON_/);
   assert.throws(() => assertMatchingRequest(replayed, { ...invocation, payload: {} }), /EFFECT_IDEMPOTENCY_CONFLICT/);

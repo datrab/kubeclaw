@@ -269,14 +269,14 @@ for (const [label, dockerfile, role] of [
 ]) {
   assert.match(
     dockerfile,
-    /node \.?\/?(?:app\/)?node_modules\/playwright\/cli\.js install-deps chromium/,
+    /node \.?\/?(?:app\/(?:prism\/skills\/|skills\/)?|)?node_modules\/playwright\/cli\.js install-deps chromium/,
     `${label} must invoke the production Playwright CLI without the pruned dev-dependency symlink`,
   );
   assert.match(dockerfile, /COPY docker\/browser-archives\.lock\.json /,
     `${label} must copy the pinned browser archive identities`);
   assert.match(dockerfile, /COPY scripts\/browser-archive-lock\.mjs /,
     `${label} must copy the actual locked browser installer`);
-  assert.match(dockerfile, new RegExp(`node (?:/app/)?scripts/browser-archive-lock\\.mjs --install "\\$TARGETARCH" ${role} /ms-playwright`),
+  assert.match(dockerfile, new RegExp(`node (?:/app/|/opt/buster-image-tools/)?scripts/browser-archive-lock\\.mjs --install "\\$TARGETARCH" ${role} /ms-playwright`),
     `${label} must install actual archives using its role and target architecture`);
 }
 assert.match(read('scripts/check-built-runtime-image.sh'), /tests\/verification\/deployment\/check-buster-build\.sh:\/proof\.sh:ro/,
@@ -485,8 +485,9 @@ assert.doesNotMatch(networkPolicies, /name:\s*kubeclaw-buster-managed-test-egres
 assert.equal((busterValues.match(/scheme:\s*HTTP/gu) ?? []).length, 3,
   'all Buster plan runtime probes must use the loopback-only internal HTTP endpoint');
 assert.match(busterValues, /CONTAINER_BUILD_BUILDKIT_HOST[\s\S]*buildkitd\.sock/);
-assert.match(busterRuntimeDockerfile, /check-pipeline-container-build-production\.mts/);
-assert.match(busterRuntimeDockerfile, /check-pipeline-container-build-recovery\.mts/);
+assert.match(busterRuntimeDockerfile, /COPY --from=buster-package \/proof \/opt\/buster-image-proofs/);
+assert.match(read('scripts/build-buster-proof-harness.mjs'), /check-pipeline-container-build-production\.mts/);
+assert.match(read('scripts/build-buster-proof-harness.mjs'), /check-pipeline-container-build-recovery\.mts/);
 for (const [probe, endpoint] of [['startupProbe', '/bootstrapz'], ['readinessProbe', '/readyz'], ['livenessProbe', '/healthz']]) {
   assert.match(
     busterValues,

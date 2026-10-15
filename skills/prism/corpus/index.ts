@@ -150,15 +150,16 @@ async function insertRevision(connection: Queryable, input: CorpusInput, evidenc
 export async function search(
   db: Queryable,
   query: string,
-  limit = 10,
-  queryEmbedding?: { embedding: number[]; model: string },
+  limit: number,
+  queryEmbedding: { embedding: number[]; model: string } | undefined,
   options: {
     required?: Record<string, unknown>;
     preferred?: Record<string, unknown>;
     avoid?: Record<string, unknown>;
-    sourceFamilyLimit?: number;
-  } = {},
+    sourceFamilyLimit: number;
+  },
 ): Promise<Array<Record<string, unknown>>> {
+  if (!Number.isSafeInteger(limit) || limit < 1 || !Number.isSafeInteger(options?.sourceFamilyLimit) || options.sourceFamilyLimit < 1) throw new Error("valid corpus search limits required");
   const vector = queryEmbedding?.embedding;
   if (
     vector &&
@@ -198,7 +199,7 @@ export async function search(
           ? actual.includes(expected)
           : actual === expected;
     });
-  const familyLimit = Math.max(1, options.sourceFamilyLimit ?? 2);
+  const familyLimit = options.sourceFamilyLimit;
   const families = new Map<string, number>();
   const selected: Array<Record<string, unknown>> = [];
   const eligible = result.rows

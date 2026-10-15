@@ -1,3 +1,4 @@
+import { TEST_CORE_POLICY } from '../../fixtures/core-runtime-policy.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -6,7 +7,7 @@ import type { AdapterActivationContext, AdapterInvocation } from '@kubeclaw/plug
 import { activate } from '../../../skills/common/plugins/wait-store/src/adapter.ts';
 import { waitFrom } from '../../../skills/nova/plugins/prism-design/src/stage.ts';
 const root = fs.mkdtempSync(path.join(os.tmpdir(), 'prism-wait-'));
-const adapter = activate({ config: { root } } as AdapterActivationContext);
+const adapter = activate({ config: { ...TEST_CORE_POLICY.waitStore, root } } as AdapterActivationContext);
 const expected = { issuerId: 'operator:design', expiresAt: new Date(Date.now() + 60_000).toISOString(), projectId: 'design' };
 const invocation = { confidential: true, signal: new AbortController().signal, request: {
   capability: 'signal.wait', operation: 'create', idempotencyKey: 'prism:real-wait',

@@ -1,4 +1,3 @@
-busterComponentFile: files/config/profiles/buster-engine.runtime.config.json
 # Buster production values. The gateway owns Buster agent sessions; the
 # colocated v2 runtime owns deterministic suites and rootless BuildKit.
 agentRole: "buster"

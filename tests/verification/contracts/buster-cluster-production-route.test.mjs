@@ -1,3 +1,4 @@
+import { TEST_CORE_POLICY_SELECTION } from '../../fixtures/core-runtime-policy.mjs';
 import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
 import fs from 'node:fs';
@@ -110,7 +111,7 @@ for (const profile of profiles) for (const capability of capabilities) {
     const privateKey = keys.privateKey.export({ type: 'pkcs8', format: 'pem' }).toString();
     const token = 'ci2-production-routing-token-000000000';
     const platformConfig = path.join(root, 'platform.json');
-    fs.writeFileSync(platformConfig, JSON.stringify({ schemaVersion: 'pipeline-platform.v2', effectLockTtlMs: 300000,
+    fs.writeFileSync(platformConfig, JSON.stringify({corePolicySelection: TEST_CORE_POLICY_SELECTION, schemaVersion: 'pipeline-platform.v2', effectLockTtlMs: 300000,
       installationRoots: [installRoot], trustedBuiltinRoots: [installRoot], externalTrust: { allowedSourceDigests: {}, verifiedAttestations: {} },
       providers: {}, grants: {}, adapters: {}, activeAdapters: [], observers: {}, storageRoot: path.join(root, 'platform-state'),
       shutdownTimeoutMs: 5000, orchestratorIssuerId: 'ci2', administrativeDecisionIssuers: [] }));

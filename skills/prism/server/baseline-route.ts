@@ -12,7 +12,7 @@ import { body, json } from "./control-http.ts";
 type RouteContext = Pick<
   AuthenticatedControlContext,
   "pool" | "repository" | "artifacts" | "runWorker"
->;
+ | "config">;
 
 export async function baselineRoute(
   context: RouteContext,
@@ -33,7 +33,7 @@ async function publishBaseline(
 ) {
   const { pool } = context;
 
-  const input = (await body(request)) as {
+  const input = (await body(request, context.config.maximumJsonBodyBytes)) as {
     projectId?: string;
     documentId?: string;
     approvalId?: string;

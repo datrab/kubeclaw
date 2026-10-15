@@ -1,3 +1,4 @@
+import { TEST_CORE_POLICY } from '../../fixtures/core-runtime-policy.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -80,8 +81,8 @@ async function produce() {
   ]) });
   const activated = await core.activateRegistry(granted.snapshot, new Set(granted.grants.keys()));
   const effectsFile = path.join(root, 'producer-effects.jsonl');
-  const effects = new core.FileEffectJournal(effectsFile);
-  const adapters = new core.AdapterRuntime({ granted, activated, configs: new Map([['kubeclaw.artifact-store:artifact-store', { artifactRoot }]]), effects: new core.EffectCoordinator(effects, undefined, undefined, new core.FileResourceLockManager(path.join(root, 'producer-locks')), 300_000), shutdownTimeoutMs: 1000, async emitDomainEvent() {} });
+  const effects = new core.FileEffectJournal(effectsFile, TEST_CORE_POLICY);
+  const adapters = new core.AdapterRuntime({ granted, activated, configs: new Map([['kubeclaw.artifact-store:artifact-store', { artifactRoot }]]), effects: new core.EffectCoordinator(effects, undefined, undefined, new core.FileResourceLockManager(path.join(root, 'producer-locks'), TEST_CORE_POLICY), 300_000), shutdownTimeoutMs: 1000, async emitDomainEvent() {} });
   await adapters.start();
   try {
     const moduleCoverage = contractCoverage('module');
@@ -96,7 +97,7 @@ async function produce() {
       { id: 'project-summary', type: 'kubeclaw.report.project-summary', dependsOn: ['final-test'], config: {}, input: { projectId: 'app', modules: [{ moduleId: 'app', sourceStageId: 'forge', testStageId: 'test', expectedCoverage: moduleCoverage }], final: { sourceStageId: 'forge', testStageId: 'final-test', lintStageId: 'lint', expectedCoverage: finalCoverage } }, execution: { maxAttempts: 1, maxRemediationCycles: 0, timeoutMs: 10000 } },
     ] };
     const lifecycleFile = path.join(root, 'producer-lifecycle.jsonl');
-    const runner = new core.PipelineRunner({ definition, registry: granted, activated, adapters, journal: new core.FileJournal(lifecycleFile), orchestratorIssuerId: 'test:delivery-stage-boundary' });
+    const runner = new core.PipelineRunner({stageMemoryBytes: TEST_CORE_POLICY.stageMemoryBytes, definition, registry: granted, activated, adapters, journal: new core.FileJournal(lifecycleFile, TEST_CORE_POLICY.journalAppendLockTimeoutMs), orchestratorIssuerId: 'test:delivery-stage-boundary' });
     const result = await runner.run(runId);
     assert.equal(result.status, 'succeeded');
     assert.equal(result.stages.get('project-summary')?.status, 'succeeded');
@@ -156,17 +157,17 @@ async function consume() {
   ]) });
   const activated = await core.activateRegistry(granted.snapshot, new Set(granted.grants.keys()));
   const effectsFile = path.join(root, `${phase}-effects.jsonl`);
-  const effects = new core.FileEffectJournal(effectsFile);
+  const effects = new core.FileEffectJournal(effectsFile, TEST_CORE_POLICY);
   const adapters = new core.AdapterRuntime({ granted, activated, configs: new Map([
     ['kubeclaw.artifact-store:artifact-store', { artifactRoot }],
     [evidenceId, { stateRoot: root, manifestStageId: 'project-summary', gateStageId: 'final-test' }],
-  ]), effects: new core.EffectCoordinator(effects, undefined, undefined, new core.FileResourceLockManager(path.join(root, `${phase}-locks`)), 300_000), shutdownTimeoutMs: 1000, async emitDomainEvent() {} });
+  ]), effects: new core.EffectCoordinator(effects, undefined, undefined, new core.FileResourceLockManager(path.join(root, `${phase}-locks`), TEST_CORE_POLICY), 300_000), shutdownTimeoutMs: 1000, async emitDomainEvent() {} });
   await adapters.start();
   try {
     const ref = phase === 'consume-portable-en' ? producer.portableV2ReaderContractRef : producer.storedArtifactRef;
     const request = { operation: 'demo', resource: { type: 'test.plan.evidence', canonicalId: ref.artifactId }, payload: { manifest: ref, namespace: 'kubeclaw.project-summary', authNodeId: 'auth' } };
     const definition = { schemaVersion: 'pipeline-definition.v2', id: `delivery-manifest-stage-boundary-${phase}`, maxConcurrency: 1, stages: [{ id: 'consume', type: 'test.delivery-consumer', dependsOn: [], config: {}, input: request, execution: { maxAttempts: 1, maxRemediationCycles: 0, timeoutMs: 10000 } }] };
-    const runner = new core.PipelineRunner({ definition, registry: granted, activated, adapters, journal: new core.FileJournal(path.join(root, `${phase}-lifecycle.jsonl`)), orchestratorIssuerId: 'test:delivery-stage-boundary' });
+    const runner = new core.PipelineRunner({stageMemoryBytes: TEST_CORE_POLICY.stageMemoryBytes, definition, registry: granted, activated, adapters, journal: new core.FileJournal(path.join(root, `${phase}-lifecycle.jsonl`), TEST_CORE_POLICY.journalAppendLockTimeoutMs), orchestratorIssuerId: 'test:delivery-stage-boundary' });
     const result = await runner.run(runId);
     assert.equal(result.status, 'blocked');
     const recovery = await effects.recoveryEntries();

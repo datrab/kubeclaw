@@ -33,16 +33,18 @@ export class BusterPreparationClient {
   readonly #requests = new Map<string, Error | null>();
   readonly #replies = new Map<string, Reply>();
   readonly #reader: Promise<void>;
+  readonly #messages: AsyncIterable<Buffer>;
   #failure: Error | undefined;
 
   constructor(channel: NativeWorkerControlChannel, limits: {
     maximumPendingAdmissions: number; maximumRequestBytes: number; maximumResultBytes: number;
-  }, sourceRoot: string) {
+  }, sourceRoot: string, messages: AsyncIterable<Buffer> = channel.messages()) {
     this.#channel = channel;
     this.#maximumPending = limits.maximumPendingAdmissions;
     this.#maximumRequestBytes = limits.maximumRequestBytes;
     this.#sourceRoot = sourceRoot;
     this.#maximumMetadataBytes = limits.maximumResultBytes;
+    this.#messages = messages;
     this.#reader = this.#read().catch(error => {
       this.#failure = error instanceof Error ? error : new Error('BUSTER_PREPARATION_PARENT_LOST');
       for (const reply of this.#replies.values()) reply.pending.reject(this.#failure);
@@ -133,7 +135,7 @@ export class BusterPreparationClient {
   }
 
   async #read(): Promise<void> {
-    for await (const bytes of this.#channel.messages()) {
+    for await (const bytes of this.#messages) {
       const message = decodePreparationMessage(bytes);
       const reply = this.#replies.get(message.admissionId);
       if (message.kind === 'failure') {

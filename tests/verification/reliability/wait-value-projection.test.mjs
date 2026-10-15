@@ -1,3 +1,5 @@
+import { loadCoreRuntimePolicy } from '../../../skills/common/plugin-runtime/foundation/config/core-runtime-policy.ts';
+import { TEST_CORE_POLICY } from '../../fixtures/core-runtime-policy.mjs';
 import { retireOperatorRequest } from '../../../scripts/retire-operator-request.mjs';
 import { fork } from 'node:child_process';
 import { once } from 'node:events';
@@ -46,7 +48,7 @@ export function waitScope(f, pendingSignal = false) {
 }
 async function actualReader(f, root = f.run) {
   const prepared = await prepareRuntime(f.platform, f.definition);
-  const runtime = createAdapterRuntime(f.platform, root, prepared, new FileJournal(path.join(root, 'events.jsonl')));
+  const runtime = createAdapterRuntime(f.platform, root, prepared, new FileJournal(path.join(root, 'events.jsonl'), TEST_CORE_POLICY.journalAppendLockTimeoutMs));
   await runtime.start();
   return { runtime, invoke: (operation, key, payload = {}) => runtime.invoke('signal.wait', f.waitRequest.attempt, key,
     { operation, resource: f.waitRequest.resource, payload }, new AbortController().signal) };
@@ -153,8 +155,11 @@ test('fixed real Wait byte quota admits original Core work only after measured s
   const before = fs.readFileSync(recordFile(f.waitRoot));
   const quota = before.length + 128;
   const platform = structuredClone(f.platform);
-  platform.adapters['kubeclaw.wait-store:waits'].maximumStoreBytes = quota;
-  platform.adapters['kubeclaw.wait-store:waits'].maximumRecords = 2;
+  const inheritedPolicy = loadCoreRuntimePolicy(platform.corePolicySelection);
+  const selectedPolicy = { ...inheritedPolicy, waitStore: { ...inheritedPolicy.waitStore, maximumStoreBytes: quota, maximumRecords: 2 } };
+  const policyFile = path.join(f.root, 'wait-quota-core.json');
+  fs.writeFileSync(policyFile, JSON.stringify({ schemaVersion: 'nova-core-runtime-policy.v1', profiles: { selected: { settings: selectedPolicy } } }));
+  platform.corePolicySelection = { file: policyFile, profile: 'selected' };
   const configuration = structuredClone(platform.adapters['kubeclaw.wait-store:waits']);
   const definition = structuredClone(f.definition);
   definition.stages[0].input.summary = 'Fixed quota next original approval. '.repeat(35);

@@ -1,3 +1,4 @@
+import { nativeNonceDatabaseSettings } from './native/resource-policy.mts';
 import test from "node:test";
 import assert from "node:assert/strict";
 import { createServer as createTcpServer, type Socket } from "node:net";
@@ -13,7 +14,7 @@ test("actual HMAC HTTP admission fails closed on native pg startup timeout; boot
   blackhole.listen(0, "127.0.0.1"); await once(blackhole, "listening");
   const address = blackhole.address(); assert(address && typeof address !== "string");
   const diagnostics: WorkerDependencyDiagnostic[] = [];
-  const database = new WorkerNonceDatabase(`postgresql://fixture:private@127.0.0.1:${address.port}/fixture`, 100, event => diagnostics.push(event));
+  const database = new WorkerNonceDatabase(`postgresql://fixture:private@127.0.0.1:${address.port}/fixture`, { ...nativeNonceDatabaseSettings, timeoutMs: 100 }, event => diagnostics.push(event));
   const server = await nativeWorkerHarness(t, { mode: "hmac", secret: "secret", database });
   server.listen(0, "127.0.0.1"); await once(server, "listening");
   const http = server.address(); assert(http && typeof http !== "string");
@@ -27,7 +28,7 @@ test("actual HMAC HTTP admission fails closed on native pg startup timeout; boot
     assert.equal(database.pendingConnections, 0); assert.equal(database.openConnections, 0);
     assert(diagnostics.some(event => event.phase === "admission" && event.code === "ADMISSION_LIMIT"));
     assert(diagnostics.some(event => event.phase === "connect" && event.code === "PG_CONNECT_TIMEOUT"));
-    assert(diagnostics.every(event => event.durationMs >= 0 && event.active <= 4 && event.pending === 0));
+    assert(diagnostics.every(event => event.durationMs >= 0 && event.active <= nativeNonceDatabaseSettings.maximumConnections && event.pending === 0));
     assert.doesNotMatch(JSON.stringify(diagnostics), /private|postgresql|fixture|127\.0\.0\.1/);
   } finally {
     await database.close(); server.closeAllConnections(); await new Promise<void>(resolve => server.close(() => resolve()));

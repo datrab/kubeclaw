@@ -64,8 +64,7 @@
     "worker",
     "postgresql",
     "secrets",
-    "artifactStorage",
-    "busterComponentFile"
+    "artifactStorage"
   ],
   "properties": {
     "images": {
@@ -305,8 +304,7 @@
       "type": "object",
       "required": [
         "enabled",
-        "replicas",
-        "quarantineTtlMs"
+        "replicas"
       ],
       "properties": {
         "enabled": {
@@ -315,11 +313,6 @@
         "replicas": {
           "type": "integer",
           "minimum": 0
-        },
-        "quarantineTtlMs": {
-          "type": "integer",
-          "minimum": 60000,
-          "maximum": 86400000
         },
         "resources": {
           "type": "object"
@@ -510,10 +503,6 @@
           "maxLength": 128
         }
       }
-    },
-    "busterComponentFile": {
-      "type": "string",
-      "pattern": "^files/config/(profiles/)?buster-engine([.][a-z0-9-]+)?[.]config[.]json$"
     }
   },
   "additionalProperties": false

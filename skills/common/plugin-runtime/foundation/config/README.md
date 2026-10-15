@@ -79,3 +79,72 @@ by `prism-worker.config.json` `settings.ingress.port`. The shared loader validat
 it; Worker captures it once and rejects its retired role-specific `PORT` input.
 See the [operator contract](../../../../../docs/operations/operator-configuration.md#worker-listener-component-migration)
 for deployment and migration. The change is implemented; see the linked criteria for the remaining acceptance gates.
+
+
+## Explicit Nova Core runtime policy
+
+Platform v2 now requires `corePolicySelection: {file, profile}`. The sole repository
+author is `config/nova/core.config.json`; the standard profile retains former
+behavior. Paths resolve against the canonical Platform author directory, never
+CWD or a delivered-code directory. For the normal Nova/Buster image file use an
+explicit `{"file":"/etc/kubeclaw/nova/core.config.json","profile":"standard"}`.
+Images copy the canonical document; they do not auto-select it. Operator-authored
+Platform files must supply the reference. No inline second author, ENV default,
+Swarm owner, or v10 activation was introduced.
+
+`loadPlatformConfig` validates/freezes the reference and resolves paths. Its pure
+`resolvePlatformConfigValue` counterpart does exactly the same mapping without
+reading the policy. Actual Core startup (`inspectRuntimeConfiguration` /
+`prepareRuntime`) reads the explicitly selected profile once, validates every
+authored profile, clones/freezes the selected policy and captures it in runtime
+configuration before registry activation. Missing/invalid policy fails closed.
+
+The required settings are stage/observer lease memory, run-mutation TTL/renewal,
+journal append timeout and audit summary byte threshold. Resource metadata-lock
+timeout, provisional-lock lifetime and effect-journal inline bytes remain three
+separate settings, not aliases. Twelve recovery attempt/admission capacity leaves
+reach the active reconciliation caller. Timer bounds, positive safe integer
+budgets, renewal below TTL, and the admission metadata reserve are validated.
+
+New run snapshots retain resolved values in `registry.configuration.corePolicy`.
+Recovery, resume, administrative reopen and manual retirement select those
+retained values before their mutation lock/journal, without rereading latest B.
+Package/grant/graph checks remain unchanged. A snapshot lacking a valid policy
+requires its original runtime; it is never filled from current config or former
+literals. Journal, effect and resource-lock constructors now require explicit
+policy arguments; programmatic test/consumer callers must migrate too.
+
+This is configuration receiving and preserved-settings behavior only, not
+source authentication, grants, v10 admission or full native acceptance.
+
+
+## Selected durable adapter capacities
+
+The existing Core runtime policy also requires `artifactStore` (four leaves),
+`stateStore` (three), `waitStore` (three), `telemetryStore` (three),
+`operatorMessagingStore` (two), `transportPublisherStore` (two) and
+`openClawDispatch` (two processing leaves plus five target-timing profile leaves).
+Nova projects these central values
+into their original built-in registration configs before registry validation,
+passes the same captured config to actual activation and persists it alongside
+the Core policy. Raw Platform entries contain installation/target data only;
+equal-valued duplicate policy fields reject. Direct adapters require explicit
+complete arguments. See the operator guide for exact fields and migration.
+Retained Wait projection reads its recorded entry limit with no old literal
+fallback; original snapshots without the required policy need original code.
+No source authentication, v10 activation, provider authority or retirement
+protocol is introduced by these capacity settings.
+
+
+OpenClaw target timing selection uses the explicit target `timingProfile` and
+complete Core `targetTimingProfiles` map; old raw timing values reject. The
+existing run snapshot retains original processing selectors as well as policy
+values. Recover/resume/admin capture both from one retained snapshot before
+preparation, while other current installation/identity config still must match
+the existing pinned comparison. This does not introduce graph/authority rules.
+
+HTTP runtime-dispatch uses selected required `httpDispatch.targetByteProfiles`
+(two body-byte leaves, standard1MiB each). Explicit target `byteProfile` chooses
+a complete profile; retained selectors and values are restored without changing
+endpoint/authentication/token/grant identity checks. No raw map/default byte
+author remains; this does not centralize authentication or network-adapter caps.

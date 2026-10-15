@@ -1,3 +1,6 @@
+import { TEST_CORE_POLICY as ARTIFACT_TEST_CORE_POLICY } from '../../fixtures/core-runtime-policy.mjs';
+const TEST_ARTIFACT_STORE_POLICY = ARTIFACT_TEST_CORE_POLICY.artifactStore;
+import { TEST_CORE_POLICY } from '../../fixtures/core-runtime-policy.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -16,12 +19,12 @@ for (const outcome of ['conflicting-request', 'orphaned-receipt', 'corrupt-journ
   test(`effect releases resource after locked recheck rejects ${outcome}`, async () => {
     const root = fs.mkdtempSync(path.join(os.tmpdir(), 'effect-lock-lifetime-'));
     const signal = new AbortController().signal;
-    const adapter = activate({ config: { artifactRoot: path.join(root, 'artifacts') } });
+    const adapter = activate({ config: { ...TEST_ARTIFACT_STORE_POLICY, artifactRoot: path.join(root, 'artifacts') } });
     try {
       const file = path.join(root, 'effects.jsonl');
-      const journal = new FileEffectJournal(file);
-      const concurrent = new FileEffectJournal(file);
-      const locks = new FileResourceLockManager(path.join(root, 'locks'));
+      const journal = new FileEffectJournal(file, TEST_CORE_POLICY);
+      const concurrent = new FileEffectJournal(file, TEST_CORE_POLICY);
+      const locks = new FileResourceLockManager(path.join(root, 'locks'), TEST_CORE_POLICY);
       const invocation = { idempotencyKey: 'race:key',
         attempt: { runId: 'run:regression', stageId: 'write', attemptId: 'attempt:regression', attemptNumber: 1 },
         capability: 'artifacts.write', operation: 'put_json',
@@ -68,10 +71,10 @@ for (const outcome of ['conflicting-request', 'orphaned-receipt', 'corrupt-journ
 test('real artifact completion and receipt replay release once without repeating the effect', async () => {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'effect-completion-'));
   const signal = new AbortController().signal;
-  const adapter = activate({ config: { artifactRoot: path.join(root, 'artifacts') } });
+  const adapter = activate({ config: { ...TEST_ARTIFACT_STORE_POLICY, artifactRoot: path.join(root, 'artifacts') } });
   try {
-    const journal = new FileEffectJournal(path.join(root, 'effects.jsonl'));
-    const locks = new FileResourceLockManager(path.join(root, 'locks'));
+    const journal = new FileEffectJournal(path.join(root, 'effects.jsonl'), TEST_CORE_POLICY);
+    const locks = new FileResourceLockManager(path.join(root, 'locks'), TEST_CORE_POLICY);
     const invocation = { idempotencyKey: 'write:key',
       attempt: { runId: 'run:success', stageId: 'write', attemptId: 'attempt:success', attemptNumber: 1 },
       capability: 'artifacts.write', operation: 'put_json', resource: { type: 'artifact.object', canonicalId: 'success' },

@@ -27,7 +27,7 @@ export class FileJournal<T> {
   #mtimeMs: number | undefined;
   #ctimeMs: number | undefined;
 
-  constructor(file: string, appendLockTimeoutMs = 5_000) {
+  constructor(file: string, appendLockTimeoutMs: number) {
     if (!Number.isSafeInteger(appendLockTimeoutMs) || appendLockTimeoutMs < 1) {
       throw new Error('JOURNAL_APPEND_LOCK_TIMEOUT_INVALID');
     }

@@ -1,3 +1,5 @@
+import { TEST_CORE_POLICY as STATE_WAIT_TEST_CORE_POLICY } from '../../../../../tests/fixtures/core-runtime-policy.mjs';
+const TEST_WAIT_STORE_POLICY = STATE_WAIT_TEST_CORE_POLICY.waitStore;
 import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
 import fs from 'node:fs';
@@ -10,7 +12,7 @@ const root = fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-wait-store-'));
 const { activate } = await import(pathToFileURL(path.resolve('src/adapter.ts')).href);
 const adapter = activate({
   registration: {},
-  config: { root, maxEntryBytes: 2048 },
+  config: { ...TEST_WAIT_STORE_POLICY, root, maxEntryBytes: 2048 },
   async emit() {},
   async invoke() { throw new Error('unexpected dependency'); },
 });

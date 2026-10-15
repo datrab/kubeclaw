@@ -1,3 +1,4 @@
+import { nativeBrowserPolicy } from '../../tests/native/resource-policy.mts';
 import { test, expect } from '@playwright/test';
 import { createServer } from 'node:http';
 import { once } from 'node:events';
@@ -33,6 +34,7 @@ test.beforeAll(async () => {
   server = createServer((request, response) => {
     void (async () => {
       const pathname = new URL(request.url, 'http://fixture').pathname;
+      if (pathname === '/studio-config') { response.setHeader('content-type', 'application/json'); response.end(JSON.stringify(nativeBrowserPolicy)); return; }
       if (pathname === '/v1/session') { response.setHeader('content-type', 'application/json'); response.end(JSON.stringify({ csrf: 'fixture', userId: 'operator' })); return; }
       if (pathname === '/v1/documents/demo') { response.setHeader('content-type', 'application/json'); response.end(JSON.stringify({ document })); return; }
       if (pathname.startsWith('/v1/artifacts/')) {

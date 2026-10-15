@@ -16,6 +16,7 @@ import { RevocableLease } from './lease.ts';
 export type AppendLifecycleEvent = (type: LifecycleEvent['type'], identity: LifecycleEvent['identity'], payload?: Readonly<Record<string, unknown>>, causationId?: string | null) => LifecycleEvent;
 
 interface ExecutorOptions {
+  readonly stageMemoryBytes: number;
   readonly runtimeDispatchProfile?: RuntimeDispatchProfile;
   readonly reviewCacheProfile?: ReviewCacheProfile;
   readonly graph: ExecutionGraph; readonly registry: GrantedRegistry; readonly activated: ActivatedRegistry; readonly adapters: AdapterRuntime;
@@ -30,7 +31,10 @@ interface AttemptRuntime {
 
 export class StageExecutor {
   readonly #options: ExecutorOptions;
-  constructor(options: ExecutorOptions) { this.#options = options; }
+  constructor(options: ExecutorOptions) {
+    if (!Number.isSafeInteger(options.stageMemoryBytes) || options.stageMemoryBytes < 1) throw new Error('CORE_STAGE_MEMORY_REQUIRED');
+    this.#options = Object.freeze({ ...options });
+  }
 
   async execute(runId: string, state: StageRuntimeState, guidance?: Readonly<Record<string, unknown>>): Promise<{ state: StageRuntimeState; action: ReturnType<typeof applyStageResult>['action']; result: StageResult }> {
     const definition = this.#options.graph.stage(state.stageId);
@@ -59,7 +63,7 @@ export class StageExecutor {
     const leaseContract: InvocationLease = Object.freeze({
       schemaVersion: 'invocation-lease.v2', leaseId: `lease:${crypto.randomUUID()}`, attempt, registration: owner.provenance, status: 'active',
       grants: [...(this.#options.registry.grants.get(registrationId) ?? [])],
-      limits: Object.freeze({ wallTimeMs: definition.execution.timeoutMs, memoryBytes: 512 * 1024 * 1024, cpuMillis: definition.execution.timeoutMs }),
+      limits: Object.freeze({ wallTimeMs: definition.execution.timeoutMs, memoryBytes: this.#options.stageMemoryBytes, cpuMillis: definition.execution.timeoutMs }),
       issuedAt: now.toISOString(), expiresAt: new Date(now.getTime() + definition.execution.timeoutMs).toISOString(),
     });
     const lease = new RevocableLease(leaseContract, this.#options.now); const controller = new AbortController();

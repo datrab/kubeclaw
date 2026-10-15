@@ -1,0 +1,18 @@
+{
+  "axe": {
+    "path": "skills/buster/engine/test-gates/browser-axe-runtime.ts",
+    "sha256": "7370bdf54556875b996cc0ac4c4219a8c9ddc11d25dfb72875f41806e82482c8"
+  },
+  "visual": {
+    "path": "skills/buster/engine/test-gates/browser-visual-runtime.ts",
+    "sha256": "197b89c97cf756a90cbf2effd3485391f8cdbe494829ef6c668e527f0f695382"
+  },
+  "lighthouse": {
+    "path": "skills/buster/engine/test-gates/browser-lighthouse-runtime.ts",
+    "sha256": "a7af35a6b7df314129cf9150c3d44d2017c2bf47b9e529ef1ff6962129966b75"
+  },
+  "playwright": {
+    "path": "skills/buster/engine/test-gates/browser-playwright-runtime.ts",
+    "sha256": "20e32c52051339237e14cf1bed0da9c690ece23297bec9bb77a628e8df211917"
+  }
+}

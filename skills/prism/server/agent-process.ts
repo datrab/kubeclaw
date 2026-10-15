@@ -9,7 +9,11 @@ export class AgentProcess implements WorkerAttemptOperation<WorkerAttemptEnvelop
   private streamsClosed=false;
   private readonly executable:string;
   private readonly args:string[];
-  constructor(executable:string,args:string[]) {this.executable=executable;this.args=args;}
+  private readonly terminationGraceMs:number;
+  constructor(executable:string,args:string[],terminationGraceMs:number) {
+    if(!Number.isSafeInteger(terminationGraceMs)||terminationGraceMs<1||terminationGraceMs>2147483647)throw new Error('PRISM_AGENT_TERMINATION_GRACE_REQUIRED');
+    this.executable=executable;this.args=args;this.terminationGraceMs=terminationGraceMs;
+  }
   prepare(_limits:WorkerAttemptLimitsV2){return undefined;}
   execute(context:WorkerAttemptContext<WorkerAttemptEnvelopeV2>) {
     if(this.child)throw new Error('Prism external action has already been started');
@@ -30,7 +34,7 @@ export class AgentProcess implements WorkerAttemptOperation<WorkerAttemptEnvelop
   async terminate() {
     if(!this.child || this.streamsClosed)return;
     const kill=(signal:NodeJS.Signals)=>{try{if(this.child?.pid)process.kill(-this.child.pid,signal);}catch(error){if((error as NodeJS.ErrnoException).code!=='ESRCH')throw error;}};
-    kill('SIGTERM');const timer=setTimeout(()=>kill('SIGKILL'),1000);
+    kill('SIGTERM');const timer=setTimeout(()=>kill('SIGKILL'),this.terminationGraceMs);
     try{await this.closed;}finally{clearTimeout(timer);}
   }
   async measure():Promise<WorkerResourceObservations> {

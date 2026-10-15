@@ -324,7 +324,9 @@ data:
           "kubeclaw-prism": {
             "enabled": true,
             "config": {
-              "controlUrl": "http://127.0.0.1:28080"
+              {{- $tools := mustFromJson (required "central Prism tool projection required; run npm run config:prism:sync" (.Files.Get "files/pipeline/prism-agent-tools.json")) }}
+              {{- if or (ne $tools.namespace .Release.Namespace) (ne $tools.releaseName .Release.Name) }}{{ fail "Prism tool release identity must match central bindings" }}{{ end }}
+              "controlUrl": {{ required "Prism tool controlUrl required" $tools.controlUrl | quote }}
             }
           }
           {{- end }}

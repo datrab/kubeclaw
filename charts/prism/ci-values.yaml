@@ -11,5 +11,9 @@ postgresql:
 worker:
   native:
     nodeName: native-render-test
-    namespace: default
+    namespace: kubeclaw
     policyDigest: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+
+workerTrust:
+  spiffe:
+    enabled: true

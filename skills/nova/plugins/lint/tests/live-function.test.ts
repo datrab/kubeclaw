@@ -1,3 +1,6 @@
+import { TEST_CORE_POLICY as ARTIFACT_TEST_CORE_POLICY } from '../../../../../tests/fixtures/core-runtime-policy.mjs';
+const TEST_ARTIFACT_STORE_POLICY = ARTIFACT_TEST_CORE_POLICY.artifactStore;
+import { TEST_CORE_POLICY } from '../../../../../tests/fixtures/core-runtime-policy.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import { execFileSync } from 'node:child_process';
@@ -101,7 +104,7 @@ function registry(type) {
 async function run(changedFiles, runId, type = 'kubeclaw.lint.pre-check', options = {}) {
   const granted = registry(type);
   const activated = await core.activateRegistry(granted.snapshot, new Set(granted.grants.keys()));
-  const effects = new core.EffectCoordinator(new core.FileEffectJournal(path.join(temporary, `${runId}-effects.jsonl`)), undefined, undefined, new core.MemoryResourceLockManager(), 300_000);
+  const effects = new core.EffectCoordinator(new core.FileEffectJournal(path.join(temporary, `${runId}-effects.jsonl`), TEST_CORE_POLICY), undefined, undefined, new core.MemoryResourceLockManager(), 300_000);
   const adapters = new core.AdapterRuntime({
     granted,
     activated,
@@ -110,7 +113,7 @@ async function run(changedFiles, runId, type = 'kubeclaw.lint.pre-check', option
         allowedRepositoryRoots: [fixtureRepository],
         allowedPolicyRoots: [temporary],
       }],
-      ['kubeclaw.artifact-store:artifact-store', {
+      ['kubeclaw.artifact-store:artifact-store', { ...TEST_ARTIFACT_STORE_POLICY,
         artifactRoot: options.artifactRoot ?? artifacts,
       }],
     ]),
@@ -121,7 +124,7 @@ async function run(changedFiles, runId, type = 'kubeclaw.lint.pre-check', option
   await adapters.start();
   options.afterAdaptersStart?.();
   try {
-    const runner = new core.PipelineRunner({
+    const runner = new core.PipelineRunner({stageMemoryBytes: TEST_CORE_POLICY.stageMemoryBytes,
       definition: {
         schemaVersion: 'pipeline-definition.v2',
         id: `pipeline:${runId}`,
@@ -159,7 +162,7 @@ async function run(changedFiles, runId, type = 'kubeclaw.lint.pre-check', option
       registry: granted,
       activated,
       adapters,
-      journal: new core.FileJournal(path.join(temporary, `${runId}-events.jsonl`)),
+      journal: new core.FileJournal(path.join(temporary, `${runId}-events.jsonl`), TEST_CORE_POLICY.journalAppendLockTimeoutMs),
     });
     return await runner.run(`run:${runId}`);
   } finally {

@@ -1,3 +1,4 @@
+import { TEST_CORE_POLICY } from '../../fixtures/core-runtime-policy.mjs';
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import fs from 'node:fs';
@@ -18,7 +19,7 @@ const definition: PipelineDefinition = { schemaVersion: 'pipeline-definition.v2'
   stages: ['forge', 'lint', 'echo', 'buster'].map((id, index, ids) => ({ id, type: `test.${id}`, dependsOn: index ? [ids[index - 1]] : [],
     config: {}, input: {}, execution: { maxAttempts: 8, maxRemediationCycles: 3, timeoutMs: 1000 },
     ...(index ? { on: { request_fix: 'forge' } } : {}) })) };
-function journalAt(root: string) { return new FileJournal<LifecycleEvent>(path.join(root, 'events.jsonl')); }
+function journalAt(root: string) { return new FileJournal<LifecycleEvent>(path.join(root, 'events.jsonl'), TEST_CORE_POLICY.journalAppendLockTimeoutMs); }
 function appendTo(journal: FileJournal<LifecycleEvent>) {
   return (type: LifecycleEvent['type'], identity: LifecycleEvent['identity'], payload = {}) => {
     let event!: LifecycleEvent;

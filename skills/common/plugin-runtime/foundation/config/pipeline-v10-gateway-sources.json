@@ -1,0 +1,3800 @@
+{
+  "profileSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "schemaVersion",
+      "profileId",
+      "role",
+      "instanceId",
+      "managedOpenClaw",
+      "readonlyBindings"
+    ],
+    "properties": {
+      "schemaVersion": {
+        "const": "gateway-openclaw-profile.v1-proposal"
+      },
+      "profileId": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+      },
+      "role": {
+        "enum": [
+          "nova",
+          "buster",
+          "prism"
+        ]
+      },
+      "instanceId": {
+        "type": "string",
+        "minLength": 1
+      },
+      "managedOpenClaw": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "memory",
+          "agents",
+          "acp",
+          "tools",
+          "commands",
+          "session",
+          "channels",
+          "gateway",
+          "plugins",
+          "messages"
+        ],
+        "properties": {
+          "memory": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "search"
+            ],
+            "properties": {
+              "search": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "enabled",
+                  "experimental",
+                  "sources",
+                  "provider",
+                  "remote",
+                  "model"
+                ],
+                "properties": {
+                  "enabled": {
+                    "type": "boolean"
+                  },
+                  "experimental": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "sessionMemory"
+                    ],
+                    "properties": {
+                      "sessionMemory": {
+                        "type": "boolean"
+                      }
+                    }
+                  },
+                  "sources": {
+                    "type": "array",
+                    "uniqueItems": true,
+                    "items": {
+                      "enum": [
+                        "memory",
+                        "sessions"
+                      ]
+                    },
+                    "minItems": 0
+                  },
+                  "provider": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "remote": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "baseUrl",
+                      "apiKey"
+                    ],
+                    "properties": {
+                      "baseUrl": {
+                        "type": "string",
+                        "minLength": 1,
+                        "format": "uri"
+                      },
+                      "apiKey": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "source",
+                          "provider",
+                          "id"
+                        ],
+                        "properties": {
+                          "source": {
+                            "enum": [
+                              "env",
+                              "file",
+                              "exec",
+                              "store"
+                            ]
+                          },
+                          "provider": {
+                            "type": "string",
+                            "pattern": "^[a-z][a-z0-9_-]{0,63}$"
+                          },
+                          "id": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "model": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              }
+            }
+          },
+          "agents": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "defaults",
+              "entries"
+            ],
+            "properties": {
+              "defaults": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "thinkingDefault",
+                  "reasoningDefault",
+                  "modelPolicy",
+                  "models",
+                  "workspace",
+                  "embeddedAgent",
+                  "contextPruning",
+                  "compaction",
+                  "subagents",
+                  "contextInjection",
+                  "timeoutSeconds"
+                ],
+                "properties": {
+                  "thinkingDefault": {
+                    "enum": [
+                      "off",
+                      "minimal",
+                      "low",
+                      "medium",
+                      "high",
+                      "xhigh",
+                      "adaptive",
+                      "max",
+                      "ultra"
+                    ]
+                  },
+                  "reasoningDefault": {
+                    "enum": [
+                      "off",
+                      "on",
+                      "stream"
+                    ]
+                  },
+                  "modelPolicy": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "allow"
+                    ],
+                    "properties": {
+                      "allow": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "uniqueItems": true
+                      }
+                    }
+                  },
+                  "models": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "openai/gpt-5.6-sol",
+                      "openai/gpt-5.5"
+                    ],
+                    "properties": {
+                      "openai/gpt-6-astra": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "agentRuntime"
+                        ],
+                        "properties": {
+                          "agentRuntime": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "required": [
+                              "id"
+                            ],
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "enum": [
+                                  "openclaw",
+                                  "codex"
+                                ]
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "openai/gpt-5.6-sol": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "agentRuntime"
+                        ],
+                        "properties": {
+                          "agentRuntime": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "required": [
+                              "id"
+                            ],
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "enum": [
+                                  "openclaw",
+                                  "codex"
+                                ]
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "openai/gpt-5.5": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "agentRuntime"
+                        ],
+                        "properties": {
+                          "agentRuntime": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "required": [
+                              "id"
+                            ],
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "enum": [
+                                  "openclaw",
+                                  "codex"
+                                ]
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "workspace": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "embeddedAgent": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "executionContract"
+                    ],
+                    "properties": {
+                      "executionContract": {
+                        "enum": [
+                          "default",
+                          "strict-agentic"
+                        ]
+                      }
+                    }
+                  },
+                  "contextPruning": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "mode",
+                      "ttl"
+                    ],
+                    "properties": {
+                      "mode": {
+                        "enum": [
+                          "off",
+                          "cache-ttl"
+                        ]
+                      },
+                      "ttl": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "compaction": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "mode",
+                      "keepRecentTokens",
+                      "memoryFlush"
+                    ],
+                    "properties": {
+                      "mode": {
+                        "enum": [
+                          "default",
+                          "safeguard"
+                        ]
+                      },
+                      "keepRecentTokens": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 9007199254740991
+                      },
+                      "memoryFlush": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "enabled"
+                        ],
+                        "properties": {
+                          "enabled": {
+                            "type": "boolean"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "subagents": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "maxConcurrent",
+                      "archiveAfterMinutes",
+                      "runTimeoutSeconds",
+                      "maxSpawnDepth"
+                    ],
+                    "properties": {
+                      "maxConcurrent": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 9007199254740991
+                      },
+                      "archiveAfterMinutes": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 144000000000
+                      },
+                      "runTimeoutSeconds": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 2147483
+                      },
+                      "maxSpawnDepth": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 5
+                      }
+                    }
+                  },
+                  "contextInjection": {
+                    "enum": [
+                      "always",
+                      "continuation-skip",
+                      "never"
+                    ]
+                  },
+                  "timeoutSeconds": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 2147483
+                  }
+                }
+              },
+              "entries": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "main"
+                ],
+                "properties": {
+                  "main": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "subagents",
+                      "skills",
+                      "skillsLimits"
+                    ],
+                    "properties": {
+                      "subagents": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "allowAgents"
+                        ],
+                        "properties": {
+                          "allowAgents": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            },
+                            "uniqueItems": true
+                          }
+                        }
+                      },
+                      "skills": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "uniqueItems": true
+                      },
+                      "skillsLimits": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "maxSkillsPromptChars"
+                        ],
+                        "properties": {
+                          "maxSkillsPromptChars": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 9007199254740991
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "acp": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "enabled",
+              "backend",
+              "defaultAgent",
+              "allowedAgents"
+            ],
+            "properties": {
+              "enabled": {
+                "type": "boolean"
+              },
+              "backend": {
+                "type": "string",
+                "minLength": 1
+              },
+              "defaultAgent": {
+                "type": "string",
+                "minLength": 1
+              },
+              "allowedAgents": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "uniqueItems": true
+              }
+            }
+          },
+          "tools": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "profile",
+              "sessions",
+              "sessions_spawn",
+              "exec",
+              "agentToAgent"
+            ],
+            "properties": {
+              "profile": {
+                "enum": [
+                  "minimal",
+                  "coding",
+                  "messaging",
+                  "full"
+                ]
+              },
+              "sessions": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "visibility"
+                ],
+                "properties": {
+                  "visibility": {
+                    "enum": [
+                      "self",
+                      "tree",
+                      "agent",
+                      "all"
+                    ]
+                  }
+                }
+              },
+              "sessions_spawn": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "attachments"
+                ],
+                "properties": {
+                  "attachments": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "enabled"
+                    ],
+                    "properties": {
+                      "enabled": {
+                        "type": "boolean"
+                      }
+                    }
+                  }
+                }
+              },
+              "exec": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "timeoutSeconds",
+                  "mode"
+                ],
+                "properties": {
+                  "timeoutSeconds": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 2147483
+                  },
+                  "mode": {
+                    "enum": [
+                      "deny",
+                      "allowlist",
+                      "ask",
+                      "auto",
+                      "full"
+                    ]
+                  }
+                }
+              },
+              "agentToAgent": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "enabled"
+                ],
+                "properties": {
+                  "enabled": {
+                    "type": "boolean"
+                  }
+                }
+              }
+            }
+          },
+          "commands": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "native",
+              "nativeSkills",
+              "restart"
+            ],
+            "properties": {
+              "native": {
+                "anyOf": [
+                  {
+                    "type": "boolean"
+                  },
+                  {
+                    "const": "auto"
+                  }
+                ]
+              },
+              "nativeSkills": {
+                "anyOf": [
+                  {
+                    "type": "boolean"
+                  },
+                  {
+                    "const": "auto"
+                  }
+                ]
+              },
+              "restart": {
+                "type": "boolean"
+              }
+            }
+          },
+          "session": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "dmScope",
+              "resetByType",
+              "threadBindings"
+            ],
+            "properties": {
+              "dmScope": {
+                "enum": [
+                  "main",
+                  "per-peer",
+                  "per-channel-peer",
+                  "per-account-channel-peer"
+                ]
+              },
+              "resetByType": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "group"
+                ],
+                "properties": {
+                  "group": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "mode",
+                      "idleMinutes"
+                    ],
+                    "properties": {
+                      "mode": {
+                        "enum": [
+                          "none",
+                          "daily",
+                          "idle"
+                        ]
+                      },
+                      "idleMinutes": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 144000000000
+                      }
+                    }
+                  }
+                }
+              },
+              "threadBindings": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "enabled",
+                  "idleHours",
+                  "maxAgeHours"
+                ],
+                "properties": {
+                  "enabled": {
+                    "type": "boolean"
+                  },
+                  "idleHours": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 2400000000.0
+                  },
+                  "maxAgeHours": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 2400000000.0
+                  }
+                }
+              }
+            }
+          },
+          "channels": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "discord"
+            ],
+            "properties": {
+              "discord": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "groupPolicy",
+                  "streaming",
+                  "guilds",
+                  "threadBindings",
+                  "execApprovals"
+                ],
+                "properties": {
+                  "groupPolicy": {
+                    "enum": [
+                      "open",
+                      "disabled",
+                      "allowlist"
+                    ]
+                  },
+                  "streaming": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "mode"
+                    ],
+                    "properties": {
+                      "mode": {
+                        "enum": [
+                          "off",
+                          "partial",
+                          "block",
+                          "progress"
+                        ]
+                      }
+                    }
+                  },
+                  "guilds": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "*"
+                    ],
+                    "properties": {
+                      "*": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "requireMention"
+                        ],
+                        "properties": {
+                          "requireMention": {
+                            "type": "boolean"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "threadBindings": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "enabled",
+                      "idleHours",
+                      "spawnSessions"
+                    ],
+                    "properties": {
+                      "enabled": {
+                        "type": "boolean"
+                      },
+                      "idleHours": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 2400000000.0
+                      },
+                      "spawnSessions": {
+                        "type": "boolean"
+                      }
+                    }
+                  },
+                  "execApprovals": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "enabled",
+                      "target"
+                    ],
+                    "properties": {
+                      "enabled": {
+                        "anyOf": [
+                          {
+                            "type": "boolean"
+                          },
+                          {
+                            "const": "auto"
+                          }
+                        ]
+                      },
+                      "target": {
+                        "enum": [
+                          "dm",
+                          "channel",
+                          "both"
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "gateway": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "mode",
+              "bind",
+              "controlUi",
+              "auth",
+              "tools",
+              "tailscale"
+            ],
+            "properties": {
+              "mode": {
+                "enum": [
+                  "local",
+                  "remote"
+                ]
+              },
+              "bind": {
+                "enum": [
+                  "auto",
+                  "lan",
+                  "loopback",
+                  "custom",
+                  "tailnet"
+                ]
+              },
+              "controlUi": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "dangerouslyAllowHostHeaderOriginFallback"
+                ],
+                "properties": {
+                  "dangerouslyAllowHostHeaderOriginFallback": {
+                    "type": "boolean"
+                  }
+                }
+              },
+              "auth": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "mode"
+                ],
+                "properties": {
+                  "mode": {
+                    "enum": [
+                      "none",
+                      "token",
+                      "password",
+                      "trusted-proxy"
+                    ]
+                  }
+                }
+              },
+              "tools": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "allow"
+                ],
+                "properties": {
+                  "allow": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "uniqueItems": true
+                  }
+                }
+              },
+              "tailscale": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "mode"
+                ],
+                "properties": {
+                  "mode": {
+                    "enum": [
+                      "off",
+                      "serve",
+                      "funnel"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "plugins": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "entries"
+            ],
+            "properties": {
+              "entries": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "acpx",
+                  "openai",
+                  "codex"
+                ],
+                "properties": {
+                  "acpx": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "enabled",
+                      "config"
+                    ],
+                    "properties": {
+                      "enabled": {
+                        "type": "boolean"
+                      },
+                      "config": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "permissionMode"
+                        ],
+                        "properties": {
+                          "permissionMode": {
+                            "enum": [
+                              "approve-all",
+                              "approve-reads",
+                              "deny-all"
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "openai": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "enabled"
+                    ],
+                    "properties": {
+                      "enabled": {
+                        "type": "boolean"
+                      }
+                    }
+                  },
+                  "codex": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "enabled"
+                    ],
+                    "properties": {
+                      "enabled": {
+                        "type": "boolean"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "messages": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "groupChat"
+            ],
+            "properties": {
+              "groupChat": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "visibleReplies"
+                ],
+                "properties": {
+                  "visibleReplies": {
+                    "enum": [
+                      "automatic",
+                      "message_tool"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "readonlyBindings": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "modelRoute",
+          "embedding",
+          "installedRuntime",
+          "deployment",
+          "bootstrapContextRef",
+          "originalRunAndRecoveryAuthority"
+        ],
+        "properties": {
+          "modelRoute": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "primary",
+              "fallbacks",
+              "sourceRef"
+            ],
+            "properties": {
+              "primary": {
+                "type": "string",
+                "minLength": 1
+              },
+              "fallbacks": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "uniqueItems": true
+              },
+              "sourceRef": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "embedding": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "providerRef",
+              "modelCatalogueReceipt",
+              "serviceSourceRef",
+              "credential"
+            ],
+            "properties": {
+              "providerRef": {
+                "type": "string",
+                "minLength": 1
+              },
+              "modelCatalogueReceipt": {
+                "const": "external-required"
+              },
+              "serviceSourceRef": {
+                "type": "string",
+                "minLength": 1
+              },
+              "credential": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "authoritySourceRef",
+                  "locator",
+                  "revisionCapability",
+                  "originalRevisionReceipt",
+                  "accessGrantReceipt",
+                  "confidentialTransport"
+                ],
+                "properties": {
+                  "authoritySourceRef": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "locator": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "revisionCapability": {
+                    "const": "requires-authentic-supported-original-revision-retention-or-block"
+                  },
+                  "originalRevisionReceipt": {
+                    "const": "external-required-not-fake-pin"
+                  },
+                  "accessGrantReceipt": {
+                    "const": "external-required"
+                  },
+                  "confidentialTransport": {
+                    "const": "original-authenticated-host-provider-to-native-resolved-runtime-snapshot-no-plaintext-config"
+                  }
+                }
+              }
+            }
+          },
+          "installedRuntime": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "version",
+              "nativePackageSourceReceipt",
+              "actualImageEqualityReceipt",
+              "agentOwnerReceipt",
+              "harnessModelToolPluginGrantReceipt"
+            ],
+            "properties": {
+              "version": {
+                "const": "2026.9.5"
+              },
+              "nativePackageSourceReceipt": {
+                "type": "string",
+                "minLength": 1
+              },
+              "actualImageEqualityReceipt": {
+                "const": "external-required"
+              },
+              "agentOwnerReceipt": {
+                "const": "external-required"
+              },
+              "harnessModelToolPluginGrantReceipt": {
+                "const": "external-required"
+              }
+            }
+          },
+          "deployment": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "role",
+              "instanceId",
+              "namespace",
+              "gatewayPort",
+              "sourceRef"
+            ],
+            "properties": {
+              "role": {
+                "enum": [
+                  "nova",
+                  "buster",
+                  "prism"
+                ]
+              },
+              "instanceId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "namespace": {
+                "type": "string",
+                "minLength": 1
+              },
+              "gatewayPort": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 65535
+              },
+              "sourceRef": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "bootstrapContextRef": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "path",
+              "pointer",
+              "sha256"
+            ],
+            "properties": {
+              "path": {
+                "enum": [
+                  "managed-bootstrap-context.json",
+                  "generated-contexts/nova-bootstrap-context.json",
+                  "generated-contexts/prism-bootstrap-context.json"
+                ]
+              },
+              "pointer": {
+                "type": "string",
+                "pattern": "^/contexts/[A-Za-z0-9][A-Za-z0-9._-]*$"
+              },
+              "sha256": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              }
+            }
+          },
+          "originalRunAndRecoveryAuthority": {
+            "const": "original-service/run/session/agent/model/source/trust/grants/credential-revision/deadline/cleanup; no latest or hot-M rebinding"
+          }
+        }
+      }
+    },
+    "allOf": [
+      {
+        "if": {
+          "properties": {
+            "readonlyBindings": {
+              "properties": {
+                "modelRoute": {
+                  "properties": {
+                    "primary": {
+                      "const": "openai/gpt-6-astra"
+                    }
+                  },
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "type": "object"
+        },
+        "then": {
+          "properties": {
+            "managedOpenClaw": {
+              "properties": {
+                "agents": {
+                  "properties": {
+                    "defaults": {
+                      "properties": {
+                        "models": {
+                          "required": [
+                            "openai/gpt-6-astra"
+                          ],
+                          "type": "object",
+                          "properties": {
+                            "openai/gpt-6-astra": {}
+                          }
+                        }
+                      },
+                      "type": "object"
+                    }
+                  },
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "type": "object"
+        },
+        "else": {
+          "properties": {
+            "managedOpenClaw": {
+              "properties": {
+                "agents": {
+                  "properties": {
+                    "defaults": {
+                      "properties": {
+                        "models": {
+                          "not": {
+                            "required": [
+                              "openai/gpt-6-astra"
+                            ],
+                            "type": "object",
+                            "properties": {
+                              "openai/gpt-6-astra": {}
+                            }
+                          }
+                        }
+                      },
+                      "type": "object"
+                    }
+                  },
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "type": "object"
+        }
+      }
+    ]
+  },
+  "busterContextSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "contexts",
+      "nativeFullSchema"
+    ],
+    "properties": {
+      "nativeFullSchema": {
+        "const": "pinned validateConfigObjectRaw and actual image/native plugin schema still required; this managed69 schema is NOT a substitute full OpenClaw validator"
+      },
+      "contexts": {
+        "type": "object",
+        "minProperties": 1,
+        "propertyNames": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+        },
+        "additionalProperties": {
+          "anyOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "qualification",
+                "systemAgent",
+                "agentModel",
+                "commandsAuthorization",
+                "discordEnabled",
+                "gatewayPort",
+                "gatewayTokenRef",
+                "discordTokenRef",
+                "installedPluginAllow",
+                "roleSpecificPluginEntries",
+                "secretsProviderContext",
+                "authProfileContext",
+                "sourceRoleAuthor",
+                "agentRole",
+                "nativeSecretRefRefinement",
+                "roleSpecificProjectionSource",
+                "discordApprovers",
+                "guildUserProjection",
+                "sourceAuthorizationRecipe",
+                "association"
+              ],
+              "properties": {
+                "qualification": {
+                  "const": "readonly generated existing-author/source context, not second configurable policy/secret writer; exact original per-role/host/grant/image support required"
+                },
+                "systemAgent": {
+                  "const": {
+                    "agentId": "main"
+                  }
+                },
+                "agentModel": {
+                  "const": {
+                    "primary": "openai/gpt-5.6-sol",
+                    "fallbacks": [
+                      "openai/gpt-5.5"
+                    ],
+                    "sourceRef": "charts/kubeclaw/values.yaml#/agent/model (same existing Chart author; B explicit conditional selected branch proposal)"
+                  }
+                },
+                "commandsAuthorization": {
+                  "const": {
+                    "ownerAllowFrom": [
+                      "discord:849379821536804864"
+                    ],
+                    "discord": [
+                      "849379821536804864",
+                      "user:849379821536804864"
+                    ]
+                  }
+                },
+                "discordEnabled": {
+                  "const": true
+                },
+                "gatewayPort": {
+                  "const": 18789
+                },
+                "gatewayTokenRef": {
+                  "const": {
+                    "source": "env",
+                    "provider": "default",
+                    "id": "OPENCLAW_GATEWAY_TOKEN"
+                  }
+                },
+                "discordTokenRef": {
+                  "const": {
+                    "source": "env",
+                    "provider": "default",
+                    "id": "DISCORD_TOKEN"
+                  }
+                },
+                "installedPluginAllow": {
+                  "const": [
+                    "discord",
+                    "acpx",
+                    "codex",
+                    "openai",
+                    "kubeclaw-agent-observer"
+                  ]
+                },
+                "roleSpecificPluginEntries": {
+                  "const": {
+                    "discord": {
+                      "enabled": true
+                    },
+                    "kubeclaw-agent-observer": {
+                      "enabled": true,
+                      "config": {
+                        "enabled": true,
+                        "redisNetworkIsolation": "isolated",
+                        "maxEventBytes": 3145728,
+                        "maxQueuePerStream": 100,
+                        "redisCommandTimeoutMs": 5000,
+                        "streamMaxLen": 10000,
+                        "deadLetterMaxLen": 1000,
+                        "controlWriteMaxAttempts": 3,
+                        "controlWriteRetryBaseMs": 100,
+                        "controlWriteRetryMaxMs": 1000,
+                        "hookPriority": -100,
+                        "hookTimeoutMs": 1000
+                      },
+                      "hooks": {
+                        "allowConversationAccess": true
+                      }
+                    }
+                  }
+                },
+                "secretsProviderContext": {
+                  "const": {
+                    "providers": {
+                      "default": {
+                        "source": "env",
+                        "allowlist": [
+                          "LITELLM_API_KEY",
+                          "DLV_TEST_EMBEDDING_TOKEN",
+                          "DLV_TEST_GATEWAY_PASSWORD",
+                          "OPENCLAW_GATEWAY_TOKEN"
+                        ]
+                      },
+                      "delivery-test": {
+                        "source": "env",
+                        "allowlist": [
+                          "DLV_TEST_EMBEDDING_TOKEN"
+                        ]
+                      }
+                    }
+                  }
+                },
+                "authProfileContext": {
+                  "const": "existing Chart/native OAuth identity references only; actual retained tokens/grants/issuer external, no bytes here"
+                },
+                "sourceRoleAuthor": {
+                  "const": "existing Chart + selected original my-values/buster-values.yaml; no arbitrary Context CONFIG writer"
+                },
+                "agentRole": {
+                  "const": "buster"
+                },
+                "nativeSecretRefRefinement": {
+                  "const": "original pinned native SecretRefSchema/isValidFileSecretRefId/isValidExecSecretRefId mandatory in approved full-image bootstrap; partial local cuts are NOT that validator"
+                },
+                "roleSpecificProjectionSource": {
+                  "const": "charts/kubeclaw/templates/configmap-gateway.yaml conditional agentRole=buster; original observer owner/schema/C1-source/grant joins required, not extra gateway70 policy writers"
+                },
+                "discordApprovers": {
+                  "const": [
+                    "user:849379821536804864"
+                  ]
+                },
+                "guildUserProjection": {
+                  "const": [
+                    "849379821536804864"
+                  ]
+                },
+                "sourceAuthorizationRecipe": {
+                  "const": "exact selected my-values/buster-values.yaml commands/discord arrays -> reviewed batch30 current projection; source names/IDs are NOT authentic active grants"
+                },
+                "association": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "ownerPath",
+                    "ownerProfileId",
+                    "receivingProfileId",
+                    "role",
+                    "instanceId",
+                    "sourceRecipeId",
+                    "sourceInputs"
+                  ],
+                  "properties": {
+                    "ownerPath": {
+                      "const": "charts/kubeclaw/values.yaml"
+                    },
+                    "ownerProfileId": {
+                      "type": "string",
+                      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+                    },
+                    "receivingProfileId": {
+                      "type": "string",
+                      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+                    },
+                    "role": {
+                      "const": "buster"
+                    },
+                    "instanceId": {
+                      "const": "agent-buster-gateway"
+                    },
+                    "sourceRecipeId": {
+                      "enum": [
+                        "captured-chart-local-A",
+                        "captured-chart-local-B",
+                        "captured-chart-Ready-port-contrast",
+                        "captured-chart-ready-product-off",
+                        "captured-chart-role-off"
+                      ]
+                    },
+                    "sourceInputs": {
+                      "const": [
+                        {
+                          "path": "charts/kubeclaw/values.yaml",
+                          "sha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1"
+                        },
+                        {
+                          "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+                          "sha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4"
+                        },
+                        {
+                          "path": "my-values/buster-values.yaml",
+                          "sha256": "23106a0d42310ad7aa5e2ce22a7bc940e88beac0eb486130b6f728dd84e0472f"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "qualification",
+                "systemAgent",
+                "agentModel",
+                "commandsAuthorization",
+                "discordEnabled",
+                "gatewayPort",
+                "gatewayTokenRef",
+                "discordTokenRef",
+                "installedPluginAllow",
+                "roleSpecificPluginEntries",
+                "secretsProviderContext",
+                "authProfileContext",
+                "sourceRoleAuthor",
+                "agentRole",
+                "nativeSecretRefRefinement",
+                "roleSpecificProjectionSource",
+                "discordApprovers",
+                "guildUserProjection",
+                "sourceAuthorizationRecipe",
+                "association"
+              ],
+              "properties": {
+                "qualification": {
+                  "const": "readonly generated existing-author/source context, not second configurable policy/secret writer; exact original per-role/host/grant/image support required"
+                },
+                "systemAgent": {
+                  "const": {
+                    "agentId": "main"
+                  }
+                },
+                "agentModel": {
+                  "const": {
+                    "primary": "openai/gpt-6-astra",
+                    "fallbacks": [
+                      "openai/gpt-5.5"
+                    ],
+                    "sourceRef": "charts/kubeclaw/values.yaml#/agent/model (same existing Chart author; B explicit conditional selected branch proposal)"
+                  }
+                },
+                "commandsAuthorization": {
+                  "const": {
+                    "ownerAllowFrom": [
+                      "discord:849379821536804864"
+                    ],
+                    "discord": [
+                      "849379821536804864",
+                      "user:849379821536804864"
+                    ]
+                  }
+                },
+                "discordEnabled": {
+                  "const": true
+                },
+                "gatewayPort": {
+                  "const": 18789
+                },
+                "gatewayTokenRef": {
+                  "const": {
+                    "source": "env",
+                    "provider": "default",
+                    "id": "OPENCLAW_GATEWAY_TOKEN"
+                  }
+                },
+                "discordTokenRef": {
+                  "const": {
+                    "source": "env",
+                    "provider": "default",
+                    "id": "DISCORD_TOKEN"
+                  }
+                },
+                "installedPluginAllow": {
+                  "const": [
+                    "discord",
+                    "acpx",
+                    "codex",
+                    "openai",
+                    "kubeclaw-agent-observer"
+                  ]
+                },
+                "roleSpecificPluginEntries": {
+                  "const": {
+                    "discord": {
+                      "enabled": true
+                    },
+                    "kubeclaw-agent-observer": {
+                      "enabled": true,
+                      "config": {
+                        "enabled": true,
+                        "redisNetworkIsolation": "isolated",
+                        "maxEventBytes": 3145728,
+                        "maxQueuePerStream": 100,
+                        "redisCommandTimeoutMs": 5000,
+                        "streamMaxLen": 10000,
+                        "deadLetterMaxLen": 1000,
+                        "controlWriteMaxAttempts": 3,
+                        "controlWriteRetryBaseMs": 100,
+                        "controlWriteRetryMaxMs": 1000,
+                        "hookPriority": -100,
+                        "hookTimeoutMs": 1000
+                      },
+                      "hooks": {
+                        "allowConversationAccess": true
+                      }
+                    }
+                  }
+                },
+                "secretsProviderContext": {
+                  "const": {
+                    "providers": {
+                      "default": {
+                        "source": "env",
+                        "allowlist": [
+                          "LITELLM_API_KEY",
+                          "DLV_TEST_EMBEDDING_TOKEN",
+                          "DLV_TEST_GATEWAY_PASSWORD",
+                          "OPENCLAW_GATEWAY_TOKEN"
+                        ]
+                      },
+                      "delivery-test": {
+                        "source": "env",
+                        "allowlist": [
+                          "DLV_TEST_EMBEDDING_TOKEN"
+                        ]
+                      }
+                    }
+                  }
+                },
+                "authProfileContext": {
+                  "const": "existing Chart/native OAuth identity references only; actual retained tokens/grants/issuer external, no bytes here"
+                },
+                "sourceRoleAuthor": {
+                  "const": "existing Chart + selected original my-values/buster-values.yaml; no arbitrary Context CONFIG writer"
+                },
+                "agentRole": {
+                  "const": "buster"
+                },
+                "nativeSecretRefRefinement": {
+                  "const": "original pinned native SecretRefSchema/isValidFileSecretRefId/isValidExecSecretRefId mandatory in approved full-image bootstrap; partial local cuts are NOT that validator"
+                },
+                "roleSpecificProjectionSource": {
+                  "const": "charts/kubeclaw/templates/configmap-gateway.yaml conditional agentRole=buster; original observer owner/schema/C1-source/grant joins required, not extra gateway70 policy writers"
+                },
+                "discordApprovers": {
+                  "const": [
+                    "user:849379821536804864"
+                  ]
+                },
+                "guildUserProjection": {
+                  "const": [
+                    "849379821536804864"
+                  ]
+                },
+                "sourceAuthorizationRecipe": {
+                  "const": "exact selected my-values/buster-values.yaml commands/discord arrays -> reviewed batch30 current projection; source names/IDs are NOT authentic active grants"
+                },
+                "association": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "ownerPath",
+                    "ownerProfileId",
+                    "receivingProfileId",
+                    "role",
+                    "instanceId",
+                    "sourceRecipeId",
+                    "sourceInputs"
+                  ],
+                  "properties": {
+                    "ownerPath": {
+                      "const": "charts/kubeclaw/values.yaml"
+                    },
+                    "ownerProfileId": {
+                      "type": "string",
+                      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+                    },
+                    "receivingProfileId": {
+                      "type": "string",
+                      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+                    },
+                    "role": {
+                      "const": "buster"
+                    },
+                    "instanceId": {
+                      "const": "agent-buster-gateway"
+                    },
+                    "sourceRecipeId": {
+                      "enum": [
+                        "captured-chart-local-A",
+                        "captured-chart-local-B",
+                        "captured-chart-Ready-port-contrast",
+                        "captured-chart-ready-product-off",
+                        "captured-chart-role-off"
+                      ]
+                    },
+                    "sourceInputs": {
+                      "const": [
+                        {
+                          "path": "charts/kubeclaw/values.yaml",
+                          "sha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1"
+                        },
+                        {
+                          "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+                          "sha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4"
+                        },
+                        {
+                          "path": "my-values/buster-values.yaml",
+                          "sha256": "23106a0d42310ad7aa5e2ce22a7bc940e88beac0eb486130b6f728dd84e0472f"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  "novaContextSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "contexts",
+      "nativeFullSchema"
+    ],
+    "properties": {
+      "contexts": {
+        "type": "object",
+        "minProperties": 1,
+        "propertyNames": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+        },
+        "additionalProperties": {
+          "anyOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "qualification",
+                "systemAgent",
+                "agentModel",
+                "commandsAuthorization",
+                "discordEnabled",
+                "gatewayPort",
+                "gatewayTokenRef",
+                "discordTokenRef",
+                "installedPluginAllow",
+                "roleSpecificPluginEntries",
+                "secretsProviderContext",
+                "authProfileContext",
+                "sourceRoleAuthor",
+                "agentRole",
+                "nativeSecretRefRefinement",
+                "roleSpecificProjectionSource",
+                "discordApprovers",
+                "guildUserProjection",
+                "sourceAuthorizationRecipe",
+                "nativeRoleSource",
+                "association"
+              ],
+              "properties": {
+                "qualification": {
+                  "const": "readonly generated existing-author/source context, not second configurable policy/secret writer; exact original per-role/host/grant/image support required"
+                },
+                "systemAgent": {
+                  "const": {
+                    "agentId": "main"
+                  }
+                },
+                "agentModel": {
+                  "const": {
+                    "primary": "openai/gpt-6-astra",
+                    "fallbacks": [
+                      "openai/gpt-5.5"
+                    ],
+                    "sourceRef": "my-values/nova-values.yaml#/agent/model -> same existing Chart agent.model; current actual source"
+                  }
+                },
+                "commandsAuthorization": {
+                  "const": {
+                    "ownerAllowFrom": [
+                      "discord:849379821536804864"
+                    ],
+                    "discord": [
+                      "849379821536804864",
+                      "user:849379821536804864"
+                    ]
+                  }
+                },
+                "discordEnabled": {
+                  "const": true
+                },
+                "gatewayPort": {
+                  "const": 18789
+                },
+                "gatewayTokenRef": {
+                  "const": {
+                    "source": "env",
+                    "provider": "default",
+                    "id": "OPENCLAW_GATEWAY_TOKEN"
+                  }
+                },
+                "discordTokenRef": {
+                  "const": {
+                    "source": "env",
+                    "provider": "default",
+                    "id": "DISCORD_TOKEN"
+                  }
+                },
+                "installedPluginAllow": {
+                  "const": [
+                    "discord",
+                    "acpx",
+                    "codex",
+                    "openai"
+                  ]
+                },
+                "roleSpecificPluginEntries": {
+                  "const": {
+                    "discord": {
+                      "enabled": true
+                    }
+                  }
+                },
+                "secretsProviderContext": {
+                  "const": {
+                    "providers": {
+                      "default": {
+                        "source": "env"
+                      }
+                    }
+                  }
+                },
+                "authProfileContext": {
+                  "const": "existing Chart/native OAuth identity references only; actual retained tokens/grants/issuer external, no bytes here"
+                },
+                "sourceRoleAuthor": {
+                  "const": "existing Chart + my-values/nova-values.yaml; no arbitrary context CONFIG writer"
+                },
+                "agentRole": {
+                  "const": "nova"
+                },
+                "nativeSecretRefRefinement": {
+                  "const": "original pinned native SecretRefSchema/isValidFileSecretRefId/isValidExecSecretRefId mandatory in approved full-image bootstrap; partial local cuts are NOT that validator"
+                },
+                "roleSpecificProjectionSource": {
+                  "const": "actual ConfigMap role nova plugin branch; immutable generated source recipe, no installed grant"
+                },
+                "discordApprovers": {
+                  "const": []
+                },
+                "guildUserProjection": {
+                  "const": [
+                    "849379821536804864"
+                  ]
+                },
+                "sourceAuthorizationRecipe": {
+                  "const": "exact my-values/nova-values.yaml commands/Discord/auth/litellm source projections; not active grant"
+                },
+                "nativeRoleSource": {
+                  "const": {
+                    "roleValuesPath": "my-values/nova-values.yaml",
+                    "deploymentName": "agent-nova",
+                    "namespace": "kubeclaw",
+                    "imageRecipe": "docker/Dockerfile.nova",
+                    "imageRepository": "ghcr.io/datrab/kubeclaw-nova",
+                    "imageTag": "latest",
+                    "installedImageEquality": "external-required",
+                    "gatewayTokenLocator": "kubernetes-secret:kubeclaw/openclaw-shared-secrets#gatewayToken-nova",
+                    "discordTokenLocator": "kubernetes-secret:kubeclaw/openclaw-shared-secrets#discordToken-nova",
+                    "discordTokenCarrier": "ENV DISCORD_TOKEN only when actual discord.enabled; dormant locator otherwise, not token read",
+                    "litellmAlias": {
+                      "endpoint": "http://litellm.kubeclaw.svc.cluster.local:4000/v1",
+                      "apiKey": {
+                        "source": "env",
+                        "provider": "default",
+                        "id": "LITELLM_API_KEY"
+                      },
+                      "locator": "kubernetes-secret:kubeclaw/openclaw-shared-secrets#litellmApiKey"
+                    },
+                    "skillSelection": [],
+                    "skillSource": "Chart explicit main.skills=[]; image codebundle /app/skills overlay delivery does not imply selection/installed skill availability",
+                    "pluginSdkSource": "OpenClaw2026.9.5 original base and diagnostic-runtime onDiagnosticEvent build assertion; Prism package compat >=2026.9.1 where active; actual installed SDK equality/grants missing",
+                    "serviceExposure": {
+                      "type": "ClusterIP",
+                      "gatewayPort": 18789,
+                      "gatewayTargetPort": "gateway",
+                      "bridgeEnabled": true,
+                      "bridgePort": 18790,
+                      "nodePort": 0,
+                      "bridgeNodePort": 0,
+                      "extraPorts": []
+                    },
+                    "modelBranchMeaning": "current source exact"
+                  }
+                },
+                "association": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "ownerPath",
+                    "ownerProfileId",
+                    "receivingProfileId",
+                    "role",
+                    "instanceId",
+                    "sourceRecipeId",
+                    "sourceInputs"
+                  ],
+                  "properties": {
+                    "ownerPath": {
+                      "const": "charts/kubeclaw/values.yaml"
+                    },
+                    "ownerProfileId": {
+                      "type": "string",
+                      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+                    },
+                    "receivingProfileId": {
+                      "type": "string",
+                      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+                    },
+                    "role": {
+                      "const": "nova"
+                    },
+                    "instanceId": {
+                      "const": "agent-nova-gateway"
+                    },
+                    "sourceRecipeId": {
+                      "const": "nova-current"
+                    },
+                    "sourceInputs": {
+                      "const": [
+                        {
+                          "path": "charts/kubeclaw/values.yaml",
+                          "sha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1"
+                        },
+                        {
+                          "path": "my-values/nova-values.yaml",
+                          "sha256": "0fcc239368db8830868f38d7be350580575e8c241bd6435f79c9f9b931ff6140"
+                        },
+                        {
+                          "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+                          "sha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4"
+                        },
+                        {
+                          "path": "charts/kubeclaw/templates/deployment.yaml",
+                          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+                        },
+                        {
+                          "path": "charts/kubeclaw/templates/_helpers.tpl",
+                          "sha256": "69986722975a973479b9fb1a2c35ab1a1ecb972662e8c19dd03718ac441f5103"
+                        },
+                        {
+                          "path": "docker/Dockerfile.nova",
+                          "sha256": "34e54267a3cd0d7541315de3c6ec785206a0364b7ec76699d433c4a3ca341242"
+                        },
+                        {
+                          "path": "gitops/production/apps/applications.yaml",
+                          "sha256": "2c4e7b1db4ac0282cf64e6cee265c084c59dd24f7623ef61ca8cb09ebb9a1542"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "qualification",
+                "systemAgent",
+                "agentModel",
+                "commandsAuthorization",
+                "discordEnabled",
+                "gatewayPort",
+                "gatewayTokenRef",
+                "discordTokenRef",
+                "installedPluginAllow",
+                "roleSpecificPluginEntries",
+                "secretsProviderContext",
+                "authProfileContext",
+                "sourceRoleAuthor",
+                "agentRole",
+                "nativeSecretRefRefinement",
+                "roleSpecificProjectionSource",
+                "discordApprovers",
+                "guildUserProjection",
+                "sourceAuthorizationRecipe",
+                "nativeRoleSource",
+                "association"
+              ],
+              "properties": {
+                "qualification": {
+                  "const": "readonly generated existing-author/source context, not second configurable policy/secret writer; exact original per-role/host/grant/image support required"
+                },
+                "systemAgent": {
+                  "const": {
+                    "agentId": "main"
+                  }
+                },
+                "agentModel": {
+                  "const": {
+                    "primary": "openai/gpt-5.6-sol",
+                    "fallbacks": [
+                      "openai/gpt-5.5"
+                    ],
+                    "sourceRef": "my-values/nova-values.yaml#/agent/model -> same existing Chart agent.model; proposed full-profile alternative using actual Chart conditional native domain, not deployed source/grant"
+                  }
+                },
+                "commandsAuthorization": {
+                  "const": {
+                    "ownerAllowFrom": [
+                      "discord:849379821536804864"
+                    ],
+                    "discord": [
+                      "849379821536804864",
+                      "user:849379821536804864"
+                    ]
+                  }
+                },
+                "discordEnabled": {
+                  "const": true
+                },
+                "gatewayPort": {
+                  "const": 18789
+                },
+                "gatewayTokenRef": {
+                  "const": {
+                    "source": "env",
+                    "provider": "default",
+                    "id": "OPENCLAW_GATEWAY_TOKEN"
+                  }
+                },
+                "discordTokenRef": {
+                  "const": {
+                    "source": "env",
+                    "provider": "default",
+                    "id": "DISCORD_TOKEN"
+                  }
+                },
+                "installedPluginAllow": {
+                  "const": [
+                    "discord",
+                    "acpx",
+                    "codex",
+                    "openai"
+                  ]
+                },
+                "roleSpecificPluginEntries": {
+                  "const": {
+                    "discord": {
+                      "enabled": true
+                    }
+                  }
+                },
+                "secretsProviderContext": {
+                  "const": {
+                    "providers": {
+                      "default": {
+                        "source": "env"
+                      }
+                    }
+                  }
+                },
+                "authProfileContext": {
+                  "const": "existing Chart/native OAuth identity references only; actual retained tokens/grants/issuer external, no bytes here"
+                },
+                "sourceRoleAuthor": {
+                  "const": "existing Chart + my-values/nova-values.yaml; no arbitrary context CONFIG writer"
+                },
+                "agentRole": {
+                  "const": "nova"
+                },
+                "nativeSecretRefRefinement": {
+                  "const": "original pinned native SecretRefSchema/isValidFileSecretRefId/isValidExecSecretRefId mandatory in approved full-image bootstrap; partial local cuts are NOT that validator"
+                },
+                "roleSpecificProjectionSource": {
+                  "const": "actual ConfigMap role nova plugin branch; immutable generated source recipe, no installed grant"
+                },
+                "discordApprovers": {
+                  "const": []
+                },
+                "guildUserProjection": {
+                  "const": [
+                    "849379821536804864"
+                  ]
+                },
+                "sourceAuthorizationRecipe": {
+                  "const": "exact my-values/nova-values.yaml commands/Discord/auth/litellm source projections; not active grant"
+                },
+                "nativeRoleSource": {
+                  "const": {
+                    "roleValuesPath": "my-values/nova-values.yaml",
+                    "deploymentName": "agent-nova",
+                    "namespace": "kubeclaw",
+                    "imageRecipe": "docker/Dockerfile.nova",
+                    "imageRepository": "ghcr.io/datrab/kubeclaw-nova",
+                    "imageTag": "latest",
+                    "installedImageEquality": "external-required",
+                    "gatewayTokenLocator": "kubernetes-secret:kubeclaw/openclaw-shared-secrets#gatewayToken-nova",
+                    "discordTokenLocator": "kubernetes-secret:kubeclaw/openclaw-shared-secrets#discordToken-nova",
+                    "discordTokenCarrier": "ENV DISCORD_TOKEN only when actual discord.enabled; dormant locator otherwise, not token read",
+                    "litellmAlias": {
+                      "endpoint": "http://litellm.kubeclaw.svc.cluster.local:4000/v1",
+                      "apiKey": {
+                        "source": "env",
+                        "provider": "default",
+                        "id": "LITELLM_API_KEY"
+                      },
+                      "locator": "kubernetes-secret:kubeclaw/openclaw-shared-secrets#litellmApiKey"
+                    },
+                    "skillSelection": [],
+                    "skillSource": "Chart explicit main.skills=[]; image codebundle /app/skills overlay delivery does not imply selection/installed skill availability",
+                    "pluginSdkSource": "OpenClaw2026.9.5 original base and diagnostic-runtime onDiagnosticEvent build assertion; Prism package compat >=2026.9.1 where active; actual installed SDK equality/grants missing",
+                    "serviceExposure": {
+                      "type": "ClusterIP",
+                      "gatewayPort": 18789,
+                      "gatewayTargetPort": "gateway",
+                      "bridgeEnabled": true,
+                      "bridgePort": 18790,
+                      "nodePort": 0,
+                      "bridgeNodePort": 0,
+                      "extraPorts": []
+                    },
+                    "modelBranchMeaning": "operator full-profile alternative, source-authentic conditional branch; installed model/harness grant missing"
+                  }
+                },
+                "association": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "ownerPath",
+                    "ownerProfileId",
+                    "receivingProfileId",
+                    "role",
+                    "instanceId",
+                    "sourceRecipeId",
+                    "sourceInputs"
+                  ],
+                  "properties": {
+                    "ownerPath": {
+                      "const": "charts/kubeclaw/values.yaml"
+                    },
+                    "ownerProfileId": {
+                      "type": "string",
+                      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+                    },
+                    "receivingProfileId": {
+                      "type": "string",
+                      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+                    },
+                    "role": {
+                      "const": "nova"
+                    },
+                    "instanceId": {
+                      "const": "agent-nova-gateway"
+                    },
+                    "sourceRecipeId": {
+                      "const": "nova-modelcontrast"
+                    },
+                    "sourceInputs": {
+                      "const": [
+                        {
+                          "path": "charts/kubeclaw/values.yaml",
+                          "sha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1"
+                        },
+                        {
+                          "path": "my-values/nova-values.yaml",
+                          "sha256": "0fcc239368db8830868f38d7be350580575e8c241bd6435f79c9f9b931ff6140"
+                        },
+                        {
+                          "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+                          "sha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4"
+                        },
+                        {
+                          "path": "charts/kubeclaw/templates/deployment.yaml",
+                          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+                        },
+                        {
+                          "path": "charts/kubeclaw/templates/_helpers.tpl",
+                          "sha256": "69986722975a973479b9fb1a2c35ab1a1ecb972662e8c19dd03718ac441f5103"
+                        },
+                        {
+                          "path": "docker/Dockerfile.nova",
+                          "sha256": "34e54267a3cd0d7541315de3c6ec785206a0364b7ec76699d433c4a3ca341242"
+                        },
+                        {
+                          "path": "gitops/production/apps/applications.yaml",
+                          "sha256": "2c4e7b1db4ac0282cf64e6cee265c084c59dd24f7623ef61ca8cb09ebb9a1542"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      "nativeFullSchema": {
+        "const": "pinned validateConfigObjectRaw and actual image/native plugin schema still required; this managed69 schema is NOT a substitute full OpenClaw validator"
+      }
+    }
+  },
+  "prismContextSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "contexts",
+      "nativeFullSchema"
+    ],
+    "properties": {
+      "contexts": {
+        "type": "object",
+        "minProperties": 1,
+        "propertyNames": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+        },
+        "additionalProperties": {
+          "anyOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "qualification",
+                "systemAgent",
+                "agentModel",
+                "commandsAuthorization",
+                "discordEnabled",
+                "gatewayPort",
+                "gatewayTokenRef",
+                "discordTokenRef",
+                "installedPluginAllow",
+                "roleSpecificPluginEntries",
+                "secretsProviderContext",
+                "authProfileContext",
+                "sourceRoleAuthor",
+                "agentRole",
+                "nativeSecretRefRefinement",
+                "roleSpecificProjectionSource",
+                "discordApprovers",
+                "guildUserProjection",
+                "sourceAuthorizationRecipe",
+                "nativeRoleSource",
+                "association"
+              ],
+              "properties": {
+                "qualification": {
+                  "const": "readonly generated existing-author/source context, not second configurable policy/secret writer; exact original per-role/host/grant/image support required"
+                },
+                "systemAgent": {
+                  "const": {
+                    "agentId": "main"
+                  }
+                },
+                "agentModel": {
+                  "const": {
+                    "primary": "openai/gpt-5.6-sol",
+                    "fallbacks": [
+                      "openai/gpt-5.5"
+                    ],
+                    "sourceRef": "my-values/prism-agent-values.yaml#/agent/model -> same existing Chart agent.model; current actual source"
+                  }
+                },
+                "commandsAuthorization": {
+                  "const": {
+                    "ownerAllowFrom": [
+                      "discord:849379821536804864"
+                    ],
+                    "discord": [
+                      "849379821536804864",
+                      "user:849379821536804864"
+                    ]
+                  }
+                },
+                "discordEnabled": {
+                  "const": false
+                },
+                "gatewayPort": {
+                  "const": 18789
+                },
+                "gatewayTokenRef": {
+                  "const": {
+                    "source": "env",
+                    "provider": "default",
+                    "id": "OPENCLAW_GATEWAY_TOKEN"
+                  }
+                },
+                "discordTokenRef": {
+                  "const": {
+                    "source": "env",
+                    "provider": "default",
+                    "id": "DISCORD_TOKEN"
+                  }
+                },
+                "installedPluginAllow": {
+                  "const": [
+                    "discord",
+                    "acpx",
+                    "codex",
+                    "openai",
+                    "kubeclaw-prism"
+                  ]
+                },
+                "roleSpecificPluginEntries": {
+                  "const": {
+                    "discord": {
+                      "enabled": false
+                    },
+                    "kubeclaw-prism": {
+                      "enabled": true,
+                      "config": {
+                        "controlUrl": "http://127.0.0.1:28080"
+                      }
+                    }
+                  }
+                },
+                "secretsProviderContext": {
+                  "const": {
+                    "providers": {
+                      "default": {
+                        "source": "env"
+                      }
+                    }
+                  }
+                },
+                "authProfileContext": {
+                  "const": "existing Chart/native OAuth identity references only; actual retained tokens/grants/issuer external, no bytes here"
+                },
+                "sourceRoleAuthor": {
+                  "const": "existing Chart + my-values/prism-agent-values.yaml; no arbitrary context CONFIG writer"
+                },
+                "agentRole": {
+                  "const": "prism"
+                },
+                "nativeSecretRefRefinement": {
+                  "const": "original pinned native SecretRefSchema/isValidFileSecretRefId/isValidExecSecretRefId mandatory in approved full-image bootstrap; partial local cuts are NOT that validator"
+                },
+                "roleSpecificProjectionSource": {
+                  "const": "actual ConfigMap role prism plugin branch; immutable generated source recipe, no installed grant"
+                },
+                "discordApprovers": {
+                  "const": []
+                },
+                "guildUserProjection": {
+                  "const": [
+                    "849379821536804864"
+                  ]
+                },
+                "sourceAuthorizationRecipe": {
+                  "const": "exact my-values/prism-agent-values.yaml commands/Discord/auth/litellm source projections; not active grant"
+                },
+                "nativeRoleSource": {
+                  "const": {
+                    "roleValuesPath": "my-values/prism-agent-values.yaml",
+                    "deploymentName": "agent-prism",
+                    "namespace": "kubeclaw",
+                    "imageRecipe": "docker/Dockerfile.prism-agent",
+                    "imageRepository": "ghcr.io/datrab/kubeclaw-prism-agent",
+                    "imageTag": "latest",
+                    "installedImageEquality": "external-required",
+                    "gatewayTokenLocator": "kubernetes-secret:kubeclaw/openclaw-shared-secrets#gatewayToken-prism",
+                    "discordTokenLocator": "kubernetes-secret:kubeclaw/openclaw-shared-secrets#discordToken-prism",
+                    "discordTokenCarrier": "ENV DISCORD_TOKEN only when actual discord.enabled; dormant locator otherwise, not token read",
+                    "litellmAlias": {
+                      "endpoint": "http://litellm.kubeclaw.svc.cluster.local:4000/v1",
+                      "apiKey": {
+                        "source": "env",
+                        "provider": "default",
+                        "id": "LITELLM_API_KEY"
+                      },
+                      "locator": "kubernetes-secret:kubeclaw/openclaw-shared-secrets#litellmApiKey"
+                    },
+                    "skillSelection": [],
+                    "skillSource": "Chart explicit main.skills=[]; image codebundle /app/skills overlay delivery does not imply selection/installed skill availability",
+                    "pluginSdkSource": "OpenClaw2026.9.5 original base and diagnostic-runtime onDiagnosticEvent build assertion; Prism package compat >=2026.9.1 where active; actual installed SDK equality/grants missing",
+                    "serviceExposure": {
+                      "gatewayPort": 8080,
+                      "gatewayTargetPort": "prism-dispatch",
+                      "bridgeEnabled": false
+                    },
+                    "modelBranchMeaning": "current source exact"
+                  }
+                },
+                "association": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "ownerPath",
+                    "ownerProfileId",
+                    "receivingProfileId",
+                    "role",
+                    "instanceId",
+                    "sourceRecipeId",
+                    "sourceInputs"
+                  ],
+                  "properties": {
+                    "ownerPath": {
+                      "const": "charts/kubeclaw/values.yaml"
+                    },
+                    "ownerProfileId": {
+                      "type": "string",
+                      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+                    },
+                    "receivingProfileId": {
+                      "type": "string",
+                      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+                    },
+                    "role": {
+                      "const": "prism"
+                    },
+                    "instanceId": {
+                      "const": "agent-prism-gateway"
+                    },
+                    "sourceRecipeId": {
+                      "const": "prism-current"
+                    },
+                    "sourceInputs": {
+                      "const": [
+                        {
+                          "path": "charts/kubeclaw/values.yaml",
+                          "sha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1"
+                        },
+                        {
+                          "path": "my-values/prism-agent-values.yaml",
+                          "sha256": "5ff81cee48e035c74e67694c57dea8a2ee66ce5ca5015c6b15cd6ae352c2936a"
+                        },
+                        {
+                          "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+                          "sha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4"
+                        },
+                        {
+                          "path": "charts/kubeclaw/templates/deployment.yaml",
+                          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+                        },
+                        {
+                          "path": "charts/kubeclaw/templates/_helpers.tpl",
+                          "sha256": "69986722975a973479b9fb1a2c35ab1a1ecb972662e8c19dd03718ac441f5103"
+                        },
+                        {
+                          "path": "docker/Dockerfile.prism-agent",
+                          "sha256": "85209d0cb47ab3bca1e2a27acb50d4e554853adfa472fa7195c0468627a19a47"
+                        },
+                        {
+                          "path": "skills/prism/openclaw-plugin/openclaw.plugin.json",
+                          "sha256": "1cf3f06268870973f2d7131cf64d469e516a62bf4b5f3a9d5b6d6a1c9bdd0588"
+                        },
+                        {
+                          "path": "skills/prism/openclaw-plugin/package.json",
+                          "sha256": "27f48da7e93c5506cbc7f77cb56163ceae6c6ce6659597cbbfde3f88b194dfcf"
+                        },
+                        {
+                          "path": "skills/prism/openclaw-plugin/index.mjs",
+                          "sha256": "97a30daa0a042f2cd9416746caffe9207828dd9a587e3a6c3e8de481f5d0640e"
+                        },
+                        {
+                          "path": "gitops/production/apps/applications.yaml",
+                          "sha256": "2c4e7b1db4ac0282cf64e6cee265c084c59dd24f7623ef61ca8cb09ebb9a1542"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "qualification",
+                "systemAgent",
+                "agentModel",
+                "commandsAuthorization",
+                "discordEnabled",
+                "gatewayPort",
+                "gatewayTokenRef",
+                "discordTokenRef",
+                "installedPluginAllow",
+                "roleSpecificPluginEntries",
+                "secretsProviderContext",
+                "authProfileContext",
+                "sourceRoleAuthor",
+                "agentRole",
+                "nativeSecretRefRefinement",
+                "roleSpecificProjectionSource",
+                "discordApprovers",
+                "guildUserProjection",
+                "sourceAuthorizationRecipe",
+                "nativeRoleSource",
+                "association"
+              ],
+              "properties": {
+                "qualification": {
+                  "const": "readonly generated existing-author/source context, not second configurable policy/secret writer; exact original per-role/host/grant/image support required"
+                },
+                "systemAgent": {
+                  "const": {
+                    "agentId": "main"
+                  }
+                },
+                "agentModel": {
+                  "const": {
+                    "primary": "openai/gpt-6-astra",
+                    "fallbacks": [
+                      "openai/gpt-5.5"
+                    ],
+                    "sourceRef": "my-values/prism-agent-values.yaml#/agent/model -> same existing Chart agent.model; proposed full-profile alternative using actual Chart conditional native domain, not deployed source/grant"
+                  }
+                },
+                "commandsAuthorization": {
+                  "const": {
+                    "ownerAllowFrom": [
+                      "discord:849379821536804864"
+                    ],
+                    "discord": [
+                      "849379821536804864",
+                      "user:849379821536804864"
+                    ]
+                  }
+                },
+                "discordEnabled": {
+                  "const": false
+                },
+                "gatewayPort": {
+                  "const": 18789
+                },
+                "gatewayTokenRef": {
+                  "const": {
+                    "source": "env",
+                    "provider": "default",
+                    "id": "OPENCLAW_GATEWAY_TOKEN"
+                  }
+                },
+                "discordTokenRef": {
+                  "const": {
+                    "source": "env",
+                    "provider": "default",
+                    "id": "DISCORD_TOKEN"
+                  }
+                },
+                "installedPluginAllow": {
+                  "const": [
+                    "discord",
+                    "acpx",
+                    "codex",
+                    "openai",
+                    "kubeclaw-prism"
+                  ]
+                },
+                "roleSpecificPluginEntries": {
+                  "const": {
+                    "discord": {
+                      "enabled": false
+                    },
+                    "kubeclaw-prism": {
+                      "enabled": true,
+                      "config": {
+                        "controlUrl": "http://127.0.0.1:28080"
+                      }
+                    }
+                  }
+                },
+                "secretsProviderContext": {
+                  "const": {
+                    "providers": {
+                      "default": {
+                        "source": "env"
+                      }
+                    }
+                  }
+                },
+                "authProfileContext": {
+                  "const": "existing Chart/native OAuth identity references only; actual retained tokens/grants/issuer external, no bytes here"
+                },
+                "sourceRoleAuthor": {
+                  "const": "existing Chart + my-values/prism-agent-values.yaml; no arbitrary context CONFIG writer"
+                },
+                "agentRole": {
+                  "const": "prism"
+                },
+                "nativeSecretRefRefinement": {
+                  "const": "original pinned native SecretRefSchema/isValidFileSecretRefId/isValidExecSecretRefId mandatory in approved full-image bootstrap; partial local cuts are NOT that validator"
+                },
+                "roleSpecificProjectionSource": {
+                  "const": "actual ConfigMap role prism plugin branch; immutable generated source recipe, no installed grant"
+                },
+                "discordApprovers": {
+                  "const": []
+                },
+                "guildUserProjection": {
+                  "const": [
+                    "849379821536804864"
+                  ]
+                },
+                "sourceAuthorizationRecipe": {
+                  "const": "exact my-values/prism-agent-values.yaml commands/Discord/auth/litellm source projections; not active grant"
+                },
+                "nativeRoleSource": {
+                  "const": {
+                    "roleValuesPath": "my-values/prism-agent-values.yaml",
+                    "deploymentName": "agent-prism",
+                    "namespace": "kubeclaw",
+                    "imageRecipe": "docker/Dockerfile.prism-agent",
+                    "imageRepository": "ghcr.io/datrab/kubeclaw-prism-agent",
+                    "imageTag": "latest",
+                    "installedImageEquality": "external-required",
+                    "gatewayTokenLocator": "kubernetes-secret:kubeclaw/openclaw-shared-secrets#gatewayToken-prism",
+                    "discordTokenLocator": "kubernetes-secret:kubeclaw/openclaw-shared-secrets#discordToken-prism",
+                    "discordTokenCarrier": "ENV DISCORD_TOKEN only when actual discord.enabled; dormant locator otherwise, not token read",
+                    "litellmAlias": {
+                      "endpoint": "http://litellm.kubeclaw.svc.cluster.local:4000/v1",
+                      "apiKey": {
+                        "source": "env",
+                        "provider": "default",
+                        "id": "LITELLM_API_KEY"
+                      },
+                      "locator": "kubernetes-secret:kubeclaw/openclaw-shared-secrets#litellmApiKey"
+                    },
+                    "skillSelection": [],
+                    "skillSource": "Chart explicit main.skills=[]; image codebundle /app/skills overlay delivery does not imply selection/installed skill availability",
+                    "pluginSdkSource": "OpenClaw2026.9.5 original base and diagnostic-runtime onDiagnosticEvent build assertion; Prism package compat >=2026.9.1 where active; actual installed SDK equality/grants missing",
+                    "serviceExposure": {
+                      "gatewayPort": 8080,
+                      "gatewayTargetPort": "prism-dispatch",
+                      "bridgeEnabled": false
+                    },
+                    "modelBranchMeaning": "operator full-profile alternative, source-authentic conditional branch; installed model/harness grant missing"
+                  }
+                },
+                "association": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "ownerPath",
+                    "ownerProfileId",
+                    "receivingProfileId",
+                    "role",
+                    "instanceId",
+                    "sourceRecipeId",
+                    "sourceInputs"
+                  ],
+                  "properties": {
+                    "ownerPath": {
+                      "const": "charts/kubeclaw/values.yaml"
+                    },
+                    "ownerProfileId": {
+                      "type": "string",
+                      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+                    },
+                    "receivingProfileId": {
+                      "type": "string",
+                      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+                    },
+                    "role": {
+                      "const": "prism"
+                    },
+                    "instanceId": {
+                      "const": "agent-prism-gateway"
+                    },
+                    "sourceRecipeId": {
+                      "const": "prism-modelcontrast"
+                    },
+                    "sourceInputs": {
+                      "const": [
+                        {
+                          "path": "charts/kubeclaw/values.yaml",
+                          "sha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1"
+                        },
+                        {
+                          "path": "my-values/prism-agent-values.yaml",
+                          "sha256": "5ff81cee48e035c74e67694c57dea8a2ee66ce5ca5015c6b15cd6ae352c2936a"
+                        },
+                        {
+                          "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+                          "sha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4"
+                        },
+                        {
+                          "path": "charts/kubeclaw/templates/deployment.yaml",
+                          "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+                        },
+                        {
+                          "path": "charts/kubeclaw/templates/_helpers.tpl",
+                          "sha256": "69986722975a973479b9fb1a2c35ab1a1ecb972662e8c19dd03718ac441f5103"
+                        },
+                        {
+                          "path": "docker/Dockerfile.prism-agent",
+                          "sha256": "85209d0cb47ab3bca1e2a27acb50d4e554853adfa472fa7195c0468627a19a47"
+                        },
+                        {
+                          "path": "skills/prism/openclaw-plugin/openclaw.plugin.json",
+                          "sha256": "1cf3f06268870973f2d7131cf64d469e516a62bf4b5f3a9d5b6d6a1c9bdd0588"
+                        },
+                        {
+                          "path": "skills/prism/openclaw-plugin/package.json",
+                          "sha256": "27f48da7e93c5506cbc7f77cb56163ceae6c6ce6659597cbbfde3f88b194dfcf"
+                        },
+                        {
+                          "path": "skills/prism/openclaw-plugin/index.mjs",
+                          "sha256": "97a30daa0a042f2cd9416746caffe9207828dd9a587e3a6c3e8de481f5d0640e"
+                        },
+                        {
+                          "path": "gitops/production/apps/applications.yaml",
+                          "sha256": "2c4e7b1db4ac0282cf64e6cee265c084c59dd24f7623ef61ca8cb09ebb9a1542"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      "nativeFullSchema": {
+        "const": "pinned validateConfigObjectRaw and actual image/native plugin schema still required; this managed69 schema is NOT a substitute full OpenClaw validator"
+      }
+    }
+  },
+  "busterRecipes": {
+    "recipes": {
+      "captured-chart-local-A": {
+        "qualification": "readonly generated existing-author/source context, not second configurable policy/secret writer; exact original per-role/host/grant/image support required",
+        "systemAgent": {
+          "agentId": "main"
+        },
+        "agentModel": {
+          "primary": "openai/gpt-5.6-sol",
+          "fallbacks": [
+            "openai/gpt-5.5"
+          ],
+          "sourceRef": "charts/kubeclaw/values.yaml#/agent/model (same existing Chart author; B explicit conditional selected branch proposal)"
+        },
+        "commandsAuthorization": {
+          "ownerAllowFrom": [
+            "discord:849379821536804864"
+          ],
+          "discord": [
+            "849379821536804864",
+            "user:849379821536804864"
+          ]
+        },
+        "discordEnabled": true,
+        "gatewayPort": 18789,
+        "gatewayTokenRef": {
+          "source": "env",
+          "provider": "default",
+          "id": "OPENCLAW_GATEWAY_TOKEN"
+        },
+        "discordTokenRef": {
+          "source": "env",
+          "provider": "default",
+          "id": "DISCORD_TOKEN"
+        },
+        "installedPluginAllow": [
+          "discord",
+          "acpx",
+          "codex",
+          "openai",
+          "kubeclaw-agent-observer"
+        ],
+        "roleSpecificPluginEntries": {
+          "discord": {
+            "enabled": true
+          },
+          "kubeclaw-agent-observer": {
+            "enabled": true,
+            "config": {
+              "enabled": true,
+              "redisNetworkIsolation": "isolated",
+              "maxEventBytes": 3145728,
+              "maxQueuePerStream": 100,
+              "redisCommandTimeoutMs": 5000,
+              "streamMaxLen": 10000,
+              "deadLetterMaxLen": 1000,
+              "controlWriteMaxAttempts": 3,
+              "controlWriteRetryBaseMs": 100,
+              "controlWriteRetryMaxMs": 1000,
+              "hookPriority": -100,
+              "hookTimeoutMs": 1000
+            },
+            "hooks": {
+              "allowConversationAccess": true
+            }
+          }
+        },
+        "secretsProviderContext": {
+          "providers": {
+            "default": {
+              "source": "env",
+              "allowlist": [
+                "LITELLM_API_KEY",
+                "DLV_TEST_EMBEDDING_TOKEN",
+                "DLV_TEST_GATEWAY_PASSWORD",
+                "OPENCLAW_GATEWAY_TOKEN"
+              ]
+            },
+            "delivery-test": {
+              "source": "env",
+              "allowlist": [
+                "DLV_TEST_EMBEDDING_TOKEN"
+              ]
+            }
+          }
+        },
+        "authProfileContext": "existing Chart/native OAuth identity references only; actual retained tokens/grants/issuer external, no bytes here",
+        "sourceRoleAuthor": "existing Chart + selected original my-values/buster-values.yaml; no arbitrary Context CONFIG writer",
+        "agentRole": "buster",
+        "nativeSecretRefRefinement": "original pinned native SecretRefSchema/isValidFileSecretRefId/isValidExecSecretRefId mandatory in approved full-image bootstrap; partial local cuts are NOT that validator",
+        "roleSpecificProjectionSource": "charts/kubeclaw/templates/configmap-gateway.yaml conditional agentRole=buster; original observer owner/schema/C1-source/grant joins required, not extra gateway70 policy writers",
+        "discordApprovers": [
+          "user:849379821536804864"
+        ],
+        "guildUserProjection": [
+          "849379821536804864"
+        ],
+        "sourceAuthorizationRecipe": "exact selected my-values/buster-values.yaml commands/discord arrays -> reviewed batch30 current projection; source names/IDs are NOT authentic active grants"
+      },
+      "captured-chart-local-B": {
+        "qualification": "readonly generated existing-author/source context, not second configurable policy/secret writer; exact original per-role/host/grant/image support required",
+        "systemAgent": {
+          "agentId": "main"
+        },
+        "agentModel": {
+          "primary": "openai/gpt-6-astra",
+          "fallbacks": [
+            "openai/gpt-5.5"
+          ],
+          "sourceRef": "charts/kubeclaw/values.yaml#/agent/model (same existing Chart author; B explicit conditional selected branch proposal)"
+        },
+        "commandsAuthorization": {
+          "ownerAllowFrom": [
+            "discord:849379821536804864"
+          ],
+          "discord": [
+            "849379821536804864",
+            "user:849379821536804864"
+          ]
+        },
+        "discordEnabled": true,
+        "gatewayPort": 18789,
+        "gatewayTokenRef": {
+          "source": "env",
+          "provider": "default",
+          "id": "OPENCLAW_GATEWAY_TOKEN"
+        },
+        "discordTokenRef": {
+          "source": "env",
+          "provider": "default",
+          "id": "DISCORD_TOKEN"
+        },
+        "installedPluginAllow": [
+          "discord",
+          "acpx",
+          "codex",
+          "openai",
+          "kubeclaw-agent-observer"
+        ],
+        "roleSpecificPluginEntries": {
+          "discord": {
+            "enabled": true
+          },
+          "kubeclaw-agent-observer": {
+            "enabled": true,
+            "config": {
+              "enabled": true,
+              "redisNetworkIsolation": "isolated",
+              "maxEventBytes": 3145728,
+              "maxQueuePerStream": 100,
+              "redisCommandTimeoutMs": 5000,
+              "streamMaxLen": 10000,
+              "deadLetterMaxLen": 1000,
+              "controlWriteMaxAttempts": 3,
+              "controlWriteRetryBaseMs": 100,
+              "controlWriteRetryMaxMs": 1000,
+              "hookPriority": -100,
+              "hookTimeoutMs": 1000
+            },
+            "hooks": {
+              "allowConversationAccess": true
+            }
+          }
+        },
+        "secretsProviderContext": {
+          "providers": {
+            "default": {
+              "source": "env",
+              "allowlist": [
+                "LITELLM_API_KEY",
+                "DLV_TEST_EMBEDDING_TOKEN",
+                "DLV_TEST_GATEWAY_PASSWORD",
+                "OPENCLAW_GATEWAY_TOKEN"
+              ]
+            },
+            "delivery-test": {
+              "source": "env",
+              "allowlist": [
+                "DLV_TEST_EMBEDDING_TOKEN"
+              ]
+            }
+          }
+        },
+        "authProfileContext": "existing Chart/native OAuth identity references only; actual retained tokens/grants/issuer external, no bytes here",
+        "sourceRoleAuthor": "existing Chart + selected original my-values/buster-values.yaml; no arbitrary Context CONFIG writer",
+        "agentRole": "buster",
+        "nativeSecretRefRefinement": "original pinned native SecretRefSchema/isValidFileSecretRefId/isValidExecSecretRefId mandatory in approved full-image bootstrap; partial local cuts are NOT that validator",
+        "roleSpecificProjectionSource": "charts/kubeclaw/templates/configmap-gateway.yaml conditional agentRole=buster; original observer owner/schema/C1-source/grant joins required, not extra gateway70 policy writers",
+        "discordApprovers": [
+          "user:849379821536804864"
+        ],
+        "guildUserProjection": [
+          "849379821536804864"
+        ],
+        "sourceAuthorizationRecipe": "exact selected my-values/buster-values.yaml commands/discord arrays -> reviewed batch30 current projection; source names/IDs are NOT authentic active grants"
+      },
+      "captured-chart-Ready-port-contrast": {
+        "qualification": "readonly generated existing-author/source context, not second configurable policy/secret writer; exact original per-role/host/grant/image support required",
+        "systemAgent": {
+          "agentId": "main"
+        },
+        "agentModel": {
+          "primary": "openai/gpt-5.6-sol",
+          "fallbacks": [
+            "openai/gpt-5.5"
+          ],
+          "sourceRef": "charts/kubeclaw/values.yaml#/agent/model (same existing Chart author; B explicit conditional selected branch proposal)"
+        },
+        "commandsAuthorization": {
+          "ownerAllowFrom": [
+            "discord:849379821536804864"
+          ],
+          "discord": [
+            "849379821536804864",
+            "user:849379821536804864"
+          ]
+        },
+        "discordEnabled": true,
+        "gatewayPort": 18789,
+        "gatewayTokenRef": {
+          "source": "env",
+          "provider": "default",
+          "id": "OPENCLAW_GATEWAY_TOKEN"
+        },
+        "discordTokenRef": {
+          "source": "env",
+          "provider": "default",
+          "id": "DISCORD_TOKEN"
+        },
+        "installedPluginAllow": [
+          "discord",
+          "acpx",
+          "codex",
+          "openai",
+          "kubeclaw-agent-observer"
+        ],
+        "roleSpecificPluginEntries": {
+          "discord": {
+            "enabled": true
+          },
+          "kubeclaw-agent-observer": {
+            "enabled": true,
+            "config": {
+              "enabled": true,
+              "redisNetworkIsolation": "isolated",
+              "maxEventBytes": 3145728,
+              "maxQueuePerStream": 100,
+              "redisCommandTimeoutMs": 5000,
+              "streamMaxLen": 10000,
+              "deadLetterMaxLen": 1000,
+              "controlWriteMaxAttempts": 3,
+              "controlWriteRetryBaseMs": 100,
+              "controlWriteRetryMaxMs": 1000,
+              "hookPriority": -100,
+              "hookTimeoutMs": 1000
+            },
+            "hooks": {
+              "allowConversationAccess": true
+            }
+          }
+        },
+        "secretsProviderContext": {
+          "providers": {
+            "default": {
+              "source": "env",
+              "allowlist": [
+                "LITELLM_API_KEY",
+                "DLV_TEST_EMBEDDING_TOKEN",
+                "DLV_TEST_GATEWAY_PASSWORD",
+                "OPENCLAW_GATEWAY_TOKEN"
+              ]
+            },
+            "delivery-test": {
+              "source": "env",
+              "allowlist": [
+                "DLV_TEST_EMBEDDING_TOKEN"
+              ]
+            }
+          }
+        },
+        "authProfileContext": "existing Chart/native OAuth identity references only; actual retained tokens/grants/issuer external, no bytes here",
+        "sourceRoleAuthor": "existing Chart + selected original my-values/buster-values.yaml; no arbitrary Context CONFIG writer",
+        "agentRole": "buster",
+        "nativeSecretRefRefinement": "original pinned native SecretRefSchema/isValidFileSecretRefId/isValidExecSecretRefId mandatory in approved full-image bootstrap; partial local cuts are NOT that validator",
+        "roleSpecificProjectionSource": "charts/kubeclaw/templates/configmap-gateway.yaml conditional agentRole=buster; original observer owner/schema/C1-source/grant joins required, not extra gateway70 policy writers",
+        "discordApprovers": [
+          "user:849379821536804864"
+        ],
+        "guildUserProjection": [
+          "849379821536804864"
+        ],
+        "sourceAuthorizationRecipe": "exact selected my-values/buster-values.yaml commands/discord arrays -> reviewed batch30 current projection; source names/IDs are NOT authentic active grants"
+      },
+      "captured-chart-ready-product-off": {
+        "qualification": "readonly generated existing-author/source context, not second configurable policy/secret writer; exact original per-role/host/grant/image support required",
+        "systemAgent": {
+          "agentId": "main"
+        },
+        "agentModel": {
+          "primary": "openai/gpt-5.6-sol",
+          "fallbacks": [
+            "openai/gpt-5.5"
+          ],
+          "sourceRef": "charts/kubeclaw/values.yaml#/agent/model (same existing Chart author; B explicit conditional selected branch proposal)"
+        },
+        "commandsAuthorization": {
+          "ownerAllowFrom": [
+            "discord:849379821536804864"
+          ],
+          "discord": [
+            "849379821536804864",
+            "user:849379821536804864"
+          ]
+        },
+        "discordEnabled": true,
+        "gatewayPort": 18789,
+        "gatewayTokenRef": {
+          "source": "env",
+          "provider": "default",
+          "id": "OPENCLAW_GATEWAY_TOKEN"
+        },
+        "discordTokenRef": {
+          "source": "env",
+          "provider": "default",
+          "id": "DISCORD_TOKEN"
+        },
+        "installedPluginAllow": [
+          "discord",
+          "acpx",
+          "codex",
+          "openai",
+          "kubeclaw-agent-observer"
+        ],
+        "roleSpecificPluginEntries": {
+          "discord": {
+            "enabled": true
+          },
+          "kubeclaw-agent-observer": {
+            "enabled": true,
+            "config": {
+              "enabled": true,
+              "redisNetworkIsolation": "isolated",
+              "maxEventBytes": 3145728,
+              "maxQueuePerStream": 100,
+              "redisCommandTimeoutMs": 5000,
+              "streamMaxLen": 10000,
+              "deadLetterMaxLen": 1000,
+              "controlWriteMaxAttempts": 3,
+              "controlWriteRetryBaseMs": 100,
+              "controlWriteRetryMaxMs": 1000,
+              "hookPriority": -100,
+              "hookTimeoutMs": 1000
+            },
+            "hooks": {
+              "allowConversationAccess": true
+            }
+          }
+        },
+        "secretsProviderContext": {
+          "providers": {
+            "default": {
+              "source": "env",
+              "allowlist": [
+                "LITELLM_API_KEY",
+                "DLV_TEST_EMBEDDING_TOKEN",
+                "DLV_TEST_GATEWAY_PASSWORD",
+                "OPENCLAW_GATEWAY_TOKEN"
+              ]
+            },
+            "delivery-test": {
+              "source": "env",
+              "allowlist": [
+                "DLV_TEST_EMBEDDING_TOKEN"
+              ]
+            }
+          }
+        },
+        "authProfileContext": "existing Chart/native OAuth identity references only; actual retained tokens/grants/issuer external, no bytes here",
+        "sourceRoleAuthor": "existing Chart + selected original my-values/buster-values.yaml; no arbitrary Context CONFIG writer",
+        "agentRole": "buster",
+        "nativeSecretRefRefinement": "original pinned native SecretRefSchema/isValidFileSecretRefId/isValidExecSecretRefId mandatory in approved full-image bootstrap; partial local cuts are NOT that validator",
+        "roleSpecificProjectionSource": "charts/kubeclaw/templates/configmap-gateway.yaml conditional agentRole=buster; original observer owner/schema/C1-source/grant joins required, not extra gateway70 policy writers",
+        "discordApprovers": [
+          "user:849379821536804864"
+        ],
+        "guildUserProjection": [
+          "849379821536804864"
+        ],
+        "sourceAuthorizationRecipe": "exact selected my-values/buster-values.yaml commands/discord arrays -> reviewed batch30 current projection; source names/IDs are NOT authentic active grants"
+      },
+      "captured-chart-role-off": {
+        "qualification": "readonly generated existing-author/source context, not second configurable policy/secret writer; exact original per-role/host/grant/image support required",
+        "systemAgent": {
+          "agentId": "main"
+        },
+        "agentModel": {
+          "primary": "openai/gpt-5.6-sol",
+          "fallbacks": [
+            "openai/gpt-5.5"
+          ],
+          "sourceRef": "charts/kubeclaw/values.yaml#/agent/model (same existing Chart author; B explicit conditional selected branch proposal)"
+        },
+        "commandsAuthorization": {
+          "ownerAllowFrom": [
+            "discord:849379821536804864"
+          ],
+          "discord": [
+            "849379821536804864",
+            "user:849379821536804864"
+          ]
+        },
+        "discordEnabled": true,
+        "gatewayPort": 18789,
+        "gatewayTokenRef": {
+          "source": "env",
+          "provider": "default",
+          "id": "OPENCLAW_GATEWAY_TOKEN"
+        },
+        "discordTokenRef": {
+          "source": "env",
+          "provider": "default",
+          "id": "DISCORD_TOKEN"
+        },
+        "installedPluginAllow": [
+          "discord",
+          "acpx",
+          "codex",
+          "openai",
+          "kubeclaw-agent-observer"
+        ],
+        "roleSpecificPluginEntries": {
+          "discord": {
+            "enabled": true
+          },
+          "kubeclaw-agent-observer": {
+            "enabled": true,
+            "config": {
+              "enabled": true,
+              "redisNetworkIsolation": "isolated",
+              "maxEventBytes": 3145728,
+              "maxQueuePerStream": 100,
+              "redisCommandTimeoutMs": 5000,
+              "streamMaxLen": 10000,
+              "deadLetterMaxLen": 1000,
+              "controlWriteMaxAttempts": 3,
+              "controlWriteRetryBaseMs": 100,
+              "controlWriteRetryMaxMs": 1000,
+              "hookPriority": -100,
+              "hookTimeoutMs": 1000
+            },
+            "hooks": {
+              "allowConversationAccess": true
+            }
+          }
+        },
+        "secretsProviderContext": {
+          "providers": {
+            "default": {
+              "source": "env",
+              "allowlist": [
+                "LITELLM_API_KEY",
+                "DLV_TEST_EMBEDDING_TOKEN",
+                "DLV_TEST_GATEWAY_PASSWORD",
+                "OPENCLAW_GATEWAY_TOKEN"
+              ]
+            },
+            "delivery-test": {
+              "source": "env",
+              "allowlist": [
+                "DLV_TEST_EMBEDDING_TOKEN"
+              ]
+            }
+          }
+        },
+        "authProfileContext": "existing Chart/native OAuth identity references only; actual retained tokens/grants/issuer external, no bytes here",
+        "sourceRoleAuthor": "existing Chart + selected original my-values/buster-values.yaml; no arbitrary Context CONFIG writer",
+        "agentRole": "buster",
+        "nativeSecretRefRefinement": "original pinned native SecretRefSchema/isValidFileSecretRefId/isValidExecSecretRefId mandatory in approved full-image bootstrap; partial local cuts are NOT that validator",
+        "roleSpecificProjectionSource": "charts/kubeclaw/templates/configmap-gateway.yaml conditional agentRole=buster; original observer owner/schema/C1-source/grant joins required, not extra gateway70 policy writers",
+        "discordApprovers": [
+          "user:849379821536804864"
+        ],
+        "guildUserProjection": [
+          "849379821536804864"
+        ],
+        "sourceAuthorizationRecipe": "exact selected my-values/buster-values.yaml commands/discord arrays -> reviewed batch30 current projection; source names/IDs are NOT authentic active grants"
+      }
+    },
+    "profiles": [
+      {
+        "profileId": "local-A",
+        "originalControllerProfile": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "badc34136cd6c59eaaf5d2e43615489e1de805f9b9e3442613a4894ff460b40a",
+          "pointer": "/profiles/local-A"
+        },
+        "controllerSubsetRetained": true,
+        "explicitManagedPolicyInput": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/existing-chart-owner-proposal.json",
+          "sha256": "bd18300361425b9f005efad737fcddbf5e0aedf2899ec4dd85fbb3f2eaedcf89",
+          "pointer": "/profiles/local-A"
+        },
+        "explicitReadonlyRecipeInput": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/readonly-context-source-recipes.json",
+          "sha256": "c4ad7e2885088263621329dd99097006857dfbc4d765e5e82becfd5d7967bc98",
+          "pointer": "/recipes/A"
+        },
+        "ownGeneratedContextPointer": "/contexts/local-A",
+        "recipeId": "captured-chart-local-A",
+        "relation": "Explicit declared captured migration recipe for this exact profile; no inferred lookup or ambient fallback. ready-product-off has explicit same-owner local-product-off co-selection from original AUTH-PRISM-PRODUCT-ENABLE/B whole fixture; native actualENV/issuer/grant receipts remain unexecuted."
+      },
+      {
+        "profileId": "local-B",
+        "originalControllerProfile": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "badc34136cd6c59eaaf5d2e43615489e1de805f9b9e3442613a4894ff460b40a",
+          "pointer": "/profiles/local-B"
+        },
+        "controllerSubsetRetained": true,
+        "explicitManagedPolicyInput": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/existing-chart-owner-proposal.json",
+          "sha256": "bd18300361425b9f005efad737fcddbf5e0aedf2899ec4dd85fbb3f2eaedcf89",
+          "pointer": "/profiles/local-B"
+        },
+        "explicitReadonlyRecipeInput": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/readonly-context-source-recipes.json",
+          "sha256": "c4ad7e2885088263621329dd99097006857dfbc4d765e5e82becfd5d7967bc98",
+          "pointer": "/recipes/B"
+        },
+        "ownGeneratedContextPointer": "/contexts/local-B",
+        "recipeId": "captured-chart-local-B",
+        "relation": "Explicit declared captured migration recipe for this exact profile; no inferred lookup or ambient fallback. ready-product-off has explicit same-owner local-product-off co-selection from original AUTH-PRISM-PRODUCT-ENABLE/B whole fixture; native actualENV/issuer/grant receipts remain unexecuted."
+      },
+      {
+        "profileId": "Ready-port-contrast",
+        "originalControllerProfile": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "badc34136cd6c59eaaf5d2e43615489e1de805f9b9e3442613a4894ff460b40a",
+          "pointer": "/profiles/Ready-port-contrast"
+        },
+        "controllerSubsetRetained": true,
+        "explicitManagedPolicyInput": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/existing-chart-owner-proposal.json",
+          "sha256": "bd18300361425b9f005efad737fcddbf5e0aedf2899ec4dd85fbb3f2eaedcf89",
+          "pointer": "/profiles/local-A"
+        },
+        "explicitReadonlyRecipeInput": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/readonly-context-source-recipes.json",
+          "sha256": "c4ad7e2885088263621329dd99097006857dfbc4d765e5e82becfd5d7967bc98",
+          "pointer": "/recipes/A"
+        },
+        "ownGeneratedContextPointer": "/contexts/Ready-port-contrast",
+        "recipeId": "captured-chart-Ready-port-contrast",
+        "relation": "Explicit declared captured migration recipe for this exact profile; no inferred lookup or ambient fallback. ready-product-off has explicit same-owner local-product-off co-selection from original AUTH-PRISM-PRODUCT-ENABLE/B whole fixture; native actualENV/issuer/grant receipts remain unexecuted."
+      },
+      {
+        "profileId": "ready-product-off",
+        "originalControllerProfile": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "badc34136cd6c59eaaf5d2e43615489e1de805f9b9e3442613a4894ff460b40a",
+          "pointer": "/profiles/ready-product-off"
+        },
+        "controllerSubsetRetained": true,
+        "explicitManagedPolicyInput": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/existing-chart-owner-proposal.json",
+          "sha256": "bd18300361425b9f005efad737fcddbf5e0aedf2899ec4dd85fbb3f2eaedcf89",
+          "pointer": "/profiles/local-A"
+        },
+        "explicitReadonlyRecipeInput": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/readonly-context-source-recipes.json",
+          "sha256": "c4ad7e2885088263621329dd99097006857dfbc4d765e5e82becfd5d7967bc98",
+          "pointer": "/recipes/A"
+        },
+        "ownGeneratedContextPointer": "/contexts/ready-product-off",
+        "recipeId": "captured-chart-ready-product-off",
+        "relation": "Explicit declared captured migration recipe for this exact profile; no inferred lookup or ambient fallback. ready-product-off has explicit same-owner local-product-off co-selection from original AUTH-PRISM-PRODUCT-ENABLE/B whole fixture; native actualENV/issuer/grant receipts remain unexecuted."
+      },
+      {
+        "profileId": "role-off",
+        "originalControllerProfile": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stand/charts/kubeclaw/values.yaml",
+          "sha256": "badc34136cd6c59eaaf5d2e43615489e1de805f9b9e3442613a4894ff460b40a",
+          "pointer": "/profiles/role-off"
+        },
+        "controllerSubsetRetained": true,
+        "explicitManagedPolicyInput": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/existing-chart-owner-proposal.json",
+          "sha256": "bd18300361425b9f005efad737fcddbf5e0aedf2899ec4dd85fbb3f2eaedcf89",
+          "pointer": "/profiles/local-A"
+        },
+        "explicitReadonlyRecipeInput": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/readonly-context-source-recipes.json",
+          "sha256": "c4ad7e2885088263621329dd99097006857dfbc4d765e5e82becfd5d7967bc98",
+          "pointer": "/recipes/A"
+        },
+        "ownGeneratedContextPointer": "/contexts/role-off",
+        "recipeId": "captured-chart-role-off",
+        "relation": "Explicit declared captured migration recipe for this exact profile; no inferred lookup or ambient fallback. ready-product-off has explicit same-owner local-product-off co-selection from original AUTH-PRISM-PRODUCT-ENABLE/B whole fixture; native actualENV/issuer/grant receipts remain unexecuted."
+      }
+    ],
+    "supportedRoles": [
+      "buster"
+    ],
+    "otherKnownChartRoleBranches": {
+      "nova": "No Buster/Prism role plugin; explicit independent full source recipe required before declaration, denied here",
+      "prism": "Actual kubeclaw-prism branch requires exact real source/role/host/token/roster tuple; no B-context inference, denied here"
+    },
+    "unknownRoles": "deny"
+  },
+  "roleRecipes": {
+    "qualification": "readonly exact generated role recipes, not second writer/installed grants",
+    "recipes": {
+      "nova-current": {
+        "qualification": "readonly generated existing-author/source context, not second configurable policy/secret writer; exact original per-role/host/grant/image support required",
+        "systemAgent": {
+          "agentId": "main"
+        },
+        "agentModel": {
+          "primary": "openai/gpt-6-astra",
+          "fallbacks": [
+            "openai/gpt-5.5"
+          ],
+          "sourceRef": "my-values/nova-values.yaml#/agent/model -> same existing Chart agent.model; current actual source"
+        },
+        "commandsAuthorization": {
+          "ownerAllowFrom": [
+            "discord:849379821536804864"
+          ],
+          "discord": [
+            "849379821536804864",
+            "user:849379821536804864"
+          ]
+        },
+        "discordEnabled": true,
+        "gatewayPort": 18789,
+        "gatewayTokenRef": {
+          "source": "env",
+          "provider": "default",
+          "id": "OPENCLAW_GATEWAY_TOKEN"
+        },
+        "discordTokenRef": {
+          "source": "env",
+          "provider": "default",
+          "id": "DISCORD_TOKEN"
+        },
+        "installedPluginAllow": [
+          "discord",
+          "acpx",
+          "codex",
+          "openai"
+        ],
+        "roleSpecificPluginEntries": {
+          "discord": {
+            "enabled": true
+          }
+        },
+        "secretsProviderContext": {
+          "providers": {
+            "default": {
+              "source": "env"
+            }
+          }
+        },
+        "authProfileContext": "existing Chart/native OAuth identity references only; actual retained tokens/grants/issuer external, no bytes here",
+        "sourceRoleAuthor": "existing Chart + my-values/nova-values.yaml; no arbitrary context CONFIG writer",
+        "agentRole": "nova",
+        "nativeSecretRefRefinement": "original pinned native SecretRefSchema/isValidFileSecretRefId/isValidExecSecretRefId mandatory in approved full-image bootstrap; partial local cuts are NOT that validator",
+        "roleSpecificProjectionSource": "actual ConfigMap role nova plugin branch; immutable generated source recipe, no installed grant",
+        "discordApprovers": [],
+        "guildUserProjection": [
+          "849379821536804864"
+        ],
+        "sourceAuthorizationRecipe": "exact my-values/nova-values.yaml commands/Discord/auth/litellm source projections; not active grant",
+        "nativeRoleSource": {
+          "roleValuesPath": "my-values/nova-values.yaml",
+          "deploymentName": "agent-nova",
+          "namespace": "kubeclaw",
+          "imageRecipe": "docker/Dockerfile.nova",
+          "imageRepository": "ghcr.io/datrab/kubeclaw-nova",
+          "imageTag": "latest",
+          "installedImageEquality": "external-required",
+          "gatewayTokenLocator": "kubernetes-secret:kubeclaw/openclaw-shared-secrets#gatewayToken-nova",
+          "discordTokenLocator": "kubernetes-secret:kubeclaw/openclaw-shared-secrets#discordToken-nova",
+          "discordTokenCarrier": "ENV DISCORD_TOKEN only when actual discord.enabled; dormant locator otherwise, not token read",
+          "litellmAlias": {
+            "endpoint": "http://litellm.kubeclaw.svc.cluster.local:4000/v1",
+            "apiKey": {
+              "source": "env",
+              "provider": "default",
+              "id": "LITELLM_API_KEY"
+            },
+            "locator": "kubernetes-secret:kubeclaw/openclaw-shared-secrets#litellmApiKey"
+          },
+          "skillSelection": [],
+          "skillSource": "Chart explicit main.skills=[]; image codebundle /app/skills overlay delivery does not imply selection/installed skill availability",
+          "pluginSdkSource": "OpenClaw2026.9.5 original base and diagnostic-runtime onDiagnosticEvent build assertion; Prism package compat >=2026.9.1 where active; actual installed SDK equality/grants missing",
+          "serviceExposure": {
+            "type": "ClusterIP",
+            "gatewayPort": 18789,
+            "gatewayTargetPort": "gateway",
+            "bridgeEnabled": true,
+            "bridgePort": 18790,
+            "nodePort": 0,
+            "bridgeNodePort": 0,
+            "extraPorts": []
+          },
+          "modelBranchMeaning": "current source exact"
+        }
+      },
+      "nova-modelcontrast": {
+        "qualification": "readonly generated existing-author/source context, not second configurable policy/secret writer; exact original per-role/host/grant/image support required",
+        "systemAgent": {
+          "agentId": "main"
+        },
+        "agentModel": {
+          "primary": "openai/gpt-5.6-sol",
+          "fallbacks": [
+            "openai/gpt-5.5"
+          ],
+          "sourceRef": "my-values/nova-values.yaml#/agent/model -> same existing Chart agent.model; proposed full-profile alternative using actual Chart conditional native domain, not deployed source/grant"
+        },
+        "commandsAuthorization": {
+          "ownerAllowFrom": [
+            "discord:849379821536804864"
+          ],
+          "discord": [
+            "849379821536804864",
+            "user:849379821536804864"
+          ]
+        },
+        "discordEnabled": true,
+        "gatewayPort": 18789,
+        "gatewayTokenRef": {
+          "source": "env",
+          "provider": "default",
+          "id": "OPENCLAW_GATEWAY_TOKEN"
+        },
+        "discordTokenRef": {
+          "source": "env",
+          "provider": "default",
+          "id": "DISCORD_TOKEN"
+        },
+        "installedPluginAllow": [
+          "discord",
+          "acpx",
+          "codex",
+          "openai"
+        ],
+        "roleSpecificPluginEntries": {
+          "discord": {
+            "enabled": true
+          }
+        },
+        "secretsProviderContext": {
+          "providers": {
+            "default": {
+              "source": "env"
+            }
+          }
+        },
+        "authProfileContext": "existing Chart/native OAuth identity references only; actual retained tokens/grants/issuer external, no bytes here",
+        "sourceRoleAuthor": "existing Chart + my-values/nova-values.yaml; no arbitrary context CONFIG writer",
+        "agentRole": "nova",
+        "nativeSecretRefRefinement": "original pinned native SecretRefSchema/isValidFileSecretRefId/isValidExecSecretRefId mandatory in approved full-image bootstrap; partial local cuts are NOT that validator",
+        "roleSpecificProjectionSource": "actual ConfigMap role nova plugin branch; immutable generated source recipe, no installed grant",
+        "discordApprovers": [],
+        "guildUserProjection": [
+          "849379821536804864"
+        ],
+        "sourceAuthorizationRecipe": "exact my-values/nova-values.yaml commands/Discord/auth/litellm source projections; not active grant",
+        "nativeRoleSource": {
+          "roleValuesPath": "my-values/nova-values.yaml",
+          "deploymentName": "agent-nova",
+          "namespace": "kubeclaw",
+          "imageRecipe": "docker/Dockerfile.nova",
+          "imageRepository": "ghcr.io/datrab/kubeclaw-nova",
+          "imageTag": "latest",
+          "installedImageEquality": "external-required",
+          "gatewayTokenLocator": "kubernetes-secret:kubeclaw/openclaw-shared-secrets#gatewayToken-nova",
+          "discordTokenLocator": "kubernetes-secret:kubeclaw/openclaw-shared-secrets#discordToken-nova",
+          "discordTokenCarrier": "ENV DISCORD_TOKEN only when actual discord.enabled; dormant locator otherwise, not token read",
+          "litellmAlias": {
+            "endpoint": "http://litellm.kubeclaw.svc.cluster.local:4000/v1",
+            "apiKey": {
+              "source": "env",
+              "provider": "default",
+              "id": "LITELLM_API_KEY"
+            },
+            "locator": "kubernetes-secret:kubeclaw/openclaw-shared-secrets#litellmApiKey"
+          },
+          "skillSelection": [],
+          "skillSource": "Chart explicit main.skills=[]; image codebundle /app/skills overlay delivery does not imply selection/installed skill availability",
+          "pluginSdkSource": "OpenClaw2026.9.5 original base and diagnostic-runtime onDiagnosticEvent build assertion; Prism package compat >=2026.9.1 where active; actual installed SDK equality/grants missing",
+          "serviceExposure": {
+            "type": "ClusterIP",
+            "gatewayPort": 18789,
+            "gatewayTargetPort": "gateway",
+            "bridgeEnabled": true,
+            "bridgePort": 18790,
+            "nodePort": 0,
+            "bridgeNodePort": 0,
+            "extraPorts": []
+          },
+          "modelBranchMeaning": "operator full-profile alternative, source-authentic conditional branch; installed model/harness grant missing"
+        }
+      },
+      "prism-current": {
+        "qualification": "readonly generated existing-author/source context, not second configurable policy/secret writer; exact original per-role/host/grant/image support required",
+        "systemAgent": {
+          "agentId": "main"
+        },
+        "agentModel": {
+          "primary": "openai/gpt-5.6-sol",
+          "fallbacks": [
+            "openai/gpt-5.5"
+          ],
+          "sourceRef": "my-values/prism-agent-values.yaml#/agent/model -> same existing Chart agent.model; current actual source"
+        },
+        "commandsAuthorization": {
+          "ownerAllowFrom": [
+            "discord:849379821536804864"
+          ],
+          "discord": [
+            "849379821536804864",
+            "user:849379821536804864"
+          ]
+        },
+        "discordEnabled": false,
+        "gatewayPort": 18789,
+        "gatewayTokenRef": {
+          "source": "env",
+          "provider": "default",
+          "id": "OPENCLAW_GATEWAY_TOKEN"
+        },
+        "discordTokenRef": {
+          "source": "env",
+          "provider": "default",
+          "id": "DISCORD_TOKEN"
+        },
+        "installedPluginAllow": [
+          "discord",
+          "acpx",
+          "codex",
+          "openai",
+          "kubeclaw-prism"
+        ],
+        "roleSpecificPluginEntries": {
+          "discord": {
+            "enabled": false
+          },
+          "kubeclaw-prism": {
+            "enabled": true,
+            "config": {
+              "controlUrl": "http://127.0.0.1:28080"
+            }
+          }
+        },
+        "secretsProviderContext": {
+          "providers": {
+            "default": {
+              "source": "env"
+            }
+          }
+        },
+        "authProfileContext": "existing Chart/native OAuth identity references only; actual retained tokens/grants/issuer external, no bytes here",
+        "sourceRoleAuthor": "existing Chart + my-values/prism-agent-values.yaml; no arbitrary context CONFIG writer",
+        "agentRole": "prism",
+        "nativeSecretRefRefinement": "original pinned native SecretRefSchema/isValidFileSecretRefId/isValidExecSecretRefId mandatory in approved full-image bootstrap; partial local cuts are NOT that validator",
+        "roleSpecificProjectionSource": "actual ConfigMap role prism plugin branch; immutable generated source recipe, no installed grant",
+        "discordApprovers": [],
+        "guildUserProjection": [
+          "849379821536804864"
+        ],
+        "sourceAuthorizationRecipe": "exact my-values/prism-agent-values.yaml commands/Discord/auth/litellm source projections; not active grant",
+        "nativeRoleSource": {
+          "roleValuesPath": "my-values/prism-agent-values.yaml",
+          "deploymentName": "agent-prism",
+          "namespace": "kubeclaw",
+          "imageRecipe": "docker/Dockerfile.prism-agent",
+          "imageRepository": "ghcr.io/datrab/kubeclaw-prism-agent",
+          "imageTag": "latest",
+          "installedImageEquality": "external-required",
+          "gatewayTokenLocator": "kubernetes-secret:kubeclaw/openclaw-shared-secrets#gatewayToken-prism",
+          "discordTokenLocator": "kubernetes-secret:kubeclaw/openclaw-shared-secrets#discordToken-prism",
+          "discordTokenCarrier": "ENV DISCORD_TOKEN only when actual discord.enabled; dormant locator otherwise, not token read",
+          "litellmAlias": {
+            "endpoint": "http://litellm.kubeclaw.svc.cluster.local:4000/v1",
+            "apiKey": {
+              "source": "env",
+              "provider": "default",
+              "id": "LITELLM_API_KEY"
+            },
+            "locator": "kubernetes-secret:kubeclaw/openclaw-shared-secrets#litellmApiKey"
+          },
+          "skillSelection": [],
+          "skillSource": "Chart explicit main.skills=[]; image codebundle /app/skills overlay delivery does not imply selection/installed skill availability",
+          "pluginSdkSource": "OpenClaw2026.9.5 original base and diagnostic-runtime onDiagnosticEvent build assertion; Prism package compat >=2026.9.1 where active; actual installed SDK equality/grants missing",
+          "serviceExposure": {
+            "gatewayPort": 8080,
+            "gatewayTargetPort": "prism-dispatch",
+            "bridgeEnabled": false
+          },
+          "modelBranchMeaning": "current source exact"
+        }
+      },
+      "prism-modelcontrast": {
+        "qualification": "readonly generated existing-author/source context, not second configurable policy/secret writer; exact original per-role/host/grant/image support required",
+        "systemAgent": {
+          "agentId": "main"
+        },
+        "agentModel": {
+          "primary": "openai/gpt-6-astra",
+          "fallbacks": [
+            "openai/gpt-5.5"
+          ],
+          "sourceRef": "my-values/prism-agent-values.yaml#/agent/model -> same existing Chart agent.model; proposed full-profile alternative using actual Chart conditional native domain, not deployed source/grant"
+        },
+        "commandsAuthorization": {
+          "ownerAllowFrom": [
+            "discord:849379821536804864"
+          ],
+          "discord": [
+            "849379821536804864",
+            "user:849379821536804864"
+          ]
+        },
+        "discordEnabled": false,
+        "gatewayPort": 18789,
+        "gatewayTokenRef": {
+          "source": "env",
+          "provider": "default",
+          "id": "OPENCLAW_GATEWAY_TOKEN"
+        },
+        "discordTokenRef": {
+          "source": "env",
+          "provider": "default",
+          "id": "DISCORD_TOKEN"
+        },
+        "installedPluginAllow": [
+          "discord",
+          "acpx",
+          "codex",
+          "openai",
+          "kubeclaw-prism"
+        ],
+        "roleSpecificPluginEntries": {
+          "discord": {
+            "enabled": false
+          },
+          "kubeclaw-prism": {
+            "enabled": true,
+            "config": {
+              "controlUrl": "http://127.0.0.1:28080"
+            }
+          }
+        },
+        "secretsProviderContext": {
+          "providers": {
+            "default": {
+              "source": "env"
+            }
+          }
+        },
+        "authProfileContext": "existing Chart/native OAuth identity references only; actual retained tokens/grants/issuer external, no bytes here",
+        "sourceRoleAuthor": "existing Chart + my-values/prism-agent-values.yaml; no arbitrary context CONFIG writer",
+        "agentRole": "prism",
+        "nativeSecretRefRefinement": "original pinned native SecretRefSchema/isValidFileSecretRefId/isValidExecSecretRefId mandatory in approved full-image bootstrap; partial local cuts are NOT that validator",
+        "roleSpecificProjectionSource": "actual ConfigMap role prism plugin branch; immutable generated source recipe, no installed grant",
+        "discordApprovers": [],
+        "guildUserProjection": [
+          "849379821536804864"
+        ],
+        "sourceAuthorizationRecipe": "exact my-values/prism-agent-values.yaml commands/Discord/auth/litellm source projections; not active grant",
+        "nativeRoleSource": {
+          "roleValuesPath": "my-values/prism-agent-values.yaml",
+          "deploymentName": "agent-prism",
+          "namespace": "kubeclaw",
+          "imageRecipe": "docker/Dockerfile.prism-agent",
+          "imageRepository": "ghcr.io/datrab/kubeclaw-prism-agent",
+          "imageTag": "latest",
+          "installedImageEquality": "external-required",
+          "gatewayTokenLocator": "kubernetes-secret:kubeclaw/openclaw-shared-secrets#gatewayToken-prism",
+          "discordTokenLocator": "kubernetes-secret:kubeclaw/openclaw-shared-secrets#discordToken-prism",
+          "discordTokenCarrier": "ENV DISCORD_TOKEN only when actual discord.enabled; dormant locator otherwise, not token read",
+          "litellmAlias": {
+            "endpoint": "http://litellm.kubeclaw.svc.cluster.local:4000/v1",
+            "apiKey": {
+              "source": "env",
+              "provider": "default",
+              "id": "LITELLM_API_KEY"
+            },
+            "locator": "kubernetes-secret:kubeclaw/openclaw-shared-secrets#litellmApiKey"
+          },
+          "skillSelection": [],
+          "skillSource": "Chart explicit main.skills=[]; image codebundle /app/skills overlay delivery does not imply selection/installed skill availability",
+          "pluginSdkSource": "OpenClaw2026.9.5 original base and diagnostic-runtime onDiagnosticEvent build assertion; Prism package compat >=2026.9.1 where active; actual installed SDK equality/grants missing",
+          "serviceExposure": {
+            "gatewayPort": 8080,
+            "gatewayTargetPort": "prism-dispatch",
+            "bridgeEnabled": false
+          },
+          "modelBranchMeaning": "operator full-profile alternative, source-authentic conditional branch; installed model/harness grant missing"
+        }
+      }
+    }
+  },
+  "qualification": "Reviewed public source-recipe prerequisites, NOT installed grants/native schema execution/key revision proof.",
+  "provenance": {
+    "profileSchema": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-role-recipes-01/gateway-profile.schema.json",
+      "sha256": "983ef36a16c86e8cd50bfe01e082d41fa12de27cd7ffd3b4b1c9a3d2b780e9c6"
+    },
+    "busterContextSchema": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-agent-role-binding-01/schemas/gateway/managed-bootstrap-context.schema.json",
+      "sha256": "eb7e21ec65a755fcda4603348bd3368677f17b54451a94844919419205b5d1c8"
+    },
+    "novaContextSchema": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-agent-role-binding-01/schemas/role/nova-bootstrap-context.schema.json",
+      "sha256": "be0e5c96f804642ffff6dcc2d971759a7ee4574742bc5c9e4bc2d08a12c01454"
+    },
+    "prismContextSchema": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-agent-role-binding-01/schemas/role/prism-bootstrap-context.schema.json",
+      "sha256": "91088f085975e1899696e97677526643e0735eedb90a8b99c9792adf785c076b"
+    },
+    "busterRecipes": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-agent-role-binding-01/stand/source-current/generated/gateway-context-source-recipes.json",
+      "sha256": "334286ca546a93be3544b50fa662080964da3eecc8a5aede1b2a516c6ae4088c"
+    },
+    "roleRecipes": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-agent-role-binding-01/stand/source-current/generated/role-source-recipes.json",
+      "sha256": "c0b90cc7a0f5bc721f1794cca729c5b0cc3e6b994bb5049fb7381e2f3490eb96"
+    }
+  },
+  "busterSourceInputs": [
+    {
+      "path": "charts/kubeclaw/values.yaml",
+      "sha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1"
+    },
+    {
+      "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+      "sha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4"
+    },
+    {
+      "path": "my-values/buster-values.yaml",
+      "sha256": "23106a0d42310ad7aa5e2ce22a7bc940e88beac0eb486130b6f728dd84e0472f"
+    }
+  ],
+  "nativeFullSchema": "pinned validateConfigObjectRaw and actual image/native plugin schema still required; this managed69 schema is NOT a substitute full OpenClaw validator",
+  "contextProvenance": {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-agent-role-binding-01/stand/managed-bootstrap-context.json",
+    "sha256": "b4ee135162a1ab01774caa05765f333637905854c0c0891d6b523058032b4386"
+  }
+}

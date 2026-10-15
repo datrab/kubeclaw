@@ -7,8 +7,7 @@ function textResult(value) {
   };
 }
 
-async function post(path, payload, config) {
-  const base = config?.controlUrl || process.env.PRISM_CONTROL_URL || "http://127.0.0.1:28080";
+async function post(path, payload, base) {
   const response = await fetch(new URL(path, base), {
     method: "POST",
     headers: { "content-type": "application/json" },
@@ -20,6 +19,15 @@ async function post(path, payload, config) {
 }
 
 export default function register(api) {
+  if (process.env.PRISM_CONTROL_URL !== undefined) throw new Error('PRISM_TOOL_LEGACY_OVERRIDE:PRISM_CONTROL_URL');
+  const config = api.pluginConfig;
+  if (!config || typeof config !== 'object' || Array.isArray(config)
+    || Object.keys(config).length !== 1 || typeof config.controlUrl !== 'string'
+    || !/^https?:\/\/[^/?#\s@\\\x00-\x20\x7f]+\/?$/u.test(config.controlUrl)) throw new Error('PRISM_TOOL_CONTROL_URL_REQUIRED');
+  const parsed = new URL(config.controlUrl);
+  if (!parsed.hostname || parsed.username || parsed.password) throw new Error('PRISM_TOOL_CONTROL_URL_INVALID');
+  // Capture startup policy once. Tool-call context is task data, never a policy author.
+  const controlUrl = parsed.origin;
   api.registerTool({
     name: "prism_create_design_set",
     description: "Persist exactly three materially distinct, complete Prism design documents for one project. This tool must be called once for every new Nova architecture request.",
@@ -52,7 +60,7 @@ export default function register(api) {
       }
     },
     async execute(_id, params, context) {
-      return textResult(await post("/v1/agent/design-sets", params, context?.config));
+      return textResult(await post("/v1/agent/design-sets", params, controlUrl));
     }
   });
 
@@ -75,7 +83,7 @@ export default function register(api) {
       }
     },
     async execute(_id, params, context) {
-      return textResult(await post("/v1/agent/revisions", params, context?.config));
+      return textResult(await post("/v1/agent/revisions", params, controlUrl));
     }
   });
 }

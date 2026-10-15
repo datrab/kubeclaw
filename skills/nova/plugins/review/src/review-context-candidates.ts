@@ -31,10 +31,10 @@ function boundedReasons(reasons: readonly ReviewContextReason[]): readonly Revie
 export function mergeReviewContextDescriptors(
   input: unknown, additions: readonly unknown[], scope: ReviewBundleScope,
 ): { readonly descriptors: readonly CandidateDescriptor[]; readonly changed: boolean } {
-  const current = bundleArray(input, 'contextCandidates', 0, REVIEW_HARD_LIMITS.contextCandidates).map(descriptor);
+  const current = bundleArray(input, 'contextCandidates', 0, REVIEW_HARD_LIMITS.contextCandidates).map(parseReviewContextDescriptor);
   const merged = new Map(current.map((candidate) => [candidate.path, candidate]));
   additions.forEach((value, index) => {
-    const candidate = descriptor(value, current.length + index);
+    const candidate = parseReviewContextDescriptor(value, current.length + index);
     const existing = merged.get(candidate.path);
     if (!existing) {
       merged.set(candidate.path, candidate);
@@ -69,7 +69,8 @@ function inScope(path: string, prefixes: readonly string[]): boolean {
   return prefixes.some((prefix) => prefix === '.' || path === prefix || path.startsWith(`${prefix}/`));
 }
 
-function descriptor(value: unknown, index: number): CandidateDescriptor {
+/** Effect-free original descriptor grammar only; no repository provenance or authority. */
+export function parseReviewContextDescriptor(value: unknown, index: number): CandidateDescriptor {
   const label = `contextCandidates[${index}]`;
   const item = bundleRecord(value, label);
   bundleExact(item, ['path', 'reasons', 'dependencyDepth'], [], label);
@@ -87,6 +88,15 @@ function descriptor(value: unknown, index: number): CandidateDescriptor {
   };
 }
 
+/** Supplied relational source prefix check only; no dependency/revision proof. */
+export function assertReviewContextReasonAllowedScope(
+  candidate: CandidateDescriptor, reason: ReviewContextReason, prefixes: readonly string[],
+): void {
+  if (reason.sourcePath && !inScope(reason.sourcePath, prefixes)) {
+    throw new Error(`${candidate.path} has out-of-scope provenance`);
+  }
+}
+
 function assertCandidateSource(
   candidate: CandidateDescriptor,
   reason: ReviewContextReason,
@@ -94,9 +104,7 @@ function assertCandidateSource(
   prefixes: readonly string[],
 ): void {
   if (!reason.sourcePath) return;
-  if (!inScope(reason.sourcePath, prefixes)) {
-    throw new Error(`${candidate.path} has out-of-scope provenance`);
-  }
+  assertReviewContextReasonAllowedScope(candidate, reason, prefixes);
   const source = byPath.get(reason.sourcePath);
   if (!source || source.dependencyDepth >= candidate.dependencyDepth) {
     throw new Error(`${candidate.path} has invalid dependency provenance`);
@@ -118,14 +126,21 @@ function assertCandidateProvenance(
   for (const reason of candidate.reasons) assertCandidateSource(candidate, reason, byPath, prefixes);
 }
 
+/** Declared prefix containment only; does not authenticate repository scope. */
+export function assertReviewContextDescriptorAllowedScope(
+  candidate: CandidateDescriptor, allowedPrefixes: readonly string[],
+): void {
+  if (!inScope(candidate.path, allowedPrefixes)) {
+    throw new Error(`${candidate.path} is outside allowed scope`);
+  }
+}
+
 function descriptors(input: unknown, scope: ReviewBundleScope): readonly CandidateDescriptor[] {
   const supplied = bundleArray(
     input, 'contextCandidates', 0, REVIEW_HARD_LIMITS.contextCandidates,
-  ).map(descriptor);
+  ).map(parseReviewContextDescriptor);
   for (const candidate of supplied) {
-    if (!inScope(candidate.path, scope.allowedPrefixes)) {
-      throw new Error(`${candidate.path} is outside allowed scope`);
-    }
+    assertReviewContextDescriptorAllowedScope(candidate, scope.allowedPrefixes);
   }
   const changed = scope.changedPaths
     .filter(({ status }) => status !== 'deleted')

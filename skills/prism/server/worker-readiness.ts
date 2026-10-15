@@ -1,3 +1,4 @@
+import type { PrismNonceDatabaseSettings } from '@kubeclaw/plugin-foundation/config/swarm';
 import { Pool } from "pg";
 import { PostgresNonceStore, verifyInternalRequest } from "./internal-auth.ts";
 
@@ -36,14 +37,25 @@ function safeDatabaseCode(error: unknown): string {
 export class WorkerNonceDatabase {
   private readonly pool: Pool;
   private active = 0;
+  private readonly authenticationWindowMs: number;
+  private readonly maximumCleanupRows: number;
   private readonly timeoutMs: number;
+  private readonly maximumConnections: number;
   private readonly diagnostic: (event: WorkerDependencyDiagnostic) => void;
-  constructor(connectionString: string, timeoutMs = 750, diagnostic: (event: WorkerDependencyDiagnostic) => void = event => { process.stderr.write(`${JSON.stringify(event)}\n`); }) {
+  constructor(connectionString: string, settings: PrismNonceDatabaseSettings, diagnostic: (event: WorkerDependencyDiagnostic) => void = event => { process.stderr.write(`${JSON.stringify(event)}\n`); }) {
+    const { timeoutMs, maximumConnections } = settings;
     this.diagnostic = diagnostic;
     if (!Number.isSafeInteger(timeoutMs) || timeoutMs < 1 || timeoutMs > 2_147_483_647) throw new Error("Invalid nonce dependency deadline");
+    if (!Number.isSafeInteger(maximumConnections) || maximumConnections < 1 || maximumConnections > 2_147_483_647) throw new Error("Invalid nonce database connection limit");
+    if (!Number.isSafeInteger(settings.maximumCleanupRows) || settings.maximumCleanupRows < 1 || settings.maximumCleanupRows > 2147483647) throw new Error("Invalid nonce cleanup row limit");
+    if (!Number.isSafeInteger(settings.authenticationWindowMs) || settings.authenticationWindowMs < 1 || settings.authenticationWindowMs > 2147483647) throw new Error("Invalid authentication window");
+    if (!Number.isSafeInteger(settings.idleTimeoutMs) || settings.idleTimeoutMs < 0 || settings.idleTimeoutMs > 2147483647) throw new Error("Invalid nonce database idle timeout");
+    this.authenticationWindowMs = settings.authenticationWindowMs;
+    this.maximumCleanupRows = settings.maximumCleanupRows;
     this.timeoutMs = timeoutMs;
-    this.pool = new Pool({ connectionString, max: 4,
-      connectionTimeoutMillis: timeoutMs, statement_timeout: timeoutMs,
+    this.maximumConnections = maximumConnections;
+    this.pool = new Pool({ connectionString, max: maximumConnections,
+      connectionTimeoutMillis: timeoutMs, idleTimeoutMillis: settings.idleTimeoutMs, statement_timeout: timeoutMs,
       lock_timeout: timeoutMs });
     // Idle connection failures are handled by pg's pool eviction. Never log
     // connection details or credentials in a public readiness response.
@@ -58,7 +70,7 @@ export class WorkerNonceDatabase {
 
   private async run(operation: (db: PostgresNonceStore) => Promise<void>, signal?: AbortSignal): Promise<void> {
     const started = performance.now();
-    if (this.active >= 4) {
+    if (this.active >= this.maximumConnections) {
       this.report("admission", "ADMISSION_LIMIT", started);
       throw new WorkerDependencyUnavailable();
     }
@@ -87,7 +99,7 @@ export class WorkerNonceDatabase {
       try {
         if (closing) throw new WorkerDependencyUnavailable();
         await checkWorkerNonceTable({ query });
-        await operation(new PostgresNonceStore({ query }));
+        await operation(new PostgresNonceStore({ query }, this.maximumCleanupRows));
         if (closing) throw new WorkerDependencyUnavailable();
       } finally {
         clearTimeout(timer);
@@ -99,7 +111,7 @@ export class WorkerNonceDatabase {
 
   check(signal?: AbortSignal): Promise<void> { return this.run(async () => {}, signal); }
   authenticate(secret: string, body: Buffer, headers: Record<string, string | string[] | undefined>, signal?: AbortSignal): Promise<void> {
-    return this.run((store) => verifyInternalRequest(secret, body, headers, store), signal);
+    return this.run((store) => verifyInternalRequest(secret, body, headers, store, this.authenticationWindowMs), signal);
   }
   get pendingConnections(): number { return this.pool.waitingCount; }
   get openConnections(): number { return this.pool.totalCount; }

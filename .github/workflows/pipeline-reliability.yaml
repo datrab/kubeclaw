@@ -22,6 +22,7 @@ jobs:
         if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
         run: |
           npm run versions:check
+          npm run config:prism:check
           node --test tests/verification/deployment/versions.test.mjs
       - name: Typecheck source packages
         if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}

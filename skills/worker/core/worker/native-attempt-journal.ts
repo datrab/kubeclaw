@@ -17,18 +17,29 @@ export class NativeWorkerAttemptBusy extends Error {
   constructor() { super('WORKER_NATIVE_ATTEMPT_BUSY'); }
 }
 
+/** Trusted coordinator capability, never decoded from an attempt/control wire.
+ * bind fsyncs original provenance before admission; verify denies missing A
+ * without repairing it from current settings.
+ */
+export interface NativeAttemptBootAssociation {
+  readonly bind: (envelope: WorkerAttemptEnvelopeV3) => Promise<void>;
+  readonly verify: (envelope: WorkerAttemptEnvelopeV3) => Promise<void>;
+}
+
 /** Accepted identity, original output and sealed result outlive the serving process. */
 export class NativeAttemptJournal {
   readonly #root: string;
   readonly #limits: NativeAttemptJournalLimits;
   readonly #records: FileDurableRecordStore;
   readonly #blobs: FileDurableBlobStore;
+  readonly #originalBoot: NativeAttemptBootAssociation | undefined;
 
-  constructor(root: string, limits: NativeAttemptJournalLimits) {
+  constructor(root: string, limits: NativeAttemptJournalLimits, originalBoot?: NativeAttemptBootAssociation) {
     if (!path.isAbsolute(root) || Object.values(limits).some(value => !Number.isSafeInteger(value) || value < 1)) {
       throw new Error('WORKER_NATIVE_JOURNAL_CONFIG_INVALID');
     }
     this.#root = path.resolve(root); this.#limits = { ...limits };
+    this.#originalBoot = originalBoot;
     this.#records = new FileDurableRecordStore(path.join(this.#root, 'metadata'), {
       maximumRecords: limits.maximumRecords, maximumBytes: limits.maximumStateBytes, maximumRecordBytes: nativeJournalMaximumRecordBytes,
     });
@@ -72,6 +83,7 @@ export class NativeAttemptJournal {
       validateWorkerResourceContractV3('workerAttemptEnvelope', envelope);
       if (journalKey(envelope) !== record.idempotencyKey || sha256Digest(envelope) !== record.payload.envelopeDigest
         || canonicalJson(journalIdentity(envelope)) !== canonicalJson(record.payload.identity)) throw new Error('WORKER_NATIVE_JOURNAL_IDENTITY_CONFLICT');
+      await this.#originalBoot?.verify(envelope);
       yield envelope;
     }
   }
@@ -152,6 +164,7 @@ export class NativeAttemptJournal {
     const record = (await this.#all()).find(record => record.idempotencyKey === journalKey(envelope));
     if (record && (record.payload.envelopeDigest !== sha256Digest(envelope)
       || canonicalJson(record.payload.identity) !== canonicalJson(journalIdentity(envelope)))) throw new Error('WORKER_NATIVE_JOURNAL_IDENTITY_CONFLICT');
+    if (record) await this.#originalBoot?.verify(envelope);
     return record;
   }
 
@@ -177,6 +190,7 @@ export class NativeAttemptJournal {
         envelopeDigest: sha256Digest(envelope), envelope: { digest: sha256Digest(envelope), sizeBytes: bytes.byteLength },
         acceptedAt: new Date().toISOString(), reservationBytes, process: null, processCompletedAt: null, result: null };
       const owner = `native-worker:${sha256Digest(envelope.claim.workerId).slice(7)}`;
+      await this.#originalBoot?.bind(envelope);
       await reserveNativeJournalMetadata(path.join(this.#root, 'metadata', 'records', 'store.json'),
         payload, journalKey(envelope), owner, this.#limits);
       // The global admission lock holds the checked disk reservation while the

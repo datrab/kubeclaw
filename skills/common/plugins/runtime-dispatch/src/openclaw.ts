@@ -9,6 +9,8 @@ import { openClawToolDetails, record } from './openclaw-response.ts';
 import { findRegisteredSession, gateway, pollSession, type OpenClawSessionIdentity, type OpenClawSessionState } from './openclaw-session.ts';
 
 export interface OpenClawTarget {
+  readonly timingProfile: string;
+  readonly resultReadMaximumBytes: number; readonly collectorWaitTimeoutSeconds: number;
   readonly endpoint: string; readonly tokenSecret: string; readonly runtime: 'acp' | 'subagent';
   readonly agentId: string; readonly agentRole: string; readonly model: string; readonly thinking: string;
   readonly controllerSessionKey?: string;

@@ -1,6 +1,6 @@
-import { validateBusterExecutionSettings, type BusterExecutionSettings } from '../../../common/plugin-runtime/foundation/config/buster-execution.ts';
+import { validateBusterExecutionSettings, type BusterExecutionSettings } from '@kubeclaw/plugin-foundation/config/buster-execution';
 import { validateLocalWorkerRuntimePolicy, type LocalWorkerRuntimePolicy } from "@kubeclaw/worker-core";
-import { validateBusterAdmissionSettings, validateBusterDependencyReadinessSettings, type BusterAdmissionSettings, type BusterDependencyReadinessSettings } from '../../../common/plugin-runtime/foundation/config/swarm.ts';
+import { validateBusterAdmissionSettings, validateBusterDependencyReadinessSettings, type BusterAdmissionSettings, type BusterDependencyReadinessSettings } from '@kubeclaw/plugin-foundation/config/swarm';
 import { executeBusterPreparedJob } from './remote-prepared-execution.ts';
 import { preparedPlanRuntimeRoot } from './prepared-plan-paths.ts';
 import type { BusterStagedAdmission } from './preparation-input.ts';

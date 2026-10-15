@@ -298,6 +298,9 @@ RUN find packs npm-cache -type f -print0 \
 
 WORKDIR /app
 
+# Explicit Platform policy reference target; never auto-selected by the runtime.
+COPY config/nova/core.config.json /etc/kubeclaw/nova/core.config.json
+
 ENV HOME=/home/node
 
 LABEL org.opencontainers.image.title="KubeClaw Nova (Root Mode)"

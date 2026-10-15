@@ -1,3 +1,4 @@
+import { TEST_CORE_POLICY } from '../../fixtures/core-runtime-policy.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -42,17 +43,17 @@ test('native Redis keeps target and provider streams distinct and deduplicates w
       if (server.exitCode !== null || performance.now() >= deadline) throw new Error(`native Redis failed: ${logs}`);
       await new Promise(resolve => setTimeout(resolve, 10));
     }
-    const locks = new FileResourceLockManager(path.join(root, 'locks'));
+    const locks = new FileResourceLockManager(path.join(root, 'locks'), TEST_CORE_POLICY);
     const receipts: any[] = [];
     for (const kind of ['publisher', 'telemetry'] as const) for (const target of ['pipeline.completed', 'pipeline_completed']) {
-      const effects = new EffectCoordinator(new FileEffectJournal(path.join(root, `${kind}-${target}.jsonl`)), undefined, undefined, locks, 300_000);
+      const effects = new EffectCoordinator(new FileEffectJournal(path.join(root, `${kind}-${target}.jsonl`), TEST_CORE_POLICY), undefined, undefined, locks, 300_000);
       const input = { idempotencyKey: 'same-delivery-key', attempt, capability: kind === 'publisher' ? 'transport.publish' : 'telemetry.emit',
         operation: kind === 'publisher' ? 'publish' : 'append', resource: { type: kind === 'publisher' ? 'transport.target' : 'telemetry.event', canonicalId: target }, payload: { kind, target, content: 'Unicode 日本語 🐾' } };
       const adapter = kind === 'publisher' ? publisher : telemetry;
       const receipt = await effects.invoke(adapter, { ...owner, registrationId: kind }, input, signal);
       assert.equal(receipt.status, 'completed', JSON.stringify(receipt)); receipts.push(receipt.result);
       assert.deepEqual(await effects.invoke(adapter, { ...owner, registrationId: kind }, input, signal), receipt);
-      const restarted = new EffectCoordinator(new FileEffectJournal(path.join(root, `${kind}-${target}-second.jsonl`)), undefined, undefined, locks, 300_000);
+      const restarted = new EffectCoordinator(new FileEffectJournal(path.join(root, `${kind}-${target}-second.jsonl`), TEST_CORE_POLICY), undefined, undefined, locks, 300_000);
       const repeated = await restarted.invoke(adapter, { ...owner, registrationId: kind }, input, signal);
       assert.deepEqual(repeated.result, receipt.result, 'original adapter Lua deduplicates a real second send');
       const entries = command('XRANGE', receipt.result!.stream, '-', '+');

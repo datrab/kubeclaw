@@ -1,4 +1,4 @@
-import type { BusterProcessInputSettings } from '../../../common/plugin-runtime/foundation/config/buster-execution.ts';
+import type { BusterProcessInputSettings } from '@kubeclaw/plugin-foundation/config/buster-execution';
 import { DirectCommandCapabilityInvoker, type DirectCommandCapabilityInvokerOptions } from './direct-command-runtime.ts';
 import { ContainerBuildCapabilityInvoker, type ContainerBuildCapabilityInvokerOptions } from './container-build-runtime.ts';
 import { KubernetesFixtureCapabilityInvoker, type KubernetesFixtureCapabilityInvokerOptions } from './kubernetes-fixture-runtime.ts';

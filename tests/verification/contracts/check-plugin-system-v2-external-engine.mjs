@@ -1,3 +1,4 @@
+import { TEST_CORE_POLICY_SELECTION } from '../../fixtures/core-runtime-policy.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -65,7 +66,7 @@ fs.writeFileSync(path.join(packageRoot, 'plugin.json'), JSON.stringify({
 
 try {
   const digest = computePackageDigest(packageRoot);
-  const result = await runPipelineV2({
+  const result = await runPipelineV2({corePolicySelection: TEST_CORE_POLICY_SELECTION,
     ...(isolation ? { isolation } : {}),
     schemaVersion: 'pipeline-platform.v2', effectLockTtlMs: 300_000,
     installationRoots: [installationRoot],

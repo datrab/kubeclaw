@@ -422,3 +422,258 @@ Both fields are mandatory even when `container.build` is disabled. Validation ne
 Remove `dependencyReadiness` from the former generated/runtime JSON before upgrading: presence is rejected even for null, empty or equal-valued objects. Missing fields, strings, fractions and out-of-range values are rejected instead of receiving defaults. Direct service API callers must also supply the complete policy. Update and publish the complete config generation, render the relevant chart, then restart/roll out the process; existing instances retain their captured policy. The owner contributes to the config rollout checksum. Liveness `/healthz`, initialization `/bootstrapz`, and dependency readiness `/readyz` remain separate.
 
 Controlled executable tests establish policy propagation and process enforcement; they do not establish actual buildctl availability, a built image, a working BuildKit daemon, native isolation, or cluster activation. Those proofs remain separate. The process helper's fixed PATH/locale and other Buster runtime/provider settings are not migrated by this two-field change.
+
+
+## Nova Core selected runtime policy
+
+Author Core settings only in `config/nova/core.config.json` profiles. Every
+supported Platform v2 input must explicitly select `corePolicySelection` with
+`file` and `profile`. Relative policy paths resolve against the canonical
+Platform author directory; normal Nova/Buster image copies are available at
+`/etc/kubeclaw/nova/core.config.json` (not automatically selected). Missing or
+incomplete profiles reject; no ENV or former-literal fallback exists.
+
+The selected21 numeric leaves cover stage/observer memory, mutation lifetime and
+renewal, journal deadline, audit bytes, separate resource metadata/provisional
+locks and effect-journal inline bytes, and recovery capacities. Startup validates
+and freezes selected values before registry activation. Retained runs select
+their stored Core policy before recovery/resume/admin/retirement locks, even
+when current policy B is unavailable. Legacy snapshots without it require their
+original runtime. See the foundation configuration README for exact API and
+programmatic constructor migration details. This does not establish full
+Buster chart/image, authenticated source, native execution or global acceptance.
+
+
+## Buster normal image and chart delivery
+
+The Buster image build now emits the exact `buster` runtime package at `/app`
+and both `buster-preparation` and `buster-runtime` selections from
+`config/pipeline.config.json`. Helpers, pinned installer metadata and image proof
+support live outside that package root; do not overlay files into `/app` or
+mount a raw checkout there. The generated system configuration is installed at
+`/etc/kubeclaw/config`. Native parent/child startup verifies the installed package
+and captured selections before using the selected settings.
+
+Run `npm run config:buster:sync` after changing canonical configuration and
+commit the resulting `charts/kubeclaw/files/pipeline/buster-topology.json`.
+`config:buster:check` and normal release materialization reject stale projections.
+This shared chart topology is a derivative, not an alternate runtime author.
+Remove retired `SWARM_CONFIG`, `swarmConfigJson`, `busterComponentFile` and old
+`/etc/kubeclaw/swarm` runtime mounts rather than supplying equal-valued copies.
+
+The image-record workflow extracts `/opt/buster-image-tools/buster-delivery.json`
+from the exact digest-qualified built image without invoking its entrypoint.
+Release collection retains that metadata; release materialization validates its
+source revision, generation and namespace/release tuple, then transports its
+exact expected parent receipt into `pipelineDelivery.buster`. The chart mounts
+that receipt as a whole read-only ConfigMap directory at `/run/pipeline-delivery`
+without `subPath`, and its content participates in the rollout checksum. Do not
+hand-author, reconstruct or substitute an expected receipt from current source.
+A release lacking extracted Buster metadata must build/record its image first;
+old production release records are not silently upgraded.
+
+Image proof support is test-only at `/opt/buster-image-proofs`, with Buster,
+Foundation and SDK imports linked to the installed emitted package. Existing
+actual BuildKit, browser and restricted-capability identity/cgroup proofs remain
+required. Local package/render tests do not establish Docker installation,
+UID1000 execution or native acceptance. No deployment is performed by generation
+or verification. Other Buster service/browser policies still authored by the
+entrypoint remain a separate externalization residual; this delivery migration
+does not claim those settings have moved to the central owner.
+
+
+## Selected Artifact Store capacities
+
+The existing Nova `corePolicySelection` also selects required
+`settings.artifactStore` in `config/nova/core.config.json`. The four explicit
+fields are `maxArtifactBytes` (16777216), `maximumRecords` (100000),
+`maximumStoreBytes` (268435456) and `maximumRecordBytes` (65536). These preserve
+the former behavior; all must be positive safe integers. Both per-artifact and
+per-record byte limits must not exceed the store limit. Record metadata and blob
+storage retain their original independent accounting; this is not one combined
+metadata-plus-blob quota.
+
+Nova startup projects the selected values into
+`kubeclaw.artifact-store:artifact-store` before registry configuration validation
+and passes that captured configuration to actual adapter activation. Keep only
+installation data such as `artifactRoot` in the raw Platform adapter entry.
+Remove all four old limit keys from that entry: even equal-valued or null copies
+are rejected as competing authors. No schema default or adapter fallback remains.
+Direct programmatic adapter callers must supply all four explicitly.
+
+Run snapshots retain the resolved policy and effective adapter configuration.
+Recovery/resume uses policy A retained by that run without rereading current B;
+missing legacy policy leaves require the original runtime, not new defaults.
+Publish the complete selected policy and rebuild the normal image when changing
+it. Existing live adapters keep their captured settings until restart. This
+four-setting batch is separate from the State/Wait and Telemetry capacities
+below; whole-package/native acceptance remains open.
+
+
+## Selected State and Wait Store capacities
+
+The same explicit Nova Core file/profile selection requires separate
+`settings.stateStore` and `settings.waitStore` objects. Each has three required
+positive safe integer fields: `maxEntryBytes` (1048576), `maximumRecords` (100000)
+and `maximumStoreBytes` (268435456). These six settings preserve the former
+behavior. The per-entry and complete serialized-store limits remain independent;
+a smaller store limit is allowed and still constrains real reads/writes.
+
+Nova projects each selected policy into the original registration
+`kubeclaw.state-store:state` or `kubeclaw.wait-store:waits` before registry config
+validation and actual activation. Keep installation `root` only in the raw
+Platform entries. Remove all three old limit keys from each entry; null or
+equal-valued copies are still rejected. Direct adapter callers must supply all
+three explicitly; schema defaults and runtime fallback/coercion are gone.
+
+The effective adapter configs and selected policies are retained in the run
+snapshot. A resumed A uses its stored policy even when current B is absent.
+Reading a projected retained Wait also requires its recorded `maxEntryBytes`;
+missing old policy data requires the original runtime, never an implicit 1MiB.
+This does not change Wait source identity, grants, projection ownership,
+idempotency or retirement protocols. Publish the complete policy/rebuild normal
+images; existing adapters retain their captured limits until restart.
+
+
+## Selected Telemetry Store capacities
+
+`settings.telemetryStore` in the selected Nova Core file/profile requires
+`maxRecordBytes` (1048576), `maximumRecords` (100000) and `maximumStoreBytes`
+(268435456). These three positive safe integers preserve the former behavior.
+Per-record and complete serialized-store limits remain independent. Nova
+projects them into `kubeclaw.telemetry-store:telemetry` before registry validation
+and actual adapter activation, and retains that effective config in the run
+snapshot. A resumed A uses recorded A even when current policy B is absent.
+
+Keep installation `root` only in the raw Platform adapter entry; remove all
+three limit overrides, including equal-valued copies. Schema defaults and
+adapter fallback/coercion no longer exist. Direct programmatic callers supply
+all three explicitly. Old snapshots missing required selected policy need their
+original runtime, not new defaults. Rebuild normal images after publishing the
+complete selected policy; existing instances retain their captured settings.
+
+The record-byte limit still bounds the input JSON graph before redaction and
+the stored redacted record. Secret/personal-field projection, graph/depth/node
+checks, idempotency, owner identity and cancellation are unchanged. Agent
+Observability's ingester delegates to this telemetry adapter and its evidence
+observer delegates to Artifact Store; this adds no separate observer limits or
+new dormant settings. Native and whole-package acceptance remain separate.
+
+
+## Selected Operator and Transport delivery-store capacities
+
+The selected Core policy requires separate `settings.operatorMessagingStore`
+and `settings.transportPublisherStore` objects. Each requires
+`maximumDeliveryRecords` (100000) and `maximumDeliveryBytes` (268435456) as
+positive safe integers. These four settings preserve the former store behavior.
+They select the actual durable delivery stores of
+`kubeclaw.operator-messaging:operator` and
+`kubeclaw.transport-publisher:publisher`, not task targets or sender identities.
+
+Nova projects the values before registry validation and uses the captured
+configuration at actual activation. Run snapshots retain these effective values;
+recovery/resume selects stored A without reading current B. Remove both limit
+keys from raw Platform adapter entries, including equal-valued or null copies.
+Keep `deliveryRoot`, targets, endpoint/secret references and target payload policy
+there until their separate receiving migration. Direct API callers explicitly
+supply both store limits. No store schema default or adapter fallback remains.
+
+A failed quota admission still follows the original durable reservation protocol;
+this migration does not alter signed request bodies, delivery IDs, idempotency,
+receiver receipts, pending/failure/retry records or retirement ownership rules.
+Publish/rebuild the complete selected policy for new instances; existing
+instances retain captured limits. Missing retained policy requires the original
+runtime, not current config defaults. Target payload/default policies are not
+claimed migrated by this store-only group. Original publisher test fixture's
+non-local stage ID remains a recorded verification failure; neither its identity
+nor the canonical stage-ID schema was changed to claim a pass. Native and
+whole-package acceptance remain OPEN.
+
+
+## Selected OpenClaw dispatch processing limits
+
+`settings.openClawDispatch` in the selected Core policy requires
+`resultReadMaximumBytes` (1048576) and `collectorWaitTimeoutSeconds` (15).
+Nova projects them only into `kubeclaw.runtime-dispatch:openclaw` before registry
+validation/activation and retains that effective config with the run. The HTTP
+runtime-dispatch registration is separate and uses the HTTP byte profiles below. Remove both limit keys
+from raw Platform entries; equal/null duplicate values reject. Direct activation
+callers supply these top-level values plus the timing-profile map described
+below, not per-target processing overrides. Targets are
+captured/frozen at startup; retained A does not reload current B on resume.
+
+The byte limit is a positive safe integer passed explicitly to the existing
+no-follow local workspace result reader, which rejects missing or invalid limits.
+It replaces that reader's old1MiB default only; it is not a new bound on remote
+results, repository-adapter reads, structured collector outputs or writes. The
+2048-byte result-path protocol limit remains separate and unchanged.
+
+The collector setting is the requested wait budget in seconds for each
+`agents_wait` call, not an overall session deadline or poll-backoff interval.
+It accepts integral0..2147483 seconds (bounded for millisecond timer conversion).
+Zero requests a nonblocking check. The receiving OpenClaw host can still clamp
+it to its configured maximum. Direct collector reads validate it before any
+request, so missing values cannot select an upstream default. Existing session
+timeout, poll/max-poll limits, cancellation, collector identity and output
+validation remain unchanged. Per-target model/prompt/network policy defaults
+are not claimed migrated here. Local gateway protocol vectors and physical file
+tests do not prove paid/native model or collector execution; global acceptance
+remains OPEN.
+
+
+## Explicit per-target OpenClaw timing profiles
+
+The selected Core `openClawDispatch.targetTimingProfiles` is a required, nonempty
+map. Each named profile authors all five fields in milliseconds except the count:
+
+| Field | `standard` (former defaults) | `production-pipeline` (existing producer) |
+| --- | ---: | ---: |
+| `spawnIntervalMs` | 1500 | 1500 |
+| `pollMs` | 1000 | 2000 |
+| `maxPollMs` | 15000 | 15000 |
+| `maxPolls` | 1800 | 1200 |
+| `sessionTimeoutMs` | 1800000 | 1800000 |
+
+Each raw Platform OpenClaw target explicitly sets `timingProfile` to one existing
+name. The name `standard` has no implicit meaning: missing/unknown selectors
+reject. Remove all five old timing fields from targets, including equal/null
+copies. The only value author is the selected Core profile map; raw Platform
+`targetTimingProfiles` overrides reject. Direct adapter callers explicitly supply
+the map and target selectors. Distinct targets may select distinct complete
+profiles; no generic merge or per-target value fallback is performed.
+
+Existing supported bounds remain: spawn0..60000, polling at least10, positive
+safe-integer poll count, maxPollMs at least pollMs, sessionTimeoutMs at least
+pollMs and at most86400000. Every authored profile is validated, even unselected.
+Values reach existing spawn pacing, exponential/capped polling, poll-count cutoff
+and session deadline consumers. These remain separate from per-call collector
+wait seconds. The normal production-pipeline producer now selects its preserved
+profile; generation/source inspection is not a deployment/native success claim.
+
+New runs retain both resolved timing policies and each target's selector in the
+existing run snapshot. Recovery/resume/admin restore only the original processing
+selector from that same snapshot, before preparation. A missing/broken current B
+policy or changed B selector cannot replace A. Other current endpoint/model/
+identity/grant/installation data still faces the unchanged pinned configuration
+check; this is not permission to ignore changed targets. Missing old retained
+profile data requires the original runtime, not reconstructed defaults. No graph,
+owner, authorization or source-receipt protocol was added by this migration.
+
+## Explicit HTTP runtime-dispatch byte profiles
+
+Selected Nova Core `settings.httpDispatch.targetByteProfiles` is the sole author
+for HTTP target body caps. `standard` preserves1MiB request and1MiB response.
+Each HTTP runtime target explicitly names its `byteProfile`; there is no default
+profile or target-level fallback. The complete closed profile contains
+`maxRequestBytes` and `maxResponseBytes`, each integer1..8388608. Named profiles
+support distinct target budgets; all profiles validate even when unused.
+
+Nova delivers the selected map before original registry validation and activation;
+raw adapter maps or former target byte fields reject even equal/null. Actual
+receiver captures caps and preserves JSON UTF-8 boundary behavior: request before
+network, response after JSON/status validation. This is not a streaming response
+limit and does not replace network adapter caps, authentication or secrets.
+Resume/recovery/admin restore original processing selector and Core values from
+the same retained snapshot; endpoint/authentication/token/grants and target set
+remain subject to unchanged configuration pinning. Missing original policy or
+selector requires original runtime. Native and whole CONFIG acceptance stay OPEN.

@@ -21,7 +21,7 @@ const artifact = { artifactId: 'input:journal-test', type: 'prism-engine-input',
 test('new-admission rejection persists no accepted work and cannot block historical receipt replay', async () => {
   const parent = await fs.mkdtemp(path.join(os.tmpdir(), 'native-journal-admission-'));
   const journal = new NativeAttemptJournal(path.join(parent, 'journal'), limits);
-  const envelope = prismNativeAttempt('render', artifact, 'admission-precondition', nativeResourcePolicy);
+  const envelope = prismNativeAttempt('render', artifact, 'admission-precondition', nativeResourcePolicy, 600000, 300000, 16777216, 134217728, 64);
   const reject = () => { throw new Error('EXPIRED_NEW_ADMISSION'); };
   try {
     await assert.rejects(journal.withAttempt(envelope, async () => assert.fail('rejected work entered'), reject), /EXPIRED_NEW_ADMISSION/);
@@ -41,7 +41,7 @@ for (const mode of ['accepted', 'sealed']) {
   test(`real writer SIGKILL preserves ${mode} identity, original output and receipt without re-admission`, { timeout: 20000 }, async () => {
     const parent = await fs.mkdtemp(path.join(os.tmpdir(), 'native-journal-crash-'));
     const root = path.join(parent, 'journal');
-    const envelope = prismNativeAttempt('render', artifact, 'journal-crash', nativeResourcePolicy);
+    const envelope = prismNativeAttempt('render', artifact, 'journal-crash', nativeResourcePolicy, 600000, 300000, 16777216, 134217728, 64);
     const envelopePath = path.join(parent, 'envelope.json');
     await fs.writeFile(envelopePath, JSON.stringify(envelope));
     const child = spawn(process.execPath, [fileURLToPath(new URL('../../fixtures/worker-journal-writer.mjs', import.meta.url)), root, envelopePath, mode], { stdio: 'pipe' });
@@ -83,7 +83,7 @@ test('journal binds the full envelope and reserves retained disk before admittin
   const parent = await fs.mkdtemp(path.join(os.tmpdir(), 'native-journal-quota-'));
   const root = path.join(parent, 'journal');
   const journal = new NativeAttemptJournal(root, { ...limits, maximumTotalBytes: 950000 });
-  const envelope = prismNativeAttempt('render', artifact, 'journal-quota', nativeResourcePolicy);
+  const envelope = prismNativeAttempt('render', artifact, 'journal-quota', nativeResourcePolicy, 600000, 300000, 16777216, 134217728, 64);
   try {
     await journal.withAttempt(envelope, async context => { assert.equal(context.newlyAccepted, true); });
     const changed = structuredClone(envelope);
@@ -94,7 +94,7 @@ test('journal binds the full envelope and reserves retained disk before admittin
     // can make space. No implicit cleanup is triggered by admission pressure.
     const retained = path.join(root, 'retained-original');
     await fs.writeFile(retained, Buffer.alloc(400000, 7));
-    const second = prismNativeAttempt('render', artifact, 'journal-quota-second', nativeResourcePolicy);
+    const second = prismNativeAttempt('render', artifact, 'journal-quota-second', nativeResourcePolicy, 600000, 300000, 16777216, 134217728, 64);
     await assert.rejects(journal.withAttempt(second, async () => assert.fail('disk quota bypassed')), /WORKER_NATIVE_JOURNAL_CAPACITY_EXCEEDED/u);
     assert.equal((await fs.stat(retained)).size, 400000);
     await journal.withAttempt(envelope, async context => { assert.equal(context.newlyAccepted, false); });
@@ -104,7 +104,7 @@ test('journal binds the full envelope and reserves retained disk before admittin
 test('process archive verifies original output and immutable completion time before receipt construction', async () => {
   const parent = await fs.mkdtemp(path.join(os.tmpdir(), 'native-journal-process-'));
   const journal = new NativeAttemptJournal(path.join(parent, 'journal'), limits);
-  const envelope = prismNativeAttempt('render', artifact, 'journal-process', nativeResourcePolicy);
+  const envelope = prismNativeAttempt('render', artifact, 'journal-process', nativeResourcePolicy, 600000, 300000, 16777216, 134217728, 64);
   try {
     await journal.withAttempt(envelope, async context => {
       const spool = await NativeWorkerOutputSpool.create(context.outputRoot, limits.maximumOutputBytes);
@@ -132,7 +132,7 @@ test('process archive verifies original output and immutable completion time bef
 test('busy live attempt reports retryable contention without changing its durable identity', { timeout: 20000 }, async () => {
   const parent = await fs.mkdtemp(path.join(os.tmpdir(), 'native-journal-busy-'));
   const root = path.join(parent, 'journal');
-  const envelope = prismNativeAttempt('render', artifact, 'journal-busy', nativeResourcePolicy);
+  const envelope = prismNativeAttempt('render', artifact, 'journal-busy', nativeResourcePolicy, 600000, 300000, 16777216, 134217728, 64);
   const envelopePath = path.join(parent, 'envelope.json');
   await fs.writeFile(envelopePath, JSON.stringify(envelope));
   const child = spawn(process.execPath, [fileURLToPath(new URL('../../fixtures/worker-journal-writer.mjs', import.meta.url)), root, envelopePath, 'accepted'], { stdio: 'pipe' });

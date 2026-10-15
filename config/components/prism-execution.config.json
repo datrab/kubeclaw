@@ -1,0 +1,25 @@
+{
+  "schemaVersion": "pipeline-component.v2",
+  "owner": "prism-execution",
+  "profiles": {
+    "standard": {
+      "settings": {
+        "resourcePolicy": {
+          "cpuTimeMs": 60000,
+          "memoryBytes": 8589934592,
+          "tasks": 2048
+        },
+        "maximumResultBytes": 67108864,
+        "enginePolicy": {
+          "cache": {
+            "maximumInFlight": 4,
+            "maximumCompletedEntries": 32,
+            "maximumCompletedBytes": 16777216
+          },
+          "maximumIngestTextCharacters": 200000,
+          "maximumAssetSourceCharacters": 16000000
+        }
+      }
+    }
+  }
+}

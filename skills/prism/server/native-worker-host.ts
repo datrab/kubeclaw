@@ -20,8 +20,8 @@ for await (const chunk of process.stdin) {
 }
 const envelope = JSON.parse(Buffer.concat(chunks).toString('utf8')) as WorkerAttemptEnvelopeV3;
 validateWorkerResourceContractV3('workerAttemptEnvelope', envelope);
-const artifacts = new WorkerArtifactClient(config.controlInternalUrl, config.workerSecret, config.spiffeEnabled);
-const engine = new PrismEngine(new DeterministicDesignProvider());
+const artifacts = new WorkerArtifactClient(config.controlInternalUrl, config.workerSecret, config.spiffeEnabled, config.maximumArtifactAcknowledgmentBytes);
+const engine = new PrismEngine(new DeterministicDesignProvider(), config.enginePolicy);
 const result = await new WorkerAttemptExecutor({ envelope, signal: cancellation.signal,
   operation: nativeOperationFor(envelope, engine, artifacts, config.scope), receiptNamespace: 'prism-native-provisional',
   storeFullLog(attemptId, content, { signal }) {

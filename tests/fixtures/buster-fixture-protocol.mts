@@ -7,7 +7,7 @@ import { sha256Digest, workerProfileDigest, workerAttemptSpecDigest } from '@kub
 // Protocol vectors feed real stores; they do not impersonate a running kernel scope.
 export function admission(): BusterFixtureAdmission {
   const envelope = prismNativeAttempt('render', { artifactId: 'fixture-input', type: 'input', mediaType: 'application/json',
-    contentDigest: sha256Digest('{}'), sizeBytes: 2, storageUrl: 'file:///fixture-input' }, `fixture-${randomUUID()}`, nativeResourcePolicy);
+    contentDigest: sha256Digest('{}'), sizeBytes: 2, storageUrl: 'file:///fixture-input' }, `fixture-${randomUUID()}`, nativeResourcePolicy, 600000, 300000);
   envelope.profile = { ...envelope.profile, workerType: 'buster', profileId: 'buster-fixture-lifetime-v1' };
   envelope.moduleId = 'fixture-module'; envelope.gateId = 'fixture-gate';
   envelope.profile.profileDigest = workerProfileDigest(envelope.profile);

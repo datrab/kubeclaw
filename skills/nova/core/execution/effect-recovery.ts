@@ -1,3 +1,4 @@
+import type { CoreRuntimePolicy } from '@kubeclaw/plugin-foundation/config/core-runtime-policy';
 import path from 'node:path';
 import type { LifecycleEvent, PipelineDefinition, PluginDomainEvent } from '@kubeclaw/plugin-sdk';
 import { FileEffectJournal } from '../effects/journal.ts';
@@ -12,8 +13,8 @@ export function requiresExternalContinuation(capability: string): boolean {
 }
 
 export async function assertEffectRecoverySafe(runRoot: string, runId: string, definition: PipelineDefinition,
-  events: FileJournal<LifecycleEvent | PluginDomainEvent>): Promise<void> {
-  const effects = new FileEffectJournal(path.join(runRoot, 'effects.jsonl'));
+  events: FileJournal<LifecycleEvent | PluginDomainEvent>, policy: CoreRuntimePolicy): Promise<void> {
+  const effects = new FileEffectJournal(path.join(runRoot, 'effects.jsonl'), policy);
   const stages = new Set(definition.stages.map(stage => stage.id));
   const owned = (request: { attempt: { runId: string; stageId: string } }) => request.attempt.runId === runId && stages.has(request.attempt.stageId);
   const entries = (await effects.recoveryEntries()).filter(({ request }) => owned(request));

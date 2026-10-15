@@ -1,3 +1,6 @@
+import { TEST_CORE_POLICY as DELIVERY_TEST_CORE_POLICY } from '../../fixtures/core-runtime-policy.mjs';
+const TEST_OPERATOR_STORE_POLICY = DELIVERY_TEST_CORE_POLICY.operatorMessagingStore;
+import { TEST_CORE_POLICY } from '../../fixtures/core-runtime-policy.mjs';
 import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
 import fs from 'node:fs';
@@ -62,20 +65,20 @@ async function scenario(mode: 'transient' | 'lost_ack' | 'permanent' | 'unresolv
     ])]]) });
   const activated = await core.activateRegistry(granted.snapshot, new Set(granted.grants.keys()));
   const configs = new Map<string, Record<string, unknown>>([[observerId, { target: 'operators' }],
-    [operatorId, { deliveryRoot: path.join(root, 'sender'), targets: { operators: { endpoint: `${origin}/messages`, tokenSecret: 'notification.webhook',
+    [operatorId, { ...TEST_OPERATOR_STORE_POLICY, deliveryRoot: path.join(root, 'sender'), targets: { operators: { endpoint: `${origin}/messages`, tokenSecret: 'notification.webhook',
       ...(mode === 'unresolved' ? {} : { receiptEndpoint: `${origin}/receipts` }) } } }],
     ['kubeclaw.network-http:http', { allowedOrigins: [origin], allowedMethods: ['GET', 'POST'], allowedHeaders: ['content-type', 'idempotency-key', 'x-kubeclaw-signature'] }],
     ['kubeclaw.secret-resolver:secrets', { environment: { 'notification.webhook': secretName } }]]);
-  const events = new core.FileJournal<any>(path.join(root, 'events.jsonl'));
+  const events = new core.FileJournal<any>(path.join(root, 'events.jsonl'), TEST_CORE_POLICY.journalAppendLockTimeoutMs);
   events.append({ schemaVersion: 'lifecycle-event.v2', eventId: 'event:delivery', sequence: 1, type: 'run.failed', identity: { runId: 'run:retry' },
     occurredAt: new Date().toISOString(), causationId: null, payload: { summary: 'Actual diagnostic\nnext line' } });
   const create = (interrupt = false) => {
     const adapters = new core.AdapterRuntime({ granted, activated, configs,
-      effects: new core.EffectCoordinator(new core.FileEffectJournal(path.join(root, 'effects.jsonl')), undefined, undefined, new core.FileResourceLockManager(path.join(root, 'locks')), 300_000),
+      effects: new core.EffectCoordinator(new core.FileEffectJournal(path.join(root, 'effects.jsonl'), TEST_CORE_POLICY), undefined, undefined, new core.FileResourceLockManager(path.join(root, 'locks'), TEST_CORE_POLICY), 300_000),
       shutdownTimeoutMs: 1000, async emitDomainEvent() {} });
-    const checkpoints = new core.FileJournal<any>(path.join(root, 'checkpoints.jsonl'));
-    const deliveries = new core.FileJournal<any>(path.join(root, 'deliveries.jsonl'));
-    const observers = new core.ObserverRuntime({ registry: granted, activated, adapters, configs, events, checkpoints, deliveries,
+    const checkpoints = new core.FileJournal<any>(path.join(root, 'checkpoints.jsonl'), TEST_CORE_POLICY.journalAppendLockTimeoutMs);
+    const deliveries = new core.FileJournal<any>(path.join(root, 'deliveries.jsonl'), TEST_CORE_POLICY.journalAppendLockTimeoutMs);
+    const observers = new core.ObserverRuntime({memoryBytes: TEST_CORE_POLICY.observerMemoryBytes, registry: granted, activated, adapters, configs, events, checkpoints, deliveries,
       wait: async () => { if (interrupt) throw new Error('TEST_PROCESS_STOP_BETWEEN_ATTEMPTS'); } });
     return { adapters, observers, checkpoints, deliveries };
   };
@@ -96,7 +99,7 @@ async function scenario(mode: 'transient' | 'lost_ack' | 'permanent' | 'unresolv
     const starts = runtime.deliveries.records().filter(record => record.entry.status === 'started');
     assert.deepEqual(starts.map(record => record.entry.attemptNumber), success ? [1, 2] : [1, 2, 3, 4, 5]);
     if (mode === 'unresolved') assert.match(result.failures[0]!.error, /OPERATOR_DELIVERY_UNRESOLVED/);
-    const journal = new core.FileEffectJournal(path.join(root, 'effects.jsonl'));
+    const journal = new core.FileEffectJournal(path.join(root, 'effects.jsonl'), TEST_CORE_POLICY);
     const stableId = `delivery:${observerId}:event:delivery:1`;
     const first = await journal.request(`${stableId}:execution:1`), second = await journal.request(`${stableId}:execution:2`);
     assert.equal(first?.deliveryId, stableId); assert.equal(second?.deliveryId, stableId);

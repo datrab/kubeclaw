@@ -4,7 +4,6 @@ import {generateKeyPairSync} from 'node:crypto';
 import {writeFile} from 'node:fs/promises';
 import {join} from 'node:path';
 import {setup,sessionHeaders} from './control-product-composition.test.mts';
-import {createControlServer} from '../server/control-server.ts';
 import {storedProductDecision} from '../storage/product-decisions.ts';
 
 test('independent composed startup rejects a genuine wrong key type and disabled authority does not read its missing key',async()=>{
@@ -13,8 +12,8 @@ test('independent composed startup rejects a genuine wrong key type and disabled
     const rsa=generateKeyPairSync('rsa',{modulusLength:2048});
     const keyFile=join(context.root,'incorrect-authority.pem');
     await writeFile(keyFile,rsa.privateKey.export({format:'pem',type:'pkcs8'}),{mode:0o600});
-    await assert.rejects(createControlServer(context.db(),{...context.environment,PRISM_PRODUCT_PRIVATE_KEY_FILE:keyFile}),/dedicated Ed25519 key/);
-    const disabled=await createControlServer(context.db(),{...context.environment,PRISM_PRODUCT_DECISIONS_ENABLED:'false',PRISM_PRODUCT_PRIVATE_KEY_FILE:join(context.root,'not-present')});
+    await assert.rejects(context.compose({...context.environment,PRISM_PRODUCT_PRIVATE_KEY_FILE:keyFile}),/dedicated Ed25519 key/);
+    const disabled=await context.compose({...context.environment,PRISM_PRODUCT_DECISIONS_ENABLED:'false',PRISM_PRODUCT_PRIVATE_KEY_FILE:join(context.root,'not-present')});
     assert.equal(disabled.listening,false);
     disabled.close();
     assert.equal((await context.request('/health')).status,200);

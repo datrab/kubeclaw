@@ -1,3 +1,5 @@
+import { TEST_CORE_POLICY as ARTIFACT_TEST_CORE_POLICY } from '../../fixtures/core-runtime-policy.mjs';
+const TEST_ARTIFACT_STORE_POLICY = ARTIFACT_TEST_CORE_POLICY.artifactStore;
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -7,7 +9,7 @@ import { activate } from '../../../skills/common/plugins/artifact-store/src/adap
 import { execute } from '../../../skills/nova/plugins/human-approval/src/architecture-approval.ts';
 
 const root = fs.mkdtempSync(path.join(os.tmpdir(), 'architecture-approval-'));
-const adapter = activate({ config: { artifactRoot: root } } as AdapterActivationContext);
+const adapter = activate({ config: { ...TEST_ARTIFACT_STORE_POLICY, artifactRoot: root } } as AdapterActivationContext);
 const producer = { runId: 'architecture:run', stageId: 'architecture', attemptNumber: 1, attemptId: 'architecture:1' };
 const input = { summary: 'Review architecture findings before Forge.', artifactId: 'architecture-validation', namespace: 'kubeclaw.architecture-validator' };
 let sequence = 0;

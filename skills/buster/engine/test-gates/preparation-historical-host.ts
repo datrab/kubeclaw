@@ -2,8 +2,8 @@ import { Socket } from 'node:net';
 import { NativeWorkerControlChannel, WorkerAttemptExecutor, observeNativeWorkerResources, sha256Digest,
   type WorkerAttemptOperation } from '@kubeclaw/worker-core';
 import { validateWorkerResourceContractV3, type WorkerAttemptEnvelopeV3 } from '@kubeclaw/pipeline-worker-core-contract';
-import { validateBusterPreparationSettings } from '../../../common/plugin-runtime/foundation/config/swarm.ts';
-import type { BusterPreparationSettings } from '../../../common/plugin-runtime/foundation/config/swarm.ts';
+import { validateBusterPreparationSettings } from '@kubeclaw/plugin-foundation/config/swarm';
+import type { BusterPreparationSettings } from '@kubeclaw/plugin-foundation/config/swarm';
 import { assertPreparationSlot } from './preparation-slots.ts';
 import { assertHistoricalImportDescriptor, historicalInputDirectory } from './preparation-historical-reference.ts';
 import type { HistoricalImportDescriptor } from './preparation-historical-reference.ts';

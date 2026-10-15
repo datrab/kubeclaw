@@ -10,3 +10,11 @@ Entry size and cancellation are enforced at the adapter boundary.
 
 The adapter uses the shared pipeline durable-record interface. `root` selects
 the embedded file driver. The old namespace-specific JSONL files are removed.
+
+
+Capacity config requires explicit `maxEntryBytes`, `maximumRecords` and
+`maximumStoreBytes` positive safe integers. No defaults or numeric strings are
+accepted. Nova selects these from `settings.stateStore` in the required Core policy,
+not from raw Platform adapter overrides. Installation `root` remains in the
+adapter entry. Direct callers supply the complete limits themselves. Existing
+store accounting/idempotency and cancellation behavior are unchanged.

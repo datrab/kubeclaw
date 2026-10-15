@@ -38,11 +38,12 @@ async function createSession(
     headers,
     ingressSecret,
     sessionSecret,
+    context.config.sessionLifetimeSeconds,
   );
   const csrf = randomBytes(24).toString("base64url");
   response.setHeader("set-cookie", [
-    `prism_session=${encodeURIComponent(token)}; HttpOnly; Secure; SameSite=Strict; Path=/; Max-Age=900`,
-    `prism_csrf=${encodeURIComponent(csrf)}; Secure; SameSite=Strict; Path=/; Max-Age=900`,
+    `prism_session=${encodeURIComponent(token)}; HttpOnly; Secure; SameSite=Strict; Path=/; Max-Age=${context.config.sessionLifetimeSeconds}`,
+    `prism_csrf=${encodeURIComponent(csrf)}; Secure; SameSite=Strict; Path=/; Max-Age=${context.config.sessionLifetimeSeconds}`,
   ]);
   return json(response, 201, {
     csrf,

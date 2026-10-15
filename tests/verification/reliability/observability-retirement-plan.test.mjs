@@ -1,3 +1,4 @@
+import { TEST_CORE_POLICY } from '../../fixtures/core-runtime-policy.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -82,7 +83,7 @@ test('shared artifact references, missing blobs and uncertain effects block reti
   const root = f.scope.artifactRoots[0]; const store = new FileDurableRecordStore(root, { ...recordLimits, maximumBytes: 10000000 });
   const original = (await store.read('artifacts/test.repair-budget'))[0].payload;
   await store.append('artifacts/test.repair-budget', 'other:reference', { ...original, producer: { ...original.producer, runId: 'run:other' } });
-  const effects = new FileJournal(path.join(f.target, 'effects.jsonl'));
+  const effects = new FileJournal(path.join(f.target, 'effects.jsonl'), TEST_CORE_POLICY.journalAppendLockTimeoutMs);
   effects.append({ type: 'accepted', request: { idempotencyKey: 'uncertain:side-effect', payload: { token: canary } } });
   const plan = inspect(f);
   assert.ok(codes(plan).has('ARTIFACT_SHARED_WITH_OTHER_RUN')); assert.ok(codes(plan).has('EXTERNAL_EFFECT_UNCERTAIN'));

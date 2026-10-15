@@ -1,3 +1,4 @@
+import { captureCoreRuntimePolicy, type CoreRuntimePolicy } from '@kubeclaw/plugin-foundation/config/core-runtime-policy';
 import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -141,4 +142,40 @@ export function validateSignal(wait: NonNullable<StageRuntimeState['wait']>, sig
   if (signal.issuer.type !== wait.authorizedIssuer.type || signal.issuer.id !== wait.authorizedIssuer.id) throw new Error(`WAIT_ISSUER_DENIED:${signal.issuer.type}:${signal.issuer.id}`);
   if (wait.expiresAt !== null && Date.now() >= Date.parse(wait.expiresAt)) throw new Error(`WAIT_EXPIRED:${wait.waitId}`);
   if (Date.parse(signal.issuedAt) < Date.parse(waitCreatedAt)) throw new Error(`WAIT_SIGNAL_STALE:${signal.signalId}`);
+}
+
+/** Retained settings are selected before mutation locks, journals or runtime activation. */
+export function retainedCoreRuntimePolicy(runRoot: string): CoreRuntimePolicy {
+  const configuration = readRunSnapshot(runRoot).registry.configuration as { corePolicy?: unknown } | undefined;
+  if (configuration?.corePolicy === undefined) throw new Error('RECOVERY_CORE_POLICY_MISSING:use original runtime; current-policy fallback is forbidden');
+  return captureCoreRuntimePolicy(configuration.corePolicy);
+}
+
+
+/** Capture selected policy and timing references from ONE original run snapshot.
+ * Only the new processing selector is restored; current installation/identity/
+ * target data still undergoes the unchanged pinned configuration comparison. */
+export function retainedRuntimePolicies(runRoot: string): Readonly<{corePolicy: CoreRuntimePolicy; timingSelections: Readonly<Record<string,string>>; httpSelections: Readonly<Record<string,string>>}> {
+  const configuration = readRunSnapshot(runRoot).registry.configuration as {corePolicy?: unknown; adapters?: Record<string,{targets?: unknown}>} | undefined;
+  if (configuration?.corePolicy === undefined) throw new Error('RECOVERY_CORE_POLICY_MISSING:use original runtime; current-policy fallback is forbidden');
+  const corePolicy = captureCoreRuntimePolicy(configuration.corePolicy);
+  const targetConfig = configuration.adapters?.['kubeclaw.runtime-dispatch:openclaw'];
+  const selections: Record<string,string> = {};
+  if (targetConfig !== undefined) {
+    if (!targetConfig.targets || typeof targetConfig.targets !== 'object' || Array.isArray(targetConfig.targets)) throw new Error('RECOVERY_TARGET_TIMING_SELECTION_MISSING:use original runtime');
+    for (const [id, target] of Object.entries(targetConfig.targets)) {
+      if (!target || typeof target !== 'object' || typeof target.timingProfile !== 'string') throw new Error('RECOVERY_TARGET_TIMING_SELECTION_MISSING:use original runtime');
+      Object.defineProperty(selections,id,{value:target.timingProfile,enumerable:true});
+    }
+  }
+  const httpSelections: Record<string,string> = {};
+  const httpConfig = configuration.adapters?.['kubeclaw.runtime-dispatch:runtime'];
+  if (httpConfig !== undefined) {
+    if (!httpConfig.targets || typeof httpConfig.targets !== 'object' || Array.isArray(httpConfig.targets)) throw new Error('RECOVERY_TARGET_BYTE_SELECTION_MISSING:use original runtime');
+    for (const [id,target] of Object.entries(httpConfig.targets)) {
+      if (!target || typeof target !== 'object' || typeof target.byteProfile !== 'string') throw new Error('RECOVERY_TARGET_BYTE_SELECTION_MISSING:use original runtime');
+      Object.defineProperty(httpSelections,id,{value:target.byteProfile,enumerable:true});
+    }
+  }
+  return Object.freeze({corePolicy,timingSelections:Object.freeze(selections),httpSelections:Object.freeze(httpSelections)});
 }

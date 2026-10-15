@@ -8,6 +8,7 @@ import type { EngineResult } from "./index.ts";
 function renderAssetsFor(
   document: PrismDocument,
   input: Record<string, unknown>,
+  maximumAssetSourceCharacters: number,
 ): Record<string, unknown> {
   const suppliedAssets = (input.assetSources ?? {}) as Record<string, unknown>;
   const renderAssets: Record<string, unknown> = {};
@@ -23,7 +24,7 @@ function renderAssetsFor(
       !asset.mediaType ||
       typeof src !== "string" ||
       !src.startsWith(`data:${asset.mediaType};base64,`) ||
-      src.length > 16_000_000
+      src.length > maximumAssetSourceCharacters
     )
       throw new Error(`render asset is unavailable: ${assetId}`);
     renderAssets[assetId] = {
@@ -37,8 +38,9 @@ function renderAssetsFor(
 function renderHtml(
   document: PrismDocument,
   input: Record<string, unknown>,
+  maximumAssetSourceCharacters: number,
 ): string {
-  const renderAssets = renderAssetsFor(document, input);
+  const renderAssets = renderAssetsFor(document, input, maximumAssetSourceCharacters);
   const safeColor = (value: unknown, fallback: string) =>
     typeof value === "string" &&
     /^(?:#[0-9a-f]{3,8}|rgba?\([0-9., %]+\)|hsla?\([0-9., %a-z]+\)|transparent|currentColor)$/iu.test(
@@ -141,9 +143,10 @@ async function captureHtml(
 export async function renderOperation(
   document: PrismDocument,
   input: Record<string, unknown>,
+  maximumAssetSourceCharacters: number,
   signal?: AbortSignal,
 ): Promise<EngineResult> {
-  const html = renderHtml(document, input);
+  const html = renderHtml(document, input, maximumAssetSourceCharacters);
   const capture = input.capture === true;
   let screenshotBase64: string | undefined;
   let ariaSnapshot: string | undefined;

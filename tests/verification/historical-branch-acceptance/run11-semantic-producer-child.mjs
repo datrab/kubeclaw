@@ -1,3 +1,4 @@
+import { TEST_CORE_POLICY } from '../../fixtures/core-runtime-policy.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import http from 'node:http';
@@ -59,9 +60,9 @@ const granted = core.resolveCapabilityGrants(registry, {
   ['kubeclaw.runtime-dispatch:runtime', new Map([['network.http', {allowedOrigins: [origin]}], ['secrets.read', {allowedNames: ['review-token']}]])]]),
 });
 const activated = await core.activateRegistry(granted.snapshot, new Set([...granted.grants.keys(), 'kubeclaw.repository-adapter:repository']));
-const effects = new core.FileEffectJournal(path.join(state, 'effects.jsonl'));
+const effects = new core.FileEffectJournal(path.join(state, 'effects.jsonl'), TEST_CORE_POLICY);
 const adapters = new core.AdapterRuntime({granted, activated, configs: new Map([
-  ['kubeclaw.runtime-dispatch:runtime', {targets: {reviewer: {endpoint: `${origin}/dispatch`, tokenSecret: 'review-token'}}}],
+  ['kubeclaw.runtime-dispatch:runtime', {...TEST_CORE_POLICY.httpDispatch,targets: {reviewer: {byteProfile:'standard',endpoint: `${origin}/dispatch`, tokenSecret: 'review-token'}}}],
   ['kubeclaw.network-http:http', {allowedOrigins: [origin], allowedMethods: ['POST'], allowedHeaders: ['content-type', 'idempotency-key', 'x-kubeclaw-signature']}],
   ['kubeclaw.secret-resolver:secrets', {environment: {'review-token': 'KUBECLAW_SEMANTIC_PRODUCER_TOKEN'}}],
   ['kubeclaw.repository-adapter:repository', {repositoryRoot: source.repository, expectedHead: source.head}],
@@ -70,7 +71,7 @@ const adapters = new core.AdapterRuntime({granted, activated, configs: new Map([
   shutdownTimeoutMs: 1000, async emitDomainEvent() {}});
 try {
   await adapters.start();
-  const journal = new core.FileJournal(path.join(state, 'events.jsonl'));
+  const journal = new core.FileJournal(path.join(state, 'events.jsonl'), TEST_CORE_POLICY.journalAppendLockTimeoutMs);
   const definition = {schemaVersion: 'pipeline-definition.v2', id: `pipeline:semantic-${profile}`, maxConcurrency: 1,
     stages: [{id: 'review', type: 'kubeclaw.decision.review', dependsOn: [],
       config: {agent: 'reviewer', profile, reportArtifactEncoding: PORTABLE_JSON_ENCODING,
@@ -80,7 +81,7 @@ try {
         evidence: [{kind: 'test', content: source.testOutput, digest: sha256Text(reviewEvidenceJson(source.testOutput))},
           {kind: 'gate-coverage', content: coverage, digest: sha256Text(canonicalJson(coverage))}], contextCandidates: []},
       execution: {maxAttempts: 1, maxRemediationCycles: 0, timeoutMs: 5000}}]};
-  const result = await new core.PipelineRunner({definition, registry: granted, activated, adapters, journal}).run(`run:semantic-${profile}`);
+  const result = await new core.PipelineRunner({stageMemoryBytes: TEST_CORE_POLICY.stageMemoryBytes,definition, registry: granted, activated, adapters, journal}).run(`run:semantic-${profile}`);
   const records = new FileDurableRecordStore(artifactRoot, {maximumRecords: 100000, maximumBytes: 256 * 1024 * 1024, maximumRecordBytes: 64 * 1024});
   const blobs = new FileDurableBlobStore(artifactRoot, 16 * 1024 * 1024);
   const stored = [];

@@ -5,7 +5,7 @@ import {
   remotePlanJobDigest, remotePlanJobId, repositoryArchiveBytes, resolvedTestPlanDigest,
   validatePipelineTestGateContract, verifySourceSnapshotAttestation, type RemotePlanJobV1,
 } from '@kubeclaw/pipeline-test-gate-contract';
-import type { BusterPreparationSettings } from '../../../common/plugin-runtime/foundation/config/swarm.ts';
+import type { BusterPreparationSettings } from '@kubeclaw/plugin-foundation/config/swarm';
 import { ensureDirectoryDurable } from '@kubeclaw/plugin-foundation/observability/durable-delivery';
 import {
   preparedPlanHeader, preparationDigest, assertPreparedSource,

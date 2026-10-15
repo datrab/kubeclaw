@@ -1,3 +1,4 @@
+import { TEST_CORE_POLICY } from '../../fixtures/core-runtime-policy.mjs';
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import fs from 'node:fs';
@@ -11,7 +12,7 @@ const invocation = (payload = {}, signal = new AbortController().signal) => ({ r
 
 function fixture(config = {}, fail = false) {
   const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'agent-ingress-'));
-  const journal = new FileJournal(path.join(temporary, 'events.jsonl'));
+  const journal = new FileJournal(path.join(temporary, 'events.jsonl'), TEST_CORE_POLICY.journalAppendLockTimeoutMs);
   const handlers = new Map();
   let release!: () => void;
   const blocked = new Promise<void>((resolve) => { release = resolve; });

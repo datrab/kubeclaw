@@ -1,4 +1,5 @@
-import { readTestBundle, writeTestBundle } from '../../../tests/fixtures/config/swarm-bundle.mjs';
+import { fileURLToPath } from 'node:url';
+import { captureSwarmSettings } from '../../common/plugin-runtime/foundation/config/swarm.ts';
 import test, { type TestContext } from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -8,16 +9,26 @@ import http from 'node:http';
 import { connect, type AddressInfo, type Socket } from 'node:net';
 import { once } from 'node:events';
 import { createManagedWorkerServer } from '../server/worker-lifecycle.ts';
-import { loadWorkerConfig } from '../server/worker-config.ts';
 import type { PrismWorkerSettings } from '../../common/plugin-runtime/foundation/config/swarm.ts';
 
 function settings(t: TestContext, overrides: Partial<PrismWorkerSettings>) {
   const root = fs.mkdtempSync(path.join(tmpdir(), 'prism-worker-behavior-'));
   t.after(() => fs.rmSync(root, { recursive: true, force: true }));
-  const authored = readTestBundle(new URL('../../../charts/kubeclaw/files/config/swarm.config.json', import.meta.url));
-  Object.assign(authored['prism-worker'].settings.ingress, overrides);
-  const file = path.join(root, 'swarm.config.json'); writeTestBundle(file, authored);
-  return loadWorkerConfig({ SWARM_CONFIG: file, WORKER_TRUST_SPIFFE_ENABLED: 'true', PRISM_TRUSTED_CONTROL_SPIFFE_ID: 'spiffe://local/control' });
+  const configRoot = fileURLToPath(new URL('../../../config/', import.meta.url));
+  fs.cpSync(configRoot, root, { recursive: true });
+  const authorFile = path.join(root, 'components/prism-worker.config.json');
+  const authored = JSON.parse(fs.readFileSync(authorFile, 'utf8'));
+  Object.assign(authored.profiles.standard.settings.ingress, overrides);
+  fs.writeFileSync(authorFile, JSON.stringify(authored));
+  const entryFile = path.join(root, 'pipeline.config.json');
+  const entry = JSON.parse(fs.readFileSync(entryFile, 'utf8'));
+  const instanceId = 'kubeclaw/prism/prism-worker';
+  const captured = captureSwarmSettings(entryFile, { role: 'prism', callerId: 'prism-worker', serviceInstanceId: instanceId,
+    bindings: entry.bindings.filter((binding: { instanceId: string }) => binding.instanceId === instanceId)
+      .map(({ role: _role, ...binding }: { role: string; owner: string; instanceId: string; profileId: string }) => binding) });
+  // Consumer regression only: real central selection, not a verified startup capability.
+  const ingress = captured.components['prism-worker']!.settings.ingress as unknown as PrismWorkerSettings;
+  return { ingress, shutdownTimeoutMs: ingress.shutdownTimeoutMs };
 }
 function get(port: number, pathname: string): Promise<{ status: number; body: string }> {
   return new Promise((resolve, reject) => {
