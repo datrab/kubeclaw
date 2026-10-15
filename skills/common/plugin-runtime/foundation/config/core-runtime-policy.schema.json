@@ -22,7 +22,8 @@
     "openClawDispatch",
     "httpDispatch",
     "transportPublisherPayload",
-    "operatorMessagingPayload"
+    "operatorMessagingPayload",
+    "networkHttp"
   ],
   "properties": {
     "stageMemoryBytes": {
@@ -477,6 +478,20 @@
               }
             }
           }
+        }
+      }
+    },
+    "networkHttp": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "errorExcerptCharacters"
+      ],
+      "properties": {
+        "errorExcerptCharacters": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
         }
       }
     }

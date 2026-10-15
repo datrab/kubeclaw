@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-15T19:15:41.605496+00:00",
+  "updatedAt": "2026-10-15T19:20:47.943755+00:00",
   "revision": "4b1a92a6b6cf9d1e66928ce924a3620f3dba2751",
   "phase": "CONFIG_EXTERNALIZATION",
   "status": "CONFIG_EXTERNALIZATION_IN_PROGRESS",
@@ -272,7 +272,7 @@
     }
   ],
   "blocker": "Exact isolated Linux Docker/UID1000/writable cgroup/native acceptance host still unavailable. Also full original-source replay test needs sufficiently large genuinely root-trusted writable filesystem parent: /dev64MiB ENOSPC; /opt/root/run/var underlying disk EROFS; writable workspace/OpenClaw mounts have non-root or group-writable ancestry. No trust/UID/kernel spoof or skipped acceptance. Continue other authorized code.",
-  "nextAction": "Obtain fresh non-author review of transport and operator payload changes when reviewer surface available. Continue remaining network adapter caps / event queues / observers per current externalization scope. All full native/integrated C0-C6 acceptance OPEN.",
+  "nextAction": "Independent non-author review of payload and network excerpt changes when supported reviewer surface available; migrate network HTTP request/response byte caps and timeout preserving original explicit values, selectors and retained snapshots.",
   "automation": {
     "jobId": "391f197a-13c5-4925-a477-fa292dd9afcb",
     "enabled": true,
@@ -11163,7 +11163,7 @@
     "independentAcceptance": "OPEN",
     "writerLock": "shared nonblocking; released on process exit"
   },
-  "lastCheckedAt": "2026-10-15T19:15:41.605496+00:00",
+  "lastCheckedAt": "2026-10-15T19:20:47.943755+00:00",
   "workerOriginalIntegrated20261015": {
     "at": "2026-10-15T14:09:06.382516+00:00",
     "verification": [
@@ -12703,5 +12703,149 @@
     "owner": "interactive parent",
     "lockSession": 63764,
     "work": "Prism normal image builder/root-owned role and configuration receipts; generated central Helm projection and legacy Prism author removal; release/source checks and independent delivery review pending"
+  },
+  "networkErrorExcerpt20261015": {
+    "at": "2026-10-15T19:20:47.943755+00:00",
+    "change": "Network HTTP error excerpt character cap centralized, former1000 retained in selected standard Core. Required explicit adapter value projected before schema validation; competing Platform author rejected even equal; activation captures immutable scalar; original run captures whole Core policy for resume/recovery. Character slicing behavior unchanged; request/response caps and timeout intentionally remain pending separate seams.",
+    "settingsSourceWired": 91,
+    "tests": {
+      "integratedPolicyPassed": 34,
+      "integratedPolicyTotal": 34,
+      "skipped": 0,
+      "originalNetworkSuitesPassed": 3,
+      "originalNetworkSuitesTotal": 3,
+      "networkTypecheckExitCode": 0,
+      "novaConsumerTypecheckExitCode": 0
+    },
+    "verification": [
+      {
+        "command": [
+          "node",
+          "--test",
+          "tests/verification/reliability/nova-http-policy.test.mjs"
+        ],
+        "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+        "exitCode": 0,
+        "log": "docs/review/remediation/config-network-excerpt-20261015/check-0.txt"
+      },
+      {
+        "command": [
+          "node",
+          "tests/live-function.test.ts"
+        ],
+        "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugins/network-http",
+        "exitCode": 0,
+        "log": "docs/review/remediation/config-network-excerpt-20261015/check-1.txt"
+      },
+      {
+        "command": [
+          "node",
+          "tests/streaming.test.ts"
+        ],
+        "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugins/network-http",
+        "exitCode": 0,
+        "log": "docs/review/remediation/config-network-excerpt-20261015/check-2.txt"
+      },
+      {
+        "command": [
+          "node",
+          "tests/package-boundary.test.mjs"
+        ],
+        "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugins/network-http",
+        "exitCode": 0,
+        "log": "docs/review/remediation/config-network-excerpt-20261015/check-3.txt"
+      },
+      {
+        "command": [
+          "/home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/.bin/tsc",
+          "--noEmit",
+          "-p",
+          "tsconfig.json"
+        ],
+        "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugins/network-http",
+        "exitCode": 0,
+        "log": "docs/review/remediation/config-network-excerpt-20261015/check-4.txt"
+      },
+      {
+        "command": [
+          "git",
+          "diff",
+          "--check"
+        ],
+        "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+        "exitCode": 0,
+        "log": "docs/review/remediation/config-network-excerpt-20261015/check-5.txt"
+      },
+      {
+        "command": [
+          "node",
+          "--test",
+          "tests/verification/reliability/nova-target-timing-policy.test.mjs",
+          "tests/verification/reliability/nova-artifact-policy.test.mjs",
+          "tests/verification/reliability/nova-telemetry-policy.test.mjs",
+          "tests/verification/reliability/nova-delivery-policy.test.mjs",
+          "tests/verification/reliability/nova-dispatch-policy.test.mjs",
+          "tests/verification/reliability/nova-core-policy.test.mjs",
+          "tests/verification/reliability/nova-state-wait-policy.test.mjs",
+          "tests/verification/reliability/nova-http-policy.test.mjs"
+        ],
+        "exitCode": 0,
+        "log": "docs/review/remediation/config-network-excerpt-20261015/final-0.txt"
+      },
+      {
+        "command": [
+          "./node_modules/.bin/tsc",
+          "--noEmit",
+          "--module",
+          "NodeNext",
+          "--moduleResolution",
+          "NodeNext",
+          "--target",
+          "ES2024",
+          "--lib",
+          "ESNext,DOM,DOM.Iterable",
+          "--strict",
+          "--types",
+          "node",
+          "--skipLibCheck",
+          "--allowImportingTsExtensions",
+          "--esModuleInterop",
+          "skills/nova/core/execution/engine-runtime.ts",
+          "skills/nova/core/execution/engine-snapshots.ts",
+          "skills/nova/core/execution/engine-run.ts",
+          "skills/nova/core/execution/engine-admin.ts"
+        ],
+        "exitCode": 0,
+        "log": "docs/review/remediation/config-network-excerpt-20261015/final-1.txt"
+      },
+      {
+        "command": [
+          "git",
+          "diff",
+          "--check"
+        ],
+        "exitCode": 0,
+        "log": "docs/review/remediation/config-network-excerpt-20261015/final-2.txt"
+      }
+    ],
+    "sourceHashes": {
+      "config/nova/core.config.json": "84ffaa936ee60c4ab8adf3e0ba8ca9df279dcf2fa711df1fe6aa86a1336a6df5",
+      "skills/common/plugin-runtime/foundation/config/core-runtime-policy.schema.json": "d2d7359dcbdfcad41a9a7ee0ad12b1a5e65e2250668accd30af3d9208c752d48",
+      "skills/common/plugin-runtime/foundation/config/core-runtime-policy.ts": "05ad7a7347d353ea9105dcfd867a0389a2fc2048e4af5143d56f15b1546b3e2d",
+      "skills/nova/core/execution/engine-runtime.ts": "a863554eb0051c0fa71d9b3a2be99963f6023d02d636738596f679f352cec904",
+      "skills/common/plugins/network-http/schemas/config.schema.json": "9a322b750e76728e0b2d5e23e63bf1d662862bc0e0711626fe1bfcaf98512223",
+      "skills/common/plugins/network-http/src/adapter.ts": "c3e037c0cebbeb78469ec65448e6e1940e2dca57285efd884962298404bb9a8d",
+      "skills/common/plugins/network-http/tests/live-function.test.ts": "b9cd57e4d34af53e381da769fcef6e9c556d8737a2f62e413308083a1b1c470d",
+      "skills/common/plugins/network-http/tests/streaming.test.ts": "dbfcdb3a775167a58908744b686fedb94c3fafb571a0422d03bb3ae695a8266d",
+      "skills/common/plugins/network-http/README.md": "3ce8d3ea6db6fd555034bb735c13939b0eb27cc09ced782b8bc97d86537bf2d2",
+      "tests/verification/reliability/nova-http-policy.test.mjs": "ce9ecd98cc62c7172e91f21547974616a0bb1727430e52e73e68091b831c9937",
+      "tests/verification/reliability/effect-identity-version.test.mts": "04b0311f63f109c876172790e213403132a2dd0ff07ff448915850fbf10fcc6d",
+      "tests/verification/reliability/runtime-dispatch-profile-independent.test.mjs": "7c6f6b0260dd714abd72db9c33ccead1e91db6d1e1c3f31c1673d2492f27c594"
+    },
+    "qualification": "Two additional original direct-network fixtures now pass explicit selected networkHttp value; their broader effect/version suites were not rerun or claimed accepted.",
+    "independentAcceptance": "OPEN; no native spawn/reviewer tool exposed and command -v codex unavailable. No self-acceptance.",
+    "parentRecovery": "Existing recorded terminal thread-claimed failure; parent metadata still failed, no CONFIG subagents/reviewers. Historical queued70492ecb superseded. No duplicate recovery queued. Direct bounded worker completed.",
+    "nextAction": "Independent non-author review of payload and network excerpt changes when supported reviewer surface available; migrate network HTTP request/response byte caps and timeout preserving original explicit values, selectors and retained snapshots.",
+    "writerLock": "shared nonblocking; released at process exit"
   }
 }

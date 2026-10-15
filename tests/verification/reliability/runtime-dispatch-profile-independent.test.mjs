@@ -40,7 +40,7 @@ test('independent closed profile never consumes historical model keys on actual 
   await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
   const origin = `http://127.0.0.1:${server.address().port}`;
   const secret = secrets({config: {environment: {'review.secret': env}}});
-  const httpAdapter = network({config: {allowedOrigins: [origin], allowedMethods: ['POST'],
+  const httpAdapter = network({config: {...TEST_CORE_POLICY.networkHttp,allowedOrigins: [origin], allowedMethods: ['POST'],
     allowedHeaders: ['content-type', 'idempotency-key', 'x-kubeclaw-signature']}});
   const journalFile = path.join(root, 'effects.jsonl');
   const coordinator = () => new EffectCoordinator(new FileEffectJournal(journalFile, TEST_CORE_POLICY), undefined, undefined,

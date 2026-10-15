@@ -31,7 +31,7 @@ async function fixture(t){
 }
 test('actual Nova HTTP request/response A/B boundaries and retained A selector+values without B',async t=>{
  const f=await fixture(t),a={maxRequestBytes:size(payload),maxResponseBytes:size(responseBody)};f.publish(a);
- const selected=inspectRuntimeConfiguration(f.platform(),f.definition);assert.deepEqual(selected.adapterConfigurations[id].targetByteProfiles,profiles(a).targetByteProfiles);
+ const selected=inspectRuntimeConfiguration(f.platform(),f.definition);assert.deepEqual(selected.adapterConfigurations[id].targetByteProfiles,profiles(a).targetByteProfiles);assert.equal(selected.adapterConfigurations['kubeclaw.network-http:http'].errorExcerptCharacters,1000);
  const first=await runPipelineV2(f.platform(),f.definition,'http:A');assert.equal(first.status,'waiting',JSON.stringify([...first.stages]));assert.equal(f.received.length,1);const saved=readRunSnapshot(runRoot(f.source.storageRoot,'http:A'));
  for(const field of Object.keys(a)) {f.publish({...a,[field]:a[field]-1});const before=f.received.length,result=await runPipelineV2(f.platform(),f.definition,'http:B-'+field);assert.equal(result.status,'blocked');assert.match(fs.readFileSync(path.join(runRoot(f.source.storageRoot,'http:B-'+field),'events.jsonl'),'utf8'),field==='maxRequestBytes'?/RUNTIME_REQUEST_SIZE_EXCEEDED/:/RUNTIME_RESPONSE_SIZE_EXCEEDED/);assert.equal(f.received.length,before+(field==='maxResponseBytes'?1:0));}
  f.source.adapters[id].targets.worker.byteProfile='missing-current-B';f.write();fs.unlinkSync(f.coreFile);const wait=first.stages.get('probe').wait;
@@ -58,4 +58,15 @@ test('HTTP policy missing/invalid/legacy duplicates/profile bindings fail closed
  for(const value of [undefined,'absent',null])assert.throws(()=>activate({config:{...valid,targets:{worker:{...raw.targets.worker,byteProfile:value}}}}),/byteProfile/);
  for(const value of [base.targetByteProfiles,null])assert.throws(()=>selectedAdapterConfigurations({[id]:{...raw,targetByteProfiles:value}},TEST_CORE_POLICY),/COMPETING_AUTHOR/);
  assert.doesNotThrow(()=>activate({config:valid}));
+});
+
+test('network error excerpt policy is selected centrally and rejects competing or invalid authors',()=>{
+ const networkId='kubeclaw.network-http:http',raw={allowedOrigins:['https://example.com']};
+ const authored={...TEST_CORE_POLICY,networkHttp:{errorExcerptCharacters:4}};
+ const captured=captureCoreRuntimePolicy(authored);authored.networkHttp.errorExcerptCharacters=1;
+ const selected=selectedAdapterConfigurations({[networkId]:raw},captured);
+ assert.equal(selected[networkId].errorExcerptCharacters,4);assert(Object.isFrozen(selected[networkId]));
+ for(const value of [4,null])assert.throws(()=>selectedAdapterConfigurations({[networkId]:{...raw,errorExcerptCharacters:value}},captured),/NETWORK_HTTP_POLICY_COMPETING_AUTHOR/);
+ for(const value of [undefined,null,0,-1,1.5,'4',Number.MAX_SAFE_INTEGER+1])assert.throws(()=>captureCoreRuntimePolicy({...TEST_CORE_POLICY,networkHttp:{errorExcerptCharacters:value}}),/INVALID/);
+ assert.equal(selectedAdapterConfigurations({[networkId]:raw},TEST_CORE_POLICY)[networkId].errorExcerptCharacters,1000);
 });

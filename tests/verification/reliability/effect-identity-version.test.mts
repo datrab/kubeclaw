@@ -30,7 +30,7 @@ async function worker(mode:string,kind:string,root:string) {
   const origin=`http://127.0.0.1:${address.port}`;
   const artifactRoot=path.join(root,'artifacts'),lockRoot=path.join(root,'locks'),journalFile=path.join(root,'effects.jsonl');
   const artifact=artifacts({config:{...TEST_CORE_POLICY.artifactStore,artifactRoot}} as AdapterActivationContext);
-  const httpAdapter=network({config:{allowedOrigins:[origin],allowedMethods:['POST'],allowedHeaders:['content-type','idempotency-key']}} as AdapterActivationContext);
+  const httpAdapter=network({config:{...TEST_CORE_POLICY.networkHttp,allowedOrigins:[origin],allowedMethods:['POST'],allowedHeaders:['content-type','idempotency-key']}} as AdapterActivationContext);
   const runtime=dispatch({config:{targets:{forge:{endpoint:origin+'/dispatch',authentication:'spiffe-proxy'}}},
     invokeConfidential:async(capability:string,request:Record<string,unknown>)=>httpAdapter.invoke({confidential:true,signal,
       request:{...request,capability,attempt:legacy.attempt,idempotencyKey:'inner:http'}} as AdapterInvocation)} as unknown as AdapterActivationContext);

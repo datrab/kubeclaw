@@ -100,6 +100,9 @@
               "maxPayloadBytes": 65536
             }
           }
+        },
+        "networkHttp": {
+          "errorExcerptCharacters": 1000
         }
       }
     }

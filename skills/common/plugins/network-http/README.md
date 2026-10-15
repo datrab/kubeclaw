@@ -19,3 +19,5 @@ No request is retried here. Timeout or cancellation can happen after the remote
 server committed a mutation; senders must use remote idempotency/receipts and
 reconcile uncertain outcomes before repeating the action. Native status, JSON/
 text decoding, response headers and confidential invocation behavior are unchanged.
+
+HTTP error excerpts use required `errorExcerptCharacters`, projected from the selected central Core `networkHttp` policy and retained with the original run. The central standard profile preserves the former 1000 JavaScript-character limit (not a byte budget). Platform duplicate authors reject even equal values; direct activation requires an explicit value. Request/response byte limits and timeout migration remain separate pending work.
