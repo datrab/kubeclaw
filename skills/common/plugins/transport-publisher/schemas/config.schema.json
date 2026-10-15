@@ -6,7 +6,8 @@
     "targets",
     "deliveryRoot",
     "maximumDeliveryRecords",
-    "maximumDeliveryBytes"
+    "maximumDeliveryBytes",
+    "targetPayloadProfiles"
   ],
   "properties": {
     "deliveryRoot": {
@@ -34,7 +35,8 @@
         "additionalProperties": false,
         "required": [
           "endpoint",
-          "signingSecret"
+          "signingSecret",
+          "payloadProfile"
         ],
         "properties": {
           "endpoint": {
@@ -46,11 +48,30 @@
             "type": "string",
             "pattern": "^[a-z][a-z0-9._-]{0,127}$"
           },
+          "payloadProfile": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9._-]{0,127}$"
+          }
+        }
+      }
+    },
+    "targetPayloadProfiles": {
+      "type": "object",
+      "minProperties": 1,
+      "propertyNames": {
+        "pattern": "^[a-z][a-z0-9._-]{0,127}$"
+      },
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "maxPayloadBytes"
+        ],
+        "properties": {
           "maxPayloadBytes": {
             "type": "integer",
             "minimum": 1,
-            "maximum": 1048576,
-            "default": 262144
+            "maximum": 1048576
           }
         }
       }

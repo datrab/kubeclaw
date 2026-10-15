@@ -20,7 +20,8 @@
     "operatorMessagingStore",
     "transportPublisherStore",
     "openClawDispatch",
-    "httpDispatch"
+    "httpDispatch",
+    "transportPublisherPayload"
   ],
   "properties": {
     "stageMemoryBytes": {
@@ -412,6 +413,36 @@
                 "type": "integer",
                 "minimum": 1,
                 "maximum": 8388608
+              }
+            }
+          }
+        }
+      }
+    },
+    "transportPublisherPayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "targetPayloadProfiles"
+      ],
+      "properties": {
+        "targetPayloadProfiles": {
+          "type": "object",
+          "minProperties": 1,
+          "propertyNames": {
+            "pattern": "^[a-z][a-z0-9._-]{0,127}$"
+          },
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "maxPayloadBytes"
+            ],
+            "properties": {
+              "maxPayloadBytes": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 1048576
               }
             }
           }

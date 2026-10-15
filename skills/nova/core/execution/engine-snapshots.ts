@@ -155,7 +155,7 @@ export function retainedCoreRuntimePolicy(runRoot: string): CoreRuntimePolicy {
 /** Capture selected policy and timing references from ONE original run snapshot.
  * Only the new processing selector is restored; current installation/identity/
  * target data still undergoes the unchanged pinned configuration comparison. */
-export function retainedRuntimePolicies(runRoot: string): Readonly<{corePolicy: CoreRuntimePolicy; timingSelections: Readonly<Record<string,string>>; httpSelections: Readonly<Record<string,string>>}> {
+export function retainedRuntimePolicies(runRoot: string): Readonly<{corePolicy: CoreRuntimePolicy; timingSelections: Readonly<Record<string,string>>; httpSelections: Readonly<Record<string,string>>; publisherSelections: Readonly<Record<string,string>>}> {
   const configuration = readRunSnapshot(runRoot).registry.configuration as {corePolicy?: unknown; adapters?: Record<string,{targets?: unknown}>} | undefined;
   if (configuration?.corePolicy === undefined) throw new Error('RECOVERY_CORE_POLICY_MISSING:use original runtime; current-policy fallback is forbidden');
   const corePolicy = captureCoreRuntimePolicy(configuration.corePolicy);
@@ -177,5 +177,14 @@ export function retainedRuntimePolicies(runRoot: string): Readonly<{corePolicy: 
       Object.defineProperty(httpSelections,id,{value:target.byteProfile,enumerable:true});
     }
   }
-  return Object.freeze({corePolicy,timingSelections:Object.freeze(selections),httpSelections:Object.freeze(httpSelections)});
+  const publisherSelections: Record<string,string> = {};
+  const publisherConfig = configuration.adapters?.['kubeclaw.transport-publisher:publisher'];
+  if (publisherConfig !== undefined) {
+    if (!publisherConfig.targets || typeof publisherConfig.targets !== 'object' || Array.isArray(publisherConfig.targets)) throw new Error('RECOVERY_TARGET_PAYLOAD_SELECTION_MISSING:use original runtime');
+    for (const [id,target] of Object.entries(publisherConfig.targets)) {
+      if (!target || typeof target !== 'object' || typeof target.payloadProfile !== 'string') throw new Error('RECOVERY_TARGET_PAYLOAD_SELECTION_MISSING:use original runtime');
+      Object.defineProperty(publisherSelections,id,{value:target.payloadProfile,enumerable:true});
+    }
+  }
+  return Object.freeze({corePolicy,publisherSelections:Object.freeze(publisherSelections),timingSelections:Object.freeze(selections),httpSelections:Object.freeze(httpSelections)});
 }

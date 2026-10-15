@@ -38,3 +38,16 @@ adapter entries keep deliveryRoot/targets but reject duplicate store policy.
 Direct callers supply both limits. Existing target payload, sender identity,
 receiver receipt, durable reservation and idempotency semantics are unchanged.
 This store-only migration does not claim target-policy or native acceptance.
+
+### Central target payload limits
+
+Core `settings.transportPublisherPayload.targetPayloadProfiles` owns payload byte limits.
+Each target must explicitly select `payloadProfile`; former per-target
+`maxPayloadBytes` authors and missing/null selections are rejected. The `standard`
+profile retains the former 262144-byte limit, separate from operator messaging.
+Nova projects the complete profiles before registry validation and retains both
+the selected values and target profile names in the original run snapshot.
+Resume/recovery uses those original values without reading current Core config;
+installation/endpoints still undergo the original pinned-configuration comparison.
+Legacy snapshots lacking the new required policy require their original runtime;
+there is no backfill or current-policy fallback.

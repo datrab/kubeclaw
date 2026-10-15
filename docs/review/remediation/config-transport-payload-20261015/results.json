@@ -1,0 +1,71 @@
+[
+  {
+    "command": [
+      "node",
+      "tests/config-validation.test.mjs"
+    ],
+    "exitCode": 0,
+    "log": "tmp/config-transport-payload-20261015/initial-0.log"
+  },
+  {
+    "command": [
+      "node",
+      "tests/live-function.test.ts"
+    ],
+    "exitCode": 0,
+    "log": "tmp/config-transport-payload-20261015/initial-1.log"
+  },
+  {
+    "command": [
+      "node",
+      "tests/package-boundary.test.mjs"
+    ],
+    "exitCode": 0,
+    "log": "tmp/config-transport-payload-20261015/initial-2.log"
+  },
+  {
+    "command": [
+      "node",
+      "--test",
+      "tests/verification/reliability/nova-delivery-policy.test.mjs",
+      "tests/verification/reliability/nova-http-policy.test.mjs"
+    ],
+    "exitCode": 0,
+    "log": "tmp/config-transport-payload-20261015/initial-3.log"
+  },
+  {
+    "command": [
+      "./node_modules/.bin/tsc",
+      "--noEmit",
+      "--module",
+      "NodeNext",
+      "--moduleResolution",
+      "NodeNext",
+      "--target",
+      "ES2024",
+      "--lib",
+      "ESNext,DOM,DOM.Iterable",
+      "--strict",
+      "--types",
+      "node",
+      "--skipLibCheck",
+      "--allowImportingTsExtensions",
+      "--esModuleInterop",
+      "skills/nova/core/execution/engine-runtime.ts",
+      "skills/nova/core/execution/engine-snapshots.ts",
+      "skills/nova/core/execution/engine-run.ts",
+      "skills/nova/core/execution/engine-admin.ts"
+    ],
+    "exitCode": 0,
+    "log": "tmp/config-transport-payload-20261015/initial-4.log"
+  },
+  {
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exitCode": 0,
+    "log": "tmp/config-transport-payload-20261015/initial-5.log"
+  }
+]

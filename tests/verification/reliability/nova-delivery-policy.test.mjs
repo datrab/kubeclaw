@@ -6,7 +6,7 @@ import path from 'node:path';
 import {TEST_CORE_POLICY} from '../../fixtures/core-runtime-policy.mjs';
 import {loadPlatformConfig} from '../../../skills/common/plugin-runtime/foundation/config/platform.ts';
 import {captureCoreRuntimePolicy} from '../../../skills/common/plugin-runtime/foundation/config/core-runtime-policy.ts';
-import {runPipelineV2,resumePipelineV2} from '../../../skills/nova/core/execution/engine.ts';
+import {runPipelineV2,resumePipelineV2,recoverPipelineV2} from '../../../skills/nova/core/execution/engine.ts';
 import {inspectRuntimeConfiguration,selectedAdapterConfigurations} from '../../../skills/nova/core/execution/engine-runtime.ts';
 import {runRoot} from '../../../skills/nova/core/execution/run-root.ts';
 import {readRunSnapshot} from '../../../skills/nova/core/execution/engine-snapshots.ts';
@@ -38,10 +38,10 @@ async function fixture(t,kind){
  const publish=limits=>fs.writeFileSync(coreFile,JSON.stringify({schemaVersion:'nova-core-runtime-policy.v1',profiles:{selected:{settings:{...TEST_CORE_POLICY,[policyKey]:limits}}}}));
  publish(TEST_CORE_POLICY[policyKey]);
  const common=path.resolve('skills/common/plugins');
- const source={schemaVersion:'pipeline-platform.v2',corePolicySelection:{file:coreFile,profile:'selected'},installationRoots:[path.join(root,'plugins'),common],trustedBuiltinRoots:[path.join(root,'plugins'),common],externalTrust:{allowedSourceDigests:{},verifiedAttestations:{}},providers:{[capability]:id,'network.http':'kubeclaw.network-http:http','secrets.read':'kubeclaw.secret-resolver:secrets'},grants:{'test.artifact-policy:probe':{[capability]:{allowedTargets:['operators']}},[id]:{'network.http':{allowedOrigins:[origin]},'secrets.read':{allowedNames:['policy.token']}}},adapters:{[id]:{deliveryRoot:artifactRoot,targets:{operators:{endpoint:origin+'/messages',...(kind==='operator'?{tokenSecret:'policy.token'}:{signingSecret:'policy.token'})}}},'kubeclaw.network-http:http':{allowedOrigins:[origin],allowedMethods:['POST'],allowedHeaders:['content-type','idempotency-key','x-kubeclaw-signature','x-kubeclaw-target']},'kubeclaw.secret-resolver:secrets':{environment:{'policy.token':env}}},activeAdapters:[],observers:{},storageRoot:path.join(root,'state'),shutdownTimeoutMs:1000,effectLockTtlMs:300000,orchestratorIssuerId:'nova',administrativeDecisionIssuers:[]};
+ const source={schemaVersion:'pipeline-platform.v2',corePolicySelection:{file:coreFile,profile:'selected'},installationRoots:[path.join(root,'plugins'),common],trustedBuiltinRoots:[path.join(root,'plugins'),common],externalTrust:{allowedSourceDigests:{},verifiedAttestations:{}},providers:{[capability]:id,'network.http':'kubeclaw.network-http:http','secrets.read':'kubeclaw.secret-resolver:secrets'},grants:{'test.artifact-policy:probe':{[capability]:{allowedTargets:['operators']}},[id]:{'network.http':{allowedOrigins:[origin]},'secrets.read':{allowedNames:['policy.token']}}},adapters:{[id]:{deliveryRoot:artifactRoot,targets:{operators:{endpoint:origin+'/messages',...(kind==='operator'?{tokenSecret:'policy.token'}:{signingSecret:'policy.token',payloadProfile:'standard'})}}},'kubeclaw.network-http:http':{allowedOrigins:[origin],allowedMethods:['POST'],allowedHeaders:['content-type','idempotency-key','x-kubeclaw-signature','x-kubeclaw-target']},'kubeclaw.secret-resolver:secrets':{environment:{'policy.token':env}}},activeAdapters:[],observers:{},storageRoot:path.join(root,'state'),shutdownTimeoutMs:1000,effectLockTtlMs:300000,orchestratorIssuerId:'nova',administrativeDecisionIssuers:[]};
  const platformFile=path.join(root,'platform.json');fs.writeFileSync(platformFile,JSON.stringify(source));
  const definition={schemaVersion:'pipeline-definition.v2',id:'artifact-policy',maxConcurrency:1,stages:[{id:'probe',type:'test.artifact-policy',dependsOn:[],input:{},config:{},execution:{maxAttempts:2,maxRemediationCycles:0,timeoutMs:5000}}]};
- return {root,source,definition,coreFile,publish,received,platform:()=>loadPlatformConfig(platformFile)};
+ return {root,source,definition,coreFile,publish,received,write:()=>fs.writeFileSync(platformFile,JSON.stringify(source)),publishPayload:profiles=>{const d=JSON.parse(fs.readFileSync(coreFile,'utf8'));d.profiles.selected.settings.transportPublisherPayload={targetPayloadProfiles:profiles};fs.writeFileSync(coreFile,JSON.stringify(d));},platform:()=>loadPlatformConfig(platformFile)};
 }
 for(const kind of ['operator','publisher']) {
  const id=kind==='operator'?operatorId:publisherId,policyKey=kind==='operator'?'operatorMessagingStore':'transportPublisherStore',activate=kind==='operator'?operatorActivate:publisherActivate;
@@ -70,3 +70,35 @@ test(kind+' delivery policy leaves mandatory; malformed central/direct values an
 });
 
 }
+
+test('publisher central payload exact UTF-8/overflow/restored positives and original A selectors without current B',async t=>{
+ const f=await fixture(t,'publisher');const cap=Buffer.byteLength(JSON.stringify({message:{text:'ééé'}}),'utf8');
+ f.publishPayload({standard:{maxPayloadBytes:cap},small:{maxPayloadBytes:cap-1}});
+ const inspected=inspectRuntimeConfiguration(f.platform(),f.definition);assert.equal(inspected.adapterConfigurations[publisherId].targetPayloadProfiles.standard.maxPayloadBytes,cap);
+ const first=await runPipelineV2(f.platform(),f.definition,'payload:A');assert.equal(first.status,'waiting',JSON.stringify([...first.stages]));assert.equal(f.received.length,1);
+ const aRoot=runRoot(f.source.storageRoot,'payload:A'),saved=readRunSnapshot(aRoot);
+ f.source.adapters[publisherId].targets.operators.payloadProfile='small';f.write();
+ const small=await runPipelineV2(f.platform(),f.definition,'payload:B');assert.equal(small.status,'blocked');assert.equal(f.received.length,1);assert.match(fs.readFileSync(path.join(runRoot(f.source.storageRoot,'payload:B'),'events.jsonl'),'utf8'),/TRANSPORT_PAYLOAD_SIZE_EXCEEDED/);
+ f.source.adapters[publisherId].targets.operators.payloadProfile='standard';f.write();
+ assert.equal((await runPipelineV2(f.platform(),f.definition,'payload:restored')).status,'waiting');assert.equal(f.received.length,2);
+ f.source.adapters[publisherId].targets.operators.payloadProfile='missing-current-B';f.write();fs.unlinkSync(f.coreFile);
+ const wait=first.stages.get('probe').wait;
+ const resumed=await resumePipelineV2(f.platform(),f.definition,'payload:A',{schemaVersion:'resume-signal.v2',signalId:'signal:payload',idempotencyKey:'signal-key:payload',waitId:wait.waitId,signalType:wait.signalType,issuer:wait.authorizedIssuer,issuedAt:new Date().toISOString(),payload:{approved:true}});
+ assert.equal(resumed.status,'succeeded');assert.equal(f.received.length,3);assert.deepEqual(readRunSnapshot(aRoot),saved);
+ f.source.adapters[publisherId].targets.operators.endpoint+='/changed';f.write();await assert.rejects(recoverPipelineV2(f.platform(),f.definition,'payload:A'),/RECOVERY_RUNTIME_CONFIGURATION_MISMATCH/);
+});
+test('publisher mandatory central payload profiles and selectors reject all former defaults/duplicates',async t=>{
+ const f=await fixture(t,'publisher'),policy=TEST_CORE_POLICY.transportPublisherPayload;
+ const raw=f.source.adapters[publisherId],valid={...raw,...TEST_CORE_POLICY.transportPublisherStore,...policy};
+ assert.doesNotThrow(()=>publisherActivate({config:valid}));
+ for(const value of [undefined,null,'262144',0,1.5,1048577]){
+  const profiles={standard:{maxPayloadBytes:value}};if(value===undefined)delete profiles.standard.maxPayloadBytes;
+  assert.throws(()=>captureCoreRuntimePolicy({...TEST_CORE_POLICY,transportPublisherPayload:{targetPayloadProfiles:profiles}}),/INVALID/);
+  assert.throws(()=>publisherActivate({config:{...valid,targetPayloadProfiles:profiles}}),/INVALID/);
+ }
+ for(const value of [undefined,null,{}, {standard:{maxPayloadBytes:1,extra:true}}])assert.throws(()=>publisherActivate({config:{...valid,targetPayloadProfiles:value}}),/INVALID/);
+ for(const value of [undefined,null,'absent'])assert.throws(()=>publisherActivate({config:{...valid,targets:{operators:{...raw.targets.operators,payloadProfile:value}}}}),/payloadProfile/);
+ for(const value of [262144,null])assert.throws(()=>publisherActivate({config:{...valid,targets:{operators:{...raw.targets.operators,maxPayloadBytes:value}}}}),/INVALID:target/);
+ for(const value of [policy.targetPayloadProfiles,null])assert.throws(()=>selectedAdapterConfigurations({[publisherId]:{...raw,targetPayloadProfiles:value}},TEST_CORE_POLICY),/COMPETING_AUTHOR/);
+ assert.doesNotThrow(()=>publisherActivate({config:valid}));
+});

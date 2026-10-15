@@ -86,6 +86,13 @@
               "maxResponseBytes": 1048576
             }
           }
+        },
+        "transportPublisherPayload": {
+          "targetPayloadProfiles": {
+            "standard": {
+              "maxPayloadBytes": 262144
+            }
+          }
         }
       }
     }

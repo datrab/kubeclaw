@@ -11688,8 +11688,8 @@
     "startedAt": "2026-10-15T15:04:00.781472+00:00",
     "baseline": "tmp/config-finalization-20261015/baseline",
     "automation": "Temporarily paused to acquire writer; reenabled immediately after acquisition; scheduler cancellation is coordination, not repository test failure.",
-    "status": "HTTP_BODY_BYTES2_COMPLETE_INDEPENDENT_CLEAN_OVERALL_OPEN",
-    "concreteSettingsExternalized": 88,
+    "status": "TRANSPORT_PAYLOAD_PROFILE_IMPLEMENTED_VERIFIED_INDEPENDENT_REVIEW_OPEN",
+    "concreteSettingsExternalized": 89,
     "settingsBreakdown": {
       "ingestionServer": 9,
       "artifactAcknowledgment": 1,
@@ -11710,7 +11710,8 @@
       "transportPublisherStore": 2,
       "openClawDispatch": 2,
       "openClawTargetTiming": 5,
-      "httpDispatchBodyBytes": 2
+      "httpDispatchBodyBytes": 2,
+      "transportPublisherPayload": 1
     },
     "sourceSummary": "tmp/config-finalization-20261015/SLICE-RESULT.md",
     "verification": [
@@ -11805,7 +11806,7 @@
         "total": 4
       }
     ],
-    "qualification": "88 concrete settings source-wired (86 prior + HTTP target body caps2); no native/global acceptance, suites overlap.",
+    "qualification": "89 concrete settings source-wired (88 prior + publisher target payload limit1); not fresh independent or native/global acceptance; suites overlap.",
     "independentReview": {
       "taskName": "/root/config_independent_review",
       "status": "BOUNDED_SLICE_RECHECKED_NO_REMAINING_ACTIONABLE_FINDINGS",
@@ -11822,7 +11823,7 @@
     "writerLock": "Releasing native session57249 on completed HTTP bytes2 boundary; free nonblocking probe follows",
     "parentModelAdmission": "Current interactive parent successfully implemented and tested; historical model-not-found is not current parent admission state.",
     "typecheckFinal": "tool-plugin-current-tsc.log exit0; tool-plugin-current-results.json records projection/diff checks exit0",
-    "updatedAt": "2026-10-15T18:38:23.866185+00:00",
+    "updatedAt": "2026-10-15T19:11:20.455023+00:00",
     "batches": {
       "prismDelivery": "Source image, chart, role materialization and release checks implemented; independent P1 migration job path finding fixed and clean rechecked. Actual Docker/UID1000 not available here.",
       "databaseBootstrap": "3 settings source-wired, actual local TCP protocol 2/2; independent review no findings. Not full PostgreSQL role acceptance.",
@@ -11834,7 +11835,7 @@
       "Broad deployment-truth Prism proof relocation; original lint fixture/Go-dependent evidence verification failures recorded; Docker/UID1000/Chromium/PostgreSQL native and integrated overall acceptance OPEN"
     ],
     "semanticResiduals": "tmp/config-finalization-20261015/SEMANTIC-RESIDUALS.md",
-    "nextAction": "Next coherent config-only group: transport-publisher/operator target payload byte profiles through supported selected Core startup/snapshot and explicit per-target selection preserving distinct values and retainedA; inspect actual schemas/consumers before authoring. HTTP authentication default remains separate unchanged installation/security choice, not an invitation for unrelated authority changes. Network adapter caps, agent event queues and compiler/operator approval or supported Buster runtimeService remain. No v10/graph/authority workaround; native/prior original failures remain OPEN.",
+    "nextAction": "Obtain fresh non-author review of transport payload profile seam and correct findings; then migrate separate operator payload policy (former65536 and per-target512/4096) through same selected Core/original snapshot path. Preserve all original target IDs and defaults. Full native and integrated C0-C6 acceptance OPEN.",
     "reviewedBatches": [
       "ingestion/artifact/launcher: metadata cap finding fixed and rechecked",
       "prism delivery: migration paths finding fixed and rechecked",
@@ -11851,7 +11852,12 @@
       "Current production release missing new Buster exact-image receipt metadata; normal CI rebuild/record required",
       "Original transport-publisher plugin script stageId stage:transport fails canonical localId in dependency parent; actual normal Nova publisher new suite passes. No identity rewrite or validator weakening."
     ],
-    "pendingReview": null,
+    "pendingReview": {
+      "slice": "transportPublisherPayload",
+      "status": "BLOCKED_REVIEW_RUNTIME_UNAVAILABLE",
+      "evidence": "docs/review/remediation/config-transport-payload-20261015/RESULT.json",
+      "resumeCondition": "Fresh non-author reviewer runtime/native spawn_agent or configured same-engine review helper available; no credentials/model changes."
+    },
     "activeWriter": false,
     "integratedPrismReview": {
       "recoveredAt": "2026-10-15T16:24:42.362669+00:00",
@@ -12463,5 +12469,99 @@
     "settingsSourceWired": 88,
     "independentAcceptance": "OPEN",
     "nextAction": "Migrate separate publisher/operator target payload profiles via selected Core plus original retained per-target selection, preserving 262144/65536 and explicit overrides. Include engine-runtime injection, engine-snapshots capture and recovery call chain, schemas, authored platform adapters and original live tests as one coherent change."
+  },
+  "transportPayloadProfiles20261015": {
+    "at": "2026-10-15T19:11:20.455023+00:00",
+    "change": "Transport publisher maxPayloadBytes externalized into required central targetPayloadProfiles with explicit target payloadProfile. Former 262144-byte default preserved only in central standard profile; distinct original 128/1048576 fixture profiles preserved. Per-target numeric defaults/authors reject. Central values and selectors captured in original snapshot; resume/recover/admin carry retained selection before current config validation. No security/authority scope expansion.",
+    "settingsSourceWired": 89,
+    "verification": [
+      {
+        "command": [
+          "node",
+          "--test",
+          "tests/verification/reliability/nova-target-timing-policy.test.mjs",
+          "tests/verification/reliability/nova-artifact-policy.test.mjs",
+          "tests/verification/reliability/nova-telemetry-policy.test.mjs",
+          "tests/verification/reliability/nova-delivery-policy.test.mjs",
+          "tests/verification/reliability/nova-dispatch-policy.test.mjs",
+          "tests/verification/reliability/nova-core-policy.test.mjs",
+          "tests/verification/reliability/nova-state-wait-policy.test.mjs",
+          "tests/verification/reliability/nova-http-policy.test.mjs"
+        ],
+        "exitCode": 0,
+        "log": "docs/review/remediation/config-transport-payload-20261015/final-0.log"
+      },
+      {
+        "command": [
+          "node",
+          "tests/config-validation.test.mjs"
+        ],
+        "exitCode": 0,
+        "log": "docs/review/remediation/config-transport-payload-20261015/final-1.log"
+      },
+      {
+        "command": [
+          "node",
+          "tests/live-function.test.ts"
+        ],
+        "exitCode": 0,
+        "log": "docs/review/remediation/config-transport-payload-20261015/final-2.log"
+      },
+      {
+        "command": [
+          "node",
+          "tests/package-boundary.test.mjs"
+        ],
+        "exitCode": 0,
+        "log": "docs/review/remediation/config-transport-payload-20261015/final-3.log"
+      },
+      {
+        "command": [
+          "/home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/typescript/bin/tsc",
+          "--noEmit",
+          "-p",
+          "tsconfig.json"
+        ],
+        "exitCode": 0,
+        "log": "docs/review/remediation/config-transport-payload-20261015/final-4.log"
+      },
+      {
+        "command": [
+          "git",
+          "diff",
+          "--check"
+        ],
+        "exitCode": 0,
+        "log": "docs/review/remediation/config-transport-payload-20261015/final-5.log"
+      }
+    ],
+    "tests": {
+      "integratedPolicyPassed": 31,
+      "integratedPolicyTotal": 31,
+      "skipped": 0,
+      "originalTransportSuitesPassed": 3,
+      "originalTransportSuitesTotal": 3,
+      "novaTypecheckExitCode": 0,
+      "publisherTypecheckExitCode": 0
+    },
+    "sourceHashes": {
+      "config/nova/core.config.json": "a7ac9d4ef0eebacdaa93636f34d98ff74fbcae68921565b42e46d6ee85f1b9fa",
+      "skills/common/plugin-runtime/foundation/config/core-runtime-policy.schema.json": "471d773c6c42c31f42a4317ccb6c89b31ebab4c8164e1db991806c13f4f5469b",
+      "skills/common/plugin-runtime/foundation/config/core-runtime-policy.ts": "fe92184d5761a79198dd01c2a23fcd0b42950f124b5163b3764ef2301637d75d",
+      "skills/common/plugins/transport-publisher/README.md": "7ed3f68b2db33fd3b226aeee7a8eecbbd36e93fcba5b21f177c63027da38fe01",
+      "skills/common/plugins/transport-publisher/schemas/config.schema.json": "c24464fa96121a4894cc5ab1896845801ed479bb04af11898a17e6cc7e133941",
+      "skills/common/plugins/transport-publisher/src/adapter.ts": "df2166fb55a02c1d7640e05d82e02b1a9783ab5b5a0c70fe2b0c2e1ab44b6101",
+      "skills/common/plugins/transport-publisher/tests/config-validation.test.mjs": "e6f4813cce939151983620a4d14a973c03644cf6d0a1df83d6db90efd7b34316",
+      "skills/common/plugins/transport-publisher/tests/live-function.test.ts": "6347a4f32b6c67677a1432a00332bc645c0ef63850a09d94efb4792f88892ecb",
+      "skills/nova/core/execution/engine-admin.ts": "35452a7d2760408d791dba54d76071b3f14c1c118ee408b887b1bff4408a0a9b",
+      "skills/nova/core/execution/engine-run.ts": "3af87c9b05ca446b73ef9d7506c41885fee87400d129a3050cf4ba62b6b4cd93",
+      "skills/nova/core/execution/engine-runtime.ts": "e675da884f5859751eddb28a3684f3b77e8a5a7d72d1106dc34c0fd28b7611d6",
+      "skills/nova/core/execution/engine-snapshots.ts": "fd7c9aeacd67308303bf29f40ed63da72f3cd4f143f6beee3e6e746a0c704161",
+      "tests/verification/reliability/nova-delivery-policy.test.mjs": "76afad5803e40690ced7306e7e8cbb42eb8996174f365c916f02d446ac641734"
+    },
+    "independentAcceptance": "OPEN; fresh non-author review required. Native collaboration tools absent from runtime ALL_TOOLS; command -v codex returned no executable on this execution surface. No independent review fabricated.",
+    "parentRecovery": "Original parent failed-before-reply: thread claimed; no duplicate queued. Scheduled turn directly implemented under shared nonblocking writer lock.",
+    "nextAction": "Obtain fresh non-author review of transport payload profile seam and correct findings; then migrate separate operator payload policy (former65536 and per-target512/4096) through same selected Core/original snapshot path. Preserve all original target IDs and defaults. Full native and integrated C0-C6 acceptance OPEN.",
+    "writerLock": "shared nonblocking; released at process exit"
   }
 }

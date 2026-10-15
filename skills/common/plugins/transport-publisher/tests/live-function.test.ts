@@ -1,5 +1,5 @@
 import { TEST_CORE_POLICY as DELIVERY_TEST_CORE_POLICY } from '../../../../../tests/fixtures/core-runtime-policy.mjs';
-const TEST_PUBLISHER_STORE_POLICY = DELIVERY_TEST_CORE_POLICY.transportPublisherStore;
+const TEST_PUBLISHER_STORE_POLICY = {...DELIVERY_TEST_CORE_POLICY.transportPublisherStore,targetPayloadProfiles:{...DELIVERY_TEST_CORE_POLICY.transportPublisherPayload.targetPayloadProfiles,small:{maxPayloadBytes:128},maximum:{maxPayloadBytes:1_048_576}}};
 import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
 import fs from 'node:fs';
@@ -129,19 +129,22 @@ const adapters = new core.AdapterRuntime({
         audit: {
           endpoint: `${origin}/publish`,
           signingSecret: 'transport.signing',
-          maxPayloadBytes: 128,
+          payloadProfile: 'small',
         },
         rejected: {
           endpoint: `${origin}/rejected`,
           signingSecret: 'transport.signing',
+        payloadProfile: 'standard',
         },
         malformed: {
           endpoint: `${origin}/malformed`,
           signingSecret: 'transport.signing',
+        payloadProfile: 'standard',
         },
         unavailable: {
           endpoint: `${origin}/unavailable`,
           signingSecret: 'transport.signing',
+        payloadProfile: 'standard',
         },
       },
     }],
@@ -258,6 +261,7 @@ try {
         retry: {
           endpoint: `${origin}/direct-retry`,
           signingSecret: 'transport.signing',
+        payloadProfile: 'standard',
         },
       },
     },
@@ -316,6 +320,7 @@ try {
         retry: {
           endpoint: `${origin}/capacity`,
           signingSecret: 'transport.signing',
+        payloadProfile: 'standard',
         },
       },
     },
@@ -354,6 +359,7 @@ try {
         retry: {
           endpoint: `${origin}/concurrent`,
           signingSecret: 'transport.signing',
+        payloadProfile: 'standard',
         },
       },
     },
@@ -399,7 +405,7 @@ try {
         retry: {
           endpoint: `${origin}/boundary`,
           signingSecret: 'transport.signing',
-          maxPayloadBytes: 1_048_576,
+          payloadProfile: 'maximum',
         },
       },
     },

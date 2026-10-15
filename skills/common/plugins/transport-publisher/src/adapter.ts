@@ -10,7 +10,6 @@ interface TargetConfig {
 
 const TARGET_ID = /^[a-z][a-z0-9._-]{0,127}$/;
 const PUBLICATION_ID = /^[A-Za-z0-9][A-Za-z0-9._:-]{0,255}$/;
-const DEFAULT_MAX_PAYLOAD_BYTES = 262_144;
 const MAX_PAYLOAD_BYTES = 1_048_576;
 const MAX_JSON_DEPTH = 64;
 const TERMINAL_RESERVATION_BYTES = 8_192;
@@ -27,8 +26,8 @@ function exactKeys(value: Record<string, unknown>, allowed: readonly string[], c
   if (Object.keys(value).some((key) => !accepted.has(key))) throw new Error(code);
 }
 
-function positiveInteger(value: unknown, fallback: number): number {
-  const resolved = value ?? fallback;
+function positiveInteger(value: unknown): number {
+  const resolved = value;
   if (
     !Number.isSafeInteger(resolved)
     || Number(resolved) < 1
@@ -68,22 +67,30 @@ function readConfig(config: Readonly<Record<string, unknown>>): {
   readonly maximumDeliveryBytes: number;
 } {
   exactKeys(config as Record<string, unknown>, [
-    'targets', 'deliveryRoot', 'maximumDeliveryRecords', 'maximumDeliveryBytes',
+    'targets', 'deliveryRoot', 'maximumDeliveryRecords', 'maximumDeliveryBytes', 'targetPayloadProfiles',
   ], 'TRANSPORT_CONFIG_INVALID:unknownField');
   if (!plainRecord(config.targets) || Object.keys(config.targets).length === 0) {
     throw new Error('TRANSPORT_CONFIG_INVALID:targets');
   }
+  if (!plainRecord(config.targetPayloadProfiles) || Object.keys(config.targetPayloadProfiles).length === 0) throw new Error('TRANSPORT_CONFIG_INVALID:targetPayloadProfiles');
+  const profiles = new Map<string, number>();
+  for (const [id, value] of Object.entries(config.targetPayloadProfiles)) {
+    if (!TARGET_ID.test(id) || !plainRecord(value)) throw new Error('TRANSPORT_CONFIG_INVALID:targetPayloadProfiles');
+    exactKeys(value, ['maxPayloadBytes'], 'TRANSPORT_CONFIG_INVALID:profile');
+    profiles.set(id, positiveInteger(value.maxPayloadBytes));
+  }
   const targets = new Map<string, TargetConfig>();
   for (const [id, rawTarget] of Object.entries(config.targets)) {
     if (!TARGET_ID.test(id) || !plainRecord(rawTarget)) throw new Error(`TRANSPORT_CONFIG_INVALID:target:${id}`);
-    exactKeys(rawTarget, ['endpoint', 'signingSecret', 'maxPayloadBytes'], `TRANSPORT_CONFIG_INVALID:target:${id}`);
+    exactKeys(rawTarget, ['endpoint', 'signingSecret', 'payloadProfile'], `TRANSPORT_CONFIG_INVALID:target:${id}`);
     if (typeof rawTarget.signingSecret !== 'string' || !TARGET_ID.test(rawTarget.signingSecret)) {
       throw new Error(`TRANSPORT_CONFIG_INVALID:signingSecret:${id}`);
     }
+    if (typeof rawTarget.payloadProfile !== 'string' || !profiles.has(rawTarget.payloadProfile)) throw new Error(`TRANSPORT_CONFIG_INVALID:payloadProfile:${id}`);
     targets.set(id, Object.freeze({
       endpoint: endpoint(rawTarget.endpoint),
       signingSecret: rawTarget.signingSecret,
-      maxPayloadBytes: positiveInteger(rawTarget.maxPayloadBytes, DEFAULT_MAX_PAYLOAD_BYTES),
+      maxPayloadBytes: profiles.get(rawTarget.payloadProfile)!,
     }));
   }
   if (typeof config.deliveryRoot !== 'string' || config.deliveryRoot.length === 0) {

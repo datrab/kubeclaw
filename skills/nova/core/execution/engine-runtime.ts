@@ -38,9 +38,9 @@ export interface PreparedRuntime extends RuntimeConfigurationInspection {
  * NOT original-run discovery, a v10 source receipt, or permission to activate.
  * In particular, it does not authenticate canonical AUTHOR/task/R/caller inputs.
  */
-export function inspectRuntimeConfiguration(platform: PlatformConfig, definition: PipelineDefinition, retainedCorePolicy?: CoreRuntimePolicy, retainedTimingSelections?: Readonly<Record<string,string>>, retainedHttpSelections?: Readonly<Record<string,string>>): RuntimeConfigurationInspection {
+export function inspectRuntimeConfiguration(platform: PlatformConfig, definition: PipelineDefinition, retainedCorePolicy?: CoreRuntimePolicy, retainedTimingSelections?: Readonly<Record<string,string>>, retainedHttpSelections?: Readonly<Record<string,string>>, retainedPublisherSelections?: Readonly<Record<string,string>>): RuntimeConfigurationInspection {
   const corePolicy = retainedCorePolicy === undefined ? loadCoreRuntimePolicy(platform.corePolicySelection) : captureCoreRuntimePolicy(retainedCorePolicy);
-  const adapterConfigurations = selectedAdapterConfigurations(platform.adapters, corePolicy, retainedTimingSelections, retainedHttpSelections);
+  const adapterConfigurations = selectedAdapterConfigurations(platform.adapters, corePolicy, retainedTimingSelections, retainedHttpSelections, retainedPublisherSelections);
   validateContractValue('pipelineDefinition', definition);
   const packages = discoverPackages({ installationRoots: platform.installationRoots, trustPolicy: {
     trustedBuiltinRoots: platform.trustedBuiltinRoots, allowedSourceDigests: new Map(Object.entries(platform.externalTrust.allowedSourceDigests)),
@@ -55,8 +55,8 @@ export function inspectRuntimeConfiguration(platform: PlatformConfig, definition
   return { corePolicy, adapterConfigurations, configuration: { corePolicy, providers: platform.providers, grants: platform.grants, adapters: adapterConfigurations, activeAdapters: platform.activeAdapters, observers: platform.observers, ...(platform.isolation ? { isolation: platform.isolation } : {}) }, snapshot, granted };
 }
 
-export async function prepareRuntime(platform: PlatformConfig, definition: PipelineDefinition, retainedCorePolicy?: CoreRuntimePolicy, retainedTimingSelections?: Readonly<Record<string,string>>, retainedHttpSelections?: Readonly<Record<string,string>>): Promise<PreparedRuntime> {
-  const inspected = inspectRuntimeConfiguration(platform, definition, retainedCorePolicy, retainedTimingSelections, retainedHttpSelections);
+export async function prepareRuntime(platform: PlatformConfig, definition: PipelineDefinition, retainedCorePolicy?: CoreRuntimePolicy, retainedTimingSelections?: Readonly<Record<string,string>>, retainedHttpSelections?: Readonly<Record<string,string>>, retainedPublisherSelections?: Readonly<Record<string,string>>): Promise<PreparedRuntime> {
+  const inspected = inspectRuntimeConfiguration(platform, definition, retainedCorePolicy, retainedTimingSelections, retainedHttpSelections, retainedPublisherSelections);
   return { ...inspected, activated: await activateRegistry(inspected.snapshot, new Set(inspected.granted.grants.keys()), platform.isolation) };
 }
 
@@ -126,7 +126,7 @@ export function serializedObserverDrainer(platform: PlatformConfig, runRoot: str
 /** Central policy is projected before registry schema validation and retained in
  * the run configuration. Raw Platform adapter data is installation/target data;
  * equal-valued duplicate operator policies are still rejected. */
-export function selectedAdapterConfigurations(adapters: PlatformConfig['adapters'], policy: CoreRuntimePolicy, retainedTimingSelections?: Readonly<Record<string,string>>, retainedHttpSelections?: Readonly<Record<string,string>>): PlatformConfig['adapters'] {
+export function selectedAdapterConfigurations(adapters: PlatformConfig['adapters'], policy: CoreRuntimePolicy, retainedTimingSelections?: Readonly<Record<string,string>>, retainedHttpSelections?: Readonly<Record<string,string>>, retainedPublisherSelections?: Readonly<Record<string,string>>): PlatformConfig['adapters'] {
   const selected: Record<string, Readonly<Record<string, unknown>>> = structuredClone(adapters);
   const openClawId = 'kubeclaw.runtime-dispatch:openclaw';
   if (retainedTimingSelections !== undefined && Object.hasOwn(selected,openClawId)) {
@@ -148,7 +148,18 @@ export function selectedAdapterConfigurations(adapters: PlatformConfig['adapters
     }));
     selected[httpId] = {...raw,targets:Object.freeze(targets)};
   }
+  const publisherId = 'kubeclaw.transport-publisher:publisher';
+  if (retainedPublisherSelections !== undefined && Object.hasOwn(selected,publisherId)) {
+    const raw = selected[publisherId]!;
+    if (!raw.targets || typeof raw.targets !== 'object' || Array.isArray(raw.targets)) throw new Error('RECOVERY_TARGET_PAYLOAD_SELECTION_MISSING');
+    const targets = Object.fromEntries(Object.entries(raw.targets).map(([id,target]) => {
+      if (!Object.hasOwn(retainedPublisherSelections,id) || !target || typeof target !== 'object' || Array.isArray(target)) throw new Error('RECOVERY_TARGET_PAYLOAD_SELECTION_MISSING:use original runtime');
+      return [id,Object.freeze({...target,payloadProfile:retainedPublisherSelections[id]})];
+    }));
+    selected[publisherId] = {...raw,targets:Object.freeze(targets)};
+  }
   const policies = [
+    ['kubeclaw.transport-publisher:publisher', policy.transportPublisherPayload, 'TRANSPORT_PAYLOAD'],
     ['kubeclaw.artifact-store:artifact-store', policy.artifactStore, 'ARTIFACT'],
     ['kubeclaw.state-store:state', policy.stateStore, 'STATE'],
     ['kubeclaw.wait-store:waits', policy.waitStore, 'WAIT'],
