@@ -171,7 +171,7 @@ const adapters = new core.AdapterRuntime({
 
 const attempt = {
   runId: 'run:transport',
-  stageId: 'stage:transport',
+  stageId: 'transport',
   attemptId: 'attempt:transport',
   attemptNumber: 1,
 };
@@ -234,12 +234,15 @@ try {
     /TRANSPORT_RESOURCE_TYPE_INVALID/,
   );
 
+  const beforeCancellation = received.length;
   const cancelled = new AbortController();
   cancelled.abort();
   await assert.rejects(
     publish('audit', { message: {} }, { signal: cancelled.signal }),
-    /ADAPTER_CANCELLED/,
+    /^Error: EFFECT_RESOURCE_WAIT_CANCELLED$/,
   );
+
+  assert.equal(received.length, beforeCancellation, 'pre-aborted publication must not reach the receiver');
 
   const persisted = JSON.stringify(journal.entries());
   assert.doesNotMatch(persisted, new RegExp(signingKey), 'secret must never enter durable effect requests');
