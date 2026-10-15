@@ -41,6 +41,24 @@ flowchart LR
     J --> K[Durable recovery record]
 ```
 
+**Text alternative to the diagram**
+
+Each row names a directed connection. Labels preserve the diagram’s conditions or handoffs; dotted relationships are identified explicitly.
+
+| From | Relationship | To |
+| --- | --- | --- |
+| Installed package bytes | Directed connection | Inert discovery |
+| Inert discovery | Directed connection | Validated registry snapshot |
+| Validated registry snapshot | Directed connection | Enabled registration set |
+| Enabled registration set | Directed connection | Provider and grant resolution |
+| Provider and grant resolution | Directed connection | Configuration validation |
+| Configuration validation | Directed connection | Integrity recheck and import audit |
+| Integrity recheck and import audit | Directed connection | Activation |
+| Activation | Directed connection | Lease-bound invocation |
+| Lease-bound invocation | Directed connection | Core-owned effects, events, and state |
+| Core-owned effects, events, and state | Directed connection | Durable recovery record |
+
+
 Text version: the host starts with operator-installed bytes. It reads data before it executes code. It then validates global ownership, resolves policy, validates configuration, checks integrity, and activates only the selected runtime surfaces. An invocation can use external authority only through a valid lease and a matching grant. Core records the result and the recovery facts.
 
 This order is a safety property. The runtime must know *which bytes*, *which owner*, and *which authority* before plugin code can run.

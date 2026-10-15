@@ -108,6 +108,26 @@ flowchart TD
     Fence --> Removed[Owned namespace removed, finalizer cleared]
 ```
 
+**Text alternative to the diagram**
+
+Each row names a directed connection. Labels preserve the diagram’s conditions or handoffs; dotted relationships are identified explicitly.
+
+| From | Relationship | To |
+| --- | --- | --- |
+| Fixture validates request and manifest | Directed connection | Server dry-run and lease apply |
+| Server dry-run and lease apply | Directed connection | Controller checks identity and operator policy |
+| Controller checks identity and operator policy | Directed connection | Namespace safeguards, grants and Secrets |
+| Namespace safeguards, grants and Secrets | Directed connection | Namespace phase Ready |
+| Namespace phase Ready | Directed connection | Fixture deploys and tests workload |
+| Namespace phase Ready | Directed connection | Credential and exposure reconciliation |
+| Credential and exposure reconciliation | Directed connection | Trusted readiness handoff verifies live sources |
+| Trusted readiness handoff verifies live sources | Directed connection | Committed retention and signed human decisions |
+| Namespace phase Ready | Directed connection | Expiry or explicit lease deletion |
+| Committed retention and signed human decisions | Directed connection | Expiry or explicit lease deletion |
+| Expiry or explicit lease deletion | Directed connection | Ownership and version fences |
+| Ownership and version fences | Directed connection | Owned namespace removed, finalizer cleared |
+
+
 The diagram answers who owns each handoff. The controller can fail during policy,
 provisioning, exposure or cleanup. It publishes observations or returns an error;
 the next reconciliation reads current state. A successful lease apply alone does

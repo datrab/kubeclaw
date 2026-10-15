@@ -12,6 +12,7 @@ import {
 } from './docs-generate-core.mjs';
 import { yamlFieldPathTokens } from './yaml-field-path.mjs';
 import { renderApiResourceReference, renderRejectedApiOutputProfiles, upstreamApiReference } from './docs-api-reference.mjs';
+import { generateSdkReference } from './docs-sdk-reference.mjs';
 
 const argv = process.argv.slice(2);
 const option = (name, fallback) => {
@@ -135,8 +136,11 @@ function stableWriteMap() {
   const configurationSchemas = readJson('docs/generated/inventory/configuration-schemas.json');
   const platformSurfaces = readJson('docs/generated/inventory/platform-surfaces.json');
   const workflows = readJson('docs/generated/inventory/workflows.json');
+  const sdkReference = generateSdkReference({ root, revision: sourceRevision });
 
   return new Map([
+    ['docs/generated/inventory/sdk-reference.json', `${JSON.stringify(sdkReference.inventory, null, 2)}\n`],
+    ['docs/site/reference/sdk-exports.md', sdkReference.generatedMarkdown],
     ['docs/site/reference/cli.md', renderCli(deploy, runtimeInputs, (sourcePath, line) => `[\`${sourcePath}:${line}\`](${pinnedSourceUrl(sourcePath, line, line)})`)],
     ['docs/site/reference/secrets.md', renderSecrets(secrets, runtimeInputs, (sourcePath, line) => `[\`${sourcePath}${line ? `:${line}` : ''}\`](${pinnedSourceUrl(sourcePath, line ?? 1, line ?? 1)})`)],
     ['docs/site/reference/helm-values.md', renderHelmValues(configurationValues, configurationSchemas)],
@@ -596,6 +600,8 @@ function renderEnvironment(deploy, secrets, runtimeInputs) {
   }
   const descriptions = combined;
   const rows = runtimeInputs.environment;
+  const configuredReceivers = runtimeInputs.configuredEnvironmentReceivers ?? [];
+  const configuredReceiverEvidence = (item) => (item.evidence ?? []).map((e) => `[\`${e.path}:${e.line}\`](${pinnedSourceUrl(e.path, e.line, e.endLine)})`).join('<br>');
   const publishableValue = (value) => typeof value === 'string' && /docs\/(?:deployment|operations|operators|reference)\//.test(value)
     ? '<source diagnostic contains a non-published path>'
     : value;
@@ -662,6 +668,7 @@ ${generatedNotice(['docs/generated/inventory/configuration-runtime-inputs.json']
 
 ${table(['Class', 'Count', 'Meaning'], [
   ['All discovered names', runtimeInputs.totals.environmentVariables, 'Unique names read from process input or injected by checked-in Kubernetes YAML.'],
+  ['Configuration-selected names', configuredReceivers.length, 'Supported receiving sites whose environment variable name is selected by a configuration field, rather than fixed in source.'],
   ['Operator-authored inputs', runtimeInputs.totals.operatorAuthoredEnvironmentInputs, 'A checked-in operator command reads this input directly.'],
   ['Injection-only names', runtimeInputs.totals.injectionOnlyEnvironmentVariables, 'A checked-in manifest produces the variable, but no checked-in receiving reader proves its behavior.'],
   ['Development-tool inputs', rows.filter((item) => item.surface === 'maintainer-verification-input').length, 'Inputs to the named development tools. These names remain in the complete reference but do not configure running product services.'],
@@ -686,6 +693,18 @@ ${table(['Name', 'Surface and direct setting', 'Purpose, impact, and failure', '
   consumerContracts(item),
   groupedConsumers(item),
 ]))}
+${configuredReceivers.length ? `## Configuration-Selected Variable Names
+
+Some runtime configuration fields select an environment variable name. These names are not a fixed list. Set the named variable in the actual receiving process and follow the configuration field's conditions. The example names on the linked configuration page are examples, not the only supported names.
+
+${table(['Configuration field and source', 'Purpose and condition', 'Accepted form', 'Default, empty, invalid, and precedence', 'Impact and failure'], configuredReceivers.map((item) => [
+  `\`${item.configurationField}\` in [\`${item.function}\`](${pinnedSourceUrl(item.path, item.line, item.line)})<br>[Runtime configuration](${path.posix.relative('reference', item.canonicalPage)})<br>${configuredReceiverEvidence(item)}`,
+  `${item.purpose}<br>Required: ${item.required}<br>Condition: ${item.condition}`,
+  item.acceptedForm,
+  `Default: ${item.defaultBehavior}<br>Empty: ${item.emptyBehavior}<br>Invalid: ${item.invalidBehavior}<br>Precedence: ${item.precedence}`,
+  `Impact: ${item.impact}<br>Failure: ${item.failure}`,
+]))}
+` : ''}
 ${generatedEnd()}
 ## Ownership And Runtime Boundaries
 

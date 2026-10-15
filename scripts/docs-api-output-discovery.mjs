@@ -1,3 +1,4 @@
+import {observerMaterializedSourceState, canonicalObserverDocumentationSource, resolveObserverDocumentationImport} from './docs-api-observer-materialized-source.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -7,8 +8,11 @@ import { createHash } from 'node:crypto';
 import { spawnSync } from 'node:child_process';
 import YAML from 'yaml';
 import ts from 'typescript';
+import { shellHeredocCustody, shellCommandAcquisitions, shellNativeNodeEntries } from './docs-shell-source-custody.mjs';
+import { assertDocumentationExecutableRole, qualifiedRootNodeHarnessSources, expandReviewedNodePackageGlob, reviewedRootSelectedCompilerCapability, rootSelectedCompilerTarget } from './docs-api-documentation-role-custody.mjs';
 import { createSerializedOutputRoleClassifier } from './docs-api-output-role-classification.mjs';
 
+const isRootSelectedCompilerCapability=value=>value?.kind==='root-selected-compiler-require';
 const hash = bytes => createHash('sha256').update(bytes).digest('hex');
 const syntheticDigest = 'a'.repeat(64);
 // Public product execution and extension roots. Tests/fixtures are synthetic;
@@ -52,7 +56,7 @@ const reviewedDocumentationModuleInputRecipes = [
   {
     "source": "scripts/docs-configuration-inventory.mjs",
     "semanticClass": "finite-documentation-runtime-semantics",
-    "recipeSha256": "f42395d02bca9aff6bd023da499f20ecfbd2be5b673fd4e7bfe2461fd71467a2"
+    "recipeSha256": "55b8ef2ad4ab006444733f452472abde72883de2d24e95af4d1bce86e982059e"
   },
   {
     "source": "scripts/docs-lint-policy-reference.mjs",
@@ -112,12 +116,30 @@ function documentationModuleInputAuthority(root,boundary,graph) {
       facts.push({path:selected,canonical,sha256:hash(fs.readFileSync(file))});
     }
   }
+  for(const dependency of graph.installedFoundationDependencies??[]) {
+    assert(dependency.capabilityKind==='root-selected-compiler-require'&&dependency.runtimeAcquisitionAuthorized===false,`DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED: installed foundation boundary`);
+    const {operation,...recorded}=dependency;
+    const capability={...recorded,kind:dependency.capabilityKind};
+    const actual=rootSelectedCompilerTarget(root,capability,()=>{});
+    assert.deepEqual(actual,recorded,`DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED: installed foundation evidence changed`);
+    facts.push(dependency);
+  }
   return hash(JSON.stringify(facts));
 }
-function documentationEntryPoints(scripts,documentationOnly=true) {
+function documentationEntryPoints(scripts,documentationOnly=true,root) {
   const entries=[];
-  for(const [name,command]of Object.entries(scripts))if(!documentationOnly||name.startsWith('docs:')||name.startsWith('verify:docs:'))for(const match of command.matchAll(/\b((?:scripts|skills|ops|tools|bin|cmd|docker|packaging|plugins|contracts|my-values)\/[A-Za-z0-9_./-]+\.(?:[cm]?js|ts))\b/gu))entries.push({name,command,source:match[1]});
-  for(const [name,command]of Object.entries(scripts))if(!documentationOnly||name.startsWith('docs:')||name.startsWith('verify:docs:'))for(const match of command.matchAll(/\bnode(?:\s+(?:--[A-Za-z0-9_=./:-]+|-[A-Za-z]+|--))*\s+['"]?((?:\.\/)?(?:scripts|skills|ops|tools|bin|cmd|docker|packaging|plugins|contracts|my-values)\/[A-Za-z0-9_./-]+)/gu))if(!entries.some(entry=>entry.name===name&&entry.source===path.posix.normalize(match[1])))entries.push({name,command,source:path.posix.normalize(match[1])});
+  for(const [name,command]of Object.entries(scripts)) {
+    if(documentationOnly&&!name.startsWith('docs:')&&!name.startsWith('verify:docs:'))continue;
+    assert(typeof command==='string',`DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED: package.json; ${name} command must be literal`);
+    for(const acquisition of shellNativeNodeEntries(`package.json scripts.${name}`,command)){
+      const {nativeTest,entryWords:targets}=acquisition;
+      for(const word of targets){
+        if(/[*?]/u.test(word.value)){for(const source of expandReviewedNodePackageGlob(root,{name,command,word,nativeTest}))entries.push({name,command,source});continue;}
+        assert(!/[\$`]/u.test(word.value),`DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED: package.json; ${name} unsupported dynamic Node entry: ${word.value}`);
+        entries.push({name,command,source:path.posix.normalize(word.value)});
+      }
+    }
+  }
   return entries.sort((a,b)=>a.name.localeCompare(b.name)||a.source.localeCompare(b.source));
 }
 
@@ -139,7 +161,7 @@ function nodeModuleInputClass(source,kind) {
 const reviewedSyntheticNodeTests=[{
   source:'skills/prism/integration/corpus-pool.mts',sha256:'993e49c853527500253108753d94178855a6ef019203ac8dd1b012e50de6d8c7',
   package:'skills/prism/package.json',script:'test:corpus-pool',command:'node integration/corpus-pool.mts',
-  authorityInputs:[{path:'skills/prism/package.json',sha256:'19457da92aed9c48e1bc81e082463bba0e406c662adeaff7699e0c674b45709c'},{path:'scripts/docs-runtime-consumer-contracts.mjs',sha256:'7cc530f43693188691d2485e5bdef0c57de9307696b957c060ef6356a021dfaa'}]
+  authorityInputs:[{path:'skills/prism/package.json',sha256:'19457da92aed9c48e1bc81e082463bba0e406c662adeaff7699e0c674b45709c'},{path:'scripts/docs-runtime-consumer-contracts.mjs',sha256:'e92de825967a2d76f671145ab42e33a1367ed68e7a2c67427fc93ef86b6a0a6a'}]
 },{
   source:'skills/prism/integration/engine-capture-retention.mts',sha256:'83e1cbdd48b997c5fd0d59f183bd6057d82e10df9ba25e2e7e7f4162a0eac74a',
   package:'skills/prism/package.json',script:'test:engine:native-retention',command:'node --expose-gc integration/engine-capture-retention.mts',
@@ -157,7 +179,7 @@ function syntheticNodeTestSources(root,packageBytes) {
     assert(JSON.parse(fs.readFileSync(path.join(root,recipe.package),'utf8')).scripts?.[recipe.script]===recipe.command,`DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED: ${recipe.source}; synthetic test command changed`);
     for(const command of Object.values(definition.scripts??{})) {
       assert(!command.includes(recipe.source),`DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED: ${recipe.source}; new unreviewed package invocation of synthetic test`);
-      for(const match of command.matchAll(/\bnode(?:\s+(?:--[A-Za-z0-9_=./:-]+|-[A-Za-z]+|--))*\s+['"]?((?:\.\/)?(?:scripts|skills|ops|tools|bin|cmd|docker|packaging|plugins|contracts|my-values)\/[A-Za-z0-9_./-]+)/gu)){const entry=path.join(root,path.posix.normalize(match[1]));assert(!fs.existsSync(entry)||fs.realpathSync(entry)!==fs.realpathSync(file),`DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED: ${recipe.source}; synthetic test has new canonical package invocation`);}
+      for(const match of command.matchAll(/\bnode(?:\s+(?:--[A-Za-z0-9_=./:-]+|-[A-Za-z]+|--))*\s+['"]?((?:\.\/)?(?:[A-Za-z0-9_.-]+)\/[A-Za-z0-9_./-]+)/gu)){const entry=path.join(root,path.posix.normalize(match[1]));assert(!fs.existsSync(entry)||fs.realpathSync(entry)!==fs.realpathSync(file),`DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED: ${recipe.source}; synthetic test has new canonical package invocation`);}
     }
     for(const target of [definition.bin,definition.main,definition.exports].flatMap(publicTargets)) {
       const absolute=path.resolve(root,target);
@@ -165,21 +187,34 @@ function syntheticNodeTestSources(root,packageBytes) {
     }
     selected.add(recipe.source);
   }
+  for(const source of qualifiedRootNodeHarnessSources(root,definition,documentationEntryPoints(definition.scripts??{},false,root)))selected.add(source);
   return selected;
+}
+
+function explicitPackageEntryTargets(definition){
+ const targets=[];const fail=detail=>assert.fail(`DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED: package.json; unsupported explicit package entry authority: ${detail}`);
+ if(definition.main!==undefined){if(typeof definition.main!=='string')fail('main must be a literal file');targets.push(definition.main);}
+ for(const [surface,value]of [['exports',definition.exports],['bin',definition.bin]]){
+  if(value===undefined)continue;if(typeof value==='string'){targets.push(value);continue;}
+  if(!value||typeof value!=='object'||Array.isArray(value))fail(surface);
+  for(const [key,target]of Object.entries(value)){if(typeof target!=='string'||key.includes('*')||surface==='exports'&&!/^\.(?:\/[^*]+)?$/u.test(key))fail(`${surface} ${key}; conditional, alternative and wildcard selectors are outside the finite admission`);targets.push(target);}
+ }
+ return targets;
 }
 
 function nodeProductExecutableSources(root,packageBytes) {
   const syntheticTests=syntheticNodeTestSources(root,packageBytes),all=walkProductSources(root,producerRoots,()=>true),selected=new Set(all.filter(source=>nodeExecutableSource(source)&&!syntheticTests.has(source)));
   const definition=JSON.parse(packageBytes),invoked=[];
-  for(const command of Object.values(definition.scripts??{}))for(const match of command.matchAll(/\bnode(?:\s+(?:--[A-Za-z0-9_=./:-]+|-[A-Za-z]+|--))*\s+['"]?((?:\.\/)?(?:scripts|skills|ops|tools|bin|cmd|docker|packaging|plugins|contracts|my-values)\/[A-Za-z0-9_./-]+)/gu))invoked.push(path.posix.normalize(match[1]));
-  const packageTargets=value=>typeof value==='string'?[value]:value&&typeof value==='object'?Object.values(value).flatMap(packageTargets):[];
-  invoked.push(...[definition.bin,definition.main,definition.exports].flatMap(packageTargets).map(source=>source.replace(/^\.\//u,'')));
+  invoked.push(...documentationEntryPoints(definition.scripts??{},false,root).map(entry=>entry.source));
+  invoked.push(...explicitPackageEntryTargets(definition).map(source=>source.replace(/^\.\//u,'')));
+  for(const source of invoked){assert(!path.isAbsolute(source)&&!source.split('/').includes('..')&&!source.includes('*')&&fs.existsSync(path.join(root,source)),`DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED: package.json; unsupported or missing explicit entry: ${source}`);if(!syntheticTests.has(source))selected.add(source);}
   for(const source of all)if(!syntheticTests.has(source)&&(invoked.includes(source)||/^#![^\n]*(?:\/|\s)node(?:\s|$)/u.test(fs.readFileSync(path.join(root,source),'utf8').split('\n',1)[0])))selected.add(source);
   return [...selected].sort();
 }
 
 function documentationModuleGraph(root,packageBytes,boundary={}) {
-  const syntheticTests=syntheticNodeTestSources(root,packageBytes),rootSources=nodeProductExecutableSources(root,packageBytes),files=[],sourceClasses=new Map(),rootAliases=[],rootPaths=new Set(rootSources);
+  const observerState=observerMaterializedSourceState(root);
+  const syntheticTests=syntheticNodeTestSources(root,packageBytes),rootSources=[...new Set(nodeProductExecutableSources(root,packageBytes).map(source=>canonicalObserverDocumentationSource(root,source)))],files=[],sourceClasses=new Map(),rootAliases=[],rootPaths=new Set(rootSources);
   function admit(source,kind) {
     assert(!syntheticTests.has(source),`DOCUMENTATION_TOOL_PUBLIC_CONSUMER_UNQUALIFIED: ${source}; synthetic native test acquired by ${kind}`);
     const selected=nodeModuleInputClass(source,kind);
@@ -209,34 +244,88 @@ function documentationModuleGraph(root,packageBytes,boundary={}) {
     if(fs.statSync(absolute).isDirectory())for(const entry of fs.readdirSync(absolute,{withFileTypes:true}))if(!excluded.has(entry.name)&&(entry.isDirectory()||entry.isSymbolicLink()))inspectDirectory(path.posix.join(source,entry.name));
   }
   producerRoots.forEach(inspectDirectory);directoryAliases.sort((a,b)=>a.source.localeCompare(b.source));
+  // Public entry surfaces are distinct from the canonical file Node executes.
+  // Parse/authorize canonical bytes once, but retain every admitted root path.
+  const publicEntries=rootSources.map(source=>({path:source,canonicalSource:path.relative(root,fs.realpathSync(path.join(root,source))).replaceAll(path.sep,'/')}));
+  for(const alias of directoryAliases)for(const entry of [...publicEntries])if(entry.canonicalSource.startsWith(alias.target+'/')) {
+    const selected=path.posix.join(alias.source,entry.canonicalSource.slice(alias.target.length+1));
+    if(nodeExecutableSource(selected)&&!publicEntries.some(entry=>entry.path===selected))publicEntries.push({path:selected,canonicalSource:entry.canonicalSource});
+  }
+  publicEntries.sort((a,b)=>a.path.localeCompare(b.path));
   function canonicalDependency(source) {
     const canonical=path.relative(root,fs.realpathSync(path.join(root,source))).replaceAll(path.sep,'/');
     assert(!canonical.startsWith('../')&&!path.isAbsolute(canonical)&&!canonical.split('/').some(part=>['node_modules','vendor','.git'].includes(part)),`DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED: ${source}; cached module input escapes repository authority`);
     return canonical;
   }
-  const dependencyFacts=paths=>[...paths].sort().map(source=>{const file=path.join(root,source);return fs.existsSync(file)?[source,canonicalDependency(source),hash(fs.readFileSync(file))]:[source,null];});
-  const graphKey=(selected,dependencyPaths)=>hash(JSON.stringify([hash(packageBytes),directoryAliases,dependencyFacts(seedPaths),dependencyFacts(rootPaths),selected.map(([source,bytes])=>[source,fs.realpathSync(path.join(root,source)),hash(bytes)]).sort((a,b)=>a[0].localeCompare(b[0])),dependencyFacts(dependencyPaths)]));
+  const dependencyFacts=paths=>[...paths].sort().map(source=>{const file=path.join(root,source);return fs.existsSync(file)?[source,canonicalDependency(source),fs.statSync(file).isDirectory()?'directory':hash(fs.readFileSync(file))]:[source,null];});
+  function installedFoundationFacts(dependencies) {
+    return dependencies.map(dependency=>{
+      assert(dependency.inputClass==='source-owned-installed-compiler-foundation'&&dependency.kind==='installedFoundationDependency'&&dependency.capabilityKind==='root-selected-compiler-require',`DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED: unsupported installed foundation input class`);
+      const {operation,...recorded}=dependency;
+      const actual=rootSelectedCompilerTarget(root,{...recorded,kind:dependency.capabilityKind});
+      assert.deepEqual(actual,recorded,`DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED: cached installed foundation evidence changed`);
+      return {...actual,operation};
+    }).sort((a,b)=>JSON.stringify(a).localeCompare(JSON.stringify(b)));
+  }
+  const graphKey=(selected,dependencyPaths,installedFoundationDependencies=[])=>hash(JSON.stringify([observerState,hash(packageBytes),directoryAliases,publicEntries,dependencyFacts(seedPaths),dependencyFacts(rootPaths),selected.map(([source,bytes])=>[source,fs.realpathSync(path.join(root,source)),hash(bytes)]).sort((a,b)=>a[0].localeCompare(b[0])),dependencyFacts(dependencyPaths),installedFoundationFacts(installedFoundationDependencies)]));
+  function reusableDocumentationGraph(cached,selected) {
+    if(!cached)return null;
+    const currentKey=graphKey(selected,cached.dependencyPaths,cached.installedFoundationDependencies??[]);
+    return cached.inputKey===currentKey?cached:null;
+  }
   const cached=documentationGraphCache.get(root);
   // A cached closure must still bind every bridge's current bytes and canonical
   // path. On change, rebuild from primary inputs so removed edges cannot retain
   // stale consumers. ASTs are reused only for identical complete source bytes.
   const cacheInputs=[...inputs];
   if(cached)for(const source of cached.closureSources)if(!files.includes(source)&&fs.existsSync(path.join(root,source))){canonicalDependency(source);cacheInputs.push([source,fs.readFileSync(path.join(root,source))]);}
-  if(cached&&cached.inputKey===graphKey(cacheInputs,cached.dependencyPaths))return cached;
-  const edges=[],dynamicOperations=[],unresolvedLocalOperations=[],aliases=[...directoryAliases,...rootAliases,...seedAliases],dependencyPaths=new Set([...seedPaths,...rootPaths]);
-  const packageDefinition=JSON.parse(packageBytes),packageImports=packageDefinition.imports??{};
-  function targetFor(source,specifier,kind) {
-    let packageRelative=false;
-    if(specifier.startsWith('#')){const mapped=packageImports[specifier];if(typeof mapped==='string'){specifier=mapped;packageRelative=true;}else return null;}
-    if(specifier===packageDefinition.name&&typeof packageDefinition.exports==='string'){specifier=packageDefinition.exports;packageRelative=true;}
+  const reusable=reusableDocumentationGraph(cached,cacheInputs);if(reusable)return reusable;
+  const edges=[],installedFoundationDependencies=[],installedFoundationDependencyPaths=new Set(),dynamicOperations=[],unresolvedLocalOperations=[],aliases=[...directoryAliases,...rootAliases,...seedAliases],dependencyPaths=new Set([...seedPaths,...rootPaths]);
+  // The calling module's nearest package is the sole self-reference authority.
+  // Missing intervening package files are cache inputs too: adding a boundary
+  // must invalidate an already admitted closure.
+  function packageScope(source) {
+    let directory=path.posix.dirname(source);
+    for(;;) {
+      const selected=path.posix.join(directory,'package.json');dependencyPaths.add(selected);
+      if(fs.existsSync(path.join(root,selected)))return {directory:directory==='.'?'':directory,definition:JSON.parse(fs.readFileSync(path.join(root,selected),'utf8'))};
+      if(directory==='.')return {directory:'',definition:{}};
+      directory=path.posix.dirname(directory);
+    }
+  }
+  const isPackageSelfReference=(source,specifier)=>{const {definition}=packageScope(source);return typeof definition.name==='string'&&definition.name.length>0&&(specifier===definition.name||specifier.startsWith(definition.name+'/'));};
+  function targetFor(source,specifier,kind,capability=null) {
+    if(isRootSelectedCompilerCapability(capability)) {
+      assert(source===capability.source&&kind==='root-selected-compiler-require'&&specifier==='typescript',`DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED: ${source}; root compiler specifier/call`);
+      return rootSelectedCompilerTarget(root,capability,dependency=>installedFoundationDependencyPaths.add(dependency));
+    }
+    const observerTarget=resolveObserverDocumentationImport(root,source,specifier,kind,dependency=>dependencyPaths.add(dependency));
+    if(observerTarget){admit(observerTarget,kind);if(!files.includes(observerTarget)){files.push(observerTarget);inputs.push([observerTarget,fs.readFileSync(path.join(root,observerTarget))]);}return observerTarget;}
+    let packageDirectory=null,exactExport=false;
+    if(specifier.startsWith('#')){const scope=packageScope(source),mapped=scope.definition.imports?.[specifier];if(typeof mapped==='string'){specifier=mapped;packageDirectory=scope.directory;}else return null;}
+    if(isPackageSelfReference(source,specifier)) {
+      const scope=packageScope(source),packageDefinition=scope.definition;
+      const subpath=specifier===packageDefinition.name?'.':'./'+specifier.slice(packageDefinition.name.length+1),exports=packageDefinition.exports;
+      const selected=typeof exports==='string'&&subpath==='.'?exports:exports&&typeof exports==='object'&&!Array.isArray(exports)&&Object.hasOwn(exports,subpath)?exports[subpath]:null;
+      assert(typeof selected==='string'&&selected.startsWith('./')&&!selected.split('/').some(part=>['..','node_modules'].includes(part)),`DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED: ${source}; own package self-reference has no finite exact export target: ${specifier}`);
+      specifier=selected;packageDirectory=scope.directory;exactExport=true;
+    }
     if(specifier.startsWith('file:')){try{specifier=decodeURIComponent(new URL(specifier).pathname);}catch{return null;}}
-    if(path.isAbsolute(specifier)){if(!specifier.startsWith(path.resolve(root)+path.sep))return null;specifier='./'+path.relative(root,specifier).replaceAll(path.sep,'/');packageRelative=true;}
+    if(path.isAbsolute(specifier)){if(!specifier.startsWith(path.resolve(root)+path.sep))return null;specifier='./'+path.relative(root,specifier).replaceAll(path.sep,'/');packageDirectory='';}
     if(!specifier.startsWith('.'))return null;
-    let target=path.posix.normalize(path.posix.join(packageRelative?'':path.posix.dirname(source),specifier));
+    let target=path.posix.normalize(path.posix.join(packageDirectory??path.posix.dirname(source),specifier));
     if(target.startsWith('../'))return null;
-    if(!fs.existsSync(path.join(root,target))&&target.endsWith('.js')&&fs.existsSync(path.join(root,target.slice(0,-3)+'.ts')))target=target.slice(0,-3)+'.ts';
-    if(!fs.existsSync(path.join(root,target)))for(const extension of ['.mjs','.js','.ts','/index.mjs','/index.js','/index.ts'])if(fs.existsSync(path.join(root,target+extension))){target+=extension;break;}
-    if(!fs.existsSync(path.join(root,target))||!fs.statSync(path.join(root,target)).isFile())return null;
+    const isFile=selected=>{dependencyPaths.add(selected);return fs.existsSync(path.join(root,selected))&&fs.statSync(path.join(root,selected)).isFile();};
+    if(!isFile(target)) {
+      if(kind==='require'&&!exactExport) {
+        // Native CommonJS LOAD_AS_FILE: exact, .js, .json, .node. Never
+        // substitute ESM/TypeScript siblings. Directory loading is outside
+        // this finite admission; fail with the receiving source instead.
+        const candidate=['.js','.json','.node'].map(extension=>target+extension).find(isFile);
+        if(candidate)target=candidate;
+        else {assert(!fs.existsSync(path.join(root,target))||!fs.statSync(path.join(root,target)).isDirectory(),`DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED: ${source}; unsupported CommonJS directory input: ${specifier}`);return null;}
+      } else return null;
+    }
     dependencyPaths.add(target);
     const canonical=path.relative(root,fs.realpathSync(path.join(root,target))).replaceAll(path.sep,'/');
     if(canonical!==target)aliases.push({source:target,target:canonical});
@@ -257,7 +346,7 @@ function documentationModuleGraph(root,packageBytes,boundary={}) {
     const tree=syntaxEntry?.key===syntaxKey?syntaxEntry.tree:ts.createSourceFile(source,bytes.toString(),ts.ScriptTarget.Latest,true,/\.[cm]?ts$/u.test(source)?ts.ScriptKind.TS:ts.ScriptKind.JS);
     assert(!tree.parseDiagnostics.length,`DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED: ${source}; executable input syntax is outside the finite scanner`);
     documentationModuleSyntaxCache.set(path.join(root,source),{key:syntaxKey,tree});
-    const declarations=new Map(),writes=[],importCapabilities=new Map();
+    const declarations=new Map(),writes=[],importCapabilities=new Map(),moduleShadows=new Set();
     for(const statement of tree.statements)if(ts.isImportDeclaration(statement)&&ts.isStringLiteralLike(statement.moduleSpecifier)&&['module','node:module'].includes(statement.moduleSpecifier.text)) {
       const clause=statement.importClause;if(clause?.name)importCapabilities.set(clause.name.text,'node-module');
       if(clause?.namedBindings&&ts.isNamespaceImport(clause.namedBindings))importCapabilities.set(clause.namedBindings.name.text,'node-module');
@@ -268,14 +357,18 @@ function documentationModuleGraph(root,packageBytes,boundary={}) {
         if(selected==='Module'||selected==='default')importCapabilities.set(element.name.text,'node-module');
       }
     }
-    const scopeOf=node=>{for(let parent=node.parent;parent;parent=parent.parent)if(ts.isBlock(parent)||ts.isFunctionLike(parent)||ts.isSourceFile(parent))return parent;return tree;};
+    const scopeOf=node=>{const functionScoped=ts.isVariableDeclaration(node)&&ts.isVariableDeclarationList(node.parent)&&!(node.parent.flags&ts.NodeFlags.BlockScoped);for(let parent=node.parent;parent;parent=parent.parent)if(ts.isFunctionLike(parent)||ts.isSourceFile(parent)||!functionScoped&&(ts.isBlock(parent)||ts.isForStatement(parent)||ts.isForOfStatement(parent)||ts.isForInStatement(parent)||ts.isCatchClause(parent)))return parent;return tree;};
+    const intrinsicModuleVar=node=>ts.isVariableDeclaration(node)&&ts.isIdentifier(node.name)&&node.name.text==='module'&&ts.isVariableDeclarationList(node.parent)&&!(node.parent.flags&ts.NodeFlags.BlockScoped)&&scopeOf(node)===tree;
+    const bindsModule=name=>ts.isIdentifier(name)?name.text==='module':ts.isObjectBindingPattern(name)||ts.isArrayBindingPattern(name)?name.elements.some(element=>ts.isBindingElement(element)&&bindsModule(element.name)):false;
     function declarationsIn(node){
+      if((ts.isVariableDeclaration(node)&&!node.initializer||ts.isParameter(node)||ts.isFunctionDeclaration(node)||ts.isClassDeclaration(node))&&node.name&&bindsModule(node.name)&&!intrinsicModuleVar(node))moduleShadows.add(scopeOf(node));
       if(ts.isVariableDeclaration(node)&&ts.isIdentifier(node.name)&&node.initializer){const choices=declarations.get(node.name.text)??[];choices.push({value:node.initializer,scope:scopeOf(node)});declarations.set(node.name.text,choices);}
       if(ts.isVariableDeclaration(node)&&ts.isObjectBindingPattern(node.name)&&node.initializer)for(const element of node.name.elements)if(ts.isIdentifier(element.name)){const property=element.dotDotDotToken?null:element.propertyName?ts.isIdentifier(element.propertyName)||ts.isStringLiteralLike(element.propertyName)?element.propertyName.text:ts.isComputedPropertyName(element.propertyName)?ts.isStringLiteralLike(element.propertyName.expression)?element.propertyName.expression.text:'createRequire':null:element.name.text;const choices=declarations.get(element.name.text)??[];choices.push({value:node.initializer,property,scope:scopeOf(node)});declarations.set(element.name.text,choices);}
       if(ts.isBinaryExpression(node)&&node.operatorToken.kind>=ts.SyntaxKind.FirstAssignment&&node.operatorToken.kind<=ts.SyntaxKind.LastAssignment&&ts.isIdentifier(node.left))writes.push(node);
       ts.forEachChild(node,declarationsIn);
     }declarationsIn(tree);
     function bindingFor(node){for(let parent=node.parent;parent;parent=parent.parent){const choices=(declarations.get(node.text)??[]).filter(choice=>choice.scope===parent);if(choices.length)return choices.filter(choice=>choice.value.end<node.pos).at(-1)??choices[0];}return null;}
+    const moduleIsShadowed=node=>{for(let owner=node.parent;owner;owner=owner.parent)if(moduleShadows.has(owner))return true;return false;};
     const declarationFor=node=>bindingFor(node)?.value??null;
     const assignedValues=node=>writes.filter(write=>write.left.text===node.text&&declarationFor(write.left)===declarationFor(node)).map(write=>write.right);
     function literal(node,seen=new Set()) {
@@ -300,26 +393,47 @@ function documentationModuleGraph(root,packageBytes,boundary={}) {
       if(ts.isAwaitExpression(node)&&loaderCapability(node.expression,seen)==='node-module-promise')return 'node-module';
       if(ts.isCallExpression(node)&&node.expression.kind===ts.SyntaxKind.ImportKeyword&&['module','node:module'].includes(literal(node.arguments[0])))return 'node-module-promise';
       if(ts.isIdentifier(node)) {
-        const binding=bindingFor(node),initial=binding?loaderCapability(binding.value,seen):importCapabilities.get(node.text)??(node.text==='require'?'require':null);
-        const projected=binding?.property?initial==='node-module'&&binding.property==='createRequire'?'create-require':initial==='node-module'&&['default','Module'].includes(binding.property)?'node-module':null:initial;
+        const binding=bindingFor(node),initial=binding?intrinsicModuleVar(binding.value.parent)&&ts.isIdentifier(binding.value)&&binding.value.text==='module'?'commonjs-module':loaderCapability(binding.value,seen):importCapabilities.get(node.text)??(node.text==='require'?'require':node.text==='module'&&!moduleIsShadowed(node)?'commonjs-module':null);
+        if(isRootSelectedCompilerCapability(initial)) {
+          assert(!binding?.property&&node.text==='require'&&!assignedValues(node).length&&(binding.value.parent.name===node||ts.isCallExpression(node.parent)&&node.parent.expression===node),`DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED: ${source}; root compiler alias/projection/write`);
+          return initial;
+        }
+        const projected=binding?.property?initial==='node-module'&&binding.property==='createRequire'?'create-require':initial==='commonjs-module'&&binding.property==='require'?'module-require':initial==='node-module'&&['default','Module'].includes(binding.property)?'node-module':null:initial;
         return projected??assignedValues(node).map(value=>loaderCapability(value,seen)).find(Boolean)??null;
       }
+      if(propertyOf(node)==='require'&&loaderCapability(node.expression,seen)==='commonjs-module')return 'module-require';
       if(propertyOf(node)==='createRequire'&&loaderCapability(node.expression,seen)==='node-module')return 'create-require';
       if(['default','Module'].includes(propertyOf(node))&&loaderCapability(node.expression,seen)==='node-module')return 'node-module';
-      if(['call','apply'].includes(propertyOf(node))&&loaderCapability(node.expression,seen)==='require')return 'require-forwarder';
-      if(['call','apply'].includes(propertyOf(node))&&loaderCapability(node.expression,seen)==='create-require')return 'create-require-forwarder';
+      if(['call','apply','bind'].includes(propertyOf(node))&&isRootSelectedCompilerCapability(loaderCapability(node.expression,seen)))assert.fail(`DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED: ${source}; root compiler forwarding`);
+      if(['call','apply','bind'].includes(propertyOf(node))&&['require','module-require'].includes(loaderCapability(node.expression,seen)))return 'require-forwarder';
+      if(['call','apply','bind'].includes(propertyOf(node))&&loaderCapability(node.expression,seen)==='create-require')return 'create-require-forwarder';
       if(ts.isCallExpression(node)) {
         const forwarded=['call','apply','bind'].includes(propertyOf(node.expression));
         const capability=loaderCapability(forwarded?node.expression.expression:node.expression,seen);
-        if(propertyOf(node.expression)==='bind')return capability;
-        if(capability==='create-require'||capability==='create-require-forwarder')return 'require';
-        if(capability==='require'&&['module','node:module'].includes(literal(requireArgument(node))))return 'node-module';
+        if(capability==='create-require'||capability==='create-require-forwarder') {
+          // Only the exact native current-module URL establishes the same base
+          // that targetFor uses. Do not discard a selected foreign filename,
+          // alias, bound argument, or computed URL and resolve its loads here.
+          const forwarding=propertyOf(node.expression);
+          const base=forwarding==='call'?node.arguments[1]:forwarding==='apply'&&node.arguments[1]&&ts.isArrayLiteralExpression(node.arguments[1])&&!node.arguments[1].elements.some(ts.isSpreadElement)?node.arguments[1].elements[0]:node.arguments[0];
+          if(forwarding!=='call'&&forwarding!=='apply'&&forwarding!=='bind'&&capability==='create-require'&&!(base&&ts.isPropertyAccessExpression(base)&&base.name.text==='url'&&ts.isMetaProperty(base.expression)))return reviewedRootSelectedCompilerCapability(source,bytes,tree,node);
+          assert(forwarding!=='bind'&&capability!=='create-require-forwarder'&&base&&ts.isPropertyAccessExpression(base)&&base.name.text==='url'&&ts.isMetaProperty(base.expression)&&base.expression.keywordToken===ts.SyntaxKind.ImportKeyword&&base.expression.name.text==='meta',`DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED: ${source}; unsupported createRequire factory base: ${node.getText(tree)}; expected exact import.meta.url`);
+          return 'require';
+        }
+        if(propertyOf(node.expression)==='bind')return capability==='module-require'?'require':capability;
+        if(['require','module-require'].includes(capability)&&['module','node:module'].includes(literal(requireArgument(node))))return 'node-module';
       }
       return null;
     }
     function requireArgument(node) {
+      const direct=loaderCapability(node.expression);
+      if(isRootSelectedCompilerCapability(direct)) {
+        assert(ts.isIdentifier(node.expression)&&node.expression.text==='require'&&node.arguments.length===1&&ts.isStringLiteral(node.arguments[0])&&node.arguments[0].text==='typescript',`DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED: ${source}; root compiler consumer`);
+        return node.arguments[0];
+      }
       const forwarding=propertyOf(node.expression);
-      if(['call','apply','bind'].includes(forwarding)&&loaderCapability(node.expression.expression)==='require') {
+      if(['call','apply','bind'].includes(forwarding)&&['require','module-require'].includes(loaderCapability(node.expression.expression))) {
+        if(loaderCapability(node.expression.expression)==='module-require')assert(loaderCapability(node.arguments[0])==='commonjs-module',`DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED: ${source}; unsupported intrinsic module.require receiver: ${node.getText(tree)}`);
         if(forwarding==='apply')return node.arguments[1]&&ts.isArrayLiteralExpression(node.arguments[1])&&!node.arguments[1].elements.some(ts.isSpreadElement)?node.arguments[1].elements[0]??null:null;
         // A bound receiver with no module argument is not yet a load. Its later
         // invocation is a require capability; bound module arguments themselves
@@ -327,19 +441,27 @@ function documentationModuleGraph(root,packageBytes,boundary={}) {
         return node.arguments[1]??null;
       }
       if(loaderCapability(node.expression)==='require-forwarder')return null;
+      if(loaderCapability(node.expression)==='module-require')return (ts.isPropertyAccessExpression(node.expression)||ts.isElementAccessExpression(node.expression))&&loaderCapability(node.expression.expression)==='commonjs-module'?node.arguments[0]??null:null;
       return loaderCapability(node.expression)==='require'?node.arguments[0]??null:undefined;
     }
+    const syntaxHashForCompilerConsumer=(node,capability)=>hash(node.getText(tree))===capability.consumerSha256&&ts.isVariableDeclaration(node.parent)&&node.parent.name?.getText(tree)==='ts';
     function capabilityCustodyQualified(node,capability) {
       const parent=node.parent;if(!parent)return false;
+      if(isRootSelectedCompilerCapability(capability)) {
+        if(ts.isVariableDeclaration(parent)&&parent.name===node)return ts.isIdentifier(node)&&node.text==='require';
+        if(ts.isVariableDeclaration(parent)&&parent.initializer===node)return ts.isIdentifier(parent.name)&&parent.name.text==='require'&&ts.isCallExpression(node);
+        return ts.isIdentifier(node)&&node.text==='require'&&ts.isCallExpression(parent)&&parent.expression===node&&syntaxHashForCompilerConsumer(parent,capability);
+      }
       // Declaration names and import binding syntax do not read a capability.
-      if((ts.isVariableDeclaration(parent)||ts.isBindingElement(parent))&&parent.name===node)return true;
+      if((ts.isVariableDeclaration(parent)||ts.isBindingElement(parent))&&parent.name===node||ts.isBindingElement(parent)&&parent.propertyName===node)return true;
       if(ts.isImportClause(parent)||ts.isImportSpecifier(parent)||ts.isNamespaceImport(parent))return true;
+      if((ts.isPropertySignature(parent)||ts.isMethodSignature(parent)||ts.isPropertyDeclaration(parent)||ts.isInterfaceDeclaration(parent)||ts.isTypeAliasDeclaration(parent))&&parent.name===node)return true;
       if((ts.isPropertyAccessExpression(parent)||ts.isPropertyAssignment(parent))&&parent.name===node)return true;
       if(ts.isVariableDeclaration(parent)&&parent.initializer===node) {
         // Admission must match declarationsIn's finite projection grammar.
         // Nested/array/defaulted bindings are custody escapes, never aliases
         // whose resulting identifiers can silently lose their capability.
-        if(!ts.isIdentifier(parent.name)&&(capability!=='node-module'||!ts.isObjectBindingPattern(parent.name)||parent.name.elements.some(element=>!ts.isIdentifier(element.name)||element.initializer||element.dotDotDotToken||!reviewedNodeModuleNamedImports.has(element.propertyName?ts.isIdentifier(element.propertyName)||ts.isStringLiteralLike(element.propertyName)?element.propertyName.text:ts.isComputedPropertyName(element.propertyName)?literal(element.propertyName.expression):null:element.name.text))))return false;
+        if(!ts.isIdentifier(parent.name)&&(!['node-module','commonjs-module'].includes(capability)||!ts.isObjectBindingPattern(parent.name)||parent.name.elements.some(element=>!ts.isIdentifier(element.name)||element.initializer||element.dotDotDotToken||!(capability==='commonjs-module'?new Set(['require']):reviewedNodeModuleNamedImports).has(element.propertyName?ts.isIdentifier(element.propertyName)||ts.isStringLiteralLike(element.propertyName)?element.propertyName.text:ts.isComputedPropertyName(element.propertyName)?literal(element.propertyName.expression):null:element.name.text))))return false;
         for(let owner=parent;owner;owner=owner.parent)if(ts.isVariableStatement(owner))return !owner.modifiers?.some(modifier=>modifier.kind===ts.SyntaxKind.ExportKeyword);
         return true;
       }
@@ -347,8 +469,10 @@ function documentationModuleGraph(root,packageBytes,boundary={}) {
       if(ts.isBinaryExpression(parent)&&parent.left===node&&ts.isIdentifier(node)&&parent.operatorToken.kind===ts.SyntaxKind.EqualsToken)return true;
       if(ts.isParenthesizedExpression(parent)||ts.isAsExpression(parent)||ts.isNonNullExpression(parent))return true;
       if(capability==='node-module-promise')return ts.isAwaitExpression(parent);
-      if((ts.isPropertyAccessExpression(parent)||ts.isElementAccessExpression(parent))&&parent.expression===node)return loaderCapability(parent)!==null;
-      if(ts.isCallExpression(parent)&&parent.expression===node)return ['require','require-forwarder','create-require','create-require-forwarder'].includes(capability);
+      if(capability==='commonjs-module'&&ts.isCallExpression(parent)&&parent.arguments[0]===node
+        && ['call','apply','bind'].includes(propertyOf(parent.expression))&&['require','module-require'].includes(loaderCapability(parent.expression.expression)))return true;
+      if((ts.isPropertyAccessExpression(parent)||ts.isElementAccessExpression(parent))&&parent.expression===node)return capability==='commonjs-module'&&propertyOf(parent)==='exports'||loaderCapability(parent)!==null;
+      if(ts.isCallExpression(parent)&&parent.expression===node)return ['require','module-require','require-forwarder','create-require','create-require-forwarder'].includes(capability);
       return false;
     }
     function visit(node) {
@@ -361,16 +485,17 @@ function documentationModuleGraph(root,packageBytes,boundary={}) {
       if(ts.isCallExpression(node)) {
         const requireInput=requireArgument(node);
         if(node.expression.kind===ts.SyntaxKind.ImportKeyword){argument=node.arguments[0];kind='dynamic-import';}
-        else if(requireInput!==undefined&&!(propertyOf(node.expression)==='bind'&&requireInput===null)){argument=requireInput;kind='require';}
-        else if(node.arguments.some(argument=>['node-module','create-require','create-require-forwarder','require','require-forwarder'].includes(loaderCapability(argument)))){argument=null;kind='require-capability-escape';}
+        else if(requireInput!==undefined&&!(propertyOf(node.expression)==='bind'&&requireInput===null)){argument=requireInput;kind=isRootSelectedCompilerCapability(loaderCapability(node.expression))?'root-selected-compiler-require':'require';}
+        else if(!(propertyOf(node.expression)==='bind'&&requireInput===null)&&node.arguments.some(argument=>isRootSelectedCompilerCapability(loaderCapability(argument))||['commonjs-module','node-module','create-require','create-require-forwarder','require','module-require','require-forwarder'].includes(loaderCapability(argument)))){argument=null;kind='require-capability-escape';}
       }
       if(kind) {
-        const specifier=literal(argument),target=specifier===null?null:targetFor(source,specifier,kind);
-        if(target)edges.push({source,target,kind,operation:node.getText(tree)});
-        else if(specifier===null||specifier.startsWith('#')||specifier.startsWith('.')||specifier.startsWith('file:')||path.isAbsolute(specifier)) {
+        const specifier=literal(argument),target=specifier===null?null:targetFor(source,specifier,kind,ts.isCallExpression(node)?loaderCapability(node.expression):null);
+        if(target?.kind==='installedFoundationDependency')installedFoundationDependencies.push({...target,source,operation:node.getText(tree)});
+        else if(target)edges.push({source,target,kind,operation:node.getText(tree)});
+        else if(specifier===null||specifier.startsWith('#')||specifier.startsWith('.')||specifier.startsWith('file:')||path.isAbsolute(specifier)||isPackageSelfReference(source,specifier)) {
           let owner=node;for(let parent=node.parent;parent;parent=parent.parent)if(ts.isFunctionDeclaration(parent))owner=parent;
           dynamicOperations.push({source,expression:node.getText(tree),operation:owner.getText(tree),hints:hints(argument)});
-        } else if(specifier.startsWith('.')||specifier.startsWith('file:')||path.isAbsolute(specifier)) {
+        } else if(specifier.startsWith('.')||specifier.startsWith('file:')||path.isAbsolute(specifier)||isPackageSelfReference(source,specifier)) {
           // This source may enter the finite closure through an edge discovered
           // later. Retain its unresolved local edge rather than losing it when
           // it was initially scanned as an ordinary root.
@@ -390,15 +515,24 @@ function documentationModuleGraph(root,packageBytes,boundary={}) {
     }}
   }
   dynamicOperations.push(...unresolvedLocalOperations.filter(operation=>finiteClosure.has(operation.source)));
-  const graph={inputKey:graphKey(inputs,dependencyPaths),edges,dynamicOperations,aliases,closureSources:[...files],executableSources:files.filter(source=>sourceClasses.get(source)!=='passive-json'),dependencyPaths:[...dependencyPaths]};documentationGraphCache.set(root,graph);return graph;
+  const graph={inputKey:graphKey(inputs,dependencyPaths,installedFoundationDependencies),edges,installedFoundationDependencies,installedFoundationDependencyPaths:[...installedFoundationDependencyPaths].sort(),dynamicOperations,aliases,publicEntries,closureSources:[...files],executableSources:files.filter(source=>sourceClasses.get(source)!=='passive-json'),dependencyPaths:[...dependencyPaths]};documentationGraphCache.set(root,graph);return graph;
 }
 const documentationEdgeOrder=(a,b)=>a.source.localeCompare(b.source)||a.target.localeCompare(b.target)||a.kind.localeCompare(b.kind)||a.operation.localeCompare(b.operation);
+// A mutable registry records reviewed facts; it cannot authorize a new output
+// capability by refreshing its own digest and operation recipe. These selected
+// static Source roles require an independently reviewed code change to rebind.
+const staticReceiverSourceAuthorities={
+  'scripts/docs-kubernetes-pv-selected-receiver-contracts.mjs':'02d9af8019e1300767aa0ca507607004aa6ee6e107fb455da3579af46e551f51',
+};
 function assertDocumentationToolQualifications(root,boundary,packageBytes) {
-  const records=boundary.qualifications??[],required=boundary.qualificationRequiredSources??[];
+  const records=boundary.qualifications??[],required=[...new Set([...(boundary.qualificationRequiredSources??[]),...Object.keys(staticReceiverSourceAuthorities).filter(source=>(boundary.sources??[]).includes(source)||records.some(record=>record.source===source))])];
   for(const source of required)assert(records.some(record=>record.source===source),`DOCUMENTATION_TOOL_QUALIFICATION_MISSING: ${source}`);
-  if(!records.length)return;
+  // Public executable transfers exist independently of metadata exemptions.
+  // Build their complete canonical closure even in an ordinary checkout, and
+  // reject unresolved loader custody instead of silently losing its outputs.
+  if(!records.length){const graph=documentationModuleGraph(root,packageBytes,boundary);documentationModuleInputAuthority(root,boundary,graph);return;}
   for(const record of records)assert(fs.existsSync(path.join(root,record.source))&&hash(fs.readFileSync(path.join(root,record.source)))===record.sha256,`DOCUMENTATION_TOOL_QUALIFICATION_SOURCE_DRIFT: ${record.source}; renewed source review is required`);
-  const graph=documentationModuleGraph(root,packageBytes,boundary),entries=documentationEntryPoints(JSON.parse(packageBytes).scripts??{});
+  const graph=documentationModuleGraph(root,packageBytes,boundary),entries=documentationEntryPoints(JSON.parse(packageBytes).scripts??{},true,root);
   const inputAuthorityKey=documentationModuleInputAuthority(root,boundary,graph);
   const qualificationKey=hash(JSON.stringify([graph.inputKey,inputAuthorityKey,boundary]));if(documentationQualificationCache.get(root)===qualificationKey)return;
   const docsReachable=new Set(entries.map(entry=>entry.source));let changed=true;
@@ -407,13 +541,14 @@ function assertDocumentationToolQualifications(root,boundary,packageBytes) {
     const source=record.source,file=path.join(root,source);
     assert(record.kind==='static-receiver-descriptions/v1'&&boundary.sources.includes(source)&&fs.existsSync(file),`DOCUMENTATION_TOOL_QUALIFICATION_SOURCE_DRIFT: ${source}`);
     const bytes=fs.readFileSync(file);
+    assert(staticReceiverSourceAuthorities[source]===hash(bytes),`DOCUMENTATION_TOOL_STATIC_SOURCE_ROLE_UNQUALIFIED: ${source}; registry refresh cannot authorize changed static Source behavior`);
     assert.equal(hash(bytes),record.sha256,`DOCUMENTATION_TOOL_QUALIFICATION_SOURCE_DRIFT: ${source}; renewed source review is required`);
     assert.deepEqual(producerAdapterOperationRecipe(source,bytes.toString()),record.operationRecipe,`DOCUMENTATION_TOOL_QUALIFICATION_OPERATION_DRIFT: ${source}; a digest refresh does not qualify a changed operation`);
     const ancestors=new Set([source]);changed=true;
     while(changed){changed=false;for(const edge of graph.edges)if(ancestors.has(edge.target)&&!ancestors.has(edge.source)){ancestors.add(edge.source);changed=true;}}
     for(const alias of graph.aliases)assert(![...ancestors].some(ancestor=>ancestor===alias.target||alias.directory&&ancestor.startsWith(alias.target+'/'))||ancestors.has(alias.source),`DOCUMENTATION_TOOL_PUBLIC_CONSUMER_UNQUALIFIED: ${source}; symlink ${alias.source}`);
     for(const consumer of ancestors)assert(docsReachable.has(consumer),`DOCUMENTATION_TOOL_PUBLIC_CONSUMER_UNQUALIFIED: ${source}; ${consumer}`);
-    for(const entry of documentationEntryPoints(JSON.parse(packageBytes).scripts??{},false))if(!entry.name.startsWith('docs:')&&!entry.name.startsWith('verify:docs:'))assert(!ancestors.has(entry.source),`DOCUMENTATION_TOOL_PUBLIC_CONSUMER_UNQUALIFIED: ${source}; package invocation ${entry.name}`);
+    for(const entry of documentationEntryPoints(JSON.parse(packageBytes).scripts??{},false,root))if(!entry.name.startsWith('docs:')&&!entry.name.startsWith('verify:docs:'))assert(!ancestors.has(entry.source),`DOCUMENTATION_TOOL_PUBLIC_CONSUMER_UNQUALIFIED: ${source}; package invocation ${entry.name}`);
     const packageDefinition=JSON.parse(packageBytes);
     function publicTargets(value){return typeof value==='string'?[value]:value&&typeof value==='object'?Object.values(value).flatMap(publicTargets):[];}
     for(const target of [...publicTargets(packageDefinition.bin),...publicTargets(packageDefinition.exports),...publicTargets(packageDefinition.main)]) {
@@ -438,15 +573,28 @@ function assertDocumentationToolQualifications(root,boundary,packageBytes) {
 }
 function nodeOutputExecutableSources(root) {
   const packageFile=path.join(root,'package.json'),packageBytes=fs.existsSync(packageFile)?fs.readFileSync(packageFile):Buffer.from('{}');
-  return documentationGraphCache.get(root)?.executableSources??nodeProductExecutableSources(root,packageBytes);
+  const registry=path.join(root,'scripts/docs-api-producer-adapter-authorities.json');
+  const boundary=fs.existsSync(registry)?JSON.parse(fs.readFileSync(registry,'utf8')).documentationToolBoundary??{}:{};
+  return documentationModuleGraph(root,packageBytes,boundary).executableSources;
+}
+function publicNodeSourceContexts(root,source,context) {
+  const graph=documentationGraphCache.get(root),contexts=[context];
+  for(const entry of graph?.publicEntries??[])if(entry.path!==entry.canonicalSource) {
+    const reachable=new Set([entry.canonicalSource]);let changed=true;
+    while(changed){changed=false;for(const edge of graph.edges)if(reachable.has(edge.source)&&!reachable.has(edge.target)){reachable.add(edge.target);changed=true;}}
+    if(reachable.has(source))contexts.push({...context,path:entry.path,canonicalSource:source,
+      entrySource:entry.canonicalSource,entrySourceDigest:hash(fs.readFileSync(path.join(root,entry.canonicalSource)))});
+  }
+  return contexts;
 }
 function documentationToolSources(root) {
-  const file=path.join(root,'package.json');if(!fs.existsSync(file))return new Set();
-  const packageBytes=fs.readFileSync(file);const scripts=JSON.parse(packageBytes).scripts??{};const result=new Set();const queue=[];const registryFile=path.join(root,'scripts/docs-api-producer-adapter-authorities.json');const boundary=fs.existsSync(registryFile)?JSON.parse(fs.readFileSync(registryFile,'utf8')).documentationToolBoundary??{}:{};const qualifiedBoundary=new Set(boundary.sources??[]);
+  const file=path.join(root,'package.json');
+  const packageBytes=fs.existsSync(file)?fs.readFileSync(file):Buffer.from('{}');const scripts=JSON.parse(packageBytes).scripts??{};const result=new Set();const queue=[];const registryFile=path.join(root,'scripts/docs-api-producer-adapter-authorities.json');const boundary=fs.existsSync(registryFile)?JSON.parse(fs.readFileSync(registryFile,'utf8')).documentationToolBoundary??{}:{};const qualifiedBoundary=new Set(boundary.sources??[]);
   assertDocumentationToolQualifications(root,boundary,packageBytes);
-  for(const entry of documentationEntryPoints(scripts))queue.push(entry.source);
+  for(const entry of documentationEntryPoints(scripts,true,root))queue.push(entry.source);
   while(queue.length){const source=queue.pop();if(result.has(source)||!qualifiedBoundary.has(source)||!fs.existsSync(path.join(root,source)))continue;result.add(source);const bytes=fs.readFileSync(path.join(root,source),'utf8');for(const helper of bytes.matchAll(/new URL\('\.\/(docs-[A-Za-z0-9_-]+\.(?:py|go))',import\.meta\.url\)/gu)){const target=path.posix.join(path.dirname(source),helper[1]);if(qualifiedBoundary.has(target))result.add(target);}for(const match of bytes.matchAll(/(?:from\s*|import\s*\()(['"])(\.\.?\/[^'"]+)\1/gu)){const target=path.posix.normalize(path.posix.join(path.dirname(source),match[2]));if(/^scripts\/docs-[^/]+\.mjs$/u.test(target))queue.push(target);}}
   for(const record of boundary.qualifications??[])result.add(record.source);
+  for(const source of [...result].reverse())assertDocumentationExecutableRole(root,source,new Set((boundary.qualifications??[]).map(record=>record.source)));
   return result;
 }
 function assertNativeSerializationRoles(root,source,bytes,language) {
@@ -457,12 +605,13 @@ function assertNativeSerializationRoles(root,source,bytes,language) {
     const parsed=spawnSync('python3',[new URL('./docs-api-python-output-adapter.py',import.meta.url).pathname,path.join(root,source),'--classify'],{encoding:'utf8',env:{PATH:process.env.PATH}});
     assert.equal(parsed.status,0,`API_PRODUCT_PYTHON_SERIALIZATION_PARSE_FAILED: ${source}: ${parsed.stderr}`);
     const outputs=JSON.parse(parsed.stdout);
+    assert(outputs.every(output=>output.serializationProtocol==='docs-python-ast-v1'),`API_PRODUCT_PYTHON_SERIALIZATION_PROTOCOL_UNQUALIFIED: ${source}`);
     let bootstrapAudit;
     if(source==='ops/pod/bootstrap.py'){
       const audited=spawnSync('python3',[new URL('./docs-api-python-output-adapter.py',import.meta.url).pathname,path.join(root,source),'--audit'],{encoding:'utf8',env:{PATH:process.env.PATH}});
       assert.equal(audited.status,0,`API_PRODUCT_PYTHON_PUBLIC_OUTPUT_AUDIT_FAILED: ${source}: ${audited.stderr}`);
       bootstrapAudit=JSON.parse(audited.stdout);
-      assert(bootstrapAudit.kind==='bootstrap-public-output-audit'&&bootstrapAudit.qualified===true&&bootstrapAudit.entryPoints?.discover===true&&bootstrapAudit.entryPoints?.secrets===true&&Array.isArray(bootstrapAudit.dependencies)&&bootstrapAudit.dependencies.length&&bootstrapAudit.dependencies.every(fact=>fact.qualified===true&&fact.symbol&&fact.operation&&/^[a-f0-9]{64}$/u.test(fact.sha256))&&JSON.stringify(bootstrapAudit.outputs)===JSON.stringify(outputs),`API_PRODUCT_PYTHON_PUBLIC_OUTPUT_FLOW_UNQUALIFIED: ${source}`);
+      assert(bootstrapAudit.serializationProtocol==='docs-python-ast-v1'&&bootstrapAudit.kind==='bootstrap-public-output-audit'&&bootstrapAudit.qualified===true&&bootstrapAudit.entryPoints?.discover===true&&bootstrapAudit.entryPoints?.secrets===true&&Array.isArray(bootstrapAudit.dependencies)&&bootstrapAudit.dependencies.length&&bootstrapAudit.dependencies.every(fact=>fact.qualified===true&&fact.symbol&&fact.operation&&/^[a-f0-9]{64}$/u.test(fact.sha256))&&JSON.stringify(bootstrapAudit.outputs)===JSON.stringify(outputs),`API_PRODUCT_PYTHON_PUBLIC_OUTPUT_FLOW_UNQUALIFIED: ${source}`);
     }
     const auditedBootstrap=output=>{
       if(!bootstrapAudit)return false;
@@ -473,16 +622,31 @@ function assertNativeSerializationRoles(root,source,bytes,language) {
     return outputs;
   }
 }
-function nativeOutputConsumerMatches(output,contracts,root) {
+export function assertNativeProductResponseSchemaAuthority(root) {
+ // The complete selected owned CRD bounds inherited pruning, receiver and
+ // item-root controls. productReceipt returns the unprojected API-read map.
+ // The original structural object item lists its root properties without
+ // apiVersion/kind, preserve-unknown, embedded-resource or additionalProperties
+ // controls at that root. The complete bytes also bind ancestors, status
+ // subresource, required/nullable decisions and the actual Helm receiver.
+ // Exact equality is a conservative maintenance limit,
+ // never live API validation or blanket upstream authority.
+   const source='charts/kubeclaw/templates/buster-namespace-lease-crd.yaml';
+   const file=path.join(root,source);
+   assert(fs.existsSync(file)&&hash(fs.readFileSync(file))==='5dff68d75c46476c582e8bb5d677b758574ecd1a2a0676363ef11eb188cb83f8',`API_PRODUCT_GO_HTTP_RESPONSE_SCHEMA_AUTHORITY_UNQUALIFIED: ${source}: $.status.demoProduct.decisions.items`);
+
+}
+export function nativeOutputConsumerMatches(output,contracts,root) {
  // Digests only invalidate reviewed facts. A role also requires the actual
  // operation to satisfy its consumer grammar; a generic diagnostic label does
  // not authorize a new root, writer, HTTP client or output argument.
- if(output.transportBodyQualified===false)return false;
+ if(output.transportBodyQualified===false||output.authorityQualified===false)return false;
  function nativeHttpResponseRecipe(){
   // These are selected, inspected router/response constructor declarations,
   // not a source-module exemption. The routers return the ready envelope,
   // product-subjects envelope, or the persisted decision receipt. A refreshed
   // registry digest cannot authorize a replacement constructor or new route.
+  if(output.function==='productHandler')assertNativeProductResponseSchemaAuthority(root);
   const routers={productHandler:'e6207009937c85a6c20f24b4c4325afec71d8674fcfd37a442f4ff89cb6f7905',readinessHandler:'fc9bb294ed751512a810cde45e4e329da27e0f4a5dc637a69dffe59d6b71d73e'};
   const constructors={commitProduct:'9db306489982efa4fcb213ee4caa1bfef05175192f077394afa91ba94bc7785d',productReceipt:'093407fbd5fa71a9de7898572aea6a12558779a0782c8c8fcd9cea0502716a3e',productRecords:'53b4c7b8218adbf86e8812eccc803314c5376925c7ab51e6afcf26a2bb3ff1bd',productSubject:'d6ae13944edccd2862149794296a5f0424f9fc69d6863c4e34da06dfcf687da1'};
   if(output.function==='readinessHandler')constructors.readyResponse='c337ca7727f6328352cf424c29e619f67b6d009806a7789de10a7048b4bd04c1';
@@ -529,7 +693,7 @@ function nativeOutputConsumerMatches(output,contracts,root) {
   const external=/\b(?:os\.Args|os\.Getenv|os\.Stdin|sys\.argv|input\(|eval\(|exec\()/u.test(expression);
   if(external)return false;
   switch(consumer.kind){
-   case 'go-error-stderr':return /^fmt\.Fprintln\(os\.Stderr, err(?:\.Error\(\))?\)$/u.test(expression)&&/if (?:[^\n]+;\s*)?err != nil\s*\{/u.test(operation)&&consumer.errorOrigins?.some(origin=>operation.includes(origin))&&/os\.Exit\(1\)/u.test(operation);
+   case 'go-error-stderr':return output.diagnosticQualified===true&&output.authorityQualified===true&&/^fmt\.Fprintln\(os\.Stderr, err(?:\.Error\(\))?\)$/u.test(expression)&&/if (?:[^\n]+;\s*)?err != nil\s*\{/u.test(operation)&&consumer.errorOrigins?.some(origin=>operation.includes(origin))&&/os\.Exit\(1\)/u.test(operation);
    case 'go-digest':return /^json\.Marshal\(/u.test(expression)&&/sha256\.Sum256\(/u.test(operation)&&resultName&&new RegExp(`(?:Sum256|Transform)\\(${resultName}\\)`, 'u').test(operation);
    case 'go-equality':return /^json\.Marshal\(/u.test(expression)&&resultName&&(new RegExp(`bytes\\.Equal\\([^)]*\\b${resultName}\\b`, 'u').test(operation)||new RegExp(`string\\(${resultName}\\)\\s*(?:==|!=)|(?:==|!=)\\s*string\\(${resultName}\\)`, 'u').test(operation));
    case 'go-byte-limit':return /^json\.Marshal\(/u.test(expression)&&resultName&&new RegExp(`len\\(${resultName}\\)`, 'u').test(operation);
@@ -550,7 +714,7 @@ function nativeOutputConsumerMatches(output,contracts,root) {
    case 'go-kubernetes-payload':return output.transportBodyQualified===true&&expression==='json.Marshal(body)'&&nativeTransportRecipe(consumer.kind,operation);
    case 'go-kubernetes-request':return output.transportBodyQualified===true&&expression==='c.httpClient.Do(req)'&&nativeTransportRecipe(consumer.kind,operation);
    case 'go-native-http-response':return /^json\.NewEncoder\(w\)(?:\.Encode\(result\))?$/u.test(expression)&&nativeHttpResponseRecipe()&&/w.Header\(\).Set\("Content-Type", "application\/json"\)/u.test(operation)&&/authenticate(?:Transport|Ready)\(/u.test(operation)&&/\/v1\/demo-(?:ready|product)/u.test(operation);
-   case 'python-native-state':return (output.operation.match(/Name\(id='data', ctx=Store\(\)\)/gu)??[]).length===1&&!/attr='(?:update|setdefault|clear|pop|popitem)'/u.test(output.operation)&&!output.capabilityEscapes&&output.callerArguments?.length&&output.callerArguments.every(call=>call.positionalRoles.every(role=>role==='non-api')&&call.expandedKeys.every(keys=>keys!==null)&&!([...call.keywordNames.filter(Boolean),...call.expandedKeys.flat()].includes('apiVersion')&&[...call.keywordNames.filter(Boolean),...call.expandedKeys.flat()].includes('kind')))&&/^(?:temp.write_text\(json.dumps\(data\) \+ '\\n'\)|json.dumps\(data\))$/u.test(expression)&&operation.includes("Constant(value='phase')")&&operation.includes("Constant(value='observedAt')")&&operation.includes("Constant(value='pairingVerified')")&&operation.includes("Call(func=Attribute(value=Name(id='time', ctx=Load()), attr='time'");
+   case 'python-native-state':return output.nativeStateQualified===true&&(output.operation.match(/Name\(id='data', ctx=Store\(\)\)/gu)??[]).length===1&&!/attr='(?:update|setdefault|clear|pop|popitem)'/u.test(output.operation)&&!output.capabilityEscapes&&output.callerArguments?.length&&output.callerArguments.every(call=>call.positionalRoles.every(role=>role==='non-api')&&call.expandedKeys.every(keys=>keys!==null)&&!([...call.keywordNames.filter(Boolean),...call.expandedKeys.flat()].includes('apiVersion')&&[...call.keywordNames.filter(Boolean),...call.expandedKeys.flat()].includes('kind')))&&/^(?:temp.write_text\(json.dumps\(data\) \+ '\\n'\)|json.dumps\(data\))$/u.test(expression)&&operation.includes("Constant(value='phase')")&&operation.includes("Constant(value='observedAt')")&&operation.includes("Constant(value='pairingVerified')")&&operation.includes("Call(func=Attribute(value=Name(id='time', ctx=Load()), attr='time'");
    case 'python-process-exit-diagnostic':return expression==="print(f'Codex app-server failed to become ready (exit {child.poll()}).', flush=True)"&&operation.includes("Call(func=Attribute(value=Name(id='child', ctx=Load()), attr='poll'")&&operation.includes("attr='Popen'");
    case 'python-systemd-unit':return output.systemdUnitFlow?.sourcePath==='/etc/systemd/system/k3s.service'&&(expression==="(backup / 'original.service').write_text(original)"?output.systemdUnitFlow.transform==='original':expression==='staged.write_text(corrected)'&&output.systemdUnitFlow.transform==='repair'&&output.systemdUnitFlow.helperDigest==='5509c7dbc386819dacddc95719508e034aa53c583c1d8e80cb9da99d1d9faf43')&&operation.includes("Constant(value='systemd-analyze')")&&operation.includes("Constant(value='verify')")&&operation.includes("Constant(value='install')");
    default:return false;
@@ -566,8 +730,8 @@ export function producerAdapterOperationRecipe(source,bytes) {
     assert.equal(parsed.status,0,`API_PRODUCT_ADAPTER_OPERATION_PARSE_FAILED: ${source}: ${parsed.stderr}`);return {language:'Shell',tokens:JSON.parse(parsed.stdout)};
   }
   if(source.endsWith('.py')){
-    const parsed=spawnSync('python3',['-c',"import ast,json,sys; print(json.dumps(ast.dump(ast.parse(sys.stdin.read()),include_attributes=False)))"],{input:bytes,encoding:'utf8',env:{PATH:process.env.PATH}});
-    assert.equal(parsed.status,0,`API_PRODUCT_ADAPTER_OPERATION_PARSE_FAILED: ${source}: ${parsed.stderr}`);return {language:'Python',ast:JSON.parse(parsed.stdout)};
+    const parsed=spawnSync('python3',[new URL('./docs-api-python-ast-v1.py',import.meta.url).pathname,'--stdin',source],{input:bytes,encoding:'utf8',env:{PATH:process.env.PATH}});
+    assert.equal(parsed.status,0,`API_PRODUCT_ADAPTER_OPERATION_PARSE_FAILED: ${source}: ${parsed.stderr}`);return {language:'Python',protocol:'docs-python-ast-v1',ast:JSON.parse(parsed.stdout)};
   }
   const tree=ts.createSourceFile(source,bytes,ts.ScriptTarget.Latest,true);assert(!tree.parseDiagnostics.length,`API_PRODUCT_ADAPTER_OPERATION_PARSE_FAILED: ${source}`);
   return {language:'TypeScript',statements:tree.statements.map(node=>({kind:ts.SyntaxKind[node.kind],syntax:node.getText(tree)}))};
@@ -863,19 +1027,37 @@ function discoverHelmOutputs(root, {allowRejectedInputs,schemaAuthorityOnly}) {
 // cluster. Constructors are discovered from AST identity properties, not a
 // filename list. Every source position and every changed byte remain bound.
 const scriptOutputCache=new Map();
+// This selected diagnostic recipe includes its complete error-collection
+// authority. Sink facts alone cannot bind new values added to the error list.
+// A mutable line/digest refresh cannot authorize a changed producer or output.
+const reviewedDiagnosticOutputSources={
+  'scripts/check-site-reader-boundary.mjs':'79469dc8ac99a7d111c93d5d22c6f3cdbe1a3834822a7ec275da3ac3eaec7715',
+};
+function assertReviewedDiagnosticOutputSources(root) {
+  const registry=path.join(root,'scripts/docs-api-producer-adapter-authorities.json');
+  if(!fs.existsSync(registry))return;
+  const contracts=JSON.parse(fs.readFileSync(registry,'utf8')).nonApiOutputContracts??[];
+  for(const [source,sha256]of Object.entries(reviewedDiagnosticOutputSources))if(contracts.some(contract=>contract.source===source)) {
+    const file=path.join(root,source);
+    if(!fs.existsSync(file))continue;
+    assert(fs.realpathSync(file)===path.resolve(file)&&hash(fs.readFileSync(file))===sha256,`API_PRODUCT_DIAGNOSTIC_SOURCE_ROLE_UNQUALIFIED: ${source}; changed error/input/output authority requires renewed Source review`);
+  }
+}
 export function discoverScriptApiOutputs(root) {
+  assertReviewedDiagnosticOutputSources(root);
   // Qualification includes graph metadata (for example directory symlinks)
   // that may leave the producer byte inventory unchanged. Validate it before
   // returning cached API output.
   const validatedDocumentationTools=documentationToolSources(root);
+  const executableSources=nodeOutputExecutableSources(root),executableSourceSet=new Set(executableSources);
   const sourceInputs=walkProductSources(root,producerRoots,()=>true);
   if(fs.existsSync(path.join(root,'package.json')))sourceInputs.push('package.json');
-  const inputKey=hash(JSON.stringify(sourceInputs.map(source=>[source,hash(fs.readFileSync(path.join(root,source)))])));
+  const inputKey=hash(JSON.stringify([documentationGraphCache.get(root).inputKey,sourceInputs.map(source=>[source,hash(fs.readFileSync(path.join(root,source)))])]));
   const cached=scriptOutputCache.get(root);
   if(cached?.inputKey===inputKey&&cached.dependencies.every(([source,digest])=>fs.existsSync(path.join(root,source))&&hash(fs.readFileSync(path.join(root,source)))===digest))return cached.result;
   const classifiedDependencies=new Set();
   const result=[];
-  for(const source of walkProductSources(root,producerRoots,file=>!/\.(?:[cm]?js|[cm]?ts|py|sh|go|ya?ml|json|md|txt|toml|lock|pem|crt)$/u.test(file))) {
+  for(const source of walkProductSources(root,producerRoots,file=>!executableSourceSet.has(path.relative(root,fs.realpathSync(path.join(root,file))).replaceAll(path.sep,'/'))&&!/\.(?:[cm]?js|[cm]?ts|py|sh|go|ya?ml|json|md|txt|toml|lock|pem|crt)$/u.test(file))) {
     const bytes=fs.readFileSync(path.join(root,source),'utf8');
     let unqualified=bytes;
     if(/(?:^|\/)Dockerfile(?:\.|$)/u.test(source)){
@@ -928,7 +1110,7 @@ export function discoverScriptApiOutputs(root) {
     });
   }
   const documentationTools=validatedDocumentationTools;
-  const sources=nodeOutputExecutableSources(root).filter(file=>!documentationTools.has(file));
+  const sources=executableSources.filter(file=>!documentationTools.has(file));
   const classifyOutputRoles=createSerializedOutputRoleClassifier(root,sources);
   for(const source of sources) {
     const bytes=fs.readFileSync(path.join(root,source),'utf8');
@@ -938,7 +1120,7 @@ export function discoverScriptApiOutputs(root) {
     for(const role of outputRoles)for(const dependency of role.dependencies??[])classifiedDependencies.add(dependency);
     for(const role of outputRoles)assert(role.role!=='unknown',`API_PRODUCT_SCRIPT_OUTPUT_ROLE_UNQUALIFIED: ${source}:${role.line}: ${role.expression}`);
     if(!outputRoles.some(role=>role.role==='api')&&(!/apiVersion/u.test(bytes)||!/(?:kind\s*:|['"]kind['"]\s*:)/u.test(bytes)))continue;
-    const tree=ts.createSourceFile(source,bytes,ts.ScriptTarget.Latest,true);
+    const tree=ts.createSourceFile(source,bytes,ts.ScriptTarget.Latest,true,/\.[cm]?ts$/u.test(source)?ts.ScriptKind.TS:ts.ScriptKind.JS);
     assert(!tree.parseDiagnostics.length,`API_PRODUCT_PRODUCER_PARSE_FAILED: ${source}`);
     const declarations=new Map();const assignments=[];const constructors=[];const serializedInputs=new Set();
     const functions=[];const calls=[];const serializedPublications=[];const unsupportedMutations=[];
@@ -1171,25 +1353,40 @@ export function discoverScriptApiOutputs(root) {
     assert(!outputRoles.some(role=>role.role==='api')||result.some(output=>output.context.path===source),`API_PRODUCT_SCRIPT_OUTPUT_IDENTITY_UNQUALIFIED: ${source}`);
   }
   for(const output of result)for(const source of output.context.inputs??[])classifiedDependencies.add(source);
-  scriptOutputCache.set(root,{inputKey,result,dependencies:[...classifiedDependencies].sort().map(source=>[source,hash(fs.readFileSync(path.join(root,source)))])});
-  return result;
+  // Entry aliases carry the canonical source's actual line/digest and inputs;
+  // relative imports and operation qualification were resolved canonically.
+  const publicResult=result.flatMap(output=>output.context.producer==='script-shape'
+    ?publicNodeSourceContexts(root,output.context.path,output.context).map(context=>({...output,context})): [output]);
+  scriptOutputCache.set(root,{inputKey,result:publicResult,dependencies:[...classifiedDependencies].sort().map(source=>[source,hash(fs.readFileSync(path.join(root,source)))])});
+  return publicResult;
 }
 
 const goOutputCache=new Map();
 export function discoverGoApiOutputs(root) {
   const sources=walkProductSources(root,producerRoots,file=>/\.go$/u.test(file)&&!/_test\.go$/u.test(file));
   if(!sources.length)return [];
+  // Reject flags before documentation-role qualification can invoke a native
+  // helper, as well as before cold parsing or warmed cache admission. Source
+  // roles cannot authorize a different Go compilation/environment boundary.
+  assert(!process.env.GOFLAGS,`API_PRODUCT_GO_RAW_OUTPUT_ROLE_UNQUALIFIED: ${path.join(root,sources[0])}; explicit GOFLAGS selection is outside the reviewed finite authority`);
   const helper=new URL('./docs-api-go-output-shapes.go',import.meta.url);
   const authorityFile='scripts/docs-api-producer-adapter-authorities.json';
-  const cacheInputs=[...sources,authorityFile,'package.json'].filter(source=>fs.existsSync(path.join(root,source)));
-  const key=hash(JSON.stringify([root,hash(fs.readFileSync(helper)),hash(fs.readFileSync(new URL('./docs-api-go-output-role-adapter.go',import.meta.url))),cacheInputs.map(source=>[source,hash(fs.readFileSync(path.join(root,source)))])]));
-  if(goOutputCache.has(key))return goOutputCache.get(key);
+  const cacheInputs=[...sources,authorityFile,'package.json','charts/kubeclaw/templates/buster-namespace-lease-crd.yaml'].filter(source=>fs.existsSync(path.join(root,source)));
   const documentationTools=documentationToolSources(root);
+  const modulePaths=new Set();
+  for(const source of sources)for(let directory=path.dirname(path.join(root,source));true;directory=path.dirname(directory)){for(const name of ['go.mod','go.sum','go.work','go.work.sum'])modulePaths.add(path.join(directory,name));if(path.dirname(directory)===directory)break;}
+  const cached=goOutputCache.get(root);for(const file of [...cached?.dependencyPaths??[],...cached?.externalAuthorityDependencies??[]])modulePaths.add(file);
+  assert(!process.env.GOWORK||['auto','off'].includes(process.env.GOWORK),`API_PRODUCT_GO_MODULE_AUTHORITY_UNQUALIFIED: ${root}; explicit GOWORK outside finite documentation recipe`);
+  const key=hash(JSON.stringify([root,process.env.GOWORK??'auto',process.env.GOMODCACHE??'<default>',process.env.GOPATH??'<default>',hash(fs.readFileSync(helper)),hash(fs.readFileSync(new URL('./docs-api-go-output-role-adapter.go',import.meta.url))),cacheInputs.map(source=>[source,hash(fs.readFileSync(path.join(root,source)))]),[...modulePaths].sort().map(file=>[file,fs.existsSync(file)?[fs.realpathSync(file),fs.statSync(file).isDirectory()?hash(fs.readdirSync(file).sort().join('\n')):hash(fs.readFileSync(file))]:null])]));
+  if(cached?.key===key)return cached.result;
   for(const source of sources)if(!documentationTools.has(source))assertNativeSerializationRoles(root,source,fs.readFileSync(path.join(root,source),'utf8'),'Go');
   const nativeAuthority=path.join(root,'scripts/docs-api-producer-adapter-authorities.json');const nativeContracts=fs.existsSync(nativeAuthority)?JSON.parse(fs.readFileSync(nativeAuthority,'utf8')).nativeLanguageSerializationContracts??[]:[];
   const roles=spawnSync(process.env.KUBECLAW_DOCS_GO_BINARY??'go',['run',new URL('./docs-api-go-output-role-adapter.go',import.meta.url).pathname],{input:JSON.stringify(sources.filter(source=>!documentationTools.has(source)).map(source=>({path:path.join(root,source)}))),encoding:'utf8',maxBuffer:16*1024*1024});assert.equal(roles.status,0,`API_PRODUCT_GO_PRODUCER_PARSE_FAILED: ${roles.error?.message??roles.stderr}`);
   const parsedRoles=JSON.parse(roles.stdout);
-  for(const role of parsedRoles)assert(role.role==='non-api'||role.role==='api'||nativeOutputConsumerMatches({...role,expression:role.expression,function:role.function},nativeContracts.filter(contract=>contract.source===path.relative(root,role.path)&&contract.language==='Go').flatMap(contract=>contract.outputs??[]),root),`API_PRODUCT_GO_RAW_OUTPUT_ROLE_UNQUALIFIED: ${role.path}:${role.line}: ${role.expression}`);
+  // Inspect the original response-root control independently of an earlier
+  // unsupported error publication; neither surface can hide the other.
+  if(parsedRoles.some(role=>role.function==='productHandler'&&/^json\.NewEncoder\(w\)/u.test(role.expression)))assertNativeProductResponseSchemaAuthority(root);
+  for(const role of parsedRoles)assert(role.authorityQualified===true&&(role.role==='non-api'||role.role==='api'||nativeOutputConsumerMatches({...role,expression:role.expression,function:role.function},nativeContracts.filter(contract=>contract.source===path.relative(root,role.path)&&contract.language==='Go').flatMap(contract=>contract.outputs??[]),root)),`API_PRODUCT_GO_RAW_OUTPUT_ROLE_UNQUALIFIED: ${role.path}:${role.line}: ${role.expression}; ${(role.authorityIssues??[]).join('; ')}`);
   const literalOutputs=parsedRoles.filter(role=>role.role==='api').flatMap(role=>YAML.parseAllDocuments(role.value).map(document=>{assert(!document.errors.length,`API_PRODUCT_GO_LITERAL_YAML_INVALID: ${role.path}:${role.line}`);const value=document.toJS();assert(value?.apiVersion&&value?.kind,`API_PRODUCT_GO_LITERAL_IDENTITY_UNQUALIFIED: ${role.path}:${role.line}`);return {value,context:{apiVersion:value.apiVersion,kind:value.kind,path:path.relative(root,role.path),document:role.line,sourceDigest:hash(fs.readFileSync(role.path)),producer:'go-literal-forwarding',line:role.line,outputDigest:hash(JSON.stringify(value))}};}));
   const parsed=spawnSync(process.env.KUBECLAW_DOCS_GO_BINARY ?? 'go',['run',helper.pathname],{input:JSON.stringify(sources.filter(source=>!documentationTools.has(source)).map(source=>path.join(root,source))),encoding:'utf8',maxBuffer:32*1024*1024});
   assert.equal(parsed.status,0,`API_PRODUCT_GO_PRODUCER_PARSE_FAILED: ${parsed.error?.message ?? parsed.stderr}`);
@@ -1197,7 +1394,9 @@ export function discoverGoApiOutputs(root) {
     const source=path.relative(root,absolute);
     return {value:object.value,context:{apiVersion:object.value.apiVersion,kind:object.value.kind,path:source,document:index,sourceDigest:hash(fs.readFileSync(absolute)),producer:'go-shape',line:object.line,...(object.inferredIdentity?{inferredIdentity:true}:{}),...(object.requestMethod?{requestMethod:object.requestMethod}:{}),...(object.requestPath!==undefined?{requestPath:object.requestPath}:{}),...(object.requestAlternatives?{requestAlternatives:object.requestAlternatives}:{}),...(object.conditions?{conditions:object.conditions}:{}),...(object.factoryExpression?{factoryExpression:object.factoryExpression,factoryLine:object.factoryLine,factoryDependencies:object.factoryDependencies?.map(dependency=>({...dependency,path:path.relative(root,dependency.path)}))}:{}),outputDigest:hash(JSON.stringify(object.value))}};
   }))];
-  goOutputCache.clear();goOutputCache.set(key,result);return result;
+  const dependencyPaths=[...new Set(parsedRoles.flatMap(role=>(role.dependencies??[]).map(fact=>fact.path)).filter(Boolean))];
+  const externalAuthorityDependencies=[...new Set(parsedRoles.flatMap(role=>(role.externalAuthorityDependencies??[]).map(fact=>typeof fact==='string'?fact:fact.path)).filter(Boolean))];
+  goOutputCache.set(root,{key,result,dependencyPaths,externalAuthorityDependencies});return result;
 }
 
 const nonApiOutputClassifications=new Map();
@@ -1205,12 +1404,11 @@ export function discoverScriptOutputRoleClassifications(root) {
   const documentationTools=documentationToolSources(root);
   const sources=nodeOutputExecutableSources(root).filter(file=>!documentationTools.has(file));
   const classify=createSerializedOutputRoleClassifier(root,sources);
-  return sources.flatMap(source=>classify(source).map(role=>({...role,path:source,sourceDigest:hash(fs.readFileSync(path.join(root,source))),dependencyDigests:Object.fromEntries(role.dependencies.map(file=>[file,hash(fs.readFileSync(path.join(root,file)))]))})));
+  return sources.flatMap(source=>classify(source).flatMap(role=>publicNodeSourceContexts(root,source,{...role,path:source,sourceDigest:hash(fs.readFileSync(path.join(root,source))),dependencyDigests:Object.fromEntries(role.dependencies.map(file=>[file,hash(fs.readFileSync(path.join(root,file)))]))})));
 }
 export function discoverNonApiOutputClassifications(root) {discoverShellApiOutputs(root);return [...(nonApiOutputClassifications.get(root)??[]),...discoverScriptOutputRoleClassifications(root).filter(role=>role.role==='non-api')];}
 export function shellRawOutputSinks(source,bytes) {
- const heredoc=/<<-?\s*['"]?([A-Za-z_][A-Za-z0-9_]*)['"]?[^\n]*\n([\s\S]*?)\n[ \t]*\1(?:\n|$)/gu;
- const code=bytes.replace(heredoc,match=>match.slice(0,match.indexOf('\n'))+'\n'.repeat((match.match(/\n/gu)??[]).length));
+ const {shell:code}=shellHeredocCustody(source,bytes);
  // Keep quoting and captured substitutions inside a word. Punctuation inside
  // a regex, quoted program or $(...) is not an executable command boundary.
  const tokens=[],substitutions=[];let index=0,line=1;
@@ -1265,9 +1463,8 @@ export function shellRawOutputSinks(source,bytes) {
  return sinks;
 }
 export function shellRawOutputOperationRecipe(source,bytes) {
- const heredocs=[];
- const shell=bytes.replace(/<<-?\s*['"]?([A-Za-z_][A-Za-z0-9_]*)['"]?[^\n]*\n([\s\S]*?)\n[ \t]*\1(?:\n|$)/gu,(match,delimiter,body)=>{heredocs.push({delimiter,sha256:hash(body)});return match.slice(0,match.indexOf('\n'))+'\n'.repeat((match.match(/\n/gu)??[]).length);});
- return {...producerAdapterOperationRecipe(source,shell),heredocs};
+ const {shell,heredocs}=shellCommandAcquisitions(source,bytes);
+ return {...producerAdapterOperationRecipe(source,shell),heredocs:heredocs.map(({operator,delimiter,body,fd,selectedStdin,command})=>({operator,delimiter,fd,selectedStdin,command:command.words.map(word=>word.value),sha256:hash(body)}))};
 }
 const shellOutputCache=new Map();
 // Close unbound raw input channels;
@@ -1512,7 +1709,19 @@ function shellNamedFileProof(root,source,bytes,sink) {
   if(body!==expected)return null;
   const workload='charts/ops-pod/templates/workload.yaml',bootstrap='ops/pod/bootstrap.py';
   if(![workload,bootstrap].every(file=>fs.existsSync(path.join(root,file))))return null;
-  if(!fs.readFileSync(path.join(root,workload),'utf8').includes('- {name: bearer, mountPath: /var/run/kubeclaw-ops/bearer, readOnly: true}')||!fs.readFileSync(path.join(root,bootstrap),'utf8').includes("apply_secret('codex-ops-bearer', {'token': secrets.token_urlsafe(48)})"))return null;
+  const workloadText=fs.readFileSync(path.join(root,workload),'utf8');
+  // Bind the receiving container, not another container with the same mount.
+  // This finite template grammar rejects changed or ambiguous custody rather
+  // than treating an unrelated mount as evidence for the Codex shell.
+  const codexContainers=[...workloadText.matchAll(/^        - name: codex\n([\s\S]*?)(?=^        - name:|^      volumes:)/gmu)];
+  const volumeSections=[...workloadText.matchAll(/^      volumes:\n([\s\S]*?)(?=^  volumeClaimTemplates:|(?![\s\S]))/gmu)];
+  if(codexContainers.length!==1||volumeSections.length!==1)return null;
+  const codex=codexContainers[0][1],volumes=volumeSections[0][1];
+  const mounts=[...codex.matchAll(/^          volumeMounts:\n([\s\S]*?)(?=^          [A-Za-z]|(?![\s\S]))/gmu)];
+  if(mounts.length!==1||(mounts[0][1].match(/name: bearer\b/gu)??[]).length!==1||!/^            - \{name: bearer, mountPath: \/var\/run\/kubeclaw-ops\/bearer, readOnly: true\}$/mu.test(mounts[0][1]))return null;
+  const bearerVolumes=[...volumes.matchAll(/^        - name: bearer\n([\s\S]*?)(?=^        - |(?![\s\S]))/gmu)];
+  if(bearerVolumes.length!==1||bearerVolumes[0][1]!== '          secret:\n            secretName: {{ .Values.bearerSecret }}\n            defaultMode: 0440\n')return null;
+  if(!fs.readFileSync(path.join(root,bootstrap),'utf8').includes("apply_secret('codex-ops-bearer', {'token': secrets.token_urlsafe(48)})"))return null;
   return native('mounted-authentication-input-to-exported-environment; interactive-bash-outside-source',[workload,bootstrap]);
  }
  // The selected external diagnostic process owns this exact file and stderr
@@ -2058,6 +2267,8 @@ export function discoverShellApiOutputs(root) {
   if([...namedShellChannelFacts].some(([id,entry])=>id.startsWith(root+':')&&entry.contract.startsWith('unreachable-private-')))cacheInputs.push(...privateShellReachabilityInputs(root));
   const key=hash(JSON.stringify([...new Set(cacheInputs)].sort().map(source=>[source,hash(fs.readFileSync(path.join(root,source)))])));
   const cached=shellOutputCache.get(root);if(cached?.key===key)return cached.outputs;
+  // Rebuild facts transactionally: no removed producer may survive by line identity.
+  for(const id of namedShellChannelFacts.keys())if(id.startsWith(root+':'))namedShellChannelFacts.delete(id);
   const outputs=[];const classifications=[];nonApiOutputClassifications.set(root,classifications);
   for(const source of sources) {
     const bytes=fs.readFileSync(path.join(root,source),'utf8');
@@ -2072,9 +2283,10 @@ export function discoverShellApiOutputs(root) {
     const scalarize=value=>value.replace(/\$\{[^}\n]+\}|\$[A-Za-z_][A-Za-z0-9_]*/gu,'discovery');
     let document=0;
     const add=(value,line,profile,request={})=>outputs.push({value,context:{apiVersion:value.apiVersion,kind:value.kind,path:source,document:document++,sourceDigest,producer:'shell-shape',line,profile,...request,outputDigest:hash(JSON.stringify(value))}});
-    const pattern=/<<-?\s*['"]?([A-Za-z_][A-Za-z0-9_]*)['"]?[^\n]*\n([\s\S]*?)\n[ \t]*\1(?:\n|$)/gu;
-    for(const match of bytes.matchAll(pattern)) {
-      const header=bytes.slice(bytes.lastIndexOf('\n',match.index-1)+1,match.index+match[0].indexOf('\n'));
+    for(const custody of shellCommandAcquisitions(source,bytes).heredocs) {
+      if(!custody.selectedStdin)continue;
+      const match={0:bytes.slice(custody.start,custody.end),1:custody.delimiter,2:custody.body,index:custody.start};
+      const header=custody.header;
       if(!/(?:^|\n)apiVersion:/u.test(match[2])){assert(!/\bkubectl\s+(?:apply|create|replace)\b/u.test(header),`API_PRODUCT_SHELL_SUBMITTED_OUTPUT_ROLE_UNQUALIFIED: ${source}:${header}`);assert(!/\bcat\b/u.test(header)||!/(?:^|\n)\s*\$(?:\{[A-Za-z_][A-Za-z0-9_]*\}|[A-Za-z_][A-Za-z0-9_]*)(?:\s*(?:\n|$)|:)/u.test(match[2]),`API_PRODUCT_SHELL_EMITTED_OUTPUT_ROLE_UNQUALIFIED: ${source}:${header}`);continue;}
       assert(header.split('|').slice(1).every(part=>/^\s*kubectl\s+apply\b/u.test(part)),`API_PRODUCT_SHELL_PIPELINE_UNQUALIFIED: ${source}:${header}`);
       let content=match[2];
@@ -2144,9 +2356,9 @@ export function discoverTransformedApiOutputs(root) {
   const adapterSources=['scripts/render-litellm-deployment.mjs','scripts/render-postgresql-recovery.mjs','scripts/render-stateful-network-policies.mjs','scripts/render-registry-local.mjs'].filter(source=>fs.existsSync(path.join(root,source)));
   assertProducerAdapterAuthority(root,adapterSources);
   const dependencyFiles=walkProductSources(root,['scripts','my-values/infra'],file=>/\.(?:mjs|ya?ml|json)$/u.test(file));
-  const cacheKey=hash(JSON.stringify([root,dependencyFiles.map(file=>[file,hash(fs.readFileSync(path.join(root,file)))]),fs.existsSync(path.join(root,'versions.json'))?hash(fs.readFileSync(path.join(root,'versions.json'))):null]));
-  if(transformOutputCache.has(cacheKey))return transformOutputCache.get(cacheKey);
+  const cacheKey=hash(JSON.stringify([root,dependencyFiles.map(file=>[file,hash(fs.readFileSync(path.join(root,file)))]),fs.existsSync(path.join(root,'scripts/deploy.sh'))?[fs.realpathSync(path.join(root,'scripts/deploy.sh')),hash(fs.readFileSync(path.join(root,'scripts/deploy.sh')))]:null,fs.existsSync(path.join(root,'versions.json'))?hash(fs.readFileSync(path.join(root,'versions.json'))):null]));
   const caller='scripts/deploy.sh';
+  assert(!adapterSources.length||fs.existsSync(path.join(root,caller)),`API_PRODUCT_ADAPTED_RECIPE_INVOCATION_DRIFT: ${caller}; selected renderer caller missing`);
   if(fs.existsSync(path.join(root,caller))) {
     const callerBytes=fs.readFileSync(path.join(root,caller),'utf8').replace(/\\\n[ \t]*/gu,' ');
     const operations={
@@ -2160,6 +2372,7 @@ export function discoverTransformedApiOutputs(root) {
       assert(actual.length&&actual.every(operation=>operation.replace(/\s+/gu,' ')===parameters),`API_PRODUCT_ADAPTED_RECIPE_INVOCATION_DRIFT: ${caller}:${renderer}; offline recipe positional input mapping must be reviewed`);
     }
   }
+  if(transformOutputCache.has(cacheKey))return transformOutputCache.get(cacheKey);
   const recipes=[
     ['scripts/render-litellm-deployment.mjs',['my-values/infra/litellm-config.yaml','my-values/infra/litellm-deployment.yaml']],
     ['scripts/render-postgresql-recovery.mjs',['default','my-values/infra/postgresql-recovery.yaml','my-values/infra/postgresql-values.yaml','my-values/infra/litellm-deployment.yaml','postgresql']],

@@ -48,6 +48,35 @@ flowchart LR
     Nova -. event delivery .-> Telemetry[Telemetry and observers]
 ```
 
+**Text alternative to the diagram**
+
+Each row names a directed connection. Labels preserve the diagram’s conditions or handoffs; dotted relationships are identified explicitly.
+
+| From | Relationship | To |
+| --- | --- | --- |
+| Human user | Directed connection — private application route | Prism Studio |
+| Prism Studio | Directed connection — HTTP 8080 | Prism Control |
+| Nova role | Directed connection — Envoy and SPIFFE mTLS | Buster role |
+| Nova role | Directed connection — loopback Envoy 28080 and SPIFFE mTLS | Prism agent Envoy 18082 |
+| Prism agent Envoy 18082 | Directed connection — loopback 18080 | Prism agent bridge |
+| Prism agent bridge | Directed connection — loopback Envoy 28080 and SPIFFE mTLS | Prism Control |
+| Prism agent bridge | Directed connection — durable job launch | Prism OpenClaw gateway |
+| Prism OpenClaw gateway | Directed connection — fenced tool result | Prism Control |
+| Prism OpenClaw gateway | Directed connection — memory embedding | LiteLLM |
+| LiteLLM | Directed connection — provider request | Vertex AI |
+| Prism OpenClaw gateway | Directed connection — managed reasoning | OpenAI provider |
+| Prism Control | Directed connection — Envoy and SPIFFE mTLS | Prism Worker |
+| Prism Control | Directed connection — bearer HTTP | Optional Prism Ingestion |
+| Prism Control | Directed connection | Prism PostgreSQL |
+| Prism Worker | Directed connection | Prism PostgreSQL |
+| Prism Control | Directed connection | Prism artifact PVC |
+| Nova role | Directed connection | Nova run storage |
+| Buster role | Directed connection | Buster job and evidence storage |
+| Discord users and service | Directed connection — enabled bot channels | Nova role |
+| Discord users and service | Directed connection — enabled bot channels | Buster role |
+| Nova role | Dotted relationship — event delivery | Telemetry and observers |
+
+
 Text version: Nova calls Buster through its protected route. For Prism, Nova
 first reaches the `agent-prism` Envoy and loopback bridge. The bridge reaches
 Control through a second protected route. Control persists an agent job before
@@ -307,6 +336,25 @@ flowchart LR
     Restore --> Database
     Restore --> Artifacts
 ```
+
+**Text alternative to the diagram**
+
+Each row names a directed connection. Labels preserve the diagram’s conditions or handoffs; dotted relationships are identified explicitly.
+
+| From | Relationship | To |
+| --- | --- | --- |
+| Nova | Directed connection | Run snapshots, journals, signals, and imports |
+| Buster | Directed connection | Jobs, source archives, results, and evidence |
+| Prism Control | Directed connection | PostgreSQL state |
+| Prism Control | Directed connection | Content-addressed artifact PVC |
+| Prism Worker | Directed connection | Native ownership and process journal |
+| Applicable role deployments | Directed connection | OpenClaw state PVCs |
+| PostgreSQL state | Directed connection | Matched Prism backup group |
+| Content-addressed artifact PVC | Directed connection | Matched Prism backup group |
+| Matched Prism backup group | Directed connection | Restore and digest verification |
+| Restore and digest verification | Directed connection | PostgreSQL state |
+| Restore and digest verification | Directed connection | Content-addressed artifact PVC |
+
 
 Text version: Nova owns its run records, and Buster owns its remote-job and evidence records.
 Prism Control owns relational state and content-addressed artifacts.

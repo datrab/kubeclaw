@@ -15,6 +15,14 @@ procedures. This section gives exact names and source-backed facts.
 
 ## Configuration and Operation
 
+- [Errors and safe diagnostics](errors.md) maps diagnostic representations, owning boundaries, effects, and safe retry decisions.
+- [Events and payloads](events.md) separates canonical records, actual consumers, delivery, ordering, retention, and audit effects.
+- [Contracts, versions, and compatibility](contracts.md) Identify selected producer/reader versions, migration and retirement limits.
+- [Stores, paths, and retention](stores-and-retention.md) Select authoritative data groups, quotas, cleanup and original-reader recovery boundaries.
+- [Images, digests, and release selection](images-and-digests.md) Connect source/platform/image/bundle identities, promotion/deployment and verification limits.
+- [Configuration](configuration.md) selects the owning consumer, effective-value rules, change boundary, and detailed family reference.
+- [Schema authorities](schemas.md) maps registered and other named contracts to their actual validators, versions, and recursive interpretation limits.
+- [Roles and package ownership](roles-and-package-ownership.md) separates bundle selection and package owners from Nova caller grants, Buster configuration, and Prism native-host authority.
 - [Pipeline platform](pipeline-platform.md) documents the operator-owned package, trust, capability, adapter, observer, storage, isolation, timeout, and issuer authority.
 - [Nova project](nova-project.md) documents every `nova-project.v2` source field and its deterministic compilation boundary.
 - [Pipeline definition](pipeline-definition.md) documents the explicit `pipeline-definition.v2` graph contract and semantic graph rules.
@@ -47,6 +55,8 @@ procedures. This section gives exact names and source-backed facts.
 
 ## Extension Runtime
 
+- [Plugin SDK](sdk.md) explains both entrypoints, public helpers and types, exact JSON/digest rules, source identity, compatibility and rejection boundaries.
+- [Complete SDK exports and fields](sdk-exports.md) records every discovered export, member and recursive schema rule with its consumer meaning and source.
 - [Capabilities](capabilities.md) lists every grantable capability and registration.
 - [Plugin catalogue](../extend/plugin-catalogue/README.md) lists every extension package.
 - [Extension contracts](../extend/contracts.md) explains registration inputs and results.
@@ -57,6 +67,7 @@ procedures. This section gives exact names and source-backed facts.
 
 ## Documentation Maintenance
 
+- [Documentation site and publication](documentation-site.md) explains navigation, source evidence, allowed inputs, local staging, and rendered-site limits.
 - [Documentation governance](documentation-governance.md) defines canonical ownership, source authority, metadata, decision, status, and route-lifecycle rules.
 - [Generated documentation map](generated-documentation-map.json) maps every reader page to its owner, sources, status, and required checks.
 - [Route registry](documentation-route-registry.json) records public redirects, deprecated terms, and their successors.

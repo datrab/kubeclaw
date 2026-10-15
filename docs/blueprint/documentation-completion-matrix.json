@@ -12195,7 +12195,7 @@
       "pageOwner": null,
       "readerTask": "Repository-, Workspace- und Toolchain-Setup",
       "sourceDependencies": [],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "current-cloud-Source-FAIL-full-defining-closure-continuing",
       "contentKind": "not-in-current-map",
       "generator": null,
       "automatedChecks": [],
@@ -12305,6 +12305,17 @@
         ],
         "report": "/home/node/Documents/Codex/a98-evidence/ap98-finding-evidence-reconciliation/report.md",
         "scope": "Remove only closed authored defect identities; do not set requirement accepted or waive wider/manual/execution/generated-content proof."
+      },
+      "currentCloudSourceReview": {
+        "identity": "/root/handbook_full_source_fresh",
+        "report": "/tmp/kubeclaw-cloud-reviews/turn2155-handbook-source-fresh/report.md",
+        "candidateSha256": "87cfb1e6a39c235dd19f0d54065aa93fc2ee4bb4bfcad0b874b4a25d48c99353",
+        "state": "FAIL; initialfullpagebutincompletedefiningclosure retained, SAMEreviewer nowfinishingallcoherentfindings",
+        "facets": [
+          "F1 version updater uv/exact selected PATHGo prerequisite",
+          "ongoing native Worker/Prism route prerequisites"
+        ],
+        "limits": "No complete requirement/gate or practical acceptance; earlier static/historicalscope not transferred"
       }
     },
     {
@@ -12316,7 +12327,7 @@
       "pageOwner": null,
       "readerTask": "Build-, Start- und Debugwege je Komponente",
       "sourceDependencies": [],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "current-cloud-Source-FAIL-full-defining-closure-continuing",
       "contentKind": "not-in-current-map",
       "generator": null,
       "automatedChecks": [],
@@ -12425,6 +12436,16 @@
         ],
         "report": "/home/node/Documents/Codex/a98-evidence/ap98-finding-evidence-reconciliation/report.md",
         "scope": "Remove only closed authored defect identities; do not set requirement accepted or waive wider/manual/execution/generated-content proof."
+      },
+      "currentCloudSourceReview": {
+        "identity": "/root/handbook_full_source_fresh",
+        "report": "/tmp/kubeclaw-cloud-reviews/turn2155-handbook-source-fresh/report.md",
+        "candidateSha256": "87cfb1e6a39c235dd19f0d54065aa93fc2ee4bb4bfcad0b874b4a25d48c99353",
+        "state": "FAIL; initialfullpagebutincompletedefiningclosure retained, SAMEreviewer nowfinishingallcoherentfindings",
+        "facets": [
+          "ongoing native Worker/Prism route prerequisite findings"
+        ],
+        "limits": "No complete requirement/gate or practical acceptance; earlier static/historicalscope not transferred"
       }
     },
     {
@@ -12436,7 +12457,7 @@
       "pageOwner": null,
       "readerTask": "Testpyramide und Auswahl des richtigen Checks",
       "sourceDependencies": [],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "current-cloud-Source-FAIL-full-defining-closure-continuing",
       "contentKind": "not-in-current-map",
       "generator": null,
       "automatedChecks": [],
@@ -12536,7 +12557,17 @@
         }
       ],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L324"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L324",
+      "currentCloudSourceReview": {
+        "identity": "/root/handbook_full_source_fresh",
+        "report": "/tmp/kubeclaw-cloud-reviews/turn2155-handbook-source-fresh/report.md",
+        "candidateSha256": "87cfb1e6a39c235dd19f0d54065aa93fc2ee4bb4bfcad0b874b4a25d48c99353",
+        "state": "FAIL; initialfullpagebutincompletedefiningclosure retained, SAMEreviewer nowfinishingallcoherentfindings",
+        "facets": [
+          "F1 exact version-update change-to-check prerequisite"
+        ],
+        "limits": "No complete requirement/gate or practical acceptance; earlier static/historicalscope not transferred"
+      }
     },
     {
       "id": "DEV-005",
@@ -12665,7 +12696,7 @@
       "pageOwner": null,
       "readerTask": "Coding-, Contract- und Dependency-Regeln",
       "sourceDependencies": [],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "current-cloud-Source-FAIL-full-defining-closure-continuing",
       "contentKind": "not-in-current-map",
       "generator": null,
       "automatedChecks": [],
@@ -12765,7 +12796,17 @@
         }
       ],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L326"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L326",
+      "currentCloudSourceReview": {
+        "identity": "/root/handbook_full_source_fresh",
+        "report": "/tmp/kubeclaw-cloud-reviews/turn2155-handbook-source-fresh/report.md",
+        "candidateSha256": "87cfb1e6a39c235dd19f0d54065aa93fc2ee4bb4bfcad0b874b4a25d48c99353",
+        "state": "FAIL; initialfullpagebutincompletedefiningclosure retained, SAMEreviewer nowfinishingallcoherentfindings",
+        "facets": [
+          "F3 dependency enforcement locator"
+        ],
+        "limits": "No complete requirement/gate or practical acceptance; earlier static/historicalscope not transferred"
+      }
     },
     {
       "id": "DEV-007",
@@ -12776,7 +12817,7 @@
       "pageOwner": null,
       "readerTask": "Security-, Performance- und Lastprüfung",
       "sourceDependencies": [],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "current-cloud-Source-FAIL-full-defining-closure-continuing",
       "contentKind": "not-in-current-map",
       "generator": null,
       "automatedChecks": [],
@@ -12876,7 +12917,17 @@
         }
       ],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L327"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L327",
+      "currentCloudSourceReview": {
+        "identity": "/root/handbook_full_source_fresh",
+        "report": "/tmp/kubeclaw-cloud-reviews/turn2155-handbook-source-fresh/report.md",
+        "candidateSha256": "87cfb1e6a39c235dd19f0d54065aa93fc2ee4bb4bfcad0b874b4a25d48c99353",
+        "state": "FAIL; initialfullpagebutincompletedefiningclosure retained, SAMEreviewer nowfinishingallcoherentfindings",
+        "facets": [
+          "F2 retention GC script locator"
+        ],
+        "limits": "No complete requirement/gate or practical acceptance; earlier static/historicalscope not transferred"
+      }
     },
     {
       "id": "DEV-008",
@@ -12887,7 +12938,7 @@
       "pageOwner": null,
       "readerTask": "Release, Versionierung, Migration und Changelog",
       "sourceDependencies": [],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "current-cloud-Source-FAIL-full-defining-closure-continuing",
       "contentKind": "not-in-current-map",
       "generator": null,
       "automatedChecks": [],
@@ -12987,7 +13038,17 @@
         }
       ],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L328"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L328",
+      "currentCloudSourceReview": {
+        "identity": "/root/handbook_full_source_fresh",
+        "report": "/tmp/kubeclaw-cloud-reviews/turn2155-handbook-source-fresh/report.md",
+        "candidateSha256": "87cfb1e6a39c235dd19f0d54065aa93fc2ee4bb4bfcad0b874b4a25d48c99353",
+        "state": "FAIL; initialfullpagebutincompletedefiningclosure retained, SAMEreviewer nowfinishingallcoherentfindings",
+        "facets": [
+          "F1 stale-lock regeneration prerequisite"
+        ],
+        "limits": "No complete requirement/gate or practical acceptance; earlier static/historicalscope not transferred"
+      }
     },
     {
       "id": "DEV-009",
@@ -12998,7 +13059,7 @@
       "pageOwner": null,
       "readerTask": "Dokumentationspflicht einer Codeänderung",
       "sourceDependencies": [],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "current-cloud-Source-FAIL-full-defining-closure-continuing",
       "contentKind": "not-in-current-map",
       "generator": null,
       "automatedChecks": [],
@@ -13098,7 +13159,17 @@
         }
       ],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L329"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L329",
+      "currentCloudSourceReview": {
+        "identity": "/root/handbook_full_source_fresh",
+        "report": "/tmp/kubeclaw-cloud-reviews/turn2155-handbook-source-fresh/report.md",
+        "candidateSha256": "87cfb1e6a39c235dd19f0d54065aa93fc2ee4bb4bfcad0b874b4a25d48c99353",
+        "state": "FAIL; initialfullpagebutincompletedefiningclosure retained, SAMEreviewer nowfinishingallcoherentfindings",
+        "facets": [
+          "F3 governance record/publication boundary locators"
+        ],
+        "limits": "No complete requirement/gate or practical acceptance; earlier static/historicalscope not transferred"
+      }
     },
     {
       "id": "EXT-001",
@@ -15004,7 +15075,7 @@
       "pageOwner": null,
       "readerTask": "Public SDK API und Value-/Identity-Regeln",
       "sourceDependencies": [],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "current-public119exports-discovered-full-consumer-reference-notimplemented",
       "contentKind": "not-in-current-map",
       "generator": null,
       "automatedChecks": [],
@@ -15034,7 +15105,14 @@
       "evidence": [],
       "reviews": [],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L374"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L374",
+      "currentCloudSdkScope": {
+        "state": "ActualREF018SDKreference gapconfirmed;rootfull14source read119exportsdiscovered, implementation/refsemantics/drift/reviews stillopen",
+        "canonicalTarget": "docs/site/reference/sdk.md",
+        "requirement": "REF-018",
+        "gate": "A910-04",
+        "evidence": "/tmp/kubeclaw-cloud-reviews/turn1950-root/sdk-surface-source-reading.json"
+      }
     },
     {
       "id": "DEC-001",
@@ -18819,7 +18897,13 @@
         "AP09-DEV-20261012-F2",
         "AP09-DEV-20261012-F3",
         "AP09-DEV-20261012-QF01"
-      ]
+      ],
+      "currentCloudSourceReview": {
+        "identity": "/root/handbook_full_source_fresh",
+        "report": "/tmp/kubeclaw-cloud-reviews/turn2155-handbook-source-fresh/report.md",
+        "state": "notaccepted; currentSource prerequisites/source-evidence findings and definingclosure ongoing",
+        "limits": "Completegate has additional required practical/canonical/inventory/productscopes; no staticfacet approval substitutes"
+      }
     },
     {
       "id": "A910-02",
@@ -18897,7 +18981,13 @@
         }
       ],
       "readerFixtureIds": [],
-      "executionScenarioIds": []
+      "executionScenarioIds": [],
+      "currentCloudSourceReview": {
+        "identity": "/root/handbook_full_source_fresh",
+        "report": "/tmp/kubeclaw-cloud-reviews/turn2155-handbook-source-fresh/report.md",
+        "state": "notaccepted; currentSource prerequisites/source-evidence findings and definingclosure ongoing",
+        "limits": "Completegate has additional required practical/canonical/inventory/productscopes; no staticfacet approval substitutes"
+      }
     },
     {
       "id": "A910-03",
@@ -18980,7 +19070,13 @@
         "AP09-DEV-20261012-F1",
         "AP09-DEV-20261012-F2",
         "AP09-DEV-20261012-F3"
-      ]
+      ],
+      "currentCloudSourceReview": {
+        "identity": "/root/handbook_full_source_fresh",
+        "report": "/tmp/kubeclaw-cloud-reviews/turn2155-handbook-source-fresh/report.md",
+        "state": "notaccepted; currentSource prerequisites/source-evidence findings and definingclosure ongoing",
+        "limits": "Completegate has additional required practical/canonical/inventory/productscopes; no staticfacet approval substitutes"
+      }
     },
     {
       "id": "A910-04",
@@ -19137,7 +19233,13 @@
         "AP09-DEV-20261012-F1",
         "AP09-DEV-20261012-F2",
         "AP09-DEV-20261012-F3"
-      ]
+      ],
+      "currentCloudSourceReview": {
+        "identity": "/root/handbook_full_source_fresh",
+        "report": "/tmp/kubeclaw-cloud-reviews/turn2155-handbook-source-fresh/report.md",
+        "state": "notaccepted; currentSource prerequisites/source-evidence findings and definingclosure ongoing",
+        "limits": "Completegate has additional required practical/canonical/inventory/productscopes; no staticfacet approval substitutes"
+      }
     },
     {
       "id": "A910-12",
@@ -25352,6 +25454,23 @@
         "A98-14"
       ],
       "correction": "One coherent bounded census/pending-owner correction; native/control/actual receiver proof and fresh complete independent review required. No general interpreter."
+    },
+    {
+      "id": "PR13-SOURCE-RECIPE-INVENTORY-DRIFT",
+      "state": "open-source-snapshot-admission",
+      "pages": [],
+      "authority": "scripts/docs-api-producer-adapter-authorities.json documentationToolBoundary.unresolvedModuleInputAuthorities; scripts/docs-api-output-discovery.mjs documentationModuleInputAuthority",
+      "description": "Inventory complete source differs from independently anchored finite module recipe; later coherent WIP remains unqualified. Not a digest-only correction.",
+      "evidence": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/source-readiness-20261014/readiness.json",
+      "owner": "background integration owner",
+      "correction": "Recover exact later Source evidence or perform permitted independent semantic qualification of changed inventory/helpers/callers before updating reviewed anchor and recipe."
+    },
+    {
+      "id": "PR13-SCHEDULED-SPAWN-UNAVAILABLE",
+      "state": "blocked-tool-access",
+      "description": "Required native spawn_agent is absent in scheduled runtime; no independent author/review children can be started. Shell and file access remain available.",
+      "owner": "OpenClaw runtime/tool-cap configuration",
+      "resumeCondition": "Expose callable native spawn_agent with GPT-6.1 Sol selection and fresh context in this scheduled job."
     }
   ],
   "checks": [
@@ -29775,10 +29894,10 @@
     }
   ],
   "continuation": {
-    "stage": "AP09.8 open. Diagnosis/recovery3rolecontentPASS; replacement Root297-candidate/86checks live; full Tool freshSource and two coherent docauthors active.",
+    "stage": "AP09.8 open. First full FAIL10 correction authored and checked; new fresh Source review has additional loop/comprehension-target omission and is completing full scope. Two-page Reader review active; page Source/Quality pending. No independent or package acceptance.",
     "baselineMutationSession": 17726,
     "baselineMutationLog": "/tmp/kubeclaw-a98-config-mutations.log",
-    "next": "Finish complete Tool Source report, correct all findings together; complete distinct final document reviews in parallel. Integrate stable checked content, then Source commit and separate revision-bound generation. Full mandatory gates/mutations, required deployment evidence, Astra/AP98 and all parity/AP99-13/AP10/AP11 remain.",
+    "next": "Collect full new Source/Reader findings; correct coherent set and semantically rebind changed sources again. Complete fresh separate Source/Reader/Quality on all affected scopes; retain exact observed checks. Do not start long overall gates or Source/Generated commits while known material findings remain. Full deployment/platform evidence, Astra, parity/AP10/AP11 remain required.",
     "environmentConstraints": [
       "Previously reported /tmp proof artifacts and native tool bindings are not assumed available after runtime resumption; revalidate required tools."
     ],
@@ -29791,9 +29910,9 @@
     "currentMutationLog": "/home/node/Documents/Codex/a98-evidence/config-mutations-7e413cf6-resumed.log",
     "currentMutationSnapshot": "7e413cf63e82fdc6104184a6be25f35420b15d80",
     "agents": [
-      "/root/protocol_alias_heredoc_complete_source_runtime_fresh",
-      "/root/publication_complete_runtime_writer",
-      "/root/prism_studio_complete_runtime_writer"
+      "/root/corrected_tool_source_review",
+      "/root/publication_studio_reader_review",
+      "/root/node_custody_correction"
     ],
     "baselineMutationState": "terminal-pass-old-source-snapshot",
     "baselineMutationExitCode": 0,
@@ -30834,10 +30953,10 @@
       "/root/developer_handbook_corrected_complete_source_fresh"
     ],
     "currentNextSteps": [
-      "Complete coherentwrapper+NamedExpr toolauthorbatch thenjustified API Source rebind/currentaffectedcontrols+Rootsharedsuite+NEWfullSource; waitcompletefindings beforefurthercorrections.",
-      "Complete capacityselectedcontrol/version/readaccess docwriter thenfreshroletriad; servicebudget template SourcefacetalreadyPASS.",
-      "Finish newfull correctedDeveloperSource, separatefreshQuality andReader; noformalexercise/publicationglobalclaim.",
-      "Afterstable acceptedtoolcandidate commitcheckedSource/fullSHA generation separately; currentrequired mutations/gates/deployment/API inventory/evidence/Astra/AP98/parity/rest remainopen."
+      "Collect new full tooling Source findings before one coherent correction; fresh independent page Source/Quality in parallel.",
+      "Studio local example Reader execution remains FAIL until supported native browser host prerequisites and exact journey are proved.",
+      "Requalify changed tooling semantically, focused native/receiving controls, then new full independent review.",
+      "All current requirements/gates, registered deployment/platform evidence, source/generated separate commits, Astra, parity, AP10 R>A>D, AP11 and final clean synchronized branch remain required."
     ],
     "lastVerifiedSourceCommit": "95e57db04c9da7c6d3801319ce84328fb51a26b8",
     "lastVerifiedRemoteCommit": "4ed48fa6ce17a4813ed3bcf4593ff010911fd974",
@@ -35170,5 +35289,2676 @@
       "verifiedActualCurrentInputManifest": 1198,
       "scope": "Actual author56qualified/fourbinding/eightconsumers terminalPASS; Root independently verified1198 inputs before this administrative matrix update. New metadata/writer prose deltas require explicit qualification, not wholecurrent equality. Independent Source pending."
     }
+  },
+  "cloudResumption20261012": {
+    "at": "2026-10-12T18:01:23.230114+00:00",
+    "checkout": "/home/node/.openclaw/workspace/kubeclaw-documentation-cloud",
+    "branch": "docs/documentation-overhaul",
+    "head": "ad73a0df62607ea9634304c3e9518826450a6a25",
+    "restoredWorktreeFiles": 16,
+    "archiveFiles": 1176,
+    "archiveUncompressedBytes": 31582089,
+    "evidenceRoot": "/tmp/kubeclaw-documentation-evidence-v_ijp4l_",
+    "worktreeVerification": "PASS exact 16-file restoration before subsequent authorized work",
+    "archiveVerification": "PASS each path/size/SHA256 verified in archive and extracted files",
+    "gitRemoteVerification": "local HEAD equals origin docs/documentation-overhaul at startup",
+    "environment": {
+      "os": "Debian12",
+      "node": "v24.21.0",
+      "npm": "12.2.0",
+      "python": "3.11.2",
+      "helm": "v3.18.4",
+      "flock": "util-linux2.38.1",
+      "kubectlContext": "none configured; not a registered target deployment",
+      "dependencies": "npm ci --ignore-scripts --include=dev --cache /tmp/kubeclaw-cloud-npm-cache exited0; inherited NODE_ENV production explicitly handled"
+    },
+    "checks": [
+      {
+        "command": "npm run docs:ap09:acceptance-contract:check",
+        "exitCode": 0,
+        "acceptancePoints": 89,
+        "requirements": 261,
+        "fixtures": 122,
+        "evidenceValidated": false,
+        "scope": "structural contract check, not content acceptance"
+      }
+    ],
+    "noProductImplementationChanges": true,
+    "authors": {
+      "/root/publication_author": [
+        "docs/site/reference/project-pipeline-publication.md"
+      ],
+      "/root/studio_author": [
+        "docs/site/use/prism-studio.md"
+      ]
+    },
+    "freshReadOnlyReviewer": "/root/tool_scope_audit",
+    "openState": "AP09.8 and overall task unaccepted; full tooling audit collecting additional native findings, coherent correction follows full report; no long whole suite started on known-defective candidate",
+    "requiredDeploymentEvidence": "unproven; no substitution of existing pods or mocks",
+    "historicalRuntimeState": "All old handles/agents/process statuses are historical only; interrupted runs have no PASS",
+    "completion": "NOT COMPLETE"
+  },
+  "cloudToolCorrection20261012": {
+    "state": "author-corrected; independent acceptance pending; overall unaccepted",
+    "priorSourceAudit": {
+      "verdict": "FAIL",
+      "materialFindings": 10,
+      "report": "/tmp/kubeclaw-cloud-reviews/tool-scope-audit/report.md",
+      "observedTests": {
+        "total": 123,
+        "passed": 110,
+        "failed": 13,
+        "exit": 1
+      }
+    },
+    "authorEvidence": {
+      "root": "/tmp/kubeclaw-cloud-reviews/root-tool-correction/report.md",
+      "node": "/tmp/kubeclaw-cloud-reviews/node-custody-correction/report.md",
+      "semanticQualification": "/tmp/kubeclaw-cloud-reviews/corrected-source-qualification"
+    },
+    "scannerSha256": "f4c05578dfca068d2fe29b1acb508c26896048464dbd7696d18c8091f483ffb5",
+    "tests": [
+      {
+        "scope": "combined corrected focused candidate before final passive-Node and AnnAssign-order corrections",
+        "total": 170,
+        "passed": 136,
+        "failed": 0,
+        "skipped": 34,
+        "cancelled": 0,
+        "exit": 0,
+        "log": "/tmp/kubeclaw-corrected-focused.log"
+      },
+      {
+        "scope": "final Python/shell/Ops source including passive-Node and AnnAssign-order native controls",
+        "total": 129,
+        "passed": 95,
+        "failed": 0,
+        "skipped": 34,
+        "cancelled": 0,
+        "exit": 0,
+        "log": "/tmp/kubeclaw-python-shell-final.log"
+      },
+      {
+        "scope": "Node API author correction before semantic scanner anchor update; implementation unchanged afterwards",
+        "total": 42,
+        "passed": 42,
+        "failed": 0,
+        "skipped": 0,
+        "exit": 0,
+        "log": "/tmp/kubeclaw-cloud-reviews/node-custody-correction/focused-tests.log"
+      }
+    ],
+    "skipBoundary": "34 named native Python3.14/annotationlib witnesses unavailable on actual Python3.11.2. Shared discovery and exact receiving-source assertions execute. No unavailable native witness marked passed.",
+    "prerequisite": {
+      "command": "npm run sync-contract --workspace @kubeclaw/openclaw-agent-observer",
+      "exit": 0,
+      "log": "/tmp/kubeclaw-observer-sync.log",
+      "scope": "declared ignored copies of canonical contract sources; no product implementation edits"
+    },
+    "authorRuntimeRecovery": "Initial publication and Studio authors interrupted by request-owner403; retained candidate/evidence recovered by fresh Sol author identities, not transferred acceptance.",
+    "publication": {
+      "page": "docs/site/reference/project-pipeline-publication.md",
+      "sha256": "427e9e6add725db76f75273e9928d6e673ef0d1e2a87abf02f9974f0ec8e4eaf",
+      "state": "author ready; independent reviews pending",
+      "report": "/tmp/kubeclaw-cloud-reviews/publication-author-resumed/author-report.md",
+      "readerReview": {
+        "state": "scoped PASS; no package acceptance",
+        "report": "/tmp/kubeclaw-cloud-reviews/publication-studio-reader-review/report.md"
+      },
+      "qualityReview": {
+        "state": "scoped PASS; no package acceptance",
+        "identity": "/root/pages_quality_audit",
+        "report": "/tmp/kubeclaw-cloud-reviews/pages-quality-audit/report.md",
+        "sha256": "427e9e6add725db76f75273e9928d6e673ef0d1e2a87abf02f9974f0ec8e4eaf"
+      }
+    },
+    "studio": {
+      "page": "docs/site/use/prism-studio.md",
+      "sha256": "43cff92757fe3a3e6800ea778390732490ec4c771461a9c6c9427656e6b48c66",
+      "state": "author source/checks completed; maintained browser unavailable, no sample/deployed journey PASS",
+      "report": "/tmp/kubeclaw-cloud-reviews/studio-author-resumed/report.json",
+      "browser": {
+        "attempts": 21,
+        "passed": 0,
+        "failedBeforeLaunch": 21,
+        "exit": 1,
+        "blocker": "missing libglib-2.0.so.0; OS install-deps fails on read-only apt state"
+      },
+      "runtimeRelease": "releases/runtime-images.json absent; no runtime release/deployment proof",
+      "readerReview": {
+        "state": "FAIL: runnable local browser edit/move/preview/reload-reset example lacks execution proof; deployed product-validation exclusion preserved",
+        "report": "/tmp/kubeclaw-cloud-reviews/publication-studio-reader-review/report.md"
+      },
+      "hostPrerequisiteVerification": {
+        "state": "unavailable unchanged native host",
+        "observed": "findmnt shows read-only root overlay for /var/lib/apt/lists and /usr/lib/x86_64-linux-gnu",
+        "limit": "No private library/browser shim, OS remount, altered product, or browser PASS."
+      },
+      "qualityReview": {
+        "state": "FAIL; full report complete, correction waits whole Source report",
+        "identity": "/root/pages_quality_audit",
+        "report": "/tmp/kubeclaw-cloud-reviews/pages-quality-audit/report.md",
+        "findings": [
+          "Q1-unsupported-intentional-design-assertion-line2934",
+          "Q2-local-browser-sample-execution-unverified"
+        ],
+        "sha256": "43cff92757fe3a3e6800ea778390732490ec4c771461a9c6c9427656e6b48c66"
+      }
+    },
+    "reviewEvidenceBoundary": "Fresh reviews read entire affected scope, not checklist of old findings; no Source/Reader/Quality/Astra PASS assumed.",
+    "commitPushState": "No new commit or push beyond restored ad73a0df62607ea9634304c3e9518826450a6a25. Generated WIP preserved; do not manually repair.",
+    "remaining": "AP09.8 and all applicable requirements/gates remain unaccepted. Complete mutation, registered deployment/platform scenarios, current generated outputs, Source/Reader/Quality and Astra, parity, AP10 R>A>D and AP11 all required.",
+    "newIndependentFinding": {
+      "status": "material; full Source review not finished",
+      "description": "For/comprehension assignment target receiver/index environment reads omitted; native legal witnesses execute, scanner returns empty and receiving gate falsely passes. Collect full findings before coherent correction.",
+      "evidence": "/tmp/kubeclaw-cloud-reviews/corrected-tool-source-review/new-target-results.json"
+    },
+    "newIndependentNodeFinding": {
+      "status": "material; full Source review not finished",
+      "description": "createRequire factory base not qualified; native examples/p.txt selected but discovery tools/p.txt passive sibling causes empty output. Finite current-source-only rejection is possible, complete review pending.",
+      "evidence": "/tmp/kubeclaw-cloud-reviews/corrected-tool-source-review/new-module-results.json"
+    },
+    "currentReviewResumption": {
+      "at": "2026-10-12T18:25:41.573490+00:00",
+      "reason": "New turn exposes no prior native children in current tree; no old live identity or final verdict assumed. Retained full Reader report recovered, interrupted Source report not complete.",
+      "authorizedSubagentLimit": 6,
+      "runtimeConcurrentAgentSlotsIncludingRoot": 4,
+      "freshIdentities": {
+        "sourceTools": "/root/tool_source_complete_audit",
+        "sourcePages": "/root/pages_source_audit",
+        "qualityPages": "/root/pages_quality_audit"
+      },
+      "scope": "Whole assigned scopes read-only on unchanged candidates; gather complete findings before coherent correction."
+    },
+    "newIndependentShellFinding": {
+      "status": "material witness; interrupted full Source report incomplete, fresh full audit running",
+      "description": "Expanded interpreter word with native Python environment reader but no interpreter-name marker returns empty and actual receiving gate falsely passes.",
+      "evidence": "/tmp/kubeclaw-cloud-reviews/corrected-tool-source-review/new-shell-results.json"
+    },
+    "semanticQualificationProcessObservation": {
+      "state": "terminal completion NOT observed",
+      "priorHandles": [
+        75767,
+        68444
+      ],
+      "currentHandles": "unknown in current exec scope; gateway process list empty",
+      "observedNativePids": [
+        979436,
+        979458
+      ],
+      "logs": "qualified-graph.log and binding-controls.log empty at inspection",
+      "limit": "Existing native processes found; not restarted or counted PASS. Later filesystem artifacts require explicit independent validation."
+    },
+    "mandatoryExecutionReadinessAudit": {
+      "identity": "/root/mandatory_execution_readiness",
+      "state": "read-only assigned; no target registration or execution acceptance inferred",
+      "evidence": "/tmp/kubeclaw-cloud-reviews/mandatory-execution-readiness"
+    }
+  },
+  "continuation1935": {
+    "at": "2026-10-12T19:38:51.890880+00:00",
+    "head": "ad73a0df62607ea9634304c3e9518826450a6a25",
+    "goal": "active; full original goal preserved",
+    "model": "GPT-6.1 Sol",
+    "restorationEvidence": "/tmp/kubeclaw-cloud-reviews/turn1935-root/transfer-reverification.json",
+    "restorationScope": "16 historical WIP files reconstructed exactly in isolated directory; all1176 extracted artifacts verified; later work preserved, not overwritten",
+    "currentToolSourceState": "FAIL prior complete REPORT.md six material findings; new full independent read-only audit gathering complete findings before coherent correction",
+    "authors": {
+      "studio": "/root/studio_coherent_author; exclusive docs/site/use/prism-studio.md",
+      "browserPrerequisites": "/root/browser_prerequisite_author; native standard installation/checks; versions only if required"
+    },
+    "reviewer": "/root/tool_full_source_fresh; fresh-context Source only; read-only",
+    "deployment": "NOT READY; no registered context/releases/scenario controls; unchanged mandatory evidence obligations",
+    "completion": "NOT COMPLETE",
+    "commitPush": "No new commit; existing local and remote HEAD match; source/generated split preserved",
+    "toolAuthorCorrection": {
+      "findings": "F1-F6 coherently corrected; current independent full Source pending",
+      "scannerFocused": {
+        "exit": 0,
+        "passed": 13,
+        "skipped": 0,
+        "log": "/tmp/kubeclaw-cloud-reviews/turn1935-root/scanner-focused.log"
+      },
+      "scannerCombinedInitial": {
+        "exit": 1,
+        "passed": 98,
+        "failed": 1,
+        "skipped": 34,
+        "scope": "class lexical fixture falsely expected an environment read for an empty comprehension; fixture changed to selected [1], native nonempty/empty class witnesses added",
+        "log": "/tmp/kubeclaw-cloud-reviews/turn1935-root/scanner-combined.log"
+      },
+      "scannerCombinedFinal": {
+        "exit": 0,
+        "records": 134,
+        "passed": 100,
+        "failed": 0,
+        "skipped": 34,
+        "cancelled": 0,
+        "log": "/tmp/kubeclaw-cloud-reviews/turn1935-root/scanner-combined-final.log"
+      },
+      "nodeAuthor": "/tmp/kubeclaw-cloud-reviews/turn1935-node-author/REPORT.md",
+      "recipeBinding": "full graph semantic comparison running; not yet qualified"
+    },
+    "studioCorrection": {
+      "sha256": "d3fd9e5778a6fe40ae4b71b12e4a773b8f4e6126b967776725463c32ccd98f95",
+      "author": "/tmp/kubeclaw-cloud-reviews/turn1935-studio-author/report.md",
+      "sourceReview": "/root/studio_source_corrected_fresh; pending",
+      "qualityReview": "/root/studio_quality_corrected_fresh; pending",
+      "browserEvidence": "/tmp/kubeclaw-cloud-reviews/turn1935-browser-prerequisites/report.md",
+      "browserOutcome": "standard download exit0, OS dependencies apt blocked by read-only root; maintained verify exit1,21 preassertion browser failures; no sample exercise PASS",
+      "versions": "No dependency upgrade installed/required; current Playwright1.62.1 package pin preserved, no product versions edit"
+    },
+    "freshToolReview": "/root/tools_corrected_full_source_fresh; functional scope reading; stable binding notification pending",
+    "deploymentClarification": "Asked asynchronously for registered target/access/release and authorized wait/cancel/restart fixtures; no dependent deployment actions",
+    "updatedAt": "2026-10-12T19:47:55.272296+00:00",
+    "additionalToolFindings": {
+      "state": "material; whole fresh Source audit still collecting; no new full gate begun",
+      "description": "Node heredoc receiver custody: second command after passive data body missed, Node-looking printf promoted, losing fd0 heredoc promoted",
+      "evidence": "/tmp/kubeclaw-cloud-reviews/turn1935-tools-corrected-source-fresh/node-passive-results.json"
+    },
+    "studioAdditionalSourceFinding": {
+      "state": "full assigned scope terminal FAIL S3; same author correcting coherently",
+      "report": "/tmp/kubeclaw-cloud-reviews/turn1935-studio-source-fresh/report.md",
+      "description": "four semantic locator facets: dev script, two revision SPIFFE guard links, trust overlay, preview bounded/media/digest checks",
+      "authorFollowup": "/root/studio_coherent_author",
+      "followupEvidence": "/tmp/kubeclaw-cloud-reviews/turn1935-studio-author-followup-s3"
+    },
+    "studioQuality": {
+      "identity": "/root/studio_quality_corrected_fresh",
+      "scope": "Full exact d3fd9e content-quality PASS, executable sample acceptance FAIL; no package acceptance",
+      "report": "/tmp/kubeclaw-cloud-reviews/turn1935-studio-quality-fresh/report.md"
+    },
+    "prebindQualification": {
+      "session": 95266,
+      "pid": 1054165,
+      "state": "original process running at last observation; no final result or PASS claimed",
+      "root": "/tmp/kubeclaw-cloud-reviews/turn1935-root/qualification",
+      "scope": "diagnostic full graph before known additional Node finding correction; do not rebind hashes without coherent correction/requalification"
+    },
+    "originalGoalPreserved": "AP09.8 and all AP01-AP11/AP09.0-13, independent roles+final Astra, parity249sources/R>A>D, all mandatory execution/gates and clean synchronized final branch remain open until proved"
+  },
+  "continuation1950": {
+    "at": "2026-10-12T19:51:48.857035+00:00",
+    "goal": "active; full original goal and all acceptance conditions preserved",
+    "priorToolReview": {
+      "state": "interrupted, incomplete; no full review verdict",
+      "reason": "native reviewer transcript ends with HTTP403 owner verification failure",
+      "provenance": "/home/node/.openclaw/agents/main/agent/codex-home/sessions/2026/10/12/rollout-2026-10-12T19-44-43-01a131a5-5e12-7722-8cee-290fcd844829.jsonl",
+      "knownFindings": "three Node heredoc custody failures retained; gather complete findings before correction"
+    },
+    "freshReviews": {
+      "toolSource": "/root/tools_whole_source_resume",
+      "studioSource": "/root/studio_s3_full_source",
+      "studioQuality": "/root/studio_s3_full_quality",
+      "state": "running; no verdict yet",
+      "publicationQuality": "/root/publication_full_quality",
+      "publicationSource": "/root/publication_full_source"
+    },
+    "studioS3Correction": {
+      "sha256": "a822fdea4ad17c7926cd8f14c949f9ab703fc1faeb683c0981eeb179086b95e2",
+      "authorReport": "/tmp/kubeclaw-cloud-reviews/turn1935-studio-author-followup-s3/report.md",
+      "mechanicalLinks": "262 source/106 local valid; author checks only",
+      "executableBlocks": "all19 unchanged, exact comparison retained",
+      "acceptance": "no previous overall verdict transferred; browser sample remains unverified"
+    },
+    "prebindQualification": {
+      "state": "original process absent, tool handle unknown, empty retained log and no expected graph/results; no completed result observed",
+      "pid": 1054165,
+      "session": 95266,
+      "root": "/tmp/kubeclaw-cloud-reviews/turn1935-root/qualification",
+      "action": "do not restart obsolete candidate; qualify stable coherent corrections later"
+    },
+    "deployment": "user clarification remains pending; no registered environment inferred",
+    "commitPush": "no new commits/push; dirty work preserved; no acceptance or completion",
+    "updatedAt": "2026-10-13T00:38:17.921343+00:00",
+    "publicationRequalification": {
+      "candidateSha256": "427e9e6add725db76f75273e9928d6e673ef0d1e2a87abf02f9974f0ec8e4eaf",
+      "rootProof": "/tmp/kubeclaw-cloud-reviews/turn1950-root/publication-requalification.json",
+      "observed": "all91 recorded product/test/dependency paths exact current/pinned/recorded bytes, all6 Bash blocks exact successful retained script; three complete retained exit0 run logs hashed",
+      "reader": "unchanged exact candidate bounded independent Reader PASS report /tmp/kubeclaw-cloud-reviews/publication-studio-reader-review/report.md",
+      "remaining": "new complete independent Source and Quality, renderer/cleanrevision/gates/packageAstra; no overall acceptance"
+    },
+    "rootAuthorityReading": {
+      "state": "all nine required original goal/handoff authority files now fullyread by root",
+      "binding": "/tmp/kubeclaw-cloud-reviews/turn1950-root/root-authority-read-bindings.json",
+      "catalogueRecordsRead": 261,
+      "limits": "authority reading only, not verification of baseline/current acceptance claims"
+    },
+    "knownAdditionalToolWitnesses": "new reviewer gathering Node inline passive data/comment/printf custody, FD/argv/generated-file custody, Python Try intermediate handler state and computed process env access; whole report pending",
+    "studioQualityCurrent": {
+      "state": "full exact contentPASS; executable sampleFAIL; no package acceptance",
+      "identity": "/root/studio_s3_full_quality",
+      "report": "/tmp/kubeclaw-cloud-reviews/turn1950-studio-quality/report.md",
+      "rootSeal": "/tmp/kubeclaw-cloud-reviews/turn1950-root/studio-quality-seal.json",
+      "candidateSha256": "a822fdea4ad17c7926cd8f14c949f9ab703fc1faeb683c0981eeb179086b95e2"
+    },
+    "studioSourceCurrent": {
+      "state": "full exact contentSourcePASS; executable sample unverified; no package acceptance",
+      "identity": "/root/studio_s3_full_source",
+      "report": "/tmp/kubeclaw-cloud-reviews/turn1950-studio-source/report.md",
+      "rootSeal": "/tmp/kubeclaw-cloud-reviews/turn1950-root/studio-source-seal.json",
+      "candidateSha256": "a822fdea4ad17c7926cd8f14c949f9ab703fc1faeb683c0981eeb179086b95e2"
+    },
+    "toolFullContinuation": {
+      "state": "six-group materialFAIL retained; explicitly incomplete fullscope, SAME reviewer now continuing entire original scope before correction",
+      "report": "/tmp/kubeclaw-cloud-reviews/turn1950-tools-whole-source/REPORT.md",
+      "identity": "/root/tools_whole_source_resume",
+      "observedSuite": {
+        "exit": 0,
+        "records": 177,
+        "passed": 143,
+        "skipped": 34,
+        "failed": 0
+      },
+      "acceptance": "not granted; no fullscope completeness claimed"
+    },
+    "publicationQualityCurrent": {
+      "state": "full exactQualityPASS",
+      "identity": "/root/publication_full_quality",
+      "report": "/tmp/kubeclaw-cloud-reviews/turn1955-publication-quality/report.md",
+      "rootSeal": "/tmp/kubeclaw-cloud-reviews/turn1950-root/publication-quality-seal.json",
+      "candidateSha256": "427e9e6add725db76f75273e9928d6e673ef0d1e2a87abf02f9974f0ec8e4eaf",
+      "limits": "no Source/render/cleancommit/package/Astra/live acceptance"
+    },
+    "publicationSourceCurrent": {
+      "state": "full exactSourcePASS",
+      "identity": "/root/publication_full_source",
+      "report": "/tmp/kubeclaw-cloud-reviews/turn1955-publication-source/report.md",
+      "rootSeal": "/tmp/kubeclaw-cloud-reviews/turn1950-root/publication-source-seal.json",
+      "candidateSha256": "427e9e6add725db76f75273e9928d6e673ef0d1e2a87abf02f9974f0ec8e4eaf",
+      "limits": "no render/cleancommit/package/Astra/live acceptance"
+    },
+    "toolFullParallelPartitions": {
+      "inventoryClassifierEnvironmentTests": "completeFAIL /root/tools_whole_source_resume",
+      "discoveryPublicationTestsApiBoundaries": "completeFAIL4groups /root/tool_discovery_full_source",
+      "registryShellNonApiWriterCrosswalk": "retained completeFAIL /root/tool_registry_full_source; explicit remainder allocated separately",
+      "boundary56and12UnresolvedAuthorities": "semantic fullFAIL /root/tool_boundary_full_source; additionalgraph pending",
+      "native19and43DependencyConsumerCrosswalk": "completeFAIL /root/tool_native_full_source",
+      "state": "All assigned full semantic partitions collected; all93 helper groups fully read. Known material findings require coherent corrections; no whole tooling acceptance.",
+      "remainingRuntimePairs": "complete assigned FAIL twenty groups /root/runtime_pairs_full_source",
+      "helperClosure000_024": "complete full assigned FAIL H1 /root/tool_helper_closure_source",
+      "helperClosure025_047": "complete full assigned PASS /root/helper_closure_025_047",
+      "helperClosure048_070": "complete full assigned FAIL H48-1 /root/helper_closure_048_070",
+      "helperClosure071_092": "retained 071–072 and082–092 complete without material findings; original partition FAIL incomplete",
+      "helperValidator073": "complete full exact assigned PASS /root/helper_validator_073",
+      "helperValidators074_081": "complete full exact Source PASS /root/helper_validators_074_081"
+    },
+    "discoveryFullSource": {
+      "state": "complete assigned partitionFAIL D1-D3",
+      "report": "/tmp/kubeclaw-cloud-reviews/turn2000-tool-discovery-source/REPORT.md",
+      "rootSeal": "/tmp/kubeclaw-cloud-reviews/turn1950-root/discovery-source-seal.json",
+      "observedTests": {
+        "passed": 43,
+        "exit": 0,
+        "failed": 0
+      },
+      "followup": "D4 bounded classifier/fact/discovery integration terminalFAIL; fullprimarycoverage preserved",
+      "followupRootSeal": "/tmp/kubeclaw-cloud-reviews/turn1950-root/discovery-source-followup-seal.json",
+      "latestReportSha256": "174f0e8a9af4c6e059f9ea7a40560c41e133861215686228c319cfb89f77dadc",
+      "literalControlLimit": "literal Secret object wronglyclassifiednonapi but recovered by literalfallback; actualexternalpayloadforwardingomitted",
+      "heredocFollowup": "D5 bounded native raw-output custody FAIL, six controls, no source changes",
+      "heredocRootSeal": "/tmp/kubeclaw-cloud-reviews/turn1950-root/discovery-heredoc-followup-seal.json"
+    },
+    "inventoryFullSource": {
+      "state": "complete retainedpartitionFAIL12groups",
+      "report": "/tmp/kubeclaw-cloud-reviews/turn1950-tools-whole-source/PARTITION-CONTINUATION.md",
+      "rootSeal": "/tmp/kubeclaw-cloud-reviews/turn1950-root/inventory-full-source-seal.json",
+      "actualGates": {
+        "schemaSemantics": 0,
+        "runtimeSemantics": 0,
+        "environmentCoverage": 1
+      },
+      "limits": "wholetooling notaccepted; actualrealchartgatefailure+publishedaggregatewrongclaim+driftwitnesses"
+    },
+    "nativeFullSource": {
+      "state": "full19contracts43outputsSourceFAIL NATIVE01-03",
+      "report": "/tmp/kubeclaw-cloud-reviews/turn2015-tool-native-source/REPORT.md",
+      "rootSeal": "/tmp/kubeclaw-cloud-reviews/turn1950-root/native-full-source-seal.json",
+      "focusedTests": {
+        "exit": 1,
+        "passed": 17,
+        "failed": 2
+      },
+      "baselineLimit": "currentPythonASTreceipts2fail; exacthistoricalrepresentationcausenotproved, nohashonlyrepair",
+      "nativeGo": "/usr/local/go/bin/go ordinary1.26.5 explicitKUBECLAW_DOCS_GO_BINARY, notruntimeproductbuild",
+      "portabilityFollowup": {
+        "state": "bounded exact native3.11 representation proof complete",
+        "report": "/tmp/kubeclaw-cloud-reviews/turn2015-tool-native-source/portability/REPORT.md",
+        "rootSeal": "/tmp/kubeclaw-cloud-reviews/turn1950-root/native-portability-seal.json",
+        "correctionBoundary": "owned versioned finite ASTserializer, not hashrefresh; meaningful nodes/fields preserved; unknown nodes/fields failclosed",
+        "limits": "historical3.13vs3.14unknown; no laternativeinterpreterPASS"
+      }
+    },
+    "boundarySourceCurrent": {
+      "state": "full56+12boundarysemanticFAIL2groups reportready; additionalgraphoriginalrunpending",
+      "report": "/tmp/kubeclaw-cloud-reviews/turn2015-tool-boundary-source/report.md",
+      "rootProvisionalSeal": "/tmp/kubeclaw-cloud-reviews/turn1950-root/boundary-source-provisional-seal.json",
+      "findings": [
+        "BOUNDARY01 nonPVdocshelperrole drift skipped",
+        "BOUNDARY02 explicitoutside-rootpublicentrytransitivecustody omitted"
+      ],
+      "graph": {
+        "session": 32521,
+        "pid": 1087225,
+        "state": "Original PID absent; SAME handle unavailable even in original owner scope; terminal exit/output NOT OBSERVED; graph artifacts absent",
+        "handleRecovery": "Bounded original-owner recovery complete, no restart or fabricated terminal result",
+        "observationSeal": "/tmp/kubeclaw-cloud-reviews/turn1950-root/graph-final-observation-seal.json"
+      },
+      "rootFullSemanticSeal": "/tmp/kubeclaw-cloud-reviews/turn1950-root/boundary-full-source-seal.json",
+      "latestReportSha256": "50bf481ccf7acceec74429e286f379c2856e4bd5401b30702d59f8446dd9ab3e"
+    },
+    "registryInterruption": {
+      "state": "automaticriskflag stopped one review turn; no fullverdict inferred",
+      "action": "same reviewer now continuing passive-only source/documentation correctness with no new counterexample execution/external/product operations",
+      "policy": "ifpassive attemptrejected stopretrying andreport; preserve partialscope",
+      "deliveryClarification": {
+        "state": "only ONE actual riskflag completion; delayed duplicate event was temporarily misinterpreted as second rejection, corrected visibly",
+        "actualFailedTurn": "01a131b2-d55a-7711-a707-8d7e9dc428b3",
+        "failedAt": "2026-10-12T20:33:03.016Z",
+        "passiveFollowupTurn": "01a131d2-6092-7f60-90f2-3e50e31cf3b5",
+        "followupStartedAt": "2026-10-12T20:33:53.306Z",
+        "followupStatus": "completed passive retained report; no second rejection proved"
+      }
+    },
+    "independentStableReader": {
+      "identity": "/root/handbook_current_reader",
+      "scope": "entire current developer handbook static Reader content only, fresh/read-only/passive no command execution",
+      "state": "complete fullstatic ReadercontentPASS, practical notperformed",
+      "report": "/tmp/kubeclaw-cloud-reviews/turn2040-handbook-reader/REPORT.md",
+      "rootSeal": "/tmp/kubeclaw-cloud-reviews/turn1950-root/handbook-current-reader-seal.json",
+      "candidateSha256": "87cfb1e6a39c235dd19f0d54065aa93fc2ee4bb4bfcad0b874b4a25d48c99353"
+    },
+    "unstartedCapacityQuality": "spawn attempt rejected at active concurrency limit; no agent or review claimed",
+    "registryRetainedFinal": {
+      "state": "complete retained Source FAIL; runtime remainder now complete FAIL, helper 000–047 complete, 048–092 in progress",
+      "report": "/tmp/kubeclaw-cloud-reviews/turn2000-tool-registry-source/REPORT.md",
+      "rootSeal": "/tmp/kubeclaw-cloud-reviews/turn1950-root/registry-retained-final-seal.json"
+    },
+    "helperClosure000024": {
+      "state": "full exact assigned Source FAIL H1; no whole closure acceptance",
+      "report": "/tmp/kubeclaw-cloud-reviews/turn2040-helper-closure-source/REPORT.md",
+      "rootSeal": "/tmp/kubeclaw-cloud-reviews/turn1950-root/helper-000-024-source-seal.json",
+      "scopeLimits": "No tests, execution, whole tooling, package or Astra acceptance"
+    },
+    "helperClosure025047": {
+      "state": "full exact assigned Source PASS; no execution or broader acceptance",
+      "report": "/tmp/kubeclaw-cloud-reviews/turn2045-helper-025-047/REPORT.md",
+      "rootSeal": "/tmp/kubeclaw-cloud-reviews/turn1950-root/helper-025-047-source-seal.json",
+      "scopeLimits": "No tests, execution, whole tooling, package or Astra acceptance"
+    },
+    "runtimePairsFullSource": {
+      "state": "full assigned passive Source FAIL twenty grouped findings",
+      "report": "/tmp/kubeclaw-cloud-reviews/turn2040-runtime-pairs-source/REPORT.md",
+      "rootSeal": "/tmp/kubeclaw-cloud-reviews/turn1950-root/runtime-pairs-source-seal.json",
+      "scopeLimits": "No tests, execution, whole tooling, package or Astra acceptance"
+    },
+    "helperClosure071092": {
+      "state": "FAIL assigned incomplete; no material finding in fully read retained 071–072 and082–092",
+      "fullReadGroups": [
+        71,
+        72,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89,
+        90,
+        91,
+        92
+      ],
+      "unreadGroups": [
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81
+      ],
+      "report": "/tmp/kubeclaw-cloud-reviews/turn2045-helper-071-092/REPORT.md",
+      "rootSeal": "/tmp/kubeclaw-cloud-reviews/turn1950-root/helper-071-092-retained-seal.json"
+    },
+    "helperClosure048070": {
+      "state": "full exact Source FAIL H48-1; initializer custody overlaps H1",
+      "report": "/tmp/kubeclaw-cloud-reviews/turn2045-helper-048-070/REPORT.md",
+      "rootSeal": "/tmp/kubeclaw-cloud-reviews/turn1950-root/helper-048-070-source-seal.json",
+      "groups": 23,
+      "definitions": 482,
+      "sourceFiles": 55
+    },
+    "helperValidator073": {
+      "state": "full exact assigned Source PASS",
+      "report": "/tmp/kubeclaw-cloud-reviews/turn2055-helper-validator-073/REPORT.md",
+      "rootSeal": "/tmp/kubeclaw-cloud-reviews/turn1950-root/helper-validator-073-source-seal.json"
+    },
+    "helperValidators074081": {
+      "state": "full exact assigned Source PASS",
+      "report": "/tmp/kubeclaw-cloud-reviews/turn2055-helper-validators-074-081/REPORT.md",
+      "rootSeal": "/tmp/kubeclaw-cloud-reviews/turn1950-root/helper-validators-074-081-source-seal.json"
+    },
+    "coherentCorrectionAuthors": {
+      "state": "Inventory helper followup/output harness admission/native external authority active; runtime returned partial ownership; no stable whole candidate",
+      "inventory": {
+        "identity": "/root/inventory_coherent_correction",
+        "ownership": "inventory plus environment/Python/schema focused tests and maintained family/runtime claims"
+      },
+      "output": {
+        "identity": "/root/output_coherent_correction",
+        "ownership": "discovery/classifier/product-scope/publication tests plus finite shared shell custody helper"
+      },
+      "native": {
+        "identity": "/root/native_coherent_correction",
+        "ownership": "Go/Python adapters plus finite versioned AST serializer/new adapter tests",
+        "state": "Owned correction complete; eleven focused tests pass, existing selection fifteen pass/two fail, no authority tuples rebound",
+        "report": "/tmp/kubeclaw-cloud-reviews/turn2105-native-author/REPORT.md",
+        "rootSeal": "/tmp/kubeclaw-cloud-reviews/turn1950-root/native-author-correction-seal.json"
+      },
+      "parent": "Registry semantic proof binding, shared generator/matrix/integration; parent stops editing runtime-consumer contracts until author returns ownership",
+      "acceptance": "none; fresh independent full affected reviews after stable correction",
+      "parentProgress": "Direct runtime F1/F2/F12/F15/F16 corrected with narrow implementation evidence; F17 exact producer-only transports added, stronger per-producer qualification still pending. Registry n2/n99 prose corrected, no proof digests rebound. Structural/syntax/range checks exit0, no independent acceptance.",
+      "runtime": {
+        "identity": "/root/runtime_coherent_correction",
+        "ownership": "Runtime-consumer contracts exclusively transferred from parent; actual producing-process receipt qualification and remaining direct contract correction",
+        "state": "Coherent followup in progress: actual declaration/container/command/guard metadata, newly discovered named reader contracts, no provisional metadata approval"
+      }
+    },
+    "configuredEnvironmentRenderer": {
+      "state": "Generator source adjusted, syntax check exit0 after one corrected template syntax failure; no actual output generation or full render acceptance",
+      "file": "scripts/docs-generate.mjs",
+      "scope": "Supported Buster config-selected environment names separately visible with actual source/field/conditions/evidence, no fictitious fixed-name list",
+      "actualRowsChecked": 5,
+      "isolatedRendererExit": 0,
+      "evidence": "/tmp/kubeclaw-cloud-reviews/turn2115-root-renderer/result.json",
+      "canonicalPathConvention": "site-relative reference/*.md; relative generated page links checked",
+      "limits": "No full current generation/publication or semantic acceptance; actual author row snapshot may still change"
+    },
+    "runtimeCorrectionInitial": {
+      "state": "Initial author complete, six focused PASS; integration found same-file wrong-container custody still unvalidated, coherent followup active",
+      "report": "/tmp/kubeclaw-cloud-reviews/turn2115-runtime-author/REPORT.md",
+      "rootHistoricalSeal": "/tmp/kubeclaw-cloud-reviews/turn1950-root/runtime-author-correction-seal.json",
+      "followupIdentity": "/root/runtime_coherent_correction",
+      "limits": "Do not transfer six-test author result to changed followup or infer full producing-process qualification"
+    },
+    "nativePython314": {
+      "state": "Official CPython3.14.8 native adapter subset8PASS and owning environment/witness suite78PASS0FAIL0SKIP; no whole acceptance",
+      "evidence": "/tmp/kubeclaw-cloud-reviews/turn2120-python314",
+      "buildSession": 42529,
+      "buildTerminalExit": 0,
+      "adapterSubsetSession": 5912,
+      "adapterSubsetTerminalExit": 0,
+      "adapterSubsetPassed": 8,
+      "globalEnvironmentChanged": false,
+      "selection": "Command-local PATH selects same genuine standard installed python3 for scanner and native witnesses, no shims",
+      "original314Skips": "Original3.11 34 skips retained, not retroactively converted to PASS",
+      "environmentSuite": {
+        "session": 7073,
+        "terminalExit": 0,
+        "passed": 78,
+        "failed": 0,
+        "skipped": 0,
+        "evidence": "/tmp/kubeclaw-cloud-reviews/turn2120-python314/python-environment-native314-result.json",
+        "recordedInputsUnchangedDuringRun": true,
+        "recordedInputHashes": {
+          "scripts/docs-configuration-inventory.mjs": "38a9a3d9d941ef3430b904191fa28beda916fe3f1e86fd59607d87d7fef3b62d",
+          "scripts/docs-shell-source-custody.mjs": "519667a901f462ce61ad7ab4bd968c0a705ea2ca01ea0008423ec8470e3cac9b",
+          "scripts/docs-runtime-consumer-contracts.mjs": "d20f7dd66a0f55c34e091c1e934afa914ee6ed260b61e7c0e345755a1c8b2548",
+          "scripts/tests/python-environment-discovery.test.mjs": "86fdb376292c1742a7ad5c0b56ec4cb2802521af6de78e580e673297ddf1b9b8"
+        },
+        "reuseBoundary": "Inventory/runtime subsequently changed; evidence belongs exact recorded candidate, not current whole gate"
+      }
+    },
+    "studioImageDeliveryObservation": {
+      "state": "Source recipe missing studio-config.ts and studio-request.ts COPY into final Studio image; standalone readers remain, default image delivery unproved",
+      "sources": [
+        "docker/Dockerfile.prism-studio",
+        "skills/prism/server/studio.ts"
+      ],
+      "limits": "Source observation only; no actual image build or deployment result, no product edit; default image receiver must remain transport-only until delivery established"
+    },
+    "inventoryCorrectionInitial": {
+      "state": "Owned coherent corrections returned;178tests144PASS34genuine3.11SKIP0FAIL;35acquisition controlsPASS; actual source gate explicit helper blocker",
+      "report": "/tmp/kubeclaw-cloud-reviews/turn2105-inventory-author/REPORT.md",
+      "hashes": "/tmp/kubeclaw-cloud-reviews/turn2105-inventory-author/final-owned-source-hashes.json",
+      "helperRemainder": "Actual3families/demo4/Prism8/registry finite builder unqualified;208index partial",
+      "followup": "/root/inventory_coherent_correction bounded actual helper/caller projection ongoing; no general interpreter or acceptance"
+    },
+    "runtimeCorrectionFollowup": {
+      "state": "Ownership returned;15bounded cases observedPASS, two failed13case full runs retained; no whole verdict",
+      "report": "/tmp/kubeclaw-cloud-reviews/turn2115-runtime-author-followup/REPORT.md",
+      "runtimeSha256": "a9b7eea252a83ab6e172fef7e74ecaaa02df08501c9b1e21a947ae162b0975f1",
+      "testSha256": "3dc42c9161522f9d84ef5878d303965aac619cd88a4e8ea6e79e540767d3b6b4",
+      "limits": "208 prehelper partial producer receipts;34new actual reader structures; helper projection requires later receiving qualification; source assembly not deployed success"
+    },
+    "externalNativeAuthorityFollowup": {
+      "state": "Author returned boundedcanonicalizer exactsource/checksum/4caller/errorcontrol correction;13focusedPASS on3.11and3.14,38originalGooperationdigests preserved;Hubble/NRIremain source-specific unresolved",
+      "rootEvidence": "/tmp/kubeclaw-cloud-reviews/turn2125-external-native-authority/canonicalizer-primary-source-custody.json",
+      "identity": "/root/native_external_authority_correction",
+      "limits": "No independent acceptance or whole nativegate qualification; ordinary exact external source cache required",
+      "primarySourceFindings": "Actual Hubble remote codes.Unknown error message propagated without prefix may carry JSON/API shape; NRI lifecycle error origin examined but stillunsupported; source-specific failures retained",
+      "report": "/tmp/kubeclaw-cloud-reviews/turn2135-native-external-author/REPORT.md",
+      "authorSeal": "/tmp/kubeclaw-cloud-reviews/turn1950-root/native-external-author-seal.json"
+    },
+    "outputCorrectionCandidate": {
+      "state": "Owned candidate returned;12focusedPASS;publication45tests44PASS1FAIL staleRuntimeSourceAuthority;57candidate roles initialized notqualified",
+      "report": "/tmp/kubeclaw-cloud-reviews/turn2105-output-author/REPORT.md",
+      "harnessRemainder": "17newactualpackage --test harnesses4823lines pluswildcards need full Sourcepurpose custody; no name/path exemption",
+      "reviewAttempt": "FreshGPT6.1Sol Source initialspawnfailedcapacity retained; resumedturnspawn succeeded /root/test_harness_source_fresh full17scope in progress, no verdict"
+    },
+    "helperProjectionCorrection": {
+      "state": "Author stable224index exactly recaptured by parent;16helper receiving receipts integrated,16positive+80custodymutation controlsPASS; full regression/native14 pending",
+      "identity": "/root/inventory_coherent_correction",
+      "evidence": "/tmp/kubeclaw-cloud-reviews/turn2135-helper-projection-author",
+      "limits": "Author correction only; actual receiving and freshfullSource/Reader/Quality mandatory; no wholeHelm evaluator/default-onlysampling",
+      "authorTests": {
+        "records": 182,
+        "passed": 148,
+        "skipped": 34,
+        "failed": 0,
+        "nativeHelmControls": 12,
+        "nativeExpectedRejectionStatusesRetained": true
+      },
+      "parentEvidence": "/tmp/kubeclaw-cloud-reviews/turn1950-root/helper-runtime-integration-results.json",
+      "runtimeSha256": "21bcd06fa06caa435133d17439e699aa7f3c1c2f06c3e82ab65318d6bc3b1595",
+      "sourceSeal": "/tmp/kubeclaw-cloud-reviews/turn1950-root/helper-projection-author-seal.json"
+    },
+    "nativePython314Integrated": {
+      "state": "78PASS0FAIL0SKIP owning suite on final5recordedinputs unchangedduringrun; subsequent runtime evidence-only fallback changedsource, no old wholeverdicttransfer",
+      "session": 23352,
+      "terminalExit": 0,
+      "evidence": "/tmp/kubeclaw-cloud-reviews/turn1950-root/python314-integrated-result.json",
+      "limits": "No fullconfiguration/publication/packageacceptance; runtime laterfieldfallback is separately boundedregression"
+    },
+    "runtimeHelperIntegration": {
+      "state": "16actualhelperreceipts+80changedcustodycontrolsPASS;full15run14PASS1FAIL root evidence-array regression preserved; failedcase repairedand1PASSterminal0; helper16/80recheckPASS",
+      "fullRunSession": 48628,
+      "fullRunExit": 1,
+      "fullRunLog": "/tmp/kubeclaw-cloud-reviews/turn1950-root/runtime-integrated-focused.tap",
+      "repairSession": 50077,
+      "repairExit": 0,
+      "repairLog": "/tmp/kubeclaw-cloud-reviews/turn1950-root/runtime-missing-evidence-regression.tap",
+      "limits": "No full15PASSverdict fabricated; helpernamespace/validation findings now require affected sourcefollowup"
+    },
+    "helperProjectionRootFindings": {
+      "state": "Two coherent material gaps witnessed; sameauthor correctivefollowup running",
+      "findings": [
+        "Registry preceding validator can be wrapped in iffalse while semantic receipt unchanged",
+        "Known named helper shadow in actualtemplates/shadow.yaml ignored by .tpl-onlynamespaceacquisition"
+      ],
+      "evidence": [
+        "/tmp/kubeclaw-cloud-reviews/turn1950-root/helper-validation-guard-witness.json",
+        "/tmp/kubeclaw-cloud-reviews/turn1950-root/helper-yaml-definition-witness.json"
+      ],
+      "identity": "/root/inventory_coherent_correction",
+      "output": "/tmp/kubeclaw-cloud-reviews/turn2165-helper-custody-followup"
+    },
+    "testHarnessSourceCurrent": {
+      "state": "Complete bounded finite17source479selector purposePASS aftersame-roleclosure;currentadmissionFAIL F1wildcards;F3publicproducer/F4initializationgeneratedchild boundariesretained",
+      "report": "/tmp/kubeclaw-cloud-reviews/turn2150-harness-source-fresh/REPORT.md",
+      "identity": "/root/test_harness_source_fresh",
+      "limits": "No rolesbound/public genericproducerexemptions/wholetoolapproval",
+      "sources": 114,
+      "readRangeLines": 15221,
+      "chunks": 170,
+      "correctionIdentity": "/root/output_coherent_correction",
+      "correctionEvidence": "/tmp/kubeclaw-cloud-reviews/turn2180-output-harness-correction",
+      "wildcardLimits": "Actual142expandedsourcefiles independentlyadmitted, NOT17roleapproval;no blankettestexemption"
+    },
+    "handbookSourceCurrent": {
+      "state": "Complete finite defining-source continuation collected coherentF1–F7 SourceFAIL,175source identities; no execution/gateacceptance",
+      "report": "/tmp/kubeclaw-cloud-reviews/turn2155-handbook-source-fresh/report.md",
+      "identity": "/root/handbook_full_source_fresh",
+      "remaining": "Correct completeSource+Qualitycoherentbatch, thennewfullfreshreviews/practicalproof",
+      "qualityAttempt": "SeparatefreshQualityspawn rejected agentthreadlimit, no reviewer orverdict",
+      "readerLimits": "UnchangedstaticReader result retained its exact reviewedfacet only; newSource prerequisitefindings prevent broad/practicalReader/packageclaim"
+    },
+    "handbookQualityCurrent": {
+      "state": "Completewhole1363pageQualityFAILQ1–Q6,8hashedchunks/fullcontract, no practical/gateacceptance",
+      "identity": "/root/handbook_quality_complete_fresh",
+      "report": "/tmp/kubeclaw-cloud-reviews/turn2210-handbook-quality-fresh/report.md"
+    },
+    "handbookCoherentCorrection": {
+      "status": "author correction returned; fresh full reviews and actual SDK integration pending",
+      "sourceFindings": 7,
+      "qualityFindings": 6,
+      "handbookSha256": "d5a5d17dda6124c1d34c9b5738d0c6e2f96465c4d0268767f5370eb804523efd",
+      "readmeSha256": "2597361945ee0bcb2258060fd221f250d4086c07e20b6220a4b8b860b1e3f7c9",
+      "evidence": "/tmp/kubeclaw-cloud-reviews/turn2220-handbook-coherent-author/report.md",
+      "passiveChecks": {
+        "sourceLinks": 181,
+        "localLinks": 103,
+        "bashSyntaxBlocks": 42,
+        "npmScriptReferences": 74
+      },
+      "executionAcceptance": false,
+      "sdkGap": "REF-018/A910-04 author still implementing; not accepted"
+    },
+    "sdkReferenceImplementation": {
+      "status": "author completed; parent integrated canonical/generated pages, inventory, generator, CLI/package, metadata/navigation; full fresh Source ongoing",
+      "exports": 119,
+      "entrypoints": 2,
+      "recursiveSchemaFacts": 551,
+      "memberFacts": 520,
+      "authorFocusedTests": {
+        "passed": 7,
+        "failed": 0,
+        "skipped": 0
+      },
+      "authorEvidence": "/tmp/kubeclaw-cloud-reviews/turn2235-sdk-reference-author/author-report.md",
+      "parentFinalSeal": "/tmp/kubeclaw-cloud-reviews/turn1950-root/sdk-parent-integrated-seal.json",
+      "parentExactByteCheck": {
+        "session": 42408,
+        "exitCode": 0,
+        "exports": 119,
+        "log": "/tmp/kubeclaw-cloud-reviews/turn1950-root/sdk-parent-final-check.log"
+      },
+      "governanceCheck": {
+        "exitCode": 0,
+        "pageCount": 155,
+        "log": "/tmp/kubeclaw-cloud-reviews/turn1950-root/sdk-parent-governance.log"
+      },
+      "freshSourceReviewer": "/root/sdk_reference_full_source_fresh",
+      "independentAcceptance": false,
+      "readerQualityAstra": "pending distinct role reviews"
+    },
+    "helperCustodyFollowupFinal": {
+      "status": "author returned; parent requalified only added namespace/execution facets and 16 existing receiver identities",
+      "evidence": "/tmp/kubeclaw-cloud-reviews/turn2165-helper-custody-followup/REPORT.md",
+      "tests": {
+        "passed": 152,
+        "skipped": 34,
+        "failed": 0,
+        "pythonVersion": "3.11"
+      },
+      "originalLiteralProducerReceiptsPreserved": 208,
+      "helperReceipts": 16,
+      "parentPositiveControls": 16,
+      "parentNegativeControls": 80,
+      "wholeAcceptance": false,
+      "historicalWitnessPreservationNote": "/tmp/kubeclaw-cloud-reviews/turn1950-root/helper-witness-evidence-preservation-note.txt"
+    },
+    "outputHarnessCorrectionFinal": {
+      "status": "author returned; fresh affected Source and parent semantic qualification pending",
+      "evidence": "/tmp/kubeclaw-cloud-reviews/turn2180-output-harness-correction/REPORT.md",
+      "focusedTestsPassed": 7,
+      "regressionTestsPassed": 12,
+      "publicationTests": {
+        "passed": 44,
+        "failed": 1,
+        "failure": "stale runtime Source/caller authority"
+      },
+      "finiteHarnesses": 17,
+      "wildcardAcquiredProductSeeds": 142,
+      "productSeedsExempted": false,
+      "wholeAcceptance": false
+    },
+    "environmentCoverageCurrent": {
+      "status": "FAIL; coherent literal-reader case correction underway",
+      "correctArgv": [
+        "node",
+        "scripts/docs-configuration-inventory.mjs",
+        "--check-environment-coverage-only"
+      ],
+      "exitCode": 1,
+      "session": 35674,
+      "finding": "NODE_ENVIRONMENT_UNSUPPORTED scripts/docs-api-documentation-role-custody.mjs:24842 npm_execpath; finite Node name/helper/Deno/destructuring family inspected before correction",
+      "log": "/tmp/kubeclaw-cloud-reviews/turn1950-root/environment-final-helper-receiving-correct-flag.log",
+      "incorrectFlagRun": {
+        "session": 54176,
+        "exitCode": 1,
+        "flag": "--verify-environment-coverage",
+        "disposition": "not environment coverage; default inventory path failed stale Source authority before writing outputs"
+      },
+      "newReceivingContracts": [
+        "npm_execpath:scripts/docs-api-documentation-role-custody.mjs",
+        "PATH:scripts/docs-api-documentation-role-custody.mjs",
+        "NODE_OPTIONS:scripts/docs-api-documentation-role-custody.mjs"
+      ],
+      "acceptance": false
+    },
+    "handbookCurrentFreshSource": {
+      "status": "full read-only review ongoing; candidate frozen",
+      "reviewer": "/root/handbook_corrected_full_source_fresh",
+      "evidence": "/tmp/kubeclaw-cloud-reviews/turn2250-handbook-source-fresh",
+      "newObservedFinding": "ownership table still claims SDK reference missing despite integrated canonical routes; collecting complete findings before coherent correction",
+      "acceptance": false
+    },
+    "runtimeReceivingFinalTestRun": {
+      "status": "terminal PASS for actual selected 15 custody cases; not whole Source/gate acceptance",
+      "session": 44137,
+      "exitCode": 0,
+      "passed": 15,
+      "failed": 0,
+      "skipped": 0,
+      "log": "/tmp/kubeclaw-cloud-reviews/turn1950-root/runtime-receiving-final-helper-and-native-caller.tap",
+      "scope": "producer custody/default delivery, receiving transport and header boundaries; independent Node literal-reader edit underway during run does not make this evidence whole-scanner approval"
+    },
+    "nodeEnvironmentCaseCorrection": {
+      "status": "author returned; finite exact-case acquisition corrected",
+      "report": "/tmp/kubeclaw-cloud-reviews/turn2245-node-env-case-author/REPORT.md",
+      "inventorySha256": "dbabe672354bbef811ef4e8c6baad51c15848f09c764af55eeafb49c57f69905",
+      "focused": {
+        "passed": 47,
+        "failed": 0,
+        "skipped": 0
+      },
+      "regression": {
+        "passed": 156,
+        "failed": 0,
+        "skipped": 34,
+        "interpreter": "3.11; genuine annotationlib-unavailable skips"
+      },
+      "nativeNodeWitnesses": 7,
+      "DenoEvidence": "parser only, not native execution",
+      "producerAndProductSelectorBoundariesChanged": false,
+      "independentAcceptance": false
+    },
+    "environmentCoverageAfterNodeCase": {
+      "status": "FAIL; Node spelling fixed, four new Go cache receiving contracts then found and corrected by parent",
+      "session": 93044,
+      "exitCode": 1,
+      "log": "/tmp/kubeclaw-cloud-reviews/turn1950-root/environment-node-case-corrected.log",
+      "pairs": [
+        "GOMODCACHE:scripts/docs-api-go-output-role-adapter.go",
+        "GOPATH:scripts/docs-api-go-output-role-adapter.go",
+        "GOMODCACHE:scripts/docs-api-output-discovery.mjs",
+        "GOPATH:scripts/docs-api-output-discovery.mjs"
+      ],
+      "newRun": {
+        "status": "running",
+        "session": 58031,
+        "log": "/tmp/kubeclaw-cloud-reviews/turn1950-root/environment-node-case-go-cache-contracts.log"
+      },
+      "wholeAcceptance": false
+    },
+    "sdkIntegratedReferenceCheck": {
+      "status": "FAIL",
+      "session": 51305,
+      "exitCode": 1,
+      "log": "/tmp/kubeclaw-cloud-reviews/turn1950-root/sdk-parent-refs.log",
+      "newSdkFinding": "root-added metadata cites nonexistent src/source.ts; Source reviewer notified, frozen candidate preserved for coherent full collection",
+      "otherFindings": [
+        "three retained historical repository-directory references",
+        "three missing generated Helm-value anchors"
+      ],
+      "acceptance": false
+    },
+    "python314FinalNodeCase": {
+      "status": "terminal PASS for owning Python environment witness suite",
+      "session": 83541,
+      "exitCode": 0,
+      "passed": 78,
+      "failed": 0,
+      "skipped": 0,
+      "allFiveRecordedInputsUnchangedDuringRun": true,
+      "result": "/tmp/kubeclaw-cloud-reviews/turn1950-root/python314-final-node-case-and-helper-result.json",
+      "log": "/tmp/kubeclaw-cloud-reviews/turn1950-root/python314-final-node-case-and-helper.tap",
+      "laterSourceChange": "Parent subsequently added four unrelated explicit Go cache receiving contracts; no whole runtime-module verdict transferred",
+      "wholeAcceptance": false
+    },
+    "environmentCoverageAfterGoCacheContracts": {
+      "status": "PASS for exact environment receiving-source coverage only",
+      "session": 58031,
+      "exitCode": 0,
+      "discoveredNames": 457,
+      "configuredKeyReceivers": 5,
+      "log": "/tmp/kubeclaw-cloud-reviews/turn1950-root/environment-node-case-go-cache-contracts.log",
+      "scope": "Every discovered reader/producer pair has a finite receiving contract; not whole Source, generator, native runtime, gate or package acceptance"
+    },
+    "sdkFreshSourceProgress": {
+      "status": "material FAIL draft; full assigned reading continues before coherent corrections",
+      "reviewer": "/root/sdk_reference_full_source_fresh",
+      "findingsReported": [
+        "nonexistent source.ts metadata",
+        "reachable provider/report callback contract omissions",
+        "demonstrated semantic-source drift blind spot in isolated documentation fixture"
+      ],
+      "coverage": "full generated page/inventory remainder still being read; no full verdict claimed",
+      "parentDirective": "complete same-role full scope and all findings before final report and corrections",
+      "acceptance": false
+    },
+    "handbookSourceCorrectedCheckpoint": {
+      "status": "FAIL / INCOMPLETE checkpoint; same-role complete scope continuation started before corrections",
+      "report": "/tmp/kubeclaw-cloud-reviews/turn2250-handbook-source-fresh/report.md",
+      "findings": [
+        "S1 stale SDK ownership-table routing",
+        "S2 exact centrally generated Node 24.15.0 host requirement missing",
+        "S3 actual Helm and Go -race/cgo compiler environment prerequisites missing",
+        "S4 compiler progress-scaffold fixture absolute /usr/bin/tar prerequisite missing"
+      ],
+      "retainedReadScope": {
+        "handbookLines": 1880,
+        "extendLines": 494,
+        "sourceLocatorOccurrences": 181,
+        "finiteCommandBoundaryFiles": 99
+      },
+      "remaining": "Broader 7454-line definition extraction and necessary native, cross-language, release, documentation-check and historical-status defining closures",
+      "candidateUnchanged": true,
+      "completeReview": false,
+      "correctionReady": false,
+      "independentAcceptance": false
+    },
+    "sdkFreshSourceCheckpoint": {
+      "status": "FAIL / INCOMPLETE checkpoint; same-role full remaining scope continuation started",
+      "report": "/tmp/kubeclaw-cloud-reviews/turn2250-sdk-source-fresh/source-report.md",
+      "progress": "/tmp/kubeclaw-cloud-reviews/turn2250-sdk-source-fresh/review-progress.json",
+      "findings": [
+        "SDK-SOURCE-01 nonexistent metadata dependency source.ts",
+        "SDK-SOURCE-02 missing recursive reachable callback contracts and validators",
+        "SDK-SOURCE-03 unbound semantic dependency producer mutation leaves generated outputs unchanged"
+      ],
+      "generatedContiguousReadLines": 1140,
+      "generatedTotalLines": 4911,
+      "inventoryAllRawBytesRead": false,
+      "all119AnnotationsRead": true,
+      "all31BoundSourcesReadAndEqual": true,
+      "all551IndexedRulesEqualSource": true,
+      "focusedTests": {
+        "passed": 7,
+        "failed": 0,
+        "skipped": 0
+      },
+      "completeReview": false,
+      "correctionReady": false,
+      "candidateFrozen": true,
+      "acceptance": false
+    },
+    "handbookSourceCorrectedComplete": {
+      "status": "complete assigned Source FAIL S1-S6, no unread assigned remainder",
+      "report": "/tmp/kubeclaw-cloud-reviews/turn2250-handbook-source-fresh/report.md",
+      "parentSourceCustodySeal": "/tmp/kubeclaw-cloud-reviews/turn1950-root/handbook-corrected-full-source-seal.json",
+      "definitionSourceIdentities": 99,
+      "adaptiveSourceIdentities": 43,
+      "selectedSourceLines": 7355,
+      "physicalExcerptLines": 7553,
+      "candidateUnchanged": true,
+      "findings": [
+        "S1 SDK ownership-table routing",
+        "S2 exact native-host Node patch",
+        "S3 actual Helm and Go race/cgo environment",
+        "S4 absolute archive prerequisite for progress-scaffold compiler fixture",
+        "S5 transaction fixture absent-schema/create privileges/retained state and owner cleanup/repeat",
+        "S6 native preflight does not prove descendant pool emptiness"
+      ],
+      "readRequestEOFOvershoots": "Two requested ranges extend past EOF; parent seal separates requests from actual physical extents, original artifacts retained",
+      "otherPartitions": "SDK full semantics, tooling, practical Reader/Quality/Astra remain separate",
+      "accepted": false
+    },
+    "handbookS1S6StagedCorrection": {
+      "status": "complete staged-only author batch; not applied while SDK Source candidate frozen",
+      "report": "/tmp/kubeclaw-cloud-reviews/turn2300-handbook-s1-s6-author/report.md",
+      "patch": "/tmp/kubeclaw-cloud-reviews/turn2300-handbook-s1-s6-author/author.patch",
+      "stagedHandbookSha256": "447e807c96cc18832ccea532a58e8ba72e6996af71d4ac2d95cede76ce8bc704",
+      "checks": {
+        "localLinks": 111,
+        "sourceLocatorExtents": 200,
+        "bashSyntaxBlocks": 46,
+        "npmDeclarations": 76,
+        "databaseNodeHeredoc": "syntax only",
+        "patchApplicability": "pass, not applied"
+      },
+      "frozenPagesEqual": true,
+      "productExecution": false,
+      "accepted": false
+    },
+    "nativeCorrectedFullSourceFresh": {
+      "status": "same-role full review ongoing after retained context checkpoint; material serializer alias bypass confirmed",
+      "reviewer": "/root/native_corrected_full_source_fresh",
+      "checkpoint": "/tmp/kubeclaw-cloud-reviews/turn2300-native-source-fresh/CHECKPOINT.md",
+      "finding": "shutdown local codec=json; setattr(codec,dumps,lambda...) retains nativeStateQualified and integrated discovery returns empty, while bounded official Python3.14 function execution emits Secret root",
+      "scope": "all corrected native adapters/AST protocol, nineteen native contracts/43 outputs and defining dependencies",
+      "remaining": "controller main 2099 lines, types remainder, exact primary canonicalizer sources, dependency tuples, tests/current captures/authority",
+      "correctionReady": false,
+      "accepted": false
+    },
+    "nativeCorrectedSourceComplete": {
+      "status": "complete assigned Source FAIL F1-F4; all findings collected before staged corrections",
+      "report": "/tmp/kubeclaw-cloud-reviews/turn2300-native-source-fresh/REPORT.md",
+      "reportSha256": "ebe33f94393a80627a72572ea53e3e3c5612c5510fc18cecab807f10953c5e81",
+      "nativeContracts": 19,
+      "originalOutputs": 43,
+      "storedDistinctDependencyFacts": 204,
+      "actualDistinctDependencyFacts": 349,
+      "newDistinctFacts": 145,
+      "preservedGoOperationHashes": 38,
+      "focusedNativeTests": {
+        "passed": 13,
+        "failed": 0,
+        "skipped": 0
+      },
+      "maintainedNativeTests": {
+        "passed": 6,
+        "failed": 2,
+        "skipped": 0,
+        "failure": "two unchanged-original Go baselines fail stale expanded dependency admission"
+      },
+      "findings": [
+        "F1 reflective serializer capability state aliases/escape",
+        "F2 patch offline execution exposes live JSON module builtins",
+        "F3 GOFLAGS warm-cache admission and cold native acquisition authority",
+        "F4 all38 unintegrated expanded Go dependency receipts"
+      ],
+      "accepted": false
+    },
+    "nativePythonF1F2StagedCorrection": {
+      "status": "complete author stage only; not applied during SDK shared lifecycle freeze",
+      "report": "/tmp/kubeclaw-cloud-reviews/turn2330-native-python-f1-f2-author/REPORT.md",
+      "patch": "/tmp/kubeclaw-cloud-reviews/turn2330-native-python-f1-f2-author/correction.patch",
+      "checks": {
+        "python311": {
+          "passed": 16,
+          "failed": 0,
+          "skipped": 0
+        },
+        "officialPython3148": {
+          "passed": 16,
+          "failed": 0,
+          "skipped": 0
+        },
+        "originalPythonClassificationsEqual": 8,
+        "integratedReflectionCases": "all4 explicitly rejected; unchanged baseline empty",
+        "patchEscapes": "reject before sentinel file creation",
+        "patchOriginalProfiles": 6
+      },
+      "stagedHashes": {
+        "scripts/docs-api-python-output-adapter.py": {
+          "original": "5cf3103575c3604732328b2227b7106cb354f009e4f5a7c952be850f428d8496",
+          "staged": "48b569f207777ea0730ed6a42562980ea0b8144e8adde2f42efb1b1113571bfe",
+          "frozenInputEqual": true
+        },
+        "scripts/tests/native-output-adapter-custody.test.py": {
+          "original": "0129ab1596d1a05505d8b82f996a335769774e2ec288c41b8934c5e64b05eda8",
+          "staged": "085b24318ea5bfd1561fde2fe8376d667efa5678489bd6ef6bd94e3be259b318",
+          "frozenInputEqual": true
+        }
+      },
+      "accepted": false
+    },
+    "goCacheF3StagedCorrection": {
+      "status": "strengthened complete stage only; no actual source edits",
+      "report": "/tmp/kubeclaw-cloud-reviews/turn2330-go-cache-author/REPORT.md",
+      "patch": "/tmp/kubeclaw-cloud-reviews/turn2330-go-cache-author/correction.patch",
+      "focusedTests": {
+        "passed": 2,
+        "failed": 0,
+        "skipped": 0
+      },
+      "guardOrdering": "before any documentation qualification/native child invocation/cold parse/cache reuse",
+      "firstCandidate": "superseded five-line guard preserved under initial-five-line-candidate; its PASS not final",
+      "newSourceSha256": "c425aafd98086dd303b6beea280f5eef912f06db7af5893b7439e66ad63f1802",
+      "accepted": false
+    },
+    "goExpandedReceiptsParentCandidate": {
+      "status": "staged parent semantic binding candidate, NOT applied",
+      "report": "/tmp/kubeclaw-cloud-reviews/turn2330-root-go-binding/REPORT.md",
+      "crosswalk": "/tmp/kubeclaw-cloud-reviews/turn2330-root-go-binding/candidate-crosswalk.json",
+      "receipts": 38,
+      "oldDistinctFacts": 204,
+      "newDistinctFacts": 349,
+      "addedDistinctFacts": 145,
+      "originalOperationsAndOtherRegistryFieldsPreserved": true,
+      "ambiguousMatches": "all matching native records required to carry identical defining closure, including NRI duplicates",
+      "sourceEvidenceInputsRechecked": true,
+      "unsupportedHubbleNriQualified": false,
+      "actualAdmissionRetests": "pending composed integration after SDK freeze",
+      "accepted": false
+    },
+    "sdkSourceCompleteFinal": {
+      "status": "complete semantically distinct Source FAIL SDK-SOURCE-01-09, correction-ready",
+      "report": "/tmp/kubeclaw-cloud-reviews/turn2250-sdk-source-fresh/source-report.md",
+      "seal": "/tmp/kubeclaw-cloud-reviews/turn2250-sdk-source-fresh/source-review-seal.json",
+      "exports": 119,
+      "members": 631,
+      "schemaRules": 551,
+      "method": "independent all-record/member/rule audits and lossless explicit dedup custody, not claimed human rereading of every raw byte",
+      "focusedTestsPassed": 7,
+      "findings": [
+        "nonexistent source authority",
+        "reachable callback/qualified type closure",
+        "unbound semantic drift",
+        "missing positive publication classification",
+        "own/inherited and sparse parser input domain",
+        "revoked proxy fallback exceptions",
+        "native task JSON serialization coercion/effects",
+        "UTF8 byte hashing vs text uniqueness",
+        "UTF16/codepoint/UTF8 text-bound differences"
+      ],
+      "accepted": false
+    },
+    "sdkNineCoherentCorrection": {
+      "status": "author working; exact four-file exclusive ownership",
+      "author": "/root/sdk_nine_findings_coherent_author",
+      "scope": [
+        "scripts/docs-sdk-reference.mjs",
+        "scripts/docs-sdk-semantics.mjs",
+        "tests/documentation/sdk-reference.test.mjs",
+        "docs/site/reference/sdk.md"
+      ],
+      "stage": "/tmp/kubeclaw-cloud-reviews/turn2400-sdk-nine-author",
+      "reportedProgress": "all9 implemented;119namedexports551pluginrules28qualifiedsupportdecls27owningtestgate definitions210schema nodes23additionaldefiningauthoritybindings; checks pending",
+      "accepted": false
+    },
+    "sdkPositivePublicationClassification": {
+      "status": "actual selector PASS after positive records; not publication output acceptance",
+      "classification": "docs/config/documentation-tree-classification.json",
+      "newCanonicalRecords": 2,
+      "newInternalInventoryRecords": 1,
+      "registeredMarkdownPages": 155,
+      "baselineAbsenceVerified": true,
+      "evidence": "/tmp/kubeclaw-cloud-reviews/turn1950-root/sdk-positive-publication-selector.json",
+      "outputBuilt": false
+    },
+    "composedNativeHandbookIntegration": {
+      "status": "all prepared Python F1F2/cacheF3/GoF4/HandbookS1-S6 applied after complete SDK Source freeze ended",
+      "evidence": "/tmp/kubeclaw-cloud-reviews/turn1950-root/composed-native-handbook-integration.json",
+      "goOriginalOperationsPreserved": 38,
+      "registryOnlyGoDependencyFieldsChanged": true,
+      "newReceivingContract": "GOFLAGS:scripts/docs-api-output-discovery.mjs; before qualifier/native/cache, range evidence corrected",
+      "sdkAuthorScopeTouched": false,
+      "accepted": false
+    },
+    "nativeComposedChecks": {
+      "status": "terminal focused/cache PASS, maintained6PASS2FAIL with newly exposed module-file fixture parsing error",
+      "session": 56466,
+      "driverExitCode": 1,
+      "inputsUnchanged": true,
+      "maintained": {
+        "passed": 6,
+        "failed": 2,
+        "skipped": 0,
+        "failure": "fixtures send newly bound go.mod as Go AST source; not original stale receipt failure"
+      },
+      "focused": {
+        "passed": 16,
+        "failed": 0,
+        "skipped": 0
+      },
+      "cache": {
+        "passed": 2,
+        "failed": 0,
+        "skipped": 0
+      },
+      "results": "/tmp/kubeclaw-cloud-reviews/turn1950-root/composed-native-checks-results.json",
+      "fixtureCorrection": "all4 receipt-refresh callsites keep module/sum files as copied authority inputs but send only .go files to native AST adapter",
+      "targetedRerun": {
+        "session": 24727,
+        "status": "running",
+        "scope": "failed2 plus related2 mutation fixtures",
+        "log": "/tmp/kubeclaw-cloud-reviews/turn1950-root/native-receipt-module-fixtures.log"
+      },
+      "accepted": false
+    },
+    "nativeReceiptModuleFixtureCorrection": {
+      "status": "first targeted rerun terminal FAIL 2PASS2FAIL; originalfailed transport/HTTP mutation fixtures nowPASS, relatedIngress/Role miss moduleauthority data",
+      "session": 24727,
+      "exitCode": 1,
+      "passed": 2,
+      "failed": 2,
+      "skipped": 0,
+      "log": "/tmp/kubeclaw-cloud-reviews/turn1950-root/native-receipt-module-fixtures.log",
+      "inputsUnchanged": true,
+      "rootCorrection": "related2 fixtures now copy union of native Go source files and all bound module/sum/declaration authority paths; only Go files passed to native AST capture, assertions unchanged",
+      "nextRun": {
+        "session": 43272,
+        "status": "running",
+        "scope": "related2 Ingress/Role fixtures only",
+        "log": "/tmp/kubeclaw-cloud-reviews/turn1950-root/native-receipt-authority-copy.log",
+        "result": "/tmp/kubeclaw-cloud-reviews/turn1950-root/native-receipt-authority-copy-result.json"
+      },
+      "wholeAcceptance": false
+    },
+    "sdkNineIntegratedFinal": {
+      "status": "coherent author returned; actual canonical/tooling/generated candidate integrated; fresh full Source ongoing",
+      "report": "/tmp/kubeclaw-cloud-reviews/turn2400-sdk-nine-author/author-report.md",
+      "custody": "/tmp/kubeclaw-cloud-reviews/turn1950-root/sdk-nine-integrated-custody.json",
+      "focusedTests": {
+        "passed": 11,
+        "failed": 0,
+        "skipped": 0
+      },
+      "finalAnnotationTestPassed": 1,
+      "sourceBindings": 58,
+      "originalExports": 119,
+      "qualifiedSupports": 28,
+      "check": {
+        "session": 50968,
+        "exitCode": 0,
+        "log": "/tmp/kubeclaw-cloud-reviews/turn1950-root/sdk-nine-integrated-check.log",
+        "exports": 119
+      },
+      "governanceGeneratedPages": 155,
+      "accepted": false
+    },
+    "nativeReceiptAuthorityCopyFinal": {
+      "status": "targeted related Ingress/Role fixtures terminal PASS after module authority copy correction; prior failures preserved",
+      "session": 43272,
+      "exitCode": 0,
+      "passed": 2,
+      "failed": 0,
+      "skipped": 0,
+      "inputsUnchanged": true,
+      "evidence": "/tmp/kubeclaw-cloud-reviews/turn1950-root/native-receipt-authority-copy-result.json",
+      "wholeAcceptance": false
+    },
+    "freshCorrectedSource2420": {
+      "status": "three full independent Source reviews ongoing, candidate frozen",
+      "roles": [
+        "/root/native_f1_f4_corrected_full_source",
+        "/root/sdk_nine_corrected_full_source",
+        "/root/handbook_six_corrected_full_source"
+      ],
+      "nativeCheckpoint": "remaining global-json and frame-global serializer state witnesses reported; collecting full report before coherent correction",
+      "accepted": false
+    },
+    "sdkCorrectedFullSource2420": {
+      "status": "complete FAIL solely new SDK-SOURCE-10; original nine corrected",
+      "report": "/tmp/kubeclaw-cloud-reviews/turn2420-sdk-source-corrected/source-report.md",
+      "seal": "/tmp/kubeclaw-cloud-reviews/turn2420-sdk-source-corrected/source-review-seal.json",
+      "finding": "literal truncation marker parsed as missing local link65547",
+      "correctionAuthor": "/root/sdk_nine_findings_coherent_author",
+      "accepted": false
+    },
+    "currentIntegratedRefsCheck": {
+      "session": 52462,
+      "exitCode": 1,
+      "result": "/tmp/kubeclaw-cloud-reviews/turn1950-root/current-sdk-integrated-references-result.json",
+      "failures": [
+        "SDK literal marker link",
+        "three historical directory source claims",
+        "three retained Helm anchors"
+      ],
+      "accepted": false
+    },
+    "handbookFullSource2420": {
+      "status": "complete assigned Source PASS zero material findings; no Reader Quality Astra or package transfer",
+      "report": "/tmp/kubeclaw-cloud-reviews/turn2420-handbook-source-corrected/report.md",
+      "facets": "/tmp/kubeclaw-cloud-reviews/turn2420-handbook-source-corrected/source-facets.json",
+      "rootDefiningHashesRechecked": 142,
+      "currentCandidateEqualities": "6/7; only separately corrected SDK generated literal marker changed, handbook/canonical routing unchanged",
+      "qualityRole": "/root/handbook_six_corrected_full_quality",
+      "accepted": false
+    },
+    "sdkMarkerIntegrated2450": {
+      "status": "coherent correction integrated, fresh full Source ongoing",
+      "authorReport": "/tmp/kubeclaw-cloud-reviews/turn2450-sdk-marker-author/author-report.md",
+      "rootSeal": "/tmp/kubeclaw-cloud-reviews/turn1950-root/sdk-marker-integrated-seal.json",
+      "focusedTestsPassed": 2,
+      "sdkCheck": {
+        "session": 34543,
+        "exitCode": 0,
+        "exports": 119
+      },
+      "refsCheck": {
+        "session": 34543,
+        "exitCode": 1,
+        "remainingFailures": 6,
+        "markerFailureRemoved": true
+      },
+      "sourceRole": "/root/sdk_marker_corrected_full_source",
+      "accepted": false
+    },
+    "handbookFullQuality2500": {
+      "status": "complete content Quality PASS zero material findings",
+      "report": "/tmp/kubeclaw-cloud-reviews/turn2500-handbook-quality-fresh/report.md",
+      "rootCandidateHashesVerified": 9,
+      "passiveLinksChecked": 203,
+      "DEVQualityFacets": "001-009PASS",
+      "readerRole": "/root/handbook_corrected_full_reader_2530",
+      "practicalReaderAccepted": false,
+      "packageAccepted": false
+    },
+    "nativeCompleteSource2420": {
+      "status": "complete assigned Source FAIL N1-N4; full report root read",
+      "report": "/tmp/kubeclaw-cloud-reviews/turn2420-native-source-corrected/REPORT.md",
+      "findings": [
+        "Python global/frame reflective serializer custody",
+        "Go log.Print/http.Error output capabilities omitted",
+        "product status API-read CRD schema authority missing",
+        "maintained unsupported NRI baseline assertion incorrect"
+      ],
+      "verifiedScopes": {
+        "goOriginalReceiptsEqual": 38,
+        "pythonFocusedPassed": 16,
+        "cachePassed": 2,
+        "maintainedSelectionPassed": 10,
+        "separateOriginalNriFailed": 1
+      },
+      "coherentAuthor": "/root/native_n1_n4_coherent_author_2540",
+      "stage": "/tmp/kubeclaw-cloud-reviews/turn2540-native-n1-n4-author",
+      "accepted": false
+    },
+    "sdkFullSource2520": {
+      "status": "complete assigned SourcePASS zero material findings",
+      "report": "/tmp/kubeclaw-cloud-reviews/turn2520-sdk-marker-source-fresh/source-report.md",
+      "seal": "/tmp/kubeclaw-cloud-reviews/turn2520-sdk-marker-source-fresh/source-review-seal.json",
+      "facets": "/tmp/kubeclaw-cloud-reviews/turn2520-sdk-marker-source-fresh/individual-source-facets.json",
+      "rootRecheckedPrincipalFiles": 6,
+      "rootCurrentPinnedSourceIdentitiesEqual": 58,
+      "documentationTests": {
+        "passed": 12,
+        "failed": 0,
+        "skipped": 0
+      },
+      "pinnedLinksValid": 2406,
+      "localLinksValid": 28,
+      "qualityRole": "/root/sdk_corrected_full_quality_2560",
+      "readerAccepted": false,
+      "packageAccepted": false
+    },
+    "handbookCompleteReader2530": {
+      "status": "complete content Reader FAIL R1R2; registered practical FAIL",
+      "report": "/tmp/kubeclaw-cloud-reviews/turn2530-handbook-reader-fresh/report.md",
+      "findings": [
+        "install dev omission under production environment",
+        "complete protected Core source repin/check update omitted"
+      ],
+      "strictParticipantQualified": false,
+      "participantLimitation": "supplied prior Source/Quality reports read; forbidden review sources for contract task",
+      "boundedDiagnostics": {
+        "initialGroupsPassed": 10,
+        "changedDirectTestsPassed": 5,
+        "removalDirectTestsPassed": 5,
+        "postRemovalGroupsPassed": 9,
+        "changedCoreDocumentationCheck": "FAIL",
+        "currentCandidateGovernance": "PASS155",
+        "currentCandidateGeneration": "FAIL source-revision mismatch"
+      },
+      "ownedScratchRetired": true,
+      "coherentAuthor": "/root/handbook_coherent_cloud_author",
+      "correctionStage": "/tmp/kubeclaw-cloud-reviews/turn2600-handbook-r1-r2-author",
+      "accepted": false
+    },
+    "nativeAuthor2540Checkpoint": {
+      "status": "coherent stage ongoing; newly discovered original dynamic http.Error remains explicitly unsupported",
+      "scope": "raw server error text authority unproved; prefix and pinned closure do not justify nonAPI approval",
+      "rootInstruction": "preserve source-specific failure/full-original unsupported assertion; no productfix/exemption/falsebaselinePASS",
+      "accepted": false
+    },
+    "sdkFullQuality2560": {
+      "status": "complete content QualityPASS zero material findings",
+      "report": "/tmp/kubeclaw-cloud-reviews/turn2560-sdk-quality-fresh/quality-report.md",
+      "seal": "/tmp/kubeclaw-cloud-reviews/turn2560-sdk-quality-fresh/quality-review-seal.json",
+      "rootSealedFilesVerified": 9,
+      "qualityFacetsPassed": 28,
+      "individualApiSupportRecords": 147,
+      "freshReaderRole": "/root/sdk_full_reader_2610",
+      "readerInputs": "publishedpages/linkedactualproducts/displayedexample only; no reviewleads/internalfiles",
+      "practicalReaderAccepted": false,
+      "packageAccepted": false
+    },
+    "sdkCompleteReader2610": {
+      "status": "complete reference Reader no blocking contract-identification defect; bounded displayedexample PASS; fullbootstrap FAIL notestablished",
+      "report": "/tmp/kubeclaw-sdk-reader-2610-independent/reader-report.md",
+      "exports": 119,
+      "members": 631,
+      "qualifiedSupport": 28,
+      "supportMembers": 130,
+      "finalExampleRunsPassed": 2,
+      "preparation": "copied existing full dependency tree into owned scratch localclone; not genuinefreshlockedinstall",
+      "usabilityFindings": [
+        "safeexample directpreplink andNode24",
+        "dynamiccompactexportindex/taskanchors"
+      ],
+      "forbiddenReviewSourcesRead": false,
+      "coherentUsabilityAuthor": "/root/sdk_nine_findings_coherent_author",
+      "stage": "/tmp/kubeclaw-cloud-reviews/turn2630-sdk-reader-usability-author",
+      "packageAccepted": false
+    },
+    "sdkUsabilityIntegrated2630": {
+      "status": "two Readerusability improvements integrated; newfullSource ongoing",
+      "authorReport": "/tmp/kubeclaw-cloud-reviews/turn2630-sdk-reader-usability-author/author-report.md",
+      "rootSeal": "/tmp/kubeclaw-cloud-reviews/turn1950-root/sdk-usability-integrated-seal.json",
+      "semanticInventoryUnchanged": true,
+      "displayedCodeUnchanged": true,
+      "authorFocusedTestsPassed": 3,
+      "authorLocalLinksValid": 151,
+      "boundedStatusUpdate": "actual two Reader runs usingcopieddeps, notfreshinstall/bootstrap",
+      "rootChecks": {
+        "session": 80003,
+        "sdkExitCode": 0,
+        "exports": 119,
+        "refsExitCode": 1,
+        "remainingNonSdkFailures": 6
+      },
+      "sourceRole": "/root/sdk_usability_corrected_full_source_2650",
+      "accepted": false
+    },
+    "handbookReaderCorrectionsIntegrated2600": {
+      "status": "exactcoherentR1R2stagepatch integrated; newfullSource ongoing",
+      "authorReport": "/tmp/kubeclaw-cloud-reviews/turn2600-handbook-r1-r2-author/report.md",
+      "rootSeal": "/tmp/kubeclaw-cloud-reviews/turn1950-root/handbook-r1-r2-integrated-seal.json",
+      "handbookSha256": "c0d4232c5c8b5278c4d57d965a92ac6bb9481be89c6f88b3dbed7ca58a5f0067",
+      "extendUnchanged": true,
+      "passiveAuthorChecks": {
+        "links": 117,
+        "sourceExtents": 212,
+        "bashBlocks": 50,
+        "npmDeclarations": 88
+      },
+      "sourceRole": "/root/handbook_r1_r2_corrected_full_source_2670",
+      "accepted": false
+    },
+    "nativeIntegrated2540": {
+      "status": "coherent N1N4fivefilepatchintegrated; freshfullSource ongoing",
+      "report": "/tmp/kubeclaw-cloud-reviews/turn2540-native-n1-n4-author/REPORT.md",
+      "rootSeal": "/tmp/kubeclaw-cloud-reviews/turn1950-root/native-n1-n4-integrated-seal.json",
+      "rootProductAuthorityHashesEqual": 29,
+      "registryBytesChanged": false,
+      "authorStableChecks": {
+        "maintainedScopedPassed": 14,
+        "custodyPassed": 18,
+        "cachePassed": 2,
+        "failed": 0,
+        "skipped": 0
+      },
+      "testWhitespaceNormalization": "one trailing space; transpiledJSexactequal, separatehashrecord",
+      "originalWholeController": "explicitunsupported dynamic API-read error publication",
+      "sourceRole": "/root/native_n1_n4_corrected_full_source_2690",
+      "accepted": false
+    },
+    "handbookSource2670Checkpoint": {
+      "status": "incomplete fullassignedSource noPASS/noestablishedmaterialfinding; same-role continuation",
+      "report": "/tmp/kubeclaw-cloud-reviews/turn2670-handbook-source-fresh/report.md",
+      "remainingScope": "defining-source semanticinspection and truncated-output recovery",
+      "extractionNotApproval": true
+    },
+    "sdkCompleteSource2650": {
+      "status": "complete assigned SourcePASS zero material findings",
+      "report": "/tmp/kubeclaw-cloud-reviews/turn2650-sdk-usability-source-fresh/source-report.md",
+      "seal": "/tmp/kubeclaw-cloud-reviews/turn2650-sdk-usability-source-fresh/source-review-seal.json",
+      "freshTestsPassed": 13,
+      "pinnedLinksValid": 2406,
+      "localLinksValid": 157,
+      "boundedReaderCodeDependencyEqualitiesVerified": true,
+      "qualityRole": "/root/sdk_usability_full_quality_2700",
+      "packageAccepted": false
+    },
+    "handbookCompleteSource2670Final": {
+      "status": "complete assignedSourcePASS replaces incompletecheckpoint",
+      "report": "/tmp/kubeclaw-cloud-reviews/turn2670-handbook-source-fresh/report.md",
+      "pagesPhysicalLines": [
+        2296,
+        494
+      ],
+      "selectedDefiningFiles": 161,
+      "sourceRangesValid": 212,
+      "bashSyntaxBlocks": 50,
+      "qualityRole": "/root/handbook_r1_r2_full_quality_2720",
+      "practicalReaderAccepted": false,
+      "packageAccepted": false
+    },
+    "sdkCompleteQuality2700": {
+      "status": "complete contentQualityPASS zero materialfindings",
+      "report": "/tmp/kubeclaw-cloud-reviews/turn2700-sdk-quality-fresh/quality-report.md",
+      "seal": "/tmp/kubeclaw-cloud-reviews/turn2700-sdk-quality-fresh/quality-review-seal.json",
+      "readerRole": "/root/sdk_final_reader_2730",
+      "readerPermittedInputsOnly": true,
+      "freshLockedInstallationAuthorizedInOwnedScratch": true,
+      "practicalReaderAccepted": false,
+      "packageAccepted": false
+    },
+    "nativeSource2690Checkpoint": {
+      "status": "fullscopecollectingnewfindings noverdict",
+      "python": "exception alias and MatchAs capture binding holes",
+      "go": "privateHTTPhelper alias escape and parameter localmutation authority",
+      "integration": "sourceowned documentation executable role recipes stale; no blindreceipt refresh",
+      "accepted": false
+    },
+    "handbookCompleteQuality2720": {
+      "status": "complete contentQualityPASS zero materialfindings",
+      "report": "/tmp/kubeclaw-cloud-reviews/turn2720-handbook-quality-fresh/report.md",
+      "rootAssignedHashesVerified": 2,
+      "practicalParticipant": "/root/platform_practical_reader_2750",
+      "participantInputRestrictions": "onlypublishedsite/registeredfixture/derivedtools, no forbiddenreviewfiles or hiddenfields",
+      "practicalAccepted": false,
+      "packageAccepted": false
+    },
+    "sdkReader2730": {
+      "status": "complete referenceanswers; exactdisplayedexample passed twice after genuinefreshlockedinstall",
+      "report": "/home/node/.openclaw/workspace/sdk-reader-2730-evidence/reader-report.md",
+      "exports": 119,
+      "members": 631,
+      "supportDeclarations": 28,
+      "supportMembers": 130,
+      "freshInstall": "npmci include-dev ignore-scripts ownedcache exit0, no shareddependencycopy",
+      "exampleRunsPassed": 2,
+      "pureValuesAndSdkProductPrerequisite": "PASS",
+      "candidateOverlayExplicit": true,
+      "fullPristineHandbookBootstrapAccepted": false,
+      "activationLiveAccepted": false,
+      "packageAccepted": false
+    },
+    "nativeCompleteSource2690Final": {
+      "status": "complete assigned SourceFAIL S1S2S3 reportfullrootread",
+      "report": "/tmp/kubeclaw-cloud-reviews/turn2690-native-source-fresh/REPORT.md",
+      "findings": [
+        "Python exception/pattern lexicalbinder custody",
+        "Go privateparameter helperescape/repeatedwrite custody",
+        "actual native documentation roles stale"
+      ],
+      "freshFocusedPass": {
+        "custody": 18,
+        "maintained": 14,
+        "cache": 2,
+        "skips": 0
+      },
+      "originalContractsCovered": 19,
+      "receiptsCovered": 43,
+      "dependencyTuplesCovered": 349,
+      "selectedAuthoritiesCovered": 29,
+      "coherentAuthor": "/root/native_n1_n4_coherent_author_2540",
+      "stage": "/tmp/kubeclaw-cloud-reviews/turn2780-native-binding-author",
+      "accepted": false
+    },
+    "platformParticipant2750": {
+      "status": "strictfresh participant BLOCKEDnotcompleted requiredtoolprerequisites",
+      "report": "/tmp/platform-reader-2750-evidence/outcome.md",
+      "clone": "genuinefreshHTTPS cleanimmutable671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "freshLockedInstall": "PASS include-devownedcache",
+      "unchangedTestsPassed": 9,
+      "requiredHelm": "3.22.0",
+      "observedHelm": "3.18.4",
+      "requiredGo": "1.26.3",
+      "observedGo": "commandnotfound",
+      "changedNegativeCrashRemovalPerformed": false,
+      "sharedPagesUnchanged": true,
+      "provisionRole": "/root/platform_official_toolchain_provision_2790",
+      "accepted": false
+    },
+    "platformTools2790Ready": {
+      "status": "genuineofficialunmodifiedtools provisioned; rootarchive/binaryhash anddirectversion rechecked",
+      "report": "/tmp/kubeclaw-cloud-reviews/turn2790-platform-toolchain-provision/outcome.md",
+      "hashes": {
+        "go1.26.3.linux-amd64.tar.gz": "2b2cfc7148493da5e73981bffbf3353af381d5f93e789c82c79aff64962eb556",
+        "helm-v3.22.0-linux-amd64.tar.gz": "1e4ab49e429626cf6c6958d914248b78c9730803c2751b87627e171dc800e7bb",
+        "go/bin/go": "d68b7abbc40d0844f673f6cf06ae3cded225c50437c6454fa37ef178d079fe65",
+        "linux-amd64/helm": "7a319dee5ea7a1f7d7a0d92d5c223586f3b65abc33163c9de2a85f083aa3df2b"
+      },
+      "tools": {
+        "Go": "1.26.3",
+        "Helm": "3.22.0"
+      },
+      "verification": "officialHTTPSarchiveSHA256, noGPGsignatureclaim",
+      "globalChanges": false,
+      "participantResumed": "/root/platform_practical_reader_2750",
+      "handoffInputs": "environmentinventorypaths only, localprocessPATHauthorized",
+      "readerAccepted": false
+    },
+    "platform2750ResumedStop": {
+      "status": "strictparticipant stillnotcomplete afteractualtoolsready",
+      "report": "/tmp/platform-reader-2750-evidence/resumed-outcome.md",
+      "freshCloneAndInstall": true,
+      "unchangedNovaTestsPassed": 9,
+      "firstRequiredDocCheck": "docs:governance:check exit1 baseline generated map stale",
+      "downstreamDocsStarted": false,
+      "exerciseImplementationPerformed": false,
+      "gitAuthorConfigured": false,
+      "scratchRemoved": true,
+      "sharedPagesUnchanged": true,
+      "baselineProcedureAuthor": "/root/handbook_coherent_cloud_author",
+      "stage": "/tmp/kubeclaw-cloud-reviews/turn2820-platform-baseline-author",
+      "accepted": false
+    },
+    "gitAuthorInputPending": {
+      "status": "asyncrealidentityselectionrequested; notblanketactionapproval",
+      "source": "Gitnoauthorconfigured; existingHEADDavideTrabucco83491444+datrab usersnoreply, handbook2034-2035 requiresrealconfigured identity",
+      "globalConfigChanged": false
+    },
+    "platformBaselineDiagnostic2820": {
+      "status": "complete finiteoldbaselineprep blocked at missingmoduleinputauthority; clarification stagepreserved notintegrated",
+      "report": "/tmp/kubeclaw-cloud-reviews/turn2820-platform-baseline-author/report.md",
+      "originalStartingRevision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "governanceGenerateRecheck": "PASS metadataonly",
+      "commonRevisionUpdate": "partiallockwrite thenFAIL rejectedprofileinventorymissing",
+      "finiteInventory": "PASS workflows-only",
+      "bothLocalHelmAndConfigInventory": "FAIL DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED openclaw-agent-observer/src/config.ts",
+      "ownedOutputsRestored": 3,
+      "productsSharedSourceUnchanged": true,
+      "stageHandbookSha256": "aad67693fe67229ed17b853fb027d97c4a5ac0aa23a5559531bee9e28ca08302",
+      "rootNext": "qualifygenuinereadyimmutabledoc-toolinput/productstartingcondition, no blindfixturepin or stop-rulewaiver",
+      "accepted": false
+    },
+    "sixReferenceCorrection2840": {
+      "status": "separatestagedcoherentauthor investigating allsix, noactualedits",
+      "author": "/root/six_reference_failures_coherent_author_2840",
+      "stage": "/tmp/kubeclaw-cloud-reviews/turn2840-six-ref-author",
+      "preserveHistoricalAtomicParity": true,
+      "noFakeOrOverbroadHelmAnchors": true,
+      "accepted": false
+    },
+    "threePathCorrectionsIntegrated2840": {
+      "status": "threecoherenthistorical/currentpath fixes integrated, freshfullSource underway",
+      "report": "/tmp/kubeclaw-cloud-reviews/turn2840-six-ref-author/report.md",
+      "rootSeal": "/tmp/kubeclaw-cloud-reviews/turn1950-root/three-path-reference-integration.json",
+      "fullActualRefs": {
+        "session": 94700,
+        "exitCode": 1,
+        "remainingFailures": 3,
+        "result": "/tmp/kubeclaw-cloud-reviews/turn1950-root/three-path-integrated-refs-result.json"
+      },
+      "busterUnchanged": true,
+      "remainingGeneratorDependency": "configurationvalues inventory omits apiResources/apiMetadataReferences, missingownedlease root/metadata/specpublishedfacets; existinganchorIDs correct",
+      "sourceRole": "/root/three_path_corrections_full_source_2860",
+      "accepted": false
+    },
+    "threePathSource2860": {
+      "status": "complete threefileSourcePASS no material findings; precise reportprovenance corrected with original retained",
+      "report": "/tmp/kubeclaw-cloud-reviews/turn2860-three-path-source-fresh/report.md",
+      "rootCurrentTargetHashesEqual": 3,
+      "rootAuthorityHashesEqual": 16,
+      "evidenceCorrection": "commitroot tree6196b202 vs nestedreference tree4ab957ef; root and reviewer actualGit verified",
+      "correctionArtifact": "/tmp/kubeclaw-cloud-reviews/turn2860-three-path-source-fresh/provenance-correction.json",
+      "qualityRole": "/root/three_path_corrections_full_quality_2870",
+      "parityPackageAccepted": false,
+      "remainingBusterGeneratedFacetsAccepted": false
+    },
+    "threePathQuality2870": {
+      "status": "complete threefileQualityPASS no materialfindings",
+      "report": "/tmp/kubeclaw-cloud-reviews/turn2870-three-path-quality-fresh/report.md",
+      "rootTargetHashesVerified": 3,
+      "targetLinesRead": 845,
+      "parityPackageAccepted": false,
+      "busterGeneratedFacetsAccepted": false
+    },
+    "nativeS1S3Integrated2780": {
+      "status": "integrated candidate full fresh Source FAIL with two new type/encoder authority findings; coherent staged correction ongoing",
+      "authorReport": "/tmp/kubeclaw-cloud-reviews/turn2780-native-binding-author/REPORT.md",
+      "rootSeal": "/tmp/kubeclaw-cloud-reviews/turn1950-root/native-s1-s3-integrated-seal.json",
+      "semanticProofSha256": "ff2c4aef5d555dd444bc8dfb499b60cff61ecde5687a1c36cad0375d98e1b8f2",
+      "rootVerifiedUnchangedAuthorities": 32,
+      "registryUnchanged": true,
+      "authorStableTests": {
+        "maintained": 17,
+        "custody": 22,
+        "cache": 2,
+        "failures": 0,
+        "skips": 0
+      },
+      "rootActualNativeCustody": {
+        "goBinary": "officialGo1.26.3",
+        "qualified": 3,
+        "total": 3,
+        "exitCode": 0,
+        "result": "/tmp/kubeclaw-cloud-reviews/turn1950-root/native-s1-s3-official-go1263-root-custody.json"
+      },
+      "initialDefaultGoAttempt": "Go ENOENT retained, notrolepolicyfailure; Python andAST qualified",
+      "sourceRole": "/root/native_s1_s3_corrected_full_source_2910",
+      "accepted": false
+    },
+    "nativeHttpAuthorityInvestigation2890": {
+      "status": "boundedread-onlycomplete constraintreport, noadmissionchangeapproved",
+      "report": "/tmp/kubeclaw-cloud-reviews/turn2890-native-http-scope/REPORT.md",
+      "selectedPrismConsumer": "non200body rejectedbeforeJSON withboundederrorcode",
+      "universalPublicBytes": "actualoriginalHTTPerror unconstrained, currentevery-role authoritygate cannotadmit",
+      "possibleNewInputs": "enforcedexhaustiveexternalmessageauthority or explicitindependentlyreviewed diagnostic-purpose admissiondefinition",
+      "productsCodeChanged": false,
+      "unknownAdmissionWaived": false,
+      "accepted": false
+    },
+    "nativeCompleteSource2910": {
+      "status": "FAIL — complete assigned Source partition",
+      "report": "/tmp/kubeclaw-cloud-reviews/turn2910-native-source-fresh/REPORT.md",
+      "rootFullReportRead": true,
+      "findings": [
+        "T1: Go implicit typed values/method dispatch and MarshalJSON root authority omitted",
+        "T2: Python callable cls and expanded serializer option authority omitted"
+      ],
+      "coverage": {
+        "contracts": 19,
+        "receipts": 43,
+        "dependencyTuples": 349,
+        "authorities": 32,
+        "goRecords": 51,
+        "pythonSources": 8
+      },
+      "freshTests": {
+        "maintainedPassed": 17,
+        "custodyPassed": 22,
+        "cachePassed": 2,
+        "failures": 0,
+        "skips": 0
+      },
+      "nativeDocumentationCustodyQualified": 3,
+      "candidateUnchanged": true,
+      "accepted": false
+    },
+    "nativeTypeEncoderCorrection2940": {
+      "status": "integrated candidate; fresh Source3060 found separator-list authority gap, then provider content flag interrupted review; retained evidence recovery pending",
+      "author": "/root/native_n1_n4_coherent_author_2540",
+      "stage": "/tmp/kubeclaw-cloud-reviews/turn2940-native-type-encoder-author",
+      "scope": [
+        "T1",
+        "T2",
+        "affected native Source-purpose custody"
+      ],
+      "accepted": false,
+      "authorReport": "/tmp/kubeclaw-cloud-reviews/turn2940-native-type-encoder-author/REPORT.md",
+      "rootSeal": "/tmp/kubeclaw-cloud-reviews/turn1950-root/native-t1-t2-integrated-seal.json",
+      "patchSha256": "b8510ce0d2593eea9d37b99e25f1f34e0553d30597ea7828eee546d36f50833f",
+      "stableTests": {
+        "maintainedPassed": 19,
+        "custodyPassed": 25,
+        "cachePassed": 2,
+        "failures": 0,
+        "skips": 0
+      },
+      "rootActualNativeCustody": {
+        "qualified": 3,
+        "total": 3,
+        "exitCode": 0,
+        "goBinary": "officialGo1.26.3",
+        "result": "/tmp/kubeclaw-cloud-reviews/turn1950-root/native-t1-t2-official-go1263-root-custody.json"
+      },
+      "freshSourceRole": "/root/native_t1_t2_corrected_full_source_3060"
+    },
+    "platformMissingProjection2950": {
+      "status": "finite preparation prerequisite established; executable recovery unverified",
+      "report": "/tmp/kubeclaw-cloud-reviews/turn2950-platform-input-authority/report.md",
+      "rootFullReportRead": true,
+      "rootVerifiedBaselineCurrentSourceHashes": 19,
+      "missingIgnoredFiles": 7,
+      "producer": "skills/common/plugins/openclaw-agent-observer/scripts/sync-contract.mjs",
+      "canonicalAuthority": "contracts/agent-observability/v1/src",
+      "correctionToPriorDiagnosis": "unresolved static import caused by absent generated projection, not evidence requiring a new semantic recipe",
+      "recoveryPhase": "2970 exactprojection verified, next Python systemd writer-role guard failed; version/receipt diagnosis2990 ongoing",
+      "readyImmutableBaselineEstablished": false,
+      "gitIdentitySupplied": false,
+      "accepted": false
+    },
+    "platformProjectionRecovery2970": {
+      "status": "projection PASS; configuration inventory FAIL; later preparation not executed",
+      "report": "/tmp/kubeclaw-cloud-reviews/turn2970-platform-projection-recovery/report.md",
+      "rootFullReportRead": true,
+      "syncExitCode": 0,
+      "projectionExactFiles": 7,
+      "noSymlinksOrExtraFiles": true,
+      "trackedBytesUnchanged": true,
+      "configurationInventoryExitCode": 1,
+      "nextGuard": "API_PRODUCT_PYTHON_SERIALIZED_OUTPUT_ROLE_UNQUALIFIED: scripts/repair-k3s-reservation-arguments.py",
+      "laterRoutesExecuted": false,
+      "handbookStageIntegrated": false,
+      "baselineReady": false,
+      "accepted": false
+    },
+    "platformSystemdReceiptDiagnosis2990": {
+      "status": "static representation cause established; baseline recovery unverified",
+      "report": "/tmp/kubeclaw-cloud-reviews/turn2990-systemd-role-authority-diagnosis/report.md",
+      "rootFullReportRead": true,
+      "cause": "old runtime ast.dump empty-field formatting differs between Python3.11 and3.14; module/helper receipts differ with identical product bytes",
+      "oldAdapterPython314IndividualWriterReceivers": "PASS both",
+      "oldAdapterPython311IndividualWriterReceivers": "FAIL both",
+      "currentAstV1BothInterpretersIndividualWriterReceivers": "PASS both",
+      "originalDocumentedPython314RequirementEstablished": false,
+      "wholePipelineAcceptance": false,
+      "next": "3010 newly explicit genuine officialPython3.14 environment owned-scratch diagnostic, not retroactive original procedure acceptance",
+      "accepted": false
+    },
+    "platformPython314Preparation3010": {
+      "status": "config inventory FAIL at next Node reader-boundary diagnostic guard; later routes stopped",
+      "report": "/tmp/kubeclaw-cloud-reviews/turn3010-platform-python314-preparation/report.md",
+      "rootFullReportRead": true,
+      "selectedEnvironment": [
+        "official CPython3.14.8",
+        "official Go1.26.3",
+        "Helm3.22.0",
+        "Node24.21.0",
+        "npm12.2.0"
+      ],
+      "systemdGuardClearedInActualDiscovery": true,
+      "configurationExitCode": 1,
+      "nextGuard": "API_PRODUCT_SCRIPT_OUTPUT_ROLE_UNQUALIFIED: scripts/check-site-reader-boundary.mjs:213",
+      "trackedBytesUnchanged": true,
+      "laterRoutesExecuted": false,
+      "baselineReady": false,
+      "accepted": false
+    },
+    "platformBaselineClosureDiagnosis3030": {
+      "status": "complete bounded old Node static classification diagnosis; original unchangedtools cannot prepare config",
+      "reportDirectory": "/tmp/kubeclaw-cloud-reviews/turn3030-platform-baseline-closure-diagnosis",
+      "accepted": false,
+      "report": "/tmp/kubeclaw-cloud-reviews/turn3030-platform-baseline-closure-diagnosis/report.md",
+      "rootFullReportRead": true,
+      "nodePublicationFacts": 436,
+      "unknownFacts": 1,
+      "unknownSource": "scripts/check-site-reader-boundary.mjs:213",
+      "docsCommandOccurrences": 102,
+      "finiteStaticClosurePaths": 175,
+      "oldBoundarySources": 56,
+      "wholeCurrentToolAcceptance": false,
+      "wholeNativeMaterializationEstablished": false
+    },
+    "readerBoundaryDiagnosticCustodyAuthor3080": {
+      "status": "candidate Source3130 completeFAIL2; sameauthor3150 coherent npm/lifecycle and child capability/target correction ongoing outside; unintegrated",
+      "role": "/root/reader_boundary_diagnostic_custody_author_3080",
+      "scope": "complete affected checker/classifier/custody purpose, no broad exemption or general interpreter",
+      "sharedBytesMutated": false,
+      "accepted": false,
+      "report": "/tmp/kubeclaw-cloud-reviews/phase3100-reader-boundary-custody-author/report.md",
+      "rootFullReportRead": true,
+      "currentCheckerRole": "unknown",
+      "existingMutableReceiptFactsMatch": false,
+      "sourceOwnedRecipePresent": false,
+      "fullCallerGraphQualified": false,
+      "rootFullReportAndPatchRead": true,
+      "rootCrosswalkFullRead": false,
+      "candidateIntegrated": false,
+      "controlsPassed": 28,
+      "portableTestsPassed": 1,
+      "dependentReceiptClosuresAffected": 5,
+      "receiptsRebound": false,
+      "actualCurrentGraphQualified": false,
+      "rootSeal": "/tmp/kubeclaw-cloud-reviews/turn1950-root/reader-boundary3100-preserved-seal.json",
+      "sourceRole": "/root/reader_boundary_candidate_full_source_3130"
+    },
+    "nativeSource3060": {
+      "status": "FAIL/incomplete — provider also rejected passive source-reading subtask; no further attempts planned",
+      "role": "/root/native_t1_t2_corrected_full_source_3060",
+      "evidenceDirectory": "/tmp/kubeclaw-cloud-reviews/turn3060-native-source-fresh",
+      "observedNewFinding": "T3 mutable separators list initializer borrowed without mutation/escape authority; actual receiving discovery accepted existing isolated witness",
+      "fullReportCollected": false,
+      "correctionStarted": false,
+      "accepted": false,
+      "recoveryRejected": true,
+      "fullReadCoverageReportAvailable": false,
+      "rootArtifactSeal": "/tmp/kubeclaw-cloud-reviews/turn1950-root/native-source3060-interrupted-artifact-seal.json",
+      "report": "/tmp/kubeclaw-cloud-reviews/turn3060-native-source-fresh/report.md",
+      "seal": "/tmp/kubeclaw-cloud-reviews/turn3060-native-source-fresh/final-seal.json",
+      "rootFullReportRead": true,
+      "rootVerifiedCandidateHashes": 8,
+      "rootVerifiedRetainedArtifactHashes": 4,
+      "partialCoverageReportAvailable": true,
+      "recoveryReportDelivered": true,
+      "executionStdoutPersisted": false,
+      "remainingScope": "full selected source/record/test authority still not independently complete",
+      "passiveRemainingCoverageSubtask": "provider-interrupted, no completed passive report/seal delivered",
+      "passiveReportedPartialProgress": "reviewer message only: prior Py711–734/test236–271 gaps and native40/18/13receipt inventory read; selected32-source/record closure still unfinished"
+    },
+    "readerBoundarySource3130": {
+      "status": "FAIL — complete assigned finite three-file Source scope",
+      "report": "/tmp/kubeclaw-cloud-reviews/turn3130-reader-boundary-source-fresh/report.md",
+      "seal": "/tmp/kubeclaw-cloud-reviews/turn3130-reader-boundary-source-fresh/hash-seal.json",
+      "rootFullReportRead": true,
+      "rootVerifiedCandidateHashes": 3,
+      "rootVerifiedSharedHashes": 7,
+      "findings": [
+        "S3130-01 lexical46npmwhitelist lacks selectedpackage/script/lifecycle semantic authority",
+        "S3130-02 unsupported/computed/nativecapability acquisition silently skipped"
+      ],
+      "independentCheckerFacts": 32,
+      "normalReceivingControlsPassed": 28,
+      "lexicalScanInputHashesMatched": 846,
+      "candidateIntegrated": false,
+      "accepted": false
+    },
+    "readerBoundaryCoherentCorrection3150": {
+      "status": "candidatefrozenoutside; Source3180FAIL/incomplete2newfindings, same-rolefullscopecontinuing, nocorrection",
+      "role": "/root/reader_boundary_diagnostic_custody_author_3080",
+      "stage": "/tmp/kubeclaw-cloud-reviews/phase3150-reader-boundary-custody-author",
+      "accepted": false,
+      "report": "/tmp/kubeclaw-cloud-reviews/phase3150-reader-boundary-custody-author/report.md",
+      "rootFullReportRead": true,
+      "rootFunctionalPatchRangesRead": [
+        [
+          150,
+          195
+        ],
+        [
+          2541,
+          2699
+        ]
+      ],
+      "rootFull2779LinePatchRead": false,
+      "rootCandidateHashesVerified": 3,
+      "checkerRecipeUnchangedFrom3100": true,
+      "controlsPassed": 33,
+      "portableTestsPassed": 1,
+      "broaderRootAcquisitionDomain": "explicitly unsupported/unready, not falsely qualified",
+      "candidateIntegrated": false,
+      "sourceRole": "/root/reader_boundary_corrected_full_source_3180",
+      "rootSeal": "/tmp/kubeclaw-cloud-reviews/turn1950-root/reader-boundary3150-preserved-seal.json"
+    },
+    "readerBoundarySource3180": {
+      "status": "FAIL — complete affectedfiniteSource scope, allfour materialfindings collected",
+      "report": "/tmp/kubeclaw-cloud-reviews/turn3180-reader-boundary-source-fresh/report.md",
+      "rootFullIntermediateReportRead": true,
+      "candidateHashesUnchangedRootChecked": 3,
+      "findings": [
+        "S3180-01 canonicaldecoder nativeESM resolution authority unbound",
+        "S3180-02 literal dynamicopaqueinput qualification bypass",
+        "S3180-03 actual npm/root/native executable/config/environment selection authority missing",
+        "S3180-04 blanketbuiltin/processnames admit unqualified nativecapability"
+      ],
+      "unconfirmedLead": null,
+      "normalExistingTestPassed": 1,
+      "normalExistingTestExitCode": 0,
+      "scopeComplete": true,
+      "correctionStarted": true,
+      "accepted": false,
+      "seal": "/tmp/kubeclaw-cloud-reviews/turn3180-reader-boundary-source-fresh/hash-seal.json",
+      "rootFullFinalReportRead": true,
+      "rootVerifiedCandidateHashes": 3,
+      "rootVerifiedPrimarySourceHashes": 16,
+      "fiveAffectedImpactDeltasVerified": true,
+      "preexistingStaleBindings": 8
+    },
+    "readerBoundaryCoherentCorrection3200": {
+      "status": "outside failclosedproposal NOTready by mandatorycaller/runtimecontradiction; preserved notintegrated orreviewed aspositivecandidate",
+      "role": "/root/reader_boundary_diagnostic_custody_author_3080",
+      "stage": "/tmp/kubeclaw-cloud-reviews/phase3200-reader-boundary-custody-author",
+      "sharedBytesMutated": false,
+      "accepted": false,
+      "report": "/tmp/kubeclaw-cloud-reviews/phase3200-reader-boundary-custody-author/report.md",
+      "proof": "/tmp/kubeclaw-cloud-reviews/phase3200-reader-boundary-custody-author/proof.json",
+      "rootFullReportAndProofRead": true,
+      "rootFullPatchRead": false,
+      "rootVerifiedCandidateHashes": 3,
+      "rootVerifiedSharedHashes": 17,
+      "normalNamedControlsPassed": 36,
+      "normalNamedDiscoveryAdmissionBlocked": 1,
+      "normalAggregateTestExitCode": 0,
+      "checkerRecipeUnchanged": true,
+      "actualOuterAdmission": "unsupported byconstruction mandatory nativecaller acquiredruntime authority missing",
+      "candidateIntegrated": false,
+      "receiptsRebound": false
+    },
+    "readerBoundaryRuntimePrerequisite3220": {
+      "status": "completeboundedread-only missingruntimecontract report; no positivegrant justified",
+      "role": "/root/reader_boundary_diagnostic_custody_author_3080",
+      "stage": "/tmp/kubeclaw-cloud-reviews/phase3220-reader-boundary-runtime-authority",
+      "scope": "genuine narrow executable/config/env/loader/cwd/package/source input authority orprecisemissingcontract, no generalinterpreter ornewprobes",
+      "accepted": false,
+      "report": "/tmp/kubeclaw-cloud-reviews/phase3220-reader-boundary-runtime-prerequisite-author/report.md",
+      "contractProposal": "/tmp/kubeclaw-cloud-reviews/phase3220-reader-boundary-runtime-prerequisite-author/runtime-domain-contract.proposal.json",
+      "proof": "/tmp/kubeclaw-cloud-reviews/phase3220-reader-boundary-runtime-prerequisite-author/proof.json",
+      "rootFullReportProposalProofRead": true,
+      "initial13CallsAreTransitiveComplete": false,
+      "missingAuthority": [
+        "pre-module-init supervised actualartifact/config/env selection",
+        "actualper-acquisition executable/cwd/config/runtimeinputdomain",
+        "separatehistoricalsource/lock/module/dependencyauthority",
+        "full actualtransitive gate/fixtureacquisitionclosure"
+      ],
+      "phase3200Unchanged": true,
+      "candidateReady": false
+    },
+    "runtimeContractApplicability3250": {
+      "status": "complete independentREADONLYobligationmap notcandidateacceptance",
+      "role": "/root/documentation_tool_runtime_contract_applicability_3250",
+      "scope": "mapnecessaryauthority toactualgoal/quality/contract andsupportedscenario; determine minimalfinitepurpose/domain withoutqualityweakening or newgeneralruntimeaudit",
+      "accepted": false,
+      "report": "/tmp/kubeclaw-cloud-reviews/turn3250-runtime-contract-applicability/report.md",
+      "rootFullReportRead": true,
+      "necessary": "selectedtoolchain/startup/input/runtime/caller/source/currenthistoricaltransitivedomain",
+      "notIndependentlyRequired": "universalhostilehost/OSoralllinkedbinarybuildcertification",
+      "candidateApproved": false,
+      "oldFailReinterpreted": false
+    },
+    "finiteDocumentationRuntimeAuthor3280": {
+      "status": "author completed; fail-closed scaffold BLOCKED, not integrated or accepted",
+      "role": "/root/runtime3280_resume",
+      "stage": "/tmp/kubeclaw-cloud-reviews/phase3280-reader-boundary-runtime-author",
+      "scope": "actualcurrent/transitive/historicalselectedinputs enforced orunsupported, no generalinterpreter/sandbox/OScertification/productchanges",
+      "sharedBytesMutated": false,
+      "accepted": false,
+      "checkpoint": "/tmp/kubeclaw-cloud-reviews/phase3280-reader-boundary-runtime-author/capacity-interrupted-checkpoint.json",
+      "partialFilesHashed": 20,
+      "newOrChangedPartialFiles": 14,
+      "runtimeContractModulePresent": true,
+      "finalReportPresent": true,
+      "syntaxChecksOnly": {
+        "runtimeModuleExit": 0,
+        "launcherExit": 0
+      },
+      "nativeOrProductExecution": false,
+      "candidateReady": false,
+      "modelPreferenceQuestionPending": false,
+      "fallbackModelUsed": false,
+      "filesHashed": 21,
+      "newOrChangedFiles": 15,
+      "report": "/tmp/kubeclaw-cloud-reviews/phase3280-reader-boundary-runtime-author/report.md",
+      "proof": "/tmp/kubeclaw-cloud-reviews/phase3280-reader-boundary-runtime-author/proof.json",
+      "patch": "/tmp/kubeclaw-cloud-reviews/phase3280-reader-boundary-runtime-author/candidate.patch",
+      "hashes": "/tmp/kubeclaw-cloud-reviews/phase3280-reader-boundary-runtime-author/hashes.json",
+      "rootFullReportPatchProofHashesRead": true,
+      "rootAll21CandidateSharedBindingsMatch": true,
+      "syntaxChecksPassed": 19,
+      "nonNativeControlAssertionsPassed": 16,
+      "successfulDocumentationRuntime": false,
+      "remaining": [
+        "supported selected runtime/startup authority",
+        "exact actual node --test gate dispatch",
+        "publication Ajv/formats and decoder package closure",
+        "complete caller/source/dependency review",
+        "separate historical inputs",
+        "independent reviews"
+      ]
+    },
+    "finiteDocumentationGateWiring3290": {
+      "status": "author complete; finite wiring BLOCKED, no runtime qualification",
+      "role": "/root/runtime_gate_wiring_3290",
+      "model": "gpt-6.1-sol",
+      "stage": "/tmp/kubeclaw-cloud-reviews/phase3290-documentation-gate-wiring-author",
+      "scope": "exact existing documentation node --test dispatch and actual selected publication/decoder dependencies; no native execution or positive authority grant",
+      "previous3280Preserved": true,
+      "accepted": false,
+      "integrated": false,
+      "providerBlockedNativeReviewRetried": false,
+      "report": "/tmp/kubeclaw-cloud-reviews/phase3290-documentation-gate-wiring-author/report.md",
+      "proof": "/tmp/kubeclaw-cloud-reviews/phase3290-documentation-gate-wiring-author/proof.json",
+      "patch": "/tmp/kubeclaw-cloud-reviews/phase3290-documentation-gate-wiring-author/candidate.patch",
+      "hashes": "/tmp/kubeclaw-cloud-reviews/phase3290-documentation-gate-wiring-author/hashes.json",
+      "syntaxChecksPassed": 20,
+      "ordinaryNonNativeAssertionsPassed": 24,
+      "boundFiles": 22,
+      "rootReadFullReportProofDraftAndSuccessorDelta": true,
+      "rootVerifiedAllCandidateSharedArtifactAndPredecessorHashes": true,
+      "successfulRuntime": false,
+      "approved": false
+    },
+    "selectedDocumentationInputs3300": {
+      "status": "both author drafts complete; not integrated or accepted",
+      "packageAuthor": "/root/documentation_package_inputs_3300",
+      "runtimeAuthor": "/root/documentation_runtime_inputs_3300",
+      "model": "gpt-6.1-sol",
+      "exclusiveOutputs": [
+        "/tmp/kubeclaw-cloud-reviews/phase3300-documentation-package-input-author",
+        "/tmp/kubeclaw-cloud-reviews/phase3300-documentation-runtime-input-author"
+      ],
+      "scope": "actual finite dependency edges and current trusted runtime/source/caller/fixture/Git operation declarations",
+      "nativeReviewRetried": false,
+      "approved": false,
+      "sharedEdits": false,
+      "packageReport": "/tmp/kubeclaw-cloud-reviews/phase3300-documentation-package-input-author/report.md",
+      "runtimeReport": "/tmp/kubeclaw-cloud-reviews/phase3300-documentation-runtime-input-author/report.md",
+      "packageModuleDataFiles": 105,
+      "packageLiteralEdges": 258,
+      "dependencySelectorInputs": 112,
+      "localRuntimeSources": 23,
+      "exactLocalImports": 108,
+      "rootFullReportsAndFiniteProposalProofRead": true,
+      "rootDeclarationReadScope": "schema/summary and generated-validator purpose inspected; full large edge/declaration bodies not independently semantically reviewed"
+    },
+    "documentationRuntimeInputsFollowup3310_3320": {
+      "status": "parallel same authors implementing current declarations and fourth-package draft",
+      "packageAuthor": "/root/documentation_package_inputs_3300",
+      "runtimeAuthor": "/root/documentation_runtime_inputs_3300",
+      "model": "gpt-6.1-sol",
+      "outputs": [
+        "/tmp/kubeclaw-cloud-reviews/phase3310-documentation-typescript-input-author",
+        "/tmp/kubeclaw-cloud-reviews/phase3320-documentation-runtime-declaration-author"
+      ],
+      "scope": "fourth TypeScript input declaration; concrete current contract, selector enforcement, fixture receipts and exact Git/SHA256 handling; preserve approval=false",
+      "originalNative3060Status": "incomplete; no retry/substitution",
+      "newMaterialGaps": [
+        "TypeScript caller selected package",
+        "SHA256 config extensions",
+        "self-containing contract digest"
+      ],
+      "sharedCandidateIntegration": false,
+      "accepted": false,
+      "packageStatus": "TypeScript input author completed with prescribed model; no fallback",
+      "runtimeStatus": "3320 author complete, stable current draft; independent affected-scope reviews running",
+      "fallbackModelUsed": false,
+      "typeScriptIntermediateArtifactsPresent": true,
+      "typeScriptActualHelperPaths": [
+        "scripts/plugin-source-closure.mjs",
+        "scripts/plugin-dependency-boundaries.mjs"
+      ],
+      "typeScriptInitEffects": "author observation: eager builtin imports, Linux stat and process/environment selections; NOT pure initialization",
+      "typeScriptReport": "/tmp/kubeclaw-cloud-reviews/phase3310-documentation-typescript-input-author/report.md",
+      "typeScriptVersion": "5.9.3",
+      "typeScriptSelectedAstInterfaces": 40,
+      "typeScriptSelectedBuiltinInitEdges": 5,
+      "typeScriptDeferredAcquisitionsStopped": 5,
+      "typeScriptRootFullReportProofInitEdgesRead": true,
+      "typeScriptRootVerifiedHashRecords": 36,
+      "typeScriptInputArtifactPredecessorDrift": false,
+      "typeScriptAccepted": false,
+      "runtimeReport": "/tmp/kubeclaw-cloud-reviews/phase3320-documentation-runtime-declaration-author/report.md",
+      "sourceRecords": 29,
+      "exactImports": 125,
+      "wholeArrayGitTemplates": 60,
+      "syntaxChecksPassed": 28,
+      "pureControlAssertionsPassed": 52,
+      "candidateSharedBindings": 31,
+      "preservedPriorBindings": 68,
+      "rootVerifiedArtifactHashes": 44,
+      "rootBindingDrift": false,
+      "rootReadScope": "full report, supervisor and current runtime modules, caller/fixture delta, complete proof results; large input declaration bodies not full independent semantic review",
+      "admission": false
+    },
+    "runtimeAffectedScopeReview3330": {
+      "status": "three independent fresh-context roles running",
+      "model": "gpt-6.1-sol",
+      "roles": {
+        "Source": "/root/runtime3320_source_review",
+        "Reader": "/root/runtime3320_reader_review",
+        "Quality": "/root/runtime3320_quality_review"
+      },
+      "scope": "new3320 current documentation runtime implementation and declared workflow; no original Native3060 retry/recovery/substitution",
+      "readOnly": true,
+      "execution": "none; read/hash only",
+      "accepted": false,
+      "Native3060": "remains incomplete",
+      "source3180": "FAIL unchanged",
+      "phase3200": "36 PASS / 1 BLOCKED, unintegrated",
+      "readerStatus": "complete affected reader-interface FAIL; no published reader acceptance",
+      "sourceStatus": "completed finite selected-package continuation; FAIL findings remain",
+      "qualityStatus": "completed affected Quality declaration/evidence scope FAIL",
+      "fallbackModelUsed": false,
+      "readerReport": "/tmp/kubeclaw-cloud-reviews/phase3330-runtime-reader-review/report.md",
+      "qualityReport": "/tmp/kubeclaw-cloud-reviews/phase3330-runtime-quality-review/report.md",
+      "rootFullReaderAndQualityReportsRead": true,
+      "findings": [
+        {
+          "id": "Q3330-01 / R3330-01",
+          "status": "open",
+          "finding": "dynamic import position 307 stale; final statement line252"
+        },
+        {
+          "id": "R3330-02",
+          "status": "open",
+          "finding": "refs SHA256 catchall masks runtime STOP as unsupported Git capability skip"
+        },
+        {
+          "id": "R3330-03",
+          "status": "open",
+          "finding": "contract purpose incorrectly says no imports despite typed JSON import"
+        }
+      ],
+      "candidateChangedDuringReview": false,
+      "sourceReport": "/tmp/kubeclaw-cloud-reviews/phase3330-runtime-source-review/report.md",
+      "qualityAudit": "/tmp/kubeclaw-cloud-reviews/phase3330-runtime-quality-review/declaration-read-audit.json",
+      "rootFullSourceReportAndQualityPartialAuditRead": true,
+      "qualityCapacityInterruptions": 1,
+      "sourcePositionAudit": {
+        "declaredImports": 125,
+        "acquisitionSites": 110,
+        "selectorPointers": 6,
+        "builtinPositions": 896,
+        "staleSelectorPointers": 5,
+        "uniqueResolutionObservations": 794,
+        "uniqueInputRecords": 124,
+        "observedSelectorOrInputFailures": 0
+      },
+      "qualitySupplement": "/tmp/kubeclaw-cloud-reviews/phase3330-runtime-quality-review/supplement-completed-scope.md",
+      "rootFullQualitySupplementRead": true,
+      "rootVerifiedCompletedQualityArtifactHashes": 5,
+      "qualityRemainingUnreadUniqueUnits": 0,
+      "qualityCompletedScope": {
+        "uniqueObservations": 794,
+        "uniqueInputs": 124,
+        "uniqueEdges": 270,
+        "scopeAssociations": 105,
+        "consumerStatements": 159,
+        "staleCurrentSelectorPositions": 5
+      },
+      "findingClassification": {
+        "staleSelectorMapping": "material cohesive defect",
+        "fixtureCatchMasksStop": "material Source/Reader finding",
+        "noImportsPurposeWording": "concrete wording mismatch; Quality nonblocking, correct together"
+      },
+      "sourceSupplement": "/tmp/kubeclaw-cloud-reviews/phase3330-runtime-source-review/package-purpose-supplement.md",
+      "rootFullSourceSupplementRead": true,
+      "sourceSupplementSha256": "ff38d855f91d912a3e9a551570939e9132b448ca44e0c5b99ca37b06356d8cec",
+      "source112InputComparisonExit": 0,
+      "selectedPackageUnreadJsBodies": 0
+    },
+    "runtimeCoherentCorrection3340": {
+      "status": "author correction complete; root inspected; fresh independent reviews running",
+      "author": "/root/documentation_runtime_inputs_3300",
+      "model": "gpt-6.1-sol",
+      "stage": "/tmp/kubeclaw-cloud-reviews/phase3340-documentation-runtime-correction-author",
+      "scope": [
+        "rebuild and validate all final source-position inventories",
+        "honest typed JSON contract import purpose in declaration and manifest",
+        "remove catchall SHA256 capability skip hiding runtime STOP"
+      ],
+      "original3320AndReviewsPreserved": true,
+      "approvalAndAdmissionRemainFalse": true,
+      "independentAcceptance": false,
+      "sharedIntegration": false,
+      "nativeOrProductExecutionAuthorizedInThisAuthorTask": false,
+      "report": "/tmp/kubeclaw-cloud-reviews/phase3340-documentation-runtime-correction-author/report.md",
+      "rootFullReportGeneratorVerifierProofRead": true,
+      "rootChangedCandidateFiles": [
+        "scripts/docs-reader-runtime-inputs.json",
+        "scripts/tests/docs-check-refs.test.mjs"
+      ],
+      "rootArtifactHashesVerified": 49,
+      "rootPriorBindingsVerified": 134,
+      "rootCandidateSharedBindingsVerified": 31,
+      "rootBindingDrift": false,
+      "positionsValidated": 1137,
+      "newDataControlsPassed": 19,
+      "newSyntaxChecksPassed": 1,
+      "syntaxChecksReused": 27,
+      "pureControlsReused": 52,
+      "admission": false,
+      "accepted": false
+    },
+    "runtimeFreshReview3350": {
+      "status": "three new separate prescribed fresh-context roles running",
+      "model": "gpt-6.1-sol",
+      "roles": {
+        "Source": "/root/runtime3340_source_fresh",
+        "Reader": "/root/runtime3340_reader_fresh",
+        "Quality": "/root/runtime3340_quality_fresh"
+      },
+      "scope": "complete affected new3340 current draft implementation interfaces/evidence/purposes; no oldNative3060 recovery/substitution",
+      "readOnly": true,
+      "nativeExecution": false,
+      "accepted": false,
+      "prior3330FailRebound": false,
+      "readerStatus": "complete affected reader scope FAIL; prior3groups corrected,2newgroups",
+      "readerReport": "/tmp/kubeclaw-cloud-reviews/phase3350-runtime-reader-review/report.md",
+      "rootFullReaderReportRead": true,
+      "sourceStatus": "complete finite affected draft Source scope FAIL",
+      "qualityStatus": "complete affected Quality scope FAIL",
+      "candidateChangedDuringReview": false,
+      "newFindings": [
+        {
+          "id": "R3350-01",
+          "status": "open",
+          "finding": "wrapped Git qualification/acquisition failures discarded as absent objects/nonancestor/HEAD repository facts across callers"
+        },
+        {
+          "id": "R3350-02",
+          "status": "open",
+          "finding": "parity scanner falls back to other scan or omits mandatory reviewed blob after unqualified acquisition"
+        },
+        {
+          "id": "S3350-03",
+          "status": "open",
+          "finding": "fixed expected-absence approval probe missing finite path selector"
+        },
+        {
+          "id": "Q3350-03",
+          "status": "open",
+          "finding": "assertion-field projection equality excludes actual whole-declaration recursive freeze initialization"
+        }
+      ],
+      "sourceReport": "/tmp/kubeclaw-cloud-reviews/phase3350-runtime-source-review/report.md",
+      "qualityReport": "/tmp/kubeclaw-cloud-reviews/phase3350-runtime-quality-review/report.md",
+      "rootFullAllReportsAndSourceCoverageRead": true
+    },
+    "runtimeAcquisitionFailureCorrection3360": {
+      "status": "complete frozen author successor; root inspected; fresh reviews running",
+      "author": "/root/documentation_runtime_inputs_3300",
+      "model": "gpt-6.1-sol",
+      "stage": "/tmp/kubeclaw-cloud-reviews/phase3360-documentation-acquisition-failure-author",
+      "scope": "all related acquisition catch/required scanner/finite expected-negative selector and accurate whole-DATA check evidence corrections",
+      "flagsRemainFalse": true,
+      "sharedEdits": false,
+      "nativeOrProductExecution": false,
+      "accepted": false,
+      "report": "/tmp/kubeclaw-cloud-reviews/phase3360-documentation-acquisition-failure-author/report.md",
+      "rootFullReportProofFailureHelperAndNonJsonSuccessorDeltaRead": true,
+      "rootArtifactsVerified": 61,
+      "rootPreservationBindingsVerified": 218,
+      "rootCandidateSharedBindingsVerified": 32,
+      "rootHashDrift": false,
+      "fullFinalInitializationOrdinaryAssertionsPassed": 52,
+      "focusedNonnativeAssertionsPassed": 38,
+      "changedSyntaxChecksPassed": 11,
+      "unchangedSyntaxChecksReused": 18,
+      "sourcePositionAudit": {
+        "imports": 130,
+        "acquisitions": 128,
+        "selectors": 7,
+        "builtinPositions": 897,
+        "failures": []
+      },
+      "approval": false
+    },
+    "runtimeFreshReview3370": {
+      "status": "new separate fresh-context Source/Reader/Quality roles running",
+      "model": "gpt-6.1-sol",
+      "roles": {
+        "Source": "/root/runtime3360_source_fresh",
+        "Reader": "/root/runtime3360_reader_fresh",
+        "Quality": "/root/runtime3360_quality_fresh"
+      },
+      "scope": "complete affected3360finite current implementation/workflow/evidence including new negative protocols and catch/scanner changes",
+      "readOnly": true,
+      "nativeExecution": false,
+      "priorFailRebound": false,
+      "accepted": false,
+      "readerStatus": "supplement complete FAIL supersedes initial PASS for same frozen candidate; original artifacts preserved",
+      "readerReport": "/tmp/kubeclaw-cloud-reviews/phase3370-runtime-reader-review/report.md",
+      "rootFullReaderReportRead": true,
+      "sourceStatus": "complete affected Source FAIL new negative-result meaning finding",
+      "sourceReport": "/tmp/kubeclaw-cloud-reviews/phase3370-runtime-source-review/report.md",
+      "rootFullSourceReportRead": true,
+      "qualityStatus": "complete affected Quality FAIL same result-meaning defect",
+      "finding": {
+        "id": "S3370-01",
+        "status": "open",
+        "meaning": "Git batch missing also emitted after FOUND when object-info unavailable; cannot prove selected path absent for deletion/restoration"
+      },
+      "executionCustody": {
+        "report": "/tmp/kubeclaw-cloud-reviews/phase3360-execution-custody/report.md",
+        "rootReadOnlyRawCommandEventObserved": true,
+        "actual52And38OutputObserved": true,
+        "combinedShellExit": 0,
+        "separateNodeExitStatusesCaptured": false,
+        "executionTimeDigestPrinted": false,
+        "digestTiming": "source/artifact reconstruction explicitly labeled",
+        "testsRerun": false
+      },
+      "readerSupplement": "/tmp/kubeclaw-cloud-reviews/phase3370-runtime-reader-review/supplement-new-evidence.md",
+      "qualityReport": "/tmp/kubeclaw-cloud-reviews/phase3370-runtime-quality-review/report.md",
+      "rootFullQualityReportAndReaderSupplementRead": true,
+      "allRolesCurrentVerdict": "FAIL"
+    },
+    "runtimeTreeMembershipCorrection3380": {
+      "status": "author complete frozen successor; root inspected; independent reviews in progress",
+      "author": "/root/documentation_runtime_inputs_3300",
+      "model": "gpt-6.1-sol",
+      "stage": "/tmp/kubeclaw-cloud-reviews/phase3380-documentation-tree-membership-author",
+      "scope": "derive absent path only from successful exact selected commit-tree membership; unreadable tree/blob fails; precise per-control raw execution custody",
+      "prior3360And3370ArtifactsPreserved": true,
+      "sharedIntegration": false,
+      "nativeExecution": false,
+      "approval": false,
+      "accepted": false,
+      "report": "/tmp/kubeclaw-cloud-reviews/phase3380-documentation-tree-membership-author/report.md",
+      "rootFullReportHelperCaptureWrapperRawControlRecordsAndRuntimeGrammarDeltaRead": true,
+      "rootArtifactHashesVerified": 82,
+      "rootDirectPredecessorBindingsVerified": 113,
+      "rootTransitivePredecessorBindingsVerified": 218,
+      "rootCandidateSharedBindingsVerified": 32,
+      "rootBindingDrift": false,
+      "finalDeclarationSha256": "31cd65e4b7597615ff9320c3e9864ed43e3e7b91bcc872f33824b288f4d2d001",
+      "ordinaryAssertions": 52,
+      "focusedAssertions": 53,
+      "individualControlExitCodes": [
+        0,
+        0
+      ],
+      "controlInputBindingsMatchCurrentCandidate": true
+    },
+    "runtimeFreshReview3390": {
+      "status": "all three complete affected implementation-draft roles PASS only",
+      "model": "gpt-6.1-sol",
+      "Source": "/root/runtime3380_source_fresh",
+      "Reader": "/root/runtime3380_reader_fresh",
+      "Quality": "/root/runtime3380_quality_fresh",
+      "qualityScopeComplete": true,
+      "qualityFallbackUsed": false,
+      "readOnly": true,
+      "accepted": false,
+      "sharedIntegration": false,
+      "ReaderStatus": "complete affected Reader draft scope PASS only",
+      "readerReport": "/tmp/kubeclaw-cloud-reviews/phase3390-runtime-reader-review/report.md",
+      "rootFullReaderReportRead": true,
+      "QualityStatus": "complete affected finite Quality implementation-draft PASS only",
+      "SourceStatus": "complete affected finite Source implementation-draft PASS only",
+      "sourceReport": "/tmp/kubeclaw-cloud-reviews/phase3390-runtime-source-review/report.md",
+      "rootFullSourceReportRead": true,
+      "rootSourceCloseoutHashesVerified": true,
+      "runtimeAdmission": false,
+      "qualityReport": "/tmp/kubeclaw-cloud-reviews/phase3390-runtime-quality-review/report.md",
+      "rootFullQualityReportRead": true,
+      "rootQualityArtifactBindingsVerified": 10,
+      "allRoles": "PASS at exact draft scope; not native/runtime/package/global authority"
+    },
+    "runtimeAstraAssessment3400": {
+      "status": "complete independent Astra assessment; draft PASS / admission NOT READY",
+      "role": "/root/runtime3380_astra_medium",
+      "model": "gpt-6-astra",
+      "reasoningEffort": "medium",
+      "stage": "/tmp/kubeclaw-cloud-reviews/phase3400-runtime-astra-assessment",
+      "scope": "/tmp/kubeclaw-cloud-reviews/phase3400-runtime-astra-assessment/scope.md",
+      "readOnly": true,
+      "allFlagsRemainFalse": true,
+      "accepted": false,
+      "report": "/tmp/kubeclaw-cloud-reviews/phase3400-runtime-astra-assessment/report.md",
+      "rootFullReportAndScopeRead": true,
+      "rootAstraBindingsMatch": true,
+      "finiteDraftVerdict": "PASS",
+      "runtimeIntegrationAP098Verdict": "NOT READY",
+      "next": "independent current helper/business-rule and actual selected DATA qualification; no unchanged3380 review loop"
+    },
+    "currentPurposeQualification3420": {
+      "status": "both independent current-purpose partitions complete; exact input/result bindings NOT READY",
+      "model": "gpt-6.1-sol",
+      "publicationAndTypeScriptRole": "/root/current_publication_data_source",
+      "businessAndParityRole": "/root/current_parity_data_source",
+      "outputs": [
+        "/tmp/kubeclaw-cloud-reviews/phase3420-current-publication-data-source",
+        "/tmp/kubeclaw-cloud-reviews/phase3420-current-parity-data-source"
+      ],
+      "scope": "full remaining selected current helper/business-rule semantics and actual source-owned DATA ledgers, plus selected TypeScript init/AST purpose; attribution-preserving reuse of unchanged prior package/runtime evidence",
+      "retainedDiscoveryCustodyNative3060": "excluded STOP records remain unresolved; no retry/substitution",
+      "readOnly": true,
+      "nativeExecution": false,
+      "sharedEdits": false,
+      "admissionFlagsFalse": true,
+      "accepted": false,
+      "parityReport": "/tmp/kubeclaw-cloud-reviews/phase3420-current-parity-data-source/report.md",
+      "paritySourcePurposeVerdict": "PASS",
+      "parityPhysicalDataPurposeVerdict": "PASS at bound physical snapshot",
+      "parityGitSelectedCurrentInputs": "NOTREADY exact refs/fields enumerated",
+      "parityScopedSourceUnits": 12,
+      "parityFullSemanticLines": 7162,
+      "parityPhysicalDocsObserved": 2946,
+      "rootFullParityReportRead": true,
+      "rootParityArtifactBindingsVerified": 23,
+      "parityCurrentDecisions": "7 untriaged with stale extraction bindings; content acceptance not granted",
+      "parityReviewsApprovalManifest": "absent",
+      "currentDataSnapshotNote": "physical hashes bind reviewer snapshot; root matrix updates are tracking-data changes, not immutable current-DATA acceptance",
+      "publicationReport": "/tmp/kubeclaw-cloud-reviews/phase3420-current-publication-data-source/report.md",
+      "publicationLedger": "/tmp/kubeclaw-cloud-reviews/phase3420-current-publication-data-source/complete-purpose-input-ledger.json",
+      "publicationSourcePurpose": "PASS 7 complete bodies",
+      "publicationContentDataPurpose": "PASS at bound878file snapshot",
+      "selectedTypeScriptPurpose": "PASS finite two-helper selected semantics",
+      "publicationCurrentSchemaAndExamples": "PASS purpose; not observed validator output",
+      "publicationExactMetadataAndGitResults": "NOT READY P17 page-derived targets and P11 pinned Git observations",
+      "rootFullPublicationReportRead": true,
+      "rootPublicationArtifactsVerified": 38
+    },
+    "currentInputAcquisitionPlan3440": {
+      "status": "author packet frozen; fresh Source/Reader/Quality reviews underway",
+      "author": "/root/current_input_acquisition_plan_author",
+      "model": "gpt-6.1-sol",
+      "stage": "/tmp/kubeclaw-cloud-reviews/phase3440-current-input-acquisition-plan-author",
+      "scope": "exact current immutable Git/scanner input and page metadata selector/result capture plan; no candidate/historical/product execution",
+      "nativeDataAcquisitionPerformed": false,
+      "planReviewPending": true,
+      "noHumanReapprovalRequiredForExistingAuthorizedReadOnlyScope": true,
+      "sharedEdits": false,
+      "flagsRemainFalse": true,
+      "accepted": false,
+      "initialGitCommands": 3094,
+      "ordinaryShapeControlsPassed": 26,
+      "rootFullReportAndCaptureCodeRead": true,
+      "rootArtifactBindingsVerified": 21,
+      "publicationEvidenceFactSelectors": "NOTREADY; broad supplemental selections excluded"
+    },
+    "currentInputAcquisitionReview3450": {
+      "status": "all three complete; combined/P17 FAIL, Git-only design no material findings",
+      "model": "gpt-6.1-sol",
+      "roles": [
+        "/root/input_packet_source_fresh",
+        "/root/input_packet_reader_fresh",
+        "/root/input_packet_quality_fresh"
+      ],
+      "scope": "new3440 exact default current read-only DATA acquisition packet and tools only",
+      "sourcePreliminaryFinding": "P17 eager entities decode-shared.js and encode-shared.js missing pre-Node snapshot bindings; complete review pending",
+      "executionPerformed": false,
+      "sharedRuntimeEdits": false,
+      "admissionFlagsFalse": true,
+      "accepted": false,
+      "rootFullReportsAndCoverageRead": true,
+      "readerBindingsVerified": 291,
+      "qualityBindingsVerified": 13,
+      "sourceReviewArtifactsVerified": 3,
+      "findings": [
+        "two actual eager entities modules missing pre-init hashes",
+        "nearer bare-package resolution candidates unbound",
+        "P17 publicationPages discovery not repeated at closeout"
+      ],
+      "sourceSupplement": "complete: S3450-02 and S3450-03 material; original report preserved",
+      "acquisitionPerformed": false,
+      "rootFullSourceSupplementRead": true,
+      "sourceSupplementBindingsVerified": 10
+    },
+    "currentInputAcquisitionCorrection3460": {
+      "status": "successor frozen; fresh affected reviews underway",
+      "author": "/root/current_input_acquisition_plan_author",
+      "stage": "/tmp/kubeclaw-cloud-reviews/phase3460-current-input-acquisition-correction-author",
+      "scope": "three coherent P17 pre-init/closeout corrections; preserve Git domain and excluded callback selections",
+      "preserve3440": true,
+      "sharedEdits": false,
+      "admissionFlagsFalse": true,
+      "accepted": false,
+      "rootFullReportPatchesProofAndReuseRead": true,
+      "artifactBindingsVerified": 25,
+      "preservedArtifactsVerified": 35,
+      "newOrdinaryControlsPassed": 24,
+      "priorControlsRerun": false,
+      "selectedSnapshotRows": 288
+    },
+    "currentInputAcquisitionReview3470": {
+      "status": "all three complete PASS exact3460 finite DATA proposal only",
+      "roles": [
+        "/root/input3460_source_fresh",
+        "/root/input3460_reader_fresh",
+        "/root/input3460_quality_fresh"
+      ],
+      "model": "gpt-6.1-sol",
+      "scope": "corrected3460 finite DATA proposal; unchanged3450 Git scope attributed only after equality",
+      "executionPerformed": false,
+      "flagsRemainFalse": true,
+      "accepted": false,
+      "sourceVerdict": "PASS exact Git/P17/combined finite DATA proposal only",
+      "rootFullSourceReportAndCoverageRead": true,
+      "sourceBindingsVerified": 309,
+      "readerVerdict": "PASS Git/P17/combined scoped proposal",
+      "qualityVerdict": "PASS Git/P17/combined scoped proposal",
+      "rootFullReaderQualityReportsAndCoverageRead": true,
+      "readerBindingsVerified": 15,
+      "qualityBindingsVerified": 28,
+      "allThreeP17GroupsClosed": true
+    },
+    "currentInputAcquisitionAssessment3480": {
+      "status": "complete PASS exact default DATA proposal; runtime/package/global NOTREADY",
+      "role": "/root/input3460_astra_medium",
+      "model": "gpt-6-astra",
+      "reasoningEffort": "medium",
+      "stage": "/tmp/kubeclaw-cloud-reviews/phase3480-current-input-acquisition-astra-assessment",
+      "scope": "exact3460 read-only DATA proposal versus separately ungranted runtime/package/global domain",
+      "acquisitionPerformed": false,
+      "flagsRemainFalse": true,
+      "rootFullReportAndScopeRead": true,
+      "bindingsVerified": 308
+    },
+    "currentInputDataAcquisition3490": {
+      "status": "actual P17 complete; Git partial stop preserved, no retry",
+      "stage": "/tmp/kubeclaw-cloud-reviews/phase3460-current-input-acquisition-correction-author",
+      "modes": [
+        "git",
+        "p17"
+      ],
+      "scope": "current read-only DATA capture only",
+      "runtimeAdmission": false,
+      "packageAcceptance": false,
+      "callback433Excluded": true,
+      "Native3060Retry": false,
+      "gitExit": 1,
+      "gitCapturedCommands": 3452,
+      "gitCloseout": false,
+      "gitStoppedAt": "selected-1540 exact040000tree plugins/kubeclaw-ops/skills; decoder expected regular blob",
+      "p17Exit": 0,
+      "p17CapturedCommands": 1,
+      "p17Closeout": true,
+      "p17Pages": 155,
+      "p17SelectedMetadataRows": 38272,
+      "resultFilesBound": 10368,
+      "resultStage": "/tmp/kubeclaw-cloud-reviews/phase3490-current-data-acquisition-results",
+      "independentResultReview": "/root/actual_data3490_source_review"
+    },
+    "currentGitAcquisitionContinuation3500": {
+      "status": "existing prescribed writer inspecting preserved partialstate/preparing reviewed continuation, not retry",
+      "author": "/root/current_input_acquisition_plan_author",
+      "stage": "/tmp/kubeclaw-cloud-reviews/phase3500-current-git-acquisition-continuation-author",
+      "reuseCompletedCommandsRequired": 3452,
+      "p17Rerun": false,
+      "flagsRemainFalse": true,
+      "accepted": false
+    }
+  },
+  "scheduledSourceReadiness20261014": {
+    "utc": "2026-10-14T14:03:41.474418+00:00",
+    "revision": "eb51092b825c9501c53e486517ae3739411f60b3",
+    "branch": "docs/documentation-overhaul",
+    "state": "NOT_READY_FOR_SOURCE_COMMIT_OR_GENERATION",
+    "report": "/home/node/.openclaw/workspace/tmp/pr13-resume-20261014/source-readiness-20261014/readiness.json",
+    "reportSha256": "434c899528c30743035a7d9929d5e3aac9bb6f662c512b604b0f27b7868d9d10",
+    "scope": "Actual passive candidate/source/input admission; not independent review or package acceptance",
+    "observerCandidateFilesVerified": 4,
+    "observerAuthorityPinsVerified": 19,
+    "adapterSourceAndOperationHashesMatched": 24,
+    "adapterSemanticRecipesReplayed": false,
+    "finiteModuleRecipeSourcesMatched": 11,
+    "finiteModuleRecipeSourcesTotal": 12,
+    "inventoryRecipeExpectedSha256": "f4c05578dfca068d2fe29b1acb508c26896048464dbd7696d18c8091f483ffb5",
+    "inventoryActualSha256": "dbabe672354bbef811ef4e8c6baad51c15848f09c764af55eeafb49c57f69905",
+    "inventoryChangesComparedWithHEAD": {
+      "newImports": [
+        "./docs-shell-source-custody.mjs",
+        "./docs-helm-environment-projections.mjs"
+      ],
+      "newFunctions": [
+        "configuredSecretResolverFacts",
+        "configuredEnvironmentReceiverFacts",
+        "pythonArgvMode",
+        "pythonInterpreterIndex",
+        "pythonShellPrograms",
+        "pythonYamlPrograms",
+        "acquiredPythonEnvironmentReads",
+        "nodeArgvSelection",
+        "nodeShellPrograms",
+        "acquiredNodeEnvironmentReads",
+        "environmentProducerOccurrences"
+      ],
+      "changedFunctions": [
+        "walk",
+        "operatorEnvironmentFamilyContract",
+        "schemaStaticFallback",
+        "schemaSpecificPurpose",
+        "schemaFieldMeaning",
+        "maskQuotedShellHeredocs",
+        "nodeEnvironmentReads",
+        "inlineProgramEnvironmentReads",
+        "pythonEnvironmentReads",
+        "embeddedNodeEnvironmentReads",
+        "embeddedPythonEnvironmentReads",
+        "environmentOccurrences",
+        "verifyEnvironmentConsumerCoverage",
+        "environmentProducerSetting",
+        "buildRuntimeInputInventory"
+      ],
+      "dynamicImportExpressionsUnchanged": true
+    },
+    "transferArchive": {
+      "command": "python3 .codex/handoffs/documentation-cloud/verify-transfer.py",
+      "exit": 0,
+      "filesVerified": 1176,
+      "scope": "Historical evidence integrity only; later current-source evidence not included"
+    },
+    "missingEvidenceRoot": "/tmp/kubeclaw-cloud-reviews",
+    "missingRequiredTool": "spawn_agent",
+    "toolDiscovery": "Absent from ALL_TOOLS; openclaw__subagents lists/waits/cancels only; no existing child in this run",
+    "prohibitedScopesPreserved": [
+      "native3060 retained STOP; no retry/substitution",
+      "P17/runtime not admitted; no execution"
+    ],
+    "next": "Restore native spawn_agent to this scheduled GPT-6.1 Sol runtime. Recover later candidate-bound role evidence or request permitted independent fresh reviews over inventory source/helper/caller/input scope, then qualify complete source snapshot and commit source before generation. Do not repair hashes alone."
   }
 }

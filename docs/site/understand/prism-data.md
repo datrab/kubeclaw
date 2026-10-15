@@ -47,6 +47,31 @@ flowchart LR
     ArtifactStore --> Bundle
 ```
 
+**Text alternative to the diagram**
+
+Each row names a directed connection. Labels preserve the diagram’s conditions or handoffs; dotted relationships are identified explicitly.
+
+| From | Relationship | To |
+| --- | --- | --- |
+| Project | Directed connection | Design request |
+| Design request | Directed connection | Design round |
+| Design round | Directed connection | Three directions |
+| Three directions | Directed connection | Design document |
+| Design document | Directed connection | Immutable revisions |
+| Immutable revisions | Directed connection | Approval |
+| Approval | Directed connection | Baseline record |
+| Baseline record | Directed connection | Content-addressed bundle |
+| Preference events | Directed connection | Generation snapshot |
+| Generation snapshot | Directed connection | Design round |
+| Governed corpus | Directed connection | Rights-filtered retrieval |
+| Rights-filtered retrieval | Directed connection | Design round |
+| Design document | Directed connection | Renderer and browser capture |
+| Renderer and browser capture | Directed connection | Content-addressed bundle |
+| Content-addressed artifact store | Directed connection | Design request |
+| Content-addressed artifact store | Directed connection | Governed corpus |
+| Content-addressed artifact store | Directed connection | Content-addressed bundle |
+
+
 Text version: A project owns design requests. The active request owns the
 current design round. A round produces three direction records and three
 documents. Each document points to its current immutable revision. Preference

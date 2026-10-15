@@ -10,6 +10,8 @@ import { spawnSync } from 'node:child_process';
 import vm from 'node:vm';
 import ts from 'typescript';
 import YAML from 'yaml';
+import { shellHeredocCustody, shellCommandAcquisitions } from './docs-shell-source-custody.mjs';
+import { helmEnvironmentHelperProjectionPlans } from './docs-helm-environment-projections.mjs';
 import Ajv2020 from 'ajv/dist/2020.js';
 import addFormats from 'ajv-formats';
 import { assertYamlAuthorityRegistry, yamlAuthorityFile, yamlAuthorityPaths, yamlFieldAuthority } from './docs-yaml-field-authorities.mjs';
@@ -86,6 +88,9 @@ function walk(relativeRoot, accept = () => true) {
     for (const entry of fs.readdirSync(directory, { withFileTypes: true }).sort((a, b) => a.name.localeCompare(b.name))) {
       if (EXCLUDED_SEGMENTS.has(entry.name)) continue;
       const absolutePath = path.join(directory, entry.name);
+      if (entry.isSymbolicLink()) {
+        assert.fail(`CONFIG_RUNTIME_SOURCE_CUSTODY_UNSUPPORTED: ${relative(absolutePath)}: symbolic-link source requires explicit canonical acquisition; outside-root and unresolved aliases cannot be omitted`);
+      }
       if (entry.isDirectory()) visit(absolutePath);
       else if (entry.isFile() && accept(absolutePath)) found.push(relative(absolutePath));
     }
@@ -132,9 +137,9 @@ const ENVIRONMENT_CONTRACTS = new Map(Object.entries({
   BUNDLE_TMP_ROOT: environmentContract({ purpose: 'Carries the chart init script\'s fixed `/tmp/code-bundle` work directory across one shell-to-Node process boundary while the downloaded code bundle is validated.', acceptedForm: 'The internal fixed path `/tmp/code-bundle`; this is not an operator or external runtime input.', defaultBehavior: 'The init script assigns `/tmp/code-bundle` before bundle download and passes that value only to the validation Node process.', emptyBehavior: 'No supported empty state exists: the shell assignment at `deployment.yaml:944` fixes the value before the child-process export at line 1023.', invalidBehavior: 'Changing or removing the internal assignment can make archive extraction and Node validation use different directories, which stops code-bundle initialization.', precedence: 'The local shell assignment at `deployment.yaml:944` is the only producer. The command-local export at line 1023 passes it to the Node reader at line 1027; no values field, Pod environment entry, or external setting participates.', impact: 'The value joins the shell extraction directory to the Node validator\'s `extracted` path for this init-container execution only.', failure: 'The code-bundle init step fails before the workload starts when the archive and validator do not use the same temporary directory.', required: 'internal and fixed when code-bundle initialization runs' }),
   AGENT_HELM_TIMEOUT: environmentContract({ purpose: 'Limits how long Helm can wait for a Nova or Buster release operation.', acceptedForm: 'A Helm duration such as `45m`.', defaultBehavior: 'Uses `45m`.', emptyBehavior: 'An empty value is absent and selects `45m`.', invalidBehavior: 'Helm rejects an invalid duration or ends the release when the duration expires.', precedence: 'A non-empty process value wins; otherwise the deploy script uses `45m`.', impact: 'A shorter value stops a slow agent release sooner. A longer value delays rollback and failure reporting.', failure: 'The atomic Helm operation fails and rolls back when the wait limit expires.' }),
   AGENT_ROLLOUT_TIMEOUT: environmentContract({ purpose: 'Limits each Kubernetes rollout-status wait for Nova and Buster workloads.', acceptedForm: 'A kubectl duration such as `45m`.', defaultBehavior: 'Uses `45m`.', emptyBehavior: 'An empty value is absent and selects `45m`.', invalidBehavior: 'kubectl rejects an invalid duration or reports a rollout timeout.', precedence: 'A non-empty process value wins; otherwise the deploy script uses `45m`.', impact: 'This value changes only the observation deadline; it does not change the workload progress deadline.', failure: 'The deploy command stops when a required rollout does not become ready in time.' }),
-  ALLOW_PARTIAL_INFRA: environmentContract({ purpose: 'Changes selected infrastructure rollout failures from fatal errors to warnings.', acceptedForm: '`true` or `false`.', defaultBehavior: 'Uses `false` and fails closed.', emptyBehavior: 'An empty value is absent and selects `false`.', invalidBehavior: 'Only the exact value `true` enables partial progress; every other value keeps fail-closed behavior.', precedence: 'A non-empty process value wins; otherwise the deploy script uses `false`.', impact: 'When true, deployment can continue after an infrastructure component fails readiness.', failure: 'The command can finish with incomplete infrastructure; operators must inspect warnings and component status before using the platform.' }),
-  BACKUP_APPLICATION_IMAGE: environmentContract({ purpose: 'Pins the application image identity written into and checked against PostgreSQL backup metadata.', acceptedForm: 'An OCI image reference with a `sha256` digest.', defaultBehavior: 'No default.', emptyBehavior: 'An empty value is rejected before backup or restore.', invalidBehavior: 'A value without the required digest shape returns `POSTGRES_RECOVERY_APPLICATION_IMAGE_INVALID`.', precedence: 'The non-empty process value is the only source.', impact: 'Changing it makes existing backups fail the application-image compatibility check.', failure: 'Backup and restore stop before changing database state.', required: 'required' }),
-  BACKUP_CREDENTIAL_AUTHORITY_REF: environmentContract({ purpose: 'Records the external credential-authority identity that must provide database roles and credentials during recovery.', acceptedForm: 'A 1-256 character authority reference containing letters, digits, dot, underscore, colon, slash, or hyphen.', defaultBehavior: 'No default.', emptyBehavior: 'An empty value is rejected before backup or restore.', invalidBehavior: 'A value outside the allowed shape returns `POSTGRES_RECOVERY_CREDENTIAL_AUTHORITY_INVALID`.', precedence: 'The non-empty process value is the only source.', impact: 'The reference is stored in backup metadata; it does not copy credential bytes into the backup.', failure: 'Recovery stops if the selected authority does not match the retained recovery plan.', required: 'required' }),
+  ALLOW_PARTIAL_INFRA: environmentContract({ purpose: 'Changes selected infrastructure rollout failures from fatal errors to warnings.', acceptedForm: 'Case-insensitive `1`, `true`, `yes`, `on`, or `enabled`; `0`, `false`, `no`, `off`, or `disabled`.', defaultBehavior: 'Uses `false` and fails closed.', emptyBehavior: 'An empty value is absent and selects `false`.', invalidBehavior: 'Case-insensitive `1`, `true`, `yes`, `on`, or `enabled` enables partial progress; other values keep fail-closed behavior.', precedence: 'A non-empty process value wins; otherwise the deploy script uses `false`.', impact: 'When true, deployment can continue after an infrastructure component fails readiness.', failure: 'The command can finish with incomplete infrastructure; operators must inspect warnings and component status before using the platform.' }),
+  BACKUP_APPLICATION_IMAGE: environmentContract({ purpose: 'Pins the application image identity written into and checked against PostgreSQL backup metadata.', acceptedForm: 'A reference matching `[a-zA-Z0-9._/-]+@sha256:[a-f0-9]{64}`; tags and colon-containing registry ports are not accepted by this host recovery reader.', defaultBehavior: 'No default.', emptyBehavior: 'An empty value is rejected before backup or restore.', invalidBehavior: 'A value without the required digest shape returns `POSTGRES_RECOVERY_APPLICATION_IMAGE_INVALID`.', precedence: 'The non-empty process value is the only source.', impact: 'Changing it makes existing backups fail the application-image compatibility check.', failure: 'Backup and restore stop before changing database state.', required: 'required' }),
+  BACKUP_CREDENTIAL_AUTHORITY_REF: environmentContract({ purpose: 'Records the external credential-authority identity that must provide database roles and credentials during recovery.', acceptedForm: 'A 1-256 character authority reference containing letters, digits, dot, underscore, colon, slash, or hyphen.', defaultBehavior: 'No default.', emptyBehavior: 'An empty value is rejected before backup or restore.', invalidBehavior: 'A value outside the allowed shape returns `POSTGRES_RECOVERY_CREDENTIAL_AUTHORITY_INVALID`.', precedence: 'The non-empty process value is the only source.', impact: 'The reference is stored in backup metadata; it does not copy credential bytes into the backup.', failure: 'The syntax guard rejects an invalid reference. Recovery retains this descriptive metadata but does not compare it for equality; credential binding and other enforced metadata checks remain separate.', required: 'required' }),
   BACKUP_EXPECTED_SERVER_VERSION: environmentContract({ purpose: 'Selects the PostgreSQL numeric server version accepted for backup and target recovery.', acceptedForm: 'A positive PostgreSQL `server_version_num`, for example `160004`.', defaultBehavior: 'No default.', emptyBehavior: 'An empty value is rejected before database access.', invalidBehavior: 'A non-positive value returns `POSTGRES_RECOVERY_INVALID_BACKUP_EXPECTED_SERVER_VERSION`; a different live version returns `POSTGRES_RECOVERY_SERVER_VERSION_NOT_SELECTED`.', precedence: 'The non-empty process value is the only source.', impact: 'The value prevents an unplanned source version or restore-client version from entering recovery.', failure: 'Backup, verify, restore, or migration stops before publication or restore.', required: 'required' }),
   BACKUP_INTERVAL_SECONDS: environmentContract({ purpose: 'Sets the minimum age at which the scheduled command creates another PostgreSQL backup.', acceptedForm: 'A positive integer from 1 through 9,999,999,999,999 seconds.', defaultBehavior: 'No default; only the `scheduled` command reads it.', emptyBehavior: 'An empty value is rejected for `scheduled`.', invalidBehavior: 'Zero, negative, non-numeric, or overlong input returns `POSTGRES_RECOVERY_INVALID_BACKUP_INTERVAL_SECONDS`.', precedence: 'The non-empty process value is the only source.', impact: 'A larger value reuses a still-valid latest backup for longer; it does not relax the maximum backup age.', failure: 'The scheduled command stops without creating or deleting a backup.', required: 'required for `scheduled`' }),
   BACKUP_MAXIMUM_AGE_SECONDS: environmentContract({ purpose: 'Sets the oldest backup age accepted by verification and restore.', acceptedForm: 'A positive integer from 1 through 9,999,999,999,999 seconds.', defaultBehavior: 'No default.', emptyBehavior: 'An empty value is rejected before reading a backup.', invalidBehavior: 'Invalid input returns `POSTGRES_RECOVERY_INVALID_BACKUP_MAXIMUM_AGE_SECONDS`; an older backup returns `POSTGRES_RECOVERY_BACKUP_RPO_EXCEEDED`.', precedence: 'The non-empty process value is the only source.', impact: 'This is the enforced recovery-point objective limit.', failure: 'Verification and restore stop; the backup is retained.', required: 'required' }),
@@ -784,8 +789,8 @@ addEnvironmentConsumerContract('PRISM_NATIVE_MAXIMUM_INPUT_BYTES', 'skills/prism
 for (const [name, contract] of Object.entries({
   BUILDKIT_ROOTLESS_PREFLIGHT_IMAGE: environmentContract({ purpose: 'Selects the rootless BuildKit image used by the deployment capability probe.', acceptedForm: 'An OCI image reference pinned with a `sha256` digest.', defaultBehavior: 'Uses the checked-in `moby/buildkit:v0.26.2-rootless` digest.', emptyBehavior: 'An empty value is absent and selects the checked-in digest.', invalidBehavior: 'The container runtime rejects an invalid or unavailable image; the probe also rejects a runtime that lacks the required rootless capability.', precedence: 'A non-empty process value wins; otherwise the checked-in digest applies.', impact: 'Changing it changes the executable probe used to decide whether build capability is ready.', failure: 'The probe pod fails and deployment does not claim rootless BuildKit readiness.' }),
   BUILDKIT_ROOTLESS_PREFLIGHT_TIMEOUT: environmentContract({ purpose: 'Limits the wait for the rootless BuildKit capability probe pod.', acceptedForm: 'A kubectl duration such as `180s`.', defaultBehavior: 'Uses `180s`.', emptyBehavior: 'An empty value is absent and selects `180s`.', invalidBehavior: 'kubectl rejects an invalid duration or reports a timeout.', precedence: 'A non-empty process value wins; otherwise the checked-in timeout applies.', impact: 'A shorter value stops a slow probe sooner; a longer value delays deployment failure.', failure: 'The probe is diagnosed and removed, and deployment stops without claiming BuildKit readiness.' }),
-  CODE_BUNDLE_GITHUB_REPOSITORY: environmentContract({ purpose: 'Supplies the GitHub `owner/repository` used to derive source-bundle release URLs.', acceptedForm: 'A GitHub repository identifier in `owner/repository` form.', defaultBehavior: 'Empty; the deploy script can derive the repository from Git remote metadata.', emptyBehavior: 'An empty value requests repository derivation.', invalidBehavior: 'A missing or malformed effective repository prevents release-asset URL derivation.', precedence: 'An explicit environment repository wins; otherwise the script inspects the checked-in repository remote.', impact: 'Changing it redirects all derived Nova, Buster, and Prism bundle URLs.', failure: 'Code-bundle preflight or deployment stops before downloading an unbound archive.' }),
-  CODE_BUNDLE_PREFLIGHT_SKIP: environmentContract({ purpose: 'Disables the remote code-bundle release preflight for a controlled render path.', acceptedForm: 'Only the exact string `true` skips the preflight; use `false` otherwise.', defaultBehavior: 'Uses `false`.', emptyBehavior: 'An empty value is absent and selects `false`.', invalidBehavior: 'Any value other than exact `true` does not skip verification.', precedence: 'A non-empty process value wins; otherwise verification remains enabled.', impact: 'When true, the command does not prove that the remote archive and receipt exist before rendering.', failure: 'A later init container can fail if the unverified asset is missing or invalid.' }),
+  CODE_BUNDLE_GITHUB_REPOSITORY: environmentContract({ purpose: 'Supplies the GitHub `owner/repository` used to derive source-bundle release URLs.', acceptedForm: 'A GitHub repository identifier in `owner/repository` form.', defaultBehavior: 'Empty; derive from a recognized `ghcr.io` image repository, then Git remote metadata.', emptyBehavior: 'An empty value requests repository derivation.', invalidBehavior: 'A missing or malformed effective repository prevents release-asset URL derivation.', precedence: 'An explicit environment repository wins, then a recognized `ghcr.io` image repository, then Git remote metadata.', impact: 'Changing it redirects all derived Nova, Buster, and Prism bundle URLs.', failure: 'Code-bundle preflight or deployment stops before downloading an unbound archive.' }),
+  CODE_BUNDLE_PREFLIGHT_SKIP: environmentContract({ purpose: 'Skips the remote code-bundle URL-existence preflight during live code deployment; render-only mode bypasses that remote check separately.', acceptedForm: 'Case-insensitive `true` skips the remote preflight; use `false` otherwise.', defaultBehavior: 'Uses `false`.', emptyBehavior: 'An empty value is absent and selects `false`.', invalidBehavior: 'Any value other than case-insensitive `true` does not skip the remote check. This switch never bypasses local selected-receipt render validation.', precedence: 'A non-empty process value wins; otherwise verification remains enabled.', impact: 'When true, the command skips remote archive URL existence checks. A successful URL check never validates a receipt, and local selected-receipt render validation remains mandatory.', failure: 'A later init container can fail if the unverified asset is missing or invalid.' }),
   CODE_BUNDLE_RELEASE_TAG: environmentContract({ purpose: 'Selects the GitHub release tag under which derived code-bundle assets are located.', acceptedForm: 'A GitHub release tag valid in a release download URL.', defaultBehavior: 'Uses `agent-code-bundles`.', emptyBehavior: 'An empty value is absent and selects the default tag.', invalidBehavior: 'A nonexistent or malformed tag makes the derived asset unavailable.', precedence: 'A non-empty process value wins; otherwise the checked-in tag applies.', impact: 'Changing it redirects derived Nova, Buster, and Prism archive URLs while expected commits still bind their contents.', failure: 'Bundle preflight or init download fails.' }),
   DISABLE_IMAGE_PULL_SECRETS: environmentContract({ purpose: 'Omits configured imagePullSecrets from an agent Helm release.', acceptedForm: 'Only `1` disables imagePullSecrets; use `0` to retain them.', defaultBehavior: 'Uses `0` and keeps imagePullSecrets.', emptyBehavior: 'An empty value is absent and selects `0`.', invalidBehavior: 'Any value other than exact `1` retains imagePullSecrets.', precedence: 'A non-empty process value wins; otherwise the deploy script uses `0`.', impact: 'Use it only when every selected image is anonymously pullable or another cluster mechanism supplies credentials.', failure: 'Private image pulls fail with `ImagePullBackOff` when the override removes the required Secret.' }),
   KUBECLAW_DEPLOY_LAB_DOCKERHUB_MIRROR: environmentContract({ purpose: 'Enables the anonymous HTTP Docker Hub pull-through mirror used by the lab deployment.', acceptedForm: 'Exactly `true` or `false`.', defaultBehavior: 'Uses `false`.', emptyBehavior: 'An empty value is absent and selects `false`.', invalidBehavior: 'Any other value stops deployment with a boolean validation error.', precedence: 'A non-empty process value wins; otherwise the mirror remains disabled.', impact: 'When enabled, deployment applies the lab mirror resources. It does not make the service production-ready or HTTPS-authenticated.', failure: 'Invalid input or a failed mirror rollout stops the infrastructure path.' }),
@@ -793,7 +798,7 @@ for (const [name, contract] of Object.entries({
   KUBECLAW_DEPLOY_RENDER_ONLY: environmentContract({ purpose: 'Selects manifest rendering without cluster mutation for internal deployment verification paths.', acceptedForm: 'Only exact `1` enables render-only behavior.', defaultBehavior: 'Uses `0` in ordinary deployment paths.', emptyBehavior: 'An absent or empty value selects normal apply behavior.', invalidBehavior: 'Every value other than exact `1` is treated as normal apply behavior.', precedence: 'A value exported by the script for its verification subshells wins there; otherwise an inherited process value controls each read.', impact: 'When set to `1`, selected render paths emit or validate manifests and skip their corresponding kubectl or Helm mutation and readiness steps.', failure: 'Using `1` for an intended deployment produces no live rollout; leaving it disabled in a verification path can mutate the selected cluster.', required: 'internal verification control; direct operator use is unsafe' }),
   KUBECLAW_KUBERNETES_PREFLIGHT_SECRET: environmentContract({ purpose: 'Names the approved test Secret mounted by the Kubernetes and combined production preflights.', acceptedForm: 'A valid Kubernetes Secret name.', defaultBehavior: 'Uses `kubeclaw-fixture-preflight`.', emptyBehavior: 'An empty value is absent and selects the default Secret name.', invalidBehavior: 'The command rejects an invalid name and fails when the Secret does not exist or cannot be mounted.', precedence: 'Command argument 3 wins; this environment value is the fallback; then the checked-in default applies.', impact: 'This public object name selects test data exposure for the preflight workload; it does not contain the Secret payload.', failure: 'The preflight stops and produces no successful production receipt.' }),
   KUBECLAW_LAB_REGISTRY_STORAGE_CONFIG: environmentContract({ purpose: 'Selects the explicit JSON storage configuration used to render the lab local registry.', acceptedForm: 'A readable JSON file accepted by `render-registry-local.mjs`.', defaultBehavior: 'No default when the lab registry is enabled.', emptyBehavior: 'An empty value is rejected only when `KUBECLAW_DEPLOY_LAB_REGISTRY=true`.', invalidBehavior: 'A missing, invalid, or unsafe storage configuration stops registry rendering.', precedence: 'The non-empty process value is the only storage-config source for the enabled lab registry.', impact: 'The file selects registry storage behavior and persistence.', failure: 'Deployment stops before applying the local registry resources.', required: 'required when the lab registry is enabled' }),
-  KUBECLAW_PRODUCTION_RECEIPT_PRIVATE_KEY_FILE: environmentContract({ purpose: 'Selects the private signing-key file used to issue a production preflight receipt.', acceptedForm: 'A readable filesystem path to the private key paired with the installed trusted public key.', defaultBehavior: 'Empty; production receipt commands require an explicit file.', emptyBehavior: 'An empty value is rejected by receipt-producing commands.', invalidBehavior: 'A missing, unreadable, or mismatched key prevents receipt signing or verification.', precedence: 'The process value is the only private-key path; the trusted public-key file remains a separate checked-in/installed authority.', impact: 'The path is publishable, but the file contents are secret. Changing the key pair changes who can issue accepted receipts.', failure: 'The production preflight stops without an accepted receipt.', required: 'required for production receipt commands' }),
+  KUBECLAW_PRODUCTION_RECEIPT_PRIVATE_KEY_FILE: environmentContract({ purpose: 'Selects the private signing-key file used to issue a production preflight receipt.', acceptedForm: 'A readable private-key file whose canonical real path is outside the repository and whose key matches the installed trusted public key.', defaultBehavior: 'Empty; production receipt commands require an explicit file.', emptyBehavior: 'An empty value is rejected by receipt-producing commands.', invalidBehavior: 'A missing, unreadable, mismatched, or repository-contained canonical key path prevents receipt signing or verification.', precedence: 'The process value is the only private-key path; the fixed installed trusted public-key path remains a separate immutable authority and its canonical file must also be outside the repository.', impact: 'The path is publishable, but the file contents are secret. Changing the key pair changes who can issue accepted receipts.', failure: 'The production preflight stops without an accepted receipt.', required: 'required for production receipt commands' }),
   KUBECLAW_RUN_SECRET_SETUP: environmentContract({ purpose: 'Selects whether the deploy `setup` and `all` paths invoke secret setup.', acceptedForm: 'Case-insensitive `auto`; truthy `1`, `true`, `yes`, `on`, or `enabled`; or falsey `0`, `false`, `no`, `off`, or `disabled`.', defaultBehavior: '`auto`: run with a terminal and skip with a warning without one.', emptyBehavior: 'An empty value is absent and selects `auto`.', invalidBehavior: 'Every value outside the exact accepted set stops deployment with an explicit mode error.', precedence: 'A non-empty process value wins; otherwise `auto` applies.', impact: 'A truthy value requires secret setup even without a terminal; a falsey value always skips it.', failure: 'Forced setup fails when required sources are unavailable; skipped setup can leave later workloads unready.' }),
   KUBECLAW_SECRET_SETUP_MODE: environmentContract({ purpose: 'Selects whether the secret helper can ask for missing values interactively.', acceptedForm: 'Case-insensitive `auto`, `interactive`, or `noninteractive`; truthy `1`, `true`, `yes`, `on`, or `enabled` selects interactive mode; falsey `0`, `false`, `no`, `off`, or `disabled` selects noninteractive mode.', defaultBehavior: '`auto`: use prompts only when `/dev/tty` is readable and writable.', emptyBehavior: 'An empty value is absent and selects `auto`.', invalidBehavior: 'Every value outside the exact accepted set stops secret setup.', precedence: 'A non-empty process value wins; otherwise `auto` applies.', impact: 'Noninteractive mode requires existing target Secrets, SOPS, source-namespace copies, or bootstrap inputs.', failure: 'A required value without an allowed source remains missing and setup reports the gap.' }),
   KUBECLAW_SECRETS_OVERWRITE: environmentContract({ purpose: 'Allows secret setup to replace existing target Secret data.', acceptedForm: 'Case-insensitive truthy `1`, `true`, `yes`, `on`, or `enabled` enables overwrite. Falsey `0`, `false`, `no`, `off`, or `disabled` keeps existing data.', defaultBehavior: 'Uses `false` and reuses existing Secrets.', emptyBehavior: 'An empty value is absent and selects `false`.', invalidBehavior: 'A value outside the exact accepted boolean set does not enable overwrite and therefore preserves existing data.', precedence: 'A non-empty process value wins; otherwise existing target Secrets remain authoritative.', impact: 'When enabled, later configured sources can replace live credential material and trigger dependent restarts or auth failures.', failure: 'Partial or wrong replacement can break consumers; inspect each Secret and rotate deliberately.' }),
@@ -802,8 +807,8 @@ for (const [name, contract] of Object.entries({
   LITELLM_NODE_PORT: environmentContract({ purpose: 'Selects the Kubernetes NodePort exposed by the LiteLLM Service.', acceptedForm: 'An integer from 30000 through 32767.', defaultBehavior: 'Uses `30050`.', emptyBehavior: 'An empty value is absent and selects `30050`.', invalidBehavior: 'A non-integer or out-of-range value stops deployment before patching the Service.', precedence: 'A non-empty process value wins; otherwise the checked-in default applies.', impact: 'Changing it changes the node-level LiteLLM endpoint and can conflict with another Service.', failure: 'Infrastructure deployment stops before accepting an invalid Service port.' }),
   NAMESPACE: environmentContract({ purpose: 'Selects the primary Kubernetes namespace targeted by deployment, secret setup, and policy migration.', acceptedForm: 'A valid Kubernetes namespace name.', defaultBehavior: 'Startup uses kubeclaw for an unset or empty process value. Deploy setup, secrets, and all through setup can subsequently select a valid saved namespace when the variable was unset, or an accepted interactive response.', emptyBehavior: 'Explicit empty uses kubeclaw at startup but remains marked as set: saved-file loading and auto prompting are suppressed. Forced true prompting can still replace it.', invalidBehavior: 'The workspace resolver rejects invalid saved or entered names; kubectl rejects invalid direct names at the API boundary.', precedence: 'For commands without workspace resolution, the nonempty process value wins over the kubeclaw startup fallback. Deploy setup, secrets, and all through setup additionally load a valid saved file only when NAMESPACE was unset; false or auto with a set variable retains the chosen value, while true with a terminal accepts a replacement even for an explicit process value. Any accepted prompt response wins and is persisted/exported.', impact: 'Changing it redirects namespaced reads, writes, release ownership, Secret setup, and policy operations.', failure: 'A wrong valid namespace can target the wrong workload set, so operators must verify the bound cluster and namespace before mutation.' }),
   NATIVE_WORKER_NODE_POLICY_FILE: environmentContract({ purpose: 'Selects the native-worker node policy checked before Prism workloads are deployed.', acceptedForm: 'A readable YAML policy file path.', defaultBehavior: 'Uses `my-values/infra/native-worker-pools.yaml`.', emptyBehavior: 'An empty value is absent and selects the checked-in policy.', invalidBehavior: 'A missing, invalid, or unsatisfied policy stops the worker-node preflight.', precedence: 'A non-empty process path wins; otherwise the checked-in policy applies.', impact: 'Changing it changes which nodes and isolation conditions Prism workers may use.', failure: 'Prism deployment stops before applying workloads to an unapproved worker pool.' }),
-  PRISM_DATABASE_SECRET_NAME: environmentContract({ purpose: 'Names the Kubernetes Secret that supplies Prism PostgreSQL credentials.', acceptedForm: 'A valid Secret name in `PRISM_NAMESPACE` with every required database key.', defaultBehavior: 'Uses `prism-postgresql-auth`.', emptyBehavior: 'An empty value is absent and selects the default.', invalidBehavior: 'An invalid name, missing Secret, or missing required key stops Prism deployment.', precedence: 'A non-empty process value wins and is passed to both the Prism and PostgreSQL chart bindings.', impact: 'This public object name changes the database credential authority for Prism components.', failure: 'Secret preflight or workload startup fails; no valid database connection is claimed.' }),
-  PRISM_RUNTIME_SECRET_NAME: environmentContract({ purpose: 'Names the Kubernetes Secret that supplies Prism runtime signing and ingress credentials.', acceptedForm: 'A valid Secret name in `PRISM_NAMESPACE` with every required runtime key.', defaultBehavior: 'Uses `prism-runtime`.', emptyBehavior: 'An empty value is absent and selects the default.', invalidBehavior: 'An invalid name, missing Secret, or missing required key stops Prism deployment.', precedence: 'A non-empty process value wins and is passed to the Prism chart.', impact: 'This public object name changes the runtime credential authority used by Prism services and preflights.', failure: 'Secret preflight, pod startup, or authenticated request verification fails.' }),
+  PRISM_DATABASE_SECRET_NAME: environmentContract({ purpose: 'Names the Kubernetes Secret that supplies Prism PostgreSQL credentials.', acceptedForm: 'A valid Secret name in `PRISM_NAMESPACE` with every required database key.', defaultBehavior: 'Uses `prism-postgresql-auth`.', emptyBehavior: 'An empty value is absent and selects the default.', invalidBehavior: 'An absent selected Secret is created by secret setup; an existing Secret is reused and is not automatically repaired. An invalid name or missing required key stops deployment.', precedence: 'A non-empty process value wins and is passed to both the Prism and PostgreSQL chart bindings.', impact: 'This public object name changes the database credential authority for Prism components.', failure: 'Secret preflight or workload startup fails; no valid database connection is claimed.' }),
+  PRISM_RUNTIME_SECRET_NAME: environmentContract({ purpose: 'Names the Kubernetes Secret that supplies Prism runtime signing and ingress credentials.', acceptedForm: 'A valid Secret name in `PRISM_NAMESPACE` with every required runtime key.', defaultBehavior: 'Uses `prism-runtime`.', emptyBehavior: 'An empty value is absent and selects the default.', invalidBehavior: 'An absent selected Secret is created by secret setup; an existing Secret is reused and is not automatically repaired. An invalid name or missing required key stops deployment.', precedence: 'A non-empty process value wins and is passed to the Prism chart.', impact: 'This public object name changes the runtime credential authority used by Prism services and preflights.', failure: 'Secret preflight, pod startup, or authenticated request verification fails.' }),
   PRISM_IMAGE_PULL_SECRET_NAME: environmentContract({ purpose: 'Names the Kubernetes Secret used to pull Prism and Prism test images.', acceptedForm: 'A valid image-pull Secret name in `PRISM_NAMESPACE`.', defaultBehavior: 'Uses `ghcr-secret`.', emptyBehavior: 'An empty value is absent and selects the default.', invalidBehavior: 'An invalid or missing Secret stops Prism preflight or causes image pulls to fail.', precedence: 'A non-empty process value wins and is written into the rendered imagePullSecrets list.', impact: 'This public object name changes the registry credential authority; it does not contain credential bytes.', failure: 'Deployment stops at preflight or pods report `ImagePullBackOff`.' }),
   PRISM_E2E_RUN_FAILURES: environmentContract({ purpose: 'Adds the destructive/negative Prism production-failure exercise after the main end-to-end run.', acceptedForm: 'Only exact `true` enables the failure exercise.', defaultBehavior: 'Uses `false`.', emptyBehavior: 'An empty value is absent and selects `false`.', invalidBehavior: 'Any value other than exact `true` leaves the additional exercise disabled.', precedence: 'A non-empty process value wins; otherwise failure injection remains off.', impact: 'When enabled, the command deliberately exercises failure paths after the success journey.', failure: 'A failed negative exercise makes the end-to-end command fail and retain its evidence.' }),
   PRISM_E2E_USE_LEASE: environmentContract({ purpose: 'Selects whether the Prism end-to-end command requests an isolated Buster namespace lease.', acceptedForm: 'Only exact `true` enables lease creation.', defaultBehavior: 'Uses `true`.', emptyBehavior: 'An empty value is absent and selects `true`.', invalidBehavior: 'Any value other than exact `true` runs in the configured Prism namespace without a lease.', precedence: 'A non-empty process value wins; otherwise isolation is enabled.', impact: 'Disabling it removes namespace isolation and makes the test operate on the configured Prism namespace.', failure: 'Lease creation or namespace preparation failure stops the test before Prism deployment.' }),
@@ -813,14 +818,14 @@ for (const [name, contract] of Object.entries({
   PRISM_AGENT_VALUES_FILE: environmentContract({ purpose: 'Adds an operator-owned Prism-agent Helm values overlay while keeping the selected release values as the immutable base.', acceptedForm: 'A readable YAML values file compatible with the KubeClaw agent chart.', defaultBehavior: 'Empty; deployment uses `releases/values/prism-agent.yaml` without an extra operator overlay.', emptyBehavior: 'An empty value adds no overlay.', invalidBehavior: 'A missing, unreadable, or invalid overlay makes bundle inspection, rendering, or Helm fail.', precedence: 'The deploy script captures this process value as `PRISM_AGENT_VALUES_OVERLAY`, then resets `PRISM_AGENT_VALUES_FILE` to the selected release file. The non-empty overlay is appended after the selected file and before explicit command-line overrides.', impact: 'Changing it can override the Prism agent release without replacing the selected release baseline.', failure: 'Bundle preflight, render, or the atomic Helm release fails before a successful rollout is claimed.' }),
   PRISM_NAMESPACE: environmentContract({ purpose: 'Selects the Kubernetes namespace for Prism, Prism agent, their Secrets, and their acceptance checks.', acceptedForm: 'A valid Kubernetes namespace name.', defaultBehavior: 'Uses the effective primary `NAMESPACE`.', emptyBehavior: 'An empty value is absent and inherits `NAMESPACE`.', invalidBehavior: 'kubectl or Helm rejects an invalid namespace; a wrong valid namespace fails Secret and ownership checks.', precedence: 'A nonempty process value wins; otherwise startup captures NAMESPACE before any workspace prompt. A later setup/secrets prompt does not recompute PRISM_NAMESPACE. The E2E lease path temporarily overrides it with the allocated namespace.', impact: 'Changing it redirects every Prism namespaced resource and trust binding.', failure: 'Preflight or deployment stops when required resources are absent from the selected namespace.' }),
   PRISM_ROLLOUT_TIMEOUT: environmentContract({ purpose: 'Limits Prism Kubernetes rollout and ready-pod waits after Helm succeeds.', acceptedForm: 'A kubectl duration such as `45m`.', defaultBehavior: 'Uses `45m`.', emptyBehavior: 'An empty value is absent and selects `45m`.', invalidBehavior: 'kubectl rejects an invalid duration or reports a rollout timeout.', precedence: 'A non-empty process value wins; otherwise the checked-in timeout applies.', impact: 'This changes the observation deadline, not the workload configuration.', failure: 'Deployment stops and reports the workload that did not become ready.' }),
-  SPIFFE_HELM_REPO: environmentContract({ purpose: 'Selects the SPIFFE Helm repository URL registered for the SPIRE charts.', acceptedForm: 'An HTTPS Helm repository URL.', defaultBehavior: 'Uses `https://spiffe.github.io/helm-charts-hardened/`.', emptyBehavior: 'An empty value is absent and selects the checked-in URL.', invalidBehavior: 'Helm repository registration or chart lookup fails.', precedence: 'A non-empty process value wins; otherwise the checked-in upstream repository applies.', impact: 'Changing it changes where SPIRE chart metadata and packages are fetched.', failure: 'SPIRE installation stops before its releases are upgraded.' }),
-  SPIRE_CHART_VERSION: environmentContract({ purpose: 'Pins the SPIRE server and agent Helm chart version.', acceptedForm: 'A chart version present in the selected SPIFFE repository.', defaultBehavior: 'Uses `0.30.0`.', emptyBehavior: 'An empty value is absent and selects the checked-in version.', invalidBehavior: 'Helm fails when the version does not exist or the chart is incompatible.', precedence: 'A non-empty process value wins; otherwise the checked-in pin applies.', impact: 'Changing it changes SPIRE control-plane and agent behavior and requires trust/readiness verification.', failure: 'The atomic Helm release fails or its rollout does not become ready.' }),
+  SPIFFE_HELM_REPO: environmentContract({ purpose: 'Selects the SPIFFE Helm repository URL registered for the SPIRE charts.', acceptedForm: 'An HTTPS Helm repository URL.', defaultBehavior: 'Uses `https://spiffe.github.io/helm-charts-hardened/`.', emptyBehavior: 'An empty value is absent and selects the checked-in URL.', invalidBehavior: 'Helm repository registration or chart lookup fails.', precedence: 'A non-empty process URL is proposed when registering `spiffe`; an already-present local Helm alias is preserved and remains the chart-fetch authority.', impact: 'Changing it changes the proposed SPIFFE repository URL only when registering a new alias. An existing local alias keeps its prior chart-fetch source; inspect Helm repository state.', failure: 'SPIRE installation stops before its releases are upgraded.' }),
+  SPIRE_CHART_VERSION: environmentContract({ purpose: 'Pins the SPIRE server and agent Helm chart version.', acceptedForm: 'A chart version present in the selected SPIFFE repository.', defaultBehavior: 'Uses `0.30.0`.', emptyBehavior: 'An empty value is absent and selects the checked-in version.', invalidBehavior: 'Helm fails when the version does not exist or the chart is incompatible.', precedence: 'A non-empty process value wins; otherwise the checked-in pin applies.', impact: 'Changing it changes SPIRE control-plane and agent behavior and requires trust/readiness verification.', failure: 'The infrastructure Helm operation uses `--wait`, not `--atomic`; failure or readiness timeout can leave partial release state.' }),
   SPIRE_CRDS_CHART_VERSION: environmentContract({ purpose: 'Pins the SPIRE CRD Helm chart version.', acceptedForm: 'A CRD chart version present in the selected SPIFFE repository.', defaultBehavior: 'Uses `0.6.0`.', emptyBehavior: 'An empty value is absent and selects the checked-in version.', invalidBehavior: 'Helm fails when the version does not exist or is incompatible.', precedence: 'A non-empty process value wins; otherwise the checked-in pin applies.', impact: 'Changing it changes cluster-scoped SPIRE API definitions and must remain compatible with the SPIRE chart.', failure: 'SPIRE installation stops before the main release is accepted.' }),
   TAILSCALE_HELM_REPO: environmentContract({ purpose: 'Represents a retired direct Tailscale Helm repository override.', acceptedForm: 'Leave unset or empty.', defaultBehavior: 'Empty; deployment uses the pinned chart lock in `versions.json`.', emptyBehavior: 'An empty value selects the pinned lock.', invalidBehavior: 'Any non-empty value stops deployment as superseded.', precedence: 'The pinned infrastructure-chart lock is authoritative; this variable cannot override it.', impact: 'The fail-closed rule prevents an arbitrary repository from replacing the locked Tailscale chart.', failure: 'Tailscale operator deployment stops with a superseded-setting error.' }),
   TAILSCALE_OAUTH_CLIENT_ID: environmentContract({ purpose: 'Optionally supplies the public client identity used to bootstrap the Tailscale operator OAuth Secret.', acceptedForm: 'A non-empty Tailscale OAuth client ID.', defaultBehavior: 'Empty; reuse an existing Secret or another secret-setup source.', emptyBehavior: 'An empty value supplies no bootstrap identity.', invalidBehavior: 'The helper does not validate the identity locally; the Tailscale operator reports rejected credentials.', precedence: 'An existing target Secret wins unless overwrite is enabled; the paired bootstrap environment values are used only when both are present.', impact: 'This identity is not secret, but it must be paired with the matching client secret.', failure: 'Secret creation is skipped or operator authentication fails.' }),
   TAILSCALE_OAUTH_CLIENT_SECRET: environmentContract({ purpose: 'Optionally supplies the confidential client secret used to bootstrap the Tailscale operator OAuth Secret.', acceptedForm: 'A non-empty secret value paired with `TAILSCALE_OAUTH_CLIENT_ID`.', defaultBehavior: 'Empty; reuse an existing Secret or another secret-setup source.', emptyBehavior: 'An empty value supplies no bootstrap credential.', invalidBehavior: 'The helper does not validate the credential locally; the Tailscale operator reports rejected credentials.', precedence: 'An existing target Secret wins unless overwrite is enabled; the paired bootstrap values are used only when both are present.', impact: 'The value is written to Kubernetes Secret data and must not be logged or published.', failure: 'Secret creation is skipped or operator authentication fails.' }),
   TAILSCALE_OAUTH_SECRET_NAME: environmentContract({ purpose: 'Selects the Kubernetes Secret object that holds the Tailscale operator OAuth client identity and secret.', acceptedForm: 'A valid Kubernetes Secret name in the effective Tailscale operator namespace.', defaultBehavior: 'Uses `operator-oauth`.', emptyBehavior: 'An empty value is absent and selects `operator-oauth`.', invalidBehavior: 'kubectl, Helm, or the Kubernetes API rejects an invalid object name; a valid but wrong name leaves the operator without its expected credentials.', precedence: 'A non-empty process value wins; otherwise setup and deployment both use `operator-oauth`.', impact: 'Changing the name changes which Secret setup creates or verifies and which Secret the operator release expects. This value names an object and does not contain credential payload.', failure: 'Secret verification or operator rollout fails, and Tailscale-backed ingress remains unavailable.' }),
-  TAILSCALE_OPERATOR_ENABLED: environmentContract({ purpose: 'Enables Tailscale operator secret setup and installation.', acceptedForm: 'A boolean-like value accepted by `component_enabled`.', defaultBehavior: 'Uses `true`.', emptyBehavior: 'An empty value is absent and selects `true`.', invalidBehavior: 'An unrecognized value behaves as disabled because only normalized `true` enables the component.', precedence: 'A non-empty process value wins; otherwise Tailscale integration remains enabled.', impact: 'Disabling it removes the operator installation path and final-preview tailnet URL support.', failure: 'The script reports the skip; Tailscale-backed ingress and preview URLs remain unavailable.' }),
+  TAILSCALE_OPERATOR_ENABLED: environmentContract({ purpose: 'Enables Tailscale operator secret setup and installation.', acceptedForm: 'Case-insensitive `1`, `true`, `yes`, `on`, or `enabled`; `0`, `false`, `no`, `off`, or `disabled`.', defaultBehavior: 'Uses `true`.', emptyBehavior: 'An empty value is absent and selects `true`.', invalidBehavior: 'Only normalized `false` skips setup and installation. An unrecognized value continues the enabled path; missing paired credentials can still cause a warning and skip.', precedence: 'A non-empty process value wins; otherwise Tailscale integration remains enabled.', impact: 'Disabling it removes the operator installation path and final-preview tailnet URL support.', failure: 'The script reports the skip; Tailscale-backed ingress and preview URLs remain unavailable.' }),
   TAILSCALE_OPERATOR_NAMESPACE: environmentContract({ purpose: 'Selects the Kubernetes namespace that owns the Tailscale operator release and its OAuth Secret.', acceptedForm: 'A valid Kubernetes namespace name.', defaultBehavior: 'Uses `tailscale`.', emptyBehavior: 'An empty value is absent and selects `tailscale`.', invalidBehavior: 'kubectl or Helm rejects an invalid namespace; a valid but wrong namespace separates setup, Secret, or release state from the intended operator.', precedence: 'A non-empty process value wins; otherwise setup and deployment both use `tailscale`.', impact: 'Changing the namespace changes the ownership boundary for the operator release, ServiceAccount, and OAuth Secret.', failure: 'Secret lookup, Helm release, or rollout verification fails; no Tailscale-backed ingress is accepted.' }),
   ARGOCD_HELM_REPO: environmentContract({ purpose: 'Selects the Helm repository URL registered under the local `argo` alias.', acceptedForm: 'An HTTPS Helm repository URL.', defaultBehavior: 'Uses `https://argoproj.github.io/argo-helm`.', emptyBehavior: 'An empty value is absent and selects the checked-in upstream URL.', invalidBehavior: 'Helm repository registration or chart lookup fails.', precedence: 'A non-empty process value wins; `--force-update` makes it replace an existing local alias.', impact: 'Changing it changes the source of the pinned Argo CD chart package.', failure: 'Argo CD installation stops before Helm upgrades the release.' }),
   ARGOCD_VALUES_FILE: environmentContract({ purpose: 'Selects the Helm values file for the Argo CD release.', acceptedForm: 'A readable YAML values file.', defaultBehavior: 'Uses `my-values/infra/argocd-values.yaml`.', emptyBehavior: 'An empty value is absent and selects the checked-in file.', invalidBehavior: 'Helm stops on a missing, unreadable, or invalid file.', precedence: 'A non-empty process path replaces the default values-file path; explicit `--set` and `--set-file` arguments in the script still win.', impact: 'Changing it changes the rendered Argo CD configuration.', failure: 'The Helm release fails and the ingress is not applied.' }),
@@ -834,10 +839,10 @@ for (const [name, contract] of Object.entries({
   OPS_RELEASE: environmentContract({ purpose: 'Selects the Helm release name and resulting stateful Ops pod name.', acceptedForm: 'A valid Helm release name.', defaultBehavior: 'Uses `codex-ops`.', emptyBehavior: 'An empty value is absent and selects `codex-ops`.', invalidBehavior: 'Helm rejects an invalid name; a wrong valid name can create or target another release.', precedence: 'A non-empty process value wins and is exported to the bootstrap helper.', impact: 'The script derives the pod name as `<release>-0` for login, pairing, status, and verification.', failure: 'Follow-up commands fail or target the wrong valid release.' }),
   OPS_DISCOVERY_VALUES: environmentContract({ purpose: 'Supplies the explicit discovery JSON used by the non-mutating Ops render command.', acceptedForm: 'A readable JSON values file produced by an equivalent discovery step.', defaultBehavior: 'No default for `render`; live `deploy` runs discovery instead.', emptyBehavior: 'An empty value stops `render` before Helm rendering.', invalidBehavior: 'Copy, release rendering, or JSON consumption fails for a missing or malformed file.', precedence: 'The process file is authoritative only for `render`; `deploy` regenerates discovery from the bound cluster.', impact: 'Changing it changes the simulated discovered cluster scope rendered into the Ops chart.', failure: 'No rendered manifest is emitted.', required: 'required for `render`' }),
   OPS_POD_VALUES: environmentContract({ purpose: 'Adds an operator-owned Helm values overlay to the Ops release.', acceptedForm: 'A readable YAML values file.', defaultBehavior: 'Empty; only discovered and checked-in release values are used.', emptyBehavior: 'No operator overlay is appended.', invalidBehavior: 'Rendering or Helm fails for a missing or invalid file.', precedence: 'Discovered values load first, checked-in release values load second, and this non-empty overlay loads last before explicit image and feature overrides.', impact: 'Changing it can alter Ops permissions, mounts, resources, and runtime behavior.', failure: 'Pre-render validation or release upgrade fails.' }),
-  OPS_CODEX_IMAGE: environmentContract({ purpose: 'Overrides the Codex container image in the Ops chart.', acceptedForm: 'An OCI image reference accepted by the container runtime.', defaultBehavior: 'Empty; the selected release values supply the image.', emptyBehavior: 'No image override is added.', invalidBehavior: 'Rendering can succeed, but an invalid or unavailable reference causes image-pull failure.', precedence: 'A non-empty process value becomes a final Helm `--set-string` override.', impact: 'Changing it changes the executable Codex environment in the Ops pod.', failure: 'The pod reports an image pull or startup failure.' }),
-  OPS_MCP_IMAGE: environmentContract({ purpose: 'Overrides the MCP sidecar image in the Ops chart.', acceptedForm: 'An OCI image reference accepted by the container runtime.', defaultBehavior: 'Empty; the selected release values supply the image.', emptyBehavior: 'No image override is added.', invalidBehavior: 'Rendering can succeed, but an invalid or unavailable reference causes image-pull failure.', precedence: 'A non-empty process value becomes a final Helm `--set-string` override.', impact: 'Changing it changes the security and analysis service used by the Ops pod.', failure: 'The MCP sidecar reports an image pull or startup failure.' }),
-  OPS_GITHUB_TOKEN_FILE: environmentContract({ purpose: 'Selects the local file whose confidential token is copied into the Ops GitHub Secret.', acceptedForm: 'A readable path to a file that contains the intended GitHub token.', defaultBehavior: 'Empty; no GitHub Secret override is requested.', emptyBehavior: 'The deployment does not enable the chart GitHub Secret binding.', invalidBehavior: 'The bootstrap helper fails when the file is missing, unreadable, or contains unusable credentials.', precedence: 'A non-empty path enables the fixed `codex-ops-github` Secret binding after discovery values and release values.', impact: 'The path is publishable; the file content is secret and grants the Ops pod GitHub access.', failure: 'Secret creation or GitHub authentication fails.' }),
-  OPS_TAILSCALE_AUTHKEY_FILE: environmentContract({ purpose: 'Selects the local file whose confidential auth key enables Tailscale in the Ops pod.', acceptedForm: 'A readable path to a file that contains a valid Tailscale auth key.', defaultBehavior: 'Empty; Tailscale remains disabled in the Ops chart.', emptyBehavior: 'No Tailscale enable override is added.', invalidBehavior: 'The bootstrap helper or Tailscale sidecar rejects a missing, unreadable, expired, or invalid key.', precedence: 'A non-empty path adds the final `tailscale.enabled=true` Helm override and supplies Secret setup.', impact: 'The path is publishable; the file content is secret and joins the Ops pod to the tailnet.', failure: 'Secret creation or Tailscale authentication fails.' }),
+  OPS_CODEX_IMAGE: environmentContract({ purpose: 'Overrides the Codex container image in the Ops chart.', acceptedForm: 'An OCI image reference ending in `@sha256:` and 64 lowercase hexadecimal digits, identical to the selected receipt image.', defaultBehavior: 'Empty; the selected release values supply the image.', emptyBehavior: 'No image override is added.', invalidBehavior: 'The chart rejects a reference without the required digest before render. Local selected-release validation rejects a valid-but-different image; an unavailable accepted image can later fail pull.', precedence: 'A non-empty process value becomes a final Helm `--set-string` override.', impact: 'The override can only restate the selected receipt image; changing executable Codex content requires selecting a different release receipt.', failure: 'The pod reports an image pull or startup failure.' }),
+  OPS_MCP_IMAGE: environmentContract({ purpose: 'Overrides the MCP sidecar image in the Ops chart.', acceptedForm: 'An OCI image reference ending in `@sha256:` and 64 lowercase hexadecimal digits, identical to the selected receipt image.', defaultBehavior: 'Empty; the selected release values supply the image.', emptyBehavior: 'No image override is added.', invalidBehavior: 'The chart rejects a reference without the required digest before render. Local selected-release validation rejects a valid-but-different image; an unavailable accepted image can later fail pull.', precedence: 'A non-empty process value becomes a final Helm `--set-string` override.', impact: 'The override can only restate the selected receipt image; changing MCP executable content requires selecting a different release receipt.', failure: 'The MCP sidecar reports an image pull or startup failure.' }),
+  OPS_GITHUB_TOKEN_FILE: environmentContract({ purpose: 'Selects the local file whose confidential token is copied into the Ops GitHub Secret.', acceptedForm: 'A readable path to a file that contains the intended GitHub token.', defaultBehavior: 'Empty; no GitHub Secret override is requested.', emptyBehavior: 'The deployment does not enable the chart GitHub Secret binding.', invalidBehavior: 'The bootstrap helper stops for a missing or unreadable file, empty stripped content, or Secret apply failure. It does not authenticate a nonempty token; unusable credentials can be stored and fail later GitHub authentication.', precedence: 'A non-empty path enables the fixed `codex-ops-github` Secret binding after discovery values and release values.', impact: 'The path is publishable; the file content is secret and grants the Ops pod GitHub access.', failure: 'Secret creation or GitHub authentication fails.' }),
+  OPS_TAILSCALE_AUTHKEY_FILE: environmentContract({ purpose: 'Selects the local file whose confidential auth key enables Tailscale in the Ops pod.', acceptedForm: 'A readable path to a file that contains a valid Tailscale auth key.', defaultBehavior: 'Empty; no Tailscale enabling override or credential apply is added. Effective enablement remains with the merged values; the chart default is false. Bootstrap absence does not delete an existing Secret.', emptyBehavior: 'No Tailscale enable override is added.', invalidBehavior: 'The bootstrap helper or Tailscale sidecar rejects a missing, unreadable, expired, or invalid key.', precedence: 'A non-empty path adds the final `tailscale.enabled=true` Helm override and supplies Secret setup.', impact: 'The path is publishable; the file content is secret and joins the Ops pod to the tailnet.', failure: 'Secret creation or Tailscale authentication fails.' }),
 })) ENVIRONMENT_CONTRACTS.set(name, contract);
 
 function operatorEnvironmentFamilyContract(name) {
@@ -846,35 +851,37 @@ function operatorEnvironmentFamilyContract(name) {
     const component = role[1].toLowerCase();
     const field = role[2];
     const definitions = {
-      ARCHIVE_URL: environmentContract({ purpose: `Selects the published ${component} source-bundle archive instead of deriving its GitHub release URL.`, acceptedForm: 'An `https` archive URL accepted by the bundle init contract.', defaultBehavior: 'Empty; the deploy script derives a release URL when repository and expected commit are available.', emptyBehavior: 'An empty value requests URL derivation.', invalidBehavior: 'The code-bundle preflight rejects an unreachable archive, an unsafe scheme, or a receipt mismatch.', precedence: 'A non-empty environment URL wins; then selected values are checked; finally the script derives the GitHub release URL.', impact: `Changing it changes the exact ${component} code archive delivered to the init container.`, failure: 'Render or deploy stops before the workload accepts an unverified bundle.' }),
-      EXPECTED_COMMIT: environmentContract({ purpose: `Pins the ${component} source commit that the code-bundle receipt must report.`, acceptedForm: 'The full source commit identifier expected by the bundle contract.', defaultBehavior: 'Empty; code deployment requires a value from the environment or selected values.', emptyBehavior: 'An empty value does not disable verification and causes code deploy to stop when no selected value supplies it.', invalidBehavior: 'A value that differs from the release receipt fails the bundle preflight.', precedence: 'A non-empty environment value wins; otherwise the selected release values supply the expected commit.', impact: `The value binds the ${component} runtime to one verified source revision.`, failure: 'The workload is not upgraded with the unverified bundle.' }),
-      CONTRACT_VERSION: environmentContract({ purpose: `Selects the code-bundle manifest contract expected by the ${component} init path.`, acceptedForm: 'A supported bundle contract identifier; the current default is `v2`.', defaultBehavior: 'Uses `v2`.', emptyBehavior: 'An empty value is absent and selects `v2`.', invalidBehavior: 'The bundle preflight rejects an unsupported or mismatched contract.', precedence: 'A non-empty environment value wins; otherwise selected values and then `v2` apply.', impact: 'Changing it changes which manifest and receipt rules the downloaded archive must satisfy.', failure: 'Render or deployment stops before activating the bundle.' }),
-      AUTH_SECRET: environmentContract({ purpose: `Names the Kubernetes Secret that supplies an optional bearer token for the private ${component} bundle archive.`, acceptedForm: 'A Kubernetes Secret name in the target namespace.', defaultBehavior: 'Empty; public archive access uses no auth Secret.', emptyBehavior: 'An empty value disables Secret-backed archive authentication.', invalidBehavior: 'An invalid or missing named Secret causes render, init, or archive download failure.', precedence: 'A non-empty environment value wins; otherwise selected values can name the Secret.', impact: 'This is a public object name, not credential payload. It changes which Secret the init container references.', failure: 'The workload cannot fetch a private bundle and does not become ready.' }),
-      AUTH_SECRET_KEY: environmentContract({ purpose: `Names the key within the ${component} bundle authentication Secret.`, acceptedForm: 'A key present in the named Kubernetes Secret.', defaultBehavior: 'Uses `token`.', emptyBehavior: 'An empty value is absent and selects `token`.', invalidBehavior: 'A missing key causes the bundle init container to fail.', precedence: 'A non-empty environment value wins; otherwise selected values and then `token` apply.', impact: 'This is a public key name, not credential payload.', failure: 'The private bundle cannot be downloaded and the workload remains unready.' }),
+      ARCHIVE_URL: environmentContract({ purpose: `Selects the published ${component} source-bundle archive instead of deriving its GitHub release URL.`, acceptedForm: 'An `https` archive URL accepted by the bundle init contract.', defaultBehavior: 'Empty; the deploy script derives a release URL when repository and expected commit are available.', emptyBehavior: 'An empty value requests URL derivation.', invalidBehavior: 'Local render and the bundle contract reject an unsafe scheme or selected-receipt mismatch. The separate remote URL-existence check can reject an unavailable archive, but is skipped for configured Secret auth, missing curl, render-only mode, or the explicit skip switch.', precedence: 'A non-empty environment URL wins; then selected values are checked; finally the script derives the GitHub release URL.', impact: `An override must retain the exact ${component} archive identity in the selected release receipt; a valid different URL fails local render validation.`, failure: 'Render or deploy stops before the workload accepts an unverified bundle.' }),
+      EXPECTED_COMMIT: environmentContract({ purpose: `Pins the ${component} source commit that the code-bundle receipt must report.`, acceptedForm: 'The full source commit identifier expected by the bundle contract.', defaultBehavior: 'Uses `SELECTED_RUNTIME_COMMIT` when the environment value is empty.', emptyBehavior: 'An empty value selects `SELECTED_RUNTIME_COMMIT` and does not disable receipt verification.', invalidBehavior: 'A value that differs from the release receipt fails the bundle preflight.', precedence: 'A non-empty environment value wins; otherwise `SELECTED_RUNTIME_COMMIT` applies. Local render validation requires agreement with the selected receipt.', impact: `The value binds the ${component} runtime to one verified source revision.`, failure: 'The workload is not upgraded with the unverified bundle.' }),
+      CONTRACT_VERSION: environmentContract({ purpose: `Selects the code-bundle manifest contract expected by the ${component} init path.`, acceptedForm: 'Exactly `v2` for the selected runtime release.', defaultBehavior: 'Uses `v2`.', emptyBehavior: 'An empty value is absent and selects `v2`.', invalidBehavior: 'Selected-runtime validation rejects a contract other than `v2`; local render and the bundle init path also enforce receipt agreement.', precedence: 'A non-empty environment value wins; otherwise `v2` applies, without consulting selected Helm values. The selected runtime requires `v2`.', impact: 'Changing it changes which manifest and receipt rules the downloaded archive must satisfy.', failure: 'Render or deployment stops before activating the bundle.' }),
+      AUTH_SECRET: environmentContract({ purpose: `Names the Kubernetes Secret that supplies an optional bearer token for the private ${component} bundle archive.`, acceptedForm: 'A Kubernetes Secret name in the target namespace.', defaultBehavior: 'Uses a selected/overlay `auth.existingSecret` when supplied; otherwise public archive access uses no auth Secret.', emptyBehavior: 'An empty environment value requests the selected/overlay Secret, or no Secret-backed authentication when that source is empty.', invalidBehavior: 'An invalid or missing named Secret causes render, init, or archive download failure.', precedence: 'A non-empty environment value wins; otherwise selected values can name the Secret.', impact: 'This is a public object name, not credential payload. It changes which Secret the init container references.', failure: 'The workload cannot fetch a private bundle and does not become ready.' }),
+      AUTH_SECRET_KEY: environmentContract({ purpose: `Names the key within the ${component} bundle authentication Secret.`, acceptedForm: 'A key present in the named Kubernetes Secret.', defaultBehavior: 'Starts with `token`, then replaces it with a non-empty selected/overlay `existingSecretKey`.', emptyBehavior: 'An empty environment value follows the selected/overlay key, or `token` when that key is empty.', invalidBehavior: 'A missing key causes the bundle init container to fail.', precedence: 'A non-empty environment value other than `token` wins. Any effective `token`, including an explicit environment value, is replaced by a non-empty selected/overlay `existingSecretKey`; otherwise `token` applies.', impact: 'This is a public key name, not credential payload.', failure: 'The private bundle cannot be downloaded and the workload remains unready.' }),
     };
     return definitions[field];
   }
   const componentSwitch = name.match(/^KUBECLAW_DEPLOY_(POSTGRESQL|LITELLM|SPIRE|PRISM)$/u);
   if (componentSwitch) return environmentContract({ purpose: `Enables or skips ${componentSwitch[1]} in the deployment path.`, acceptedForm: 'A boolean-like value accepted by `component_enabled`: `1`, `true`, `yes`, `on`, or `enabled` enables it; `0`, `false`, `no`, `off`, or `disabled` disables it.', defaultBehavior: 'Uses `true`.', emptyBehavior: 'An empty value is absent and selects `true`.', invalidBehavior: 'Any unrecognized value behaves as disabled because `component_enabled` matches only normalized `true`.', precedence: 'A non-empty process value wins; otherwise the deploy script uses `true`.', impact: `Disabling the switch skips ${componentSwitch[1]} installation; dependent features can remain unavailable.`, failure: 'The script reports the skip. It does not prove that dependent workloads can operate without the component.' });
   const values = name.match(/^(NOVA|BUSTER|POSTGRESQL|REDIS|SPIRE|TAILSCALE)_VALUES_FILE$/u);
-  if (values) return environmentContract({ purpose: `Selects the ${values[1].toLowerCase()} Helm values file or private overlay used by deployment.`, acceptedForm: 'A readable YAML file path.', defaultBehavior: name === 'NOVA_VALUES_FILE' || name === 'BUSTER_VALUES_FILE' ? 'Empty; no private overlay is added.' : 'Uses the checked-in infrastructure values file.', emptyBehavior: name === 'NOVA_VALUES_FILE' || name === 'BUSTER_VALUES_FILE' ? 'An empty value adds no private overlay.' : 'An empty value is absent and selects the checked-in file.', invalidBehavior: 'Deployment stops when a required file is missing, unreadable, or invalid YAML.', precedence: name === 'NOVA_VALUES_FILE' || name === 'BUSTER_VALUES_FILE' ? 'The selected release values form the base; this non-empty private file is appended as the later Helm values source.' : 'A non-empty process path replaces the default checked-in values-file path; later Helm command-line overrides still win.', impact: 'Changing the file changes the rendered release configuration and therefore requires a fresh render and readiness check.', failure: 'Preflight, Helm rendering, or the atomic release fails before the new configuration is accepted.' });
+  if (values) return environmentContract({ purpose: `Selects the ${values[1].toLowerCase()} Helm values file or private overlay used by deployment.`, acceptedForm: 'A readable YAML file path.', defaultBehavior: name === 'NOVA_VALUES_FILE' || name === 'BUSTER_VALUES_FILE' ? 'Empty; no private overlay is added.' : 'Uses the checked-in infrastructure values file.', emptyBehavior: name === 'NOVA_VALUES_FILE' || name === 'BUSTER_VALUES_FILE' ? 'An empty value adds no private overlay.' : 'An empty value is absent and selects the checked-in file.', invalidBehavior: 'Deployment stops when a required file is missing, unreadable, or invalid YAML.', precedence: name === 'NOVA_VALUES_FILE' || name === 'BUSTER_VALUES_FILE' ? 'The selected release values form the base; this non-empty private file is appended as the later Helm values source.' : 'A non-empty process path replaces the default checked-in values-file path; later Helm command-line overrides still win.', impact: 'Changing the file changes the rendered release configuration and therefore requires a fresh render and readiness check.', failure: name === 'NOVA_VALUES_FILE' || name === 'BUSTER_VALUES_FILE' ? 'Preflight, Helm rendering, or the atomic agent release fails before the new configuration is accepted.' : 'Preflight, Helm rendering, or infrastructure readiness can fail. These infrastructure Helm commands use `--wait` without `--atomic`; partial release state can remain.' });
   const release = name.match(/^(POSTGRESQL|REDIS|PRISM|TAILSCALE_OPERATOR)_RELEASE$/u);
   if (release) return environmentContract({ purpose: `Selects the Helm release name for ${release[1].toLowerCase()}.`, acceptedForm: 'A valid Helm release name that matches the intended existing or new release.', defaultBehavior: `Uses \`${release[1] === 'TAILSCALE_OPERATOR' ? 'tailscale-operator' : release[1].toLowerCase()}\`.`, emptyBehavior: 'An empty value is absent and selects the default.', invalidBehavior: 'Helm rejects an invalid name; selecting the wrong valid name can create a second release instead of upgrading the intended one.', precedence: 'A non-empty process value wins; otherwise the deploy script uses its checked-in release name.', impact: 'The name is part of stateful-release ownership and uninstall targeting.', failure: 'Preflight or Helm stops; an incorrectly selected valid name requires operator reconciliation.' });
   const compatibilityImage = name.match(/^(GENERAL|NAMESPACE_CONTROLLER)_IMAGE_(REPOSITORY|TAG)$/u);
   if (compatibilityImage) {
     const currentName = compatibilityImage[1] === 'GENERAL' ? `NOVA_IMAGE_${compatibilityImage[2]}` : `BUSTER_CONTROLLER_IMAGE_${compatibilityImage[2]}`;
     const kind = compatibilityImage[2];
+    if (kind === 'TAG') return environmentContract({ purpose: `Retains the rejected compatibility tag selector for ${currentName}.`, acceptedForm: 'Leave unset or empty.', defaultBehavior: 'Empty; selected digest-release values remain authoritative.', emptyBehavior: 'Adds no tag override.', invalidBehavior: 'Any non-empty effective tag is rejected before rendering with the selected-digest release error.', precedence: `A non-empty ${currentName} wins; otherwise this compatibility value becomes the rejected effective tag.`, impact: 'A tag cannot redirect the selected immutable executable image.', failure: 'Deployment stops before Helm render or rollout.' });
     return environmentContract({ purpose: `Supplies the compatibility fallback for \`${currentName}\` when the current image override is empty.`, acceptedForm: kind === 'TAG' ? 'An image tag accepted by the container runtime.' : 'An OCI repository without an embedded credential.', defaultBehavior: 'Empty; the selected Helm values remain authoritative.', emptyBehavior: 'An empty value adds no compatibility override.', invalidBehavior: 'Helm or the container runtime rejects an invalid or unavailable effective image reference.', precedence: `A non-empty \`${currentName}\` wins, then this compatibility value, then the selected Helm values.`, impact: `Changing it changes the effective image only while \`${currentName}\` is empty.`, failure: 'Render, image pull, or rollout fails; the atomic Helm operation rolls back when applicable.' });
   }
   const image = name.match(/^(NOVA|BUSTER_GATEWAY|BUSTER_CONTROLLER|PRISM_(?:CONTROL|STUDIO|WORKER|INGESTION))_IMAGE_(REPOSITORY|TAG|DIGEST)$/u);
   if (image) {
     const kind = image[2];
+    if (kind === 'TAG') return environmentContract({ purpose: `Retains the rejected ${image[1].toLowerCase()} image-tag override.`, acceptedForm: 'Leave unset or empty.', defaultBehavior: 'Empty; selected digest-release values remain authoritative.', emptyBehavior: 'Adds no tag override; Nova and Buster controller can inherit the compatibility tag, which is also rejected when non-empty.', invalidBehavior: 'Any non-empty effective image tag stops deployment before render with the selected-digest release error.', precedence: 'The explicit current tag wins over its compatibility fallback; neither can replace a selected digest release.', impact: 'Executable content remains bound to the selected release receipt.', failure: 'Deployment stops before Helm rendering or rollout.' });
     const compatibilityFallback = /^(?:NOVA|BUSTER_CONTROLLER)$/u.test(image[1]) && kind !== 'DIGEST';
     const fallbackName = image[1] === 'NOVA' ? `GENERAL_IMAGE_${kind}` : `NAMESPACE_CONTROLLER_IMAGE_${kind}`;
-    return environmentContract({ purpose: `Overrides the selected ${image[1].toLowerCase().replaceAll('_', ' ')} container image ${kind.toLowerCase()}.`, acceptedForm: kind === 'DIGEST' ? 'A lowercase `sha256:` digest with 64 hexadecimal digits.' : kind === 'TAG' ? 'An image tag accepted by the container runtime.' : 'An OCI repository without an embedded credential.', defaultBehavior: compatibilityFallback ? `Uses \`${fallbackName}\` when that compatibility value is non-empty; otherwise selected values remain authoritative.` : 'Empty; checked-in selected values remain authoritative.', emptyBehavior: compatibilityFallback ? `An empty value selects \`${fallbackName}\` when it is non-empty, then falls back to selected values.` : 'An empty value does not add an override.', invalidBehavior: kind === 'DIGEST' ? 'Prism deployment rejects a missing or invalid effective digest.' : 'Helm or the container runtime rejects an invalid or unavailable image reference.', precedence: compatibilityFallback ? `This non-empty value wins, then \`${fallbackName}\`, then the selected Helm values.` : 'A non-empty environment override wins over the selected values for this image field.', impact: 'Changing it changes executable workload content and requires receipt, pull, and rollout verification.', failure: 'Render, image pull, or rollout fails; atomic Helm operations roll back when applicable.' });
+    return environmentContract({ purpose: `Overrides the selected ${image[1].toLowerCase().replaceAll('_', ' ')} container image ${kind.toLowerCase()}.`, acceptedForm: kind === 'DIGEST' ? 'A lowercase `sha256:` digest with 64 hexadecimal digits.' : kind === 'TAG' ? 'An image tag accepted by the container runtime.' : 'An OCI repository without an embedded credential.', defaultBehavior: compatibilityFallback ? `Uses \`${fallbackName}\` when that compatibility value is non-empty; otherwise selected values remain authoritative.` : 'Empty; checked-in selected values remain authoritative.', emptyBehavior: compatibilityFallback ? `An empty value selects \`${fallbackName}\` when it is non-empty, then falls back to selected values.` : 'An empty value does not add an override.', invalidBehavior: kind === 'DIGEST' ? 'Prism deployment rejects a missing or invalid effective digest.' : 'Helm or the container runtime rejects an invalid or unavailable image reference.', precedence: compatibilityFallback ? `This non-empty value wins, then \`${fallbackName}\`, then the selected Helm values.` : 'A non-empty environment override wins over the selected values for this image field.', impact: 'Local selected-release render validation requires the exact selected receipt image. A valid-but-different repository or digest fails before rollout; changing executable content requires selecting a different receipt.', failure: 'Render, image pull, or rollout fails; atomic Helm operations roll back when applicable.' });
   }
   const preflightImage = name.match(/^KUBECLAW_(KUBERNETES|HTTP|API|A11Y|LIGHTHOUSE|VISUAL|E2E|SECURITY|TAILSCALE|PRODUCTION)_PREFLIGHT_IMAGE$/u);
-  if (preflightImage) return environmentContract({ purpose: `Selects the digest-pinned workload image for the ${preflightImage[1].toLowerCase()} production preflight.`, acceptedForm: 'An OCI image reference pinned with a `sha256` digest.', defaultBehavior: 'Empty; the command requires an explicit argument or this environment value.', emptyBehavior: 'An empty value provides no fallback.', invalidBehavior: 'The preflight rejects a missing, mutable, malformed, or unavailable image.', precedence: 'Command argument 2 wins; this environment value is the fallback.', impact: 'The image is the exact test workload whose behavior and receipt are evaluated.', failure: 'The preflight stops and does not issue a successful production receipt.' });
+  if (preflightImage) return environmentContract({ purpose: `Selects the digest-pinned workload image for the ${preflightImage[1].toLowerCase()} production preflight.`, acceptedForm: 'A reference matching `[A-Za-z0-9.-]+(:[0-9]{1,5})?/[a-z0-9]+([._/-][a-z0-9]+)*@sha256:[a-f0-9]{64}`: explicit registry, lowercase repository, no tag.', defaultBehavior: 'Empty; the command requires an explicit argument or this environment value.', emptyBehavior: 'An empty value provides no fallback.', invalidBehavior: 'The preflight rejects a missing, mutable, malformed, or unavailable image.', precedence: 'Command argument 2 wins; this environment value is the fallback.', impact: 'The image is the exact test workload whose behavior and receipt are evaluated.', failure: 'The preflight stops and does not issue a successful production receipt.' });
   const expectedText = name.match(/^KUBECLAW_(HTTP|TAILSCALE)_PREFLIGHT_EXPECTED_TEXT$/u);
   if (expectedText) return environmentContract({ purpose: `Optionally requires the ${expectedText[1].toLowerCase()} preflight response body to contain an exact text fragment.`, acceptedForm: 'A non-empty UTF-8 text fragment.', defaultBehavior: 'Empty; no extra body-fragment assertion is sent.', emptyBehavior: 'An empty value disables this additional assertion.', invalidBehavior: 'The preflight fails when the response does not contain the supplied fragment.', precedence: 'The process value is forwarded to the test command when non-empty.', impact: 'This narrows success from reachability to reachability plus expected content.', failure: 'The preflight receipt reports failure and deployment acceptance stops.' });
   const notifyContracts = {
@@ -886,10 +893,10 @@ function operatorEnvironmentFamilyContract(name) {
     OPENCLAW_NOTIFY_SILENT: environmentContract({ purpose: 'Requests silent delivery for the required channel message.', acceptedForm: 'Only exact `1` enables the OpenClaw `--silent` flag.', defaultBehavior: 'Uses `0`.', emptyBehavior: 'An empty value is absent and selects `0`.', invalidBehavior: 'Any value other than exact `1` sends without the silent flag.', precedence: 'A non-empty process value wins; otherwise normal notification applies.', impact: 'This changes recipient notification behavior, not message content or delivery requirements.', failure: 'Unsupported silence behavior is reported by the selected channel adapter.' }),
     OPENCLAW_NOTIFY_AGENT_ID: environmentContract({ purpose: 'Selects the OpenClaw agent awakened for configured terminal pipeline states.', acceptedForm: 'An installed OpenClaw agent identifier.', defaultBehavior: 'Uses `main`.', emptyBehavior: 'An empty value is absent and selects `main`.', invalidBehavior: 'OpenClaw rejects an unknown agent.', precedence: 'A non-empty process value wins; otherwise `main` applies.', impact: 'Changing it changes which agent receives the pipeline context and continuation request.', failure: 'The required agent wake fails and the notifier exits 1.' }),
     OPENCLAW_NOTIFY_AGENT_SESSION_KEY: environmentContract({ purpose: 'Selects the OpenClaw agent session awakened for matching terminal statuses.', acceptedForm: 'A non-empty OpenClaw agent session key.', defaultBehavior: 'Empty; no agent wake is attempted.', emptyBehavior: 'The agent route is disabled.', invalidBehavior: 'OpenClaw rejects an unknown session key.', precedence: 'The process value is used directly.', impact: 'When non-empty and the status policy matches, agent wake becomes a required delivery.', failure: 'The notifier exits 1 when the required agent call does not return a JSON object.' }),
-    OPENCLAW_NOTIFY_AGENT_ON_STATUSES: environmentContract({ purpose: 'Selects the pipeline status values that can trigger an OpenClaw agent wake.', acceptedForm: 'A comma-separated list compared case-insensitively after trimming; for example `failed,complete`.', defaultBehavior: 'Uses `failed`.', emptyBehavior: 'An empty list matches no status.', invalidBehavior: 'Unknown tokens never match and therefore do not trigger the agent route.', precedence: 'The process value is used directly; the pipeline level is compared with each normalized token.', impact: 'Adding a status can wake the agent for non-failure terminal messages.', failure: 'A nonmatching policy silently skips the agent route; other configured routes still determine success.' }),
+    OPENCLAW_NOTIFY_AGENT_ON_STATUSES: environmentContract({ purpose: 'Selects the pipeline status values that can trigger an OpenClaw agent wake.', acceptedForm: 'A comma-separated list compared case-insensitively after trimming; for example `failed,complete`.', defaultBehavior: 'Uses `failed`.', emptyBehavior: 'An empty value selects `failed`; a non-empty list with no matching token triggers no agent wake.', invalidBehavior: 'Unknown tokens never match and therefore do not trigger the agent route.', precedence: 'The process value is used directly; the pipeline level is compared with each normalized token.', impact: 'Adding a status can wake the agent for non-failure terminal messages.', failure: 'A nonmatching policy silently skips the agent route; other configured routes still determine success.' }),
     OPENCLAW_NOTIFY_AGENT_TIMEOUT_SECONDS: environmentContract({ purpose: 'Limits the OpenClaw agent command execution time.', acceptedForm: 'A seconds value accepted by `openclaw agent --timeout`.', defaultBehavior: 'Uses `180` seconds.', emptyBehavior: 'An empty value is absent and selects `180`.', invalidBehavior: 'OpenClaw rejects an invalid timeout or the call fails when the limit expires.', precedence: 'A non-empty process value wins; otherwise 180 seconds applies.', impact: 'A shorter value bounds wake latency but can stop a slow agent response.', failure: 'The required agent route fails and the notifier exits 1.' }),
     OPENCLAW_NOTIFY_AGENT_DELIVER: environmentContract({ purpose: 'Controls whether the awakened agent also sends its reply through a channel.', acceptedForm: 'Only exact `1` enables `--deliver`.', defaultBehavior: 'Uses `1`.', emptyBehavior: 'An empty value is absent and selects `1`.', invalidBehavior: 'Any value other than exact `1` disables reply delivery while retaining the agent call.', precedence: 'A non-empty process value wins; otherwise reply delivery is enabled.', impact: 'Disabling it keeps the agent result in the session and sends no channel reply.', failure: 'When enabled, invalid reply routing can make the agent command fail.' }),
-    OPENCLAW_NOTIFY_AGENT_REPLY_CHANNEL: environmentContract({ purpose: 'Selects the channel used for an awakened agent reply.', acceptedForm: 'An OpenClaw channel name.', defaultBehavior: 'Inherits `OPENCLAW_NOTIFY_CHANNEL`.', emptyBehavior: 'An explicitly empty value disables reply delivery because a reply target cannot be completed.', invalidBehavior: 'OpenClaw rejects an unknown channel.', precedence: 'An explicit non-empty process value wins; otherwise the effective notification channel applies.', impact: 'Changing it separates agent replies from the primary notification channel.', failure: 'The agent delivery route fails when the selected adapter is invalid or unavailable.' }),
+    OPENCLAW_NOTIFY_AGENT_REPLY_CHANNEL: environmentContract({ purpose: 'Selects the channel used for an awakened agent reply.', acceptedForm: 'An OpenClaw channel name.', defaultBehavior: 'Inherits `OPENCLAW_NOTIFY_CHANNEL`.', emptyBehavior: 'An empty value inherits the effective `OPENCLAW_NOTIFY_CHANNEL`.', invalidBehavior: 'OpenClaw rejects an unknown channel.', precedence: 'An explicit non-empty process value wins; otherwise the effective notification channel applies.', impact: 'Changing it separates agent replies from the primary notification channel.', failure: 'The agent delivery route fails when the selected adapter is invalid or unavailable.' }),
     OPENCLAW_NOTIFY_AGENT_REPLY_TARGET: environmentContract({ purpose: 'Selects the destination for an awakened agent reply.', acceptedForm: 'A target accepted by the reply channel.', defaultBehavior: 'Inherits `OPENCLAW_NOTIFY_TARGET`.', emptyBehavior: 'No `--deliver` arguments are added when the effective target is empty.', invalidBehavior: 'OpenClaw rejects an unknown or unauthorized target.', precedence: 'An explicit non-empty process value wins; otherwise the primary notification target applies.', impact: 'Changing it redirects only the agent reply.', failure: 'The agent delivery route fails when enabled with an invalid target.' }),
     OPENCLAW_NOTIFY_AGENT_REPLY_ACCOUNT: environmentContract({ purpose: 'Selects the OpenClaw account used to deliver an awakened agent reply.', acceptedForm: 'An account name configured in OpenClaw.', defaultBehavior: 'Inherits `OPENCLAW_NOTIFY_ACCOUNT`.', emptyBehavior: 'An empty value is absent and inherits the primary account.', invalidBehavior: 'OpenClaw rejects an unknown or unauthorized account.', precedence: 'An explicit non-empty process value wins; otherwise the effective notification account applies.', impact: 'Changing it changes the reply sending identity.', failure: 'The agent delivery route fails when the account cannot send to the selected target.' }),
     PIPELINE_LIGHT_MESSAGE: environmentContract({ purpose: 'Supplies the human-readable pipeline status body sent through each selected route.', acceptedForm: 'A non-empty UTF-8 string.', defaultBehavior: 'No default.', emptyBehavior: 'An empty value stops the notifier with exit 2.', invalidBehavior: 'The script accepts arbitrary text and prefixes it with the selected level; downstream adapters can impose length limits.', precedence: 'The process value is the only message source.', impact: 'The same prefixed payload is used for session and channel delivery and embedded in the agent wake message.', failure: 'No delivery is attempted when the value is empty.', required: 'required' }),
@@ -3290,15 +3297,39 @@ function schemaStaticFallback(sourcePath, anchor) {
   let parsed = schemaStaticSourceCache.get(sourcePath);
   if (!parsed) {
     const source = ts.createSourceFile(sourcePath, read(sourcePath), ts.ScriptTarget.Latest, true);
-    const bindings = new Map(); const functions = new Map();
+    const bindings = new Map(); const functions = new Map(); const unstableBindings = new Set();
     const visit = (node) => {
-      if (ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) && node.initializer) bindings.set(node.name.text, node.initializer);
+      if (ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) && node.initializer) {
+        if (bindings.has(node.name.text) || !(node.parent.flags & ts.NodeFlags.Const)) unstableBindings.add(node.name.text);
+        bindings.set(node.name.text, node.initializer);
+      }
+      const rootBinding = expression => {
+        while (ts.isPropertyAccessExpression(expression) || ts.isElementAccessExpression(expression)) expression = expression.expression;
+        return ts.isIdentifier(expression) ? expression.text : null;
+      };
+      if (ts.isBinaryExpression(node) && node.operatorToken.kind >= ts.SyntaxKind.FirstAssignment && node.operatorToken.kind <= ts.SyntaxKind.LastAssignment) {
+        const name = rootBinding(node.left); if (name) unstableBindings.add(name);
+      }
+      if (ts.isCallExpression(node) && ts.isPropertyAccessExpression(node.expression)
+        && ['push','pop','shift','unshift','splice','sort','reverse','fill','copyWithin','set','add','delete','clear'].includes(node.expression.name.text)) {
+        const name = rootBinding(node.expression.expression); if (name) unstableBindings.add(name);
+      }
+      if ((ts.isPrefixUnaryExpression(node) || ts.isPostfixUnaryExpression(node)) && ts.isIdentifier(node.operand)
+        && [ts.SyntaxKind.PlusPlusToken, ts.SyntaxKind.MinusMinusToken].includes(node.operator)) unstableBindings.add(node.operand.text);
       if (ts.isFunctionDeclaration(node) && node.name) functions.set(node.name.text, node);
       ts.forEachChild(node, visit);
     };
-    visit(source); parsed = { source, bindings, functions }; schemaStaticSourceCache.set(sourcePath, parsed);
+    visit(source);
+    // A literal object/array alias cannot restore mutable initializer authority.
+    for (let changed = true; changed;) {
+      changed = false;
+      for (const [name, initializer] of bindings) if (unstableBindings.has(name) && ts.isIdentifier(initializer) && !unstableBindings.has(initializer.text)) {
+        unstableBindings.add(initializer.text); changed = true;
+      }
+    }
+    parsed = { source, bindings, functions, unstableBindings }; schemaStaticSourceCache.set(sourcePath, parsed);
   }
-  const { source, bindings, functions } = parsed;
+  const { source, bindings, functions, unstableBindings } = parsed;
   const unknown = Symbol('not statically proven');
   const evaluate = (node, stack = new Set()) => {
     if (!node) return unknown;
@@ -3308,7 +3339,10 @@ function schemaStaticFallback(sourcePath, anchor) {
     if (node.kind === ts.SyntaxKind.TrueKeyword) return true;
     if (node.kind === ts.SyntaxKind.FalseKeyword) return false;
     if (node.kind === ts.SyntaxKind.NullKeyword) return null;
-    if (ts.isIdentifier(node) && bindings.has(node.text) && !stack.has(node.text)) return evaluate(bindings.get(node.text), new Set([...stack, node.text]));
+    if (ts.isIdentifier(node) && bindings.has(node.text) && !stack.has(node.text)) {
+      assert(!unstableBindings.has(node.text), `CONFIG_SCHEMA_DEFAULT_AUTHORITY: ${sourcePath}:${lineAt(source.text, node.getStart(source))} mutable or ambiguous fallback binding ${node.text}`);
+      return evaluate(bindings.get(node.text), new Set([...stack, node.text]));
+    }
     if (ts.isArrayLiteralExpression(node)) {
       const values = node.elements.map((item) => evaluate(item, stack)); return values.includes(unknown) ? unknown : values;
     }
@@ -3474,6 +3508,11 @@ function schemaSpecificPurpose(authorityPath, fieldPath, context) {
   const leaf = segments.at(-1);
   const parent = segments.at(-2);
   if (!leaf) return null;
+  if (authorityPath === 'skills/buster/plugins/kubernetes-fixture/schemas/config.schema.json'
+    && ['$.secretReferences', '$.secretReferences[]'].includes(fieldPath)) {
+    const selection = fieldPath.endsWith('[]') ? 'Names one Kubernetes Secret object to copy' : 'Lists Kubernetes Secret objects to copy';
+    return `${selection} from the approved source namespace into the deployment lease namespace created by ${context}. The runtime allowedSecretReferences and controller BUSTER_ALLOWED_SOURCE_SECRETS allowlists must both admit each name. The separately applied checked workload manifest defines volume, environment and imagePullSecret projections; listing a copied Secret does not create those projections.`;
+  }
   if (authorityPath === 'skills/common/plugin-runtime/foundation/config/platform.schema.json' && fieldPath === '$.shutdownTimeoutMs') return 'Sets the timer delay used for adapter activation, readiness and shutdown. Some paths reject at the deadline; cleanup paths that only pass an abort signal can remain pending if the adapter does not settle.';
 
   if (/^(?:artifacts|coverage|reports)\[\]\./u.test(pathWithoutRoot)) {
@@ -3519,6 +3558,7 @@ function schemaSpecificPurpose(authorityPath, fieldPath, context) {
   if (/operations\[\]\.query\.\{\*\}$/u.test(pathWithoutRoot)) return `Supplies one scalar query-parameter value for each configured parameter name in ${context}.`;
   if (/operations\[\]\.pathParameters\.\{\*\}$/u.test(pathWithoutRoot)) return `Supplies one scalar path-parameter value for each OpenAPI path placeholder in ${context}.`;
   if (/definition\.buildArgs\.\{\*\}$/u.test(pathWithoutRoot)) return `Supplies one Docker build-argument value for each configured argument name in ${context}.`;
+  if (authorityPath === 'skills/common/plugins/secret-resolver/schemas/config.schema.json' && /environment\.\{\*\}$/u.test(pathWithoutRoot)) return 'Maps one allowed logical secret identifier to the process environment-variable name read for its confidential resolve request; the mapping stores the variable name, not the secret value.';
   if (/environment\.\{\*\}$/u.test(pathWithoutRoot)) return `Maps one declared environment name to the value given to ${context}; it does not grant ambient host-environment access.`;
   if (/executableCatalog\.\{\*\}$/u.test(pathWithoutRoot)) return `Maps one logical executable identifier to the exact executable path that ${context} can start.`;
   if (/stageLabels\.\{\*\}$/u.test(pathWithoutRoot)) return `Maps one stage identifier to the bounded label shown by ${context}.`;
@@ -3581,7 +3621,7 @@ function schemaSpecificPurpose(authorityPath, fieldPath, context) {
   if (/matchingFiles\[\]\./u.test(pathWithoutRoot)) {
     return {
       id: `Gives one matching-file budget a stable evidence identifier in ${context}.`,
-      maximumBytes: `Sets the largest allowed byte size for each file matched by one budget rule.`,
+      maximumBytes: `Sets the largest allowed aggregate byte size of all files matched by one budget rule.`,
       pattern: `Selects repository-relative files for one size-budget rule.`,
       requireMatch: `Controls whether a size-budget rule fails when its pattern matches no file.`,
     }[leaf] ?? null;
@@ -3810,7 +3850,6 @@ function schemaSpecificPurpose(authorityPath, fieldPath, context) {
     schemaVersion: `Pins the exact configuration contract version accepted by ${context}.`,
     seconds: `Sets the requested lifetime in seconds for the configured resource in ${context}.`,
     secretName: `Names the Kubernetes Secret used by ${context}.`,
-    secretReferences: `Lists operator-allowlisted Kubernetes Secrets mounted into the deployment lease created by ${context}.`,
     selector: `Limits the configured accessibility exception to one exact DOM selector.`,
     selectors: `Lists DOM selectors masked for one visual-comparison target in ${context}.`,
     semanticVerifier: `Selects the verifier result required before a proposed review finding can be accepted.`,
@@ -4264,6 +4303,14 @@ function schemaFieldMeaning(authorityPath, field, consumerEvidence) {
       schemaEvidence: schemaAuthorityPath(authorityPath),
       implementationEvidence: `${implementation.path}:${implementation.line}`,
       additionalImplementationEvidence: [...new Set([
+        ...(authorityPath === 'skills/buster/plugins/kubernetes-fixture/schemas/config.schema.json'
+          && ['$.secretReferences', '$.secretReferences[]'].includes(field.path)
+          ? ['skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts:664',
+            'skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts:700',
+            'skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts:715',
+            'cmd/buster-namespace-controller/main.go:185',
+            'cmd/buster-namespace-controller/main.go:623',
+            'cmd/buster-namespace-controller/main.go:1401'] : []),
         ...(runtimeRules?.evidence ?? []),
         ...(collection?.additionalImplementationEvidence ?? []),
         ...(runtimeFallback ? [runtimeFallback.evidence] : []),
@@ -4919,46 +4966,280 @@ function runtimeTextSources() {
   return [...new Set([...files].map(canonicalRuntimeSource))].sort();
 }
 
-function maskQuotedShellHeredocs(text) {
-  const lines = text.split('\n');
-  let delimiter = null;
-  return lines.map((line) => {
-    if (delimiter !== null) {
-      const closes = line.replace(/^\t+/u, '').trim() === delimiter;
-      if (closes) delimiter = null;
-      return ' '.repeat(line.length);
-    }
-    const starts = /<<-?\s*(['"])([A-Za-z_][A-Za-z0-9_]*)\1/u.exec(line);
-    if (starts) delimiter = starts[2];
-    return line;
-  }).join('\n');
+function maskQuotedShellHeredocs(text, file = '<shell environment source>') {
+  const custody = shellHeredocCustody(file, text);
+  let masked = text;
+  for (const body of custody.heredocs) {
+    const quoted = /^<<-?\s*['"]/u.test(text.slice(body.start, body.bodyStart));
+    if (quoted) masked = masked.slice(0, body.bodyStart)
+      + masked.slice(body.bodyStart, body.end).replace(/[^\n]/gu, ' ') + masked.slice(body.end);
+  }
+  return masked;
 }
 
-function nodeEnvironmentReads(file, text) {
+function configuredSecretResolverFacts(file, text, parsedSource = null) {
+  const source = parsedSource ?? ts.createSourceFile(file, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const normalize = node => node.getText(source).replace(/\s+/gu, '');
+  const fail = detail => { throw new Error(`NODE_ENVIRONMENT_UNSUPPORTED: ${file}: configured receiver custody: ${detail}`); };
+  const nodes = []; const visit = node => { nodes.push(node); ts.forEachChild(node, visit); }; visit(source);
+  const requireNode = (predicate, normalized) => {
+    const matches = nodes.filter(node => predicate(node) && normalize(node) === normalized);
+    if (matches.length !== 1) fail(`missing or changed selector/guard ${normalized}`); return matches[0];
+  };
+  const mapping = requireNode(ts.isVariableDeclaration, 'mapping=context.config.environment');
+  const mappingGuard = requireNode(ts.isIfStatement, "if(!mapping||typeofmapping!=='object'||Array.isArray(mapping))thrownewError('environmentmappingisrequired');");
+  const frozen = requireNode(ts.isVariableDeclaration, 'names=Object.freeze({...(mappingasRecord<string,string>)})');
+  const selector = requireNode(ts.isVariableDeclaration, 'environmentName=names[request.resource.canonicalId]');
+  const denied = requireNode(ts.isIfStatement, 'if(!environmentName)thrownewError(`SECRET_DENIED:${request.resource.canonicalId}`);');
+  const capability = requireNode(ts.isIfStatement, "if(request.capability!=='secrets.read'||request.operation!=='resolve'){thrownewError('SECRET_OPERATION_UNSUPPORTED');}");
+  const cancelled = requireNode(ts.isIfStatement, "if(signal.aborted)thrownewError('ADAPTER_CANCELLED');");
+  const fence = requireNode(ts.isIfStatement, 'if(!confidential)fence.assertCurrent();');
+  const value = requireNode(ts.isVariableDeclaration, 'value=process.env[environmentName]');
+  const missing = requireNode(ts.isIfStatement, 'if(value===undefined||value.length===0)thrownewError(`SECRET_UNAVAILABLE:${request.resource.canonicalId}`);');
+  for (const node of [mapping,frozen,selector,value]) if (!(node.parent.flags & ts.NodeFlags.Const)) fail('mutable selector/configuration initialization');
+  for (const node of nodes) if (ts.isBinaryExpression(node) && node.operatorToken.kind >= ts.SyntaxKind.FirstAssignment && node.operatorToken.kind <= ts.SyntaxKind.LastAssignment
+    && /^(?:mapping|names|environmentName|value)(?:$|[.\[])/u.test(node.left.getText(source))) fail('configured selector or value written');
+  if (!(mapping.end < mappingGuard.getStart(source) && mappingGuard.end < frozen.getStart(source) && frozen.end < selector.getStart(source)
+    && selector.end < denied.getStart(source) && denied.end < value.getStart(source) && value.end < missing.getStart(source)
+    && fence.end < capability.getStart(source) && capability.end < cancelled.getStart(source) && cancelled.end < selector.getStart(source))) fail('selector authorization/read order changed');
+  const schemaPath = 'skills/common/plugins/secret-resolver/schemas/config.schema.json';
+  const pluginPath = 'skills/common/plugins/secret-resolver/plugin.json';
+  const schema = JSON.parse(fs.readFileSync(path.join(root,schemaPath),'utf8'));
+  const plugin = JSON.parse(fs.readFileSync(path.join(root,pluginPath),'utf8'));
+  if (schema.type !== 'object' || schema.additionalProperties !== false || !schema.required?.includes('environment')
+    || schema.properties?.environment?.type !== 'object' || schema.properties.environment.additionalProperties?.type !== 'string'
+    || schema.properties.environment.additionalProperties.pattern !== '^[A-Z][A-Z0-9_]*$'
+    || !plugin.adapters?.some(adapter => adapter.module === 'src/adapter.ts' && adapter.export === 'activate'
+      && adapter.configSchema === 'schemas/config.schema.json' && adapter.providesCapabilities?.includes('secrets.read'))) fail('registered mapping-schema authority changed');
+  const receiver = value.initializer;
+  return [{index:receiver.getStart(source),path:file,line:lineAt(text,receiver.getStart(source)),access:'configured-environment-key',
+    function:'activate / invoke',schemaVersion:'registered secret-resolver config.schema.json',configurationField:'environment{logical secret identifier}',canonicalPage:'reference/plugin-configuration.md',
+    purpose:'Maps one allowed logical secret identifier to the process environment-variable name read for a confidential secrets.read / resolve request.',
+    acceptedForm:'The registered mapping schema requires variable names matching `[A-Z][A-Z0-9_]*`. The adapter itself checks mapping shape, not each mapped name; the selected variable must contain non-empty text.',
+    defaultBehavior:'No mapping default. Activation copies and freezes the configured mapping; arbitrary supported names are selectors, not a closed list of example names.',
+    emptyBehavior:'An absent mapping stops activation. An empty object or unmapped identifier returns SECRET_DENIED; an absent or empty selected variable returns SECRET_UNAVAILABLE.',
+    invalidBehavior:'Registered configuration-schema validation rejects malformed variable names. Unsupported capability/operation returns SECRET_OPERATION_UNSUPPORTED; cancellation returns ADAPTER_CANCELLED; the current fence is required outside the confidential lane.',
+    precedence:'The copied activation configuration maps request.resource.canonicalId to a variable name. The current process environment supplies its contents at each permitted invocation; later mutation of the original mapping does not change the frozen copy.',
+    impact:'Changing the mapping changes which process-held secret bytes one granted logical identifier can resolve on the next activation.',
+    failure:'Activation or the resolve request stops with its mapping, authorization, cancellation, missing-value, or fence error; no value is returned on those paths.',
+    required:'mapping required at activation; selected contents required for each permitted mapped resolve request',condition:'Only an allowed secrets.read / resolve request that passes cancellation and the applicable current-fence check.',
+    evidence:[mapping,mappingGuard,frozen,fence,capability,cancelled,selector,denied,receiver,missing].map(node=>({path:file,line:lineAt(text,node.getStart(source)),endLine:lineAt(text,node.end)})).concat([{path:schemaPath,line:1,endLine:1},{path:pluginPath,line:7,endLine:17}]),
+  }];
+}
+
+function configuredEnvironmentReceiverFacts(file, text, parsedSource = null) {
+  if (file === 'skills/common/plugins/secret-resolver/src/adapter.ts') return configuredSecretResolverFacts(file, text, parsedSource);
+  const nova = file === 'skills/nova/core/test-gates/runtime-config.ts';
+  if (!nova && file !== 'skills/buster/engine/test-gates/production.ts') return [];
+  const loaderName = nova ? 'loadProductionNovaTestGate' : 'loadProductionBusterRemotePlanRuntime';
+  const schemaVersion = nova ? 'nova-remote-test-gate-runtime.v1' : 'buster-remote-plan-runtime.v1';
+  const prefix = nova ? 'NOVA' : 'BUSTER';
+  const keyField = nova ? 'sourceAttestationPrivateKeyEnvironmentVariable' : 'sourceAttestationPublicKeyEnvironmentVariable';
+  const keyValue = nova ? 'sourceAttestationPrivateKey' : 'sourceAttestationPublicKey';
+  const source = parsedSource ?? ts.createSourceFile(file, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const normalize = node => node.getText(source).replace(/\s+/gu, '');
+  const fail = detail => { throw new Error(`NODE_ENVIRONMENT_UNSUPPORTED: ${file}: configured receiver custody: ${detail}`); };
+  const loaders = source.statements.filter(node => ts.isFunctionDeclaration(node) && node.name?.text === loaderName);
+  if (loaders.length !== 1 || !loaders[0].body) fail('loader missing or ambiguous');
+  const loader = loaders[0]; const parameter = loader.parameters.find(node => node.name.getText(source) === 'environment');
+  if (!parameter?.initializer || normalize(parameter.initializer) !== 'process.env') fail('process environment default changed');
+  const nodes = []; const visit = node => { nodes.push(node); ts.forEachChild(node, visit); }; visit(loader.body);
+  const statements = nodes.filter(ts.isIfStatement);
+  const requireGuard = (condition, body) => {
+    const matches = statements.filter(node => normalize(node.expression) === condition && normalize(node.thenStatement) === body);
+    if (matches.length !== 1) fail(`missing or changed guard ${condition}`);
+    return matches[0];
+  };
+  const version = requireGuard(`value.schemaVersion!=='${schemaVersion}'`, `thrownewError('${prefix}_REMOTE_CONFIG_VERSION_INVALID');`);
+  const declaration = name => {
+    const matches = nodes.filter(node => ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) && node.name.text === name);
+    if (matches.length !== 1) fail(`ambiguous selector ${name}`); return matches[0];
+  };
+  if (normalize(declaration('canonical').initializer) !== 'fs.realpathSync(file)'
+    || normalize(declaration('value').initializer) !== "object(JSON.parse(fs.readFileSync(canonical,'utf8')),'root')") fail('canonical configuration-file acquisition changed');
+  if (nova) {
+    if (normalize(declaration('authentication').initializer) !== "value.authentication==='spiffe-proxy'?'spiffe-proxy':'bearer'") fail('authentication selection changed');
+  } else if (normalize(declaration('trustedPeerSpiffeIds').initializer) !== "value.trustedPeerSpiffeIds===undefined?undefined:stringArray(value.trustedPeerSpiffeIds,'trustedPeerSpiffeIds')") fail('SPIFFE selection changed');
+  const conditional = statements.filter(node => normalize(node.expression) === (nova ? "authentication==='bearer'" : '!trustedPeerSpiffeIds'));
+  if (conditional.length !== 1 || !ts.isBlock(conditional[0].thenStatement)) fail('token enable condition changed');
+  const tokenGuard = requireGuard("typeofvalue.tokenEnvironmentVariable!=='string'||!/^[A-Z][A-Z0-9_]*$/u.test(value.tokenEnvironmentVariable)", `{thrownewError('${prefix}_REMOTE_CONFIG_TOKEN_ENV_INVALID');}`);
+  const tokenMissing = requireGuard('!token', `thrownewError('${prefix}_REMOTE_CONFIG_TOKEN_MISSING');`);
+  const keyGuard = requireGuard('!/^[A-Z][A-Z0-9_]*$/u.test(sourceKeyName)||sourceKeyName===tokenName', `{thrownewError('${prefix}_SOURCE_ATTESTATION_ENV_INVALID');}`);
+  const keyMissing = requireGuard(`!${keyValue}`, `thrownewError('${prefix}_SOURCE_ATTESTATION_${nova ? 'PRIVATE' : 'PUBLIC'}_KEY_MISSING');`);
+  const tokenAssignments = nodes.filter(node => ts.isBinaryExpression(node) && ts.isIdentifier(node.left) && node.left.text === 'tokenName'
+    && node.operatorToken.kind >= ts.SyntaxKind.FirstAssignment && node.operatorToken.kind <= ts.SyntaxKind.LastAssignment);
+  if (tokenAssignments.length !== 1 || normalize(tokenAssignments[0]) !== 'tokenName=value.tokenEnvironmentVariable'
+    || declaration('tokenName').initializer) fail('token selector write authority changed');
+  const keyDeclaration = declaration('sourceKeyName');
+  if (!(keyDeclaration.parent.flags & ts.NodeFlags.Const) || normalize(keyDeclaration.initializer) !== `value.${keyField}asstring`) fail('public-key selector initializer changed');
+  for (const node of nodes) {
+    if (ts.isBinaryExpression(node) && node.operatorToken.kind >= ts.SyntaxKind.FirstAssignment && node.operatorToken.kind <= ts.SyntaxKind.LastAssignment
+      && /^(?:environment|value|sourceKeyName)(?:$|[.\[])/u.test(node.left.getText(source))) fail('configuration or receiver binding is written');
+    if ((ts.isPrefixUnaryExpression(node) || ts.isPostfixUnaryExpression(node)) && ['environment','value','sourceKeyName','tokenName'].includes(node.operand.getText(source))
+      && [ts.SyntaxKind.PlusPlusToken,ts.SyntaxKind.MinusMinusToken].includes(node.operator)) fail('selector increment/decrement');
+  }
+  if (nova) {
+    requireGuard("parsedSourceKey.asymmetricKeyType!=='ed25519'", "thrownewError('NOVA_SOURCE_ATTESTATION_PRIVATE_KEY_INVALID');");
+    const parses = nodes.filter(node => ts.isBinaryExpression(node) && normalize(node) === 'parsedSourceKey=crypto.createPrivateKey(sourceAttestationPrivateKey)');
+    if (parses.length !== 1) fail('Ed25519 private-key parse changed');
+  }
+  const facts = [];
+  for (const [key, configurationField, guard, missing, condition] of [
+    ['tokenName', 'tokenEnvironmentVariable', tokenGuard, tokenMissing, nova ? 'Only when effective authentication is bearer; absent or unrecognized authentication selects bearer.' : 'Only when trustedPeerSpiffeIds is absent.'],
+    ['sourceKeyName', keyField, keyGuard, keyMissing, 'Always required by the selected remote-test runtime.'],
+  ]) {
+    const receivers = nodes.filter(node => ts.isElementAccessExpression(node) && ts.isIdentifier(node.expression) && node.expression.text === 'environment'
+      && ts.isIdentifier(node.argumentExpression) && node.argumentExpression.text === key);
+    if (receivers.length !== 1) fail(`receiver removed or duplicated for ${configurationField}`);
+    const receiver = receivers[0];
+    if (key === 'tokenName') {
+      let ancestor = receiver.parent; while (ancestor && ancestor !== conditional[0].thenStatement) ancestor = ancestor.parent;
+      if (!ancestor || tokenGuard.parent !== conditional[0].thenStatement || tokenMissing.parent !== conditional[0].thenStatement
+        || receiver.getStart(source) < tokenGuard.end || receiver.getStart(source) > tokenMissing.getStart(source)) fail('token conditional/guard/read order changed');
+    } else if (receiver.getStart(source) < keyGuard.end || receiver.getStart(source) > keyMissing.getStart(source)) fail('public-key guard/read order changed');
+    const publicKey = key === 'sourceKeyName';
+    const selectedValue = publicKey ? declaration(keyValue) : declaration('token');
+    if (publicKey && (!(selectedValue.parent.flags & ts.NodeFlags.Const) || normalize(selectedValue.initializer) !== 'environment[sourceKeyName]')) fail('key contents fallback or write changed');
+    const tokenWrites = nodes.filter(node => ts.isBinaryExpression(node) && ts.isIdentifier(node.left) && node.left.text === 'token' && node.operatorToken.kind >= ts.SyntaxKind.FirstAssignment && node.operatorToken.kind <= ts.SyntaxKind.LastAssignment);
+    if (!publicKey && (selectedValue.initializer || tokenWrites.length !== 1 || normalize(tokenWrites[0]) !== 'token=environment[tokenName]')) fail('token contents fallback or write changed');
+    facts.push({ index: receiver.getStart(source), path: file, line: lineAt(text, receiver.getStart(source)), access:'configured-environment-key',
+      function:loaderName, schemaVersion, configurationField,
+      canonicalPage:nova ? 'reference/environment-variables.md' : 'reference/buster-runtime-configuration.md', condition,
+      purpose: publicKey ? `Selects the environment variable that contains the Nova source-attestation ${nova ? 'private signing' : 'trusted public'} key.` : 'Selects the environment variable that contains the remote-test bearer token when the selected authentication mode requires it.',
+      acceptedForm: publicKey ? 'A variable name matching `[A-Z][A-Z0-9_]*`, different from the selected token variable; its non-empty contents supply the required source-attestation key.' : 'A variable name matching `[A-Z][A-Z0-9_]*`; its non-empty contents supply the bearer token.',
+      defaultBehavior:'No selector default. The configuration file selects an arbitrary supported variable name; documented examples are not a closed allow-list.',
+      emptyBehavior: publicKey ? `A missing, empty, or malformed selector is rejected; an absent or empty selected variable returns ${prefix}_SOURCE_ATTESTATION_${nova ? 'PRIVATE' : 'PUBLIC'}_KEY_MISSING.` : `In the selected SPIFFE mode the token selector is not read. In bearer mode, a missing, empty, or malformed selector is rejected; an absent or empty selected variable returns ${prefix}_REMOTE_CONFIG_TOKEN_MISSING.`,
+      invalidBehavior: publicKey ? `An invalid or reused selector returns ${prefix}_SOURCE_ATTESTATION_ENV_INVALID; ${nova ? 'this loader rejects a malformed or non-Ed25519 private key' : 'downstream Ed25519 verification rejects unusable public-key bytes'}.` : `An invalid selector returns ${prefix}_REMOTE_CONFIG_TOKEN_ENV_INVALID; downstream bearer verification rejects unusable credentials.`,
+      precedence:'The canonical JSON file selects the key; the function environment argument supplies its contents and defaults to the current process environment. The selected SPIFFE mode bypasses only bearer-token selection.',
+      impact:publicKey ? nova ? 'Changing the selector changes the private Ed25519 key used to sign Nova source attestations.' : 'Changing the selector changes which Nova attestation authority the remote-plan runtime trusts.' : 'Changing the selector changes the bearer credential used for the non-SPIFFE remote-plan transport.',
+      failure:'Configuration loading stops before remote-plan work is admitted when its selected required variable is missing or unusable.',
+      required:publicKey ? 'required' : nova ? 'required only in effective bearer mode' : 'required only without trustedPeerSpiffeIds',
+      evidence:[version,guard,missing,receiver].map(node=>({path:file,line:lineAt(text,node.getStart(source)),endLine:lineAt(text,node.end)})),
+    });
+  }
+  return facts;
+}
+
+function nodeEnvironmentReads(file, text, sourcePositions = null, sourceText = text) {
   const sourceFile = ts.createSourceFile(file, text, ts.ScriptTarget.Latest, true,
     file.endsWith('.ts') || file.endsWith('.mts') || file.endsWith('.cts') ? ts.ScriptKind.TS : ts.ScriptKind.JS);
+  if (sourceFile.parseDiagnostics.length) {
+    const diagnostic = sourceFile.parseDiagnostics[0], index = diagnostic.start ?? 0;
+    throw new Error(`NODE_ENVIRONMENT_UNSUPPORTED: ${file}:${lineAt(sourceText,sourcePositions ? sourcePositions[index] : index)}: malformed selected JavaScript/TypeScript source: ${ts.flattenDiagnosticMessageText(diagnostic.messageText,' ')}`);
+  }
   const reads = [];
-  const aliases = new Set();
-  const stringConstants = new Map();
+  const configuredReceivers = configuredEnvironmentReceiverFacts(file, text, sourceFile);
   const computedReaders = new Map();
-  const processEnvironment = (node) => ts.isPropertyAccessExpression(node)
-    && ts.isIdentifier(node.expression)
-    && node.expression.text === 'process'
-    && node.name.text === 'env';
-  const aliasExpression = (node) => processEnvironment(node) || (ts.isIdentifier(node) && aliases.has(node.text));
+  const writes = new Set();
+  const collectWrites = (node) => {
+    if (ts.isBinaryExpression(node) && node.operatorToken.kind >= ts.SyntaxKind.FirstAssignment && node.operatorToken.kind <= ts.SyntaxKind.LastAssignment) {
+      let target = node.left;
+      while (ts.isPropertyAccessExpression(target) || ts.isElementAccessExpression(target)) target = target.expression;
+      if (ts.isIdentifier(target)) writes.add(target.text);
+    }
+    if ((ts.isPrefixUnaryExpression(node) || ts.isPostfixUnaryExpression(node)) && ts.isIdentifier(node.operand)
+      && [ts.SyntaxKind.PlusPlusToken, ts.SyntaxKind.MinusMinusToken].includes(node.operator)) writes.add(node.operand.text);
+    ts.forEachChild(node, collectWrites);
+  };
+  collectWrites(sourceFile);
+  const unsupported = (node, reason) => { throw new Error(`NODE_ENVIRONMENT_UNSUPPORTED: ${file}:${lineAt(sourceText, sourcePositions ? sourcePositions[node.getStart(sourceFile)] : node.getStart(sourceFile))}: ${reason}`); };
+  const importedProcessObjects = new Set(); const importedEnvironmentObjects = new Set(); const importedNames = new Set();
+  for (const statement of sourceFile.statements) if (ts.isImportDeclaration(statement) && ts.isStringLiteral(statement.moduleSpecifier) && statement.importClause) {
+    const builtin = ['process','node:process'].includes(statement.moduleSpecifier.text);
+    const clause = statement.importClause;
+    if (clause.name) { importedNames.add(clause.name.text); if (builtin) importedProcessObjects.add(clause.name.text); }
+    if (clause.namedBindings && ts.isNamespaceImport(clause.namedBindings)) { importedNames.add(clause.namedBindings.name.text); if (builtin) importedProcessObjects.add(clause.namedBindings.name.text); }
+    if (clause.namedBindings && ts.isNamedImports(clause.namedBindings)) for (const specifier of clause.namedBindings.elements) {
+      importedNames.add(specifier.name.text);
+      if (builtin && (specifier.propertyName ?? specifier.name).text === 'env') importedEnvironmentObjects.add(specifier.name.text);
+      if (builtin && (specifier.propertyName ?? specifier.name).text === 'default') importedProcessObjects.add(specifier.name.text);
+    }
+  }
+  const processEnvironment = (node) => {
+    if (!(ts.isPropertyAccessExpression(node) || ts.isElementAccessExpression(node))) return false;
+    const environmentMember = ts.isPropertyAccessExpression(node) ? node.name.text === 'env' : ts.isStringLiteral(node.argumentExpression) && node.argumentExpression.text === 'env';
+    if (!environmentMember) return false;
+    const processRequire = expression => ts.isCallExpression(expression) && ts.isIdentifier(expression.expression) && expression.expression.text === 'require'
+      && expression.arguments.length === 1 && ts.isStringLiteral(expression.arguments[0]) && ['process','node:process'].includes(expression.arguments[0].text);
+    if (processRequire(node.expression)) unsupported(node,'unqualified CommonJS process-module environment capability');
+    if (!ts.isIdentifier(node.expression)) return false;
+    const name = node.expression.text;
+    let locallyBound = false;
+    for (let scope=node.expression.parent;scope;scope=scope.parent) if ((declarations.get(name) ?? []).some(entry=>entry.scope===scope)) { locallyBound=true;break; }
+    if (locallyBound && processRequire(bindingFor(node.expression)?.initializer ?? node.expression)) unsupported(node,'unqualified CommonJS process-module environment alias');
+    if (locallyBound || !(importedProcessObjects.has(name) || name === 'process' && !importedNames.has(name))) return false;
+    return ts.isPropertyAccessExpression(node) ? node.name.text === 'env'
+      : ts.isStringLiteral(node.argumentExpression) && node.argumentExpression.text === 'env';
+  };
+  const declarations = new Map(); const aliasNodes = new Set();
+  const scopeOf = node => {
+    let scope = node.parent;
+    if (ts.isParameter(node)) return scope;
+    while (scope && !ts.isBlock(scope) && !ts.isSourceFile(scope) && !ts.isFunctionLike(scope) && !ts.isForOfStatement(scope) && !ts.isForInStatement(scope) && !ts.isForStatement(scope) && !ts.isCatchClause(scope)) scope = scope.parent;
+    return scope;
+  };
+  const collectDeclarations = node => {
+    if ((ts.isVariableDeclaration(node) || ts.isParameter(node)) && ts.isIdentifier(node.name)) {
+      const entries = declarations.get(node.name.text) ?? []; entries.push({ node, scope: scopeOf(node) }); declarations.set(node.name.text, entries);
+    }
+    ts.forEachChild(node, collectDeclarations);
+  };
+  collectDeclarations(sourceFile);
+  const bindingFor = node => {
+    if (!ts.isIdentifier(node)) return null;
+    const entries = declarations.get(node.text) ?? [];
+    for (let scope = node.parent; scope; scope = scope.parent) {
+      const matches = entries.filter(entry => entry.scope === scope);
+      if (matches.length > 1) {
+        if (matches.some(entry => aliasNodes.has(entry.node))) unsupported(node, `ambiguous environment binding ${node.text}`);
+        return null; // Unrelated pure bindings are not environment authority.
+      }
+      if (matches.length) return matches[0].node;
+    }
+    return null;
+  };
+  const aliasExpression = (node) => {
+    const binding = bindingFor(node);
+    const alias = binding && aliasNodes.has(binding) || !binding && importedEnvironmentObjects.has(node.text);
+    if (alias && writes.has(node.text)) unsupported(node, `written environment alias ${node.text}`);
+    return processEnvironment(node) || alias;
+  };
   const functionName = (node) => node.name && ts.isIdentifier(node.name) ? node.name.text
     : ts.isVariableDeclaration(node.parent) && ts.isIdentifier(node.parent.name) ? node.parent.name.text : null;
   const collectAliases = (node) => {
     if (ts.isParameter(node) && ts.isIdentifier(node.name)
-      && (node.initializer && aliasExpression(node.initializer) || /(?:^|\.)ProcessEnv\b/u.test(node.type?.getText(sourceFile) ?? ''))) aliases.add(node.name.text);
+      && (node.initializer && aliasExpression(node.initializer) || /(?:^|\.)ProcessEnv\b/u.test(node.type?.getText(sourceFile) ?? ''))) aliasNodes.add(node);
     if (ts.isVariableDeclaration(node) && ts.isIdentifier(node.name)) {
-      if (node.initializer && aliasExpression(node.initializer)) aliases.add(node.name.text);
-      if (node.initializer && (ts.isStringLiteral(node.initializer) || ts.isNoSubstitutionTemplateLiteral(node.initializer))
-        && /^[A-Z][A-Z0-9_]*$/u.test(node.initializer.text)) stringConstants.set(node.name.text, node.initializer.text);
+      if (node.initializer && aliasExpression(node.initializer)) aliasNodes.add(node);
     }
     ts.forEachChild(node, collectAliases);
   };
   collectAliases(sourceFile);
+  const constantKey = node => {
+    const binding = bindingFor(node);
+    return binding?.initializer && (ts.isStringLiteral(binding.initializer) || ts.isNoSubstitutionTemplateLiteral(binding.initializer))
+      ? binding.initializer.text : null;
+  };
+  const snapshotObservation = node => {
+    const comparison = node.parent;
+    if (!ts.isBinaryExpression(comparison) || comparison.left !== node || comparison.operatorToken.kind !== ts.SyntaxKind.ExclamationEqualsEqualsToken) return false;
+    const callback = comparison.parent;
+    if (!ts.isArrowFunction(callback) || callback.body !== comparison || callback.parameters.length !== 1
+      || !ts.isArrayBindingPattern(callback.parameters[0].name)) return false;
+    const [key, value] = callback.parameters[0].name.elements;
+    if (!key || !value || !ts.isIdentifier(key.name) || !ts.isIdentifier(value.name)
+      || !ts.isIdentifier(node.argumentExpression) || node.argumentExpression.text !== key.name.text
+      || !ts.isIdentifier(comparison.right) || comparison.right.text !== value.name.text) return false;
+    const call = callback.parent;
+    if (!ts.isCallExpression(call) || !ts.isPropertyAccessExpression(call.expression) || call.expression.name.text !== 'some') return false;
+    const entries = call.expression.expression;
+    if (!ts.isCallExpression(entries) || entries.expression.getText(sourceFile) !== 'Object.entries'
+      || entries.arguments.length !== 1 || !ts.isIdentifier(entries.arguments[0])) return false;
+    const binding = bindingFor(entries.arguments[0]);
+    return binding && (binding.parent.flags & ts.NodeFlags.Const) && !writes.has(entries.arguments[0].text)
+      && ts.isObjectLiteralExpression(binding.initializer) && binding.initializer.properties.length === 1
+      && ts.isSpreadAssignment(binding.initializer.properties[0]) && processEnvironment(binding.initializer.properties[0].expression);
+  };
   const collectComputedReaders = (node) => {
     if ((ts.isFunctionDeclaration(node) || ts.isFunctionExpression(node) || ts.isArrowFunction(node) || ts.isMethodDeclaration(node))) {
       const name = functionName(node);
@@ -4986,23 +5267,58 @@ function nodeEnvironmentReads(file, text) {
   };
   collectComputedReaders(sourceFile);
   const add = (name, node, kind) => {
-    if (/^[A-Z][A-Z0-9_]*$/u.test(name)) reads.push({ name, index: node.getStart(sourceFile), kind });
+    if (typeof name !== 'string' || !/^[A-Za-z_][A-Za-z0-9_]*$/u.test(name)) unsupported(node,'unsupported environment key spelling outside finite identifier-shaped literal grammar');
+    reads.push({ name, index: node.getStart(sourceFile), kind });
   };
   const visit = (node) => {
+    if (ts.isBinaryExpression(node) && node.operatorToken.kind >= ts.SyntaxKind.FirstAssignment && node.operatorToken.kind <= ts.SyntaxKind.LastAssignment
+      && (processEnvironment(node.left) || ((ts.isPropertyAccessExpression(node.left) || ts.isElementAccessExpression(node.left)) && aliasExpression(node.left.expression)))) unsupported(node.left,'written environment receiver');
+    if (ts.isDeleteExpression(node) && (ts.isPropertyAccessExpression(node.expression) || ts.isElementAccessExpression(node.expression))
+      && aliasExpression(node.expression.expression)) unsupported(node.expression,'deleted environment receiver');
     if (ts.isVariableDeclaration(node) && ts.isObjectBindingPattern(node.name)
       && node.initializer && aliasExpression(node.initializer)) {
       for (const element of node.name.elements) {
-        if (element.dotDotDotToken) continue;
+        if (element.dotDotDotToken) unsupported(element,'environment destructuring rest capability');
         const key = element.propertyName ?? element.name;
         if (ts.isIdentifier(key) || ts.isStringLiteral(key)) add(key.text, element, 'node-process-env-destructure');
+        else if (ts.isComputedPropertyName(key)) {
+          const expression=key.expression;
+          if(ts.isStringLiteral(expression)||ts.isNoSubstitutionTemplateLiteral(expression)) add(expression.text,element,'node-process-env-computed-destructure');
+          else if(ts.isIdentifier(expression)&&constantKey(expression)!==null) {
+            if(writes.has(expression.text)) unsupported(element,`written environment destructuring key ${expression.text}`);
+            add(constantKey(expression),element,'node-process-env-computed-destructure');
+          } else unsupported(element,'runtime-computed environment destructuring key');
+        } else unsupported(element,'unsupported environment destructuring selector');
       }
     } else if (ts.isPropertyAccessExpression(node) && aliasExpression(node.expression)) {
       add(node.name.text, node, processEnvironment(node.expression) ? 'node-process-env' : 'node-process-env-alias');
     } else if (ts.isElementAccessExpression(node) && aliasExpression(node.expression)) {
       if (ts.isStringLiteral(node.argumentExpression) || ts.isNoSubstitutionTemplateLiteral(node.argumentExpression)) {
         add(node.argumentExpression.text, node, 'node-process-env-computed');
-      } else if (ts.isIdentifier(node.argumentExpression) && stringConstants.has(node.argumentExpression.text)) {
-        add(stringConstants.get(node.argumentExpression.text), node, 'node-process-env-computed');
+      } else if (ts.isIdentifier(node.argumentExpression) && constantKey(node.argumentExpression) !== null) {
+        if (writes.has(node.argumentExpression.text)) unsupported(node, `written environment key ${node.argumentExpression.text}`);
+        add(constantKey(node.argumentExpression), node, 'node-process-env-computed');
+      } else {
+        let loop = node.parent; let literalLoop = null;
+        while (loop && !ts.isFunctionLike(loop)) {
+          if (ts.isForOfStatement(loop) && ts.isVariableDeclarationList(loop.initializer)
+            && loop.initializer.declarations.length === 1 && ts.isIdentifier(loop.initializer.declarations[0].name)
+            && ts.isIdentifier(node.argumentExpression) && loop.initializer.declarations[0].name.text === node.argumentExpression.text
+            && !writes.has(node.argumentExpression.text)) {
+            let collection = loop.expression;
+            if (ts.isIdentifier(collection)) { const binding = bindingFor(collection); if (binding && binding.parent.flags & ts.NodeFlags.Const && !writes.has(collection.text)) collection = binding.initializer; }
+            if (collection && ts.isCallExpression(collection) && collection.expression.getText(sourceFile) === 'Object.freeze') collection = collection.arguments[0];
+            while (collection && (ts.isAsExpression(collection) || ts.isParenthesizedExpression(collection))) collection = collection.expression;
+            if (collection && ts.isArrayLiteralExpression(collection) && collection.elements.every(ts.isStringLiteral)) { literalLoop = collection.elements; break; }
+          }
+          loop = loop.parent;
+        }
+        if (literalLoop) { for (const key of literalLoop) add(key.text, node, 'node-process-env-literal-loop'); }
+        let owner = node.parent;
+        while (owner && !ts.isFunctionLike(owner)) owner = owner.parent;
+        const boundedHelper = owner && functionName(owner) && computedReaders.has(functionName(owner))
+          && ts.isIdentifier(node.argumentExpression) && owner.parameters.some(parameter => ts.isIdentifier(parameter.name) && parameter.name.text === node.argumentExpression.text);
+        if (!boundedHelper && !literalLoop && !snapshotObservation(node) && !configuredReceivers.some(fact => fact.index === node.getStart(sourceFile))) unsupported(node, 'runtime-computed environment key');
       }
     } else if (ts.isCallExpression(node) && ts.isIdentifier(node.expression) && computedReaders.has(node.expression.text)) {
       for (const reader of computedReaders.get(node.expression.text)) {
@@ -5010,14 +5326,22 @@ function nodeEnvironmentReads(file, text) {
         if (reader.environmentIndex !== null && (!environmentArgument || !aliasExpression(environmentArgument))) continue;
         const argument = node.arguments[reader.keyIndex];
         if (argument && (ts.isStringLiteral(argument) || ts.isNoSubstitutionTemplateLiteral(argument))) add(argument.text, node, 'node-process-env-computed-helper');
-        else if (argument && ts.isIdentifier(argument) && stringConstants.has(argument.text)) add(stringConstants.get(argument.text), node, 'node-process-env-computed-helper');
+        else if (argument && ts.isIdentifier(argument) && constantKey(argument) !== null) {
+          if (writes.has(argument.text)) unsupported(node, `written environment helper key ${argument.text}`);
+          add(constantKey(argument), node, 'node-process-env-computed-helper');
+        } else unsupported(node,'runtime-computed or missing environment helper key');
       }
     } else if (ts.isCallExpression(node) && ts.isPropertyAccessExpression(node.expression)
       && node.expression.name.text === 'get' && ts.isPropertyAccessExpression(node.expression.expression)
       && ts.isIdentifier(node.expression.expression.expression) && node.expression.expression.expression.text === 'Deno'
-      && node.expression.expression.name.text === 'env' && node.arguments.length === 1
-      && ts.isStringLiteral(node.arguments[0]) && /^[A-Z][A-Z0-9_]*$/u.test(node.arguments[0].text)) {
-      reads.push({ name: node.arguments[0].text, index: node.getStart(sourceFile), kind: 'deno-env' });
+      && node.expression.expression.name.text === 'env') {
+      if(node.arguments.length!==1) unsupported(node,'unsupported Deno environment getter argument custody');
+      const argument=node.arguments[0];
+      if(ts.isStringLiteral(argument)||ts.isNoSubstitutionTemplateLiteral(argument)) add(argument.text,node,'deno-env');
+      else if(ts.isIdentifier(argument)&&constantKey(argument)!==null) {
+        if(writes.has(argument.text)) unsupported(node,`written Deno environment key ${argument.text}`);
+        add(constantKey(argument),node,'deno-env');
+      } else unsupported(node,'runtime-computed Deno environment key');
     }
     ts.forEachChild(node, visit);
   };
@@ -5033,97 +5357,1723 @@ function quotedProgramToken(token) {
   return { code: token, offset: 0 };
 }
 
-function inlineProgramEnvironmentReads(file, text) {
-  const reads = [];
-  const patterns = [
-    { runtime: 'node', expression: /\bnode(?:\s+--?[A-Za-z][A-Za-z0-9-]*(?:=[^\s]+)?)?\s+(?:-e|--eval|-p|--print)\s+('(?:[^']*)'|"(?:\\.|[^"\\])*"|[^\s;|&]+)/gmu },
-    { runtime: 'python', expression: /\bpython(?:[0-9]+(?:\.[0-9]+)?)?(?:\s+--?[A-Za-z][A-Za-z0-9-]*(?:=[^\s]+)?)?\s+(?:-c)\s+('(?:[^']*)'|"(?:\\.|[^"\\])*"|[^\s;|&]+)/gmu },
-  ];
-  for (const { runtime, expression } of patterns) {
-    for (const match of text.matchAll(expression)) {
-      const token = match[1];
-      const parsed = quotedProgramToken(token);
-      const tokenIndex = (match.index ?? 0) + match[0].lastIndexOf(token) + parsed.offset;
-      const found = runtime === 'node' ? nodeEnvironmentReads(`${file}#node-inline-${lineAt(text, match.index ?? 0)}`, parsed.code)
-        : pythonEnvironmentReads(parsed.code);
-      for (const fact of found) reads.push({ ...fact, index: tokenIndex + fact.index, kind: `embedded-${fact.kind}` });
+function pythonArgvMode(tokens, python, diagnostic) {
+  let modeIndex = python + 1;
+  while (['-I', '-E', '-s', '-S', '-u', '-B', '-q', '-O', '-OO'].includes(tokens[modeIndex])) modeIndex += 1;
+  const mode = tokens[modeIndex];
+  assert(!mode?.startsWith('-') || ['-', '-c', '-m', '--version', '-V', '--help', '-h'].includes(mode),
+    `${diagnostic}: unresolved Python argv mode`);
+  return { stdin: mode === undefined || mode === '-', codeFlag: mode === '-c' ? modeIndex : -1 };
+}
+
+function pythonInterpreterIndex(tokens, diagnostic) {
+  let first = 0;
+  const wrapperIdentity = (value) => typeof value === 'string' && (value.startsWith('/') || !value.includes('/')) ? path.posix.basename(value) : null;
+  while (['env', 'sudo'].includes(wrapperIdentity(tokens[first]))) {
+    const wrapper = wrapperIdentity(tokens[first++]);
+    while (tokens[first]) {
+      if (/^[A-Za-z_][A-Za-z0-9_]*=/u.test(tokens[first]) || tokens[first] === '--') { first += 1; continue; }
+      if (wrapper === 'env' && ['-i', '--ignore-environment'].includes(tokens[first])) { first += 1; continue; }
+      if (wrapper === 'env' && ['-u', '--unset'].includes(tokens[first])) { first += 2; continue; }
+      assert(!tokens[first].startsWith('-'), `${diagnostic}: unresolved interpreter wrapper options`);
+      break;
     }
+  }
+  return first;
+}
+
+function pythonShellPrograms(text, depth = 0) {
+  assert(depth < 16, 'PYTHON_ENVIRONMENT_SHELL_UNSUPPORTED: literal shell nesting limit');
+  // Finite lexical command acquisition, not shell execution. Quoted words and
+  // every heredoc body belong to their command; recipe text is never rescanned.
+  const programs = [];
+  let unresolvedStdin = false;
+  let words = [];
+  let redirects = [];
+  // Separators end argv, but heredoc bodies start only after the newline.
+  // Retain each redirect with its original command until that body is consumed.
+  const pendingHeredocs = [];
+  let inputRedirect = null;
+  const executable = () => {
+    const tokens = words.map((word) => word.value);
+    let first = 0;
+    while (tokens[first] && (/^[A-Za-z_][A-Za-z0-9_]*=/u.test(tokens[first])
+      || ['if', 'then', 'elif', 'do', 'while', 'until', '!', 'exec', 'command'].includes(tokens[first]))) first += 1;
+    first += pythonInterpreterIndex(tokens.slice(first), 'PYTHON_ENVIRONMENT_SHELL_UNSUPPORTED');
+    let python = first;
+    if (['docker', 'kubectl'].includes(tokens[first]) && tokens.includes('exec')) {
+      python = tokens.findIndex((word, index) => index > first && /^(?:.*\/)?python(?:\d+(?:\.\d+)?)?$/u.test(word));
+    }
+    if (/^(?:.*\/)?(?:ba|da|a|z|k)?sh$/u.test(tokens[first] ?? '')) {
+      let flag = first + 1;
+      while (/^-[efuvxnCli]+$/u.test(tokens[flag] ?? '')) flag += 1;
+      if (/^-[a-z]*c[a-z]*$/u.test(tokens[flag] ?? '')) return { shell: true, codeFlag: flag };
+      assert(!tokens[flag]?.startsWith('-') || tokens[flag] === '--'
+        || !tokens.slice(flag + 1).some((value) => /^-[a-z]*c[a-z]*$/u.test(value ?? '')),
+      'PYTHON_ENVIRONMENT_SHELL_UNSUPPORTED: unresolved nested shell argv mode');
+      return null;
+    }
+    if (!/^(?:.*\/)?python(?:\d+(?:\.\d+)?)?$/u.test(tokens[python] ?? '')) {
+      // An expanded executable with recognizable Python -c source has lost
+      // interpreter custody. Do not infer shell variable values or omit it.
+      const code = tokens.indexOf('-c', first + 1);
+      assert(!words[first]?.dynamic || code < 0
+        || !/\b(?:import\s+os\b|from\s+os\s+import\b|os\.(?:getenv|environ)\b)/u.test(tokens[code + 1] ?? ''),
+      'PYTHON_ENVIRONMENT_SHELL_UNSUPPORTED: unresolved dynamic interpreter custody');
+      return words[first]?.dynamic ? { dynamicInterpreter: true, index: words[first].positions[0] ?? 0 } : null;
+    }
+    // Only no argument or an explicit '-' selects Python stdin. Options
+    // with operands and script/module modes must not promote stdin as source.
+    return { tokens, python, ...pythonArgvMode(tokens, python, 'PYTHON_ENVIRONMENT_SHELL_UNSUPPORTED') };
+  };
+  const flush = () => {
+    const command = executable();
+    if (command) {
+      const flag = command.codeFlag;
+      if (flag >= 0) {
+        assert(words[flag + 1], 'PYTHON_ENVIRONMENT_SHELL_UNSUPPORTED: missing literal -c body');
+        const body = words[flag + 1];
+        assert(!body.dynamic, 'PYTHON_ENVIRONMENT_SHELL_UNSUPPORTED: dynamically expanded Python body');
+        if (command.shell) {
+          const nested = pythonShellPrograms(body.value, depth + 1);
+          assert(!nested.unresolvedStdin, 'PYTHON_ENVIRONMENT_SHELL_UNSUPPORTED: unresolved nested shell stdin custody');
+          for (const program of nested) programs.push({ ...program,
+            ...(program.positions ? { positions: program.positions.map((position) => body.positions[position]) } : {}) });
+        } else programs.push({ code: body.value, positions: body.positions, kind: 'inline' });
+      }
+    }
+    assert(!inputRedirect, 'PYTHON_ENVIRONMENT_SHELL_UNSUPPORTED: missing stdin redirect path');
+    const winner = redirects.filter((redirect) => redirect.fd === 0).at(-1);
+    if (command?.stdin && !winner) unresolvedStdin = true;
+    if (command?.stdin && winner?.body && !winner.output) programs.push({ fileInput: winner.body, kind: 'file-stdin' });
+    const result = { command, redirects };
+    if (redirects.some((redirect) => !redirect.body)) pendingHeredocs.push(result);
+    words = []; redirects = [];
+    return result;
+  };
+  let index = 0;
+  while (index < text.length) {
+    if (text[index] === '#') { while (index < text.length && text[index] !== '\n') index += 1; continue; }
+    if (/\s/u.test(text[index])) {
+      if (text[index] === '\n') {
+        flush();
+        index += 1;
+        for (const command of pendingHeredocs.splice(0)) {
+          for (const redirect of command.redirects) {
+            if (redirect.body) continue;
+            const start = index;
+            let end = index;
+            while (end < text.length) {
+              const next = text.indexOf('\n', end);
+              const stop = next < 0 ? text.length : next;
+              if ((redirect.stripTabs ? text.slice(end, stop).replace(/^\t+/u, '') : text.slice(end, stop)) === redirect.delimiter) break;
+              end = stop + 1;
+            }
+            assert(end < text.length, 'PYTHON_ENVIRONMENT_SHELL_UNSUPPORTED: unterminated heredoc');
+            const rawBody = text.slice(start, end);
+            if (command.command?.dynamicInterpreter && redirect.fd === 0 && redirect === command.redirects.filter(item => item.fd === 0).at(-1)
+              && /\b(?:import\s+os\b|from\s+os\s+import\b|os\.(?:getenv|environ)\b)/u.test(rawBody))
+              assert.fail(`PYTHON_ENVIRONMENT_SHELL_UNSUPPORTED: unresolved dynamic interpreter stdin custody at line ${lineAt(text,command.command.index)}`);
+            assert(redirect.quoted || !/\$\(|`/u.test(rawBody),
+              command.command?.stdin ? 'PYTHON_ENVIRONMENT_SHELL_UNSUPPORTED: expanded Python heredoc custody'
+                : 'PYTHON_ENVIRONMENT_SHELL_UNSUPPORTED: expanded executable heredoc custody');
+            if (command.command?.stdin && redirect.fd === 0 && redirect === command.redirects.filter((item) => item.fd === 0).at(-1)) {
+              const raw = text.slice(start, end);
+              assert(redirect.quoted || !/[$`]|\\(?:[\\$`]|\n)/u.test(raw), 'PYTHON_ENVIRONMENT_SHELL_UNSUPPORTED: expanded Python heredoc custody');
+              const positions = []; let code = '';
+              for (let offset = 0; offset < raw.length; offset += 1) {
+                if (redirect.stripTabs && (offset === 0 || raw[offset - 1] === '\n')) {
+                  while (raw[offset] === '\t') offset += 1;
+                }
+                if (offset < raw.length) { code += raw[offset]; positions.push(start + offset); }
+              }
+              programs.push({ code, positions, kind: 'heredoc' });
+            }
+            const next = text.indexOf('\n', end);
+            index = next < 0 ? text.length : next + 1;
+          }
+        }
+      } else index += 1;
+      continue;
+    }
+    if (text.startsWith('&>', index)) assert(!executable(), 'PYTHON_ENVIRONMENT_SHELL_UNSUPPORTED: combined Python output redirection custody');
+    if (';|&()'.includes(text[index])) { flush(); index += 1; continue; }
+    if (text.startsWith('<<<', index)) {
+      assert(!executable(), 'PYTHON_ENVIRONMENT_SHELL_UNSUPPORTED: Python here-string custody');
+      index += 3; continue;
+    }
+    if (text.startsWith('<<', index)) {
+      const descriptor = words.at(-1);
+      const fd = descriptor && /^\d+$/u.test(descriptor.value) && descriptor.positions.at(-1) === index - 1 ? Number(words.pop().value) : 0;
+      const stripTabs = text[index + 2] === '-'; index += stripTabs ? 3 : 2;
+      while (/[ \t]/u.test(text[index] ?? '') && index < text.length) index += 1;
+      let delimiter = ''; let quote = null; let quoted = false;
+      while (index < text.length && (quote || !/[\s;|&)]/u.test(text[index]))) {
+        const char = text[index++];
+        if ((char === "'" || char === '"') && (!quote || quote === char)) { quoted = true; quote = quote ? null : char; continue; }
+        if (char === '\\') { quoted = true; assert(index < text.length, 'PYTHON_ENVIRONMENT_SHELL_UNSUPPORTED: incomplete heredoc delimiter escape'); delimiter += text[index++]; continue; }
+        delimiter += char;
+      }
+      redirects.push({ delimiter, stripTabs, fd, quoted }); continue;
+    }
+    if ('<>'.includes(text[index])) {
+      const output = text[index] === '>';
+      const descriptor = words.at(-1);
+      const fd = descriptor && /^\d+$/u.test(descriptor.value) && descriptor.positions.at(-1) === index - 1 ? Number(words.pop().value) : output ? 1 : 0;
+      index += 1;
+      if (output && text[index] === '>') index += 1;
+      if (text[index] === '&') {
+        index += 1;
+        const target = /^(?:[0-9]+|-)/u.exec(text.slice(index));
+        assert(target, 'PYTHON_ENVIRONMENT_SHELL_UNSUPPORTED: unresolved redirect descriptor');
+        assert(output || !executable()?.stdin, 'PYTHON_ENVIRONMENT_SHELL_UNSUPPORTED: unresolved Python stdin descriptor duplication');
+        redirects.push({ fd, output, body: { value: target[0], dynamic: false } });
+        index += target[0].length;
+        continue;
+      }
+      assert(!['|', '<', '>'].includes(text[index]), 'PYTHON_ENVIRONMENT_SHELL_UNSUPPORTED: unresolved redirection operator');
+      inputRedirect = { fd, output };
+      redirects.push(inputRedirect);
+      continue;
+    }
+    const wordStart = index;
+    let value = ''; const positions = []; let quote = null; let dynamic = false;
+    while (index < text.length && (quote || !/[\s;|&()<>]/u.test(text[index]))) {
+      const char = text[index];
+      if ((char === "'" || char === '"') && (!quote || quote === char)) { quote = quote ? null : char; index += 1; continue; }
+      if (char === '`' && quote !== "'") {
+        const start = index + 1;
+        let end = start;
+        while (end < text.length && text[end] !== '`') {
+          assert(text[end] !== '\\', 'PYTHON_ENVIRONMENT_SHELL_UNSUPPORTED: escaped backtick custody');
+          end += 1;
+        }
+        assert(end < text.length, 'PYTHON_ENVIRONMENT_SHELL_UNSUPPORTED: unterminated backtick substitution');
+        const nested = pythonShellPrograms(text.slice(start, end), depth + 1);
+        unresolvedStdin ||= nested.unresolvedStdin;
+        for (const program of nested) programs.push({ ...program,
+          ...(program.positions ? { positions: program.positions.map((position) => start + position) } : {}) });
+        dynamic = true; value += '`'; positions.push(index); index = end + 1; continue;
+      }
+      if (text.startsWith('$(', index) && quote !== "'") {
+        const start = index + 2; let end = start; let delimiterDepth = 1; let innerQuote = null;
+        for (; end < text.length && delimiterDepth; end += 1) {
+          const inner = text[end];
+          if (inner === '\\' && innerQuote !== "'") { end += 1; continue; }
+          if ((inner === "'" || inner === '"') && (!innerQuote || innerQuote === inner)) { innerQuote = innerQuote ? null : inner; continue; }
+          if (!innerQuote && inner === '(') delimiterDepth += 1;
+          if (!innerQuote && inner === ')') delimiterDepth -= 1;
+        }
+        assert(!delimiterDepth, 'PYTHON_ENVIRONMENT_SHELL_UNSUPPORTED: unterminated command substitution');
+        const nested = pythonShellPrograms(text.slice(start, end - 1), depth + 1);
+        unresolvedStdin ||= nested.unresolvedStdin;
+        for (const program of nested) programs.push({ ...program,
+          ...(program.positions ? { positions: program.positions.map((position) => start + position) } : {}) });
+        dynamic = true; value += '$()'; positions.push(index, index, index);
+        index = end; continue;
+      }
+      if (char === '\\' && quote !== "'") {
+        if (text[index + 1] === '\n') { index += 2; continue; }
+        if (!quote || /[\\"$`]/u.test(text[index + 1] ?? '')) index += 1;
+      } else if ((char === '$' || char === '`') && quote !== "'") dynamic = true;
+      value += text[index]; positions.push(index); index += 1;
+    }
+    assert(!quote, 'PYTHON_ENVIRONMENT_SHELL_UNSUPPORTED: unterminated shell quote');
+    const word = { value, positions, dynamic, raw: text.slice(wordStart, index) };
+    if (inputRedirect) { inputRedirect.body = word; inputRedirect = null; }
+    else words.push(word);
+  }
+  flush();
+  assert(!pendingHeredocs.length, 'PYTHON_ENVIRONMENT_SHELL_UNSUPPORTED: unterminated heredoc');
+  Object.defineProperty(programs, 'unresolvedStdin', { value: unresolvedStdin });
+  return programs;
+}
+
+function pythonYamlPrograms(file, text) {
+  if (!/\b(?:python(?:\d+(?:\.\d+)?)?\b|import\s+os\b|from\s+os\s+import\b|os\.(?:getenv|environ)\b)/u.test(text)) return [];
+  // Recognizable Python source also reaches dynamic-interpreter rejection;
+  // a literal interpreter name is not required for fail-closed custody.
+  // Helm delimiters are not YAML nodes. Mask only their spans, retaining every
+  // original source offset; actual command/args scalar tokens come from YAML.
+  const masked = text.replace(/\{\{[\s\S]*?\}\}/gu, (value) => value.replace(/[^\n]/gu, ' '));
+  const documents = YAML.parseAllDocuments(masked, { keepSourceTokens: true, uniqueKeys: false });
+  const programs = [];
+  const scalar = (node) => {
+    assert(YAML.isScalar(node) && typeof node.value === 'string',
+      `PYTHON_ENVIRONMENT_YAML_UNSUPPORTED: ${file} nonliteral command argument`);
+    const raw = masked.slice(node.range[0], node.range[1]);
+    const positions = [];
+    let decoded = '';
+    if (raw.startsWith('"') || raw.startsWith("'")) {
+      const double = raw[0] === '"';
+      for (let index = 1; index < raw.length - 1; index += 1) {
+        const start = index; let value = raw[index];
+        if (!double && value === "'" && raw[index + 1] === "'") index += 1;
+        else if (double && value === '\\') {
+          const escape = raw[++index];
+          const widths = { x: 2, u: 4, U: 8 };
+          if (widths[escape]) { value = String.fromCodePoint(parseInt(raw.slice(index + 1, index + 1 + widths[escape]), 16)); index += widths[escape]; }
+          else value = ({ '0': '\0', a: '\x07', b: '\b', t: '\t', n: '\n', v: '\v', f: '\f', r: '\r', e: '\x1b', ' ': ' ', '"': '"', '/': '/', '\\': '\\', N: '\u0085', _: '\u00a0', L: '\u2028', P: '\u2029' })[escape];
+          assert(value !== undefined, `PYTHON_ENVIRONMENT_YAML_UNSUPPORTED: ${file} scalar escape`);
+        }
+        decoded += value; for (let count = 0; count < value.length; count += 1) positions.push(node.range[0] + start);
+      }
+    } else if (/^[|>]/u.test(raw)) {
+      let cursor = raw.indexOf('\n') + 1;
+      for (const char of node.value) {
+        while (cursor < raw.length && raw[cursor] !== char) cursor += 1;
+        assert(cursor < raw.length, `PYTHON_ENVIRONMENT_YAML_UNSUPPORTED: ${file} folded scalar mapping`);
+        decoded += char; positions.push(node.range[0] + cursor++);
+      }
+    } else { decoded = raw; for (let index = 0; index < raw.length; index += 1) positions.push(node.range[0] + index); }
+    assert.equal(decoded, node.value, `PYTHON_ENVIRONMENT_YAML_UNSUPPORTED: ${file} multiline scalar mapping`);
+    return { value: node.value, positions };
+  };
+  for (const document of documents) {
+    assert.equal(document.errors.length, 0, `PYTHON_ENVIRONMENT_YAML_UNSUPPORTED: ${file} ${document.errors.map((error) => error.message).join('; ')}`);
+    YAML.visit(document, { Map(_key, node, ancestors) {
+      const pairs = ancestors.filter((ancestor) => YAML.isPair(ancestor));
+      const owner = pairs.at(-1)?.key?.value;
+      const directContainer = YAML.isSeq(ancestors.at(-1))
+        && ['containers', 'initContainers'].includes(owner);
+      if (node !== document.contents && owner !== 'exec' && !directContainer) return;
+      const command = node.items.find((pair) => pair.key?.value === 'command');
+      const args = node.items.find((pair) => pair.key?.value === 'args');
+      if (!command) return;
+      const items = YAML.isSeq(command.value) ? [...command.value.items,
+        ...(YAML.isSeq(args?.value) ? args.value.items : [])] : [command.value];
+      const values = items.map((item) => YAML.isScalar(item) ? item.value : null);
+      const diagnostic = `PYTHON_ENVIRONMENT_YAML_UNSUPPORTED: ${file}`;
+      const python = pythonInterpreterIndex(values, diagnostic);
+      if (/^(?:.*\/)?python(?:\d+(?:\.\d+)?)?$/u.test(values[python] ?? '')) {
+        assert(!args || YAML.isSeq(args.value), `${diagnostic}: nonliteral Python args sequence`);
+        assert(values.every((value) => typeof value === 'string'), `${diagnostic}: nonliteral Python argv`);
+        const mode = pythonArgvMode(values, python, diagnostic);
+        assert(!mode.stdin, `${diagnostic}: unresolved Python stdin source custody`);
+        const flag = mode.codeFlag;
+        if (flag < 0) return;
+        const body = scalar(items[flag + 1]);
+        programs.push({ code: body.value, positions: body.positions, kind: 'yaml-argv' });
+      } else if (/^(?:.*\/)?(?:ba|da|a|z|k)?sh$/u.test(values[python] ?? '') || !YAML.isSeq(command.value)) {
+        let flag = python + 1;
+        if (YAML.isSeq(command.value)) {
+          while (/^-[efuvxnCli]+$/u.test(values[flag] ?? '')) flag += 1;
+          if (!/^-[a-z]*c[a-z]*$/u.test(values[flag] ?? '')) {
+            assert(!values[flag]?.startsWith('-') || values[flag] === '--', `${diagnostic}: unresolved shell argv mode`);
+            return; // Shell script operands and their trailing -c data are passive.
+          }
+          assert(values.every((value) => typeof value === 'string'), `${diagnostic}: nonliteral shell argv`);
+          assert(!args || YAML.isSeq(args.value), `${diagnostic}: nonliteral shell args sequence`);
+        }
+        const body = scalar(items[YAML.isSeq(command.value) ? flag + 1 : 0]);
+        const nested = pythonShellPrograms(body.value);
+        assert(!nested.unresolvedStdin, `${diagnostic}: unresolved Python stdin source custody`);
+        for (const program of nested) programs.push({ ...program,
+          ...(program.positions ? { positions: program.positions.map((index) => body.positions[index]) } : {}) });
+      } else if (['env', 'sudo'].includes(typeof values[0] === 'string' ? path.posix.basename(values[0]) : null) && values.some((value) => /^(?:.*\/)?python(?:\d+(?:\.\d+)?)?$/u.test(value ?? ''))) {
+        assert.fail(`${diagnostic}: unresolved interpreter wrapper custody`);
+      }
+    } });
+  }
+  return programs;
+}
+
+function acquiredPythonEnvironmentReads(file, text, kind = null) {
+  if (!/\b(?:python(?:\d+(?:\.\d+)?)?\b|import\s+os\b|from\s+os\s+import\b|os\.(?:getenv|environ)\b)/u.test(text)) return [];
+  const yaml = ['.yaml', '.yml'].includes(path.extname(file));
+  // A standalone shell fixture in YAML is normalized with an offset map.
+  const lines = text.split('\n');
+  const indentation = yaml ? Math.min(...lines.filter((line) => line.trim()).map((line) => line.match(/^\s*/u)[0].length)) : 0;
+  let normalized = ''; const positions = [];
+  let offset = 0;
+  for (const line of lines) {
+    const removed = Math.min(indentation, line.length);
+    for (let index = removed; index < line.length; index += 1) { normalized += line[index]; positions.push(offset + index); }
+    normalized += '\n'; positions.push(offset + line.length); offset += line.length + 1;
+  }
+  let programs;
+  try {
+    programs = yaml ? pythonYamlPrograms(file, text) : pythonShellPrograms(normalized);
+    assert(!programs.unresolvedStdin, 'PYTHON_ENVIRONMENT_SHELL_UNSUPPORTED: unresolved Python stdin source custody');
+  }
+  catch (error) { throw new Error(`${file}: ${error.message}`, { cause: error }); }
+  const reads = [];
+  for (const program of programs) {
+    if (program.kind === 'file-stdin') {
+      // Finite repository-bound external stdin custody. Its own source has a
+      // different offset space: reject any newly found readers with that source
+      // identity, rather than pretending the shell redirect is their read site.
+      const word = program.fileInput;
+      let selected;
+      if (!word.dynamic) {
+        assert(path.isAbsolute(word.value), `PYTHON_ENVIRONMENT_SHELL_UNSUPPORTED: ${file} unresolved working directory for Python stdin file`);
+        selected = path.resolve(word.value);
+      }
+      else {
+        const relative = /^"\$\(dirname -- "\$\{BASH_SOURCE\[0\]\}"\)([^"$`]+)"$/u.exec(word.raw);
+        assert(relative, `PYTHON_ENVIRONMENT_SHELL_UNSUPPORTED: ${file} unresolved Python stdin file path`);
+        selected = path.resolve(root, path.dirname(file), `.${relative[1]}`);
+      }
+      assert(selected.startsWith(`${root}${path.sep}`) && fs.existsSync(selected) && fs.lstatSync(selected).isFile() && fs.realpathSync(selected) === selected,
+        `PYTHON_ENVIRONMENT_SHELL_UNSUPPORTED: ${file} Python stdin source is not a regular repository file`);
+      const input = fs.readFileSync(selected, 'utf8');
+      const external = pythonEnvironmentReads(input, selected);
+      assert(!external.length, `PYTHON_ENVIRONMENT_SHELL_UNSUPPORTED: ${file} external stdin readers require exact receiving-source qualification: ${selected}: ${external.map((item) => `${item.name}@line-${lineAt(input, item.index)}`).join(', ')}`);
+      continue;
+    }
+    if (kind === 'non-heredoc' ? program.kind === 'heredoc' : kind && program.kind !== kind) continue;
+    for (const fact of pythonEnvironmentReads(program.code, `${file}:${lineAt(text, program.positions[0] ?? 0)}`)) reads.push({ ...fact,
+      index: yaml ? program.positions[fact.index] : positions[program.positions[fact.index]],
+      kind: `embedded-${fact.kind}` });
   }
   return reads;
 }
 
-function pythonEnvironmentReads(text) {
+function inlineProgramEnvironmentReads(file, text) {
+  return [...acquiredPythonEnvironmentReads(file, text, 'non-heredoc'), ...acquiredNodeEnvironmentReads(file, text, 'inline')];
+}
+
+function pythonEnvironmentReads(text, source = '<inline>') {
+  // Parse syntax, never import or execute the inspected program. Constants
+  // (including raw recipes/docstrings) and comments cannot be environment
+  // readers; JoinedStr expressions remain executable AST children. This finite
+  // static model supports imports, simple aliases/constant keys and literal
+  // tuple loops, lexical class/function/lambda/comprehension boundaries and
+  // conservative finite if/else joins. Runtime-computed keys, reflection,
+  // potential lazy/eager annotations (future strings need explicit evaluation).
+  // Recognizable os reflection, star imports and helper-returned environment
+  // capabilities reject explicitly. Unresolved static keys/bindings also fail;
+  // exception/global/nonlocal
+  // effects and arbitrary helper/control/data flow
+  // require separate source review; this is not an arbitrary-Python proof.
+  const parser = String.raw`
+import ast, json, re, sys
+try:
+    tree = ast.parse(sys.stdin.read())
+except (SyntaxError, ValueError) as error:
+    print("PYTHON_ENVIRONMENT_PARSE_FAILED: " + str(error), file=sys.stderr)
+    sys.exit(1)
+
+class Readers(ast.NodeVisitor):
+    def __init__(self):
+        self.aliases = {}
+        self.keys = {}
+        self.reads = []
+        self.exception_states = []
+        self.class_parent = None
+        self.comprehension_scopes = set()
+        self.comprehension_writes = {}
+        self.pending = []
+        self.annotations = {}
+        self.methods = {}
+        self.callable_functions = {}
+        self.class_annotations = {}
+        self.class_nodes = {}
+        self.class_base_protocols = {}
+        self.capability_active = set()
+        self.annotation_namespaces = {}
+        self.class_bindings = None
+        self.active_functions = set()
+        self.annotation_pending = []
+        self.lazy_annotations = sys.version_info >= (3, 14)
+        self.imported_os_names = {item.asname or 'os' for node in ast.walk(tree)
+            if isinstance(node, ast.Import) for item in node.names
+            if item.name == 'os' or item.name.startswith('os.') and not item.asname}
+        self.function_depth = 0
+        self.ast_parents = {id(child): node for node in ast.walk(tree) for child in ast.iter_child_nodes(node)}
+        self.module_globals = ({}, {})
+        self.function_stack = []
+        self.definition_states = {}
+        self.environment_authority_names = set(self.imported_os_names)
+        self.environment_authority_names.update(item.asname or item.name for node in ast.walk(tree)
+            if isinstance(node, ast.ImportFrom) and node.level == 0 and node.module == 'os'
+            for item in node.names if item.name in ('getenv', 'environ'))
+        self.subprocess_names = {item.asname or item.name for node in ast.walk(tree)
+            if isinstance(node, ast.Import) for item in node.names if item.name == 'subprocess'}
+        changed = True
+        while changed:
+            changed = False
+            for node in ast.walk(tree):
+                if isinstance(node, ast.Assign) and isinstance(node.value, ast.Name) and node.value.id in self.subprocess_names:
+                    for target in node.targets:
+                        if isinstance(target, ast.Name) and target.id not in self.subprocess_names:
+                            self.subprocess_names.add(target.id)
+                            changed = True
+        self.subprocess_escaped = False
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Attribute) and isinstance(node.value, ast.Name) and node.value.id in self.subprocess_names:
+                if isinstance(node.ctx, (ast.Store, ast.Del)) or node.attr in ('__dict__', '__setattr__', '__delattr__'):
+                    self.subprocess_escaped = True
+        def acquisition(node):
+            if isinstance(node, ast.Name): return node.id in self.environment_authority_names
+            if isinstance(node, ast.NamedExpr): return acquisition(node.value)
+            if isinstance(node, ast.Attribute): return node.attr in ('getenv', 'environ', 'get', '__call__', '__getitem__', 'setdefault') and acquisition(node.value)
+            if isinstance(node, ast.Call): return isinstance(node.func, ast.Attribute) and node.func.attr == 'copy' and acquisition(node.func.value)
+            if isinstance(node, (ast.List, ast.Tuple, ast.Set)): return any(acquisition(value) for value in node.elts)
+            if isinstance(node, ast.Dict): return any(acquisition(value) for value in node.values)
+            if isinstance(node, ast.IfExp): return acquisition(node.body) or acquisition(node.orelse)
+            if isinstance(node, ast.BoolOp): return any(acquisition(value) for value in node.values)
+            return False
+        changed = True
+        while changed:
+            changed = False
+            for node in ast.walk(tree):
+                if isinstance(node, (ast.Assign, ast.AnnAssign, ast.NamedExpr)) and node.value is not None and acquisition(node.value):
+                    for target in node.targets if isinstance(node, ast.Assign) else [node.target]:
+                        if isinstance(target, ast.Name) and target.id not in self.environment_authority_names:
+                            self.environment_authority_names.add(target.id)
+                            changed = True
+        self.environment_key_names = set()
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute) and node.func.attr in ('getenv', 'get') and acquisition(node.func):
+                if node.args and isinstance(node.args[0], ast.Name): self.environment_key_names.add(node.args[0].id)
+            if isinstance(node, ast.Call) and isinstance(node.func, ast.Name) and node.func.id in self.environment_authority_names:
+                if node.args and isinstance(node.args[0], ast.Name): self.environment_key_names.add(node.args[0].id)
+            if isinstance(node, ast.Subscript) and acquisition(node.value) and isinstance(node.slice, ast.Name):
+                self.environment_key_names.add(node.slice.id)
+            if isinstance(node, ast.Name) and isinstance(node.ctx, ast.Load) and node.id in self.subprocess_names:
+                parent = self.ast_parents.get(id(node))
+                if not ((isinstance(parent, ast.Attribute) and parent.value is node)
+                    or (isinstance(parent, ast.Assign) and parent.value is node and all(isinstance(target, ast.Name) for target in parent.targets))):
+                    self.subprocess_escaped = True
+        # The same finite Name/IfExp keys accepted by names() can reach a
+        # supported reader through simple assignment aliases. External writes
+        # must reject before helper restoration can resurrect an old key.
+        def key_dependencies(node):
+            if isinstance(node, ast.Name): return {node.id}
+            if isinstance(node, ast.IfExp): return key_dependencies(node.body) | key_dependencies(node.orelse)
+            return set()
+        def recognized_reader(node):
+            if isinstance(node, ast.NamedExpr): return recognized_reader(node.value)
+            if isinstance(node, ast.Attribute) and node.attr == '__call__': return recognized_reader(node.value)
+            if isinstance(node, ast.Attribute) and node.attr in ('getenv', 'get', '__getitem__', 'setdefault'):
+                return acquisition(node.value)
+            return isinstance(node, ast.Name) and node.id in self.environment_authority_names
+        self.external_key_names = set()
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Call) and recognized_reader(node.func):
+                key = node.args[0] if node.args else next((item.value for item in node.keywords if item.arg == 'key'), None)
+                self.external_key_names.update(key_dependencies(key))
+            if isinstance(node, ast.Subscript) and acquisition(node.value):
+                self.external_key_names.update(key_dependencies(node.slice))
+        changed = True
+        while changed:
+            changed = False
+            for node in ast.walk(tree):
+                if isinstance(node, ast.Assign): targets, value = node.targets, node.value
+                elif isinstance(node, (ast.AnnAssign, ast.NamedExpr)): targets, value = [node.target], node.value
+                else: continue
+                if any(isinstance(target, ast.Name) and target.id in self.external_key_names for target in targets):
+                    dependencies = key_dependencies(value) - self.external_key_names
+                    if dependencies:
+                        self.external_key_names.update(dependencies)
+                        changed = True
+        self.postponed_annotations = any(isinstance(n, ast.ImportFrom) and n.module == "__future__"
+            and any(a.name == "annotations" for a in n.names) for n in tree.body)
+
+    def role(self, node):
+        if isinstance(node, ast.Constant): return {'passive-authority'}
+        if isinstance(node, ast.Name):
+            if node.id == 'getattr' and node.id not in self.keys: return {'reflection-reader'}
+            if node.id in ('setattr', 'delattr') and node.id not in self.keys: return {'authority-mutator'}
+            return self.aliases.get(node.id, set())
+        if isinstance(node, ast.Call):
+            if isinstance(node.func, ast.Attribute) and node.func.attr == 'copy' and 'environ' in self.role(node.func.value):
+                return {'environment-snapshot', 'snapshot:' + str(node.lineno) + ':' + str(node.col_offset)} if self.role(node.func.value) == {'environ'} else {'capability-container'}
+            if any(self.callable_environment_capability(self.class_nodes[identity]) for identity in self.role(node.func) if identity in self.class_nodes):
+                return {'capability-container'}
+            return set()
+        if isinstance(node, ast.IfExp):
+            branches = (node.body, node.orelse)
+            roles = self.role(node.body) | self.role(node.orelse)
+            if any(not self.role(branch) and not isinstance(branch, ast.Constant) for branch in branches):
+                roles = roles | {'unknown-authority'}
+            return roles
+        if isinstance(node, ast.BoolOp):
+            roles = set().union(*(self.role(value) for value in node.values))
+            if any(not self.role(value) and not isinstance(value, ast.Constant) for value in node.values):
+                roles = roles | {'unknown-authority'}
+            return roles
+        if isinstance(node, ast.BinOp):
+            return {'capability-container'} if self.transferred_capability(node.left) or self.transferred_capability(node.right) else set()
+        if isinstance(node, ast.Lambda):
+            return {'unsupported-callable'} if self.callable_environment_capability([node, False]) else set()
+        if isinstance(node, (ast.ListComp, ast.SetComp, ast.GeneratorExp, ast.DictComp)):
+            values = (node.key, node.value) if isinstance(node, ast.DictComp) else (node.elt,)
+            return {'capability-container'} if any(self.transferred_capability(value) for value in values) else set()
+        if isinstance(node, ast.NamedExpr): return self.role(node.value)
+        # Literal containers retain an unsupported capability marker through
+        # assignment/aliases. Ordinary data containers have no such role.
+        if isinstance(node, (ast.Tuple, ast.List, ast.Set)):
+            return {'capability-container'} if any(self.transferred_capability(item) for item in node.elts) else set()
+        if isinstance(node, ast.Dict):
+            capabilities = [(key, value) for key, value in zip(node.keys, node.values)
+                if self.transferred_capability(key) or self.transferred_capability(value)]
+            if capabilities and all(key is None and (self.role(value) == {'environ'} or self.snapshot_role(self.role(value))) for key, value in capabilities):
+                identity = 'snapshot:' + str(node.lineno) + ':' + str(node.col_offset)
+                return {'environment-snapshot', identity} | {'written:' + identity + ':' + key.value for key in node.keys if isinstance(key, ast.Constant) and isinstance(key.value, str)}
+            return {'capability-container'} if capabilities else set()
+        if isinstance(node, ast.Starred): return self.role(node.value)
+        if isinstance(node, ast.Attribute):
+            methods = set()
+            base = self.role(node.value)
+            matched = set()
+            for owner in base:
+                candidate = self.methods.get(owner, {}).get(node.attr)
+                if candidate:
+                    matched.add(owner)
+                    methods.update(identity for identity, function in self.callable_functions.items() if function is candidate)
+            alternatives = base - matched
+            if methods: return methods | ({'passive-authority'} if alternatives == {'passive-authority'} else {'unknown-authority'} if alternatives else set())
+            if 'os' in base and node.attr in ('environ', 'getenv'):
+                role = 'environ' if node.attr == 'environ' else 'reader'
+                return {role} | ({'passive-authority'} if base - {'os'} == {'passive-authority'} else {'unknown-authority'} if base != {'os'} else set())
+            if node.attr == '__call__' and (base & {'reader', 'annotation-reader'} or any(identity in self.callable_functions for identity in base)):
+                return base
+            if 'environ' in base and node.attr in ('get', '__getitem__', 'setdefault'):
+                return {'reader'} | ({'passive-authority'} if base - {'environ'} == {'passive-authority'} else {'unknown-authority'} if base != {'environ'} else set())
+            if 'annotationlib' in base and node.attr == 'get_annotations':
+                return {'annotation-reader'} if base == {'annotationlib'} else {'annotation-reader', 'unknown-authority'}
+            if 'builtins' in base and node.attr == 'getattr':
+                return {'reflection-reader'} if base == {'builtins'} else {'reflection-reader', 'unknown-authority'}
+            if 'builtins' in base and node.attr in ('setattr', 'delattr'): return {'authority-mutator'}
+        return set()
+
+    def literal(self, node):
+        try:
+            return ast.literal_eval(node)
+        except (ValueError, TypeError, SyntaxError, RecursionError):
+            return None
+
+    def snapshot_role(self, roles):
+        return 'environment-snapshot' in roles and all(role == 'environment-snapshot' or role.startswith(('snapshot:', 'written:snapshot:')) for role in roles)
+
+    def snapshot_write(self, target, deleting=False):
+        if not isinstance(target, ast.Subscript) or not self.snapshot_role(self.role(target.value)): return
+        keys = self.names(target.slice)
+        if None in keys or len(keys) != 1:
+            raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: unresolved environment snapshot producer key at line ' + str(target.lineno))
+        identities = {role for role in self.role(target.value) if role.startswith('snapshot:')}
+        if len(identities) != 1:
+            raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: unresolved environment snapshot producer receiver at line ' + str(target.lineno))
+        markers = {'written:' + identity + ':' + key for identity in identities for key in keys}
+        for name, roles in list(self.aliases.items()):
+            if roles & identities:
+                self.aliases[name] = roles - markers if deleting else roles | markers
+
+    def snapshot_forwarding_parameter(self, candidate, parameter):
+        parents = {id(child): node for node in ast.walk(candidate[0]) for child in ast.iter_child_nodes(node)}
+        uses = [node for node in ast.walk(candidate[0]) if isinstance(node, ast.Name) and node.id == parameter]
+        if not uses: return False
+        for use in uses:
+            keyword = parents.get(id(use))
+            call = parents.get(id(keyword))
+            if not (isinstance(use.ctx, ast.Load) and isinstance(keyword, ast.keyword) and keyword.arg == 'env'
+                and isinstance(call, ast.Call) and isinstance(call.func, ast.Attribute)
+                and self.exact_subprocess_receiver(call.func.value, call)
+                and call.func.attr in ('Popen', 'run', 'call', 'check_call', 'check_output')): return False
+        return True
+
+    def lexical_scope(self, node):
+        parent = self.ast_parents.get(id(node))
+        while parent is not None:
+            if isinstance(parent, (ast.Module, ast.FunctionDef, ast.AsyncFunctionDef, ast.Lambda)): return parent
+            parent = self.ast_parents.get(id(parent))
+        return tree
+
+    def exact_subprocess_receiver(self, value, site, scope=None, active=None):
+        # Prove the receiver in its owning lexical scope, never in a caller's
+        # local namespace. Only unconditional finite imports/simple aliases
+        # with no foreign writes or module escape qualify this producer slot.
+        if self.subprocess_escaped or not isinstance(value, ast.Name): return False
+        scope = self.lexical_scope(site) if scope is None else scope
+        active = set() if active is None else active
+        identity = (id(scope), value.id)
+        if identity in active: return False
+        active = active | {identity}
+        if not isinstance(scope, ast.Module):
+            parameters = scope.args.posonlyargs + scope.args.args + scope.args.kwonlyargs + [item for item in (scope.args.vararg, scope.args.kwarg) if item]
+            if any(item.arg == value.id for item in parameters): return False
+        declarations = [node for node in ast.walk(scope) if self.lexical_scope(node) is scope and isinstance(node, (ast.Global, ast.Nonlocal)) and value.id in node.names]
+        bindings = []
+        for node in ast.walk(scope):
+            if self.lexical_scope(node) is not scope: continue
+            if isinstance(node, ast.Import):
+                for item in node.names:
+                    if (item.asname or item.name.split('.')[0]) == value.id: bindings.append((node, item.name == 'subprocess', None))
+            elif isinstance(node, ast.ImportFrom):
+                if any((item.asname or item.name) == value.id for item in node.names): bindings.append((node, False, None))
+            elif isinstance(node, ast.Name) and isinstance(node.ctx, (ast.Store, ast.Del)) and node.id == value.id:
+                parent = self.ast_parents.get(id(node))
+                bindings.append((parent, False, parent.value if isinstance(parent, ast.Assign) else None))
+            elif isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)) and node is not scope and node.name == value.id:
+                bindings.append((node, False, None))
+        if declarations:
+            if bindings or any(isinstance(node, ast.Nonlocal) for node in declarations): return False
+            scope = tree
+            return self.exact_subprocess_receiver(value, site, scope, active)
+        # A global/nonlocal write elsewhere can change the shared module
+        # identity before this call, even when the writer is invoked opaquely.
+        if isinstance(scope, ast.Module):
+            if self.module_globals[0].get(value.id) != {'subprocess'}: return False
+            for declaration in ast.walk(tree):
+                if isinstance(declaration, (ast.Global, ast.Nonlocal)) and value.id in declaration.names:
+                    owner = self.lexical_scope(declaration)
+                    if any(isinstance(node, ast.Name) and isinstance(node.ctx, (ast.Store, ast.Del)) and node.id == value.id and self.lexical_scope(node) is owner for node in ast.walk(owner)): return False
+        if not bindings:
+            if isinstance(scope, ast.Module): return False
+            return self.exact_subprocess_receiver(value, site, self.lexical_scope(scope), active)
+        for binding, imported, alias in bindings:
+            if self.ast_parents.get(id(binding)) is not scope: return False
+            if not isinstance(scope, ast.Module) and binding.lineno >= site.lineno: return False
+            if imported: continue
+            if not isinstance(alias, ast.Name) or not self.exact_subprocess_receiver(alias, binding, scope, active): return False
+        return True
+
+    def visit_Module(self, node):
+        for child in node.body:
+            self.visit(child)
+            self.module_globals = self.state()
+
+    def visit_Global(self, node):
+        owner = self.lexical_scope(node)
+        sensitive = self.environment_authority_names | self.subprocess_names | self.environment_key_names | self.external_key_names
+        for name in set(node.names) & sensitive:
+            for child in ast.walk(owner):
+                if self.lexical_scope(child) is not owner: continue
+                written = isinstance(child, ast.Name) and isinstance(child.ctx, (ast.Store, ast.Del)) and child.id == name
+                imported = isinstance(child, (ast.Import, ast.ImportFrom)) and any((item.asname or item.name.split('.')[0]) == name for item in child.names)
+                if written or imported:
+                    raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: global or nonlocal environment authority write at line ' + str(node.lineno))
+
+    visit_Nonlocal = visit_Global
+
+    def names(self, node):
+        if isinstance(node, ast.Name): return self.keys.get(node.id, {None})
+        if isinstance(node, ast.IfExp): return self.names(node.body) | self.names(node.orelse)
+        value = self.literal(node)
+        # None is an explicit unresolved/non-string alternative, never an
+        # empty union that a known branch can erase.
+        return {value} if isinstance(value, str) else {None}
+
+    def callable_environment_capability(self, candidate, active=None):
+        active = set() if active is None else active
+        if id(candidate[0]) in active or id(candidate[0]) in self.capability_active: return False
+        active = active | {id(candidate[0])}
+        # A passed pure callback is ordinary data. Potential environment
+        # authority in its executable AST (including late imported globals)
+        # cannot cross an unmodeled parameter boundary. Passive constants are
+        # never scanned as code; no callback is executed by this inspection.
+        self.capability_active.add(id(candidate[0]))
+        try:
+            for child in ast.walk(candidate[0]):
+                if isinstance(child, ast.ImportFrom) and child.level == 0 and child.module == 'os': return True
+                if isinstance(child, ast.Name) and child.id in self.environment_authority_names: return True
+                roles = self.role(child)
+                if roles & {'os', 'environ', 'reader', 'annotation-reader', 'annotationlib', 'subprocess', 'capability-container', 'environment-snapshot'}: return True
+                for identity in roles:
+                    called = self.callable_functions.get(identity) or self.class_nodes.get(identity)
+                    if called and self.callable_environment_capability(called, active): return True
+            return False
+        finally:
+            self.capability_active.remove(id(candidate[0]))
+
+    def transferred_capability(self, node):
+        roles = self.role(node)
+        if roles & {'os', 'environ', 'reader', 'annotation-reader', 'annotationlib', 'subprocess', 'reflection-reader', 'capability-container', 'environment-snapshot', 'unsupported-callable'}: return True
+        if any(self.callable_environment_capability(self.class_nodes[role]) for role in roles if role in self.class_nodes): return True
+        if any(self.callable_environment_capability(self.callable_functions[role]) for role in roles if role in self.callable_functions): return True
+        if isinstance(node, (ast.Tuple, ast.List, ast.Set)):
+            return any(self.transferred_capability(item) for item in node.elts)
+        if isinstance(node, ast.Dict):
+            return any(self.transferred_capability(item) for item in node.values)
+        return False
+
+    def bind(self, target, values, role=None):
+        if isinstance(target, ast.Name):
+            if self.class_bindings is not None: self.class_bindings.add(target.id)
+            self.aliases.pop(target.id, None)
+            self.keys[target.id] = {value if isinstance(value, str) else None for value in values}
+            if role: self.aliases[target.id] = {role} if isinstance(role, str) else role
+        elif isinstance(target, (ast.Tuple, ast.List)):
+            if role and role & {'capability-container', 'environment-snapshot', 'unsupported-callable', 'os', 'environ', 'reader'}:
+                raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: environment capability unpacking at line ' + str(target.lineno))
+            for index, child in enumerate(target.elts):
+                self.bind(child, [value[index] for value in values
+                    if isinstance(value, (tuple, list)) and len(value) == len(target.elts)])
+
+    def visit_Import(self, node):
+        for item in node.names:
+            self.bind(ast.Name(id=item.asname or item.name.split('.')[0]), [],
+                'os' if item.name.startswith('os.') and not item.asname else
+                item.name if item.name in ('os', 'annotationlib', 'builtins', 'subprocess') else None)
+
+    def visit_ImportFrom(self, node):
+        if node.level == 0 and node.module == 'os' and any(item.name == '*' for item in node.names):
+            raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: os star-import capability at line ' + str(node.lineno))
+        for item in node.names:
+            self.bind(ast.Name(id=item.asname or item.name), [],
+                ({'environ': 'environ', 'getenv': 'reader'}.get(item.name) if node.module == 'os' else
+                 'annotation-reader' if node.module == 'annotationlib' and item.name == 'get_annotations' else
+                 'reflection-reader' if node.module == 'builtins' and item.name == 'getattr' else None) if node.level == 0 else None)
+            if node.level == 0 and node.module == 'builtins' and item.name in ('setattr', 'delattr'):
+                self.bind(ast.Name(id=item.asname or item.name), [], 'authority-mutator')
+
+    def reject_exemption_mutation(self, target):
+        for child in ast.walk(target):
+            if isinstance(child, ast.Attribute) and child.attr in ('__dict__', '__setattr__', '__delattr__') and self.role(child.value) & {'annotationlib', 'subprocess'}:
+                raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: known environment custody receiver reflection at line ' + str(child.lineno))
+        if isinstance(target, ast.Attribute):
+            base = self.role(target.value)
+            for identity in base:
+                if identity in self.callable_functions and target.attr in ('__annotations__', '__annotate__'):
+                    raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: callable annotation authority mutation at line ' + str(target.lineno))
+                if identity in self.class_nodes:
+                    annotations = self.class_annotations.get(identity, ([], set(), None))[0]
+                    referenced = {node.id for annotation in annotations for node in ast.walk(annotation) if isinstance(node, ast.Name)}
+                    for candidate in self.methods.get(identity, {}).values():
+                        for argument in candidate[0].args.posonlyargs + candidate[0].args.args + candidate[0].args.kwonlyargs + [item for item in (candidate[0].args.vararg, candidate[0].args.kwarg) if item]:
+                            if argument.annotation: referenced.update(node.id for node in ast.walk(argument.annotation) if isinstance(node, ast.Name))
+                        if candidate[0].returns: referenced.update(node.id for node in ast.walk(candidate[0].returns) if isinstance(node, ast.Name))
+                    if target.attr in referenced or target.attr in self.methods.get(identity, {}) or target.attr in ('__annotations__', '__annotate__'):
+                        raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: class annotation authority mutation at line ' + str(target.lineno))
+            if ('annotationlib' in base and target.attr == 'get_annotations') or ('subprocess' in base and target.attr in ('Popen', 'run', 'call', 'check_call', 'check_output')):
+                raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: known environment custody receiver mutation at line ' + str(target.lineno))
+
+    def reject_external_capability_write(self, target, value):
+        if not isinstance(target, ast.Name) or not (self.transferred_capability(value) or target.id in self.external_key_names): return
+        owner = self.lexical_scope(target)
+        if any(isinstance(node, (ast.Global, ast.Nonlocal)) and target.id in node.names and self.lexical_scope(node) is owner for node in ast.walk(owner)):
+            raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: global or nonlocal environment authority write at line ' + str(target.lineno))
+
+    def visit_Assign(self, node):
+        self.visit(node.value)
+        role = self.role(node.value)
+        values = list(self.names(node.value)) or [self.literal(node.value)]
+        for target in node.targets:
+            self.visit_target_expressions(target)
+            self.reject_external_capability_write(target, node.value)
+            self.reject_exemption_mutation(target)
+            if not isinstance(target, (ast.Name, ast.Tuple, ast.List)) and self.transferred_capability(node.value):
+                raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: unresolved environment capability assignment receiver at line ' + str(target.lineno))
+            self.bind(target, values, role)
+            self.snapshot_write(target)
+
+    def visit_target_expressions(self, target):
+        # Store/Delete contexts do not read the selected environment value,
+        # but their receiver and subscript expressions are evaluated.
+        if isinstance(target, ast.Subscript):
+            self.visit(target.value)
+            self.visit(target.slice)
+        elif isinstance(target, ast.Attribute):
+            self.visit(target.value)
+        elif isinstance(target, (ast.Tuple, ast.List)):
+            for child in target.elts: self.visit_target_expressions(child)
+        elif isinstance(target, ast.Starred): self.visit_target_expressions(target.value)
+
+    def visit_AugAssign(self, node):
+        self.reject_exemption_mutation(node.target)
+        if self.transferred_capability(node.value) or self.role(node.target) & {'capability-container', 'environment-snapshot'}:
+            raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: environment capability augmented assignment at line ' + str(node.lineno))
+        # AugAssign has a Store AST target but reads its previous value first.
+        if isinstance(node.target, ast.Subscript) and 'environ' in self.role(node.target.value):
+            self.add(node.target.slice, node.target)
+        self.visit(node.target)
+        self.visit(node.value)
+        if isinstance(node.target, ast.Name): self.bind(node.target, [])
+
+    def class_annotation_protocol(self, name, access, active=None):
+        active = set() if active is None else active
+        if name in active: return
+        active = active | {name}
+        for roles, builtin in self.class_base_protocols.get(name, []):
+            if builtin: continue
+            if not roles or any(role not in self.class_nodes for role in roles):
+                raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: unresolved class annotation protocol at line ' + str(access.lineno))
+            for role in roles: self.class_annotation_protocol(role, access, active)
+
+    def evaluate_class_annotations(self, name, eval_str=False, access=None):
+        if access is not None: self.class_annotation_protocol(name, access)
+        if self.postponed_annotations and eval_str and self.callable_environment_capability(self.class_nodes[name]):
+            raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: evaluated future class annotation at line ' + str((access or self.class_nodes[name][0]).lineno))
+        if name not in self.class_annotations: return
+        annotations, locals, namespace = self.class_annotations[name]
+        saved = self.state()
+        self.aliases, self.keys = (part.copy() for part in self.annotation_globals(self.class_nodes[name][0]))
+        for local in locals:
+            self.aliases[local] = namespace[0].get(local, set())
+            self.keys[local] = namespace[1].get(local, set())
+        for annotation in annotations:
+            if self.transferred_capability(annotation):
+                raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: annotation-returned environment capability at line ' + str(annotation.lineno))
+            if eval_str and isinstance(annotation, ast.Constant) and isinstance(annotation.value, str):
+                raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: evaluated string annotation at line ' + str(annotation.lineno))
+            self.visit(annotation)
+        self.aliases, self.keys = saved
+
+    def annotation_globals(self, node):
+        owner = self.lexical_scope(node)
+        if isinstance(owner, ast.Module):
+            return self.module_globals if self.function_depth else self.state()
+        if self.function_stack and self.function_stack[-1] is owner: return self.state()
+        definition = self.definition_states.get(id(node), self.state())
+        if any(isinstance(child, ast.Name) and (child.id in self.environment_authority_names or definition[0].get(child.id, set()) & {'os', 'environ', 'reader', 'capability-container', 'environment-snapshot'}) for child in ast.walk(node)):
+            raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: unresolved annotation closure namespace at line ' + str(node.lineno))
+        return self.module_globals
+
+    def visit_Attribute(self, node):
+        if node.attr in ('__dict__', '__setattr__', '__delattr__') and self.role(node.value) & {'annotationlib', 'subprocess'}:
+            raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: known environment custody receiver reflection at line ' + str(node.lineno))
+        if self.role(node.value) & {'capability-container', 'environment-snapshot'}:
+            raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: environment capability container access at line ' + str(node.lineno))
+        # Reflective acquisition must not erase a recognizable module, reader
+        # or callable's authority before metadata evaluation or helper transfer.
+        # Ordinary objects and pure callbacks remain passive; no reflection is
+        # executed or interpreted by this syntax-only scanner.
+        base = self.role(node.value)
+        admitted_protocol = node.attr == '__call__' and (base & {'reader', 'annotation-reader'} or any(identity in self.callable_functions for identity in base))
+        passive_metadata = node.attr in ('__name__', '__qualname__', '__module__', '__doc__')
+        if node.attr.startswith('__') and node.attr != '__annotations__' and not admitted_protocol and not passive_metadata and self.transferred_capability(node.value):
+            if not (node.attr == '__getitem__' and base == {'environ'}):
+                raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: reflected environment capability at line ' + str(node.lineno))
+        if 'environ' in base and node.attr not in ('get', 'copy', '__getitem__', 'setdefault') and not passive_metadata:
+            raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: unresolved environment mapping protocol at line ' + str(node.lineno))
+        if node.attr == '__annotations__':
+            self.evaluate_annotations(node.value, False, node)
+        self.generic_visit(node)
+
+    def evaluate_annotations(self, target, eval_str, access):
+        identities = self.role(target)
+        if identities - (self.class_nodes.keys() | self.annotations.keys() | {'passive-authority'}):
+            raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: unresolved annotation evaluation target at line ' + str(access.lineno))
+        known = False
+        for identity in identities:
+            if identity in self.class_nodes:
+                known = True
+                self.evaluate_class_annotations(identity, eval_str, access)
+            elif identity in self.annotations:
+                known = True
+                saved = self.state()
+                self.aliases, self.keys = (part.copy() for part in self.annotation_globals(self.callable_functions[identity][0]))
+                namespace = self.annotation_namespaces.get(identity)
+                if namespace:
+                    bindings, state = namespace
+                    for local in bindings:
+                        self.aliases[local] = state[0].get(local, set())
+                        self.keys[local] = state[1].get(local, set())
+                for annotation in self.annotations[identity] if eval_str or not self.postponed_annotations else []:
+                    if self.transferred_capability(annotation):
+                        raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: annotation-returned environment capability at line ' + str(annotation.lineno))
+                    if eval_str and not self.postponed_annotations and isinstance(annotation, ast.Constant) and isinstance(annotation.value, str):
+                        raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: evaluated string annotation at line ' + str(annotation.lineno))
+                    self.visit(annotation)
+                self.aliases, self.keys = saved
+        if not known and (eval_str or not self.postponed_annotations):
+            raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: unresolved annotation evaluation target at line ' + str(access.lineno))
+
+    def visit_NamedExpr(self, node):
+        self.visit(node.value)
+        self.reject_external_capability_write(node.target, node.value)
+        # A walrus in a comprehension writes the containing scope. Never
+        # discard recognized capability or environment-key custody on restore.
+        sensitive = self.environment_authority_names | self.subprocess_names | self.environment_key_names
+        parent = self.ast_parents.get(id(node))
+        while parent is not None and not isinstance(parent, (ast.Module, ast.FunctionDef, ast.AsyncFunctionDef, ast.Lambda)):
+            if id(parent) in self.comprehension_scopes and (self.transferred_capability(node.value) or node.target.id in sensitive):
+                raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: comprehension containing-scope environment authority write at line ' + str(node.lineno))
+            if id(parent) in self.comprehension_scopes:
+                self.comprehension_writes[id(parent)].add(node.target.id)
+            parent = self.ast_parents.get(id(parent))
+        self.bind(node.target, list(self.names(node.value)), self.role(node.value))
+
+    def visit_AnnAssign(self, node):
+        if node.value:
+            self.visit(node.value)
+        self.visit_target_expressions(node.target)
+        if node.value:
+            self.reject_external_capability_write(node.target, node.value)
+            self.reject_exemption_mutation(node.target)
+            if not isinstance(node.target, (ast.Name, ast.Tuple, ast.List)) and self.transferred_capability(node.value):
+                raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: unresolved environment capability assignment receiver at line ' + str(node.target.lineno))
+            self.bind(node.target, list(self.names(node.value)) or [self.literal(node.value)], self.role(node.value))
+            self.snapshot_write(node.target)
+        if not self.function_depth: self.annotation(node.annotation)
+
+    def visit_Delete(self, node):
+        for target in node.targets:
+            self.visit_target_expressions(target)
+            self.reject_exemption_mutation(target)
+            if isinstance(target, ast.Name): self.bind(target, [])
+            self.snapshot_write(target, True)
+
+    def annotation(self, node):
+        if self.postponed_annotations: return
+        if self.lazy_annotations: self.annotation_pending.append(node)
+        else:
+            if self.transferred_capability(node):
+                raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: annotation-returned environment capability at line ' + str(node.lineno))
+            self.visit(node)
+
+    def finish_annotations(self):
+        pending, self.annotation_pending = self.annotation_pending, []
+        for node in pending:
+            if self.transferred_capability(node):
+                raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: annotation-returned environment capability at line ' + str(node.lineno))
+            self.visit(node)
+
+    def visit_For(self, node):
+        self.visit(node.iter)
+        if self.role(node.iter) & {'capability-container', 'environment-snapshot'}:
+            raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: environment capability container iteration at line ' + str(node.lineno))
+        values = self.literal(node.iter)
+        before = self.state()
+        if isinstance(values, (tuple, list, set)) and not values:
+            for child in node.orelse: self.visit(child)
+            return
+        # Store receivers and indices execute for a selected iteration, not
+        # for an empty iterable. They are readers without reading stored values.
+        self.visit_target_expressions(node.target)
+        self.bind(node.target, values if isinstance(values, (tuple, list, set)) else [])
+        self.visit_loop_body(node, self.state() if isinstance(values, (tuple, list, set)) else before, iteration_target=node.target)
+        for child in node.orelse: self.visit(child)
+
+    visit_AsyncFor = visit_For
+
+    def visit_While(self, node):
+        self.visit(node.test)
+        if isinstance(node.test, ast.Constant) and not node.test.value:
+            for child in node.orelse: self.visit(child)
+            return
+        before = self.state()
+        self.visit_loop_body(node, before, node.test)
+        for child in node.orelse: self.visit(child)
+
+    def visit_loop_body(self, node, entry, test=None, iteration_target=None):
+        # Finite abstract join, not iteration execution. Revisit with carried
+        # key/capability alternatives until stable; never accept truncation.
+        sensitive = self.environment_authority_names | self.environment_key_names
+        carried = any((isinstance(child, ast.Name) and isinstance(child.ctx, (ast.Store, ast.Del)) and child.id in sensitive)
+            or (isinstance(child, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)) and child.name in sensitive)
+            or (isinstance(child, (ast.Import, ast.ImportFrom)) and any((item.asname or item.name.split('.')[0]) in sensitive for item in child.names))
+            for statement in node.body + ([iteration_target] if iteration_target is not None else []) for child in ast.walk(statement))
+        if not carried:
+            for child in node.body: self.visit(child)
+            self.join(entry, self.state())
+            return
+        for attempt in range(16):
+            previous = self.loop_environment_state()
+            if test is not None: self.visit(test)
+            if attempt and iteration_target is not None:
+                self.visit_target_expressions(iteration_target)
+            for child in node.body: self.visit(child)
+            self.join(entry, self.state())
+            if self.loop_environment_state() == previous: return
+        raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: loop-carried environment custody did not converge at line ' + str(node.lineno))
+
+    def loop_environment_state(self):
+        # Fresh identities of pure callbacks/containers are not environment
+        # custody. Only selected reader keys and potential capabilities govern
+        # this purpose-bound fixed point; unrelated program state is not run.
+        sensitive = self.environment_authority_names | self.environment_key_names
+        aliases = {name: roles for name, roles in self.aliases.items() if name in sensitive}
+        return aliases, {name: self.keys.get(name, {None}) for name in self.environment_key_names}
+
+    def visit_With(self, node):
+        for item in node.items:
+            self.visit(item.context_expr)
+            if item.optional_vars is not None:
+                self.visit_target_expressions(item.optional_vars)
+                self.bind(item.optional_vars, [None])
+        for child in node.body: self.visit(child)
+
+    visit_AsyncWith = visit_With
+
+    def visit_Raise(self, node):
+        if node.exc: self.visit(node.exc)
+        if node.cause: self.visit(node.cause)
+        # A nested explicit raise exposes this intermediate static key state.
+        # Do not execute handlers or model Python exception selection.
+        for states in self.exception_states: states.append(self.state())
+
+    def state(self):
+        return self.aliases.copy(), self.keys.copy()
+
+    def join(self, left, right):
+        self.aliases = {name: left[0].get(name, set()) | right[0].get(name, set())
+            for name in left[0].keys() | right[0].keys()}
+        for name in self.aliases:
+            written = {role for role in self.aliases[name] if role.startswith('written:snapshot:')}
+            self.aliases[name] -= written - (left[0].get(name, set()) & right[0].get(name, set()))
+            if not left[0].get(name) or not right[0].get(name):
+                self.aliases[name] = self.aliases[name] | {'unknown-authority'}
+        self.keys = {name: left[1].get(name, {None}) | right[1].get(name, {None})
+            for name in left[1].keys() | right[1].keys()}
+
+    def visit_If(self, node):
+        self.visit(node.test)
+        before = self.state()
+        for child in node.body: self.visit(child)
+        body = self.state()
+        self.aliases, self.keys = before
+        for child in node.orelse: self.visit(child)
+        self.join(body, self.state())
+
+    def visit_Try(self, node):
+        before = self.state()
+        exceptional_states = [before]
+        self.exception_states.append(exceptional_states)
+        for child in node.body:
+            self.visit(child)
+            exceptional_states.append(self.state())
+        self.exception_states.pop()
+        body = self.state()
+        for child in node.orelse: self.visit(child)
+        outcomes = [self.state()]
+        self.aliases, self.keys = exceptional_states[0]
+        for state in exceptional_states[1:]: self.join(self.state(), state)
+        exceptional = self.state()
+        for handler in node.handlers:
+            self.aliases, self.keys = (part.copy() for part in exceptional)
+            if handler.type: self.visit(handler.type)
+            if handler.name: self.bind(ast.Name(id=handler.name), [])
+            for child in handler.body: self.visit(child)
+            outcomes.append(self.state())
+        self.aliases, self.keys = outcomes[0]
+        for outcome in outcomes[1:]: self.join(self.state(), outcome)
+        for child in node.finalbody: self.visit(child)
+
+    visit_TryStar = visit_Try
+
+    def visit_Match(self, node):
+        self.visit(node.subject)
+        if self.transferred_capability(node.subject):
+            raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: environment capability structural pattern at line ' + str(node.lineno))
+        before = self.state()
+        outcomes = [before]
+        for case in node.cases:
+            self.aliases, self.keys = (part.copy() for part in before)
+            for pattern in ast.walk(case.pattern):
+                name = getattr(pattern, 'name', None) or getattr(pattern, 'rest', None)
+                if name: self.bind(ast.Name(id=name), [])
+            if case.guard: self.visit(case.guard)
+            for child in case.body: self.visit(child)
+            outcomes.append(self.state())
+        self.aliases, self.keys = outcomes[0]
+        for outcome in outcomes[1:]: self.join(self.state(), outcome)
+
+    def arguments(self, args):
+        for item in args.posonlyargs + args.args + args.kwonlyargs:
+            self.bind(ast.Name(id=item.arg), [])
+        for item in (args.vararg, args.kwarg):
+            if item: self.bind(ast.Name(id=item.arg), [])
+
+    def enter_closure(self):
+        before, parent = self.state(), self.class_parent
+        bindings, self.class_bindings = self.class_bindings, None
+        # Class namespaces are executable scopes, but are not enclosing
+        # lexical bindings for methods, lambdas or comprehension bodies.
+        self.aliases, self.keys = parent if parent is not None else before
+        self.aliases, self.keys = self.state()
+        self.class_parent = None
+        return before, parent, bindings
+
+    def leave_closure(self, saved):
+        (self.aliases, self.keys), self.class_parent, self.class_bindings = saved
+
+    def local_names(self, node):
+        names, external = set(), set()
+        class Locals(ast.NodeVisitor):
+            def visit_Name(self, child):
+                if isinstance(child.ctx, (ast.Store, ast.Del)): names.add(child.id)
+            def visit_Import(self, child):
+                names.update(item.asname or item.name.split('.')[0] for item in child.names)
+            def visit_ImportFrom(self, child):
+                names.update(item.asname or item.name for item in child.names)
+            def visit_FunctionDef(self, child): names.add(child.name)
+            visit_AsyncFunctionDef = visit_FunctionDef
+            def visit_ClassDef(self, child): names.add(child.name)
+            def visit_Lambda(self, child): pass
+            def visit_ListComp(self, child): pass
+            visit_SetComp = visit_ListComp
+            visit_DictComp = visit_ListComp
+            visit_GeneratorExp = visit_ListComp
+            def visit_Global(self, child): external.update(child.names)
+            visit_Nonlocal = visit_Global
+        for child in node.body: Locals().visit(child)
+        return names - external
+
+    def analyze_function(self, node, parent=None):
+        if id(node) in self.active_functions: return
+        self.active_functions.add(id(node))
+        owner = self.lexical_scope(node)
+        caller = self.function_stack[-1] if self.function_stack else tree
+        if not self.function_depth and self.class_parent is None: self.module_globals = self.state()
+        if isinstance(owner, ast.Module):
+            parent = self.module_globals
+        elif caller is owner:
+            parent = self.state()
+        else:
+            definition = self.definition_states.get(id(node), self.state())
+            if any(isinstance(child, ast.Name) and (child.id in self.imported_os_names or definition[0].get(child.id, set()) & {'os', 'environ', 'reader', 'subprocess', 'capability-container', 'environment-snapshot'}) for child in ast.walk(node)):
+                raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: unresolved environment closure invocation custody at line ' + str(node.lineno))
+            parent = definition
+        saved = self.enter_closure()
+        if parent is not None: self.aliases, self.keys = (part.copy() for part in parent)
+        for name in self.local_names(node): self.bind(ast.Name(id=name), [])
+        self.arguments(node.args)
+        pending, self.pending = self.pending, []
+        annotations, self.annotation_pending = self.annotation_pending, []
+        self.function_depth += 1
+        self.function_stack.append(node)
+        for child in node.body: self.visit(child)
+        self.finish_annotations()
+        self.finish_functions()
+        self.function_depth -= 1
+        self.function_stack.pop()
+        self.pending = pending
+        self.annotation_pending = annotations
+        self.leave_closure(saved)
+        self.active_functions.remove(id(node))
+
+    def finish_functions(self):
+        pending, self.pending = self.pending, []
+        parent = self.class_parent if self.class_parent is not None else self.state()
+        for node, called in pending:
+            if not called: self.analyze_function(node, parent)
+
+    def visit_FunctionDef(self, node):
+        for item in node.decorator_list + node.args.defaults + [x for x in node.args.kw_defaults if x]: self.visit(item)
+        if any(self.transferred_capability(item) for item in node.args.defaults + [x for x in node.args.kw_defaults if x]):
+            raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: helper environment capability default argument at line ' + str(node.lineno))
+        # Without future.annotations, these are potential evaluated readers:
+        # eager on older Python, lazy annotation scopes on Python 3.14+. Class
+        # annotation scopes use the actual class namespace, unlike methods.
+        if not self.postponed_annotations:
+            for item in node.args.posonlyargs + node.args.args + node.args.kwonlyargs + [x for x in (node.args.vararg, node.args.kwarg) if x]:
+                if item.annotation: self.annotation(item.annotation)
+            if node.returns: self.annotation(node.returns)
+        candidate = [node, False]
+        self.definition_states[id(node)] = self.state()
+        identity = 'function:' + str(len(self.callable_functions))
+        self.callable_functions[identity] = candidate
+        self.bind(ast.Name(id=node.name), [], identity)
+        self.annotations[identity] = [item.annotation for item in node.args.posonlyargs + node.args.args + node.args.kwonlyargs + [x for x in (node.args.vararg, node.args.kwarg) if x] if item.annotation]
+        if node.returns: self.annotations[identity].append(node.returns)
+        self.pending.append(candidate)
+
+    visit_AsyncFunctionDef = visit_FunctionDef
+
+    def visit_Lambda(self, node):
+        for item in node.args.defaults + [x for x in node.args.kw_defaults if x]: self.visit(item)
+        if any(self.transferred_capability(item) for item in node.args.defaults + [x for x in node.args.kw_defaults if x]):
+            raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: helper environment capability default argument at line ' + str(node.lineno))
+        saved = self.enter_closure()
+        self.arguments(node.args)
+        self.visit(node.body)
+        if self.transferred_capability(node.body):
+            raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: helper-returned environment capability at line ' + str(node.lineno))
+        self.leave_closure(saved)
+
+    def visit_ClassDef(self, node):
+        self.definition_states[id(node)] = self.state()
+        base_protocols = [(self.role(base), isinstance(base, ast.Name) and base.id in ('object', 'type') and base.id not in self.keys) for base in node.bases]
+        for item in node.decorator_list + node.bases + [item.value for item in node.keywords]: self.visit(item)
+        if any(item.arg == 'metaclass' for item in node.keywords) or any(self.transferred_capability(item) for item in node.bases):
+            raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: unmodeled environment class construction authority at line ' + str(node.lineno))
+        before, parent = self.state(), self.class_parent
+        self.class_parent = parent if parent is not None else before
+        self.aliases, self.keys = (part.copy() for part in self.class_parent)
+        pending, self.pending = self.pending, []
+        annotations, self.annotation_pending = self.annotation_pending, []
+        enclosing_bindings, self.class_bindings = self.class_bindings, set()
+        for child in node.body: self.visit(child)
+        class_annotations = self.annotation_pending
+        namespace = self.state()
+        class_bindings, self.class_bindings = self.class_bindings, enclosing_bindings
+        if not self.lazy_annotations: self.finish_annotations()
+        self.annotation_pending = annotations
+        methods, self.pending = self.pending, pending
+        self.pending.extend(methods)
+        self.aliases, self.keys = before
+        self.class_parent = parent
+        identity = 'class:' + str(len(self.methods))
+        self.class_nodes[identity] = [node, False]
+        self.class_base_protocols[identity] = base_protocols
+        self.bind(ast.Name(id=node.name), [], identity)
+        self.methods[identity] = {candidate[0].name: candidate for candidate in methods
+            if any(self.callable_functions.get(role) is candidate for role in namespace[0].get(candidate[0].name, set()))}
+        for method_identity, candidate in self.callable_functions.items():
+            if any(candidate is method for method in self.methods[identity].values()):
+                self.annotation_namespaces[method_identity] = (class_bindings, namespace)
+        if self.lazy_annotations and not self.postponed_annotations:
+            self.class_annotations[identity] = (class_annotations, class_bindings, namespace)
+
+    def comprehension(self, node):
+        # The first iterable runs in the enclosing scope; targets, filters,
+        # later iterables and the result run in a separate lexical scope.
+        self.visit(node.generators[0].iter)
+        saved = self.enter_closure()
+        self.comprehension_scopes.add(id(node))
+        self.comprehension_writes[id(node)] = set()
+        reachable = True
+        for index, generator in enumerate(node.generators):
+            if index: self.visit(generator.iter)
+            if self.role(generator.iter) & {'capability-container', 'environment-snapshot'}:
+                raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: environment capability container iteration at line ' + str(node.lineno))
+            values = self.literal(generator.iter)
+            if isinstance(values, (tuple, list, set)) and not values:
+                reachable = False
+                break
+            self.visit_target_expressions(generator.target)
+            self.bind(generator.target, values if isinstance(values, (tuple, list, set)) else [])
+            for condition in generator.ifs: self.visit(condition)
+        if reachable:
+            if isinstance(node, ast.DictComp):
+                self.visit(node.key)
+                self.visit(node.value)
+            else: self.visit(node.elt)
+        self.comprehension_scopes.remove(id(node))
+        writes = self.comprehension_writes.pop(id(node))
+        self.leave_closure(saved)
+        # A pure scalar may become an environment key through a later finite
+        # alias/conditional/reader slot. Invalidate its containing binding;
+        # never restore a stale qualified key or discard possible old authority.
+        for name in writes:
+            self.keys[name] = {None}
+            self.aliases[name] = self.aliases.get(name, set()) | {'unknown-authority'}
+
+    visit_ListComp = comprehension
+    visit_SetComp = comprehension
+    visit_DictComp = comprehension
+    visit_GeneratorExp = comprehension
+
+    def add(self, key, node):
+        names = self.names(key)
+        if not names or None in names:
+            raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: unresolved environment key at line ' + str(node.lineno))
+        for name in sorted(names):
+            if not re.fullmatch(r'[A-Z][A-Z0-9_]*', name):
+                raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: unsupported statically known environment name ' + repr(name) + ' at line ' + str(node.lineno))
+            self.reads.append({'name': name, 'line': node.lineno, 'byteColumn': node.col_offset})
+
+    def visit_Call(self, node):
+        authority = self.role(node.func)
+        if 'authority-mutator' in authority and node.args and self.role(node.args[0]) & {'annotationlib', 'subprocess'}:
+            raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: known environment custody receiver mutation at line ' + str(node.lineno))
+        if 'unsupported-callable' in authority:
+            raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: unresolved environment callable authority at line ' + str(node.lineno))
+        if 'reflection-reader' in self.role(node.func) and node.args:
+            if self.role(node.args[0]) & {'os', 'environ', 'reader'}:
+                raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: reflected environment capability at line ' + str(node.lineno))
+        annotation_reader = self.role(node.func) == {'annotation-reader'}
+        candidate = self.callable_functions.get(next(iter(authority))) if len(authority) == 1 else None
+        if candidate and (candidate[0].decorator_list or next(iter(authority)) in self.annotation_namespaces):
+            candidate = None
+        parameters = candidate[0].args.posonlyargs + candidate[0].args.args if candidate else []
+        def forwarded(item, parameter):
+            return candidate and self.snapshot_role(self.role(item)) and self.snapshot_forwarding_parameter(candidate, parameter)
+        # Only the known annotation reader's object target owns supported
+        # callable/class custody. Other helper parameters have no role model.
+        transferred_arguments = [item for index, item in enumerate(node.args)
+            if not (annotation_reader and index == 0)
+            and not (index < len(parameters) and not any(isinstance(argument, ast.Starred) for argument in node.args[:index + 1]) and forwarded(item, parameters[index].arg))]
+        transferred_arguments += [keyword.value for keyword in node.keywords
+            if not (annotation_reader and keyword.arg == 'obj')
+            and not (keyword.arg and forwarded(keyword.value, keyword.arg))
+            # The subprocess env slot is a data producer boundary, not an
+            # opaque helper receiver. Preserve a copied environment snapshot;
+            # callable/reader containers in that slot still reject.
+            and not (keyword.arg == 'env' and isinstance(node.func, ast.Attribute)
+                and self.exact_subprocess_receiver(node.func.value, node)
+                and node.func.attr in ('Popen', 'run', 'call', 'check_call', 'check_output')
+                and self.snapshot_role(self.role(keyword.value))) ]
+        if any(self.transferred_capability(item) for item in transferred_arguments):
+            raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: helper environment capability argument at line ' + str(node.lineno))
+        if 'unknown-authority' in authority and self.transferred_capability(node.func):
+            raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: unresolved environment callable authority at line ' + str(node.lineno))
+        if 'annotation-reader' in self.role(node.func):
+            eval_keyword = next((item.value for item in node.keywords if item.arg == 'eval_str'), None)
+            if eval_keyword is not None and not (isinstance(eval_keyword, ast.Constant) and isinstance(eval_keyword.value, bool)):
+                raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: unresolved annotation eval_str at line ' + str(node.lineno))
+            eval_str = eval_keyword is not None and eval_keyword.value is True
+            if any(item.arg in ('format', 'globals', 'locals') or item.arg is None for item in node.keywords):
+                raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: unresolved annotation evaluation namespace/format at line ' + str(node.lineno))
+            target = node.args[0] if node.args else next((item.value for item in node.keywords if item.arg == 'obj'), None)
+            self.evaluate_annotations(target, eval_str, node)
+        for identity in self.role(node.func):
+            candidate = self.callable_functions.get(identity)
+            if candidate:
+                candidate[1] = True
+                self.analyze_function(candidate[0])
+        if isinstance(node.func, ast.Attribute) and node.func.attr in ('getenv', 'get'):
+            receiver = node.func.value
+            if isinstance(receiver, ast.Attribute) and receiver.attr == 'environ': receiver = receiver.value
+            if isinstance(receiver, ast.Name) and receiver.id in self.imported_os_names and receiver.id not in self.keys and not self.role(receiver):
+                raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: unresolved lexical os binding at line ' + str(node.lineno))
+        if 'reader' in self.role(node.func):
+            key = node.args[0] if node.args else next((item.value for item in node.keywords if item.arg == 'key'), None)
+            if key is None:
+                raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: unresolved environment reader arguments at line ' + str(node.lineno))
+            self.add(key, node)
+        self.generic_visit(node)
+
+    def visit_Return(self, node):
+        if self.transferred_capability(node.value):
+            raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: helper-returned environment capability at line ' + str(node.lineno))
+        self.generic_visit(node)
+
+    def visit_Subscript(self, node):
+        roles = self.role(node.value)
+        if self.snapshot_role(roles) and isinstance(node.ctx, ast.Load):
+            keys = self.names(node.slice)
+            identities = {role for role in roles if role.startswith('snapshot:')}
+            if keys and None not in keys and all('written:' + identity + ':' + key in roles for identity in identities for key in keys):
+                self.generic_visit(node)
+                return
+        if self.role(node.value) & {'capability-container', 'environment-snapshot'}:
+            raise ValueError('PYTHON_ENVIRONMENT_UNSUPPORTED: environment capability container access at line ' + str(node.lineno))
+        if isinstance(node.ctx, ast.Load) and 'environ' in self.role(node.value): self.add(node.slice, node)
+        self.generic_visit(node)
+
+reader = Readers()
+reader.visit(tree)
+reader.finish_annotations()
+for name in list(reader.class_annotations): reader.evaluate_class_annotations(name)
+reader.finish_functions()
+print(json.dumps(reader.reads))
+`;
+  const result = spawnSync('python3', ['-I', '-c', parser], {
+    input: text, encoding: 'utf8', timeout: 10_000, maxBuffer: 8 * 1024 * 1024,
+  });
+  assert.equal(result.status, 0,
+    `PYTHON_ENVIRONMENT_PARSE_FAILED: ${source}: read-only Python environment discovery failed\n${result.error?.message ?? ''}\n${result.stderr}`);
+  const lines = text.split('\n');
+  const offsets = [];
+  let offset = 0;
+  for (const line of lines) { offsets.push(offset); offset += line.length + 1; }
+  return JSON.parse(result.stdout).map(({ name, line, byteColumn }) => ({
+    name,
+    // CPython columns count UTF-8 bytes; JavaScript indices count UTF-16 units.
+    index: offsets[line - 1] + Buffer.from(lines[line - 1], 'utf8').subarray(0, byteColumn).toString('utf8').length,
+    kind: 'python-process-env',
+  }));
+}
+
+function nodeArgvSelection(file, words, commandArrays = new Set()) {
+  let first = 0;
+  while (words[first] && (/^[A-Za-z_][A-Za-z0-9_]*=/u.test(words[first].value)
+    || ['if', 'then', 'elif', 'do', 'while', 'until', '!', 'exec', 'command'].includes(words[first].value))) first++;
+  first += pythonInterpreterIndex(words.slice(first).map(word => word.value), `NODE_ENVIRONMENT_SHELL_UNSUPPORTED: ${file}`);
+  if ((['kubectl', 'docker'].includes(words[first]?.value) || commandArrays.has(words[first]?.value)) && words.some(word => word.value === 'exec')) {
+    const separator = words.findIndex(word => word.value === '--');
+    if (separator >= 0) first = separator + 1;
+  }
+  const executable = words[first]?.value ?? '';
+  if (!/^(?:.*\/)?node(?:js)?$/u.test(executable)) return { first, dynamic: /[$`]/u.test(words[first]?.raw ?? ''), words };
+  let next = first + 1;
+  while (words[next]?.value.startsWith('-')) {
+    const value = words[next].value;
+    if (['-e', '--eval', '-p', '--print'].includes(value)) return { first, inline: words[next + 1], node: true };
+    if (['-v', '--version', '-h', '--help', '--v8-options', '-c', '--check'].includes(value)) return { first, node: true, passive: true };
+    if (value === '-') return { first, node: true, stdin: true };
+    if (/^--(?:input-type|conditions|experimental-default-type)=/u.test(value)
+      || ['--no-warnings', '--experimental-strip-types'].includes(value)) { next++; continue; }
+    throw new Error(`NODE_ENVIRONMENT_SHELL_UNSUPPORTED: ${file}: unsupported Node argv ${value}`);
+  }
+  return { first, node: true, stdin: !words[next], script: words[next]?.value };
+}
+
+function nodeShellArgvSelection(values, first, diagnostic) {
+  let index = first + 1;
+  let unsupportedSelectedPrefix = false;
+  let selected = false;
+  const selector = value => /^-[A-Za-z]*c[A-Za-z]*$/u.test(value ?? '');
+  const selectedBody = bodyIndex => {
+    assert(!unsupportedSelectedPrefix, `${diagnostic}: unresolved nested shell argv mode`);
+    assert(values[bodyIndex] !== undefined, `${diagnostic}: missing selected shell program`);
+    return bodyIndex;
+  };
+  while (index < values.length) {
+    const value = values[index];
+    // A terminator before c establishes passive script custody. After c it
+    // ends option parsing but retains the selected command-string operand.
+    if (value === '--' || value === '-') return selected ? selectedBody(index + 1) : null;
+    if (!value.startsWith('-') && !value.startsWith('+')) return selected ? selectedBody(index) : null;
+    if (selector(value)) {
+      assert(!unsupportedSelectedPrefix && /^-[efuvxnClic]+$/u.test(value),
+        `${diagnostic}: unresolved nested shell argv mode`);
+      selected = true; index++; continue;
+    }
+    if (/^-[efuvxnCli]+$/u.test(value)) { index++; continue; }
+    // These options establish operand custody only, before or after c. A
+    // selected body using them is explicitly unsupported, never omitted.
+    if (['-o', '+o', '-O', '+O', '--rcfile', '--init-file'].includes(value)) {
+      if (values[index + 1] === undefined) {
+        assert(!selected, `${diagnostic}: unresolved nested shell argv mode`);
+        return null;
+      }
+      index += 2; unsupportedSelectedPrefix = true; continue;
+    }
+    if (['--noprofile', '--norc', '--posix', '--restricted', '--verbose', '--login', '--debugger'].includes(value)) {
+      index++; unsupportedSelectedPrefix = true; continue;
+    }
+    assert(!selected, `${diagnostic}: unresolved nested shell argv mode`);
+    // An unknown pre-selector option might consume the next word. Preserve
+    // the distinction between ambiguous custody and definite script data.
+    assert(!values.slice(index + 1).some(selector), `${diagnostic}: ambiguous shell option custody`);
+    return null;
+  }
+  assert(!selected, `${diagnostic}: missing selected shell program`);
+  return null;
+}
+
+function nodeShellPrograms(file, text, selectedScripts = new Set(), sourcePositions = null, sourceText = text, nested = false, depth = 0) {
+  const sourceLine = index => lineAt(sourceText,sourcePositions ? sourcePositions[index] : index);
+  assert(depth <= 8, `NODE_ENVIRONMENT_SHELL_UNSUPPORTED: ${file}:${sourceLine(0)}: nested shell custody depth`);
+  let acquired;
+  try { acquired = shellCommandAcquisitions(file, text); }
+  catch(error) {
+    if (!sourcePositions) throw error;
+    const marker = `${file}:`, start = error.message.indexOf(marker);
+    const line = start >= 0 ? /^([0-9]+):/u.exec(error.message.slice(start+marker.length)) : null;
+    let index = 0; if (line) for(let count=1;count<Number(line[1]);count++) index=text.indexOf('\n',index)+1;
+    throw new Error(line ? error.message.replace(`${file}:${line[1]}:`,`${file}:${sourceLine(index)}:`) : `${file}:${sourceLine(0)}: ${error.message}`,{cause:error});
+  }
+  const programs = [];
+  const commandArrays = new Set([...text.matchAll(/(?:^|\n)\s*([A-Za-z_][A-Za-z0-9_]*)=\(\s*kubectl(?:\s|\))/gu)].map(match => '${' + match[1] + '[@]}'));
+  const selections = new Map(acquired.commands.map(command => [command, nodeArgvSelection(`${file}:${sourceLine(command.words[0]?.start ?? command.start)}`, command.words, commandArrays)]));
+  for (const selection of selections.values()) if (selection.node && selection.script) selectedScripts.add(selection.script);
+  for (const [command, selection] of selections) {
+    const diagnostic = `NODE_ENVIRONMENT_SHELL_UNSUPPORTED: ${file}:${sourceLine(command.words[0]?.start ?? command.start)}`;
+    // Inspect only literal shell -c operands to detect an unsupported nested
+    // Node execution path. Quoted arguments to ordinary commands stay passive.
+    assert(!(nested && selection.node), `${diagnostic}: nested shell Node acquisition`);
+    if (/^(?:.*\/)?(?:ba|da|a|z|k)?sh$/u.test(command.words[selection.first]?.value ?? '')) {
+      const bodyIndex = nodeShellArgvSelection(command.words.map(word => word.value), selection.first, diagnostic);
+      const body = bodyIndex === null ? null : command.words[bodyIndex];
+      if (body) {
+        assert(!body.expanded, `${diagnostic}: expanded nested shell program`);
+        const positions = sourcePositions ? body.positions.map(index => sourcePositions[index]) : body.positions;
+        nodeShellPrograms(file, body.value, selectedScripts, positions, sourceText, true, depth + 1);
+      }
+    }
+    if (selection.inline) {
+      const parsed = { code: selection.inline.value };
+      assert(!selection.inline.expanded, `NODE_ENVIRONMENT_SHELL_UNSUPPORTED: ${file}:${sourceLine(command.words[0]?.start ?? command.start)}: expanded inline program`);
+      programs.push({ code: parsed.code, positions: selection.inline.positions, kind: 'inline' });
+    } else if (selection.node && !selection.passive && selection.stdin
+      && !acquired.heredocs.some(body => body.command === command && body.selectedStdin)) {
+      assert.fail(`NODE_ENVIRONMENT_SHELL_UNSUPPORTED: ${file}:${sourceLine(command.words[0]?.start ?? command.start)}: unresolved Node stdin`);
+    }
+    if (selection.dynamic && command.words.slice(selection.first + 1).some(word => /process(?:\.env|\[['"]env['"]\])/u.test(word.value)))
+      assert.fail(`NODE_ENVIRONMENT_SHELL_UNSUPPORTED: ${file}:${sourceLine(command.words[0]?.start ?? command.start)}: dynamic interpreter custody`);
+  }
+  for (const body of acquired.heredocs) {
+    const selection = selections.get(body.command);
+    if (selection.dynamic && /process(?:\.env|\[['"]env['"]\])/u.test(body.body))
+      assert.fail(`NODE_ENVIRONMENT_SHELL_UNSUPPORTED: ${file}:${sourceLine(body.start)}: dynamic interpreter stdin custody`);
+    const output = body.command.redirections.filter(redirect => redirect.fd === 1 && ['>', '>>'].includes(redirect.operator)).at(-1)?.target;
+    const generatedScript = body.selectedStdin && body.command.words[selection.first]?.value === 'cat' && output && selectedScripts.has(output);
+    if (!(body.selectedStdin && selection.node && selection.stdin) && !generatedScript) continue;
+    assert(/^<<-?\s*['"]/u.test(text.slice(body.start, body.bodyStart)) || !/[$`]/u.test(body.body),
+      `NODE_ENVIRONMENT_SHELL_UNSUPPORTED: ${file}:${sourceLine(body.start)}: expanded program heredoc`);
+    assert(body.bodyPositions?.length >= body.body.length, `NODE_ENVIRONMENT_SHELL_UNSUPPORTED: ${file}:${sourceLine(body.start)}: missing decoded heredoc source custody`);
+    programs.push({ code: body.body, positions:body.bodyPositions, kind: 'heredoc' });
+  }
+  return programs;
+}
+
+function acquiredNodeEnvironmentReads(file, text, kind = null) {
+  const programs = [];
+  if (['.yaml', '.yml'].includes(path.extname(file))) {
+    const masked = text.replace(/\{\{[\s\S]*?\}\}/gu, value => value.replace(/[^\n]/gu, ' '));
+    const documents = YAML.parseAllDocuments(masked, { keepSourceTokens: true, uniqueKeys: false });
+    const shellBodies = []; const selectedScripts = new Set();
+  const scalar = (node) => {
+    assert(YAML.isScalar(node) && typeof node.value === 'string',
+      `NODE_ENVIRONMENT_YAML_UNSUPPORTED: ${file} nonliteral command argument`);
+    const raw = masked.slice(node.range[0], node.range[1]);
+    const positions = [];
+    let decoded = '';
+    if (raw.startsWith('"') || raw.startsWith("'")) {
+      const double = raw[0] === '"';
+      for (let index = 1; index < raw.length - 1; index += 1) {
+        const start = index; let value = raw[index];
+        if (!double && value === "'" && raw[index + 1] === "'") index += 1;
+        else if (double && value === '\\') {
+          const escape = raw[++index];
+          const widths = { x: 2, u: 4, U: 8 };
+          if (widths[escape]) { value = String.fromCodePoint(parseInt(raw.slice(index + 1, index + 1 + widths[escape]), 16)); index += widths[escape]; }
+          else value = ({ '0': '\0', a: '\x07', b: '\b', t: '\t', n: '\n', v: '\v', f: '\f', r: '\r', e: '\x1b', ' ': ' ', '"': '"', '/': '/', '\\': '\\', N: '\u0085', _: '\u00a0', L: '\u2028', P: '\u2029' })[escape];
+          assert(value !== undefined, `NODE_ENVIRONMENT_YAML_UNSUPPORTED: ${file} scalar escape`);
+        }
+        decoded += value; for (let count = 0; count < value.length; count += 1) positions.push(node.range[0] + start);
+      }
+    } else if (/^[|>]/u.test(raw)) {
+      let cursor = raw.indexOf('\n') + 1;
+      for (const char of node.value) {
+        while (cursor < raw.length && raw[cursor] !== char) cursor += 1;
+        assert(cursor < raw.length, `NODE_ENVIRONMENT_YAML_UNSUPPORTED: ${file} folded scalar mapping`);
+        decoded += char; positions.push(node.range[0] + cursor++);
+      }
+    } else { decoded = raw; for (let index = 0; index < raw.length; index += 1) positions.push(node.range[0] + index); }
+    assert.equal(decoded, node.value, `NODE_ENVIRONMENT_YAML_UNSUPPORTED: ${file} multiline scalar mapping`);
+    return { code: node.value, positions };
+  };
+    for (const document of documents) YAML.visit(document, { Map(_key, node, ancestors) {
+      const owner = ancestors.filter(YAML.isPair).at(-1)?.key?.value;
+      const container = YAML.isSeq(ancestors.at(-1)) && ['containers', 'initContainers'].includes(owner);
+      if (node !== document.contents && owner !== 'exec' && !container) return;
+      const command = node.items.find(pair => pair.key?.value === 'command');
+      if (!command) return;
+      const args = node.items.find(pair => pair.key?.value === 'args');
+      const items = YAML.isSeq(command.value) ? [...command.value.items, ...(YAML.isSeq(args?.value) ? args.value.items : [])] : [command.value];
+      const values = items.map(item => item?.value);
+      // Array values are native argv, while a selected shell body/scalar is
+      // lexically acquired below. Raw Node spelling inside that body cannot
+      // decide whether a decoded literal executable exists.
+      if (YAML.isSeq(command.value) && !values.some(value => typeof value === 'string'
+        && /^(?:.*\/)?(?:node(?:js)?|(?:ba|da|a|z|k)?sh)$/u.test(value))
+        && !values.some(value => typeof value === 'string' && /process\.env/u.test(value))) return;
+      assert(!document.errors.some(error => error.pos?.[0] >= command.value.range[0] && error.pos?.[0] <= (args?.value.range?.[1] ?? command.value.range[1])), `NODE_ENVIRONMENT_YAML_UNSUPPORTED: ${file}: malformed selected argv`);
+      assert(values.every(value => typeof value === 'string'), `NODE_ENVIRONMENT_YAML_UNSUPPORTED: ${file}: nonliteral selected argv`);
+      const first = pythonInterpreterIndex(values, `NODE_ENVIRONMENT_YAML_UNSUPPORTED: ${file}`);
+      if (/^(?:.*\/)?(?:ba|da|a|z|k)?sh$/u.test(values[first]) || !YAML.isSeq(command.value)) {
+        const bodyIndex = YAML.isSeq(command.value) ? nodeShellArgvSelection(values, first,
+          `NODE_ENVIRONMENT_YAML_UNSUPPORTED: ${file}:${lineAt(text,items[first].range[0])}`) : 0;
+        if (bodyIndex === null) return;
+        shellBodies.push(scalar(items[bodyIndex]));
+      } else {
+        const words = values.map((value,index) => ({ value, raw:value, start:items[index].range[0] }));
+        const selection = nodeArgvSelection(file, words);
+        assert(!(selection.node && selection.stdin && !selection.passive), `NODE_ENVIRONMENT_YAML_UNSUPPORTED: ${file}:${lineAt(text, items[selection.first].range[0])}: unresolved Node stdin`);
+        if (selection.inline) { const index = words.indexOf(selection.inline); programs.push({...scalar(items[index]), kind:'inline'}); }
+        if (selection.script) selectedScripts.add(selection.script);
+        if (selection.dynamic && values.some(value => /process\.env/u.test(value))) assert.fail(`NODE_ENVIRONMENT_YAML_UNSUPPORTED: ${file}: dynamic interpreter custody`);
+      }
+    } });
+    // Selected direct Node script argv (including probes) proves which generated
+    // file is executed; a filename extension alone never grants authority.
+    for (const body of shellBodies) for (const command of shellCommandAcquisitions(file, body.code).commands) {
+      const selection = nodeArgvSelection(file, command.words); if (selection.script) selectedScripts.add(selection.script);
+    }
+    for (const body of shellBodies) for (const program of nodeShellPrograms(file, body.code, selectedScripts, body.positions, text)) programs.push({ ...program,
+      positions: program.positions ? program.positions.map(index => body.positions[index]) : body.positions.slice(program.index, program.index + program.code.length) });
+  } else programs.push(...nodeShellPrograms(file, text));
   const reads = [];
-  const patterns = [
-    /\bos\.getenv\(\s*['"]([A-Z][A-Z0-9_]*)['"]/gu,
-    /\bos\.environ\.get\(\s*['"]([A-Z][A-Z0-9_]*)['"]/gu,
-    /\bos\.environ\[\s*['"]([A-Z][A-Z0-9_]*)['"]\s*\]/gu,
-  ];
-  for (const expression of patterns) {
-    for (const match of text.matchAll(expression)) reads.push({ name: match[1], index: match.index ?? 0, kind: 'python-process-env' });
+  for (const program of programs) {
+    if (kind && program.kind !== kind) continue;
+    for (const fact of nodeEnvironmentReads(file, program.code, program.positions ?? Array.from(program.code,(_char,index)=>program.index+index), text)) reads.push({ ...fact,
+      index: program.positions ? program.positions[fact.index] : program.index + fact.index, kind:`embedded-${fact.kind}` });
   }
   return reads;
 }
 
 function embeddedNodeEnvironmentReads(file, text) {
-  const lines = text.split('\n');
-  const offsets = [];
-  let offset = 0;
-  for (const line of lines) {
-    offsets.push(offset);
-    offset += line.length + 1;
-  }
-  const reads = [];
-  for (let lineIndex = 0; lineIndex < lines.length; lineIndex += 1) {
-    const opener = /<<-?\s*(['"]?)([A-Za-z_][A-Za-z0-9_]*)\1\s*$/u.exec(lines[lineIndex]);
-    if (!opener) continue;
-    const command = lines[lineIndex].slice(0, opener.index);
-    // Some chart block scalars write a JavaScript program to a .js/.mjs/.cjs
-    // file and execute it later. It is still a checked-in environment reader,
-    // even though the heredoc command itself is `cat`, not `node`.
-    if (!/\bnode(?:\s|$)/u.test(command) && !/\.(?:mjs|cjs|js)(?:["']|\s|$)/u.test(command)) continue;
-    const delimiter = opener[2];
-    let endIndex = lineIndex + 1;
-    while (endIndex < lines.length && lines[endIndex].trim() !== delimiter) endIndex += 1;
-    if (endIndex >= lines.length) continue;
-    const bodyStartLine = lineIndex + 1;
-    const body = lines.slice(bodyStartLine, endIndex).join('\n');
-    for (const readFact of nodeEnvironmentReads(`${file}#node-heredoc-${lineIndex + 1}`, body)) {
-      reads.push({
-        ...readFact,
-        index: offsets[bodyStartLine] + readFact.index,
-        kind: `embedded-${readFact.kind}`,
-      });
-    }
-    lineIndex = endIndex;
-  }
-  return reads;
+  return acquiredNodeEnvironmentReads(file, text, 'heredoc');
 }
 
 function embeddedPythonEnvironmentReads(file, text) {
-  const lines = text.split('\n');
-  const offsets = [];
-  let offset = 0;
-  for (const line of lines) {
-    offsets.push(offset);
-    offset += line.length + 1;
-  }
-  const reads = [];
-  for (let lineIndex = 0; lineIndex < lines.length; lineIndex += 1) {
-    const opener = /\bpython(?:[0-9]+(?:\.[0-9]+)?)?(?:\s+[^<\n]*)?\s+<<-?\s*(['"]?)([A-Za-z_][A-Za-z0-9_]*)\1\s*$/u.exec(lines[lineIndex]);
-    if (!opener) continue;
-    const delimiter = opener[2];
-    let endIndex = lineIndex + 1;
-    while (endIndex < lines.length && lines[endIndex].replace(/^\t+/u, '').trim() !== delimiter) endIndex += 1;
-    if (endIndex >= lines.length) continue;
-    const bodyStartLine = lineIndex + 1;
-    const body = lines.slice(bodyStartLine, endIndex).join('\n');
-    for (const readFact of pythonEnvironmentReads(body)) {
-      reads.push({ ...readFact, index: offsets[bodyStartLine] + readFact.index, kind: `embedded-${readFact.kind}` });
+  return acquiredPythonEnvironmentReads(file, text, 'heredoc');
+}
+
+function environmentProducerOccurrences(file, text, skipHelperProjection = false) {
+  const helperPlans = skipHelperProjection ? [] : helmEnvironmentHelperProjectionPlans({file,text,sourceRoot:root});
+  const masked = text.replace(/\{\{[\s\S]*?\}\}/gu,value=>value.replace(/[^\n]/gu,' '));
+  const facts = [];
+  const documents = YAML.parseAllDocuments(masked,{keepSourceTokens:true,uniqueKeys:false});
+  const propertySource = (owner,key) => {
+    if (!YAML.isMap(owner)) return null;
+    const pair = owner.items.find(item=>item.key?.value===key);
+    if (!pair?.key?.range) return null;
+    const start = pair.key.range[0], end = text.indexOf('\n',start);
+    return text.slice(start,end < 0 ? text.length : end).replace(/^[^:]+:\s*/u,'').trim();
+  };
+  const propertyBytes = (owner,key) => {
+    if (!YAML.isMap(owner)) return '';
+    const pair = owner.items.find(item=>item.key?.value===key);
+    if (!pair?.key?.range) return '';
+    const start=pair.key.range[0],newline=text.indexOf('\n',start),end=Math.max(pair.value?.range?.[1]??start,newline<0?text.length:newline);
+    return text.slice(start,end);
+  };
+  const guardsAt = index => {
+    const stack = []; const bindings = [];
+    for (const match of text.slice(0,index).matchAll(/\{\{-?\s*([\s\S]*?)\s*-?\}\}/gu)) {
+      const action = match[1].trim();
+      if (/^\$[A-Za-z_][A-Za-z0-9_]*\s*(?::=|=)/u.test(action)) bindings.push({directive:'binding',expression:action});
+      if (/^(?:if|range|with)\s/u.test(action)) {
+        const space = action.indexOf(' '); stack.push({directive:action.slice(0,space),expression:action.slice(space+1).trim()});
+      } else if (/^else(?:\s|$)/u.test(action)) {
+        assert(stack.length, `ENVIRONMENT_PRODUCER_CUSTODY_UNSUPPORTED: ${file}:${lineAt(text,match.index)}: unmatched template else`);
+        stack[stack.length-1] = {...stack.at(-1),branch:action};
+      } else if (action === 'end') {
+        assert(stack.length, `ENVIRONMENT_PRODUCER_CUSTODY_UNSUPPORTED: ${file}:${lineAt(text,match.index)}: unmatched template end`);stack.pop();
+      }
     }
-    lineIndex = endIndex;
+    return [...bindings,...stack];
+  };
+  for (const [documentIndex,document] of documents.entries()) YAML.visit(document,{ Map(_key,node,ancestors) {
+    const sequence = ancestors.at(-1), envPair = ancestors.at(-2);
+    if (!YAML.isSeq(sequence) || !YAML.isPair(envPair) || !['env','extraEnv'].includes(envPair.key?.value)) return;
+    const names = node.items.filter(pair=>pair.key?.value==='name');
+    assert(names.length === 1, `ENVIRONMENT_PRODUCER_CUSTODY_UNSUPPORTED: ${file}:${lineAt(text,node.range[0])}: missing or ambiguous environment declaration name`);
+    const name = names[0].value;
+    assert(YAML.isScalar(name) && typeof name.value === 'string' && name.value.length > 0, `ENVIRONMENT_PRODUCER_CUSTODY_UNSUPPORTED: ${file}:${lineAt(text,names[0].key.range[0])}: unsupported nonliteral or environment-name spelling`);
+    assert(!document.errors.some(error=>error.pos?.[0]>=node.range[0]&&error.pos?.[0]<=node.range[1]), `ENVIRONMENT_PRODUCER_CUSTODY_UNSUPPORTED: ${file}:${lineAt(text,name.range[0])}: malformed selected declaration`);
+    const owner = ancestors.slice(0,-2).filter(YAML.isMap).at(-1);
+    assert(owner, `ENVIRONMENT_PRODUCER_CUSTODY_UNSUPPORTED: ${file}:${lineAt(text,name.range[0])}: environment owner missing`);
+    const keys = ancestors.filter(YAML.isPair).map(pair=>String(pair.key?.value));
+    const placement = keys.findLast(key=>['containers','initContainers','extraContainers'].includes(key)) ?? 'profile-environment';
+    const command = owner.get('command',true),args = owner.get('args',true);
+    const argv = value => YAML.isSeq(value) ? value.items.map((item,index)=>YAML.isScalar(item)&&typeof item.value==='string'&&!item.value.includes('\n')&&!['-c','-ec','-e','-p','--eval','--print'].includes(value.items[index-1]?.value)?item.value:'<selected program or template argument>') : [];
+    const commandSource = ['command','args'].map(key=>propertyBytes(owner,key)).filter(Boolean).join('\n');
+    const image = owner.get('image',true);
+    const imageSource = propertyBytes(owner,'image');
+    const metadata = YAML.isMap(document.contents) ? document.contents.get('metadata',true) : null;
+    const kind = YAML.isMap(document.contents) ? document.contents.get('kind',true) : null;
+    const raw = text.slice(node.range[0],node.range[1]);
+    const custody = {
+      schemaVersion:'environment-producer-source-custody.v1',
+      container:{name:propertySource(owner,'name'),image:YAML.isMap(image)?`<selected image mapping: ${image.items.map(pair=>pair.key?.value).join(', ')}>`:propertySource(owner,'image'),imageSourceDigest:crypto.createHash('sha256').update(imageSource).digest('hex'),placement},
+      command:{argv:argv(command),args:argv(args),sourceSelectors:{command:command&&!YAML.isSeq(command)?propertySource(owner,'command'):null,args:args&&!YAML.isSeq(args)?propertySource(owner,'args'):null},sourceDigest:crypto.createHash('sha256').update(commandSource).digest('hex'),mode:command?'conditional or explicit selected argv; inspect command guards':'image/default entrypoint or profile injection',guards:command?guardsAt(owner.items.find(pair=>pair.key?.value==='command').key.range[0]):[]},
+      guards:guardsAt(name.range[0]),statement:{sourceDigest:crypto.createHash('sha256').update(raw).digest('hex')},
+      document:{index:documentIndex,kind:propertySource(document.contents,'kind'),name:propertySource(metadata,'name')},
+      profilePlacement:'$.'+keys.join('.'),
+    };
+    const value = node.get('value',true); const literal = YAML.isScalar(value) && typeof value.value==='string' ? value.value : '';
+    facts.push({name:name.value,kind:'kubernetes-env',path:file,line:lineAt(text,name.range[0]),defaultOperator:null,sourceValueRole:'none',default:'<none>',
+      secretProvenance:/\b(?:secretKeyRef|secretRef)\s*:/u.test(raw),
+      filePathProvenance:literal.startsWith('/')&&(SENSITIVE_ENV_NAME.test(name.value)||name.value==='GOOGLE_APPLICATION_CREDENTIALS'||/\.(?:key|pem|crt)$/u.test(literal)),
+      custody, custodyDigest:crypto.createHash('sha256').update(JSON.stringify(custody)).digest('hex'),
+      custodyEvidence:{path:file,line:lineAt(text,node.range[0]),endLine:lineAt(text,node.range[1]),containerLine:lineAt(text,owner.range[0]),range:[node.range[0],node.range[1]]},
+    });
+  } });
+  for(const plan of helperPlans) {
+    const indent=plan.prefix.length;
+    const marker='__HELM_ENVIRONMENT_PROJECTION_CUSTODY__';
+    const replacement=plan.registry
+      ? `name: buster-v2-runtime\n${' '.repeat(indent)}image: '<selected incoming .Values.extraContainers image>'\n${' '.repeat(indent)}env:\n${' '.repeat(indent+2)}- name: ${marker}\n${' '.repeat(indent+4)}value: selected`
+      : `- name: ${marker}\n${' '.repeat(indent+2)}value: selected`;
+    const selected=environmentProducerOccurrences(file,text.slice(0,plan.start)+replacement+text.slice(plan.end),true).filter(fact=>fact.name===marker);
+    assert(selected.length===1,`ENVIRONMENT_PRODUCER_HELPER_CUSTODY_UNQUALIFIED: ${file}:${plan.line}: helper is not acquired in one actual environment/container placement`);
+    const caller=selected[0];
+    if(plan.registry) {
+      assert(caller.custody.container.placement==='containers' && caller.custody.guards.some(guard=>guard.directive==='range'&&guard.expression==='.Values.extraContainers') && caller.custody.guards.some(guard=>guard.directive==='if'&&guard.expression==='eq .name "buster-v2-runtime"'),`ENVIRONMENT_PRODUCER_HELPER_CUSTODY_UNQUALIFIED: ${file}:${plan.line}: registry helper requires actual extraContainers range/name branch`);
+    }
+    for(const projection of plan.projections) {
+      const helperProjection={...plan.helperProjection,caller:{...plan.helperProjection.caller,guards:caller.custody.guards},branch:{guards:projection.guards,finiteKey:projection.finiteKey??null,valueAuthority:projection.valueAuthority}};
+      const custody={...caller.custody,guards:[...caller.custody.guards,...projection.guards],statement:{sourceDigest:projection.sourceDigest},helperProjection};
+      if(plan.registry) {
+        custody.container={...custody.container,image:'.Values.extraContainers[name=buster-v2-runtime].image',imageSourceDigest:plan.helperProjection.incomingContainer.sourceDigest};
+        custody.command={argv:[],args:[],sourceSelectors:{command:'.container.command',args:'.container.args'},sourceDigest:plan.helperProjection.incomingContainer.sourceDigest,mode:'incoming values container command/image; transport only without source delivery proof',guards:caller.custody.guards};
+      }
+      const literal=typeof projection.literalValue==='string'?projection.literalValue:'';
+      facts.push({name:projection.name,kind:'kubernetes-env',path:file,line:plan.line,defaultOperator:null,sourceValueRole:'none',default:'<none>',secretProvenance:projection.secretProvenance,
+        filePathProvenance:literal.startsWith('/')&&(SENSITIVE_ENV_NAME.test(projection.name)||/\.(?:key|pem|crt)$/u.test(literal)),custody,custodyDigest:crypto.createHash('sha256').update(JSON.stringify(custody)).digest('hex'),
+        custodyEvidence:{path:file,line:plan.line,endLine:plan.line,containerLine:caller.custodyEvidence.containerLine,selectedSourcePath:projection.sourcePath,selectedSourceLine:projection.sourceLine,range:projection.range}});
+    }
   }
-  return reads;
+  return facts;
 }
 
 function environmentOccurrences(file, text) {
@@ -5136,7 +7086,8 @@ function environmentOccurrences(file, text) {
   const pythonSource = extension === '.py';
   const goSource = extension === '.go';
   const cSource = extension === '.c' || extension === '.h';
-  const scanText = shellSource ? maskQuotedShellHeredocs(text) : text;
+  const scanText = shellSource ? maskQuotedShellHeredocs(text, file) : text;
+  if (yamlSource) found.push(...environmentProducerOccurrences(file, text));
   if (goSource) {
     const splitGoArguments = (value) => {
       const result = [];
@@ -5206,8 +7157,8 @@ function environmentOccurrences(file, text) {
       }
     }
   }
-  if (nodeSource) {
-    for (const readFact of nodeEnvironmentReads(file, text)) {
+  if (nodeSource || pythonSource) {
+    for (const readFact of pythonSource ? pythonEnvironmentReads(text, file) : nodeEnvironmentReads(file, text)) {
       found.push({
         name: readFact.name,
         kind: readFact.kind,
@@ -5285,11 +7236,7 @@ function environmentOccurrences(file, text) {
   // Embedded YAML programs are parsed by the runtime-specific scanners above.
   // Do not also scan arbitrary YAML text with language regexes: that duplicates
   // real readers and can turn documentation strings into runtime inputs.
-  if (pythonSource) patterns.push({ kind: 'python-process-env', regex: /(?:os\.getenv\(|os\.environ(?:\.get\(|\[))['"]([A-Z][A-Z0-9_]*)['"]/g });
   if (cSource) patterns.push({ kind: 'c-getenv', regex: /(?:secure_)?getenv\(\s*"([A-Z][A-Z0-9_]*)"\s*\)/g });
-  if (yamlSource) patterns.push({ kind: 'kubernetes-env', regex: /^\s*-?\s*name:\s*([A-Z][A-Z0-9_]*)\s*(?:#.*)?$/gm });
-  if (yamlSource) patterns.push({ kind: 'kubernetes-env', regex: /^\s*-\s*\{\s*name\s*:\s*["']?([A-Z][A-Z0-9_]*)["']?\s*,\s*(?:value|valueFrom)\s*:/gm });
-  if (yamlSource) patterns.push({ kind: 'kubernetes-env', regex: /\benv\s*:\s*\[\s*\{\s*name\s*:\s*["']?([A-Z][A-Z0-9_]*)["']?\s*,\s*(?:value|valueFrom)\s*:/g });
   for (const { kind, regex } of patterns) {
     for (const match of scanText.matchAll(regex)) {
       const name = match[1] ?? match[2];
@@ -6420,9 +8367,10 @@ function environmentConsumerPurpose(contract, producer = null) {
 
 function verifyEnvironmentConsumerCoverage() {
   const entries = new Map();
+  const configuredEnvironmentReceivers = runtimeTextSources().flatMap(source => configuredEnvironmentReceiverFacts(source, read(source)));
   for (const source of runtimeTextSources()) for (const occurrence of environmentOccurrences(source, read(source))) {
     const entry = entries.get(occurrence.name) ?? { readers: [], producers: [] };
-    entry[occurrence.kind === 'kubernetes-env' ? 'producers' : 'readers'].push({ path: occurrence.path, line: occurrence.line, access: occurrence.kind });
+    entry[occurrence.kind === 'kubernetes-env' ? 'producers' : 'readers'].push({ path: occurrence.path, line: occurrence.line, access: occurrence.kind, ...(occurrence.custody ? {custody:occurrence.custody,custodyDigest:occurrence.custodyDigest,custodyEvidence:occurrence.custodyEvidence} : {}) });
     entries.set(occurrence.name, entry);
   }
   const missing = [];
@@ -6430,27 +8378,36 @@ function verifyEnvironmentConsumerCoverage() {
     for (const reader of entry.readers) if (!environmentReaderContract(name, reader)) missing.push(`${name}:${reader.path}`);
     for (const producer of entry.producers) {
       if (!qualifiedProducerBindings.has(`${name}:${producer.path}`)) missing.push(`${name}:${producer.path}`);
-      if (!entry.readers.length && !externalProducerContract(name, producer.path, producer)) missing.push(`${name}:${producer.path}:external boundary`);
+      if (!externalProducerContract(name, producer.path, {...producer,sourceRoot:root})) missing.push(`${name}:${producer.path}:external boundary`);
     }
   }
   assert.equal(missing.length, 0, `CONFIG_SEMANTIC_GAP: unqualified environment receiving sources: ${[...new Set(missing)].join(', ')}`);
-  console.log(`PASS exact environment receiving-source coverage (${entries.size} discovered names; every reader and producer pair qualified).`);
+  console.log(`PASS exact environment receiving-source coverage (${entries.size} discovered names; every reader and producer pair qualified; ${configuredEnvironmentReceivers.length} explicit configured-key receivers).`);
 }
 
 function environmentProducerSetting(producer) {
-  const lines = read(producer.path).split('\n');
+  const selectedPath=producer.custodyEvidence?.selectedSourcePath??producer.path;
+  const selectedLine=producer.custodyEvidence?.selectedSourceLine??producer.line;
+  const lines = read(selectedPath).split('\n');
   const selected = [];
-  const declarationIndent = /^\s*/u.exec(lines[producer.line - 1])[0].length;
-  for (let index = producer.line - 1; index < Math.min(lines.length, producer.line + 12); index++) {
+  const declarationIndent = /^\s*/u.exec(lines[selectedLine - 1])[0].length;
+  for (let index = selectedLine - 1; index < Math.min(lines.length, selectedLine + 12); index++) {
     // A sibling value, Helm action, or container field does not belong to this
     // environment declaration. Its Values expressions cannot prove this input.
-    if (index > producer.line - 1 && /^\s*\S/u.test(lines[index])
+    if (index > selectedLine - 1 && /^\s*\S/u.test(lines[index])
       && !/^\s*#/u.test(lines[index]) && /^\s*/u.exec(lines[index])[0].length <= declarationIndent) break;
     selected.push(lines[index]);
   }
-  const text = selected.join('\n');
+  const bytes = read(selectedPath);
+  const text = producer.custodyEvidence?.range ? bytes.slice(...producer.custodyEvidence.range) : selected.join('\n');
   const settings = [...new Set([...text.matchAll(/\.Values\.([A-Za-z0-9_.]+)/gu)].map((match) => match[1]))];
-  const location = `\`${producer.path}\` at line ${producer.line}`;
+  const location = `\`${producer.path}\` at line ${producer.line}${selectedPath!==producer.path?`; selected helper \`${selectedPath}\` at line ${selectedLine}`:''}`;
+  if(producer.custody?.helperProjection) {
+    const projection=producer.custody.helperProjection,authority=projection.branch.valueAuthority;
+    const selectedValue=authority.kind==='literal'?`fixed literal ${JSON.stringify(authority.value)}`:authority.expression?`Helm value expression \`${authority.expression}\``:`selected ${authority.kind} statements ${authority.statements.map(statement=>`\`${statement}\``).join('; ')}`;
+    const guards=projection.branch.guards.filter(guard=>guard.directive!=='binding').map(guard=>`${guard.directive} \`${guard.expression}\``).join('; ');
+    return `${location}; ${selectedValue}; producing branches ${guards||'<unconditional helper declaration>'}; exact helper validation dependencies and actual caller/container custody apply; no evaluated Helm default or unproved receiving-process guarantee`;
+  }
   if (settings.length) return `${location}; Helm fields ${settings.map((setting) => `\`${setting}\``).join(', ')}; the linked declaration supplies any render condition and default`;
   const literalSource = /\bvalue:\s*("(?:[^"\\]|\\.)*"|'(?:[^']|'')*'|[^,}\n]+)/u.exec(text)?.[1]?.trim();
   const literal = literalSource && !literalSource.startsWith('{{') ? YAML.parse(literalSource) : undefined;
@@ -6499,7 +8456,10 @@ function buildRuntimeInputInventory(yamlInventory) {
     const publicCertificatePath = /(?:_TLS_CERT|_CA_FILE)$/u.test(occurrence.name);
     const identityReference = /(?:_CLIENT_ID|_USER|_USERNAME|_ACCOUNT|_PRODUCER|_AUDIENCE|_ISSUER)$/u.test(occurrence.name)
       || ['PGUSER', 'REDIS_USERNAME'].includes(occurrence.name);
-    if (publicVerificationMaterial) {
+    if (occurrence.secretProvenance || entry.sensitivityClass === 'secret-value') {
+      entry.sensitivityClass = 'secret-value';
+      if (occurrence.secretProvenance) entry.sensitivityReasons.push('Kubernetes valueFrom/secretKeyRef provenance');
+    } else if (publicVerificationMaterial) {
       entry.sensitivityClass = 'public-verification-material';
       entry.sensitivityReasons.push('public verification material; it cannot create signatures or credentials');
     } else if (publicCertificatePath) {
@@ -6508,9 +8468,6 @@ function buildRuntimeInputInventory(yamlInventory) {
     } else if (identityReference) {
       entry.sensitivityClass = 'identity-reference';
       entry.sensitivityReasons.push('identity or routing selector; it is not authentication proof');
-    } else if (occurrence.secretProvenance) {
-      entry.sensitivityClass = 'secret-value';
-      entry.sensitivityReasons.push('Kubernetes valueFrom/secretKeyRef provenance');
     } else if (publicSecretClass) {
       entry.sensitivityClass = publicSecretClass;
       entry.sensitivityReasons.push('public control or authority identifier; it does not carry Secret payload data');
@@ -6528,7 +8485,7 @@ function buildRuntimeInputInventory(yamlInventory) {
       entry.sensitivityReasons.push('sensitive environment-variable name');
     }
     entry.sensitive = entry.sensitivityClass === 'secret-value';
-    entry.consumers.push({ path: occurrence.path, line: occurrence.line, access: occurrence.kind });
+    entry.consumers.push({ path: occurrence.path, line: occurrence.line, access: occurrence.kind, ...(occurrence.custody ? {custody:occurrence.custody,custodyDigest:occurrence.custodyDigest,custodyEvidence:occurrence.custodyEvidence} : {}) });
     const owner = sourceOwner(occurrence.path);
     if (!entry.sourceOwners.some((item) => item.component === owner.component && item.evidence === owner.evidence)) entry.sourceOwners.push(owner);
     if (occurrence.kind === 'shell-parameter') {
@@ -6645,9 +8602,9 @@ function buildRuntimeInputInventory(yamlInventory) {
       owningSurface: environmentProducerSetting(producer),
       qualified: qualifiedProducerBindings.has(`${entry.name}:${producer.path}`),
     }));
-    if (entry.readers.length === 0) {
+    {
       for (const producer of entry.producers) {
-        const contract = externalProducerContract(entry.name, producer.path, producer);
+        const contract = externalProducerContract(entry.name, producer.path, {...producer,sourceRoot:root});
         if (!contract) { entry.unqualifiedProducers.push(producer); continue; }
         assertRuntimeConsumerContract(contract, `${entry.name}:${producer.path}`);
         entry.consumerContracts.push({ ...producer, ...contract,
@@ -6952,8 +8909,9 @@ function buildRuntimeInputInventory(yamlInventory) {
   const classifiedCliFlags = classifyCliFacts(cliFlags);
   return {
     generatedBy: 'scripts/docs-configuration-inventory.mjs',
-    discovery: { roots: RUNTIME_SCAN_ROOTS, textExtensions: [...TEXT_EXTENSIONS].sort(), excludedSegments: [...EXCLUDED_SEGMENTS].sort(), shellSecretRule: 'every .sh source below the declared runtime roots, excluding quoted heredoc bodies; discover direct kubectl create secret commands and shell command arrays, and reject any discovered Secret without semantic authority' },
+    discovery: { roots: RUNTIME_SCAN_ROOTS, textExtensions: [...TEXT_EXTENSIONS].sort(), excludedSegments: [...EXCLUDED_SEGMENTS].sort(), helmEnvironmentHelperRule: 'finite source-shaped literal include/caller recipes acquire all optional demo-ready, product-decisions and registry-container environment branches with exact helper/validation/caller/container custody; unknown or changed env-emitting helper syntax fails source-specifically', shellSecretRule: 'every .sh source below the declared runtime roots, excluding quoted heredoc bodies; discover direct kubectl create secret commands and shell command arrays, and reject any discovered Secret without semantic authority' },
     environment: [...groupedEnvironment.values()].sort((a, b) => a.name.localeCompare(b.name)),
+    configuredEnvironmentReceivers: runtimeTextSources().flatMap(source => configuredEnvironmentReceiverFacts(source, read(source))).map(({index, ...fact}) => fact),
     cliFlags: classifiedCliFlags,
     secrets: secrets.sort((a, b) => a.path.localeCompare(b.path) || String(a.name).localeCompare(String(b.name)) || String(a.key ?? '').localeCompare(String(b.key ?? ''))),
     derivedValues: derivedValues.sort((a, b) => a.name.localeCompare(b.name) || a.path.localeCompare(b.path)),
@@ -6974,6 +8932,7 @@ function buildRuntimeInputInventory(yamlInventory) {
     },
     totals: {
       environmentVariables: groupedEnvironment.size,
+      configuredEnvironmentReceivers: runtimeTextSources().flatMap(source => configuredEnvironmentReceiverFacts(source, read(source))).length,
       environmentReaderPairs: new Set([...groupedEnvironment.values()].flatMap((item) => item.readers.map((reader) => `${item.name}:${reader.path}`))).size,
       environmentProducerPairs: new Set([...groupedEnvironment.values()].flatMap((item) => item.producers.map((producer) => `${item.name}:${producer.path}`))).size,
       unqualifiedEnvironmentReaderPairs: [...groupedEnvironment.values()].reduce((sum, item) => sum + item.unqualifiedReaders.length, 0),
@@ -7232,6 +9191,24 @@ async function verifyConfigurationSchemaSemantics() {
   const newSecret = enrichSecretFacts(shellSecretFacts('scripts/new-secret-source.sh', 'kubectl create secret generic unowned-semantic-secret --from-literal=opaque=fixture\n'));
   assert.equal(newSecret.length, 1); assert.deepEqual(newSecret[0].keys, ['opaque']); assert.equal(newSecret[0].semanticStatus, 'secret-authority-blocker');
   console.log('PASS recursive schema rules, actual registry default boundaries, approval omission/explicit/empty, direct-command collection behavior and common-executor rejection, new shell Secret authority');
+}
+
+if (argv.includes('--environment-producer-custody-index-only')) {
+  const facts=runtimeTextSources().filter(file=>['.yaml','.yml'].includes(path.extname(file))).flatMap(file=>environmentProducerOccurrences(file,read(file)));
+  await new Promise((resolve,reject)=>process.stdout.write(JSON.stringify(facts,null,2)+'\n',error=>error?reject(error):resolve()));
+  process.exit(0);
+}
+
+if (argv.includes('--environment-producer-custody-probe')) {
+  const sourcePath = option('--environment-producer-custody-probe');
+  assert(typeof sourcePath === 'string' && RUNTIME_SCAN_ROOTS.some(prefix=>sourcePath.startsWith(`${prefix}/`))
+    && sourcePath === path.posix.normalize(sourcePath) && !sourcePath.startsWith('../') && ['.yaml','.yml'].includes(path.extname(sourcePath)) && exists(sourcePath),
+    'ENVIRONMENT_PRODUCER_CUSTODY_UNSUPPORTED: probe requires an existing repository runtime YAML source identity');
+  const input = option('--probe-input');
+  assert(!input || fs.lstatSync(input).isFile(), 'ENVIRONMENT_PRODUCER_CUSTODY_UNSUPPORTED: probe input must be a regular local text file');
+  const text = input ? fs.readFileSync(input,'utf8') : read(sourcePath);
+  await new Promise((resolve,reject)=>process.stdout.write(JSON.stringify(environmentProducerOccurrences(sourcePath,text),null,2)+'\n',error=>error?reject(error):resolve()));
+  process.exit(0);
 }
 
 if (argv.includes('--check-runtime-consumer-semantics-only')) {

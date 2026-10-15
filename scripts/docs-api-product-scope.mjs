@@ -293,8 +293,8 @@ export function discoverProductApiContexts(root) {
 }
 
 export function assertProductApiContexts(resources, root) {
-  const normalize = rows => rows.map(({ apiVersion, kind, path, document, sourceDigest, producer, profile, dependencyDigest, outputDigest, inputDigest, inputs, line, expressions, inferredIdentity, requestMethod, requestOperation, requestInvocation, requestConstructor, archivePath, archiveSha256, generatedFields, requestPath, requestPatchType, requestReceiver, patchOperations, requestAlternatives, factoryExpression, factoryLine, factoryDependencies, conditions, forwardedProducer }) =>
-    JSON.stringify([apiVersion, kind, path, document, sourceDigest, producer, profile, dependencyDigest, outputDigest, inputDigest, inputs, line, expressions, inferredIdentity, requestMethod, requestOperation, requestInvocation, requestConstructor, archivePath, archiveSha256, generatedFields, requestPath, requestPatchType, requestReceiver, patchOperations, requestAlternatives, factoryExpression, factoryLine, factoryDependencies, conditions, forwardedProducer])).sort();
+  const normalize = rows => rows.map(({ apiVersion, kind, path, document, sourceDigest, producer, profile, dependencyDigest, outputDigest, inputDigest, inputs, line, expressions, inferredIdentity, requestMethod, requestOperation, requestInvocation, requestConstructor, archivePath, archiveSha256, generatedFields, requestPath, requestPatchType, requestReceiver, patchOperations, requestAlternatives, factoryExpression, factoryLine, factoryDependencies, conditions, forwardedProducer, canonicalSource, entrySource, entrySourceDigest }) =>
+    JSON.stringify([apiVersion, kind, path, document, sourceDigest, producer, profile, dependencyDigest, outputDigest, inputDigest, inputs, line, expressions, inferredIdentity, requestMethod, requestOperation, requestInvocation, requestConstructor, archivePath, archiveSha256, generatedFields, requestPath, requestPatchType, requestReceiver, patchOperations, requestAlternatives, factoryExpression, factoryLine, factoryDependencies, conditions, forwardedProducer, canonicalSource, entrySource, entrySourceDigest])).sort();
   const actual = resources.flatMap(resource => resource.sourceContexts.map(context =>
     ({ ...context, apiVersion: resource.apiVersion, kind: resource.kind })));
   assert.deepEqual(normalize(actual), normalize(discoverProductApiContexts(root)), 'API_PRODUCT_DISCOVERY_DRIFT: resource or source document omitted, added or changed');
@@ -499,17 +499,34 @@ export function apiProductSelection(apiVersion, kind, contexts, receivers, root 
   const selected = new Map();
   const authoredUnknownFields=[];
   const metadataPaths = new Set();
+  let sourceProvenance = {};
   const add = (boundary, evidence) => {
     if (!selected.has(boundary.fieldPath)) selected.set(boundary.fieldPath, []);
-    selected.get(boundary.fieldPath).push(evidence);
+    selected.get(boundary.fieldPath).push({...evidence,...sourceProvenance});
   };
   for (const context of contexts) {
-    const bytes = fs.readFileSync(path.resolve(root, context.path), 'utf8');
+    sourceProvenance = {};
+    if(context.canonicalSource !== undefined) {
+      const canonicalFile=source=>{
+        assert(typeof source==='string' && source.length>0, 'API_PRODUCT_CANONICAL_SOURCE_UNQUALIFIED');
+        const file=path.resolve(root,source),relative=path.relative(root,file);
+        assert(relative!=='' && relative!=='..' && !relative.startsWith('..'+path.sep) && !path.isAbsolute(relative)
+          && fs.realpathSync(file)===file && fs.statSync(file).isFile(), `API_PRODUCT_CANONICAL_SOURCE_DRIFT: ${source}`);
+        return file;
+      };
+      canonicalFile(context.canonicalSource);
+      const entryFile=canonicalFile(context.entrySource),publicFile=path.resolve(root,context.path),relative=path.relative(root,publicFile);
+      assert(relative!=='' && relative!=='..' && !relative.startsWith('..'+path.sep) && !path.isAbsolute(relative)
+        && fs.realpathSync(publicFile)===entryFile, `API_PRODUCT_ENTRY_SOURCE_DRIFT: ${context.path}`);
+      assert.equal(digest(fs.readFileSync(entryFile,'utf8')),context.entrySourceDigest, `API_PRODUCT_ENTRY_SOURCE_DRIFT: ${context.path}`);
+      sourceProvenance={canonicalSource:context.canonicalSource,entrySource:context.entrySource,entrySourceDigest:context.entrySourceDigest,line:context.line};
+    }
+    const bytes = fs.readFileSync(path.resolve(root, context.canonicalSource??context.path), 'utf8');
     assert.equal(digest(bytes), context.sourceDigest, `API_PRODUCT_SOURCE_DRIFT: ${context.path}`);
     let value;
     if (context.producer) {
       const outputs=context.producer==='helm'?discoverHelmApiOutputs(root):context.producer==='go-shape'?discoverGoApiOutputs(root):context.producer==='shell-shape'?discoverShellApiOutputs(root):context.producer==='script-render'?discoverTransformedApiOutputs(root):context.producer==='infrastructure-helm'?discoverInfrastructureApiOutputs(root):context.producer==='external-helm'?discoverExternalChartApiOutputs(root):discoverScriptApiOutputs(root);
-      const output=outputs.find(item=>item.context.path===context.path && item.context.document===context.document && item.context.profile===context.profile);
+      const output=outputs.find(item=>item.context.path===context.path && item.context.document===context.document && item.context.profile===context.profile && item.context.canonicalSource===context.canonicalSource && item.context.entrySource===context.entrySource && item.context.apiVersion===apiVersion && item.context.kind===kind);
       assert(output, `API_PRODUCT_OUTPUT_MISSING: ${context.path} ${context.profile}#${context.document}`);
       assert.deepEqual({...context,owner:undefined,apiVersion,kind},{...output.context,owner:undefined}, `API_PRODUCT_OUTPUT_DRIFT: ${context.path} ${context.profile}`);
       value=output.value;
@@ -754,6 +771,7 @@ export function apiProductSelection(apiVersion, kind, contexts, receivers, root 
       }
     }
   }
+  sourceProvenance = {};
   if (isProductOwnedApi(apiVersion,kind)) for(const boundary of authority) if(!selected.has(boundary.fieldPath)) add(boundary,{reason:'recursive-product-owned-public-schema',authority:boundary.authority,authoritySha256:boundary.authoritySha256});
   return { version: 1, fieldPaths: [...selected.keys()].sort(), applicability: Object.fromEntries([...selected].sort(([a], [b]) => a.localeCompare(b))), metadataPaths: [...metadataPaths].sort(), limits: productScopeLimits,...(authoredUnknownFields.length?{authoredUnknownFields}: {}) };
 }

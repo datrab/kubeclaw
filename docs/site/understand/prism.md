@@ -85,6 +85,31 @@ flowchart LR
     Adapter --> Forge[Forge]
 ```
 
+**Text alternative to the diagram**
+
+Each row names a directed connection. Labels preserve the diagram’s conditions or handoffs; dotted relationships are identified explicitly.
+
+| From | Relationship | To |
+| --- | --- | --- |
+| User or agent | Directed connection | Prism Control |
+| Prism Studio | Directed connection | Prism Control |
+| Prism Control | Directed connection | PostgreSQL and pgvector |
+| Prism Control | Directed connection | Agent Bridge |
+| Agent Bridge | Directed connection | OpenClaw Agent |
+| Prism Control | Directed connection | Prism Worker |
+| Prism Worker | Directed connection | Worker Core |
+| Worker Core | Directed connection | Prism Engine |
+| Prism Engine | Directed connection | Renderer and evaluation |
+| Prism Control | Directed connection | Ingestion service |
+| Ingestion service | Directed connection | External source |
+| Prism Worker | Directed connection — artifact HTTP | Prism Control |
+| Prism Control | Directed connection | Content-addressed artifacts |
+| Prism Control | Directed connection | Approved baseline bundle |
+| Approved baseline bundle | Directed connection | Pipeline adapter |
+| Pipeline adapter | Directed connection | Buster |
+| Pipeline adapter | Directed connection | Forge |
+
+
 Text version: A user works through Studio or calls Control through an allowed
 agent path. Control validates identity and intent, and stores the durable
 request. Model-driven generation uses a durable Agent job, the Agent Bridge,

@@ -147,8 +147,12 @@ keine Schließung technischer Arbeit und keine Löschfreigabe für Review-Nachwe
 
 Die fünf zusätzlichen Entscheidungen beziehen sich auf Commit
 `a8a5b526efbe26b726f8fd5297c98bcbd2f221b7`; ihre Quellblobs sind gegenüber dem
-eingefrorenen Bestand unverändert. Alle 15 Texte unter `docs/operations/`
+eingefrorenen Bestand unverändert. Alle 15 Texte unter dem historischen Pfad <code>docs/operations/</code>
 sind damit inhaltlich bewertet, aber noch nicht überarbeitet oder abgenommen.
+Der Pfad bezeichnet den [damaligen Quellstand](https://github.com/datrab/kubeclaw/tree/a8a5b526efbe26b726f8fd5297c98bcbd2f221b7/docs/operations),
+nicht ein aktuelles Repository-Verzeichnis. Der heutige Betriebseinstieg ist
+[Operate KubeClaw](../site/use/operate.md); dieser Verweis ersetzt keine
+der damaligen Einzelentscheidungen oder Abnahmegrenzen.
 Die oben genannten 424 Verweiskandidaten beschreiben den ersten 52er-Stand;
 die zusätzlichen Kandidaten stehen direkt in den fünf neuen Einträgen.
 

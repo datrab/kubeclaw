@@ -8,10 +8,19 @@ import hashlib
 import json
 import sys
 import types
+import importlib.util
+sys.dont_write_bytecode = True
 from pathlib import Path
 
+_receipt_spec = importlib.util.spec_from_file_location('docs_python_ast_v1', Path(__file__).with_name('docs-api-python-ast-v1.py'))
+_receipt = importlib.util.module_from_spec(_receipt_spec)
+_receipt_spec.loader.exec_module(_receipt)
+def receipt(node):
+    return _receipt.serialize(node, sys.argv[1])
+
 source = Path(sys.argv[1]).read_text()
-tree = ast.parse(source)
+tree = ast.parse(source, filename=sys.argv[1])
+receipt(tree) # reject unknown source syntax before any finite offline adapter dispatch
 # Closed AST recipes bind each selected constructor, transfer and public sink.
 # They are deliberately finite: an unfamiliar source construct requires review,
 # even after generated artifacts or registry source digests are refreshed. These
@@ -88,7 +97,7 @@ if __name__ == '__main__':
 def bootstrap_credential_recipe(actual, recipe):
     """A finite constructor/roundtrip language; actual bytes still reach stubs."""
     normalized = copy.deepcopy(actual)
-    dump = lambda node: ast.dump(node, include_attributes=False)
+    dump = lambda node: receipt(node)
     def finite_value(node):
         if isinstance(node, ast.Constant): return isinstance(node.value, (str, int, float, bool, type(None)))
         if isinstance(node, ast.Name): return node.id in ('name', 'namespace', 'values')
@@ -137,7 +146,7 @@ def bootstrap_credential_recipe(actual, recipe):
 
 def bootstrap_audit_facts():
     expected = ast.parse(BOOTSTRAP_RECIPES)
-    dump = lambda node: ast.dump(node, include_attributes=False)
+    dump = lambda node: receipt(node)
     actual_functions = {node.name: node for node in tree.body if isinstance(node, ast.FunctionDef)}
     expected_functions = {node.name: node for node in expected.body if isinstance(node, ast.FunctionDef)}
     facts = {}
@@ -164,8 +173,84 @@ def bootstrap_audit_facts():
     entries = {name: all(facts[symbol]['qualified'] for symbol in symbols) for name, symbols in groups.items()}
     return facts, groups, entries
 
+PATCH_RECIPE = r'''
+#!/usr/bin/env python3
+"""Align the existing webhook list with chart 0.30.0 without replacing entries."""
+import argparse
+import json
+import os
+import subprocess
+
+NAME = "spire-server-spire-controller-manager-webhook"
+ORDER = ["vclusterfederatedtrustdomain.kb.io", "vclusterspiffeid.kb.io"]
+
+
+def order_patch(live):
+    hooks = live.get("webhooks", [])
+    names = [hook.get("name") for hook in hooks]
+    if len(names) != 2 or set(names) != set(ORDER):
+        raise ValueError("Unexpected webhook names; refusing to modify the list")
+    if names == ORDER:
+        return []
+    # Reject a concurrent controller update instead of overwriting a CA rotation.
+    return [
+        {"op": "test", "path": "/metadata/resourceVersion", "value": live["metadata"]["resourceVersion"]},
+        {"op": "test", "path": "/webhooks/0/name", "value": ORDER[1]},
+        {"op": "test", "path": "/webhooks/1/name", "value": ORDER[0]},
+        {"op": "move", "from": "/webhooks/1", "path": "/webhooks/0"},
+    ]
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--apply", action="store_true", help="Apply the guarded list move")
+    args = parser.parse_args()
+    context = os.environ.get("KUBE_CONTEXT")
+    if not context:
+        raise SystemExit("Set KUBE_CONTEXT first")
+    command = ["kubectl", "--context", context]
+    live = json.loads(subprocess.check_output(command + ["get", "validatingwebhookconfiguration", NAME, "-o", "json"], text=True))
+    patch = order_patch(live)
+    if not patch:
+        print("PASS: webhook order already matches the chart; no change needed")
+    elif not args.apply:
+        print("Reorder required; rerun with --apply to move the existing entries without changing their contents")
+    else:
+        subprocess.run(command + ["patch", "validatingwebhookconfiguration", NAME, "--type=json", "-p", json.dumps(patch)], check=True)
+        print("PASS: existing webhook entries reordered; contents unchanged")
+
+
+if __name__ == "__main__":
+    main()
+'''
+
+def patch_source_custody():
+    """Closed public/helper grammar, with data-only operation constructors."""
+    expected = ast.parse(PATCH_RECIPE)
+    actual = copy.deepcopy(tree)
+    def without_doc(module):
+        module.body = [n for n in module.body if not (isinstance(n, ast.Expr) and isinstance(n.value, ast.Constant) and isinstance(n.value.value, str))]
+    without_doc(actual); without_doc(expected)
+    functions = [n for n in actual.body if isinstance(n, ast.FunctionDef)]
+    if [n.name for n in functions] != ['order_patch', 'main']: return False
+    selected = next(n for n in expected.body if isinstance(n, ast.FunctionDef) and n.name == 'order_patch')
+    constructor = functions[0].body[-1]
+    if not isinstance(constructor, ast.Return) or not isinstance(constructor.value, ast.List): return False
+    def data(node):
+        if isinstance(node, ast.Constant): return type(node.value) in (str, int, float, bool, type(None))
+        if isinstance(node, (ast.List, ast.Tuple)): return all(data(n) for n in node.elts)
+        if isinstance(node, ast.Dict): return all(isinstance(k, ast.Constant) and isinstance(k.value, str) and data(v) for k,v in zip(node.keys,node.values))
+        return receipt(node) in [receipt(ast.parse(expr, mode='eval').body) for expr in ('live["metadata"]["resourceVersion"]', 'ORDER[0]', 'ORDER[1]')]
+    if not constructor.value.elts or not all(isinstance(n, ast.Dict) and data(n) for n in constructor.value.elts): return False
+    constructor.value = copy.deepcopy(selected.body[-1].value)
+    # Public flow, helper controls, bindings, decorators/defaults and the full
+    # module dispatch must match before any FunctionDef is compiled or called.
+    return receipt(actual) == receipt(expected)
+
 def patch_profiles():
     """Run original patch construction and argv at the subprocess boundary."""
+    if not patch_source_custody():
+        raise ValueError("API_PRODUCT_PYTHON_PATCH_SOURCE_UNQUALIFIED: " + sys.argv[1])
     assignments = [node for node in tree.body if isinstance(node, ast.Assign)]
     for node in assignments:
         ast.literal_eval(node.value)  # no module-side process or file effects
@@ -204,7 +289,7 @@ def patch_profiles():
             submitted.append(record)
             if profile == 'transport-failure': raise RuntimeError('synthetic transport failure')
             results.append(record)
-        namespace = {'__builtins__': {name: getattr(__import__('builtins'), name) for name in ('print','list','set','len','ValueError','SystemExit')}, '__doc__': 'offline selected patch', 'argparse': types.SimpleNamespace(ArgumentParser=Parser), 'json': json, 'os': types.SimpleNamespace(environ=env), 'subprocess': types.SimpleNamespace(check_output=read, run=run)}
+        namespace = {'__builtins__': {name: getattr(__import__('builtins'), name) for name in ('print','list','set','len','ValueError','SystemExit')}, '__doc__': 'offline selected patch', 'argparse': types.SimpleNamespace(ArgumentParser=Parser), 'json': types.SimpleNamespace(loads=json.loads, dumps=json.dumps), 'os': types.SimpleNamespace(environ=env), 'subprocess': types.SimpleNamespace(check_output=read, run=run)}
         exec(compile(program, sys.argv[1], 'exec'), namespace)
         try:
             with contextlib.redirect_stdout(io.StringIO()): namespace['main']()
@@ -291,13 +376,35 @@ if len(sys.argv) > 2 and sys.argv[2] in ('--classify', '--audit'):
             parents[child] = node
             index(child)
     index(tree)
-    scopes = (ast.Module, ast.FunctionDef, ast.AsyncFunctionDef, ast.Lambda, ast.ClassDef)
+    scopes = (ast.Module, ast.FunctionDef, ast.AsyncFunctionDef, ast.Lambda, ast.ClassDef, ast.ListComp, ast.SetComp, ast.DictComp, ast.GeneratorExp)
     def owner(node):
+        child = node
+        ancestors = {node}
         node = parents.get(node)
-        while node is not None and not isinstance(node, scopes): node = parents.get(node)
-        return node
+        while node is not None:
+            if isinstance(node, scopes):
+                # Definition-time defaults/decorators/bases are evaluated in
+                # the enclosing scope, not a future function/class body.
+                definition_input = isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)) and child not in node.body
+                definition_input |= isinstance(node, ast.Lambda) and child is not node.body
+                # Only the first comprehension iterable uses the enclosing
+                # scope; its targets and remaining expressions are local.
+                definition_input |= isinstance(node, (ast.ListComp, ast.SetComp, ast.DictComp, ast.GeneratorExp)) and node.generators[0].iter in ancestors
+                if not definition_input: return node
+            ancestors.add(node)
+            child = node
+            node = parents.get(node)
+        return None
+    # Finite scope declarations: Global refers to the module import authority,
+    # including stores. Nonlocal is an explicitly unsupported custody escape.
+    global_names = {}
+    for declaration in ast.walk(tree):
+        if isinstance(declaration, ast.Global):
+            global_names.setdefault(owner(declaration), set()).update(declaration.names)
     bindings = {}
-    def bind(scope, name, value): bindings.setdefault((scope, name), []).append(value)
+    def bind(scope, name, value):
+        if name in global_names.get(scope, set()): scope = tree
+        bindings.setdefault((scope, name), []).append(value)
     for node in ast.walk(tree):
         if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
             bind(owner(node), node.name, node)
@@ -312,19 +419,46 @@ if len(sys.argv) > 2 and sys.argv[2] in ('--classify', '--audit'):
                 bind(owner(node), name, ('import', alias.name if isinstance(node, ast.Import) else (node.module or '') + '.' + alias.name))
         if isinstance(node, (ast.Assign, ast.AnnAssign, ast.NamedExpr)):
             targets = node.targets if isinstance(node, ast.Assign) else [node.target]
+            binding_scope = owner(node)
+            if isinstance(node, ast.NamedExpr):
+                while isinstance(binding_scope, (ast.ListComp, ast.SetComp, ast.DictComp, ast.GeneratorExp)): binding_scope = owner(binding_scope)
             for target in targets:
                 for item in ast.walk(target):
-                    if isinstance(item, ast.Name) and isinstance(item.ctx, ast.Store): bind(owner(node), item.id, node.value)
+                    if isinstance(item, ast.Name) and isinstance(item.ctx, ast.Store): bind(binding_scope, item.id, node.value)
         if isinstance(node, (ast.AugAssign, ast.For, ast.AsyncFor, ast.With, ast.AsyncWith, ast.ExceptHandler)):
             target = getattr(node, 'target', None)
             if target:
                 for item in ast.walk(target):
                     if isinstance(item, ast.Name): bind(owner(node), item.id, None)
-        if isinstance(node, (ast.Global, ast.Nonlocal)):
+        # These lexical binders use string fields or non-statement targets,
+        # not ordinary assignment Name Store nodes. Never inherit an import
+        # through an exception, pattern, with or comprehension capture.
+        if isinstance(node, ast.Delete):
+            for target in node.targets:
+                for item in ast.walk(target):
+                    if isinstance(item, ast.Name) and isinstance(item.ctx, ast.Del): bind(owner(node), item.id, None)
+        if isinstance(node, ast.ExceptHandler) and node.name: bind(owner(node), node.name, None)
+        if isinstance(node, (ast.MatchAs, ast.MatchStar)) and node.name: bind(owner(node), node.name, None)
+        if isinstance(node, ast.MatchMapping) and node.rest: bind(owner(node), node.rest, None)
+        if isinstance(node, (ast.With, ast.AsyncWith)):
+            for item in node.items:
+                if item.optional_vars:
+                    for target in ast.walk(item.optional_vars):
+                        if isinstance(target, ast.Name) and isinstance(target.ctx, ast.Store): bind(owner(node), target.id, None)
+        if isinstance(node, ast.comprehension):
+            for target in ast.walk(node.target):
+                if isinstance(target, ast.Name) and isinstance(target.ctx, ast.Store): bind(owner(node), target.id, None)
+        if isinstance(node, ast.Nonlocal):
             for name in node.names: bind(owner(node), name, None)
     def lookup(node):
         scope = owner(node)
+        namespace_scope = scope if isinstance(scope, ast.ClassDef) else None
         while scope is not None:
+            # Class namespaces do not supply closure bindings to methods or
+            # comprehension bodies. Enclosing function/module authority does.
+            if isinstance(scope, ast.ClassDef) and scope is not namespace_scope:
+                scope = owner(scope); continue
+            if node.id in global_names.get(scope, set()): scope = tree
             values = bindings.get((scope, node.id))
             if values is not None:
                 return values[0] if len(values) == 1 else None
@@ -346,6 +480,53 @@ if len(sys.argv) > 2 and sys.argv[2] in ('--classify', '--audit'):
             base = capability(node.value, seen)
             return base + '.' + node.attr if base else None
         return None
+    def imported_capability_state_issues():
+        protected = ('json', 'yaml', 'time', 'pathlib.Path')
+        issues = []
+        frame_access = {'_getframe', '_current_frames', 'currentframe', 'getouterframes', 'getinnerframes', 'stack', 'trace', 'f_globals', 'f_locals', 'f_builtins', 'gi_frame', 'cr_frame', 'ag_frame', 'tb_frame'}
+        reflective = {'getattr', 'setattr', 'delattr', 'vars', 'globals', 'locals', 'eval', 'exec', '__import__'}
+        def protected_value(node):
+            value = capability(node)
+            return value and any(value == p or value.startswith(p + '.') for p in protected)
+        reviewed_imports = {'argparse', 'hashlib', 'ipaddress', 'json', 'os', 'pathlib', 're', 'secrets', 'shlex', 'shutil', 'signal', 'socket', 'subprocess', 'sys', 'tempfile', 'threading', 'time', 'urllib.request'}
+        reviewed_from = {'pathlib.Path', 'json.dump', 'json.dumps', 'json.loads', 'time.time', 'time.monotonic'}
+        for item in ast.walk(tree):
+            if isinstance(item, ast.Import) and any(a.name not in reviewed_imports for a in item.names): issues.append(item)
+            if isinstance(item, ast.ImportFrom) and (item.level or any((item.module or '') + '.' + a.name not in reviewed_from for a in item.names)): issues.append(item)
+            if isinstance(item, ast.Global):
+                for name in item.names:
+                    values = bindings.get((tree, name), [])
+                    if any(isinstance(value, tuple) and value[0] == 'import' and any(value[1] == p or value[1].startswith(p + '.') for p in protected) or isinstance(value, ast.AST) and protected_value(value) for value in values) and len(values) != 1:
+                        issues.append(item)
+            if isinstance(item, ast.Nonlocal): issues.append(item)
+            if isinstance(item, ast.Attribute) and (item.attr.startswith('__') or item.attr == 'modules' or item.attr in frame_access): issues.append(item)
+            if isinstance(item, ast.Call):
+                if capability(item.func) in {'importlib.import_module'} | {'builtins.' + name for name in reflective}: issues.append(item)
+                # Builtin reflection aliases are deliberately not supported.
+                func = item.func
+                seen = set()
+                while isinstance(func, ast.Name) and func not in seen:
+                    seen.add(func)
+                    if func.id in reflective:
+                        issues.append(item); break
+                    value = lookup(func)
+                    if not isinstance(value, ast.AST): break
+                    func = value
+            if isinstance(item, (ast.Name, ast.Attribute, ast.Subscript)) and protected_value(item):
+                parent = parents.get(item)
+                if isinstance(item, ast.Attribute) and item.attr.startswith('__'):
+                    issues.append(item); continue
+                if isinstance(item, (ast.Attribute, ast.Subscript)) and isinstance(item.ctx, (ast.Store, ast.Del)):
+                    issues.append(item); continue
+                allowed = isinstance(parent, ast.Attribute) and parent.value is item and not parent.attr.startswith('__')
+                allowed |= isinstance(parent, ast.Call) and parent.func is item
+                if isinstance(parent, ast.Assign) and parent.value is item and len(parent.targets) == 1 and isinstance(parent.targets[0], ast.Name):
+                    allowed |= len(bindings.get((owner(parent), parent.targets[0].id), [])) == 1
+                if isinstance(item, ast.Name) and isinstance(item.ctx, ast.Store) and isinstance(parent, ast.Assign) and len(parent.targets) == 1 and parent.targets[0] is item:
+                    allowed |= len(bindings.get((owner(parent), item.id), [])) == 1 and protected_value(parent.value)
+                if not allowed: issues.append(item)
+        return issues
+    capability_state_issues = imported_capability_state_issues()
     def sink(node):
         name = capability(node)
         return name in ('print', 'writer', 'unknown-serializer') or name in serializers
@@ -380,10 +561,65 @@ if len(sys.argv) > 2 and sys.argv[2] in ('--classify', '--audit'):
                     if actual is value and not path: return True
                 if capability(item.func) not in pure and any(root(arg) is value for arg in item.args): return True
         return False
+    def serializer_options_qualified(node):
+        name = capability(node.func)
+        # A serializer's data root is authoritative only under its finite call
+        # grammar. Duck encoders are callable authority even without inheritance.
+        if name not in ('json.dumps', 'json.dump'):
+            return not node.keywords and len(node.args) == 1
+        if len(node.args) != (2 if name == 'json.dump' else 1): return False
+        options = {}
+        for keyword in node.keywords:
+            if keyword.arg is None:
+                expanded = keyword.value
+                if isinstance(expanded, ast.Name): expanded = lookup(expanded)
+                if not isinstance(expanded, ast.Dict): return False
+                if changed(expanded, node): return False
+                for operation in ast.walk(tree):
+                    if isinstance(operation, (ast.Assign, ast.AnnAssign, ast.AugAssign, ast.Delete)) and getattr(operation, 'lineno', 0) > getattr(expanded, 'end_lineno', 0):
+                        for target in getattr(operation, 'targets', [getattr(operation, 'target', None)]):
+                            actual, path = projection(target)
+                            if actual is expanded: return False
+                # A fixed option dict cannot escape through a container,
+                # callback or returned alias and then borrow unchanged keys.
+                for reference in ast.walk(tree):
+                    if not isinstance(reference, ast.Name) or root(reference) is not expanded: continue
+                    parent = parents.get(reference)
+                    declaration = isinstance(parent, (ast.Assign, ast.AnnAssign)) and getattr(parent, 'value', None) is expanded and isinstance(reference.ctx, ast.Store)
+                    caller = parents.get(parent)
+                    expansion = isinstance(parent, ast.keyword) and parent.arg is None and parent.value is reference and isinstance(caller, ast.Call) and capability(caller.func) in serializers
+                    if not declaration and not expansion: return False
+                pairs = []
+                for key, value in zip(expanded.keys, expanded.values):
+                    if not isinstance(key, ast.Constant) or not isinstance(key.value, str): return False
+                    pairs.append((key.value, value))
+            else: pairs = [(keyword.arg, keyword.value)]
+            for key, value in pairs:
+                if key in options: return False
+                options[key] = value
+        for key, value in options.items():
+            if isinstance(value, ast.Name): value = lookup(value)
+            if key == 'separators':
+                if not isinstance(value, (ast.Tuple, ast.List)) or len(value.elts) != 2 or not all(isinstance(item, ast.Constant) and type(item.value) is str for item in value.elts): return False
+                for item, token in zip(value.elts, (',', ':')):
+                    if not item.value.startswith(token) or any(character not in ' \t\r\n' for character in item.value[1:]): return False
+                continue
+            if not isinstance(value, ast.Constant): return False
+            actual = value.value
+            if key in ('cls', 'default'):
+                if actual is not None: return False
+            elif key in ('skipkeys', 'ensure_ascii', 'check_circular', 'allow_nan', 'sort_keys'):
+                if type(actual) is not bool: return False
+            elif key == 'indent':
+                if actual is not None and type(actual) not in (int, str): return False
+                if type(actual) is str and any(character not in ' \t\r\n' for character in actual): return False
+            else: return False
+        return True
     def role(node, publication, seen=frozenset()):
         if node is None or node in seen: return 'unknown'
         seen = seen | {node}
-        if isinstance(node, ast.Call) and capability(node.func) in serializers and node.args: return role(node.args[0], publication, seen)
+        if isinstance(node, ast.Call) and capability(node.func) in serializers and node.args:
+            return role(node.args[0], publication, seen) if serializer_options_qualified(node) else 'unknown'
         if isinstance(node, ast.Call) and capability(node.func) in ('pathlib.Path', 'Path', 'tempfile.mkdtemp'):
             values = node.args + [keyword.value for keyword in node.keywords]
             return 'non-api' if values and all(role(value, publication, seen) == 'non-api' for value in values) else 'unknown'
@@ -445,14 +681,14 @@ if len(sys.argv) > 2 and sys.argv[2] in ('--classify', '--audit'):
                         target = target.value
                     if isinstance(target, ast.Name) and target.id in ('re', 'shlex', 'pathlib'):
                         return None
-        return {'sourcePath': unit.args[0].value, 'transform': 'repair' if helper else 'original', 'helperDigest': hashlib.sha256(ast.dump(helper, include_attributes=False).encode()).hexdigest() if helper else None}
+        return {'sourcePath': unit.args[0].value, 'transform': 'repair' if helper else 'original', 'helperDigest': hashlib.sha256(receipt(helper).encode()).hexdigest() if helper else None}
     for node in ast.walk(tree):
         if isinstance(node, ast.Call) and sink(node.func):
             names = capability(node.func)
             values = node.args if names == 'print' else node.args[:1]
             roles = [role(value, node) for value in values]
-            published = 'unknown' if not roles or 'unknown' in roles else 'api' if 'api' in roles else 'non-api'
-            outputs.append({'line': node.lineno, 'expression': ast.unparse(node), 'role': published})
+            published = 'unknown' if names == 'unknown-serializer' or names in serializers and not serializer_options_qualified(node) or not roles or 'unknown' in roles else 'api' if 'api' in roles else 'non-api'
+            outputs.append({'line': node.lineno, 'expression': ast.unparse(node), 'role': published, **({'gap': 'serializer-option-authority-unqualified', 'sourceIdentity': sys.argv[1]} if names in serializers and not serializer_options_qualified(node) else {})})
         if isinstance(node, ast.Return) and node.value is not None and role(node.value, node) == 'api':
             outputs.append({'line': node.lineno, 'expression': ast.unparse(node), 'role': 'api', 'gap': 'public-api-return'})
         # Writer references in containers, returns, callback arguments, attributes,
@@ -462,8 +698,16 @@ if len(sys.argv) > 2 and sys.argv[2] in ('--classify', '--audit'):
             allowed = isinstance(parent, ast.Call) and parent.func is node
             if isinstance(parent, ast.Assign) and parent.value is node and len(parent.targets) == 1 and isinstance(parent.targets[0], ast.Name):
                 allowed = len(bindings.get((owner(parent), parent.targets[0].id), [])) == 1
+            if isinstance(node, ast.Name) and isinstance(node.ctx, ast.Store) and isinstance(parent, ast.Assign) and len(parent.targets) == 1 and parent.targets[0] is node:
+                allowed = len(bindings.get((owner(parent), node.id), [])) == 1 and sink(parent.value)
             if not allowed and not isinstance(parent, ast.Attribute):
                 outputs.append({'line': node.lineno, 'expression': ast.unparse(node), 'role': 'unknown', 'gap': 'capability-escape'})
+    for issue in capability_state_issues:
+        outputs.append({'line': issue.lineno, 'expression': ast.unparse(issue), 'role': 'unknown',
+                        'gap': 'imported-capability-state-unqualified', 'sourceIdentity': sys.argv[1]})
+    if capability_state_issues:
+        for output in outputs:
+            if output['role'] == 'non-api': output['role'] = 'unknown'
     # A JSON Patch is an API submission even though it is a list without
     # apiVersion/kind. Bind the exact serialized argument to original argv.
     patch_sinks = [node for node in ast.walk(tree) if isinstance(node, ast.Call) and ast.unparse(node.func) == 'subprocess.run' and node.args and any(isinstance(item, ast.Constant) and item.value == 'patch' for item in ast.walk(node.args[0]))]
@@ -477,11 +721,69 @@ if len(sys.argv) > 2 and sys.argv[2] in ('--classify', '--audit'):
                     found['role'] = 'api-patch'
                     found['patchReceiver'] = records[0]['receiver']
                     found['patchOperations'] = records[0]['patchOperations']
+    def native_state_custody(scope):
+        # Finite selected supervisor serializer/writer dependencies. No module
+        # execution or imported serializer substitution can inherit this role.
+        module_recipe = ast.parse("""
+import json
+import os
+from pathlib import Path
+import shutil
+import signal
+import socket
+import subprocess
+import threading
+import time
+stop = threading.Event()
+child = None
+state_file = Path('/tmp/codex-ops-status.json')
+signal.signal(signal.SIGTERM, shutdown)
+signal.signal(signal.SIGINT, shutdown)
+""")
+        actual_module = ast.Module(body=[n for n in tree.body if not isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef)) and not (isinstance(n, ast.Expr) and isinstance(n.value, ast.Constant) and isinstance(n.value.value, str))], type_ignores=[])
+        # Original public entry dispatch calls main; it is not a serializer binding.
+        actual_module.body = [n for n in actual_module.body if not (isinstance(n, ast.If) and receipt(n) == receipt(ast.parse("if __name__ == '__main__':\n    main()").body[0]))]
+        if capability_state_issues or receipt(actual_module) != receipt(module_recipe): return False
+        expected = {'json': ('import', 'json'), 'time': ('import', 'time'),
+                    'Path': ('import', 'pathlib.Path')}
+        for name, authority in expected.items():
+            refs = [n for n in ast.walk(scope) if isinstance(n, ast.Name) and n.id == name]
+            if name == 'Path':
+                refs = [n for n in ast.walk(tree) if isinstance(n, ast.Name) and n.id == name]
+            if not refs or any(lookup(ref) != authority for ref in refs): return False
+        state_refs = [n for n in ast.walk(scope) if isinstance(n, ast.Name) and n.id == 'state_file']
+        state_recipe = ast.parse("Path('/tmp/codex-ops-status.json')", mode='eval').body
+        if not state_refs or any(not isinstance(lookup(ref), ast.AST) or receipt(lookup(ref)) != receipt(state_recipe) for ref in state_refs): return False
+        protected = {'json', 'time', 'Path', 'state_file'}
+        for item in ast.walk(tree):
+            if isinstance(item, (ast.Assign, ast.AnnAssign, ast.AugAssign, ast.Delete, ast.NamedExpr)):
+                for target in getattr(item, 'targets', [getattr(item, 'target', None)]):
+                    base = target
+                    while isinstance(base, (ast.Attribute, ast.Subscript)): base = base.value
+                    if isinstance(base, ast.Name) and base.id in protected:
+                        if base is not target or base.id != 'state_file' or owner(item) is not tree or not isinstance(item, ast.Assign): return False
+            if isinstance(item, ast.Call):
+                if isinstance(item.func, ast.Name) and item.func.id in ('__import__', 'exec', 'eval', 'globals', 'locals', 'vars'): return False
+                base = item.func
+                while isinstance(base, ast.Attribute): base = base.value
+                if isinstance(base, ast.Name) and base.id in ('json', 'time', 'Path'):
+                    allowed = {'json': {'json.dumps'}, 'time': {'time.time', 'time.monotonic'}, 'Path': {'Path', 'Path.home'}}
+                    if ast.unparse(item.func) not in allowed[base.id]: return False
+                for argument in item.args + [k.value for k in item.keywords]:
+                    if isinstance(argument, ast.Name) and argument.id in protected:
+                        # Actual state replacement is the sole selected reference
+                        # passed as an argument; passing module capabilities escapes.
+                        if not (argument.id == 'state_file' and ast.unparse(item.func) == 'temp.replace' and owner(item) is scope): return False
+        return True
+
     for output in outputs:
         matching = next((node for node in ast.walk(tree) if isinstance(node, (ast.Call, ast.Return, ast.Name, ast.Attribute)) and getattr(node, 'lineno', None) == output['line'] and ast.unparse(node) == output['expression']), None)
         scope = owner(matching) if matching else None
         output['function'] = getattr(scope, 'name', '<module>')
-        output['operation'] = ast.dump(scope, include_attributes=False) if scope else ''
+        output['serializationProtocol'] = _receipt.VERSION
+        output['operation'] = receipt(scope) if scope else ''
+        if output['function'] == 'status':
+            output['nativeStateQualified'] = native_state_custody(scope)
         if output['expression'] in ("(backup / 'original.service').write_text(original)", 'staged.write_text(corrected)'):
             output['systemdUnitFlow'] = systemd_unit_flow(matching)
         if isinstance(scope, (ast.FunctionDef, ast.AsyncFunctionDef)):
@@ -530,9 +832,9 @@ if len(sys.argv) > 2 and sys.argv[2] in ('--classify', '--audit'):
                 if output['role'] != 'api': output['role'] = 'unknown'
                 output['gap'] = 'bootstrap-public-output-unqualified'
         audit = {'kind': 'bootstrap-public-output-audit', 'qualified': all(entries.values()) and all(output.get('bootstrapFlow', {}).get('qualified') for output in outputs),
-                 'entryPoints': entries, 'dependencies': list(facts.values()), 'outputs': outputs}
+                 'serializationProtocol': _receipt.VERSION, 'entryPoints': entries, 'dependencies': list(facts.values()), 'outputs': outputs}
     else:
-        audit = {'kind': 'non-bootstrap-output-audit', 'qualified': False, 'entryPoints': {}, 'dependencies': [], 'outputs': outputs}
+        audit = {'kind': 'non-bootstrap-output-audit', 'serializationProtocol': _receipt.VERSION, 'qualified': False, 'entryPoints': {}, 'dependencies': [], 'outputs': outputs}
     print(json.dumps(audit if sys.argv[2] == '--audit' else outputs))
     sys.exit(0)
 # Compile only function definitions. Imports, module initialization and main

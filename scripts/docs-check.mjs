@@ -70,6 +70,7 @@ function checkGeneratedMarkers() {
     'docs/site/reference/secrets.md',
     'docs/site/reference/verification-commands.md',
     'docs/site/reference/workflows.md',
+    'docs/site/reference/sdk-exports.md',
   ];
   for (const page of generatedPages) {
     const filePath = path.join(root, page);

@@ -198,7 +198,7 @@ test('an added upstream choice is discovered and cannot pass with its meaning re
 });
 
 import { discoverProductApiContexts, assertProductApiContexts, productScopeLimits } from '../docs-api-product-scope.mjs';
-import { discoverScriptApiOutputs, discoverGoApiOutputs, discoverShellApiOutputs } from '../docs-api-output-discovery.mjs';
+import { nativeOutputConsumerMatches, discoverScriptApiOutputs, discoverGoApiOutputs, discoverShellApiOutputs } from '../docs-api-output-discovery.mjs';
 import { upstreamApiReference } from '../docs-api-reference.mjs';
 
 function sourceFixture(contents, run) {
@@ -898,7 +898,20 @@ test('Go formatted file destinations retain unknown serialized input qualificati
 test('original Go diagnostic consumer qualification rejects changed writer inputs',()=>{
  const source='tools/native-worker-nri/main.go',bytes=fs.readFileSync(new URL('../..//'+source,import.meta.url),'utf8'),authority=JSON.parse(fs.readFileSync(new URL('../docs-api-producer-adapter-authorities.json',import.meta.url),'utf8')),registry={nativeLanguageSerializationContracts:authority.nativeLanguageSerializationContracts.filter(record=>record.source===source)};
  const files=Object.fromEntries([...new Set(registry.nativeLanguageSerializationContracts.flatMap(record=>record.outputs.flatMap(output=>output.dependencyFacts?.map(fact=>fact.path)??[])))].map(file=>[file,fs.readFileSync(new URL('../..//'+file,import.meta.url),'utf8')]));
- sourceFixture({...files,[source]:bytes,'scripts/docs-api-producer-adapter-authorities.json':JSON.stringify(registry)},root=>{assert.doesNotThrow(()=>discoverGoApiOutputs(root));fs.writeFileSync(path.join(root,source),bytes.replace('fmt.Fprintln(os.Stderr, err)','fmt.Fprintf(os.Stderr,"%s",os.Args[1])'));assert.throws(()=>discoverGoApiOutputs(root),/GO_RAW_OUTPUT_ROLE_UNQUALIFIED/);});
+ sourceFixture({...files,[source]:bytes,'scripts/docs-api-producer-adapter-authorities.json':JSON.stringify(registry)},root=>{
+  // Original external lifecycle error authority is unsupported. Keep its
+  // truthful rejection separate from the independently tested writer control.
+  assert.throws(()=>discoverGoApiOutputs(root),/main.go:164:.*unsupported external error-result authority for run/);
+  function classify(){const run=spawnSync(process.env.KUBECLAW_DOCS_GO_BINARY??'go',['run',new URL('../docs-api-go-output-role-adapter.go',import.meta.url).pathname],{input:JSON.stringify([{path:path.join(root,source)}]),encoding:'utf8'});assert.equal(run.status,0,run.stderr);return JSON.parse(run.stdout);}
+  const original=classify(),guarded=original.find(record=>record.line===164&&record.expression==='fmt.Fprintln(os.Stderr, err)');
+  assert(guarded);assert.equal(guarded.diagnosticQualified,true);assert.equal(guarded.authorityQualified,false);
+  assert(original.some(record=>record.authorityQualified&&record.diagnosticQualified),'supported configuration diagnostic guard must remain independently qualified');
+  const changed=bytes.replace('fmt.Fprintln(os.Stderr, err)','fmt.Fprintf(os.Stderr,"%s",os.Args[1])');assert.notEqual(changed,bytes);fs.writeFileSync(path.join(root,source),changed);
+  const modified=classify().filter(record=>record.expression==='fmt.Fprintf(os.Stderr, "%s", os.Args[1])');assert(modified.length);
+  assert(modified.every(record=>record.diagnosticQualified!==true&&record.role==='unknown'),'argv replacement must not inherit error-guard qualification');
+  assert(modified.some(record=>record.operation!==guarded.operation),'changed writer input must alter the selected operation');
+  assert.throws(()=>discoverGoApiOutputs(root),/GO_RAW_OUTPUT_ROLE_UNQUALIFIED:.*main.go/);
+ });
 });
 test('Go output values bind lexical declarations and reject mutation or address escape',()=>{
  for(const body of ['func first(){body:=os.Args[1];fmt.Fprintln(os.Stdout,body)}\nfunc other(){body:="safe";_=body}','func main(){body:=os.Args[1];{body:="safe";_=body};fmt.Fprintln(os.Stdout,body)}','func main(){body:=os.Args[1];fmt.Fprintln(os.Stdout,body);body="safe"}','func alter(body *string){*body=os.Args[1]}\nfunc main(){body:="safe";alter(&body);fmt.Fprintln(os.Stdout,body)}'])sourceFixture({'bin/new.go':'package main\nimport "os"\nimport "fmt"\n'+body+'\n'},root=>assert.throws(()=>discoverGoApiOutputs(root),/GO_RAW_OUTPUT_ROLE_UNQUALIFIED/));
@@ -1203,16 +1216,16 @@ func original(){requestPayload(map[string]interface{}{"apiVersion":"v1","kind":"
 
 test('native Go transport receipt binds aliases, callbacks and returned capabilities',()=>{
  const repository=path.resolve(import.meta.dirname,'../..'),authority='scripts/docs-api-producer-adapter-authorities.json',registry=JSON.parse(fs.readFileSync(path.join(repository,authority),'utf8')),selected={nativeLanguageSerializationContracts:registry.nativeLanguageSerializationContracts.filter(contract=>contract.source.startsWith('cmd/buster-namespace-controller/'))};
- const paths=[...new Set(selected.nativeLanguageSerializationContracts.flatMap(contract=>contract.outputs.flatMap(output=>output.dependencyFacts.map(fact=>fact.path))))],files=Object.fromEntries(paths.map(file=>[file,fs.readFileSync(path.join(repository,file),'utf8')]));
+ const paths=[...new Set(['charts/kubeclaw/templates/buster-namespace-lease-crd.yaml',...selected.nativeLanguageSerializationContracts.flatMap(contract=>contract.outputs.flatMap(output=>output.dependencyFacts.map(fact=>fact.path)))])],files=Object.fromEntries(paths.map(file=>[file,fs.readFileSync(path.join(repository,file),'utf8')]));
  for(const added of [
   'func unchecked(c *controller){send:=c.kube;send(context.Background(),"POST","/api/v1/namespaces",os.Args[1],"application/json",nil)}',
   'func unchecked(c *controller){callback:=func(){send:=c.kube;send(context.Background(),"POST","/api/v1/namespaces",os.Args[1],"application/json",nil)};callback()}',
   'var transport=func(c *controller){send:=c.kube;send(context.Background(),"POST","/api/v1/namespaces",os.Args[1],"application/json",nil)}',
   'func capability(c *controller)interface{}{return c.kube};func unchecked(c *controller){capability(c)}'
  ])sourceFixture({...files,[authority]:JSON.stringify(selected)},root=>{
-  assert.doesNotThrow(()=>discoverGoApiOutputs(root));
+  assertOriginalControllerUnsupported(root);assert.doesNotThrow(()=>fixtureControllerShapes(root));
   fs.writeFileSync(path.join(root,'cmd/buster-namespace-controller/unchecked.go'),'package main\nimport("context";"os")\n'+added+'\n');
-  assert.throws(()=>discoverGoApiOutputs(root),/GO_RAW_OUTPUT_ROLE_UNQUALIFIED/);
+  assert.throws(()=>fixtureControllerShapes(root),/FINITE_TRANSPORT_CONSUMER_UNQUALIFIED/);
  });
 });
 
@@ -1220,7 +1233,7 @@ test('native Go transport receipts reject refreshed unknown incoming bodies and 
  const repository=path.resolve(import.meta.dirname,'../..'),authority='scripts/docs-api-producer-adapter-authorities.json';
  const registry=JSON.parse(fs.readFileSync(path.join(repository,authority),'utf8'));
  const selected={nativeLanguageSerializationContracts:registry.nativeLanguageSerializationContracts.filter(contract=>contract.source.startsWith('cmd/buster-namespace-controller/'))};
- const paths=[...new Set(selected.nativeLanguageSerializationContracts.flatMap(contract=>contract.outputs.flatMap(output=>output.dependencyFacts.map(fact=>fact.path))))];
+ const paths=[...new Set(['charts/kubeclaw/templates/buster-namespace-lease-crd.yaml',...selected.nativeLanguageSerializationContracts.flatMap(contract=>contract.outputs.flatMap(output=>output.dependencyFacts.map(fact=>fact.path)))])];
  const files=Object.fromEntries(paths.map(file=>[file,fs.readFileSync(path.join(repository,file),'utf8')])),added='cmd/buster-namespace-controller/unchecked.go',main='cmd/buster-namespace-controller/main.go';
  const variants={
   direct:'func unchecked(c *controller){c.kube(context.Background(),"POST","/api/v1/namespaces",os.Args[1],"application/json",nil)}',
@@ -1243,17 +1256,17 @@ test('native Go transport receipts reject refreshed unknown incoming bodies and 
   if(name==='replaced_request')fs.writeFileSync(path.join(root,main),files[main].replace('resp, err := c.httpClient.Do(req)','req.Body = io.NopCloser(strings.NewReader(os.Args[1]))\n\tresp, err := c.httpClient.Do(req)'));
   if(name==='replaced_payload')fs.writeFileSync(path.join(root,main),files[main].replace('data, err := json.Marshal(body)','body = os.Args[1]\n\tdata, err := json.Marshal(body)'));
   const inputs=body?[...paths,added]:paths;
-  const run=spawnSync(process.env.KUBECLAW_DOCS_GO_BINARY??'go',['run',new URL('../docs-api-go-output-role-adapter.go',import.meta.url).pathname],{input:JSON.stringify(inputs.map(file=>({path:path.join(root,file)}))),encoding:'utf8',maxBuffer:32*1024*1024});assert.equal(run.status,0,run.stderr);
+  const run=spawnSync(process.env.KUBECLAW_DOCS_GO_BINARY??'go',['run',new URL('../docs-api-go-output-role-adapter.go',import.meta.url).pathname],{input:JSON.stringify(inputs.filter(file=>file.endsWith(".go")).map(file=>({path:path.join(root,file)}))),encoding:'utf8',maxBuffer:32*1024*1024});assert.equal(run.status,0,run.stderr);
   const actual=JSON.parse(run.stdout),refreshed=structuredClone(selected);
   for(const contract of refreshed.nativeLanguageSerializationContracts)for(const receipt of contract.outputs){
    const output=actual.find(output=>path.relative(root,output.path)===contract.source&&output.function===receipt.function&&output.expression===receipt.expression);assert(output);
    receipt.operationDigest=createHash('sha256').update(output.operation).digest('hex');receipt.dependencyFacts=output.dependencies.map(fact=>({...fact,path:path.relative(root,fact.path)}));receipt.dependencyFactsDigest=createHash('sha256').update(JSON.stringify(receipt.dependencyFacts)).digest('hex');
   }
   fs.writeFileSync(path.join(root,authority),JSON.stringify(refreshed));
-  if(name==='supported_constructor')assert(discoverGoApiOutputs(root).some(output=>output.value.kind==='Namespace'&&output.value.metadata.name==='qualification'));
-  else if(name==='after_submission'){const outputs=discoverGoApiOutputs(root),submitted=outputs.find(output=>output.value.metadata?.name==='before');assert.equal(submitted?.value.kind,'Namespace');assert(!('immutable' in submitted.value));}
-  else if(name==='supported_patch'){const output=discoverGoApiOutputs(root).find(output=>output.context.path===added&&output.value.immutable===true);assert.equal(output?.value.kind,'Secret');assert.equal(output?.context.requestMethod,'MethodPatch');}
-  else assert.throws(()=>discoverGoApiOutputs(root),/GO_RAW_OUTPUT_ROLE_UNQUALIFIED/,name);
+  if(name==='supported_constructor')assert(fixtureControllerShapes(root).some(output=>output.value.kind==='Namespace'&&output.value.metadata.name==='qualification'));
+  else if(name==='after_submission'){const outputs=fixtureControllerShapes(root),submitted=outputs.find(output=>output.value.metadata?.name==='before');assert.equal(submitted?.value.kind,'Namespace');assert(!('immutable' in submitted.value));}
+  else if(name==='supported_patch'){const output=fixtureControllerShapes(root).find(output=>output.context.path===added&&output.value.immutable===true);assert.equal(output?.value.kind,'Secret');assert.equal(output?.context.requestMethod,'MethodPatch');}
+  else assert.throws(()=>fixtureControllerShapes(root),/FINITE_TRANSPORT_CONSUMER_UNQUALIFIED/,name);
  });
 });
 
@@ -1275,31 +1288,35 @@ test('actual Python webhook JSON Patch submits selected operations and newly add
 test('actual cross-file Ingress factory retains its submitted PATCH resource version and projected additions',()=>{
  const repository=path.resolve(import.meta.dirname,'../..'),directory='cmd/buster-namespace-controller',authority='scripts/docs-api-producer-adapter-authorities.json';
  const registry=JSON.parse(fs.readFileSync(path.join(repository,authority),'utf8')),selected={nativeLanguageSerializationContracts:registry.nativeLanguageSerializationContracts.filter(contract=>contract.source.startsWith(directory+'/'))};
- const paths=fs.readdirSync(path.join(repository,directory)).filter(file=>file.endsWith('.go')&&!file.endsWith('_test.go')).map(file=>directory+'/'+file),files=Object.fromEntries(paths.map(file=>[file,fs.readFileSync(path.join(repository,file),'utf8')]));
+ const paths=fs.readdirSync(path.join(repository,directory)).filter(file=>file.endsWith('.go')&&!file.endsWith('_test.go')).map(file=>directory+'/'+file);
+ const authorityPaths=['charts/kubeclaw/templates/buster-namespace-lease-crd.yaml',...selected.nativeLanguageSerializationContracts.flatMap(contract=>contract.outputs.flatMap(output=>output.dependencyFacts.map(fact=>fact.path)))];
+ const files=Object.fromEntries([...new Set([...paths,...authorityPaths])].map(file=>[file,fs.readFileSync(path.join(repository,file),'utf8')]));
  sourceFixture({...files,[authority]:JSON.stringify(selected)},root=>{
-  const before=discoverGoApiOutputs(root),submitted=before.find(output=>output.context.path===directory+'/exposure-generation.go'&&output.context.requestMethod==='MethodPatch'&&output.value.kind==='Ingress');
+  assertOriginalControllerUnsupported(root);const before=fixtureControllerShapes(root),submitted=before.find(output=>output.context.path===directory+'/exposure-generation.go'&&output.context.requestMethod==='MethodPatch'&&output.value.kind==='Ingress');
   assert(submitted,'actual current cross-file Ingress PATCH missing');assert.deepEqual(submitted.value.metadata.resourceVersion,{__docsDynamicExpression:'stringValue(metadata["resourceVersion"])'});assert.deepEqual(submitted.context.requestPath,{__docsDynamicExpression:'base + "/" + exposure.IngressName'});
-  const selection=apiProductSelection(submitted.context.apiVersion,submitted.context.kind,[submitted.context],versionedApiReceiverRegistries.get(submitted.context.apiVersion),root);assert(selection.metadataPaths.includes('$.metadata.resourceVersion'),'actual submitted PATCH resourceVersion must enter selected metadata');
+  assert.throws(()=>apiProductSelection(submitted.context.apiVersion,submitted.context.kind,[submitted.context],versionedApiReceiverRegistries.get(submitted.context.apiVersion),root),/unsupported API-read error-result authority/,'whole original Go source is not an admitted publication');const selection=fixtureShapeReceiverSelection(root,submitted,versionedApiReceiverRegistries.get(submitted.context.apiVersion));assert(selection.metadataPaths.includes('$.metadata.resourceVersion'),'captured PATCH shape must select the receiver resourceVersion boundary');
   assert(before.some(output=>output.context.path===directory+'/main.go'&&output.value.kind==='Ingress'&&!Object.hasOwn(output.value.metadata,'resourceVersion')),'original create constructor must retain its own fields');
   const source=directory+'/exposure-generation.go',changed=files[source].replace('objectValue(desired["metadata"])["resourceVersion"] = version','objectValue(desired["metadata"])["resourceVersion"] = version\n\tobjectValue(desired["metadata"])["generation"] = 7');assert.notEqual(changed,files[source]);fs.writeFileSync(path.join(root,source),changed);
-  const run=spawnSync(process.env.KUBECLAW_DOCS_GO_BINARY??'go',['run',new URL('../docs-api-go-output-role-adapter.go',import.meta.url).pathname],{input:JSON.stringify(paths.map(file=>({path:path.join(root,file)}))),encoding:'utf8',maxBuffer:32*1024*1024});assert.equal(run.status,0,run.stderr);const actual=JSON.parse(run.stdout),refreshed=structuredClone(selected);
+  const run=spawnSync(process.env.KUBECLAW_DOCS_GO_BINARY??'go',['run',new URL('../docs-api-go-output-role-adapter.go',import.meta.url).pathname],{input:JSON.stringify(paths.filter(file=>file.endsWith(".go")).map(file=>({path:path.join(root,file)}))),encoding:'utf8',maxBuffer:32*1024*1024});assert.equal(run.status,0,run.stderr);const actual=JSON.parse(run.stdout),refreshed=structuredClone(selected);
   for(const contract of refreshed.nativeLanguageSerializationContracts)for(const receipt of contract.outputs){const output=actual.find(output=>path.relative(root,output.path)===contract.source&&output.function===receipt.function&&output.expression===receipt.expression);assert(output);receipt.operationDigest=createHash('sha256').update(output.operation).digest('hex');receipt.dependencyFacts=output.dependencies.map(fact=>({...fact,path:path.relative(root,fact.path)}));receipt.dependencyFactsDigest=createHash('sha256').update(JSON.stringify(receipt.dependencyFacts)).digest('hex');}
   fs.writeFileSync(path.join(root,authority),JSON.stringify(refreshed));
-  try{const after=discoverGoApiOutputs(root);assert(after.some(output=>output.context.path===source&&output.context.requestMethod==='MethodPatch'&&output.value.metadata?.generation===7),'new projected submitted field disappeared after receipt refresh');}
-  catch(error){assert.match(error.message,/API_PRODUCT_GO_RAW_OUTPUT_ROLE_UNQUALIFIED/);}
+  try{const after=fixtureControllerShapes(root);assert(after.some(output=>output.context.path===source&&output.context.requestMethod==='MethodPatch'&&output.value.metadata?.generation===7),'new projected submitted field disappeared after receipt refresh');}
+  catch(error){assert.match(error.message,/FINITE_TRANSPORT_CONSUMER_UNQUALIFIED/);}
  });
 });
 
 test('actual namespace Role alternatives retain base resources and changed conditional appends',()=>{
  const repository=path.resolve(import.meta.dirname,'../..'),directory='cmd/buster-namespace-controller',authority='scripts/docs-api-producer-adapter-authorities.json',main=directory+'/main.go';
  const registry=JSON.parse(fs.readFileSync(path.join(repository,authority),'utf8')),selected={nativeLanguageSerializationContracts:registry.nativeLanguageSerializationContracts.filter(contract=>contract.source.startsWith(directory+'/'))};
- const paths=fs.readdirSync(path.join(repository,directory)).filter(file=>file.endsWith('.go')&&!file.endsWith('_test.go')).map(file=>directory+'/'+file),files=Object.fromEntries(paths.map(file=>[file,fs.readFileSync(path.join(repository,file),'utf8')]));
+ const paths=fs.readdirSync(path.join(repository,directory)).filter(file=>file.endsWith('.go')&&!file.endsWith('_test.go')).map(file=>directory+'/'+file);
+ const authorityPaths=['charts/kubeclaw/templates/buster-namespace-lease-crd.yaml',...selected.nativeLanguageSerializationContracts.flatMap(contract=>contract.outputs.flatMap(output=>output.dependencyFacts.map(fact=>fact.path)))];
+ const files=Object.fromEntries([...new Set([...paths,...authorityPaths])].map(file=>[file,fs.readFileSync(path.join(repository,file),'utf8')]));
  sourceFixture({...files,[authority]:JSON.stringify(selected)},root=>{
-  const roles=()=>discoverGoApiOutputs(root).filter(output=>output.value.kind==='Role'&&output.value.rules?.[0]?.resources?.includes('pods'));
+  const roles=()=>fixtureControllerShapes(root).filter(output=>output.value.kind==='Role'&&output.value.rules?.[0]?.resources?.includes('pods'));
   const check=(outputs,changed=false)=>{assert.equal(outputs.length,2);const tester=outputs.find(output=>output.context.conditions?.some(condition=>condition.expression==='mode == "deployer"'&&condition.result===false)),deployer=outputs.find(output=>output.context.conditions?.some(condition=>condition.expression==='mode == "deployer"'&&condition.result===true));assert(tester&&deployer,'actual tester and deployer alternatives missing');
    assert.deepEqual(tester.value.rules[0].resources,['pods','pods/log','services','endpoints','configmaps',...(changed?['events']:[])]);assert.deepEqual(tester.value.rules[1].resources,['deployments','replicasets']);assert.deepEqual(deployer.value.rules[0].resources,[...tester.value.rules[0].resources,'persistentvolumeclaims']);assert.deepEqual(deployer.value.rules[1].resources,['deployments','replicasets','statefulsets',...(changed?['daemonsets']:[])]);};
   check(roles());
-  const finalizerBranches=discoverGoApiOutputs(root).filter(output=>output.context.path===main&&output.context.line===754);
+  const finalizerBranches=fixtureControllerShapes(root).filter(output=>output.context.path===main&&output.context.line===754);
   assert.equal(finalizerBranches.length,2,'actual reread must retain both no-append and append PATCH paths');
   const branch=(outputs,taken)=>outputs.find(output=>output.context.conditions?.some(condition=>condition.expression==='!contains(finalizers, c.finalizer)'&&condition.result===taken));
   const inheritedFinalizer=branch(finalizerBranches,false),finalizer=branch(finalizerBranches,true);assert(inheritedFinalizer&&finalizer);
@@ -1307,12 +1324,12 @@ test('actual namespace Role alternatives retain base resources and changed condi
   assert.equal(inheritedFinalizer.value.metadata.finalizers.__docsSupportedSequenceAppend,undefined);
   assert.equal(finalizer.value.metadata.finalizers.__docsDynamicExpression,'append(finalizers, c.finalizer)');
   for(const output of finalizerBranches)assert.equal(output.context.requestMethod,'MethodPatch');
-  const finalizerSelection=apiProductSelection(finalizer.context.apiVersion,finalizer.context.kind,[finalizer.context],productApiReceiverRecords(finalizer.context.apiVersion,finalizer.context.kind),root);assert(finalizerSelection.metadataPaths.includes('$.metadata.finalizers'));assert(finalizerSelection.metadataPaths.includes('$.metadata.finalizers[]'),'actual symbolic finalizer array must select its public item boundary');
+  assertOriginalControllerUnsupported(root);assert.throws(()=>apiProductSelection(finalizer.context.apiVersion,finalizer.context.kind,[finalizer.context],productApiReceiverRecords(finalizer.context.apiVersion,finalizer.context.kind),root),/unsupported API-read error-result authority/);const finalizerSelection=fixtureShapeReceiverSelection(root,finalizer,productApiReceiverRecords(finalizer.context.apiVersion,finalizer.context.kind));assert(finalizerSelection.metadataPaths.includes('$.metadata.finalizers'));assert(finalizerSelection.metadataPaths.includes('$.metadata.finalizers[]'),'actual symbolic finalizer array must select its public item boundary');
   const changed=files[main].replace('coreResources := []string{"pods", "pods/log", "services", "endpoints", "configmaps"}','coreResources := []string{"pods", "pods/log", "services", "endpoints", "configmaps", "events"}').replace('appResources = append(appResources, "statefulsets")','appResources = append(appResources, "statefulsets", "daemonsets")').replace('finalizers := append([]string{}, current.Metadata.Finalizers...)','finalizers := append([]string{"existing"}, []string{"retained"}...)');assert.notEqual(changed,files[main]);fs.writeFileSync(path.join(root,main),changed);
-  const run=spawnSync(process.env.KUBECLAW_DOCS_GO_BINARY??'go',['run',new URL('../docs-api-go-output-role-adapter.go',import.meta.url).pathname],{input:JSON.stringify(paths.map(file=>({path:path.join(root,file)}))),encoding:'utf8',maxBuffer:32*1024*1024});assert.equal(run.status,0,run.stderr);const actual=JSON.parse(run.stdout),refreshed=structuredClone(selected);
+  const run=spawnSync(process.env.KUBECLAW_DOCS_GO_BINARY??'go',['run',new URL('../docs-api-go-output-role-adapter.go',import.meta.url).pathname],{input:JSON.stringify(paths.filter(file=>file.endsWith(".go")).map(file=>({path:path.join(root,file)}))),encoding:'utf8',maxBuffer:32*1024*1024});assert.equal(run.status,0,run.stderr);const actual=JSON.parse(run.stdout),refreshed=structuredClone(selected);
   for(const contract of refreshed.nativeLanguageSerializationContracts)for(const receipt of contract.outputs){const output=actual.find(output=>path.relative(root,output.path)===contract.source&&output.function===receipt.function&&output.expression===receipt.expression);assert(output);receipt.operationDigest=createHash('sha256').update(output.operation).digest('hex');receipt.dependencyFacts=output.dependencies.map(fact=>({...fact,path:path.relative(root,fact.path)}));receipt.dependencyFactsDigest=createHash('sha256').update(JSON.stringify(receipt.dependencyFacts)).digest('hex');}
   fs.writeFileSync(path.join(root,authority),JSON.stringify(refreshed));check(roles(),true);
-  const finiteBranches=discoverGoApiOutputs(root).filter(output=>output.context.path===main&&output.context.line===754),finiteFinalizer=branch(finiteBranches,true),finiteInherited=branch(finiteBranches,false);assert(finiteFinalizer&&finiteInherited);
+  const finiteBranches=fixtureControllerShapes(root).filter(output=>output.context.path===main&&output.context.line===754),finiteFinalizer=branch(finiteBranches,true),finiteInherited=branch(finiteBranches,false);assert(finiteFinalizer&&finiteInherited);
   assert.deepEqual(finiteInherited.value.metadata.finalizers,['existing','retained']);
   assert.deepEqual(finiteFinalizer.value.metadata.finalizers,['existing','retained',{__docsDynamicExpression:'c.finalizer'}]);
  });
@@ -1329,13 +1346,150 @@ test('native Python systemd repair rejects refreshed receipts for changed byte c
 
 test('native Go HTTP consumers reject refreshed receipts for replaced response constructors',()=>{
  const repository=path.resolve(import.meta.dirname,'../..'),authority='scripts/docs-api-producer-adapter-authorities.json',registry=JSON.parse(fs.readFileSync(path.join(repository,authority),'utf8')),selected={nativeLanguageSerializationContracts:registry.nativeLanguageSerializationContracts.filter(contract=>contract.source.startsWith('cmd/buster-namespace-controller/'))};
- const paths=[...new Set(selected.nativeLanguageSerializationContracts.flatMap(contract=>contract.outputs.flatMap(output=>output.dependencyFacts.map(fact=>fact.path))))],files=Object.fromEntries(paths.map(file=>[file,fs.readFileSync(path.join(repository,file),'utf8')]));
+ const paths=[...new Set(['charts/kubeclaw/templates/buster-namespace-lease-crd.yaml',...selected.nativeLanguageSerializationContracts.flatMap(contract=>contract.outputs.flatMap(output=>output.dependencyFacts.map(fact=>fact.path)))])],files=Object.fromEntries(paths.map(file=>[file,fs.readFileSync(path.join(repository,file),'utf8')]));
  sourceFixture({...files,[authority]:JSON.stringify(selected)},root=>{
-  assert.doesNotThrow(()=>discoverGoApiOutputs(root));
+  assertOriginalControllerUnsupported(root);const before=fixtureGoRoleCapture(root).filter(role=>role.function==='readinessHandler'&&/^json.NewEncoder/u.test(role.expression));assert(before.length);assert(before.every(role=>fixtureNativeConsumerMatches(root,role)));
   const source='cmd/buster-namespace-controller/demo-readiness.go',bytes=files[source];
   fs.writeFileSync(path.join(root,source),bytes.replace('"retentionSeconds": seconds, "schemaVersion": "demo-ready-response.v1"','"apiVersion": "v1", "kind": "Secret", "retentionSeconds": seconds, "schemaVersion": "demo-ready-response.v1"'));
-  const run=spawnSync(process.env.KUBECLAW_DOCS_GO_BINARY??'go',['run',new URL('../docs-api-go-output-role-adapter.go',import.meta.url).pathname],{input:JSON.stringify(paths.map(file=>({path:path.join(root,file)}))),encoding:'utf8',maxBuffer:16*1024*1024});assert.equal(run.status,0,run.stderr);const outputs=JSON.parse(run.stdout);
+  const run=spawnSync(process.env.KUBECLAW_DOCS_GO_BINARY??'go',['run',new URL('../docs-api-go-output-role-adapter.go',import.meta.url).pathname],{input:JSON.stringify(paths.filter(file=>file.endsWith(".go")).map(file=>({path:path.join(root,file)}))),encoding:'utf8',maxBuffer:16*1024*1024});assert.equal(run.status,0,run.stderr);const outputs=JSON.parse(run.stdout);
   for(const contract of selected.nativeLanguageSerializationContracts)for(const record of contract.outputs){const output=outputs.find(output=>path.relative(root,output.path)===contract.source&&output.function===record.function&&output.expression===record.expression);assert(output);record.operationDigest=createHash('sha256').update(output.operation).digest('hex');record.dependencyFacts=output.dependencies.map(fact=>({...fact,path:path.relative(root,fact.path)}));record.dependencyFactsDigest=createHash('sha256').update(JSON.stringify(record.dependencyFacts)).digest('hex');}
-  fs.writeFileSync(path.join(root,authority),JSON.stringify(selected));assert.throws(()=>discoverGoApiOutputs(root),/GO_RAW_OUTPUT_ROLE_UNQUALIFIED/);
+  fs.writeFileSync(path.join(root,authority),JSON.stringify(selected));const changed=outputs.filter(role=>role.function==='readinessHandler'&&/^json.NewEncoder/u.test(role.expression));assert(changed.length);assert(changed.every(role=>!fixtureNativeConsumerMatches(root,role)),'changed response constructor must not inherit the original receipt consumer');
  });
+});
+
+
+test('native product status API-read root binds original CRD control on repeated and fresh unsupported discovery',()=>{
+ const repository=path.resolve(import.meta.dirname,'../..'),authority='scripts/docs-api-producer-adapter-authorities.json',schema='charts/kubeclaw/templates/buster-namespace-lease-crd.yaml';
+ const registry=JSON.parse(fs.readFileSync(path.join(repository,authority),'utf8')),selected={nativeLanguageSerializationContracts:registry.nativeLanguageSerializationContracts.filter(contract=>contract.source.startsWith('cmd/buster-namespace-controller/'))};
+ const paths=[...new Set([schema,...selected.nativeLanguageSerializationContracts.flatMap(contract=>contract.outputs.flatMap(output=>output.dependencyFacts.map(fact=>fact.path)))])],files=Object.fromEntries(paths.map(file=>[file,fs.readFileSync(path.join(repository,file),'utf8')]));
+ const marker='                        required: [schemaVersion, decisionId, payloadDigest, action, leaseName, leaseUID, readyDigest, generation, actorId, issuer, appliedAt, previousExpiry, expiresAt, state, envelope]\n                        properties:\n';assert(files[schema].includes(marker));
+ const changes=[
+  bytes=>bytes.replace(marker,marker+'                          apiVersion:\n                            type: string\n                          kind:\n                            type: string\n'),
+  bytes=>bytes.replace(marker,'                        x-kubernetes-preserve-unknown-fields: true\n'+marker),
+  bytes=>bytes.replace('            status:\n              type: object','            status:\n              x-kubernetes-preserve-unknown-fields: true\n              type: object'),
+  bytes=>bytes.replace('spec:\n  group:', 'spec:\n  preserveUnknownFields: true\n  group:'),
+  bytes=>bytes.replace('                      items:\n                        type: object\n                        x-kubernetes-validations:', '                      items:\n                        type: object\n                        additionalProperties: true\n                        x-kubernetes-validations:'),
+ ];
+ for(const change of changes)sourceFixture({...files,[authority]:JSON.stringify(selected)},root=>{
+  assertOriginalControllerUnsupported(root);const before=fixtureGoRoleCapture(root).filter(role=>role.function==='productHandler'&&/^json.NewEncoder/u.test(role.expression));assert(before.length);assert(before.every(role=>fixtureNativeConsumerMatches(root,role)),'original selected response receipt must qualify independently of unsupported error publication');
+  const changed=change(files[schema]);assert.notEqual(changed,files[schema]);fs.writeFileSync(path.join(root,schema),changed);
+  const expected=/HTTP_RESPONSE_SCHEMA_AUTHORITY_UNQUALIFIED: charts\/kubeclaw\/templates\/buster-namespace-lease-crd.yaml: \$\.status\.demoProduct\.decisions\.items/;
+  assert.throws(()=>discoverGoApiOutputs(root),expected,'repeated original discovery must reject changed schema authority before error publication');
+  sourceFixture({...files,[schema]:changed,[authority]:JSON.stringify(selected)},fresh=>assert.throws(()=>discoverGoApiOutputs(fresh),expected));
+  fs.writeFileSync(path.join(root,schema),files[schema]);assertOriginalControllerUnsupported(root);const recovered=fixtureGoRoleCapture(root).filter(role=>role.function==='productHandler'&&/^json.NewEncoder/u.test(role.expression));assert.deepEqual(recovered,before);assert(recovered.every(role=>fixtureNativeConsumerMatches(root,role)));
+ });
+ sourceFixture({...files,[authority]:JSON.stringify(selected)},root=>{
+  assertOriginalControllerUnsupported(root);fs.unlinkSync(path.join(root,schema));assert.throws(()=>discoverGoApiOutputs(root),/HTTP_RESPONSE_SCHEMA_AUTHORITY_UNQUALIFIED/);
+ });
+});
+
+test('recognized stdlib log and HTTP error output wrappers cannot silently disappear',()=>{
+ const api='`{"apiVersion":"v1","kind":"Secret"}`';
+ for(const body of ['import "log"\nfunc main(){log.SetFlags(0);log.SetPrefix("");log.Print('+api+')}','import "net/http"\nfunc handler(w http.ResponseWriter,r *http.Request){http.Error(w,'+api+',200)};func main(){http.HandleFunc("/",handler)}','import logger "log"\nvar emit=logger.Print;func main(){emit('+api+')}','import "log"\nfunc relay(f func(...any)){};func main(){relay(log.Print)}','import "net/http"\nvar emit=http.Error;func handler(w http.ResponseWriter){emit(w,'+api+',200)}'])sourceFixture({'bin/output-wrapper.go':'package main\n'+body},root=>assert.throws(()=>discoverGoApiOutputs(root),/GO_RAW_OUTPUT_ROLE_UNQUALIFIED:.*output-wrapper.go/));
+ sourceFixture({'bin/output-wrapper.go':'package main\nimport "net/http"\nfunc handler(w http.ResponseWriter){http.Error(w,"fixed diagnostic",400)}'},root=>assert.doesNotThrow(()=>discoverGoApiOutputs(root)));
+});
+
+// These fixture helpers inspect selected actual AST consumer/shape boundaries.
+// They are NOT whole-source admission: the full original controller has the
+// separately asserted unsupported product HTTP error publication. No source
+// or operation is removed; all roles remain in the capture.
+function fixtureGoRoleCapture(root) {
+ const files=fs.readdirSync(root,{recursive:true}).filter(file=>file.endsWith('.go')&&!file.endsWith('_test.go'));
+ const run=spawnSync(process.env.KUBECLAW_DOCS_GO_BINARY??'go',['run',new URL('../docs-api-go-output-role-adapter.go',import.meta.url).pathname],{input:JSON.stringify(files.map(file=>({path:path.join(root,file)}))),encoding:'utf8',maxBuffer:32*1024*1024});assert.equal(run.status,0,run.stderr);return JSON.parse(run.stdout);
+}
+function fixtureNativeConsumerMatches(root,role) {
+ const registry=JSON.parse(fs.readFileSync(path.join(root,'scripts/docs-api-producer-adapter-authorities.json'),'utf8'));
+ return nativeOutputConsumerMatches(role,registry.nativeLanguageSerializationContracts.filter(contract=>contract.source===path.relative(root,role.path)).flatMap(contract=>contract.outputs),root);
+}
+function fixtureControllerShapes(root,{transport=true}={}) {
+ const roles=fixtureGoRoleCapture(root);
+ if(transport){const selected=roles.filter(role=>['kube','requestPayload'].includes(role.function));assert(selected.length);assert(selected.every(role=>fixtureNativeConsumerMatches(root,role)),'FINITE_TRANSPORT_CONSUMER_UNQUALIFIED');}
+ const files=fs.readdirSync(root,{recursive:true}).filter(file=>file.endsWith('.go')&&!file.endsWith('_test.go'));
+ const run=spawnSync(process.env.KUBECLAW_DOCS_GO_BINARY??'go',['run',new URL('../docs-api-go-output-shapes.go',import.meta.url).pathname],{input:JSON.stringify(files.map(file=>path.join(root,file))),encoding:'utf8',maxBuffer:32*1024*1024});assert.equal(run.status,0,run.stderr);
+ return Object.entries(JSON.parse(run.stdout)).flatMap(([absolute,objects])=>objects.map((object,index)=>({value:object.value,context:{...object,apiVersion:object.value.apiVersion,kind:object.value.kind,path:path.relative(root,absolute),document:index,sourceDigest:createHash('sha256').update(fs.readFileSync(absolute)).digest('hex'),producer:'go-shape',outputDigest:createHash('sha256').update(JSON.stringify(object.value)).digest('hex'),...(object.factoryDependencies?{factoryDependencies:object.factoryDependencies.map(dependency=>({...dependency,path:path.relative(root,dependency.path)}))}:{})}})));
+}
+function assertOriginalControllerUnsupported(root) {
+ assert.throws(()=>discoverGoApiOutputs(root),/demo-product.go:422:.*unsupported API-read error-result authority for productHandler/);
+ const unsupported=fixtureGoRoleCapture(root).find(role=>role.function==='productHandler'&&role.expression==='http.Error(w, code, 409)');assert(unsupported);assert.equal(unsupported.authorityQualified,false);assert.equal(unsupported.role,'unknown');
+}
+
+function fixtureShapeReceiverSelection(root,output,records) {
+ // Separate receiver/schema fixture. The input comes from the actual AST
+ // shape, but this authored YAML does NOT claim original Go source admission.
+ const source='receiver-shape-fixture.yaml',bytes=YAML.stringify(output.value);fs.writeFileSync(path.join(root,source),bytes);
+ const context={apiVersion:output.context.apiVersion,kind:output.context.kind,path:source,document:0,sourceDigest:createHash('sha256').update(bytes).digest('hex'),...(output.context.requestMethod?{requestMethod:output.context.requestMethod}:{}),...(output.context.conditions?{conditions:output.context.conditions}:{}),...(output.context.requestAlternatives?{requestAlternatives:output.context.requestAlternatives}:{})};
+ return apiProductSelection(context.apiVersion,context.kind,[context],records,root);
+}
+
+
+test('original guarded readiness HTTP error code binds its actual finite allowlist helpers',()=>{
+ const repository=path.resolve(import.meta.dirname,'../..'),authority='scripts/docs-api-producer-adapter-authorities.json',registry=JSON.parse(fs.readFileSync(path.join(repository,authority),'utf8')),selected={nativeLanguageSerializationContracts:registry.nativeLanguageSerializationContracts.filter(contract=>contract.source.startsWith('cmd/buster-namespace-controller/'))};
+ const paths=[...new Set(['charts/kubeclaw/templates/buster-namespace-lease-crd.yaml',...selected.nativeLanguageSerializationContracts.flatMap(contract=>contract.outputs.flatMap(output=>output.dependencyFacts.map(fact=>fact.path)))])],files=Object.fromEntries(paths.map(file=>[file,fs.readFileSync(path.join(repository,file),'utf8')])),main='cmd/buster-namespace-controller/main.go';
+ const original='func contains(values []string, target string) bool {\n\tfor _, value := range values {\n\t\tif value == target {\n\t\t\treturn true\n\t\t}\n\t}\n\treturn false\n}';assert(files[main].includes(original));
+ for(const change of [bytes=>bytes.replace(original,'func contains(values []string, target string) bool { return true }'),bytes=>bytes+'\n'+original+'\n',bytes=>bytes.replace('return e.message','message := e.message\n\te.message = "apiVersion: v1\\nkind: Secret"\n\treturn message')])sourceFixture({...files,[authority]:JSON.stringify(selected)},root=>{
+  assertOriginalControllerUnsupported(root);
+  const before=fixtureGoRoleCapture(root).find(role=>role.expression==='http.Error(w, readyErrorCode(err), 409)');assert(before);assert.equal(before.role,'non-api');assert.equal(before.authorityQualified,true);
+  fs.writeFileSync(path.join(root,main),change(files[main]));
+  const changed=fixtureGoRoleCapture(root).find(role=>role.expression===before.expression);assert(changed);assert.equal(changed.operation,before.operation);assert.equal(changed.role,'unknown','changed or duplicate allowlist helper must not inherit the original diagnostic purpose');
+ });
+});
+
+test('ordinary Python exception and pattern capture cannot impersonate the imported serializer',()=>{
+ const source='scripts/inspect-data-plane-mtls.py',bytes=fs.readFileSync(new URL('../..//'+source,import.meta.url),'utf8'),authority=JSON.parse(fs.readFileSync(new URL('../docs-api-producer-adapter-authorities.json',import.meta.url),'utf8')),registry={nativeLanguageSerializationContracts:authority.nativeLanguageSerializationContracts.filter(record=>record.source===source)};
+ const guard='    context = os.environ.get("KUBE_CONTEXT")',start=bytes.indexOf('    result = inventory('),end=bytes.indexOf('\n\n\nif __name__',start);assert(start>0&&end>start);
+ const declarations='\nclass SerializerError(Exception):\n    def loads(self, value):\n        return json.loads(value)\n    def dumps(self, value, indent=None):\n        return \'{"apiVersion":"v1","kind":"Secret"}\'\n\n';
+ for(const [name,header]of [['exception','    try:\n        raise SerializerError()\n    except SerializerError as json:\n'],['match','    match SerializerError():\n        case json:\n']]) {
+  // Keep original main/get/inventory work in the active lexical capture, so
+  // the nested read helper really resolves the captured delegating codec.
+  const mainStart=bytes.indexOf('def main():\n'),body=bytes.slice(mainStart+'def main():\n'.length,end),indent=name==='exception'?'    ':'        ',changed=bytes.slice(0,mainStart)+declarations+'def main():\n'+header+body.split('\n').map(line=>indent+line).join('\n')+bytes.slice(end);
+  assert(changed.includes('return json.loads(value)')&&changed.includes(guard.trim()));
+  sourceFixture({[source]:bytes,'scripts/docs-api-producer-adapter-authorities.json':JSON.stringify(registry)},root=>{assert.deepEqual(discoverScriptApiOutputs(root),[]);fs.writeFileSync(path.join(root,source),changed);assert.throws(()=>discoverScriptApiOutputs(root),/PYTHON_SERIALIZED_OUTPUT_ROLE_UNQUALIFIED: scripts\/inspect-data-plane-mtls.py/);});
+ }
+ for(const body of ['try:\n raise issue\nexcept ValueError as json:\n print(json.dumps({"report":True}))','match value:\n case {"codec": json}:\n  print(json.dumps({"report":True}))','match value:\n case [*json]:\n  print(json.dumps({"report":True}))','match value:\n case {"codec": other, **json}:\n  print(json.dumps({"report":True}))','with manager as json:\n print(json.dumps({"report":True}))'])sourceFixture({'bin/captured.py':'import json\n'+body+'\n'},root=>assert.throws(()=>discoverScriptApiOutputs(root),/PYTHON_SERIALIZED_OUTPUT_ROLE_UNQUALIFIED: bin\/captured.py/));
+ sourceFixture({'bin/captured.py':'import json\ntry:\n raise issue\nexcept ValueError as other:\n print(json.dumps({"report":True}))\n'},root=>assert.deepEqual(discoverScriptApiOutputs(root),[]));
+});
+
+test('shared Go private output parameter authority rejects indirect helper references and mutations',()=>{
+ const api='`{"apiVersion":"v1","kind":"Secret"}`',helper='package main\nimport("net/http";"fmt";"os")\nfunc emit(w http.ResponseWriter,text string){http.Error(w,text,200)}\nfunc ordinary(w http.ResponseWriter){emit(w,"ordinary diagnostic")}\n';
+ for(const added of ['func handler(w http.ResponseWriter){callback:=emit;callback(w,'+api+')}','var callback=emit;func handler(w http.ResponseWriter){callback(w,'+api+')}','func relay(f func(http.ResponseWriter,string)){};func call(){relay(emit)}','func returned()func(http.ResponseWriter,string){return emit}','var callbacks=[]func(http.ResponseWriter,string){emit}','var box=struct{emit func(http.ResponseWriter,string)}{emit}'])for(const crossFile of [false,true])sourceFixture({'cmd/probe/main.go':helper,...(crossFile?{'cmd/probe/other.go':'package main\nimport "net/http"\n'+added}:{'cmd/probe/main.go':helper+added})},root=>assert.throws(()=>discoverGoApiOutputs(root),/GO_RAW_OUTPUT_ROLE_UNQUALIFIED:.*main.go:.*http.Error/));
+ for(const mutation of ['text="first";text='+api+';', 'text='+api+';', 'ptr:=&text;*ptr='+api+';', 'alter(&text);','text += os.Args[1];'])sourceFixture({'cmd/probe/main.go':helper.replace('http.Error(w,text,200)',mutation+'http.Error(w,text,200)')},root=>assert.throws(()=>discoverGoApiOutputs(root),/GO_RAW_OUTPUT_ROLE_UNQUALIFIED:.*http.Error/));
+ for(const sink of ['fmt.Print(text)','os.Stdout.WriteString(text)'])sourceFixture({'cmd/probe/main.go':helper.replace('http.Error(w,text,200)',sink)+'var callback=emit'},root=>assert.throws(()=>discoverGoApiOutputs(root),/GO_RAW_OUTPUT_ROLE_UNQUALIFIED/));
+ sourceFixture({'cmd/probe/main.go':helper,'cmd/probe/other.go':'package main\nimport "net/http"\nfunc other(w http.ResponseWriter){emit(w,"ordinary diagnostic")}'},root=>assert.deepEqual(discoverGoApiOutputs(root),[]));
+ sourceFixture({'cmd/probe/main.go':helper.replace('http.Error(w,text,200)','http.Error(w,text,200);text="ordinary diagnostic"').replace('emit(w,"ordinary diagnostic")','emit(w,'+api+')')},root=>assert.throws(()=>discoverGoApiOutputs(root),/GO_RAW_OUTPUT_ROLE_UNQUALIFIED/));
+});
+
+import { assertDocumentationExecutableRole } from '../docs-api-documentation-role-custody.mjs';
+test('actual full native documentation executable custody admits only the prepared source-purpose receipts',()=>{
+ const repository=path.resolve(import.meta.dirname,'../..');
+ for(const source of ['scripts/docs-api-python-output-adapter.py','scripts/docs-api-go-output-role-adapter.go','scripts/docs-api-python-ast-v1.py'])assert.doesNotThrow(()=>assertDocumentationExecutableRole(repository,source));
+ for(const source of ['scripts/docs-api-python-output-adapter.py','scripts/docs-api-go-output-role-adapter.go']){
+  const bytes=fs.readFileSync(path.join(repository,source),'utf8'),changed=bytes+(source.endsWith('.py')?'\nimport subprocess\nsubprocess.run(["must-not-execute"])\n':'\nfunc init(){os.WriteFile("must-not-execute",[]byte("unqualified"),0600)}\n');
+  sourceFixture({[source]:changed},root=>{assert.throws(()=>assertDocumentationExecutableRole(root,source),/native executable\/import\/initialization operations changed/);assert(!fs.existsSync(path.join(root,'must-not-execute')));});
+ }
+});
+
+test('native Go actual typed method dispatch rejects raw output and stale serializer roots',()=>{
+ const method='func(message) String()string{return `{"apiVersion":"v1","kind":"Secret"}`}';
+ for(const body of ['func emit(text message){fmt.Fprintln(os.Stdout,text)};func main(){emit("ordinary diagnostic")}','func main(){var text message="ordinary diagnostic";fmt.Fprintln(os.Stdout,text)}','func main(){const text message="ordinary diagnostic";fmt.Fprintln(os.Stdout,text)}','type alias=message;func emit(text alias){fmt.Fprintln(os.Stdout,text)};func main(){emit("ordinary diagnostic")}']){
+  const baseline='package main\nimport("fmt";"os")\ntype message string\n'+body;
+  sourceFixture({'cmd/probe/main.go':baseline},root=>assert.deepEqual(discoverGoApiOutputs(root),[]));
+  sourceFixture({'cmd/probe/main.go':baseline+'\n'+method},root=>assert.throws(()=>discoverGoApiOutputs(root),/GO_RAW_OUTPUT_ROLE_UNQUALIFIED:.*fmt.Fprintln/));
+ }
+ const source='cmd/probe/main.go',baseline='package main\nimport("bytes";"encoding/json";"io")\ntype document map[string]interface{}\nfunc requestPayload(body interface{})(io.Reader,error){if body==nil{return nil,nil};data,err:=json.Marshal(body);if err!=nil{return nil,err};return bytes.NewReader(data),nil}\nfunc caller()(io.Reader,error){var value document=map[string]interface{}{"apiVersion":"v1","kind":"ConfigMap"};return requestPayload(value)}\n';
+ sourceFixture({[source]:baseline},root=>{
+  const run=spawnSync(process.env.KUBECLAW_DOCS_GO_BINARY??'go',['run',new URL('../docs-api-go-output-role-adapter.go',import.meta.url).pathname],{input:JSON.stringify([{path:path.join(root,source)}]),encoding:'utf8'});assert.equal(run.status,0,run.stderr);
+  const operation=JSON.parse(run.stdout).find(r=>r.expression==='json.Marshal(body)'),facts=operation.dependencies.map(f=>({...f,path:path.relative(root,f.path)})),sha=text=>createHash('sha256').update(text).digest('hex');
+  const registry={nativeLanguageSerializationContracts:[{source,language:'Go',outputs:[{expression:operation.expression,function:operation.function,operationDigest:sha(operation.operation),dependencyFacts:facts,dependencyFactsDigest:sha(JSON.stringify(facts)),consumer:{kind:'go-kubernetes-payload',source,purpose:'Synthetic finite native payload consumer',evidence:['return bytes.NewReader(data), nil']}}]}]},authority=path.join(root,'scripts/docs-api-producer-adapter-authorities.json');
+  fs.mkdirSync(path.dirname(authority),{recursive:true});const frozen=JSON.stringify(registry);fs.writeFileSync(authority,frozen);
+  assert.equal(discoverGoApiOutputs(root)[0].value.kind,'ConfigMap');
+  fs.appendFileSync(path.join(root,source),'func(document) MarshalJSON()([]byte,error){return []byte(`{"apiVersion":"v1","kind":"Secret"}`),nil}\n');
+  assert.throws(()=>discoverGoApiOutputs(root),/GO_RAW_OUTPUT_ROLE_UNQUALIFIED:.*json.Marshal\(body\)/);
+  assert.equal(fs.readFileSync(authority,'utf8'),frozen);
+ });
+});
+
+test('native Python callable encoder option authority rejects whole publications and keeps formatting neighbors',()=>{
+ const encoder='import json\nimport sys\nclass Counterfeit:\n def __init__(self,**options):pass\n def encode(self,value):return \'{"apiVersion":"v1","kind":"Secret"}\'\n def iterencode(self,value):return [self.encode(value)]\n';
+ for(const call of ['print(json.dumps({"report":True},cls=Counterfeit))','print(json.dumps({"report":True},**{"cls":Counterfeit}))','json.dump({"report":True},sys.stdout,cls=Counterfeit)','print(json.dumps({"report":True},**options))'])sourceFixture({'bin/probe.py':encoder+call},root=>assert.throws(()=>discoverScriptApiOutputs(root),/PYTHON_SERIALIZED_OUTPUT_ROLE_UNQUALIFIED: bin\/probe.py/));
+ for(const options of ['indent=2,sort_keys=True','separators=(",",":"),cls=None','**{"indent":2,"sort_keys":True}'])sourceFixture({'bin/probe.py':'import json\nprint(json.dumps({"report":True},'+options+'))'},root=>assert.deepEqual(discoverScriptApiOutputs(root),[]));
 });

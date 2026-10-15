@@ -5,20 +5,25 @@ Audience: project author, pipeline operator, maintainer
 Owner: Nova project setup
 Evidence: skills/nova/project_setup/tools/progress-scaffold.ts; skills/nova/project_setup/tools/progress-scaffold-validation.ts; skills/common/plugin-runtime/foundation/config/published-pair.ts; skills/nova/core/test-gates/pipeline.ts
 Applies to: coupled `.swarm/progress.json` and `.swarm/pipeline.json`
-Last verified: 2026-10-09 at source revision `e3fa70c3fe3a1a4a32af503201a19e0b5df14c61`
+Last verified: 2026-10-12 at source revision `ad73a0df62607ea9634304c3e9518826450a6a25`
 
 ## One logical publication
 
 `.swarm/progress.json` and `.swarm/pipeline.json` describe different parts of
-one project generation. Project setup publishes them together so a reader does
-not combine module/gate authoring from one edit with test-provider policy from
-another.
+one project generation. A generation is an exact stored pair with one identity.
+Project setup publishes both files through one pointer. The strict pair reader
+rejects module/gate authoring and test-provider policy from different generations.
 
 - `progress.json` holds project, ordering, modules, gates, and classic policy
   selections generated from `progress.scaffold.json`.
 - `pipeline.json` holds lint inputs and module/gate test-provider declarations.
 - `.scaffold-publication/` holds immutable generation members and the committed
-  pointer that makes one pair current.
+  pointer (`current.json`) that makes one pair current.
+
+A loose file is a current copy outside the immutable generation directory.
+A materialization is the publisher-created loose copy of a generation member.
+Immutable means that the publisher can create or verify stored bytes, but cannot
+replace them with different bytes under the same generation identity.
 
 Neither file is Nova runtime progress. Attempts, facts, waits, and results live
 under the platform `storageRoot`.
@@ -28,7 +33,7 @@ under the platform `storageRoot`.
 This procedure publishes and verifies a local pair. It does not compile a Nova
 project, contact a test endpoint, or start a provider. Use the recorded source
 revision, Linux, Node.js 24, Git, Bash, util-linux `flock` at `/usr/bin/flock`
-with `--timeout` support, and the dependencies from [Locked Dependency
+with `--timeout` support, GNU coreutils, and the dependencies from [Locked Dependency
 Installation](../use/quickstart.md#locked-dependency-installation). Run from the
 repository root as its checkout owner. The owner needs write access to the
 new temporary directory; no Kubernetes, model-provider, or production-storage
@@ -51,7 +56,8 @@ tool through the host owner before proceeding; do not bypass the lock.
 
 The example uses a disposable Git repository with one module. `FORGE.md` is its
 implementation instruction, and `BUSTER.md` is its test instruction. Discovery
-creates the test declaration, including an HTTP origin that must be supplied.
+creates an HTTP health declaration and a blocking dependency-security scan.
+The HTTP declaration needs an origin that the author must supply.
 The loopback origin below is authoring data only. Publication checks its presence;
 it does not prove reachability or provider admission. Before using this plan in a
 real run, resolve it with the selected registry and grants and prove the endpoint
@@ -85,9 +91,10 @@ cat "$publication_evidence/discovery.txt"
 ```
 
 Expected observation: `.swarm/progress.scaffold.json` exists and discovery
-reports `TODO:` diagnostics for the description, notes, and provider origin. Discovery can exit zero with these diagnostics because it prepares a
-form. This is not a publication success. Neither current JSON file nor a
-committed pointer should exist yet.
+reports `TODO:` diagnostics for the description, notes, and provider origin.
+Discovery can exit zero with these diagnostics because it prepares a form.
+This is not a publication success. Neither current JSON file nor a committed
+pointer should exist yet.
 
 ### 2. Complete and validate the authoring input
 
@@ -178,37 +185,143 @@ Delete only the exact newly created root. Keep the evidence directory until the
 checkout owner has accepted the observations. A publication copied to another
 filesystem requires a new strict read there before it becomes execution input.
 
-`--project` resolves `<repo>/Projects/<project>/src/.swarm`. `--swarm` selects an
-explicit absolute directory; provide `--project` too when it cannot be inferred.
+`--project` resolves `<repo>/Projects/<project>/src/.swarm`. `--swarm` takes precedence
+for the directory; provide `--project` too when it cannot be inferred.
 `--repo` overrides repository-root discovery. `--scaffold` selects another
 scaffold path. `--print` emits the computed pair. `--apply` and `--check` cannot
 be combined. `--help` (or its short alias `-h`) prints the supported command form and exits without
 reading or writing a project.
+
+Relative `--repo`, `--swarm`, and `--scaffold` paths resolve from the command's
+working directory. Use absolute paths for recovery. The selected repository
+must contain a `.git` entry, and the selected `.swarm` must already exist.
+With no `--repo`, discovery selects the nearest parent of the working directory
+with a `.git` entry. With no `--scaffold`, it selects
+`<selected-swarm>/progress.scaffold.json`.
+Repeated value flags use the last supplied value. Unknown flags, missing values,
+and a non-help command without either `--project` or `--swarm` exit nonzero.
+Argument errors still block `--help`; help bypasses only project resolution.
+A project inferred from `--swarm` is the path component after the last `Projects`.
+When `--swarm` and `--project` are both present, the project value selects the
+identity checked in the scaffold, not another directory.
+`--print` takes precedence over `--apply` and prevents publication.
+Its output includes a validation message before the JSON object containing
+`progress` and `pipeline`; the complete stdout stream is not a JSON document.
+`--check` takes precedence over `--print` and prints validation only.
+Use one mode per command so its effect is clear.
 
 > **Source evidence — scaffold command selection**
 >
 > **Claim:** Help exits before context resolution, while the other switches
 > select validation, rendering, or publication behavior.
 >
-> **Implementation:** [absolute locking command and timeout](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/skills/common/plugin-runtime/foundation/observability/durable-delivery.ts#L186-L203); [argument parsing](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/skills/nova/project_setup/tools/progress-scaffold.ts#L43-L71); [command dispatch](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/skills/nova/project_setup/tools/progress-scaffold.ts#L148-L163)
+> **Implementation:** [absolute locking command and timeout](https://github.com/datrab/kubeclaw/blob/ad73a0df62607ea9634304c3e9518826450a6a25/skills/common/plugin-runtime/foundation/observability/durable-delivery.ts#L186-L203); [argument parsing](https://github.com/datrab/kubeclaw/blob/ad73a0df62607ea9634304c3e9518826450a6a25/skills/nova/project_setup/tools/progress-scaffold.ts#L43-L71); [command dispatch](https://github.com/datrab/kubeclaw/blob/ad73a0df62607ea9634304c3e9518826450a6a25/skills/nova/project_setup/tools/progress-scaffold.ts#L148-L163)
 >
-> **Revision:** `e3fa70c3fe3a1a4a32af503201a19e0b5df14c61`
+> **Contract or setting:** [context paths and project identity](https://github.com/datrab/kubeclaw/blob/ad73a0df62607ea9634304c3e9518826450a6a25/skills/nova/project_setup/tools/progress-scaffold.ts#L94-L111); [mode precedence in applyScaffold](https://github.com/datrab/kubeclaw/blob/ad73a0df62607ea9634304c3e9518826450a6a25/skills/nova/project_setup/tools/progress-scaffold.ts#L131-L145)
+>
+> **Test evidence:** [discovery, validation failure, and apply](https://github.com/datrab/kubeclaw/blob/ad73a0df62607ea9634304c3e9518826450a6a25/tests/skills/nova/project_setup/progress-scaffold.test.mjs#L68-L109). Status: PASS, local Node.js test execution on 2026-10-12.
+> This test does not exercise every combined switch.
+>
+> **Revision:** `ad73a0df62607ea9634304c3e9518826450a6a25`
+>
+> **Limit:** Command selection and a valid authoring form do not prove a successful publication or provider execution.
 
 The discovery command in step 1 writes the editable scaffold. Regeneration preserves an
 existing scaffold `pipeline` object rather than replacing its authored
 provider plan. Resolve all `TODO:` diagnostics before apply.
+
+### Authoring authority and effective defaults
+
+Discovery reads the committed pair with loose-copy comparison disabled.
+It then reads the existing scaffold. Scaffold version, description, notes,
+defaults, and execution order take precedence over progress values.
+For these fields, missing, null, or empty-string values fall back to progress
+and then discovery defaults. Empty arrays and objects, `false`, zero, and
+whitespace-only strings do not trigger this fallback. Some discovered text
+fields, such as module title and thinking level, instead reject whitespace-only
+strings and use their fallback. These rules prepare a form; they are not
+complete type validation.
+An existing scaffold policy object wins as a whole; discovery does not merge its
+missing policy fields with defaults. Existing module and gate entries override
+discovered entries by field, with a shallow merge. Nested objects are replaced.
+
+An existing scaffold `pipeline` is preserved as a whole.
+An invalid object or mismatched project stops regeneration before any write.
+New modules can therefore need new authored pipeline scopes after regeneration.
+Without that scaffold field, discovery builds a provider plan from the prior
+pair and discovered controls. See [Project test pipeline](pipeline-json.md)
+for provider choices and their separate resolution rules.
+
+Discovery supplies version `1` and module defaults of 300 minutes, three failures,
+and `adaptive` thinking. Its initial policy enables architecture validation and
+telemetry, and disables pipeline review and case study.
+For discovered review gates, the defaults are `on_fail: stop`,
+`review_output_dir: logs/echo-review`, 45 minutes, zero fix cycles, and
+`lint_tier: full`. For discovered Buster gates, they are
+`on_fail: fix_and_retest`, 90 minutes, and three fix cycles.
+Existing progress values can replace these discovery defaults; existing
+scaffold entry fields take precedence over the result.
+These are discovery values, not a second runtime policy authority.
+Apply uses the edited scaffold directly. It defaults only the output version to
+`1`, copies supported policy fields to progress, and omits top-level null,
+undefined, and empty-object values. It retains empty strings and arrays.
+It does not fill missing module settings or resolve provider schema defaults.
+Inspect `--print` before apply to see the effective pair.
+The runtime configuration contracts remain on [Nova project](nova-project.md)
+and [Project test pipeline](pipeline-json.md).
+
+Keep secret values outside the scaffold, generated pair, and diagnostic output.
+This publisher serializes authored data without redaction or encryption.
+`--print`, immutable generations, and retained evidence can keep earlier values
+after a later publication. Restrict access to the repository and evidence.
+Provider credentials and grants belong to the selected provider execution path;
+local publication neither obtains nor verifies them.
+
+> **Source evidence — authoring precedence**
+>
+> **Claim:** Discovery preserves authored scaffold values; apply projects that scaffold into the pair without provider resolution or secret redaction.
+>
+> **Implementation:** [buildScaffold precedence](https://github.com/datrab/kubeclaw/blob/ad73a0df62607ea9634304c3e9518826450a6a25/skills/nova/project_setup/tools/progress-scaffold-discovery.ts#L651-L694); [scaffoldToProgress projection](https://github.com/datrab/kubeclaw/blob/ad73a0df62607ea9634304c3e9518826450a6a25/skills/nova/project_setup/tools/progress-scaffold-validation.ts#L236-L262)
+>
+> **Contract or setting:** [DEFAULTS](https://github.com/datrab/kubeclaw/blob/ad73a0df62607ea9634304c3e9518826450a6a25/skills/nova/project_setup/tools/progress-scaffold-values.ts#L32-L57); [valueOrDefault and omitEmpty](https://github.com/datrab/kubeclaw/blob/ad73a0df62607ea9634304c3e9518826450a6a25/skills/nova/project_setup/tools/progress-scaffold-values.ts#L78-L97);
+> [module defaults](https://github.com/datrab/kubeclaw/blob/ad73a0df62607ea9634304c3e9518826450a6a25/skills/nova/project_setup/tools/progress-scaffold-discovery.ts#L545-L581); [review and Buster gate defaults](https://github.com/datrab/kubeclaw/blob/ad73a0df62607ea9634304c3e9518826450a6a25/skills/nova/project_setup/tools/progress-scaffold-discovery.ts#L589-L641)
+>
+> **Test evidence:** [existing provider plan and migrated health input](https://github.com/datrab/kubeclaw/blob/ad73a0df62607ea9634304c3e9518826450a6a25/tests/skills/nova/project_setup/progress-scaffold.test.mjs#L205-L245). Status: PASS, local Node.js test execution on 2026-10-12.
+> The test is not a secret-handling audit.
+>
+> **Revision:** `ad73a0df62607ea9634304c3e9518826450a6a25`
+>
+> **Limit:** Discovery defaults do not establish effective provider policy, credential access, or an active run's configuration.
 
 ## Validation before publication
 
 Scaffold validation checks project identity, at least one module, safe module
 and gate IDs, module directories and `FORGE.md` files, dependencies, stage and
 suite values, referenced instructions, gate behavior, execution order, lint
-declaration, pipeline scope presence, and provider-specific test configuration.
+declaration, pipeline scope presence, and selected test-configuration checks.
 Diagnostics are either `form_check` or `strict_content_check`; both block apply.
+Provider checking here is limited. For example, an HTTP declaration needs a
+string URL or a deployment input object. This check does not establish that
+the URL has an accepted format or that the input names a valid fixture.
+The installed resolver must still validate the provider schema, input links, policy, and grants before execution.
 
 The applied `progress.json` is built only from the scaffold's supported fields.
 The applied `pipeline.json` is the scaffold `pipeline` object. Project setup
 does not resolve providers or execute them during publication.
+
+> **Source evidence — validation boundary**
+>
+> **Claim:** Scaffold checks reject their diagnostics before apply, but do not resolve the provider plan.
+>
+> **Implementation:** [validateScaffold](https://github.com/datrab/kubeclaw/blob/ad73a0df62607ea9634304c3e9518826450a6a25/skills/nova/project_setup/tools/progress-scaffold-validation.ts#L221-L234); [scaffoldToProgress](https://github.com/datrab/kubeclaw/blob/ad73a0df62607ea9634304c3e9518826450a6a25/skills/nova/project_setup/tools/progress-scaffold-validation.ts#L236-L262)
+>
+> **Contract or setting:** [HTTP scope check](https://github.com/datrab/kubeclaw/blob/ad73a0df62607ea9634304c3e9518826450a6a25/skills/nova/project_setup/tools/progress-scaffold-validation.ts#L177-L192); [lint and scope selection](https://github.com/datrab/kubeclaw/blob/ad73a0df62607ea9634304c3e9518826450a6a25/skills/nova/project_setup/tools/progress-scaffold-validation.ts#L194-L219)
+>
+> **Test evidence:** [unresolved form rejection and completed apply](https://github.com/datrab/kubeclaw/blob/ad73a0df62607ea9634304c3e9518826450a6a25/tests/skills/nova/project_setup/progress-scaffold.test.mjs#L68-L109). Status: PASS, local Node.js test execution on 2026-10-12.
+>
+> **Revision:** `ad73a0df62607ea9634304c3e9518826450a6a25`
+>
+> **Limit:** A passing scaffold check does not prove the complete progress schema, provider configuration, fixture links, grants, or runtime execution.
 
 ## Generation layout and identity
 
@@ -250,11 +363,44 @@ rechecks that the publication directory did not appear during the loose read.
 If the directory exists, the reader requires a valid current pointer, valid
 immutable generation, matching member digests/lengths, stable directory
 identities, and—by default—byte-identical loose materializations. Damage never
-causes fallback to loose files. The test-plan loader uses this strict mode.
+causes fallback to loose files. The exported test-scope and lint loaders use this strict mode.
 
 The scaffold discovery path reads with loose-copy verification disabled so it
 can prepare a corrected publication from the committed generation. That is a
 repair input path, not execution authority.
+
+The test-scope loader requires `.swarm/pipeline.json` and exactly one module or
+gate selector. It returns the selected declaration's coverage, suites, tests,
+fixtures, and concurrency limits. The lint loader uses the same strict reader;
+absent `lint` returns `null`, while a present declaration must select
+`kubeclaw.lint.full` and at least one explicit input.
+Pair errors become `TEST_PLAN_PIPELINE_INVALID` with the original error as cause.
+Inspect that cause to distinguish publication damage from a missing scope.
+These loaders do not validate the complete progress contract or compare both
+project fields. Scaffold validation establishes that identity for this workflow.
+Custom publishers must preserve the contracts of both members.
+
+These are exported loader functions, not proof that every Nova input path reads
+this pair. The legacy project importer reads the selected progress file directly.
+It imports module structure into separately authored `nova-project.v2` input;
+it does not read the publication pointer or pipeline member. Before an import,
+verify the pair here and follow [Import a legacy project file](nova-project.md#import-a-legacy-project-file).
+Publication alone does not compile, activate, or resume a Nova run.
+The importer [reads the selected file directly](https://github.com/datrab/kubeclaw/blob/ad73a0df62607ea9634304c3e9518826450a6a25/skills/nova/project/legacy-import-cli.ts#L18-L25), then [imports structure and discards runtime state](https://github.com/datrab/kubeclaw/blob/ad73a0df62607ea9634304c3e9518826450a6a25/skills/nova/project/legacy-import.ts#L31-L75).
+
+> **Source evidence — strict consumers**
+>
+> **Claim:** Both pipeline loaders read the pair strictly before selecting test or lint declarations.
+>
+> **Implementation:** [loadPipelineTestScope](https://github.com/datrab/kubeclaw/blob/ad73a0df62607ea9634304c3e9518826450a6a25/skills/nova/core/test-gates/pipeline.ts#L12-L51); [loadPipelineLintDeclaration](https://github.com/datrab/kubeclaw/blob/ad73a0df62607ea9634304c3e9518826450a6a25/skills/nova/core/test-gates/pipeline.ts#L62-L78)
+>
+> **Contract or setting:** [strict copy verification default](https://github.com/datrab/kubeclaw/blob/ad73a0df62607ea9634304c3e9518826450a6a25/skills/common/plugin-runtime/foundation/config/published-pair.ts#L57-L76)
+>
+> **Test evidence:** [scope rejection after an interrupted writer](https://github.com/datrab/kubeclaw/blob/ad73a0df62607ea9634304c3e9518826450a6a25/tests/skills/nova/project_setup/scaffold-publication.test.mjs#L38-L50). Status: PASS, local Node.js test execution on 2026-10-12.
+>
+> **Revision:** `ad73a0df62607ea9634304c3e9518826450a6a25`
+>
+> **Limit:** This proves the loader boundary in source. Provider admission, endpoint health, and adoption by a Nova run need separate proof.
 
 ## Concurrency and file safety
 
@@ -263,8 +409,30 @@ multi-linked current targets, uses a durable store lock, writes immutable
 generation files, fsyncs files/directories, and commits with one pointer update.
 Concurrent substitution or mutation produces `PUBLISHED_PAIR_CHANGED`.
 
-**Current technical inference:** The strict reader prevents a run from combining
-members of different generations. Its cost is reduced availability when either
+The lock covers publication, not scaffold edits or the CLI's earlier change
+summary. Keep other authors stopped while validating and applying one input.
+The lock waits up to five seconds; lock failure stops that attempt.
+Readers do not acquire the writer lock. They reject a changing or divergent
+pair during an interrupted publication, so they can be unavailable until repair.
+The publisher does not automatically retry or select an older generation.
+
+> **Source evidence — locking and safe files**
+>
+> **Claim:** Publication uses a bounded kernel lock and rejects unsafe current targets before replacing the pair.
+>
+> **Implementation:** [targetValid and materialize](https://github.com/datrab/kubeclaw/blob/ad73a0df62607ea9634304c3e9518826450a6a25/skills/common/plugin-runtime/foundation/config/published-pair.ts#L78-L94); [acquireKernelLock](https://github.com/datrab/kubeclaw/blob/ad73a0df62607ea9634304c3e9518826450a6a25/skills/common/plugin-runtime/foundation/observability/durable-delivery.ts#L184-L227)
+>
+> **Contract or setting:** [durable directory checks](https://github.com/datrab/kubeclaw/blob/ad73a0df62607ea9634304c3e9518826450a6a25/skills/common/plugin-runtime/foundation/observability/durable-delivery.ts#L134-L161); [lock file and error handling](https://github.com/datrab/kubeclaw/blob/ad73a0df62607ea9634304c3e9518826450a6a25/skills/common/plugin-runtime/foundation/observability/durable-delivery.ts#L244-L275)
+>
+> **Test evidence:** [unsafe second target](https://github.com/datrab/kubeclaw/blob/ad73a0df62607ea9634304c3e9518826450a6a25/tests/skills/nova/project_setup/scaffold-publication.test.mjs#L28-L36); [concurrent publication](https://github.com/datrab/kubeclaw/blob/ad73a0df62607ea9634304c3e9518826450a6a25/tests/skills/nova/project_setup/scaffold-publication.test.mjs#L72-L87). Status: PASS, local Node.js test execution on 2026-10-12.
+>
+> **Revision:** `ad73a0df62607ea9634304c3e9518826450a6a25`
+>
+> **Limit:** These tests do not prove durability after host power loss or authenticated ownership of the authoring files.
+
+**Current technical inference:** The strict reader prevents its caller from
+combining members of different generations. The current source implements
+this mechanism. Its cost is reduced availability when either
 materialization is damaged: operators must reconcile the pair before execution.
 The source proves this behavior, but it contains no recorded historical reason
 for choosing this trade-off. The Nova project-setup owner owns that unknown.
@@ -288,6 +456,9 @@ these repair limits.
 
 | Signal or observation | Meaning | Safe action and boundary |
 | --- | --- | --- |
+| `OBSERVABILITY_STORE_PATH_SYMLINK` or `OBSERVABILITY_STORE_PATH_NOT_DIRECTORY` | Durable directory creation encountered an unsafe path. | Stop. Preserve the layout and have the filesystem owner establish a trusted directory; do not replace entries blindly. |
+| `OBSERVABILITY_STORE_LOCK_FILE_INVALID` | The durable lock file is not regular or has multiple hard links. | Stop and preserve the lock path for the filesystem owner. Do not unlink or bypass an active lock. |
+| `OBSERVABILITY_STORE_UNLOCK_FAILED` | The lock holder failed when releasing the lock. | The pair may already be committed. Preserve output and perform a strict read after confirming that no writer remains; a nonzero exit is not proof of no write. |
 | `OBSERVABILITY_STORE_LOCK_FAILED` | The durable lock is unavailable or its host command is incompatible. | Verify the required absolute locking command. Stop competing writers. Retry only after the owner confirms exclusive access; never bypass locking. |
 | `PUBLISHED_PAIR_UNCOMMITTED` | The publication directory exists without a committed pointer. | Preserve it. Use the bounded republish procedure below only when the scaffold, loose progress, directories, and intended generation meet its conditions. |
 | `PUBLISHED_PAIR_MANIFEST_INVALID` | The pointer has invalid JSON, shape, member identities, or generation digest. | A missing or regular malformed pointer can be replaced through bounded republish. A symlink, unsafe target, or damaged immutable member requires the owner-directed stop below. |
@@ -317,20 +488,21 @@ the same shell. After cleanup, the deleted disposable project cannot be recovere
 through these bindings. Apply these steps only after
 the owner has excluded symlink substitutions, unsafe targets, and storage damage.
 
-1. Stop all readers and writers, then preserve the complete `.swarm` directory
-   in a new evidence destination. Keep the existing evidence directory.
-2. Check that the scaffold and loose `progress.json` contain valid JSON.
+1. Stop all readers and writers.
+2. Preserve the complete `.swarm` directory in a new evidence destination.
+   Keep the existing evidence directory.
+3. Check that the scaffold and loose `progress.json` contain valid JSON.
    Missing loose progress is allowed; malformed existing progress requires the stop below.
-3. Run the read-only admission block below against the owner-approved scaffold.
-   A different byte, missing authority, or unsafe identity stops recovery.
-4. Run the same scaffold command with `--repo "$publication_repo" --project demo --check`.
+4. Run the isolated admission procedure below against a preserved copy.
+   Missing authority, unsafe original identities, or a failed isolated apply stops recovery.
+5. Run the same scaffold command with `--repo "$publication_repo" --project demo --check`.
    Exit zero proves authoring validation only; it does not prove storage integrity.
-5. Run that command with `--apply` only when every condition above holds.
+6. Run that command with `--apply` only when every condition above holds.
    Expected observation: validation passes and both current files receive one committed generation.
-6. Repeat the strict reader and module-scope loader in
+7. Repeat the strict reader and module-scope loader in
    [Publish and read the exact committed pair](#3-publish-and-read-the-exact-committed-pair).
    Both must exit zero before any consumer resumes.
-7. Retain the new pointer, complete immutable generation, member digests, output,
+8. Retain the new pointer, complete immutable generation, member digests, output,
    and final strict-read result. Remove only disposable data after retained-copy verification.
 
 For an existing project, replace `demo` with its owner-approved project identifier.
@@ -339,96 +511,52 @@ The project-setup owner must verify these bindings before any write.
 A failed apply or strict read leaves consumers stopped; do not repeatedly retry
 without identifying the failed condition.
 
-Run this read-only admission check from the same source checkout before apply.
-It captures `--print` in private evidence because the generated pair can contain
-project data. The command writes no project or publication file.
-The JSON output has a validation line before its wrapper; the script checks
-that line before extracting the two members.
-It derives the exact bytes and generation that this publisher will use.
+The admission procedure uses the actual CLI on a private copy of `.swarm`.
+It leaves the original publication unchanged. First, the filesystem owner must
+exclude unsafe original directories, symlinks, and multiply linked current targets.
+A copy can change file identities and hard links; it cannot prove original safety.
+The owner must also confirm that the scaffold and all referenced repository inputs
+will remain unchanged through recovery. Keep consumers and other writers stopped.
+
+Run from the source checkout, with the same Bash bindings used above:
 
 ```bash
 umask 077
-admission_print="$(mktemp "$publication_evidence/republish-print.XXXXXX")"
+publication_recovery="$(mktemp -d "$publication_evidence/republish-admission.XXXXXX")"
+cp -R "$publication_swarm" "$publication_recovery/swarm"
 node skills/nova/project_setup/tools/progress-scaffold.ts \
-  --repo "$publication_repo" --project demo --print > "$admission_print"
-node --input-type=module - "$publication_swarm" "$admission_print" <<'JS'
-import assert from 'node:assert/strict';
-import fs from 'node:fs';
-import path from 'node:path';
-import crypto from 'node:crypto';
-const [swarmInput, printFile] = process.argv.slice(2);
-const swarm = path.resolve(swarmInput);
-const limit = 64 * 1024 * 1024;
-const sha = bytes => crypto.createHash('sha256').update(bytes).digest('hex');
-const exists = file => {try {fs.lstatSync(file); return true;} catch(error) {if(error.code === 'ENOENT') return false; throw error;}};
-function pinDirectory(directory) {
-  let current = path.parse(directory).root;
-  const pins = [];
-  for (const component of directory.slice(current.length).split(path.sep).filter(Boolean)) {
-    current = path.join(current, component);
-    const stat = fs.lstatSync(current);
-    assert(stat.isDirectory() && !stat.isSymbolicLink(), `Unsafe directory: ${current}`);
-    pins.push([current, stat.dev, stat.ino]);
-  }
-  return pins;
-}
-function readRegular(file) {
-  const before = fs.lstatSync(file);
-  assert(before.isFile() && !before.isSymbolicLink() && before.nlink === 1 && before.size <= limit, `Unsafe member: ${file}`);
-  const fd = fs.openSync(file, fs.constants.O_RDONLY | fs.constants.O_NOFOLLOW | fs.constants.O_NONBLOCK);
-  try {
-    const opened = fs.fstatSync(fd);
-    assert.equal(opened.dev, before.dev); assert.equal(opened.ino, before.ino);
-    const bytes = fs.readFileSync(fd);
-    const after = fs.lstatSync(file);
-    for (const key of ['dev', 'ino', 'size', 'mtimeMs', 'ctimeMs']) assert.equal(after[key], before[key], `Changed ${file}`);
-    assert.equal(bytes.length, before.size);
-    return bytes;
-  } finally {fs.closeSync(fd);}
-}
-const output = fs.readFileSync(printFile, 'utf8');
-const prefix = 'progress scaffold validation passed\n';
-assert(output.startsWith(prefix), 'Print did not report validated authoring');
-const pair = JSON.parse(output.slice(prefix.length));
-assert.deepEqual(Object.keys(pair).sort(), ['pipeline', 'progress']);
-const names = ['progress.json', 'pipeline.json'];
-const bytes = names.map(name => Buffer.from(`${JSON.stringify(pair[name.slice(0, -5)], null, 2)}\n`));
-assert(bytes.every(value => value.length <= limit), 'Publisher size limit exceeded');
-const members = bytes.map((value, index) => [names[index], sha(value), value.length]);
-const generation = sha(JSON.stringify(members));
-const directoryPins = pinDirectory(swarm);
-for (const name of names) if (exists(path.join(swarm, name))) readRegular(path.join(swarm, name));
-const progressFile = path.join(swarm, names[0]);
-if (exists(progressFile)) JSON.parse(readRegular(progressFile).toString());
-const base = path.join(swarm, '.scaffold-publication');
-if (exists(base)) {
-  directoryPins.push(...pinDirectory(base));
-  const pointer = path.join(base, 'current.json');
-  if (exists(pointer)) readRegular(pointer);
-  const intended = path.join(base, generation);
-  if (exists(intended)) {
-    directoryPins.push(...pinDirectory(intended));
-    names.forEach((name, index) => {
-      const file = path.join(intended, name);
-      if (exists(file)) assert(readRegular(file).equals(bytes[index]), `Conflicting intended member: ${file}`);
-    });
-  }
-}
-for (const [file, device, inode] of directoryPins) {
-  const current = fs.lstatSync(file);
-  assert(current.isDirectory() && !current.isSymbolicLink() && current.dev === device && current.ino === inode, `Changed directory: ${file}`);
-}
-console.log(`Republish admission passed for generation ${generation}`);
-console.log('Consumers and concurrent writers must remain stopped until apply and strict reads finish.');
+  --repo "$publication_repo" --project demo \
+  --swarm "$publication_recovery/swarm" \
+  --scaffold "$publication_recovery/swarm/progress.scaffold.json" --check \
+  > "$publication_recovery/check.txt"
+node skills/nova/project_setup/tools/progress-scaffold.ts \
+  --repo "$publication_repo" --project demo \
+  --swarm "$publication_recovery/swarm" \
+  --scaffold "$publication_recovery/swarm/progress.scaffold.json" --apply \
+  > "$publication_recovery/apply.txt" 2>&1
+node --input-type=module - "$publication_recovery/swarm" <<'JS' \
+  > "$publication_recovery/strict-read.txt"
+import {readPublishedPair} from './skills/common/plugin-runtime/foundation/config/published-pair.ts';
+readPublishedPair(process.argv[2], ['progress.json', 'pipeline.json']);
+console.log('Isolated republish pair verified');
 JS
+cat "$publication_recovery/apply.txt" "$publication_recovery/strict-read.txt"
 ```
 
-Expected observation: `Republish admission passed for generation` followed by
-one SHA-256 identity. Retain the print file and admission output privately.
-Any error stops recovery before apply. The publisher can create missing intended members.
-It must never replace an existing member with different bytes.
-This check does not authorize the scaffold or prevent a later competing writer.
-The owner must keep readers and other writers stopped through the final strict read.
+Expected observation: validation passes, apply reports both written members,
+and the strict read prints `Isolated republish pair verified`.
+This checks the publisher's serialization, intended generation, and existing
+immutable bytes through its own implementation. It does not recreate those rules
+in an independent admission script. The publisher can create a missing intended member;
+a conflicting existing member must fail.
+
+Any nonzero command stops the procedure before applying to the original.
+Retain the entire admission directory, even after failure.
+A successful copy does not authorize the original scaffold or prove the original
+filesystem safe. It also does not exclude a later competing writer.
+Use step 5 onward only while the owner-confirmed input and safety conditions remain true.
+If apply to the original fails, keep consumers stopped and preserve the new error
+and files. Do not use the successful isolated copy as execution authority.
 
 ### Unsupported corruption repair
 
@@ -449,16 +577,19 @@ or change content to evade an integrity failure.
 
 > **Source evidence — repair admission**
 >
-> The CLI [returns from check/print before parsing loose progress](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/skills/nova/project_setup/tools/progress-scaffold.ts#L131-L145).
-> Its helper [parses every existing JSON input directly](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/skills/nova/project_setup/tools/progress-scaffold-values.ts#L117-L118).
-> The publisher [derives generation identity from ordered member names, digests, and byte lengths](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/skills/common/plugin-runtime/foundation/config/published-pair.ts#L7-L14).
-> The publisher [rejects unsafe current targets and immutable conflicts](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/skills/common/plugin-runtime/foundation/config/published-pair.ts#L78-L87).
-> It [materializes members and commits the pointer only after those checks](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/skills/common/plugin-runtime/foundation/config/published-pair.ts#L95-L113).
+> **Claim:** Check and print avoid the loose-progress parse; apply cannot replace conflicting immutable generation bytes.
 >
-> **Check status:** Seven isolated actual-CLI cases passed on 2026-10-09 with Node.js `v24.21.0` and temporary util-linux locking bindings.
-> Supported cases covered valid publication, malformed loose pipeline repair, malformed pointer repair, and missing pointer recovery.
-> Rejected cases covered malformed loose progress, immutable corruption, and symlinked targets.
-> Each supported repair ended with a strict read. Each rejected case retained its committed pointer; no provider or live service ran.
+> **Implementation:** [applyScaffold early return and loose-progress parse](https://github.com/datrab/kubeclaw/blob/ad73a0df62607ea9634304c3e9518826450a6a25/skills/nova/project_setup/tools/progress-scaffold.ts#L131-L145); [immutableFile create-only conflict](https://github.com/datrab/kubeclaw/blob/ad73a0df62607ea9634304c3e9518826450a6a25/skills/common/plugin-runtime/foundation/config/published-pair.ts#L83-L87)
+>
+> **Contract or setting:** [readJsonIfExists parses existing JSON](https://github.com/datrab/kubeclaw/blob/ad73a0df62607ea9634304c3e9518826450a6a25/skills/nova/project_setup/tools/progress-scaffold-values.ts#L117-L118); [publication target and commit sequence](https://github.com/datrab/kubeclaw/blob/ad73a0df62607ea9634304c3e9518826450a6a25/skills/common/plugin-runtime/foundation/config/published-pair.ts#L95-L113)
+>
+> **Test evidence:** [interrupted apply and strict reader](https://github.com/datrab/kubeclaw/blob/ad73a0df62607ea9634304c3e9518826450a6a25/tests/skills/nova/project_setup/scaffold-publication.test.mjs#L38-L50); [corruption rejection and loose-pipeline repair](https://github.com/datrab/kubeclaw/blob/ad73a0df62607ea9634304c3e9518826450a6a25/tests/skills/nova/project_setup/scaffold-publication.test.mjs#L53-L68). Status: PASS, local Node.js test execution on 2026-10-12.
+> The isolated CLI admission also completed on disposable local data. These
+> tests do not prove automatic repair of malformed loose progress or immutable corruption.
+>
+> **Revision:** `ad73a0df62607ea9634304c3e9518826450a6a25`
+>
+> **Limit:** Copy admission cannot establish original file identities, exclusive ownership, or durable recovery on another filesystem.
 
 ## Compatibility and change impact
 
@@ -467,6 +598,25 @@ identity is based on exact serialized bytes, so whitespace from another writer
 can create a different generation even when JSON values are equivalent. Use
 the supported publisher for stable formatting.
 
+Repeated apply with identical scaffold values computes the same generation.
+It verifies existing immutable members and replaces current materializations and
+the pointer through the publisher. It can report `progress.json is already current`
+before discovering publication damage; that summary compares JSON values only.
+A zero apply exit plus the final strict read establishes success.
+Older generation directories and the `.write-lock` file remain stored.
+An interruption can also leave member temporary files inside a generation.
+The publisher implements no generation retention policy or generic generation
+removal command. Preserve uncertain files until the storage owner has checked them.
+
+There is no automatic rollback after either loose member is replaced.
+Before the pointer commit, strict readers can reject divergence from the previous
+generation. After the pointer commit, the new generation is current.
+An owner can return to an earlier authoring input only by validating and applying
+its trusted scaffold as another publication. The same target and integrity checks
+still apply. A stored old generation alone does not prove its scaffold, repository
+instructions, or provider policy are suitable for a new run.
+Do not edit `current.json` to select an older generation by hand.
+
 Publication does not make an active Nova run adopt changed project policy.
 Resolve new plans and start a new run that owns the changed project input.
 
@@ -474,19 +624,18 @@ Resolve new plans and start a new run that owns the changed project input.
 >
 > **Claim:** The publisher commits two exact JSON members through one current pointer, and readers fail closed on a partial or divergent committed publication.
 >
-> **Implementation:** [strict reader](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/skills/common/plugin-runtime/foundation/config/published-pair.ts#L45-L76); [publisher](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/skills/common/plugin-runtime/foundation/config/published-pair.ts#L78-L113); [scaffold apply](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/skills/nova/project_setup/tools/progress-scaffold.ts#L131-L145)
+> **Implementation:** [strict reader](https://github.com/datrab/kubeclaw/blob/ad73a0df62607ea9634304c3e9518826450a6a25/skills/common/plugin-runtime/foundation/config/published-pair.ts#L45-L76); [publisher](https://github.com/datrab/kubeclaw/blob/ad73a0df62607ea9634304c3e9518826450a6a25/skills/common/plugin-runtime/foundation/config/published-pair.ts#L78-L113); [scaffold apply](https://github.com/datrab/kubeclaw/blob/ad73a0df62607ea9634304c3e9518826450a6a25/skills/nova/project_setup/tools/progress-scaffold.ts#L131-L145)
 >
-> **Contract or setting:** [manifest and generation identity](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/skills/common/plugin-runtime/foundation/config/published-pair.ts#L7-L15)
+> **Contract or setting:** [manifest and generation identity](https://github.com/datrab/kubeclaw/blob/ad73a0df62607ea9634304c3e9518826450a6a25/skills/common/plugin-runtime/foundation/config/published-pair.ts#L7-L15)
 >
-> **Test evidence:** [partial-publication and interrupted-writer rejection](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/tests/skills/nova/project_setup/scaffold-publication.test.mjs#L28-L50); [corruption, symlink, and loose-file rejection](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/tests/skills/nova/project_setup/scaffold-publication.test.mjs#L53-L68); [concurrent publisher serialization](https://github.com/datrab/kubeclaw/blob/e3fa70c3fe3a1a4a32af503201a19e0b5df14c61/tests/skills/nova/project_setup/scaffold-publication.test.mjs#L72-L87)
+> **Test evidence:** [partial-publication and interrupted-writer rejection](https://github.com/datrab/kubeclaw/blob/ad73a0df62607ea9634304c3e9518826450a6a25/tests/skills/nova/project_setup/scaffold-publication.test.mjs#L28-L50); [corruption, symlink, and loose-file rejection](https://github.com/datrab/kubeclaw/blob/ad73a0df62607ea9634304c3e9518826450a6a25/tests/skills/nova/project_setup/scaffold-publication.test.mjs#L53-L68); [concurrent publisher serialization](https://github.com/datrab/kubeclaw/blob/ad73a0df62607ea9634304c3e9518826450a6a25/tests/skills/nova/project_setup/scaffold-publication.test.mjs#L72-L87)
 >
-> **Check status:** On 2026-10-09, Node.js `v24.21.0` ran the two linked scaffold/publication suites: all 29 tests passed, exit zero.
-> The command selected `tests/skills/nova/project_setup/progress-scaffold.test.mjs` and `tests/skills/nova/project_setup/scaffold-publication.test.mjs` with `node --test`.
-> Their implementation files match the recorded revision.
-> Temporary PRoot bindings supplied util-linux `flock` 2.42.3 and GNU `tar` 1.35 at their required absolute paths.
-> The bindings changed no system file. All five Bash blocks above also completed unchanged, including retained-copy verification and cleanup.
-> These results prove local publication only. No provider or live service ran. BusyBox locking does not meet the suite prerequisites.
+> **Check status:** On 2026-10-12, Node.js `v24.21.0` and util-linux
+> `flock` 2.38.1 completed all six Bash blocks on disposable local data, with
+> admission before cleanup. Exit zero; committed, isolated, and retained strict
+> reads passed. The two linked project-setup test files also passed all 29
+> tests. This is local CLI and test evidence, not a provider or live service result.
 >
-> **Revision:** `e3fa70c3fe3a1a4a32af503201a19e0b5df14c61`
+> **Revision:** `ad73a0df62607ea9634304c3e9518826450a6a25`
 >
 > **Limit:** Atomic local publication does not prove that an external filesystem, backup, or Git transport preserves the directory durably.

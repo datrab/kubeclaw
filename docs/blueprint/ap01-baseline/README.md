@@ -51,7 +51,12 @@ Die alte Übergabe verweist weiterhin auf PR #6 und dessen Branch. Das ist histo
 | `docs/blueprint/generated/platform-inventory.json` | 48 Manifeste; `kubeclaw.demo-handoff` und `kubeclaw.demo-auth-smoke` fehlen | Gegen aktuelle Manifeste aktualisieren; statische Statusaussagen nicht als Laufzeitbeweis behandeln |
 | `docs/site/extend/plugin-catalogue/` | 50 Paketdetailseiten plus Index; alle 50 Manifest-IDs unter `skills/` besitzen eine Seite | Seiten als Ausgangsmaterial wiederverwenden; Inhalt und Beispiele erst in AP03/AP08 prüfen |
 | `docs/blueprint/generated/migration-ledger.csv` | 374 Einträge; heutiger Bereich desselben Generators umfasst 2.696 Dateien | Vorhandene Zuordnungen nur als Vorschlag übernehmen, expliziten Prüf- und Migrationsstatus ergänzen |
-| `docs/generated/inventory/` und `docs/reference/` | Vorhandene Generatoren für Deploy-CLI, Values, Secrets und Workflows | Als mechanische Quellen nutzen; Aktualität separat prüfen |
+| `docs/generated/inventory/` und der historische Pfad <code>docs/reference/</code> | Vorhandene Generatoren für Deploy-CLI, Values, Secrets und Workflows | Als mechanische Quellen nutzen; Aktualität separat prüfen |
+
+Der historische Referenzpfad bezeichnet den [AP01-Baselinestand](https://github.com/datrab/kubeclaw/tree/6979bced8e5bbca90568276256e7328d93a1e072/docs/reference),
+nicht den aktuellen Ausgabeort. Aktuelle Referenzseiten stehen unter
+`docs/site/reference/`; der [Referenzindex](../../site/reference/README.md)
+führt zu diesem Bestand. Die damaligen Inventarbefunde bleiben unverändert.
 
 Im alten Migrationsregister fehlen 2.322 aktuelle Pfade: alle 2.311 Dateien unter `docs/review/` und elf Operations-Dokumente. Die vorhandenen 374 Pfade existieren noch. Der Generator schließt `docs/site/` und `docs/blueprint/` ausdrücklich aus und erfasst Dokumentation außerhalb `docs/` überhaupt nicht. Sein gemeldeter Vollständigkeitsgrad ist daher weder eine aktuelle Gesamtinventur noch eine Inhaltsabnahme.
 

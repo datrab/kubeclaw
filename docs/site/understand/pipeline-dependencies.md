@@ -78,6 +78,29 @@ flowchart LR
     Prism -->|approved result| Core
 ```
 
+**Text alternative to the diagram**
+
+Each row names a directed connection. Labels preserve the diagram’s conditions or handoffs; dotted relationships are identified explicitly.
+
+| From | Relationship | To |
+| --- | --- | --- |
+| Git source origin | Directed connection — fixed revision | Nova role |
+| Nova role | Directed connection | Nova Core |
+| Nova role | Directed connection — embedding requests | LiteLLM gateway |
+| LiteLLM gateway | Directed connection | LiteLLM PostgreSQL |
+| Nova role | Directed connection — events or messages | Redis |
+| Nova Core | Directed connection — fixed test plan | Buster role |
+| Buster role | Directed connection — container build | Rootless BuildKit |
+| Rootless BuildKit | Directed connection — push image | Writable OCI registry |
+| Docker Hub mirror | Directed connection — cached base image | Rootless BuildKit |
+| Writable OCI registry | Directed connection — digest pull | Test workload |
+| Buster role | Directed connection — selected exposure stage | Tailscale controller |
+| Nova Core | Directed connection — selected design stage | Prism |
+| Prism | Directed connection | Prism PostgreSQL |
+| Buster role | Directed connection — verified result | Nova Core |
+| Prism | Directed connection — approved result | Nova Core |
+
+
 Text version: Git supplies a fixed source revision to Nova.
 Nova Core controls the run.
 The showcase platform provides Redis, LiteLLM, Prism, BuildKit, both registry services, and Tailscale.

@@ -527,3 +527,63 @@ test('rejects changes to immutable extraction-source bytes', () => {
   fs.appendFileSync(path.join(root, 'docs/_legacy-source/legacy.md'), '\nChanged.\n');
   mustFail(root, 'legacy extraction bytes changed');
 });
+
+
+test('keeps both SDK documentation navigation reads visible in the exact docs-test namespace', () => {
+  const root = fixture();
+  for (const page of ['docs/site/reference/sdk.md', 'docs/site/extend/developer-handbook.md']) {
+    write(root, page, '# Canonical SDK navigation fixture\n');
+  }
+  run(root, 'node', ['scripts/docs-tree-boundary.mjs', '--bootstrap-classification']);
+  const consumer = 'scripts/tests/docs-sdk-reference-navigation.test.mjs';
+  write(root, consumer,
+    "import fs from 'node:fs'; import path from 'node:path'; import assert from 'node:assert/strict';\n"
+    + "const root=process.cwd();\n"
+    + "const canonical=fs.readFileSync(path.join(root,'docs/site/reference/sdk.md'),'utf8');\n"
+    + "const handbook=fs.readFileSync(path.join(root,'docs/site/extend/developer-handbook.md'),'utf8');\n"
+    + "assert.match(canonical,/Canonical/); assert.match(handbook,/Canonical/);\n");
+  run(root, 'node', ['scripts/docs-tree-boundary.mjs']);
+  run(root, 'node', ['scripts/docs-tree-boundary.mjs', '--check']);
+  const inventory = JSON.parse(fs.readFileSync(
+    path.join(root, 'docs/generated/inventory/documentation-tree.json'), 'utf8'));
+  for (const page of ['docs/site/reference/sdk.md', 'docs/site/extend/developer-handbook.md']) {
+    const record = inventory.files.find((item) => item.path === page);
+    assert.equal(record.class, 'canonical-reader-documentation');
+    assert(record.consumers.some((item) => item.sourcePath === consumer && item.inputUse === true),
+      `${page}: genuine read edge disappeared`);
+    assert(record.executableConsumers.includes(consumer),
+      `${page}: ordinary executable read was hidden instead of applying canonical-only tooling classification`);
+  }
+});
+
+for (const consumer of ['tests/documentation/sdk-reference.test.mjs', 'tests/site-input.mjs',
+  'scripts/tests/sdk-reference-navigation.test.mjs', 'skills/sdk-page-runtime.mjs']) {
+  test(`still rejects canonical page input outside docs validation namespace: ${consumer}`, () => {
+    const root = fixture();
+    write(root, consumer,
+      "import fs from 'node:fs'; const configuration=fs.readFileSync('docs/site/README.md','utf8');\n"
+      + "globalThis.productConfiguration=configuration;\n");
+    mustFail(root, 'canonical reader documentation cannot be an executable input');
+  });
+}
+
+test('recognized SDK docs-test namespace cannot read legacy source directly', () => {
+  const root = fixture();
+  write(root, 'scripts/tests/docs-sdk-reference-navigation.test.mjs',
+    "import fs from 'node:fs'; fs.readFileSync('docs/_legacy-source/legacy.md','utf8');\n");
+  mustFail(root, 'an executable source consumes this file, so it cannot be a legacy reader source');
+});
+
+test('recognized SDK docs-test namespace cannot consume legacy through internal config', () => {
+  const root = fixture();
+  write(root, 'docs/config/runtime-input.json', '{"legacy":"docs/legacy.md"}\n');
+  const registryPath = path.join(root, 'docs/config/documentation-tree-classification.json');
+  const registry = JSON.parse(fs.readFileSync(registryPath, 'utf8'));
+  registry.files.push({ path: 'docs/config/runtime-input.json', class: 'internal-documentation-input',
+    purpose: 'fixture configuration authority', originalPath: 'docs/config/runtime-input.json',
+    expectedPath: 'docs/config/runtime-input.json', introducedAfterBaseline: true });
+  fs.writeFileSync(registryPath, `${JSON.stringify(registry, null, 2)}\n`);
+  write(root, 'scripts/tests/docs-sdk-reference-navigation.test.mjs',
+    "import fs from 'node:fs'; fs.readFileSync('docs/config/runtime-input.json','utf8');\n");
+  mustFail(root, 'through a documentation dependency');
+});

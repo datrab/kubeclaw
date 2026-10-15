@@ -227,14 +227,6 @@
       "introducedAfterBaseline": false
     },
     {
-      "path": "docs/architecture/pipeline-observability-foundation.md",
-      "class": "internal-documentation-input",
-      "purpose": "Executable verification input reached through a machine-readable contract or inventory.",
-      "originalPath": "docs/architecture/pipeline-observability-foundation.md",
-      "expectedPath": "docs/architecture/pipeline-observability-foundation.md",
-      "introducedAfterBaseline": false
-    },
-    {
       "path": "docs/_legacy-source/architecture/pipeline-observability-phase-5-7-a-audit.md",
       "class": "legacy-extraction-source",
       "purpose": "Temporary source retained only until statement-level parity and AP10 deletion approval.",
@@ -352,14 +344,6 @@
       "purpose": "Temporary source retained only until statement-level parity and AP10 deletion approval.",
       "originalPath": "docs/architecture/pipeline-runtime-packaging-phase-5-6-final-audit.md",
       "expectedPath": "docs/_legacy-source/architecture/pipeline-runtime-packaging-phase-5-6-final-audit.md",
-      "introducedAfterBaseline": false
-    },
-    {
-      "path": "docs/architecture/pipeline-runtime-packaging.md",
-      "class": "internal-documentation-input",
-      "purpose": "Executable verification input reached through a machine-readable contract or inventory.",
-      "originalPath": "docs/architecture/pipeline-runtime-packaging.md",
-      "expectedPath": "docs/architecture/pipeline-runtime-packaging.md",
       "introducedAfterBaseline": false
     },
     {
@@ -859,46 +843,6 @@
       "introducedAfterBaseline": false
     },
     {
-      "path": "docs/architecture/pipeline-test-gate-manifest-policy-pack-author-guide.md",
-      "class": "internal-documentation-input",
-      "purpose": "Executable verification input reached through a machine-readable contract or inventory.",
-      "originalPath": "docs/architecture/pipeline-test-gate-manifest-policy-pack-author-guide.md",
-      "expectedPath": "docs/architecture/pipeline-test-gate-manifest-policy-pack-author-guide.md",
-      "introducedAfterBaseline": false
-    },
-    {
-      "path": "docs/architecture/pipeline-test-gate-phase-2-audit.md",
-      "class": "internal-documentation-input",
-      "purpose": "Executable verification input reached through a machine-readable contract or inventory.",
-      "originalPath": "docs/architecture/pipeline-test-gate-phase-2-audit.md",
-      "expectedPath": "docs/architecture/pipeline-test-gate-phase-2-audit.md",
-      "introducedAfterBaseline": false
-    },
-    {
-      "path": "docs/architecture/pipeline-test-gate-phase-3-audit.md",
-      "class": "internal-documentation-input",
-      "purpose": "Executable verification input reached through a machine-readable contract or inventory.",
-      "originalPath": "docs/architecture/pipeline-test-gate-phase-3-audit.md",
-      "expectedPath": "docs/architecture/pipeline-test-gate-phase-3-audit.md",
-      "introducedAfterBaseline": false
-    },
-    {
-      "path": "docs/architecture/pipeline-test-gate-phase-4-audit.md",
-      "class": "internal-documentation-input",
-      "purpose": "Executable verification input reached through a machine-readable contract or inventory.",
-      "originalPath": "docs/architecture/pipeline-test-gate-phase-4-audit.md",
-      "expectedPath": "docs/architecture/pipeline-test-gate-phase-4-audit.md",
-      "introducedAfterBaseline": false
-    },
-    {
-      "path": "docs/architecture/pipeline-test-gate-phase-5-audit.md",
-      "class": "internal-documentation-input",
-      "purpose": "Executable verification input reached through a machine-readable contract or inventory.",
-      "originalPath": "docs/architecture/pipeline-test-gate-phase-5-audit.md",
-      "expectedPath": "docs/architecture/pipeline-test-gate-phase-5-audit.md",
-      "introducedAfterBaseline": false
-    },
-    {
       "path": "docs/_legacy-source/architecture/pipeline-test-gate-phase-6-a-audit.md",
       "class": "legacy-extraction-source",
       "purpose": "Temporary source retained only until statement-level parity and AP10 deletion approval.",
@@ -1032,14 +976,6 @@
       "purpose": "Temporary source retained only until statement-level parity and AP10 deletion approval.",
       "originalPath": "docs/architecture/pipeline-test-gate-phase-9-final-audit.md",
       "expectedPath": "docs/_legacy-source/architecture/pipeline-test-gate-phase-9-final-audit.md",
-      "introducedAfterBaseline": false
-    },
-    {
-      "path": "docs/architecture/pipeline-test-gate-roadmap.md",
-      "class": "internal-documentation-input",
-      "purpose": "Executable verification input reached through a machine-readable contract or inventory.",
-      "originalPath": "docs/architecture/pipeline-test-gate-roadmap.md",
-      "expectedPath": "docs/architecture/pipeline-test-gate-roadmap.md",
       "introducedAfterBaseline": false
     },
     {
@@ -1251,14 +1187,6 @@
       "introducedAfterBaseline": false
     },
     {
-      "path": "docs/architecture/pipeline-test-gate-tailscale-exposure-security-model.md",
-      "class": "internal-documentation-input",
-      "purpose": "Executable verification input reached through a machine-readable contract or inventory.",
-      "originalPath": "docs/architecture/pipeline-test-gate-tailscale-exposure-security-model.md",
-      "expectedPath": "docs/architecture/pipeline-test-gate-tailscale-exposure-security-model.md",
-      "introducedAfterBaseline": false
-    },
-    {
       "path": "docs/_legacy-source/architecture/pipeline-test-gate-tailscale-exposure-three-phase-audit.md",
       "class": "legacy-extraction-source",
       "purpose": "Temporary source retained only until statement-level parity and AP10 deletion approval.",
@@ -1272,22 +1200,6 @@
       "purpose": "Temporary source retained only until statement-level parity and AP10 deletion approval.",
       "originalPath": "docs/architecture/pipeline-test-gate-tailscale-exposure-user-guide.md",
       "expectedPath": "docs/_legacy-source/architecture/pipeline-test-gate-tailscale-exposure-user-guide.md",
-      "introducedAfterBaseline": false
-    },
-    {
-      "path": "docs/architecture/pipeline-test-gate-unit-operator-guide.md",
-      "class": "internal-documentation-input",
-      "purpose": "Executable verification input reached through a machine-readable contract or inventory.",
-      "originalPath": "docs/architecture/pipeline-test-gate-unit-operator-guide.md",
-      "expectedPath": "docs/architecture/pipeline-test-gate-unit-operator-guide.md",
-      "introducedAfterBaseline": false
-    },
-    {
-      "path": "docs/architecture/pipeline-test-gate-unit-user-guide.md",
-      "class": "internal-documentation-input",
-      "purpose": "Executable verification input reached through a machine-readable contract or inventory.",
-      "originalPath": "docs/architecture/pipeline-test-gate-unit-user-guide.md",
-      "expectedPath": "docs/architecture/pipeline-test-gate-unit-user-guide.md",
       "introducedAfterBaseline": false
     },
     {
@@ -1347,35 +1259,11 @@
       "introducedAfterBaseline": false
     },
     {
-      "path": "docs/architecture/pipeline-test-gate-visual-user-guide.md",
-      "class": "internal-documentation-input",
-      "purpose": "Executable verification input reached through a machine-readable contract or inventory.",
-      "originalPath": "docs/architecture/pipeline-test-gate-visual-user-guide.md",
-      "expectedPath": "docs/architecture/pipeline-test-gate-visual-user-guide.md",
-      "introducedAfterBaseline": false
-    },
-    {
-      "path": "docs/architecture/pipeline-worker-core-phase-5-5-a-audit.md",
-      "class": "internal-documentation-input",
-      "purpose": "Executable verification input reached through a machine-readable contract or inventory.",
-      "originalPath": "docs/architecture/pipeline-worker-core-phase-5-5-a-audit.md",
-      "expectedPath": "docs/architecture/pipeline-worker-core-phase-5-5-a-audit.md",
-      "introducedAfterBaseline": false
-    },
-    {
       "path": "docs/_legacy-source/architecture/pipeline-worker-core-phase-5-5-audit.md",
       "class": "legacy-extraction-source",
       "purpose": "Temporary source retained only until statement-level parity and AP10 deletion approval.",
       "originalPath": "docs/architecture/pipeline-worker-core-phase-5-5-audit.md",
       "expectedPath": "docs/_legacy-source/architecture/pipeline-worker-core-phase-5-5-audit.md",
-      "introducedAfterBaseline": false
-    },
-    {
-      "path": "docs/architecture/pipeline-worker-core-phase-5-5-b-audit.md",
-      "class": "internal-documentation-input",
-      "purpose": "Executable verification input reached through a machine-readable contract or inventory.",
-      "originalPath": "docs/architecture/pipeline-worker-core-phase-5-5-b-audit.md",
-      "expectedPath": "docs/architecture/pipeline-worker-core-phase-5-5-b-audit.md",
       "introducedAfterBaseline": false
     },
     {
@@ -2115,11 +2003,27 @@
       "introducedAfterBaseline": false
     },
     {
+      "path": "docs/architecture/pipeline-observability-foundation.md",
+      "class": "internal-documentation-input",
+      "purpose": "Executable verification input reached through a machine-readable contract or inventory.",
+      "originalPath": "docs/architecture/pipeline-observability-foundation.md",
+      "expectedPath": "docs/architecture/pipeline-observability-foundation.md",
+      "introducedAfterBaseline": false
+    },
+    {
       "path": "docs/architecture/pipeline-observability-phase-5-7-a-inventory.json",
       "class": "internal-documentation-input",
       "purpose": "Executable contract, fixture, or evidence input used outside the documentation tree.",
       "originalPath": "docs/architecture/pipeline-observability-phase-5-7-a-inventory.json",
       "expectedPath": "docs/architecture/pipeline-observability-phase-5-7-a-inventory.json",
+      "introducedAfterBaseline": false
+    },
+    {
+      "path": "docs/architecture/pipeline-runtime-packaging.md",
+      "class": "internal-documentation-input",
+      "purpose": "Executable verification input reached through a machine-readable contract or inventory.",
+      "originalPath": "docs/architecture/pipeline-runtime-packaging.md",
+      "expectedPath": "docs/architecture/pipeline-runtime-packaging.md",
       "introducedAfterBaseline": false
     },
     {
@@ -2475,6 +2379,14 @@
       "introducedAfterBaseline": false
     },
     {
+      "path": "docs/architecture/pipeline-test-gate-manifest-policy-pack-author-guide.md",
+      "class": "internal-documentation-input",
+      "purpose": "Executable verification input reached through a machine-readable contract or inventory.",
+      "originalPath": "docs/architecture/pipeline-test-gate-manifest-policy-pack-author-guide.md",
+      "expectedPath": "docs/architecture/pipeline-test-gate-manifest-policy-pack-author-guide.md",
+      "introducedAfterBaseline": false
+    },
+    {
       "path": "docs/architecture/pipeline-test-gate-openapi-documentation-manifest.json",
       "class": "deletable-remainder",
       "purpose": "Historical work output with no detected executable consumer; AP10 owns deletion proof.",
@@ -2499,6 +2411,38 @@
       "introducedAfterBaseline": false
     },
     {
+      "path": "docs/architecture/pipeline-test-gate-phase-2-audit.md",
+      "class": "internal-documentation-input",
+      "purpose": "Executable verification input reached through a machine-readable contract or inventory.",
+      "originalPath": "docs/architecture/pipeline-test-gate-phase-2-audit.md",
+      "expectedPath": "docs/architecture/pipeline-test-gate-phase-2-audit.md",
+      "introducedAfterBaseline": false
+    },
+    {
+      "path": "docs/architecture/pipeline-test-gate-phase-3-audit.md",
+      "class": "internal-documentation-input",
+      "purpose": "Executable verification input reached through a machine-readable contract or inventory.",
+      "originalPath": "docs/architecture/pipeline-test-gate-phase-3-audit.md",
+      "expectedPath": "docs/architecture/pipeline-test-gate-phase-3-audit.md",
+      "introducedAfterBaseline": false
+    },
+    {
+      "path": "docs/architecture/pipeline-test-gate-phase-4-audit.md",
+      "class": "internal-documentation-input",
+      "purpose": "Executable verification input reached through a machine-readable contract or inventory.",
+      "originalPath": "docs/architecture/pipeline-test-gate-phase-4-audit.md",
+      "expectedPath": "docs/architecture/pipeline-test-gate-phase-4-audit.md",
+      "introducedAfterBaseline": false
+    },
+    {
+      "path": "docs/architecture/pipeline-test-gate-phase-5-audit.md",
+      "class": "internal-documentation-input",
+      "purpose": "Executable verification input reached through a machine-readable contract or inventory.",
+      "originalPath": "docs/architecture/pipeline-test-gate-phase-5-audit.md",
+      "expectedPath": "docs/architecture/pipeline-test-gate-phase-5-audit.md",
+      "introducedAfterBaseline": false
+    },
+    {
       "path": "docs/architecture/pipeline-test-gate-phase-8-plan.md",
       "class": "internal-documentation-input",
       "purpose": "Executable contract, fixture, or evidence input used outside the documentation tree.",
@@ -2520,6 +2464,14 @@
       "purpose": "Executable contract, fixture, or evidence input used outside the documentation tree.",
       "originalPath": "docs/architecture/pipeline-test-gate-phase-9-plan.md",
       "expectedPath": "docs/architecture/pipeline-test-gate-phase-9-plan.md",
+      "introducedAfterBaseline": false
+    },
+    {
+      "path": "docs/architecture/pipeline-test-gate-roadmap.md",
+      "class": "internal-documentation-input",
+      "purpose": "Executable verification input reached through a machine-readable contract or inventory.",
+      "originalPath": "docs/architecture/pipeline-test-gate-roadmap.md",
+      "expectedPath": "docs/architecture/pipeline-test-gate-roadmap.md",
       "introducedAfterBaseline": false
     },
     {
@@ -2651,6 +2603,14 @@
       "introducedAfterBaseline": false
     },
     {
+      "path": "docs/architecture/pipeline-test-gate-tailscale-exposure-security-model.md",
+      "class": "internal-documentation-input",
+      "purpose": "Executable verification input reached through a machine-readable contract or inventory.",
+      "originalPath": "docs/architecture/pipeline-test-gate-tailscale-exposure-security-model.md",
+      "expectedPath": "docs/architecture/pipeline-test-gate-tailscale-exposure-security-model.md",
+      "introducedAfterBaseline": false
+    },
+    {
       "path": "docs/architecture/pipeline-test-gate-unit-baseline.md",
       "class": "internal-documentation-input",
       "purpose": "Executable contract, fixture, or evidence input used outside the documentation tree.",
@@ -2667,11 +2627,27 @@
       "introducedAfterBaseline": false
     },
     {
+      "path": "docs/architecture/pipeline-test-gate-unit-operator-guide.md",
+      "class": "internal-documentation-input",
+      "purpose": "Executable verification input reached through a machine-readable contract or inventory.",
+      "originalPath": "docs/architecture/pipeline-test-gate-unit-operator-guide.md",
+      "expectedPath": "docs/architecture/pipeline-test-gate-unit-operator-guide.md",
+      "introducedAfterBaseline": false
+    },
+    {
       "path": "docs/architecture/pipeline-test-gate-unit-parity-ledger.json",
       "class": "internal-documentation-input",
       "purpose": "Executable contract, fixture, or evidence input used outside the documentation tree.",
       "originalPath": "docs/architecture/pipeline-test-gate-unit-parity-ledger.json",
       "expectedPath": "docs/architecture/pipeline-test-gate-unit-parity-ledger.json",
+      "introducedAfterBaseline": false
+    },
+    {
+      "path": "docs/architecture/pipeline-test-gate-unit-user-guide.md",
+      "class": "internal-documentation-input",
+      "purpose": "Executable verification input reached through a machine-readable contract or inventory.",
+      "originalPath": "docs/architecture/pipeline-test-gate-unit-user-guide.md",
+      "expectedPath": "docs/architecture/pipeline-test-gate-unit-user-guide.md",
       "introducedAfterBaseline": false
     },
     {
@@ -2704,6 +2680,30 @@
       "purpose": "Executable contract, fixture, or evidence input used outside the documentation tree.",
       "originalPath": "docs/architecture/pipeline-test-gate-visual-parity-ledger.json",
       "expectedPath": "docs/architecture/pipeline-test-gate-visual-parity-ledger.json",
+      "introducedAfterBaseline": false
+    },
+    {
+      "path": "docs/architecture/pipeline-test-gate-visual-user-guide.md",
+      "class": "internal-documentation-input",
+      "purpose": "Executable verification input reached through a machine-readable contract or inventory.",
+      "originalPath": "docs/architecture/pipeline-test-gate-visual-user-guide.md",
+      "expectedPath": "docs/architecture/pipeline-test-gate-visual-user-guide.md",
+      "introducedAfterBaseline": false
+    },
+    {
+      "path": "docs/architecture/pipeline-worker-core-phase-5-5-a-audit.md",
+      "class": "internal-documentation-input",
+      "purpose": "Executable verification input reached through a machine-readable contract or inventory.",
+      "originalPath": "docs/architecture/pipeline-worker-core-phase-5-5-a-audit.md",
+      "expectedPath": "docs/architecture/pipeline-worker-core-phase-5-5-a-audit.md",
+      "introducedAfterBaseline": false
+    },
+    {
+      "path": "docs/architecture/pipeline-worker-core-phase-5-5-b-audit.md",
+      "class": "internal-documentation-input",
+      "purpose": "Executable verification input reached through a machine-readable contract or inventory.",
+      "originalPath": "docs/architecture/pipeline-worker-core-phase-5-5-b-audit.md",
+      "expectedPath": "docs/architecture/pipeline-worker-core-phase-5-5-b-audit.md",
       "introducedAfterBaseline": false
     },
     {
@@ -3051,6 +3051,14 @@
       "introducedAfterBaseline": false
     },
     {
+      "path": "docs/blueprint/documentation-completion-matrix.json",
+      "class": "internal-documentation-input",
+      "purpose": "Requirement planning, independent audit findings and continuation state; no acceptance implied.",
+      "originalPath": "docs/blueprint/documentation-completion-matrix.json",
+      "expectedPath": "docs/blueprint/documentation-completion-matrix.json",
+      "introducedAfterBaseline": true
+    },
+    {
       "path": "docs/blueprint/documentation-parity-contract.md",
       "class": "internal-documentation-input",
       "purpose": "documentation governance and acceptance input",
@@ -3307,19 +3315,19 @@
       "introducedAfterBaseline": true
     },
     {
-      "path": "docs/generated/inventory/documentation-parity-summary.json",
-      "class": "internal-documentation-input",
-      "purpose": "generated documentation support",
-      "originalPath": "docs/generated/inventory/documentation-parity-summary.json",
-      "expectedPath": "docs/generated/inventory/documentation-parity-summary.json",
-      "introducedAfterBaseline": true
-    },
-    {
       "path": "docs/generated/inventory/documentation-parity-status.json",
       "class": "internal-documentation-input",
       "purpose": "generated documentation support",
       "originalPath": "docs/generated/inventory/documentation-parity-status.json",
       "expectedPath": "docs/generated/inventory/documentation-parity-status.json",
+      "introducedAfterBaseline": true
+    },
+    {
+      "path": "docs/generated/inventory/documentation-parity-summary.json",
+      "class": "internal-documentation-input",
+      "purpose": "generated documentation support",
+      "originalPath": "docs/generated/inventory/documentation-parity-summary.json",
+      "expectedPath": "docs/generated/inventory/documentation-parity-summary.json",
       "introducedAfterBaseline": true
     },
     {
@@ -3377,6 +3385,14 @@
       "originalPath": "docs/generated/inventory/plugin-system.json",
       "expectedPath": "docs/generated/inventory/plugin-system.json",
       "introducedAfterBaseline": false
+    },
+    {
+      "path": "docs/generated/inventory/sdk-reference.json",
+      "class": "internal-documentation-input",
+      "purpose": "Generated SDK reference support inventory; not a published reader asset.",
+      "originalPath": "docs/generated/inventory/sdk-reference.json",
+      "expectedPath": "docs/generated/inventory/sdk-reference.json",
+      "introducedAfterBaseline": true
     },
     {
       "path": "docs/generated/inventory/secret-setup.json",
@@ -22203,6 +22219,22 @@
       "introducedAfterBaseline": false
     },
     {
+      "path": "docs/site/extend/developer-handbook.md",
+      "class": "canonical-reader-documentation",
+      "purpose": "Published, user-facing KubeClaw documentation.",
+      "originalPath": "docs/site/extend/developer-handbook.md",
+      "expectedPath": "docs/site/extend/developer-handbook.md",
+      "introducedAfterBaseline": true
+    },
+    {
+      "path": "docs/site/extend/documentation-maintenance.md",
+      "class": "canonical-reader-documentation",
+      "purpose": "Published, user-facing KubeClaw documentation.",
+      "originalPath": "docs/site/extend/documentation-maintenance.md",
+      "expectedPath": "docs/site/extend/documentation-maintenance.md",
+      "introducedAfterBaseline": true
+    },
+    {
       "path": "docs/site/extend/effectful-plugin.md",
       "class": "canonical-reader-documentation",
       "purpose": "Published, user-facing KubeClaw documentation.",
@@ -22267,6 +22299,14 @@
       "introducedAfterBaseline": false
     },
     {
+      "path": "docs/site/extend/examples/platform-change-nova-lifecycle.json",
+      "class": "canonical-reader-documentation",
+      "purpose": "Published, user-facing KubeClaw documentation.",
+      "originalPath": "docs/site/extend/examples/platform-change-nova-lifecycle.json",
+      "expectedPath": "docs/site/extend/examples/platform-change-nova-lifecycle.json",
+      "introducedAfterBaseline": true
+    },
+    {
       "path": "docs/site/extend/first-plugin.md",
       "class": "canonical-reader-documentation",
       "purpose": "Published, user-facing KubeClaw documentation.",
@@ -22297,6 +22337,14 @@
       "originalPath": "docs/site/extend/nova.md",
       "expectedPath": "docs/site/extend/nova.md",
       "introducedAfterBaseline": false
+    },
+    {
+      "path": "docs/site/extend/platform/README.md",
+      "class": "canonical-reader-documentation",
+      "purpose": "Published, user-facing KubeClaw documentation.",
+      "originalPath": "docs/site/extend/platform/README.md",
+      "expectedPath": "docs/site/extend/platform/README.md",
+      "introducedAfterBaseline": true
     },
     {
       "path": "docs/site/extend/platform/buster.md",
@@ -22755,6 +22803,14 @@
       "introducedAfterBaseline": false
     },
     {
+      "path": "docs/site/reference/api-object-updates.md",
+      "class": "canonical-reader-documentation",
+      "purpose": "Published, user-facing KubeClaw documentation.",
+      "originalPath": "docs/site/reference/api-object-updates.md",
+      "expectedPath": "docs/site/reference/api-object-updates.md",
+      "introducedAfterBaseline": true
+    },
+    {
       "path": "docs/site/reference/buster-error-codes.md",
       "class": "canonical-reader-documentation",
       "purpose": "Published, user-facing KubeClaw documentation.",
@@ -22835,6 +22891,22 @@
       "introducedAfterBaseline": false
     },
     {
+      "path": "docs/site/reference/configuration.md",
+      "class": "canonical-reader-documentation",
+      "purpose": "Published, user-facing KubeClaw documentation.",
+      "originalPath": "docs/site/reference/configuration.md",
+      "expectedPath": "docs/site/reference/configuration.md",
+      "introducedAfterBaseline": true
+    },
+    {
+      "path": "docs/site/reference/contracts.md",
+      "class": "canonical-reader-documentation",
+      "purpose": "Published, user-facing KubeClaw documentation.",
+      "originalPath": "docs/site/reference/contracts.md",
+      "expectedPath": "docs/site/reference/contracts.md",
+      "introducedAfterBaseline": true
+    },
+    {
       "path": "docs/site/reference/documentation-governance.md",
       "class": "canonical-reader-documentation",
       "purpose": "Published, user-facing KubeClaw documentation.",
@@ -22851,6 +22923,14 @@
       "introducedAfterBaseline": false
     },
     {
+      "path": "docs/site/reference/documentation-site.md",
+      "class": "canonical-reader-documentation",
+      "purpose": "Published, user-facing KubeClaw documentation.",
+      "originalPath": "docs/site/reference/documentation-site.md",
+      "expectedPath": "docs/site/reference/documentation-site.md",
+      "introducedAfterBaseline": true
+    },
+    {
       "path": "docs/site/reference/endpoints.md",
       "class": "canonical-reader-documentation",
       "purpose": "Published, user-facing KubeClaw documentation.",
@@ -22865,6 +22945,22 @@
       "originalPath": "docs/site/reference/environment-variables.md",
       "expectedPath": "docs/site/reference/environment-variables.md",
       "introducedAfterBaseline": false
+    },
+    {
+      "path": "docs/site/reference/errors.md",
+      "class": "canonical-reader-documentation",
+      "purpose": "Published, user-facing KubeClaw documentation.",
+      "originalPath": "docs/site/reference/errors.md",
+      "expectedPath": "docs/site/reference/errors.md",
+      "introducedAfterBaseline": true
+    },
+    {
+      "path": "docs/site/reference/events.md",
+      "class": "canonical-reader-documentation",
+      "purpose": "Published, user-facing KubeClaw documentation.",
+      "originalPath": "docs/site/reference/events.md",
+      "expectedPath": "docs/site/reference/events.md",
+      "introducedAfterBaseline": true
     },
     {
       "path": "docs/site/reference/generated-documentation-map.json",
@@ -22897,6 +22993,14 @@
       "originalPath": "docs/site/reference/host-and-prism-configuration.md",
       "expectedPath": "docs/site/reference/host-and-prism-configuration.md",
       "introducedAfterBaseline": false
+    },
+    {
+      "path": "docs/site/reference/images-and-digests.md",
+      "class": "canonical-reader-documentation",
+      "purpose": "Published, user-facing KubeClaw documentation.",
+      "originalPath": "docs/site/reference/images-and-digests.md",
+      "expectedPath": "docs/site/reference/images-and-digests.md",
+      "introducedAfterBaseline": true
     },
     {
       "path": "docs/site/reference/lint-policy-generated.md",
@@ -22979,12 +23083,60 @@
       "introducedAfterBaseline": false
     },
     {
+      "path": "docs/site/reference/roles-and-package-ownership.md",
+      "class": "canonical-reader-documentation",
+      "purpose": "Published, user-facing KubeClaw documentation.",
+      "originalPath": "docs/site/reference/roles-and-package-ownership.md",
+      "expectedPath": "docs/site/reference/roles-and-package-ownership.md",
+      "introducedAfterBaseline": true
+    },
+    {
+      "path": "docs/site/reference/schemas.md",
+      "class": "canonical-reader-documentation",
+      "purpose": "Published, user-facing KubeClaw documentation.",
+      "originalPath": "docs/site/reference/schemas.md",
+      "expectedPath": "docs/site/reference/schemas.md",
+      "introducedAfterBaseline": true
+    },
+    {
+      "path": "docs/site/reference/sdk-exports.md",
+      "class": "canonical-reader-documentation",
+      "purpose": "Generated public SDK export/member and reachable owning contract reference.",
+      "originalPath": "docs/site/reference/sdk-exports.md",
+      "expectedPath": "docs/site/reference/sdk-exports.md",
+      "introducedAfterBaseline": true
+    },
+    {
+      "path": "docs/site/reference/sdk.md",
+      "class": "canonical-reader-documentation",
+      "purpose": "Canonical plugin SDK API behavior, identity, compatibility and rejection reference.",
+      "originalPath": "docs/site/reference/sdk.md",
+      "expectedPath": "docs/site/reference/sdk.md",
+      "introducedAfterBaseline": true
+    },
+    {
       "path": "docs/site/reference/secrets.md",
       "class": "canonical-reader-documentation",
       "purpose": "Published, user-facing KubeClaw documentation.",
       "originalPath": "docs/site/reference/secrets.md",
       "expectedPath": "docs/site/reference/secrets.md",
       "introducedAfterBaseline": false
+    },
+    {
+      "path": "docs/site/reference/service-routing.md",
+      "class": "canonical-reader-documentation",
+      "purpose": "Published, user-facing KubeClaw documentation.",
+      "originalPath": "docs/site/reference/service-routing.md",
+      "expectedPath": "docs/site/reference/service-routing.md",
+      "introducedAfterBaseline": true
+    },
+    {
+      "path": "docs/site/reference/stores-and-retention.md",
+      "class": "canonical-reader-documentation",
+      "purpose": "Published, user-facing KubeClaw documentation.",
+      "originalPath": "docs/site/reference/stores-and-retention.md",
+      "expectedPath": "docs/site/reference/stores-and-retention.md",
+      "introducedAfterBaseline": true
     },
     {
       "path": "docs/site/reference/verification-commands.md",
@@ -23347,6 +23499,14 @@
       "introducedAfterBaseline": false
     },
     {
+      "path": "docs/site/use/workflows/README.md",
+      "class": "canonical-reader-documentation",
+      "purpose": "Published, user-facing KubeClaw documentation.",
+      "originalPath": "docs/site/use/workflows/README.md",
+      "expectedPath": "docs/site/use/workflows/README.md",
+      "introducedAfterBaseline": true
+    },
+    {
       "path": "docs/site/use/workflows/buster-suite.md",
       "class": "canonical-reader-documentation",
       "purpose": "Published, user-facing KubeClaw documentation.",
@@ -23379,67 +23539,11 @@
       "introducedAfterBaseline": false
     },
     {
-      "path": "docs/spikes/prism-foundation-spikes.md",
-      "class": "deletable-remainder",
-      "purpose": "Historical work output with no detected executable consumer; AP10 owns deletion proof.",
-      "originalPath": "docs/spikes/prism-foundation-spikes.md",
-      "expectedPath": "docs/spikes/prism-foundation-spikes.md",
-      "introducedAfterBaseline": false
-    },
-    {
-      "path": "docs/status/finding-identities.json",
-      "class": "internal-documentation-input",
-      "purpose": "machine-readable product status authority",
-      "originalPath": "docs/status/finding-identities.json",
-      "expectedPath": "docs/status/finding-identities.json",
-      "introducedAfterBaseline": false
-    },
-    {
-      "path": "docs/status/open-issues.json",
-      "class": "internal-documentation-input",
-      "purpose": "machine-readable product status authority",
-      "originalPath": "docs/status/open-issues.json",
-      "expectedPath": "docs/status/open-issues.json",
-      "introducedAfterBaseline": false
-    },
-    {
-      "path": "docs/blueprint/documentation-completion-matrix.json",
-      "class": "internal-documentation-input",
-      "purpose": "Requirement planning, independent audit findings and continuation state; no acceptance implied.",
-      "originalPath": "docs/blueprint/documentation-completion-matrix.json",
-      "expectedPath": "docs/blueprint/documentation-completion-matrix.json",
-      "introducedAfterBaseline": true
-    },
-    {
-      "path": "docs/site/reference/api-object-updates.md",
-      "class": "canonical-reader-documentation",
-      "purpose": "Published, user-facing KubeClaw documentation.",
-      "originalPath": "docs/site/reference/api-object-updates.md",
-      "expectedPath": "docs/site/reference/api-object-updates.md",
-      "introducedAfterBaseline": true
-    },
-    {
-      "path": "docs/site/reference/service-routing.md",
-      "class": "canonical-reader-documentation",
-      "purpose": "Published, user-facing KubeClaw documentation.",
-      "originalPath": "docs/site/reference/service-routing.md",
-      "expectedPath": "docs/site/reference/service-routing.md",
-      "introducedAfterBaseline": true
-    },
-    {
       "path": "docs/site/use/workflows/kubernetes-fixture.md",
       "class": "canonical-reader-documentation",
       "purpose": "Published, user-facing KubeClaw documentation.",
       "originalPath": "docs/site/use/workflows/kubernetes-fixture.md",
       "expectedPath": "docs/site/use/workflows/kubernetes-fixture.md",
-      "introducedAfterBaseline": true
-    },
-    {
-      "path": "docs/site/use/workflows/README.md",
-      "class": "canonical-reader-documentation",
-      "purpose": "Published, user-facing KubeClaw documentation.",
-      "originalPath": "docs/site/use/workflows/README.md",
-      "expectedPath": "docs/site/use/workflows/README.md",
       "introducedAfterBaseline": true
     },
     {
@@ -23475,20 +23579,28 @@
       "introducedAfterBaseline": true
     },
     {
-      "path": "docs/site/extend/developer-handbook.md",
-      "class": "canonical-reader-documentation",
-      "purpose": "Published, user-facing KubeClaw documentation.",
-      "originalPath": "docs/site/extend/developer-handbook.md",
-      "expectedPath": "docs/site/extend/developer-handbook.md",
-      "introducedAfterBaseline": true
+      "path": "docs/spikes/prism-foundation-spikes.md",
+      "class": "deletable-remainder",
+      "purpose": "Historical work output with no detected executable consumer; AP10 owns deletion proof.",
+      "originalPath": "docs/spikes/prism-foundation-spikes.md",
+      "expectedPath": "docs/spikes/prism-foundation-spikes.md",
+      "introducedAfterBaseline": false
     },
     {
-      "path": "docs/site/extend/examples/platform-change-nova-lifecycle.json",
-      "class": "canonical-reader-documentation",
-      "purpose": "Published, user-facing KubeClaw documentation.",
-      "originalPath": "docs/site/extend/examples/platform-change-nova-lifecycle.json",
-      "expectedPath": "docs/site/extend/examples/platform-change-nova-lifecycle.json",
-      "introducedAfterBaseline": true
+      "path": "docs/status/finding-identities.json",
+      "class": "internal-documentation-input",
+      "purpose": "machine-readable product status authority",
+      "originalPath": "docs/status/finding-identities.json",
+      "expectedPath": "docs/status/finding-identities.json",
+      "introducedAfterBaseline": false
+    },
+    {
+      "path": "docs/status/open-issues.json",
+      "class": "internal-documentation-input",
+      "purpose": "machine-readable product status authority",
+      "originalPath": "docs/status/open-issues.json",
+      "expectedPath": "docs/status/open-issues.json",
+      "introducedAfterBaseline": false
     }
   ]
 }

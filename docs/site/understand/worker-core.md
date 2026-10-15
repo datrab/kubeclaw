@@ -74,6 +74,27 @@ sequenceDiagram
     J-->>C: Return result or replay same result
 ```
 
+**Text alternative to the diagram**
+
+Read the following messages in order. A self-action stays with the same participant; a dashed reply is identified explicitly.
+
+Participants: Calling service, Attempt journal, Ownership supervisor, Linux cgroup v2, Unprivileged host, Specialist engine.
+
+| Step | From | Relationship | To |
+| --- | --- | --- | --- |
+| 1 | Calling service | Message — Submit validated envelope | Attempt journal |
+| 2 | Attempt journal | Self-action — Persist accepted identity and input | Attempt journal |
+| 3 | Attempt journal | Message — Request resource reservation | Ownership supervisor |
+| 4 | Ownership supervisor | Message — Create and bind attempt scope | Linux cgroup v2 |
+| 5 | Ownership supervisor | Message — Attach, drop privilege, and execute | Unprivileged host |
+| 6 | Unprivileged host | Message — Prepare and execute operation | Specialist engine |
+| 7 | Specialist engine | Dashed reply — Result, logs, and evidence | Unprivileged host |
+| 8 | Ownership supervisor | Message — Kill and drain complete tree | Linux cgroup v2 |
+| 9 | Ownership supervisor | Message — Persist output and final counters | Attempt journal |
+| 10 | Attempt journal | Self-action — Seal bound result | Attempt journal |
+| 11 | Attempt journal | Dashed reply — Return result or replay same result | Calling service |
+
+
 Text version: The journal accepts the immutable attempt before process launch.
 The ownership supervisor reserves capacity and creates one kernel scope. The
 launcher joins that scope before it runs specialist code. The host executes the
@@ -588,6 +609,31 @@ stateDiagram-v2
     quiescing --> abandoned
     unresolved --> abandoned
 ```
+
+**Text alternative to the diagram**
+
+States shown: `reserved`, `allocated`, `running`, `quiescing`, `empty`, `disposed`, `unresolved`, `abandoned`. The start marker enters the first state; each row names one directed transition.
+
+| From | Relationship | To |
+| --- | --- | --- |
+| Start marker | Start transition | reserved |
+| reserved | State transition | allocated |
+| allocated | State transition | running |
+| allocated | State transition | quiescing |
+| running | State transition | quiescing |
+| quiescing | State transition | empty |
+| empty | State transition | disposed |
+| reserved | State transition | unresolved |
+| allocated | State transition | unresolved |
+| running | State transition | unresolved |
+| quiescing | State transition | unresolved |
+| unresolved | State transition | quiescing |
+| reserved | State transition | abandoned |
+| allocated | State transition | abandoned |
+| running | State transition | abandoned |
+| quiescing | State transition | abandoned |
+| unresolved | State transition | abandoned |
+
 
 `reserved` means that the identity and scope name are durable but no kernel
 binding exists. `allocated` adds the durable kernel binding. `running` is the
