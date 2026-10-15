@@ -12,7 +12,7 @@ const raw = JSON.parse(fs.readFileSync(policyPath, 'utf8'));
 const normalize = value => validateLintPolicy(value, policyPath);
 const jscpd = value => value.tools.find(tool => tool.id === 'jscpd');
 assert.equal(jscpd(normalize(raw)).test_targets, undefined);
-for (const test_targets of [[], ['../escape'], ['/tmp/escape'], ['same', 'same'], ['same', './same'], null]) {
+for (const test_targets of [[], ['../escape'], ['/tmp/escape'], ['same', 'same'], ['same', './same'], ['same', 'same/'], ['.', './'], null]) {
   const candidate = structuredClone(raw); jscpd(candidate).test_targets = test_targets;
   assert.throws(() => normalize(candidate), /test_targets/);
 }

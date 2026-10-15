@@ -130,7 +130,7 @@ function validateTestTargets(tool: Record<string, any>, id: string, field: strin
   // Omission preserves the legacy root-tests contract; explicit input never falls back.
   if (tool.test_targets === undefined) return undefined;
   const targets = stringList(tool.test_targets, `${field}.test_targets`, { nonEmpty: true })
-    .map((entry: any, index: any) => repoRelative(entry, `${field}.test_targets[${index}]`));
+    .map((entry: any, index: any) => repoRelative(entry, `${field}.test_targets[${index}]`).replace(/\/+$/, '') || '.');
   return uniqueStrings(targets, `${field}.test_targets`);
 }
 
