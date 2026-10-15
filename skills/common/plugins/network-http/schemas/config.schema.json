@@ -4,7 +4,10 @@
   "additionalProperties": false,
   "required": [
     "allowedOrigins",
-    "errorExcerptCharacters"
+    "errorExcerptCharacters",
+    "maxRequestBytes",
+    "maxResponseBytes",
+    "timeoutMs"
   ],
   "properties": {
     "allowedOrigins": {
@@ -49,17 +52,17 @@
     "maxRequestBytes": {
       "type": "integer",
       "minimum": 1,
-      "default": 1048576
+      "maximum": 9007199254740991
     },
     "maxResponseBytes": {
       "type": "integer",
       "minimum": 1,
-      "default": 1048576
+      "maximum": 9007199254740991
     },
     "timeoutMs": {
       "type": "integer",
       "minimum": 1,
-      "default": 30000
+      "maximum": 4294967295
     },
     "errorExcerptCharacters": {
       "type": "integer",

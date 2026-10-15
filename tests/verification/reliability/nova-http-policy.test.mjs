@@ -19,15 +19,16 @@ const size=v=>Buffer.byteLength(JSON.stringify(v),'utf8');
 const profiles=limits=>({targetByteProfiles:{chosen:limits}});
 async function fixture(t){
  const root=fs.mkdtempSync(path.join(os.tmpdir(),'nova-http-policy-'));t.after(()=>fs.rmSync(root,{recursive:true,force:true}));
+ let responseDelay=0;
  const received=[],secret='http-policy-test-secret',env='HTTP_POLICY_'+crypto.randomBytes(8).toString('hex').toUpperCase();process.env[env]=secret;t.after(()=>{delete process.env[env];});
- const server=http.createServer(async(req,res)=>{const chunks=[];for await(const c of req)chunks.push(c);const body=Buffer.concat(chunks).toString('utf8');assert.equal(req.headers['x-kubeclaw-signature'],'v1='+crypto.createHmac('sha256',secret).update(req.headers['idempotency-key']+'.'+body).digest('hex'));received.push(body);res.writeHead(200,{'content-type':'application/json'});res.end(JSON.stringify(responseBody));});server.listen(0,'127.0.0.1');await once(server,'listening');t.after(()=>new Promise(resolve=>{server.closeAllConnections();server.close(resolve);}));const origin='http://127.0.0.1:'+server.address().port;
+ const server=http.createServer(async(req,res)=>{const chunks=[];for await(const c of req)chunks.push(c);const body=Buffer.concat(chunks).toString('utf8');assert.equal(req.headers['x-kubeclaw-signature'],'v1='+crypto.createHmac('sha256',secret).update(req.headers['idempotency-key']+'.'+body).digest('hex'));received.push(body);res.writeHead(200,{'content-type':'application/json'});if(responseDelay){const timer=setTimeout(()=>res.end(JSON.stringify(responseBody)),responseDelay);res.on('close',()=>clearTimeout(timer));}else res.end(JSON.stringify(responseBody));});server.listen(0,'127.0.0.1');await once(server,'listening');t.after(()=>new Promise(resolve=>{server.closeAllConnections();server.close(resolve);}));const origin='http://127.0.0.1:'+server.address().port;
  const plugin=path.join(root,'plugins/probe');fs.mkdirSync(path.join(plugin,'schemas'),{recursive:true});fs.writeFileSync(path.join(plugin,'package.json'),'{"type":"module"}');
  fs.writeFileSync(path.join(plugin,'entry.mjs'),`export async function execute(input,context){await context.invoke('runtime.dispatch',{operation:'dispatch',resource:{type:'runtime.agent',canonicalId:'worker'},payload:${JSON.stringify(payload)}});if(context.contract.guidance?.approved)return {schemaVersion:'stage-result.v2',outcome:'passed',artifacts:[]};return {schemaVersion:'stage-result.v2',outcome:'orchestrator_required',reason:{code:'test.guidance',message:'waiting'},artifacts:[],wait:{schemaVersion:'wait-request.v2',waitId:'wait:http-policy',kind:'orchestrator',signalType:'core.orchestrator.resume',authorizedIssuer:{type:'orchestrator',id:'nova'},expiresAt:null}};}`);
  for(const [name,value] of Object.entries({config:{type:'object',additionalProperties:false},input:{type:'object',additionalProperties:false},result:{$ref:'https://kubeclaw.dev/contracts/plugin-system/v2/plugin-system-v2.schema.json#/$defs/stageResult'}}))fs.writeFileSync(path.join(plugin,'schemas',name+'.json'),JSON.stringify(value));
  fs.writeFileSync(path.join(plugin,'plugin.json'),JSON.stringify({id:'test.http-policy',apiVersion:'pipeline-plugin-v2',packageVersion:'1.0.0',observers:[],adapters:[],stages:[{id:'probe',type:'test.http-policy',module:'entry.mjs',export:'execute',requiredCapabilities:['runtime.dispatch'],configSchema:'schemas/config.json',inputSchema:'schemas/input.json',resultSchema:'schemas/result.json'}]}));
- const coreFile=path.join(root,'core.json'),publish=limits=>fs.writeFileSync(coreFile,JSON.stringify({schemaVersion:'nova-core-runtime-policy.v1',profiles:{selected:{settings:{...TEST_CORE_POLICY,httpDispatch:profiles(limits)}}}}));publish({maxRequestBytes:1000,maxResponseBytes:1000});
+ const coreFile=path.join(root,'core.json'),publish=(limits,networkHttp=TEST_CORE_POLICY.networkHttp)=>fs.writeFileSync(coreFile,JSON.stringify({schemaVersion:'nova-core-runtime-policy.v1',profiles:{selected:{settings:{...TEST_CORE_POLICY,networkHttp,httpDispatch:profiles(limits)}}}}));publish({maxRequestBytes:1000,maxResponseBytes:1000});
  const common=path.resolve('skills/common/plugins');const source={schemaVersion:'pipeline-platform.v2',corePolicySelection:{file:coreFile,profile:'selected'},installationRoots:[path.join(root,'plugins'),common],trustedBuiltinRoots:[path.join(root,'plugins'),common],externalTrust:{allowedSourceDigests:{},verifiedAttestations:{}},providers:{'runtime.dispatch':id,'network.http':'kubeclaw.network-http:http','secrets.read':'kubeclaw.secret-resolver:secrets'},grants:{'test.http-policy:probe':{'runtime.dispatch':{allowedAgents:['worker']}},[id]:{'network.http':{allowedOrigins:[origin]},'secrets.read':{allowedNames:['policy.token']}}},adapters:{[id]:{targets:{worker:{endpoint:origin+'/dispatch',tokenSecret:'policy.token',byteProfile:'chosen'}}},'kubeclaw.network-http:http':{allowedOrigins:[origin],allowedMethods:['POST'],allowedHeaders:['content-type','idempotency-key','x-kubeclaw-signature']},'kubeclaw.secret-resolver:secrets':{environment:{'policy.token':env}}},activeAdapters:[],observers:{},storageRoot:path.join(root,'state'),shutdownTimeoutMs:1000,effectLockTtlMs:300000,orchestratorIssuerId:'nova',administrativeDecisionIssuers:[]};
- const platformFile=path.join(root,'platform.json'),write=()=>fs.writeFileSync(platformFile,JSON.stringify(source));write();const definition={schemaVersion:'pipeline-definition.v2',id:'http-policy',maxConcurrency:1,stages:[{id:'probe',type:'test.http-policy',dependsOn:[],input:{},config:{},execution:{maxAttempts:2,maxRemediationCycles:0,timeoutMs:5000}}]};return {root,source,definition,received,coreFile,publish,write,platform:()=>loadPlatformConfig(platformFile),secret};
+ const platformFile=path.join(root,'platform.json'),write=()=>fs.writeFileSync(platformFile,JSON.stringify(source));write();const definition={schemaVersion:'pipeline-definition.v2',id:'http-policy',maxConcurrency:1,stages:[{id:'probe',type:'test.http-policy',dependsOn:[],input:{},config:{},execution:{maxAttempts:2,maxRemediationCycles:0,timeoutMs:5000}}]};return {root,source,definition,received,coreFile,publish,setResponseDelay:value=>{responseDelay=value;},write,platform:()=>loadPlatformConfig(platformFile),secret};
 }
 test('actual Nova HTTP request/response A/B boundaries and retained A selector+values without B',async t=>{
  const f=await fixture(t),a={maxRequestBytes:size(payload),maxResponseBytes:size(responseBody)};f.publish(a);
@@ -62,11 +63,51 @@ test('HTTP policy missing/invalid/legacy duplicates/profile bindings fail closed
 
 test('network error excerpt policy is selected centrally and rejects competing or invalid authors',()=>{
  const networkId='kubeclaw.network-http:http',raw={allowedOrigins:['https://example.com']};
- const authored={...TEST_CORE_POLICY,networkHttp:{errorExcerptCharacters:4}};
+ const authored={...TEST_CORE_POLICY,networkHttp:{...TEST_CORE_POLICY.networkHttp,errorExcerptCharacters:4}};
  const captured=captureCoreRuntimePolicy(authored);authored.networkHttp.errorExcerptCharacters=1;
  const selected=selectedAdapterConfigurations({[networkId]:raw},captured);
  assert.equal(selected[networkId].errorExcerptCharacters,4);assert(Object.isFrozen(selected[networkId]));
  for(const value of [4,null])assert.throws(()=>selectedAdapterConfigurations({[networkId]:{...raw,errorExcerptCharacters:value}},captured),/NETWORK_HTTP_POLICY_COMPETING_AUTHOR/);
- for(const value of [undefined,null,0,-1,1.5,'4',Number.MAX_SAFE_INTEGER+1])assert.throws(()=>captureCoreRuntimePolicy({...TEST_CORE_POLICY,networkHttp:{errorExcerptCharacters:value}}),/INVALID/);
+ for(const value of [undefined,null,0,-1,1.5,'4',Number.MAX_SAFE_INTEGER+1])assert.throws(()=>captureCoreRuntimePolicy({...TEST_CORE_POLICY,networkHttp:{...TEST_CORE_POLICY.networkHttp,errorExcerptCharacters:value}}),/INVALID/);
  assert.equal(selectedAdapterConfigurations({[networkId]:raw},TEST_CORE_POLICY)[networkId].errorExcerptCharacters,1000);
+});
+
+
+test('central network caps enforce actual UTF-8 boundaries and timeout; original run survives missing current author',async t=>{
+ const f=await fixture(t),dispatch={maxRequestBytes:1000,maxResponseBytes:1000};
+ const a={...TEST_CORE_POLICY.networkHttp,maxRequestBytes:size(payload),maxResponseBytes:size(responseBody),timeoutMs:3000};
+ f.publish(dispatch,a);
+ const first=await runPipelineV2(f.platform(),f.definition,'network:A');assert.equal(first.status,'waiting');
+ const saved=readRunSnapshot(runRoot(f.source.storageRoot,'network:A'));assert.equal(f.received.length,1);
+ for(const field of ['maxRequestBytes','maxResponseBytes']) {
+  f.publish(dispatch,{...a,[field]:a[field]-1});const before=f.received.length;
+  const runId='network:B-'+field,result=await runPipelineV2(f.platform(),f.definition,runId);
+  assert.equal(result.status,'blocked');assert.match(fs.readFileSync(path.join(runRoot(f.source.storageRoot,runId),'events.jsonl'),'utf8'),field==='maxRequestBytes'?/NETWORK_REQUEST_SIZE_EXCEEDED/:/NETWORK_RESPONSE_SIZE_EXCEEDED/);
+  assert.equal(f.received.length,before+(field==='maxResponseBytes'?1:0));
+ }
+ f.publish(dispatch,{...a,timeoutMs:50});f.setResponseDelay(300);
+ const timed=await runPipelineV2(f.platform(),f.definition,'network:B-timeout');assert.equal(timed.status,'blocked');
+ assert.match(fs.readFileSync(path.join(runRoot(f.source.storageRoot,'network:B-timeout'),'events.jsonl'),'utf8'),/NETWORK_TIMEOUT/);
+ f.setResponseDelay(0);fs.unlinkSync(f.coreFile);
+ const wait=first.stages.get('probe').wait;
+ const resumed=await resumePipelineV2(f.platform(),f.definition,'network:A',{schemaVersion:'resume-signal.v2',signalId:'signal:network',idempotencyKey:'signal-key:network',waitId:wait.waitId,signalType:wait.signalType,issuer:wait.authorizedIssuer,issuedAt:new Date().toISOString(),payload:{approved:true}});
+ assert.equal(resumed.status,'succeeded');assert.deepEqual(readRunSnapshot(runRoot(f.source.storageRoot,'network:A')),saved);
+});
+
+test('network limit policies reject absent, invalid and competing authors and capture activation values',async()=>{
+ const {activate:networkActivate}=await import('../../../skills/common/plugins/network-http/src/adapter.ts');
+ const networkId='kubeclaw.network-http:http',raw={allowedOrigins:['https://example.com']};
+ for(const field of ['maxRequestBytes','maxResponseBytes','timeoutMs']) {
+  for(const value of [undefined,null,0,-1,1.5,'4',Number.MAX_SAFE_INTEGER+1,...(field==='timeoutMs'?[4294967296]:[])]) {
+   const bad={...TEST_CORE_POLICY.networkHttp,[field]:value};
+   assert.throws(()=>captureCoreRuntimePolicy({...TEST_CORE_POLICY,networkHttp:bad}),/INVALID/);
+   assert.throws(()=>networkActivate({config:{...raw,...bad}}),/NETWORK_CONFIG_INVALID/);
+  }
+  for(const value of [TEST_CORE_POLICY.networkHttp[field],null])assert.throws(()=>selectedAdapterConfigurations({[networkId]:{...raw,[field]:value}},TEST_CORE_POLICY),/NETWORK_HTTP_POLICY_COMPETING_AUTHOR/);
+ }
+ const policy=captureCoreRuntimePolicy({...TEST_CORE_POLICY,networkHttp:{...TEST_CORE_POLICY.networkHttp,maxRequestBytes:5,maxResponseBytes:5,timeoutMs:100}});
+ const config=structuredClone(selectedAdapterConfigurations({[networkId]:raw},policy)[networkId]);
+ const adapter=networkActivate({config});config.maxRequestBytes=999;
+ await assert.rejects(adapter.invoke({confidential:true,signal:new AbortController().signal,request:{capability:'network.http',operation:'request',resource:{canonicalId:'https://example.com'},payload:{body:'ééé'}}}),/NETWORK_REQUEST_SIZE_EXCEEDED/);
+ assert.doesNotThrow(()=>networkActivate({config:{...raw,...TEST_CORE_POLICY.networkHttp}}));
 });

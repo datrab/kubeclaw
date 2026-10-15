@@ -1,0 +1,136 @@
+{
+  "at": "2026-10-15T19:30:46.072340+00:00",
+  "change": "Central selected networkHttp now requires maxRequestBytes/maxResponseBytes/timeoutMs; former1048576/1048576/30000 retained only in central standard. Adapter/schema fallback removed; duplicate Platform authors rejected by existing projection; activation captures scalars and original run captures full Core before current author reads. Distinct dispatch target profiles unchanged. Timeout domain matches AbortSignal.timeout unsigned32 range.",
+  "settingsSourceWired": 94,
+  "tests": {
+    "integratedPolicyPassed": 36,
+    "integratedPolicyTotal": 36,
+    "skipped": 0,
+    "originalNetworkSuitesPassed": 3,
+    "originalNetworkSuitesTotal": 3,
+    "originalReplayHmacPassed": 3,
+    "originalReplayHmacTotal": 3,
+    "networkTypecheckExitCode": 0,
+    "novaTypecheckExitCode": 0
+  },
+  "verification": [
+    {
+      "command": [
+        "node",
+        "--test",
+        "--test-timeout=30000",
+        "tests/verification/reliability/nova-target-timing-policy.test.mjs",
+        "tests/verification/reliability/nova-artifact-policy.test.mjs",
+        "tests/verification/reliability/nova-telemetry-policy.test.mjs",
+        "tests/verification/reliability/nova-delivery-policy.test.mjs",
+        "tests/verification/reliability/nova-dispatch-policy.test.mjs",
+        "tests/verification/reliability/nova-core-policy.test.mjs",
+        "tests/verification/reliability/nova-state-wait-policy.test.mjs",
+        "tests/verification/reliability/nova-http-policy.test.mjs"
+      ],
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-network-limits-20261015/check-0.txt"
+    },
+    {
+      "command": [
+        "node",
+        "tests/live-function.test.ts"
+      ],
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugins/network-http",
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-network-limits-20261015/check-1.txt"
+    },
+    {
+      "command": [
+        "node",
+        "tests/streaming.test.ts"
+      ],
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugins/network-http",
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-network-limits-20261015/check-2.txt"
+    },
+    {
+      "command": [
+        "node",
+        "tests/package-boundary.test.mjs"
+      ],
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugins/network-http",
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-network-limits-20261015/check-3.txt"
+    },
+    {
+      "command": [
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/.bin/tsc",
+        "--noEmit",
+        "-p",
+        "tsconfig.json"
+      ],
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugins/network-http",
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-network-limits-20261015/check-4.txt"
+    },
+    {
+      "command": [
+        "./node_modules/.bin/tsc",
+        "--noEmit",
+        "--module",
+        "NodeNext",
+        "--moduleResolution",
+        "NodeNext",
+        "--target",
+        "ES2024",
+        "--lib",
+        "ESNext,DOM,DOM.Iterable",
+        "--strict",
+        "--types",
+        "node",
+        "--skipLibCheck",
+        "--allowImportingTsExtensions",
+        "--esModuleInterop",
+        "skills/nova/core/execution/engine-runtime.ts",
+        "skills/nova/core/execution/engine-snapshots.ts",
+        "skills/nova/core/execution/engine-run.ts",
+        "skills/nova/core/execution/engine-admin.ts"
+      ],
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-network-limits-20261015/check-5.txt"
+    },
+    {
+      "command": [
+        "node",
+        "--test",
+        "--test-timeout=25000",
+        "tests/verification/reliability/effect-identity-version.test.mts",
+        "tests/verification/reliability/runtime-dispatch-profile-independent.test.mjs"
+      ],
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-network-limits-20261015/check-6.txt"
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-network-limits-20261015/check-7.txt"
+    }
+  ],
+  "sourceHashes": {
+    "config/nova/core.config.json": "df7f8901772f78934c763db74b78770e72269c5cd365be0248eee4a4e02f9807",
+    "skills/common/plugin-runtime/foundation/config/core-runtime-policy.schema.json": "84c900dc3193481f77854b7d21c1e61ecdd0127a6c6988bea914d93acc374493",
+    "skills/common/plugin-runtime/foundation/config/core-runtime-policy.ts": "674942062259a39f5817113dd269132f9484eb63bc20564fe8b56e6ecab951dc",
+    "skills/common/plugins/network-http/README.md": "03d00906703c53c3cce7905933daf1b1f7ab35021e4c405be978458e0e86f68a",
+    "skills/common/plugins/network-http/schemas/config.schema.json": "63e8507e6eeab305b9843d06f72bc6bc933f6d5d2558a55e7ad38f189886252e",
+    "skills/common/plugins/network-http/src/adapter.ts": "3b719a3e7ffa21fbaeb31d7bd8510cda39d04a9356f523205f8e4a857ac644eb",
+    "tests/verification/reliability/nova-http-policy.test.mjs": "351073ed11b1a4a894f42b7dce21fbdff1d88bc83fa7db7d07ee91029fe5c396"
+  },
+  "independentAcceptance": "OPEN; no active CONFIG reviewers/native spawn tools exposed; no new independent review claimed. Existing originals are regression evidence only.",
+  "parentRecovery": "Parent failed/thread-claimed; no CONFIG subagents or productive parent. Historical70492ecb superseded, latest recovery terminal failed-before-reply. No duplicate sent. Direct bounded worker under shared nonblocking lock.",
+  "nextAction": "Fresh non-author review of payload and HTTP changes when reviewer surface available; inspect remaining network method/header defaults and event queue/observer configuration seams, preserving actual authored values and original snapshots. No authority hardening.",
+  "writerLock": "shared nonblocking; released on process exit"
+}

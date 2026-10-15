@@ -1,7 +1,7 @@
 import type { AdapterActivationContext, AdapterInstance } from '@kubeclaw/plugin-sdk';
 
-function positiveInteger(value: unknown, label: string, fallback: number): number {
-  const resolved = value ?? fallback;
+function positiveInteger(value: unknown, label: string): number {
+  const resolved = value;
   if (!Number.isSafeInteger(resolved) || Number(resolved) < 1) throw new Error(`NETWORK_CONFIG_INVALID:${label}`);
   return Number(resolved);
 }
@@ -27,14 +27,15 @@ function parseConfig(config: Readonly<Record<string, unknown>>): NetworkConfig {
   if (!Array.isArray(rawHeaders) || rawHeaders.some((item) => typeof item !== 'string')) {
     throw new Error('NETWORK_CONFIG_INVALID:allowedHeaders');
   }
+  if (Number(config.timeoutMs) > 4_294_967_295) throw new Error('NETWORK_CONFIG_INVALID:timeoutMs');
   return {
     errorExcerptCharacters: Number(excerpt),
     origins: new Set(origins.map((origin) => new URL(origin).origin)),
     methods: new Set((config.allowedMethods as string[] | undefined ?? ['GET']).map((method) => method.toUpperCase())),
     headers: new Set(rawHeaders.map((item) => item.toLowerCase())),
-    maxRequestBytes: positiveInteger(config.maxRequestBytes, 'maxRequestBytes', 1_048_576),
-    maxResponseBytes: positiveInteger(config.maxResponseBytes, 'maxResponseBytes', 1_048_576),
-    timeoutMs: positiveInteger(config.timeoutMs, 'timeoutMs', 30_000),
+    maxRequestBytes: positiveInteger(config.maxRequestBytes, 'maxRequestBytes'),
+    maxResponseBytes: positiveInteger(config.maxResponseBytes, 'maxResponseBytes'),
+    timeoutMs: positiveInteger(config.timeoutMs, 'timeoutMs'),
   };
 }
 

@@ -102,7 +102,10 @@
           }
         },
         "networkHttp": {
-          "errorExcerptCharacters": 1000
+          "errorExcerptCharacters": 1000,
+          "maxRequestBytes": 1048576,
+          "maxResponseBytes": 1048576,
+          "timeoutMs": 30000
         }
       }
     }
