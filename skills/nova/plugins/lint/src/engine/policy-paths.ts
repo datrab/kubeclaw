@@ -43,7 +43,7 @@ function validateHelmCharts(projectRoot: string, project: Record<string, any>): 
 function validateToolTargets(repoRoot: string, projectRoot: string, policy: Record<string, any>): void {
   const visited = new Set<string>();
   for (const tool of policy.tools) {
-    for (const target of tool.targets) {
+    for (const target of [...tool.targets, ...(tool.test_targets ?? [])]) {
       const absolute = requireRepositoryPath(projectRoot, path.resolve(projectRoot, target));
       // Discovery exclusions are not a security boundary: native tsconfig,
       // Terraform and Helm traversals can still include excluded source paths.

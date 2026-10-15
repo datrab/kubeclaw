@@ -118,3 +118,19 @@ finding outcomes, native timeout classification and report errors, active abort,
 shutdown, candidate cleanup and cancellation during a real Git smudge filter.
 No native program or plugin provider is replaced with a mock. Its process-state
 assertions use Linux `/proc`, including namespace-to-host PID translation.
+
+### Dedicated JSCPD test targets
+
+The `jscpd` tool policy may declare `test_targets` as a non-empty array of
+project-relative existing paths, for example `['packages/core/test',
+'packages/paperless/test']` (JSON uses double quotes). These targets use the
+separate sibling `jscpd-tests.json` calibration; production still uses `targets`.
+Both sets receive recursive repository/symlink containment checks before tools
+execute. Empty/duplicate lists, parent/absolute escapes and missing paths fail.
+Omission preserves the legacy root `tests` contract; new external-project
+policies should declare their actual test paths explicitly. Other tool types
+must not declare `test_targets`.
+
+Regression: from this plugin directory, put the pinned `jscpd` binary on PATH
+and run `node tests/jscpd-targets.test.mjs`. It executes actual clone detection
+against disposable non-root test files and checks policy/path rejection.

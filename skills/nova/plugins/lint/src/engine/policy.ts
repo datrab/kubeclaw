@@ -122,6 +122,18 @@ function validateProjectTerraform(project: Record<string, any>, field: string, l
   return { roots: terraformRoots, provider_mirror: terraformProviderMirror };
 }
 
+function validateTestTargets(tool: Record<string, any>, id: string, field: string): string[] {
+  if (id !== 'jscpd') {
+    if (tool.test_targets !== undefined) fail(`${field}.test_targets`, 'only supported by jscpd');
+    return [];
+  }
+  // Omission preserves the legacy root-tests contract; explicit input never falls back.
+  if (tool.test_targets === undefined) return ['tests'];
+  const targets = stringList(tool.test_targets, `${field}.test_targets`, { nonEmpty: true })
+    .map((entry: any, index: any) => repoRelative(entry, `${field}.test_targets[${index}]`));
+  return uniqueStrings(targets, `${field}.test_targets`);
+}
+
 function validateTool(input: unknown, field: string, policyDir: string): Record<string, any> {
   const tool = record(input, field);
   const id = text(tool.id, `${field}.id`);
@@ -140,6 +152,7 @@ function validateTool(input: unknown, field: string, policyDir: string): Record<
     .map((entry: any, index: any) => repoRelative(entry, `${field}.targets[${index}]`));
   return {
     id,
+    test_targets: validateTestTargets(tool, id, field),
     required: tool.required,
     category: tool.category,
     scope: tool.scope,
