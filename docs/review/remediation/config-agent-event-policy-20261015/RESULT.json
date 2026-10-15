@@ -1,0 +1,135 @@
+{
+  "at": "2026-10-15T19:44:58.460930+00:00",
+  "change": "Three required selected Core agentEventSource queue policies replace local256/1048576/5000 fallbacks; actual source adapter receives captured projection. Hook allowlist unchanged. Missing/null/duplicate authors reject; queue captures copied limits. Separate Gateway observer remains unmodified.",
+  "settingsSourceWired": 99,
+  "verification": [
+    {
+      "command": [
+        "node",
+        "--test",
+        "--test-timeout=25000",
+        "tests/verification/reliability/agent-source-ingress.test.ts"
+      ],
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-agent-event-policy-20261015/check-0.txt"
+    },
+    {
+      "command": [
+        "node",
+        "tests/live-function.test.ts"
+      ],
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugins/openclaw-agent-events",
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-agent-event-policy-20261015/check-1.txt"
+    },
+    {
+      "command": [
+        "node",
+        "tests/package-boundary.test.mjs"
+      ],
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugins/openclaw-agent-events",
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-agent-event-policy-20261015/check-2.txt"
+    },
+    {
+      "command": [
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/.bin/tsc",
+        "--noEmit",
+        "-p",
+        "tsconfig.json"
+      ],
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugins/openclaw-agent-events",
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-agent-event-policy-20261015/check-3.txt"
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-agent-event-policy-20261015/check-4.txt"
+    },
+    {
+      "command": [
+        "node",
+        "--test",
+        "--test-timeout=30000",
+        "tests/verification/reliability/nova-agent-event-policy.test.mjs",
+        "tests/verification/reliability/nova-artifact-policy.test.mjs",
+        "tests/verification/reliability/nova-core-policy.test.mjs",
+        "tests/verification/reliability/nova-delivery-policy.test.mjs",
+        "tests/verification/reliability/nova-dispatch-policy.test.mjs",
+        "tests/verification/reliability/nova-http-policy.test.mjs",
+        "tests/verification/reliability/nova-state-wait-policy.test.mjs",
+        "tests/verification/reliability/nova-target-timing-policy.test.mjs",
+        "tests/verification/reliability/nova-telemetry-policy.test.mjs"
+      ],
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-agent-event-policy-20261015/final-0.txt"
+    },
+    {
+      "command": [
+        "./node_modules/.bin/tsc",
+        "--noEmit",
+        "--module",
+        "NodeNext",
+        "--moduleResolution",
+        "NodeNext",
+        "--target",
+        "ES2024",
+        "--lib",
+        "ESNext,DOM,DOM.Iterable",
+        "--strict",
+        "--types",
+        "node",
+        "--skipLibCheck",
+        "--allowImportingTsExtensions",
+        "--esModuleInterop",
+        "skills/nova/core/execution/engine-runtime.ts",
+        "skills/nova/core/execution/engine-snapshots.ts",
+        "skills/nova/core/execution/engine-run.ts",
+        "skills/nova/core/execution/engine-admin.ts"
+      ],
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-agent-event-policy-20261015/final-1.txt"
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-agent-event-policy-20261015/final-2.txt"
+    }
+  ],
+  "tests": {
+    "integratedPolicyPassed": 39,
+    "integratedPolicyTotal": 39,
+    "skipped": 0,
+    "originalIngressPassed": 3,
+    "originalIngressTotal": 3,
+    "originalPluginSuitesPassed": 2,
+    "pluginTypecheckExitCode": 0,
+    "novaTypecheckExitCode": 0
+  },
+  "sourceHashes": {
+    "config/nova/core.config.json": "3fe3e57a7c56c2a4d6fe4e7ae5bfef3c995bfd31e24cddbe481c31e20fb89287",
+    "skills/common/plugin-runtime/foundation/config/core-runtime-policy.schema.json": "5c47219970bf5b842102802d0e26f6dd8c6f2ce805f32c7e7fa9983840e6aaf7",
+    "skills/common/plugin-runtime/foundation/config/core-runtime-policy.ts": "82e57a434421f5663a5df8cd63628ba946d11a3b315b2fed57e5f10e539a227c",
+    "skills/nova/core/execution/engine-runtime.ts": "c034c9b7bbbdb66c05c2afc108289dc7b752221e487b82d2225443ded21d2706",
+    "skills/common/plugins/openclaw-agent-events/schemas/config.schema.json": "e71310312419ce376d66ce64cf15cb0a4195f42e81478b3b20c551ae5590d52c",
+    "skills/common/plugins/openclaw-agent-events/src/ingress-queue.ts": "ba2a19d16bafe446ece843c223c0f6cb68a1072d4efd4c54b4a3b73b41057dbb",
+    "skills/common/plugins/openclaw-agent-events/tests/live-function.test.ts": "e6530d938f40d5e9bb9717a27a3a048b7269fd1819243baac41384c94fc84071",
+    "skills/common/plugins/openclaw-agent-events/README.md": "35dedd264544e9af0c3fec0fae3e064405271e853900f145a3710af83dce81fa",
+    "tests/verification/reliability/nova-agent-event-policy.test.mjs": "87a36249a93817e2cf1c040075827f6b350d9f6044aae4c789654738b3c24b86"
+  },
+  "independentAcceptance": "OPEN; no active CONFIG reviewer or callable native spawn tool. Original regressions are not independent acceptance.",
+  "parentRecovery": "Parent remains failed; no active CONFIG children. Historical70492ecb superseded; recorded terminal recovery has no verified start, no duplicate queued. Direct worker used same shared nonblocking lock.",
+  "writerLock": "shared nonblocking; released on process exit",
+  "nextAction": "Fresh non-author review of payload/HTTP/telemetry/queue changes; continue supported plugin budgets. Gateway observer needs complete sole-owner startup/receiving contract; do not borrow Nova authority."
+}

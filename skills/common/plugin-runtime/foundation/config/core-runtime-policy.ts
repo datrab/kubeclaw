@@ -2,6 +2,7 @@ import fs from 'node:fs';
 import Ajv2020 from 'ajv/dist/2020.js';
 
 export interface CoreRuntimePolicy {
+  readonly agentEventSource: Readonly<{maxQueueEvents: number; maxQueueBytes: number; drainTimeoutMs: number}>;
   readonly networkHttp: Readonly<{errorExcerptCharacters: number; maxRequestBytes: number; maxResponseBytes: number; timeoutMs: number}>;
   readonly operatorMessagingPayload: Readonly<{targetPayloadProfiles: Readonly<Record<string,Readonly<{maxPayloadBytes:number}>>>}>;
   readonly transportPublisherPayload: Readonly<{targetPayloadProfiles: Readonly<Record<string,Readonly<{maxPayloadBytes:number}>>>}>;

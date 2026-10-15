@@ -23,7 +23,8 @@
     "httpDispatch",
     "transportPublisherPayload",
     "operatorMessagingPayload",
-    "networkHttp"
+    "networkHttp",
+    "agentEventSource"
   ],
   "properties": {
     "stageMemoryBytes": {
@@ -522,6 +523,32 @@
           "type": "integer",
           "minimum": 1,
           "maximum": 4294967295
+        }
+      }
+    },
+    "agentEventSource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "maxQueueEvents",
+        "maxQueueBytes",
+        "drainTimeoutMs"
+      ],
+      "properties": {
+        "maxQueueEvents": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 10000
+        },
+        "maxQueueBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 16777216
+        },
+        "drainTimeoutMs": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 60000
         }
       }
     }

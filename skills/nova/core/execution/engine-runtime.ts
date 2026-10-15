@@ -169,6 +169,7 @@ export function selectedAdapterConfigurations(adapters: PlatformConfig['adapters
     selected[operatorId] = {...raw,targets:Object.freeze(targets)};
   }
   const policies = [
+    ['kubeclaw.openclaw-agent-events:source', policy.agentEventSource, 'AGENT_EVENT_SOURCE'],
     ['kubeclaw.network-http:http', policy.networkHttp, 'NETWORK_HTTP'],
     ['kubeclaw.operator-messaging:operator', policy.operatorMessagingPayload, 'OPERATOR_PAYLOAD'],
     ['kubeclaw.transport-publisher:publisher', policy.transportPublisherPayload, 'TRANSPORT_PAYLOAD'],

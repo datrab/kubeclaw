@@ -108,6 +108,11 @@
           "maxRequestBytes": 1048576,
           "maxResponseBytes": 1048576,
           "timeoutMs": 30000
+        },
+        "agentEventSource": {
+          "maxQueueEvents": 256,
+          "maxQueueBytes": 1048576,
+          "drainTimeoutMs": 5000
         }
       }
     }

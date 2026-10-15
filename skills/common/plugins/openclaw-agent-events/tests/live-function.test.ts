@@ -37,7 +37,7 @@ const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-agent-events-'
 const journalPath = path.join(temporary, 'events.jsonl');
 const journal = new core.FileJournal(journalPath, TEST_CORE_POLICY.journalAppendLockTimeoutMs);
 const adapter = activateWithSdk({
-  registration: {}, config: { hooks: ['agent_end', 'session_end'] },
+  registration: {}, config: { ...TEST_CORE_POLICY.agentEventSource, hooks: ['agent_end', 'session_end'] },
   async invoke() { throw new Error('unexpected dependency'); },
   async emit(type, identity, payload) {
     events.push({ type, identity, payload });
@@ -69,12 +69,12 @@ await adapter.shutdown(new AbortController().signal);
 assert.equal(released, 2);
 assert.equal(handlers.size, 0);
 assert.throws(() => activateWithSdk({
-  registration: {}, config: { hooks: ['unknown'] }, async invoke() {}, async emit() {},
+  registration: {}, config: { ...TEST_CORE_POLICY.agentEventSource, hooks: ['unknown'] }, async invoke() {}, async emit() {},
 }, sdk), /AGENT_EVENT_HOOK_UNSUPPORTED/);
 const deliveryEvents = [];
 const deliveryHandlers = new Map();
 const deliveryAdapter = activateWithSdk({
-  registration: {}, config: { hooks: ['subagent_delivery_target'] },
+  registration: {}, config: { ...TEST_CORE_POLICY.agentEventSource, hooks: ['subagent_delivery_target'] },
   async invoke() { throw new Error('unexpected dependency'); },
   async emit(type) { deliveryEvents.push(type); },
 }, {
@@ -91,7 +91,7 @@ await deliveryAdapter.shutdown(new AbortController().signal);
 const partialHandlers = new Map();
 let partialReleased = 0;
 const partial = activateWithSdk({
-  registration: {}, config: { hooks: ['agent_end', 'session_end'] },
+  registration: {}, config: { ...TEST_CORE_POLICY.agentEventSource, hooks: ['agent_end', 'session_end'] },
   async invoke() { throw new Error('unexpected dependency'); }, async emit() {},
 }, {
   on(hook, handler) {

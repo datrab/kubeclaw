@@ -1,10 +1,10 @@
 export interface IngressLimits { maxQueueEvents: number; maxQueueBytes: number; drainTimeoutMs: number }
 
 export function ingressLimits(config: Readonly<Record<string, unknown>>): IngressLimits {
-  const limits = { maxQueueEvents: 256, maxQueueBytes: 1024 * 1024, drainTimeoutMs: 5000 };
+  const limits = {} as IngressLimits;
   const maxima = { maxQueueEvents: 10_000, maxQueueBytes: 16 * 1024 * 1024, drainTimeoutMs: 60_000 };
-  for (const key of Object.keys(limits) as Array<keyof IngressLimits>) {
-    const value = config[key] ?? limits[key];
+  for (const key of Object.keys(maxima) as Array<keyof IngressLimits>) {
+    const value = config[key];
     if (typeof value !== 'number' || !Number.isSafeInteger(value) || value < 1 || value > maxima[key]) throw new Error(`AGENT_EVENT_LIMIT_INVALID:${key}`);
     limits[key] = value;
   }
@@ -22,7 +22,7 @@ export class IngressQueue<T> {
   #rejected = 0;
   #lastError: string | null = null;
 
-  constructor(limits: IngressLimits, emit: (value: T) => Promise<void>) { this.#limits = limits; this.#emit = emit; }
+  constructor(limits: IngressLimits, emit: (value: T) => Promise<void>) { this.#limits = Object.freeze({ ...limits }); this.#emit = emit; }
 
   enqueue(value: T): void {
     const bytes = Buffer.byteLength(JSON.stringify(value));
