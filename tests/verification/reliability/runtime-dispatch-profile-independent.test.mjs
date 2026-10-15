@@ -45,7 +45,7 @@ test('independent closed profile never consumes historical model keys on actual 
   const journalFile = path.join(root, 'effects.jsonl');
   const coordinator = () => new EffectCoordinator(new FileEffectJournal(journalFile, TEST_CORE_POLICY), undefined, undefined,
     new FileResourceLockManager(path.join(root, 'locks'), TEST_CORE_POLICY), 300_000);
-  const adapter = dispatch({config: {targets: {forge: {endpoint: `${origin}/dispatch`, authentication: 'hmac', tokenSecret: 'review.secret'}}},
+  const adapter = dispatch({config: {...TEST_CORE_POLICY.httpDispatch,targets: {forge: {endpoint: `${origin}/dispatch`, authentication: 'hmac', tokenSecret: 'review.secret',byteProfile:'standard'}}},
     invokeConfidential: async (capability, request) => {
       assert.ok(['network.http', 'secrets.read'].includes(capability));
       return coordinator().invokeConfidential(capability === 'network.http' ? httpAdapter : secret, owner,

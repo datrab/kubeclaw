@@ -29,9 +29,9 @@ async function worker(mode:string,kind:string,root:string) {
   server.listen(0,'127.0.0.1');await once(server,'listening');const address=server.address();assert(address&&typeof address!=='string');
   const origin=`http://127.0.0.1:${address.port}`;
   const artifactRoot=path.join(root,'artifacts'),lockRoot=path.join(root,'locks'),journalFile=path.join(root,'effects.jsonl');
-  const artifact=artifacts({config:{...TEST_CORE_POLICY.artifactStore,artifactRoot}} as AdapterActivationContext);
-  const httpAdapter=network({config:{...TEST_CORE_POLICY.networkHttp,allowedOrigins:[origin],allowedMethods:['POST'],allowedHeaders:['content-type','idempotency-key']}} as AdapterActivationContext);
-  const runtime=dispatch({config:{targets:{forge:{endpoint:origin+'/dispatch',authentication:'spiffe-proxy'}}},
+  const artifact=artifacts({config:{...TEST_CORE_POLICY.artifactStore,artifactRoot}} as unknown as AdapterActivationContext);
+  const httpAdapter=network({config:{...TEST_CORE_POLICY.networkHttp,allowedOrigins:[origin],allowedMethods:['POST'],allowedHeaders:['content-type','idempotency-key']}} as unknown as AdapterActivationContext);
+  const runtime=dispatch({config:{...TEST_CORE_POLICY.httpDispatch,targets:{forge:{endpoint:origin+'/dispatch',authentication:'spiffe-proxy',byteProfile:'standard'}}},
     invokeConfidential:async(capability:string,request:Record<string,unknown>)=>httpAdapter.invoke({confidential:true,signal,
       request:{...request,capability,attempt:legacy.attempt,idempotencyKey:'inner:http'}} as AdapterInvocation)} as unknown as AdapterActivationContext);
   const adapter=kind==='dispatch'?runtime:artifact;
