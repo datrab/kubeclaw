@@ -1,0 +1,44 @@
+[
+  {
+    "command": [
+      "./node_modules/.bin/tsc",
+      "--noEmit",
+      "--module",
+      "NodeNext",
+      "--moduleResolution",
+      "NodeNext",
+      "--target",
+      "ES2024",
+      "--lib",
+      "ESNext,DOM,DOM.Iterable",
+      "--strict",
+      "--types",
+      "node",
+      "--skipLibCheck",
+      "--allowImportingTsExtensions",
+      "--esModuleInterop",
+      "skills/nova/core/execution/engine-runtime.ts",
+      "skills/nova/core/execution/engine-snapshots.ts",
+      "skills/nova/core/execution/engine-run.ts",
+      "skills/nova/core/execution/engine-admin.ts"
+    ],
+    "exitCode": 0,
+    "log": "docs/review/remediation/config-operator-payload-20261015/final-0.txt"
+  },
+  {
+    "command": [
+      "node",
+      "--test",
+      "tests/verification/reliability/nova-target-timing-policy.test.mjs",
+      "tests/verification/reliability/nova-artifact-policy.test.mjs",
+      "tests/verification/reliability/nova-telemetry-policy.test.mjs",
+      "tests/verification/reliability/nova-delivery-policy.test.mjs",
+      "tests/verification/reliability/nova-dispatch-policy.test.mjs",
+      "tests/verification/reliability/nova-core-policy.test.mjs",
+      "tests/verification/reliability/nova-state-wait-policy.test.mjs",
+      "tests/verification/reliability/nova-http-policy.test.mjs"
+    ],
+    "exitCode": 0,
+    "log": "docs/review/remediation/config-operator-payload-20261015/final-1.txt"
+  }
+]

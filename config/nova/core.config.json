@@ -93,6 +93,13 @@
               "maxPayloadBytes": 262144
             }
           }
+        },
+        "operatorMessagingPayload": {
+          "targetPayloadProfiles": {
+            "standard": {
+              "maxPayloadBytes": 65536
+            }
+          }
         }
       }
     }

@@ -1,7 +1,7 @@
 import type { AdapterActivationContext } from '@kubeclaw/plugin-sdk';
 
 const TARGET_ID = /^[a-z0-9](?:[a-z0-9._:-]{0,126}[a-z0-9])?$/;
-const TARGET_KEYS = new Set(['endpoint', 'endpointOrigin', 'endpointSecret', 'tokenSecret', 'maxPayloadBytes', 'format', 'receiptEndpoint']);
+const TARGET_KEYS = new Set(['endpoint', 'endpointOrigin', 'endpointSecret', 'tokenSecret', 'payloadProfile', 'format', 'receiptEndpoint']);
 
 export interface TargetConfig {
   readonly endpoint?: string;
@@ -41,7 +41,7 @@ function validateEndpoint(endpoint: URL, targetId: string, originOnly: boolean):
 }
 
 function parsePayloadLimit(value: unknown, targetId: string): number {
-  const limit = value ?? 65_536;
+  const limit = value;
   if (!Number.isSafeInteger(limit) || Number(limit) < 1 || Number(limit) > 1_048_576) {
     throw new Error(`OPERATOR_CONFIG_INVALID:maxPayloadBytes:${targetId}`);
   }
@@ -56,12 +56,13 @@ function receiptConfig(raw: Record<string, unknown>, targetId: string, origin: s
   return { receiptEndpoint: endpoint.href };
 }
 
-function parseTarget(targetId: string, raw: unknown): TargetConfig {
+function parseTarget(targetId: string, raw: unknown, profiles: ReadonlyMap<string, number>): TargetConfig {
   if (!TARGET_ID.test(targetId) || !isRecord(raw)) throw new Error(`OPERATOR_CONFIG_INVALID:target:${targetId}`);
   exactKeys(raw, TARGET_KEYS, 'OPERATOR_CONFIG_UNKNOWN_TARGET_FIELD');
   const usesSecretEndpoint = raw.endpointSecret !== undefined || raw.endpointOrigin !== undefined;
   if (usesSecretEndpoint === (raw.endpoint !== undefined)) throw new Error(`OPERATOR_CONFIG_INVALID:endpoint_mode:${targetId}`);
-  const maxPayloadBytes = parsePayloadLimit(raw.maxPayloadBytes, targetId);
+  if (typeof raw.payloadProfile !== 'string' || !profiles.has(raw.payloadProfile)) throw new Error(`OPERATOR_CONFIG_INVALID:payloadProfile:${targetId}`);
+  const maxPayloadBytes = profiles.get(raw.payloadProfile)!;
   const format = raw.format ?? 'json';
   if (format !== 'json' && format !== 'discord_webhook') throw new Error(`OPERATOR_CONFIG_INVALID:format:${targetId}`);
   if (usesSecretEndpoint) {
@@ -82,8 +83,15 @@ function parseTarget(targetId: string, raw: unknown): TargetConfig {
 
 export function parseConfig(config: AdapterActivationContext['config']): OperatorConfig {
   exactKeys(config as Record<string, unknown>, new Set([
-    'targets', 'deliveryRoot', 'maximumDeliveryRecords', 'maximumDeliveryBytes',
+    'targets', 'deliveryRoot', 'maximumDeliveryRecords', 'maximumDeliveryBytes', 'targetPayloadProfiles',
   ]), 'OPERATOR_CONFIG_UNKNOWN_FIELD');
+  if (!isRecord(config.targetPayloadProfiles) || Object.keys(config.targetPayloadProfiles).length === 0) throw new Error('OPERATOR_CONFIG_INVALID:targetPayloadProfiles');
+  const profiles = new Map<string, number>();
+  for (const [id, value] of Object.entries(config.targetPayloadProfiles)) {
+    if (!/^[a-z][a-z0-9._-]{0,127}$/.test(id) || !isRecord(value)) throw new Error('OPERATOR_CONFIG_INVALID:targetPayloadProfiles');
+    exactKeys(value, new Set(['maxPayloadBytes']), 'OPERATOR_CONFIG_INVALID:profile');
+    profiles.set(id, parsePayloadLimit(value.maxPayloadBytes, id));
+  }
   if (!isRecord(config.targets) || Object.keys(config.targets).length < 1) throw new Error('OPERATOR_CONFIG_INVALID:targets');
   if (typeof config.deliveryRoot !== 'string' || config.deliveryRoot.length === 0) {
     throw new Error('OPERATOR_CONFIG_INVALID:deliveryRoot');
@@ -97,7 +105,7 @@ export function parseConfig(config: AdapterActivationContext['config']): Operato
     throw new Error('OPERATOR_CONFIG_INVALID:maximumDeliveryBytes');
   }
   return Object.freeze({
-    targets: new Map(Object.entries(config.targets).map(([id, raw]) => [id, parseTarget(id, raw)])),
+    targets: new Map(Object.entries(config.targets).map(([id, raw]) => [id, parseTarget(id, raw, profiles)])),
     deliveryRoot: config.deliveryRoot,
     maximumDeliveryRecords,
     maximumDeliveryBytes,

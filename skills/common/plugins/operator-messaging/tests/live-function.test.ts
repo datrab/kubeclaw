@@ -1,5 +1,5 @@
 import { TEST_CORE_POLICY as DELIVERY_TEST_CORE_POLICY } from '../../../../../tests/fixtures/core-runtime-policy.mjs';
-const TEST_OPERATOR_STORE_POLICY = DELIVERY_TEST_CORE_POLICY.operatorMessagingStore;
+const TEST_OPERATOR_STORE_POLICY = {...DELIVERY_TEST_CORE_POLICY.operatorMessagingStore, targetPayloadProfiles: {...DELIVERY_TEST_CORE_POLICY.operatorMessagingPayload.targetPayloadProfiles, small:{maxPayloadBytes:512}, discord:{maxPayloadBytes:4096}}};
 import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
 import fs from 'node:fs';
@@ -122,29 +122,29 @@ const adapters = new core.AdapterRuntime({
         operators: {
           endpoint: `${origin}/messages`,
           tokenSecret: 'operator.webhook',
-          maxPayloadBytes: 512,
+          payloadProfile: 'small',
         },
         failing: {
           endpoint: `${origin}/fail`,
           tokenSecret: 'operator.webhook',
-          maxPayloadBytes: 512,
+          payloadProfile: 'small',
         },
         discord: {
           endpoint: `${origin}/discord`,
           tokenSecret: 'operator.webhook',
           format: 'discord_webhook',
-          maxPayloadBytes: 4_096,
+          payloadProfile: 'discord',
         },
         'confidential-discord': {
           endpointOrigin: origin,
           endpointSecret: 'operator.endpoint',
           format: 'discord_webhook',
-          maxPayloadBytes: 4_096,
+          payloadProfile: 'discord',
         },
         slow: {
           endpoint: `${origin}/slow`,
           tokenSecret: 'operator.webhook',
-          maxPayloadBytes: 512,
+          payloadProfile: 'small',
         },
       },
     }],
@@ -346,7 +346,7 @@ try {
         retry: {
           endpoint: `${origin}/direct-retry`,
           tokenSecret: 'operator.webhook',
-          maxPayloadBytes: 512,
+          payloadProfile: 'small',
         },
       },
     },
@@ -404,7 +404,7 @@ try {
         retry: {
           endpoint: `${origin}/capacity`,
           tokenSecret: 'operator.webhook',
-          maxPayloadBytes: 512,
+          payloadProfile: 'small',
         },
       },
     },
@@ -443,7 +443,7 @@ try {
         retry: {
           endpoint: `${origin}/concurrent`,
           tokenSecret: 'operator.webhook',
-          maxPayloadBytes: 512,
+          payloadProfile: 'small',
         },
       },
     },
