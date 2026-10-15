@@ -12274,5 +12274,18 @@
         "diff-final.log": 0
       }
     }
+  },
+  "checkpointPush20261015": {
+    "at": "2026-10-15T18:48:49.231305+00:00",
+    "sha": "ac81384c9e9955d018ec8f3b3c69ba6c2e5344a7",
+    "branch": "codex/config-c0-semantic-inventory-20261012",
+    "files": 586,
+    "pushExitCode": 0,
+    "acceptance": "OPEN",
+    "sourceHashesMatched": 38,
+    "qualification": "WIP source checkpoint, not whole independent acceptance. Historical evidence and unrelated untracked review artifacts retained outside commit.",
+    "recoveryFailure": "b30cb92d-067f-4ac5-a626-23ebeece0883 failed before reply: original Codex thread claimed by active work. No CONFIG child or tool/test process observed; no duplicate queued.",
+    "nextAction": "Next coherent config-only group: transport-publisher/operator target payload byte profiles through supported selected Core startup/snapshot and explicit per-target selection preserving distinct values and retainedA; inspect actual schemas/consumers before authoring. HTTP authentication default remains separate unchanged installation/security choice, not an invitation for unrelated authority changes. Network adapter caps, agent event queues and compiler/operator approval or supported Buster runtimeService remain. No v10/graph/authority workaround; native/prior original failures remain OPEN.",
+    "writerLock": "shared nonblocking; released on process exit"
   }
 }
