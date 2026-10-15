@@ -134,3 +134,22 @@ must not declare `test_targets`.
 Regression: from this plugin directory, put the pinned `jscpd` binary on PATH
 and run `node tests/jscpd-targets.test.mjs`. It executes actual clone detection
 against disposable non-root test files and checks policy/path rejection.
+
+### Explicit isolated npm preparation
+
+Executor adapter config may set `candidatePreparation` to an object with all of:
+`mode: "npm-ci"`, absolute `executable` (npm), `path` (subprocess PATH), positive
+`timeoutMs`, and positive `maxOutputBytes`. Omission retains source-only execution.
+Preparation requires an exact source revision and regular root package.json and
+package-lock.json. Project .npmrc and overriding npm-shrinkwrap.json are rejected.
+The detached candidate receives `npm ci --ignore-scripts --no-audit --no-fund`
+with empty user/global config, private temporary HOME/cache and no ambient
+credentials. Shared process cancellation, timeout and output limits apply;
+failed preparation prevents all lint callbacks. HEAD and tracked cleanliness are
+rechecked before analysis. Temporary checkout/cache are removed on success or
+failure. No ambient node_modules are reused. External private registries are not
+supported by this preparation contract.
+
+`node tests/preparation.test.mjs` uses real npm and local workspaces to verify
+installation, lifecycle suppression, exact revision, cleanup/isolation and
+fail-closed missing/inconsistent locks, cancellation, timeout and output limits.

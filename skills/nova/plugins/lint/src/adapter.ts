@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import { assertNotAborted } from './engine/process.ts';
+import { candidatePreparation } from './preparation.ts';
 import { withLintCandidate } from './candidate.ts';
 import path from 'node:path';
 
@@ -28,6 +29,7 @@ function requireInside(value: unknown, roots: readonly string[], label: string):
 export function activate(context: AdapterActivationContext): AdapterInstance {
   const repositoryRoots = configuredRoots(context.config, 'allowedRepositoryRoots');
   const policyRoots = configuredRoots(context.config, 'allowedPolicyRoots');
+  const preparation = candidatePreparation(context.config.candidatePreparation);
   const shutdown = new AbortController();
   const active = new Set<Promise<Readonly<Record<string, unknown>>>>();
   return {
@@ -45,9 +47,10 @@ export function activate(context: AdapterActivationContext): AdapterInstance {
       const policyPath = requireInside(payload.policyPath, policyRoots, 'LINT_POLICY_PATH');
       const revision = request.payload.sourceRevision;
       if (revision !== undefined && (typeof revision !== 'string' || !/^[a-f0-9]{40}$/u.test(revision))) throw new Error('LINT_SOURCE_REVISION_INVALID');
+      if (preparation && revision === undefined) throw new Error('LINT_PREPARATION_REVISION_REQUIRED');
       const run = (root: string) => executeLintReport({ ...payload, workingDirectory: root, policyPath, signal });
       const report = revision === undefined ? await run(workingDirectory)
-        : await withLintCandidate(workingDirectory, revision, run, signal);
+        : await withLintCandidate(workingDirectory, revision, run, signal, preparation);
       assertNotAborted(signal);
       if (!confidential) fence.assertCurrent();
       return { report, ...(revision === undefined ? {} : { sourceRevision: revision }) };

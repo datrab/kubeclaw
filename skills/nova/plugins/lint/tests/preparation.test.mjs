@@ -1,0 +1,47 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
+import { execFileSync } from 'node:child_process';
+import { candidatePreparation } from '../src/preparation.ts';
+import { withLintCandidate } from '../src/candidate.ts';
+const temp = fs.mkdtempSync(path.join(os.tmpdir(), 'lint-preparation-regression-'));
+const repository = path.join(temp, 'source'); fs.mkdirSync(repository);
+const executable = fs.realpathSync(execFileSync('which', ['npm'], { encoding: 'utf8' }).trim());
+const settings = candidatePreparation({ mode: 'npm-ci', executable, path: process.env.PATH, timeoutMs: 30000, maxOutputBytes: 1024 * 1024 });
+const git = (...args) => execFileSync('git', args, { cwd: repository, encoding: 'utf8' }).trim();
+const commit = () => { git('add', '.');git('-c', 'user.name=Fixture', '-c', 'user.email=fixture@example.invalid', 'commit', '-qm', 'fixture');return git('rev-parse', 'HEAD'); };
+try {
+  assert.equal(candidatePreparation(undefined), undefined);
+  assert.throws(() => candidatePreparation({ mode: 'npm-ci' }), /CONFIG_INVALID/);
+  fs.writeFileSync(path.join(repository, '.gitignore'), 'node_modules/\n');
+  fs.writeFileSync(path.join(repository, 'package.json'), JSON.stringify({ name: 'fixture-root', version: '1.0.0', private: true, workspaces: ['helper'], scripts: { postinstall: "node -e \"require('fs').writeFileSync('lifecycle-marker','bad')\"" } }));
+  fs.mkdirSync(path.join(repository, 'helper'));
+  fs.writeFileSync(path.join(repository, 'helper/package.json'), JSON.stringify({ name: 'fixture-helper', version: '1.0.0' }));
+  execFileSync(executable, ['install', '--package-lock-only', '--ignore-scripts', '--no-audit', '--no-fund', '--cache', path.join(temp, 'cache')], { cwd: repository, env: { PATH: process.env.PATH, HOME: temp }, stdio: 'pipe' });
+  git('init', '-q');const revision = commit();
+  let executed = false;let checkout;
+  await withLintCandidate(repository, revision, async root => {
+    checkout = root; executed = true;
+    assert.equal(execFileSync('git', ['rev-parse', 'HEAD'], { cwd: root, encoding: 'utf8' }).trim(), revision);
+    assert.ok(fs.existsSync(path.join(root, 'node_modules/fixture-helper/package.json')));
+    assert.equal(fs.existsSync(path.join(root, 'lifecycle-marker')), false);
+  }, undefined, settings);
+  assert.ok(executed);assert.equal(fs.existsSync(checkout), false);
+  assert.equal(fs.existsSync(path.join(repository, 'node_modules')), false);
+  const lock = fs.readFileSync(path.join(repository, 'package-lock.json'));
+  fs.unlinkSync(path.join(repository, 'package-lock.json'));const noLock = commit();
+  const forbidden = async () => { assert.fail('Lint callback must not run on failed preparation'); };
+  await assert.rejects(withLintCandidate(repository, noLock, forbidden, undefined, settings), /LOCKFILE_REQUIRED/);
+  fs.writeFileSync(path.join(repository, 'package-lock.json'), lock);
+  const manifest = JSON.parse(fs.readFileSync(path.join(repository, 'package.json')));
+  manifest.dependencies = { absent: 'file:./missing-local-dependency' };
+  fs.writeFileSync(path.join(repository, 'package.json'), JSON.stringify(manifest));
+  const inconsistent = commit();
+  await assert.rejects(withLintCandidate(repository, inconsistent, forbidden, undefined, settings), /PREPARATION_FAILED/);
+  const controller = new AbortController();controller.abort();
+  await assert.rejects(withLintCandidate(repository, revision, forbidden, controller.signal, settings), /CANCELLED/);
+  await assert.rejects(withLintCandidate(repository, revision, forbidden, undefined, { ...settings, timeoutMs: 1 }), error => error.code === 'LINT_PREPARATION_TIMEOUT');
+  await assert.rejects(withLintCandidate(repository, revision, forbidden, undefined, { ...settings, maxOutputBytes: 1 }), /PREPARATION_FAILED/);
+  console.log('Real npm ci: exact revision, dependency resolution, lifecycle suppression, isolation/cleanup, missing lock, cancellation, timeout and output cap verified');
+} finally { fs.rmSync(temp, { recursive: true, force: true }); }
