@@ -46,3 +46,5 @@ file/profile; raw Platform entries keep installation `root` only. Duplicate raw
 policy leaves reject even when equal. Direct callers provide every limit.
 Retained runs use their original captured policy; no current-file fallback.
 This changes configuration receiving only, not redaction or ownership rules.
+
+JSON traversal budgets `maxJsonDepth` and `maxJsonNodes` are required selected Core telemetryStore settings (standard:64 and100000). The adapter captures both at activation; retained runs use their original Core snapshot. Platform adapter duplicates and missing values reject; no projection-local defaults. Byte limits and redaction are unchanged.

@@ -1,7 +1,6 @@
 import { types } from 'node:util';
 
-export const TELEMETRY_JSON_MAX_DEPTH = 64;
-export const TELEMETRY_JSON_MAX_NODES = 100_000;
+export interface TelemetryJsonLimits { readonly maxJsonDepth: number; readonly maxJsonNodes: number }
 const protectedField = /(?:authorization|cookie|password|secret|token|apikey|credential|privatekey|accesskey|connectionstring)/iu;
 const personalField = /^(?:user|customer)?(?:email|emailaddress|phone|phonenumber|postaladdress|homeaddress|ssn|socialsecuritynumber|personaldata|userdata)$/iu;
 
@@ -16,7 +15,8 @@ class TelemetrySnapshot {
   readonly #ancestors = new Set<object>();
   readonly #maximumBytes: number;
 
-  constructor(maximumBytes: number) { this.#maximumBytes = maximumBytes; }
+  readonly limits: TelemetryJsonLimits;
+  constructor(maximumBytes: number, limits: TelemetryJsonLimits) { this.#maximumBytes = maximumBytes; this.limits = limits; }
   consume(count: number): void {
     this.#bytes += count;
     if (this.#bytes > this.#maximumBytes) throw new Error('TELEMETRY_RECORD_SIZE_EXCEEDED');
@@ -33,7 +33,7 @@ class TelemetrySnapshot {
       throw new Error('TELEMETRY_JSON_PROTOTYPE_INVALID');
     }
     const keys = Reflect.ownKeys(value);
-    if (keys.length > TELEMETRY_JSON_MAX_NODES - this.#nodes + (array ? 1 : 0)) throw new Error('TELEMETRY_JSON_NODE_LIMIT');
+    if (keys.length > this.limits.maxJsonNodes - this.#nodes + (array ? 1 : 0)) throw new Error('TELEMETRY_JSON_NODE_LIMIT');
     if (array && keys.length !== value.length + 1) throw new Error('TELEMETRY_JSON_ARRAY_INVALID');
     return keys;
   }
@@ -64,8 +64,8 @@ class TelemetrySnapshot {
     } finally { this.#ancestors.delete(value); }
   }
   snapshot(value: unknown, depth: number): unknown {
-    if (++this.#nodes > TELEMETRY_JSON_MAX_NODES) throw new Error('TELEMETRY_JSON_NODE_LIMIT');
-    if (depth > TELEMETRY_JSON_MAX_DEPTH) throw new Error('TELEMETRY_JSON_DEPTH_LIMIT');
+    if (++this.#nodes > this.limits.maxJsonNodes) throw new Error('TELEMETRY_JSON_NODE_LIMIT');
+    if (depth > this.limits.maxJsonDepth) throw new Error('TELEMETRY_JSON_DEPTH_LIMIT');
     if (value === null || typeof value === 'boolean') { this.consume(JSON.stringify(value).length); return value; }
     if (typeof value === 'string') { this.consume(this.stringBytes(value)); return value; }
     if (typeof value === 'number') {
@@ -86,8 +86,8 @@ function redact(value: any): any {
 
 // This sink receives no trusted credential-provenance authority. A payload's
 // self-asserted demo label cannot exempt a protected field from this projection.
-export function telemetryProjection(payload: unknown, maximumBytes: number): Record<string, unknown> {
-  const validated = new TelemetrySnapshot(maximumBytes).snapshot(payload, 0);
+export function telemetryProjection(payload: unknown, maximumBytes: number, limits: TelemetryJsonLimits): Record<string, unknown> {
+  const validated = new TelemetrySnapshot(maximumBytes, limits).snapshot(payload, 0);
   if (validated === null || typeof validated !== 'object' || Array.isArray(validated)) throw new Error('TELEMETRY_JSON_ROOT_INVALID');
   // Only a fully validated, accessor-free bounded snapshot reaches redaction.
   return redact(validated);

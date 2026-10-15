@@ -70,3 +70,13 @@ test('all central telemetry leaves required; malformed direct/central values and
   for(const value of [TEST_CORE_POLICY.telemetryStore[key],null])assert.throws(()=>selectedAdapterConfigurations({[id]:{root:f.root,[key]:value}},TEST_CORE_POLICY),/COMPETING_AUTHOR/);
  }
 });
+
+test('selected telemetry structural budgets enforce exact boundaries, capture and restored positives',async t=>{
+ const f=fixture(t),open=(name,limits)=>{const config={root:path.join(f.root,name),...TEST_CORE_POLICY.telemetryStore,...limits};const adapter=activate({config});config.maxJsonDepth=100;config.maxJsonNodes=100;return adapter;};
+ const nested={child:{value:null}}; // root depth0, child1, leaf2; three total nodes.
+ await open('exact',{maxJsonDepth:2,maxJsonNodes:3}).invoke(invocation('one',nested));
+ await assert.rejects(()=>open('depth',{maxJsonDepth:1,maxJsonNodes:3}).invoke(invocation('one',nested)),/TELEMETRY_JSON_DEPTH_LIMIT/);
+ await open('depth',{maxJsonDepth:2,maxJsonNodes:3}).invoke(invocation('one',nested));
+ await assert.rejects(()=>open('nodes',{maxJsonDepth:2,maxJsonNodes:2}).invoke(invocation('one',nested)),/TELEMETRY_JSON_NODE_LIMIT/);
+ await open('nodes',{maxJsonDepth:2,maxJsonNodes:3}).invoke(invocation('one',nested));
+});

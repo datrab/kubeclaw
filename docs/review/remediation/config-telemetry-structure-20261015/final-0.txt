@@ -1,0 +1,12 @@
+✔ actual Nova telemetry A/B record cap, redaction and retained A resume without B use selected snapshot (2574.01136ms)
+✔ selected actual telemetry byte/count/store limits enforce exact UTF8 boundaries and restored positives (126.479142ms)
+✔ all central telemetry leaves required; malformed direct/central values and duplicate authors reject (3.658254ms)
+✔ selected telemetry structural budgets enforce exact boundaries, capture and restored positives (52.52094ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3207.926429

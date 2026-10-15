@@ -49,7 +49,9 @@
         "telemetryStore": {
           "maxRecordBytes": 1048576,
           "maximumRecords": 100000,
-          "maximumStoreBytes": 268435456
+          "maximumStoreBytes": 268435456,
+          "maxJsonDepth": 64,
+          "maxJsonNodes": 100000
         },
         "operatorMessagingStore": {
           "maximumDeliveryRecords": 100000,

@@ -9,7 +9,7 @@ export interface CoreRuntimePolicy {
   readonly openClawDispatch: Readonly<{ resultReadMaximumBytes: number; collectorWaitTimeoutSeconds: number; targetTimingProfiles: Readonly<Record<string, Readonly<{ spawnIntervalMs: number; pollMs: number; maxPollMs: number; maxPolls: number; sessionTimeoutMs: number }>>> }>;
   readonly operatorMessagingStore: Readonly<{ maximumDeliveryRecords: number; maximumDeliveryBytes: number }>;
   readonly transportPublisherStore: Readonly<{ maximumDeliveryRecords: number; maximumDeliveryBytes: number }>;
-  readonly telemetryStore: Readonly<{ maxRecordBytes: number; maximumRecords: number; maximumStoreBytes: number }>;
+  readonly telemetryStore: Readonly<{ maxJsonDepth: number; maxJsonNodes: number; maxRecordBytes: number; maximumRecords: number; maximumStoreBytes: number }>;
   readonly stateStore: Readonly<{ maxEntryBytes: number; maximumRecords: number; maximumStoreBytes: number }>;
   readonly waitStore: Readonly<{ maxEntryBytes: number; maximumRecords: number; maximumStoreBytes: number }>;
   readonly artifactStore: Readonly<{ maxArtifactBytes: number; maximumRecords: number; maximumStoreBytes: number; maximumRecordBytes: number }>;

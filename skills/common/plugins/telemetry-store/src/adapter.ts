@@ -11,6 +11,11 @@ export function activate(context: AdapterActivationContext): AdapterInstance {
   if (typeof context.config.maxRecordBytes !== 'number' || !Number.isSafeInteger(maxRecordBytes) || maxRecordBytes < 1) throw new Error('maxRecordBytes is invalid');
   if (typeof context.config.maximumRecords !== 'number' || !Number.isSafeInteger(maximumRecords) || maximumRecords < 1) throw new Error('maximumRecords is invalid');
   if (typeof context.config.maximumStoreBytes !== 'number' || !Number.isSafeInteger(maximumStoreBytes) || maximumStoreBytes < 1) throw new Error('maximumStoreBytes is invalid');
+  const maxJsonDepth = context.config.maxJsonDepth;
+  const maxJsonNodes = context.config.maxJsonNodes;
+  if (typeof maxJsonDepth !== 'number' || !Number.isSafeInteger(maxJsonDepth) || maxJsonDepth < 1) throw new Error('maxJsonDepth is invalid');
+  if (typeof maxJsonNodes !== 'number' || !Number.isSafeInteger(maxJsonNodes) || maxJsonNodes < 1) throw new Error('maxJsonNodes is invalid');
+  const jsonLimits = Object.freeze({ maxJsonDepth, maxJsonNodes });
   const store = new FileDurableRecordStore(root, {
     maximumRecords,
     maximumBytes: maximumStoreBytes,
@@ -27,7 +32,7 @@ export function activate(context: AdapterActivationContext): AdapterInstance {
         const committed = await store.append(
           stream,
           request.idempotencyKey,
-          telemetryProjection(request.payload, maxRecordBytes),
+          telemetryProjection(request.payload, maxRecordBytes, jsonLimits),
           request.attempt.runId,
         );
         return { accepted: committed.appended, sequence: committed.record.sequence };

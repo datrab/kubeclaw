@@ -1,0 +1,196 @@
+{
+  "at": "2026-10-15T19:33:51.870767+00:00",
+  "change": "Required selected Core telemetry maxJsonDepth/maxJsonNodes replaces projection-local64/100000 defaults; adapter captures scalars, existing original snapshot path conserved. Original projection boundary identities and redaction assertions preserved; no authority hardening.",
+  "settingsSourceWired": 96,
+  "verification": [
+    {
+      "command": [
+        "node",
+        "--test",
+        "--test-timeout=30000",
+        "tests/verification/reliability/nova-telemetry-policy.test.mjs"
+      ],
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+      "exitCode": 1,
+      "log": "docs/review/remediation/config-telemetry-structure-20261015/check-0.txt"
+    },
+    {
+      "command": [
+        "node",
+        "tests/verification/integration/telemetry-store-projection.test.mts"
+      ],
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+      "exitCode": 1,
+      "log": "docs/review/remediation/config-telemetry-structure-20261015/check-1.txt"
+    },
+    {
+      "command": [
+        "node",
+        "tests/live-function.test.ts"
+      ],
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugins/telemetry-store",
+      "exitCode": 1,
+      "log": "docs/review/remediation/config-telemetry-structure-20261015/check-2.txt"
+    },
+    {
+      "command": [
+        "node",
+        "tests/package-boundary.test.mjs"
+      ],
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugins/telemetry-store",
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-telemetry-structure-20261015/check-3.txt"
+    },
+    {
+      "command": [
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/.bin/tsc",
+        "--noEmit",
+        "-p",
+        "tsconfig.json"
+      ],
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugins/telemetry-store",
+      "exitCode": 2,
+      "log": "docs/review/remediation/config-telemetry-structure-20261015/check-4.txt"
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-telemetry-structure-20261015/check-5.txt"
+    }
+  ],
+  "independentAcceptance": "OPEN; no fresh non-author reviewer available; original regression is not independent acceptance.",
+  "nextAction": "Fresh non-author review of payload, HTTP and telemetry structural changes; continue observer configuration/queue seams. HTTP allowedMethods/allowedHeaders are explicit endpoint grants, not globally interchangeable settings; do not flatten grants into generic Core defaults.",
+  "writerLock": "shared nonblocking; released on process exit",
+  "initialVerificationCorrection": "TS1294 / ERR_UNSUPPORTED_TYPESCRIPT_SYNTAX: parameter property unsupported by erasableSyntaxOnly and Node strip-only; replaced with explicit field assignment. No runtime semantics changed.",
+  "finalVerification": [
+    {
+      "command": [
+        "node",
+        "--test",
+        "--test-timeout=30000",
+        "tests/verification/reliability/nova-telemetry-policy.test.mjs"
+      ],
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-telemetry-structure-20261015/final-0.txt"
+    },
+    {
+      "command": [
+        "node",
+        "tests/verification/integration/telemetry-store-projection.test.mts"
+      ],
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-telemetry-structure-20261015/final-1.txt"
+    },
+    {
+      "command": [
+        "node",
+        "tests/live-function.test.ts"
+      ],
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugins/telemetry-store",
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-telemetry-structure-20261015/final-2.txt"
+    },
+    {
+      "command": [
+        "node",
+        "tests/package-boundary.test.mjs"
+      ],
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugins/telemetry-store",
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-telemetry-structure-20261015/final-3.txt"
+    },
+    {
+      "command": [
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/.bin/tsc",
+        "--noEmit",
+        "-p",
+        "tsconfig.json"
+      ],
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugins/telemetry-store",
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-telemetry-structure-20261015/final-4.txt"
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-telemetry-structure-20261015/final-5.txt"
+    }
+  ],
+  "integratedVerification": [
+    {
+      "command": [
+        "node",
+        "--test",
+        "--test-timeout=30000",
+        "tests/verification/reliability/nova-target-timing-policy.test.mjs",
+        "tests/verification/reliability/nova-artifact-policy.test.mjs",
+        "tests/verification/reliability/nova-telemetry-policy.test.mjs",
+        "tests/verification/reliability/nova-delivery-policy.test.mjs",
+        "tests/verification/reliability/nova-dispatch-policy.test.mjs",
+        "tests/verification/reliability/nova-core-policy.test.mjs",
+        "tests/verification/reliability/nova-state-wait-policy.test.mjs",
+        "tests/verification/reliability/nova-http-policy.test.mjs"
+      ],
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-telemetry-structure-20261015/integrated-0.txt"
+    },
+    {
+      "command": [
+        "./node_modules/.bin/tsc",
+        "--noEmit",
+        "--module",
+        "NodeNext",
+        "--moduleResolution",
+        "NodeNext",
+        "--target",
+        "ES2024",
+        "--lib",
+        "ESNext,DOM,DOM.Iterable",
+        "--strict",
+        "--types",
+        "node",
+        "--skipLibCheck",
+        "--allowImportingTsExtensions",
+        "--esModuleInterop",
+        "skills/nova/core/execution/engine-runtime.ts",
+        "skills/nova/core/execution/engine-snapshots.ts",
+        "skills/nova/core/execution/engine-run.ts",
+        "skills/nova/core/execution/engine-admin.ts"
+      ],
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-telemetry-structure-20261015/integrated-1.txt"
+    }
+  ],
+  "sourceHashes": {
+    "config/nova/core.config.json": "e1ce0a7a183cd11b33ccbc334923774072c02642c280af5ceb3d7abc932d7d5d",
+    "skills/common/plugin-runtime/foundation/config/core-runtime-policy.schema.json": "aa2847d20052de12e691d4430a2a16e654163d755a4d3f7eda67999d1de54116",
+    "skills/common/plugin-runtime/foundation/config/core-runtime-policy.ts": "afc4f9c79a1f9f2ac3a9b2a9c231ed5a7b794a6f6c77a2bbf1167c9fde98a510",
+    "skills/common/plugins/telemetry-store/schemas/config.schema.json": "eff0b9ae5c03a448dac4d852d5a540d4eb53a11c39b12e3862ed8bde2067e1e9",
+    "skills/common/plugins/telemetry-store/src/projection.ts": "7c2d2a4d9771eddeada8e44181678dbcdee42a5683d5772d647074e298eed4cb",
+    "skills/common/plugins/telemetry-store/src/adapter.ts": "d2dc84c9a4b281b7ec76c3f4661d9826fbee6adb7e3677ff8d6370f86540f16c",
+    "tests/verification/integration/telemetry-store-projection.test.mts": "0734d78dc58eb8d1313fb9927b66350fa3dacbec4c8f973733cf26a76c668e69",
+    "tests/verification/reliability/nova-telemetry-policy.test.mjs": "6bd7efa8cc11277ae989448829150445ade0c635c00c5fa05ee8b06d4d27423d",
+    "skills/common/plugins/telemetry-store/README.md": "78ebcc2892b584433da17a64c2be5e814a09ef71a49d16f32502f26214f7cd14"
+  },
+  "tests": {
+    "telemetryPolicyPassed": 4,
+    "telemetryPolicyTotal": 4,
+    "originalProjectionSuiteExitCode": 0,
+    "originalPluginSuitesPassed": 2,
+    "originalPluginSuitesTotal": 2,
+    "telemetryTypecheckExitCode": 0,
+    "novaTypecheckExitCode": 0
+  }
+}
