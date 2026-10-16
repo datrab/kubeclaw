@@ -15,6 +15,7 @@ import (
 // Captured once at startup from the deployment owner. The locator is transport,
 // not another author; absent, partial and ambiguous policies never get defaults.
 type controllerPolicy struct {
+	HTTPClientTimeoutSeconds              int64 `json:"httpClientTimeoutSeconds"`
 	ReadyReadHeaderTimeoutSeconds         int64 `json:"readyReadHeaderTimeoutSeconds"`
 	ReadyReadTimeoutSeconds               int64 `json:"readyReadTimeoutSeconds"`
 	ReadyWriteTimeoutSeconds              int64 `json:"readyWriteTimeoutSeconds"`

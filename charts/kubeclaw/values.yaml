@@ -403,8 +403,9 @@ busterNamespaceBroker:
   defaultTtlSeconds: 7200
   maxTtlSeconds: 86400
   controller:
-    # Sole author for controller Ready/Product runtime limits. Transported as JSON.
+    # Sole author for controller runtime limits. Transported as JSON.
     policy:
+      httpClientTimeoutSeconds: 60
       readyReadHeaderTimeoutSeconds: 5
       readyReadTimeoutSeconds: 20
       readyWriteTimeoutSeconds: 20

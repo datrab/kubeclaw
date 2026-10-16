@@ -2,6 +2,9 @@ package main
 
 import (
 	"encoding/json"
+	"encoding/pem"
+	"net/http"
+	"net/http/httptest"
 	"os"
 	"path/filepath"
 	"strconv"
@@ -158,6 +161,12 @@ func TestControllerActualDeliveredPolicy(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
+	if selected := os.Getenv("CONTROLLER_TEST_API_TIMEOUT_SECONDS"); selected != "" {
+		expected, err := strconv.ParseInt(selected, 10, 64)
+		if err != nil || policy.HTTPClientTimeoutSeconds != expected {
+			t.Fatal("delivered API timeout mismatch", policy.HTTPClientTimeoutSeconds, selected)
+		}
+	}
 	f := newReadyHTTPFixture(t, readyCredentials(t))
 	f.controller.policy = policy
 	status, result := f.call("/v1/demo-ready", "producer-token", f.request)
@@ -189,5 +198,75 @@ func TestControllerProductPolicyAdmissionAndOriginalReplay(t *testing.T) {
 	g.controller.policy.ProductMaximumBodyBytes = 1
 	if status, _ := g.call("/v1/demo-product/decisions", "producer-token", productSign(t, productInput(t, g), key)); status != 400 {
 		t.Fatal("selected product body ceiling not applied", status)
+	}
+}
+
+// Exercise the actual trusted TLS transport, not just projected policy bytes.
+func TestControllerSelectedAPITimeout(t *testing.T) {
+	server := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		select {
+		case <-time.After(1200 * time.Millisecond):
+			w.WriteHeader(http.StatusNoContent)
+		case <-r.Context().Done():
+		}
+	}))
+	defer server.Close()
+	ca := filepath.Join(t.TempDir(), "ca.pem")
+	if err := os.WriteFile(ca, pem.EncodeToMemory(&pem.Block{Type: "CERTIFICATE", Bytes: server.Certificate().Raw}), 0600); err != nil {
+		t.Fatal(err)
+	}
+	policyFile := filepath.Join(t.TempDir(), "policy.json")
+	p := testControllerPolicy(t)
+	p.HTTPClientTimeoutSeconds = 1
+	raw, _ := json.Marshal(p)
+	if err := os.WriteFile(policyFile, raw, 0600); err != nil {
+		t.Fatal(err)
+	}
+	captured, err := loadControllerPolicy(policyFile)
+	if err != nil {
+		t.Fatal(err)
+	}
+	a, err := kubernetesHTTPClientFromCA(ca, captured)
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer a.CloseIdleConnections()
+	p.HTTPClientTimeoutSeconds = 2
+	raw, _ = json.Marshal(p)
+	if err := os.WriteFile(policyFile, raw, 0600); err != nil {
+		t.Fatal(err)
+	}
+	selected, err := loadControllerPolicy(policyFile)
+	if err != nil {
+		t.Fatal(err)
+	}
+	b, err := kubernetesHTTPClientFromCA(ca, selected)
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer b.CloseIdleConnections()
+	if err := os.Remove(policyFile); err != nil {
+		t.Fatal(err)
+	}
+	if a.Timeout != time.Second || b.Timeout != 2*time.Second {
+		t.Fatal("selection not captured")
+	}
+	if response, err := a.Get(server.URL); err == nil {
+		response.Body.Close()
+		t.Fatal("A timeout ignored")
+	}
+	response, err := b.Get(server.URL)
+	if err != nil {
+		t.Fatal(err)
+	}
+	response.Body.Close()
+	if response.StatusCode != http.StatusNoContent {
+		t.Fatal(response.Status)
+	}
+	if _, err := loadControllerPolicy(policyFile); err == nil {
+		t.Fatal("missing owner accepted")
+	}
+	if _, err := kubernetesHTTPClientFromCA(ca, controllerPolicy{}); err == nil {
+		t.Fatal("zero policy accepted as unlimited")
 	}
 }

@@ -57,7 +57,7 @@ test('real full kubeclaw chart uses exact transported parent receipt and no old 
  // delivered through its real read-only ConfigMap mount, not an image fallback.
  const controllerChecksums=[];
  for(const seconds of [60,120]) {
-  values.busterNamespaceBroker.controller.policy={...yaml.load(fs.readFileSync('charts/kubeclaw/values.yaml','utf8')).busterNamespaceBroker.controller.policy,defaultDemoRetentionSeconds:seconds};
+  values.busterNamespaceBroker.controller.policy={...yaml.load(fs.readFileSync('charts/kubeclaw/values.yaml','utf8')).busterNamespaceBroker.controller.policy,defaultDemoRetentionSeconds:seconds,httpClientTimeoutSeconds:seconds/10};
   const selected=render(),controller=selected.find(item=>item?.kind==='Deployment'&&item.metadata.name==='agent-buster-namespace-controller');
   const pod=controller.spec.template.spec,actual=pod.containers.find(item=>item.name==='controller');
   assert(actual.env.some(item=>item.name==='BUSTER_CONTROLLER_POLICY_FILE'&&item.value==='/etc/kubeclaw/controller/controller-policy.json'));
@@ -66,7 +66,7 @@ test('real full kubeclaw chart uses exact transported parent receipt and no old 
   const delivered=JSON.parse(map.data['controller-policy.json']);assert.deepEqual(delivered,values.busterNamespaceBroker.controller.policy);
   controllerChecksums.push(controller.spec.template.metadata.annotations['checksum/controller-policy']);
   const policyFile=path.join(root,`controller-${seconds}.json`);fs.writeFileSync(policyFile,map.data['controller-policy.json']);
-  execFileSync('go',['test','./cmd/buster-namespace-controller','-run','^TestControllerActualDeliveredPolicy$','-count=1'],{encoding:'utf8',stdio:['ignore','pipe','pipe'],env:{...process.env,CONTROLLER_TEST_DELIVERED_POLICY:policyFile,CONTROLLER_TEST_RETENTION_SECONDS:String(seconds)}});
+  execFileSync('go',['test','./cmd/buster-namespace-controller','-run','^TestControllerActualDeliveredPolicy$','-count=1'],{encoding:'utf8',stdio:['ignore','pipe','pipe'],env:{...process.env,CONTROLLER_TEST_DELIVERED_POLICY:policyFile,CONTROLLER_TEST_RETENTION_SECONDS:String(seconds),CONTROLLER_TEST_API_TIMEOUT_SECONDS:String(seconds/10)}});
  }
  assert.notEqual(controllerChecksums[0],controllerChecksums[1],'controller owner change triggers rollout');
  assert.throws(()=>render('other-release'),/release identity/);

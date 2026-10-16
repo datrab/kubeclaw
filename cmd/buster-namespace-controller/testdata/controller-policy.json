@@ -11,5 +11,6 @@
   "readyObservationMaximumAgeSeconds": 300,
   "productHandlerTimeoutSeconds": 15,
   "productMaximumBodyBytes": 16384,
-  "productDecisionMaximumValiditySeconds": 300
+  "productDecisionMaximumValiditySeconds": 300,
+  "httpClientTimeoutSeconds": 60
 }

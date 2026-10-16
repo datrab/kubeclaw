@@ -57,7 +57,7 @@ func serveVersionedLease(t *testing.T, c *controller, item *lease, w http.Respon
 }
 
 func TestKubernetesHTTPClientRequiresServiceAccountCA(t *testing.T) {
-	if _, err := kubernetesHTTPClientFromCA(filepath.Join(t.TempDir(), "missing-ca.crt")); err == nil {
+	if _, err := kubernetesHTTPClientFromCA(filepath.Join(t.TempDir(), "missing-ca.crt"), testControllerPolicy(t)); err == nil {
 		t.Fatal("expected a missing ServiceAccount CA to fail closed")
 	}
 }

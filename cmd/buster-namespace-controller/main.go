@@ -194,7 +194,7 @@ func newController() (*controller, error) {
 		ctrl.allowedSourceSecrets[name] = true
 	}
 
-	client, err := kubernetesHTTPClient()
+	client, err := kubernetesHTTPClient(policy)
 	if err != nil {
 		return nil, err
 	}
@@ -202,11 +202,14 @@ func newController() (*controller, error) {
 	return ctrl, nil
 }
 
-func kubernetesHTTPClient() (*http.Client, error) {
-	return kubernetesHTTPClientFromCA(serviceAccountCAPath)
+func kubernetesHTTPClient(policy controllerPolicy) (*http.Client, error) {
+	return kubernetesHTTPClientFromCA(serviceAccountCAPath, policy)
 }
 
-func kubernetesHTTPClientFromCA(caPath string) (*http.Client, error) {
+func kubernetesHTTPClientFromCA(caPath string, policy controllerPolicy) (*http.Client, error) {
+	if policy.HTTPClientTimeoutSeconds < 1 || policy.HTTPClientTimeoutSeconds > int64((1<<63-1)/time.Second) {
+		return nil, errors.New("CONTROLLER_POLICY_INVALID")
+	}
 	caPEM, err := os.ReadFile(caPath)
 	if err != nil {
 		return nil, fmt.Errorf("read Kubernetes ServiceAccount CA: %w", err)
@@ -216,7 +219,7 @@ func kubernetesHTTPClientFromCA(caPath string) (*http.Client, error) {
 		return nil, fmt.Errorf("failed to parse Kubernetes ServiceAccount CA")
 	}
 	return &http.Client{
-		Timeout: 60 * time.Second,
+		Timeout: time.Duration(policy.HTTPClientTimeoutSeconds) * time.Second,
 		Transport: &http.Transport{
 			TLSClientConfig: &tls.Config{RootCAs: roots, MinVersion: tls.VersionTLS12},
 		},
