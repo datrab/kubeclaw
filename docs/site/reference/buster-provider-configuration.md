@@ -83,7 +83,7 @@ not invent a default when the schema has none.
 | --- | --- | --- | --- |
 | `buildContext` | Required | string | minimum length 1; maximum length 1024 |
 | `definition` | Required | object | no unknown fields |
-| `definition.buildArgs` | Optional | object | maximum entries 32 |
+| `definition.buildArgs` | Optional | object | maximum entries 32; property name pattern "^[A-Za-z_][A-Za-z0-9_]*$" |
 | `definition.buildArgs{}` | Each map value | string | maximum length 4096 |
 | `definition.dockerfile` | Conditional | string | minimum length 1; maximum length 1024 |
 | `definition.target` | Optional | string | pattern "^[a-z0-9]&#40;?:[a-z0-9._-]{0,126}[a-z0-9]&#41;?$" |
@@ -183,7 +183,7 @@ not invent a default when the schema has none.
 | `coverage[].id` | Required | string | pattern "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$" |
 | `coverage[].mediaType` | Required | schema choice | constant "text/lcov" |
 | `coverage[].path` | Required | string | minimum length 1; maximum length 1024 |
-| `environment` | Optional | object | maximum entries 64 |
+| `environment` | Optional | object | maximum entries 64; property name pattern "^[A-Za-z_][A-Za-z0-9_]*$" |
 | `environment{}` | Each map value | string | maximum length 4096 |
 | `executable` | Required | string | pattern "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$" |
 | `reports` | Optional | array | maximum items 16 |
@@ -534,7 +534,7 @@ not invent a default when the schema has none.
 | `cleanup[].expect.messageContains` | Optional | string | No additional scalar limit in the schema. |
 | `cleanup[].expect.minimumMessages` | Optional | integer | minimum 1; maximum 64 |
 | `cleanup[].expect.status` | Optional | integer | minimum 100; maximum 599 |
-| `cleanup[].extract` | Optional | object | maximum entries 32 |
+| `cleanup[].extract` | Optional | object | maximum entries 32; property name pattern "^[A-Za-z][A-Za-z0-9_]{0,63}$" |
 | `cleanup[].extract{}` | Each map value | string | No additional scalar limit in the schema. |
 | `cleanup[].headers` | Optional | object | maximum entries 32 |
 | `cleanup[].headers{}` | Each map value | string | minimum length 1; maximum length 4096 |
@@ -555,7 +555,7 @@ not invent a default when the schema has none.
 | `setup[].expect.messageContains` | Optional | string | No additional scalar limit in the schema. |
 | `setup[].expect.minimumMessages` | Optional | integer | minimum 1; maximum 64 |
 | `setup[].expect.status` | Optional | integer | minimum 100; maximum 599 |
-| `setup[].extract` | Optional | object | maximum entries 32 |
+| `setup[].extract` | Optional | object | maximum entries 32; property name pattern "^[A-Za-z][A-Za-z0-9_]{0,63}$" |
 | `setup[].extract{}` | Each map value | string | No additional scalar limit in the schema. |
 | `setup[].headers` | Optional | object | maximum entries 32 |
 | `setup[].headers{}` | Each map value | string | minimum length 1; maximum length 4096 |
@@ -575,7 +575,7 @@ not invent a default when the schema has none.
 | `steps[].expect.messageContains` | Optional | string | No additional scalar limit in the schema. |
 | `steps[].expect.minimumMessages` | Optional | integer | minimum 1; maximum 64 |
 | `steps[].expect.status` | Optional | integer | minimum 100; maximum 599 |
-| `steps[].extract` | Optional | object | maximum entries 32 |
+| `steps[].extract` | Optional | object | maximum entries 32; property name pattern "^[A-Za-z][A-Za-z0-9_]{0,63}$" |
 | `steps[].extract{}` | Each map value | string | No additional scalar limit in the schema. |
 | `steps[].headers` | Optional | object | maximum entries 32 |
 | `steps[].headers{}` | Each map value | string | minimum length 1; maximum length 4096 |
@@ -585,7 +585,7 @@ not invent a default when the schema has none.
 | `steps[].path` | Required | string | minimum length 1; maximum length 2048; pattern "^/&#40;?!/&#41;[^#\\r\\n]*$" |
 | `steps[].protocol` | Optional | schema choice | constant "websocket" |
 | `steps[].timeoutMs` | Optional | integer | minimum 1; maximum 300000 |
-| `variables` | Optional | object | maximum entries 64 |
+| `variables` | Optional | object | maximum entries 64; property name pattern "^[A-Za-z][A-Za-z0-9_]{0,63}$" |
 | `variables{}` | Each map value | boolean or number or string | No additional scalar limit in the schema. |
 
 ### Choice And Dependency Rules

@@ -729,7 +729,240 @@ function naturalCause(code) {
     : `${lead} could not complete ${object}.`;
   return `${lead} detected an invalid state while processing ${object}.`;
 }
+// Process collector and lifecycle recovery; preserve the earlier finite-family corrections.
+const processRecoveryDiagnoses = new Map([
+  [
+    "KUBERNETES_FIXTURE_KUBECTL_CLEANUP_FAILED",
+    [
+      "Child-process cleanup failed; this code alone does not identify a Kubernetes resource or lease cleanup failure.",
+      "Native close or owned-process-group cleanup could not be confirmed. Destroying host pipe ends does not prove descendant termination.",
+      "Preserve the AggregateError errors and cause plus stdout/stderr. Inspect the child/group identity and any caller side effects; a prior operation failure can be wrapped by this cleanup failure.",
+      "Do not replay until process ownership and caller-specific retained state are reconciled."
+    ]
+  ],
+  [
+    "KUBERNETES_FIXTURE_KUBECTL_OUTPUT_LIMIT",
+    [
+      "One stdout or stderr chunk would exceed that stream's separate maxBuffer (default 1 MiB) byte allowance; stdout and stderr are not summed.",
+      "The overflowing chunk is not retained. Process cleanup is requested; this does not undo effects already performed by the command. A cleanup failure can wrap this code.",
+      "Inspect preserved output and caller side effects. Reduce the verbose stream or use a reviewed larger owning output allowance, not an unrelated input-size limit.",
+      "Retry only after cleanup and caller-specific retry safety are established; smaller output alone does not make replay safe."
+    ]
+  ],
+  [
+    "TAILSCALE_EXPOSURE_KUBECTL_CLEANUP_FAILED",
+    [
+      "Child-process cleanup failed; this code alone does not identify a Kubernetes resource or lease cleanup failure.",
+      "Native close or owned-process-group cleanup could not be confirmed. Destroying host pipe ends does not prove descendant termination.",
+      "Preserve the AggregateError errors and cause plus stdout/stderr. Inspect the child/group identity and any caller side effects; a prior operation failure can be wrapped by this cleanup failure.",
+      "Do not replay until process ownership and caller-specific retained state are reconciled."
+    ]
+  ],
+  [
+    "TAILSCALE_EXPOSURE_KUBECTL_OUTPUT_LIMIT",
+    [
+      "One stdout or stderr chunk would exceed that stream's separate maxBuffer (default 1 MiB) byte allowance; stdout and stderr are not summed.",
+      "The overflowing chunk is not retained. Process cleanup is requested; this does not undo effects already performed by the command. A cleanup failure can wrap this code.",
+      "Inspect preserved output and caller side effects. Reduce the verbose stream or use a reviewed larger owning output allowance, not an unrelated input-size limit.",
+      "Retry only after cleanup and caller-specific retry safety are established; smaller output alone does not make replay safe."
+    ]
+  ],
+  [
+    "REPORT_ADAPTER_CLEANUP_FAILED",
+    [
+      "Child-process cleanup failed; this code alone does not identify a Kubernetes resource or lease cleanup failure.",
+      "Native close or owned-process-group cleanup could not be confirmed. Destroying host pipe ends does not prove descendant termination.",
+      "Preserve the AggregateError errors and cause plus stdout/stderr. Inspect the child/group identity and any caller side effects; a prior operation failure can be wrapped by this cleanup failure.",
+      "Do not replay until process ownership and caller-specific retained state are reconciled."
+    ]
+  ],
+  [
+    "REPORT_ADAPTER_RESULT_LIMIT",
+    [
+      "One stdout or stderr chunk would exceed that stream's separate maximumResultBytes byte allowance; stdout and stderr are not summed.",
+      "The overflowing chunk is not retained. Process cleanup is requested; this does not undo effects already performed by the command. A cleanup failure can wrap this code.",
+      "Inspect preserved output and caller side effects. Reduce the verbose stream or use a reviewed larger owning output allowance, not an unrelated input-size limit.",
+      "Retry only after cleanup and caller-specific retry safety are established; smaller output alone does not make replay safe."
+    ]
+  ]
+]);
+// Exact source-backed recovery for the audited finite limit/path/file-size families.
+const finiteFamilyDiagnoses = new Map([
+  [
+    "CONTAINER_BUILD_LOG_LIMIT_INVALID",
+    [
+      "The runtime option maximumLogBytes (bytes) is not a positive safe integer.",
+      "Runtime construction stops at the rejected option.",
+      "Set maximumLogBytes to a positive safe integer in bytes; changing per-request limits does not repair this constructor option.",
+      "Recreate the runtime only after its owning options pass validation."
+    ]
+  ],
+  [
+    "CONTAINER_BUILD_TIME_LIMIT_INVALID",
+    [
+      "The runtime option maximumExecutionMs (milliseconds) is not a positive safe integer.",
+      "Runtime construction stops at the rejected option.",
+      "Set maximumExecutionMs to a positive safe integer in milliseconds; changing per-request limits does not repair this constructor option.",
+      "Recreate the runtime only after its owning options pass validation."
+    ]
+  ],
+  [
+    "CONTAINER_BUILD_MANIFEST_LIMIT_INVALID",
+    [
+      "The runtime option maximumManifestBytes (bytes) is not a positive safe integer.",
+      "Runtime construction stops at the rejected option.",
+      "Set maximumManifestBytes to a positive safe integer in bytes; changing per-request limits does not repair this constructor option.",
+      "Recreate the runtime only after its owning options pass validation."
+    ]
+  ],
+  [
+    "KUBERNETES_FIXTURE_MANIFEST_SIZE_LIMIT_INVALID",
+    [
+      "The runtime option maximumManifestBytes (bytes) is not a positive safe integer.",
+      "Runtime construction stops at the rejected option.",
+      "Set maximumManifestBytes to a positive safe integer in bytes; changing per-request limits does not repair this constructor option.",
+      "Recreate the runtime only after its owning options pass validation."
+    ]
+  ],
+  [
+    "KUBERNETES_FIXTURE_RESOURCE_COUNT_LIMIT_INVALID",
+    [
+      "The runtime option maximumResources (resources) is not a positive safe integer.",
+      "Runtime construction stops at the rejected option.",
+      "Set maximumResources to a positive safe integer in resources; changing per-request limits does not repair this constructor option.",
+      "Recreate the runtime only after its owning options pass validation."
+    ]
+  ],
+  [
+    "KUBERNETES_FIXTURE_PVC_SIZE_LIMIT_INVALID",
+    [
+      "The runtime option maximumPersistentVolumeClaimBytes (bytes) is not a positive safe integer.",
+      "Runtime construction stops at the rejected option.",
+      "Set maximumPersistentVolumeClaimBytes to a positive safe integer in bytes; changing per-request limits does not repair this constructor option.",
+      "Recreate the runtime only after its owning options pass validation."
+    ]
+  ],
+  [
+    "KUBERNETES_FIXTURE_PVC_TOTAL_SIZE_LIMIT_INVALID",
+    [
+      "The runtime option maximumPersistentVolumeTotalBytes (bytes) is not a positive safe integer, or is smaller than maximumPersistentVolumeClaimBytes.",
+      "Runtime construction stops at the rejected option.",
+      "Set maximumPersistentVolumeTotalBytes to a positive safe integer in bytes; changing per-request limits does not repair this constructor option. Keep maximumPersistentVolumeTotalBytes at least as large as maximumPersistentVolumeClaimBytes.",
+      "Recreate the runtime only after its owning options pass validation."
+    ]
+  ],
+  [
+    "KUBERNETES_FIXTURE_RETENTION_LIMIT_INVALID",
+    [
+      "The runtime option maximumRetentionSeconds (seconds) is not a positive safe integer.",
+      "Runtime construction stops at the rejected option.",
+      "Set maximumRetentionSeconds to a positive safe integer in seconds; changing per-request limits does not repair this constructor option.",
+      "Recreate the runtime only after its owning options pass validation."
+    ]
+  ],
+  [
+    "KUBERNETES_FIXTURE_EXECUTION_LIMIT_INVALID",
+    [
+      "The runtime option maximumExecutionMs (milliseconds) is not a positive safe integer.",
+      "Runtime construction stops at the rejected option.",
+      "Set maximumExecutionMs to a positive safe integer in milliseconds; changing per-request limits does not repair this constructor option.",
+      "Recreate the runtime only after its owning options pass validation."
+    ]
+  ],
+  [
+    "TEST_RUNNER_OBSERVABILITY_ROOT_SYMLINK",
+    [
+      "A path component of observabilityRoot is a symbolic link.",
+      "Runner construction stops; earlier path components may already have been created.",
+      "Use a directory path with no symbolic-link components for observabilityRoot. Keep the observability root separate from the workspace; attempt and admission stores must match its attempts and admission subdirectories.",
+      "Preserve existing store data; retry after the directory chain and owning root constraints are correct."
+    ]
+  ],
+  [
+    "TEST_RUNNER_OBSERVABILITY_ROOT_NOT_DIRECTORY",
+    [
+      "A path component of observabilityRoot is not a directory.",
+      "Runner construction stops; earlier path components may already have been created.",
+      "Use a directory path with no symbolic-link components for observabilityRoot. Keep the observability root separate from the workspace; attempt and admission stores must match its attempts and admission subdirectories.",
+      "Preserve existing store data; retry after the directory chain and owning root constraints are correct."
+    ]
+  ],
+  [
+    "TEST_RUNNER_ATTEMPT_STORE_ROOT_SYMLINK",
+    [
+      "A path component of durableAttemptStore.storageDirectory() is a symbolic link.",
+      "Runner construction stops; earlier path components may already have been created.",
+      "Use a directory path with no symbolic-link components for durableAttemptStore.storageDirectory(). Keep the observability root separate from the workspace; attempt and admission stores must match its attempts and admission subdirectories.",
+      "Preserve existing store data; retry after the directory chain and owning root constraints are correct."
+    ]
+  ],
+  [
+    "TEST_RUNNER_ATTEMPT_STORE_ROOT_NOT_DIRECTORY",
+    [
+      "A path component of durableAttemptStore.storageDirectory() is not a directory.",
+      "Runner construction stops; earlier path components may already have been created.",
+      "Use a directory path with no symbolic-link components for durableAttemptStore.storageDirectory(). Keep the observability root separate from the workspace; attempt and admission stores must match its attempts and admission subdirectories.",
+      "Preserve existing store data; retry after the directory chain and owning root constraints are correct."
+    ]
+  ],
+  [
+    "TEST_RUNNER_ADMISSION_STORE_ROOT_SYMLINK",
+    [
+      "A path component of observabilityAdmissionStore.storageDirectory() is a symbolic link.",
+      "Runner construction stops; earlier path components may already have been created.",
+      "Use a directory path with no symbolic-link components for observabilityAdmissionStore.storageDirectory(). Keep the observability root separate from the workspace; attempt and admission stores must match its attempts and admission subdirectories.",
+      "Preserve existing store data; retry after the directory chain and owning root constraints are correct."
+    ]
+  ],
+  [
+    "TEST_RUNNER_ADMISSION_STORE_ROOT_NOT_DIRECTORY",
+    [
+      "A path component of observabilityAdmissionStore.storageDirectory() is not a directory.",
+      "Runner construction stops; earlier path components may already have been created.",
+      "Use a directory path with no symbolic-link components for observabilityAdmissionStore.storageDirectory(). Keep the observability root separate from the workspace; attempt and admission stores must match its attempts and admission subdirectories.",
+      "Preserve existing store data; retry after the directory chain and owning root constraints are correct."
+    ]
+  ],
+  [
+    "TEST_RUNNER_REPOSITORY_OUTSIDE_WORKSPACE",
+    [
+      "The canonical repository path equals the workspace root or is outside that root.",
+      "The repository containment check stops; earlier preparation may already have created directories or copied files.",
+      "Use a repository directory strictly below the canonical workspace root, not the workspace root itself.",
+      "Inspect partial preparation and retry only after the canonical paths pass containment checks."
+    ]
+  ],
+  [
+    "TEST_RUNNER_ATTEMPT_REPOSITORY_OUTSIDE_WORKSPACE",
+    [
+      "The canonical repository path equals the workspace root or is outside that root.",
+      "The repository containment check stops; earlier preparation may already have created directories or copied files.",
+      "Use a repository directory strictly below the canonical workspace root, not the workspace root itself.",
+      "Inspect partial preparation and retry only after the canonical paths pass containment checks."
+    ]
+  ],
+  [
+    "VISUAL_PROFILE_FILE_INVALID_TOO_LARGE",
+    [
+      "The browser-profile JSON file exceeds the fixed 1,048,576-byte (1 MiB) limit.",
+      "The provider has already read the entire file; it rejects these bytes before JSON parsing. This is not a pre-read memory bound.",
+      "Reduce the browser-profile file to at most 1 MiB while preserving its schema. This helper has no configurable larger limit.",
+      "Retry with a smaller valid file; an unchanged file fails again."
+    ]
+  ],
+  [
+    "VISUAL_MANIFEST_INVALID_TOO_LARGE",
+    [
+      "The manifest JSON file exceeds the fixed 1,048,576-byte (1 MiB) limit.",
+      "The provider has already read the entire file; it rejects these bytes before JSON parsing. This is not a pre-read memory bound.",
+      "Reduce the manifest file to at most 1 MiB while preserving its schema. This helper has no configurable larger limit.",
+      "Retry with a smaller valid file; an unchanged file fails again."
+    ]
+  ]
+]);
 function diagnosis(code) {
+  if (processRecoveryDiagnoses.has(code)) return processRecoveryDiagnoses.get(code);
+  if (finiteFamilyDiagnoses.has(code)) return finiteFamilyDiagnoses.get(code);
   if (code === 'KUBERNETES_FIXTURE_RBAC_DENIED') return [
     'The fixture caller did not receive yes from kubectl auth can-i for the verb named after the code.',
     'Preparation stops before server dry-run and lease apply.',

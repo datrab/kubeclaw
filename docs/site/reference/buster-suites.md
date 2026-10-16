@@ -393,13 +393,15 @@ selector, reason, and expiry. `timeoutMs` defaults to 30000 and ranges from
 1000 to 120000.
 
 Each acceptance requires `rule`, `route`, `selector`, `reason`, and `expiresAt`.
-The reason has 8–1024 characters. The expiry uses an exact calendar date. An
-expired acceptance is an execution error; it never silently restores a pass.
+The reason has 8–1024 characters. The expiry must identify an exact calendar
+date to take effect. An expired or invalid-calendar-date acceptance does not
+suppress a matching violation: that violation remains unaccepted and fails the
+scan. An acceptance with no matching violation does not by itself fail a scan.
 
 The retry-safe provider needs `browser.axe`. It records logs and test reports,
-and adds screenshots on failure. Unaccepted violations fail. Invalid or expired
-acceptance, unavailable browser, forbidden origin, timeout, or malformed result
-errors. Browser availability and all three supported engines need live proof.
+and adds screenshots on failure. Unaccepted violations fail. Schema-invalid
+configuration, unavailable browser, forbidden origin, timeout, or malformed
+result errors. Browser availability and all three supported engines need live proof.
 
 > [Accessibility suite](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/contracts/pipeline-test-gate/v1/suites/a11y.v1.json) ·
 > [complete Axe schema](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/axe/schemas/config.schema.json) ·
@@ -418,17 +420,24 @@ retry, and one-at-a-time Lighthouse concurrency.
 
 The provider requires `purpose`, `routes`, `settingsFile`, and `profile`.
 `purpose` is `performance`, `seo`, or `best-practices`. `url` and
-`endpointName` are optional target selectors. `budget` names an operator-known
-combined budget and is required by runtime policy for blocking performance.
-`runs` is 1, 3, or 5. `acceptances[]` defaults empty. `timeoutMs` defaults to
+`endpointName` are optional target selectors. `budget` names a budget in the
+project settings file; Nova requires it when resolving blocking performance
+nodes. Performance uses 3 or 5 runs (default 3); SEO and best practices use
+exactly 1 run. `acceptances[]` defaults empty. `timeoutMs` defaults to
 120000 and ranges from 10000 to 180000.
 
 Each acceptance requires `audit`, `route`, `reason`, and `expiresAt`. The audit
 names one Lighthouse finding on one route. The reason has 8–1024 characters,
-and the expiry uses an exact calendar date.
+and the expiry must be a real calendar date that has not passed (valid through
+the end of that UTC day). Only matching route/audit acceptances with a valid
+expiry suppress SEO or best-practice failures; accepted findings remain
+informational. Expired or invalid-calendar acceptances leave matching findings
+unsuppressed, rather than causing an execution error on their own. Acceptances
+do not suppress performance budget breaches.
 
-The retry-safe provider needs `browser.lighthouse`. It stores every performance
-report and one complete median-score representative report. A budget breach or
+The retry-safe provider needs `browser.lighthouse`. It stores every report and,
+for performance, marks one complete median-score representative per route.
+Budget metrics come from that representative report. A budget breach or
 unaccepted finding fails. Missing profile, forbidden origin, unavailable Chrome
 or Lighthouse, timeout, or malformed report errors.
 
@@ -490,9 +499,12 @@ as executed.
 The provider is not retry-safe and needs `browser.playwright`. It forces a JSON
 reporter, no maximum-failure early exit, and an attempt-owned output directory.
 It emits logs, test reports, screenshots, video, traces, and bounded test
-artifacts. A final failed test fails. Zero discovered tests, missing required
-tests, invalid report, attachment limit, process failure, or cancellation
-errors.
+artifacts. Unexpected test failures fail. In a usable report, an insufficient
+executed-test count, unexecuted tests, or a required title that is missing,
+ambiguous, skipped, or unexecuted also produces a failed result. A flaky test
+that passes under the project retry policy is not itself a failure. Zero
+discovered tests, invalid report, attachment limit, or execution failure without
+a reported failed test is an error.
 
 Nova validates imported provider details before it accepts the result. It emits
 `TEST_PROVIDER_E2E_DETAILS_INVALID` when the detail object has unknown fields,
@@ -559,8 +571,10 @@ files belong to a release. The empty suite expects a
 
 `format` defaults to `auto` and can be `file`, `tar`, or `tar-gzip`.
 `maximumTotalBytes` and
-`maximumFileCount` set absolute limits. `matchingFiles[]` limits which archive
-paths contribute. Each rule requires `id`, glob `pattern`, and `maximumBytes`;
+`maximumFileCount` set limits on the whole measured artifact. Each
+`matchingFiles[]` rule separately sums the bytes of paths matching its glob;
+it does not filter the overall byte or file totals. Each rule requires `id`,
+glob `pattern`, and `maximumBytes`;
 `requireMatch` defaults to `true`. `maximumGrowthBytes` and `maximumGrowthPercent` compare with
 the optional baseline input. `largestFiles` selects 1–100 retained diagnostic
 entries and defaults to 10. `matchingFiles[]` defaults empty. All budget fields
@@ -744,7 +758,7 @@ command, output, Git revision, and external target identity together.
 | HTTP | Add `kubeclaw.http@1` with an approved direct target or a typed deployment/exposure input, expected statuses, and bounded response size. | `npm run verify:test-gate:http-implementation`; use `npm run verify:test-gate:http-live` for the complete remote fixture path or the explicitly gated `http-capability-live` check for one in-cluster origin. | Distinguish origin-policy denial and transport error from a received response that violates an assertion. |
 | Tailscale exposure | Link a retained deployment to `kubeclaw.tailscale-exposure@1`; choose `release` or the durable `await-readiness` handoff and an allowed host suffix. | `npm run verify:test-gate:tailscale-exposure-implementation`; use `npm run verify:test-gate:tailscale-exposure-live` only with the cluster, Tailscale operator, immutable image, and remote credentials required by the script. | Inspect deployment ownership, exposure generation, ingress status, handoff, and release. Never delete an object owned by a newer generation. |
 | API | Select `kubeclaw.api-suite@1`; provide `.swarm/api-flow.json` and `.swarm/openapi.json`, then override target selection and operations for the project. | `npm run verify:test-gate:api-implementation`; `npm run verify:test-gate:api-cutover` is the strongest registered boundary check, not a general external API health test. | For flow, inspect the first failed step and cleanup result. For OpenAPI, inspect supported-subset validation and operation selection before network evidence. |
-| Accessibility | Select `kubeclaw.a11y-suite@1`; provide the endpoint and optional project profile, and use only exact, reasoned, expiring acceptances. | `npm run verify:test-gate:a11y-implementation`; use `npm run verify:test-gate:a11y-live` with the configured browser and remote endpoint path. | Separate browser launch or origin denial from Axe violations. An expired acceptance is an error, not an unsuppressed finding. |
+| Accessibility | Select `kubeclaw.a11y-suite@1`; provide the endpoint and optional project profile, and use only exact, reasoned, expiring acceptances. | `npm run verify:test-gate:a11y-implementation`; use `npm run verify:test-gate:a11y-live` with the configured browser and remote endpoint path. | Separate browser launch or origin denial from Axe violations. An expired acceptance cannot suppress a violation; a matching violation remains a failed finding, not an execution error. |
 | Performance | Select `kubeclaw.lighthouse-suite@1`; provide the settings file, profile, target, and operator-known budget for blocking performance. | `npm run verify:test-gate:lighthouse-implementation`; use `npm run verify:test-gate:lighthouse-live` with its Chrome, target, and remote-runtime prerequisites. | Inspect Chrome launch and bounded report parsing before score or audit findings. Compare the retained median representative with all run summaries. |
 | Visual | Select `kubeclaw.visual-suite@1`; commit a reviewed baseline manifest, images, browser profile, and exact browser identity. | `npm run verify:test-gate:visual-implementation`; use `npm run verify:test-gate:visual-live` only in an environment with the required browser and target. | Check baseline digest and browser family/version before pixel findings. A provider failure must not update the baseline. |
 | End-to-end | Select `kubeclaw.e2e-suite@1`; commit the Playwright configuration and tests, set a positive blocking test minimum, and declare required test titles where omission matters. | `npm run verify:test-gate:e2e-implementation`; use `npm run verify:test-gate:e2e-live` with the sandbox, browsers, remote endpoint, and credentials declared by the script. | Inspect sandbox/process admission, Playwright JSON, executed-test count, required titles, and attachment limits before individual assertions. |

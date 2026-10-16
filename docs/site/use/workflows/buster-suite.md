@@ -54,7 +54,7 @@ selects the source repository. That repository can be elsewhere and does not
 need a Nova npm script. Keep the command shell in the original KubeClaw checkout
 and use absolute platform, project, graph, and evidence paths.
 
-The [pipeline npm script](https://github.com/datrab/kubeclaw/blob/63fe81768c0c922ad0a9a2bf68981d7fa1c38cc1/package.json#L42)
+The [pipeline npm script](https://github.com/datrab/kubeclaw/blob/5de04728653e7b4c350850e5fbeb6218b25ba5c3/package.json#L42)
 loads the [Nova dispatcher](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/nova/pipeline.ts#L1-L14).
 The [project CLI](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/nova/project/cli.ts#L46-L51)
 checks the selected project's HEAD and clean working tree with `git -C` before

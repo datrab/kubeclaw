@@ -14851,7 +14851,7 @@
               "expression": "`Buster guides verified: ${specifications.length} pages, ${suites.length} suites, ${providerCount} providers, ${sourceLinks} pinned links, ${checkedSources.size} revision-bound source files, ${Object.keys(requirementMarkers).length} requirements.`"
             }
           ],
-          "factsDigest": "102ce151d8730da4844187aceac2a1ce347f03d561f64213e73df46a8bebffdb"
+          "factsDigest": "91f2366441d1650c83a01bc0279952600f5b6bbcbb63c086a6ef7394c36f91dd"
         }
       ],
       "roleConsumerEvidence": {
@@ -15781,7 +15781,7 @@
               "expression": "`wrote ${path.relative(root, target)} (${locations.size} stable codes from ${productionFiles.length} production files)`"
             }
           ],
-          "factsDigest": "5a71aecb5c9a5405fe7f580950203b8848a0f302964c1d18f13057a681c1feb0"
+          "factsDigest": "f81f01c0d7c3b73d0c9836f0d3cb6ccc0a1442a1ce22d0b33cd9608edc58ed4e"
         }
       ],
       "roleConsumerEvidence": {
@@ -15812,7 +15812,7 @@
               "expression": "`Buster error reference verified: ${grouped.size} groups, ${locations.size} stable codes, ${productionFiles.length} production files`"
             }
           ],
-          "factsDigest": "5a71aecb5c9a5405fe7f580950203b8848a0f302964c1d18f13057a681c1feb0"
+          "factsDigest": "f81f01c0d7c3b73d0c9836f0d3cb6ccc0a1442a1ce22d0b33cd9608edc58ed4e"
         }
       ],
       "roleConsumerEvidence": {
@@ -15843,7 +15843,7 @@
               "expression": "`wrote ${path.relative(root, target)}`"
             }
           ],
-          "factsDigest": "3b360a46f28940662bbbbf119cff05cb03e9daa5ed57acb46b1475af0bce8673"
+          "factsDigest": "9b623dbf0088d5e8f5ccc38e6960a3bccde03fdab26e1b08310a929bdde4f479"
         }
       ],
       "roleConsumerEvidence": {

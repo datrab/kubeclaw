@@ -53,6 +53,7 @@ function ruleText(nodes) {
     ['maxLength', 'maximum length'], ['minItems', 'minimum items'], ['maxItems', 'maximum items'],
     ['minProperties', 'minimum entries'], ['maxProperties', 'maximum entries']]) add(label, nodes.map((node) => node[key]));
   add('pattern', nodes.map((node) => node.pattern?.replaceAll('(', '&#40;').replaceAll(')', '&#41;')));
+  add('property name pattern', nodes.map((node) => node.propertyNames?.pattern?.replaceAll('(', '&#40;').replaceAll(')', '&#41;')));
   if (nodes.some((node) => node.uniqueItems === true)) rules.push('unique items');
   if (nodes.some((node) => node.additionalProperties === false)) rules.push('no unknown fields');
   return rules.join('; ') || 'No additional scalar limit in the schema.';

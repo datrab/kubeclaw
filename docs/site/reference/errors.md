@@ -75,7 +75,7 @@ This hub is authored routing and consequence explanation, not another copied
 Buster code table or a new generator output.
 
 **Source — bounded Buster discovery:**
-[productionFiles / stableCode / valuesFor](../../../scripts/generate-buster-error-reference.mjs#L15-L69) (`scripts/generate-buster-error-reference.mjs:15–69`, current-checkout SHA-256 `6c0a2327c2008fcd51286caf843d21f059e5bdf34d4a8cac3a6816a044c8287d`).
+[productionFiles / stableCode / valuesFor](../../../scripts/generate-buster-error-reference.mjs#L15-L69) (`scripts/generate-buster-error-reference.mjs:15–69`, current-checkout SHA-256 `83a7b3d025d684b0ebf321362885aaf0094a709efb8dca3a3765539a6f934000`).
 
 ## Dynamic families and detail parameters
 
