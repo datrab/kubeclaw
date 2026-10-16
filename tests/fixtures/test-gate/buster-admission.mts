@@ -1,5 +1,5 @@
 import { runnerExecutionPolicy } from './execution-policy.mts';
-import { canonicalSwarmEntry, readTestBundle, writeTestBundle } from '../config/swarm-bundle.mjs';
+import { canonicalPipelineEntry, readTestPipeline, writeTestPipeline, busterRuntimeSelection } from '../config/pipeline-components.mjs';
 /** Actual signed source/parser/store/service; native preparation ownership is modeled. */
 import crypto from 'node:crypto';
 import fs from 'node:fs';
@@ -8,15 +8,15 @@ import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { buildCommittedSourceSnapshot, buildRegistry, createRemotePlanJob, discoverPackages,
   resolveTestPlan } from '@kubeclaw/nova-core';
-import { loadBusterSettings, type BusterAdmissionSettings } from '../../../skills/common/plugin-runtime/foundation/config/swarm.ts';
+import { captureSwarmSettings, type BusterSettings, type BusterAdmissionSettings } from '../../../skills/common/plugin-runtime/foundation/config/swarm.ts';
 import { ModeledPreparedPlanJobStore, ModeledBusterRemotePlanService } from './modeled-preparation.mts';
 
 export function authoredBusterProfile(root: string, admission?: BusterAdmissionSettings) {
-  const document = readTestBundle(canonicalSwarmEntry);
-  if (admission) document['buster-engine'].settings.admission = admission;
-  const file = path.join(root, 'swarm.json');
-  writeTestBundle(file, document);
-  return { file, document, settings: loadBusterSettings({ SWARM_CONFIG: file }) };
+  const document = readTestPipeline(canonicalPipelineEntry);
+  if (admission) document['buster-engine'].profiles.runtime.settings.admission = admission;
+  const file = path.join(root, 'pipeline.config.json');
+  writeTestPipeline(file, document);
+  return { file, document, settings: captureSwarmSettings(file, busterRuntimeSelection(document)).components['buster-engine']!.settings as unknown as BusterSettings };
 }
 
 export async function admissionFixture(admission: BusterAdmissionSettings) {

@@ -1,11 +1,14 @@
-import { writeTestBundle } from '../../fixtures/config/swarm-bundle.mjs';
+import { writeTestPipeline, busterRuntimeSelection } from '../../fixtures/config/pipeline-components.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
-import { loadBusterSettings } from '../../../skills/common/plugin-runtime/foundation/config/swarm.ts';
+import { captureSwarmSettings, rejectLegacyAuthors, type BusterSettings } from '../../../skills/common/plugin-runtime/foundation/config/swarm.ts';
 import { admissionFixture, authoredBusterProfile } from '../../fixtures/test-gate/buster-admission.mts';
+
+const loadSelected = (file: string, documents: ReturnType<typeof authoredBusterProfile>['document']) =>
+  captureSwarmSettings(file, busterRuntimeSelection(documents)).components['buster-engine']!.settings as unknown as BusterSettings;
 
 const names = ['maximumActiveJobs', 'maximumQueuedJobs', 'maximumConcurrentAttempts'] as const;
 test('canonical startup rejects missing/unknown/malformed admission and every retired ENV author', () => {
@@ -15,30 +18,30 @@ test('canonical startup rejects missing/unknown/malformed admission and every re
     assert.deepEqual(settings.admission, { maximumActiveJobs: 2, maximumQueuedJobs: 8, maximumConcurrentAttempts: 64 });
     for (const name of names) {
       for (const invalid of [0, -1, 1.5, '2', [2], null, Number.MAX_SAFE_INTEGER + 1]) {
-        const changed = structuredClone(document); changed['buster-engine'].settings.admission[name] = invalid;
-        writeTestBundle(file, changed);
-        assert.throws(() => loadBusterSettings({ SWARM_CONFIG: file }), /SWARM_CONFIG_INVALID/);
+        const changed = structuredClone(document); changed['buster-engine'].profiles.runtime.settings.admission[name] = invalid;
+        writeTestPipeline(file, changed);
+        assert.throws(() => loadSelected(file, document), /SWARM_CONFIG_INVALID/);
       }
-      const changed = structuredClone(document); delete changed['buster-engine'].settings.admission[name];
-      writeTestBundle(file, changed);
-      assert.throws(() => loadBusterSettings({ SWARM_CONFIG: file }), /SWARM_CONFIG_INVALID/);
+      const changed = structuredClone(document); delete changed['buster-engine'].profiles.runtime.settings.admission[name];
+      writeTestPipeline(file, changed);
+      assert.throws(() => loadSelected(file, document), /SWARM_CONFIG_INVALID/);
     }
-    for (const value of [undefined, { ...document['buster-engine'].settings.admission, typo: 1 }]) {
-      const changed = structuredClone(document); changed['buster-engine'].settings.admission = value;
-      writeTestBundle(file, changed);
-      assert.throws(() => loadBusterSettings({ SWARM_CONFIG: file }), /SWARM_CONFIG_INVALID/);
+    for (const value of [undefined, { ...document['buster-engine'].profiles.runtime.settings.admission, typo: 1 }]) {
+      const changed = structuredClone(document); changed['buster-engine'].profiles.runtime.settings.admission = value;
+      writeTestPipeline(file, changed);
+      assert.throws(() => loadSelected(file, document), /SWARM_CONFIG_INVALID/);
     }
-    writeTestBundle(file, document);
+    writeTestPipeline(file, document);
     for (const name of ['BUSTER_V2_MAX_ACTIVE_JOBS', 'BUSTER_V2_MAX_QUEUED_JOBS', 'BUSTER_V2_MAX_CONCURRENT_ATTEMPTS']) {
       for (const value of ['', '2', '8', '16', '64']) {
-        assert.throws(() => loadBusterSettings({ SWARM_CONFIG: file, [name]: value }), /SWARM_CONFIG_LEGACY_OVERRIDE/);
+        assert.throws(() => rejectLegacyAuthors({ SWARM_CONFIG: file, [name]: value }), /SWARM_CONFIG_LEGACY_OVERRIDE/);
       }
     }
     assert.ok(Object.isFrozen(settings)); assert.ok(Object.isFrozen(settings.admission));
-    document['buster-engine'].settings.admission.maximumActiveJobs = 7;
-    writeTestBundle(file, document);
+    document['buster-engine'].profiles.runtime.settings.admission.maximumActiveJobs = 7;
+    writeTestPipeline(file, document);
     assert.equal(settings.admission.maximumActiveJobs, 2);
-    assert.equal(loadBusterSettings({ SWARM_CONFIG: file }).admission.maximumActiveJobs, 7);
+    assert.equal(loadSelected(file, document).admission.maximumActiveJobs, 7);
   } finally { fs.rmSync(root, { recursive: true, force: true }); }
 });
 
@@ -53,9 +56,9 @@ for (const profile of [
       const weight = profile.maximumActiveJobs === 1 ? 1 : 2;
       const first = f.job('first', weight), second = f.job('second', weight);
       await f.service.submit(first); await f.started.get(first.jobId)!.promise;
-      f.profile.document['buster-engine'].settings.admission = { maximumActiveJobs: 10, maximumQueuedJobs: 10, maximumConcurrentAttempts: 64 };
-      writeTestBundle(f.profile.file, f.profile.document);
-      assert.equal(loadBusterSettings({ SWARM_CONFIG: f.profile.file }).admission.maximumActiveJobs, 10);
+      f.profile.document['buster-engine'].profiles.runtime.settings.admission = { maximumActiveJobs: 10, maximumQueuedJobs: 10, maximumConcurrentAttempts: 64 };
+      writeTestPipeline(f.profile.file, f.profile.document);
+      assert.equal(loadSelected(f.profile.file, f.profile.document).admission.maximumActiveJobs, 10);
       await f.service.submit(second);
       assert.equal((await f.service.status(second.jobId)).state, 'accepted');
       const waiting = [second];

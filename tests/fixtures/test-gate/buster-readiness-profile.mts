@@ -5,8 +5,8 @@ import assert from 'node:assert/strict';
 import path from 'node:path';
 import { cliProfile } from './buster-cli-profile.mjs';
 import { ModeledPreparation } from './modeled-preparation.mts';
-import { readTestBundle, writeTestBundle } from '../config/swarm-bundle.mjs';
-import { loadSwarmSettings, type BusterDependencyReadinessSettings } from '../../../skills/common/plugin-runtime/foundation/config/swarm.ts';
+import { readTestPipeline, writeTestPipeline, busterRuntimeSelection } from '../config/pipeline-components.mjs';
+import { captureSwarmSettings, type BusterSettings, type WorkerCoreSettings, type BusterDependencyReadinessSettings } from '../../../skills/common/plugin-runtime/foundation/config/swarm.ts';
 import { loadProductionBusterRemotePlanRuntime } from '../../../skills/buster/engine/test-gates/production.ts';
 
 export function readinessExecutable(root: string) {
@@ -22,10 +22,13 @@ export function readinessRuntime(root: string, policy: BusterDependencyReadiness
   const fixture = readinessExecutable(root);
   const profile = cliProfile(root, { maximumActiveJobs: 1, maximumQueuedJobs: 2, maximumConcurrentAttempts: 3 });
   const file = profile.environment.SWARM_CONFIG;
-  const documents = readTestBundle(file);
-  documents['buster-engine'].settings.dependencyReadiness = policy;
-  writeTestBundle(file, documents);
-  const settings = loadSwarmSettings(profile.environment);
+  const documents = readTestPipeline(file);
+  documents['buster-engine'].profiles.runtime.settings.dependencyReadiness = policy;
+  writeTestPipeline(file, documents);
+  const selected = captureSwarmSettings(file, busterRuntimeSelection(documents));
+  // Actual consumed owners only, not a reconstruction of the retired full facade.
+  const buster = selected.components['buster-engine']!.settings as unknown as BusterSettings;
+  const workerLocalRuntime = (selected.components['worker-core']!.settings as unknown as WorkerCoreSettings).localRuntime;
   const source = JSON.parse(fs.readFileSync(profile.runtime, 'utf8'));
   source.allowedCapabilities = enabled ? ['container.build'] : [];
   source.containerBuild = { buildctlExecutable: fixture.executable, buildkitHost: 'unix:///fixture-not-buildkit.sock',
@@ -38,9 +41,9 @@ export function readinessRuntime(root: string, policy: BusterDependencyReadiness
     maximumResultBytes: source.maximumResultBytes, maximumResultStoreBytes: source.maximumResultStoreBytes,
     trustedSourceAuthority: source.trustedSourceAuthority,
     sourceAttestationPublicKey: profile.environment.ADMISSION_TEST_SOURCE_KEY });
-  const create = () => loadProductionBusterRemotePlanRuntime(profile.runtime, preparation, settings.buster,
-    settings.workerCore.localRuntime, profile.environment);
-  return { ...fixture, create, settings, source, profile, documents, file, preparation };
+  const create = () => loadProductionBusterRemotePlanRuntime(profile.runtime, preparation, buster,
+    workerLocalRuntime, profile.environment);
+  return { ...fixture, create, buster, workerLocalRuntime, source, profile, documents, file, preparation };
 }
 
 /** Observe the existing real diagnostic write and forward it unchanged. */
