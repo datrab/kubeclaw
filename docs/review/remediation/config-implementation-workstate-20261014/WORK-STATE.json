@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-16T17:25:07.900058+00:00",
+  "updatedAt": "2026-10-16T17:30:32.521204+00:00",
   "revision": "4b1a92a6b6cf9d1e66928ce924a3620f3dba2751",
   "phase": "CONFIG_EXTERNALIZATION",
   "status": "CONFIG_WORKER_V3_AND_QUALITY_GUARDS_VERIFIED_PROVIDER_V2_MATRIX_NATIVE_OPEN",
@@ -272,7 +272,7 @@
     }
   ],
   "blocker": "Exact isolated Linux Docker/UID1000/writable cgroup/native acceptance host still unavailable. Also full original-source replay test needs sufficiently large genuinely root-trusted writable filesystem parent: /dev64MiB ENOSPC; /opt/root/run/var underlying disk EROFS; writable workspace/OpenClaw mounts have non-root or group-writable ancestry. No trust/UID/kernel spoof or skipped acceptance. Continue other authorized code.",
-  "nextAction": "Quality v2 actual registry/resolver/runner/original inputStore/package/delivery;15 candidate groups,12 earlier adapter root/admission and20 delivery target/root/secret residuals,13 unresolved owner groups; independent review/full C0-C6/native/archive remain OPEN.",
+  "nextAction": "Quality v2 actual registry/resolver/runner/original inputStore/package/delivery;12 remaining section-candidate groups,12 prior adapter root/admission and20 delivery target/root/secret residuals,13 unresolved owner groups; service history and independent/full C0-C6/native/archive remain OPEN.",
   "automation": {
     "jobId": "391f197a-13c5-4925-a477-fa292dd9afcb",
     "enabled": true,
@@ -22945,6 +22945,25 @@
     "negativeControls": 8,
     "newRuntimeCasesExecuted": 0,
     "independentReview": "OPEN",
+    "fullAcceptance": "OPEN",
+    "writerLock": "same nonblocking; released at process exit"
+  },
+  "prismServiceSourceReconciliation20261016": {
+    "at": "2026-10-16T17:30:32.521204+00:00",
+    "evidence": "docs/review/remediation/config-final-reconciliation-20261016",
+    "originalFields": 16,
+    "groups": 3,
+    "exactSourceJoins": 16,
+    "negativeControls": 8,
+    "fullOriginalRoster": {
+      "fields": 2409,
+      "cases": 6845,
+      "requirements": 50,
+      "integrityFailures": 0
+    },
+    "newRuntimeCasesExecuted": 0,
+    "qualification": "Existing selected component/startup/effect source navigation, not new source implementation or durable history acceptance",
+    "independentReview": "OPEN; native spawn unavailable, unchanged direct-surface EROFS not retried",
     "fullAcceptance": "OPEN",
     "writerLock": "same nonblocking; released at process exit"
   }

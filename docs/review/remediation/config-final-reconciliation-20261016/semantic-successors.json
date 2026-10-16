@@ -1,5 +1,5 @@
 {
-  "scope": "Semantic navigation closeout over all45 historic missing locator observations; scoped Review, Core scalar and delivery joins reuse existing source, not new implementation or runtime replay",
+  "scope": "Semantic navigation closeout over all45 historic missing locator observations; scoped Review, Core scalar, delivery and Prism service joins reuse existing source, not new implementation or runtime replay",
   "inputs": [
     {
       "path": "docs/review/remediation/config-final-reconciliation-20261016/fields.json",
@@ -24,15 +24,17 @@
     "exactCurrentCoreScalarSourceJoins": 19,
     "exactDeliveryStoreSourceJoins": 4,
     "originalTargetSelectedProfileSourceJoins": 2,
+    "exactPrismServiceSourceJoins": 16,
     "staticReviewOwnerPointers": 222,
     "originalTargetDerivedFields": 6,
     "groupsByStatus": {
-      "CURRENT_SUCCESSOR_CANDIDATE_REQUIRES_FIELD_JOIN": 15,
+      "CURRENT_SUCCESSOR_CANDIDATE_REQUIRES_FIELD_JOIN": 12,
       "UNRESOLVED_SEMANTIC_OWNER_JOIN": 13,
       "PARTIAL_EXACT_CORE_SCALAR_SOURCE_JOIN": 6,
       "DEFINED_RECEIVING_IMPLEMENTATION_OPEN": 2,
       "PARTIAL_EXACT_DELIVERY_SOURCE_JOIN": 2,
-      "EXACT_EXISTING_SCOPED_MAPPING": 7
+      "EXACT_EXISTING_SCOPED_MAPPING": 7,
+      "EXACT_PRISM_SERVICE_SOURCE_JOIN": 3
     }
   },
   "groups": [
@@ -12539,14 +12541,7 @@
       ],
       "fieldCount": 6,
       "exactExistingMappings": [],
-      "remainingFieldIds": [
-        "AUTH-PRISM-BRIDGE-PORT",
-        "AUTH-PRISM-BRIDGE-CONTROL",
-        "AUTH-PRISM-BRIDGE-BODY",
-        "AUTH-PRISM-BRIDGE-DISPATCH",
-        "AUTH-PRISM-BRIDGE-JOB-LOOKUP",
-        "AUTH-PRISM-BRIDGE-POLL"
-      ],
+      "remainingFieldIds": [],
       "candidateSuccessors": [
         {
           "owner": {
@@ -12565,8 +12560,656 @@
           "qualification": "Current component section; exact per-field source/recovery joins still required"
         }
       ],
-      "status": "CURRENT_SUCCESSOR_CANDIDATE_REQUIRES_FIELD_JOIN",
+      "status": "EXACT_PRISM_SERVICE_SOURCE_JOIN",
       "runtimeAcceptance": "OPEN; no original case result rewritten",
+      "exactPrismServiceSourceMappings": [
+        {
+          "id": "AUTH-PRISM-BRIDGE-PORT",
+          "original": "D228#/rows/2322",
+          "originalObjectSha256": "5bd6cc7dcbd31970b248044c64048922580ed8c552176a6f703634b4834b50ed",
+          "class": "operator-setting",
+          "caseIds": [
+            "AUTH-PRISM-BRIDGE-PORT-EFFECT"
+          ],
+          "historicalLocator": "config/services/prism-agent-bridge.config.json",
+          "originalSourceField": "PORT",
+          "owner": {
+            "path": "config/components/prism-control.config.json",
+            "sha256": "fedd2322e9b31d16fae7ea05e874c1adde18336d11a4369da7cc4d352a24863f"
+          },
+          "selectedPointerTemplate": "/profiles/<original-selected>/settings/agentBridge/port",
+          "authoredProfileLeaves": [
+            {
+              "profile": "spiffe",
+              "pointer": "/profiles/spiffe/settings/agentBridge/port",
+              "valueSha256": "5ac94c081182ef29b8390bd538b6249914a45176e88bb2312255d7f7cca5eef4"
+            },
+            {
+              "profile": "standard",
+              "pointer": "/profiles/standard/settings/agentBridge/port",
+              "valueSha256": "5ac94c081182ef29b8390bd538b6249914a45176e88bb2312255d7f7cca5eef4"
+            }
+          ],
+          "status": "EXACT_CURRENT_PRISM_SERVICE_SOURCE_JOIN",
+          "projection": {
+            "path": "skills/common/plugin-runtime/foundation/config/pipeline-composition.ts",
+            "sha256": "c380905efe31bdcd8cbd516bdba2d14cb836067d3cd00710ad3684d8d7a5e8b7",
+            "anchor": ".agentBridge",
+            "lines": [
+              51
+            ]
+          },
+          "receiver": {
+            "path": "skills/prism/server/agent-bridge-config.ts",
+            "sha256": "ddacc0f827aff2ca128b8a80253b7cf7c3fd6f9bc4944b5f0ad0b3de2319850b",
+            "anchor": "return projectAgentBridgeSettings(capture)",
+            "lines": [
+              10
+            ]
+          },
+          "actualEntrypoint": {
+            "path": "skills/prism/server/agent-bridge-entry.mjs",
+            "sha256": "be2eee61d0444900777c9f17991378f234656372215e0f9f5cbf42cf489ab9db",
+            "anchor": "startAgentBridge(config)",
+            "lines": [
+              6
+            ]
+          },
+          "actualEffect": {
+            "path": "skills/prism/server/agent-bridge.mjs",
+            "sha256": "8fb68db8e3a85b43cd1b6c0de0c3b6d8d8cf913c420af029164f49ee5764fe99",
+            "anchor": "server.listen(port,'127.0.0.1'",
+            "lines": [
+              35
+            ]
+          },
+          "startupCapture": [
+            {
+              "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+              "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+              "anchor": "selection.digest !== expected.selectionDigest",
+              "lines": [
+                114
+              ]
+            },
+            {
+              "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+              "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+              "anchor": "const capture = captureSwarmSettings(",
+              "lines": [
+                117
+              ]
+            },
+            {
+              "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+              "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+              "anchor": "verifiedCaptures.add(result)",
+              "lines": [
+                143
+              ]
+            },
+            {
+              "path": "skills/common/plugin-runtime/foundation/config/swarm-bundle.ts",
+              "sha256": "23ef048b73ed2c3c2684d14935d37834a21d2a61ab9dd2407af6f7962680aef9",
+              "anchor": "authors[binding.owner].profiles, binding.profileId",
+              "lines": [
+                89,
+                397
+              ]
+            },
+            {
+              "path": "skills/common/plugin-runtime/foundation/config/pipeline-composition.ts",
+              "sha256": "c380905efe31bdcd8cbd516bdba2d14cb836067d3cd00710ad3684d8d7a5e8b7",
+              "anchor": "assertPipelineBootCapture(capture, 'prism-agent-bridge')",
+              "lines": [
+                50
+              ]
+            }
+          ],
+          "originalHistoryObligation": "Preserve original durable job/operation/product subject/claim and caller state; policy generation changes do not authorize repeat side effects.",
+          "historyAcceptance": "OPEN; captured service startup is NOT durable per-acquisition/job reconstruction proof",
+          "runtimeAcceptance": "NOT_INFERRED; original cases/results unchanged"
+        },
+        {
+          "id": "AUTH-PRISM-BRIDGE-CONTROL",
+          "original": "D228#/rows/2323",
+          "originalObjectSha256": "38b46efcb5ab122237da6b63a82142d39dcb72821dfc2ae0627c6de1d0dbbbf9",
+          "class": "operator-setting",
+          "caseIds": [
+            "AUTH-PRISM-BRIDGE-CONTROL-EFFECT"
+          ],
+          "historicalLocator": "config/services/prism-agent-bridge.config.json",
+          "originalSourceField": "PRISM_CONTROL_URL",
+          "owner": {
+            "path": "config/components/prism-control.config.json",
+            "sha256": "fedd2322e9b31d16fae7ea05e874c1adde18336d11a4369da7cc4d352a24863f"
+          },
+          "selectedPointerTemplate": "/profiles/<original-selected>/settings/agentBridge/controlUrl",
+          "authoredProfileLeaves": [
+            {
+              "profile": "spiffe",
+              "pointer": "/profiles/spiffe/settings/agentBridge/controlUrl",
+              "valueSha256": "f4561ccb86550c6ee55aa7c77e033a221991f245b2f5a20a5d241863fbe8d82b"
+            },
+            {
+              "profile": "standard",
+              "pointer": "/profiles/standard/settings/agentBridge/controlUrl",
+              "valueSha256": "f4561ccb86550c6ee55aa7c77e033a221991f245b2f5a20a5d241863fbe8d82b"
+            }
+          ],
+          "status": "EXACT_CURRENT_PRISM_SERVICE_SOURCE_JOIN",
+          "projection": {
+            "path": "skills/common/plugin-runtime/foundation/config/pipeline-composition.ts",
+            "sha256": "c380905efe31bdcd8cbd516bdba2d14cb836067d3cd00710ad3684d8d7a5e8b7",
+            "anchor": ".agentBridge",
+            "lines": [
+              51
+            ]
+          },
+          "receiver": {
+            "path": "skills/prism/server/agent-bridge-config.ts",
+            "sha256": "ddacc0f827aff2ca128b8a80253b7cf7c3fd6f9bc4944b5f0ad0b3de2319850b",
+            "anchor": "return projectAgentBridgeSettings(capture)",
+            "lines": [
+              10
+            ]
+          },
+          "actualEntrypoint": {
+            "path": "skills/prism/server/agent-bridge-entry.mjs",
+            "sha256": "be2eee61d0444900777c9f17991378f234656372215e0f9f5cbf42cf489ab9db",
+            "anchor": "startAgentBridge(config)",
+            "lines": [
+              6
+            ]
+          },
+          "actualEffect": {
+            "path": "skills/prism/server/agent-bridge.mjs",
+            "sha256": "8fb68db8e3a85b43cd1b6c0de0c3b6d8d8cf913c420af029164f49ee5764fe99",
+            "anchor": "new URL('/v1/dispatch',controlUrl)",
+            "lines": [
+              14
+            ]
+          },
+          "startupCapture": [
+            {
+              "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+              "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+              "anchor": "selection.digest !== expected.selectionDigest",
+              "lines": [
+                114
+              ]
+            },
+            {
+              "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+              "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+              "anchor": "const capture = captureSwarmSettings(",
+              "lines": [
+                117
+              ]
+            },
+            {
+              "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+              "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+              "anchor": "verifiedCaptures.add(result)",
+              "lines": [
+                143
+              ]
+            },
+            {
+              "path": "skills/common/plugin-runtime/foundation/config/swarm-bundle.ts",
+              "sha256": "23ef048b73ed2c3c2684d14935d37834a21d2a61ab9dd2407af6f7962680aef9",
+              "anchor": "authors[binding.owner].profiles, binding.profileId",
+              "lines": [
+                89,
+                397
+              ]
+            },
+            {
+              "path": "skills/common/plugin-runtime/foundation/config/pipeline-composition.ts",
+              "sha256": "c380905efe31bdcd8cbd516bdba2d14cb836067d3cd00710ad3684d8d7a5e8b7",
+              "anchor": "assertPipelineBootCapture(capture, 'prism-agent-bridge')",
+              "lines": [
+                50
+              ]
+            }
+          ],
+          "originalHistoryObligation": "Preserve original durable job/operation/product subject/claim and caller state; policy generation changes do not authorize repeat side effects.",
+          "historyAcceptance": "OPEN; captured service startup is NOT durable per-acquisition/job reconstruction proof",
+          "runtimeAcceptance": "NOT_INFERRED; original cases/results unchanged"
+        },
+        {
+          "id": "AUTH-PRISM-BRIDGE-BODY",
+          "original": "D228#/rows/2324",
+          "originalObjectSha256": "bb5349d9e497b19116ab9a3ca0289af0049bc0af48df9ce088f42049963ddbca",
+          "class": "operator-setting",
+          "caseIds": [
+            "AUTH-PRISM-BRIDGE-BODY-EFFECT"
+          ],
+          "historicalLocator": "config/services/prism-agent-bridge.config.json",
+          "originalSourceField": "size",
+          "owner": {
+            "path": "config/components/prism-control.config.json",
+            "sha256": "fedd2322e9b31d16fae7ea05e874c1adde18336d11a4369da7cc4d352a24863f"
+          },
+          "selectedPointerTemplate": "/profiles/<original-selected>/settings/agentBridge/maximumRequestBytes",
+          "authoredProfileLeaves": [
+            {
+              "profile": "spiffe",
+              "pointer": "/profiles/spiffe/settings/agentBridge/maximumRequestBytes",
+              "valueSha256": "dd80d7a873341d491936c851964a9793195f37e646f6809dd546e2946f46d283"
+            },
+            {
+              "profile": "standard",
+              "pointer": "/profiles/standard/settings/agentBridge/maximumRequestBytes",
+              "valueSha256": "dd80d7a873341d491936c851964a9793195f37e646f6809dd546e2946f46d283"
+            }
+          ],
+          "status": "EXACT_CURRENT_PRISM_SERVICE_SOURCE_JOIN",
+          "projection": {
+            "path": "skills/common/plugin-runtime/foundation/config/pipeline-composition.ts",
+            "sha256": "c380905efe31bdcd8cbd516bdba2d14cb836067d3cd00710ad3684d8d7a5e8b7",
+            "anchor": ".agentBridge",
+            "lines": [
+              51
+            ]
+          },
+          "receiver": {
+            "path": "skills/prism/server/agent-bridge-config.ts",
+            "sha256": "ddacc0f827aff2ca128b8a80253b7cf7c3fd6f9bc4944b5f0ad0b3de2319850b",
+            "anchor": "return projectAgentBridgeSettings(capture)",
+            "lines": [
+              10
+            ]
+          },
+          "actualEntrypoint": {
+            "path": "skills/prism/server/agent-bridge-entry.mjs",
+            "sha256": "be2eee61d0444900777c9f17991378f234656372215e0f9f5cbf42cf489ab9db",
+            "anchor": "startAgentBridge(config)",
+            "lines": [
+              6
+            ]
+          },
+          "actualEffect": {
+            "path": "skills/prism/server/agent-bridge.mjs",
+            "sha256": "8fb68db8e3a85b43cd1b6c0de0c3b6d8d8cf913c420af029164f49ee5764fe99",
+            "anchor": "size>config.maximumRequestBytes",
+            "lines": [
+              9
+            ]
+          },
+          "startupCapture": [
+            {
+              "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+              "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+              "anchor": "selection.digest !== expected.selectionDigest",
+              "lines": [
+                114
+              ]
+            },
+            {
+              "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+              "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+              "anchor": "const capture = captureSwarmSettings(",
+              "lines": [
+                117
+              ]
+            },
+            {
+              "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+              "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+              "anchor": "verifiedCaptures.add(result)",
+              "lines": [
+                143
+              ]
+            },
+            {
+              "path": "skills/common/plugin-runtime/foundation/config/swarm-bundle.ts",
+              "sha256": "23ef048b73ed2c3c2684d14935d37834a21d2a61ab9dd2407af6f7962680aef9",
+              "anchor": "authors[binding.owner].profiles, binding.profileId",
+              "lines": [
+                89,
+                397
+              ]
+            },
+            {
+              "path": "skills/common/plugin-runtime/foundation/config/pipeline-composition.ts",
+              "sha256": "c380905efe31bdcd8cbd516bdba2d14cb836067d3cd00710ad3684d8d7a5e8b7",
+              "anchor": "assertPipelineBootCapture(capture, 'prism-agent-bridge')",
+              "lines": [
+                50
+              ]
+            }
+          ],
+          "originalHistoryObligation": "Preserve original durable job/operation/product subject/claim and caller state; policy generation changes do not authorize repeat side effects.",
+          "historyAcceptance": "OPEN; captured service startup is NOT durable per-acquisition/job reconstruction proof",
+          "runtimeAcceptance": "NOT_INFERRED; original cases/results unchanged"
+        },
+        {
+          "id": "AUTH-PRISM-BRIDGE-DISPATCH",
+          "original": "D228#/rows/2325",
+          "originalObjectSha256": "0bc9ae5692cbda433b367556fcbf7e9ee6354cd5fdbc7d2ebfc5ec676e1f30cb",
+          "class": "operator-setting",
+          "caseIds": [
+            "AUTH-PRISM-BRIDGE-DISPATCH-EFFECT"
+          ],
+          "historicalLocator": "config/services/prism-agent-bridge.config.json",
+          "originalSourceField": "AbortSignal.timeout",
+          "owner": {
+            "path": "config/components/prism-control.config.json",
+            "sha256": "fedd2322e9b31d16fae7ea05e874c1adde18336d11a4369da7cc4d352a24863f"
+          },
+          "selectedPointerTemplate": "/profiles/<original-selected>/settings/agentBridge/dispatchTimeoutMs",
+          "authoredProfileLeaves": [
+            {
+              "profile": "spiffe",
+              "pointer": "/profiles/spiffe/settings/agentBridge/dispatchTimeoutMs",
+              "valueSha256": "891937cb335016e9c7074c3781dcb1364e0c660733a8889bbeae83e6aa759be6"
+            },
+            {
+              "profile": "standard",
+              "pointer": "/profiles/standard/settings/agentBridge/dispatchTimeoutMs",
+              "valueSha256": "891937cb335016e9c7074c3781dcb1364e0c660733a8889bbeae83e6aa759be6"
+            }
+          ],
+          "status": "EXACT_CURRENT_PRISM_SERVICE_SOURCE_JOIN",
+          "projection": {
+            "path": "skills/common/plugin-runtime/foundation/config/pipeline-composition.ts",
+            "sha256": "c380905efe31bdcd8cbd516bdba2d14cb836067d3cd00710ad3684d8d7a5e8b7",
+            "anchor": ".agentBridge",
+            "lines": [
+              51
+            ]
+          },
+          "receiver": {
+            "path": "skills/prism/server/agent-bridge-config.ts",
+            "sha256": "ddacc0f827aff2ca128b8a80253b7cf7c3fd6f9bc4944b5f0ad0b3de2319850b",
+            "anchor": "return projectAgentBridgeSettings(capture)",
+            "lines": [
+              10
+            ]
+          },
+          "actualEntrypoint": {
+            "path": "skills/prism/server/agent-bridge-entry.mjs",
+            "sha256": "be2eee61d0444900777c9f17991378f234656372215e0f9f5cbf42cf489ab9db",
+            "anchor": "startAgentBridge(config)",
+            "lines": [
+              6
+            ]
+          },
+          "actualEffect": {
+            "path": "skills/prism/server/agent-bridge.mjs",
+            "sha256": "8fb68db8e3a85b43cd1b6c0de0c3b6d8d8cf913c420af029164f49ee5764fe99",
+            "anchor": "AbortSignal.timeout(config.dispatchTimeoutMs)",
+            "lines": [
+              14
+            ]
+          },
+          "startupCapture": [
+            {
+              "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+              "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+              "anchor": "selection.digest !== expected.selectionDigest",
+              "lines": [
+                114
+              ]
+            },
+            {
+              "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+              "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+              "anchor": "const capture = captureSwarmSettings(",
+              "lines": [
+                117
+              ]
+            },
+            {
+              "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+              "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+              "anchor": "verifiedCaptures.add(result)",
+              "lines": [
+                143
+              ]
+            },
+            {
+              "path": "skills/common/plugin-runtime/foundation/config/swarm-bundle.ts",
+              "sha256": "23ef048b73ed2c3c2684d14935d37834a21d2a61ab9dd2407af6f7962680aef9",
+              "anchor": "authors[binding.owner].profiles, binding.profileId",
+              "lines": [
+                89,
+                397
+              ]
+            },
+            {
+              "path": "skills/common/plugin-runtime/foundation/config/pipeline-composition.ts",
+              "sha256": "c380905efe31bdcd8cbd516bdba2d14cb836067d3cd00710ad3684d8d7a5e8b7",
+              "anchor": "assertPipelineBootCapture(capture, 'prism-agent-bridge')",
+              "lines": [
+                50
+              ]
+            }
+          ],
+          "originalHistoryObligation": "Preserve original durable job/operation/product subject/claim and caller state; policy generation changes do not authorize repeat side effects.",
+          "historyAcceptance": "OPEN; captured service startup is NOT durable per-acquisition/job reconstruction proof",
+          "runtimeAcceptance": "NOT_INFERRED; original cases/results unchanged"
+        },
+        {
+          "id": "AUTH-PRISM-BRIDGE-JOB-LOOKUP",
+          "original": "D228#/rows/2326",
+          "originalObjectSha256": "09211e4c84beec007b36cfd8d6b1353a84bea07aca2348080db4c052a0eea429",
+          "class": "operator-setting",
+          "caseIds": [
+            "AUTH-PRISM-BRIDGE-JOB-LOOKUP-EFFECT"
+          ],
+          "historicalLocator": "config/services/prism-agent-bridge.config.json",
+          "originalSourceField": "controlRequest",
+          "owner": {
+            "path": "config/components/prism-control.config.json",
+            "sha256": "fedd2322e9b31d16fae7ea05e874c1adde18336d11a4369da7cc4d352a24863f"
+          },
+          "selectedPointerTemplate": "/profiles/<original-selected>/settings/agentBridge/controlRequestTimeoutMs",
+          "authoredProfileLeaves": [
+            {
+              "profile": "spiffe",
+              "pointer": "/profiles/spiffe/settings/agentBridge/controlRequestTimeoutMs",
+              "valueSha256": "39e5b4830d4d9c14db7368a95b65d5463ea3d09520373723430c03a5a453b5df"
+            },
+            {
+              "profile": "standard",
+              "pointer": "/profiles/standard/settings/agentBridge/controlRequestTimeoutMs",
+              "valueSha256": "39e5b4830d4d9c14db7368a95b65d5463ea3d09520373723430c03a5a453b5df"
+            }
+          ],
+          "status": "EXACT_CURRENT_PRISM_SERVICE_SOURCE_JOIN",
+          "projection": {
+            "path": "skills/common/plugin-runtime/foundation/config/pipeline-composition.ts",
+            "sha256": "c380905efe31bdcd8cbd516bdba2d14cb836067d3cd00710ad3684d8d7a5e8b7",
+            "anchor": ".agentBridge",
+            "lines": [
+              51
+            ]
+          },
+          "receiver": {
+            "path": "skills/prism/server/agent-bridge-config.ts",
+            "sha256": "ddacc0f827aff2ca128b8a80253b7cf7c3fd6f9bc4944b5f0ad0b3de2319850b",
+            "anchor": "return projectAgentBridgeSettings(capture)",
+            "lines": [
+              10
+            ]
+          },
+          "actualEntrypoint": {
+            "path": "skills/prism/server/agent-bridge-entry.mjs",
+            "sha256": "be2eee61d0444900777c9f17991378f234656372215e0f9f5cbf42cf489ab9db",
+            "anchor": "startAgentBridge(config)",
+            "lines": [
+              6
+            ]
+          },
+          "actualEffect": {
+            "path": "skills/prism/server/agent-bridge.mjs",
+            "sha256": "8fb68db8e3a85b43cd1b6c0de0c3b6d8d8cf913c420af029164f49ee5764fe99",
+            "anchor": "AbortSignal.timeout(config.controlRequestTimeoutMs)",
+            "lines": [
+              26
+            ]
+          },
+          "startupCapture": [
+            {
+              "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+              "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+              "anchor": "selection.digest !== expected.selectionDigest",
+              "lines": [
+                114
+              ]
+            },
+            {
+              "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+              "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+              "anchor": "const capture = captureSwarmSettings(",
+              "lines": [
+                117
+              ]
+            },
+            {
+              "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+              "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+              "anchor": "verifiedCaptures.add(result)",
+              "lines": [
+                143
+              ]
+            },
+            {
+              "path": "skills/common/plugin-runtime/foundation/config/swarm-bundle.ts",
+              "sha256": "23ef048b73ed2c3c2684d14935d37834a21d2a61ab9dd2407af6f7962680aef9",
+              "anchor": "authors[binding.owner].profiles, binding.profileId",
+              "lines": [
+                89,
+                397
+              ]
+            },
+            {
+              "path": "skills/common/plugin-runtime/foundation/config/pipeline-composition.ts",
+              "sha256": "c380905efe31bdcd8cbd516bdba2d14cb836067d3cd00710ad3684d8d7a5e8b7",
+              "anchor": "assertPipelineBootCapture(capture, 'prism-agent-bridge')",
+              "lines": [
+                50
+              ]
+            }
+          ],
+          "originalHistoryObligation": "Preserve original durable job/operation/product subject/claim and caller state; policy generation changes do not authorize repeat side effects.",
+          "historyAcceptance": "OPEN; captured service startup is NOT durable per-acquisition/job reconstruction proof",
+          "runtimeAcceptance": "NOT_INFERRED; original cases/results unchanged"
+        },
+        {
+          "id": "AUTH-PRISM-BRIDGE-POLL",
+          "original": "D228#/rows/2327",
+          "originalObjectSha256": "1dcff57b28e7c242b4f48252444a8e078a20b175ee5bb815ff5a53aad018bfe6",
+          "class": "operator-setting",
+          "caseIds": [
+            "AUTH-PRISM-BRIDGE-POLL-EFFECT"
+          ],
+          "historicalLocator": "config/services/prism-agent-bridge.config.json",
+          "originalSourceField": "setInterval",
+          "owner": {
+            "path": "config/components/prism-control.config.json",
+            "sha256": "fedd2322e9b31d16fae7ea05e874c1adde18336d11a4369da7cc4d352a24863f"
+          },
+          "selectedPointerTemplate": "/profiles/<original-selected>/settings/agentBridge/pollIntervalMs",
+          "authoredProfileLeaves": [
+            {
+              "profile": "spiffe",
+              "pointer": "/profiles/spiffe/settings/agentBridge/pollIntervalMs",
+              "valueSha256": "40510175845988f13f6162ed8526f0b09f73384467fa855e1e79b44a56562a58"
+            },
+            {
+              "profile": "standard",
+              "pointer": "/profiles/standard/settings/agentBridge/pollIntervalMs",
+              "valueSha256": "40510175845988f13f6162ed8526f0b09f73384467fa855e1e79b44a56562a58"
+            }
+          ],
+          "status": "EXACT_CURRENT_PRISM_SERVICE_SOURCE_JOIN",
+          "projection": {
+            "path": "skills/common/plugin-runtime/foundation/config/pipeline-composition.ts",
+            "sha256": "c380905efe31bdcd8cbd516bdba2d14cb836067d3cd00710ad3684d8d7a5e8b7",
+            "anchor": ".agentBridge",
+            "lines": [
+              51
+            ]
+          },
+          "receiver": {
+            "path": "skills/prism/server/agent-bridge-config.ts",
+            "sha256": "ddacc0f827aff2ca128b8a80253b7cf7c3fd6f9bc4944b5f0ad0b3de2319850b",
+            "anchor": "return projectAgentBridgeSettings(capture)",
+            "lines": [
+              10
+            ]
+          },
+          "actualEntrypoint": {
+            "path": "skills/prism/server/agent-bridge-entry.mjs",
+            "sha256": "be2eee61d0444900777c9f17991378f234656372215e0f9f5cbf42cf489ab9db",
+            "anchor": "startAgentBridge(config)",
+            "lines": [
+              6
+            ]
+          },
+          "actualEffect": {
+            "path": "skills/prism/server/agent-bridge.mjs",
+            "sha256": "8fb68db8e3a85b43cd1b6c0de0c3b6d8d8cf913c420af029164f49ee5764fe99",
+            "anchor": "setInterval(tick,config.pollIntervalMs)",
+            "lines": [
+              33
+            ]
+          },
+          "startupCapture": [
+            {
+              "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+              "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+              "anchor": "selection.digest !== expected.selectionDigest",
+              "lines": [
+                114
+              ]
+            },
+            {
+              "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+              "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+              "anchor": "const capture = captureSwarmSettings(",
+              "lines": [
+                117
+              ]
+            },
+            {
+              "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+              "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+              "anchor": "verifiedCaptures.add(result)",
+              "lines": [
+                143
+              ]
+            },
+            {
+              "path": "skills/common/plugin-runtime/foundation/config/swarm-bundle.ts",
+              "sha256": "23ef048b73ed2c3c2684d14935d37834a21d2a61ab9dd2407af6f7962680aef9",
+              "anchor": "authors[binding.owner].profiles, binding.profileId",
+              "lines": [
+                89,
+                397
+              ]
+            },
+            {
+              "path": "skills/common/plugin-runtime/foundation/config/pipeline-composition.ts",
+              "sha256": "c380905efe31bdcd8cbd516bdba2d14cb836067d3cd00710ad3684d8d7a5e8b7",
+              "anchor": "assertPipelineBootCapture(capture, 'prism-agent-bridge')",
+              "lines": [
+                50
+              ]
+            }
+          ],
+          "originalHistoryObligation": "Preserve original durable job/operation/product subject/claim and caller state; policy generation changes do not authorize repeat side effects.",
+          "historyAcceptance": "OPEN; captured service startup is NOT durable per-acquisition/job reconstruction proof",
+          "runtimeAcceptance": "NOT_INFERRED; original cases/results unchanged"
+        }
+      ],
+      "prismServiceSupplementalJoin": {
+        "path": "docs/review/remediation/config-final-reconciliation-20261016/prism-service-successors.json",
+        "sha256": "cc57972c1380ee8f13359efb103ba8e3faea82982e0139c061f33adad0c66b8a"
+      },
       "qualification": "No missing-path-to-gap inference. Candidate section presence is NOT exact field closure, implementation acceptance, or permission to publish an author."
     },
     {
@@ -12595,11 +13238,7 @@
       ],
       "fieldCount": 3,
       "exactExistingMappings": [],
-      "remainingFieldIds": [
-        "AUTH-PRISM-DB-BOOTSTRAP-connectionTimeoutMs",
-        "AUTH-PRISM-DB-BOOTSTRAP-maximumAttempts",
-        "AUTH-PRISM-DB-BOOTSTRAP-retryDelayMs"
-      ],
+      "remainingFieldIds": [],
       "candidateSuccessors": [
         {
           "owner": {
@@ -12610,8 +13249,335 @@
           "qualification": "Current component section; exact per-field source/recovery joins still required"
         }
       ],
-      "status": "CURRENT_SUCCESSOR_CANDIDATE_REQUIRES_FIELD_JOIN",
+      "status": "EXACT_PRISM_SERVICE_SOURCE_JOIN",
       "runtimeAcceptance": "OPEN; no original case result rewritten",
+      "exactPrismServiceSourceMappings": [
+        {
+          "id": "AUTH-PRISM-DB-BOOTSTRAP-connectionTimeoutMs",
+          "original": "D228#/rows/2328",
+          "originalObjectSha256": "24925aa051a8d3c8f8c8a1aa8d4186dfc7cf41e0c790c635dbb5c60e36d53029",
+          "class": "operator-setting",
+          "caseIds": [
+            "AUTH-PRISM-DB-BOOTSTRAP-connectionTimeoutMs-EFFECT"
+          ],
+          "historicalLocator": "config/services/prism-database-bootstrap.config.json",
+          "originalSourceField": "connectionTimeoutMs",
+          "owner": {
+            "path": "config/components/prism-control.config.json",
+            "sha256": "fedd2322e9b31d16fae7ea05e874c1adde18336d11a4369da7cc4d352a24863f"
+          },
+          "selectedPointerTemplate": "/profiles/<original-selected>/settings/databaseBootstrap/connectionTimeoutMs",
+          "authoredProfileLeaves": [
+            {
+              "profile": "spiffe",
+              "pointer": "/profiles/spiffe/settings/databaseBootstrap/connectionTimeoutMs",
+              "valueSha256": "0f8eb4b72b6e0c9e88b388eb967b49e067ef1004bf07bffc22c3acb13b43580a"
+            },
+            {
+              "profile": "standard",
+              "pointer": "/profiles/standard/settings/databaseBootstrap/connectionTimeoutMs",
+              "valueSha256": "0f8eb4b72b6e0c9e88b388eb967b49e067ef1004bf07bffc22c3acb13b43580a"
+            }
+          ],
+          "status": "EXACT_CURRENT_PRISM_SERVICE_SOURCE_JOIN",
+          "projection": {
+            "path": "skills/common/plugin-runtime/foundation/config/pipeline-composition.ts",
+            "sha256": "c380905efe31bdcd8cbd516bdba2d14cb836067d3cd00710ad3684d8d7a5e8b7",
+            "anchor": "const { dispatchTimeoutMs, ...control }",
+            "lines": [
+              15
+            ]
+          },
+          "receiver": {
+            "path": "skills/prism/config/database-bootstrap.ts",
+            "sha256": "6ada3c58fa81f46b7b7a474b679cf7ac934a2103564c7113594175d95eb578b0",
+            "anchor": "projectControlSettings(capture).control.databaseBootstrap",
+            "lines": [
+              6
+            ]
+          },
+          "actualEntrypoint": {
+            "path": "skills/prism/server/bootstrap-database.ts",
+            "sha256": "ce39fe24e1f5e43ba86c2ebb2f85c8a1e771a38f505f5411f1c51896df4d6a00",
+            "anchor": "runPrismDatabaseBootstrap(prismDatabaseBootstrapConfig(capture))",
+            "lines": [
+              6
+            ]
+          },
+          "actualEffect": {
+            "path": "skills/prism/server/database-bootstrap-runtime.ts",
+            "sha256": "6053b9295dc45ebb8a5e5b448d716e4521513dc1cf1940f73fcc9fd8e9cfeb24",
+            "anchor": "connectionTimeoutMillis: config.connectionTimeoutMs",
+            "lines": [
+              9
+            ]
+          },
+          "startupCapture": [
+            {
+              "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+              "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+              "anchor": "selection.digest !== expected.selectionDigest",
+              "lines": [
+                114
+              ]
+            },
+            {
+              "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+              "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+              "anchor": "const capture = captureSwarmSettings(",
+              "lines": [
+                117
+              ]
+            },
+            {
+              "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+              "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+              "anchor": "verifiedCaptures.add(result)",
+              "lines": [
+                143
+              ]
+            },
+            {
+              "path": "skills/common/plugin-runtime/foundation/config/swarm-bundle.ts",
+              "sha256": "23ef048b73ed2c3c2684d14935d37834a21d2a61ab9dd2407af6f7962680aef9",
+              "anchor": "authors[binding.owner].profiles, binding.profileId",
+              "lines": [
+                89,
+                397
+              ]
+            },
+            {
+              "path": "skills/common/plugin-runtime/foundation/config/pipeline-composition.ts",
+              "sha256": "c380905efe31bdcd8cbd516bdba2d14cb836067d3cd00710ad3684d8d7a5e8b7",
+              "anchor": "assertPipelineBootCapture(capture, 'prism-control')",
+              "lines": [
+                14
+              ]
+            }
+          ],
+          "originalHistoryObligation": "Only listed transient connection codes retry; last maximumAttempts always throws, retries wait retryDelayMs; ordinary DB role bootstrap does not rotate existing passwords. Process startup policy, not run repair budget.",
+          "historyAcceptance": "OPEN; captured service startup is NOT durable per-acquisition/job reconstruction proof",
+          "runtimeAcceptance": "NOT_INFERRED; original cases/results unchanged"
+        },
+        {
+          "id": "AUTH-PRISM-DB-BOOTSTRAP-maximumAttempts",
+          "original": "D228#/rows/2329",
+          "originalObjectSha256": "7e7de840be6decca9d332eb60c96fb89768d86f297d5ad5344aa1693e4048e8a",
+          "class": "operator-setting",
+          "caseIds": [
+            "AUTH-PRISM-DB-BOOTSTRAP-maximumAttempts-EFFECT"
+          ],
+          "historicalLocator": "config/services/prism-database-bootstrap.config.json",
+          "originalSourceField": "maximumAttempts",
+          "owner": {
+            "path": "config/components/prism-control.config.json",
+            "sha256": "fedd2322e9b31d16fae7ea05e874c1adde18336d11a4369da7cc4d352a24863f"
+          },
+          "selectedPointerTemplate": "/profiles/<original-selected>/settings/databaseBootstrap/maximumAttempts",
+          "authoredProfileLeaves": [
+            {
+              "profile": "spiffe",
+              "pointer": "/profiles/spiffe/settings/databaseBootstrap/maximumAttempts",
+              "valueSha256": "39fa9ec190eee7b6f4dff1100d6343e10918d044c75eac8f9e9a2596173f80c9"
+            },
+            {
+              "profile": "standard",
+              "pointer": "/profiles/standard/settings/databaseBootstrap/maximumAttempts",
+              "valueSha256": "39fa9ec190eee7b6f4dff1100d6343e10918d044c75eac8f9e9a2596173f80c9"
+            }
+          ],
+          "status": "EXACT_CURRENT_PRISM_SERVICE_SOURCE_JOIN",
+          "projection": {
+            "path": "skills/common/plugin-runtime/foundation/config/pipeline-composition.ts",
+            "sha256": "c380905efe31bdcd8cbd516bdba2d14cb836067d3cd00710ad3684d8d7a5e8b7",
+            "anchor": "const { dispatchTimeoutMs, ...control }",
+            "lines": [
+              15
+            ]
+          },
+          "receiver": {
+            "path": "skills/prism/config/database-bootstrap.ts",
+            "sha256": "6ada3c58fa81f46b7b7a474b679cf7ac934a2103564c7113594175d95eb578b0",
+            "anchor": "projectControlSettings(capture).control.databaseBootstrap",
+            "lines": [
+              6
+            ]
+          },
+          "actualEntrypoint": {
+            "path": "skills/prism/server/bootstrap-database.ts",
+            "sha256": "ce39fe24e1f5e43ba86c2ebb2f85c8a1e771a38f505f5411f1c51896df4d6a00",
+            "anchor": "runPrismDatabaseBootstrap(prismDatabaseBootstrapConfig(capture))",
+            "lines": [
+              6
+            ]
+          },
+          "actualEffect": {
+            "path": "skills/prism/server/database-bootstrap-runtime.ts",
+            "sha256": "6053b9295dc45ebb8a5e5b448d716e4521513dc1cf1940f73fcc9fd8e9cfeb24",
+            "anchor": "attempt <= config.maximumAttempts",
+            "lines": [
+              13
+            ]
+          },
+          "startupCapture": [
+            {
+              "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+              "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+              "anchor": "selection.digest !== expected.selectionDigest",
+              "lines": [
+                114
+              ]
+            },
+            {
+              "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+              "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+              "anchor": "const capture = captureSwarmSettings(",
+              "lines": [
+                117
+              ]
+            },
+            {
+              "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+              "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+              "anchor": "verifiedCaptures.add(result)",
+              "lines": [
+                143
+              ]
+            },
+            {
+              "path": "skills/common/plugin-runtime/foundation/config/swarm-bundle.ts",
+              "sha256": "23ef048b73ed2c3c2684d14935d37834a21d2a61ab9dd2407af6f7962680aef9",
+              "anchor": "authors[binding.owner].profiles, binding.profileId",
+              "lines": [
+                89,
+                397
+              ]
+            },
+            {
+              "path": "skills/common/plugin-runtime/foundation/config/pipeline-composition.ts",
+              "sha256": "c380905efe31bdcd8cbd516bdba2d14cb836067d3cd00710ad3684d8d7a5e8b7",
+              "anchor": "assertPipelineBootCapture(capture, 'prism-control')",
+              "lines": [
+                14
+              ]
+            }
+          ],
+          "originalHistoryObligation": "Only listed transient connection codes retry; last maximumAttempts always throws, retries wait retryDelayMs; ordinary DB role bootstrap does not rotate existing passwords. Process startup policy, not run repair budget.",
+          "historyAcceptance": "OPEN; captured service startup is NOT durable per-acquisition/job reconstruction proof",
+          "runtimeAcceptance": "NOT_INFERRED; original cases/results unchanged"
+        },
+        {
+          "id": "AUTH-PRISM-DB-BOOTSTRAP-retryDelayMs",
+          "original": "D228#/rows/2330",
+          "originalObjectSha256": "3dc642abcbc77a7de98d5fd48542cfb9b6b199d869ccab2007078aa788630238",
+          "class": "operator-setting",
+          "caseIds": [
+            "AUTH-PRISM-DB-BOOTSTRAP-retryDelayMs-EFFECT"
+          ],
+          "historicalLocator": "config/services/prism-database-bootstrap.config.json",
+          "originalSourceField": "retryDelayMs",
+          "owner": {
+            "path": "config/components/prism-control.config.json",
+            "sha256": "fedd2322e9b31d16fae7ea05e874c1adde18336d11a4369da7cc4d352a24863f"
+          },
+          "selectedPointerTemplate": "/profiles/<original-selected>/settings/databaseBootstrap/retryDelayMs",
+          "authoredProfileLeaves": [
+            {
+              "profile": "spiffe",
+              "pointer": "/profiles/spiffe/settings/databaseBootstrap/retryDelayMs",
+              "valueSha256": "81a83544cf93c245178cbc1620030f1123f435af867c79d87135983c52ab39d9"
+            },
+            {
+              "profile": "standard",
+              "pointer": "/profiles/standard/settings/databaseBootstrap/retryDelayMs",
+              "valueSha256": "81a83544cf93c245178cbc1620030f1123f435af867c79d87135983c52ab39d9"
+            }
+          ],
+          "status": "EXACT_CURRENT_PRISM_SERVICE_SOURCE_JOIN",
+          "projection": {
+            "path": "skills/common/plugin-runtime/foundation/config/pipeline-composition.ts",
+            "sha256": "c380905efe31bdcd8cbd516bdba2d14cb836067d3cd00710ad3684d8d7a5e8b7",
+            "anchor": "const { dispatchTimeoutMs, ...control }",
+            "lines": [
+              15
+            ]
+          },
+          "receiver": {
+            "path": "skills/prism/config/database-bootstrap.ts",
+            "sha256": "6ada3c58fa81f46b7b7a474b679cf7ac934a2103564c7113594175d95eb578b0",
+            "anchor": "projectControlSettings(capture).control.databaseBootstrap",
+            "lines": [
+              6
+            ]
+          },
+          "actualEntrypoint": {
+            "path": "skills/prism/server/bootstrap-database.ts",
+            "sha256": "ce39fe24e1f5e43ba86c2ebb2f85c8a1e771a38f505f5411f1c51896df4d6a00",
+            "anchor": "runPrismDatabaseBootstrap(prismDatabaseBootstrapConfig(capture))",
+            "lines": [
+              6
+            ]
+          },
+          "actualEffect": {
+            "path": "skills/prism/server/database-bootstrap-runtime.ts",
+            "sha256": "6053b9295dc45ebb8a5e5b448d716e4521513dc1cf1940f73fcc9fd8e9cfeb24",
+            "anchor": "setTimeout(resolve, config.retryDelayMs)",
+            "lines": [
+              19
+            ]
+          },
+          "startupCapture": [
+            {
+              "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+              "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+              "anchor": "selection.digest !== expected.selectionDigest",
+              "lines": [
+                114
+              ]
+            },
+            {
+              "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+              "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+              "anchor": "const capture = captureSwarmSettings(",
+              "lines": [
+                117
+              ]
+            },
+            {
+              "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+              "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+              "anchor": "verifiedCaptures.add(result)",
+              "lines": [
+                143
+              ]
+            },
+            {
+              "path": "skills/common/plugin-runtime/foundation/config/swarm-bundle.ts",
+              "sha256": "23ef048b73ed2c3c2684d14935d37834a21d2a61ab9dd2407af6f7962680aef9",
+              "anchor": "authors[binding.owner].profiles, binding.profileId",
+              "lines": [
+                89,
+                397
+              ]
+            },
+            {
+              "path": "skills/common/plugin-runtime/foundation/config/pipeline-composition.ts",
+              "sha256": "c380905efe31bdcd8cbd516bdba2d14cb836067d3cd00710ad3684d8d7a5e8b7",
+              "anchor": "assertPipelineBootCapture(capture, 'prism-control')",
+              "lines": [
+                14
+              ]
+            }
+          ],
+          "originalHistoryObligation": "Only listed transient connection codes retry; last maximumAttempts always throws, retries wait retryDelayMs; ordinary DB role bootstrap does not rotate existing passwords. Process startup policy, not run repair budget.",
+          "historyAcceptance": "OPEN; captured service startup is NOT durable per-acquisition/job reconstruction proof",
+          "runtimeAcceptance": "NOT_INFERRED; original cases/results unchanged"
+        }
+      ],
+      "prismServiceSupplementalJoin": {
+        "path": "docs/review/remediation/config-final-reconciliation-20261016/prism-service-successors.json",
+        "sha256": "cc57972c1380ee8f13359efb103ba8e3faea82982e0139c061f33adad0c66b8a"
+      },
       "qualification": "No missing-path-to-gap inference. Candidate section presence is NOT exact field closure, implementation acceptance, or permission to publish an author."
     },
     {
@@ -12627,15 +13593,7 @@
       ],
       "fieldCount": 7,
       "exactExistingMappings": [],
-      "remainingFieldIds": [
-        "AUTH-PRISM-INGESTION-ROOT",
-        "AUTH-PRISM-INGESTION-TTL",
-        "AUTH-PRISM-INGESTION-PORT",
-        "AUTH-PRISM-INGESTION-ACQUIRED-BYTES",
-        "AUTH-PRISM-INGESTION-REQUEST-BYTES",
-        "AUTH-PRISM-INGESTION-HTTP-TIMEOUT",
-        "AUTH-PRISM-INGESTION-REDIRECTS"
-      ],
+      "remainingFieldIds": [],
       "candidateSuccessors": [
         {
           "owner": {
@@ -12646,8 +13604,763 @@
           "qualification": "Current component section; exact per-field source/recovery joins still required"
         }
       ],
-      "status": "CURRENT_SUCCESSOR_CANDIDATE_REQUIRES_FIELD_JOIN",
+      "status": "EXACT_PRISM_SERVICE_SOURCE_JOIN",
       "runtimeAcceptance": "OPEN; no original case result rewritten",
+      "exactPrismServiceSourceMappings": [
+        {
+          "id": "AUTH-PRISM-INGESTION-ROOT",
+          "original": "D228#/rows/2315",
+          "originalObjectSha256": "0f0cfc01a180668bee1907b7ae84eb8ab7958cf06dd6dc6825db87c360c24502",
+          "class": "operator-setting",
+          "caseIds": [
+            "AUTH-PRISM-INGESTION-ROOT-EFFECT"
+          ],
+          "historicalLocator": "config/services/prism-ingestion.config.json",
+          "originalSourceField": "PRISM_QUARANTINE_ROOT",
+          "owner": {
+            "path": "config/components/prism-control.config.json",
+            "sha256": "fedd2322e9b31d16fae7ea05e874c1adde18336d11a4369da7cc4d352a24863f"
+          },
+          "selectedPointerTemplate": "/profiles/<original-selected>/settings/ingestionServer/quarantineRoot",
+          "authoredProfileLeaves": [
+            {
+              "profile": "spiffe",
+              "pointer": "/profiles/spiffe/settings/ingestionServer/quarantineRoot",
+              "valueSha256": "a928db4079f08c548c7836eb86576024d6ebfb2f9f416c98a7a6e5df3650edc1"
+            },
+            {
+              "profile": "standard",
+              "pointer": "/profiles/standard/settings/ingestionServer/quarantineRoot",
+              "valueSha256": "a928db4079f08c548c7836eb86576024d6ebfb2f9f416c98a7a6e5df3650edc1"
+            }
+          ],
+          "status": "EXACT_CURRENT_PRISM_SERVICE_SOURCE_JOIN",
+          "projection": {
+            "path": "skills/common/plugin-runtime/foundation/config/pipeline-composition.ts",
+            "sha256": "c380905efe31bdcd8cbd516bdba2d14cb836067d3cd00710ad3684d8d7a5e8b7",
+            "anchor": ".ingestionServer",
+            "lines": [
+              46
+            ]
+          },
+          "receiver": {
+            "path": "skills/prism/server/ingestion-config.ts",
+            "sha256": "330a3783b1e43cff6c28259e52fa6763d05e09b4d2ae57ff2298734452bb6426",
+            "anchor": "projectIngestionSettings(capture)",
+            "lines": [
+              11
+            ]
+          },
+          "actualEntrypoint": {
+            "path": "skills/prism/server/ingestion-entry.ts",
+            "sha256": "348b8ac2f5abbcb6826eecc2025f47be258e91e80bf6930c1bb9a6a7be455644",
+            "anchor": "startIngestionServer(loadIngestionConfig(capture))",
+            "lines": [
+              6
+            ]
+          },
+          "actualEffect": {
+            "path": "skills/prism/server/ingestion.ts",
+            "sha256": "acb00ab619fd56c9b44919d9aef8c7b08c9c38e5fc4d14216649778fc9bb63aa",
+            "anchor": "quarantineRoot: root",
+            "lines": [
+              14
+            ]
+          },
+          "startupCapture": [
+            {
+              "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+              "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+              "anchor": "selection.digest !== expected.selectionDigest",
+              "lines": [
+                114
+              ]
+            },
+            {
+              "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+              "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+              "anchor": "const capture = captureSwarmSettings(",
+              "lines": [
+                117
+              ]
+            },
+            {
+              "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+              "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+              "anchor": "verifiedCaptures.add(result)",
+              "lines": [
+                143
+              ]
+            },
+            {
+              "path": "skills/common/plugin-runtime/foundation/config/swarm-bundle.ts",
+              "sha256": "23ef048b73ed2c3c2684d14935d37834a21d2a61ab9dd2407af6f7962680aef9",
+              "anchor": "authors[binding.owner].profiles, binding.profileId",
+              "lines": [
+                89,
+                397
+              ]
+            },
+            {
+              "path": "skills/common/plugin-runtime/foundation/config/pipeline-composition.ts",
+              "sha256": "c380905efe31bdcd8cbd516bdba2d14cb836067d3cd00710ad3684d8d7a5e8b7",
+              "anchor": "assertPipelineBootCapture(capture, 'prism-ingestion')",
+              "lines": [
+                45
+              ]
+            }
+          ],
+          "originalHistoryObligation": "Quarantine TTL currently evaluated against mtime under current process policy; no durable per-acquisition policy. Claims of old-acquisition lifetime binding must be implemented, not assumed.",
+          "historyAcceptance": "OPEN; captured service startup is NOT durable per-acquisition/job reconstruction proof",
+          "runtimeAcceptance": "NOT_INFERRED; original cases/results unchanged"
+        },
+        {
+          "id": "AUTH-PRISM-INGESTION-TTL",
+          "original": "D228#/rows/2316",
+          "originalObjectSha256": "4a6c9f303f08cb10d1632b3a2d8a2482db83866a4d1ea8adb9eb6da562cae90d",
+          "class": "operator-setting",
+          "caseIds": [
+            "AUTH-PRISM-INGESTION-TTL-EFFECT"
+          ],
+          "historicalLocator": "config/services/prism-ingestion.config.json",
+          "originalSourceField": "PRISM_QUARANTINE_TTL_MS",
+          "owner": {
+            "path": "config/components/prism-control.config.json",
+            "sha256": "fedd2322e9b31d16fae7ea05e874c1adde18336d11a4369da7cc4d352a24863f"
+          },
+          "selectedPointerTemplate": "/profiles/<original-selected>/settings/ingestionServer/quarantineTtlMs",
+          "authoredProfileLeaves": [
+            {
+              "profile": "spiffe",
+              "pointer": "/profiles/spiffe/settings/ingestionServer/quarantineTtlMs",
+              "valueSha256": "c48664a448d8a63d99349ce31b40aca5285c6f6b01a7c6bda646827a46062120"
+            },
+            {
+              "profile": "standard",
+              "pointer": "/profiles/standard/settings/ingestionServer/quarantineTtlMs",
+              "valueSha256": "c48664a448d8a63d99349ce31b40aca5285c6f6b01a7c6bda646827a46062120"
+            }
+          ],
+          "status": "EXACT_CURRENT_PRISM_SERVICE_SOURCE_JOIN",
+          "projection": {
+            "path": "skills/common/plugin-runtime/foundation/config/pipeline-composition.ts",
+            "sha256": "c380905efe31bdcd8cbd516bdba2d14cb836067d3cd00710ad3684d8d7a5e8b7",
+            "anchor": ".ingestionServer",
+            "lines": [
+              46
+            ]
+          },
+          "receiver": {
+            "path": "skills/prism/server/ingestion-config.ts",
+            "sha256": "330a3783b1e43cff6c28259e52fa6763d05e09b4d2ae57ff2298734452bb6426",
+            "anchor": "projectIngestionSettings(capture)",
+            "lines": [
+              11
+            ]
+          },
+          "actualEntrypoint": {
+            "path": "skills/prism/server/ingestion-entry.ts",
+            "sha256": "348b8ac2f5abbcb6826eecc2025f47be258e91e80bf6930c1bb9a6a7be455644",
+            "anchor": "startIngestionServer(loadIngestionConfig(capture))",
+            "lines": [
+              6
+            ]
+          },
+          "actualEffect": {
+            "path": "skills/prism/server/ingestion.ts",
+            "sha256": "acb00ab619fd56c9b44919d9aef8c7b08c9c38e5fc4d14216649778fc9bb63aa",
+            "anchor": "info.mtimeMs>=quarantineTtl",
+            "lines": [
+              17
+            ]
+          },
+          "startupCapture": [
+            {
+              "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+              "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+              "anchor": "selection.digest !== expected.selectionDigest",
+              "lines": [
+                114
+              ]
+            },
+            {
+              "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+              "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+              "anchor": "const capture = captureSwarmSettings(",
+              "lines": [
+                117
+              ]
+            },
+            {
+              "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+              "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+              "anchor": "verifiedCaptures.add(result)",
+              "lines": [
+                143
+              ]
+            },
+            {
+              "path": "skills/common/plugin-runtime/foundation/config/swarm-bundle.ts",
+              "sha256": "23ef048b73ed2c3c2684d14935d37834a21d2a61ab9dd2407af6f7962680aef9",
+              "anchor": "authors[binding.owner].profiles, binding.profileId",
+              "lines": [
+                89,
+                397
+              ]
+            },
+            {
+              "path": "skills/common/plugin-runtime/foundation/config/pipeline-composition.ts",
+              "sha256": "c380905efe31bdcd8cbd516bdba2d14cb836067d3cd00710ad3684d8d7a5e8b7",
+              "anchor": "assertPipelineBootCapture(capture, 'prism-ingestion')",
+              "lines": [
+                45
+              ]
+            }
+          ],
+          "originalHistoryObligation": "Quarantine TTL currently evaluated against mtime under current process policy; no durable per-acquisition policy. Claims of old-acquisition lifetime binding must be implemented, not assumed.",
+          "historyAcceptance": "OPEN; captured service startup is NOT durable per-acquisition/job reconstruction proof",
+          "runtimeAcceptance": "NOT_INFERRED; original cases/results unchanged"
+        },
+        {
+          "id": "AUTH-PRISM-INGESTION-PORT",
+          "original": "D228#/rows/2317",
+          "originalObjectSha256": "47b448acea640def6aec3d07e76037fefa4f68f1c9156801825b06b716644a72",
+          "class": "operator-setting",
+          "caseIds": [
+            "AUTH-PRISM-INGESTION-PORT-EFFECT"
+          ],
+          "historicalLocator": "config/services/prism-ingestion.config.json",
+          "originalSourceField": "PORT",
+          "owner": {
+            "path": "config/components/prism-control.config.json",
+            "sha256": "fedd2322e9b31d16fae7ea05e874c1adde18336d11a4369da7cc4d352a24863f"
+          },
+          "selectedPointerTemplate": "/profiles/<original-selected>/settings/ingestionServer/port",
+          "authoredProfileLeaves": [
+            {
+              "profile": "spiffe",
+              "pointer": "/profiles/spiffe/settings/ingestionServer/port",
+              "valueSha256": "6c237681e70921603a306be9a1a5d9833fce5c1e268f52b1650970eaad0dce21"
+            },
+            {
+              "profile": "standard",
+              "pointer": "/profiles/standard/settings/ingestionServer/port",
+              "valueSha256": "6c237681e70921603a306be9a1a5d9833fce5c1e268f52b1650970eaad0dce21"
+            }
+          ],
+          "status": "EXACT_CURRENT_PRISM_SERVICE_SOURCE_JOIN",
+          "projection": {
+            "path": "skills/common/plugin-runtime/foundation/config/pipeline-composition.ts",
+            "sha256": "c380905efe31bdcd8cbd516bdba2d14cb836067d3cd00710ad3684d8d7a5e8b7",
+            "anchor": ".ingestionServer",
+            "lines": [
+              46
+            ]
+          },
+          "receiver": {
+            "path": "skills/prism/server/ingestion-config.ts",
+            "sha256": "330a3783b1e43cff6c28259e52fa6763d05e09b4d2ae57ff2298734452bb6426",
+            "anchor": "projectIngestionSettings(capture)",
+            "lines": [
+              11
+            ]
+          },
+          "actualEntrypoint": {
+            "path": "skills/prism/server/ingestion-entry.ts",
+            "sha256": "348b8ac2f5abbcb6826eecc2025f47be258e91e80bf6930c1bb9a6a7be455644",
+            "anchor": "startIngestionServer(loadIngestionConfig(capture))",
+            "lines": [
+              6
+            ]
+          },
+          "actualEffect": {
+            "path": "skills/prism/server/ingestion.ts",
+            "sha256": "acb00ab619fd56c9b44919d9aef8c7b08c9c38e5fc4d14216649778fc9bb63aa",
+            "anchor": "server.listen(config.port, '0.0.0.0'",
+            "lines": [
+              103
+            ]
+          },
+          "startupCapture": [
+            {
+              "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+              "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+              "anchor": "selection.digest !== expected.selectionDigest",
+              "lines": [
+                114
+              ]
+            },
+            {
+              "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+              "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+              "anchor": "const capture = captureSwarmSettings(",
+              "lines": [
+                117
+              ]
+            },
+            {
+              "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+              "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+              "anchor": "verifiedCaptures.add(result)",
+              "lines": [
+                143
+              ]
+            },
+            {
+              "path": "skills/common/plugin-runtime/foundation/config/swarm-bundle.ts",
+              "sha256": "23ef048b73ed2c3c2684d14935d37834a21d2a61ab9dd2407af6f7962680aef9",
+              "anchor": "authors[binding.owner].profiles, binding.profileId",
+              "lines": [
+                89,
+                397
+              ]
+            },
+            {
+              "path": "skills/common/plugin-runtime/foundation/config/pipeline-composition.ts",
+              "sha256": "c380905efe31bdcd8cbd516bdba2d14cb836067d3cd00710ad3684d8d7a5e8b7",
+              "anchor": "assertPipelineBootCapture(capture, 'prism-ingestion')",
+              "lines": [
+                45
+              ]
+            }
+          ],
+          "originalHistoryObligation": "Quarantine TTL currently evaluated against mtime under current process policy; no durable per-acquisition policy. Claims of old-acquisition lifetime binding must be implemented, not assumed.",
+          "historyAcceptance": "OPEN; captured service startup is NOT durable per-acquisition/job reconstruction proof",
+          "runtimeAcceptance": "NOT_INFERRED; original cases/results unchanged"
+        },
+        {
+          "id": "AUTH-PRISM-INGESTION-ACQUIRED-BYTES",
+          "original": "D228#/rows/2318",
+          "originalObjectSha256": "60787ac39fdd976a3746b7bbcd1f89861686881eec728da5d978d9fc0ecef9a6",
+          "class": "operator-setting",
+          "caseIds": [
+            "AUTH-PRISM-INGESTION-ACQUIRED-BYTES-EFFECT"
+          ],
+          "historicalLocator": "config/services/prism-ingestion.config.json",
+          "originalSourceField": "getPinned.size",
+          "owner": {
+            "path": "config/components/prism-control.config.json",
+            "sha256": "fedd2322e9b31d16fae7ea05e874c1adde18336d11a4369da7cc4d352a24863f"
+          },
+          "selectedPointerTemplate": "/profiles/<original-selected>/settings/ingestionServer/maximumSourceBytes",
+          "authoredProfileLeaves": [
+            {
+              "profile": "spiffe",
+              "pointer": "/profiles/spiffe/settings/ingestionServer/maximumSourceBytes",
+              "valueSha256": "515ea18bb057ce8c5e0ed73153cc95db567ce071db9ea38731704fc11f06e0f2"
+            },
+            {
+              "profile": "standard",
+              "pointer": "/profiles/standard/settings/ingestionServer/maximumSourceBytes",
+              "valueSha256": "515ea18bb057ce8c5e0ed73153cc95db567ce071db9ea38731704fc11f06e0f2"
+            }
+          ],
+          "status": "EXACT_CURRENT_PRISM_SERVICE_SOURCE_JOIN",
+          "projection": {
+            "path": "skills/common/plugin-runtime/foundation/config/pipeline-composition.ts",
+            "sha256": "c380905efe31bdcd8cbd516bdba2d14cb836067d3cd00710ad3684d8d7a5e8b7",
+            "anchor": ".ingestionServer",
+            "lines": [
+              46
+            ]
+          },
+          "receiver": {
+            "path": "skills/prism/server/ingestion-config.ts",
+            "sha256": "330a3783b1e43cff6c28259e52fa6763d05e09b4d2ae57ff2298734452bb6426",
+            "anchor": "projectIngestionSettings(capture)",
+            "lines": [
+              11
+            ]
+          },
+          "actualEntrypoint": {
+            "path": "skills/prism/server/ingestion-entry.ts",
+            "sha256": "348b8ac2f5abbcb6826eecc2025f47be258e91e80bf6930c1bb9a6a7be455644",
+            "anchor": "startIngestionServer(loadIngestionConfig(capture))",
+            "lines": [
+              6
+            ]
+          },
+          "actualEffect": {
+            "path": "skills/prism/server/ingestion.ts",
+            "sha256": "acb00ab619fd56c9b44919d9aef8c7b08c9c38e5fc4d14216649778fc9bb63aa",
+            "anchor": "size>config.maximumSourceBytes",
+            "lines": [
+              39
+            ]
+          },
+          "startupCapture": [
+            {
+              "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+              "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+              "anchor": "selection.digest !== expected.selectionDigest",
+              "lines": [
+                114
+              ]
+            },
+            {
+              "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+              "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+              "anchor": "const capture = captureSwarmSettings(",
+              "lines": [
+                117
+              ]
+            },
+            {
+              "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+              "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+              "anchor": "verifiedCaptures.add(result)",
+              "lines": [
+                143
+              ]
+            },
+            {
+              "path": "skills/common/plugin-runtime/foundation/config/swarm-bundle.ts",
+              "sha256": "23ef048b73ed2c3c2684d14935d37834a21d2a61ab9dd2407af6f7962680aef9",
+              "anchor": "authors[binding.owner].profiles, binding.profileId",
+              "lines": [
+                89,
+                397
+              ]
+            },
+            {
+              "path": "skills/common/plugin-runtime/foundation/config/pipeline-composition.ts",
+              "sha256": "c380905efe31bdcd8cbd516bdba2d14cb836067d3cd00710ad3684d8d7a5e8b7",
+              "anchor": "assertPipelineBootCapture(capture, 'prism-ingestion')",
+              "lines": [
+                45
+              ]
+            }
+          ],
+          "originalHistoryObligation": "Quarantine TTL currently evaluated against mtime under current process policy; no durable per-acquisition policy. Claims of old-acquisition lifetime binding must be implemented, not assumed.",
+          "historyAcceptance": "OPEN; captured service startup is NOT durable per-acquisition/job reconstruction proof",
+          "runtimeAcceptance": "NOT_INFERRED; original cases/results unchanged"
+        },
+        {
+          "id": "AUTH-PRISM-INGESTION-REQUEST-BYTES",
+          "original": "D228#/rows/2319",
+          "originalObjectSha256": "3a29cd4f975063dd7c79d27ed0a7694063e057b0753fb8998048c37b6400e0e9",
+          "class": "operator-setting",
+          "caseIds": [
+            "AUTH-PRISM-INGESTION-REQUEST-BYTES-EFFECT"
+          ],
+          "historicalLocator": "config/services/prism-ingestion.config.json",
+          "originalSourceField": "handleRequest.size",
+          "owner": {
+            "path": "config/components/prism-control.config.json",
+            "sha256": "fedd2322e9b31d16fae7ea05e874c1adde18336d11a4369da7cc4d352a24863f"
+          },
+          "selectedPointerTemplate": "/profiles/<original-selected>/settings/ingestionServer/maximumRequestBytes",
+          "authoredProfileLeaves": [
+            {
+              "profile": "spiffe",
+              "pointer": "/profiles/spiffe/settings/ingestionServer/maximumRequestBytes",
+              "valueSha256": "dd80d7a873341d491936c851964a9793195f37e646f6809dd546e2946f46d283"
+            },
+            {
+              "profile": "standard",
+              "pointer": "/profiles/standard/settings/ingestionServer/maximumRequestBytes",
+              "valueSha256": "dd80d7a873341d491936c851964a9793195f37e646f6809dd546e2946f46d283"
+            }
+          ],
+          "status": "EXACT_CURRENT_PRISM_SERVICE_SOURCE_JOIN",
+          "projection": {
+            "path": "skills/common/plugin-runtime/foundation/config/pipeline-composition.ts",
+            "sha256": "c380905efe31bdcd8cbd516bdba2d14cb836067d3cd00710ad3684d8d7a5e8b7",
+            "anchor": ".ingestionServer",
+            "lines": [
+              46
+            ]
+          },
+          "receiver": {
+            "path": "skills/prism/server/ingestion-config.ts",
+            "sha256": "330a3783b1e43cff6c28259e52fa6763d05e09b4d2ae57ff2298734452bb6426",
+            "anchor": "projectIngestionSettings(capture)",
+            "lines": [
+              11
+            ]
+          },
+          "actualEntrypoint": {
+            "path": "skills/prism/server/ingestion-entry.ts",
+            "sha256": "348b8ac2f5abbcb6826eecc2025f47be258e91e80bf6930c1bb9a6a7be455644",
+            "anchor": "startIngestionServer(loadIngestionConfig(capture))",
+            "lines": [
+              6
+            ]
+          },
+          "actualEffect": {
+            "path": "skills/prism/server/ingestion.ts",
+            "sha256": "acb00ab619fd56c9b44919d9aef8c7b08c9c38e5fc4d14216649778fc9bb63aa",
+            "anchor": "size>config.maximumRequestBytes",
+            "lines": [
+              74
+            ]
+          },
+          "startupCapture": [
+            {
+              "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+              "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+              "anchor": "selection.digest !== expected.selectionDigest",
+              "lines": [
+                114
+              ]
+            },
+            {
+              "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+              "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+              "anchor": "const capture = captureSwarmSettings(",
+              "lines": [
+                117
+              ]
+            },
+            {
+              "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+              "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+              "anchor": "verifiedCaptures.add(result)",
+              "lines": [
+                143
+              ]
+            },
+            {
+              "path": "skills/common/plugin-runtime/foundation/config/swarm-bundle.ts",
+              "sha256": "23ef048b73ed2c3c2684d14935d37834a21d2a61ab9dd2407af6f7962680aef9",
+              "anchor": "authors[binding.owner].profiles, binding.profileId",
+              "lines": [
+                89,
+                397
+              ]
+            },
+            {
+              "path": "skills/common/plugin-runtime/foundation/config/pipeline-composition.ts",
+              "sha256": "c380905efe31bdcd8cbd516bdba2d14cb836067d3cd00710ad3684d8d7a5e8b7",
+              "anchor": "assertPipelineBootCapture(capture, 'prism-ingestion')",
+              "lines": [
+                45
+              ]
+            }
+          ],
+          "originalHistoryObligation": "Quarantine TTL currently evaluated against mtime under current process policy; no durable per-acquisition policy. Claims of old-acquisition lifetime binding must be implemented, not assumed.",
+          "historyAcceptance": "OPEN; captured service startup is NOT durable per-acquisition/job reconstruction proof",
+          "runtimeAcceptance": "NOT_INFERRED; original cases/results unchanged"
+        },
+        {
+          "id": "AUTH-PRISM-INGESTION-HTTP-TIMEOUT",
+          "original": "D228#/rows/2320",
+          "originalObjectSha256": "f8ae758832570c29e78cf6af9c2b890acc01d998f4029762192fe1cd3f17a15b",
+          "class": "operator-setting",
+          "caseIds": [
+            "AUTH-PRISM-INGESTION-HTTP-TIMEOUT-EFFECT"
+          ],
+          "historicalLocator": "config/services/prism-ingestion.config.json",
+          "originalSourceField": "request.setTimeout",
+          "owner": {
+            "path": "config/components/prism-control.config.json",
+            "sha256": "fedd2322e9b31d16fae7ea05e874c1adde18336d11a4369da7cc4d352a24863f"
+          },
+          "selectedPointerTemplate": "/profiles/<original-selected>/settings/ingestionServer/sourceRequestTimeoutMs",
+          "authoredProfileLeaves": [
+            {
+              "profile": "spiffe",
+              "pointer": "/profiles/spiffe/settings/ingestionServer/sourceRequestTimeoutMs",
+              "valueSha256": "d4c999ae43633bd2036188d2bca68e1be8202b2cc1f3a1c42a728eaff7d2483d"
+            },
+            {
+              "profile": "standard",
+              "pointer": "/profiles/standard/settings/ingestionServer/sourceRequestTimeoutMs",
+              "valueSha256": "d4c999ae43633bd2036188d2bca68e1be8202b2cc1f3a1c42a728eaff7d2483d"
+            }
+          ],
+          "status": "EXACT_CURRENT_PRISM_SERVICE_SOURCE_JOIN",
+          "projection": {
+            "path": "skills/common/plugin-runtime/foundation/config/pipeline-composition.ts",
+            "sha256": "c380905efe31bdcd8cbd516bdba2d14cb836067d3cd00710ad3684d8d7a5e8b7",
+            "anchor": ".ingestionServer",
+            "lines": [
+              46
+            ]
+          },
+          "receiver": {
+            "path": "skills/prism/server/ingestion-config.ts",
+            "sha256": "330a3783b1e43cff6c28259e52fa6763d05e09b4d2ae57ff2298734452bb6426",
+            "anchor": "projectIngestionSettings(capture)",
+            "lines": [
+              11
+            ]
+          },
+          "actualEntrypoint": {
+            "path": "skills/prism/server/ingestion-entry.ts",
+            "sha256": "348b8ac2f5abbcb6826eecc2025f47be258e91e80bf6930c1bb9a6a7be455644",
+            "anchor": "startIngestionServer(loadIngestionConfig(capture))",
+            "lines": [
+              6
+            ]
+          },
+          "actualEffect": {
+            "path": "skills/prism/server/ingestion.ts",
+            "sha256": "acb00ab619fd56c9b44919d9aef8c7b08c9c38e5fc4d14216649778fc9bb63aa",
+            "anchor": "request.setTimeout(config.sourceRequestTimeoutMs",
+            "lines": [
+              42
+            ]
+          },
+          "startupCapture": [
+            {
+              "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+              "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+              "anchor": "selection.digest !== expected.selectionDigest",
+              "lines": [
+                114
+              ]
+            },
+            {
+              "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+              "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+              "anchor": "const capture = captureSwarmSettings(",
+              "lines": [
+                117
+              ]
+            },
+            {
+              "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+              "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+              "anchor": "verifiedCaptures.add(result)",
+              "lines": [
+                143
+              ]
+            },
+            {
+              "path": "skills/common/plugin-runtime/foundation/config/swarm-bundle.ts",
+              "sha256": "23ef048b73ed2c3c2684d14935d37834a21d2a61ab9dd2407af6f7962680aef9",
+              "anchor": "authors[binding.owner].profiles, binding.profileId",
+              "lines": [
+                89,
+                397
+              ]
+            },
+            {
+              "path": "skills/common/plugin-runtime/foundation/config/pipeline-composition.ts",
+              "sha256": "c380905efe31bdcd8cbd516bdba2d14cb836067d3cd00710ad3684d8d7a5e8b7",
+              "anchor": "assertPipelineBootCapture(capture, 'prism-ingestion')",
+              "lines": [
+                45
+              ]
+            }
+          ],
+          "originalHistoryObligation": "Quarantine TTL currently evaluated against mtime under current process policy; no durable per-acquisition policy. Claims of old-acquisition lifetime binding must be implemented, not assumed.",
+          "historyAcceptance": "OPEN; captured service startup is NOT durable per-acquisition/job reconstruction proof",
+          "runtimeAcceptance": "NOT_INFERRED; original cases/results unchanged"
+        },
+        {
+          "id": "AUTH-PRISM-INGESTION-REDIRECTS",
+          "original": "D228#/rows/2321",
+          "originalObjectSha256": "66bdc9423ce2b68779b83c6501734cef32f60717119bc61fd5ab72eeb4d6cfe6",
+          "class": "operator-setting",
+          "caseIds": [
+            "AUTH-PRISM-INGESTION-REDIRECTS-EFFECT"
+          ],
+          "historicalLocator": "config/services/prism-ingestion.config.json",
+          "originalSourceField": "redirects",
+          "owner": {
+            "path": "config/components/prism-control.config.json",
+            "sha256": "fedd2322e9b31d16fae7ea05e874c1adde18336d11a4369da7cc4d352a24863f"
+          },
+          "selectedPointerTemplate": "/profiles/<original-selected>/settings/ingestionServer/maximumRedirects",
+          "authoredProfileLeaves": [
+            {
+              "profile": "spiffe",
+              "pointer": "/profiles/spiffe/settings/ingestionServer/maximumRedirects",
+              "valueSha256": "4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce"
+            },
+            {
+              "profile": "standard",
+              "pointer": "/profiles/standard/settings/ingestionServer/maximumRedirects",
+              "valueSha256": "4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce"
+            }
+          ],
+          "status": "EXACT_CURRENT_PRISM_SERVICE_SOURCE_JOIN",
+          "projection": {
+            "path": "skills/common/plugin-runtime/foundation/config/pipeline-composition.ts",
+            "sha256": "c380905efe31bdcd8cbd516bdba2d14cb836067d3cd00710ad3684d8d7a5e8b7",
+            "anchor": ".ingestionServer",
+            "lines": [
+              46
+            ]
+          },
+          "receiver": {
+            "path": "skills/prism/server/ingestion-config.ts",
+            "sha256": "330a3783b1e43cff6c28259e52fa6763d05e09b4d2ae57ff2298734452bb6426",
+            "anchor": "projectIngestionSettings(capture)",
+            "lines": [
+              11
+            ]
+          },
+          "actualEntrypoint": {
+            "path": "skills/prism/server/ingestion-entry.ts",
+            "sha256": "348b8ac2f5abbcb6826eecc2025f47be258e91e80bf6930c1bb9a6a7be455644",
+            "anchor": "startIngestionServer(loadIngestionConfig(capture))",
+            "lines": [
+              6
+            ]
+          },
+          "actualEffect": {
+            "path": "skills/prism/server/ingestion.ts",
+            "sha256": "acb00ab619fd56c9b44919d9aef8c7b08c9c38e5fc4d14216649778fc9bb63aa",
+            "anchor": "redirects<=config.maximumRedirects",
+            "lines": [
+              49
+            ]
+          },
+          "startupCapture": [
+            {
+              "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+              "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+              "anchor": "selection.digest !== expected.selectionDigest",
+              "lines": [
+                114
+              ]
+            },
+            {
+              "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+              "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+              "anchor": "const capture = captureSwarmSettings(",
+              "lines": [
+                117
+              ]
+            },
+            {
+              "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+              "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+              "anchor": "verifiedCaptures.add(result)",
+              "lines": [
+                143
+              ]
+            },
+            {
+              "path": "skills/common/plugin-runtime/foundation/config/swarm-bundle.ts",
+              "sha256": "23ef048b73ed2c3c2684d14935d37834a21d2a61ab9dd2407af6f7962680aef9",
+              "anchor": "authors[binding.owner].profiles, binding.profileId",
+              "lines": [
+                89,
+                397
+              ]
+            },
+            {
+              "path": "skills/common/plugin-runtime/foundation/config/pipeline-composition.ts",
+              "sha256": "c380905efe31bdcd8cbd516bdba2d14cb836067d3cd00710ad3684d8d7a5e8b7",
+              "anchor": "assertPipelineBootCapture(capture, 'prism-ingestion')",
+              "lines": [
+                45
+              ]
+            }
+          ],
+          "originalHistoryObligation": "Quarantine TTL currently evaluated against mtime under current process policy; no durable per-acquisition policy. Claims of old-acquisition lifetime binding must be implemented, not assumed.",
+          "historyAcceptance": "OPEN; captured service startup is NOT durable per-acquisition/job reconstruction proof",
+          "runtimeAcceptance": "NOT_INFERRED; original cases/results unchanged"
+        }
+      ],
+      "prismServiceSupplementalJoin": {
+        "path": "docs/review/remediation/config-final-reconciliation-20261016/prism-service-successors.json",
+        "sha256": "cc57972c1380ee8f13359efb103ba8e3faea82982e0139c061f33adad0c66b8a"
+      },
       "qualification": "No missing-path-to-gap inference. Candidate section presence is NOT exact field closure, implementation acceptance, or permission to publish an author."
     },
     {
