@@ -2,6 +2,10 @@
 {{- define "kubeclaw.busterTopology" -}}
 {{- if hasKey .Values "busterComponentFile" -}}{{- fail "busterComponentFile is retired; select central pipeline bindings" -}}{{- end -}}
 {{- if hasKey .Values "swarmConfigJson" -}}{{- fail "swarmConfigJson is retired; select central pipeline bindings" -}}{{- end -}}
+{{- $broker := default dict .Values.busterNamespaceBroker -}}
+{{- range $key := list "leaseApiGroup" "leaseApiVersion" -}}
+{{- if hasKey $broker $key -}}{{- fail (printf "retired busterNamespaceBroker.%s; select central pipeline bindings" $key) -}}{{- end -}}
+{{- end -}}
 {{- $topology := mustFromJson (required "generated Buster topology required; run npm run config:buster:sync" (.Files.Get "files/pipeline/buster-topology.json")) -}}
 {{- if ne $topology.schemaVersion "pipeline-buster-chart-projection.v1" -}}{{- fail "Buster topology projection version invalid" -}}{{- end -}}
 {{- toJson $topology -}}
