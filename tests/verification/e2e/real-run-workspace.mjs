@@ -1388,8 +1388,12 @@ async function publishRunBranchUpstream({ worktreePath, branchName }) {
 async function cloneRunScopedWorkspace({ artifactRoot, worktreePath, branchName }) {
   const originPath = path.join(artifactRoot, 'origin.git');
   const sourceOriginUrl = await rawOriginUrl(REPO_ROOT);
-  await execGit(['init', '--bare', originPath], { timeout: 60000 });
-  await execGit(['clone', '--no-local', REPO_ROOT, worktreePath], { timeout: 60000 });
+  // Copy complete Git objects without hardlinks or alternates. Transport cloning
+  // needlessly repacks the entire repository history for every offline scenario.
+  await execGit(['clone', '--no-hardlinks', REPO_ROOT, worktreePath], { timeout: 60000 });
+  // Seed the isolated writable origin with the same independent history so its
+  // first scenario push transfers only the new fixture commit, not all ancestry.
+  await execGit(['clone', '--bare', '--no-hardlinks', worktreePath, originPath], { timeout: 60000 });
   await configureWorkspaceOrigin(worktreePath, originPath);
   await execGit(['config', 'user.email', 'real-e2e@example.invalid'], { cwd: worktreePath, timeout: 30000 });
   await execGit(['config', 'user.name', 'Real E2E'], { cwd: worktreePath, timeout: 30000 });
@@ -1403,7 +1407,9 @@ async function configureGitMergeConflictFixture({ workspace, projectName }) {
   const conflictFile = 'REAL_E2E_TRUE_MERGE_CONFLICT.txt';
   const sourceOriginUrl = workspace.sourceOriginUrl || await rawOriginUrl(workspace.worktreePath);
 
-  await execGit(['init', '--bare', conflictRemotePath], { timeout: 60000 });
+  // The conflict origin is independent too; retain actual history without a
+  // second full-history transport push before constructing the divergent commits.
+  await execGit(['clone', '--bare', '--no-hardlinks', workspace.worktreePath, conflictRemotePath], { timeout: 60000 });
   await configureWorkspaceOrigin(workspace.worktreePath, conflictRemotePath);
   await execGit(['push', '-u', 'origin', `HEAD:${workspace.branchName}`], { cwd: workspace.worktreePath, timeout: 60000 });
   await execGit(['push', 'origin', `${workspace.architectureBranchName}:${workspace.architectureBranchName}`], {
@@ -1426,7 +1432,7 @@ async function configureGitMergeConflictFixture({ workspace, projectName }) {
     timeout: 60000,
   });
 
-  await execGit(['clone', conflictRemotePath, conflictClonePath], { timeout: 60000 });
+  await execGit(['clone', '--no-hardlinks', conflictRemotePath, conflictClonePath], { timeout: 60000 });
   await execGit(['checkout', workspace.branchName], { cwd: conflictClonePath, timeout: 30000 });
   await execGit(['config', 'user.email', 'real-e2e@example.invalid'], { cwd: conflictClonePath, timeout: 30000 });
   await execGit(['config', 'user.name', 'Real E2E'], { cwd: conflictClonePath, timeout: 30000 });
@@ -1652,7 +1658,7 @@ export async function createRealE2EGitCleanupBlocker(workspace) {
     throw new Error('workspace is required to create a Git cleanup blocker');
   }
   const blockerPath = path.join(workspace.artifactRoot, 'branch-delete-blocker');
-  await execGit(['clone', '--no-local', workspace.worktreePath, blockerPath], { timeout: 60000 });
+  await execGit(['clone', '--no-hardlinks', workspace.worktreePath, blockerPath], { timeout: 60000 });
   await execGit(['checkout', workspace.branchName], { cwd: blockerPath, timeout: 30000 });
   workspace.cleanupBlockerWorktreePath = blockerPath;
   return blockerPath;
