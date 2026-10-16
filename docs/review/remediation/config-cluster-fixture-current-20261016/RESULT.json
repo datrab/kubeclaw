@@ -1,0 +1,60 @@
+{
+  "at": "2026-10-16T20:47:21.579792+00:00",
+  "sourceCommit": "2a7ef38e805b318d51777713927fdf59e6dbc895",
+  "sourceRemoteVerified": true,
+  "evidence": "docs/review/remediation/config-cluster-fixture-current-20261016",
+  "change": "Four original cluster suites now use complete real selected component authors and explicit Buster runtime consumed-owner capture. Raw current helper reads/writes all six physical authors and preserves invalid negative inputs; no legacy full facade, settings refill, fake boot receipt or production API restored. Original assertions, fake-kubectl commands, real child processes, denial/cancellation/closure and service/HTTP/IPC obligations retained.",
+  "checks": {
+    "originalClusterCaptureOutputRuntimeSecurity": {
+      "passed": 79,
+      "total": 79,
+      "failed": 0,
+      "skipped": 0,
+      "log": "docs/review/remediation/config-cluster-fixture-current-20261016/current-capture.txt"
+    },
+    "originalServiceHTTPIPC": {
+      "passed": 6,
+      "total": 6,
+      "failed": 0,
+      "skipped": 0,
+      "log": "docs/review/remediation/config-cluster-fixture-current-20261016/production-route-initial.txt"
+    },
+    "companionClusterEntrypointManifestTimingPoll": {
+      "passed": 40,
+      "total": 40,
+      "failed": 0,
+      "skipped": 0,
+      "log": "docs/review/remediation/config-cluster-fixture-current-20261016/checks-1.txt"
+    },
+    "normalClusterStrictSourceTypecheck": true,
+    "changedJavaScriptSyntax": true,
+    "diffCheck": true,
+    "fullOriginalRoster": {
+      "fields": 2409,
+      "cases": 6845,
+      "requirements": 50,
+      "integrityFailures": 0
+    }
+  },
+  "initialFailuresRetained": [
+    "Original suites failed at retired full facade before intended assertions; baseline before.txt retained.",
+    "First migration kept retired swarm.config.json filename; current-entry rejection retained in initial.txt, corrected to actual pipeline.config.json without changing production validation or original behavioral assertions."
+  ],
+  "qualification": "Local original regression/fixture migration, not live Kubernetes/native preparation, independent source review or full semantic/history acceptance. Production decoder/service/HTTP/provider IPC is real; native preparation and cluster command API remain original modeled fixtures. Normal deployment parity fixture and complete npm aggregate are not claimed passed. No production source/config/default changed.",
+  "independentReview": "OPEN: no native spawn/reviewer callable, active/recent CONFIG subagents0, no fresh independent output. Unchanged same-surface app-server EROFS not retried. Author-run checks are not independent acceptance.",
+  "originalCasesNewlyAccepted": 0,
+  "qualitySealedInputStoreImplemented": false,
+  "qualityProductiveBootImplemented": false,
+  "qualityActivationAllowed": false,
+  "fullC0C6Complete": false,
+  "nextAction": "Genuine QB-R02 original producer/source/build/baseline/inputStore reservation/accounting/sealed snapshot/publication plus coordinated sole-root/all-profile/schema/file-set/actual boot+Nova receiving. BUDGET_SOURCE_RECEIPT_REQUIRED and denied-v10 activation remain unchanged. Required independent full original/history/native/C0-C6 gates OPEN.",
+  "externalInfrastructure": "UNCHANGED owner Raven; required isolated Linux Docker/UID1000/delegated writable cgroup plus sufficiently large genuinely root-trusted writable archive filesystem; resume when supplied.",
+  "writerLock": "same nonblocking repository writer lock, released at bounded command exit",
+  "sourceHashes": {
+    "tests/fixtures/config/pipeline-components.mjs": "94dd86c3c38445fd492c151c5cf5fea76b9e051e5bd0067837285bce52b0c976",
+    "tests/verification/contracts/buster-cluster-capture.test.mjs": "8119d18be834d452471cb283cd723d62582b92da4a9b73c3027c626492852911",
+    "tests/verification/contracts/buster-cluster-output-consumers.test.mjs": "82906d6d373f536390ebdba66094c43b8b8d60996134ebe6259f0af5e88371bd",
+    "tests/verification/contracts/buster-runtime-security-policy.test.mjs": "46cce7ad177d45bf57bc1c64ffaea4f8fcb52b62e3027dc7b7905298ff289f7d",
+    "tests/verification/contracts/buster-cluster-production-route.test.mjs": "9710a7e36eaa6f3bb8d1bdc2f09343c4cdffaaa8966662efad213d8b2a6f49a2"
+  }
+}

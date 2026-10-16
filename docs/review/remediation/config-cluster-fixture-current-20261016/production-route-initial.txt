@@ -1,0 +1,14 @@
+✔ production decoder/service/IPC first kubernetes.fixture, allowed and grant/route denied (2259.040511ms)
+✔ production decoder/service/IPC first kubernetes.exposure, allowed and grant/route denied (1619.214962ms)
+✔ production decoder/service/IPC first kubernetes.runtime-security, allowed and grant/route denied (2207.134259ms)
+✔ production decoder/service/IPC second kubernetes.fixture, allowed and grant/route denied (1877.531763ms)
+✔ production decoder/service/IPC second kubernetes.exposure, allowed and grant/route denied (1696.398623ms)
+✔ production decoder/service/IPC second kubernetes.runtime-security, allowed and grant/route denied (2233.363024ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 13824.169603
