@@ -1,0 +1,49 @@
+{
+  "at": "2026-10-16T18:39:15.125573+00:00",
+  "status": "COMPLETE_SERVICE_MAP_SOURCE_AND_DELIVERY_VERIFIED_NOT_ACTIVATED",
+  "sourceCommit": "314fc8f935d73f12ff16f63874d083c853f2eb95",
+  "evidence": "docs/review/remediation/config-quality-service-selection-20261016",
+  "implemented": [
+    "complete Size+Coverage service selection derived from one retained root/owner/schema/package file-set; no caller-authored output/default/example refill",
+    "all-profile real registry validation completes before immutable readonly policy map escapes",
+    "real Nova resolver consumes complete service map across A/B and retained original A",
+    "explicit missing original C3 registry-peer reference contract descriptor added,448->449 members, all previous member identities conserved"
+  ],
+  "checks": {
+    "generationTests": {
+      "passed": 51,
+      "total": 51,
+      "failed": 0,
+      "skipped": 0
+    },
+    "strictSourceTypecheck": true,
+    "roleBuildReadbackAndActualImport": [
+      "nova",
+      "buster"
+    ],
+    "gitDiffCheck": true
+  },
+  "independentReview": "OPEN_NO_NEW_RESULT; native spawn/reviewer not exposed; no unchanged EROFS retry",
+  "productiveRootSuppliesSelection": false,
+  "activationAllowed": false,
+  "originalCasesNewlyAccepted": 0,
+  "fullC0C6Complete": false,
+  "requiredRoster": {
+    "fields": 2409,
+    "cases": 6845,
+    "requirements": 50,
+    "allSemanticObligationsAccepted": false
+  },
+  "initialFailuresRetained": [
+    "generation.txt: incomplete constructed C3 binding rejected by existing schema; corrected by reading actual original schema/reference bytes, not example digest refill",
+    "typecheck.txt: inferred narrow map key type corrected with explicit ReadonlyMap<string,...> backing type"
+  ],
+  "QB_R02_exact_local_seam": "runner-attempt-preparation.ts invocationInputs currently obtains artifact ref from retained plan links and ProducedOutputV1, but carries only artifact metadata, not authenticated producerRun/module/attempt/sourceRevision/build/schema/originalInputReceiptDigest/storeVersion. provider-process-session.ts merely realpaths/reopens storageUrl. Package verifiedSnapshot seals CODE only. Must join genuine original producer/result/source and existing store reservations before sealed inputStore receiver/publication fence. No invented receipt strings, new store author or copied-file-as-authentication substitution. Source work remains, not external design approval.",
+  "remaining": [
+    "fresh independent complete-source generation/service-map review",
+    "authenticated sole-root productive boot/delivery and actual production plan receiving; v10 remains denied",
+    "QB-R02 original sealed inputStore with genuine producer/build/source/baseline association and original accounting/publication fences",
+    "full original C0-C6 semantic/history/native/archive gates"
+  ],
+  "externalInfrastructure": "UNCHANGED: isolated Linux Docker/UID1000/delegated writable cgroup and sufficiently large root-trusted writable archive parent unavailable; owner Raven; resume on suitable environment"
+}

@@ -1,0 +1,11 @@
+✔ Quality same-file-set policies reach real registry resolver frozen; old v1 task digest/profile substitutions reject (1516.355228ms)
+✔ Quality rejects invalid unselected original profiles without accepting a partial author (700.554806ms)
+✔ Quality complete physical A/B generation reaches Nova plan and retained A without current B refill (1823.448193ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4974.540635

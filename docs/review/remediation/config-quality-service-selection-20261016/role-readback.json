@@ -1,0 +1,40 @@
+[
+  {
+    "role": "nova",
+    "sourceCommit": "314fc8f935d73f12ff16f63874d083c853f2eb95",
+    "indexedFiles": 1832,
+    "files": [
+      {
+        "file": "pipeline-v10-receiver.ts",
+        "digest": "sha256:6d974101d4bac3c5226d68acf8a90485f38da799eb1229676bf6e6175db8ff29",
+        "byteEqualityAndReceipt": true
+      },
+      {
+        "file": "pipeline-v10-input-contract.json",
+        "digest": "sha256:f140708503c761d5c2dc3fd777c03917191d1b37b3875d5a26282d530c16181a",
+        "byteEqualityAndReceipt": true
+      }
+    ],
+    "deliveredImport": true,
+    "installedNativeAuthority": false
+  },
+  {
+    "role": "buster",
+    "sourceCommit": "314fc8f935d73f12ff16f63874d083c853f2eb95",
+    "indexedFiles": 14126,
+    "files": [
+      {
+        "file": "pipeline-v10-receiver.ts",
+        "digest": "sha256:6d974101d4bac3c5226d68acf8a90485f38da799eb1229676bf6e6175db8ff29",
+        "byteEqualityAndReceipt": true
+      },
+      {
+        "file": "pipeline-v10-input-contract.json",
+        "digest": "sha256:f140708503c761d5c2dc3fd777c03917191d1b37b3875d5a26282d530c16181a",
+        "byteEqualityAndReceipt": true
+      }
+    ],
+    "deliveredImport": true,
+    "installedNativeAuthority": false
+  }
+]

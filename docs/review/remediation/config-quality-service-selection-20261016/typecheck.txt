@@ -1,0 +1,2 @@
+skills/common/plugin-runtime/foundation/config/pipeline-v10-receiver.ts(539,61): error TS2345: Argument of type 'string' is not assignable to parameter of type '"kubeclaw.coverage-budget@1" | "kubeclaw.size-budget@1"'.
+skills/common/plugin-runtime/foundation/config/pipeline-v10-receiver.ts(539,102): error TS2345: Argument of type 'string' is not assignable to parameter of type '"kubeclaw.coverage-budget@1" | "kubeclaw.size-budget@1"'.
