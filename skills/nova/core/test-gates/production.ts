@@ -15,6 +15,7 @@ import {
   NovaRemoteTestGate,
 } from './remote-result-import.ts';
 import { buildCommittedSourceSnapshot } from './source-snapshot.ts';
+import { captureSourceAcquisitionPolicy, type SourceAcquisitionPolicy } from './source-acquisition-policy.ts';
 
 export interface ProductionNovaTestGateOptions {
   readonly stateRoot: string;
@@ -31,6 +32,7 @@ export interface ProductionNovaTestGateOptions {
   readonly maximumEvidenceBytes: number;
   readonly maximumEvidenceStoreBytes: number;
   readonly recordLimits: DurableRecordLimits;
+  readonly sourceAcquisitionPolicy?: SourceAcquisitionPolicy;
 }
 
 export interface ProductionNovaTestGateExecutionInput {
@@ -52,8 +54,12 @@ export class ProductionNovaTestGate {
   readonly #sourceAuthority: string;
   readonly #sourceAttestationPrivateKey: string | Buffer;
   readonly #maximumArchiveBytes: number;
+  readonly #sourceAcquisitionPolicy: SourceAcquisitionPolicy | undefined;
   constructor(options: { remote: NovaRemoteTestGate; sourceAuthority: string;
-    sourceAttestationPrivateKey: string | Buffer; maximumArchiveBytes: number }) {
+    sourceAttestationPrivateKey: string | Buffer; maximumArchiveBytes: number;
+    sourceAcquisitionPolicy?: SourceAcquisitionPolicy }) {
+    this.#sourceAcquisitionPolicy = options.sourceAcquisitionPolicy === undefined
+      ? undefined : captureSourceAcquisitionPolicy(options.sourceAcquisitionPolicy);
     this.#remote = options.remote;
     this.#sourceAuthority = options.sourceAuthority;
     this.#sourceAttestationPrivateKey = options.sourceAttestationPrivateKey;
@@ -67,7 +73,11 @@ export class ProductionNovaTestGate {
         repositoryId: input.repositoryId, pipelineStageId: input.pipelineStageId,
         creatorAuthority: this.#sourceAuthority,
         attestationPrivateKey: this.#sourceAttestationPrivateKey,
-        maximumArchiveBytes: this.#maximumArchiveBytes, timeoutMs: deadline.remaining(), signal: deadline.signal,
+        maximumArchiveBytes: this.#maximumArchiveBytes,
+        timeoutMs: this.#sourceAcquisitionPolicy
+          ? Math.min(deadline.remaining(), this.#sourceAcquisitionPolicy.timeoutMs) : deadline.remaining(),
+        signal: deadline.signal,
+        ...(this.#sourceAcquisitionPolicy ? { sourceAcquisitionPolicy: this.#sourceAcquisitionPolicy } : {}),
         ...(input.revision ? { revision: input.revision } : {}) });
       deadline.check();
       const job = createRemotePlanJob({ idempotencyKey: input.idempotencyKey,
@@ -90,6 +100,8 @@ export class ProductionNovaTestGate {
 export function createProductionNovaTestGate(
   options: ProductionNovaTestGateOptions,
 ): ProductionNovaTestGate {
+  const sourceAcquisitionPolicy = options.sourceAcquisitionPolicy === undefined
+    ? undefined : captureSourceAcquisitionPolicy(options.sourceAcquisitionPolicy);
   if (!path.isAbsolute(options.stateRoot)) throw new Error('NOVA_REMOTE_STATE_ROOT_NOT_ABSOLUTE');
   const endpoint = assertSecureRemoteEndpoint(options.endpoint);
   const transport = new HttpRemotePlanTransport({
@@ -121,5 +133,6 @@ export function createProductionNovaTestGate(
   const remote = new NovaRemoteTestGate({ dispatcher, importer });
   return new ProductionNovaTestGate({ remote, sourceAuthority: options.sourceAuthority,
     sourceAttestationPrivateKey: options.sourceAttestationPrivateKey,
-    maximumArchiveBytes: options.maximumArchiveBytes });
+    maximumArchiveBytes: options.maximumArchiveBytes,
+    ...(sourceAcquisitionPolicy ? { sourceAcquisitionPolicy } : {}) });
 }

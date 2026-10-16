@@ -2,6 +2,7 @@ import fs from 'node:fs';
 import Ajv2020 from 'ajv/dist/2020.js';
 
 export interface CoreRuntimePolicy {
+  readonly sourceAcquisition: Readonly<{timeoutMs: number; maximumMetadataBytes: number; maximumStderrCharacters: number; cleanupTimeoutMs: number; forceKillAfterMs: number; pollIntervalMs: number}>;
   readonly agentEventSource: Readonly<{maxQueueEvents: number; maxQueueBytes: number; drainTimeoutMs: number}>;
   readonly networkHttp: Readonly<{errorExcerptCharacters: number; maxRequestBytes: number; maxResponseBytes: number; timeoutMs: number}>;
   readonly operatorMessagingPayload: Readonly<{targetPayloadProfiles: Readonly<Record<string,Readonly<{maxPayloadBytes:number}>>>}>;
@@ -48,6 +49,8 @@ export function captureCoreRuntimePolicy(value: unknown): CoreRuntimePolicy {
   for (const timing of Object.values(selected.openClawDispatch.targetTimingProfiles)) {
     if (timing.maxPollMs < timing.pollMs || timing.sessionTimeoutMs < timing.pollMs) throw new Error('CORE_RUNTIME_POLICY_BUDGET_INVALID');
   }
+  if (selected.sourceAcquisition.forceKillAfterMs >= selected.sourceAcquisition.cleanupTimeoutMs
+    || selected.sourceAcquisition.pollIntervalMs > selected.sourceAcquisition.cleanupTimeoutMs) throw new Error('CORE_RUNTIME_POLICY_BUDGET_INVALID');
   if (selected.artifactStore.maxArtifactBytes > selected.artifactStore.maximumStoreBytes
     || selected.artifactStore.maximumRecordBytes > selected.artifactStore.maximumStoreBytes
     || selected.runMutationRenewalMs >= selected.runMutationTtlMs

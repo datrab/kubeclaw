@@ -1,9 +1,11 @@
+import { captureSourceAcquisitionPolicy, LEGACY_SOURCE_ACQUISITION_POLICY, type SourceAcquisitionPolicy } from './source-acquisition-policy.ts';
 import { spawn } from 'node:child_process';
 import { checkGateSignal } from './deadline.ts';
 import { SourceProcessLifecycle } from './source-process-lifecycle.ts';
 
 /** Bound output and acknowledge native process/pipes cleanup before settling. */
-export async function sourceGit(root: string, args: readonly string[], maximum: number, signal: AbortSignal): Promise<Buffer> {
+export async function sourceGit(root: string, args: readonly string[], maximum: number, signal: AbortSignal, policy: SourceAcquisitionPolicy = LEGACY_SOURCE_ACQUISITION_POLICY): Promise<Buffer> {
+  const captured = captureSourceAcquisitionPolicy(policy);
   checkGateSignal(signal);
   return new Promise<Buffer>((resolve, reject) => {
     const child = spawn('git', ['-C', root, ...args], { detached: process.platform !== 'win32', stdio: ['ignore', 'pipe', 'pipe'] });
@@ -33,13 +35,13 @@ export async function sourceGit(root: string, args: readonly string[], maximum: 
       if (chunk.length > maximum - total) { fail(new Error('NOVA_SOURCE_ARCHIVE_SIZE_EXCEEDED')); return; }
       chunks.push(chunk); total += chunk.length;
     });
-    child.stderr.on('data', (chunk: Buffer) => { if (stderr.length < 4096) stderr += chunk.toString('utf8').slice(0, 4096 - stderr.length); });
+    child.stderr.on('data', (chunk: Buffer) => { if (stderr.length < captured.maximumStderrCharacters) stderr += chunk.toString('utf8').slice(0, captured.maximumStderrCharacters - stderr.length); });
     child.stdout.on('error', fail); child.stderr.on('error', fail); child.once('error', fail);
     child.once('exit', (exitCode, exitSignal) => { code = exitCode; childSignal = exitSignal; finish(); });
     child.once('close', (exitCode, exitSignal) => {
       code = exitCode; childSignal = exitSignal; resolveClosed(); finish();
     });
-    lifecycle = new SourceProcessLifecycle(child, closed);
+    lifecycle = new SourceProcessLifecycle(child, closed, captured);
     if (signal.aborted) abort();
   });
 }

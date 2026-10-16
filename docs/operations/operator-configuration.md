@@ -677,3 +677,24 @@ Resume/recovery/admin restore original processing selector and Core values from
 the same retained snapshot; endpoint/authentication/token/grants and target set
 remain subject to unchanged configuration pinning. Missing original policy or
 selector requires original runtime. Native and whole CONFIG acceptance stay OPEN.
+
+### Nova committed-source acquisition budgets
+
+For the standalone remote-gate CLI, opt into
+`schemaVersion: "nova-remote-test-gate-runtime.v2"` and add
+`corePolicySelection: {"file":"<central-core-file>","profile":"standard"}`
+to its runtime document. Relative owner paths resolve from that runtime file,
+not the process working directory. No source budget is authored inline there.
+The selected Core profile's `settings.sourceAcquisition` owns `timeoutMs`,
+`maximumMetadataBytes`, `maximumStderrCharacters`, `cleanupTimeoutMs`,
+`forceKillAfterMs`, and `pollIntervalMs`. Defaults formerly in source processing
+remain 30000/65536/4096/1500/250/10 in the explicit standard profile. Task deadlines
+may shorten but cannot extend the selected acquisition deadline.
+
+The loader captures these values before creating the gate. Running gate instances
+keep that capture if the current owner changes or disappears. Callers restoring
+an original captured source policy pass it as the loader's existing third
+argument; that path does not read the current owner. This does not introduce a
+new durable binding ledger or claim a complete cross-restart CLI recovery
+migration. The v1 runtime reader remains closed and preserves its historical
+behavior; adding the v2 selector or inline source values to v1 is rejected.

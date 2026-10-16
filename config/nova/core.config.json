@@ -113,6 +113,14 @@
           "maxQueueEvents": 256,
           "maxQueueBytes": 1048576,
           "drainTimeoutMs": 5000
+        },
+        "sourceAcquisition": {
+          "timeoutMs": 30000,
+          "maximumMetadataBytes": 65536,
+          "maximumStderrCharacters": 4096,
+          "cleanupTimeoutMs": 1500,
+          "forceKillAfterMs": 250,
+          "pollIntervalMs": 10
         }
       }
     }
