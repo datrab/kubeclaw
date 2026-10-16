@@ -16,8 +16,19 @@ import { requestWorkerResult } from '../control/worker-operation-transport.ts';
 import { prismNativeAttempt } from '../engine/worker-envelope.ts';
 
 const configRoot = fileURLToPath(new URL('../../../config/', import.meta.url));
-const executionDefaults = JSON.parse(fs.readFileSync(path.join(configRoot, 'components/prism-execution.config.json'), 'utf8')).profiles.standard.settings;
-const controlDefaults = JSON.parse(fs.readFileSync(path.join(configRoot, 'components/prism-control.config.json'), 'utf8')).profiles.standard.settings;
+// Author the actual complete profiles selected by BOTH real caller tuples.
+// A standard-profile edit alone must not masquerade as an active spiffe edit.
+const canonicalEntry = JSON.parse(fs.readFileSync(path.join(configRoot, 'pipeline.config.json'), 'utf8'));
+const selectedProfiles = Object.fromEntries(['prism-execution', 'prism-control'].map(owner => {
+  const profiles = [...new Set<string>(canonicalEntry.bindings
+    .filter((binding: { owner: string; instanceId: string }) => binding.owner === owner
+      && ['kubeclaw/prism/prism-control', 'kubeclaw/prism/prism-worker'].includes(binding.instanceId))
+    .map((binding: { profileId: string }) => binding.profileId))];
+  assert.equal(profiles.length, 1, `fixture requires one shared selected ${owner} profile`);
+  return [owner, profiles[0]!];
+}));
+const executionDefaults = JSON.parse(fs.readFileSync(path.join(configRoot, 'components/prism-execution.config.json'), 'utf8')).profiles[selectedProfiles['prism-execution']!].settings;
+const controlDefaults = JSON.parse(fs.readFileSync(path.join(configRoot, 'components/prism-control.config.json'), 'utf8')).profiles[selectedProfiles['prism-control']!].settings;
 const supervisorDefaults = JSON.parse(fs.readFileSync(path.join(configRoot, 'components/prism-worker.config.json'), 'utf8')).profiles.standard.settings.supervisor;
 const nativeDefaults = { ...executionDefaults, dispatchTimeoutMs: controlDefaults.dispatchTimeoutMs, supervisor: supervisorDefaults };
 const credentials = { PRISM_SESSION_SECRET: 'test-session', PRISM_INGRESS_SECRET: 'test-ingress',
@@ -31,7 +42,7 @@ function fixture(t: { after(fn: () => void): void }, settings: {maximumResultByt
   const value: Record<string, { settings: any }> = {};
   for (const owner of ['prism-execution', 'prism-control']) {
     const author = JSON.parse(fs.readFileSync(path.join(root, `components/${owner}.config.json`), 'utf8'));
-    value[owner] = author.profiles.standard;
+    value[owner] = author.profiles[selectedProfiles[owner]!];
   }
   value['prism-execution']!.settings.maximumResultBytes = settings.maximumResultBytes;
   value['prism-control']!.settings.dispatchTimeoutMs = settings.dispatchTimeoutMs;
@@ -39,7 +50,7 @@ function fixture(t: { after(fn: () => void): void }, settings: {maximumResultByt
     for (const [owner, profile] of Object.entries(value)) {
       const file = path.join(root, `components/${owner}.config.json`);
       const author = JSON.parse(fs.readFileSync(file, 'utf8'));
-      author.profiles.standard = profile;
+      author.profiles[selectedProfiles[owner]!] = profile;
       fs.writeFileSync(file, JSON.stringify(author));
     }
   };
@@ -51,7 +62,7 @@ function fixture(t: { after(fn: () => void): void }, settings: {maximumResultByt
     const captured = captureSwarmSettings(entryFile, { role: 'prism', callerId, serviceInstanceId: instanceId,
       bindings: entry.bindings.filter((binding: { instanceId: string }) => binding.instanceId === instanceId)
         .map(({ role: _role, ...binding }: { role: string; owner: string; instanceId: string; profileId: string }) => binding) });
-    const execution = captured.components['prism-execution']!.settings as unknown as Pick<PrismNativeSettings, 'resourcePolicy' | 'maximumResultBytes'>;
+    const execution = captured.components['prism-execution']!.settings as unknown as Pick<PrismNativeSettings, 'resourcePolicy' | 'maximumResultBytes' | 'enginePolicy'>;
     const control = captured.components['prism-control']!.settings;
     const native = Object.freeze({ ...execution, dispatchTimeoutMs: control.dispatchTimeoutMs as number,
       ...(callerId === 'prism-worker' ? { supervisor: captured.components['prism-worker']!.settings.supervisor as unknown as PrismSupervisorSettings } : {}) });
@@ -73,12 +84,12 @@ for (const settings of [{ maximumResultBytes: 64, dispatchTimeoutMs: 100 }, { ma
     const f = fixture(t, settings), control = f.load('prism-control'), worker = f.load('prism-worker');
     assert.equal(control.maximumWorkerResponseBytes, settings.maximumResultBytes);
     assert.equal(control.nativeWorkerDispatchTimeoutMs, settings.dispatchTimeoutMs);
-    assert.deepEqual(worker.native, { resourcePolicy: nativeDefaults.resourcePolicy, supervisor: nativeDefaults.supervisor, ...settings }); assert.equal(Object.isFrozen(worker.native), true);
+    assert.deepEqual(worker.native, { ...executionDefaults, supervisor: nativeDefaults.supervisor, ...settings }); assert.equal(Object.isFrozen(worker.native), true);
     f.value['prism-execution'].settings.maximumResultBytes = 999;
     f.value['prism-control'].settings.dispatchTimeoutMs = 999;
     f.write();
     assert.equal(control.maximumWorkerResponseBytes, settings.maximumResultBytes);
-    assert.equal(control.nativeWorkerDispatchTimeoutMs, settings.dispatchTimeoutMs); assert.deepEqual(worker.native, { resourcePolicy: nativeDefaults.resourcePolicy, supervisor: nativeDefaults.supervisor, ...settings });
+    assert.equal(control.nativeWorkerDispatchTimeoutMs, settings.dispatchTimeoutMs); assert.deepEqual(worker.native, { ...executionDefaults, supervisor: nativeDefaults.supervisor, ...settings });
   });
 }
 for (const key of ['maximumResultBytes', 'dispatchTimeoutMs']) for (const invalid of [undefined, null, '5', 0, -1, 1.5, 2147483648]) {
@@ -121,4 +132,25 @@ for (const mode of ['headers', 'body']) test(`CR04 real ${mode} deadline follows
     error => error instanceof Error && ['TimeoutError', 'AbortError'].includes(error.name));
   assert.equal(await requestWorkerResult({ ...long.load('prism-control'), workerUrl: new URL(url) }, attempt), 'ok');
   assert.equal(requests, 2); assert.equal(closed, 2, 'aborted request and completed request release their responses');
+});
+
+// The inactive author is still whole-owner validated, but must not supply the
+// selected dispatch budget. Exercise both obligations instead of changing the
+// existing A/B thresholds or relaxing deep equality to selected scalar checks.
+test('CR01 inactive control profile cannot replace selected transport; invalid inactive profile rejects', t => {
+  const f = fixture(t, { maximumResultBytes: 128, dispatchTimeoutMs: 75 });
+  const file = path.join(f.root, 'components/prism-control.config.json');
+  const author = JSON.parse(fs.readFileSync(file, 'utf8'));
+  const inactive = Object.keys(author.profiles).filter(profile => profile !== selectedProfiles['prism-control']);
+  assert.ok(inactive.length > 0, 'real complete owner must include an inactive contrast');
+  for (const profile of inactive) author.profiles[profile].settings.dispatchTimeoutMs = 2000;
+  fs.writeFileSync(file, JSON.stringify(author));
+  for (const role of ['prism-control', 'prism-worker'] as const) {
+    assert.equal(f.load(role).nativeWorkerDispatchTimeoutMs, 75);
+  }
+  for (const profile of inactive) author.profiles[profile].settings.dispatchTimeoutMs = 0;
+  fs.writeFileSync(file, JSON.stringify(author));
+  for (const role of ['prism-control', 'prism-worker'] as const) {
+    assert.throws(() => f.load(role), /SWARM_CONFIG_INVALID/);
+  }
 });
