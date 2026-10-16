@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2026-10-16T23:29:50.835038+00:00",
+  "updatedAt": "2026-10-16T23:34:48.912589+00:00",
   "revision": "4b1a92a6b6cf9d1e66928ce924a3620f3dba2751",
   "phase": "CONFIG_EXTERNALIZATION",
-  "status": "ORIGINAL_REPORT_DELIVERY_AND_CONSUMERS_PASS_NOT_FULL_ACCEPTANCE",
+  "status": "ORIGINAL_BOOT_AUTHORS_MIGRATED_ARCHIVE_RESTORE_STILL_BLOCKED_NOT_FULL_ACCEPTANCE",
   "implementedPhases": [],
   "implementationAccepted": false,
   "scopeUnchanged": "FULL C1-C6; 2409 fields, 6845 cases, 50 requirements",
@@ -272,7 +272,7 @@
     }
   ],
   "blocker": "Exact isolated Linux Docker/UID1000/writable cgroup/native acceptance host still unavailable. Also full original-source replay test needs sufficiently large genuinely root-trusted writable filesystem parent: /dev64MiB ENOSPC; /opt/root/run/var underlying disk EROFS; writable workspace/OpenClaw mounts have non-root or group-writable ancestry. No trust/UID/kernel spoof or skipped acceptance. Continue other authorized code.",
-  "nextAction": "Continue genuine QB-R02 original source/build/baseline/inputStore association, reservation/accounting/sealed snapshot/publication and authenticated coordinated sole-root/boot+Nova receiving. Remaining original fixture source boundaries and all independent/native/full C0-C6 gates remain OPEN. Do not replay unchanged report checks.",
+  "nextAction": "Complete genuine QB-R02 source/build/baseline inputStore ownership/reservation/accounting/sealed-byte/publication and authenticated sole-root/boot+Nova receiving. Continue remaining exact supported source/fixture residuals. Do not replay unchanged green boot checks or known archive ENOSPC.",
   "automation": {
     "jobId": "391f197a-13c5-4925-a477-fa292dd9afcb",
     "enabled": true,
@@ -24820,5 +24820,59 @@
     "writerLock": "SAME shared nonblocking lock held through commit/push; released on command exit",
     "noHistoricalFollowup": true,
     "countCorrection": "Original loop has nine malformed values per field:36 field negatives plus2 coherence negatives=38; retained test log is authoritative. Initial evidence prose42 corrected, no test omitted."
+  },
+  "originalBootAuthors20261016": {
+    "at": "2026-10-16T23:34:48.912589+00:00",
+    "status": "ORIGINAL_BOOT_AUTHORS_MIGRATED_ARCHIVE_RESTORE_STILL_BLOCKED_NOT_FULL_ACCEPTANCE",
+    "sourceCommit": "bdbf4d51385d023223e47987702f140f2dfdeb58",
+    "sourceRemoteVerified": true,
+    "verifiedRemoteHead": "bdbf4d51385d023223e47987702f140f2dfdeb58",
+    "evidence": "docs/review/remediation/config-original-boot-authors-20261016",
+    "change": "Both original readonly boot and genuine Prism package/readback fixtures read config/pipeline.config.json and preserve actual declared schema/root fields. Only explicit fixture service bindings and relative copied owner paths differ. Retired chart-local swarm.config.json and forced version override removed; all existing assertions retained. No new policy author or boot authentication manufactured.",
+    "checks": {
+      "baselineBoot": {
+        "passed": 10,
+        "total": 10,
+        "qualification": "Old chart author still exists; baseline passed, not a reproduced startup failure. Change eliminates remaining duplicate author dependency."
+      },
+      "combinedOriginalBootAndRoles": {
+        "total": 13,
+        "passed": 11,
+        "failed": 2,
+        "skipped": 0,
+        "qualification": "10 original readonly boot controls plus actual complete Prism role readback pass. Buster archive restoration child ENOSPC produces its own failure and parent failure; NOT 13 independent gate results. Full suite exit1, no subset-based full PASS."
+      },
+      "syntax": true,
+      "diffCheck": true,
+      "originalRoster": {
+        "fields": 2409,
+        "cases": 6845,
+        "requirements": 50,
+        "integrityFailures": 0,
+        "acceptance": "OPEN"
+      }
+    },
+    "archiveFailure": {
+      "code": "ENOSPC",
+      "path": "/dev trusted archive restore",
+      "boundary": "restoreBusterSourceClosure -> materializeBusterBootSourceArchive",
+      "log": "tests.txt",
+      "qualification": "Known unchanged infrastructure gate was inadvertently included by unfiltered original role suite; preserved failure, no retry/skip or trust bypass. /dev64MiB empty again after original cleanup; /tmp has disk space but required trusted ancestry not established."
+    },
+    "independentReview": "OPEN; fresh ALL_TOOLS native spawn/reviewer discovery empty, CONFIG subagents0; no new independent result. Known unchanged same-surface initialization EROFS not retried. Author tests are not independent/native acceptance.",
+    "sourceHashes": {
+      "tests/verification/reliability/pipeline-boot.test.mjs": "c8c17acf909404d43c0941a7c62b49a7bfe3cb12b17302653100836047341b76",
+      "tests/verification/reliability/pipeline-role-readback.test.mjs": "ac92739d72d5285b9f994a332e65f47dda71d0e95366b182131304ed7889d2a3"
+    },
+    "originalCasesNewlyAccepted": 0,
+    "fullC0C6Complete": false,
+    "qualityActivationAllowed": false,
+    "sealedInputStoreImplemented": false,
+    "productiveQualityBootImplemented": false,
+    "nextAction": "Complete genuine QB-R02 source/build/baseline inputStore ownership/reservation/accounting/sealed-byte/publication and authenticated sole-root/boot+Nova receiving. Continue remaining exact supported source/fixture residuals. Do not replay unchanged green boot checks or known archive ENOSPC.",
+    "externalOwner": "Raven",
+    "resumeCondition": "Isolated Linux Docker UID1000/GID1000/delegated writable cgroup, sufficiently large genuinely root-trusted writable archive storage and isolated migrated PostgreSQL. No trust/UID/kernel spoof or skipped required gates.",
+    "writerLock": "SAME nonblocking shared repository lock; released on command exit",
+    "noHistoricalFollowup": true
   }
 }

@@ -1,0 +1,18 @@
+✔ readonly packaged-reader core verifies complete receipts and installed code readback (1150.240863ms)
+✔ self-consistent hashes do not validate a two-field fake package manifest (773.300384ms)
+✔ changed installed code and additional unreceipted code files reject (700.724151ms)
+✔ stale expected generation cannot admit changed profile content (562.042166ms)
+✔ writable files and escaping expected-receipt atomic-writer target reject (469.488903ms)
+✔ inventory retains early file observations until all members have been read (527.285933ms)
+✔ package observations remain alive until boot capture is branded (495.376371ms)
+✔ self-consistent receipts reject nonexistent facade and open metadata records (423.648169ms)
+✔ an off-tree reader copy cannot borrow a genuine installed package receipt (632.019596ms)
+✔ expected-delivery alias replacement during boot rejects, next boot validates the selected receipt (578.276889ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6421.026086
