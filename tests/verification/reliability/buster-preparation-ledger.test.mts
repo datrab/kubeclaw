@@ -1,27 +1,26 @@
-import { canonicalSwarmEntry, readTestBundle, writeTestBundle } from '../../fixtures/config/swarm-bundle.mjs';
+import { canonicalPipelineEntry, readTestPipeline, writeTestPipeline, busterRuntimeSelection } from '../../fixtures/config/pipeline-components.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
-import { loadBusterPreparationSettings } from '../../../skills/common/plugin-runtime/foundation/config/swarm.ts';
+import { captureSwarmSettings, type BusterSettings } from '../../../skills/common/plugin-runtime/foundation/config/swarm.ts';
 import { PreparationSourceLedger } from '../../../skills/buster/engine/test-gates/preparation-ledger.ts';
 import { preparationProfile } from '../../../skills/buster/engine/test-gates/preparation-envelope.ts';
 import { withDurableStoreLock } from '@kubeclaw/plugin-foundation/observability/durable-delivery';
 
-const authored = readTestBundle(canonicalSwarmEntry);
-const settings = loadBusterPreparationSettings({ SWARM_CONFIG: canonicalSwarmEntry });
+const settings = (captureSwarmSettings(canonicalPipelineEntry, busterRuntimeSelection(readTestPipeline())).components['buster-engine']!.settings as unknown as BusterSettings).preparation;
 const profile = preparationProfile(`sha256:${'a'.repeat(64)}`);
 const now = new Date('2026-09-21T00:00:00.000Z');
 const id = (value: number) => value.toString(16).padStart(32, '0');
 
 async function fixture(recordLimit = settings.maximumRecords) {
   const root = await fs.mkdtemp(path.join(os.tmpdir(), 'buster-preparation-ledger-'));
-  const configured = structuredClone(authored);
-  configured['buster-engine'].settings.preparation.maximumRecords = recordLimit;
-  const configFile = path.join(root, 'swarm.config.json');
-  writeTestBundle(configFile, configured);
-  const policy = loadBusterPreparationSettings({ SWARM_CONFIG: configFile });
+  const configured = readTestPipeline();
+  configured['buster-engine'].profiles.runtime.settings.preparation.maximumRecords = recordLimit;
+  const configFile = path.join(root, 'pipeline.config.json');
+  writeTestPipeline(configFile, configured);
+  const policy = (captureSwarmSettings(configFile, busterRuntimeSelection(configured)).components['buster-engine']!.settings as unknown as BusterSettings).preparation;
   return { root, file: path.join(root, 'source-ledger', 'state.json'),
     ledger: new PreparationSourceLedger(root, policy), dispose: () => fs.rm(root, { recursive: true, force: true }) };
 }
