@@ -1,3 +1,4 @@
+import type { WorkerCorePolicyCapture } from '@kubeclaw/plugin-foundation/config/worker-core-policy';
 import { readLegacyBusterRuntimeServicePolicy, type BusterRemotePlanServicePolicy } from '@kubeclaw/plugin-foundation/config/buster-service-policy';
 import { rejectLegacyClusterEnvironment, validateBusterClusterInvokerSettings, type BusterClusterInvokerSettings } from '@kubeclaw/plugin-foundation/config/buster-cluster-invokers';
 import { validateBusterExecutionSettings } from '@kubeclaw/plugin-foundation/config/buster-execution';
@@ -19,6 +20,7 @@ export function loadProductionBusterRemotePlanRuntime(
   settings: BusterSettings,
   workerLocalRuntime: WorkerCoreSettings['localRuntime'],
   environment: Readonly<Record<string, string | undefined>>,
+  workerCore?: WorkerCorePolicyCapture,
 ): BusterRemotePlanRuntime {
   rejectLegacyClusterEnvironment(environment);
   const executionPolicy = validateBusterExecutionSettings(settings.execution);
@@ -33,12 +35,12 @@ export function loadProductionBusterRemotePlanRuntime(
   validateRuntimeRoot(value);
   const policy = readLegacyBusterRuntimeServicePolicy(value);
   const authority = runtimeAuthority(value, environment);
-  const service = configuredService(value, policy, directory, environment, preparation, { buster: { ...settings, execution: executionPolicy, clusterInvokers }, workerLocalRuntime }, workerRevision, authority.sourceAttestationPublicKey);
+  const service = configuredService(value, policy, directory, environment, preparation, { buster: { ...settings, execution: executionPolicy, clusterInvokers }, workerLocalRuntime, ...(workerCore ? {workerCore} : {}) }, workerRevision, authority.sourceAttestationPublicKey);
   return configuredRuntime(value, policy, directory, service, settings, authority);
 }
 
 function configuredService(value: Record<string, unknown>, policy: BusterRemotePlanServicePolicy, directory: string, environment: NodeJS.ProcessEnv,
-  preparation: BusterPreparation, settings: { buster: BusterSettings; workerLocalRuntime: WorkerCoreSettings['localRuntime'] }, workerRevision: string, sourceAttestationPublicKey: string) {
+  preparation: BusterPreparation, settings: { buster: BusterSettings; workerLocalRuntime: WorkerCoreSettings['localRuntime']; workerCore?: WorkerCorePolicyCapture }, workerRevision: string, sourceAttestationPublicKey: string) {
   const dependencyReadiness = validateBusterDependencyReadinessSettings(settings.buster.dependencyReadiness);
   const registry = runtimeRegistry(value, directory);
   const allowedCapabilities = new Set(policy.allowedCapabilities);
@@ -58,7 +60,7 @@ function configuredService(value: Record<string, unknown>, policy: BusterRemoteP
     dependencyReadiness,
     workerRevision,
     runtimeRoot: path.resolve(directory, value.runtimeRoot as string),
-    admission: settings.buster.admission, workerLocalRuntime: settings.workerLocalRuntime, executionPolicy: settings.buster.execution,
+    ...(settings.workerCore ? {workerCore: settings.workerCore} : {}), admission: settings.buster.admission, workerLocalRuntime: settings.workerLocalRuntime, executionPolicy: settings.buster.execution,
     allowedCapabilities,
     ...capabilities,
   });

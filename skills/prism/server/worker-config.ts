@@ -19,7 +19,7 @@ export function loadWorkerConfig(capture: PipelineBootCapture, environment: Node
   const settings = snapshot.worker;
   return Object.freeze({ spiffeEnabled, workerSecret, trustedControlSpiffeId, databaseUrl, shutdownTimeoutMs: settings.shutdownTimeoutMs,
     controlInternalUrl: new URL(snapshot.controlInternalUrl), maximumArtifactAcknowledgmentBytes: snapshot.maximumArtifactAcknowledgmentBytes,
-    nonceDatabase: snapshot.nonceDatabase, native: snapshot.native, port: settings.port, ingress: ingressLimits(settings),
+    ...(snapshot.workerCore ? {workerCore: snapshot.workerCore} : {}), nonceDatabase: snapshot.nonceDatabase, native: snapshot.native, port: settings.port, ingress: ingressLimits(settings),
   });
 }
 

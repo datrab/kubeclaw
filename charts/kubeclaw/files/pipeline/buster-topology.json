@@ -1,7 +1,7 @@
 {
   "schemaVersion": "pipeline-buster-chart-projection.v1",
   "generatedFrom": "config/pipeline.config.json",
-  "generationDigest": "sha256:748d821e67093273fdfbbeb51059377df53e8a8e766224259b0f3af3e3147f26",
+  "generationDigest": "sha256:d166259cf63ea481a0aa16fd6ce2a324f1d1ced037d03ae36ada847287215f7b",
   "deployment": {
     "namespace": "kubeclaw",
     "releaseName": "agent-buster"

@@ -1,3 +1,4 @@
+import { assignedWorkerCorePolicy, workerCoreExecutionOptions } from '@kubeclaw/plugin-foundation/config/worker-core-policy';
 import { WorkerAttemptExecutor } from '@kubeclaw/worker-core';
 import { validateWorkerResourceContractV3, type WorkerAttemptEnvelopeV3 } from '@kubeclaw/pipeline-worker-core-contract';
 import { PrismEngine, DeterministicDesignProvider } from '../engine/index.ts';
@@ -22,7 +23,7 @@ const envelope = JSON.parse(Buffer.concat(chunks).toString('utf8')) as WorkerAtt
 validateWorkerResourceContractV3('workerAttemptEnvelope', envelope);
 const artifacts = new WorkerArtifactClient(config.controlInternalUrl, config.workerSecret, config.spiffeEnabled, config.maximumArtifactAcknowledgmentBytes);
 const engine = new PrismEngine(new DeterministicDesignProvider(), config.enginePolicy);
-const result = await new WorkerAttemptExecutor({ envelope, signal: cancellation.signal,
+const result = await new WorkerAttemptExecutor({ ...workerCoreExecutionOptions(assignedWorkerCorePolicy(process.env), 'prism-native'), envelope, signal: cancellation.signal,
   operation: nativeOperationFor(envelope, engine, artifacts, config.scope), receiptNamespace: 'prism-native-provisional',
   storeFullLog(attemptId, content, { signal }) {
     if (attemptId !== envelope.attemptId) throw new Error('Prism log attempt identity mismatch');

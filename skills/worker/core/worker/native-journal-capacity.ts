@@ -8,13 +8,14 @@ export const nativeJournalMaximumRecordBytes = 65536;
 const maximumInteger = Number.MAX_SAFE_INTEGER;
 const maximumDate = '+275760-09-13T00:00:00.000Z';
 const digest = `sha256:${'0'.repeat(64)}`;
-const diagnostic = '\u0000'.repeat(nativeJournalMaximumDiagnosticUnits);
+
 
 function futurePayload(payload: NativeAttemptJournalState, limits: NativeAttemptJournalLimits) {
   if (payload.result !== null) return payload;
   // Per-field envelopes intentionally allow both output references their full
   // limit; no synthetic output, observations or diagnostics are ever persisted.
   const output = { digest, sizeBytes: limits.maximumOutputBytes };
+  const diagnostic = '\u0000'.repeat(payload.workerCore?.settings.runtime.journal_diagnostic_units ?? nativeJournalMaximumDiagnosticUnits);
   return { ...payload, process: payload.process ?? {
     schemaVersion: 'worker-native-process-result.v1', stdout: output, stderr: output,
     exitCode: null, signal: diagnostic, fault: diagnostic,
@@ -31,7 +32,7 @@ function futureRecordBytes(record: DurableRecord, limits: NativeAttemptJournalLi
   validateJournalState(record.payload);
   if (record.payload.result !== null) return actual;
   const payload = futurePayload(record.payload, limits);
-  if (Buffer.byteLength(canonicalJson(payload)) > nativeJournalMaximumRecordBytes) {
+  if (Buffer.byteLength(canonicalJson(payload)) > (record.payload.workerCore?.settings.runtime.journal_record_bytes ?? nativeJournalMaximumRecordBytes)) {
     throw new Error('WORKER_NATIVE_JOURNAL_METADATA_CAPACITY_EXCEEDED');
   }
   return Math.max(actual, Buffer.byteLength(canonicalJson({ ...record,

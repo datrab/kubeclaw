@@ -1,3 +1,4 @@
+import { readWorkerCorePolicyCapture, type WorkerCorePolicyCapture } from '@kubeclaw/plugin-foundation/config/worker-core-policy';
 import type { BusterExecutionSettings } from '@kubeclaw/plugin-foundation/config/buster-execution';
 import type { AttemptResultV1, NodeResultV1, ProducedOutputV1, ProviderInvocationV1, ResolvedInputV1, ResolvedTestPlanV1 } from '@kubeclaw/pipeline-test-gate-contract';
 import type { TestProviderCapabilityRequest } from '@kubeclaw/plugin-sdk';
@@ -37,6 +38,7 @@ export interface TestPlanRunnerOptions {
   readonly observabilityRoot: string;
   readonly maximumConcurrency: number;
   readonly workerLocalRuntime: LocalWorkerRuntimePolicy;
+  readonly workerCore?: WorkerCorePolicyCapture;
   readonly grants?: ReadonlyMap<string, readonly string[]>;
   readonly loader?: TestProviderLoader;
   readonly evidenceStore?: EvidenceStore;

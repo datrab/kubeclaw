@@ -23,7 +23,7 @@ export async function agentRoutes(
 
   if (
     await handleAgentJobs(request, response, url, {
-      db: pool,
+      ...(context.config.workerCore ? {workerCore: context.config.workerCore} : {}), db: pool,
       agentLauncher: context.config.agentLauncher,
       maximumArtifactAcknowledgmentBytes: context.config.maximumArtifactAcknowledgmentBytes,
       spiffeEnabled,

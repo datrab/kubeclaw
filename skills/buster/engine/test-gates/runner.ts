@@ -1,3 +1,4 @@
+import { readWorkerCorePolicyCapture } from '@kubeclaw/plugin-foundation/config/worker-core-policy';
 import { cleanupRetainedProvider, cleanupRetainedFixtures, type FixtureOwner } from './runner-fixtures.ts';
 import { finalizeRunnerAttempt } from './runner-attempt-result.ts';
 import { executeRunnerAttempt } from './runner-attempt-execution.ts';
@@ -53,7 +54,7 @@ export class TestPlanRunner {
     const { workerLocalRuntime, executionPolicy } = validateRunnerOptions(options);
     const { workspaceRoot, artifactRoot, observabilityRoot } = prepareRunnerPaths(options);
     this.#workspaceRoot = workspaceRoot;
-    this.#options = { ...options, workerLocalRuntime, executionPolicy, artifactRoot, observabilityRoot };
+    this.#options = { ...options, ...(options.workerCore ? {workerCore: readWorkerCorePolicyCapture(options.workerCore)} : {}), workerLocalRuntime, executionPolicy, artifactRoot, observabilityRoot };
     this.#loader = options.loader ?? new RegisteredTestProviderLoader({ provider: executionPolicy.provider, observation: executionPolicy.observation });
     this.#store = options.evidenceStore ?? new FileEvidenceStore(artifactRoot);
     this.#reportAdapterRuntime = options.reportAdapterRuntime ?? new RegisteredReportAdapterRuntime(

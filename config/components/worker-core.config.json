@@ -1,5 +1,5 @@
 {
-  "schemaVersion": "pipeline-component.v2",
+  "schemaVersion": "pipeline-component.v3",
   "owner": "worker-core",
   "profiles": {
     "standard": {
@@ -8,7 +8,37 @@
           "drainTimeoutMs": 300000,
           "cancellationTimeoutMs": 30000,
           "replayLimit": 65536
+        },
+        "runtime": {
+          "input_bytes": 16777216,
+          "json_nodes": 100000,
+          "json_depth": 64,
+          "log_parts": 10000,
+          "retain_logs": {
+            "prism-native": true,
+            "prism-agent": true,
+            "buster-provider": false,
+            "buster-preparation": false,
+            "buster-historical-import": false,
+            "buster-source-cleanup": false
+          },
+          "drain_poll_ms": 10,
+          "pool_file_bytes": 65536,
+          "runtime_identity_file_bytes": 4096,
+          "node_identity_file_bytes": 128,
+          "journal_record_bytes": 65536,
+          "journal_diagnostic_units": 4096,
+          "ownership_diagnostic_units": 4096,
+          "journalLockHexDigits": 2
+        },
+        "scaffoldPublication": {
+          "maximumMemberBytes": 67108864,
+          "maximumPointerBytes": 4096
         }
+      },
+      "activation": {
+        "core": "enabled",
+        "scaffoldPublication": "enabled"
       }
     }
   }

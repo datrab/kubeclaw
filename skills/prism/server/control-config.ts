@@ -51,9 +51,9 @@ export function loadControlServerConfig(capture: PipelineBootCapture, environmen
   if (environment.PRISM_WORKER_URL !== undefined) throw new Error('SWARM_CONFIG_LEGACY_OVERRIDE:PRISM_WORKER_URL:use prism-control.config.json settings.workerUrl');
   if (environment.PRISM_INGESTION_URL !== undefined) throw new Error('SWARM_CONFIG_LEGACY_OVERRIDE:PRISM_INGESTION_URL:use prism-control.config.json settings.ingestionUrl');
   if (environment.PRISM_CONTROL_INTERNAL_URL !== undefined) throw new Error('SWARM_CONFIG_LEGACY_OVERRIDE:PRISM_CONTROL_INTERNAL_URL:use prism-control.config.json settings.controlInternalUrl');
-  const { native: settings, control } = projectControlSettings(capture);
+  const { native: settings, control, workerCore } = projectControlSettings(capture);
   return Object.freeze({
-    ...controlPolicy(control),
+    ...(workerCore ? {workerCore} : {}), ...controlPolicy(control),
     port: control.port,
     maximumArtifactAcknowledgmentBytes: control.maximumArtifactAcknowledgmentBytes,
     agentLauncher: control.agentLauncher,

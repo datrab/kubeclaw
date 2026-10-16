@@ -1,7 +1,7 @@
 import fs from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
-import { nativeResourcePolicy } from '../../../skills/prism/tests/native/resource-policy.mts';
+import { nativeResourcePolicy, nativeControlSettings } from '../../../skills/prism/tests/native/resource-policy.mts';
 import { prismNativeAttempt } from '../../../skills/prism/engine/worker-envelope.ts';
 import { NativeAttemptJournal } from '../../../skills/worker/core/worker/native-attempt-journal.ts';
 import { NativeWorkerOutputSpool } from '../../../skills/worker/core/worker/native-output-spool.ts';
@@ -12,7 +12,7 @@ export const limits: NativeAttemptJournalLimits = { maximumRecords: 32, maximumS
   maximumTotalBytes: 8388608, maximumInputBytes: 65536, maximumOutputBytes: 65536, maximumResultBytes: 65536 };
 const artifact = { artifactId: 'input:journal-capacity', type: 'prism-engine-input', mediaType: 'application/json',
   contentDigest: `sha256:${'1'.repeat(64)}`, sizeBytes: 2, storageUrl: 'https://control.example/input' };
-export const envelope = (name: string) => prismNativeAttempt('render', artifact, name, nativeResourcePolicy, 600000, 300000, 16777216, 134217728, 64);
+export const envelope = (name: string) => prismNativeAttempt('render', artifact, name, nativeResourcePolicy, nativeControlSettings.nativeAttemptLifetimeMs, nativeControlSettings.nativeAttemptTimeoutMs, nativeControlSettings.nativeAttemptCleanupTimeoutMs, nativeControlSettings.nativeAttemptLogBytes, nativeControlSettings.nativeAttemptResultBytes, nativeControlSettings.nativeAttemptEvidenceBytes, nativeControlSettings.nativeAttemptEvidenceFiles);
 export const metadataFile = (root: string) => path.join(root, 'metadata', 'records', 'store.json');
 export const metadata = async (root: string) => JSON.parse(await fs.readFile(metadataFile(root), 'utf8'));
 export const temporary = () => fs.mkdtemp(path.join(os.tmpdir(), 'journal-capacity-'));

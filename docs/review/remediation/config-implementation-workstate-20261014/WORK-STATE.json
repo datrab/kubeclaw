@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2026-10-16T14:07:48.944659+00:00",
+  "updatedAt": "2026-10-16T16:36:04.772072+00:00",
   "revision": "4b1a92a6b6cf9d1e66928ce924a3620f3dba2751",
   "phase": "CONFIG_EXTERNALIZATION",
-  "status": "CONFIG_CONTROLLER_OPS_AND_AGENT_OBSERVER_VERIFIED_REMAINING_MATRIX_AND_NATIVE_OPEN",
+  "status": "CONFIG_WORKER_CORE_V3_SOURCE_VERIFIED_MATRIX_AND_NATIVE_OPEN",
   "implementedPhases": [],
   "implementationAccepted": false,
   "scopeUnchanged": "FULL C1-C6; 2409 fields, 6845 cases, 50 requirements",
@@ -272,7 +272,7 @@
     }
   ],
   "blocker": "Exact isolated Linux Docker/UID1000/writable cgroup/native acceptance host still unavailable. Also full original-source replay test needs sufficiently large genuinely root-trusted writable filesystem parent: /dev64MiB ENOSPC; /opt/root/run/var underlying disk EROFS; writable workspace/OpenClaw mounts have non-root or group-writable ancestry. No trust/UID/kernel spoof or skipped acceptance. Continue other authorized code.",
-  "nextAction": "Continue defined WorkerCore C3 v3 receiving/original binding bridge and exact matrix reconciliation; do not invent missing author definitions or promote denied v10. Native full acceptance needs isolated Linux Docker/UID1000/delegated writable cgroup environment (requested from Raven); not a blanket source-audit blocker.",
+  "nextAction": "Reconcile exact remaining2409 fields/6845 original cases/50 requirements against all current verified source checkpoints; do not replay unchanged green suites or claim native/full acceptance. Resume blocked full native/archive gates only on a suitable isolated system, owner Raven. No old claimed-thread dispatch; scheduled direct work under same lock is authorized.",
   "automation": {
     "jobId": "391f197a-13c5-4925-a477-fa292dd9afcb",
     "enabled": true,
@@ -497,9 +497,9 @@
     "action": "Original parent resumed, WIP preserved; idle lock release and explicit continuation, supervisor health correction."
   },
   "activeWriter": {
-    "owner": null,
-    "status": "verified checkpoint delivered; shared writer lock released before turn end",
-    "nextOwner": "existing supervisor direct worker, same lock"
+    "owner": "interactive Raven continuation",
+    "lockPid": 2199443,
+    "state": "held through source evidence commit/push; release before yield/end"
   },
   "parentStartupIntegration20261014": {
     "at": "2026-10-14T20:24:52.629592+00:00",
@@ -22770,5 +22770,72 @@
     "retainedUnrelatedWipPreserved": true,
     "deployment": false,
     "mainMerge": false
+  },
+  "workerCoreV3Source20261016": {
+    "at": "2026-10-16T16:36:04.772072+00:00",
+    "status": "SOURCE_IMPLEMENTED_FOCUSED_VERIFIED_AND_INDEPENDENT_SOURCE_REVIEW_CLEAN",
+    "baseline": "2c06deda40f69d1012de06f7074f47b9178a45eb",
+    "owner": "config/components/worker-core.config.json",
+    "liveOwnerVersion": "pipeline-component.v3",
+    "rootVersion": "pipeline-entry.v3; v10 remains denied",
+    "originalCaptures": [
+      "worker-core-policy-capture.v1",
+      "native-attempt-journal.v2",
+      "worker-ownership-store.v4",
+      "native-journal-routing.v1 immutable epoch",
+      "published-json-pair.v2"
+    ],
+    "actualConsumers": [
+      "prism-native",
+      "prism-agent",
+      "buster-provider",
+      "buster-preparation",
+      "buster-historical-import",
+      "buster-source-cleanup"
+    ],
+    "checks": {
+      "focusedTests": {
+        "passed": 38,
+        "failed": 0
+      },
+      "scaffoldTests": {
+        "passed": 5,
+        "failed": 0
+      },
+      "rolePackageReadback": {
+        "passed": 2,
+        "qualification": "Actual emitted/installed Prism and Buster roles, both complete source-level role paths. Required full inert archive restoration subtest explicitly excluded from supported-environment run after retained ENOSPC failure; NOT whole-suite/native PASS."
+      },
+      "legacyExecutor": "exit0 original contract assertions preserved",
+      "typechecks": {
+        "worker": 0,
+        "foundation": 0,
+        "buster": 0,
+        "prism": 0,
+        "projectSetup": 0
+      },
+      "generatedChartProjectionChecks": 0,
+      "routingRegression": "pre-fix exit1; fixed exit0; real durable FS/flock scheduling witness"
+    },
+    "sourceReview": {
+      "engine": "codex via autoreview",
+      "findingCount": 0,
+      "sourceManifestMatchesCurrent": true,
+      "qualification": "Complete supplied source-only datasets; reviewer shell UID-map failure, no independent test/native execution."
+    },
+    "resolvedReviewFindings": [
+      "Unsupported Buster true-retention without actual writers now fails before admission/loading. Four dormant role controls remain explicit false; actual test no longer injects nonexistent Buster writers.",
+      "Routing epoch revalidated inside admission lock before lookup/reservation; deterministic pre-fix red/fixed-green interleaving control."
+    ],
+    "remaining": [
+      "Full original field/case/requirement reconciliation and integrated zero-author-context C6 acceptance",
+      "Actual isolated Linux Docker/UID1000/delegated writable cgroup native gates",
+      "Full original-source archive restore on a sufficiently large root-trusted writable parent (default /dev ENOSPC; disk-backed root parents EROFS; writable workspace ancestry fails required trust)"
+    ],
+    "externalInfrastructureOwner": "Raven; suitable isolated acceptance system requested earlier, no reply yet",
+    "taskComplete": false,
+    "deployment": false,
+    "mainMerge": false,
+    "evidenceDirectory": "docs/review/remediation/config-worker-core-v3-20261016"
   }
 }

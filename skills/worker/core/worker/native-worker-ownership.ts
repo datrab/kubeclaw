@@ -1,3 +1,4 @@
+import type { NativeJournalSupervisor } from './native-journal-routing.ts';
 import fs from 'node:fs';
 import { randomUUID } from 'node:crypto';
 import { NativeProcessLaunches } from './native-process-launches.ts';
@@ -43,8 +44,8 @@ function terminal(record: WorkerOwnershipRecord): boolean {
   return record.phase === 'disposed' || record.phase === 'abandoned';
 }
 
-function diagnosis(error: unknown): string {
-  return (error instanceof Error ? error.message : String(error)).slice(0, 4096).toWellFormed() || 'WORKER_NATIVE_UNKNOWN_FAILURE';
+function diagnosis(error: unknown, record: WorkerOwnershipRecord): string {
+  return (error instanceof Error ? error.message : String(error)).slice(0, record.workerCore?.settings.runtime.ownership_diagnostic_units ?? 4096).toWellFormed() || 'WORKER_NATIVE_UNKNOWN_FAILURE';
 }
 
 /** A lease is available only after its reservation and native identity are durable. */
@@ -144,7 +145,7 @@ export class NativeWorkerOwnershipLease {
     let observation: NativeWorkerResourceObservation | undefined;
     // Quota/fsync failure must not make identity-checked kernel drain unreachable.
     // Any failure still prevents finalization, deletion and reservation release.
-    try { observation = await this.#scope.terminateAndDrain(this.#options.drainTimeoutMs); }
+    try { observation = await this.#scope.terminateAndDrain(this.#options.drainTimeoutMs, undefined, this.#record.workerCore?.settings.runtime.drain_poll_ms); }
     catch (error) { errors.push(error); }
     if (errors.length === 1) throw errors[0];
     if (errors.length) throw new AggregateError(errors, 'WORKER_NATIVE_QUIESCENCE_INCOMPLETE');
@@ -172,7 +173,7 @@ export class NativeWorkerOwnershipLease {
     } catch (error) {
       try {
         if (!terminal(this.#record) && this.#record.phase !== 'unresolved' && this.#record.phase !== 'empty') {
-          this.#record = await this.#options.store.transition(this.#record, 'unresolved', { diagnosis: diagnosis(error) });
+          this.#record = await this.#options.store.transition(this.#record, 'unresolved', { diagnosis: diagnosis(error, this.#record) });
         }
       } catch (persistenceError) {
         throw new AggregateError([error, persistenceError], 'WORKER_NATIVE_RECONCILIATION_RECORD_FAILED');
@@ -184,6 +185,14 @@ export class NativeWorkerOwnershipLease {
 
 /** No admission is exposed until every previous durable owner has been reconciled. */
 export class NativeWorkerOwnership {
+  #routingAuthority: NativeJournalSupervisor | undefined;
+  #routingTransition = false;
+
+  async withJournalRoutingFence<T>(operation: (authority: NativeJournalSupervisor) => Promise<T>): Promise<T> {
+    if (this.#closed || this.#routingTransition || this.#allocations.size || this.#admitting.size || this.#leases.size || !this.#routingAuthority) throw new Error('WORKER_NATIVE_JOURNAL_ROUTING_CONFLICT');
+    this.#routingTransition = true;
+    try { return await operation(this.#routingAuthority); } finally {this.#routingTransition = false;}
+  }
   readonly #options: NativeWorkerOwnershipOptions;
   readonly #leases = new Set<NativeWorkerOwnershipLease>();
   readonly #admitting = new Set<string>();
@@ -247,8 +256,9 @@ export class NativeWorkerOwnership {
       throw new Error('WORKER_NATIVE_CAPACITY_INVALID');
     }
     const captured = { ...options, poolLimits: { ...options.poolLimits }, cgroupRoot: fs.realpathSync(options.cgroupRoot) };
-    return captured.store.withSupervisor(async () => {
+    return captured.store.withSupervisor(async authority => {
       const owner = new NativeWorkerOwnership(captured);
+      owner.#routingAuthority = authority;
       await owner.#recover();
       let result: T | undefined;
       const errors: unknown[] = [];
@@ -281,7 +291,7 @@ export class NativeWorkerOwnership {
       record = await this.#options.store.reserve(captured);
       if (record.phase !== 'reserved' || record.topology.kind !== 'aggregate.v1') throw new Error('WORKER_NATIVE_IDENTITY_ALREADY_USED');
       await this.#options.bindOriginalBoot?.(record);
-      if (this.#closed) throw new Error('WORKER_NATIVE_ADMISSION_FENCED');
+      if (this.#closed || this.#routingTransition) throw new Error('WORKER_NATIVE_ADMISSION_FENCED');
       const scope = NativeWorkerResourceScope.createReserved(this.#options.cgroupRoot, record.scopeName, requested);
       record = await this.#options.store.transition(record, 'allocated', { binding: scope.binding() });
       const lease = new NativeWorkerOwnershipLease(scope, record, this.#options, failed => {

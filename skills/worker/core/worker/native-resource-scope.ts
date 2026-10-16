@@ -168,8 +168,9 @@ export class NativeWorkerResourceScope {
   }
 
   /** Keep cumulative counters available until the caller seals its result. */
-  async terminateAndDrain(timeoutMs: number, signal?: AbortSignal): Promise<NativeWorkerResourceObservation> {
+  async terminateAndDrain(timeoutMs: number, signal?: AbortSignal, drainPollMs = 10): Promise<NativeWorkerResourceObservation> {
     positive(timeoutMs);
+    if (!Number.isInteger(drainPollMs) || drainPollMs < 10 || drainPollMs > 20) throw new Error('WORKER_NATIVE_DRAIN_POLL_INVALID');
     signal?.throwIfAborted();
     this.#checkIdentity();
     this.#quiescing = true;
@@ -181,7 +182,7 @@ export class NativeWorkerResourceScope {
       if (!observation.populated) return observation;
       const remaining = deadline - performance.now();
       if (remaining <= 0) throw new Error('WORKER_NATIVE_DRAIN_TIMEOUT');
-      await delay(Math.min(10, remaining), undefined, signal ? { signal } : undefined);
+      await delay(Math.min(drainPollMs, remaining), undefined, signal ? { signal } : undefined);
     }
   }
 

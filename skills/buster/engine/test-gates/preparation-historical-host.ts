@@ -1,3 +1,4 @@
+import { assignedWorkerCorePolicy, workerCoreExecutionOptions } from '@kubeclaw/plugin-foundation/config/worker-core-policy';
 import { Socket } from 'node:net';
 import { NativeWorkerControlChannel, WorkerAttemptExecutor, observeNativeWorkerResources, sha256Digest,
   type WorkerAttemptOperation } from '@kubeclaw/worker-core';
@@ -94,8 +95,8 @@ async function main(): Promise<void> {
     async measure() { return resourceMeasurement(scope); },
   };
   try {
-    const result = await new WorkerAttemptExecutor({ envelope, operation, signal: cancellation.signal,
-      retainLogs: false, receiptNamespace: 'buster-historical-import' }).execute();
+    const result = await new WorkerAttemptExecutor({ ...workerCoreExecutionOptions(assignedWorkerCorePolicy(process.env), 'buster-historical-import', false), envelope, operation, signal: cancellation.signal,
+      receiptNamespace: 'buster-historical-import' }).execute();
     process.stdout.write(JSON.stringify(result));
   } finally {
     channel.destroy();

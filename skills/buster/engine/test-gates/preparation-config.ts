@@ -1,3 +1,4 @@
+import type { WorkerCorePolicyCapture } from '@kubeclaw/plugin-foundation/config/worker-core-policy';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -13,11 +14,11 @@ export const preparationRuntimeConfig = '/run/kubeclaw-buster/config/runtime.jso
 const nativeTrustCaptures = new WeakMap<object, Readonly<{ poolFile: string; settings: string }>>();
 
 /** The root parent reads only bounded immutable configuration; it never constructs providers. */
-export function captureNativeBusterPreparationTrust(settings: BusterPreparationSettings, environment: NodeJS.ProcessEnv) {
+export function captureNativeBusterPreparationTrust(settings: BusterPreparationSettings, environment: NodeJS.ProcessEnv, workerCore?: WorkerCorePolicyCapture) {
   const poolFile = environment.BUSTER_NATIVE_POOL_POLICY_FILE;
   if (!poolFile) throw new Error('BUSTER_NATIVE_POOL_POLICY_REQUIRED');
-  const pool = readNativeWorkerPoolPolicy(poolFile, 'buster');
-  requireNativeWorkerRuntimeIdentity(pool.runtimeIdentityFile);
+  const pool = readNativeWorkerPoolPolicy(poolFile, 'buster', workerCore);
+  requireNativeWorkerRuntimeIdentity(pool.runtimeIdentityFile, workerCore);
   if (pool.limits.memoryBytes < settings.resourcePolicy.memoryBytes || pool.limits.tasks < settings.resourcePolicy.tasks
     || pool.maximumActiveScopes < settings.maximumActivePreparations) throw new Error('BUSTER_NATIVE_POOL_CAPACITY_INVALID');
   const engineContentDigest = environment.BUSTER_ENGINE_CONTENT_DIGEST;
@@ -28,14 +29,14 @@ export function captureNativeBusterPreparationTrust(settings: BusterPreparationS
   requireNativeWorkerLauncher(process.execPath);
   requireNativeWorkerLauncher(fileURLToPath(import.meta.resolve('@kubeclaw/plugin-foundation/isolation/plugin-sandbox')));
   const captured = Object.freeze({ pool, launcher, engineContentDigest: engineContentDigest!,
-    nodeIdentity: readNativeWorkerNodeIdentity(pool.nodeIdentityFile), tarExecutable: '/usr/bin/tar' });
+    nodeIdentity: readNativeWorkerNodeIdentity(pool.nodeIdentityFile, workerCore), tarExecutable: '/usr/bin/tar' });
   nativeTrustCaptures.set(captured, Object.freeze({ poolFile, settings: portableJson(settings) }));
   return captured;
 }
 
 /** Generated runtime read is separate from the recovery-only pool/node/code trust capture. */
-export function nativeBusterPreparationConfig(settings: BusterPreparationSettings, environment: NodeJS.ProcessEnv) {
-  const trusted = captureNativeBusterPreparationTrust(settings, environment);
+export function nativeBusterPreparationConfig(settings: BusterPreparationSettings, environment: NodeJS.ProcessEnv, workerCore?: WorkerCorePolicyCapture) {
+  const trusted = captureNativeBusterPreparationTrust(settings, environment, workerCore);
   const runtime = readRootConfiguration(settings.maximumInputBytes);
   const publicKeyName = runtime.sourceAttestationPublicKeyEnvironmentVariable;
   if (typeof publicKeyName !== 'string' || !/^[A-Z][A-Z0-9_]*$/u.test(publicKeyName)

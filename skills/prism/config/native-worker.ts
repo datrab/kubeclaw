@@ -40,14 +40,14 @@ export function nativePrismSupervisorConfig(config: ReturnType<typeof loadWorker
   };
   const engineContentDigest = prismEngineContentDigest(environment);
   if (!/^sha256:[a-f0-9]{64}$/u.test(engineContentDigest ?? '')) throw new Error('PRISM_NATIVE_ENGINE_CONTENT_IDENTITY_REQUIRED');
-  const pool = readNativeWorkerPoolPolicy(root('PRISM_NATIVE_POOL_POLICY_FILE'), 'prism');
+  const pool = readNativeWorkerPoolPolicy(root('PRISM_NATIVE_POOL_POLICY_FILE'), 'prism', config.workerCore);
   requirePrismResourcePoolCapacity(config.native.resourcePolicy, pool.limits);
-  requireNativeWorkerRuntimeIdentity(pool.runtimeIdentityFile);
+  requireNativeWorkerRuntimeIdentity(pool.runtimeIdentityFile, config.workerCore);
   return Object.freeze({
     ...prismSupervisorSettings(config),
     engineContentDigest: engineContentDigest!,
     cgroupRoot: pool.cgroupRoot, ownershipRoot: pool.ownershipRoot,
-    poolLimits: pool.limits, nodeIdentity: readNativeWorkerNodeIdentity(pool.nodeIdentityFile),
+    poolLimits: pool.limits, nodeIdentity: readNativeWorkerNodeIdentity(pool.nodeIdentityFile, config.workerCore),
     launcher: root('PRISM_NATIVE_LAUNCHER'),
     maximumActiveScopes: pool.maximumActiveScopes,
     browserPath: environment.PLAYWRIGHT_BROWSERS_PATH ?? '/ms-playwright',

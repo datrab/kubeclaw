@@ -26,14 +26,14 @@ export async function nativeWorkerHarness(t: { after(callback: () => Promise<voi
     'Publish the native test control endpoint in the selected prism-control author before boot');
   const native = nativePrismSupervisorConfig(config);
   requireNativeWorkerSupervisorAuthority(); requireNativeWorkerLauncher(native.launcher);
-  const store = new FileWorkerOwnershipStore(native.ownershipRoot, { maximumRecords: native.maximumRecords, maximumBytes: native.maximumBytes });
+  const store = new FileWorkerOwnershipStore(native.ownershipRoot, { maximumRecords: native.maximumRecords, maximumBytes: native.maximumBytes },undefined,config.workerCore);
   let release!: () => void;
   const finished = new Promise<void>(resolve => { release = resolve; });
   let admit!: (value: ManagedWorkerServer) => void;
   let reject!: (reason: unknown) => void;
   const admitted = new Promise<ManagedWorkerServer>((resolve, fail) => { admit = resolve; reject = fail; });
   const supervision = NativeWorkerOwnership.supervise({ ...native, store }, async owner => {
-    const execution = await nativePrismExecution(owner, native, config);
+    const execution = await nativePrismExecution(owner, native, config, capture.selectionReceipt.generationDigest);
     const server = createWorkerServer(auth, execution, config.ingress);
     admit(server);
     await finished;

@@ -5,7 +5,7 @@ import { NativeWorkerControlChannel } from '@kubeclaw/worker-core';
 import { rejectLegacyAuthors } from '@kubeclaw/plugin-foundation/config/swarm';
 import { verifyBusterChildBootReceipt } from '@kubeclaw/plugin-foundation/config/pipeline-boot.mjs';
 import { captureProductiveBusterLifetimeWitness } from '@kubeclaw/plugin-foundation/config/buster-lifetime.mjs';
-import { projectBusterSettings, projectBusterWorkerCore } from '@kubeclaw/plugin-foundation/config/pipeline-composition';
+import { selectedWorkerCorePolicy, projectBusterSettings, projectBusterWorkerCore } from '@kubeclaw/plugin-foundation/config/pipeline-composition';
 import { preparationSourceRoot } from './test-gates/preparation-config.ts';
 import { BusterPreparationClient } from './test-gates/preparation-client.ts';
 import { preparationServiceChannelLimits } from './test-gates/preparation-channel.ts';
@@ -41,7 +41,7 @@ try {
   lifetime.assertCurrent(); boot.startup.assertCurrent();
   const client = new BusterPreparationClient(channel, settings.preparation, preparationSourceRoot, messages);
   const runtime = loadProductionBusterRemotePlanRuntime(runtimeConfig, client, settings,
-    projectBusterWorkerCore(boot.capture).localRuntime, process.env);
+    projectBusterWorkerCore(boot.capture).localRuntime, process.env, selectedWorkerCorePolicy(boot.capture));
   try {
     const address = await runtime.start();
     process.stdout.write(`${JSON.stringify({ schemaVersion: 'buster-remote-runtime-ready.v1',

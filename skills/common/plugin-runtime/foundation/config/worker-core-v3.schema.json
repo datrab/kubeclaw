@@ -1,0 +1,217 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://kubeclaw.invalid/pipeline-component.v3/worker-core",
+  "$defs": {
+    "positiveTimerInteger": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 2147483647
+    }
+  },
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "owner",
+    "profiles"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "pipeline-component.v3"
+    },
+    "owner": {
+      "const": "worker-core"
+    },
+    "profiles": {
+      "type": "object",
+      "minProperties": 1,
+      "propertyNames": {
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+      },
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "settings",
+          "activation"
+        ],
+        "properties": {
+          "settings": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "localRuntime",
+              "runtime",
+              "scaffoldPublication"
+            ],
+            "properties": {
+              "localRuntime": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "drainTimeoutMs",
+                  "cancellationTimeoutMs",
+                  "replayLimit"
+                ],
+                "properties": {
+                  "drainTimeoutMs": {
+                    "$ref": "#/$defs/positiveTimerInteger"
+                  },
+                  "cancellationTimeoutMs": {
+                    "$ref": "#/$defs/positiveTimerInteger"
+                  },
+                  "replayLimit": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 1000000
+                  }
+                }
+              },
+              "runtime": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "drain_poll_ms",
+                  "input_bytes",
+                  "journal_diagnostic_units",
+                  "journal_record_bytes",
+                  "json_depth",
+                  "json_nodes",
+                  "journalLockHexDigits",
+                  "log_parts",
+                  "node_identity_file_bytes",
+                  "ownership_diagnostic_units",
+                  "pool_file_bytes",
+                  "retain_logs",
+                  "runtime_identity_file_bytes"
+                ],
+                "properties": {
+                  "drain_poll_ms": {
+                    "type": "integer",
+                    "minimum": 10,
+                    "maximum": 20
+                  },
+                  "input_bytes": {
+                    "type": "integer",
+                    "minimum": 12582912,
+                    "maximum": 16777216
+                  },
+                  "journal_diagnostic_units": {
+                    "type": "integer",
+                    "minimum": 2048,
+                    "maximum": 4096
+                  },
+                  "journal_record_bytes": {
+                    "type": "integer",
+                    "minimum": 32768,
+                    "maximum": 65536
+                  },
+                  "json_depth": {
+                    "type": "integer",
+                    "minimum": 48,
+                    "maximum": 64
+                  },
+                  "json_nodes": {
+                    "type": "integer",
+                    "minimum": 75000,
+                    "maximum": 100000
+                  },
+                  "journalLockHexDigits": {
+                    "type": "integer",
+                    "enum": [
+                      1,
+                      2
+                    ]
+                  },
+                  "log_parts": {
+                    "type": "integer",
+                    "minimum": 7500,
+                    "maximum": 10000
+                  },
+                  "node_identity_file_bytes": {
+                    "type": "integer",
+                    "minimum": 64,
+                    "maximum": 128
+                  },
+                  "ownership_diagnostic_units": {
+                    "type": "integer",
+                    "minimum": 2048,
+                    "maximum": 4096
+                  },
+                  "pool_file_bytes": {
+                    "type": "integer",
+                    "minimum": 32768,
+                    "maximum": 65536
+                  },
+                  "retain_logs": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "prism-native",
+                      "prism-agent",
+                      "buster-provider",
+                      "buster-preparation",
+                      "buster-historical-import",
+                      "buster-source-cleanup"
+                    ],
+                    "properties": {
+                      "prism-native": {
+                        "type": "boolean"
+                      },
+                      "prism-agent": {
+                        "type": "boolean"
+                      },
+                      "buster-provider": {
+                        "type": "boolean"
+                      },
+                      "buster-preparation": {
+                        "type": "boolean"
+                      },
+                      "buster-historical-import": {
+                        "type": "boolean"
+                      },
+                      "buster-source-cleanup": {
+                        "type": "boolean"
+                      }
+                    }
+                  },
+                  "runtime_identity_file_bytes": {
+                    "type": "integer",
+                    "minimum": 2048,
+                    "maximum": 4096
+                  }
+                }
+              },
+              "scaffoldPublication": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "maximumMemberBytes",
+                  "maximumPointerBytes"
+                ],
+                "properties": {
+                  "maximumMemberBytes": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 67108864
+                  },
+                  "maximumPointerBytes": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 4096
+                  }
+                }
+              }
+            }
+          },
+          "activation": {
+            "const": {
+              "core": "enabled",
+              "scaffoldPublication": "enabled"
+            }
+          }
+        }
+      }
+    }
+  }
+}

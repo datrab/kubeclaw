@@ -1,3 +1,4 @@
+import { captureWorkerCorePolicy, type WorkerCoreSettingsV3 } from './worker-core-policy.ts';
 import path from 'node:path';
 import { assertPipelineBootCapture, type PipelineBootCapture } from './pipeline-boot.mjs';
 import type { BusterSettings, PrismControlSettings, PrismStudioSettings, PrismWorkerSettings,
@@ -13,7 +14,7 @@ export function projectControlSettings(capture: PipelineBootCapture) {
   assertPipelineBootCapture(capture, 'prism-control');
   const { dispatchTimeoutMs, ...control } = capture.components['prism-control']!.settings as unknown as PrismControlSettings & { dispatchTimeoutMs: number };
   const execution = capture.components['prism-execution']!.settings as unknown as Pick<PrismNativeSettings, 'resourcePolicy' | 'maximumResultBytes' | 'enginePolicy'>;
-  return Object.freeze({ control: Object.freeze(control), native: Object.freeze({ ...execution, dispatchTimeoutMs }) });
+  return Object.freeze({ control: Object.freeze(control), native: Object.freeze({ ...execution, dispatchTimeoutMs }), workerCore: selectedWorkerCorePolicy(capture) });
 }
 
 export function projectWorkerSettings(capture: PipelineBootCapture) {
@@ -21,7 +22,7 @@ export function projectWorkerSettings(capture: PipelineBootCapture) {
   const worker = capture.components['prism-worker']!.settings as unknown as { ingress: PrismWorkerSettings; nonceDatabase: PrismNonceDatabaseSettings; supervisor: PrismSupervisorSettings };
   const control = capture.components['prism-control']!.settings as unknown as PrismControlSettings & { dispatchTimeoutMs: number };
   const execution = capture.components['prism-execution']!.settings as unknown as Pick<PrismNativeSettings, 'resourcePolicy' | 'maximumResultBytes' | 'enginePolicy'>;
-  return Object.freeze({ maximumArtifactAcknowledgmentBytes: control.maximumArtifactAcknowledgmentBytes, controlInternalUrl: control.controlInternalUrl, worker: worker.ingress, nonceDatabase: worker.nonceDatabase, native: Object.freeze({ ...execution,
+  return Object.freeze({ workerCore: selectedWorkerCorePolicy(capture), maximumArtifactAcknowledgmentBytes: control.maximumArtifactAcknowledgmentBytes, controlInternalUrl: control.controlInternalUrl, worker: worker.ingress, nonceDatabase: worker.nonceDatabase, native: Object.freeze({ ...execution,
     dispatchTimeoutMs: control.dispatchTimeoutMs, supervisor: worker.supervisor }) });
 }
 
@@ -48,4 +49,12 @@ export function projectIngestionSettings(capture: PipelineBootCapture): PrismIng
 export function projectAgentBridgeSettings(capture: PipelineBootCapture) {
   assertPipelineBootCapture(capture, 'prism-agent-bridge');
   return (capture.components['prism-control']!.settings as unknown as PrismControlSettings).agentBridge;
+}
+
+/** Only a verified boot capture may introduce a selected v3 policy. */
+export function selectedWorkerCorePolicy(capture: PipelineBootCapture) {
+  assertPipelineBootCapture(capture, capture.identity.callerId);
+  const component = capture.components['worker-core'];
+  return component?.schemaVersion === 'pipeline-component.v3'
+    ? captureWorkerCorePolicy(component.settings as unknown as WorkerCoreSettingsV3) : undefined;
 }

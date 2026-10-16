@@ -133,7 +133,10 @@ export function declaredPipelineServices(authorRoot, { role, namespace, releaseN
     'prism-control': ['prism-control', 'prism-execution'],
     'prism-worker': ['prism-worker', 'prism-control', 'prism-execution'], 'prism-studio': ['prism-studio'], 'prism-ingestion': ['prism-control'],
   }) : { 'buster-preparation': ['buster-engine'], 'buster-runtime': ['buster-engine', 'worker-core'] };
-  return Object.entries(owners).map(([callerId, consumed]) => {
+  const workerCoreV3 = JSON.parse(fs.readFileSync(path.join(authorRoot, 'components/worker-core.config.json'))).schemaVersion === 'pipeline-component.v3';
+  return Object.entries(owners).map(([callerId, originalConsumed]) => {
+    const consumed = workerCoreV3 && ['prism-control', 'prism-worker', 'buster-preparation'].includes(callerId)
+      ? [...originalConsumed, 'worker-core'] : originalConsumed;
     const container = role === 'buster' ? 'buster-v2-runtime' : callerId;
     const serviceInstanceId = `${namespace}/${releaseName}/${container}`;
     const bindings = root.bindings.filter(binding => binding.role === role && binding.instanceId === serviceInstanceId && consumed.includes(binding.owner))

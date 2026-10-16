@@ -12,7 +12,7 @@ import {
 } from '@kubeclaw/worker-core';
 import { rejectLegacyAuthors } from '@kubeclaw/plugin-foundation/config/swarm';
 import { verifyPipelineBootReceipt, captureBusterParentStartupHandoff } from '@kubeclaw/plugin-foundation/config/pipeline-boot.mjs';
-import { projectBusterSettings } from '@kubeclaw/plugin-foundation/config/pipeline-composition';
+import { projectBusterSettings, selectedWorkerCorePolicy } from '@kubeclaw/plugin-foundation/config/pipeline-composition';
 import { publishBusterStartupFile, type BusterStartupFileCapture } from '@kubeclaw/plugin-foundation/config/buster-startup-file.mjs';
 import { captureProductiveBusterLifetimeDescriptor, type BusterLifetimeDescriptor } from '@kubeclaw/plugin-foundation/config/buster-lifetime.mjs';
 import { nativeBusterPreparationConfig, preparationSourceRoot, preparationRuntimeConfig } from './preparation-config.ts';
@@ -42,13 +42,13 @@ async function runLockedBusterPreparationSupervisor(lifetime: BusterLifetimeDesc
   const boot = verifyPipelineBootReceipt('/run/pipeline-delivery', 'buster-preparation');
   const settings = projectBusterSettings(boot, 'buster-preparation').preparation;
   const handoff = captureBusterParentStartupHandoff(boot);
-  const native = nativeBusterPreparationConfig(settings, process.env);
+  const native = nativeBusterPreparationConfig(settings, process.env, selectedWorkerCorePolicy(boot));
   const source = await fs.lstat(preparationSourceRoot);
   if (!source.isDirectory() || source.uid !== 0 || (source.mode & 0o022) !== 0
     || await fs.realpath(preparationSourceRoot) !== preparationSourceRoot) throw new Error('BUSTER_NATIVE_SOURCE_ROOT_NOT_TRUSTED');
   const store = new FileWorkerOwnershipStore(native.pool.ownershipRoot, {
     maximumRecords: settings.maximumRecords, maximumBytes: settings.maximumOwnershipBytes,
-  });
+  }, undefined, selectedWorkerCorePolicy(boot));
   await NativeWorkerOwnership.supervise({ store, cgroupRoot: native.pool.cgroupRoot,
     nodeIdentity: native.nodeIdentity, drainTimeoutMs: settings.drainTimeoutMs,
     maximumActiveScopes: native.pool.maximumActiveScopes, poolLimits: native.pool.limits }, async owner => {
@@ -56,7 +56,8 @@ async function runLockedBusterPreparationSupervisor(lifetime: BusterLifetimeDesc
       maximumRecords: settings.maximumRecords, maximumStateBytes: settings.maximumMetadataBytes,
       maximumTotalBytes: settings.maximumJournalBytes, maximumInputBytes: settings.maximumInputBytes,
       maximumOutputBytes: settings.maximumOutputBytes, maximumResultBytes: settings.maximumResultBytes,
-    });
+    }, undefined, selectedWorkerCorePolicy(boot));
+    if (selectedWorkerCorePolicy(boot)) await owner.withJournalRoutingFence(authority => journal.configureRouting(authority, boot.selectionReceipt.generationDigest));
     const execution: PreparationExecutionOptions = {
       owner, journal, settings, ledger: new PreparationSourceLedger(preparationSourceRoot, settings),
       engineContentDigest: native.engineContentDigest,
@@ -65,6 +66,7 @@ async function runLockedBusterPreparationSupervisor(lifetime: BusterLifetimeDesc
         trustedSourceAuthority: native.trustedSourceAuthority, sourceAttestationPublicKey: native.sourceAttestationPublicKey },
     };
     await recoverNativeWorkerAttempts(journal, owner, preparationCleanupReconciliation(execution));
+    if (selectedWorkerCorePolicy(boot)) await owner.withJournalRoutingFence(authority => journal.configureRouting(authority, boot.selectionReceipt.generationDigest, true));
     await runHistoricalImport(execution, native.stateRoot);
     await recoverPreparationLedger(execution);
     await owner.assertRecoveryQuiescent();

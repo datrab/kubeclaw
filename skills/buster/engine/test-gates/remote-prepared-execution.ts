@@ -35,7 +35,7 @@ async function runPlan(options: BusterRemotePlanServiceOptions, job: PreparedPla
     workspaceRoot: paths.workspaceRoot, repositoryRoot: paths.repositoryRoot,
     sourceRepositoryRoot: paths.sourceRepositoryRoot, artifactRoot: paths.artifactRoot,
     observabilityRoot: paths.observabilityRoot, maximumConcurrency: job.maximumConcurrency,
-    grants: new Map(Object.entries(job.grants)), workerLocalRuntime: options.workerLocalRuntime, executionPolicy: options.executionPolicy,
+    ...(options.workerCore ? {workerCore: options.workerCore} : {}), grants: new Map(Object.entries(job.grants)), workerLocalRuntime: options.workerLocalRuntime, executionPolicy: options.executionPolicy,
     ...(capabilities.invoker ? { capabilityInvoker: capabilities.invoker } : {}), signal,
   }).run().finally(() => capabilities.shutdown());
 }

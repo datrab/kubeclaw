@@ -18,9 +18,9 @@ export async function runNativePrismWorker(): Promise<void> {
   requireNativeWorkerLauncher(native.launcher);
   const store = new FileWorkerOwnershipStore(native.ownershipRoot, {
     maximumRecords: native.maximumRecords, maximumBytes: native.maximumBytes,
-  });
+  }, undefined, config.workerCore);
   await NativeWorkerOwnership.supervise({ ...native, store }, async owner => {
-    const execution = await nativePrismExecution(owner, native, config);
+    const execution = await nativePrismExecution(owner, native, config, capture.selectionReceipt.generationDigest);
     const authentication = config.spiffeEnabled
       ? { mode: 'spiffe' as const, trustedControlSpiffeId: config.trustedControlSpiffeId }
       : { mode: 'hmac' as const, secret: config.workerSecret, database: new WorkerNonceDatabase(config.databaseUrl, config.nonceDatabase) };

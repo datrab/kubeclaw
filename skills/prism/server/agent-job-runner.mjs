@@ -1,3 +1,4 @@
+import { readWorkerCorePolicyCapture, workerCoreExecutionOptions } from '@kubeclaw/plugin-foundation/config/worker-core-policy';
 import { randomUUID } from 'node:crypto';
 import { checkWorkerResourceResultBinding } from '@kubeclaw/pipeline-worker-core-contract';
 import { WorkerAttemptExecutor } from '@kubeclaw/worker-core';
@@ -34,9 +35,12 @@ export class AgentJobRunner {
       if(!envelope || envelope.claim.workerId!==this.runnerId || envelope.attemptId!==job.fence || envelope.executionId!==job.id)throw new Error('Prism accepted attempt identity is missing or conflicts with claim');
       const localProfile=(await agentLauncherProfile());
       if(localProfile.profileDigest!==envelope.profile.profileDigest)throw new Error('Prism local launcher implementation does not match Control accepted profile');
-      if(envelope.operation.inputSchemaId!=='prism-agent-job.v3')throw new Error('Prism agent launcher requires centrally assigned settings');
+      if(!['prism-agent-job.v3','prism-agent-job.v4'].includes(envelope.operation.inputSchemaId))throw new Error('Prism agent launcher requires centrally assigned settings');
+      const workerCore=envelope.operation.inputSchemaId==='prism-agent-job.v4'
+        ? readWorkerCorePolicyCapture(envelope.operation.values.workerCore) : undefined;
+      if(!workerCore && Object.hasOwn(envelope.operation.values,'workerCore'))throw new Error('PRISM_AGENT_LEGACY_POLICY_OVERRIDE');
       const artifacts=new WorkerArtifactClient(new URL(this.controlUrl),'',true,envelope.operation.values.maximumArtifactAcknowledgmentBytes);
-      const executor=new WorkerAttemptExecutor({envelope,operation:new AgentProcess('openclaw',['agent','--agent','main','--session-key',job.session_key,'--message',agentPrompt(job),'--json','--timeout',String(Math.ceil(envelope.limits.timeoutMs / 1000))],envelope.operation.values.terminationGraceMs),signal:this.stopping.signal,receiptNamespace:'prism-agent-launcher',
+      const executor=new WorkerAttemptExecutor({...workerCoreExecutionOptions(workerCore,'prism-agent'),envelope,operation:new AgentProcess('openclaw',['agent','--agent','main','--session-key',job.session_key,'--message',agentPrompt(job),'--json','--timeout',String(Math.ceil(envelope.limits.timeoutMs / 1000))],envelope.operation.values.terminationGraceMs),signal:this.stopping.signal,receiptNamespace:'prism-agent-launcher',
         storeFullLog:(id,content,{signal})=>artifacts.upload(`${id}-logs`,'worker-log','text/plain',Buffer.from(content),signal)});
       outcome=await executor.execute();
       const binding=checkWorkerResourceResultBinding(envelope,outcome);

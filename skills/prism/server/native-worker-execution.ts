@@ -9,13 +9,16 @@ import type { loadWorkerConfig } from './worker-config.ts';
 
 /** Only serializable trusted configuration crosses into the per-attempt host. */
 export async function nativePrismExecution(owner: NativeWorkerOwnership, native: ReturnType<typeof nativePrismSupervisorConfig>,
-  config: ReturnType<typeof loadWorkerConfig>) {
+  config: ReturnType<typeof loadWorkerConfig>, captureGeneration?: string) {
+  if (config.workerCore && (!captureGeneration || !/^sha256:[a-f0-9]{64}$/u.test(captureGeneration))) throw new Error('WORKER_CORE_GENERATION_REQUIRED');
   const journal = new NativeAttemptJournal(path.join(native.ownershipRoot, 'attempt-journal'), {
     maximumRecords: native.maximumRecords, maximumStateBytes: native.maximumBytes,
     maximumTotalBytes: native.maximumJournalBytes, maximumInputBytes: native.maximumInputBytes,
     maximumOutputBytes: native.maximumOutputBytes, maximumResultBytes: native.maximumResultBytes,
-  });
+  }, undefined, config.workerCore);
+  if (config.workerCore) await owner.withJournalRoutingFence(authority => journal.configureRouting(authority, captureGeneration!));
   await recoverNativeWorkerAttempts(journal, owner);
+  if (config.workerCore) await owner.withJournalRoutingFence(authority => journal.configureRouting(authority, captureGeneration!, true));
   const command = nativePrismCommand(native, config);
   return {
     ready: () => owner.isReady(),

@@ -1,3 +1,4 @@
+import { assignedWorkerCorePolicy, workerCoreExecutionOptions } from '@kubeclaw/plugin-foundation/config/worker-core-policy';
 import { assertPreparationSlot } from './preparation-slots.ts';
 import { Socket } from 'node:net';
 import {
@@ -113,8 +114,8 @@ async function main(): Promise<void> {
     async measure() { return measureResources(scope); },
   };
   try {
-    const result = await new WorkerAttemptExecutor({ envelope, operation, signal: cancellation.signal,
-      retainLogs: false, receiptNamespace: 'buster-preparation-provisional' }).execute();
+    const result = await new WorkerAttemptExecutor({ ...workerCoreExecutionOptions(assignedWorkerCorePolicy(process.env), 'buster-preparation', false), envelope, operation, signal: cancellation.signal,
+      receiptNamespace: 'buster-preparation-provisional' }).execute();
     process.stdout.write(JSON.stringify(result));
   } finally {
     channel.destroy();

@@ -1,3 +1,4 @@
+import { readWorkerCorePolicyCapture, type WorkerCorePolicyCapture } from '@kubeclaw/plugin-foundation/config/worker-core-policy';
 import { readFile } from 'node:fs/promises';
 import { sha256Digest,sha256Text,workerAttemptSpecDigest,workerProfileDigest } from '@kubeclaw/worker-core';
 import type { WorkerAttemptEnvelopeV2,WorkerProfileV2,JsonValue } from '@kubeclaw/pipeline-worker-core-contract';
@@ -21,9 +22,10 @@ export async function agentLauncherProfile(): Promise<WorkerProfileV2> {
 }
 
 export type AgentLauncherConfig = Pick<import('@kubeclaw/plugin-foundation/config/swarm').PrismControlSettings,
-  'agentLauncher' | 'maximumArtifactAcknowledgmentBytes'>;
+  'agentLauncher' | 'maximumArtifactAcknowledgmentBytes'> & {readonly workerCore?: WorkerCorePolicyCapture};
 export async function agentAttempt(job:{id:string;fence:string;expires_at:string|Date;request_digest:string;request:Record<string,unknown>},runnerId:string, config: AgentLauncherConfig):Promise<WorkerAttemptEnvelopeV2> {
   const profile = await agentLauncherProfile();
+  const workerCore = config.workerCore === undefined ? undefined : readWorkerCorePolicyCapture(config.workerCore);
   const limits = config.agentLauncher.limits;
   if (!Number.isSafeInteger(config.agentLauncher.terminationGraceMs) || config.agentLauncher.terminationGraceMs < 1 || config.agentLauncher.terminationGraceMs > 2147483647
     || !Object.values(limits).every(value => Number.isSafeInteger(value) && value > 0 && value <= 2147483647)
@@ -34,7 +36,7 @@ export async function agentAttempt(job:{id:string;fence:string;expires_at:string
     attemptId:job.fence,attemptNumber:1,claim:{schemaVersion:'attempt-claim.v1' as const,claimId:job.fence,attemptId:job.fence,generation:1,workerId:runnerId,claimedAt:now,expiresAt},profile,packages:[],grantedCapabilities:[...profile.capabilities],
     limits:{...limits},
     resourceBudgets:{schemaVersion:'worker-resource-budgets.v1' as const,cpuTimeMs:{state:'unrequested' as const},maximumMemoryBytes:{state:'unrequested' as const},maximumProcesses:{state:'unrequested' as const}},
-    inputs:[],operation:{contractId:'kubeclaw.prism-agent-launcher@1',inputSchemaId:'prism-agent-job.v3',inputSchemaDigest:sha256Digest({type:'object',required:['jobId','requestDigest','request','maximumArtifactAcknowledgmentBytes','terminationGraceMs']}),values:{jobId:job.id,requestDigest:job.request_digest,request:job.request as JsonValue,maximumArtifactAcknowledgmentBytes:config.maximumArtifactAcknowledgmentBytes,terminationGraceMs:config.agentLauncher.terminationGraceMs}},
+    inputs:[],operation:{contractId:'kubeclaw.prism-agent-launcher@1',inputSchemaId:workerCore ? 'prism-agent-job.v4' : 'prism-agent-job.v3',inputSchemaDigest:sha256Digest({type:'object',required:['jobId','requestDigest','request','maximumArtifactAcknowledgmentBytes','terminationGraceMs', ...(workerCore ? ['workerCore'] : [])]}),values:{...(workerCore ? {workerCore: JSON.parse(JSON.stringify(workerCore)) as JsonValue} : {}), jobId:job.id,requestDigest:job.request_digest,request:job.request as JsonValue,maximumArtifactAcknowledgmentBytes:config.maximumArtifactAcknowledgmentBytes,terminationGraceMs:config.agentLauncher.terminationGraceMs}},
     cancellationId:job.fence,issuedAt:now,queueDeadline:expiresAt};
   return {...unsigned,attemptSpecDigest:workerAttemptSpecDigest(unsigned)};
 }

@@ -4,7 +4,7 @@ import { createHash, createPublicKey } from 'node:crypto';
 import { portableJson } from '@kubeclaw/plugin-sdk/values';
 import { requireNativeWorkerRuntimeIdentity, readNativeWorkerNodeIdentity, readNativeWorkerPoolPolicy } from '@kubeclaw/worker-core';
 import { assertPipelineBootCapture, type PipelineBootCapture } from '@kubeclaw/plugin-foundation/config/pipeline-boot.mjs';
-import { projectBusterSettings } from '@kubeclaw/plugin-foundation/config/pipeline-composition';
+import { projectBusterSettings, selectedWorkerCorePolicy } from '@kubeclaw/plugin-foundation/config/pipeline-composition';
 import { originalNativeBusterPoolFile, originalNativeBusterHostPoolFile, captureNativeBusterPreparationTrust, nativeBusterPreparationConfig } from './preparation-config.ts';
 
 type Native = ReturnType<typeof nativeBusterPreparationConfig>;
@@ -24,7 +24,7 @@ export function captureInitialBusterNativeHostFacts(boot: PipelineBootCapture, e
   if (process.getuid?.() !== 0) throw new Error('BUSTER_NATIVE_BOOT_FACT_SUPERVISOR_REQUIRED');
   assertPipelineBootCapture(boot, 'buster-preparation');
   const preparation = projectBusterSettings(boot, 'buster-preparation').preparation;
-  return captureOriginalBusterNativeHostFacts(boot, captureNativeBusterPreparationTrust(preparation, environment));
+  return captureOriginalBusterNativeHostFacts(boot, captureNativeBusterPreparationTrust(preparation, environment, selectedWorkerCorePolicy(boot)));
 }
 
 export function captureOriginalBusterNativeHostFacts(boot: PipelineBootCapture,

@@ -83,6 +83,18 @@
       "owner": "prism-control",
       "instanceId": "kubeclaw/agent-prism/prism-agent-bridge",
       "profileId": "standard"
+    },
+    {
+      "role": "prism",
+      "owner": "worker-core",
+      "instanceId": "kubeclaw/prism/prism-control",
+      "profileId": "standard"
+    },
+    {
+      "role": "prism",
+      "owner": "worker-core",
+      "instanceId": "kubeclaw/prism/prism-worker",
+      "profileId": "standard"
     }
   ]
 }

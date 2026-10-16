@@ -85,3 +85,24 @@ test('concurrent publishers serialize complete generations and an interrupted fi
  assert.ok(winner);assert.deepEqual(current,winner);
  assert.equal(scope(swarm).project,winner[1].project);
 }));
+
+test('actual CLI selected v3 publication captures limits; B cannot invalidate published A or partly commit',()=>fixture(({root,swarm,args})=>{
+ const owner=JSON.parse(fs.readFileSync(new URL('../../../../config/components/worker-core.config.json',import.meta.url),'utf8'));
+ const selectedFile=path.join(root,'worker-core.config.json');
+ const capture=()=>fs.writeFileSync(selectedFile,JSON.stringify(owner));capture();
+ const selected=(...extra)=>execFileSync(process.execPath,[...args,'--worker-core-file',selectedFile,'--worker-core-profile','standard',...extra],{encoding:'utf8',stdio:'pipe'});
+ selected('--apply');
+ const pointer=path.join(swarm,'.scaffold-publication/current.json');
+ const before=fs.readFileSync(pointer),manifest=JSON.parse(before);
+ assert.equal(manifest.schemaVersion,'published-json-pair.v2');
+ assert.equal(manifest.workerCore.settings.scaffoldPublication.maximumMemberBytes,67108864);
+ const original=readPublishedPair(swarm,names);
+ owner.profiles.standard.settings.scaffoldPublication.maximumMemberBytes=1;capture();
+ assert.throws(()=>selected('--apply'),/PUBLISHED_PAIR_SIZE_EXCEEDED/);
+ assert.deepEqual(fs.readFileSync(pointer),before);assert.deepEqual(readPublishedPair(swarm,names),original);
+ owner.profiles.standard.settings.scaffoldPublication.maximumMemberBytes=67108864;
+ owner.profiles.standard.settings.scaffoldPublication.maximumPointerBytes=1;capture();
+ assert.throws(()=>selected('--apply'),/PUBLISHED_PAIR_POINTER_SIZE_EXCEEDED/);
+ assert.deepEqual(fs.readFileSync(pointer),before);assert.deepEqual(readPublishedPair(swarm,names),original);
+ assert.throws(()=>execFileSync(process.execPath,[...args,'--worker-core-file',selectedFile,'--apply'],{stdio:'pipe'}),/Both --worker-core/);
+}));

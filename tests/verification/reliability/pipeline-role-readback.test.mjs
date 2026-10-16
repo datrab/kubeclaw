@@ -12,8 +12,8 @@ import { declaredPipelineServices, materializePipelineGeneration } from '../../.
 
 const repo = fileURLToPath(new URL('../../../', import.meta.url));
 const owners = ['prism-control', 'prism-studio', 'prism-worker', 'prism-execution', 'buster-engine', 'worker-core'];
-const consumed = { 'prism-studio': ['prism-studio'], 'prism-control': ['prism-control', 'prism-execution'],
-  'prism-worker': ['prism-worker', 'prism-control', 'prism-execution'], 'prism-ingestion': ['prism-control'] };
+const consumed = { 'prism-studio': ['prism-studio'], 'prism-control': ['prism-control', 'prism-execution', 'worker-core'],
+  'prism-worker': ['prism-worker', 'prism-control', 'prism-execution', 'worker-core'], 'prism-ingestion': ['prism-control'] };
 function write(file, value) { fs.mkdirSync(path.dirname(file), { recursive: true }); fs.writeFileSync(file, `${JSON.stringify(value, null, 2)}\n`); }
 
 test('real Prism role package readback drives all service caller compositions', async t => {
@@ -126,6 +126,12 @@ test('real Prism role package readback drives all service caller compositions', 
 
   changedControl.profiles.standard.settings.ingestionCleanupTimeoutMs = 1000;
   write(controlAuthor, changedControl);
+  const coreAuthor = path.join(author,'components/worker-core.config.json');
+  const changedCore = JSON.parse(fs.readFileSync(coreAuthor));
+  changedCore.profiles.standard.settings.runtime.input_bytes=12582912;
+  changedCore.profiles.standard.settings.runtime.retain_logs['prism-native']=false;
+  changedCore.profiles.standard.settings.runtime.retain_logs['prism-agent']=false;
+  write(coreAuthor,changedCore);
   const generationB = path.join(root, 'generation-B');
   await materializePipelineGeneration({ authorRoot: author, packageRoot: code, output: generationB, services, publisher });
   const studioMount = mounts['prism-studio'];
@@ -207,6 +213,10 @@ test('real Prism role package readback drives all service caller compositions', 
   assert.deepEqual(configs.worker.loadWorkerConfig(captures['prism-worker'], credentials).nonceDatabase, { timeoutMs: 750, maximumConnections: 4, maximumCleanupRows: 1000, idleTimeoutMs:10000, authenticationWindowMs: 300000 });
   const workerConfigB = configs.worker.loadWorkerConfig(workerB, credentials);
   const workerConfigA = configs.worker.loadWorkerConfig(captures['prism-worker'], credentials);
+  assert.equal(workerConfigA.workerCore.settings.runtime.input_bytes,16777216);
+  assert.equal(workerConfigB.workerCore.settings.runtime.input_bytes,12582912);
+  assert.equal(workerConfigA.workerCore.settings.runtime.retain_logs['prism-native'],true);
+  assert.equal(workerConfigB.workerCore.settings.runtime.retain_logs['prism-native'],false);
   assert.equal(workerConfigB.port, 18090);
   assert.equal(workerConfigB.shutdownTimeoutMs, 130000);
   assert.equal(workerConfigA.port, 8080);
@@ -718,6 +728,8 @@ test('real Buster role binds parent and child to the same runtime service and ow
     loaded.push(projection.projectBusterSettings(capture, service.callerId));
   }
   assert.deepEqual(loaded[0], loaded[1]);
+  assert.deepEqual(projection.selectedWorkerCorePolicy(captures['buster-preparation']),projection.selectedWorkerCorePolicy(captures['buster-runtime']));
+  assert.equal(projection.selectedWorkerCorePolicy(captures['buster-runtime']).settings.runtime.retain_logs['buster-provider'],false);
   const startup = await import(pathToFileURL(path.join(foundation, 'buster-startup.ts')).href);
   const engineLeaf = path.join(output, 'system/components/buster-engine.config.json');
   fs.chmodSync(engineLeaf, 0o664);
@@ -1033,10 +1045,11 @@ witness.assertCurrent(); witness.close();
   assert.throws(() => startup.createBusterStartupHandoff(captures['buster-preparation'], forgedChild), /ENGINE_SELECTION_MISMATCH/);
 
   const entry = JSON.parse(fs.readFileSync(path.join(author, 'pipeline.config.json')));
-  entry.bindings.push({ role: 'buster', owner: 'buster-engine', instanceId: 'other.runtime/parent', profileId: 'standard' });
+  entry.bindings.push({ role: 'buster', owner: 'buster-engine', instanceId: 'other.runtime/parent', profileId: 'standard' },
+    {role:'buster',owner:'worker-core',instanceId:'other.runtime/parent',profileId:'standard'});
   write(path.join(author, 'pipeline.config.json'), entry);
   const conflicting = services.map(service => service.callerId !== 'buster-preparation' ? service : {
-    ...service, serviceInstanceId: 'other.runtime/parent', bindings: [{ owner: 'buster-engine', instanceId: 'other.runtime/parent', profileId: 'standard' }],
+    ...service, serviceInstanceId: 'other.runtime/parent', bindings: [{ owner: 'buster-engine', instanceId: 'other.runtime/parent', profileId: 'standard' }, {owner:'worker-core',instanceId:'other.runtime/parent',profileId:'standard'}],
   });
   const invalidOutput = path.join(root, 'invalid-generation');
   await assert.rejects(materializePipelineGeneration({ authorRoot: author, packageRoot: code,

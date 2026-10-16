@@ -1,3 +1,4 @@
+import { readWorkerCorePolicyCapture, type WorkerCorePolicyCapture } from '@kubeclaw/plugin-foundation/config/worker-core-policy';
 import { validateBusterExecutionSettings, type BusterExecutionSettings } from '@kubeclaw/plugin-foundation/config/buster-execution';
 import { validateLocalWorkerRuntimePolicy, type LocalWorkerRuntimePolicy } from "@kubeclaw/worker-core";
 import { validateBusterAdmissionSettings, validateBusterDependencyReadinessSettings, type BusterAdmissionSettings, type BusterDependencyReadinessSettings } from '@kubeclaw/plugin-foundation/config/swarm';
@@ -29,6 +30,7 @@ export interface BusterRemotePlanServiceOptions extends BusterCapabilityRuntimeO
   readonly runtimeRoot: string;
   readonly admission: BusterAdmissionSettings;
   readonly workerLocalRuntime: LocalWorkerRuntimePolicy;
+  readonly workerCore?: WorkerCorePolicyCapture;
   readonly executionPolicy: BusterExecutionSettings;
   readonly dependencyReadiness: BusterDependencyReadinessSettings;
   readonly now?: () => Date;
@@ -69,7 +71,7 @@ export class BusterRemotePlanService {
     const workerLocalRuntime = validateLocalWorkerRuntimePolicy(options.workerLocalRuntime);
     const dependencyReadiness = validateBusterDependencyReadinessSettings(options.dependencyReadiness);
     if (!/^[a-f0-9]{40,64}$/u.test(options.workerRevision)) throw new Error('BUSTER_REMOTE_WORKER_REVISION_INVALID');
-    this.#options = { ...options, workerLocalRuntime, dependencyReadiness, executionPolicy };
+    this.#options = { ...options, ...(options.workerCore ? {workerCore: readWorkerCorePolicyCapture(options.workerCore)} : {}), workerLocalRuntime, dependencyReadiness, executionPolicy };
     this.#buildkitReadiness = configuredBuildkitReadiness(this.#options);
     this.#now = options.now ?? (() => new Date());
     const admission = validateBusterAdmissionSettings(options.admission);

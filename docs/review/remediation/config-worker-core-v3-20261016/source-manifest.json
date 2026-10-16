@@ -1,0 +1,358 @@
+[
+  {
+    "path": "charts/kubeclaw/files/pipeline/buster-topology.json",
+    "sha256": "2d5e52862fd31c4de791df0343479990decb43e8d8d9b30edae804f9f76b3ecc"
+  },
+  {
+    "path": "charts/prism/files/pipeline/prism-topology.json",
+    "sha256": "d4bd47c4787ea550f80cda24fc11e932762d1edde18fbc4304f0c0908f97976b"
+  },
+  {
+    "path": "config/components/worker-core.config.json",
+    "sha256": "82e3b9abf335daf031574dfcf5a35d44d2e9e1460877fbd6286f7a2418066b93"
+  },
+  {
+    "path": "config/pipeline.config.json",
+    "sha256": "089e0906b864338bca894c985b5173aa86ddf89250ca321f6f6e2792377050f3"
+  },
+  {
+    "path": "scripts/updates/pipeline-generation.mjs",
+    "sha256": "e8204e681a8b3af354ea75a8476ea37c3eb335f7ea9a6b6df4a85161e62ed006"
+  },
+  {
+    "path": "skills/buster/engine/remote-plan-cli.ts",
+    "sha256": "d5465bbc8fb67c2d119379d2aa044fa771d58cb886c9c61e7258271bac030071"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-boot-closure.ts",
+    "sha256": "ceaa4b10fadd48b2cd733d0d24b3be93fd576d80c463ca649d413b088f21e039"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-boot-store.ts",
+    "sha256": "9e0bc0d4b1fa49056bd68a193541bf83fff2db113f7b4efdb97159a8f5fe3b60"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-cleanup-host.ts",
+    "sha256": "ac2b0888dd1f631ccd56191680f5fd546481bf58b69281f1f48374b4368cc38c"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-config.ts",
+    "sha256": "3fa332c4886317b3ec64f444187707f79d98ad0c9ec1f492602909e10dc263ca"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-execution.ts",
+    "sha256": "0e31337fc926c5f0f225f0363d7b5d1225f05295df703703d1d7dd55990f71a6"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-historical-host.ts",
+    "sha256": "5474bbc6c687a90fc9e12bf3ce60535ff5b3dbd3e5d1e5fbd059cc00b097327f"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-host.ts",
+    "sha256": "9fdf4522fa618bcd6ffbb39de4c5dae439671bc4827180ffbe26db8085e9c527"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-supervisor.ts",
+    "sha256": "7c83cceecc70f0bdf7ade1d6e0d89b081bcbcb261d6a3d2d0273f091079b8ff7"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/production.ts",
+    "sha256": "87aec581314102eb728622184b28280ed323bf95b5032090802cc209c1f1964c"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/remote-plan-service.ts",
+    "sha256": "f29623cd9189b8d04c6e79e19b5a218167158a62d4ddc06d93fa038f891b2ffc"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/remote-prepared-execution.ts",
+    "sha256": "37dec882f4f15dd54aab067c7c43f299b8a831a22ef1613773741f0bc69667e5"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/runner-attempt-execution.ts",
+    "sha256": "44cc3cb60858d14f6d8c433d3891dd2e8967df8cf653d437955ce286d67bc3a9"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/runner-types.ts",
+    "sha256": "6ff182faa3df06619b0120ccc191adeec032d0cf07dff1025e01566d98b6170f"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/runner.ts",
+    "sha256": "9439d60ebc5c4a02644bdba612b045fe483fc084f676f9b91378558cce436a38"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+    "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/pipeline-composition.ts",
+    "sha256": "c380905efe31bdcd8cbd516bdba2d14cb836067d3cd00710ad3684d8d7a5e8b7"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/pipeline-generation.ts",
+    "sha256": "eca6368dc4785ce70f04cbe6c1b382d3d15f417e346a5463a6b78e7a7f90884c"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/published-pair.ts",
+    "sha256": "a9b5c66f769b5d1d3ef96da7d26e212a470243bed340216c7ae9fecba3abe584"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/swarm-bundle.ts",
+    "sha256": "23ef048b73ed2c3c2684d14935d37834a21d2a61ab9dd2407af6f7962680aef9"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/worker-core-policy.ts",
+    "sha256": "035c31b3a276d10f40ff0bd47d35d489fe532d6476f97941b7a4bddf41afa225"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/worker-core-v3.schema.json",
+    "sha256": "28333aa51934690724b2b60cf20724bbc0857169aca26ab72d3d21e67a4e33a6"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+    "sha256": "5624aa2b5f980a373ab30fdf012dee1346418ac3b2537244475f2a496d3766a0"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+    "sha256": "ab407b028f3a22c96a436c3bdf2a9dd7bfee3b36d301de919669d2d1bf25c553"
+  },
+  {
+    "path": "skills/nova/project_setup/tools/progress-scaffold-discovery.ts",
+    "sha256": "973356c5879817884b106fec74439899f0d494156fa34c078cc51e6cada6df82"
+  },
+  {
+    "path": "skills/nova/project_setup/tools/progress-scaffold-values.ts",
+    "sha256": "9a5462863de2655525b9288603cc11b6067ef281369279894b2871f5ca783acd"
+  },
+  {
+    "path": "skills/nova/project_setup/tools/progress-scaffold.ts",
+    "sha256": "11932da097aa7b216f7c619309a190394d120e7d57ec8ec652ed1158ee3a45b0"
+  },
+  {
+    "path": "skills/prism/config/native-worker.ts",
+    "sha256": "f044f3f1c0834bdbb757b5774d384a00179ac82da3d4ae1a0b4d2932aebe5277"
+  },
+  {
+    "path": "skills/prism/control/agent-jobs.ts",
+    "sha256": "59690a1923e7c2ca08d6d9f4bc3d65165aa3c63fa3f28e482f17d55207a55214"
+  },
+  {
+    "path": "skills/prism/engine/worker-envelope.ts",
+    "sha256": "7530bbecc0af3f56faf05c31ffb4db3d4d20471759d47df3c6fa321427acb127"
+  },
+  {
+    "path": "skills/prism/server/agent-attempt.ts",
+    "sha256": "39fba101b63cab9e30ab5d2808ffb918927706c5be7d36623fc29bda92c5dd42"
+  },
+  {
+    "path": "skills/prism/server/agent-job-runner.mjs",
+    "sha256": "11821ff194747cc4555e9d3c5b00a58f41eb6d70684a0c2461d65ba0c4fbb17e"
+  },
+  {
+    "path": "skills/prism/server/agent-routes.ts",
+    "sha256": "c9180a8fdeea6b1a818a79e8f9334b71f0fb9e23d9defac9c95ec462d9602768"
+  },
+  {
+    "path": "skills/prism/server/control-config.ts",
+    "sha256": "3302e14401c6a51bf50983cd88dae65a993980b0e5c867594a077bbdb47d892e"
+  },
+  {
+    "path": "skills/prism/server/native-worker-execution.ts",
+    "sha256": "7573e59944fc62603ef425c2f1f12ff5397aa510e9c5d1c5c20b7facd6cb199f"
+  },
+  {
+    "path": "skills/prism/server/native-worker-host.ts",
+    "sha256": "10955956dccba2909a49474dc96bd416f0921fc52b49ec69e5c9d57330e00eca"
+  },
+  {
+    "path": "skills/prism/server/worker-config.ts",
+    "sha256": "dbdaa47609004aa4300dd8efafdf60f6018a3f1d7e20bb50e521fe1510a829e4"
+  },
+  {
+    "path": "skills/prism/server/worker.ts",
+    "sha256": "6e117c614cdb4daccad316f66a2f51ac74584c6cddaddd2d563cf8dc6e8196c3"
+  },
+  {
+    "path": "skills/prism/tests/native/worker-harness.mts",
+    "sha256": "94a0adb5d93d6b34de7e59d176766e5f102b2839af82bb8a0e2f7b99fc820ffd"
+  },
+  {
+    "path": "skills/worker/core/worker/attempt-executor.ts",
+    "sha256": "d1e58559553099cd74e2d4aa6c604542addb48b2497c6b99978999e4ebc399a8"
+  },
+  {
+    "path": "skills/worker/core/worker/digest.ts",
+    "sha256": "d8c005287076f3ca2a6e84daf386c17ff77858ba5dc22cfebd3b9063d48ef402"
+  },
+  {
+    "path": "skills/worker/core/worker/local-runtime.ts",
+    "sha256": "17ce49a84ab0484d19e004aad2db4554804df89230c6884dd3c91c4892e962a4"
+  },
+  {
+    "path": "skills/worker/core/worker/log-decoder.ts",
+    "sha256": "7f777b5cd5f9544c6eb2f5933613d8d8379633742edf45cd235428805e7dea88"
+  },
+  {
+    "path": "skills/worker/core/worker/native-attempt-executor.ts",
+    "sha256": "4385f8b716de87e78d55b8f62176f424b36bfb6f93e6957eb01986853b73f38b"
+  },
+  {
+    "path": "skills/worker/core/worker/native-attempt-journal.ts",
+    "sha256": "7a31d08efed7f1549f350d3b305ca500858226ffc1ca1269b2446d46cd10e0a3"
+  },
+  {
+    "path": "skills/worker/core/worker/native-attempt-recovery.ts",
+    "sha256": "f6cef5767983497edd3865667a6b480e8ea75ed34b847bc4f44e8fae02d807bc"
+  },
+  {
+    "path": "skills/worker/core/worker/native-cleanup-reconciliation.ts",
+    "sha256": "9cfc04ab25b0eecea23b75b9dcdbb4b87f87854c8b00b7346e7eafa33a0118f4"
+  },
+  {
+    "path": "skills/worker/core/worker/native-control-channel.ts",
+    "sha256": "253ecc17f153e13e6e00aad3f842565ad17a01e85cac15db910d9b4b2ea9edc8"
+  },
+  {
+    "path": "skills/worker/core/worker/native-hierarchy-events.ts",
+    "sha256": "de9626356ef4ffca272c1bb534b29e13c9a3845df0ff34b33783b71320e32aea"
+  },
+  {
+    "path": "skills/worker/core/worker/native-journal-capacity.ts",
+    "sha256": "9310021abf4fbc915e65e5d3ea36fcf8d1b5acb92332c1d4415f00aa47308ff3"
+  },
+  {
+    "path": "skills/worker/core/worker/native-journal-routing.ts",
+    "sha256": "6c727f1034a0bd80e7dc5ca7edc59fd579c944c915ca884b116a8a8d7419d3aa"
+  },
+  {
+    "path": "skills/worker/core/worker/native-journal-state.ts",
+    "sha256": "d37ff559a57f6527c611a7de2396d9379e645f9b0725331d73db1a86cf7adf4b"
+  },
+  {
+    "path": "skills/worker/core/worker/native-node-identity.ts",
+    "sha256": "9f49dce052f3193b7273b0a927f8c9e13b2dd3f08ee5294998ab9802bc6c06c0"
+  },
+  {
+    "path": "skills/worker/core/worker/native-output-spool.ts",
+    "sha256": "da9b2bdd9f5b8f9418e98a451eb3275aadec117a9ee7ca733566e571870898c7"
+  },
+  {
+    "path": "skills/worker/core/worker/native-owned-children.ts",
+    "sha256": "631594461634def759607c57e4a7407c062bd1d5e837a28d7f83c5fcde5e204d"
+  },
+  {
+    "path": "skills/worker/core/worker/native-pool-policy.ts",
+    "sha256": "f0dbf3fe8c6e781366cf32279891149de19f07ae884a6ce5f0ca290ec4430c61"
+  },
+  {
+    "path": "skills/worker/core/worker/native-process-cancellation.ts",
+    "sha256": "1a3295c2220b82b3c06047151df0a6ca4e126f747f5eaabb57ddb5a753cd1bf5"
+  },
+  {
+    "path": "skills/worker/core/worker/native-process-control.ts",
+    "sha256": "3cfd56d48a2f70fb80072692a133fb0c8490bd94ec79d5270b771dd2e2717d2e"
+  },
+  {
+    "path": "skills/worker/core/worker/native-process-launches.ts",
+    "sha256": "4b4ea9b64584e43f2f791d97872430f0d2dcf917d5ada11c0a8bb2ecd4456155"
+  },
+  {
+    "path": "skills/worker/core/worker/native-process-output.ts",
+    "sha256": "5f7a4e1cdd9424fefe249775886a34019da38f7a76c486b38005c5d727f14350"
+  },
+  {
+    "path": "skills/worker/core/worker/native-resource-accounting.ts",
+    "sha256": "c92b1246dd5b924b71147314257063eba2478838abe4ddcb3a9453a2e9abe448"
+  },
+  {
+    "path": "skills/worker/core/worker/native-resource-observation.ts",
+    "sha256": "903fe22c2b9c51c908111361bb0423819a32ce1a4bf99b49b08cb39f490b976c"
+  },
+  {
+    "path": "skills/worker/core/worker/native-resource-pool.ts",
+    "sha256": "2a002b796bae216210186f258d32f5dd267ec10a4940f4d0fc2f12ea72bd93ee"
+  },
+  {
+    "path": "skills/worker/core/worker/native-resource-scope.ts",
+    "sha256": "a32f3b6ce5ac8a67f0d66f1151b7dc9b1d131ed1d2fcb4a4cdab2456767d44a2"
+  },
+  {
+    "path": "skills/worker/core/worker/native-result.ts",
+    "sha256": "11c8074a973fec8f764e64668e29c7d4907a5b9e605b6bad04cbfa0454d318bd"
+  },
+  {
+    "path": "skills/worker/core/worker/native-runtime-identity.ts",
+    "sha256": "e1a6f0ba2f54fbbedc2222060aabb7e808d9b4ba7e456263cf60ec8bde3100d0"
+  },
+  {
+    "path": "skills/worker/core/worker/native-supervisor-authority.ts",
+    "sha256": "2a710c00d935777144fc2055e435f1610bc66a01976a002047de751862e18650"
+  },
+  {
+    "path": "skills/worker/core/worker/native-worker-ownership.ts",
+    "sha256": "68f64e22754d71070507b6a5cc062dc1b3ca91a7537ba6584eafca7ae55f1651"
+  },
+  {
+    "path": "skills/worker/core/worker/native-worker-process.ts",
+    "sha256": "230bcb2eae21abc5d87187d682504155ef131a649b05f6662fb0d7a6db575182"
+  },
+  {
+    "path": "skills/worker/core/worker/ownership-capacity.ts",
+    "sha256": "2951db7fdc8094bd6b288cfaca8120d35d4f2325182f9abaee63df53dafca8d9"
+  },
+  {
+    "path": "skills/worker/core/worker/ownership-children.ts",
+    "sha256": "cda8cec00dc6046b0204d72c7cdda342d3a23934a4c26d00129352dbc07535b1"
+  },
+  {
+    "path": "skills/worker/core/worker/ownership-state.ts",
+    "sha256": "2afd5e0bb09da921a96d7c7fdedc11786fc96b4cd7f56946ee3cdb1563c45ea4"
+  },
+  {
+    "path": "skills/worker/core/worker/ownership-store.ts",
+    "sha256": "49b038f893b4405bfe8b147c726632b68864b614cf4ef3c83c024cd6bbdf93f9"
+  },
+  {
+    "path": "skills/worker/core/worker/phase-deadline.ts",
+    "sha256": "13ead2817f0277f8bb7a45b09f42df228bc62e8a0d43e26eabbcbc4f2365e456"
+  },
+  {
+    "path": "skills/worker/core/worker/resource-accounting.ts",
+    "sha256": "eaed91f776bfdbf1daac4faa7b2e56848b5f1b1f83d2737622048cd4426837ef"
+  },
+  {
+    "path": "skills/worker/core/worker/resource-reservations.ts",
+    "sha256": "781ba82f68942a44ba3c40652adffb76d8ceb369c279909dc826fbc361fd63e9"
+  },
+  {
+    "path": "skills/worker/core/worker/resource-result-fields.ts",
+    "sha256": "d109f3aedf33fca9a84eab376d96ae714ea4134af5cfebf7c495cb7db89e218f"
+  },
+  {
+    "path": "skills/worker/core/worker/trust.ts",
+    "sha256": "722f48ca75fb8546dbc4f4c9cc8eab8e31dfdfeafec7ea7aab587045e78b23fe"
+  },
+  {
+    "path": "tests/skills/nova/project_setup/scaffold-publication.test.mjs",
+    "sha256": "69a98688e0a2be33146644966a22b37be4b34a7f9c0ba66c8695daa857b41c6b"
+  },
+  {
+    "path": "tests/verification/contracts/worker-core-policy-fixture.mts",
+    "sha256": "4641523baa5b08f9f5d3c624d8d5215fc46400cb346e138053cbe7dfe2bbced5"
+  },
+  {
+    "path": "tests/verification/contracts/worker-core-policy.test.mts",
+    "sha256": "496eb116132c363a0e98eb27dd1cf2c5a99cfe961c0939123850f4cb41543ff4"
+  },
+  {
+    "path": "tests/verification/reliability/native-journal-capacity-fixture.mts",
+    "sha256": "10f54bc4a2c84dbbab0cb434e60e938949d9d50e7e917ea34e54dc4a5449228e"
+  },
+  {
+    "path": "tests/verification/reliability/pipeline-role-readback.test.mjs",
+    "sha256": "8feff8d2838c8de6bbe141f17c659ce54478d1fe9f990aa0ea10bee375820f76"
+  },
+  {
+    "path": "tests/verification/reliability/worker-native-journal.test.mts",
+    "sha256": "c39c3468c9ca3d24e3525e8f2a658d145de758379f3234515199791207d0ec90"
+  }
+]
