@@ -68,7 +68,7 @@ test("the generic worker carries an opaque Prism operation", async () => {
     },
     "worker:1",
   );
-  assert.match(result.schemaId, /engine-results\.v1\.json#\/\$defs\/render$/);
+  assert.match(result.schemaId, /engine-results\.v1\.json#\/\$defs\/renderSelected$/);
   assert.notEqual(result.schemaDigest, `sha256:${"a".repeat(64)}`);
   assert.match(String(result.values.html), /Deployments/);
 });

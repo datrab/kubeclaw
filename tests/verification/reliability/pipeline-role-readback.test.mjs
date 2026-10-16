@@ -127,6 +127,11 @@ test('real Prism role package readback drives all service caller compositions', 
 
   changedControl.profiles.standard.settings.ingestionCleanupTimeoutMs = 1000;
   write(controlAuthor, changedControl);
+  const executionAuthor = path.join(author,'components/prism-execution.config.json');
+  const changedExecution = JSON.parse(fs.readFileSync(executionAuthor));
+  Object.assign(changedExecution.profiles.standard.settings.enginePolicy.render,
+    {widths:{compact:320,regular:640,wide:1200},height:900,locale:'de-DE',timezoneId:'Europe/Berlin'});
+  write(executionAuthor,changedExecution);
   const coreAuthor = path.join(author,'components/worker-core.config.json');
   const changedCore = JSON.parse(fs.readFileSync(coreAuthor));
   changedCore.profiles.standard.settings.runtime.input_bytes=12582912;
@@ -213,6 +218,16 @@ test('real Prism role package readback drives all service caller compositions', 
   assert.deepEqual(configs.worker.loadWorkerConfig(workerB, credentials).nonceDatabase, { timeoutMs: 180, maximumConnections: 2, maximumCleanupRows: 7, idleTimeoutMs:0, authenticationWindowMs: 900 });
   assert.deepEqual(configs.worker.loadWorkerConfig(captures['prism-worker'], credentials).nonceDatabase, { timeoutMs: 750, maximumConnections: 4, maximumCleanupRows: 1000, idleTimeoutMs:10000, authenticationWindowMs: 300000 });
   const workerConfigB = configs.worker.loadWorkerConfig(workerB, credentials);
+  const deliveredEngine = await import(pathToFileURL(path.join(code,'skills/packages/prism-engine/engine/index.ts')).href);
+  const designDocument = JSON.parse(fs.readFileSync(path.join(repo,'contracts/prism/v1/fixtures/minimal-web.json')));
+  for (const [capture,locale,width,height] of [[captures['prism-worker'],'en-US',1440,1000],[workerB,'de-DE',1200,900]]) {
+    const policy=configs.worker.loadWorkerConfig(capture,credentials).native.enginePolicy;
+    assert.equal(policy.schemaVersion,'prism-engine-policy.v2');assert.ok(Object.isFrozen(policy.render.widths));
+    const instance=new deliveredEngine.PrismEngine(new deliveredEngine.DeterministicDesignProvider(),policy);
+    const result=await instance.execute({contract:'kubeclaw.prism-design-engine@1',operation:'render',input:{document:designDocument,view:'home',state:'default',viewport:'wide'},idempotencyKey:'delivered-render'});
+    assert.equal(result.output.renderer.locale,locale);assert.deepEqual(result.output.renderer.viewport,{width,height});
+  }
+
   const workerConfigA = configs.worker.loadWorkerConfig(captures['prism-worker'], credentials);
   assert.equal(workerConfigA.workerCore.settings.runtime.input_bytes,16777216);
   assert.equal(workerConfigB.workerCore.settings.runtime.input_bytes,12582912);

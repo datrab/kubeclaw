@@ -390,6 +390,12 @@ export function readSwarmBundle(file: string | undefined, selection?: SwarmSelec
           if (!Number.isSafeInteger(candidateLimit) || candidateLimit > 2147483647) throw new Error('CORPUS_CANDIDATE_LIMIT_INVALID');
         }
       }
+      if (owner === 'prism-execution' && (value as ComponentAuthor).schemaVersion === 'pipeline-component.v3') {
+        for (const profile of Object.values((value as ComponentAuthor).profiles)) {
+          const widths = (profile.settings.enginePolicy as { render: { widths: { compact: number; regular: number; wide: number } } }).render.widths;
+          if (!(widths.compact < widths.regular && widths.regular < widths.wide)) throw new Error('PRISM_RENDER_WIDTH_ORDER_INVALID');
+        }
+      }
       freezeJson(value);
       authors[owner] = value as ComponentAuthor;
     }

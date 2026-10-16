@@ -2682,6 +2682,145 @@
           ]
         }
       }
+    },
+    "prism-execution-v3": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "resourcePolicy",
+        "maximumResultBytes",
+        "enginePolicy"
+      ],
+      "properties": {
+        "resourcePolicy": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "cpuTimeMs",
+            "memoryBytes",
+            "tasks"
+          ],
+          "properties": {
+            "cpuTimeMs": {
+              "$ref": "#/$defs/positiveSafeInteger"
+            },
+            "memoryBytes": {
+              "$ref": "#/$defs/positiveSafeInteger"
+            },
+            "tasks": {
+              "$ref": "#/$defs/positiveSafeInteger"
+            }
+          }
+        },
+        "maximumResultBytes": {
+          "$ref": "#/$defs/positiveTimerInteger"
+        },
+        "enginePolicy": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "cache",
+            "maximumIngestTextCharacters",
+            "maximumAssetSourceCharacters",
+            "render",
+            "schemaVersion"
+          ],
+          "properties": {
+            "cache": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "maximumInFlight",
+                "maximumCompletedEntries",
+                "maximumCompletedBytes"
+              ],
+              "properties": {
+                "maximumInFlight": {
+                  "$ref": "#/$defs/positiveSafeInteger"
+                },
+                "maximumCompletedEntries": {
+                  "$ref": "#/$defs/positiveSafeInteger"
+                },
+                "maximumCompletedBytes": {
+                  "$ref": "#/$defs/positiveSafeInteger"
+                }
+              }
+            },
+            "maximumIngestTextCharacters": {
+              "$ref": "#/$defs/positiveSafeInteger"
+            },
+            "maximumAssetSourceCharacters": {
+              "$ref": "#/$defs/positiveSafeInteger"
+            },
+            "render": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "schemaVersion",
+                "widths",
+                "height",
+                "locale",
+                "timezoneId",
+                "reducedMotion"
+              ],
+              "properties": {
+                "schemaVersion": {
+                  "const": "prism-render-policy.v1"
+                },
+                "widths": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "compact",
+                    "regular",
+                    "wide"
+                  ],
+                  "properties": {
+                    "compact": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 390
+                    },
+                    "regular": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 768
+                    },
+                    "wide": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 1440
+                    }
+                  }
+                },
+                "height": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 1000
+                },
+                "locale": {
+                  "enum": [
+                    "en-US",
+                    "de-DE"
+                  ]
+                },
+                "timezoneId": {
+                  "enum": [
+                    "UTC",
+                    "Europe/Berlin"
+                  ]
+                },
+                "reducedMotion": {
+                  "const": "reduce"
+                }
+              }
+            },
+            "schemaVersion": {
+              "const": "prism-engine-policy.v2"
+            }
+          }
+        }
+      }
     }
   },
   "oneOf": [
@@ -2967,6 +3106,42 @@
             "properties": {
               "settings": {
                 "$ref": "#/$defs/prism-control-v4"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion",
+        "owner",
+        "profiles"
+      ],
+      "properties": {
+        "schemaVersion": {
+          "const": "pipeline-component.v3"
+        },
+        "owner": {
+          "const": "prism-execution"
+        },
+        "profiles": {
+          "type": "object",
+          "minProperties": 1,
+          "propertyNames": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+          },
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "settings"
+            ],
+            "properties": {
+              "settings": {
+                "$ref": "#/$defs/prism-execution-v3"
               }
             }
           }

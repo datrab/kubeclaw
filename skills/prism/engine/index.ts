@@ -154,7 +154,7 @@ export class PrismEngine {
         },
       };
     } else if (request.operation === "render") {
-      result = await renderOperation(document, request.input, this.policy.maximumAssetSourceCharacters, signal);
+      result = await renderOperation(document, request.input, this.policy, signal);
     } else if (request.operation === "evaluate") {
       const report = evaluate(document);
       result = {

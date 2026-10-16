@@ -42,6 +42,7 @@ const prismNames = [
 const engineNames = ["generate", "render", "evaluate", "ingest", "publish"];
 const upperFirst = (value) => `${value[0].toUpperCase()}${value.slice(1)}`;
 const validators = {};
+validators.validateEngineResultRenderSelected = `${engineResults.$id}#/$defs/renderSelected`;
 validators.validateBaselineManifestV2 = baselineV2.$id;
 
 for (const name of prismNames) {

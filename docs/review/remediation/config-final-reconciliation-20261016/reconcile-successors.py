@@ -122,7 +122,7 @@ engine_path = str((OUT / 'prism-engine-successors.json').relative_to(ROOT))
 engine_joins = read(engine_path)
 engine_exact = {r['id']: r for r in engine_joins['rows'] if r['status'] == 'EXACT_PRISM_ENGINE_SOURCE_JOIN'}
 engine_open = {r['id']: r for r in engine_joins['rows'] if r['status'] == 'PRISM_ENGINE_RECEIVING_IMPLEMENTATION_OPEN'}
-if len(engine_exact) != 5 or len(engine_open) != 8 or set(engine_exact) & (set(boundary_exact) | set(prism_exact) | set(delivery_exact) | set(adapter_exact) | set(mappings)):
+if len(engine_exact) != 12 or len(engine_open) != 1 or set(engine_exact) & (set(boundary_exact) | set(prism_exact) | set(delivery_exact) | set(adapter_exact) | set(mappings)):
     raise ValueError('Prism engine roster overlap/drift')
 attempt_path = str((OUT / 'prism-attempt-successors.json').relative_to(ROOT))
 attempt_joins = read(attempt_path)

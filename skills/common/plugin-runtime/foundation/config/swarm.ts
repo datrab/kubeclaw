@@ -92,7 +92,18 @@ export interface PrismSupervisorSettings {
   readonly drainTimeoutMs: number;
   readonly closeTimeoutMs: number;
 }
+export interface PrismRenderSettings {
+  readonly schemaVersion: 'prism-render-policy.v1';
+  readonly widths: Readonly<{ compact: number; regular: number; wide: number }>;
+  readonly height: number;
+  readonly locale: 'en-US' | 'de-DE';
+  readonly timezoneId: 'UTC' | 'Europe/Berlin';
+  readonly reducedMotion: 'reduce';
+}
 export interface PrismEngineSettings {
+  /** Absent only in the closed original component-v2 reader. */
+  readonly schemaVersion?: 'prism-engine-policy.v2';
+  readonly render?: PrismRenderSettings;
   readonly cache: Readonly<{ maximumInFlight: number; maximumCompletedEntries: number; maximumCompletedBytes: number }>;
   readonly maximumIngestTextCharacters: number;
   readonly maximumAssetSourceCharacters: number;

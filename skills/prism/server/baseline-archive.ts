@@ -1,3 +1,4 @@
+import { pngDimensions } from '../engine/render-dimensions.ts';
 import {
   assembleBaselineArchive,
   BASELINE_V2,
@@ -172,9 +173,10 @@ async function renderBaselinePreview(
   const ariaPath = `previews/${id}.aria.txt`;
   binaryFiles[previewPath] = rendered.screenshotBase64;
   textFiles[ariaPath] = rendered.ariaSnapshot;
-  const previewDigest = sha256(
-    Buffer.from(rendered.screenshotBase64, "base64"),
-  );
+  const screenshot = Buffer.from(rendered.screenshotBase64, "base64");
+  const selected = (rendered.renderer as { policyVersion?: unknown } | undefined)?.policyVersion === 'prism-render-policy.v1';
+  const dimensions = selected ? pngDimensions(screenshot) : { width: widths[viewport], height: 1000 };
+  const previewDigest = sha256(screenshot);
   const ariaDigest = sha256(rendered.ariaSnapshot);
   previewEntries.push({
     id,
@@ -182,8 +184,8 @@ async function renderBaselinePreview(
     state,
     viewport,
     path: previewPath,
-    width: widths[viewport],
-    height: 1000,
+    width: dimensions.width,
+    height: dimensions.height,
     fidelity: "intent",
     digest: previewDigest,
     ariaPath,

@@ -34,8 +34,8 @@ export function acceptWorkerResult(attempt: PrismWorkerAttempt, raw: unknown): P
   const result = boundWorkerResult(attempt, raw);
   if (result.state !== 'completed') throw new Error(result.error?.message ?? 'Prism worker attempt failed', { cause: result.error });
   const name = attempt.operation.values.operation as EngineOperation;
-  const expected = engineResultSchema(name);
   const specialist = result.specialistResult;
+  const expected = engineResultSchema(name, (specialist?.values.renderer as {policyVersion?: unknown} | undefined)?.policyVersion);
   if (!specialist || specialist.schemaId !== expected.schemaId || specialist.schemaDigest !== expected.schemaDigest) {
     throw new Error('PRISM_WORKER_RESULT_SCHEMA_MISMATCH');
   }

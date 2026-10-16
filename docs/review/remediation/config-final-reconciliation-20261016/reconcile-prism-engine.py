@@ -20,22 +20,26 @@ SPECS = {
  'AUTH-PRISM-INGEST-TEXT-LIMIT': ('maximumIngestTextCharacters', 'ingest.text.length', ENGINE, 'text.length > this.policy.maximumIngestTextCharacters'),
  'AUTH-PRISM-RENDER-ASSET-LENGTH': ('maximumAssetSourceCharacters', 'src.length', RENDER, 'src.length > maximumAssetSourceCharacters'),
 }
+RENDER_SPECS = {
+ 'AUTH-PRISM-RENDER-WIDTH-COMPACT': ('render/widths/compact', 'compact', RENDER, 'width: render.widths[viewport]'),
+ 'AUTH-PRISM-RENDER-WIDTH-REGULAR': ('render/widths/regular', 'regular', RENDER, 'width: render.widths[viewport]'),
+ 'AUTH-PRISM-RENDER-WIDTH-WIDE': ('render/widths/wide', 'wide', RENDER, 'width: render.widths[viewport]'),
+ 'AUTH-PRISM-RENDER-HEIGHT': ('render/height', 'height', RENDER, 'height: render.height'),
+ 'AUTH-PRISM-RENDER-LOCALE': ('render/locale', 'locale', RENDER, 'locale: render ? render.locale'),
+ 'AUTH-PRISM-RENDER-TIMEZONE': ('render/timezoneId', 'timezoneId', RENDER, 'timezoneId: render ? render.timezoneId'),
+ 'AUTH-PRISM-RENDER-MOTION': ('render/reducedMotion', 'reducedMotion', RENDER, 'reducedMotion: render ? render.reducedMotion'),
+}
+SPECS.update(RENDER_SPECS)
 RESIDUALS = {
  'AUTH-PRISM-DESIGN-PROVIDER-TIMEOUT': ('options.timeoutMs', 'skills/prism/engine/design-providers.ts', 'options.timeoutMs ?? 60_000'),
- 'AUTH-PRISM-RENDER-WIDTH-COMPACT': ('compact', RENDER, 'compact: 390'),
- 'AUTH-PRISM-RENDER-WIDTH-REGULAR': ('regular', RENDER, 'regular: 768'),
- 'AUTH-PRISM-RENDER-WIDTH-WIDE': ('wide', RENDER, 'wide: 1440'),
- 'AUTH-PRISM-RENDER-HEIGHT': ('height', RENDER, 'height: 1000'),
- 'AUTH-PRISM-RENDER-LOCALE': ('locale', RENDER, 'locale: "en-US"'),
- 'AUTH-PRISM-RENDER-TIMEZONE': ('timezoneId', RENDER, 'timezoneId: "UTC"'),
- 'AUTH-PRISM-RENDER-MOTION': ('reducedMotion', RENDER, 'reducedMotion: "reduce"'),
 }
+
 def build(ledgers=None, owner=None):
  roster = h.read(h.ROSTER)
  refs = {r['id']: r for r in roster['fields']}
  ledgers = h.read(str((OUT / 'fields.json').relative_to(h.ROOT))) if ledgers is None else ledgers
  owner = h.read(OWNER) if owner is None else owner
- if owner['owner'] != 'prism-execution' or owner['schemaVersion'] != 'pipeline-component.v2': raise ValueError('Owner/version drift')
+ if owner['owner'] != 'prism-execution' or owner['schemaVersion'] != 'pipeline-component.v3': raise ValueError('Owner/version drift')
  rows, seen, cache = [], set(), {}
  for row in ledgers:
   if not any(x['path'] == LEGACY for x in row['explicitConfigLocatorObservations']): continue
@@ -70,7 +74,14 @@ def build(ledgers=None, owner=None):
    if leaf.startswith('cache/'):
     common['cacheConstruction'] = h.anchor(ENGINE,'new EngineExecutionCache(this.policy.cache)')
     if leaf.endswith('maximumCompletedBytes'): common['aggregateEffect'] = h.anchor(CACHE,'this.#completedBytes + bytes > this.#limits.maximumCompletedBytes')
-   if identity == 'AUTH-PRISM-RENDER-ASSET-LENGTH': common['renderHandoff'] = h.anchor(ENGINE,'this.policy.maximumAssetSourceCharacters')
+   if identity == 'AUTH-PRISM-RENDER-ASSET-LENGTH': common['renderHandoff'] = h.anchor(ENGINE,'request.input, this.policy, signal')
+   if identity in RENDER_SPECS:
+    common['versionedReceiver'] = h.anchor('skills/prism/config/engine-policy.ts', 'export function readPrismRenderPolicy')
+    common['originalCodec'] = h.anchor('skills/prism/config/engine-policy.ts', "'cache,maximumAssetSourceCharacters,maximumIngestTextCharacters'")
+    common['resultVersion'] = h.anchor('contracts/prism/v1/src/digest.ts', "? 'renderSelected' : operation")
+    common['baselineImageDimensions'] = h.anchor('skills/prism/server/baseline-archive.ts', 'selected ? pngDimensions(screenshot)')
+    common['renderHandoff'] = h.anchor(ENGINE,'request.input, this.policy, signal')
+    common['applicability'] = 'Original effect/history/native obligations remain OPEN. Motion stays safety reduce-only; no alternate motion effect fabricated.'
   else:
    _, path, text = RESIDUALS[identity]
    common.update(status='PRISM_ENGINE_RECEIVING_IMPLEMENTATION_OPEN',selectedOwner=None,actualLiteral=h.anchor(path,text),
@@ -84,7 +95,7 @@ def build(ledgers=None, owner=None):
    if identity == 'AUTH-PRISM-RENDER-MOTION': common['metadataEffect'] = h.anchor(RENDER,'motion: "reduced"')
   rows.append(common)
  if seen != set(SPECS) | set(RESIDUALS): raise ValueError('Missing original engine fields')
- return {'scope':'13 original Prism engine fields; five existing selected source joins and eight explicit receiving residuals', 'inputs':[h.pin(h.ROSTER),h.pin(str((OUT/'fields.json').relative_to(h.ROOT)))], 'counts':{'originalFields':len(rows),'exactSourceJoins':len(SPECS),'remainingOriginalFields':len(RESIDUALS)},'rows':rows,'independentReview':'OPEN; native spawn unavailable; known unchanged EROFS helper not retried','fullAcceptance':'OPEN; all2409/6845/50/fullC0-C6 and original history/native/archive gates mandatory'}
+ return {'scope':'13 original Prism engine fields; twelve selected source joins and one explicit provider receiving residual', 'inputs':[h.pin(h.ROSTER),h.pin(str((OUT/'fields.json').relative_to(h.ROOT)))], 'counts':{'originalFields':len(rows),'exactSourceJoins':len(SPECS),'remainingOriginalFields':len(RESIDUALS)},'rows':rows,'independentReview':'OPEN; native spawn unavailable; known unchanged EROFS helper not retried','fullAcceptance':'OPEN; all2409/6845/50/fullC0-C6 and original history/native/archive gates mandatory'}
 def controls():
  baseline = build()
  ledger = h.read(str((OUT/'fields.json').relative_to(h.ROOT)))

@@ -26,8 +26,8 @@
     "originalTargetSelectedProfileSourceJoins": 2,
     "exactPrismAttemptSourceJoins": 17,
     "explicitPrismAttemptReceivingResiduals": 2,
-    "exactPrismEngineSourceJoins": 5,
-    "explicitPrismEngineReceivingResiduals": 8,
+    "exactPrismEngineSourceJoins": 12,
+    "explicitPrismEngineReceivingResiduals": 1,
     "exactPrismBoundarySourceJoins": 5,
     "explicitLiveRunnerResiduals": 1,
     "exactPrismServiceSourceJoins": 16,
@@ -2988,20 +2988,13 @@
       "fieldCount": 13,
       "exactExistingMappings": [],
       "remainingFieldIds": [
-        "AUTH-PRISM-DESIGN-PROVIDER-TIMEOUT",
-        "AUTH-PRISM-RENDER-WIDTH-COMPACT",
-        "AUTH-PRISM-RENDER-WIDTH-REGULAR",
-        "AUTH-PRISM-RENDER-WIDTH-WIDE",
-        "AUTH-PRISM-RENDER-HEIGHT",
-        "AUTH-PRISM-RENDER-LOCALE",
-        "AUTH-PRISM-RENDER-TIMEZONE",
-        "AUTH-PRISM-RENDER-MOTION"
+        "AUTH-PRISM-DESIGN-PROVIDER-TIMEOUT"
       ],
       "candidateSuccessors": [
         {
           "owner": {
             "path": "config/components/prism-execution.config.json",
-            "sha256": "744a8a83c1f49f1280efaeeed3f1dbf2908708d40cb9a5b8ea9699df68243fbb"
+            "sha256": "cf20314149f3683b4cab42d7bafe360311abcc53ea2cc78ca7a77e4163cac957"
           },
           "pointer": "/profiles/standard/settings/enginePolicy",
           "qualification": "Current component section; exact per-field source/recovery joins still required"
@@ -3038,7 +3031,7 @@
           "status": "EXACT_PRISM_ENGINE_SOURCE_JOIN",
           "selectedOwner": {
             "path": "config/components/prism-execution.config.json",
-            "sha256": "744a8a83c1f49f1280efaeeed3f1dbf2908708d40cb9a5b8ea9699df68243fbb"
+            "sha256": "cf20314149f3683b4cab42d7bafe360311abcc53ea2cc78ca7a77e4163cac957"
           },
           "selectedPointerTemplate": "/profiles/<original-selected>/settings/enginePolicy/cache/maximumInFlight",
           "authoredProfileLeaves": [
@@ -3058,10 +3051,10 @@
           },
           "immutableReceiver": {
             "path": "skills/prism/config/engine-policy.ts",
-            "sha256": "3b93fd4db1d7fe9591c182df2c1148883af5d3341bc84b5a45ace8ac741d1477",
+            "sha256": "0665d0f58b01833862b60a276f55fcbcb5f294aaccc924f79084979c87330fad",
             "anchor": "return Object.freeze({ cache: Object.freeze",
             "lines": [
-              14
+              15
             ]
           },
           "composition": {
@@ -3107,7 +3100,7 @@
           },
           "cacheConstruction": {
             "path": "skills/prism/engine/index.ts",
-            "sha256": "d82ceec16e140f1fc0b3ed20bc036d5d7386bbc019182bb4faa0c185b6d53c2b",
+            "sha256": "299b61bb55d2b49329c26c50ae19a4f116aec8fc98ce52b6b60af1edffe76a54",
             "anchor": "new EngineExecutionCache(this.policy.cache)",
             "lines": [
               77
@@ -3142,7 +3135,7 @@
           "status": "EXACT_PRISM_ENGINE_SOURCE_JOIN",
           "selectedOwner": {
             "path": "config/components/prism-execution.config.json",
-            "sha256": "744a8a83c1f49f1280efaeeed3f1dbf2908708d40cb9a5b8ea9699df68243fbb"
+            "sha256": "cf20314149f3683b4cab42d7bafe360311abcc53ea2cc78ca7a77e4163cac957"
           },
           "selectedPointerTemplate": "/profiles/<original-selected>/settings/enginePolicy/cache/maximumCompletedEntries",
           "authoredProfileLeaves": [
@@ -3162,10 +3155,10 @@
           },
           "immutableReceiver": {
             "path": "skills/prism/config/engine-policy.ts",
-            "sha256": "3b93fd4db1d7fe9591c182df2c1148883af5d3341bc84b5a45ace8ac741d1477",
+            "sha256": "0665d0f58b01833862b60a276f55fcbcb5f294aaccc924f79084979c87330fad",
             "anchor": "return Object.freeze({ cache: Object.freeze",
             "lines": [
-              14
+              15
             ]
           },
           "composition": {
@@ -3211,7 +3204,7 @@
           },
           "cacheConstruction": {
             "path": "skills/prism/engine/index.ts",
-            "sha256": "d82ceec16e140f1fc0b3ed20bc036d5d7386bbc019182bb4faa0c185b6d53c2b",
+            "sha256": "299b61bb55d2b49329c26c50ae19a4f116aec8fc98ce52b6b60af1edffe76a54",
             "anchor": "new EngineExecutionCache(this.policy.cache)",
             "lines": [
               77
@@ -3247,7 +3240,7 @@
           "status": "EXACT_PRISM_ENGINE_SOURCE_JOIN",
           "selectedOwner": {
             "path": "config/components/prism-execution.config.json",
-            "sha256": "744a8a83c1f49f1280efaeeed3f1dbf2908708d40cb9a5b8ea9699df68243fbb"
+            "sha256": "cf20314149f3683b4cab42d7bafe360311abcc53ea2cc78ca7a77e4163cac957"
           },
           "selectedPointerTemplate": "/profiles/<original-selected>/settings/enginePolicy/cache/maximumCompletedBytes",
           "authoredProfileLeaves": [
@@ -3268,10 +3261,10 @@
           },
           "immutableReceiver": {
             "path": "skills/prism/config/engine-policy.ts",
-            "sha256": "3b93fd4db1d7fe9591c182df2c1148883af5d3341bc84b5a45ace8ac741d1477",
+            "sha256": "0665d0f58b01833862b60a276f55fcbcb5f294aaccc924f79084979c87330fad",
             "anchor": "return Object.freeze({ cache: Object.freeze",
             "lines": [
-              14
+              15
             ]
           },
           "composition": {
@@ -3317,7 +3310,7 @@
           },
           "cacheConstruction": {
             "path": "skills/prism/engine/index.ts",
-            "sha256": "d82ceec16e140f1fc0b3ed20bc036d5d7386bbc019182bb4faa0c185b6d53c2b",
+            "sha256": "299b61bb55d2b49329c26c50ae19a4f116aec8fc98ce52b6b60af1edffe76a54",
             "anchor": "new EngineExecutionCache(this.policy.cache)",
             "lines": [
               77
@@ -3358,7 +3351,7 @@
           "status": "EXACT_PRISM_ENGINE_SOURCE_JOIN",
           "selectedOwner": {
             "path": "config/components/prism-execution.config.json",
-            "sha256": "744a8a83c1f49f1280efaeeed3f1dbf2908708d40cb9a5b8ea9699df68243fbb"
+            "sha256": "cf20314149f3683b4cab42d7bafe360311abcc53ea2cc78ca7a77e4163cac957"
           },
           "selectedPointerTemplate": "/profiles/<original-selected>/settings/enginePolicy/maximumIngestTextCharacters",
           "authoredProfileLeaves": [
@@ -3370,7 +3363,7 @@
           ],
           "actualEffect": {
             "path": "skills/prism/engine/index.ts",
-            "sha256": "d82ceec16e140f1fc0b3ed20bc036d5d7386bbc019182bb4faa0c185b6d53c2b",
+            "sha256": "299b61bb55d2b49329c26c50ae19a4f116aec8fc98ce52b6b60af1edffe76a54",
             "anchor": "text.length > this.policy.maximumIngestTextCharacters",
             "lines": [
               110
@@ -3378,10 +3371,10 @@
           },
           "immutableReceiver": {
             "path": "skills/prism/config/engine-policy.ts",
-            "sha256": "3b93fd4db1d7fe9591c182df2c1148883af5d3341bc84b5a45ace8ac741d1477",
+            "sha256": "0665d0f58b01833862b60a276f55fcbcb5f294aaccc924f79084979c87330fad",
             "anchor": "return Object.freeze({ cache: Object.freeze",
             "lines": [
-              14
+              15
             ]
           },
           "composition": {
@@ -3450,7 +3443,7 @@
           "status": "EXACT_PRISM_ENGINE_SOURCE_JOIN",
           "selectedOwner": {
             "path": "config/components/prism-execution.config.json",
-            "sha256": "744a8a83c1f49f1280efaeeed3f1dbf2908708d40cb9a5b8ea9699df68243fbb"
+            "sha256": "cf20314149f3683b4cab42d7bafe360311abcc53ea2cc78ca7a77e4163cac957"
           },
           "selectedPointerTemplate": "/profiles/<original-selected>/settings/enginePolicy/maximumAssetSourceCharacters",
           "authoredProfileLeaves": [
@@ -3462,18 +3455,18 @@
           ],
           "actualEffect": {
             "path": "skills/prism/engine/render-operation.ts",
-            "sha256": "bfe7066cdc020dd26594437e1d301167bac11051d08ce76154457108f4d0d579",
+            "sha256": "e1e62f8f831d4f3d7de2883dc1772950c6f00246b1f2ed6a99d4930460659726",
             "anchor": "src.length > maximumAssetSourceCharacters",
             "lines": [
-              27
+              29
             ]
           },
           "immutableReceiver": {
             "path": "skills/prism/config/engine-policy.ts",
-            "sha256": "3b93fd4db1d7fe9591c182df2c1148883af5d3341bc84b5a45ace8ac741d1477",
+            "sha256": "0665d0f58b01833862b60a276f55fcbcb5f294aaccc924f79084979c87330fad",
             "anchor": "return Object.freeze({ cache: Object.freeze",
             "lines": [
-              14
+              15
             ]
           },
           "composition": {
@@ -3519,17 +3512,954 @@
           },
           "renderHandoff": {
             "path": "skills/prism/engine/index.ts",
-            "sha256": "d82ceec16e140f1fc0b3ed20bc036d5d7386bbc019182bb4faa0c185b6d53c2b",
-            "anchor": "this.policy.maximumAssetSourceCharacters",
+            "sha256": "299b61bb55d2b49329c26c50ae19a4f116aec8fc98ce52b6b60af1edffe76a54",
+            "anchor": "request.input, this.policy, signal",
             "lines": [
               157
             ]
           }
+        },
+        {
+          "id": "AUTH-PRISM-RENDER-WIDTH-COMPACT",
+          "original": "D228#/rows/2346",
+          "originalObjectSha256": "e221d7bdc9fc07e2303467328c325496ec951a163c0de781a6ab3147e5102525",
+          "class": "operator-setting",
+          "owner": "prism-engine",
+          "caseIds": [
+            "AUTH-PRISM-RENDER-WIDTH-COMPACT-EFFECT"
+          ],
+          "historicalLocator": "config/engines/prism.config.json",
+          "originalSource": {
+            "path": "skills/prism/engine/render-operation.ts",
+            "field": "compact",
+            "sha256": "63b95de9640f47bce2b04e929232e0f7dd617c11ba08152f8e428db6a601d501",
+            "lines": [
+              73,
+              102
+            ]
+          },
+          "originalHistoryObligation": "Preserve original durable job/operation/product subject/claim and caller state; policy generation changes do not authorize repeat side effects.",
+          "runtimeAcceptance": "NOT_INFERRED; original cases/results unchanged",
+          "historyAcceptance": "OPEN; startup/assigned-child snapshot is NOT durable original-attempt recovery proof",
+          "status": "EXACT_PRISM_ENGINE_SOURCE_JOIN",
+          "selectedOwner": {
+            "path": "config/components/prism-execution.config.json",
+            "sha256": "cf20314149f3683b4cab42d7bafe360311abcc53ea2cc78ca7a77e4163cac957"
+          },
+          "selectedPointerTemplate": "/profiles/<original-selected>/settings/enginePolicy/render/widths/compact",
+          "authoredProfileLeaves": [
+            {
+              "profile": "standard",
+              "pointer": "/profiles/standard/settings/enginePolicy/render/widths/compact",
+              "valueSha256": "48a1a756f2d83f1dc57bbf14052b70a6f40d0fceed6662812e34903a9fe90924"
+            }
+          ],
+          "actualEffect": {
+            "path": "skills/prism/engine/render-operation.ts",
+            "sha256": "e1e62f8f831d4f3d7de2883dc1772950c6f00246b1f2ed6a99d4930460659726",
+            "anchor": "width: render.widths[viewport]",
+            "lines": [
+              190
+            ]
+          },
+          "immutableReceiver": {
+            "path": "skills/prism/config/engine-policy.ts",
+            "sha256": "0665d0f58b01833862b60a276f55fcbcb5f294aaccc924f79084979c87330fad",
+            "anchor": "return Object.freeze({ cache: Object.freeze",
+            "lines": [
+              15
+            ]
+          },
+          "composition": {
+            "path": "skills/common/plugin-runtime/foundation/config/pipeline-composition.ts",
+            "sha256": "c380905efe31bdcd8cbd516bdba2d14cb836067d3cd00710ad3684d8d7a5e8b7",
+            "anchor": "'resourcePolicy' | 'maximumResultBytes' | 'enginePolicy'",
+            "lines": [
+              16,
+              24
+            ]
+          },
+          "assignedChild": {
+            "path": "skills/prism/server/native-worker-execution.ts",
+            "sha256": "7573e59944fc62603ef425c2f1f12ff5397aa510e9c5d1c5c20b7facd6cb199f",
+            "anchor": "PRISM_NATIVE_ASSIGNED_ENGINE_POLICY: JSON.stringify(config.native.enginePolicy)",
+            "lines": [
+              48
+            ]
+          },
+          "assignedReceiver": {
+            "path": "skills/prism/config/native-worker.ts",
+            "sha256": "f044f3f1c0834bdbb757b5774d384a00179ac82da3d4ae1a0b4d2932aebe5277",
+            "anchor": "const enginePolicy = readPrismEnginePolicy(assigned)",
+            "lines": [
+              27
+            ]
+          },
+          "actualCaller": {
+            "path": "skills/prism/server/native-worker-host.ts",
+            "sha256": "10955956dccba2909a49474dc96bd416f0921fc52b49ec69e5c9d57330e00eca",
+            "anchor": "new PrismEngine(new DeterministicDesignProvider(), config.enginePolicy)",
+            "lines": [
+              25
+            ]
+          },
+          "startupCapture": {
+            "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+            "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+            "anchor": "verifiedCaptures.add(result)",
+            "lines": [
+              143
+            ]
+          },
+          "versionedReceiver": {
+            "path": "skills/prism/config/engine-policy.ts",
+            "sha256": "0665d0f58b01833862b60a276f55fcbcb5f294aaccc924f79084979c87330fad",
+            "anchor": "export function readPrismRenderPolicy",
+            "lines": [
+              21
+            ]
+          },
+          "originalCodec": {
+            "path": "skills/prism/config/engine-policy.ts",
+            "sha256": "0665d0f58b01833862b60a276f55fcbcb5f294aaccc924f79084979c87330fad",
+            "anchor": "'cache,maximumAssetSourceCharacters,maximumIngestTextCharacters'",
+            "lines": [
+              6
+            ]
+          },
+          "resultVersion": {
+            "path": "contracts/prism/v1/src/digest.ts",
+            "sha256": "aa9a1d1c9e0060e297ce752b87155e28c63959450300daa34c7dbf2f985de68e",
+            "anchor": "? 'renderSelected' : operation",
+            "lines": [
+              12
+            ]
+          },
+          "baselineImageDimensions": {
+            "path": "skills/prism/server/baseline-archive.ts",
+            "sha256": "df4fe972443a266426b0c3bab69b773bdf77301bf9b40647c30aa87d7e99de9d",
+            "anchor": "selected ? pngDimensions(screenshot)",
+            "lines": [
+              178
+            ]
+          },
+          "renderHandoff": {
+            "path": "skills/prism/engine/index.ts",
+            "sha256": "299b61bb55d2b49329c26c50ae19a4f116aec8fc98ce52b6b60af1edffe76a54",
+            "anchor": "request.input, this.policy, signal",
+            "lines": [
+              157
+            ]
+          },
+          "applicability": "Original effect/history/native obligations remain OPEN. Motion stays safety reduce-only; no alternate motion effect fabricated."
+        },
+        {
+          "id": "AUTH-PRISM-RENDER-WIDTH-REGULAR",
+          "original": "D228#/rows/2347",
+          "originalObjectSha256": "40df5bba8650cee11b0d1d9631631604823238ae81112006a09f50ccc0e55da4",
+          "class": "operator-setting",
+          "owner": "prism-engine",
+          "caseIds": [
+            "AUTH-PRISM-RENDER-WIDTH-REGULAR-EFFECT"
+          ],
+          "historicalLocator": "config/engines/prism.config.json",
+          "originalSource": {
+            "path": "skills/prism/engine/render-operation.ts",
+            "field": "regular",
+            "sha256": "63b95de9640f47bce2b04e929232e0f7dd617c11ba08152f8e428db6a601d501",
+            "lines": [
+              73,
+              102
+            ]
+          },
+          "originalHistoryObligation": "Preserve original durable job/operation/product subject/claim and caller state; policy generation changes do not authorize repeat side effects.",
+          "runtimeAcceptance": "NOT_INFERRED; original cases/results unchanged",
+          "historyAcceptance": "OPEN; startup/assigned-child snapshot is NOT durable original-attempt recovery proof",
+          "status": "EXACT_PRISM_ENGINE_SOURCE_JOIN",
+          "selectedOwner": {
+            "path": "config/components/prism-execution.config.json",
+            "sha256": "cf20314149f3683b4cab42d7bafe360311abcc53ea2cc78ca7a77e4163cac957"
+          },
+          "selectedPointerTemplate": "/profiles/<original-selected>/settings/enginePolicy/render/widths/regular",
+          "authoredProfileLeaves": [
+            {
+              "profile": "standard",
+              "pointer": "/profiles/standard/settings/enginePolicy/render/widths/regular",
+              "valueSha256": "f7b856c054de7ccced087ad4f9413380ec494e40abc818b840aaad990ca3c5bc"
+            }
+          ],
+          "actualEffect": {
+            "path": "skills/prism/engine/render-operation.ts",
+            "sha256": "e1e62f8f831d4f3d7de2883dc1772950c6f00246b1f2ed6a99d4930460659726",
+            "anchor": "width: render.widths[viewport]",
+            "lines": [
+              190
+            ]
+          },
+          "immutableReceiver": {
+            "path": "skills/prism/config/engine-policy.ts",
+            "sha256": "0665d0f58b01833862b60a276f55fcbcb5f294aaccc924f79084979c87330fad",
+            "anchor": "return Object.freeze({ cache: Object.freeze",
+            "lines": [
+              15
+            ]
+          },
+          "composition": {
+            "path": "skills/common/plugin-runtime/foundation/config/pipeline-composition.ts",
+            "sha256": "c380905efe31bdcd8cbd516bdba2d14cb836067d3cd00710ad3684d8d7a5e8b7",
+            "anchor": "'resourcePolicy' | 'maximumResultBytes' | 'enginePolicy'",
+            "lines": [
+              16,
+              24
+            ]
+          },
+          "assignedChild": {
+            "path": "skills/prism/server/native-worker-execution.ts",
+            "sha256": "7573e59944fc62603ef425c2f1f12ff5397aa510e9c5d1c5c20b7facd6cb199f",
+            "anchor": "PRISM_NATIVE_ASSIGNED_ENGINE_POLICY: JSON.stringify(config.native.enginePolicy)",
+            "lines": [
+              48
+            ]
+          },
+          "assignedReceiver": {
+            "path": "skills/prism/config/native-worker.ts",
+            "sha256": "f044f3f1c0834bdbb757b5774d384a00179ac82da3d4ae1a0b4d2932aebe5277",
+            "anchor": "const enginePolicy = readPrismEnginePolicy(assigned)",
+            "lines": [
+              27
+            ]
+          },
+          "actualCaller": {
+            "path": "skills/prism/server/native-worker-host.ts",
+            "sha256": "10955956dccba2909a49474dc96bd416f0921fc52b49ec69e5c9d57330e00eca",
+            "anchor": "new PrismEngine(new DeterministicDesignProvider(), config.enginePolicy)",
+            "lines": [
+              25
+            ]
+          },
+          "startupCapture": {
+            "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+            "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+            "anchor": "verifiedCaptures.add(result)",
+            "lines": [
+              143
+            ]
+          },
+          "versionedReceiver": {
+            "path": "skills/prism/config/engine-policy.ts",
+            "sha256": "0665d0f58b01833862b60a276f55fcbcb5f294aaccc924f79084979c87330fad",
+            "anchor": "export function readPrismRenderPolicy",
+            "lines": [
+              21
+            ]
+          },
+          "originalCodec": {
+            "path": "skills/prism/config/engine-policy.ts",
+            "sha256": "0665d0f58b01833862b60a276f55fcbcb5f294aaccc924f79084979c87330fad",
+            "anchor": "'cache,maximumAssetSourceCharacters,maximumIngestTextCharacters'",
+            "lines": [
+              6
+            ]
+          },
+          "resultVersion": {
+            "path": "contracts/prism/v1/src/digest.ts",
+            "sha256": "aa9a1d1c9e0060e297ce752b87155e28c63959450300daa34c7dbf2f985de68e",
+            "anchor": "? 'renderSelected' : operation",
+            "lines": [
+              12
+            ]
+          },
+          "baselineImageDimensions": {
+            "path": "skills/prism/server/baseline-archive.ts",
+            "sha256": "df4fe972443a266426b0c3bab69b773bdf77301bf9b40647c30aa87d7e99de9d",
+            "anchor": "selected ? pngDimensions(screenshot)",
+            "lines": [
+              178
+            ]
+          },
+          "renderHandoff": {
+            "path": "skills/prism/engine/index.ts",
+            "sha256": "299b61bb55d2b49329c26c50ae19a4f116aec8fc98ce52b6b60af1edffe76a54",
+            "anchor": "request.input, this.policy, signal",
+            "lines": [
+              157
+            ]
+          },
+          "applicability": "Original effect/history/native obligations remain OPEN. Motion stays safety reduce-only; no alternate motion effect fabricated."
+        },
+        {
+          "id": "AUTH-PRISM-RENDER-WIDTH-WIDE",
+          "original": "D228#/rows/2348",
+          "originalObjectSha256": "929455f8a6b5aa1f1c1383fd2473c1b681541e720a72237818abecd6284fca8b",
+          "class": "operator-setting",
+          "owner": "prism-engine",
+          "caseIds": [
+            "AUTH-PRISM-RENDER-WIDTH-WIDE-EFFECT"
+          ],
+          "historicalLocator": "config/engines/prism.config.json",
+          "originalSource": {
+            "path": "skills/prism/engine/render-operation.ts",
+            "field": "wide",
+            "sha256": "63b95de9640f47bce2b04e929232e0f7dd617c11ba08152f8e428db6a601d501",
+            "lines": [
+              73,
+              102
+            ]
+          },
+          "originalHistoryObligation": "Preserve original durable job/operation/product subject/claim and caller state; policy generation changes do not authorize repeat side effects.",
+          "runtimeAcceptance": "NOT_INFERRED; original cases/results unchanged",
+          "historyAcceptance": "OPEN; startup/assigned-child snapshot is NOT durable original-attempt recovery proof",
+          "status": "EXACT_PRISM_ENGINE_SOURCE_JOIN",
+          "selectedOwner": {
+            "path": "config/components/prism-execution.config.json",
+            "sha256": "cf20314149f3683b4cab42d7bafe360311abcc53ea2cc78ca7a77e4163cac957"
+          },
+          "selectedPointerTemplate": "/profiles/<original-selected>/settings/enginePolicy/render/widths/wide",
+          "authoredProfileLeaves": [
+            {
+              "profile": "standard",
+              "pointer": "/profiles/standard/settings/enginePolicy/render/widths/wide",
+              "valueSha256": "a4ff3ad278c7b0575a8e32ae08eebfb327e37762cb1a2caa793c431b9b2ca2c6"
+            }
+          ],
+          "actualEffect": {
+            "path": "skills/prism/engine/render-operation.ts",
+            "sha256": "e1e62f8f831d4f3d7de2883dc1772950c6f00246b1f2ed6a99d4930460659726",
+            "anchor": "width: render.widths[viewport]",
+            "lines": [
+              190
+            ]
+          },
+          "immutableReceiver": {
+            "path": "skills/prism/config/engine-policy.ts",
+            "sha256": "0665d0f58b01833862b60a276f55fcbcb5f294aaccc924f79084979c87330fad",
+            "anchor": "return Object.freeze({ cache: Object.freeze",
+            "lines": [
+              15
+            ]
+          },
+          "composition": {
+            "path": "skills/common/plugin-runtime/foundation/config/pipeline-composition.ts",
+            "sha256": "c380905efe31bdcd8cbd516bdba2d14cb836067d3cd00710ad3684d8d7a5e8b7",
+            "anchor": "'resourcePolicy' | 'maximumResultBytes' | 'enginePolicy'",
+            "lines": [
+              16,
+              24
+            ]
+          },
+          "assignedChild": {
+            "path": "skills/prism/server/native-worker-execution.ts",
+            "sha256": "7573e59944fc62603ef425c2f1f12ff5397aa510e9c5d1c5c20b7facd6cb199f",
+            "anchor": "PRISM_NATIVE_ASSIGNED_ENGINE_POLICY: JSON.stringify(config.native.enginePolicy)",
+            "lines": [
+              48
+            ]
+          },
+          "assignedReceiver": {
+            "path": "skills/prism/config/native-worker.ts",
+            "sha256": "f044f3f1c0834bdbb757b5774d384a00179ac82da3d4ae1a0b4d2932aebe5277",
+            "anchor": "const enginePolicy = readPrismEnginePolicy(assigned)",
+            "lines": [
+              27
+            ]
+          },
+          "actualCaller": {
+            "path": "skills/prism/server/native-worker-host.ts",
+            "sha256": "10955956dccba2909a49474dc96bd416f0921fc52b49ec69e5c9d57330e00eca",
+            "anchor": "new PrismEngine(new DeterministicDesignProvider(), config.enginePolicy)",
+            "lines": [
+              25
+            ]
+          },
+          "startupCapture": {
+            "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+            "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+            "anchor": "verifiedCaptures.add(result)",
+            "lines": [
+              143
+            ]
+          },
+          "versionedReceiver": {
+            "path": "skills/prism/config/engine-policy.ts",
+            "sha256": "0665d0f58b01833862b60a276f55fcbcb5f294aaccc924f79084979c87330fad",
+            "anchor": "export function readPrismRenderPolicy",
+            "lines": [
+              21
+            ]
+          },
+          "originalCodec": {
+            "path": "skills/prism/config/engine-policy.ts",
+            "sha256": "0665d0f58b01833862b60a276f55fcbcb5f294aaccc924f79084979c87330fad",
+            "anchor": "'cache,maximumAssetSourceCharacters,maximumIngestTextCharacters'",
+            "lines": [
+              6
+            ]
+          },
+          "resultVersion": {
+            "path": "contracts/prism/v1/src/digest.ts",
+            "sha256": "aa9a1d1c9e0060e297ce752b87155e28c63959450300daa34c7dbf2f985de68e",
+            "anchor": "? 'renderSelected' : operation",
+            "lines": [
+              12
+            ]
+          },
+          "baselineImageDimensions": {
+            "path": "skills/prism/server/baseline-archive.ts",
+            "sha256": "df4fe972443a266426b0c3bab69b773bdf77301bf9b40647c30aa87d7e99de9d",
+            "anchor": "selected ? pngDimensions(screenshot)",
+            "lines": [
+              178
+            ]
+          },
+          "renderHandoff": {
+            "path": "skills/prism/engine/index.ts",
+            "sha256": "299b61bb55d2b49329c26c50ae19a4f116aec8fc98ce52b6b60af1edffe76a54",
+            "anchor": "request.input, this.policy, signal",
+            "lines": [
+              157
+            ]
+          },
+          "applicability": "Original effect/history/native obligations remain OPEN. Motion stays safety reduce-only; no alternate motion effect fabricated."
+        },
+        {
+          "id": "AUTH-PRISM-RENDER-HEIGHT",
+          "original": "D228#/rows/2349",
+          "originalObjectSha256": "be08529d53e50055376403ecdcab25bbd39181dec52f56bb1206ca00c5759255",
+          "class": "operator-setting",
+          "owner": "prism-engine",
+          "caseIds": [
+            "AUTH-PRISM-RENDER-HEIGHT-EFFECT"
+          ],
+          "historicalLocator": "config/engines/prism.config.json",
+          "originalSource": {
+            "path": "skills/prism/engine/render-operation.ts",
+            "field": "height",
+            "sha256": "63b95de9640f47bce2b04e929232e0f7dd617c11ba08152f8e428db6a601d501",
+            "lines": [
+              68,
+              106
+            ]
+          },
+          "originalHistoryObligation": "Preserve original durable job/operation/product subject/claim and caller state; policy generation changes do not authorize repeat side effects.",
+          "runtimeAcceptance": "NOT_INFERRED; original cases/results unchanged",
+          "historyAcceptance": "OPEN; startup/assigned-child snapshot is NOT durable original-attempt recovery proof",
+          "status": "EXACT_PRISM_ENGINE_SOURCE_JOIN",
+          "selectedOwner": {
+            "path": "config/components/prism-execution.config.json",
+            "sha256": "cf20314149f3683b4cab42d7bafe360311abcc53ea2cc78ca7a77e4163cac957"
+          },
+          "selectedPointerTemplate": "/profiles/<original-selected>/settings/enginePolicy/render/height",
+          "authoredProfileLeaves": [
+            {
+              "profile": "standard",
+              "pointer": "/profiles/standard/settings/enginePolicy/render/height",
+              "valueSha256": "40510175845988f13f6162ed8526f0b09f73384467fa855e1e79b44a56562a58"
+            }
+          ],
+          "actualEffect": {
+            "path": "skills/prism/engine/render-operation.ts",
+            "sha256": "e1e62f8f831d4f3d7de2883dc1772950c6f00246b1f2ed6a99d4930460659726",
+            "anchor": "height: render.height",
+            "lines": [
+              190
+            ]
+          },
+          "immutableReceiver": {
+            "path": "skills/prism/config/engine-policy.ts",
+            "sha256": "0665d0f58b01833862b60a276f55fcbcb5f294aaccc924f79084979c87330fad",
+            "anchor": "return Object.freeze({ cache: Object.freeze",
+            "lines": [
+              15
+            ]
+          },
+          "composition": {
+            "path": "skills/common/plugin-runtime/foundation/config/pipeline-composition.ts",
+            "sha256": "c380905efe31bdcd8cbd516bdba2d14cb836067d3cd00710ad3684d8d7a5e8b7",
+            "anchor": "'resourcePolicy' | 'maximumResultBytes' | 'enginePolicy'",
+            "lines": [
+              16,
+              24
+            ]
+          },
+          "assignedChild": {
+            "path": "skills/prism/server/native-worker-execution.ts",
+            "sha256": "7573e59944fc62603ef425c2f1f12ff5397aa510e9c5d1c5c20b7facd6cb199f",
+            "anchor": "PRISM_NATIVE_ASSIGNED_ENGINE_POLICY: JSON.stringify(config.native.enginePolicy)",
+            "lines": [
+              48
+            ]
+          },
+          "assignedReceiver": {
+            "path": "skills/prism/config/native-worker.ts",
+            "sha256": "f044f3f1c0834bdbb757b5774d384a00179ac82da3d4ae1a0b4d2932aebe5277",
+            "anchor": "const enginePolicy = readPrismEnginePolicy(assigned)",
+            "lines": [
+              27
+            ]
+          },
+          "actualCaller": {
+            "path": "skills/prism/server/native-worker-host.ts",
+            "sha256": "10955956dccba2909a49474dc96bd416f0921fc52b49ec69e5c9d57330e00eca",
+            "anchor": "new PrismEngine(new DeterministicDesignProvider(), config.enginePolicy)",
+            "lines": [
+              25
+            ]
+          },
+          "startupCapture": {
+            "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+            "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+            "anchor": "verifiedCaptures.add(result)",
+            "lines": [
+              143
+            ]
+          },
+          "versionedReceiver": {
+            "path": "skills/prism/config/engine-policy.ts",
+            "sha256": "0665d0f58b01833862b60a276f55fcbcb5f294aaccc924f79084979c87330fad",
+            "anchor": "export function readPrismRenderPolicy",
+            "lines": [
+              21
+            ]
+          },
+          "originalCodec": {
+            "path": "skills/prism/config/engine-policy.ts",
+            "sha256": "0665d0f58b01833862b60a276f55fcbcb5f294aaccc924f79084979c87330fad",
+            "anchor": "'cache,maximumAssetSourceCharacters,maximumIngestTextCharacters'",
+            "lines": [
+              6
+            ]
+          },
+          "resultVersion": {
+            "path": "contracts/prism/v1/src/digest.ts",
+            "sha256": "aa9a1d1c9e0060e297ce752b87155e28c63959450300daa34c7dbf2f985de68e",
+            "anchor": "? 'renderSelected' : operation",
+            "lines": [
+              12
+            ]
+          },
+          "baselineImageDimensions": {
+            "path": "skills/prism/server/baseline-archive.ts",
+            "sha256": "df4fe972443a266426b0c3bab69b773bdf77301bf9b40647c30aa87d7e99de9d",
+            "anchor": "selected ? pngDimensions(screenshot)",
+            "lines": [
+              178
+            ]
+          },
+          "renderHandoff": {
+            "path": "skills/prism/engine/index.ts",
+            "sha256": "299b61bb55d2b49329c26c50ae19a4f116aec8fc98ce52b6b60af1edffe76a54",
+            "anchor": "request.input, this.policy, signal",
+            "lines": [
+              157
+            ]
+          },
+          "applicability": "Original effect/history/native obligations remain OPEN. Motion stays safety reduce-only; no alternate motion effect fabricated."
+        },
+        {
+          "id": "AUTH-PRISM-RENDER-LOCALE",
+          "original": "D228#/rows/2350",
+          "originalObjectSha256": "93570dca2a9ed71ef8b2150962e54c43dd3ddf30876eda318ed4522eea9f8bfc",
+          "class": "operator-setting",
+          "owner": "prism-engine",
+          "caseIds": [
+            "AUTH-PRISM-RENDER-LOCALE-EFFECT"
+          ],
+          "historicalLocator": "config/engines/prism.config.json",
+          "originalSource": {
+            "path": "skills/prism/engine/render-operation.ts",
+            "field": "locale",
+            "sha256": "63b95de9640f47bce2b04e929232e0f7dd617c11ba08152f8e428db6a601d501",
+            "lines": [
+              108,
+              154
+            ]
+          },
+          "originalHistoryObligation": "Preserve original durable job/operation/product subject/claim and caller state; policy generation changes do not authorize repeat side effects.",
+          "runtimeAcceptance": "NOT_INFERRED; original cases/results unchanged",
+          "historyAcceptance": "OPEN; startup/assigned-child snapshot is NOT durable original-attempt recovery proof",
+          "status": "EXACT_PRISM_ENGINE_SOURCE_JOIN",
+          "selectedOwner": {
+            "path": "config/components/prism-execution.config.json",
+            "sha256": "cf20314149f3683b4cab42d7bafe360311abcc53ea2cc78ca7a77e4163cac957"
+          },
+          "selectedPointerTemplate": "/profiles/<original-selected>/settings/enginePolicy/render/locale",
+          "authoredProfileLeaves": [
+            {
+              "profile": "standard",
+              "pointer": "/profiles/standard/settings/enginePolicy/render/locale",
+              "valueSha256": "c528452300440f47b4505e15d80ef5fb68d030675ad944dd54d1b8b6b9d45294"
+            }
+          ],
+          "actualEffect": {
+            "path": "skills/prism/engine/render-operation.ts",
+            "sha256": "e1e62f8f831d4f3d7de2883dc1772950c6f00246b1f2ed6a99d4930460659726",
+            "anchor": "locale: render ? render.locale",
+            "lines": [
+              113,
+              162
+            ]
+          },
+          "immutableReceiver": {
+            "path": "skills/prism/config/engine-policy.ts",
+            "sha256": "0665d0f58b01833862b60a276f55fcbcb5f294aaccc924f79084979c87330fad",
+            "anchor": "return Object.freeze({ cache: Object.freeze",
+            "lines": [
+              15
+            ]
+          },
+          "composition": {
+            "path": "skills/common/plugin-runtime/foundation/config/pipeline-composition.ts",
+            "sha256": "c380905efe31bdcd8cbd516bdba2d14cb836067d3cd00710ad3684d8d7a5e8b7",
+            "anchor": "'resourcePolicy' | 'maximumResultBytes' | 'enginePolicy'",
+            "lines": [
+              16,
+              24
+            ]
+          },
+          "assignedChild": {
+            "path": "skills/prism/server/native-worker-execution.ts",
+            "sha256": "7573e59944fc62603ef425c2f1f12ff5397aa510e9c5d1c5c20b7facd6cb199f",
+            "anchor": "PRISM_NATIVE_ASSIGNED_ENGINE_POLICY: JSON.stringify(config.native.enginePolicy)",
+            "lines": [
+              48
+            ]
+          },
+          "assignedReceiver": {
+            "path": "skills/prism/config/native-worker.ts",
+            "sha256": "f044f3f1c0834bdbb757b5774d384a00179ac82da3d4ae1a0b4d2932aebe5277",
+            "anchor": "const enginePolicy = readPrismEnginePolicy(assigned)",
+            "lines": [
+              27
+            ]
+          },
+          "actualCaller": {
+            "path": "skills/prism/server/native-worker-host.ts",
+            "sha256": "10955956dccba2909a49474dc96bd416f0921fc52b49ec69e5c9d57330e00eca",
+            "anchor": "new PrismEngine(new DeterministicDesignProvider(), config.enginePolicy)",
+            "lines": [
+              25
+            ]
+          },
+          "startupCapture": {
+            "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+            "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+            "anchor": "verifiedCaptures.add(result)",
+            "lines": [
+              143
+            ]
+          },
+          "versionedReceiver": {
+            "path": "skills/prism/config/engine-policy.ts",
+            "sha256": "0665d0f58b01833862b60a276f55fcbcb5f294aaccc924f79084979c87330fad",
+            "anchor": "export function readPrismRenderPolicy",
+            "lines": [
+              21
+            ]
+          },
+          "originalCodec": {
+            "path": "skills/prism/config/engine-policy.ts",
+            "sha256": "0665d0f58b01833862b60a276f55fcbcb5f294aaccc924f79084979c87330fad",
+            "anchor": "'cache,maximumAssetSourceCharacters,maximumIngestTextCharacters'",
+            "lines": [
+              6
+            ]
+          },
+          "resultVersion": {
+            "path": "contracts/prism/v1/src/digest.ts",
+            "sha256": "aa9a1d1c9e0060e297ce752b87155e28c63959450300daa34c7dbf2f985de68e",
+            "anchor": "? 'renderSelected' : operation",
+            "lines": [
+              12
+            ]
+          },
+          "baselineImageDimensions": {
+            "path": "skills/prism/server/baseline-archive.ts",
+            "sha256": "df4fe972443a266426b0c3bab69b773bdf77301bf9b40647c30aa87d7e99de9d",
+            "anchor": "selected ? pngDimensions(screenshot)",
+            "lines": [
+              178
+            ]
+          },
+          "renderHandoff": {
+            "path": "skills/prism/engine/index.ts",
+            "sha256": "299b61bb55d2b49329c26c50ae19a4f116aec8fc98ce52b6b60af1edffe76a54",
+            "anchor": "request.input, this.policy, signal",
+            "lines": [
+              157
+            ]
+          },
+          "applicability": "Original effect/history/native obligations remain OPEN. Motion stays safety reduce-only; no alternate motion effect fabricated."
+        },
+        {
+          "id": "AUTH-PRISM-RENDER-TIMEZONE",
+          "original": "D228#/rows/2351",
+          "originalObjectSha256": "4672c7947fc79b7be78cfc33ba1a0080adcffba7d7f7d426372338a880f24085",
+          "class": "operator-setting",
+          "owner": "prism-engine",
+          "caseIds": [
+            "AUTH-PRISM-RENDER-TIMEZONE-EFFECT"
+          ],
+          "historicalLocator": "config/engines/prism.config.json",
+          "originalSource": {
+            "path": "skills/prism/engine/render-operation.ts",
+            "field": "timezoneId",
+            "sha256": "63b95de9640f47bce2b04e929232e0f7dd617c11ba08152f8e428db6a601d501",
+            "lines": [
+              109
+            ]
+          },
+          "originalHistoryObligation": "Preserve original durable job/operation/product subject/claim and caller state; policy generation changes do not authorize repeat side effects.",
+          "runtimeAcceptance": "NOT_INFERRED; original cases/results unchanged",
+          "historyAcceptance": "OPEN; startup/assigned-child snapshot is NOT durable original-attempt recovery proof",
+          "status": "EXACT_PRISM_ENGINE_SOURCE_JOIN",
+          "selectedOwner": {
+            "path": "config/components/prism-execution.config.json",
+            "sha256": "cf20314149f3683b4cab42d7bafe360311abcc53ea2cc78ca7a77e4163cac957"
+          },
+          "selectedPointerTemplate": "/profiles/<original-selected>/settings/enginePolicy/render/timezoneId",
+          "authoredProfileLeaves": [
+            {
+              "profile": "standard",
+              "pointer": "/profiles/standard/settings/enginePolicy/render/timezoneId",
+              "valueSha256": "68105452227ca2d3f5561c7ecb735350489d1c873ab627a5f4f09dd7458e0179"
+            }
+          ],
+          "actualEffect": {
+            "path": "skills/prism/engine/render-operation.ts",
+            "sha256": "e1e62f8f831d4f3d7de2883dc1772950c6f00246b1f2ed6a99d4930460659726",
+            "anchor": "timezoneId: render ? render.timezoneId",
+            "lines": [
+              114
+            ]
+          },
+          "immutableReceiver": {
+            "path": "skills/prism/config/engine-policy.ts",
+            "sha256": "0665d0f58b01833862b60a276f55fcbcb5f294aaccc924f79084979c87330fad",
+            "anchor": "return Object.freeze({ cache: Object.freeze",
+            "lines": [
+              15
+            ]
+          },
+          "composition": {
+            "path": "skills/common/plugin-runtime/foundation/config/pipeline-composition.ts",
+            "sha256": "c380905efe31bdcd8cbd516bdba2d14cb836067d3cd00710ad3684d8d7a5e8b7",
+            "anchor": "'resourcePolicy' | 'maximumResultBytes' | 'enginePolicy'",
+            "lines": [
+              16,
+              24
+            ]
+          },
+          "assignedChild": {
+            "path": "skills/prism/server/native-worker-execution.ts",
+            "sha256": "7573e59944fc62603ef425c2f1f12ff5397aa510e9c5d1c5c20b7facd6cb199f",
+            "anchor": "PRISM_NATIVE_ASSIGNED_ENGINE_POLICY: JSON.stringify(config.native.enginePolicy)",
+            "lines": [
+              48
+            ]
+          },
+          "assignedReceiver": {
+            "path": "skills/prism/config/native-worker.ts",
+            "sha256": "f044f3f1c0834bdbb757b5774d384a00179ac82da3d4ae1a0b4d2932aebe5277",
+            "anchor": "const enginePolicy = readPrismEnginePolicy(assigned)",
+            "lines": [
+              27
+            ]
+          },
+          "actualCaller": {
+            "path": "skills/prism/server/native-worker-host.ts",
+            "sha256": "10955956dccba2909a49474dc96bd416f0921fc52b49ec69e5c9d57330e00eca",
+            "anchor": "new PrismEngine(new DeterministicDesignProvider(), config.enginePolicy)",
+            "lines": [
+              25
+            ]
+          },
+          "startupCapture": {
+            "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+            "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+            "anchor": "verifiedCaptures.add(result)",
+            "lines": [
+              143
+            ]
+          },
+          "versionedReceiver": {
+            "path": "skills/prism/config/engine-policy.ts",
+            "sha256": "0665d0f58b01833862b60a276f55fcbcb5f294aaccc924f79084979c87330fad",
+            "anchor": "export function readPrismRenderPolicy",
+            "lines": [
+              21
+            ]
+          },
+          "originalCodec": {
+            "path": "skills/prism/config/engine-policy.ts",
+            "sha256": "0665d0f58b01833862b60a276f55fcbcb5f294aaccc924f79084979c87330fad",
+            "anchor": "'cache,maximumAssetSourceCharacters,maximumIngestTextCharacters'",
+            "lines": [
+              6
+            ]
+          },
+          "resultVersion": {
+            "path": "contracts/prism/v1/src/digest.ts",
+            "sha256": "aa9a1d1c9e0060e297ce752b87155e28c63959450300daa34c7dbf2f985de68e",
+            "anchor": "? 'renderSelected' : operation",
+            "lines": [
+              12
+            ]
+          },
+          "baselineImageDimensions": {
+            "path": "skills/prism/server/baseline-archive.ts",
+            "sha256": "df4fe972443a266426b0c3bab69b773bdf77301bf9b40647c30aa87d7e99de9d",
+            "anchor": "selected ? pngDimensions(screenshot)",
+            "lines": [
+              178
+            ]
+          },
+          "renderHandoff": {
+            "path": "skills/prism/engine/index.ts",
+            "sha256": "299b61bb55d2b49329c26c50ae19a4f116aec8fc98ce52b6b60af1edffe76a54",
+            "anchor": "request.input, this.policy, signal",
+            "lines": [
+              157
+            ]
+          },
+          "applicability": "Original effect/history/native obligations remain OPEN. Motion stays safety reduce-only; no alternate motion effect fabricated."
+        },
+        {
+          "id": "AUTH-PRISM-RENDER-MOTION",
+          "original": "D228#/rows/2352",
+          "originalObjectSha256": "21b57964924235399c94779477e3d7e9398dc33daedecc1bc2564857c3b0a203",
+          "class": "operator-setting",
+          "owner": "prism-engine",
+          "caseIds": [
+            "AUTH-PRISM-RENDER-MOTION-EFFECT"
+          ],
+          "historicalLocator": "config/engines/prism.config.json",
+          "originalSource": {
+            "path": "skills/prism/engine/render-operation.ts",
+            "field": "reducedMotion",
+            "sha256": "63b95de9640f47bce2b04e929232e0f7dd617c11ba08152f8e428db6a601d501",
+            "lines": [
+              110
+            ]
+          },
+          "originalHistoryObligation": "Preserve original durable job/operation/product subject/claim and caller state; policy generation changes do not authorize repeat side effects.",
+          "runtimeAcceptance": "NOT_INFERRED; original cases/results unchanged",
+          "historyAcceptance": "OPEN; startup/assigned-child snapshot is NOT durable original-attempt recovery proof",
+          "status": "EXACT_PRISM_ENGINE_SOURCE_JOIN",
+          "selectedOwner": {
+            "path": "config/components/prism-execution.config.json",
+            "sha256": "cf20314149f3683b4cab42d7bafe360311abcc53ea2cc78ca7a77e4163cac957"
+          },
+          "selectedPointerTemplate": "/profiles/<original-selected>/settings/enginePolicy/render/reducedMotion",
+          "authoredProfileLeaves": [
+            {
+              "profile": "standard",
+              "pointer": "/profiles/standard/settings/enginePolicy/render/reducedMotion",
+              "valueSha256": "b21eb5983d3896714800e52e53f01de4d3fa9e54da1d954b17dd5ab4515df1d8"
+            }
+          ],
+          "actualEffect": {
+            "path": "skills/prism/engine/render-operation.ts",
+            "sha256": "e1e62f8f831d4f3d7de2883dc1772950c6f00246b1f2ed6a99d4930460659726",
+            "anchor": "reducedMotion: render ? render.reducedMotion",
+            "lines": [
+              115
+            ]
+          },
+          "immutableReceiver": {
+            "path": "skills/prism/config/engine-policy.ts",
+            "sha256": "0665d0f58b01833862b60a276f55fcbcb5f294aaccc924f79084979c87330fad",
+            "anchor": "return Object.freeze({ cache: Object.freeze",
+            "lines": [
+              15
+            ]
+          },
+          "composition": {
+            "path": "skills/common/plugin-runtime/foundation/config/pipeline-composition.ts",
+            "sha256": "c380905efe31bdcd8cbd516bdba2d14cb836067d3cd00710ad3684d8d7a5e8b7",
+            "anchor": "'resourcePolicy' | 'maximumResultBytes' | 'enginePolicy'",
+            "lines": [
+              16,
+              24
+            ]
+          },
+          "assignedChild": {
+            "path": "skills/prism/server/native-worker-execution.ts",
+            "sha256": "7573e59944fc62603ef425c2f1f12ff5397aa510e9c5d1c5c20b7facd6cb199f",
+            "anchor": "PRISM_NATIVE_ASSIGNED_ENGINE_POLICY: JSON.stringify(config.native.enginePolicy)",
+            "lines": [
+              48
+            ]
+          },
+          "assignedReceiver": {
+            "path": "skills/prism/config/native-worker.ts",
+            "sha256": "f044f3f1c0834bdbb757b5774d384a00179ac82da3d4ae1a0b4d2932aebe5277",
+            "anchor": "const enginePolicy = readPrismEnginePolicy(assigned)",
+            "lines": [
+              27
+            ]
+          },
+          "actualCaller": {
+            "path": "skills/prism/server/native-worker-host.ts",
+            "sha256": "10955956dccba2909a49474dc96bd416f0921fc52b49ec69e5c9d57330e00eca",
+            "anchor": "new PrismEngine(new DeterministicDesignProvider(), config.enginePolicy)",
+            "lines": [
+              25
+            ]
+          },
+          "startupCapture": {
+            "path": "skills/common/plugin-runtime/foundation/config/pipeline-boot.mjs",
+            "sha256": "0d80b0a155d8aae6fed57f156da0201c1952fc72a192449f215208ce5176f77a",
+            "anchor": "verifiedCaptures.add(result)",
+            "lines": [
+              143
+            ]
+          },
+          "versionedReceiver": {
+            "path": "skills/prism/config/engine-policy.ts",
+            "sha256": "0665d0f58b01833862b60a276f55fcbcb5f294aaccc924f79084979c87330fad",
+            "anchor": "export function readPrismRenderPolicy",
+            "lines": [
+              21
+            ]
+          },
+          "originalCodec": {
+            "path": "skills/prism/config/engine-policy.ts",
+            "sha256": "0665d0f58b01833862b60a276f55fcbcb5f294aaccc924f79084979c87330fad",
+            "anchor": "'cache,maximumAssetSourceCharacters,maximumIngestTextCharacters'",
+            "lines": [
+              6
+            ]
+          },
+          "resultVersion": {
+            "path": "contracts/prism/v1/src/digest.ts",
+            "sha256": "aa9a1d1c9e0060e297ce752b87155e28c63959450300daa34c7dbf2f985de68e",
+            "anchor": "? 'renderSelected' : operation",
+            "lines": [
+              12
+            ]
+          },
+          "baselineImageDimensions": {
+            "path": "skills/prism/server/baseline-archive.ts",
+            "sha256": "df4fe972443a266426b0c3bab69b773bdf77301bf9b40647c30aa87d7e99de9d",
+            "anchor": "selected ? pngDimensions(screenshot)",
+            "lines": [
+              178
+            ]
+          },
+          "renderHandoff": {
+            "path": "skills/prism/engine/index.ts",
+            "sha256": "299b61bb55d2b49329c26c50ae19a4f116aec8fc98ce52b6b60af1edffe76a54",
+            "anchor": "request.input, this.policy, signal",
+            "lines": [
+              157
+            ]
+          },
+          "applicability": "Original effect/history/native obligations remain OPEN. Motion stays safety reduce-only; no alternate motion effect fabricated."
         }
       ],
       "prismEngineSupplementalJoin": {
         "path": "docs/review/remediation/config-final-reconciliation-20261016/prism-engine-successors.json",
-        "sha256": "61e06aa9b2bf3e94830fbf4066f3e35f7163885ff93668dd03369d43b2f92685"
+        "sha256": "e619783e252e9a8d245c8aacb8f3d4b6a3f870864cbe81b38ab700d0c83585ef"
       },
       "explicitEngineResiduals": [
         {
@@ -3571,7 +4501,7 @@
           },
           "closedCurrentCodec": {
             "path": "skills/prism/config/engine-policy.ts",
-            "sha256": "3b93fd4db1d7fe9591c182df2c1148883af5d3341bc84b5a45ace8ac741d1477",
+            "sha256": "0665d0f58b01833862b60a276f55fcbcb5f294aaccc924f79084979c87330fad",
             "anchor": "'cache,maximumAssetSourceCharacters,maximumIngestTextCharacters'",
             "lines": [
               6
@@ -3584,323 +4514,6 @@
             "anchor": "new PrismEngine(new DeterministicDesignProvider(), config.enginePolicy)",
             "lines": [
               25
-            ]
-          }
-        },
-        {
-          "id": "AUTH-PRISM-RENDER-WIDTH-COMPACT",
-          "original": "D228#/rows/2346",
-          "originalObjectSha256": "e221d7bdc9fc07e2303467328c325496ec951a163c0de781a6ab3147e5102525",
-          "class": "operator-setting",
-          "owner": "prism-engine",
-          "caseIds": [
-            "AUTH-PRISM-RENDER-WIDTH-COMPACT-EFFECT"
-          ],
-          "historicalLocator": "config/engines/prism.config.json",
-          "originalSource": {
-            "path": "skills/prism/engine/render-operation.ts",
-            "field": "compact",
-            "sha256": "63b95de9640f47bce2b04e929232e0f7dd617c11ba08152f8e428db6a601d501",
-            "lines": [
-              73,
-              102
-            ]
-          },
-          "originalHistoryObligation": "Preserve original durable job/operation/product subject/claim and caller state; policy generation changes do not authorize repeat side effects.",
-          "runtimeAcceptance": "NOT_INFERRED; original cases/results unchanged",
-          "historyAcceptance": "OPEN; startup/assigned-child snapshot is NOT durable original-attempt recovery proof",
-          "status": "PRISM_ENGINE_RECEIVING_IMPLEMENTATION_OPEN",
-          "selectedOwner": null,
-          "actualLiteral": {
-            "path": "skills/prism/engine/render-operation.ts",
-            "sha256": "bfe7066cdc020dd26594437e1d301167bac11051d08ce76154457108f4d0d579",
-            "anchor": "compact: 390",
-            "lines": [
-              104
-            ]
-          },
-          "closedCurrentCodec": {
-            "path": "skills/prism/config/engine-policy.ts",
-            "sha256": "3b93fd4db1d7fe9591c182df2c1148883af5d3341bc84b5a45ace8ac741d1477",
-            "anchor": "'cache,maximumAssetSourceCharacters,maximumIngestTextCharacters'",
-            "lines": [
-              6
-            ]
-          },
-          "constraint": "Render dimensions/locale/timezone/motion need coherent versioned selected engine receiving, browser/metadata consumers, original attempt capture and normal delivery. Do not silently add fields to the existing closed codec or infer coverage from enginePolicy section presence."
-        },
-        {
-          "id": "AUTH-PRISM-RENDER-WIDTH-REGULAR",
-          "original": "D228#/rows/2347",
-          "originalObjectSha256": "40df5bba8650cee11b0d1d9631631604823238ae81112006a09f50ccc0e55da4",
-          "class": "operator-setting",
-          "owner": "prism-engine",
-          "caseIds": [
-            "AUTH-PRISM-RENDER-WIDTH-REGULAR-EFFECT"
-          ],
-          "historicalLocator": "config/engines/prism.config.json",
-          "originalSource": {
-            "path": "skills/prism/engine/render-operation.ts",
-            "field": "regular",
-            "sha256": "63b95de9640f47bce2b04e929232e0f7dd617c11ba08152f8e428db6a601d501",
-            "lines": [
-              73,
-              102
-            ]
-          },
-          "originalHistoryObligation": "Preserve original durable job/operation/product subject/claim and caller state; policy generation changes do not authorize repeat side effects.",
-          "runtimeAcceptance": "NOT_INFERRED; original cases/results unchanged",
-          "historyAcceptance": "OPEN; startup/assigned-child snapshot is NOT durable original-attempt recovery proof",
-          "status": "PRISM_ENGINE_RECEIVING_IMPLEMENTATION_OPEN",
-          "selectedOwner": null,
-          "actualLiteral": {
-            "path": "skills/prism/engine/render-operation.ts",
-            "sha256": "bfe7066cdc020dd26594437e1d301167bac11051d08ce76154457108f4d0d579",
-            "anchor": "regular: 768",
-            "lines": [
-              104
-            ]
-          },
-          "closedCurrentCodec": {
-            "path": "skills/prism/config/engine-policy.ts",
-            "sha256": "3b93fd4db1d7fe9591c182df2c1148883af5d3341bc84b5a45ace8ac741d1477",
-            "anchor": "'cache,maximumAssetSourceCharacters,maximumIngestTextCharacters'",
-            "lines": [
-              6
-            ]
-          },
-          "constraint": "Render dimensions/locale/timezone/motion need coherent versioned selected engine receiving, browser/metadata consumers, original attempt capture and normal delivery. Do not silently add fields to the existing closed codec or infer coverage from enginePolicy section presence."
-        },
-        {
-          "id": "AUTH-PRISM-RENDER-WIDTH-WIDE",
-          "original": "D228#/rows/2348",
-          "originalObjectSha256": "929455f8a6b5aa1f1c1383fd2473c1b681541e720a72237818abecd6284fca8b",
-          "class": "operator-setting",
-          "owner": "prism-engine",
-          "caseIds": [
-            "AUTH-PRISM-RENDER-WIDTH-WIDE-EFFECT"
-          ],
-          "historicalLocator": "config/engines/prism.config.json",
-          "originalSource": {
-            "path": "skills/prism/engine/render-operation.ts",
-            "field": "wide",
-            "sha256": "63b95de9640f47bce2b04e929232e0f7dd617c11ba08152f8e428db6a601d501",
-            "lines": [
-              73,
-              102
-            ]
-          },
-          "originalHistoryObligation": "Preserve original durable job/operation/product subject/claim and caller state; policy generation changes do not authorize repeat side effects.",
-          "runtimeAcceptance": "NOT_INFERRED; original cases/results unchanged",
-          "historyAcceptance": "OPEN; startup/assigned-child snapshot is NOT durable original-attempt recovery proof",
-          "status": "PRISM_ENGINE_RECEIVING_IMPLEMENTATION_OPEN",
-          "selectedOwner": null,
-          "actualLiteral": {
-            "path": "skills/prism/engine/render-operation.ts",
-            "sha256": "bfe7066cdc020dd26594437e1d301167bac11051d08ce76154457108f4d0d579",
-            "anchor": "wide: 1440",
-            "lines": [
-              104
-            ]
-          },
-          "closedCurrentCodec": {
-            "path": "skills/prism/config/engine-policy.ts",
-            "sha256": "3b93fd4db1d7fe9591c182df2c1148883af5d3341bc84b5a45ace8ac741d1477",
-            "anchor": "'cache,maximumAssetSourceCharacters,maximumIngestTextCharacters'",
-            "lines": [
-              6
-            ]
-          },
-          "constraint": "Render dimensions/locale/timezone/motion need coherent versioned selected engine receiving, browser/metadata consumers, original attempt capture and normal delivery. Do not silently add fields to the existing closed codec or infer coverage from enginePolicy section presence.",
-          "fallbackEffect": {
-            "path": "skills/prism/engine/render-operation.ts",
-            "sha256": "bfe7066cdc020dd26594437e1d301167bac11051d08ce76154457108f4d0d579",
-            "anchor": "?? 1440",
-            "lines": [
-              107
-            ]
-          }
-        },
-        {
-          "id": "AUTH-PRISM-RENDER-HEIGHT",
-          "original": "D228#/rows/2349",
-          "originalObjectSha256": "be08529d53e50055376403ecdcab25bbd39181dec52f56bb1206ca00c5759255",
-          "class": "operator-setting",
-          "owner": "prism-engine",
-          "caseIds": [
-            "AUTH-PRISM-RENDER-HEIGHT-EFFECT"
-          ],
-          "historicalLocator": "config/engines/prism.config.json",
-          "originalSource": {
-            "path": "skills/prism/engine/render-operation.ts",
-            "field": "height",
-            "sha256": "63b95de9640f47bce2b04e929232e0f7dd617c11ba08152f8e428db6a601d501",
-            "lines": [
-              68,
-              106
-            ]
-          },
-          "originalHistoryObligation": "Preserve original durable job/operation/product subject/claim and caller state; policy generation changes do not authorize repeat side effects.",
-          "runtimeAcceptance": "NOT_INFERRED; original cases/results unchanged",
-          "historyAcceptance": "OPEN; startup/assigned-child snapshot is NOT durable original-attempt recovery proof",
-          "status": "PRISM_ENGINE_RECEIVING_IMPLEMENTATION_OPEN",
-          "selectedOwner": null,
-          "actualLiteral": {
-            "path": "skills/prism/engine/render-operation.ts",
-            "sha256": "bfe7066cdc020dd26594437e1d301167bac11051d08ce76154457108f4d0d579",
-            "anchor": "height: 1000",
-            "lines": [
-              108
-            ]
-          },
-          "closedCurrentCodec": {
-            "path": "skills/prism/config/engine-policy.ts",
-            "sha256": "3b93fd4db1d7fe9591c182df2c1148883af5d3341bc84b5a45ace8ac741d1477",
-            "anchor": "'cache,maximumAssetSourceCharacters,maximumIngestTextCharacters'",
-            "lines": [
-              6
-            ]
-          },
-          "constraint": "Render dimensions/locale/timezone/motion need coherent versioned selected engine receiving, browser/metadata consumers, original attempt capture and normal delivery. Do not silently add fields to the existing closed codec or infer coverage from enginePolicy section presence."
-        },
-        {
-          "id": "AUTH-PRISM-RENDER-LOCALE",
-          "original": "D228#/rows/2350",
-          "originalObjectSha256": "93570dca2a9ed71ef8b2150962e54c43dd3ddf30876eda318ed4522eea9f8bfc",
-          "class": "operator-setting",
-          "owner": "prism-engine",
-          "caseIds": [
-            "AUTH-PRISM-RENDER-LOCALE-EFFECT"
-          ],
-          "historicalLocator": "config/engines/prism.config.json",
-          "originalSource": {
-            "path": "skills/prism/engine/render-operation.ts",
-            "field": "locale",
-            "sha256": "63b95de9640f47bce2b04e929232e0f7dd617c11ba08152f8e428db6a601d501",
-            "lines": [
-              108,
-              154
-            ]
-          },
-          "originalHistoryObligation": "Preserve original durable job/operation/product subject/claim and caller state; policy generation changes do not authorize repeat side effects.",
-          "runtimeAcceptance": "NOT_INFERRED; original cases/results unchanged",
-          "historyAcceptance": "OPEN; startup/assigned-child snapshot is NOT durable original-attempt recovery proof",
-          "status": "PRISM_ENGINE_RECEIVING_IMPLEMENTATION_OPEN",
-          "selectedOwner": null,
-          "actualLiteral": {
-            "path": "skills/prism/engine/render-operation.ts",
-            "sha256": "bfe7066cdc020dd26594437e1d301167bac11051d08ce76154457108f4d0d579",
-            "anchor": "locale: \"en-US\"",
-            "lines": [
-              110,
-              157
-            ]
-          },
-          "closedCurrentCodec": {
-            "path": "skills/prism/config/engine-policy.ts",
-            "sha256": "3b93fd4db1d7fe9591c182df2c1148883af5d3341bc84b5a45ace8ac741d1477",
-            "anchor": "'cache,maximumAssetSourceCharacters,maximumIngestTextCharacters'",
-            "lines": [
-              6
-            ]
-          },
-          "constraint": "Render dimensions/locale/timezone/motion need coherent versioned selected engine receiving, browser/metadata consumers, original attempt capture and normal delivery. Do not silently add fields to the existing closed codec or infer coverage from enginePolicy section presence."
-        },
-        {
-          "id": "AUTH-PRISM-RENDER-TIMEZONE",
-          "original": "D228#/rows/2351",
-          "originalObjectSha256": "4672c7947fc79b7be78cfc33ba1a0080adcffba7d7f7d426372338a880f24085",
-          "class": "operator-setting",
-          "owner": "prism-engine",
-          "caseIds": [
-            "AUTH-PRISM-RENDER-TIMEZONE-EFFECT"
-          ],
-          "historicalLocator": "config/engines/prism.config.json",
-          "originalSource": {
-            "path": "skills/prism/engine/render-operation.ts",
-            "field": "timezoneId",
-            "sha256": "63b95de9640f47bce2b04e929232e0f7dd617c11ba08152f8e428db6a601d501",
-            "lines": [
-              109
-            ]
-          },
-          "originalHistoryObligation": "Preserve original durable job/operation/product subject/claim and caller state; policy generation changes do not authorize repeat side effects.",
-          "runtimeAcceptance": "NOT_INFERRED; original cases/results unchanged",
-          "historyAcceptance": "OPEN; startup/assigned-child snapshot is NOT durable original-attempt recovery proof",
-          "status": "PRISM_ENGINE_RECEIVING_IMPLEMENTATION_OPEN",
-          "selectedOwner": null,
-          "actualLiteral": {
-            "path": "skills/prism/engine/render-operation.ts",
-            "sha256": "bfe7066cdc020dd26594437e1d301167bac11051d08ce76154457108f4d0d579",
-            "anchor": "timezoneId: \"UTC\"",
-            "lines": [
-              111
-            ]
-          },
-          "closedCurrentCodec": {
-            "path": "skills/prism/config/engine-policy.ts",
-            "sha256": "3b93fd4db1d7fe9591c182df2c1148883af5d3341bc84b5a45ace8ac741d1477",
-            "anchor": "'cache,maximumAssetSourceCharacters,maximumIngestTextCharacters'",
-            "lines": [
-              6
-            ]
-          },
-          "constraint": "Render dimensions/locale/timezone/motion need coherent versioned selected engine receiving, browser/metadata consumers, original attempt capture and normal delivery. Do not silently add fields to the existing closed codec or infer coverage from enginePolicy section presence.",
-          "metadataEffect": {
-            "path": "skills/prism/engine/render-operation.ts",
-            "sha256": "bfe7066cdc020dd26594437e1d301167bac11051d08ce76154457108f4d0d579",
-            "anchor": "timezone: \"UTC\"",
-            "lines": [
-              158
-            ]
-          }
-        },
-        {
-          "id": "AUTH-PRISM-RENDER-MOTION",
-          "original": "D228#/rows/2352",
-          "originalObjectSha256": "21b57964924235399c94779477e3d7e9398dc33daedecc1bc2564857c3b0a203",
-          "class": "operator-setting",
-          "owner": "prism-engine",
-          "caseIds": [
-            "AUTH-PRISM-RENDER-MOTION-EFFECT"
-          ],
-          "historicalLocator": "config/engines/prism.config.json",
-          "originalSource": {
-            "path": "skills/prism/engine/render-operation.ts",
-            "field": "reducedMotion",
-            "sha256": "63b95de9640f47bce2b04e929232e0f7dd617c11ba08152f8e428db6a601d501",
-            "lines": [
-              110
-            ]
-          },
-          "originalHistoryObligation": "Preserve original durable job/operation/product subject/claim and caller state; policy generation changes do not authorize repeat side effects.",
-          "runtimeAcceptance": "NOT_INFERRED; original cases/results unchanged",
-          "historyAcceptance": "OPEN; startup/assigned-child snapshot is NOT durable original-attempt recovery proof",
-          "status": "PRISM_ENGINE_RECEIVING_IMPLEMENTATION_OPEN",
-          "selectedOwner": null,
-          "actualLiteral": {
-            "path": "skills/prism/engine/render-operation.ts",
-            "sha256": "bfe7066cdc020dd26594437e1d301167bac11051d08ce76154457108f4d0d579",
-            "anchor": "reducedMotion: \"reduce\"",
-            "lines": [
-              112
-            ]
-          },
-          "closedCurrentCodec": {
-            "path": "skills/prism/config/engine-policy.ts",
-            "sha256": "3b93fd4db1d7fe9591c182df2c1148883af5d3341bc84b5a45ace8ac741d1477",
-            "anchor": "'cache,maximumAssetSourceCharacters,maximumIngestTextCharacters'",
-            "lines": [
-              6
-            ]
-          },
-          "constraint": "Render dimensions/locale/timezone/motion need coherent versioned selected engine receiving, browser/metadata consumers, original attempt capture and normal delivery. Do not silently add fields to the existing closed codec or infer coverage from enginePolicy section presence.",
-          "metadataEffect": {
-            "path": "skills/prism/engine/render-operation.ts",
-            "sha256": "bfe7066cdc020dd26594437e1d301167bac11051d08ce76154457108f4d0d579",
-            "anchor": "motion: \"reduced\"",
-            "lines": [
-              159
             ]
           }
         }

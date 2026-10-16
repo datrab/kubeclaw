@@ -1,5 +1,5 @@
 {
-  "schemaVersion": "pipeline-component.v2",
+  "schemaVersion": "pipeline-component.v3",
   "owner": "prism-execution",
   "profiles": {
     "standard": {
@@ -17,7 +17,20 @@
             "maximumCompletedBytes": 16777216
           },
           "maximumIngestTextCharacters": 200000,
-          "maximumAssetSourceCharacters": 16000000
+          "maximumAssetSourceCharacters": 16000000,
+          "render": {
+            "schemaVersion": "prism-render-policy.v1",
+            "widths": {
+              "compact": 390,
+              "regular": 768,
+              "wide": 1440
+            },
+            "height": 1000,
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "reducedMotion": "reduce"
+          },
+          "schemaVersion": "prism-engine-policy.v2"
         }
       }
     }

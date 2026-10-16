@@ -18,6 +18,7 @@ export const validateEngineRequestIngest: StandaloneValidator;
 export const validateEngineRequestPublish: StandaloneValidator;
 export const validateEngineResultGenerate: StandaloneValidator;
 export const validateEngineResultRender: StandaloneValidator;
+export const validateEngineResultRenderSelected: StandaloneValidator;
 export const validateEngineResultEvaluate: StandaloneValidator;
 export const validateEngineResultIngest: StandaloneValidator;
 export const validateEngineResultPublish: StandaloneValidator;

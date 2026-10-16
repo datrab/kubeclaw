@@ -1,7 +1,7 @@
 {
   "schemaVersion": "pipeline-prism-chart-projection.v1",
   "generatedFrom": "config/pipeline.config.json",
-  "generationDigest": "sha256:b793c77ba24e12db8195c8c2c9932c8bf964fc3f71530d74646c562cbfcce3dd",
+  "generationDigest": "sha256:c7ab93a451158770fc10a547bc60545e5349933f56dcfe546634bd8b7149097b",
   "deployment": {
     "namespace": "kubeclaw",
     "releaseName": "prism"
@@ -160,7 +160,20 @@
             "maximumCompletedBytes": 16777216
           },
           "maximumIngestTextCharacters": 200000,
-          "maximumAssetSourceCharacters": 16000000
+          "maximumAssetSourceCharacters": 16000000,
+          "render": {
+            "schemaVersion": "prism-render-policy.v1",
+            "widths": {
+              "compact": 390,
+              "regular": 768,
+              "wide": 1440
+            },
+            "height": 1000,
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "reducedMotion": "reduce"
+          },
+          "schemaVersion": "prism-engine-policy.v2"
         },
         "supervisor": {
           "uid": 1000,
