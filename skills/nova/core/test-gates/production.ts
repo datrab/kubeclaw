@@ -18,6 +18,7 @@ import { buildCommittedSourceSnapshot } from './source-snapshot.ts';
 import { captureSourceAcquisitionPolicy, type SourceAcquisitionPolicy } from './source-acquisition-policy.ts';
 
 export interface ProductionNovaTestGateOptions {
+  readonly cleanupMilliseconds?: number;
   readonly stateRoot: string;
   readonly endpoint: string;
   readonly token?: string;
@@ -100,6 +101,8 @@ export class ProductionNovaTestGate {
 export function createProductionNovaTestGate(
   options: ProductionNovaTestGateOptions,
 ): ProductionNovaTestGate {
+  if (options.cleanupMilliseconds !== undefined && (!Number.isSafeInteger(options.cleanupMilliseconds)
+    || options.cleanupMilliseconds < 1 || options.cleanupMilliseconds > 2147483647)) throw new Error('NOVA_REMOTE_CLEANUP_TIMEOUT_INVALID');
   const sourceAcquisitionPolicy = options.sourceAcquisitionPolicy === undefined
     ? undefined : captureSourceAcquisitionPolicy(options.sourceAcquisitionPolicy);
   if (!path.isAbsolute(options.stateRoot)) throw new Error('NOVA_REMOTE_STATE_ROOT_NOT_ABSOLUTE');
@@ -119,6 +122,7 @@ export function createProductionNovaTestGate(
     }),
     transport,
     pollMilliseconds: options.pollMilliseconds,
+    ...(options.cleanupMilliseconds === undefined ? {} : { cleanupMilliseconds: options.cleanupMilliseconds }),
   });
   const importer = new NovaRemoteGateImporter({
     store: new FileNovaGateImportStore(path.join(options.stateRoot, 'imports'), {

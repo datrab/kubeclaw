@@ -1,0 +1,2 @@
+npm notice run build
+npm notice run tsc --noEmit -p tsconfig.json

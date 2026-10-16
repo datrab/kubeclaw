@@ -34,7 +34,7 @@ test('native Redis keeps target and provider streams distinct and deduplicates w
   const variable = `REDIS_TRANSPORT_TEST_${process.pid}`; process.env[variable] = password;
   const signal = new AbortController().signal;
   const secrets = activateSecrets({ config: { environment: { 'redis.password': variable } } } as any);
-  const context = { config: { url: `redis://127.0.0.1:${port}`, passwordSecret: 'redis.password', streamPrefix: 'fixture', maxLen: 1000, dedupTtlMs: 60000, timeoutMs: 1000 },
+  const context = { config: { ...TEST_CORE_POLICY.redisTransport, url: `redis://127.0.0.1:${port}`, passwordSecret: 'redis.password', streamPrefix: 'fixture', maxLen: 1000, dedupTtlMs: 60000, timeoutMs: 1000 },
     async invoke(capability: string, request: any) { assert.equal(capability, 'secrets.read'); return secrets.invoke({ request: { ...request, capability }, signal, confidential: true } as any); } };
   const publisher = activatePublisher(context as any), telemetry = activateTelemetry(context as any);
   try {
@@ -46,14 +46,14 @@ test('native Redis keeps target and provider streams distinct and deduplicates w
     const locks = new FileResourceLockManager(path.join(root, 'locks'), TEST_CORE_POLICY);
     const receipts: any[] = [];
     for (const kind of ['publisher', 'telemetry'] as const) for (const target of ['pipeline.completed', 'pipeline_completed']) {
-      const effects = new EffectCoordinator(new FileEffectJournal(path.join(root, `${kind}-${target}.jsonl`), TEST_CORE_POLICY), undefined, undefined, locks, 300_000);
+      const effects = new EffectCoordinator(new FileEffectJournal(path.join(root, `${kind}-${target}.jsonl`), TEST_CORE_POLICY), undefined, undefined, locks, 300_000, TEST_CORE_POLICY.resourceAcquisition);
       const input = { idempotencyKey: 'same-delivery-key', attempt, capability: kind === 'publisher' ? 'transport.publish' : 'telemetry.emit',
         operation: kind === 'publisher' ? 'publish' : 'append', resource: { type: kind === 'publisher' ? 'transport.target' : 'telemetry.event', canonicalId: target }, payload: { kind, target, content: 'Unicode 日本語 🐾' } };
       const adapter = kind === 'publisher' ? publisher : telemetry;
       const receipt = await effects.invoke(adapter, { ...owner, registrationId: kind }, input, signal);
       assert.equal(receipt.status, 'completed', JSON.stringify(receipt)); receipts.push(receipt.result);
       assert.deepEqual(await effects.invoke(adapter, { ...owner, registrationId: kind }, input, signal), receipt);
-      const restarted = new EffectCoordinator(new FileEffectJournal(path.join(root, `${kind}-${target}-second.jsonl`), TEST_CORE_POLICY), undefined, undefined, locks, 300_000);
+      const restarted = new EffectCoordinator(new FileEffectJournal(path.join(root, `${kind}-${target}-second.jsonl`), TEST_CORE_POLICY), undefined, undefined, locks, 300_000, TEST_CORE_POLICY.resourceAcquisition);
       const repeated = await restarted.invoke(adapter, { ...owner, registrationId: kind }, input, signal);
       assert.deepEqual(repeated.result, receipt.result, 'original adapter Lua deduplicates a real second send');
       const entries = command('XRANGE', receipt.result!.stream, '-', '+');
@@ -82,7 +82,7 @@ async function socketCase(chunks: readonly Buffer[], expected: string | RegExp, 
   const address = server.address(); assert(address && typeof address !== 'string');
   try {
     const started = performance.now();
-    const operation = exchange({ url: new URL(`redis://127.0.0.1:${address.port}`), timeoutMs: 3000 }, 'local-password', ['PING'], new AbortController().signal);
+    const operation = exchange({ ...TEST_CORE_POLICY.redisTransport, url: new URL(`redis://127.0.0.1:${address.port}`), timeoutMs: 3000 }, 'local-password', ['PING'], new AbortController().signal);
     if (typeof expected === 'string') assert.equal(await operation, expected); else await assert.rejects(operation, expected);
     assert(performance.now() - started < 1500, 'failure must not wait for transport timeout');
     const deadline = performance.now() + 500;

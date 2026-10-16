@@ -3,14 +3,17 @@ import type { Readable } from 'node:stream';
 
 type GitChild = ChildProcessByStdio<null, Readable, Readable>;
 type EffectResult = Readonly<Record<string, unknown>>;
-export interface RunnerOptions { readonly executable: string; readonly authorName: string; readonly authorEmail: string; readonly maxExecutionMs: number; readonly maxOutputBytes: number; readonly terminationGraceMs: number; }
+export interface RunnerOptions { readonly errorExcerptCharacters: number; readonly executable: string; readonly authorName: string; readonly authorEmail: string; readonly maxExecutionMs: number; readonly maxOutputBytes: number; readonly terminationGraceMs: number; }
 
 export class GitRunner {
   readonly #children = new Set<GitChild>();
   readonly #options: RunnerOptions;
   readonly #settled = new Map<GitChild, Promise<void>>();
   #shuttingDown = false;
-  constructor(options: RunnerOptions) { this.#options = options; }
+  constructor(options: RunnerOptions) {
+    if (!Number.isSafeInteger(options.errorExcerptCharacters) || options.errorExcerptCharacters < 1 || options.errorExcerptCharacters > 16_777_216) throw new Error('GIT_CONFIG_INVALID:errorExcerptCharacters');
+    this.#options = Object.freeze({...options});
+  }
 
   async run(cwd: string, args: readonly string[], signal: AbortSignal): Promise<EffectResult> {
     if (this.#shuttingDown) throw new Error('ADAPTER_SHUTTING_DOWN');
@@ -61,7 +64,7 @@ export class GitRunner {
     child.once('error', (error) => finish(() => reject(requestedError ?? error)));
     child.once('close', (code, childSignal) => finish(() => {
       if (requestedError) reject(requestedError);
-      else if (code !== 0) reject(new Error(`GIT_COMMAND_FAILED:${String(code)}:${String(childSignal)}:${output.stderr.slice(0, 4096)}`));
+      else if (code !== 0) reject(new Error(`GIT_COMMAND_FAILED:${String(code)}:${String(childSignal)}:${output.stderr.slice(0, this.#options.errorExcerptCharacters)}`));
       else resolve({ exitCode: code, signal: childSignal, stdout: output.stdout, stderr: output.stderr });
     }));
   }

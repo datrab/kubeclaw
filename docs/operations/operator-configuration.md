@@ -698,3 +698,70 @@ argument; that path does not read the current owner. This does not introduce a
 new durable binding ledger or claim a complete cross-restart CLI recovery
 migration. The v1 runtime reader remains closed and preserves its historical
 behavior; adding the v2 selector or inline source values to v1 is rejected.
+
+### Versioned project compiler policy
+
+The canonical `config/nova/core.config.json` now publishes
+`nova-core-runtime-policy.v3`. Every profile explicitly carries
+`settings.policyVersion: "nova-core-runtime-policy.v3"` and the required
+`settings.projectCompiler` with `schemaVersion: "project-compiler-runtime.v1"`.
+This is the supported runtime compiler contract, not activation of the earlier
+experimental candidate or its membership/authority proposals.
+
+`projectCompiler.repairBudget.categories` authors the independent `lint`,
+`review` and `test` order limits; `maximumOrchestratorOrders` is separate.
+`execution` authors `maxTechnicalRetries` and `timeoutMs` for module work.
+`executionGroups.{source,cumulative,demo}.timeoutMs` supplies three separate
+helper budgets. Standard values preserve the original generated graph exactly:
+2/2/2 repair orders, one orchestrator order, one technical retry, 1800000 ms
+module/cumulative timeout and 120000 ms source/demo timeout.
+Review presence is a task declaration, not a configuration branch: only modules
+with a declared Review stage receive the selected review budget. Mixed projects
+need no duplicate profiles or per-module configuration authors. Attempt and
+remediation totals remain derived from the applicable order budgets.
+
+The real project CLI loads one Core selection relative to its canonical Platform
+file, compiles with it, and hands that same immutable value to runtime validation
+and new-run startup. New selected runs capture `registry.projectCompilerVersion`
+and the complete original `registry.configuration.corePolicy`. Project recovery
+reads that snapshot before reconstruction and never reads today's Core owner;
+unsupported versions and partial original captures reject. Legacy graphs without
+the compiler discriminator retain the original compiler even when a v2 Core
+runtime policy exists. v1 Core publications remain supported for those legacy
+callers, but a v1 document cannot carry the v2 compiler policy. The candidate
+compiler entry still returns `activationAllowed: false`.
+
+Notification `maxTitleChars` and `maxReasonCodeChars` cannot exceed 512 and 256,
+respectively: these are the existing operator-message receiver's protocol bounds,
+not new operator defaults. Central, registration and direct producer validation
+reject unsupported selections before a publish effect.
+
+
+Operator delivery additionally selects
+`operatorMessagingPayload.payloadStructure.{maximumDepth,maximumArrayEntries,maximumObjectProperties}`.
+The standard values preserve the existing protocol ceilings (20/1000/1000).
+Stricter positive limits are supported; missing, oversized or duplicate local
+values reject. Real delivery, receipt reconstruction and lookup receive the
+captured target limits. The original durable projection validator deliberately
+uses the fixed original protocol ceiling, not a live owner's possibly narrower
+admission setting; it does not admit new deliveries or overwrite original records.
+
+Compatibility qualification: unchanged compiler encodings and complete v1
+runtime-policy captures remain supported. Older incomplete policy generations
+must run with their captured original reader/source/schema closure. The current
+loader never fills missing captured settings from current configuration or
+former literals. This is not evidence that native historical reader replay has
+passed; that acceptance remains separate and open.
+
+
+Core v3 is the explicit structural-admission successor of v2; the compiler
+contract itself remains `project-compiler-runtime.v1`. Complete original v1/v2
+Core captures retain their exact original shape (no `payloadStructure` is
+inserted). Their operator projection remains the original untagged receiver
+contract, with the fixed protocol limits 20/1000/1000. Core v3 produces the
+explicit `payloadPolicyVersion: "operator-payload.v2"` and required selected
+`payloadStructure` at the receiving adapter. Missing/partial v3 captures or
+unknown receiver tags reject; they cannot enter the legacy branch. This is a
+versioned original receiver, not a synthesized configuration merge. Previously
+incomplete historical native generations still require their original full
+reader/source/schema closure and retain their separate acceptance gate.

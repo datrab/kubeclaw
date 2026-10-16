@@ -1,0 +1,6 @@
+npm notice run test
+npm notice run node tests/observers.unit.test.mjs && node tests/parity.test.ts && node tests/live-function.test.ts && node tests/package-boundary.test.mjs
+{"ok":true,"plugin":"kubeclaw.agent-observability","suite":"observers-unit"}
+{"ok":true,"plugin":"kubeclaw.agent-observability","suite":"parity"}
+{"ok":true,"plugin":"kubeclaw.agent-observability","suite":"live-function"}
+{"ok":true,"plugin":"kubeclaw.agent-observability","suite":"package-boundary"}

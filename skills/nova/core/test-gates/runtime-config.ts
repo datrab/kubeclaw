@@ -26,10 +26,14 @@ export function loadProductionNovaTestGate(
   file: string,
   environment: Readonly<Record<string, string | undefined>> = process.env,
   sourceAcquisitionSelection?: SourceAcquisitionPolicy,
+  cleanupMillisecondsSelection?: number,
 ): ProductionNovaTestGate {
   // Explicit receiving only: v1 stays closed; never read live Core during recovery.
   let sourceAcquisitionPolicy = sourceAcquisitionSelection === undefined
     ? undefined : captureSourceAcquisitionPolicy(sourceAcquisitionSelection);
+  let cleanupMilliseconds = cleanupMillisecondsSelection;
+  if (cleanupMilliseconds !== undefined && (!Number.isSafeInteger(cleanupMilliseconds)
+    || cleanupMilliseconds < 1 || cleanupMilliseconds > 2147483647)) throw new Error('NOVA_REMOTE_CLEANUP_TIMEOUT_INVALID');
   const canonical = fs.realpathSync(file);
   const directory = path.dirname(canonical);
   const value = object(JSON.parse(fs.readFileSync(canonical, 'utf8')), 'root');
@@ -45,13 +49,21 @@ export function loadProductionNovaTestGate(
     if (typeof selection.file !== 'string' || !selection.file || typeof selection.profile !== 'string' || !selection.profile) {
       throw new Error('NOVA_REMOTE_CONFIG_INVALID:corePolicySelection');
     }
+    // A retained v2 operation must supply the complete original policy pair.
+    // Never mix captured source policy with a hidden cleanup default, or a
+    // captured cleanup budget with the current owner's source policy.
+    if ((sourceAcquisitionPolicy === undefined) !== (cleanupMilliseconds === undefined)) {
+      throw new Error('NOVA_REMOTE_RETAINED_POLICY_INCOMPLETE');
+    }
     // Original captures are passed explicitly by retained callers. New starts
     // resolve exactly one selected central owner, relative to this runtime file.
     // v1 remains closed and keeps its original no-selection behavior.
     if (sourceAcquisitionPolicy === undefined) {
-      sourceAcquisitionPolicy = captureSourceAcquisitionPolicy(loadCoreRuntimePolicy({
+      const selected = loadCoreRuntimePolicy({
         file: path.resolve(directory, selection.file), profile: selection.profile,
-      }).sourceAcquisition);
+      });
+      sourceAcquisitionPolicy = captureSourceAcquisitionPolicy(selected.sourceAcquisition);
+      cleanupMilliseconds ??= selected.remotePlanDispatch.cleanupMilliseconds;
     }
   }
   for (const name of ['endpoint', 'sourceAttestationPrivateKeyEnvironmentVariable',
@@ -84,6 +96,7 @@ export function loadProductionNovaTestGate(
   const records = object(value.recordLimits, 'recordLimits');
   assertKnownKeys(records, ['maximumRecords', 'maximumBytes', 'maximumRecordBytes'], 'recordLimits');
   return createProductionNovaTestGate({
+    ...(cleanupMilliseconds === undefined ? {} : { cleanupMilliseconds }),
     ...(sourceAcquisitionPolicy ? { sourceAcquisitionPolicy } : {}),
     endpoint: endpoint.href,
     ...(token ? { token } : {}),

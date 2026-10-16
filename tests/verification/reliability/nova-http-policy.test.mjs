@@ -16,19 +16,19 @@ import {runRoot} from '../../../skills/nova/core/execution/run-root.ts';
 import {activate} from '../../../skills/common/plugins/runtime-dispatch/src/adapter.ts';
 const id='kubeclaw.runtime-dispatch:runtime',payload={task:'ééé'},responseBody={answer:'ééé'};
 const size=v=>Buffer.byteLength(JSON.stringify(v),'utf8');
-const profiles=limits=>({targetByteProfiles:{chosen:limits}});
+const profiles=limits=>({payloadStructure:TEST_CORE_POLICY.httpDispatch.payloadStructure,targetByteProfiles:{chosen:limits}});
 async function fixture(t){
  const root=fs.mkdtempSync(path.join(os.tmpdir(),'nova-http-policy-'));t.after(()=>fs.rmSync(root,{recursive:true,force:true}));
- let responseDelay=0;
+ let responseDelay=0,servedBody=responseBody;
  const received=[],secret='http-policy-test-secret',env='HTTP_POLICY_'+crypto.randomBytes(8).toString('hex').toUpperCase();process.env[env]=secret;t.after(()=>{delete process.env[env];});
- const server=http.createServer(async(req,res)=>{const chunks=[];for await(const c of req)chunks.push(c);const body=Buffer.concat(chunks).toString('utf8');assert.equal(req.headers['x-kubeclaw-signature'],'v1='+crypto.createHmac('sha256',secret).update(req.headers['idempotency-key']+'.'+body).digest('hex'));received.push(body);res.writeHead(200,{'content-type':'application/json'});if(responseDelay){const timer=setTimeout(()=>res.end(JSON.stringify(responseBody)),responseDelay);res.on('close',()=>clearTimeout(timer));}else res.end(JSON.stringify(responseBody));});server.listen(0,'127.0.0.1');await once(server,'listening');t.after(()=>new Promise(resolve=>{server.closeAllConnections();server.close(resolve);}));const origin='http://127.0.0.1:'+server.address().port;
+ const server=http.createServer(async(req,res)=>{const chunks=[];for await(const c of req)chunks.push(c);const body=Buffer.concat(chunks).toString('utf8');assert.equal(req.headers['x-kubeclaw-signature'],'v1='+crypto.createHmac('sha256',secret).update(req.headers['idempotency-key']+'.'+body).digest('hex'));received.push(body);res.writeHead(200,{'content-type':'application/json'});if(responseDelay){const timer=setTimeout(()=>res.end(JSON.stringify(servedBody)),responseDelay);res.on('close',()=>clearTimeout(timer));}else res.end(JSON.stringify(servedBody));});server.listen(0,'127.0.0.1');await once(server,'listening');t.after(()=>new Promise(resolve=>{server.closeAllConnections();server.close(resolve);}));const origin='http://127.0.0.1:'+server.address().port;
  const plugin=path.join(root,'plugins/probe');fs.mkdirSync(path.join(plugin,'schemas'),{recursive:true});fs.writeFileSync(path.join(plugin,'package.json'),'{"type":"module"}');
  fs.writeFileSync(path.join(plugin,'entry.mjs'),`export async function execute(input,context){await context.invoke('runtime.dispatch',{operation:'dispatch',resource:{type:'runtime.agent',canonicalId:'worker'},payload:${JSON.stringify(payload)}});if(context.contract.guidance?.approved)return {schemaVersion:'stage-result.v2',outcome:'passed',artifacts:[]};return {schemaVersion:'stage-result.v2',outcome:'orchestrator_required',reason:{code:'test.guidance',message:'waiting'},artifacts:[],wait:{schemaVersion:'wait-request.v2',waitId:'wait:http-policy',kind:'orchestrator',signalType:'core.orchestrator.resume',authorizedIssuer:{type:'orchestrator',id:'nova'},expiresAt:null}};}`);
  for(const [name,value] of Object.entries({config:{type:'object',additionalProperties:false},input:{type:'object',additionalProperties:false},result:{$ref:'https://kubeclaw.dev/contracts/plugin-system/v2/plugin-system-v2.schema.json#/$defs/stageResult'}}))fs.writeFileSync(path.join(plugin,'schemas',name+'.json'),JSON.stringify(value));
  fs.writeFileSync(path.join(plugin,'plugin.json'),JSON.stringify({id:'test.http-policy',apiVersion:'pipeline-plugin-v2',packageVersion:'1.0.0',observers:[],adapters:[],stages:[{id:'probe',type:'test.http-policy',module:'entry.mjs',export:'execute',requiredCapabilities:['runtime.dispatch'],configSchema:'schemas/config.json',inputSchema:'schemas/input.json',resultSchema:'schemas/result.json'}]}));
- const coreFile=path.join(root,'core.json'),publish=(limits,networkHttp=TEST_CORE_POLICY.networkHttp)=>fs.writeFileSync(coreFile,JSON.stringify({schemaVersion:'nova-core-runtime-policy.v1',profiles:{selected:{settings:{...TEST_CORE_POLICY,networkHttp,httpDispatch:profiles(limits)}}}}));publish({maxRequestBytes:1000,maxResponseBytes:1000});
+ const coreFile=path.join(root,'core.json'),publish=(limits,networkHttp=TEST_CORE_POLICY.networkHttp,payloadStructure=TEST_CORE_POLICY.httpDispatch.payloadStructure)=>fs.writeFileSync(coreFile,JSON.stringify({schemaVersion:'nova-core-runtime-policy.v1',profiles:{selected:{settings:{...TEST_CORE_POLICY,networkHttp,httpDispatch:{...profiles(limits),payloadStructure}}}}}));publish({maxRequestBytes:1000,maxResponseBytes:1000});
  const common=path.resolve('skills/common/plugins');const source={schemaVersion:'pipeline-platform.v2',corePolicySelection:{file:coreFile,profile:'selected'},installationRoots:[path.join(root,'plugins'),common],trustedBuiltinRoots:[path.join(root,'plugins'),common],externalTrust:{allowedSourceDigests:{},verifiedAttestations:{}},providers:{'runtime.dispatch':id,'network.http':'kubeclaw.network-http:http','secrets.read':'kubeclaw.secret-resolver:secrets'},grants:{'test.http-policy:probe':{'runtime.dispatch':{allowedAgents:['worker']}},[id]:{'network.http':{allowedOrigins:[origin]},'secrets.read':{allowedNames:['policy.token']}}},adapters:{[id]:{targets:{worker:{endpoint:origin+'/dispatch',tokenSecret:'policy.token',byteProfile:'chosen'}}},'kubeclaw.network-http:http':{allowedOrigins:[origin],allowedMethods:['POST'],allowedHeaders:['content-type','idempotency-key','x-kubeclaw-signature']},'kubeclaw.secret-resolver:secrets':{environment:{'policy.token':env}}},activeAdapters:[],observers:{},storageRoot:path.join(root,'state'),shutdownTimeoutMs:1000,effectLockTtlMs:300000,orchestratorIssuerId:'nova',administrativeDecisionIssuers:[]};
- const platformFile=path.join(root,'platform.json'),write=()=>fs.writeFileSync(platformFile,JSON.stringify(source));write();const definition={schemaVersion:'pipeline-definition.v2',id:'http-policy',maxConcurrency:1,stages:[{id:'probe',type:'test.http-policy',dependsOn:[],input:{},config:{},execution:{maxAttempts:2,maxRemediationCycles:0,timeoutMs:5000}}]};return {root,source,definition,received,coreFile,publish,setResponseDelay:value=>{responseDelay=value;},write,platform:()=>loadPlatformConfig(platformFile),secret};
+ const platformFile=path.join(root,'platform.json'),write=()=>fs.writeFileSync(platformFile,JSON.stringify(source));write();const definition={schemaVersion:'pipeline-definition.v2',id:'http-policy',maxConcurrency:1,stages:[{id:'probe',type:'test.http-policy',dependsOn:[],input:{},config:{},execution:{maxAttempts:2,maxRemediationCycles:0,timeoutMs:5000}}]};return {root,source,definition,received,coreFile,publish,setResponseDelay:value=>{responseDelay=value;},setResponseBody:value=>{servedBody=value;},write,platform:()=>loadPlatformConfig(platformFile),secret};
 }
 test('actual Nova HTTP request/response A/B boundaries and retained A selector+values without B',async t=>{
  const f=await fixture(t),a={maxRequestBytes:size(payload),maxResponseBytes:size(responseBody)};f.publish(a);
@@ -42,7 +42,7 @@ test('actual Nova HTTP request/response A/B boundaries and retained A selector+v
 test('actual HTTP receiver selects distinct byte profiles, captures immutable caps and restores positives',async t=>{
  const f=await fixture(t),a={maxRequestBytes:size(payload),maxResponseBytes:size(responseBody)},raw=f.source.adapters[id];
  const byteProfiles={exact:a,small:{...a,maxRequestBytes:a.maxRequestBytes-1}};
- const policy=captureCoreRuntimePolicy({...TEST_CORE_POLICY,httpDispatch:{targetByteProfiles:byteProfiles}});
+ const policy=captureCoreRuntimePolicy({...TEST_CORE_POLICY,httpDispatch:{...TEST_CORE_POLICY.httpDispatch,targetByteProfiles:byteProfiles}});
  const config=structuredClone(selectedAdapterConfigurations({[id]:{targets:{worker:{...raw.targets.worker,byteProfile:'exact'},small:{...raw.targets.worker,byteProfile:'small'}}}},policy)[id]);
  const instance=activate({config,async invokeConfidential(capability,request){if(capability==='secrets.read')return {value:f.secret};const res=await fetch(request.resource.canonicalId,{method:'POST',headers:request.payload.headers,body:JSON.stringify(request.payload.body)});return {status:res.status,body:await res.json()};}});
  config.targetByteProfiles.exact.maxRequestBytes=1; // structured input is captured at activation, not reread.
@@ -110,4 +110,51 @@ test('network limit policies reject absent, invalid and competing authors and ca
  const adapter=networkActivate({config});config.maxRequestBytes=999;
  await assert.rejects(adapter.invoke({confidential:true,signal:new AbortController().signal,request:{capability:'network.http',operation:'request',resource:{canonicalId:'https://example.com'},payload:{body:'ééé'}}}),/NETWORK_REQUEST_SIZE_EXCEEDED/);
  assert.doesNotThrow(()=>networkActivate({config:{...raw,...TEST_CORE_POLICY.networkHttp}}));
+});
+
+
+test('selected HTTP structure caps reach request and response traversal and capture activation values',async()=>{
+ const original=TEST_CORE_POLICY.httpDispatch.payloadStructure;
+ const raw={targets:{worker:{endpoint:'http://127.0.0.1:1/dispatch',authentication:'spiffe-proxy',byteProfile:'standard'}}};
+ for(const [field,good,bad,code] of [
+  ['maximumDepth',{a:{b:1}},{a:{b:{c:1}}},'DEPTH'],
+  ['maximumArrayEntries',{a:[1,2]},{a:[1,2,3]},'ARRAY'],
+  ['maximumObjectProperties',{a:1,b:2},{a:1,b:2,c:3},'OBJECT']
+ ]) {
+  const authored={...original,[field]:2};
+  const policy=captureCoreRuntimePolicy({...TEST_CORE_POLICY,httpDispatch:{...TEST_CORE_POLICY.httpDispatch,payloadStructure:authored}});
+  const config=structuredClone(selectedAdapterConfigurations({'kubeclaw.runtime-dispatch:runtime':raw},policy)['kubeclaw.runtime-dispatch:runtime']);
+  let body=good,calls=0;
+  const adapter=activate({config,async invokeConfidential(){calls++;return {status:200,body};}});
+  config.payloadStructure[field]=1;authored[field]=1;
+  const invoke=payload=>adapter.invoke({confidential:true,signal:new AbortController().signal,request:{capability:'runtime.dispatch',operation:'dispatch',resource:{type:'runtime.agent',canonicalId:'worker'},payload,idempotencyKey:'structure'}});
+  assert.deepEqual(await invoke(good),good);const before=calls;
+  await assert.rejects(invoke(bad),new RegExp('RUNTIME_PAYLOAD_'+code+'_EXCEEDED'));assert.equal(calls,before);
+  body=bad;await assert.rejects(invoke(good),new RegExp('RUNTIME_PAYLOAD_'+code+'_EXCEEDED'));assert.equal(calls,before+1);
+  body=good;assert.deepEqual(await invoke(good),good);
+ }
+ for(const field of Object.keys(original)) {
+  for(const value of [undefined,null,'2',-1,1.5,original[field]+1]) {
+   const payloadStructure={...original,[field]:value};
+   assert.throws(()=>captureCoreRuntimePolicy({...TEST_CORE_POLICY,httpDispatch:{...TEST_CORE_POLICY.httpDispatch,payloadStructure}}),/INVALID/);
+   assert.throws(()=>activate({config:{...raw,...TEST_CORE_POLICY.httpDispatch,payloadStructure}}),/INVALID/);
+  }
+ }
+ assert.throws(()=>activate({config:{...raw,targetByteProfiles:TEST_CORE_POLICY.httpDispatch.targetByteProfiles}}),/INVALID/);
+ assert.throws(()=>selectedAdapterConfigurations({'kubeclaw.runtime-dispatch:runtime':{...raw,payloadStructure:original}},TEST_CORE_POLICY),/COMPETING_AUTHOR/);
+});
+
+test('installed HTTP structure selection survives changed B and removed current author on original resume',async t=>{
+ const f=await fixture(t),bytes={maxRequestBytes:1000,maxResponseBytes:1000};
+ const a={...TEST_CORE_POLICY.httpDispatch.payloadStructure,maximumObjectProperties:2};
+ f.setResponseBody({answer:'yes',second:'retained'});f.publish(bytes,TEST_CORE_POLICY.networkHttp,a);
+ const first=await runPipelineV2(f.platform(),f.definition,'structure:A');assert.equal(first.status,'waiting');
+ const saved=readRunSnapshot(runRoot(f.source.storageRoot,'structure:A'));
+ assert.deepEqual(saved.registry.configuration.adapters[id].payloadStructure,a);
+ f.publish(bytes,TEST_CORE_POLICY.networkHttp,{...a,maximumObjectProperties:1});
+ assert.equal((await runPipelineV2(f.platform(),f.definition,'structure:B')).status,'blocked');
+ assert.match(fs.readFileSync(path.join(runRoot(f.source.storageRoot,'structure:B'),'events.jsonl'),'utf8'),/RUNTIME_PAYLOAD_OBJECT_EXCEEDED/);
+ fs.unlinkSync(f.coreFile);const wait=first.stages.get('probe').wait;
+ assert.equal((await resumePipelineV2(f.platform(),f.definition,'structure:A',{schemaVersion:'resume-signal.v2',signalId:'signal:structure',idempotencyKey:'signal-key:structure',waitId:wait.waitId,signalType:wait.signalType,issuer:wait.authorizedIssuer,issuedAt:new Date().toISOString(),payload:{approved:true}})).status,'succeeded');
+ assert.deepEqual(readRunSnapshot(runRoot(f.source.storageRoot,'structure:A')),saved);
 });

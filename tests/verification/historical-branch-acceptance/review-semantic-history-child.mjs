@@ -17,7 +17,7 @@ const coordinator = new EffectCoordinator(
   undefined,
   undefined,
   new FileResourceLockManager(path.join(root, `history-${phase}-locks`), TEST_CORE_POLICY), 300_000,
-);
+ TEST_CORE_POLICY.resourceAcquisition);
 const adapterOwner = {
   pluginId: 'kubeclaw.artifact-store',
   apiVersion: 'pipeline-plugin-v2',

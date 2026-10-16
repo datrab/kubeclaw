@@ -1,0 +1,34 @@
+npm notice run test
+npm notice run node tests/live-function.test.ts && node --test tests/evidence-projection.test.ts
+{"ok":true,"plugin":"kubeclaw.remote-test-gate","live":true}
+✖ original HTTP importer, artifact store and evidence adapter preserve ownership across reopen; envelopes are contract vectors (605.220739ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1238.91769
+
+✖ failing tests:
+
+test at tests/evidence-projection.test.ts:27:1
+✖ original HTTP importer, artifact store and evidence adapter preserve ownership across reopen; envelopes are contract vectors (605.220739ms)
+  Error: Command failed: /usr/local/bin/node --test /home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/integration/demo-auth-smoke-live.test.ts
+      at genericNodeError (node:internal/errors:986:15)
+      at wrappedFn (node:internal/errors:540:14)
+      at checkExecSyncError (node:child_process:942:11)
+      at execFileSync (node:child_process:978:15)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/remote-test-gate/tests/evidence-projection.test.ts:30:2)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    status: 1,
+    signal: null,
+    output: [ null, <Buffer e2 9c 96 20 6f 72 69 67 69 6e 61 6c 20 63 6f 6e 74 72 6f 6c 6c 65 72 20 63 72 65 64 65 6e 74 69 61 6c 73 20 61 75 74 68 65 6e 74 69 63 61 74 65 20 61 ... 2191 more bytes>, <Buffer > ],
+    pid: 1813257,
+    stdout: <Buffer e2 9c 96 20 6f 72 69 67 69 6e 61 6c 20 63 6f 6e 74 72 6f 6c 6c 65 72 20 63 72 65 64 65 6e 74 69 61 6c 73 20 61 75 74 68 65 6e 74 69 63 61 74 65 20 61 ... 2191 more bytes>,
+    stderr: <Buffer >
+  }

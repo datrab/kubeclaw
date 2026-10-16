@@ -15,7 +15,7 @@ import {runRoot} from '../../../skills/nova/core/execution/run-root.ts';
 import {readRunSnapshot} from '../../../skills/nova/core/execution/engine-snapshots.ts';
 import {targetsFrom} from '../../../skills/common/plugins/runtime-dispatch/src/openclaw-config.ts';
 import {readOpenClawResult} from '../../../skills/common/plugins/runtime-dispatch/src/openclaw-result.ts';
-import {readSessionState} from '../../../skills/common/plugins/runtime-dispatch/src/openclaw-session.ts';
+import {readSessionState,findRegisteredSession,cancelSession} from '../../../skills/common/plugins/runtime-dispatch/src/openclaw-session.ts';
 import {readResult} from '../../../skills/common/plugins/runtime-dispatch/src/result-persistence.ts';
 const id='kubeclaw.runtime-dispatch:openclaw';
 async function fixture(t){
@@ -47,15 +47,19 @@ async function fixture(t){
  const definition={schemaVersion:'pipeline-definition.v2',id:'dispatch-policy',maxConcurrency:1,stages:[{id:'probe',type:'test.dispatch-policy',dependsOn:[],input:{},config:{},execution:{maxAttempts:2,maxRemediationCycles:0,timeoutMs:5000}}]};return {root,repo,target,received,coreFile,publish,source,definition,policyBase,platform:()=>loadPlatformConfig(platformFile)};
 }
 test('real Nova dispatch startup captures A/B, sends configured collector wait over HTTP and resumes retained A without B',async t=>{
- const f=await fixture(t),a={resultReadMaximumBytes:8,collectorWaitTimeoutSeconds:2};f.publish(a);const captured=inspectRuntimeConfiguration(f.platform(),f.definition);
- assert.equal(captured.adapterConfigurations[id].resultReadMaximumBytes,8);assert.equal(captured.adapterConfigurations[id].collectorWaitTimeoutSeconds,2);
+ const f=await fixture(t),a={workspaceOwnerMaximumBytes:2048,cleanupPollIntervalMs:7,resultReadMaximumBytes:8,collectorWaitTimeoutSeconds:2,sessionListCacheTtlMs:250,sessionListMinimumRecentMinutes:11,sessionListPaddingMinutes:4};f.publish(a);const captured=inspectRuntimeConfiguration(f.platform(),f.definition);
+ assert.equal(captured.adapterConfigurations[id].workspaceOwnerMaximumBytes,2048);assert.equal(captured.adapterConfigurations[id].resultReadMaximumBytes,8);assert.equal(captured.adapterConfigurations[id].collectorWaitTimeoutSeconds,2);assert.equal(captured.adapterConfigurations[id].cleanupPollIntervalMs,7);
  const first=await runPipelineV2(f.platform(),f.definition,'dispatch:A');assert.equal(first.status,'waiting',JSON.stringify([...first.stages]));
+ const initialLists=f.received.filter(call=>call.tool==='subagents');assert(initialLists.length>0);assert(initialLists.every(call=>call.args.recentMinutes===11));
  const aRoot=runRoot(f.source.storageRoot,'dispatch:A'),snapshot=readRunSnapshot(aRoot);assert.deepEqual(snapshot.registry.configuration.adapters[id],captured.adapterConfigurations[id]);
- f.publish({resultReadMaximumBytes:7,collectorWaitTimeoutSeconds:3});assert.equal((await runPipelineV2(f.platform(),f.definition,'dispatch:B')).status,'waiting');
- assert.deepEqual(f.received.filter(call=>call.tool==='agents_wait').map(call=>call.args.timeoutSeconds),[2,3]);assert.equal(captured.adapterConfigurations[id].resultReadMaximumBytes,8);
+ f.publish({workspaceOwnerMaximumBytes:4096,cleanupPollIntervalMs:31,resultReadMaximumBytes:7,collectorWaitTimeoutSeconds:3,sessionListCacheTtlMs:0,sessionListMinimumRecentMinutes:2,sessionListPaddingMinutes:8});assert.equal((await runPipelineV2(f.platform(),f.definition,'dispatch:B')).status,'waiting');
+ const afterB=f.received.filter(call=>call.tool==='subagents');assert(afterB.length>initialLists.length);assert(afterB.slice(initialLists.length).every(call=>call.args.recentMinutes===9));
+ assert.deepEqual(f.received.filter(call=>call.tool==='agents_wait').map(call=>call.args.timeoutSeconds),[2,3]);assert.equal(captured.adapterConfigurations[id].workspaceOwnerMaximumBytes,2048);assert.equal(captured.adapterConfigurations[id].resultReadMaximumBytes,8);
  fs.unlinkSync(f.coreFile);const wait=first.stages.get('probe').wait;
  assert.equal((await resumePipelineV2(f.platform(),f.definition,'dispatch:A',{schemaVersion:'resume-signal.v2',signalId:'signal:dispatch',idempotencyKey:'signal-key:dispatch',waitId:wait.waitId,signalType:wait.signalType,issuer:wait.authorizedIssuer,issuedAt:new Date().toISOString(),payload:{approved:true}})).status,'succeeded');
- assert.deepEqual(f.received.filter(call=>call.tool==='agents_wait').map(call=>call.args.timeoutSeconds),[2,3,2]);assert.deepEqual(readRunSnapshot(aRoot),snapshot);
+ assert.deepEqual(f.received.filter(call=>call.tool==='agents_wait').map(call=>call.args.timeoutSeconds),[2,3,2]);assert.deepEqual(readRunSnapshot(aRoot),snapshot);assert.equal(snapshot.registry.configuration.adapters[id].workspaceOwnerMaximumBytes,2048);
+ const afterResume=f.received.filter(call=>call.tool==='subagents');assert(afterResume.length>afterB.length);assert(afterResume.slice(afterB.length).every(call=>call.args.recentMinutes===11));
+ await assert.rejects(runPipelineV2(f.platform(),f.definition,'dispatch:missing'),/ENOENT/);
 });
 test('actual local result receiver enforces selected exact/over UTF8 read cap with restored positive',async t=>{
  const f=await fixture(t),workspace=path.join(f.root,'workspace');fs.mkdirSync(workspace);fs.mkdirSync(path.join(workspace,'results'));fs.writeFileSync(path.join(workspace,'results/out.json'),'"ééé"');
@@ -80,4 +84,116 @@ test('both central/adapter fields required, no target duplicate authors and no m
  const identity={runId:'run:direct',sessionKey:'session:direct',model:'test/model'};
  for(const value of [undefined,null,'1',-1,1.5,2147484])await assert.rejects(readSessionState({invokeConfidential(){throw new Error('UNEXPECTED_GATEWAY');}},{...f.target,collectorWaitTimeoutSeconds:value},'',identity),/OPENCLAW_COLLECTOR_WAIT_INVALID/);
  let requested;await readSessionState({async invokeConfidential(_capability,request){requested=request.payload.body.args.timeoutSeconds;return {status:200,body:{ok:true,toolName:'agents_wait',output:{content:[],details:{completed:[],pending:['run:direct']}},source:'core'}};}},{...f.target,collectorWaitTimeoutSeconds:0},'',identity);assert.equal(requested,0);
+});
+
+test('selected session-list cache TTL controls actual gateway reads, exact expiry, failure eviction and retained targets',async t=>{
+ const f=await fixture(t);
+ const select=ttl=>targetsFrom(selectedAdapterConfigurations(f.source.adapters,captureCoreRuntimePolicy({...TEST_CORE_POLICY,openClawDispatch:{...f.policyBase,sessionListCacheTtlMs:ttl}}))[id]).get('worker');
+ const a=select(250),b=select(0);let now=10000,fail=false;
+ t.mock.method(Date,'now',()=>now);
+ const context={async invokeConfidential(capability,request){
+  assert.equal(capability,'network.http');
+  if(fail){fail=false;throw new Error('TEST_TRANSIENT_GATEWAY');}
+  const response=await fetch(request.resource.canonicalId,{method:'POST',headers:request.payload.headers,body:JSON.stringify(request.payload.body)});
+  return {status:response.status,body:await response.json()};
+ }};
+ const read=target=>findRegisteredSession(context,target,'policy-test-token','missing');
+ const count=()=>f.received.filter(call=>call.tool==='subagents').length;
+ await read(a);await read(a);assert.equal(count(),1);
+ now+=249;await read(a);assert.equal(count(),1);
+ now+=1;await read(a);assert.equal(count(),2);
+ await read(b);await read(b);assert.equal(count(),4); // zero explicitly disables reuse
+ await read(a);assert.equal(count(),4); // B must not overwrite retained A's cache partition
+ now+=250;fail=true;await assert.rejects(read(a),/TEST_TRANSIENT_GATEWAY/);
+ await read(a);assert.equal(count(),5); // failed cached promise is evicted
+ fs.unlinkSync(f.coreFile);await read(a);assert.equal(count(),5);assert.equal(a.sessionListCacheTtlMs,250);assert(Object.isFrozen(a));
+ assert.throws(()=>inspectRuntimeConfiguration(f.platform(),f.definition),/ENOENT/);
+ for(const value of [undefined,null,'250',-1,1.5,Number.MAX_SAFE_INTEGER+1])await assert.rejects(read({...a,sessionListCacheTtlMs:value}),/SESSION_LIST_CACHE_TTL_INVALID/);
+ assert.equal(count(),5);now+=250;await read(a);assert.equal(count(),6);
+});
+
+ test('selected lookback reaches uncached polling and cancellation identity lookup with minute rounding',async t=>{
+ const f=await fixture(t), selected=targetsFrom(selectedAdapterConfigurations(f.source.adapters,captureCoreRuntimePolicy({...TEST_CORE_POLICY,openClawDispatch:{...f.policyBase,sessionListMinimumRecentMinutes:2,sessionListPaddingMinutes:3}}))[id]).get('worker');
+ const target={...selected,collectorMode:false,sessionTimeoutMs:60001};
+ const identity={runId:'run:lookback',sessionKey:'session:lookback',label:'lookback',model:'test/model'};const calls=[];
+ const context={async invokeConfidential(_capability,request){
+ const {tool,args}=request.payload.body;calls.push({tool,args});
+ return {status:200,body:{ok:true,toolName:tool,source:'core',output:{content:[],details:{active:[{...identity,taskId:'task:lookback',status:'running'}],recent:[]}}}};
+ }};
+ assert.equal((await readSessionState(context,target,'token',identity)).state,'running');
+ await cancelSession(context,target,'token',identity);
+ assert.deepEqual(calls.map(call=>call.args.action),['list','list','cancel']);
+ assert.deepEqual(calls.slice(0,2).map(call=>call.args.recentMinutes),[5,5]);
+ assert.equal(calls[2].args.taskId,'task:lookback');
+ for(const key of ['sessionListMinimumRecentMinutes','sessionListPaddingMinutes'])for(const value of [undefined,null,'1',-1,1.5,2147483648]) {
+  const bad={...target,[key]:value};
+  await assert.rejects(readSessionState(context,bad,'token',identity),/LOOKBACK_INVALID/);
+  await assert.rejects(cancelSession(context,bad,'token',identity),/LOOKBACK_INVALID/);
+ }
+ assert.equal(calls.length,3);
+ });
+
+test('late-spawn cleanup uses selected lookback and rejects missing policy before gateway IO',async t=>{
+ const f=await fixture(t),selected=targetsFrom(selectedAdapterConfigurations(f.source.adapters,captureCoreRuntimePolicy({...TEST_CORE_POLICY,openClawDispatch:{...f.policyBase,sessionListMinimumRecentMinutes:2,sessionListPaddingMinutes:3}}))[id]).get('worker');
+ const {reconcileOpenClawFailure}=await import('../../../skills/common/plugins/runtime-dispatch/src/openclaw-cleanup.ts');
+ const identity={runId:'run:cleanup',sessionKey:'session:cleanup',label:'cleanup',model:'test/model',taskId:'task:cleanup'};
+ const calls=[];const context={async invokeConfidential(_capability,request){
+ const {tool,args}=request.payload.body;calls.push({tool,args});
+ const details=args.action==='cancel'?{status:'accepted'}:{active:[],recent:[{...identity,status:'done'}]};
+ return {status:200,body:{ok:true,toolName:tool,source:'core',output:{content:[],details}}};
+ },async withCleanup(run){return run({...context,signal:new AbortController().signal});}};
+ const pending={label:identity.label,spawning:new Promise(()=>{})};
+ for(const [minimum,padding,expected] of [[2,3,5],[13,1,13]]){
+  const start=calls.length;
+  await assert.rejects(reconcileOpenClawFailure(context,{...selected,sessionTimeoutMs:60001,sessionListMinimumRecentMinutes:minimum,sessionListPaddingMinutes:padding},'token',pending,new Error('TEST_FAILURE')),/TEST_FAILURE; OPENCLAW_SESSION_TERMINAL_CONFIRMED:run:cleanup/);
+  assert.deepEqual(calls.slice(start).map(call=>call.args.action),['list','cancel','list']);
+  assert(calls.slice(start).filter(call=>call.args.action==='list').every(call=>call.args.recentMinutes===expected));
+ }
+ const count=calls.length;
+ await assert.rejects(reconcileOpenClawFailure(context,{...selected,sessionListPaddingMinutes:undefined},'token',pending,new Error('TEST_FAILURE')),/CLEANUP_UNRESOLVED:.*LOOKBACK_INVALID/);
+ assert.equal(calls.length,count);
+});
+
+
+test('cleanup retries use selected A/B intervals for late identity and terminal confirmation, invalid intervals deny before IO',async t=>{
+ const f=await fixture(t),selected=targetsFrom(selectedAdapterConfigurations(f.source.adapters,captureCoreRuntimePolicy({...TEST_CORE_POLICY,openClawDispatch:f.policyBase}))[id]).get('worker');
+ const {reconcileOpenClawFailure}=await import('../../../skills/common/plugins/runtime-dispatch/src/openclaw-cleanup.ts');
+ const identity={runId:'run:retry',sessionKey:'session:retry',label:'retry',model:'test/model',taskId:'task:retry'};
+ const realSetTimeout=globalThis.setTimeout;const delays=[];
+ // Observe actual timer scheduling without wall-clock thresholds/flaky elapsed assertions.
+ t.mock.method(globalThis,'setTimeout',(callback,ms,...args)=>{const cleanupTimer=new Error().stack.includes('/openclaw-cleanup.ts:');if(cleanupTimer)delays.push(ms);return realSetTimeout(callback,cleanupTimer?0:ms,...args);});
+ for(const interval of [7,31]){
+  let lists=0,cancels=0;const context={async invokeConfidential(_capability,request){
+   const {tool,args}=request.payload.body;let details;
+   if(args.action==='cancel'){cancels++;details={status:'accepted'};}
+   else{lists++;details=lists===1?{active:[],recent:[]}:{active:[],recent:[{...identity,status:lists===3?'running':'done'}]};}
+   return {status:200,body:{ok:true,toolName:tool,source:'core',output:{content:[],details}}};
+  },async withCleanup(run){return run({...context,signal:new AbortController().signal});}};
+  const start=delays.length;
+  await assert.rejects(reconcileOpenClawFailure(context,{...selected,cleanupPollIntervalMs:interval},'token',{label:identity.label,spawning:new Promise(()=>{})},new Error('RETRY_FAILURE')),/RETRY_FAILURE; OPENCLAW_SESSION_TERMINAL_CONFIRMED:run:retry/);
+  assert.equal(lists,4);assert.equal(cancels,1);assert.deepEqual(delays.slice(start),[interval,interval]);
+ }
+ for(const value of [undefined,null,'25',0,-1,1.5,2147483648]){
+  const context={withCleanup(){assert.fail('invalid interval entered cleanup');},invokeConfidential(){assert.fail('invalid interval reached gateway');}};
+  await assert.rejects(reconcileOpenClawFailure(context,{...selected,cleanupPollIntervalMs:value},'token',{label:identity.label,spawning:new Promise(()=>{})},new Error('RETRY_FAILURE')),/CLEANUP_UNRESOLVED:.*OPENCLAW_CLEANUP_INTERVAL_INVALID/);
+ }
+});
+
+
+test('central workspace owner cap reaches actual filesystem read, retains A, and rejects equal duplicate authors',async t=>{
+ const f=await fixture(t);
+ const {workspaceTarget}=await import('../../../skills/common/plugins/runtime-dispatch/src/workspace-target.ts');
+ const {runtimeWorkspaceOwnerFile}=await import('@kubeclaw/plugin-sdk');
+ const root=fs.realpathSync(f.root),workspace=path.join(root,'owned');fs.mkdirSync(workspace);
+ const attempt={runId:'owner:A',stageId:'implement-a',attemptId:'attempt:A',attemptNumber:1};
+ const ref={schemaVersion:'runtime-workspace.v1',repositoryRoot:f.repo,workspaceRoot:root,workspacePath:workspace,branch:'nova/test/a',sourceRevision:'a'.repeat(40),owner:attempt};
+ const ownerFile=path.join(root,runtimeWorkspaceOwnerFile(workspace));fs.mkdirSync(path.dirname(ownerFile));fs.writeFileSync(ownerFile,JSON.stringify(ref));
+ const bytes=fs.statSync(ownerFile).size,request={attempt,payload:{workspaceReference:ref}};
+ const select=limit=>targetsFrom(selectedAdapterConfigurations({[id]:{targets:{worker:{...f.target,workspaceRoot:root}}}},captureCoreRuntimePolicy({...TEST_CORE_POLICY,openClawDispatch:{...f.policyBase,workspaceOwnerMaximumBytes:limit}}))[id]).get('worker');
+ const a=select(bytes),b=select(bytes-1);assert.equal(workspaceTarget(a,request).cwd,workspace);
+ assert.throws(()=>workspaceTarget(b,request),/RUNTIME_WORKSPACE_OWNER_INVALID/);
+ assert.equal(workspaceTarget(a,request).cwd,workspace);assert(Object.isFrozen(a));
+ assert.throws(()=>workspaceTarget({...a,workspaceOwnerMaximumBytes:undefined},request),/OWNER_LIMIT_INVALID/);
+ fs.writeFileSync(ownerFile,JSON.stringify({...ref,branch:'nova/test/foreign'}));
+ assert.throws(()=>workspaceTarget(select(32768),request),/OWNER_MISMATCH/);
 });

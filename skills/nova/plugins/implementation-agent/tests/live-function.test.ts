@@ -69,13 +69,13 @@ try {
   const effectsPath = path.join(temporary, 'effects.jsonl');
   const adapters = new core.AdapterRuntime({ granted, activated, configs: new Map([
     ['kubeclaw.runtime-dispatch:runtime',{ ...TEST_CORE_POLICY.httpDispatch,targets:{forge:{byteProfile:'standard', endpoint:`${origin}/dispatch`,tokenSecret:'forge.agent'}}}],
-    ['kubeclaw.network-http:http',{allowedOrigins:[origin],allowedMethods:['POST'],allowedHeaders:['content-type','idempotency-key','x-kubeclaw-signature']}],
+    ['kubeclaw.network-http:http',{...TEST_CORE_POLICY.networkHttp,allowedOrigins:[origin],allowedMethods:['POST'],allowedHeaders:['content-type','idempotency-key','x-kubeclaw-signature']}],
     ['kubeclaw.secret-resolver:secrets',{environment:{'forge.agent':secret}}],
     ['kubeclaw.artifact-store:artifact-store',{ ...TEST_ARTIFACT_STORE_POLICY,artifactRoot:path.join(temporary,'artifacts')}],
     ['kubeclaw.git-workspace:git',{allowedRepositoryRoots:[temporary],workspaceRoot:path.join(temporary,'worktrees'),
       gitExecutable:fs.realpathSync(execFileSync('sh',['-lc','command -v git'],{encoding:'utf8'}).trim()),
-      authorName:'KubeClaw Test',authorEmail:'test@kubeclaw.invalid',maxExecutionMs:5000,maxOutputBytes:65536,terminationGraceMs:100}],
-  ]), effects: new core.EffectCoordinator(new core.FileEffectJournal(effectsPath, TEST_CORE_POLICY), undefined, undefined, new core.MemoryResourceLockManager(), 300_000), shutdownTimeoutMs:1000, async emitDomainEvent(){} });
+      errorExcerptCharacters: TEST_CORE_POLICY.gitWorkspaceFailure.errorExcerptCharacters, authorName:'KubeClaw Test',authorEmail:'test@kubeclaw.invalid',maxExecutionMs:5000,maxOutputBytes:65536,terminationGraceMs:100}],
+  ]), effects: new core.EffectCoordinator(new core.FileEffectJournal(effectsPath, TEST_CORE_POLICY), undefined, undefined, new core.MemoryResourceLockManager(), 300_000, TEST_CORE_POLICY.resourceAcquisition), shutdownTimeoutMs:1000, async emitDomainEvent(){} });
   await adapters.start();
   try {
     const runner = new core.PipelineRunner({stageMemoryBytes: TEST_CORE_POLICY.stageMemoryBytes, definition:{schemaVersion:'pipeline-definition.v2',id:'pipeline:implementation',maxConcurrency:1,stages:[{

@@ -1,6 +1,8 @@
+import { selectedObserverConfigurations } from '../../../../nova/core/execution/engine-runtime.ts';
 import { TEST_CORE_POLICY as DELIVERY_TEST_CORE_POLICY } from '../../../../../tests/fixtures/core-runtime-policy.mjs';
-const TEST_OPERATOR_STORE_POLICY = DELIVERY_TEST_CORE_POLICY.operatorMessagingStore;
+const TEST_OPERATOR_STORE_POLICY = { ...DELIVERY_TEST_CORE_POLICY.operatorMessagingStore, ...DELIVERY_TEST_CORE_POLICY.operatorMessagingFailure, ...DELIVERY_TEST_CORE_POLICY.operatorMessagingPayload };
 import { TEST_CORE_POLICY } from '../../../../../tests/fixtures/core-runtime-policy.mjs';
+import { graphSnapshot, writeRunSnapshots } from '../../../../nova/core/execution/engine-snapshots.ts';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import http from 'node:http';
@@ -68,21 +70,31 @@ const effectsPath = path.join(temporary, 'effects.jsonl');
 const adapters = new core.AdapterRuntime({
   granted, activated,
   configs: new Map([
-    ['kubeclaw.notification-observer:notifications', { target: 'operators', pipelineLabel: 'p'.repeat(256), modelLabel: 'm'.repeat(256), stageLabels: { ['s'.repeat(512)]: 'l'.repeat(256) } }],
-    ['kubeclaw.notification-observer:preview-delivery', { target: 'operators' }],
+    ['kubeclaw.notification-observer:notifications', selectedObserverConfigurations({ 'kubeclaw.notification-observer:notifications': { target: 'operators', pipelineLabel: 'p'.repeat(256), modelLabel: 'm'.repeat(256), stageLabels: { ['s'.repeat(512)]: 'l'.repeat(256) } } }, TEST_CORE_POLICY)['kubeclaw.notification-observer:notifications']],
+    ['kubeclaw.notification-observer:preview-delivery', selectedObserverConfigurations({ 'kubeclaw.notification-observer:preview-delivery': { target: 'operators' } }, TEST_CORE_POLICY)['kubeclaw.notification-observer:preview-delivery']],
     ['kubeclaw.operator-messaging:operator', { ...TEST_OPERATOR_STORE_POLICY,
       deliveryRoot: path.join(temporary, 'notification-deliveries'),
-      targets: { operators: { endpoint: `${origin}/messages`, tokenSecret: 'notification.webhook' } },
+      targets: { operators: { payloadProfile: 'standard', endpoint: `${origin}/messages`, tokenSecret: 'notification.webhook' } },
     }],
     ['kubeclaw.network-http:http', {
-      allowedOrigins: [origin], allowedMethods: ['POST'],
+      ...TEST_CORE_POLICY.networkHttp, allowedOrigins: [origin], allowedMethods: ['POST'],
       allowedHeaders: ['content-type', 'idempotency-key', 'x-kubeclaw-signature'],
     }],
     ['kubeclaw.secret-resolver:secrets', { environment: { 'notification.webhook': secretName } }],
 
   ]),
-  effects: new core.EffectCoordinator(new core.FileEffectJournal(effectsPath, TEST_CORE_POLICY), undefined, undefined, new core.MemoryResourceLockManager(), 300_000),
+  effects: new core.EffectCoordinator(new core.FileEffectJournal(effectsPath, TEST_CORE_POLICY), undefined, undefined, new core.MemoryResourceLockManager(), 300_000, TEST_CORE_POLICY.resourceAcquisition),
   shutdownTimeoutMs: 1000, async emitDomainEvent() {},
+});
+// Publish the original fixture's selected policy before any lifecycle events.
+// Audit must read this retained snapshot, never today's installation defaults.
+writeRunSnapshots(temporary, graphSnapshot({
+  schemaVersion: 'pipeline-definition.v2', id: 'notification-fixture', maxConcurrency: 1,
+  stages: [{ id: 'notification', type: 'test.notification', dependsOn: [], config: {}, input: {},
+    execution: { maxAttempts: 1, maxRemediationCycles: 0, timeoutMs: 1000 } }],
+}), {
+  packages: [...snapshot.packages].map(([id, pkg]) => [id, pkg.provenance]),
+  configuration: { corePolicy: TEST_CORE_POLICY },
 });
 const events = new core.FileJournal(path.join(temporary, 'events.jsonl'), TEST_CORE_POLICY.journalAppendLockTimeoutMs);
 const producer = snapshot.observers.get('kubeclaw.notification-observer:notifications').provenance;
@@ -110,8 +122,8 @@ try {
     registry: granted, activated, adapters, events, checkpoints,
     deliveries: new core.FileJournal(path.join(temporary, 'deliveries.jsonl'), TEST_CORE_POLICY.journalAppendLockTimeoutMs),
     configs: new Map([
-      ['kubeclaw.notification-observer:notifications', { target: 'operators', pipelineLabel: 'p'.repeat(256), modelLabel: 'm'.repeat(256), stageLabels: { ['s'.repeat(512)]: 'l'.repeat(256) } }],
-      ['kubeclaw.notification-observer:preview-delivery', { target: 'operators' }],
+      ['kubeclaw.notification-observer:notifications', selectedObserverConfigurations({ 'kubeclaw.notification-observer:notifications': { target: 'operators', pipelineLabel: 'p'.repeat(256), modelLabel: 'm'.repeat(256), stageLabels: { ['s'.repeat(512)]: 'l'.repeat(256) } } }, TEST_CORE_POLICY)['kubeclaw.notification-observer:notifications']],
+      ['kubeclaw.notification-observer:preview-delivery', selectedObserverConfigurations({ 'kubeclaw.notification-observer:preview-delivery': { target: 'operators' } }, TEST_CORE_POLICY)['kubeclaw.notification-observer:preview-delivery']],
       ]),
     wait: async () => {},
   });

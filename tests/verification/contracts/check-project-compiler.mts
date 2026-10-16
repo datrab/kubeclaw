@@ -133,7 +133,7 @@ try {
   const artifact = (namespace: string) => ({ allowedNamespaces: [namespace] });
   const origins = ['http://127.0.0.1:9'];
   const platform = {corePolicySelection: TEST_CORE_POLICY_SELECTION,
-    schemaVersion: 'pipeline-platform.v2', effectLockTtlMs: 300_000, installationRoots: pluginRoots, trustedBuiltinRoots: pluginRoots,
+    schemaVersion: 'pipeline-platform.v2' as const, effectLockTtlMs: 300_000, installationRoots: pluginRoots, trustedBuiltinRoots: pluginRoots,
     externalTrust: { allowedSourceDigests: {}, verifiedAttestations: {} },
     providers: {
       'runtime.dispatch': 'kubeclaw.runtime-dispatch:runtime', 'network.http': 'kubeclaw.network-http:http',
@@ -190,8 +190,28 @@ try {
   assert.equal(legacyRuntime.stageCount, v3Runtime.stageCount, 'registered runtime must retain legacy semantic graph validity');
   assert(compiled.definition.stages.filter((stage: any) => stage.type === 'kubeclaw.decision.review')
     .every((stage: any) => !Object.hasOwn(stage.config, 'reviewSemanticEncoding')));
+  if (!archive) {
+    // Exercise the actual new-start launcher with a non-default selected owner,
+    // including mixed review branches, not only the pure compiler candidate.
+    const {loadCoreRuntimePolicy} = await import('../../../skills/common/plugin-runtime/foundation/config/core-runtime-policy.ts');
+    const {compileProjectWithCorePolicy} = await import('../../../skills/nova/project/compiler.ts');
+    const selected = structuredClone(loadCoreRuntimePolicy(TEST_CORE_POLICY_SELECTION));
+    const policy = {...selected.projectCompiler!, execution: {...selected.projectCompiler!.execution, timeoutMs:654321}};
+    const changedSelection = {...selected, projectCompiler:policy};
+    const mixed = structuredClone(project); delete mixed.modules[1].review;
+    const coreFile = path.join(temporary, 'selected-core.json');
+    fs.writeFileSync(coreFile, JSON.stringify({schemaVersion:'nova-core-runtime-policy.v3',profiles:{selected:{settings:changedSelection}}}));
+    fs.writeFileSync(platformFile, JSON.stringify({...platform,corePolicySelection:{file:'selected-core.json',profile:'selected'}}));
+    fs.writeFileSync(projectFile, JSON.stringify(mixed)); fs.rmSync(output);
+    const changed = launch(); assert.equal(changed.status,0,changed.stderr);
+    assert.deepEqual(JSON.parse(fs.readFileSync(output,'utf8')), compileProjectWithCorePolicy(mixed,changedSelection,
+      PORTABLE_JSON_ENCODING,PORTABLE_JSON_ENCODING,'review-semantics.utf16-v1','delivery-manifest.utf16-v1').definition);
+    fs.writeFileSync(coreFile, '{invalid'); fs.rmSync(output);
+    assert.notEqual(launch().status,0); assert.equal(fs.existsSync(output),false);
+    fs.writeFileSync(platformFile,JSON.stringify(platform));
+  }
   // A real unsupported stage config must fail before the compiler publishes output.
-  fs.rmSync(output); const invalid = structuredClone(project); invalid.modules[0].review.agent = '';
+  fs.rmSync(output,{force:true}); const invalid = structuredClone(project); invalid.modules[0].review.agent = '';
   fs.writeFileSync(projectFile, JSON.stringify(invalid)); const rejected = launch(); assert.notEqual(rejected.status, 0); assert.equal(fs.existsSync(output), false);
   assert.equal(fs.existsSync(platform.storageRoot), false, 'compilation must not start execution or write a run');
   await checkLegacyProjectImport({ project, platformFile, temporary, runtime, compilerFile });

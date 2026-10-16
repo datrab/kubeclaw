@@ -59,7 +59,7 @@ export async function sourceApprovalFixture(root, clean = false, findingSeverity
       'kubeclaw.runtime-dispatch:runtime':{'network.http':{allowedOrigins:[origin]},'secrets.read':{allowedNames:['token']}},
       'kubeclaw.operator-messaging:operator':{'network.http':{allowedOrigins:[origin]},'secrets.read':{allowedNames:['token']}} },
     adapters: {'kubeclaw.artifact-store:artifact-store':{artifactRoot:path.join(root,'artifacts')},'kubeclaw.wait-store:waits':{root:path.join(root,'waits')},
-      'kubeclaw.operator-messaging:operator':{deliveryRoot:path.join(root,'deliveries'),targets:{operators:{endpoint:`${origin}/operator`,tokenSecret:'token'}}},
+      'kubeclaw.operator-messaging:operator':{deliveryRoot:path.join(root,'deliveries'),targets:{operators:{payloadProfile:'standard',endpoint:`${origin}/operator`,tokenSecret:'token'}}},
       'kubeclaw.network-http:http':{allowedOrigins:[origin],allowedMethods:['POST'],allowedHeaders:['content-type','idempotency-key','x-kubeclaw-signature']},'kubeclaw.secret-resolver:secrets':{environment:{token:secretName}},
       'kubeclaw.runtime-dispatch:runtime':{targets:{architect:{byteProfile:'standard',endpoint:`${origin}/agent`,tokenSecret:'token'},forge:{byteProfile:'standard',endpoint:`${origin}/agent`,tokenSecret:'token'}}},
       'kubeclaw.repository-adapter:repository':{repositoryRoot:repository},'kubeclaw.state-store:state':{root:path.join(root,'state-adapter')},

@@ -1,3 +1,4 @@
+import {TEST_CORE_POLICY} from '../../fixtures/core-runtime-policy.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -29,7 +30,7 @@ for _ in range(2000):
   const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'collector-paths-'));
   const root = path.join(temporary, 'repo'); const outside = path.join(temporary, 'outside');
   fs.mkdirSync(root); fs.mkdirSync(outside);
-  const adapter = activate({ config: { repositoryRoot: root } });
+  const adapter = activate({ config: { repositoryRoot: root, ...TEST_CORE_POLICY.repositoryRead } });
   const read = (relative) => adapter.invoke({ confidential: true, signal: new AbortController().signal,
     request: { capability: 'git.repository.read', operation: 'read_text', resource: { canonicalId: relative }, attempt: { attemptId: 'test' }, payload: {} } });
   const context = { invokeConfidential: async (_capability, request) => read(request.resource.canonicalId) };

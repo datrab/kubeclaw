@@ -92,7 +92,7 @@ export async function forgeFixture(mode: 'parallel' | 'locked-worktree' | 'branc
     ['kubeclaw.artifact-store:artifact-store', { ...TEST_ARTIFACT_STORE_POLICY, artifactRoot: path.join(temporary, 'artifacts') }],
     ['kubeclaw.repository-adapter:repository', { repositoryRoot: repo }],
     ['kubeclaw.lint:executor', { allowedRepositoryRoots: [repo], allowedPolicyRoots: [temporary] }],
-    ['kubeclaw.git-workspace:git', { allowedRepositoryRoots: [temporary], workspaceRoot: workspaces, gitExecutable: fs.realpathSync('/usr/bin/git'), authorName: 'Workspace Test', authorEmail: 'workspace@example.invalid', maxExecutionMs: 5000, maxOutputBytes: 65536, terminationGraceMs: 100 }],
+    ['kubeclaw.git-workspace:git', { allowedRepositoryRoots: [temporary], workspaceRoot: workspaces, gitExecutable: fs.realpathSync('/usr/bin/git'), errorExcerptCharacters: TEST_CORE_POLICY.gitWorkspaceFailure.errorExcerptCharacters, authorName: 'Workspace Test', authorEmail: 'workspace@example.invalid', maxExecutionMs: 5000, maxOutputBytes: 65536, terminationGraceMs: 100 }],
   ]);
   const adapters = new core.AdapterRuntime({ granted, activated, configs, effects: new core.EffectCoordinator(journal, undefined, audit, locks, 300_000), shutdownTimeoutMs: 1000, async emitDomainEvent() {} });
   await adapters.start();

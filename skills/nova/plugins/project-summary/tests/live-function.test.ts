@@ -32,7 +32,7 @@ try{
     grants:new Map([['kubeclaw.project-summary:summary',new Map([['artifacts.read',{allowedNamespaces:['kubeclaw.implementation-agent','kubeclaw.lint','kubeclaw.review','kubeclaw.buster-quality-gate']}],['artifacts.write',{allowedNamespaces:['kubeclaw.project-summary']}]])]])});
   const activated=await core.activateRegistry(granted.snapshot,new Set(granted.grants.keys()));
   const adapters=new core.AdapterRuntime({granted,activated,configs:new Map([['kubeclaw.artifact-store:artifact-store',{ ...TEST_ARTIFACT_STORE_POLICY,artifactRoot:path.join(temporary,'artifacts')}]]),
-    effects:new core.EffectCoordinator(new core.FileEffectJournal(path.join(temporary,'effects.jsonl'), TEST_CORE_POLICY),undefined,undefined,new core.MemoryResourceLockManager(), 300_000),shutdownTimeoutMs:1000,async emitDomainEvent(){}});
+    effects:new core.EffectCoordinator(new core.FileEffectJournal(path.join(temporary,'effects.jsonl'), TEST_CORE_POLICY),undefined,undefined,new core.MemoryResourceLockManager(), 300_000, TEST_CORE_POLICY.resourceAcquisition),shutdownTimeoutMs:1000,async emitDomainEvent(){}});
   await adapters.start();
   try{
     const runner=new core.PipelineRunner({stageMemoryBytes: TEST_CORE_POLICY.stageMemoryBytes,definition:{schemaVersion:'pipeline-definition.v2',id:'pipeline:summary',maxConcurrency:1,stages:[{

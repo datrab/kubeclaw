@@ -1,0 +1,7 @@
+autoreview target: local
+branch: master
+engine: codex
+tools: on
+web_search: off
+bundle: 184128 chars
+finding 0 uses invalid file path: /home/node/.openclaw/workspace/tmp/config-closeout-review-nova-plugins-20261016/skills/common/plugin-runtime/foundation/config/core-runtime-policy.ts

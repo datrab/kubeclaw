@@ -58,12 +58,12 @@ const activated = await core.activateRegistry(granted.snapshot, new Set(granted.
 const artifacts = path.join(temporary, 'artifacts');
 const adapters = new core.AdapterRuntime({ granted, activated, configs: new Map<string, any>([
   ['kubeclaw.runtime-dispatch:runtime', { ...TEST_CORE_POLICY.httpDispatch, targets: { reviewer: { byteProfile:'standard', endpoint: `${origin}/dispatch`, authentication: 'spiffe-proxy' } } }],
-  ['kubeclaw.network-http:http', { allowedOrigins: [origin], allowedMethods: ['POST'], allowedHeaders: ['content-type', 'idempotency-key', 'x-kubeclaw-signature'] }],
+  ['kubeclaw.network-http:http', { ...TEST_CORE_POLICY.networkHttp, allowedOrigins: [origin], allowedMethods: ['POST'], allowedHeaders: ['content-type', 'idempotency-key', 'x-kubeclaw-signature'] }],
   ['kubeclaw.secret-resolver:secrets', { environment: {} }],
-  ['kubeclaw.repository-adapter:repository', { repositoryRoot: project }],
+  ['kubeclaw.repository-adapter:repository', {...TEST_CORE_POLICY.repositoryRead, repositoryRoot: project }],
   ['kubeclaw.artifact-store:artifact-store', { ...TEST_ARTIFACT_STORE_POLICY, artifactRoot: artifacts }],
 ]), effects: new core.EffectCoordinator(new core.FileEffectJournal(path.join(temporary, 'effects.jsonl'), TEST_CORE_POLICY),
-  undefined, undefined, new core.MemoryResourceLockManager(), 300_000), shutdownTimeoutMs: 1000,
+  undefined, undefined, new core.MemoryResourceLockManager(), 300_000, TEST_CORE_POLICY.resourceAcquisition), shutdownTimeoutMs: 1000,
   async emitDomainEvent(event: unknown) { fs.appendFileSync(path.join(temporary, 'domain.jsonl'), `${JSON.stringify(event)}\n`); },
 });
 try {

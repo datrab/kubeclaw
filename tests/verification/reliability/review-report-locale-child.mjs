@@ -21,7 +21,7 @@ const [root,mode,phase]=process.argv.slice(2);
 const value=report(),file=path.join(root,'effects.jsonl');
 const attempt={runId:'run:report-hex',stageId:'review',attemptId:'attempt-hex',attemptNumber:1};
 const adapter=activate({config:{ ...TEST_ARTIFACT_STORE_POLICY,artifactRoot:path.join(root,'artifacts')}});
-const coordinator=new EffectCoordinator(new FileEffectJournal(file, TEST_CORE_POLICY),undefined,undefined,new FileResourceLockManager(path.join(root,'locks'), TEST_CORE_POLICY), 300_000);
+const coordinator=new EffectCoordinator(new FileEffectJournal(file, TEST_CORE_POLICY),undefined,undefined,new FileResourceLockManager(path.join(root,'locks'), TEST_CORE_POLICY), 300_000, TEST_CORE_POLICY.resourceAcquisition);
 const owner={pluginId:'kubeclaw.artifact-store',apiVersion:'pipeline-plugin-v2',packageVersion:'1.0.0',contentDigest:`sha256:${'a'.repeat(64)}`};
 let sequence=0;
 // This is the SDK invocation boundary to the real Core and registered ArtifactStore,

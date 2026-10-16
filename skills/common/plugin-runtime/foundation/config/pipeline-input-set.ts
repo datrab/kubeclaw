@@ -11,7 +11,7 @@ const hash = (bytes: Uint8Array) => createHash('sha256').update(bytes).digest('h
 function membersInWireOrder(members: readonly PipelineInputMember[]) {
   if (!Array.isArray(members) || members.length === 0) throw new Error('PIPELINE_INPUT_SET_REQUIRED');
   const seen = new Set<string>();
-  const snapshot = members.map(member => {
+  const snapshot = members.map((member: PipelineInputMember) => {
     if (!member || typeof member.relativePath !== 'string' || !member.relativePath
       || /[\\\x00-\x20\x7f]/u.test(member.relativePath) || path.isAbsolute(member.relativePath)
       || member.relativePath.split('/').some(part => !part || part === '.' || part === '..')

@@ -1,5 +1,5 @@
 import { TEST_CORE_POLICY as DELIVERY_TEST_CORE_POLICY } from '../../../../../tests/fixtures/core-runtime-policy.mjs';
-const TEST_PUBLISHER_STORE_POLICY = {...DELIVERY_TEST_CORE_POLICY.transportPublisherStore,targetPayloadProfiles:{...DELIVERY_TEST_CORE_POLICY.transportPublisherPayload.targetPayloadProfiles,small:{maxPayloadBytes:128},maximum:{maxPayloadBytes:1_048_576}}};
+const TEST_PUBLISHER_STORE_POLICY = {...DELIVERY_TEST_CORE_POLICY.transportPublisherStore,...DELIVERY_TEST_CORE_POLICY.transportPublisherFailure,...DELIVERY_TEST_CORE_POLICY.transportPublisherStructure,targetPayloadProfiles:{...DELIVERY_TEST_CORE_POLICY.transportPublisherPayload.targetPayloadProfiles,small:{maxPayloadBytes:128},maximum:{maxPayloadBytes:1_048_576}}};
 import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
 import fs from 'node:fs';
@@ -154,6 +154,7 @@ const adapters = new core.AdapterRuntime({
       },
     }],
     [networkId, {
+      ...DELIVERY_TEST_CORE_POLICY.networkHttp,
       allowedOrigins: [origin],
       allowedMethods: ['POST'],
       allowedHeaders: [
@@ -167,7 +168,7 @@ const adapters = new core.AdapterRuntime({
       timeoutMs: 1000,
     }],
   ]),
-  effects: new core.EffectCoordinator(journal, undefined, undefined, new core.MemoryResourceLockManager(), 300_000),
+  effects: new core.EffectCoordinator(journal, undefined, undefined, new core.MemoryResourceLockManager(), 300_000, DELIVERY_TEST_CORE_POLICY.resourceAcquisition),
   shutdownTimeoutMs: 1000,
   async emitDomainEvent() {},
 });

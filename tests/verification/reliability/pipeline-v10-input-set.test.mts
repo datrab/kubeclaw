@@ -43,7 +43,15 @@ function tree(t: test.TestContext) {
   const root = fs.mkdtempSync(path.join(os.tmpdir(),'v10-whole-input-')); t.after(()=>fs.rmSync(root,{recursive:true,force:true}));
   const write = (relative: string, bytes: Buffer) => { const p=path.join(root,relative);fs.mkdirSync(path.dirname(p),{recursive:true});fs.writeFileSync(p,bytes); };
   for (const m of contract.base.members) write(m.relativePath,fs.readFileSync(path.join(base,'same-entry-agent-role-binding-01',m.relativePath.startsWith('schemas/')?'':'stand',m.relativePath)));
-  for (const m of [...contract.additions,...contract.packageSources]) write(m.relativePath,fs.readFileSync(path.join(repository,m.sourcePath)));
+  // Historical capture must use the declared historical bytes, not later WIP.
+  // Neither these public fixtures nor matching hashes grant activation authority.
+  for (const m of [...contract.additions,...contract.packageSources]) {
+    const retained = path.join(repository,'tests/verification/reliability/fixtures/pipeline-v10-retained',m.sha256+'.fixture');
+    const bytes = fs.readFileSync(fs.existsSync(retained) ? retained : path.join(repository,m.sourcePath));
+    assert.equal(bytes.length,m.byteLength,`historical fixture size: ${m.sourcePath}`);
+    assert.equal(createHash('sha256').update(bytes).digest('hex'),m.sha256,`historical fixture identity: ${m.sourcePath}`);
+    write(m.relativePath,bytes);
+  }
   write(replacements[0]!.relativePath,rootBytes);write(replacements[1]!.relativePath,schemaBytes);
   return root;
 }
@@ -390,11 +398,15 @@ test('selected Core Platform raw values reuse original schema/path mapper for AL
  const raw=f.capture.read('config/nova/core.config.json'),owner=JSON.parse(raw.toString());
  const author=path.join(root,'original-author','config','nova');fs.mkdirSync(author,{recursive:true});
  for(const [id,profile]of Object.entries(owner.profiles)as[string,any][]){
-  const value=structuredClone(profile.settings.platform),before=structuredClone(value);
+  // Current preparation requires an explicit runtime-policy locator; captured historical bytes remain unchanged.
+  // This effect-free path control does not load or authorize that separate policy.
+  const value={...structuredClone(profile.settings.platform),corePolicySelection:{file:'runtime-policy.json',profile:'standard'}},before=structuredClone(value);
   const file=path.join(author,id+'.json');fs.writeFileSync(file,JSON.stringify(value));
   const prepared=resolvePlatformConfigValue(value,fs.realpathSync(author));
   assert.deepEqual(prepared,loadPlatformConfig(file));assert.deepEqual(value,before);assert.equal(Object.isFrozen(value),false);
   assert.deepEqual(prepared.installationRoots,value.installationRoots.map((v:string)=>path.resolve(author,v)));
+  assert.equal(prepared.corePolicySelection.file,path.resolve(author,'runtime-policy.json'));
+  assert.equal(fs.existsSync(prepared.corePolicySelection.file),false); // Preparation performs no policy I/O.
   assert.equal(prepared.storageRoot,path.resolve(author,value.storageRoot));assert.equal(Object.isFrozen(prepared.grants),true);
   assert.equal(Object.hasOwn(prepared,'activationAllowed'),false); // Preparation is not an admission/receipt object.
  }
@@ -402,7 +414,7 @@ test('selected Core Platform raw values reuse original schema/path mapper for AL
 });
 test('legacy realpath AUTHOR base remains distinct from symlink delivery directory; pure path mapping creates no directories',t=>{
  const root=tree(t),f=capture(root,replacements);t.after(f.capture.close);const {settings}=coreCandidate(f);
- const value=structuredClone(settings.platform);value.storageRoot='../state';value.isolation={cgroupRoot:'../cgroup'};
+ const value={...structuredClone(settings.platform),corePolicySelection:{file:'runtime-policy.json',profile:'standard'}};value.storageRoot='../state';value.isolation={cgroupRoot:'../cgroup'};
  const author=path.join(root,'original-author','config','nova');fs.mkdirSync(author,{recursive:true});
  const file=path.join(author,'platform.json');fs.writeFileSync(file,JSON.stringify(value));
  const delivery=path.join(root,'delivered');fs.mkdirSync(delivery);const link=path.join(delivery,'platform.json');fs.symlinkSync(file,link);
@@ -413,9 +425,11 @@ test('legacy realpath AUTHOR base remains distinct from symlink delivery directo
  assert.equal(fs.existsSync(path.resolve(author,'../state')),false);assert.equal(fs.existsSync(path.resolve(author,'../cgroup')),false);
 });
 test('pure Platform preparation rejects implicit/noncanonical base and missing source policies, restored original succeeds',t=>{
- const root=tree(t),f=capture(root,replacements);t.after(f.capture.close);const {settings}=coreCandidate(f),value=settings.platform;
+ const root=tree(t),f=capture(root,replacements);t.after(f.capture.close);const {settings}=coreCandidate(f),value={...structuredClone(settings.platform),corePolicySelection:{file:'runtime-policy.json',profile:'standard'}};
  for(const base of ['', '.', 'relative/author',root+'/../other',root+'/'])assert.throws(()=>resolvePlatformConfigValue(value,base),/PLATFORM_AUTHOR_DIRECTORY_INVALID/);
  assert.throws(()=>resolvePlatformConfigValue(value,undefined as any),/PLATFORM_AUTHOR_DIRECTORY_INVALID/);
+ const missingSelection=structuredClone(value);delete (missingSelection as any).corePolicySelection;
+ assert.throws(()=>resolvePlatformConfigValue(missingSelection,root),/PLATFORM_CONFIG_INVALID/);
  const missing=structuredClone(value);delete missing.effectLockTtlMs;
  assert.throws(()=>resolvePlatformConfigValue(missing,root),/PLATFORM_CONFIG_INVALID/);
  const invalid=structuredClone(value);invalid.shutdownTimeoutMs=-1;

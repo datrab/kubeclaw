@@ -53,8 +53,8 @@ test('missing and invalid TTL reject at platform, runtime and direct coordinator
   const untouched = new Proxy({}, { get() { throw new Error('UNEXPECTED_JOURNAL_OR_LOCK_ACCESS'); } });
   assert.throws(() => new EffectCoordinator(untouched, undefined, undefined, untouched), /EFFECT_LOCK_TTL_INVALID/);
   for (const ttl of [undefined, null, 0, -1, 1.5, NaN, Infinity, Number.MAX_SAFE_INTEGER + 1]) {
-    assert.throws(() => new EffectCoordinator(untouched, undefined, undefined, untouched, ttl), /EFFECT_LOCK_TTL_INVALID/);
+    assert.throws(() => new EffectCoordinator(untouched, undefined, undefined, untouched, ttl, TEST_CORE_POLICY.resourceAcquisition), /EFFECT_LOCK_TTL_INVALID/);
   }
   // Low-level APIs retain their explicitly authored short test lifetimes.
-  for (const ttl of [40, 1000]) assert.doesNotThrow(() => new EffectCoordinator(untouched, undefined, undefined, untouched, ttl));
+  for (const ttl of [40, 1000]) assert.doesNotThrow(() => new EffectCoordinator(untouched, undefined, undefined, untouched, ttl, TEST_CORE_POLICY.resourceAcquisition));
 });

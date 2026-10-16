@@ -55,9 +55,9 @@ test('explicit reference resolves against author, pure preparation performs no p
 });
 
 test('real stage/observer startup A/B leases and retained A resume survive missing current policy B',async t=>{
- const f=fixture(t),platform=loadPlatformConfig(f.platformFile),a=captureCoreRuntimePolicy({...TEST_CORE_POLICY,stageMemoryBytes:33554432,observerMemoryBytes:16777216,runMutationTtlMs:600,runMutationRenewalMs:100});f.publish(a);
+ const f=fixture(t),platform=loadPlatformConfig(f.platformFile),a=captureCoreRuntimePolicy({...TEST_CORE_POLICY,stageMemoryBytes:33554432,observerMemoryBytes:16777216,runMutationTtlMs:600,runMutationRenewalMs:100,resourceAcquisition:{timeoutMs:37,pollIntervalMs:3}});f.publish(a);
  const first=await runPipelineV2(platform,f.definition,'run:A');assert.equal(first.status,'waiting',JSON.stringify([...first.stages]));
- const b=captureCoreRuntimePolicy({...a,stageMemoryBytes:67108864,observerMemoryBytes:50331648,runMutationTtlMs:900,runMutationRenewalMs:150,maximumAuditResultBytes:32,journalAppendLockTimeoutMs:50});f.publish(b);
+ const b=captureCoreRuntimePolicy({...a,stageMemoryBytes:67108864,observerMemoryBytes:50331648,runMutationTtlMs:900,runMutationRenewalMs:150,maximumAuditResultBytes:32,journalAppendLockTimeoutMs:50,resourceAcquisition:{timeoutMs:71,pollIntervalMs:7}});f.publish(b);
  assert.equal((await runPipelineV2(platform,f.definition,'run:B')).status,'waiting');
  const aRoot=runRoot(platform.storageRoot,'run:A');assert.deepEqual(retainedCoreRuntimePolicy(aRoot),a);
  assert.deepEqual(readRunSnapshot(aRoot).registry.configuration.corePolicy,a);

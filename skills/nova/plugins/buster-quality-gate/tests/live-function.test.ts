@@ -91,6 +91,7 @@ try {
         targets: { gate: { byteProfile:'standard', endpoint: `${origin}/dispatch`, tokenSecret: 'gate.agent' } },
       }],
       ['kubeclaw.network-http:http', {
+        ...TEST_CORE_POLICY.networkHttp,
         allowedOrigins: [origin],
         allowedMethods: ['POST', 'GET', 'DELETE'],
         allowedHeaders: [
@@ -107,7 +108,7 @@ try {
       ['kubeclaw.artifact-store:artifact-store', { ...TEST_ARTIFACT_STORE_POLICY,
         artifactRoot: path.join(temporary, 'artifacts'),
       }],
-      ['kubeclaw.remote-test-gate:plan', {
+      ['kubeclaw.remote-test-gate:plan', {gateLimits: TEST_CORE_POLICY.remoteTestGate,
         endpoint: origin,
         authentication: 'bearer',
         tokenSecret: 'buster.worker',
@@ -121,7 +122,7 @@ try {
       new core.FileEffectJournal(effectsPath, TEST_CORE_POLICY),
       undefined,
       undefined,
-      new core.MemoryResourceLockManager(), 300_000,
+      new core.MemoryResourceLockManager(), 300_000, TEST_CORE_POLICY.resourceAcquisition,
     ),
     shutdownTimeoutMs: 1_000,
     async emitDomainEvent() {},

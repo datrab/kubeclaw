@@ -33,3 +33,7 @@ Run the package tests and the original-journal integration test:
 npm test --prefix skills/common/plugins/openclaw-agent-events
 node --test tests/verification/reliability/agent-source-ingress.test.ts
 ```
+
+Event projection caps `maxObservedFields` and `maxObservedFieldCharacters` are required selected Core `agentEventSource` settings (standard: 128 each). The adapter captures these at activation; identity/sensitive-field filtering precedes field truncation. Platform duplicates are rejected; there is no adapter fallback. The supported ceiling remains 128.
+
+Identity admission uses required selected Core `agentEventSource.maxIdentityCharacters` (standard and supported ceiling: 512). The real hook captures the limit at activation; oversized run IDs drop the event, oversized optional stage/attempt IDs are omitted, never truncated. Retained policy reuses its original limit; competing platform authors reject.

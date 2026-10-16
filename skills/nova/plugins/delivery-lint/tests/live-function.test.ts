@@ -57,12 +57,12 @@ async function run(id, input, options = {}) {
     granted,
     activated,
     configs: new Map([
-      ['kubeclaw.repository-adapter:repository', { repositoryRoot: project }],
+      ['kubeclaw.repository-adapter:repository', {...ARTIFACT_TEST_CORE_POLICY.repositoryRead, repositoryRoot: project }],
       ['kubeclaw.artifact-store:artifact-store', { ...TEST_ARTIFACT_STORE_POLICY,
         artifactRoot: options.artifactRoot ?? artifacts,
       }],
     ]),
-    effects: new core.EffectCoordinator(new core.FileEffectJournal(path.join(temporary, `${id}-effects.jsonl`), TEST_CORE_POLICY), undefined, undefined, new core.MemoryResourceLockManager(), 300_000),
+    effects: new core.EffectCoordinator(new core.FileEffectJournal(path.join(temporary, `${id}-effects.jsonl`), TEST_CORE_POLICY), undefined, undefined, new core.MemoryResourceLockManager(), 300_000, TEST_CORE_POLICY.resourceAcquisition),
     shutdownTimeoutMs: 1000,
     async emitDomainEvent() {},
   });

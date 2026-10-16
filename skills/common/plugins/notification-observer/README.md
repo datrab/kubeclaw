@@ -13,3 +13,10 @@ Presentation labels normalize control whitespace, and every shortening marker
 counts within the configured limit. Combined stage/role titles stay within 512
 characters. The original event journal retains the complete diagnostic; the
 notification is its marked display projection and carries the event identity.
+
+Lifecycle `maxMessageChars` is required at invocation and selected solely from
+`config/nova/core.config.json` → `notificationPresentation`. Local registration
+authors reject even equal values; retained runs keep their captured selection.
+The standard value remains 8192 characters, including the shortening marker.
+
+Title, reason-code and preview artifact display limits are also required from the selected `notificationPresentation` policy (`maxTitleChars`, `maxReasonCodeChars`, `maxArtifactIdChars`, `maxArtifactDigestChars`, `maxArtifactMediaTypeChars`, `maxArtifactLogicalNameChars`). Preview publishing uses the same captured policy and preserves its redaction allowlist; original identity fields are not truncated.

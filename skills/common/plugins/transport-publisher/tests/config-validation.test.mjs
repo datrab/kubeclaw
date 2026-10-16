@@ -14,6 +14,7 @@ const context = (config) => ({
 });
 const valid = (overrides = {}) => ({
   ...TEST_CORE_POLICY.transportPublisherStore,
+  ...TEST_CORE_POLICY.transportPublisherFailure,...TEST_CORE_POLICY.transportPublisherStructure,
   ...TEST_CORE_POLICY.transportPublisherPayload,
   deliveryRoot: '/tmp/kubeclaw-transport-config-test',
   targets: { audit: { endpoint: 'https://example.test/', payloadProfile: 'standard', signingSecret: 'key' } },

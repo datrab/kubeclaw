@@ -1,0 +1,11 @@
+npm notice run test:coverage
+npm notice run node --test tests/review-coverage.test.mts
+✔ original review parser validates cumulative policy and stores its actual immutable bundle (86.865576ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 478.202013

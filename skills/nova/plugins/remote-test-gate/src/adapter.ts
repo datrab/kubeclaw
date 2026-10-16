@@ -1,3 +1,4 @@
+import {gateLimits} from './gate-limits.ts';
 import { assertCoveragePlan, assertCoverageExecution, type GateCoverageV1 } from '@kubeclaw/pipeline-test-gate-contract';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -53,7 +54,7 @@ function parseConfig(context: AdapterActivationContext) {
   if (authentication === 'spiffe-proxy' && !isSpiffeProxyLoopback(endpoint)) {
     throw new Error('REMOTE_TEST_GATE_SPIFFE_PROXY_NOT_LOOPBACK');
   }
-  return Object.freeze({ endpoint: endpoint.href, stateRoot, roots,
+  return Object.freeze({ gateLimits:gateLimits(context.config.gateLimits), endpoint: endpoint.href, stateRoot, roots,
     authentication,
     tokenSecret: authentication === 'bearer'
       ? string(context.config.tokenSecret, 'REMOTE_TEST_GATE_CONFIG_INVALID') : undefined,
@@ -83,12 +84,7 @@ async function execute(context: AdapterActivationContext, config: ReturnType<typ
   const gate = createProductionNovaTestGate({ stateRoot: config.stateRoot, endpoint: config.endpoint,
     ...(token ? { token } : {}), authentication: config.authentication,
     sourceAuthority: config.sourceAuthority, sourceAttestationPrivateKey: privateKey,
-    pollMilliseconds: 500, maximumResponseBytes: 64 * 1024 * 1024,
-    maximumResultBytes: 64 * 1024 * 1024, maximumArchiveBytes: 64 * 1024 * 1024,
-    maximumArchiveStoreBytes: 1024 * 1024 * 1024, maximumEvidenceBytes: 64 * 1024 * 1024,
-    maximumEvidenceStoreBytes: 1024 * 1024 * 1024,
-    recordLimits: { maximumRecords: 10_000, maximumBytes: 1024 * 1024 * 1024,
-      maximumRecordBytes: 64 * 1024 * 1024 } });
+    ...config.gateLimits });
   const result = await gate.execute({ idempotencyKey: request.idempotencyKey,
     pipelineStageId: request.attempt.stageId, plan, repositoryRoot,
     revision: string(request.payload.revision, 'REMOTE_TEST_GATE_REVISION_REQUIRED'),

@@ -38,7 +38,7 @@ try {
     explanation: 'The operator must accept this documented tradeoff.', remediation: 'Record the decision.' };
   const risk = await write({ verdict: 'passed', findings: [finding], checkedFiles: ['design.md'], summary: 'Risk requires approval.' });
   const riskContext = (reason?: string, issuerId = 'operator:test') => ({ ...context([risk]), contract: {
-    ...context([risk]).contract, config: { target: 'operators', issuerId: 'operator:test' },
+    ...context([risk]).contract, config: { target: 'operators', issuerId: 'operator:test', timeoutMinutes: ARTIFACT_TEST_CORE_POLICY.humanApproval.defaultTimeoutMinutes },
     guidance: { decision: 'approved', issuer: { type: 'operator', id: issuerId }, ...(reason === undefined ? {} : { reason }) },
   } }) as unknown as PluginInvocationContext;
   await assert.rejects(() => execute(input, riskContext()), /ARCHITECTURE_APPROVAL_REASON_REQUIRED/);

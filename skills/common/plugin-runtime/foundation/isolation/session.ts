@@ -1,3 +1,4 @@
+import type { CoreRuntimePolicy } from '../config/core-runtime-policy.ts';
 import type { ChildProcessWithoutNullStreams } from 'node:child_process';
 import type { PluginInvocationContext } from '@kubeclaw/plugin-sdk';
 import { ProtocolLines } from './protocol.ts';
@@ -11,7 +12,19 @@ function serializable(value: unknown, label: string, limit = 1024 * 1024): strin
   return encoded;
 }
 
+export type IsolationSessionPolicy = CoreRuntimePolicy['isolationSession'];
+export function captureIsolationSessionPolicy(value: IsolationSessionPolicy | undefined): IsolationSessionPolicy {
+  const maxima = {maximumStderrBytes:65536, stderrExcerptCharacters:4096, terminationGraceMs:1000, exitAcknowledgementMs:1000};
+  if (!value || Object.keys(value).length !== Object.keys(maxima).length) throw new Error('ISOLATION_SESSION_POLICY_INVALID');
+  for (const [key, maximum] of Object.entries(maxima)) {
+    const item = value[key as keyof IsolationSessionPolicy];
+    if (!Number.isSafeInteger(item) || item < 1 || item > maximum) throw new Error('ISOLATION_SESSION_POLICY_INVALID');
+  }
+  return Object.freeze({...value});
+}
+
 interface SessionInput {
+  readonly policy: IsolationSessionPolicy;
   readonly child: ChildProcessWithoutNullStreams;
   readonly context: PluginInvocationContext;
   readonly signal?: AbortSignal;
@@ -38,7 +51,7 @@ class IsolationSession {
   #pending = 0;
   #resolve: (value: unknown) => void = () => undefined;
   #reject: (error: Error) => void = () => undefined;
-  constructor(input: SessionInput) { this.#input = input; }
+  constructor(input: SessionInput) { this.#input = { ...input, policy: captureIsolationSessionPolicy(input.policy) }; }
 
   run(): Promise<unknown> {
     return new Promise((resolve, reject) => {
@@ -63,7 +76,7 @@ class IsolationSession {
   readonly #abort = (): void => this.#finish(new Error('ISOLATED_PLUGIN_CANCELLED'));
   readonly #pipeError = (cause: Error): void => this.#finish(new Error(`ISOLATION_PIPE_FAILED:${cause.message}`, { cause }));
   readonly #stderrData = (chunk: Buffer): void => {
-    if (this.#stderr.length + chunk.length > 64 * 1024) { this.#finish(new Error('ISOLATED_PLUGIN_STDERR_LIMIT')); return; }
+    if (this.#stderr.length + chunk.length > this.#input.policy.maximumStderrBytes) { this.#finish(new Error('ISOLATED_PLUGIN_STDERR_LIMIT')); return; }
     this.#stderr = Buffer.concat([this.#stderr, chunk]);
   };
   readonly #stdoutData = (chunk: Buffer): void => {
@@ -134,7 +147,7 @@ class IsolationSession {
     if (!this.#finishing) {
       try { this.#protocol.finish(); }
       catch (error) { this.#finish(this.#asError(error)); return; }
-      this.#finish(new Error(`ISOLATED_PLUGIN_EXITED:${String(code)}:${String(signal)}:${this.#stderr.toString('utf8').slice(0, 4096)}`));
+      this.#finish(new Error(`ISOLATED_PLUGIN_EXITED:${String(code)}:${String(signal)}:${this.#stderr.toString('utf8').slice(0, this.#input.policy.stderrExcerptCharacters)}`));
     }
     this.#settle();
   };
@@ -161,8 +174,8 @@ class IsolationSession {
         this.#error = new Error('ISOLATION_PROCESS_CLEANUP_TIMEOUT', { cause: this.#error });
         this.#input.child.stdout.destroy(); this.#input.child.stderr.destroy();
         this.#settle();
-      }, 1000);
-    }, 1000);
+      }, this.#input.policy.exitAcknowledgementMs);
+    }, this.#input.policy.terminationGraceMs);
   }
 }
 

@@ -1,0 +1,554 @@
+{
+  "skills/common/plugins/agent-observability": [
+    {
+      "command": [
+        "npm",
+        "run",
+        "build",
+        "--prefix",
+        "skills/common/plugins/agent-observability"
+      ],
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-compiler-closeout-20261016/skills-common-plugins-agent-observability-build.txt"
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "test",
+        "--prefix",
+        "skills/common/plugins/agent-observability"
+      ],
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-compiler-closeout-20261016/skills-common-plugins-agent-observability-test.txt"
+    }
+  ],
+  "skills/common/plugins/command-runner": [
+    {
+      "command": [
+        "npm",
+        "run",
+        "build",
+        "--prefix",
+        "skills/common/plugins/command-runner"
+      ],
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-compiler-closeout-20261016/skills-common-plugins-command-runner-build.txt"
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "test",
+        "--prefix",
+        "skills/common/plugins/command-runner"
+      ],
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-compiler-closeout-20261016/skills-common-plugins-command-runner-test.txt"
+    }
+  ],
+  "skills/common/plugins/git-workspace": [
+    {
+      "command": [
+        "npm",
+        "run",
+        "build",
+        "--prefix",
+        "skills/common/plugins/git-workspace"
+      ],
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-compiler-closeout-20261016/skills-common-plugins-git-workspace-build.txt"
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "test",
+        "--prefix",
+        "skills/common/plugins/git-workspace"
+      ],
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-compiler-closeout-20261016/skills-common-plugins-git-workspace-test.txt"
+    }
+  ],
+  "skills/common/plugins/notification-observer": [
+    {
+      "command": [
+        "npm",
+        "run",
+        "build",
+        "--prefix",
+        "skills/common/plugins/notification-observer"
+      ],
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-compiler-closeout-20261016/skills-common-plugins-notification-observer-build.txt"
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "test",
+        "--prefix",
+        "skills/common/plugins/notification-observer"
+      ],
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-compiler-closeout-20261016/skills-common-plugins-notification-observer-test.txt"
+    }
+  ],
+  "skills/common/plugins/openclaw-agent-events": [
+    {
+      "command": [
+        "npm",
+        "run",
+        "build",
+        "--prefix",
+        "skills/common/plugins/openclaw-agent-events"
+      ],
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-compiler-closeout-20261016/skills-common-plugins-openclaw-agent-events-build.txt"
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "test",
+        "--prefix",
+        "skills/common/plugins/openclaw-agent-events"
+      ],
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-compiler-closeout-20261016/skills-common-plugins-openclaw-agent-events-test.txt"
+    }
+  ],
+  "skills/common/plugins/operator-messaging": [
+    {
+      "command": [
+        "npm",
+        "run",
+        "build",
+        "--prefix",
+        "skills/common/plugins/operator-messaging"
+      ],
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-compiler-closeout-20261016/skills-common-plugins-operator-messaging-build.txt"
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "test",
+        "--prefix",
+        "skills/common/plugins/operator-messaging"
+      ],
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-compiler-closeout-20261016/skills-common-plugins-operator-messaging-test.txt"
+    }
+  ],
+  "skills/common/plugins/redis-transport": [
+    {
+      "command": [
+        "npm",
+        "run",
+        "build",
+        "--prefix",
+        "skills/common/plugins/redis-transport"
+      ],
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-compiler-closeout-20261016/skills-common-plugins-redis-transport-build.txt"
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "test",
+        "--prefix",
+        "skills/common/plugins/redis-transport"
+      ],
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-compiler-closeout-20261016/skills-common-plugins-redis-transport-test.txt"
+    }
+  ],
+  "skills/common/plugins/runtime-dispatch": [
+    {
+      "command": [
+        "npm",
+        "run",
+        "build",
+        "--prefix",
+        "skills/common/plugins/runtime-dispatch"
+      ],
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-compiler-closeout-20261016/skills-common-plugins-runtime-dispatch-build.txt"
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "test",
+        "--prefix",
+        "skills/common/plugins/runtime-dispatch"
+      ],
+      "exitCode": 1,
+      "log": "docs/review/remediation/config-compiler-closeout-20261016/skills-common-plugins-runtime-dispatch-test.txt"
+    }
+  ],
+  "skills/common/plugins/transport-publisher": [
+    {
+      "command": [
+        "npm",
+        "run",
+        "build",
+        "--prefix",
+        "skills/common/plugins/transport-publisher"
+      ],
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-compiler-closeout-20261016/skills-common-plugins-transport-publisher-build.txt"
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "test",
+        "--prefix",
+        "skills/common/plugins/transport-publisher"
+      ],
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-compiler-closeout-20261016/skills-common-plugins-transport-publisher-test.txt"
+    }
+  ],
+  "skills/nova/plugins/architecture-validator": [
+    {
+      "command": [
+        "npm",
+        "run",
+        "build",
+        "--prefix",
+        "skills/nova/plugins/architecture-validator"
+      ],
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-compiler-closeout-20261016/skills-nova-plugins-architecture-validator-build.txt"
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "test",
+        "--prefix",
+        "skills/nova/plugins/architecture-validator"
+      ],
+      "exitCode": 1,
+      "log": "docs/review/remediation/config-compiler-closeout-20261016/skills-nova-plugins-architecture-validator-test.txt"
+    }
+  ],
+  "skills/nova/plugins/blueprint-sync": [
+    {
+      "command": [
+        "npm",
+        "run",
+        "build",
+        "--prefix",
+        "skills/nova/plugins/blueprint-sync"
+      ],
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-compiler-closeout-20261016/skills-nova-plugins-blueprint-sync-build.txt"
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "test",
+        "--prefix",
+        "skills/nova/plugins/blueprint-sync"
+      ],
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-compiler-closeout-20261016/skills-nova-plugins-blueprint-sync-test.txt"
+    }
+  ],
+  "skills/nova/plugins/buster-quality-gate": [
+    {
+      "command": [
+        "npm",
+        "run",
+        "build",
+        "--prefix",
+        "skills/nova/plugins/buster-quality-gate"
+      ],
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-compiler-closeout-20261016/skills-nova-plugins-buster-quality-gate-build.txt"
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "test",
+        "--prefix",
+        "skills/nova/plugins/buster-quality-gate"
+      ],
+      "exitCode": 1,
+      "log": "docs/review/remediation/config-compiler-closeout-20261016/skills-nova-plugins-buster-quality-gate-test.txt"
+    }
+  ],
+  "skills/nova/plugins/delivery-lint": [
+    {
+      "command": [
+        "npm",
+        "run",
+        "build",
+        "--prefix",
+        "skills/nova/plugins/delivery-lint"
+      ],
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-compiler-closeout-20261016/skills-nova-plugins-delivery-lint-build.txt"
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "test",
+        "--prefix",
+        "skills/nova/plugins/delivery-lint"
+      ],
+      "exitCode": 1,
+      "log": "docs/review/remediation/config-compiler-closeout-20261016/skills-nova-plugins-delivery-lint-test.txt"
+    }
+  ],
+  "skills/nova/plugins/demo-handoff": [
+    {
+      "command": [
+        "npm",
+        "run",
+        "build",
+        "--prefix",
+        "skills/nova/plugins/demo-handoff"
+      ],
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-compiler-closeout-20261016/skills-nova-plugins-demo-handoff-build.txt"
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "test",
+        "--prefix",
+        "skills/nova/plugins/demo-handoff"
+      ],
+      "exitCode": 1,
+      "log": "docs/review/remediation/config-compiler-closeout-20261016/skills-nova-plugins-demo-handoff-test.txt"
+    }
+  ],
+  "skills/nova/plugins/human-approval": [
+    {
+      "command": [
+        "npm",
+        "run",
+        "build",
+        "--prefix",
+        "skills/nova/plugins/human-approval"
+      ],
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-compiler-closeout-20261016/skills-nova-plugins-human-approval-build.txt"
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "test",
+        "--prefix",
+        "skills/nova/plugins/human-approval"
+      ],
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-compiler-closeout-20261016/skills-nova-plugins-human-approval-test.txt"
+    }
+  ],
+  "skills/nova/plugins/implementation-agent": [
+    {
+      "command": [
+        "npm",
+        "run",
+        "build",
+        "--prefix",
+        "skills/nova/plugins/implementation-agent"
+      ],
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-compiler-closeout-20261016/skills-nova-plugins-implementation-agent-build.txt"
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "test",
+        "--prefix",
+        "skills/nova/plugins/implementation-agent"
+      ],
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-compiler-closeout-20261016/skills-nova-plugins-implementation-agent-test.txt"
+    }
+  ],
+  "skills/nova/plugins/lint": [
+    {
+      "command": [
+        "npm",
+        "run",
+        "build",
+        "--prefix",
+        "skills/nova/plugins/lint"
+      ],
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-compiler-closeout-20261016/skills-nova-plugins-lint-build.txt"
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "test",
+        "--prefix",
+        "skills/nova/plugins/lint"
+      ],
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-compiler-closeout-20261016/skills-nova-plugins-lint-test.txt"
+    }
+  ],
+  "skills/nova/plugins/preflight-contract": [
+    {
+      "command": [
+        "npm",
+        "run",
+        "build",
+        "--prefix",
+        "skills/nova/plugins/preflight-contract"
+      ],
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-compiler-closeout-20261016/skills-nova-plugins-preflight-contract-build.txt"
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "test",
+        "--prefix",
+        "skills/nova/plugins/preflight-contract"
+      ],
+      "exitCode": 1,
+      "log": "docs/review/remediation/config-compiler-closeout-20261016/skills-nova-plugins-preflight-contract-test.txt"
+    }
+  ],
+  "skills/nova/plugins/prism-design": [
+    {
+      "command": [
+        "npm",
+        "run",
+        "build",
+        "--prefix",
+        "skills/nova/plugins/prism-design"
+      ],
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-compiler-closeout-20261016/skills-nova-plugins-prism-design-build.txt"
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "test",
+        "--prefix",
+        "skills/nova/plugins/prism-design"
+      ],
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-compiler-closeout-20261016/skills-nova-plugins-prism-design-test.txt"
+    }
+  ],
+  "skills/nova/plugins/project-summary": [
+    {
+      "command": [
+        "npm",
+        "run",
+        "build",
+        "--prefix",
+        "skills/nova/plugins/project-summary"
+      ],
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-compiler-closeout-20261016/skills-nova-plugins-project-summary-build.txt"
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "test",
+        "--prefix",
+        "skills/nova/plugins/project-summary"
+      ],
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-compiler-closeout-20261016/skills-nova-plugins-project-summary-test.txt"
+    }
+  ],
+  "skills/nova/plugins/remote-test-gate": [
+    {
+      "command": [
+        "npm",
+        "run",
+        "build",
+        "--prefix",
+        "skills/nova/plugins/remote-test-gate"
+      ],
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-compiler-closeout-20261016/skills-nova-plugins-remote-test-gate-build.txt"
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "test",
+        "--prefix",
+        "skills/nova/plugins/remote-test-gate"
+      ],
+      "exitCode": 1,
+      "log": "docs/review/remediation/config-compiler-closeout-20261016/skills-nova-plugins-remote-test-gate-test.txt"
+    }
+  ],
+  "skills/nova/plugins/repository-adapter": [
+    {
+      "command": [
+        "npm",
+        "run",
+        "build",
+        "--prefix",
+        "skills/nova/plugins/repository-adapter"
+      ],
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-compiler-closeout-20261016/skills-nova-plugins-repository-adapter-build.txt"
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "test",
+        "--prefix",
+        "skills/nova/plugins/repository-adapter"
+      ],
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-compiler-closeout-20261016/skills-nova-plugins-repository-adapter-test.txt"
+    }
+  ],
+  "skills/nova/plugins/review": [
+    {
+      "command": [
+        "npm",
+        "run",
+        "build",
+        "--prefix",
+        "skills/nova/plugins/review"
+      ],
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-compiler-closeout-20261016/skills-nova-plugins-review-build.txt"
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "test",
+        "--prefix",
+        "skills/nova/plugins/review"
+      ],
+      "exitCode": 1,
+      "log": "docs/review/remediation/config-compiler-closeout-20261016/skills-nova-plugins-review-test.txt"
+    }
+  ]
+}

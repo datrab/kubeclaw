@@ -1,0 +1,3 @@
+autoreview clean: no accepted/actionable findings reported
+overall: patch is correct (0.83)
+No concrete actionable defects were identified in the supplied change bundle and adjacent configuration context. The changed consumers require explicit limits and preserve the original values through the supplied central policy projections. Review was limited to source inspection; shell inspection was unavailable, and no tests or historical acceptance checks were run.

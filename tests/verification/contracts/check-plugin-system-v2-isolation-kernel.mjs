@@ -1,3 +1,4 @@
+import { TEST_CORE_POLICY as ISOLATION_TEST_POLICY } from '../../fixtures/core-runtime-policy.mjs';
 import assert from 'node:assert/strict';
 import { spawn } from 'node:child_process';
 import fs from 'node:fs';
@@ -31,7 +32,7 @@ try {
   for (const memoryBytes of [128, 256].map((value) => value * 1024 * 1024)) {
     const bounded = { ...context, contract: { ...context.contract, lease: { limits: { ...context.contract.lease.limits, memoryBytes } } } };
     for (const mode of ['buffer', 'heap']) {
-      await assert.rejects(invokeIsolated({ packageRoot: path.dirname(modulePath), modulePath, exportName: 'execute', surface: 'stage', argument: { mode }, context: bounded, cgroupRoot }),
+      await assert.rejects(invokeIsolated({ sessionPolicy: ISOLATION_TEST_POLICY.isolationSession, packageRoot: path.dirname(modulePath), modulePath, exportName: 'execute', surface: 'stage', argument: { mode }, context: bounded, cgroupRoot }),
         mode === 'buffer' ? /ISOLATED_PLUGIN_MEMORY_LIMIT:memory.peak=[1-9]/ : /ISOLATED_PLUGIN_MEMORY_LIMIT|ISOLATED_PLUGIN_EXITED/);
     }
   }
@@ -43,7 +44,7 @@ try {
     const marker = path.join(root, `${mode}.pid`);
     const child = spawn(launcher, ['134217728', '5', '64', '--child-cgroup', group.path, script, marker], { stdio: ['pipe', 'pipe', 'pipe'] });
     const controller = new AbortController();
-    const result = runIsolationSession({ child, context, wallTimeMs: mode === 'timeout' ? 500 : 5000, signal: controller.signal, terminateTree: () => group.kill(), invocationMessage: {} });
+    const result = runIsolationSession({ policy: ISOLATION_TEST_POLICY.isolationSession, child, context, wallTimeMs: mode === 'timeout' ? 500 : 5000, signal: controller.signal, terminateTree: () => group.kill(), invocationMessage: {} });
     const asserted = assert.rejects(result, mode === 'cancel' ? /ISOLATED_PLUGIN_CANCELLED/ : /ISOLATED_PLUGIN_TIMEOUT/);
     try {
       await waitUntil(() => fs.existsSync(marker), 'real setsid descendant did not start');

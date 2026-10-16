@@ -104,7 +104,7 @@ function registry(type) {
 async function run(changedFiles, runId, type = 'kubeclaw.lint.pre-check', options = {}) {
   const granted = registry(type);
   const activated = await core.activateRegistry(granted.snapshot, new Set(granted.grants.keys()));
-  const effects = new core.EffectCoordinator(new core.FileEffectJournal(path.join(temporary, `${runId}-effects.jsonl`), TEST_CORE_POLICY), undefined, undefined, new core.MemoryResourceLockManager(), 300_000);
+  const effects = new core.EffectCoordinator(new core.FileEffectJournal(path.join(temporary, `${runId}-effects.jsonl`), TEST_CORE_POLICY), undefined, undefined, new core.MemoryResourceLockManager(), 300_000, TEST_CORE_POLICY.resourceAcquisition);
   const adapters = new core.AdapterRuntime({
     granted,
     activated,

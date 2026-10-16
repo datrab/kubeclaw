@@ -194,7 +194,7 @@ async function produce() {
   const effectsFile = durabilityEffectsFile(path.join(root, 'producer-effects.jsonl'));
   const effects = new core.FileEffectJournal(effectsFile, TEST_CORE_POLICY);
   instrumentKillBoundary(effects, 'write');
-  const adapters = new core.AdapterRuntime({ granted, activated, configs: new Map([['kubeclaw.artifact-store:artifact-store', { artifactRoot }]]), effects: new core.EffectCoordinator(effects, undefined, undefined, new core.FileResourceLockManager(path.join(root, 'producer-locks'), TEST_CORE_POLICY), 300_000), shutdownTimeoutMs: 1000, async emitDomainEvent() {} });
+  const adapters = new core.AdapterRuntime({ granted, activated, configs: new Map([['kubeclaw.artifact-store:artifact-store', { ...TEST_CORE_POLICY.artifactStore, artifactRoot }]]), effects: new core.EffectCoordinator(effects, undefined, undefined, new core.FileResourceLockManager(path.join(root, 'producer-locks'), TEST_CORE_POLICY), 300_000, TEST_CORE_POLICY.resourceAcquisition), shutdownTimeoutMs: 1000, async emitDomainEvent() {} });
   await adapters.start();
   try {
     const imported = await importedFinalGate(registry);
@@ -306,9 +306,9 @@ async function consume() {
   const effects = new core.FileEffectJournal(effectsFile, TEST_CORE_POLICY);
   instrumentKillBoundary(effects, 'read');
   const adapters = new core.AdapterRuntime({ granted, activated, configs: new Map([
-    ['kubeclaw.artifact-store:artifact-store', { artifactRoot }],
+    ['kubeclaw.artifact-store:artifact-store', { ...TEST_CORE_POLICY.artifactStore, artifactRoot }],
     [evidenceId, { stateRoot: root, manifestStageId: 'project-summary', gateStageId: 'final-test' }],
-  ]), effects: new core.EffectCoordinator(effects, undefined, undefined, new core.FileResourceLockManager(path.join(root, `${phase}-locks`), TEST_CORE_POLICY), 300_000), shutdownTimeoutMs: 1000, async emitDomainEvent() {} });
+  ]), effects: new core.EffectCoordinator(effects, undefined, undefined, new core.FileResourceLockManager(path.join(root, `${phase}-locks`), TEST_CORE_POLICY), 300_000, TEST_CORE_POLICY.resourceAcquisition), shutdownTimeoutMs: 1000, async emitDomainEvent() {} });
   await adapters.start();
   try {
     let ref = structuredClone(producer.storedArtifactRef);
@@ -460,10 +460,10 @@ async function replayDurableBoundary() {
     accepted(request) { audit.push({ type: 'accepted', request }); },
     completed(request, receipt) { audit.push({ type: 'completed', request, receipt }); },
   };
-  const configs = new Map([['kubeclaw.artifact-store:artifact-store', { artifactRoot }],
+  const configs = new Map([['kubeclaw.artifact-store:artifact-store', { ...TEST_CORE_POLICY.artifactStore, artifactRoot }],
     [evidenceId, { stateRoot: root, manifestStageId: 'project-summary', gateStageId: 'final-test' }]]);
   const adapters = new core.AdapterRuntime({ granted, activated, configs,
-    effects: new core.EffectCoordinator(effects, undefined, auditSink, new core.FileResourceLockManager(path.join(root, `durability-${target}-${mode}-${boundary}-replay-locks`), TEST_CORE_POLICY), 300_000),
+    effects: new core.EffectCoordinator(effects, undefined, auditSink, new core.FileResourceLockManager(path.join(root, `durability-${target}-${mode}-${boundary}-replay-locks`), TEST_CORE_POLICY), 300_000, TEST_CORE_POLICY.resourceAcquisition),
     shutdownTimeoutMs: 1000, async emitDomainEvent() {} });
   await adapters.start();
   let outcome = 'completed', error;

@@ -1,3 +1,4 @@
+import type {CoreRuntimePolicy} from '@kubeclaw/plugin-foundation/config/core-runtime-policy';
 import fs from 'node:fs';
 import type { AdministrativeReopenDecision, PipelineDefinition, ResumeSignal } from '@kubeclaw/plugin-sdk';
 import type { PlatformConfig } from '@kubeclaw/plugin-foundation/config/platform';
@@ -15,14 +16,14 @@ export function loadPipelineDefinition(file: string): PipelineDefinition {
 export interface AuthenticatedAdministrativePrincipal { readonly type: 'operator' | 'administrator'; readonly id: string }
 export type AdministrativeDecisionAuthenticator = (decision: AdministrativeReopenDecision) => Promise<AuthenticatedAdministrativePrincipal> | AuthenticatedAdministrativePrincipal;
 
-export async function validatePipelineRuntimeV2(platform: PlatformConfig, definitionInput: PipelineDefinition): Promise<Readonly<{ packageCount: number; stageCount: number; observerCount: number; adapterCount: number }>> {
-  const definition = deepFreeze(structuredClone(definitionInput)); const runtime = await prepareRuntime(platform, definition);
-  validatePipelineDefinitionAgainstRegistry(definition, runtime.granted);
+export async function validatePipelineRuntimeV2(platform: PlatformConfig, definitionInput: PipelineDefinition, selectedCorePolicy?: CoreRuntimePolicy): Promise<Readonly<{ packageCount: number; stageCount: number; observerCount: number; adapterCount: number }>> {
+  const definition = deepFreeze(structuredClone(definitionInput)); const runtime = await prepareRuntime(platform, definition, selectedCorePolicy);
+  validatePipelineDefinitionAgainstRegistry(definition, runtime.granted, runtime.corePolicy.humanApproval.defaultTimeoutMinutes, runtime.corePolicy.prismDesignBudgets);
   return Object.freeze({ packageCount: runtime.snapshot.packages.size, stageCount: runtime.activated.stages.size,
     observerCount: runtime.activated.observers.size, adapterCount: runtime.activated.adapters.size });
 }
-export function runPipelineV2(platform: PlatformConfig, definition: PipelineDefinition, runId?: string, signal?: AbortSignal): Promise<PipelineRunResult> {
-  return runNewPipeline(platform, definition, runId, signal);
+export function runPipelineV2(platform: PlatformConfig, definition: PipelineDefinition, runId?: string, signal?: AbortSignal, selectedCorePolicy?: CoreRuntimePolicy): Promise<PipelineRunResult> {
+  return runNewPipeline(platform, definition, runId, signal, selectedCorePolicy);
 }
 export function recoverPipelineV2(platform: PlatformConfig, definition: PipelineDefinition, runId: string): Promise<PipelineRunResult> {
   return recoverPipeline(platform, definition, runId);

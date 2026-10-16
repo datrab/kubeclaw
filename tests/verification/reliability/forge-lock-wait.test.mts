@@ -19,7 +19,7 @@ for (const disposition of ['release', 'cancel', 'timeout'] as const) test(`real 
   git(repo, ['init', '-q']); git(repo, ['config', 'user.name', 'Fixture']); git(repo, ['config', 'user.email', 'fixture@example.invalid']);
   fs.writeFileSync(path.join(repo, 'file'), 'baseline'); git(repo, ['add', '.']); git(repo, ['commit', '-qm', 'baseline']);
   const adapter = activate({ config: { allowedRepositoryRoots: [repo], workspaceRoot: workspaces,
-    gitExecutable: fs.realpathSync('/usr/bin/git'), authorName: 'Fixture', authorEmail: 'fixture@example.invalid', maxExecutionMs: 5000, maxOutputBytes: 65536, terminationGraceMs: 100 } });
+    gitExecutable: fs.realpathSync('/usr/bin/git'), errorExcerptCharacters: TEST_CORE_POLICY.gitWorkspaceFailure.errorExcerptCharacters, authorName: 'Fixture', authorEmail: 'fixture@example.invalid', maxExecutionMs: 5000, maxOutputBytes: 65536, terminationGraceMs: 100 } });
   const signal = new AbortController();
   const journalPath = path.join(temporary, 'effects.jsonl');
   const locks = new FileResourceLockManager(path.join(temporary, 'locks'), TEST_CORE_POLICY);
@@ -28,7 +28,7 @@ for (const disposition of ['release', 'cancel', 'timeout'] as const) test(`real 
   const held = competing.acquire(resource, 'existing-owner', 5000);
   let released = false;
   try {
-    const effects = new EffectCoordinator(new FileEffectJournal(journalPath, TEST_CORE_POLICY), undefined, undefined, locks, disposition === 'timeout' ? 40 : 1000);
+    const effects = new EffectCoordinator(new FileEffectJournal(journalPath, TEST_CORE_POLICY), undefined, undefined, locks, disposition === 'timeout' ? 40 : 1000, TEST_CORE_POLICY.resourceAcquisition);
     const pending = effects.invoke(adapter, owner, { idempotencyKey: 'create', attempt: { runId: 'run', stageId: 'create', attemptId: 'waiter', attemptNumber: 1 },
       capability: 'git.workspace.create', operation: 'create', resource,
       payload: { repositoryRoot: repo, workspacePath: path.join(workspaces, 'run', 'new'), branch: 'new', baseRef: 'HEAD' } }, signal.signal);
@@ -75,11 +75,11 @@ test('serialized real conflicting merges retain the conflict instead of treating
     fs.writeFileSync(path.join(workspace, 'file'), `${branch}\n`); git(workspace, ['commit', '-qam', branch]);
   }
   const adapter = activate({ config: { allowedRepositoryRoots: [repo], workspaceRoot: workspaces,
-    gitExecutable: fs.realpathSync('/usr/bin/git'), authorName: 'Fixture', authorEmail: 'fixture@example.invalid', maxExecutionMs: 5000, maxOutputBytes: 65536, terminationGraceMs: 100 } });
+    gitExecutable: fs.realpathSync('/usr/bin/git'), errorExcerptCharacters: TEST_CORE_POLICY.gitWorkspaceFailure.errorExcerptCharacters, authorName: 'Fixture', authorEmail: 'fixture@example.invalid', maxExecutionMs: 5000, maxOutputBytes: 65536, terminationGraceMs: 100 } });
   const signal = new AbortController().signal;
   try {
     const journal = new FileEffectJournal(path.join(temporary, 'effects.jsonl'), TEST_CORE_POLICY);
-    const effects = new EffectCoordinator(journal, undefined, undefined, new FileResourceLockManager(path.join(temporary, 'locks'), TEST_CORE_POLICY), 1000);
+    const effects = new EffectCoordinator(journal, undefined, undefined, new FileResourceLockManager(path.join(temporary, 'locks'), TEST_CORE_POLICY), 1000, TEST_CORE_POLICY.resourceAcquisition);
     const results = await Promise.all(['left', 'right'].map(branch => effects.invoke(adapter, owner, {
       idempotencyKey: `merge:${branch}`, attempt: { runId: 'run', stageId: branch, attemptId: branch, attemptNumber: 1 },
       capability: 'git.merge', operation: 'merge', resource: { type: 'git.repository', canonicalId: repo }, payload: { sourceRef: branch },

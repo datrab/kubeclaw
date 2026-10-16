@@ -20,7 +20,7 @@ test('selected A/B event queue budgets reach actual hook consumer and captured A
  const file=path.join(root,'core.json');
  const publish=limits=>fs.writeFileSync(file,JSON.stringify({schemaVersion:'nova-core-runtime-policy.v1',profiles:{selected:{settings:{...TEST_CORE_POLICY,agentEventSource:limits}}}}));
  const load=()=>loadCoreRuntimePolicy({file,profile:'selected'});
- const aLimits={maxQueueEvents:1,maxQueueBytes:4096,drainTimeoutMs:10};publish(aLimits);
+ const aLimits={...TEST_CORE_POLICY.agentEventSource,maxQueueEvents:1,maxQueueBytes:4096,drainTimeoutMs:10};publish(aLimits);
  const aConfig=selected(load()),a=open(aConfig);await a.adapter.ready();
  publish({...aLimits,maxQueueEvents:2});const bConfig=selected(load()),b=open(bConfig);await b.adapter.ready();fs.unlinkSync(file);
  try{
@@ -42,4 +42,41 @@ test('required central queue fields reject missing/null/wrong units, direct fall
   }
   for(const value of [null,TEST_CORE_POLICY.agentEventSource[key]])assert.throws(()=>selectedAdapterConfigurations({[id]:{hooks:['agent_end'],[key]:value}},TEST_CORE_POLICY),/COMPETING_AUTHOR/);
  }
+});
+
+test('selected event projection caps reach real hooks, redact before truncation and capture immutable A',async()=>{
+ const handlers=new Map(),emitted=[];
+ const policy=structuredClone(TEST_CORE_POLICY);policy.agentEventSource.maxObservedFields=2;policy.agentEventSource.maxObservedFieldCharacters=3;
+ const config=structuredClone(selected(captureCoreRuntimePolicy(policy)));
+ const adapter=activateWithSdk({config,async emit(type,identity,payload){emitted.push({identity,payload});}},{on(hook,handler){handlers.set(hook,handler);return()=>handlers.delete(hook);}});
+ // Changing the supplied object after activation must not affect its captured limits.
+ config.maxObservedFields=1;config.maxObservedFieldCharacters=1;
+ await adapter.ready();
+ try {
+  handlers.get('agent_end')({runId:'run:projection',token:'secret',duration_ms:12,success:true,latency:99});
+  await adapter.invoke(status(true));
+  assert.deepEqual(emitted[0],{identity:{runId:'run:projection'},payload:{schemaVersion:'openclaw-agent-event.v2',observedFields:['dur','suc'],metrics:{duration_ms:12,success:true}}});
+  assert.doesNotMatch(JSON.stringify(emitted),/secret|token|latency/);
+ }finally{await adapter.shutdown(new AbortController().signal);}
+});
+
+
+test('selected identity budget reaches actual hooks and retained A survives source replacement/deletion',async t=>{
+ const root=fs.mkdtempSync(path.join(os.tmpdir(),'nova-event-identity-'));t.after(()=>fs.rmSync(root,{recursive:true,force:true}));
+ const file=path.join(root,'core.json');
+ const publish=cap=>fs.writeFileSync(file,JSON.stringify({schemaVersion:'nova-core-runtime-policy.v1',profiles:{selected:{settings:{...TEST_CORE_POLICY,agentEventSource:{...TEST_CORE_POLICY.agentEventSource,maxIdentityCharacters:cap}}}}}));
+ const openCapture=policy=>{const handlers=new Map(),emitted=[];const config=structuredClone(selected(policy));const adapter=activateWithSdk({config,async emit(type,identity){emitted.push(identity);}},{on(hook,handler){handlers.set(hook,handler);return()=>handlers.delete(hook);}});return{adapter,handlers,emitted,config};};
+ publish(3);const retained=loadCoreRuntimePolicy({file,profile:'selected'});
+ publish(6);const b=openCapture(loadCoreRuntimePolicy({file,profile:'selected'}));fs.unlinkSync(file);
+ const a=openCapture(retained);a.config.maxIdentityCharacters=6;
+ await a.adapter.ready();await b.adapter.ready();
+ try{
+  for(const runtime of [a,b]){
+   runtime.handlers.get('agent_end')({run_id:'1234',stage_id:'1234',attempt_id:'1234'});
+   runtime.handlers.get('agent_end')({run_id:'123',stage_id:'1234',attempt_id:'123'});
+   await runtime.adapter.invoke(status(true));
+  }
+  assert.deepEqual(a.emitted,[{runId:'123',attemptId:'123'}]);
+  assert.deepEqual(b.emitted,[{runId:'1234',stageId:'1234',attemptId:'1234'},{runId:'123',stageId:'1234',attemptId:'123'}]);
+ }finally{await a.adapter.shutdown(new AbortController().signal);await b.adapter.shutdown(new AbortController().signal);}
 });

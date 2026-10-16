@@ -29,13 +29,13 @@ test('v2 selects central owner for actual Git and HTTP; original captures surviv
  await new Promise<void>(resolve=>server.listen(0,'127.0.0.1',resolve));t.after(()=>new Promise<void>(resolve=>server.close(()=>resolve())));
  const address=server.address() as {port:number};f.config.endpoint=`http://127.0.0.1:${address.port}`;f.runtime();
  f.publish(1);const a=loadProductionNovaTestGate(f.file,f.environment);
- const captured=loadCoreRuntimePolicy({file:f.core,profile:'selected'}).sourceAcquisition;
+ const captured=loadCoreRuntimePolicy({file:f.core,profile:'selected'});
  f.publish(65536);const b=loadProductionNovaTestGate(f.file,f.environment);
  await assert.rejects(a.execute(f.input),/NOVA_SOURCE_ARCHIVE_SIZE_EXCEEDED/);assert.equal(requests,0);
  await assert.rejects(b.execute(f.input));assert.equal(requests,1,'B actually reaches HTTP submission after acquiring committed Git source');
  fs.unlinkSync(f.core);await assert.rejects(a.execute(f.input),/NOVA_SOURCE_ARCHIVE_SIZE_EXCEEDED/);assert.equal(requests,1);
  // Retained callers receive original captured values, not a current-file fallback.
- const retained=loadProductionNovaTestGate(f.file,f.environment,captured);
+ const retained=loadProductionNovaTestGate(f.file,f.environment,captured.sourceAcquisition,captured.remotePlanDispatch.cleanupMilliseconds);
  await assert.rejects(retained.execute(f.input),/NOVA_SOURCE_ARCHIVE_SIZE_EXCEEDED/);assert.equal(requests,1);
  assert.throws(()=>loadProductionNovaTestGate(f.file,f.environment),/ENOENT/);
 });
@@ -59,4 +59,28 @@ test('real remote gate CLI consumes v2 central selection before spawning dispatc
  const f=fixture(t);f.publish(1);const job=path.join(f.root,'job.json');fs.writeFileSync(job,JSON.stringify({...f.input,grants:Object.fromEntries(f.input.grants)}));
  const result=spawnSync(process.execPath,['skills/nova/core/test-gates/remote-gate-cli.ts','--config',f.file,'--job',job,'--timeout-ms','3000'],{encoding:'utf8',env:{...process.env,...f.environment},timeout:10000});
  assert.equal(result.status,1,result.stderr);assert.match(result.stderr,/NOVA_SOURCE_ARCHIVE_SIZE_EXCEEDED/);assert(!result.error);
+});
+
+
+test('v2 central remote cleanup budget reaches real HTTP cancellation and is captured before owner replacement',async t=>{
+ const f=fixture(t);let deletes=0;
+ const server=http.createServer((req,res)=>{req.resume();if(req.method==='DELETE')deletes++;res.writeHead(200,{'content-type':'application/json'});res.write(' ');});
+ await new Promise<void>(resolve=>server.listen(0,'127.0.0.1',resolve));
+ t.after(()=>{server.closeAllConnections();server.close();});
+ f.config.endpoint=`http://127.0.0.1:${(server.address() as {port:number}).port}`;f.runtime();
+ const owner=JSON.parse(fs.readFileSync(f.core,'utf8'));owner.profiles.selected.settings.remotePlanDispatch.cleanupMilliseconds=150;fs.writeFileSync(f.core,JSON.stringify(owner));
+ const gate=loadProductionNovaTestGate(f.file,f.environment);
+ const captured=loadCoreRuntimePolicy({file:f.core,profile:'selected'});
+ owner.profiles.selected.settings.remotePlanDispatch.cleanupMilliseconds=10000;fs.writeFileSync(f.core,JSON.stringify(owner));
+ assert.throws(()=>loadProductionNovaTestGate(f.file,f.environment,captured.sourceAcquisition),/NOVA_REMOTE_RETAINED_POLICY_INCOMPLETE/);
+ assert.throws(()=>loadProductionNovaTestGate(f.file,f.environment,undefined,captured.remotePlanDispatch.cleanupMilliseconds),/NOVA_REMOTE_RETAINED_POLICY_INCOMPLETE/);
+ const started=Date.now();
+ await assert.rejects(gate.execute({...f.input,timeoutMs:500}),/TIMEOUT:REMOTE_STATE_UNKNOWN/);
+ assert.equal(deletes,1);assert.ok(Date.now()-started<3000,'selected 150ms reconciliation, not current or hidden 10s');
+ fs.unlinkSync(f.core);
+ assert.throws(()=>loadProductionNovaTestGate(f.file,f.environment,captured.sourceAcquisition),/NOVA_REMOTE_RETAINED_POLICY_INCOMPLETE/);
+ assert.throws(()=>loadProductionNovaTestGate(f.file,f.environment,undefined,captured.remotePlanDispatch.cleanupMilliseconds),/NOVA_REMOTE_RETAINED_POLICY_INCOMPLETE/);
+ const retained=loadProductionNovaTestGate(f.file,f.environment,captured.sourceAcquisition,captured.remotePlanDispatch.cleanupMilliseconds);
+ await assert.rejects(retained.execute({...f.input,timeoutMs:500}),/TIMEOUT:REMOTE_STATE_UNKNOWN/);assert.equal(deletes,2);
+ for(const value of [undefined,0,-1,1.5,'10',2147483648])assert.throws(()=>captureCoreRuntimePolicy({...TEST_CORE_POLICY,remotePlanDispatch:{cleanupMilliseconds:value}}),/INVALID/);
 });

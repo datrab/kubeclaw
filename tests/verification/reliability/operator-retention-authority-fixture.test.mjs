@@ -42,7 +42,7 @@ export async function fixture(t, options = {}) {
   const network = 'kubeclaw.network-http:http', secrets = 'kubeclaw.secret-resolver:secrets';
   const deliveryRoot = path.join(root, 'deliveries'), waitRoot = path.join(root, 'waits');
   const corePolicyFile = path.join(root, 'core-policy.json');
-  fs.writeFileSync(corePolicyFile, JSON.stringify({schemaVersion:'nova-core-runtime-policy.v1',profiles:{selected:{settings:{...TEST_CORE_POLICY,operatorMessagingStore:{maximumDeliveryRecords:options.maximumRecords ?? limits.maximumRecords,maximumDeliveryBytes:options.maximumBytes ?? limits.maximumBytes}}}}}));
+  fs.writeFileSync(corePolicyFile, JSON.stringify({schemaVersion:'nova-core-runtime-policy.v1',profiles:{selected:{settings:{...TEST_CORE_POLICY,networkHttp:{...TEST_CORE_POLICY.networkHttp,maxRequestBytes:16384,maxResponseBytes:16384,timeoutMs:5000},operatorMessagingPayload:{...TEST_CORE_POLICY.operatorMessagingPayload,targetPayloadProfiles:{fixture:{maxPayloadBytes:16384}}},operatorMessagingStore:{maximumDeliveryRecords:options.maximumRecords ?? limits.maximumRecords,maximumDeliveryBytes:options.maximumBytes ?? limits.maximumBytes}}}}}));
   const platform = {corePolicySelection: {file:corePolicyFile,profile:'selected'}, schemaVersion: 'pipeline-platform.v2', effectLockTtlMs: 300_000, installationRoots: roots, trustedBuiltinRoots: roots,
     externalTrust: { allowedSourceDigests: {}, verifiedAttestations: {} },
     providers: { 'operator.request': operator, 'signal.wait': waits, 'network.http': network, 'secrets.read': secrets },
@@ -50,10 +50,10 @@ export async function fixture(t, options = {}) {
       'signal.wait': { allowedSignalTypes: ['approval.resolved'], allowedIssuerIds: ['operator:local'] } },
       [operator]: { 'network.http': { allowedOrigins: [origin] }, 'secrets.read': { allowedNames: ['operator.webhook'] } } },
     adapters: { [operator]: { deliveryRoot,
-      targets: { operators: { endpoint: `${origin}/messages`, tokenSecret: 'operator.webhook', maxPayloadBytes: 16384 } } },
+      targets: { operators: { endpoint: `${origin}/messages`, tokenSecret: 'operator.webhook', payloadProfile: 'fixture' } } },
       [waits]: { root: waitRoot }, [secrets]: { environment: { 'operator.webhook': env } },
       [network]: { allowedOrigins: [origin], allowedMethods: ['POST'],
-        allowedHeaders: ['content-type', 'idempotency-key', 'x-kubeclaw-signature'], maxRequestBytes: 16384, maxResponseBytes: 16384, timeoutMs: 5000 } },
+        allowedHeaders: ['content-type', 'idempotency-key', 'x-kubeclaw-signature'] } },
     activeAdapters: [operator, waits, network, secrets], observers: {}, storageRoot: path.join(root, 'state'),
     shutdownTimeoutMs: 5000, orchestratorIssuerId: 'nova', administrativeDecisionIssuers: [] };
   const definition = { schemaVersion: 'pipeline-definition.v2', id: 'pipeline:operator-authority', maxConcurrency: 1,

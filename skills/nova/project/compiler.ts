@@ -1,3 +1,4 @@
+import {captureCoreRuntimePolicy, type ProjectCompilerRuntimePolicy} from '@kubeclaw/plugin-foundation/config/core-runtime-policy';
 import {demoStages,demoStagesWithExecutionGroups,normalizeDemo} from './demo.ts';
 import {sourceStages,sourceStagesWithExecutionGroups} from './source.ts';
 import { cumulativeStages, cumulativeStagesWithExecutionGroups, projectCoverage, testConfiguration } from './coverage.ts';
@@ -196,7 +197,29 @@ export function compileProjectWithCompilerPolicyCandidate(value:unknown,policy:u
   return Object.freeze({...result,originalAuthorizationVerified:false as const,activationAllowed:false as const});
 }
 
-type ProjectBuildMode={kind:'legacy'}|{kind:'explicit';policy:unknown};
+/** Productive selected-owner path. Candidate admission flags are not reused.
+ * Review presence stays task-owned; the sole authored review budget applies
+ * only to modules that actually declare review, including mixed projects.
+ */
+export function compileProjectWithCorePolicy(value: unknown, corePolicy: unknown,
+  sourceIdentity: 'legacy' | typeof PORTABLE_JSON_ENCODING = PORTABLE_JSON_ENCODING,
+  reportArtifactEncoding: 'legacy' | typeof PORTABLE_JSON_ENCODING = PORTABLE_JSON_ENCODING,
+  reviewSemanticMode: ProjectReviewSemanticMode = 'legacy', deliveryManifestEncoding: ProjectDeliveryManifestMode = 'legacy') {
+  const selected = captureCoreRuntimePolicy(corePolicy);
+  if (!['nova-core-runtime-policy.v2', 'nova-core-runtime-policy.v3'].includes(selected.policyVersion ?? '') || !selected.projectCompiler) throw new Error('PROJECT_COMPILER_SELECTION_REQUIRED');
+  return buildProject(value, {kind: 'selected', policy: selected.projectCompiler}, sourceIdentity,
+    reportArtifactEncoding, reviewSemanticMode, deliveryManifestEncoding);
+}
+
+function selectedModuleExecution(policy: ProjectCompilerRuntimePolicy, hasReview: boolean) {
+  const categories = {lint: policy.repairBudget.categories.lint,
+    ...(hasReview ? {review: policy.repairBudget.categories.review} : {}), test: policy.repairBudget.categories.test};
+  const maximumOrders = Object.values(categories).reduce((sum, value) => sum + value, 0) + policy.repairBudget.maximumOrchestratorOrders;
+  return {maxAttempts: 1 + maximumOrders + policy.execution.maxTechnicalRetries, maxRemediationCycles: maximumOrders,
+    ...policy.execution, repairBudget: {categories, maximumOrchestratorOrders: policy.repairBudget.maximumOrchestratorOrders}};
+}
+
+type ProjectBuildMode={kind:'legacy'}|{kind:'explicit';policy:unknown}|{kind:'selected';policy:ProjectCompilerRuntimePolicy};
 function buildProject(value:unknown,mode:ProjectBuildMode,sourceIdentity:'legacy'|typeof PORTABLE_JSON_ENCODING,
   reportArtifactEncoding:'legacy'|typeof PORTABLE_JSON_ENCODING,reviewSemanticMode:ProjectReviewSemanticMode,
   deliveryManifestEncoding:ProjectDeliveryManifestMode) {
@@ -223,8 +246,9 @@ function buildProject(value:unknown,mode:ProjectBuildMode,sourceIdentity:'legacy
   // is invalid, never a signal to fall back to historical compiler defaults.
   const received=mode.kind==='explicit'?ordered.map(module=>resolveProjectCompilerPolicy(mode.policy,Boolean(module.review))):undefined;
   const demo = normalizeDemo(project.demo);
-  const source = mode.kind==='explicit'
-    ?sourceStagesWithExecutionGroups(project,ordered,received![0]!.executionGroups,demo,sourceIdentity)
+  const executionGroups = mode.kind === 'selected' ? mode.policy.executionGroups : received?.[0]?.executionGroups;
+  const source = mode.kind!=='legacy'
+    ?sourceStagesWithExecutionGroups(project,ordered,executionGroups,demo,sourceIdentity)
     :sourceStages(project, ordered, demo, sourceIdentity);
   const stages: StageDefinition[] = [...source.stages];
   const groups:ProjectMembershipGroupCandidate[]=[];
@@ -232,20 +256,24 @@ function buildProject(value:unknown,mode:ProjectBuildMode,sourceIdentity:'legacy
   let previousGate: string | undefined = 'blueprint-sync';
   for (const module of ordered) {
     const context={ projectId, runId, repository, workspaces, baseline, previousGate, sourceBinding: source.binding, reportArtifactEncoding, reviewSemanticMode };
-    const emitted=mode.kind==='explicit'?moduleStagesWithCompilerPolicy(module,context,mode.policy).stages:moduleStages(module,context);
+    let emitted: readonly StageDefinition[];
+    if (mode.kind === 'selected') {
+      const {repairBudget, ...execution} = selectedModuleExecution(mode.policy, Boolean(module.review));
+      emitted = buildModuleStages(module, context, execution, repairBudget);
+    } else emitted = mode.kind === 'explicit' ? moduleStagesWithCompilerPolicy(module,context,mode.policy).stages : moduleStages(module,context);
     stages.push(...emitted);
     if(mode.kind==='explicit')groups.push(projectMembershipGroupCandidate(`module:${module.id}`,'implementation',emitted));
     previousGate = `test-${module.id}`;
   }
-  if(mode.kind==='explicit') {
-    const cumulative=cumulativeStagesWithExecutionGroups(project,ordered,`implement-${ordered.at(-1)!.id}`,received![0]!.executionGroups,
+  if(mode.kind!=='legacy') {
+    const cumulative=cumulativeStagesWithExecutionGroups(project,ordered,`implement-${ordered.at(-1)!.id}`,executionGroups,
       reportArtifactEncoding,reviewSemanticMode,deliveryManifestEncoding);
-    const delivery=demoStagesWithExecutionGroups(demo,final.test.providerPlan.plan,received![0]!.executionGroups);
+    const delivery=demoStagesWithExecutionGroups(demo,final.test.providerPlan.plan,executionGroups);
     stages.push(...cumulative,...delivery);
     // The original cumulative producer emits project-summary in the delivery
     // group. Use its exact declared ID, not a runtime prefix/group inference.
-    groups.push(projectMembershipGroupCandidate('integration','integration',cumulative.filter(stage=>stage.id!=='project-summary')));
-    groups.push(projectMembershipGroupCandidate('delivery','delivery',[...cumulative.filter(stage=>stage.id==='project-summary'),...delivery]));
+    if(mode.kind==='explicit') groups.push(projectMembershipGroupCandidate('integration','integration',cumulative.filter(stage=>stage.id!=='project-summary')));
+    if(mode.kind==='explicit') groups.push(projectMembershipGroupCandidate('delivery','delivery',[...cumulative.filter(stage=>stage.id==='project-summary'),...delivery]));
   } else {
     stages.push(...cumulativeStages(project, ordered, `implement-${ordered.at(-1)!.id}`, reportArtifactEncoding,
       reviewSemanticMode, deliveryManifestEncoding));

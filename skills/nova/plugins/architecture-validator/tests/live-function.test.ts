@@ -73,18 +73,19 @@ try {
   const adapters = new core.AdapterRuntime({
     granted, activated,
     configs: new Map([
-      ['kubeclaw.repository-adapter:repository', { repositoryRoot: temporary }],
+      ['kubeclaw.repository-adapter:repository', {...ARTIFACT_TEST_CORE_POLICY.repositoryRead, repositoryRoot: temporary }],
       ['kubeclaw.runtime-dispatch:runtime', { ...TEST_CORE_POLICY.httpDispatch, targets: {
         architect: { byteProfile:'standard', endpoint: `${origin}/dispatch`, tokenSecret: 'architecture.agent' },
       } }],
       ['kubeclaw.network-http:http', {
+        ...TEST_CORE_POLICY.networkHttp,
         allowedOrigins: [origin], allowedMethods: ['POST'],
         allowedHeaders: ['content-type', 'idempotency-key', 'x-kubeclaw-signature'],
       }],
       ['kubeclaw.secret-resolver:secrets', { environment: { 'architecture.agent': secretName } }],
       ['kubeclaw.artifact-store:artifact-store', { ...TEST_ARTIFACT_STORE_POLICY, artifactRoot: path.join(temporary, 'artifacts') }],
     ]),
-    effects: new core.EffectCoordinator(new core.FileEffectJournal(path.join(temporary, 'effects.jsonl'), TEST_CORE_POLICY), undefined, undefined, new core.MemoryResourceLockManager(), 300_000),
+    effects: new core.EffectCoordinator(new core.FileEffectJournal(path.join(temporary, 'effects.jsonl'), TEST_CORE_POLICY), undefined, undefined, new core.MemoryResourceLockManager(), 300_000, TEST_CORE_POLICY.resourceAcquisition),
     shutdownTimeoutMs: 1000, async emitDomainEvent() {},
   });
   await adapters.start();

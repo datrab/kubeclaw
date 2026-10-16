@@ -225,7 +225,7 @@ export function runtimeAuthority(value: Record<string, unknown>, environment: No
   // parsing an Ed25519 key is necessary, never sufficient proof of provenance.
   try {
     if (createPublicKey(sourceAttestationPublicKey).asymmetricKeyType !== 'ed25519') throw new Error('wrong key type');
-  } catch { throw new Error('BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY_INVALID'); }
+  } catch (cause) { throw new Error('BUSTER_SOURCE_ATTESTATION_CONFIG_INVALID', { cause }); }
   if (typeof value.trustedSourceAuthority !== 'string' || !value.trustedSourceAuthority.trim()) {
     throw new Error('BUSTER_SOURCE_ATTESTATION_AUTHORITY_REQUIRED');
   }

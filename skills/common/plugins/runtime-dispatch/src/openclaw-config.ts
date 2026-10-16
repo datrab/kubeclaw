@@ -48,7 +48,7 @@ function targetValid(target: OpenClawTarget, endpoint: URL | null): boolean {
   ].every(Boolean);
 }
 
-function parseTarget(id: string, raw: unknown, processing: Pick<OpenClawTarget,'resultReadMaximumBytes'|'collectorWaitTimeoutSeconds'>, profiles: Readonly<Record<string,TargetTiming>>): OpenClawTarget {
+function parseTarget(id: string, raw: unknown, processing: Pick<OpenClawTarget,'workspaceOwnerMaximumBytes'|'resultReadMaximumBytes'|'collectorWaitTimeoutSeconds'|'sessionListCacheTtlMs'|'sessionListMinimumRecentMinutes'|'sessionListPaddingMinutes'|'cleanupPollIntervalMs'>, profiles: Readonly<Record<string,TargetTiming>>): OpenClawTarget {
   if (!ID.test(id) || !record(raw)) throw new Error(`RUNTIME_CONFIG_INVALID:target:${id}`);
   exact(raw, KEYS, 'RUNTIME_CONFIG_UNKNOWN_TARGET_FIELD');
   if (typeof raw.timingProfile !== 'string' || !Object.hasOwn(profiles, raw.timingProfile)) throw new Error(`RUNTIME_CONFIG_INVALID:timingProfile:${id}`);
@@ -77,11 +77,16 @@ function parseTarget(id: string, raw: unknown, processing: Pick<OpenClawTarget,'
 }
 
 export function targetsFrom(raw: Readonly<Record<string, unknown>>): ReadonlyMap<string, OpenClawTarget> {
-  exact(raw as Record<string, unknown>, new Set(['targets','resultReadMaximumBytes','collectorWaitTimeoutSeconds','targetTimingProfiles']), 'RUNTIME_CONFIG_UNKNOWN_FIELD');
+  exact(raw as Record<string, unknown>, new Set(['targets','workspaceOwnerMaximumBytes','resultReadMaximumBytes','collectorWaitTimeoutSeconds','targetTimingProfiles','sessionListCacheTtlMs','sessionListMinimumRecentMinutes','sessionListPaddingMinutes','cleanupPollIntervalMs']), 'RUNTIME_CONFIG_UNKNOWN_FIELD');
   if (!Number.isSafeInteger(raw.resultReadMaximumBytes) || Number(raw.resultReadMaximumBytes) < 1) throw new Error('RUNTIME_CONFIG_INVALID:resultReadMaximumBytes');
   if (!Number.isSafeInteger(raw.collectorWaitTimeoutSeconds) || Number(raw.collectorWaitTimeoutSeconds) < 0 || Number(raw.collectorWaitTimeoutSeconds) > 2147483) throw new Error('RUNTIME_CONFIG_INVALID:collectorWaitTimeoutSeconds');
+  if (!Number.isSafeInteger(raw.sessionListCacheTtlMs) || Number(raw.sessionListCacheTtlMs) < 0) throw new Error('RUNTIME_CONFIG_INVALID:sessionListCacheTtlMs');
+  for (const [key,minimum] of [['sessionListMinimumRecentMinutes',1],['sessionListPaddingMinutes',0],['cleanupPollIntervalMs',1]] as const) {
+    if (!Number.isSafeInteger(raw[key]) || Number(raw[key]) < minimum || Number(raw[key]) > 2147483647) throw new Error(`RUNTIME_CONFIG_INVALID:${key}`);
+  }
+  if (!Number.isSafeInteger(raw.workspaceOwnerMaximumBytes) || Number(raw.workspaceOwnerMaximumBytes) < 1 || Number(raw.workspaceOwnerMaximumBytes) > 32768) throw new Error('RUNTIME_CONFIG_INVALID:workspaceOwnerMaximumBytes');
   const profiles = timingProfiles(raw.targetTimingProfiles);
-  const processing = Object.freeze({resultReadMaximumBytes:Number(raw.resultReadMaximumBytes),collectorWaitTimeoutSeconds:Number(raw.collectorWaitTimeoutSeconds)});
+  const processing = Object.freeze({workspaceOwnerMaximumBytes:Number(raw.workspaceOwnerMaximumBytes),cleanupPollIntervalMs:Number(raw.cleanupPollIntervalMs),sessionListMinimumRecentMinutes:Number(raw.sessionListMinimumRecentMinutes),sessionListPaddingMinutes:Number(raw.sessionListPaddingMinutes),sessionListCacheTtlMs:Number(raw.sessionListCacheTtlMs),resultReadMaximumBytes:Number(raw.resultReadMaximumBytes),collectorWaitTimeoutSeconds:Number(raw.collectorWaitTimeoutSeconds)});
   if (!record(raw.targets) || Object.keys(raw.targets).length === 0) throw new Error('RUNTIME_CONFIG_INVALID:targets');
   return new Map(Object.entries(raw.targets).map(([id, target]) => [id, parseTarget(id, target, processing, profiles)]));
 }

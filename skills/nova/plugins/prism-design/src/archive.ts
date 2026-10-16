@@ -3,7 +3,11 @@ import { BASELINE_V1, BASELINE_V2, BASELINE_CHECKSUM_ENCODING, baselineChecksumD
 import { sha256Bytes, sha256Text } from '@kubeclaw/plugin-sdk';
 
 const digest = (bytes: string | Buffer) => typeof bytes === 'string' ? sha256Text(bytes) : sha256Bytes(bytes);
-const maximumBytes = 32 * 1024 * 1024;
+export type PrismArchiveBudgets = Readonly<{maximumArchiveBytes: number; maximumArchiveFiles: number}>;
+export function capturePrismArchiveBudgets(value: PrismArchiveBudgets): PrismArchiveBudgets {
+  if (!value || !Number.isSafeInteger(value.maximumArchiveBytes) || value.maximumArchiveBytes < 1 || !Number.isSafeInteger(value.maximumArchiveFiles) || value.maximumArchiveFiles < 1) throw new Error('PRISM_ARCHIVE_BUDGET_REQUIRED');
+  return Object.freeze({maximumArchiveBytes: value.maximumArchiveBytes, maximumArchiveFiles: value.maximumArchiveFiles});
+}
 function object(value: unknown): Record<string, any> {
   if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error('PRISM_ARCHIVE_OBJECT_INVALID');
   return value as Record<string, any>;
@@ -12,7 +16,7 @@ function filePath(value: string): void {
   if (!value || value.startsWith('/') || value.includes('\\') || value.includes('\0')
     || value.split('/').some(part => !part || part === '.' || part === '..')) throw new Error('PRISM_ARCHIVE_PATH_INVALID');
 }
-function base64(value: unknown): Buffer {
+function base64(value: unknown, maximumBytes: number): Buffer {
   if (typeof value !== 'string' || value.length > Math.ceil(maximumBytes / 3) * 4) throw new Error('PRISM_ARCHIVE_SIZE_EXCEEDED');
   const bytes = Buffer.from(value, 'base64');
   if (bytes.length > maximumBytes || bytes.toString('base64') !== value) throw new Error('PRISM_ARCHIVE_ENCODING_INVALID');
@@ -28,11 +32,11 @@ function archiveManifest(archive: Record<string, any>, approvedDigest: string, p
   validatePrism('baselineManifest', manifest);
   return manifest;
 }
-function archiveFiles(archive: Record<string, any>, manifest: Record<string, any>, approvedDigest: string) {
+function archiveFiles(archive: Record<string, any>, manifest: Record<string, any>, approvedDigest: string, budgets: PrismArchiveBudgets) {
   const textFiles = object(archive.textFiles);
   const binaryFiles = object(archive.binaryFiles);
   const names = [...Object.keys(textFiles), ...Object.keys(binaryFiles)];
-  if (names.length > 4096 || new Set(names).size !== names.length) throw new Error('PRISM_ARCHIVE_FILE_SET_INVALID');
+  if (names.length > budgets.maximumArchiveFiles || new Set(names).size !== names.length) throw new Error('PRISM_ARCHIVE_FILE_SET_INVALID');
   const checksumDocument = object(JSON.parse(textFiles['checksums.json']));
   assertBaselineChecksumDocument(checksumDocument, archive.schema);
   const checksums = object(checksumDocument.files);
@@ -41,10 +45,10 @@ function archiveFiles(archive: Record<string, any>, manifest: Record<string, any
   let totalBytes = 0;
   for (const name of names) {
     filePath(name);
-    const content = Object.hasOwn(textFiles, name) ? textFiles[name] : base64(binaryFiles[name]);
+    const content = Object.hasOwn(textFiles, name) ? textFiles[name] : base64(binaryFiles[name], budgets.maximumArchiveBytes);
     if (typeof content !== 'string' && !Buffer.isBuffer(content)) throw new Error('PRISM_ARCHIVE_FILE_INVALID');
     totalBytes += Buffer.byteLength(content);
-    if (totalBytes > maximumBytes) throw new Error('PRISM_ARCHIVE_SIZE_EXCEEDED');
+    if (totalBytes > budgets.maximumArchiveBytes) throw new Error('PRISM_ARCHIVE_SIZE_EXCEEDED');
     if (Object.hasOwn(checksums, name) && digest(content) !== checksums[name]) throw new Error(`PRISM_ARCHIVE_FILE_DIGEST_MISMATCH:${name}`);
   }
   if (baselineChecksumDigest(checksums, archive.schema) !== approvedDigest) throw new Error('PRISM_ARCHIVE_BUNDLE_DIGEST_MISMATCH');
@@ -75,14 +79,15 @@ function archiveDocuments(manifest: Record<string, any>, textFiles: Record<strin
 }
 
 /** Verify the actual content-addressed archive before publishing a Nova handoff. */
-export function verifyBaselineArchive(response: unknown, approvedDigest: string, projectId: string) {
+export function verifyBaselineArchive(response: unknown, approvedDigest: string, projectId: string, selectedBudgets: PrismArchiveBudgets) {
+  const budgets = capturePrismArchiveBudgets(selectedBudgets);
   const result = object(response);
   if (result.bundleDigest !== approvedDigest) throw new Error('PRISM_DESIGN_APPROVED_BUNDLE_MISMATCH');
-  const bytes = base64(result.archiveBase64);
+  const bytes = base64(result.archiveBase64, budgets.maximumArchiveBytes);
   if (result.artifactId !== `artifact:${digest(bytes)}`) throw new Error('PRISM_ARCHIVE_DIGEST_MISMATCH');
   const archive = object(JSON.parse(bytes.toString('utf8')));
   const manifest = archiveManifest(archive, approvedDigest, projectId);
-  const { textFiles, checksums } = archiveFiles(archive, manifest, approvedDigest);
+  const { textFiles, checksums } = archiveFiles(archive, manifest, approvedDigest, budgets);
   manifestMembers(manifest, checksums);
   archiveDocuments(manifest, textFiles, checksums, projectId);
   return { artifactId: result.artifactId as string, bundleDigest: approvedDigest, archive };

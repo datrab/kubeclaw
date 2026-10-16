@@ -1,0 +1,5 @@
+npm notice run test
+npm notice run node tests/protocol.unit.test.ts && node tests/live-function.test.ts && node tests/package-boundary.test.mjs
+{"ok":true,"plugin":"kubeclaw.architecture-validator","suite":"protocol-unit"}
+{"ok":true,"plugin":"kubeclaw.architecture-validator","suite":"live-function"}
+{"ok":true,"plugin":"kubeclaw.architecture-validator","suite":"package-boundary"}

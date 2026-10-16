@@ -1,0 +1,4 @@
+npm notice run test
+npm notice run node tests/live-function.test.ts && node tests/package-boundary.test.mjs
+{"ok":true,"plugin":"kubeclaw.operator-messaging","suite":"live-function","deliveries":5}
+{"ok":true,"plugin":"kubeclaw.operator-messaging","suite":"package-boundary"}

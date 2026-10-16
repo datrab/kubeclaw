@@ -85,3 +85,30 @@ Retained runs restore only original byteProfile and selected values from one
 recorded snapshot; current endpoint/authentication/token/grants and target-set
 changes still face the unchanged pinned configuration comparison. Older runs
 missing required policy/selector need their original runtime, not current defaults.
+
+### Session-list cache policy
+
+`openClawDispatch.sessionListCacheTtlMs` is required in the selected central Core
+profile and projected as required adapter configuration, not a target override.
+The standard profile preserves 250 milliseconds; zero disables cache reuse.
+Activation copies the selected scalar into frozen targets and original runs retain
+it with the other dispatch policies. Cache entries are scoped to context, endpoint,
+controller, lookback and selected TTL; failures evict their pending entry.
+There is no adapter-local fallback or independently authored Platform value.
+
+### Session-list lookback policy
+
+Selected Core `openClawDispatch.sessionListMinimumRecentMinutes` and
+`sessionListPaddingMinutes` are required adapter-wide settings, not target authors.
+The standard values preserve the former 10-minute minimum and 5-minute padding.
+Registration lookup, polling and cancellation identity lookup request the maximum of the
+minimum and the rounded-up session timeout in minutes plus padding. The 60,000
+conversion is a unit constant. Activation freezes selected values; retained runs
+restore their original policy without current-file defaults. Cache keys use the
+effective lookback, preventing reuse across different windows.
+
+Selected Core `openClawDispatch.cleanupPollIntervalMs` controls both late-spawn
+identity retry and terminal-confirmation retry. The standard profile retains
+25 ms; the required integer range is 1–2147483647 ms (Node timer domain).
+No adapter/target fallback or second author is accepted. Original run snapshots
+retain their selected interval even if the current Core policy changes/disappears.

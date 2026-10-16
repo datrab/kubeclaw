@@ -35,7 +35,7 @@ async function worker(mode:string,kind:string,root:string) {
     invokeConfidential:async(capability:string,request:Record<string,unknown>)=>httpAdapter.invoke({confidential:true,signal,
       request:{...request,capability,attempt:legacy.attempt,idempotencyKey:'inner:http'}} as AdapterInvocation)} as unknown as AdapterActivationContext);
   const adapter=kind==='dispatch'?runtime:artifact;
-  const coordinator=()=>new EffectCoordinator(new FileEffectJournal(journalFile, TEST_CORE_POLICY),undefined,undefined,new FileResourceLockManager(lockRoot, TEST_CORE_POLICY), 300_000);
+  const coordinator=()=>new EffectCoordinator(new FileEffectJournal(journalFile, TEST_CORE_POLICY),undefined,undefined,new FileResourceLockManager(lockRoot, TEST_CORE_POLICY), 300_000, TEST_CORE_POLICY.resourceAcquisition);
   const invoke=()=>coordinator().invoke(adapter,originalReceipt.adapter,legacy,signal);
   const locks=()=>fs.existsSync(path.join(lockRoot,'locks.jsonl'))?fs.readFileSync(path.join(lockRoot,'locks.jsonl'),'utf8').trim().split('\n').map(line=>JSON.parse(line).entry):[];
   try {

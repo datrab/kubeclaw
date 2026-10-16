@@ -69,7 +69,7 @@ test('SIGKILL after durable wait resolution preserves the exact approved continu
     appendTo(journalAt(root))('stage.waiting', { runId: 'run:approval', stageId: 'forge', waitId: wait.waitId }, { wait });
     const module = new URL('../../../skills/nova/core/state/journal.ts', import.meta.url).href;
     const code = `import { FileJournal } from ${JSON.stringify(module)};
-      const journal = new FileJournal(${JSON.stringify(path.join(root, 'events.jsonl'))});
+      const journal = new FileJournal(${JSON.stringify(path.join(root, 'events.jsonl'))}, ${JSON.stringify(TEST_CORE_POLICY.journalAppendLockTimeoutMs)});
       const signal = ${JSON.stringify(signal)};
       journal.appendSequenced(sequence => ({schemaVersion:'lifecycle-event.v2',eventId:'event:resolved',sequence,type:'wait.resolved',identity:{runId:'run:approval',stageId:'forge',waitId:signal.waitId},payload:{signal},occurredAt:new Date().toISOString(),causationId:null}));
       process.kill(process.pid, 'SIGKILL');`;

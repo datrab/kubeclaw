@@ -1,5 +1,5 @@
 {
-  "schemaVersion": "nova-core-runtime-policy.v1",
+  "schemaVersion": "nova-core-runtime-policy.v3",
   "profiles": {
     "standard": {
       "settings": {
@@ -55,11 +55,13 @@
         },
         "operatorMessagingStore": {
           "maximumDeliveryRecords": 100000,
-          "maximumDeliveryBytes": 268435456
+          "maximumDeliveryBytes": 268435456,
+          "maximumRecordBytes": 2162688
         },
         "transportPublisherStore": {
           "maximumDeliveryRecords": 100000,
-          "maximumDeliveryBytes": 268435456
+          "maximumDeliveryBytes": 268435456,
+          "maximumRecordBytes": 1114112
         },
         "openClawDispatch": {
           "resultReadMaximumBytes": 1048576,
@@ -79,7 +81,12 @@
               "maxPolls": 1200,
               "sessionTimeoutMs": 1800000
             }
-          }
+          },
+          "sessionListCacheTtlMs": 250,
+          "sessionListMinimumRecentMinutes": 10,
+          "sessionListPaddingMinutes": 5,
+          "cleanupPollIntervalMs": 25,
+          "workspaceOwnerMaximumBytes": 32768
         },
         "httpDispatch": {
           "targetByteProfiles": {
@@ -87,6 +94,11 @@
               "maxRequestBytes": 1048576,
               "maxResponseBytes": 1048576
             }
+          },
+          "payloadStructure": {
+            "maximumDepth": 20,
+            "maximumArrayEntries": 1000,
+            "maximumObjectProperties": 1000
           }
         },
         "transportPublisherPayload": {
@@ -101,6 +113,11 @@
             "standard": {
               "maxPayloadBytes": 65536
             }
+          },
+          "payloadStructure": {
+            "maximumDepth": 20,
+            "maximumArrayEntries": 1000,
+            "maximumObjectProperties": 1000
           }
         },
         "networkHttp": {
@@ -112,7 +129,48 @@
         "agentEventSource": {
           "maxQueueEvents": 256,
           "maxQueueBytes": 1048576,
-          "drainTimeoutMs": 5000
+          "drainTimeoutMs": 5000,
+          "maxObservedFields": 128,
+          "maxObservedFieldCharacters": 128,
+          "maxIdentityCharacters": 512
+        },
+        "transportPublisherFailure": {
+          "failureExcerptCharacters": 2048
+        },
+        "transportPublisherStructure": {
+          "maxJsonDepth": 64
+        },
+        "resourceAcquisition": {
+          "timeoutMs": 30000,
+          "pollIntervalMs": 10
+        },
+        "operatorMessagingFailure": {
+          "failureExcerptCharacters": 2048
+        },
+        "humanApproval": {
+          "defaultTimeoutMinutes": 60
+        },
+        "gitWorkspaceFailure": {
+          "errorExcerptCharacters": 4096
+        },
+        "notificationPresentation": {
+          "maxMessageChars": 8192,
+          "maxLabelChars": 256,
+          "maxTitleChars": 512,
+          "maxReasonCodeChars": 256,
+          "maxArtifactIdChars": 512,
+          "maxArtifactDigestChars": 256,
+          "maxArtifactMediaTypeChars": 256,
+          "maxArtifactLogicalNameChars": 512
+        },
+        "commandRunnerMonitoring": {
+          "maximumOutputRecords": 4096,
+          "sampleIntervalMs": 25
+        },
+        "prismDesignBudgets": {
+          "maximumArchiveBytes": 33554432,
+          "maximumArchiveFiles": 4096,
+          "maximumArchitectureBytes": 262144
         },
         "sourceAcquisition": {
           "timeoutMs": 30000,
@@ -121,6 +179,78 @@
           "cleanupTimeoutMs": 1500,
           "forceKillAfterMs": 250,
           "pollIntervalMs": 10
+        },
+        "remotePlanDispatch": {
+          "cleanupMilliseconds": 10000
+        },
+        "commandProcessCleanup": {
+          "cleanupPollIntervalMs": 10,
+          "exitAcknowledgementMs": 1000,
+          "sandboxMinimumGraceMs": 250
+        },
+        "redisTransport": {
+          "maximumPayloadBytes": 1048576,
+          "maximumReplyBulkBytes": 1048576,
+          "maximumReplyHeaderBytes": 1024
+        },
+        "commandCatalog": {
+          "maximumEntries": 128
+        },
+        "isolationSession": {
+          "maximumStderrBytes": 65536,
+          "stderrExcerptCharacters": 4096,
+          "terminationGraceMs": 1000,
+          "exitAcknowledgementMs": 1000
+        },
+        "demoHandoffStore": {
+          "maximumRecords": 10000,
+          "maximumBytes": 67108864,
+          "maximumRecordBytes": 65536
+        },
+        "remoteTestGate": {
+          "pollMilliseconds": 500,
+          "maximumResponseBytes": 67108864,
+          "maximumResultBytes": 67108864,
+          "maximumArchiveBytes": 67108864,
+          "maximumArchiveStoreBytes": 1073741824,
+          "maximumEvidenceBytes": 67108864,
+          "maximumEvidenceStoreBytes": 1073741824,
+          "recordLimits": {
+            "maximumRecords": 10000,
+            "maximumBytes": 1073741824,
+            "maximumRecordBytes": 67108864
+          }
+        },
+        "repositoryRead": {
+          "maxFileBytes": 4194304,
+          "maxChangedPaths": 2048
+        },
+        "policyVersion": "nova-core-runtime-policy.v3",
+        "projectCompiler": {
+          "schemaVersion": "project-compiler-runtime.v1",
+          "repairBudget": {
+            "categories": {
+              "lint": 2,
+              "review": 2,
+              "test": 2
+            },
+            "maximumOrchestratorOrders": 1
+          },
+          "execution": {
+            "maxTechnicalRetries": 1,
+            "timeoutMs": 1800000
+          },
+          "executionGroups": {
+            "cumulative": {
+              "timeoutMs": 1800000
+            },
+            "source": {
+              "timeoutMs": 120000
+            },
+            "demo": {
+              "timeoutMs": 120000
+            }
+          }
         }
       }
     }

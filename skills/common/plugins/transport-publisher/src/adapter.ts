@@ -11,9 +11,7 @@ interface TargetConfig {
 const TARGET_ID = /^[a-z][a-z0-9._-]{0,127}$/;
 const PUBLICATION_ID = /^[A-Za-z0-9][A-Za-z0-9._:-]{0,255}$/;
 const MAX_PAYLOAD_BYTES = 1_048_576;
-const MAX_JSON_DEPTH = 64;
 const TERMINAL_RESERVATION_BYTES = 8_192;
-const DELIVERY_RECORD_MAX_BYTES = MAX_PAYLOAD_BYTES + 65_536;
 
 function plainRecord(value: unknown): value is Record<string, unknown> {
   if (!value || typeof value !== 'object' || Array.isArray(value)) return false;
@@ -65,9 +63,12 @@ function readConfig(config: Readonly<Record<string, unknown>>): {
   readonly deliveryRoot: string;
   readonly maximumDeliveryRecords: number;
   readonly maximumDeliveryBytes: number;
+  readonly maximumRecordBytes: number;
+  readonly failureExcerptCharacters: number;
+  readonly maxJsonDepth: number;
 } {
   exactKeys(config as Record<string, unknown>, [
-    'targets', 'deliveryRoot', 'maximumDeliveryRecords', 'maximumDeliveryBytes', 'targetPayloadProfiles',
+    'targets', 'deliveryRoot', 'maximumDeliveryRecords', 'maximumDeliveryBytes', 'maximumRecordBytes', 'targetPayloadProfiles', 'failureExcerptCharacters', 'maxJsonDepth',
   ], 'TRANSPORT_CONFIG_INVALID:unknownField');
   if (!plainRecord(config.targets) || Object.keys(config.targets).length === 0) {
     throw new Error('TRANSPORT_CONFIG_INVALID:targets');
@@ -98,7 +99,12 @@ function readConfig(config: Readonly<Record<string, unknown>>): {
   }
   const maximumDeliveryRecords = storeLimit(config.maximumDeliveryRecords, 'maximumDeliveryRecords');
   const maximumDeliveryBytes = storeLimit(config.maximumDeliveryBytes, 'maximumDeliveryBytes');
-  return { targets, deliveryRoot: config.deliveryRoot, maximumDeliveryRecords, maximumDeliveryBytes };
+  const maximumRecordBytes = storeLimit(config.maximumRecordBytes, 'maximumRecordBytes');
+  const failureExcerptCharacters = storeLimit(config.failureExcerptCharacters, 'failureExcerptCharacters');
+  if (failureExcerptCharacters > 2048) throw new Error('TRANSPORT_CONFIG_INVALID:failureExcerptCharacters');
+  const maxJsonDepth = storeLimit(config.maxJsonDepth, 'maxJsonDepth');
+  if (maxJsonDepth > 64) throw new Error('TRANSPORT_CONFIG_INVALID:maxJsonDepth');
+  return { targets, deliveryRoot: config.deliveryRoot, maximumDeliveryRecords, maximumDeliveryBytes, maximumRecordBytes, failureExcerptCharacters, maxJsonDepth };
 }
 
 function assertJsonKey(key: string): void {
@@ -110,40 +116,40 @@ function assertJsonKey(key: string): void {
   ) throw new Error('TRANSPORT_PAYLOAD_INVALID');
 }
 
-function assertJsonObject(value: object, seen: Set<object>, depth: number): void {
+function assertJsonObject(value: object, seen: Set<object>, depth: number, maxJsonDepth: number): void {
   if (seen.has(value)) throw new Error('TRANSPORT_PAYLOAD_CYCLIC');
   seen.add(value);
   if (Array.isArray(value)) {
-    for (const item of value) assertJson(item, seen, depth + 1);
+    for (const item of value) assertJson(item, seen, depth + 1, maxJsonDepth);
   } else {
     if (!plainRecord(value)) throw new Error('TRANSPORT_PAYLOAD_INVALID');
     for (const [key, item] of Object.entries(value)) {
       assertJsonKey(key);
-      assertJson(item, seen, depth + 1);
+      assertJson(item, seen, depth + 1, maxJsonDepth);
     }
   }
   seen.delete(value);
 }
 
-function assertJson(value: unknown, seen: Set<object>, depth: number): void {
-  if (depth > MAX_JSON_DEPTH) throw new Error('TRANSPORT_PAYLOAD_DEPTH_EXCEEDED');
+function assertJson(value: unknown, seen: Set<object>, depth: number, maxJsonDepth: number): void {
+  if (depth > maxJsonDepth) throw new Error('TRANSPORT_PAYLOAD_DEPTH_EXCEEDED');
   if (value === null || ['string', 'boolean'].includes(typeof value)) return;
   if (typeof value === 'number') {
     if (!Number.isFinite(value)) throw new Error('TRANSPORT_PAYLOAD_INVALID');
     return;
   }
   if (typeof value !== 'object') throw new Error('TRANSPORT_PAYLOAD_INVALID');
-  assertJsonObject(value, seen, depth);
+  assertJsonObject(value, seen, depth, maxJsonDepth);
 }
 
-function publicationBody(payload: Readonly<Record<string, unknown>>, maxBytes: number): {
+function publicationBody(payload: Readonly<Record<string, unknown>>, maxBytes: number, maxJsonDepth: number): {
   readonly body: Readonly<Record<string, unknown>>;
   readonly serialized: string;
 } {
   if (!plainRecord(payload)) throw new Error('TRANSPORT_PAYLOAD_INVALID');
   exactKeys(payload, ['message'], 'TRANSPORT_PAYLOAD_UNKNOWN_FIELD');
   if (!plainRecord(payload.message)) throw new Error('TRANSPORT_MESSAGE_INVALID');
-  assertJson(payload.message, new Set(), 0);
+  assertJson(payload.message, new Set(), 0, maxJsonDepth);
   const body = Object.freeze({ message: payload.message });
   const serialized = JSON.stringify(body);
   if (Buffer.byteLength(serialized, 'utf8') > maxBytes) throw new Error('TRANSPORT_PAYLOAD_SIZE_EXCEEDED');
@@ -204,7 +210,7 @@ export function activate(context: AdapterActivationContext): AdapterInstance {
   const records = new FileDurableRecordStore(config.deliveryRoot, {
     maximumRecords: config.maximumDeliveryRecords,
     maximumBytes: config.maximumDeliveryBytes,
-    maximumRecordBytes: DELIVERY_RECORD_MAX_BYTES,
+    maximumRecordBytes: config.maximumRecordBytes,
   });
   let shuttingDown = false;
   return {
@@ -223,7 +229,7 @@ export function activate(context: AdapterActivationContext): AdapterInstance {
       if (signal.aborted) throw new Error('ADAPTER_CANCELLED');
       const target = targets.get(request.resource.canonicalId);
       if (!target) throw new Error(`TRANSPORT_TARGET_UNKNOWN:${request.resource.canonicalId}`);
-      const publication = publicationBody(request.payload, target.maxPayloadBytes);
+      const publication = publicationBody(request.payload, target.maxPayloadBytes, config.maxJsonDepth);
       const stream = `publications/${request.resource.canonicalId}`;
       const requestKey = deliveryRecordKey(request.idempotencyKey, 'request');
       await records.append(stream, requestKey, {
@@ -316,7 +322,7 @@ export function activate(context: AdapterActivationContext): AdapterInstance {
       } catch (error) {
         const reason = error instanceof Error ? error.message : String(error);
         const reasonId = crypto.createHash('sha256').update(reason).digest('hex').slice(0, 16);
-        const boundedReason = reason.slice(0, 2_048);
+        const boundedReason = reason.slice(0, config.failureExcerptCharacters);
         try {
           await records.transition(stream, terminalKey, reservation.record.payloadDigest, {
             schemaVersion: 'transport-publication-failure.v1',

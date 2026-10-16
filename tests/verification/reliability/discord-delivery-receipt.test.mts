@@ -1,5 +1,5 @@
 import { TEST_CORE_POLICY as DELIVERY_TEST_CORE_POLICY } from '../../fixtures/core-runtime-policy.mjs';
-const TEST_OPERATOR_STORE_POLICY = DELIVERY_TEST_CORE_POLICY.operatorMessagingStore;
+const TEST_OPERATOR_STORE_POLICY = { ...DELIVERY_TEST_CORE_POLICY.operatorMessagingStore, ...DELIVERY_TEST_CORE_POLICY.operatorMessagingPayload, ...DELIVERY_TEST_CORE_POLICY.operatorMessagingFailure };
 import { TEST_CORE_POLICY as ARTIFACT_TEST_CORE_POLICY } from '../../fixtures/core-runtime-policy.mjs';
 const TEST_ARTIFACT_STORE_POLICY = ARTIFACT_TEST_CORE_POLICY.artifactStore;
 import { TEST_CORE_POLICY } from '../../fixtures/core-runtime-policy.mjs';
@@ -54,13 +54,13 @@ async function scenario(mode: 'success' | 'lost' | 'invalid'): Promise<void> {
     ['kubeclaw.remote-test-gate:evidence', { stateRoot: root, manifestStageId: 'summary', gateStageId: 'final-test' }],
     ['kubeclaw.demo-handoff:handoff', { candidateStageId: 'candidate', deliveryStageId: 'demo-handoff', readyStageId: 'demo-ready', manifestStageId: 'summary', operatorTarget: 'operators', endpoint: 'https://127.0.0.1/v1/demo-ready', tokenPath: path.join(root, 'unused-token'), caPath: path.join(root, 'unused-ca'), stateRoot: path.join(root, 'intents'), timeoutMs: 1000 }],
     [operatorId, { ...TEST_OPERATOR_STORE_POLICY, deliveryRoot: path.join(root, 'sender'), targets: { operators: {
-      endpointOrigin: origin, endpointSecret: 'discord.webhook', format: 'discord_webhook',
+      payloadProfile: 'standard', endpointOrigin: origin, endpointSecret: 'discord.webhook', format: 'discord_webhook',
     } } }],
-    ['kubeclaw.network-http:http', { allowedOrigins: [origin], allowedMethods: ['POST'], allowedHeaders: ['content-type', 'idempotency-key', 'x-kubeclaw-signature'] }],
+    ['kubeclaw.network-http:http', { ...TEST_CORE_POLICY.networkHttp, allowedOrigins: [origin], allowedMethods: ['POST'], allowedHeaders: ['content-type', 'idempotency-key', 'x-kubeclaw-signature'] }],
     ['kubeclaw.secret-resolver:secrets', { environment: { 'discord.webhook': environment } }],
   ]);
   const create = () => new core.AdapterRuntime({ granted, activated, configs,
-    effects: new core.EffectCoordinator(new core.FileEffectJournal(path.join(root, 'effects.jsonl'), TEST_CORE_POLICY), undefined, undefined, new core.FileResourceLockManager(path.join(root, 'locks'), TEST_CORE_POLICY), 300_000),
+    effects: new core.EffectCoordinator(new core.FileEffectJournal(path.join(root, 'effects.jsonl'), TEST_CORE_POLICY), undefined, undefined, new core.FileResourceLockManager(path.join(root, 'locks'), TEST_CORE_POLICY), 300_000, TEST_CORE_POLICY.resourceAcquisition),
     shutdownTimeoutMs: 1000, async emitDomainEvent() {} });
   let runtime = create();
   const payload = { type: 'demo.credentials', summary: 'Demo username: preview\nDemo password: pipeline-generated-test-value' };

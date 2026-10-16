@@ -7,7 +7,13 @@
     "allowedWorkingRoots",
     "maxOutputBytes",
     "maxExecutionMs",
-    "terminationGraceMs"
+    "terminationGraceMs",
+    "maximumOutputRecords",
+    "sampleIntervalMs",
+    "cleanupPollIntervalMs",
+    "exitAcknowledgementMs",
+    "sandboxMinimumGraceMs",
+    "maximumCatalogEntries"
   ],
   "properties": {
     "allowedExecutables": {
@@ -50,6 +56,36 @@
     "terminationGraceMs": {
       "type": "integer",
       "minimum": 1
+    },
+    "maximumOutputRecords": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991
+    },
+    "sampleIntervalMs": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 2147483647
+    },
+    "cleanupPollIntervalMs": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 2147483647
+    },
+    "exitAcknowledgementMs": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 2147483647
+    },
+    "sandboxMinimumGraceMs": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 2147483647
+    },
+    "maximumCatalogEntries": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 128
     }
   }
 }

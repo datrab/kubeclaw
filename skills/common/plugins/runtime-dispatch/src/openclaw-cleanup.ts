@@ -1,6 +1,6 @@
 import type { AdapterActivationContext } from '@kubeclaw/plugin-sdk';
 import type { OpenClawTarget } from './openclaw.ts';
-import { cancelSession, gateway, readSessionState, registeredSessionIdentity,
+import { cancelSession, gateway, readSessionState, registeredSessionIdentity, sessionListRecentMinutes,
   type OpenClawGatewayContext, type OpenClawSessionIdentity } from './openclaw-session.ts';
 
 /** This wrapper only narrows the normal Core-owned dependency signal. */
@@ -13,11 +13,11 @@ export function scopedOpenClawContext(context: AdapterActivationContext, signal:
   };
 }
 
-async function pause(signal: AbortSignal): Promise<void> {
+async function pause(signal: AbortSignal, intervalMs: number): Promise<void> {
   signal.throwIfAborted();
   await new Promise<void>((resolve, reject) => {
     const abort = () => { clearTimeout(timer); reject(signal.reason); };
-    const timer = setTimeout(() => { signal.removeEventListener('abort', abort); resolve(); }, 25);
+    const timer = setTimeout(() => { signal.removeEventListener('abort', abort); resolve(); }, intervalMs);
     signal.addEventListener('abort', abort, { once: true });
   });
 }
@@ -36,12 +36,12 @@ async function resolveIdentity(context: OpenClawGatewayContext, target: OpenClaw
     signal.throwIfAborted();
     if (target.runtime === 'subagent') {
       const raw = await gateway(context, target, token, 'subagents', {
-        action: 'list', recentMinutes: Math.max(10, Math.ceil(target.sessionTimeoutMs / 60_000) + 5),
+        action: 'list', recentMinutes: sessionListRecentMinutes(target),
       });
       identity = registeredSessionIdentity(raw, pending.label, target.model);
     }
     // ACP has no existing label registry transport here; missing identity stays unknown.
-    if (!identity) await pause(signal);
+    if (!identity) await pause(signal, target.cleanupPollIntervalMs);
   }
   return identity;
 }
@@ -51,6 +51,7 @@ export async function reconcileOpenClawFailure(context: AdapterActivationContext
   const original = failure instanceof Error ? failure.message : String(failure);
   let identity = pending.identity;
   try {
+    if (!Number.isSafeInteger(target.cleanupPollIntervalMs) || target.cleanupPollIntervalMs < 1 || target.cleanupPollIntervalMs > 2147483647) throw new Error('OPENCLAW_CLEANUP_INTERVAL_INVALID');
     if (!context.withCleanup) throw new Error('ADAPTER_CLEANUP_SCOPE_UNAVAILABLE');
     await context.withCleanup(async cleanup => {
       identity = await resolveIdentity(cleanup, target, token, pending, cleanup.signal);
@@ -60,7 +61,7 @@ export async function reconcileOpenClawFailure(context: AdapterActivationContext
         // Collector acknowledgment and ACP stop messages do not prove terminal state.
         const state = await readSessionState(cleanup, { ...target, collectorMode: false }, token, identity, true);
         if (state.terminal) return;
-        await pause(cleanup.signal);
+        await pause(cleanup.signal, target.cleanupPollIntervalMs);
       }
     });
   } catch (error) {

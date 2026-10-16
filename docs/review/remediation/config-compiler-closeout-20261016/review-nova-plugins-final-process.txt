@@ -1,0 +1,13 @@
+autoreview target: local
+branch: master
+engine: codex
+tools: on
+web_search: off
+bundle: 177781 chars
+autoreview findings: 1
+[P1] [P1] Preserve compatibility with retained policies lacking payloadStructure
+skills/common/plugin-runtime/foundation/config/core-runtime-policy.schema.json:559
+Making `operatorMessagingPayload.payloadStructure` mandatory also changes validation of previously retained run policies. Policies captured before this change contain only `targetPayloadProfiles`; `inspectRuntimeConfiguration()` passes those retained policies directly to `captureCoreRuntimePolicy()`, which now throws `CORE_RUNTIME_POLICY_INVALID`. Consequently, recovery of existing runs fails before adapter activation. Add a version-aware compatibility path that preserves the former structural limits for old retained policies without reading the current policy source.
+
+overall: patch is incorrect (0.95)
+The new required policy field breaks validation of previously captured policies and therefore existing-run recovery. Review was based on the supplied source datasets; no tests or native execution were performed.

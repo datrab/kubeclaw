@@ -41,18 +41,18 @@ async function fixture(t,kind){
  const source={schemaVersion:'pipeline-platform.v2',corePolicySelection:{file:coreFile,profile:'selected'},installationRoots:[path.join(root,'plugins'),common],trustedBuiltinRoots:[path.join(root,'plugins'),common],externalTrust:{allowedSourceDigests:{},verifiedAttestations:{}},providers:{[capability]:id,'network.http':'kubeclaw.network-http:http','secrets.read':'kubeclaw.secret-resolver:secrets'},grants:{'test.artifact-policy:probe':{[capability]:{allowedTargets:['operators']}},[id]:{'network.http':{allowedOrigins:[origin]},'secrets.read':{allowedNames:['policy.token']}}},adapters:{[id]:{deliveryRoot:artifactRoot,targets:{operators:{endpoint:origin+'/messages',...(kind==='operator'?{tokenSecret:'policy.token',payloadProfile:'standard'}:{signingSecret:'policy.token',payloadProfile:'standard'})}}},'kubeclaw.network-http:http':{allowedOrigins:[origin],allowedMethods:['POST'],allowedHeaders:['content-type','idempotency-key','x-kubeclaw-signature','x-kubeclaw-target']},'kubeclaw.secret-resolver:secrets':{environment:{'policy.token':env}}},activeAdapters:[],observers:{},storageRoot:path.join(root,'state'),shutdownTimeoutMs:1000,effectLockTtlMs:300000,orchestratorIssuerId:'nova',administrativeDecisionIssuers:[]};
  const platformFile=path.join(root,'platform.json');fs.writeFileSync(platformFile,JSON.stringify(source));
  const definition={schemaVersion:'pipeline-definition.v2',id:'artifact-policy',maxConcurrency:1,stages:[{id:'probe',type:'test.artifact-policy',dependsOn:[],input:{},config:{},execution:{maxAttempts:2,maxRemediationCycles:0,timeoutMs:5000}}]};
- return {root,source,definition,coreFile,publish,received,write:()=>fs.writeFileSync(platformFile,JSON.stringify(source)),publishPayload:profiles=>{const d=JSON.parse(fs.readFileSync(coreFile,'utf8'));d.profiles.selected.settings[kind==='operator'?'operatorMessagingPayload':'transportPublisherPayload']={targetPayloadProfiles:profiles};fs.writeFileSync(coreFile,JSON.stringify(d));},platform:()=>loadPlatformConfig(platformFile)};
+ return {root,source,definition,coreFile,publish,received,write:()=>fs.writeFileSync(platformFile,JSON.stringify(source)),publishPayload:profiles=>{const d=JSON.parse(fs.readFileSync(coreFile,'utf8'));d.profiles.selected.settings[kind==='operator'?'operatorMessagingPayload':'transportPublisherPayload']={...d.profiles.selected.settings[kind==='operator'?'operatorMessagingPayload':'transportPublisherPayload'],targetPayloadProfiles:profiles};fs.writeFileSync(coreFile,JSON.stringify(d));},platform:()=>loadPlatformConfig(platformFile)};
 }
 for(const kind of ['operator','publisher']) {
  const id=kind==='operator'?operatorId:publisherId,policyKey=kind==='operator'?'operatorMessagingStore':'transportPublisherStore',activate=kind==='operator'?operatorActivate:publisherActivate;
 test(kind+' actual Nova delivery A/B store ceilings, real signed HTTP and retained A resume without B',async t=>{
  const f=await fixture(t,kind),a=TEST_CORE_POLICY[policyKey];f.publish(a);const captured=inspectRuntimeConfiguration(f.platform(),f.definition);
- assert.equal(captured.adapterConfigurations[id].maximumDeliveryRecords,a.maximumDeliveryRecords);assert.equal(captured.adapterConfigurations[id].maximumDeliveryBytes,a.maximumDeliveryBytes);
+ assert.equal(captured.adapterConfigurations[id].maximumDeliveryRecords,a.maximumDeliveryRecords);assert.equal(captured.adapterConfigurations[id].maximumDeliveryBytes,a.maximumDeliveryBytes);assert.equal(captured.adapterConfigurations[id].maximumRecordBytes,a.maximumRecordBytes);
  const first=await runPipelineV2(f.platform(),f.definition,'delivery:A');assert.equal(first.status,'waiting',JSON.stringify([...first.stages]));assert.equal(f.received.length,1);
  const aRoot=runRoot(f.source.storageRoot,'delivery:A'),snapshot=readRunSnapshot(aRoot);assert.deepEqual(snapshot.registry.configuration.adapters[id],captured.adapterConfigurations[id]);
  for(const key of Object.keys(a)){
   f.publish({...a,[key]:1});const result=await runPipelineV2(f.platform(),f.definition,'delivery:B-'+key);assert.equal(result.status,'blocked');
-  assert.match(fs.readFileSync(path.join(runRoot(f.source.storageRoot,'delivery:B-'+key),'events.jsonl'),'utf8'),/DURABLE_RECORD_STORE_FULL|OBSERVABILITY_REPLAY_INVALID:snapshot-size/);assert.equal(f.received.length,1);
+  assert.match(fs.readFileSync(path.join(runRoot(f.source.storageRoot,'delivery:B-'+key),'events.jsonl'),'utf8'),key==='maximumRecordBytes'?/DURABLE_RECORD_SIZE_EXCEEDED/:/DURABLE_RECORD_STORE_FULL|OBSERVABILITY_REPLAY_INVALID:snapshot-size/);assert.equal(f.received.length,1);
  }
  fs.unlinkSync(f.coreFile);const wait=first.stages.get('probe').wait;
  const resumed=await resumePipelineV2(f.platform(),f.definition,'delivery:A',{schemaVersion:'resume-signal.v2',signalId:'signal:delivery',idempotencyKey:'signal-key:delivery',waitId:wait.waitId,signalType:wait.signalType,issuer:wait.authorizedIssuer,issuedAt:new Date().toISOString(),payload:{approved:true}});
@@ -89,7 +89,7 @@ test('publisher central payload exact UTF-8/overflow/restored positives and orig
 });
 test('publisher mandatory central payload profiles and selectors reject all former defaults/duplicates',async t=>{
  const f=await fixture(t,'publisher'),policy=TEST_CORE_POLICY.transportPublisherPayload;
- const raw=f.source.adapters[publisherId],valid={...raw,...TEST_CORE_POLICY.transportPublisherStore,...policy};
+ const raw=f.source.adapters[publisherId],valid={...raw,...TEST_CORE_POLICY.transportPublisherStore,...TEST_CORE_POLICY.transportPublisherFailure,...TEST_CORE_POLICY.transportPublisherStructure,...policy};
  assert.doesNotThrow(()=>publisherActivate({config:valid}));
  for(const value of [undefined,null,'262144',0,1.5,1048577]){
   const profiles={standard:{maxPayloadBytes:value}};if(value===undefined)delete profiles.standard.maxPayloadBytes;
@@ -121,7 +121,7 @@ test('operator central payload exact UTF-8/overflow/restored positives and origi
 });
 test('operator mandatory central payload profiles and selectors reject all former defaults/duplicates',async t=>{
  const f=await fixture(t,'operator'),policy=TEST_CORE_POLICY.operatorMessagingPayload;
- const raw=f.source.adapters[operatorId],valid={...raw,...TEST_CORE_POLICY.operatorMessagingStore,...policy};
+ const raw=f.source.adapters[operatorId],valid={...raw,...TEST_CORE_POLICY.operatorMessagingFailure,...TEST_CORE_POLICY.operatorMessagingStore,...policy};
  assert.doesNotThrow(()=>operatorActivate({config:valid}));
  for(const value of [undefined,null,'65536',0,1.5,1048577]){
   const profiles={standard:{maxPayloadBytes:value}};if(value===undefined)delete profiles.standard.maxPayloadBytes;
@@ -133,4 +133,72 @@ test('operator mandatory central payload profiles and selectors reject all forme
  for(const value of [65536,null])assert.throws(()=>operatorActivate({config:{...valid,targets:{operators:{...raw.targets.operators,maxPayloadBytes:value}}}}),/UNKNOWN_TARGET_FIELD/);
  for(const value of [policy.targetPayloadProfiles,null])assert.throws(()=>selectedAdapterConfigurations({[operatorId]:{...raw,targetPayloadProfiles:value}},TEST_CORE_POLICY),/COMPETING_AUTHOR/);
  assert.doesNotThrow(()=>operatorActivate({config:valid}));
+});
+
+
+test('transport failure excerpt is selected, immutable, durable and rejects absent or competing authors',async t=>{
+ const f=await fixture(t,'publisher'),raw=f.source.adapters[publisherId];
+ const request={capability:'transport.publish',operation:'publish',resource:{type:'transport.target',canonicalId:'operators'},payload:{message:{text:'test'}},idempotencyKey:'excerpt:key',attempt:{runId:'run:excerpt',stageId:'probe',attemptId:'attempt:excerpt',attemptNumber:1}};
+ const reason='abcdef failure detail';
+ for(const maximum of [4,8,2048]) {
+  const policy=captureCoreRuntimePolicy({...TEST_CORE_POLICY,transportPublisherFailure:{failureExcerptCharacters:maximum}});
+  const config=structuredClone(selectedAdapterConfigurations({[publisherId]:{...raw,deliveryRoot:path.join(f.root,'failure-'+maximum)}},policy)[publisherId]);
+  let sends=0;const adapter=publisherActivate({config,async invoke(capability){if(capability==='secrets.read')return {value:'test-only-key'};sends++;throw new Error(reason);}});
+  config.failureExcerptCharacters=1;
+  const invoke=()=>adapter.invoke({request,confidential:true,signal:new AbortController().signal});
+  await assert.rejects(invoke(),error=>error.message===reason);
+  await assert.rejects(invoke(),error=>error.message===reason.slice(0,maximum));
+  assert.equal(sends,1,'durable failure replay does not resend');
+  await adapter.shutdown();
+ }
+ for(const value of [undefined,null,0,-1,1.5,'4',2049]) {
+  const invalid={failureExcerptCharacters:value};
+  assert.throws(()=>captureCoreRuntimePolicy({...TEST_CORE_POLICY,transportPublisherFailure:invalid}),/INVALID/);
+  assert.throws(()=>publisherActivate({config:{...selectedAdapterConfigurations({[publisherId]:raw},TEST_CORE_POLICY)[publisherId],...invalid}}),/TRANSPORT_CONFIG_INVALID/);
+ }
+ for(const value of [4,null])assert.throws(()=>selectedAdapterConfigurations({[publisherId]:{...raw,failureExcerptCharacters:value}},TEST_CORE_POLICY),/TRANSPORT_FAILURE_POLICY_COMPETING_AUTHOR/);
+});
+
+
+test('transport selected JSON depth exact/overflow/restored, captured policy and mandatory single author',async t=>{
+ const f=await fixture(t,'publisher'),raw=f.source.adapters[publisherId];
+ const nested=n=>{let value='leaf';for(let i=0;i<n;i++)value={child:value};return value;};
+ for(const maximum of [1,2,64]){
+  const policy=captureCoreRuntimePolicy({...TEST_CORE_POLICY,transportPublisherStructure:{maxJsonDepth:maximum}});
+  const config=structuredClone(selectedAdapterConfigurations({[publisherId]:{...raw,deliveryRoot:path.join(f.root,'depth-'+maximum)}},policy)[publisherId]);
+  let sends=0;const adapter=publisherActivate({config,async invoke(capability){if(capability==='secrets.read')return {value:'test-only-key'};sends++;return {status:202,headers:{},body:{accepted:true,publicationId:'depth:ok'}};}});
+  config.maxJsonDepth=maximum===1?64:1;
+  const invoke=(depth,key)=>adapter.invoke({request:{capability:'transport.publish',operation:'publish',resource:{type:'transport.target',canonicalId:'operators'},payload:{message:nested(depth)},idempotencyKey:key,attempt:{runId:'run:depth',stageId:'probe',attemptId:'attempt:depth',attemptNumber:1}},confidential:true,signal:new AbortController().signal});
+  await invoke(maximum,'exact');assert.equal(sends,1);
+  await assert.rejects(invoke(maximum+1,'overflow'),/TRANSPORT_PAYLOAD_DEPTH_EXCEEDED/);assert.equal(sends,1);
+  await invoke(maximum,'restored');assert.equal(sends,2);await adapter.shutdown();
+ }
+ for(const value of [undefined,null,0,-1,1.5,'2',65]){
+  assert.throws(()=>captureCoreRuntimePolicy({...TEST_CORE_POLICY,transportPublisherStructure:{maxJsonDepth:value}}),/INVALID/);
+  assert.throws(()=>publisherActivate({config:{...selectedAdapterConfigurations({[publisherId]:raw},TEST_CORE_POLICY)[publisherId],maxJsonDepth:value}}),/TRANSPORT_CONFIG_INVALID/);
+ }
+ for(const value of [64,null])assert.throws(()=>selectedAdapterConfigurations({[publisherId]:{...raw,maxJsonDepth:value}},TEST_CORE_POLICY),/TRANSPORT_STRUCTURE_POLICY_COMPETING_AUTHOR/);
+});
+
+test('operator failure excerpt is selected, immutable, durable and rejects absent or competing authors',async t=>{
+ const f=await fixture(t,'operator'),raw=f.source.adapters[operatorId];
+ const request={capability:'operator.request',operation:'publish',resource:{type:'operator.target',canonicalId:'operators'},payload:{type:'test.policy',message:'test'},idempotencyKey:'excerpt:key',attempt:{runId:'run:excerpt',stageId:'probe',attemptId:'attempt:excerpt',attemptNumber:1}};
+ const reason='abcdef failure detail';
+ for(const maximum of [4,8,2048]) {
+  const policy=captureCoreRuntimePolicy({...TEST_CORE_POLICY,operatorMessagingFailure:{failureExcerptCharacters:maximum}});
+  const config=structuredClone(selectedAdapterConfigurations({[operatorId]:{...raw,deliveryRoot:path.join(f.root,'failure-'+maximum)}},policy)[operatorId]);
+  let sends=0;const adapter=operatorActivate({config,async invoke(capability){sends++;throw new Error(reason);}});
+  config.failureExcerptCharacters=1;
+  const invoke=()=>adapter.invoke({request,confidential:true,signal:new AbortController().signal});
+  await assert.rejects(invoke(),error=>error.message===reason);
+  await assert.rejects(invoke(),error=>error.message===reason.slice(0,maximum));
+  assert.equal(sends,1,'durable not-sent failure replay does not retry secret resolution');
+  await adapter.shutdown();
+ }
+ for(const value of [undefined,null,0,-1,1.5,'4',2049]) {
+  const invalid={failureExcerptCharacters:value};
+  assert.throws(()=>captureCoreRuntimePolicy({...TEST_CORE_POLICY,operatorMessagingFailure:invalid}),/INVALID/);
+  assert.throws(()=>operatorActivate({config:{...selectedAdapterConfigurations({[operatorId]:raw},TEST_CORE_POLICY)[operatorId],...invalid}}),/OPERATOR_CONFIG_INVALID/);
+ }
+ for(const value of [4,null])assert.throws(()=>selectedAdapterConfigurations({[operatorId]:{...raw,failureExcerptCharacters:value}},TEST_CORE_POLICY),/OPERATOR_FAILURE_POLICY_COMPETING_AUTHOR/);
 });

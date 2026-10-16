@@ -1,5 +1,7 @@
 # Configuration ownership
 
+Demo handoff durable intents/receipts use required `demoHandoffStore` limits (10000 records, 67108864 total bytes, 65536 bytes per record by former behavior). Core projects an immutable `recordLimits` value into the installed adapter; platform adapter overrides are rejected, including equal values. Recovery uses the captured original Core policy, not the current author. Historical readers/source closures are unchanged.
+
 Generic platform, graph, policy, grant, and adapter-selection configuration only.
 
 External plugin isolation requires a host-provisioned cgroup-v2 subtree:
@@ -148,3 +150,24 @@ HTTP runtime-dispatch uses selected required `httpDispatch.targetByteProfiles`
 a complete profile; retained selectors and values are restored without changing
 endpoint/authentication/token/grant identity checks. No raw map/default byte
 author remains; this does not centralize authentication or network-adapter caps.
+
+## Core v2 project compiler receiving
+
+Core v2 adds the paired `policyVersion` / `projectCompiler` capture. The project
+CLI uses the sole selected Core file for module repair/retry/time budgets and
+separate source/cumulative/demo timeouts; task-declared review presence selects
+whether the review category applies, including mixed-module projects. It passes
+the same frozen Core value through validation and actual startup, recording
+`registry.projectCompilerVersion` only on that explicit compiler handoff.
+Recovery reconstructs from the original snapshot, not the current author.
+Legacy graphs without that discriminator use their historical compiler; v1 Core
+publication and the denied experimental candidate retain their existing behavior.
+See the operator guide's versioned project compiler section for fields and values.
+
+
+Core v3 separately versions configurable operator structural admission. Original
+complete v1/v2 captures remain byte/shape-preserving and select the original
+untagged protocol receiver; v3 produces the explicit operator-payload.v2 adapter
+configuration and requires all three selected limits. No missing v3 value is
+filled from legacy or current authors. The project compiler discriminator itself
+remains project-compiler-runtime.v1 in both Core v2 and v3.

@@ -62,13 +62,13 @@ const adapters = new core.AdapterRuntime({
   configs: new Map([
     ['kubeclaw.git-workspace:git', {
       allowedRepositoryRoots: [repository], workspaceRoot: workspaces, gitExecutable: '/usr/bin/git',
-      authorName: 'KubeClaw Test', authorEmail: 'kubeclaw@example.invalid',
+      errorExcerptCharacters: TEST_CORE_POLICY.gitWorkspaceFailure.errorExcerptCharacters, authorName: 'KubeClaw Test', authorEmail: 'kubeclaw@example.invalid',
       maxExecutionMs: 5000, maxOutputBytes: 65536, terminationGraceMs: 100,
     }],
     ['kubeclaw.state-store:state', { ...TEST_STATE_STORE_POLICY, root: path.join(temporary, 'state') }],
     ['kubeclaw.artifact-store:artifact-store', { ...TEST_ARTIFACT_STORE_POLICY, artifactRoot: path.join(temporary, 'artifacts') }],
   ]),
-  effects: new core.EffectCoordinator(new core.FileEffectJournal(path.join(temporary, 'effects.jsonl'), TEST_CORE_POLICY), undefined, undefined, new core.MemoryResourceLockManager(), 300_000),
+  effects: new core.EffectCoordinator(new core.FileEffectJournal(path.join(temporary, 'effects.jsonl'), TEST_CORE_POLICY), undefined, undefined, new core.MemoryResourceLockManager(), 300_000, TEST_CORE_POLICY.resourceAcquisition),
   shutdownTimeoutMs: 1000, async emitDomainEvent() {},
 });
 try {

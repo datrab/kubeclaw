@@ -78,7 +78,7 @@ const key = generateKeyPairSync('ed25519').publicKey.export({ type: 'spki', form
 const source = { tokenEnvironmentVariable: 'TEST_BUSTER_TOKEN', sourceAttestationPublicKeyEnvironmentVariable: 'TEST_SOURCE_KEY', trustedSourceAuthority: 'fixture:original-source' };
 test('real source key preflight rejects malformed/non-Ed25519 keys and absent issuer; never authenticates provenance', () => {
   const rsa = generateKeyPairSync('rsa', { modulusLength: 1024 }).publicKey.export({ type: 'spki', format: 'pem' }).toString();
-  for (const value of ['not a key', rsa]) assert.throws(() => runtimeAuthority(source, { TEST_BUSTER_TOKEN: 'fixture', TEST_SOURCE_KEY: value }), /PUBLIC_KEY_INVALID/);
+  for (const value of ['not a key', rsa]) assert.throws(() => runtimeAuthority(source, { TEST_BUSTER_TOKEN: 'fixture', TEST_SOURCE_KEY: value }), /BUSTER_SOURCE_ATTESTATION_CONFIG_INVALID/);
   assert.throws(() => runtimeAuthority({ ...source, trustedSourceAuthority: ' ' }, { TEST_BUSTER_TOKEN: 'fixture', TEST_SOURCE_KEY: key }), /AUTHORITY_REQUIRED/);
   assert.equal(runtimeAuthority(source, { TEST_BUSTER_TOKEN: 'fixture', TEST_SOURCE_KEY: key }).sourceAttestationPublicKey, key);
 });
@@ -102,6 +102,19 @@ test('actual production loader rejects service policy/source crypto BEFORE regis
   assert.equal(environmentReads, 0, 'service policy rejects before credential lookup');
   fs.writeFileSync(file, JSON.stringify(runtime));
   assert.throws(() => loadProductionBusterRemotePlanRuntime(file, null as unknown as BusterPreparation, settings, worker.localRuntime,
-    { KUBECLAW_BUILD_REVISION: 'a'.repeat(40), TEST_BUSTER_TOKEN: 'fixture', TEST_SOURCE_KEY: 'not a public key' }), /PUBLIC_KEY_INVALID/);
+    { KUBECLAW_BUILD_REVISION: 'a'.repeat(40), TEST_BUSTER_TOKEN: 'fixture', TEST_SOURCE_KEY: 'not a public key' }), /BUSTER_SOURCE_ATTESTATION_CONFIG_INVALID/);
   assert.deepEqual(fs.readdirSync(root), ['runtime.json'], 'invalid inputs never reach registry discovery/store handles');
+});
+
+ test('legacy v1 preserves immutable deny-all without weakening selected-owner validation', () => {
+  const runtime = { schemaVersion: 'buster-remote-plan-runtime.v1', ...structuredClone(baseline), allowedCapabilities: [] as string[] };
+  const policy = readLegacyBusterRuntimeServicePolicy(runtime);
+  assert.deepEqual(policy.allowedCapabilities, []);
+  assert.equal(Object.isFrozen(policy.allowedCapabilities), true);
+  runtime.allowedCapabilities.push('network.http');
+  assert.deepEqual(policy.allowedCapabilities, [], 'no implicit capability or mutable alias');
+  assert.throws(() => readBusterRemotePlanServicePolicy({ ...baseline, allowedCapabilities: [] }), /SERVICE_POLICY_INVALID/);
+  for (const allowedCapabilities of [undefined, ['unknown.capability'], ['network.http', 'network.http']]) {
+    assert.throws(() => readLegacyBusterRuntimeServicePolicy({ ...runtime, allowedCapabilities }), /SERVICE_POLICY_INVALID/);
+  }
 });

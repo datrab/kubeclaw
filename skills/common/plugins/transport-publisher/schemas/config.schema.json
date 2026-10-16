@@ -7,7 +7,10 @@
     "deliveryRoot",
     "maximumDeliveryRecords",
     "maximumDeliveryBytes",
-    "targetPayloadProfiles"
+    "targetPayloadProfiles",
+    "failureExcerptCharacters",
+    "maxJsonDepth",
+    "maximumRecordBytes"
   ],
   "properties": {
     "deliveryRoot": {
@@ -75,6 +78,21 @@
           }
         }
       }
+    },
+    "failureExcerptCharacters": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 2048
+    },
+    "maxJsonDepth": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 64
+    },
+    "maximumRecordBytes": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991
     }
   }
 }

@@ -17,7 +17,7 @@ test('actual Core/FileJournal/ArtifactStore retains exact same-byte owners and r
   const root=fs.mkdtempSync(path.join(os.tmpdir(),'cache-storage-negative-'));
   t.after(()=>fs.rmSync(root,{recursive:true,force:true}));
   const adapter=activate({config:{ ...TEST_ARTIFACT_STORE_POLICY,artifactRoot:path.join(root,'artifacts')}});await adapter.ready();t.after(()=>adapter.shutdown());
-  const coordinator=new EffectCoordinator(new FileEffectJournal(path.join(root,'effects.jsonl'), TEST_CORE_POLICY),undefined,undefined,new FileResourceLockManager(path.join(root,'locks'), TEST_CORE_POLICY), 300_000);
+  const coordinator=new EffectCoordinator(new FileEffectJournal(path.join(root,'effects.jsonl'), TEST_CORE_POLICY),undefined,undefined,new FileResourceLockManager(path.join(root,'locks'), TEST_CORE_POLICY), 300_000, TEST_CORE_POLICY.resourceAcquisition);
   const owner={pluginId:'kubeclaw.artifact-store',apiVersion:'pipeline-plugin-v2',packageVersion:'1.0.0',contentDigest:`sha256:${'c'.repeat(64)}`};
   const {job,identity,value}=admittedCacheValue(),record=buildReviewCacheRecord(job,identity,value,profile);
   const artifactId=`repository-review-cache:${record.cacheKey.slice(7)}`;

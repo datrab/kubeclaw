@@ -1,3 +1,4 @@
+import { selectedStageConfiguration } from './stage-configuration.ts';
 import { captureCoreRuntimePolicy, loadCoreRuntimePolicy, type CoreRuntimePolicy } from '@kubeclaw/plugin-foundation/config/core-runtime-policy';
 import { resolveRetainedCoreWait } from '../state/wait-projection-reader.ts';
 import crypto from 'node:crypto';
@@ -25,6 +26,7 @@ export function objectMap(value: Readonly<Record<string, Readonly<Record<string,
 export interface RuntimeConfigurationInspection {
   readonly corePolicy: CoreRuntimePolicy;
   readonly adapterConfigurations: PlatformConfig['adapters'];
+  readonly observerConfigurations: PlatformConfig['observers'];
   readonly configuration: Readonly<Record<string, unknown>>;
   readonly snapshot: ReturnType<typeof buildRegistry>; readonly granted: ReturnType<typeof resolveCapabilityGrants>;
 }
@@ -41,6 +43,7 @@ export interface PreparedRuntime extends RuntimeConfigurationInspection {
 export function inspectRuntimeConfiguration(platform: PlatformConfig, definition: PipelineDefinition, retainedCorePolicy?: CoreRuntimePolicy, retainedTimingSelections?: Readonly<Record<string,string>>, retainedHttpSelections?: Readonly<Record<string,string>>, retainedPublisherSelections?: Readonly<Record<string,string>>, retainedOperatorSelections?: Readonly<Record<string,string>>): RuntimeConfigurationInspection {
   const corePolicy = retainedCorePolicy === undefined ? loadCoreRuntimePolicy(platform.corePolicySelection) : captureCoreRuntimePolicy(retainedCorePolicy);
   const adapterConfigurations = selectedAdapterConfigurations(platform.adapters, corePolicy, retainedTimingSelections, retainedHttpSelections, retainedPublisherSelections, retainedOperatorSelections);
+  const observerConfigurations = selectedObserverConfigurations(platform.observers, corePolicy);
   validateContractValue('pipelineDefinition', definition);
   const packages = discoverPackages({ installationRoots: platform.installationRoots, trustPolicy: {
     trustedBuiltinRoots: platform.trustedBuiltinRoots, allowedSourceDigests: new Map(Object.entries(platform.externalTrust.allowedSourceDigests)),
@@ -50,14 +53,14 @@ export function inspectRuntimeConfiguration(platform: PlatformConfig, definition
   const policy: CapabilityPolicy = { enabledRegistrations: enabled, grants: nestedMap(platform.grants), providers: new Map(Object.entries(platform.providers)) };
   const granted = resolveCapabilityGrants(snapshot, policy);
   validateRuntimeRegistrationConfiguration(snapshot, granted.enabledRegistrations, {
-    stages: definition.stages.map((stage) => ({ type: stage.type, config: stage.config })), observers: objectMap(platform.observers), adapters: objectMap(adapterConfigurations),
+    stages: definition.stages.map((stage) => ({ type: stage.type, config: selectedStageConfiguration(stage.type, stage.config, corePolicy.humanApproval.defaultTimeoutMinutes, corePolicy.prismDesignBudgets) })), observers: objectMap(observerConfigurations), adapters: objectMap(adapterConfigurations),
   });
-  return { corePolicy, adapterConfigurations, configuration: { corePolicy, providers: platform.providers, grants: platform.grants, adapters: adapterConfigurations, activeAdapters: platform.activeAdapters, observers: platform.observers, ...(platform.isolation ? { isolation: platform.isolation } : {}) }, snapshot, granted };
+  return { corePolicy, adapterConfigurations, observerConfigurations, configuration: { corePolicy, providers: platform.providers, grants: platform.grants, adapters: adapterConfigurations, activeAdapters: platform.activeAdapters, observers: observerConfigurations, ...(platform.isolation ? { isolation: platform.isolation } : {}) }, snapshot, granted };
 }
 
 export async function prepareRuntime(platform: PlatformConfig, definition: PipelineDefinition, retainedCorePolicy?: CoreRuntimePolicy, retainedTimingSelections?: Readonly<Record<string,string>>, retainedHttpSelections?: Readonly<Record<string,string>>, retainedPublisherSelections?: Readonly<Record<string,string>>, retainedOperatorSelections?: Readonly<Record<string,string>>): Promise<PreparedRuntime> {
   const inspected = inspectRuntimeConfiguration(platform, definition, retainedCorePolicy, retainedTimingSelections, retainedHttpSelections, retainedPublisherSelections, retainedOperatorSelections);
-  return { ...inspected, activated: await activateRegistry(inspected.snapshot, new Set(inspected.granted.grants.keys()), platform.isolation) };
+  return { ...inspected, activated: await activateRegistry(inspected.snapshot, new Set(inspected.granted.grants.keys()), platform.isolation, inspected.corePolicy.isolationSession) };
 }
 
 function enabledRegistrations(platform: PlatformConfig, definition: PipelineDefinition, snapshot: ReturnType<typeof buildRegistry>): Set<string> {
@@ -98,7 +101,7 @@ export function createAdapterRuntime(platform: PlatformConfig, runRoot: string, 
     accepted: (request, executionMode) => append('effect.accepted', request, { executionMode }),
     completed: (request, receipt, executionMode) => append(receipt.status === 'completed' ? 'effect.completed' : 'effect.failed', request,
       receipt.status === 'completed' ? { executionMode, adapter: receipt.adapter, result: auditResult(receipt.result ?? {}, runtime.corePolicy.maximumAuditResultBytes) } : { executionMode, adapter: receipt.adapter, error: receipt.error ?? {} }),
-  }, new FileResourceLockManager(path.join(platform.storageRoot, 'resource-locks'), runtime.corePolicy), platform.effectLockTtlMs);
+  }, new FileResourceLockManager(path.join(platform.storageRoot, 'resource-locks'), runtime.corePolicy), platform.effectLockTtlMs, runtime.corePolicy.resourceAcquisition);
   return new AdapterRuntime({ granted: runtime.granted, activated: runtime.activated, configs: objectMap(runtime.adapterConfigurations), effects,
     resolveRetainedWait: source => {
       const waitRoot = platform.adapters?.['kubeclaw.wait-store:waits']?.root;
@@ -115,7 +118,7 @@ export function createAdapterRuntime(platform: PlatformConfig, runRoot: string, 
 export async function drainObservers(platform: PlatformConfig, runRoot: string, runtime: PreparedRuntime, adapters: AdapterRuntime, events: FileJournal<LifecycleEvent | PluginDomainEvent>): Promise<void> {
   const observers = new ObserverRuntime({ memoryBytes: runtime.corePolicy.observerMemoryBytes, registry: runtime.granted, activated: runtime.activated, adapters, events,
     checkpoints: new FileJournal<ObserverCheckpoint>(path.join(runRoot, 'observer-checkpoints.jsonl'), runtime.corePolicy.journalAppendLockTimeoutMs),
-    deliveries: new FileJournal<ObserverDeliveryRecord>(path.join(runRoot, 'observer-deliveries.jsonl'), runtime.corePolicy.journalAppendLockTimeoutMs), configs: objectMap(platform.observers) });
+    deliveries: new FileJournal<ObserverDeliveryRecord>(path.join(runRoot, 'observer-deliveries.jsonl'), runtime.corePolicy.journalAppendLockTimeoutMs), configs: objectMap(runtime.observerConfigurations) });
   await observers.drain();
 }
 
@@ -168,10 +171,26 @@ export function selectedAdapterConfigurations(adapters: PlatformConfig['adapters
     }));
     selected[operatorId] = {...raw,targets:Object.freeze(targets)};
   }
+  const operator = selected['kubeclaw.operator-messaging:operator'];
+  if (operator && ['payloadStructure','payloadPolicyVersion'].some(field => Object.hasOwn(operator,field))) throw new Error('OPERATOR_PAYLOAD_POLICY_COMPETING_AUTHOR');
   const policies = [
+    ['kubeclaw.repository-adapter:repository', policy.repositoryRead, 'REPOSITORY_READ'],
+    ['kubeclaw.remote-test-gate:plan', {gateLimits:policy.remoteTestGate}, 'REMOTE_TEST_GATE'],
+    ['kubeclaw.remote-test-gate:evidence', {gateLimits:policy.remoteTestGate}, 'REMOTE_TEST_GATE'],
+    ['kubeclaw.demo-handoff:handoff', {recordLimits: policy.demoHandoffStore}, 'DEMO_HANDOFF_STORE'],
+    ['kubeclaw.command-runner:command', {maximumCatalogEntries: policy.commandCatalog.maximumEntries}, 'COMMAND_CATALOG'],
+    ['kubeclaw.redis-transport:publisher', policy.redisTransport, 'REDIS_TRANSPORT'],
+    ['kubeclaw.redis-transport:telemetry', policy.redisTransport, 'REDIS_TRANSPORT'],
+    ['kubeclaw.command-runner:command', policy.commandProcessCleanup, 'COMMAND_CLEANUP'],
+    ['kubeclaw.command-runner:command', policy.commandRunnerMonitoring, 'COMMAND_MONITORING'],
+    ['kubeclaw.notification-observer:notifications', policy.notificationPresentation, 'NOTIFICATION_PRESENTATION'],
+    ['kubeclaw.git-workspace:git', policy.gitWorkspaceFailure, 'GIT_WORKSPACE_FAILURE'],
+    ['kubeclaw.operator-messaging:operator', policy.operatorMessagingFailure, 'OPERATOR_FAILURE'],
+    ['kubeclaw.transport-publisher:publisher', policy.transportPublisherStructure, 'TRANSPORT_STRUCTURE'],
+    ['kubeclaw.transport-publisher:publisher', policy.transportPublisherFailure, 'TRANSPORT_FAILURE'],
     ['kubeclaw.openclaw-agent-events:source', policy.agentEventSource, 'AGENT_EVENT_SOURCE'],
     ['kubeclaw.network-http:http', policy.networkHttp, 'NETWORK_HTTP'],
-    ['kubeclaw.operator-messaging:operator', policy.operatorMessagingPayload, 'OPERATOR_PAYLOAD'],
+    ['kubeclaw.operator-messaging:operator', policy.policyVersion === 'nova-core-runtime-policy.v3' ? {...policy.operatorMessagingPayload, payloadPolicyVersion: 'operator-payload.v2'} : policy.operatorMessagingPayload, 'OPERATOR_PAYLOAD'],
     ['kubeclaw.transport-publisher:publisher', policy.transportPublisherPayload, 'TRANSPORT_PAYLOAD'],
     ['kubeclaw.artifact-store:artifact-store', policy.artifactStore, 'ARTIFACT'],
     ['kubeclaw.state-store:state', policy.stateStore, 'STATE'],
@@ -189,6 +208,22 @@ export function selectedAdapterConfigurations(adapters: PlatformConfig['adapters
       if (Object.hasOwn(raw, field)) throw new Error(`${label}_POLICY_COMPETING_AUTHOR:${field}`);
     }
     selected[id] = Object.freeze({ ...raw, ...limits });
+  }
+  return Object.freeze(selected);
+}
+
+/** Observer registrations have their own configuration lane, separate from adapters.
+ * Reproject from the supplied original policy on recovery; never read current Core.
+ */
+export function selectedObserverConfigurations(observers: PlatformConfig['observers'], policy: CoreRuntimePolicy): PlatformConfig['observers'] {
+  const selected: Record<string, Readonly<Record<string, unknown>>> = structuredClone(observers);
+  for (const id of ['kubeclaw.notification-observer:notifications', 'kubeclaw.notification-observer:preview-delivery']) {
+    if (!Object.hasOwn(selected, id)) continue;
+    const raw = selected[id]!;
+    for (const field of Object.keys(policy.notificationPresentation)) {
+      if (Object.hasOwn(raw, field)) throw new Error(`NOTIFICATION_PRESENTATION_POLICY_COMPETING_AUTHOR:${field}`);
+    }
+    selected[id] = Object.freeze({ ...raw, ...policy.notificationPresentation });
   }
   return Object.freeze(selected);
 }

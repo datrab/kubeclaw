@@ -1,0 +1,15 @@
+✔ physical selected A/B and retained A reach real lifecycle and preview publication without current owner (8.123349ms)
+✔ every display limit is required, positive and non-competing before either publish effect (7.974425ms)
+✔ accepted title/reason display limits compose with the actual operator receiver at its supported boundary (1.92838ms)
+✔ selected notification A/B caps reach real publish and retained A survives source deletion (7.37407ms)
+✔ notification cap rejects missing/invalid values and equal competing authors (2.198516ms)
+✔ selected label A/B projection survives capture and rejects missing or competing label author (2.229577ms)
+✔ selected label cap also bounds generated stage labels without rewriting stage identity (0.76814ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 664.666356

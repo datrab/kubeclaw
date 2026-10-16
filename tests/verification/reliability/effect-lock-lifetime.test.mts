@@ -30,7 +30,7 @@ for (const outcome of ['conflicting-request', 'orphaned-receipt', 'corrupt-journ
         capability: 'artifacts.write', operation: 'put_json',
         resource: { type: 'artifact.object', canonicalId: 'regression:object' },
         payload: { namespace: 'regression', mediaType: 'application/json', value: { original: true } } };
-      const coordinator = new EffectCoordinator(journal, undefined, undefined, locks, 1000);
+      const coordinator = new EffectCoordinator(journal, undefined, undefined, locks, 1000, TEST_CORE_POLICY.resourceAcquisition);
       const pending = coordinator.invoke(adapter, owner, invocation, signal);
       // Microtasks place a real second writer between the initial read and the
       // resource-locked recheck. No journal, lock manager or adapter is replaced.
@@ -79,7 +79,7 @@ test('real artifact completion and receipt replay release once without repeating
       attempt: { runId: 'run:success', stageId: 'write', attemptId: 'attempt:success', attemptNumber: 1 },
       capability: 'artifacts.write', operation: 'put_json', resource: { type: 'artifact.object', canonicalId: 'success' },
       payload: { namespace: 'regression', mediaType: 'application/json', value: { correct: true } } };
-    const coordinator = new EffectCoordinator(journal, undefined, undefined, locks, 1000);
+    const coordinator = new EffectCoordinator(journal, undefined, undefined, locks, 1000, TEST_CORE_POLICY.resourceAcquisition);
     const first = await coordinator.invoke(adapter, owner, invocation, signal);
     assert.equal(first.status, 'completed');
     assert.deepEqual(await coordinator.invoke(adapter, owner, invocation, signal), first);

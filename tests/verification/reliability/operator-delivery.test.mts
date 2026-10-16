@@ -1,5 +1,5 @@
 import { TEST_CORE_POLICY as DELIVERY_TEST_CORE_POLICY } from '../../fixtures/core-runtime-policy.mjs';
-const TEST_OPERATOR_STORE_POLICY = DELIVERY_TEST_CORE_POLICY.operatorMessagingStore;
+const TEST_OPERATOR_STORE_POLICY = { ...DELIVERY_TEST_CORE_POLICY.operatorMessagingStore, ...DELIVERY_TEST_CORE_POLICY.operatorMessagingPayload, ...DELIVERY_TEST_CORE_POLICY.operatorMessagingFailure };
 import { TEST_CORE_POLICY } from '../../fixtures/core-runtime-policy.mjs';
 import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
@@ -10,6 +10,7 @@ import path from 'node:path';
 import { once } from 'node:events';
 import { test } from 'node:test';
 import * as core from '../../../skills/nova/core/src/index.ts';
+import { selectedAdapterConfigurations } from '../../../skills/nova/core/execution/engine-runtime.ts';
 
 const observerId = 'kubeclaw.notification-observer:notifications';
 const operatorId = 'kubeclaw.operator-messaging:operator';
@@ -64,17 +65,17 @@ async function scenario(mode: 'transient' | 'lost_ack' | 'permanent' | 'unresolv
       ['network.http', { allowedOrigins: [origin] }], ['secrets.read', { allowedNames: ['notification.webhook'] }],
     ])]]) });
   const activated = await core.activateRegistry(granted.snapshot, new Set(granted.grants.keys()));
-  const configs = new Map<string, Record<string, unknown>>([[observerId, { target: 'operators' }],
-    [operatorId, { ...TEST_OPERATOR_STORE_POLICY, deliveryRoot: path.join(root, 'sender'), targets: { operators: { endpoint: `${origin}/messages`, tokenSecret: 'notification.webhook',
+  const configs = new Map<string, Record<string, unknown>>([[observerId, selectedAdapterConfigurations({ [observerId]: { target: 'operators' } }, TEST_CORE_POLICY)[observerId]!],
+    [operatorId, { ...TEST_OPERATOR_STORE_POLICY, deliveryRoot: path.join(root, 'sender'), targets: { operators: { payloadProfile: 'standard', endpoint: `${origin}/messages`, tokenSecret: 'notification.webhook',
       ...(mode === 'unresolved' ? {} : { receiptEndpoint: `${origin}/receipts` }) } } }],
-    ['kubeclaw.network-http:http', { allowedOrigins: [origin], allowedMethods: ['GET', 'POST'], allowedHeaders: ['content-type', 'idempotency-key', 'x-kubeclaw-signature'] }],
+    ['kubeclaw.network-http:http', { ...TEST_CORE_POLICY.networkHttp, allowedOrigins: [origin], allowedMethods: ['GET', 'POST'], allowedHeaders: ['content-type', 'idempotency-key', 'x-kubeclaw-signature'] }],
     ['kubeclaw.secret-resolver:secrets', { environment: { 'notification.webhook': secretName } }]]);
   const events = new core.FileJournal<any>(path.join(root, 'events.jsonl'), TEST_CORE_POLICY.journalAppendLockTimeoutMs);
   events.append({ schemaVersion: 'lifecycle-event.v2', eventId: 'event:delivery', sequence: 1, type: 'run.failed', identity: { runId: 'run:retry' },
     occurredAt: new Date().toISOString(), causationId: null, payload: { summary: 'Actual diagnostic\nnext line' } });
   const create = (interrupt = false) => {
     const adapters = new core.AdapterRuntime({ granted, activated, configs,
-      effects: new core.EffectCoordinator(new core.FileEffectJournal(path.join(root, 'effects.jsonl'), TEST_CORE_POLICY), undefined, undefined, new core.FileResourceLockManager(path.join(root, 'locks'), TEST_CORE_POLICY), 300_000),
+      effects: new core.EffectCoordinator(new core.FileEffectJournal(path.join(root, 'effects.jsonl'), TEST_CORE_POLICY), undefined, undefined, new core.FileResourceLockManager(path.join(root, 'locks'), TEST_CORE_POLICY), 300_000, TEST_CORE_POLICY.resourceAcquisition),
       shutdownTimeoutMs: 1000, async emitDomainEvent() {} });
     const checkpoints = new core.FileJournal<any>(path.join(root, 'checkpoints.jsonl'), TEST_CORE_POLICY.journalAppendLockTimeoutMs);
     const deliveries = new core.FileJournal<any>(path.join(root, 'deliveries.jsonl'), TEST_CORE_POLICY.journalAppendLockTimeoutMs);

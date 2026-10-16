@@ -1,3 +1,4 @@
+import {TEST_CORE_POLICY as REMOTE_POLICY} from '../../../../../tests/fixtures/core-runtime-policy.mjs';
 import { TEST_CORE_POLICY as ARTIFACT_TEST_CORE_POLICY } from '../../../../../tests/fixtures/core-runtime-policy.mjs';
 const TEST_ARTIFACT_STORE_POLICY = ARTIFACT_TEST_CORE_POLICY.artifactStore;
 import { TEST_CORE_POLICY } from '../../../../../tests/fixtures/core-runtime-policy.mjs';
@@ -53,7 +54,7 @@ test('original HTTP importer, artifact store and evidence adapter preserve owner
   const decisionRef=(await write('quality:decision:1','kubeclaw.buster-quality-gate',decision,'final-test')).artifact;
   const manifestBase={schemaVersion:'delivery-manifest.v2',projectId:'demo',runId:job.plan.runId,sourceRevision:'a'.repeat(40),modules:[],final:{sourceRevision:'a'.repeat(40),testStageId:'final-test',expectedCoverage:policy,decisionDigest:decision.decisionDigest,resultDigest:decision.resultDigest,coverage:decision.coverage},evidence:[decisionRef]};
   const manifest=(await write('summary:demo','kubeclaw.project-summary',{...manifestBase,digest:sha256Text(canonicalJson(manifestBase))},'project-summary')).artifact;
-  const adapter=activate({config:{stateRoot:root,manifestStageId:'project-summary',gateStageId:'final-test'},invoke:(capability:string,request:unknown)=>artifacts.invoke({confidential:true,signal:new AbortController().signal,request:{...(request as object),capability,attempt:producer('demo-evidence'),idempotencyKey:'read:demo'}} as any)} as any);
+  const adapter=activate({config:{gateLimits:REMOTE_POLICY.remoteTestGate,stateRoot:root,manifestStageId:'project-summary',gateStageId:'final-test'},invoke:(capability:string,request:unknown)=>artifacts.invoke({confidential:true,signal:new AbortController().signal,request:{...(request as object),capability,attempt:producer('demo-evidence'),idempotencyKey:'read:demo'}} as any)} as any);
   const request:any={confidential:true,signal:new AbortController().signal,request:{capability:'test.plan.evidence',operation:'demo',resource:{type:'test.plan.evidence',canonicalId:(manifest as any).artifactId},payload:{manifest,namespace:'kubeclaw.project-summary',authNodeId:'auth'},attempt:producer('demo-evidence')}};
   const projected=await adapter.invoke(request);assert.equal((projected.authentication as any).credentialDigest,bundle.result.outputs[0].value.credentialDigest);
   assert.deepEqual(await adapter.invoke(request),projected);
@@ -62,8 +63,8 @@ test('original HTTP importer, artifact store and evidence adapter preserve owner
   const granted=resolveCapabilityGrants(registry,{enabledRegistrations:new Set(['test.evidence-consumer:consume']),providers:new Map([['test.plan.evidence','kubeclaw.remote-test-gate:evidence'],['artifacts.read','kubeclaw.artifact-store:artifact-store']]),
    grants:new Map([['test.evidence-consumer:consume',new Map([['test.plan.evidence',{allowedNamespaces:['kubeclaw.project-summary']}]])],['kubeclaw.remote-test-gate:evidence',new Map([['artifacts.read',{allowedNamespaces:['kubeclaw.project-summary','kubeclaw.buster-quality-gate']}]])]])});
   const activated=await activateRegistry(granted.snapshot,new Set(granted.grants.keys()));
-  const durable=new AdapterRuntime({granted,activated,configs:new Map([['kubeclaw.remote-test-gate:evidence',{stateRoot:root,manifestStageId:'project-summary',gateStageId:'final-test'}],['kubeclaw.artifact-store:artifact-store',{ ...TEST_ARTIFACT_STORE_POLICY,artifactRoot:path.join(root,'artifacts')}]]),shutdownTimeoutMs:1000,async emitDomainEvent(){},
-   effects:new EffectCoordinator(new FileEffectJournal(path.join(root,'effects.jsonl'), TEST_CORE_POLICY),undefined,undefined,new FileResourceLockManager(path.join(root,'locks'), TEST_CORE_POLICY), 300_000)});
+  const durable=new AdapterRuntime({granted,activated,configs:new Map([['kubeclaw.remote-test-gate:evidence',{gateLimits:REMOTE_POLICY.remoteTestGate,stateRoot:root,manifestStageId:'project-summary',gateStageId:'final-test'}],['kubeclaw.artifact-store:artifact-store',{ ...TEST_ARTIFACT_STORE_POLICY,artifactRoot:path.join(root,'artifacts')}]]),shutdownTimeoutMs:1000,async emitDomainEvent(){},
+   effects:new EffectCoordinator(new FileEffectJournal(path.join(root,'effects.jsonl'), TEST_CORE_POLICY),undefined,undefined,new FileResourceLockManager(path.join(root,'locks'), TEST_CORE_POLICY), 300_000, TEST_CORE_POLICY.resourceAcquisition)});
   await durable.start();try {
    assert.deepEqual(await durable.invoke('test.plan.evidence',producer('demo-evidence'),'original-effect:projection',request.request,new AbortController().signal),projected);
    assert.deepEqual(await durable.invoke('test.plan.evidence',producer('demo-evidence'),'original-effect:projection',request.request,new AbortController().signal),projected);

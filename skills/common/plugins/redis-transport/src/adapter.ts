@@ -3,6 +3,9 @@ import { streamIdentity } from './stream-identity.ts';
 import type { AdapterActivationContext, AdapterInstance } from '@kubeclaw/plugin-sdk';
 
 interface Config {
+  readonly maximumPayloadBytes: number;
+  readonly maximumReplyBulkBytes: number;
+  readonly maximumReplyHeaderBytes: number;
   readonly url: URL;
   readonly passwordSecret: string;
   readonly streamPrefix: string;
@@ -21,7 +24,7 @@ return entry
 `.trim();
 
 function config(value: Readonly<Record<string, unknown>>): Config {
-  const allowed = new Set(['url', 'passwordSecret', 'streamPrefix', 'maxLen', 'dedupTtlMs', 'timeoutMs']);
+  const allowed = new Set(['url', 'passwordSecret', 'streamPrefix', 'maxLen', 'dedupTtlMs', 'timeoutMs', 'maximumPayloadBytes', 'maximumReplyBulkBytes', 'maximumReplyHeaderBytes']);
   if (Object.keys(value).some((key) => !allowed.has(key))) throw new Error('REDIS_CONFIG_UNKNOWN_FIELD');
   if (typeof value.url !== 'string' || typeof value.passwordSecret !== 'string' || typeof value.streamPrefix !== 'string') {
     throw new Error('REDIS_CONFIG_INVALID');
@@ -38,6 +41,9 @@ function config(value: Readonly<Record<string, unknown>>): Config {
     return Number(input);
   };
   return {
+    maximumPayloadBytes: integer(value.maximumPayloadBytes, 'maximumPayloadBytes', 16_777_216),
+    maximumReplyBulkBytes: integer(value.maximumReplyBulkBytes, 'maximumReplyBulkBytes', 16_777_216),
+    maximumReplyHeaderBytes: integer(value.maximumReplyHeaderBytes, 'maximumReplyHeaderBytes', 16_777_216),
     url,
     passwordSecret: value.passwordSecret,
     streamPrefix: value.streamPrefix,
@@ -75,7 +81,7 @@ function activate(kind: 'publisher' | 'telemetry', context: AdapterActivationCon
       });
       if (typeof secret.value !== 'string' || !secret.value || /[\r\n]/u.test(secret.value)) throw new Error('REDIS_SECRET_INVALID');
       const payload = JSON.stringify(request.payload);
-      if (Buffer.byteLength(payload) > 1_048_576) throw new Error('REDIS_PAYLOAD_SIZE_EXCEEDED');
+      if (Buffer.byteLength(payload) > options.maximumPayloadBytes) throw new Error('REDIS_PAYLOAD_SIZE_EXCEEDED');
       const { stream, dedup } = streamIdentity(options.streamPrefix, kind, request.resource.canonicalId, request.idempotencyKey);
       const result = await exchange(options, secret.value, [
         'EVAL', REDIS_PUBLISH_LUA, '2', stream, dedup,

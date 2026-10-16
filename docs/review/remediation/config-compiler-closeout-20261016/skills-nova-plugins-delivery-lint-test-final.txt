@@ -1,0 +1,4 @@
+npm notice run test
+npm notice run node tests/package-boundary.test.mjs && node tests/live-function.test.ts
+{"ok":true,"plugin":"kubeclaw.delivery-lint","suite":"package-boundary"}
+{"ok":true,"plugin":"kubeclaw.delivery-lint","suite":"live-function","registrations":{"stage:delivery-lint":["pass","fail","blocked","crash"]}}

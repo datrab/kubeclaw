@@ -95,7 +95,7 @@ async function fixture(mode: Mode) {
   const configs=new Map<string,Record<string,unknown>>([
     [runtimeId,{ ...TEST_OPENCLAW_DISPATCH_POLICY,targetTimingProfiles:{fixture:{...TEST_OPENCLAW_DISPATCH_POLICY.targetTimingProfiles.standard,spawnIntervalMs:0,pollMs:10,maxPollMs:10,maxPolls:['poll-body','parent-abort'].includes(mode)?20:1,sessionTimeoutMs:80}},targets:{agent:{endpoint:`${origin}/tools/invoke`,tokenSecret:'runtime.token',runtime:mode.startsWith('acp')?'acp':'subagent',
       agentId:'test',agentRole:'test',model:'test/model',cwd:root,repositoryRoot:root,resultPathPrefix:'results',timingProfile:'fixture'}}}],
-    ['kubeclaw.network-http:http',{allowedOrigins:[origin],allowedMethods:['POST'],allowedHeaders:['authorization','content-type'],timeoutMs:1000}],
+    ['kubeclaw.network-http:http',{...TEST_CORE_POLICY.networkHttp,allowedOrigins:[origin],allowedMethods:['POST'],allowedHeaders:['authorization','content-type'],timeoutMs:1000}],
     ['kubeclaw.secret-resolver:secrets',{environment:{'runtime.token':secretName}}],
     ['kubeclaw.repository-adapter:repository',{repositoryRoot:root}],
     ['kubeclaw.artifact-store:artifact-store',{ ...TEST_ARTIFACT_STORE_POLICY,artifactRoot:path.join(root,'artifacts')}],
@@ -103,7 +103,7 @@ async function fixture(mode: Mode) {
   ]);
   const journalPath=path.join(root,'effects.jsonl');
   const create=()=>new core.AdapterRuntime({granted,activated,configs,
-    effects:new core.EffectCoordinator(new core.FileEffectJournal(journalPath, TEST_CORE_POLICY),undefined,undefined,new core.FileResourceLockManager(path.join(root,'locks'), TEST_CORE_POLICY), 300_000),
+    effects:new core.EffectCoordinator(new core.FileEffectJournal(journalPath, TEST_CORE_POLICY),undefined,undefined,new core.FileResourceLockManager(path.join(root,'locks'), TEST_CORE_POLICY), 300_000, TEST_CORE_POLICY.resourceAcquisition),
     shutdownTimeoutMs:1000,async emitDomainEvent(){}});
   const runtime=create();await runtime.start();
   const attempt={runId:'run:cleanup',stageId:'runtime',attemptId:'attempt:cleanup',attemptNumber:1};

@@ -6,7 +6,12 @@
     "targets",
     "resultReadMaximumBytes",
     "collectorWaitTimeoutSeconds",
-    "targetTimingProfiles"
+    "targetTimingProfiles",
+    "sessionListCacheTtlMs",
+    "sessionListMinimumRecentMinutes",
+    "sessionListPaddingMinutes",
+    "cleanupPollIntervalMs",
+    "workspaceOwnerMaximumBytes"
   ],
   "properties": {
     "targets": {
@@ -145,6 +150,31 @@
       "additionalProperties": {
         "$ref": "#/$defs/targetTiming"
       }
+    },
+    "sessionListCacheTtlMs": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9007199254740991
+    },
+    "sessionListMinimumRecentMinutes": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 2147483647
+    },
+    "sessionListPaddingMinutes": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 2147483647
+    },
+    "cleanupPollIntervalMs": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 2147483647
+    },
+    "workspaceOwnerMaximumBytes": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 32768
     }
   },
   "$defs": {

@@ -32,25 +32,12 @@ const SEVERITY: Readonly<Record<string, string>> = Object.freeze({
   'stage.waiting': 'warning',
   'orchestrator.required': 'warning',
 });
-const SENSITIVE = /(?:authorization|cookie|password|secret|token|api[_-]?key|credential)/i;
-
-function sanitize(value: unknown, depth = 0): unknown {
-  if (depth > 12) return '[truncated]';
-  if (Array.isArray(value)) return value.slice(0, 256).map((entry) => sanitize(entry, depth + 1));
-  if (value && typeof value === 'object') {
-    return Object.fromEntries(Object.entries(value as Record<string, unknown>)
-      .slice(0, 256)
-      .map(([key, entry]) => [key, SENSITIVE.test(key) ? '[redacted]' : sanitize(entry, depth + 1)]));
-  }
-  if (typeof value === 'string') return value.length <= 8_192 ? value : `${value.slice(0, 8_192)}…`;
-  return value;
-}
 function target(context: PluginInvocationContext): string {
   const configured = context.contract.config.target;
   if (typeof configured !== 'string' || configured.length === 0) throw new Error('NOTIFICATION_TARGET_INVALID');
   return configured;
 }
-function bounded(value: unknown, maximum = 8_192): string | undefined {
+function bounded(value: unknown, maximum: number): string | undefined {
   if (typeof value !== 'string' || value.length === 0) return undefined;
   const normalized = value.replace(/[\u0000-\u001f\u007f]/gu, ' ');
   return normalized.length <= maximum ? normalized : `${normalized.slice(0, maximum - 1)}…`;
@@ -75,14 +62,32 @@ function configuredText(
 ): string | undefined {
   return bounded(config[key], maximum);
 }
-function reasonCode(payload: Readonly<Record<string, unknown>>): string | null {
+function reasonCode(payload: Readonly<Record<string, unknown>>, maximum: number): string | null {
   const nested = payload.reason;
   const nestedCode = nested && typeof nested === 'object' && !Array.isArray(nested)
     ? (nested as Record<string, unknown>).code
     : undefined;
-  return bounded(firstNonNullish(payload.reasonCode, payload.reason_code, nestedCode), 256) ?? null;
+  return bounded(firstNonNullish(payload.reasonCode, payload.reason_code, nestedCode), maximum) ?? null;
 }
-interface PresentationOptions {
+interface FieldLimits {
+  readonly maxTitleChars: number;
+  readonly maxReasonCodeChars: number;
+  readonly maxArtifactIdChars: number;
+  readonly maxArtifactDigestChars: number;
+  readonly maxArtifactMediaTypeChars: number;
+  readonly maxArtifactLogicalNameChars: number;
+}
+function fieldLimits(value: Readonly<Record<string, unknown>> | FieldLimits): FieldLimits {
+  const fields = ["maxTitleChars", "maxReasonCodeChars", "maxArtifactIdChars", "maxArtifactDigestChars", "maxArtifactMediaTypeChars", "maxArtifactLogicalNameChars"] as const;
+  for (const field of fields) {
+    if (!Number.isSafeInteger(value[field]) || Number(value[field]) < 1
+      || (field === 'maxTitleChars' && Number(value[field]) > 512)
+      || (field === 'maxReasonCodeChars' && Number(value[field]) > 256)) throw new Error(`NOTIFICATION_FIELD_LIMIT_INVALID:${field}`);
+  }
+  return Object.freeze(Object.fromEntries(fields.map(field => [field, value[field]]))) as unknown as FieldLimits;
+}
+interface PresentationOptions extends FieldLimits {
+  readonly maxLabelChars: number;
   readonly pipelineLabel?: string;
   readonly modelLabel?: string;
   readonly stageLabels?: Readonly<Record<string, unknown>>;
@@ -91,10 +96,11 @@ function stagePresentation(
   stageId: string | null,
   agentRole: string | undefined,
   labels: Readonly<Record<string, unknown>> | undefined,
+  maximum: number,
 ): string | null {
   if (!stageId) return null;
-  const stage = bounded(labels?.[stageId], 256) ?? titleCase(stageId);
-  return agentRole ? `${titleCase(agentRole)} · ${stage}` : stage;
+  const stage = bounded(labels?.[stageId], maximum) ?? bounded(titleCase(stageId), maximum)!;
+  return agentRole ? `${bounded(titleCase(agentRole), maximum)} · ${stage}` : stage;
 }
 
 function notificationTitle(type: string, stageLabel: string | null): string {
@@ -107,25 +113,29 @@ function notificationFields(
   runId: string,
   stageId: string | null,
   modelLabel: string | undefined,
+  maximum: number,
 ): readonly Readonly<Record<string, unknown>>[] {
   const fields: Readonly<Record<string, unknown>>[] = [{ name: 'Run ID', value: runId, inline: false }];
   if (stageId) fields.push({ name: 'Stage', value: stageId, inline: true });
-  const model = bounded(modelLabel, 256);
+  const model = bounded(modelLabel, maximum);
   if (model) fields.push({ name: 'Model', value: model, inline: true });
   return fields;
 }
 export function lifecycleNotification(
   delivery: ObserverDelivery,
-  maximum = 8_192,
-  options: PresentationOptions = {},
+  maximum: number,
+  options: PresentationOptions,
 ): Readonly<Record<string, unknown>> {
+  if (!Number.isSafeInteger(maximum) || maximum < 256 || maximum > 8192) throw new Error('NOTIFICATION_MESSAGE_LIMIT_INVALID');
+  if (!Number.isSafeInteger(options.maxLabelChars) || options.maxLabelChars < 1 || options.maxLabelChars > 256) throw new Error('NOTIFICATION_LABEL_LIMIT_INVALID');
+  const limits = fieldLimits(options);
   const type = delivery.event.type;
   const payload = delivery.event.payload as Record<string, unknown>;
   const runId = delivery.event.identity.runId;
   const stageId = delivery.event.identity.stageId ?? null;
-  const stageLabel = stagePresentation(stageId, bounded(payload.agentRole, 256), options.stageLabels);
-  const title = bounded(notificationTitle(type, stageLabel), 512)!;
-  const fields = notificationFields(runId, stageId, options.modelLabel);
+  const stageLabel = stagePresentation(stageId, bounded(payload.agentRole, options.maxLabelChars), options.stageLabels, options.maxLabelChars);
+  const title = bounded(notificationTitle(type, stageLabel), limits.maxTitleChars)!;
+  const fields = notificationFields(runId, stageId, options.modelLabel, options.maxLabelChars);
   return Object.freeze({
     type,
     eventId: delivery.event.eventId,
@@ -134,15 +144,16 @@ export function lifecycleNotification(
     severity: SEVERITY[type] ?? 'info',
     title,
     summary: messageSummary(payload.summary ?? payload.message, maximum) ?? title,
-    reasonCode: reasonCode(payload),
+    reasonCode: reasonCode(payload, limits.maxReasonCodeChars),
     fields: Object.freeze(fields.map((field) => Object.freeze(field))),
-    footer: `${bounded(options.pipelineLabel, 256) ?? 'KubeClaw Pipeline'} · ${runId}`,
+    footer: `${bounded(options.pipelineLabel ?? 'KubeClaw Pipeline', options.maxLabelChars)} · ${runId}`,
     ...(typeof delivery.event.occurredAt === 'string'
       ? { occurredAt: delivery.event.occurredAt }
       : {}),
   });
 }
-export function previewNotification(delivery: ObserverDelivery): Readonly<Record<string, unknown>> {
+export function previewNotification(delivery: ObserverDelivery, options: FieldLimits): Readonly<Record<string, unknown>> {
+  const limits = fieldLimits(options);
   const payload = delivery.event.payload as Record<string, unknown>;
   const artifact = payload.artifact && typeof payload.artifact === 'object' && !Array.isArray(payload.artifact)
     ? payload.artifact as Record<string, unknown>
@@ -156,11 +167,11 @@ export function previewNotification(delivery: ObserverDelivery): Readonly<Record
     artifact: Object.freeze({
       artifactId: bounded(
         firstNonNullish(artifact.artifactId, delivery.event.identity.artifactId),
-        512,
+        limits.maxArtifactIdChars,
       ) ?? null,
-      digest: bounded(artifact.digest, 256) ?? null,
-      mediaType: bounded(artifact.mediaType, 256) ?? null,
-      logicalName: bounded(artifact.logicalName, 512) ?? null,
+      digest: bounded(artifact.digest, limits.maxArtifactDigestChars) ?? null,
+      mediaType: bounded(artifact.mediaType, limits.maxArtifactMediaTypeChars) ?? null,
+      logicalName: bounded(artifact.logicalName, limits.maxArtifactLogicalNameChars) ?? null,
     }),
   });
 }
@@ -175,17 +186,20 @@ export async function observe(delivery: ObserverDelivery, context: PluginInvocat
   const suppressed = context.contract.config.suppressEventTypes;
   if (Array.isArray(suppressed) && suppressed.includes(delivery.event.type)) return;
   const maximum = context.contract.config.maxMessageChars;
+  const maxLabelChars = context.contract.config.maxLabelChars as number;
   const stageLabels = context.contract.config.stageLabels;
-  const pipelineLabel = configuredText(context.contract.config, 'pipelineLabel', 256);
-  const modelLabel = configuredText(context.contract.config, 'modelLabel', 256);
+  const pipelineLabel = configuredText(context.contract.config, 'pipelineLabel', maxLabelChars);
+  const modelLabel = configuredText(context.contract.config, 'modelLabel', maxLabelChars);
   const configuredStageLabels = stageLabels && typeof stageLabels === 'object' && !Array.isArray(stageLabels)
     ? stageLabels as Readonly<Record<string, unknown>>
     : undefined;
   await publish(
     lifecycleNotification(
       delivery,
-      typeof maximum === 'number' ? maximum : 8_192,
+      maximum as number,
       {
+        ...fieldLimits(context.contract.config),
+        maxLabelChars,
         ...(pipelineLabel === undefined ? {} : { pipelineLabel }),
         ...(modelLabel === undefined ? {} : { modelLabel }),
         ...(configuredStageLabels === undefined ? {} : { stageLabels: configuredStageLabels }),
@@ -195,5 +209,5 @@ export async function observe(delivery: ObserverDelivery, context: PluginInvocat
   );
 }
 export async function deliverPreview(delivery: ObserverDelivery, context: PluginInvocationContext): Promise<void> {
-  await publish(previewNotification(delivery), context);
+  await publish(previewNotification(delivery, fieldLimits(context.contract.config)), context);
 }

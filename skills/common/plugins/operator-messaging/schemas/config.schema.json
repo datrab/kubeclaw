@@ -7,7 +7,9 @@
     "deliveryRoot",
     "maximumDeliveryRecords",
     "maximumDeliveryBytes",
-    "targetPayloadProfiles"
+    "targetPayloadProfiles",
+    "failureExcerptCharacters",
+    "maximumRecordBytes"
   ],
   "properties": {
     "deliveryRoot": {
@@ -117,6 +119,90 @@
           }
         }
       }
+    },
+    "failureExcerptCharacters": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 2048
+    },
+    "maximumRecordBytes": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991
+    },
+    "payloadStructure": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "maximumDepth",
+        "maximumArrayEntries",
+        "maximumObjectProperties"
+      ],
+      "properties": {
+        "maximumDepth": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 20
+        },
+        "maximumArrayEntries": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000
+        },
+        "maximumObjectProperties": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000
+        }
+      }
+    },
+    "payloadPolicyVersion": {
+      "const": "operator-payload.v2"
     }
-  }
+  },
+  "oneOf": [
+    {
+      "properties": {
+        "payloadPolicyVersion": false,
+        "payloadStructure": false
+      }
+    },
+    {
+      "properties": {
+        "payloadPolicyVersion": {
+          "const": "operator-payload.v2"
+        },
+        "payloadStructure": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "maximumDepth",
+            "maximumArrayEntries",
+            "maximumObjectProperties"
+          ],
+          "properties": {
+            "maximumDepth": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 20
+            },
+            "maximumArrayEntries": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1000
+            },
+            "maximumObjectProperties": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1000
+            }
+          }
+        }
+      },
+      "required": [
+        "payloadPolicyVersion",
+        "payloadStructure"
+      ]
+    }
+  ]
 }

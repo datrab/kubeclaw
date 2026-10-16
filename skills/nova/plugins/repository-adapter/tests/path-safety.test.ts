@@ -1,3 +1,4 @@
+import {TEST_CORE_POLICY} from '../../../../../tests/fixtures/core-runtime-policy.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -8,7 +9,7 @@ const root = path.join(temporary, 'repo'); const outside = path.join(temporary, 
 fs.mkdirSync(root); fs.mkdirSync(outside); fs.mkdirSync(path.join(root, 'inside'));
 fs.writeFileSync(path.join(root, 'inside/file.txt'), 'inside'); fs.symlinkSync('inside', path.join(root, 'internal-link'));
 fs.symlinkSync(outside, path.join(root, 'external-link')); fs.symlinkSync(path.join(outside, 'absent'), path.join(root, 'dangling-link'));
-const adapter = activate({ config: { repositoryRoot: root } });
+const adapter = activate({ config: { repositoryRoot: root, ...TEST_CORE_POLICY.repositoryRead } });
 const read = (relative) => adapter.invoke({ confidential: true, signal: new AbortController().signal,
   request: { capability: 'git.repository.read', operation: 'read_text', resource: { canonicalId: relative }, attempt: { attemptId: 'test' }, payload: {} } });
 try {

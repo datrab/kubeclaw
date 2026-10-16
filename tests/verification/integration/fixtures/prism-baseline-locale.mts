@@ -1,3 +1,4 @@
+import { TEST_CORE_POLICY } from '../../../fixtures/core-runtime-policy.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -28,7 +29,7 @@ if (mode === 'produce') {
   const bytes = Buffer.from(await store.get(reference.artifactId));
   assert.equal(reference.artifactId, `artifact:${hash(bytes)}`);
   let error: string | undefined;
-  try { verifyBaselineArchive({...reference, archiveBase64: bytes.toString('base64')}, reference.bundleDigest, 'project'); }
+  try { verifyBaselineArchive({...reference, archiveBase64: bytes.toString('base64')}, reference.bundleDigest, 'project', TEST_CORE_POLICY.prismDesignBudgets); }
   catch (caught) { error = (caught as Error).message; }
   assert.deepEqual(Buffer.from(await store.get(reference.artifactId)), bytes);
   console.log(JSON.stringify({mode, locale: new Intl.Collator().resolvedOptions().locale, artifactId: reference.artifactId, bundleDigest: reference.bundleDigest, imported: error === undefined, error: error ?? null, unchangedCasBytes: true}));

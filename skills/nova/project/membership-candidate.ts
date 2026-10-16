@@ -1,6 +1,6 @@
 import {portableJson, sha256Text, type PipelineDefinition, type StageDefinition} from '@kubeclaw/plugin-sdk';
 import {validateContractValue} from '@kubeclaw/plugin-foundation/registry/schema';
-import {ExecutionGraph} from '../core/execution/graph.ts';
+import {ExecutionGraph} from '@kubeclaw/nova-core';
 
 export interface ProjectMembershipGroupCandidate {
   readonly groupId:string;

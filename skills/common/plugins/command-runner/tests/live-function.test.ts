@@ -19,6 +19,12 @@ function createAdapter(overrides = {}) {
     config: {
       allowedExecutables: [executable],
       allowedWorkingRoots: [workingRoot],
+      maximumCatalogEntries: 128,
+      maximumOutputRecords: 4096,
+      sampleIntervalMs: 25,
+      cleanupPollIntervalMs: 10,
+      exitAcknowledgementMs: 1000,
+      sandboxMinimumGraceMs: 250,
       maxOutputBytes: 128,
       maxExecutionMs: 2_000,
       terminationGraceMs: 25,

@@ -73,7 +73,7 @@ if(process.argv[2]==='--child'){
     if(phase===boundary){fs.writeSync(1,`CACHE_AUDIT:${phase}\n`);process.kill(process.pid,'SIGKILL');}
   }]));
   const journal=new FileEffectJournal(journalFile, TEST_CORE_POLICY),runtime=new AdapterRuntime({granted:prepared.granted,activated:prepared.activated,configs:new Map(Object.entries(p.adapters)),
-    effects:new EffectCoordinator(journal,undefined,audit,new FileResourceLockManager(path.join(root,'locks'), TEST_CORE_POLICY),lockTtlMs),shutdownTimeoutMs:ioTimeoutMs,async emitDomainEvent(){throw Error('UNEXPECTED_EVENT');}});
+    effects:new EffectCoordinator(journal,undefined,audit,new FileResourceLockManager(path.join(root,'locks'), TEST_CORE_POLICY),lockTtlMs, TEST_CORE_POLICY.resourceAcquisition),shutdownTimeoutMs:ioTimeoutMs,async emitDomainEvent(){throw Error('UNEXPECTED_EVENT');}});
   await runtime.start();
   const {job,identity,value}=admittedCacheValue(),record=m.records.buildReviewCacheRecord(job,identity,value,profile);
   const attempt={runId:'run:cache-prefix',stageId:'review',attemptId:operation==='read'?'attempt:read':'attempt:write',attemptNumber:operation==='read'?2:1};

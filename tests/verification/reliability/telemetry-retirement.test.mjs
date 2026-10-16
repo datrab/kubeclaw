@@ -54,7 +54,7 @@ async function fixture(t,failures={}) {
   const result=await runPipelineV2(f.platform,f.definition,runId);
   const run=runRoot(f.platform.storageRoot,runId),telemetryRoot=path.join(root,'telemetry');
   const store=new FileDurableRecordStore(telemetryRoot,limits);
-  const adapter=activate({config:{root:telemetryRoot,maxRecordBytes:limits.maximumRecordBytes,maximumRecords:limits.maximumRecords,maximumStoreBytes:limits.maximumBytes}});
+  const adapter=activate({config:{root:telemetryRoot,maxJsonDepth:TEST_CORE_POLICY.telemetryStore.maxJsonDepth,maxJsonNodes:TEST_CORE_POLICY.telemetryStore.maxJsonNodes,maxRecordBytes:limits.maximumRecordBytes,maximumRecords:limits.maximumRecords,maximumStoreBytes:limits.maximumBytes}});
   const locks=new FileResourceLockManager(path.join(root,'telemetry-locks'), TEST_CORE_POLICY);
   const invoke=async(key,payload=blob,owner=runId)=>{
     const resource={type:'telemetry.event',canonicalId:'run.succeeded'},lock=locks.acquire(resource,key,60000);

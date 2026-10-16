@@ -1,7 +1,6 @@
 import type { StageResult, WaitRequest } from '@kubeclaw/plugin-sdk';
 
 export const APPROVAL_SIGNAL_TYPE = 'approval.resolved' as const;
-export const DEFAULT_APPROVAL_TIMEOUT_MINUTES = 60;
 const MAX_APPROVAL_TIMEOUT_MINUTES = 525_600;
 
 type UnknownRecord = Readonly<Record<string, unknown>>;
@@ -67,7 +66,7 @@ export function parseApprovalInput(value: unknown): ApprovalInput {
 export function parseApprovalConfig(value: unknown): ApprovalConfig {
   const config = record(value, 'CONFIG');
   exactKeys(config, ['target', 'issuerId', 'timeoutMinutes'], 'CONFIG');
-  const timeout = config.timeoutMinutes ?? DEFAULT_APPROVAL_TIMEOUT_MINUTES;
+  const timeout = config.timeoutMinutes;
   if (
     !Number.isSafeInteger(timeout)
     || Number(timeout) < 1

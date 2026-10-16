@@ -1,0 +1,8 @@
+npm notice run test
+npm notice run node tests/package-boundary.test.mjs && node tests/live-function.test.ts && node tests/process-group.test.ts && node tests/process-group-exit.test.ts
+{"ok":true,"plugin":"kubeclaw.command-runner","suite":"package-boundary"}
+{"ok":true,"plugin":"kubeclaw.command-runner","suite":"live-function"}
+{"mode":"timeout","elapsedMs":654,"descendantStopped":true}
+{"mode":"abort","elapsedMs":91,"descendantStopped":true}
+{"mode":"shutdown","elapsedMs":101,"descendantStopped":true}
+{"ok":true,"iterations":8,"descendantsPerIteration":3,"assertion":"nonrunning-at-settlement"}

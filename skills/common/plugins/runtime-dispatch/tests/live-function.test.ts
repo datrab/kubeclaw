@@ -254,12 +254,14 @@ const adapters = new core.AdapterRuntime({
   activated,
   configs: new Map([
     ['kubeclaw.runtime-dispatch:runtime', {
+      payloadStructure: DISPATCH_TEST_CORE_POLICY.httpDispatch.payloadStructure,
       targetByteProfiles:{fixture:{maxRequestBytes:1024,maxResponseBytes:1048576}},
       targets: {
         reviewer: { endpoint: `${origin}/dispatch`, tokenSecret: 'runtime.agent', byteProfile:'fixture' },
       },
     }],
     ['kubeclaw.network-http:http', {
+      errorExcerptCharacters: DISPATCH_TEST_CORE_POLICY.networkHttp.errorExcerptCharacters,
       allowedOrigins: [origin],
       allowedMethods: ['POST'],
       allowedHeaders: ['authorization', 'content-type', 'idempotency-key', 'x-kubeclaw-signature'],
@@ -267,7 +269,7 @@ const adapters = new core.AdapterRuntime({
       maxResponseBytes: 2048,
       timeoutMs: 1000,
     }],
-    ['kubeclaw.repository-adapter:repository', {
+    ['kubeclaw.repository-adapter:repository', {...ARTIFACT_TEST_CORE_POLICY.repositoryRead,
       repositoryRoot: repository,
       maxFileBytes: 2048,
     }],
@@ -276,7 +278,7 @@ const adapters = new core.AdapterRuntime({
     }],
     ['kubeclaw.secret-resolver:secrets', { environment: { 'runtime.agent': environmentName } }],
   ]),
-  effects: new core.EffectCoordinator(journal, undefined, undefined, new core.MemoryResourceLockManager(), 300_000),
+  effects: new core.EffectCoordinator(journal, undefined, undefined, new core.MemoryResourceLockManager(), 300_000, DISPATCH_TEST_CORE_POLICY.resourceAcquisition),
   shutdownTimeoutMs: 1000,
   async emitDomainEvent() {},
 });
@@ -382,6 +384,7 @@ try {
         },
       }],
       ['kubeclaw.network-http:http', {
+      errorExcerptCharacters: DISPATCH_TEST_CORE_POLICY.networkHttp.errorExcerptCharacters,
         allowedOrigins: [origin],
         allowedMethods: ['GET', 'POST'],
         allowedHeaders: ['authorization', 'content-type'],
@@ -389,7 +392,7 @@ try {
         maxResponseBytes: 16_384,
         timeoutMs: 1000,
       }],
-      ['kubeclaw.repository-adapter:repository', {
+      ['kubeclaw.repository-adapter:repository', {...ARTIFACT_TEST_CORE_POLICY.repositoryRead,
         repositoryRoot: repository,
         maxFileBytes: 16_384,
       }],
@@ -402,7 +405,7 @@ try {
       gatewayJournal,
       undefined,
       undefined,
-      new core.MemoryResourceLockManager(), 300_000,
+      new core.MemoryResourceLockManager(), 300_000, DISPATCH_TEST_CORE_POLICY.resourceAcquisition,
     ),
     shutdownTimeoutMs: 1000,
     async emitDomainEvent() {},
