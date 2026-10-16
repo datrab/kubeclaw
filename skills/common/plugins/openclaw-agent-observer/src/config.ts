@@ -91,7 +91,18 @@ function configuredValue(
 
 export function resolveAgentObserverConfig(pluginConfig: unknown = {}, env: UnknownRecord = process.env): AgentObserverConfig {
   const config = asRecord(pluginConfig);
-  return {
+  const selected=Object.hasOwn(config,'policyVersion');
+  if(selected){
+    if(config.policyVersion!=='agent-observer-policy.v1')throw new Error('AGENT_OBSERVER_POLICY_VERSION');
+    const aliases:Record<string,string>={enabled:'OPENCLAW_AGENT_OBSERVER_ENABLED',redisTls:'REDIS_TLS',redisNetworkIsolation:'REDIS_NETWORK_ISOLATION',maxEventBytes:'OPENCLAW_AGENT_OBSERVER_MAX_EVENT_BYTES',maxQueuePerStream:'OPENCLAW_AGENT_OBSERVER_MAX_QUEUE_PER_STREAM',redisCommandTimeoutMs:'OPENCLAW_AGENT_OBSERVER_REDIS_COMMAND_TIMEOUT_MS',streamMaxLen:'OPENCLAW_AGENT_OBSERVER_STREAM_MAXLEN',deadLetterMaxLen:'OPENCLAW_AGENT_OBSERVER_DEADLETTER_MAXLEN',controlWriteMaxAttempts:'OPENCLAW_AGENT_OBSERVER_CONTROL_WRITE_MAX_ATTEMPTS',controlWriteRetryBaseMs:'OPENCLAW_AGENT_OBSERVER_CONTROL_WRITE_RETRY_BASE_MS',controlWriteRetryMaxMs:'OPENCLAW_AGENT_OBSERVER_CONTROL_WRITE_RETRY_MAX_MS',hookPriority:'OPENCLAW_AGENT_OBSERVER_HOOK_PRIORITY',hookTimeoutMs:'OPENCLAW_AGENT_OBSERVER_HOOK_TIMEOUT_MS'};
+    for(const [key,alias] of Object.entries(aliases)){
+      if(!Object.hasOwn(config,key))throw new Error(`AGENT_OBSERVER_POLICY_FIELD_REQUIRED:${key}`);
+      if(Object.hasOwn(env,alias))throw new Error(`AGENT_OBSERVER_POLICY_COMPETING_AUTHOR:${alias}`);
+    }
+    if(typeof config.enabled!=='boolean'||typeof config.redisTls!=='boolean'||!['boolean','string'].includes(typeof config.redisNetworkIsolation))throw new Error('AGENT_OBSERVER_POLICY_TYPE_INVALID');
+    for(const key of Object.keys(aliases).filter(key=>!['enabled','redisTls','redisNetworkIsolation'].includes(key)))if(typeof config[key]!=='number'||!Number.isSafeInteger(config[key]))throw new Error(`AGENT_OBSERVER_POLICY_TYPE_INVALID:${key}`);
+  }
+  const result = {
     enabled: requiredBooleanValue(configuredValue(config, env, 'enabled', 'OPENCLAW_AGENT_OBSERVER_ENABLED'), 'enabled'),
     redisHost: stringValue(configuredValue(config, env, 'redisHost', 'REDIS_HOST')),
     redisPort: positivePort(configuredValue(config, env, 'redisPort', 'REDIS_PORT')),
@@ -110,6 +121,7 @@ export function resolveAgentObserverConfig(pluginConfig: unknown = {}, env: Unkn
     hookPriority: integerValue(configuredValue(config, env, 'hookPriority', 'OPENCLAW_AGENT_OBSERVER_HOOK_PRIORITY'), 'hookPriority'),
     hookTimeoutMs: positiveInteger(configuredValue(config, env, 'hookTimeoutMs', 'OPENCLAW_AGENT_OBSERVER_HOOK_TIMEOUT_MS'), 'hookTimeoutMs'),
   };
+  return selected?Object.freeze(result):result;
 }
 
 export function agentObserverRuntimeEnvironment(): UnknownRecord {

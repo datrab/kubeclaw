@@ -301,20 +301,7 @@ data:
           {{- if eq (.Values.agentRole | default "") "buster" }},
           "kubeclaw-agent-observer": {
             "enabled": true,
-            "config": {
-              "enabled": true,
-              "redisNetworkIsolation": "isolated",
-              "maxEventBytes": 3145728,
-              "maxQueuePerStream": 100,
-              "redisCommandTimeoutMs": 5000,
-              "streamMaxLen": 10000,
-              "deadLetterMaxLen": 1000,
-              "controlWriteMaxAttempts": 3,
-              "controlWriteRetryBaseMs": 100,
-              "controlWriteRetryMaxMs": 1000,
-              "hookPriority": -100,
-              "hookTimeoutMs": 1000
-            },
+            "config": {{ required "Central agentObserverPolicy is required" .Values.agentObserverPolicy | toJson }},
             "hooks": {
               "allowConversationAccess": true
             }

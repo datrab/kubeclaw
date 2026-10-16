@@ -10,26 +10,96 @@
     "type": "object",
     "additionalProperties": false,
     "properties": {
-      "enabled": { "type": "boolean" },
-      "redisHost": { "type": "string" },
-      "redisPort": { "type": "number" },
-      "redisUsername": { "type": "string" },
-      "redisPassword": { "type": "string" },
-      "redisTls": { "type": "boolean" },
-      "redisNetworkIsolation": { "type": ["boolean", "string"] },
-      "maxEventBytes": { "type": "number" },
-      "maxQueuePerStream": { "type": "number" },
-      "redisCommandTimeoutMs": { "type": "number" },
-      "streamMaxLen": { "type": "number" },
-      "deadLetterMaxLen": { "type": "number" },
-      "controlWriteMaxAttempts": { "type": "number" },
-      "controlWriteRetryBaseMs": { "type": "number" },
-      "controlWriteRetryMaxMs": { "type": "number" },
-      "hookPriority": { "type": "number" },
-      "hookTimeoutMs": { "type": "number" }
-    }
+      "enabled": {
+        "type": "boolean"
+      },
+      "redisHost": {
+        "type": "string"
+      },
+      "redisPort": {
+        "type": "number"
+      },
+      "redisUsername": {
+        "type": "string"
+      },
+      "redisPassword": {
+        "type": "string"
+      },
+      "redisTls": {
+        "type": "boolean"
+      },
+      "redisNetworkIsolation": {
+        "type": [
+          "boolean",
+          "string"
+        ]
+      },
+      "maxEventBytes": {
+        "type": "number"
+      },
+      "maxQueuePerStream": {
+        "type": "number"
+      },
+      "redisCommandTimeoutMs": {
+        "type": "number"
+      },
+      "streamMaxLen": {
+        "type": "number"
+      },
+      "deadLetterMaxLen": {
+        "type": "number"
+      },
+      "controlWriteMaxAttempts": {
+        "type": "number"
+      },
+      "controlWriteRetryBaseMs": {
+        "type": "number"
+      },
+      "controlWriteRetryMaxMs": {
+        "type": "number"
+      },
+      "hookPriority": {
+        "type": "number"
+      },
+      "hookTimeoutMs": {
+        "type": "number"
+      },
+      "policyVersion": {
+        "const": "agent-observer-policy.v1"
+      }
+    },
+    "allOf": [
+      {
+        "if": {
+          "required": [
+            "policyVersion"
+          ]
+        },
+        "then": {
+          "required": [
+            "policyVersion",
+            "enabled",
+            "redisTls",
+            "redisNetworkIsolation",
+            "maxEventBytes",
+            "maxQueuePerStream",
+            "redisCommandTimeoutMs",
+            "streamMaxLen",
+            "deadLetterMaxLen",
+            "controlWriteMaxAttempts",
+            "controlWriteRetryBaseMs",
+            "controlWriteRetryMaxMs",
+            "hookPriority",
+            "hookTimeoutMs"
+          ]
+        }
+      }
+    ]
   },
   "uiHints": {
-    "redisPassword": { "label": "Redis password", "sensitive": true }
+    "redisPassword": {
+      "label": "Redis password",
+      "sensitive": true
+    }
   }
 }

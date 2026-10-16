@@ -565,3 +565,20 @@ busterNative:
 
 # Generated transport of the exact immutable image receipt, never operator settings.
 pipelineDelivery: {}
+
+# Single author for the installed OpenClaw observer operating profile.
+agentObserverPolicy:
+  policyVersion: agent-observer-policy.v1
+  enabled: true
+  redisTls: false
+  redisNetworkIsolation: isolated
+  maxEventBytes: 3145728
+  maxQueuePerStream: 100
+  redisCommandTimeoutMs: 5000
+  streamMaxLen: 10000
+  deadLetterMaxLen: 1000
+  controlWriteMaxAttempts: 3
+  controlWriteRetryBaseMs: 100
+  controlWriteRetryMaxMs: 1000
+  hookPriority: -100
+  hookTimeoutMs: 1000

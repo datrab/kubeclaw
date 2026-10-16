@@ -2,7 +2,7 @@
   "updatedAt": "2026-10-16T13:20:20.198723+00:00",
   "revision": "4b1a92a6b6cf9d1e66928ce924a3620f3dba2751",
   "phase": "CONFIG_EXTERNALIZATION",
-  "status": "CONFIG_CONTROLLER_13_WIRED_VERIFIED_REVIEW_OPEN_RECONCILIATION_OPEN",
+  "status": "CONFIG_CONTROLLER_OPS_AND_AGENT_OBSERVER_VERIFIED_REMAINING_MATRIX_AND_NATIVE_OPEN",
   "implementedPhases": [],
   "implementationAccepted": false,
   "scopeUnchanged": "FULL C1-C6; 2409 fields, 6845 cases, 50 requirements",
@@ -272,7 +272,7 @@
     }
   ],
   "blocker": "Exact isolated Linux Docker/UID1000/writable cgroup/native acceptance host still unavailable. Also full original-source replay test needs sufficiently large genuinely root-trusted writable filesystem parent: /dev64MiB ENOSPC; /opt/root/run/var underlying disk EROFS; writable workspace/OpenClaw mounts have non-root or group-writable ancestry. No trust/UID/kernel spoof or skipped acceptance. Continue other authorized code.",
-  "nextAction": "Finish repository-wide actual-value reconciliation: remaining CLI deployment selectors/budgets, worker processing bounds and observer manifest/config authors. Native historic acceptance separate; never claim whole completion from Controller/Ops subsets.",
+  "nextAction": "Use approved field/case joins to finish remaining actual values. WorkerCore runtime input/node/depth/log/retention targets are explicitly pipeline-component.v3 in approved bodies, while live owner is v2: implement a supported retained-original receiving bridge without activating denied v10 candidate; no inferred protocol reclassification. Full native acceptance requires an isolated supported environment.",
   "automation": {
     "jobId": "391f197a-13c5-4925-a477-fa292dd9afcb",
     "enabled": true,
@@ -22717,5 +22717,18 @@
     "independentReview": "Codex final clean, source-only",
     "nativeAccepted": false,
     "deployment": false
+  },
+  "agentObserverPolicy20261016": {
+    "at": "2026-10-16T14:04:38.376156+00:00",
+    "status": "implemented-source-reviewed",
+    "evidence": "docs/review/remediation/config-agent-observer-20261016",
+    "checks": [
+      "whole observer package exit0",
+      "real full Helm/actual typed A/B receiver1/1",
+      "actual selected writer/override/ENV capture behavior"
+    ],
+    "review": "Codex complete-source clean; no reviewer shell/native test proof",
+    "noDiscriminatorReader": "original dynamic behavior retained",
+    "nativeAcceptance": false
   }
 }

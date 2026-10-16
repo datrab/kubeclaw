@@ -1,0 +1,15 @@
+import test from 'node:test';import assert from 'node:assert/strict';import fs from 'node:fs';import os from 'node:os';import path from 'node:path';import {execFileSync} from 'node:child_process';import yaml from 'js-yaml';
+import {buildBusterImageBundle} from '../../../scripts/build-buster-image-bundle.mjs';
+import {resolveAgentObserverConfig} from '../../../skills/common/plugins/openclaw-agent-observer/src/config.ts';
+
+test('central OpenClaw observer profile reaches actual Helm/config receiver A/B with no ENV policy fallback',async t=>{
+ const root=fs.mkdtempSync(path.join(os.tmpdir(),'agent-observer-owner-'));t.after(()=>fs.rmSync(root,{recursive:true,force:true}));const built=await buildBusterImageBundle({repository:process.cwd(),output:path.join(root,'image'),revision:'a'.repeat(40),builtAt:'2026-10-16T00:00:00Z'});
+ const base=yaml.load(fs.readFileSync('charts/kubeclaw/values.yaml','utf8')).agentObserverPolicy;const values=yaml.load(fs.readFileSync('my-values/buster-values.yaml','utf8'));values.pipelineDelivery={buster:built.metadata};values.busterNative={namespace:'kubeclaw',nodeName:'fixture-node',policyDigest:'a'.repeat(64)};values.runtimeInfrastructure={registry:{endpoint:'https://registry.example.test',transport:'https',authSecretName:'fixture'}};values.extraContainers.find(c=>c.name==='buster-v2-runtime').image='ghcr.io/datrab/kubeclaw-buster-runtime@sha256:'+'a'.repeat(64);
+ const file=path.join(root,'values.yaml');const received=[],checksums=[];
+ for(const maxQueuePerStream of [100,25]){
+  values.agentObserverPolicy={...base,maxQueuePerStream};fs.writeFileSync(file,yaml.dump(values));const docs=yaml.loadAll(execFileSync('/usr/local/bin/helm',['template','agent-buster','charts/kubeclaw','--namespace','kubeclaw','-f',file],{encoding:'utf8',stdio:['ignore','pipe','pipe']})).filter(Boolean);const gateway=JSON.parse(docs.find(d=>d.kind==='ConfigMap'&&d.metadata.name==='agent-buster-config').data['openclaw.json']);const actual=gateway.plugins.entries['kubeclaw-agent-observer'].config;assert.deepEqual(actual,values.agentObserverPolicy);const resolved=resolveAgentObserverConfig(actual,{REDIS_HOST:'redis.internal',REDIS_PORT:'6379'});assert.equal(resolved.maxQueuePerStream,maxQueuePerStream);assert.equal(resolved.redisHost,'redis.internal');assert.equal(resolved.redisTls,false);assert(Object.isFrozen(resolved));received.push(resolved);checksums.push(docs.find(d=>d.kind==='Deployment'&&d.metadata.name==='agent-buster').spec.template.metadata.annotations['checksum/config']);
+ }
+ fs.unlinkSync(file);assert.equal(received[0].maxQueuePerStream,100);assert.notEqual(checksums[0],checksums[1]);
+ for(const key of Object.keys(base).filter(k=>k!=='policyVersion')){const missing={...base};delete missing[key];assert.throws(()=>resolveAgentObserverConfig(missing,{}),/FIELD_REQUIRED/);}
+ assert.throws(()=>resolveAgentObserverConfig(base,{OPENCLAW_AGENT_OBSERVER_MAX_QUEUE_PER_STREAM:'100'}),/COMPETING_AUTHOR/);assert.throws(()=>resolveAgentObserverConfig(base,{REDIS_TLS:'false'}),/COMPETING_AUTHOR/);assert.throws(()=>resolveAgentObserverConfig({...base,policyVersion:'future'},{}),/POLICY_VERSION/);
+});
