@@ -98,7 +98,15 @@ function details(values) {
 export function provider() {
   return { async execute(invocation, context = {}) {
     context.signal?.throwIfAborted();
-    const config = invocation.configuration.values;
+    const captured = invocation.configuration;
+    if (captured.schemaVersion === 'provider-configuration.v2' &&
+      (!captured.values || typeof captured.values !== 'object' || Array.isArray(captured.values) || Object.keys(captured.values).length !== 0 || captured.contractId !== 'kubeclaw.coverage-budget@1'
+        || captured.selectedPolicy?.schemaVersion !== 'selected-registration-policy.v1')) throw new Error('QUALITY_TASK_POLICY_OVERRIDE');
+    const config = captured.schemaVersion === 'provider-configuration.v2'
+      ? captured.selectedPolicy.processing : captured.values;
+    if (captured.schemaVersion === 'provider-configuration.v2' && (!config || typeof config !== 'object' || Array.isArray(config)
+      || Object.keys(config).sort().join(',') !== 'combine,minimumLinePercent' || typeof config.combine !== 'boolean'
+      || !Number.isFinite(config.minimumLinePercent))) throw new Error('COVERAGE_BUDGET_V2_PROCESSING_REQUIRED');
     const minimum = config.minimumLinePercent;
     if (minimum !== undefined && (typeof minimum !== 'number' || !Number.isFinite(minimum) || minimum < 0 || minimum > 100)) {
       throw new Error('COVERAGE_BUDGET_MINIMUM_INVALID');

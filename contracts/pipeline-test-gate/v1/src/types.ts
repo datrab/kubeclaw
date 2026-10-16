@@ -74,6 +74,41 @@ export interface ProviderConfigurationV1 {
   values: Record<string, JsonValue>;
 }
 
+/** Immutable transport only; binding metadata is not activation authority. */
+export interface SelectedProviderPolicyV1 {
+  schemaVersion: 'selected-registration-policy.v1';
+  binding: {
+    kind: 'test-provider';
+    packageId: string;
+    registrationId: string;
+    instanceId: string;
+    profileId: string;
+    serviceInstanceId: string;
+    rootDigest: string;
+    ownerDigest: string;
+    profileDigest: string;
+    packageVersion: string;
+    packageContentDigest: string;
+    ownerSchemaDigest: string;
+    taskSchemaDigest: string;
+    readerVersion: string;
+    c3RuntimeSchemaDigest: string;
+    c3ReferenceContractDigest: string;
+  };
+  processing: Record<string, JsonValue>;
+  declarations: { evidenceDefaults: EvidencePolicyV1; retrySafe: boolean; matrixFields: string[] };
+}
+
+export interface ProviderConfigurationV2 {
+  schemaVersion: 'provider-configuration.v2';
+  contractId: 'kubeclaw.coverage-budget@1' | 'kubeclaw.size-budget@1';
+  taskSchemaDigest: string;
+  values: Record<string, JsonValue>;
+  selectedPolicy: SelectedProviderPolicyV1;
+}
+
+export type ProviderConfiguration = ProviderConfigurationV1 | ProviderConfigurationV2;
+
 export interface ProviderInvocationV1 {
   schemaVersion: 'provider-invocation.v1';
   planId: string;
@@ -88,7 +123,7 @@ export interface ProviderInvocationV1 {
   attemptId: string;
   attemptNumber: number;
   provider: ProviderRefV1;
-  configuration: ProviderConfigurationV1;
+  configuration: ProviderConfiguration;
   inputs: ResolvedInputV1[];
   evidence: EvidencePolicyV1;
   grantedCapabilities: string[];
@@ -154,7 +189,7 @@ export interface ResolvedPlanNodeV1 {
   reportAdapters: ReportAdapterRefV1[];
   mode: TestMode | null;
   reviewAgent?: string | null;
-  configuration: ProviderConfigurationV1;
+  configuration: ProviderConfiguration;
   dependencies: DependencyV1[];
   timeoutMs: number;
   limits: ExecutionLimitsV1;

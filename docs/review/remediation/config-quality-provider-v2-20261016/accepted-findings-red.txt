@@ -1,0 +1,54 @@
+✖ restored v2 size plan, invocation and direct runner boundary cannot drop mandatory error evidence (85.516039ms)
+✖ coverage direct v2 incomplete processing rejects before artifact access (1.075508ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 0
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1136.20888
+
+✖ failing tests:
+
+test at ../tmp/quality-provider-v2-red-20261016/regression-red.test.mts:122:1
+✖ restored v2 size plan, invocation and direct runner boundary cannot drop mandatory error evidence (85.516039ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/tmp/quality-provider-v2-red-20261016/regression-red.test.mts:124:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /mandatory-size-evidence/,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at ../tmp/quality-provider-v2-red-20261016/regression-red.test.mts:130:39
+✖ coverage direct v2 incomplete processing rejects before artifact access (1.075508ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /V2_PROCESSING_REQUIRED/. Input:
+  
+  'Error: INPUT_EFFECT'
+  
+      at async TestContext.<anonymous> (file:///home/node/.openclaw/workspace/tmp/quality-provider-v2-red-20261016/regression-red.test.mts:133:2)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: INPUT_EFFECT
+        at get inputs (file:///home/node/.openclaw/workspace/tmp/quality-provider-v2-red-20261016/regression-red.test.mts:132:93)
+        at Object.execute (file:///home/node/.openclaw/workspace/tmp/quality-provider-v2-review-20261016/repo/skills/buster/plugins/coverage-budget/src/provider.js:111:31)
+        at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/tmp/quality-provider-v2-red-20261016/regression-red.test.mts:133:61)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1402:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+        at Test.postRun (node:internal/test_runner/test:1542:19)
+        at Test.run (node:internal/test_runner/test:1467:12)
+        at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3),
+    expected: /V2_PROCESSING_REQUIRED/,
+    operator: 'rejects',
+    diff: 'simple'
+  }

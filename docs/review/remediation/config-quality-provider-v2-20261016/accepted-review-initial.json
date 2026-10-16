@@ -1,0 +1,29 @@
+{
+  "findings": [
+    {
+      "title": "Validate mandatory Size evidence on restored plans and invocations",
+      "body": "The new semantic validation checks the selected configuration but never checks the effective node/invocation evidence policy. A restored v2 Size plan with `evidence.onError: []` therefore passes contract validation and `validateRetainedProviderConfiguration`, despite the resolver rejecting that same task override. The runner uses the effective evidence policy to select retained evidence, so an execution error can lose its mandatory log. Enforce the mandatory Size evidence requirements on effective policies during plan and invocation validation as well as initial resolution.",
+      "priority": "P2",
+      "confidence": 0.94,
+      "category": "bug",
+      "code_location": {
+        "file_path": "contracts/pipeline-test-gate/v1/src/validation.ts",
+        "line": 155
+      }
+    },
+    {
+      "title": "Reject incomplete v2 processing in the direct Coverage API",
+      "body": "The v2 guard validates only the envelope discriminator and empty task values. A v2 configuration with `selectedPolicy.processing: {}` passes this guard, leaves `minimum` undefined, and returns a passing verdict for any valid LCOV input. This silently treats an invalid v2 policy as the historical facts-only configuration, although v2 requires both `minimumLinePercent` and `combine`. Validate the required v2 processing fields before reading artifacts while preserving the legacy no-version API behavior.",
+      "priority": "P2",
+      "confidence": 0.9,
+      "category": "bug",
+      "code_location": {
+        "file_path": "skills/buster/plugins/coverage-budget/src/provider.js",
+        "line": 103
+      }
+    }
+  ],
+  "overall_correctness": "patch is incorrect",
+  "overall_explanation": "The transport preserves original package identities and separates selected processing from task values, but validation differs between resolution, restoration, and direct v2 provider execution. These gaps permit mandatory error evidence to be dropped and an incomplete Coverage v2 policy to produce a passing verdict. Review was source-only; no tests were independently executed.",
+  "overall_confidence": 0.9
+}

@@ -2,6 +2,12 @@ import readline from 'node:readline';
 import process from 'node:process';
 import { pathToFileURL } from 'node:url';
 
+function freeze(value) {
+  if (!value || typeof value !== 'object') return value;
+  for (const child of Object.values(value)) freeze(child);
+  return Object.freeze(value);
+}
+
 function send(value) {
   process.stdout.write(`${JSON.stringify(value)}\n`);
 }
@@ -87,7 +93,8 @@ class ProviderChildSession {
   async #initialize(command) {
     if (!command || command.kind !== 'initialize') throw new Error('TEST_PROVIDER_PROTOCOL_INIT_REQUIRED');
     this.#configureObservation(command.observation);
-    this.#invocation = command.invocation;
+    this.#invocation = command.invocation.configuration?.schemaVersion === 'provider-configuration.v2'
+      ? freeze(command.invocation) : command.invocation;
     const loaded = await import(pathToFileURL(command.modulePath).href);
     const factory = loaded[command.exportName];
     if (typeof factory !== 'function') throw new Error('TEST_PROVIDER_EXPORT_INVALID');

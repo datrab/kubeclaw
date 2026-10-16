@@ -38,7 +38,23 @@ function cancelled(signal) {
 }
 
 function configuration(invocation) {
-  const value = object(invocation.configuration.values, 'root');
+  const captured = invocation.configuration;
+    if (captured.schemaVersion === 'provider-configuration.v2' &&
+      (!captured.values || typeof captured.values !== 'object' || Array.isArray(captured.values) || Object.keys(captured.values).length !== 0 || captured.contractId !== 'kubeclaw.size-budget@1'
+        || captured.selectedPolicy?.schemaVersion !== 'selected-registration-policy.v1')) throw new Error('QUALITY_TASK_POLICY_OVERRIDE');
+    if (captured.schemaVersion === 'provider-configuration.v2') {
+      const processing = object(captured.selectedPolicy.processing, 'processing');
+      const keys = ['format', 'maximumTotalBytes', 'maximumFileCount', 'matchingFiles', 'maximumGrowthBytes', 'maximumGrowthPercent', 'largestFiles'];
+      if (Object.keys(processing).sort().join(',') !== keys.sort().join(',') || processing.format === null || processing.largestFiles === null
+        || !Array.isArray(processing.matchingFiles)
+        || processing.maximumFileCount > MAXIMUM_FILES || processing.maximumGrowthPercent > 1_000_000) throw new Error('SIZE_BUDGET_V2_PROCESSING_REQUIRED');
+      for (const rule of processing.matchingFiles) {
+        if (!rule || typeof rule !== 'object' || Object.keys(rule).sort().join(',') !== 'id,maximumBytes,pattern,requireMatch'
+          || typeof rule.requireMatch !== 'boolean') throw new Error('SIZE_BUDGET_V2_PROCESSING_REQUIRED');
+      }
+    }
+    const value = captured.schemaVersion === 'provider-configuration.v2'
+      ? Object.fromEntries(Object.entries(captured.selectedPolicy.processing).filter(([, value]) => value !== null)) : captured.values;
   const matchingFiles = value.matchingFiles ?? [];
   if (!Array.isArray(matchingFiles) || matchingFiles.length > 32) throw new Error('SIZE_BUDGET_MATCHING_FILES_INVALID');
   const ids = new Set();

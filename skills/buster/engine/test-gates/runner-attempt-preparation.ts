@@ -1,7 +1,8 @@
+import { validateRetainedProviderConfiguration } from '@kubeclaw/plugin-foundation/registry/configuration';
 import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
-import { validatePipelineTestGateContract, type ExecutionState, type ProducedOutputV1, type ProviderInvocationV1, type ResolvedInputV1, type ResolvedPlanNodeV1, type ResolvedTestPlanV1 } from '@kubeclaw/pipeline-test-gate-contract';
+import { validatePipelineTestGateContract, providerPolicyModeErrors, type ExecutionState, type ProducedOutputV1, type ProviderInvocationV1, type ResolvedInputV1, type ResolvedPlanNodeV1, type ResolvedTestPlanV1 } from '@kubeclaw/pipeline-test-gate-contract';
 import type { TestPlanRunnerOptions } from './runner-types.ts';
 import { containedRelative } from './runner-paths.ts';
 import { providerEntry, grantedCapabilities } from './runner-worker-profile.ts';
@@ -96,9 +97,12 @@ function attemptDirectories(owner: PreparationOwner, node: ResolvedPlanNodeV1, a
 
 export function prepareRunnerAttempt(owner: PreparationOwner, node: ResolvedPlanNodeV1,
   attemptNumber: number, outputs: ReadonlyMap<string, readonly ProducedOutputV1[]>) {
+    const entry = providerEntry(owner.options.registry, node);
+    validateRetainedProviderConfiguration(entry, node.configuration, node.provider, node.evidence);
+    const modeErrors = providerPolicyModeErrors(node.configuration, node.mode);
+    if (modeErrors.length) throw new Error(`TEST_PROVIDER_SELECTED_POLICY_INVALID:${modeErrors.join(';')}`);
     const directories = attemptDirectories(owner, node, attemptNumber);
     const { attemptId, attemptRepositoryRelative, scratchDirectory, evidenceDirectory } = directories;
-    const entry = providerEntry(owner.options.registry, node);
     const granted = grantedCapabilities(
       { registry: owner.options.registry, grants: owner.options.grants },
       node,

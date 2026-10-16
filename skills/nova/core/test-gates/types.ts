@@ -1,4 +1,4 @@
-import type { ExecutionLimitsV1, JsonValue, TestMode, GateCoverageV1 } from '@kubeclaw/pipeline-test-gate-contract';
+import type { ExecutionLimitsV1, SelectedProviderPolicyV1, JsonValue, TestMode, GateCoverageV1 } from '@kubeclaw/pipeline-test-gate-contract';
 import type { RegistrySnapshot } from '@kubeclaw/plugin-foundation/registry/types';
 
 export type ResultFilter = 'passed' | 'failed' | 'skipped' | 'errored' | 'cancelled' | 'timed_out';
@@ -102,6 +102,8 @@ export interface ResolveTestPlanInput {
   readonly declaration: TestScopeDeclaration;
   readonly suiteTemplates: readonly SuiteTemplateV1[];
   readonly registry: RegistrySnapshot;
+  /** Authenticated original-generation receiver output; never task configuration. */
+  readonly selectedProviderPolicies?: ReadonlyMap<string, SelectedProviderPolicyV1>;
   readonly facts: ResolverFacts;
   readonly policy: ResolverPolicy;
 }

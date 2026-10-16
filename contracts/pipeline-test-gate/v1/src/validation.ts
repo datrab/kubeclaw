@@ -1,3 +1,4 @@
+import { providerPolicyErrors, providerPolicyEvidenceErrors, providerPolicyModeErrors } from './provider-policy.ts';
 import { gateCoverageResultErrors, type GateCoverageResultV1 } from './coverage-result.ts';
 import { gateCoverageErrors, resolvedCoverageErrors, type GateCoverageV1 } from './coverage.ts';
 import crypto from 'node:crypto';
@@ -6,6 +7,8 @@ import Ajv2020 from 'ajv/dist/2020.js';
 import addFormats from 'ajv-formats';
 import type {
   ContractValidationResult,
+  ProviderConfiguration,
+  ProviderInvocationV1,
   PipelineTestGateDefinition,
   ReportAdapterResultV1,
   ReportCaseOutcome,
@@ -149,6 +152,9 @@ function reportAdapterResultErrors(value: ReportAdapterResultV1): string[] {
 function resolvedTestPlanErrors(value: ResolvedTestPlanV1): string[] {
   const errors: string[] = resolvedCoverageErrors(value);
   for (const node of value.nodes) {
+    errors.push(...providerPolicyErrors(node.configuration, node.provider).map(error => `/nodes/${node.id}${error}`));
+    errors.push(...providerPolicyEvidenceErrors(node.configuration, node.evidence).map(error => `/nodes/${node.id}${error}`));
+    errors.push(...providerPolicyModeErrors(node.configuration, node.mode).map(error => `/nodes/${node.id}${error}`));
     const expected = stableTestIdentity({ project: value.project, moduleId: value.scope.moduleId,
       gateId: value.scope.gateId, suiteInstanceId: node.suiteInstanceId, nodeId: node.id, variation: node.variation });
     if (node.testIdentity !== expected) errors.push(`/nodes/${node.id}/testIdentity must match the stable declared identity`);
@@ -251,7 +257,10 @@ export function checkPipelineTestGateContract(definition: PipelineTestGateDefini
   const validate = validator(definition);
   const ok = validate(value);
   if (!ok) return { ok: false, errors: errorText(validate.errors) };
-  const semanticErrors = definition === 'gateCoverageResult' ? gateCoverageResultErrors(value as GateCoverageResultV1)
+  const semanticErrors = definition === 'providerConfiguration' ? providerPolicyErrors(value as ProviderConfiguration)
+    : definition === 'providerInvocation' ? [...providerPolicyErrors((value as ProviderInvocationV1).configuration, (value as ProviderInvocationV1).provider),
+      ...providerPolicyEvidenceErrors((value as ProviderInvocationV1).configuration, (value as ProviderInvocationV1).evidence)]
+    : definition === 'gateCoverageResult' ? gateCoverageResultErrors(value as GateCoverageResultV1)
     : definition === 'gateCoverage' ? gateCoverageErrors(value as GateCoverageV1)
     : definition === 'reportAdapterResult'
     ? reportAdapterResultErrors(value as ReportAdapterResultV1)
