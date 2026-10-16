@@ -167,6 +167,20 @@ func TestControllerActualDeliveredPolicy(t *testing.T) {
 			t.Fatal("delivered API timeout mismatch", policy.HTTPClientTimeoutSeconds, selected)
 		}
 	}
+	if selected := os.Getenv("CONTROLLER_TEST_REFRESH_SECONDS"); selected != "" {
+		expected, err := strconv.ParseInt(selected, 10, 64)
+		if err != nil || policy.RuntimeSecurityRefreshSeconds != expected {
+			t.Fatal("delivered refresh mismatch", policy.RuntimeSecurityRefreshSeconds, selected)
+		}
+		now := time.Date(2026, 10, 16, 0, 0, 0, 0, time.UTC)
+		duration := time.Duration(policy.RuntimeSecurityRefreshSeconds) * time.Second
+		if runtimeSecurityRefreshDue(map[string]interface{}{"phase": "Observed", "observedAt": now.Add(-duration + time.Second).Format(time.RFC3339)}, now, duration) {
+			t.Fatal("refresh before selected boundary")
+		}
+		if !runtimeSecurityRefreshDue(map[string]interface{}{"phase": "Observed", "observedAt": now.Add(-duration).Format(time.RFC3339)}, now, duration) {
+			t.Fatal("no refresh at selected boundary")
+		}
+	}
 	f := newReadyHTTPFixture(t, readyCredentials(t))
 	f.controller.policy = policy
 	status, result := f.call("/v1/demo-ready", "producer-token", f.request)
@@ -268,5 +282,38 @@ func TestControllerSelectedAPITimeout(t *testing.T) {
 	}
 	if _, err := kubernetesHTTPClientFromCA(ca, controllerPolicy{}); err == nil {
 		t.Fatal("zero policy accepted as unlimited")
+	}
+}
+
+func TestControllerRefreshPolicyCapture(t *testing.T) {
+	p := testControllerPolicy(t)
+	file := filepath.Join(t.TempDir(), "policy.json")
+	raw, _ := json.Marshal(p)
+	if err := os.WriteFile(file, raw, 0600); err != nil {
+		t.Fatal(err)
+	}
+	a, err := loadControllerPolicy(file)
+	if err != nil {
+		t.Fatal(err)
+	}
+	p.RuntimeSecurityRefreshSeconds = 10
+	raw, _ = json.Marshal(p)
+	if err := os.WriteFile(file, raw, 0600); err != nil {
+		t.Fatal(err)
+	}
+	b, err := loadControllerPolicy(file)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := os.Remove(file); err != nil {
+		t.Fatal(err)
+	}
+	now := time.Date(2026, 10, 16, 0, 0, 0, 0, time.UTC)
+	snapshot := map[string]interface{}{"phase": "Observed", "observedAt": now.Add(-5 * time.Second).Format(time.RFC3339)}
+	if !runtimeSecurityRefreshDue(snapshot, now, time.Duration(a.RuntimeSecurityRefreshSeconds)*time.Second) || runtimeSecurityRefreshDue(snapshot, now, time.Duration(b.RuntimeSecurityRefreshSeconds)*time.Second) {
+		t.Fatal("selected A/B refresh not retained")
+	}
+	if _, err := loadControllerPolicy(file); err == nil {
+		t.Fatal("missing owner accepted")
 	}
 }

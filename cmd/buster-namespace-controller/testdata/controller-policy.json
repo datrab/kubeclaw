@@ -12,5 +12,6 @@
   "productHandlerTimeoutSeconds": 15,
   "productMaximumBodyBytes": 16384,
   "productDecisionMaximumValiditySeconds": 300,
-  "httpClientTimeoutSeconds": 60
+  "httpClientTimeoutSeconds": 60,
+  "runtimeSecurityRefreshSeconds": 5
 }

@@ -835,13 +835,13 @@ func TestRuntimeSecurityResultDigestUsesCanonicalPayload(t *testing.T) {
 
 func TestRuntimeSecurityRefreshAvoidsStatusPatchLoop(t *testing.T) {
 	now := time.Date(2026, 9, 4, 6, 0, 0, 0, time.UTC)
-	if runtimeSecurityRefreshDue(map[string]interface{}{"phase": "Observed", "observedAt": now.Add(-4 * time.Second).Format(time.RFC3339)}, now) {
+	if runtimeSecurityRefreshDue(map[string]interface{}{"phase": "Observed", "observedAt": now.Add(-4 * time.Second).Format(time.RFC3339)}, now, time.Duration(testControllerPolicy(t).RuntimeSecurityRefreshSeconds)*time.Second) {
 		t.Fatal("fresh runtime-security status must not refresh on each controller poll")
 	}
-	if !runtimeSecurityRefreshDue(map[string]interface{}{"phase": "Observed", "observedAt": now.Add(-5 * time.Second).Format(time.RFC3339)}, now) {
+	if !runtimeSecurityRefreshDue(map[string]interface{}{"phase": "Observed", "observedAt": now.Add(-5 * time.Second).Format(time.RFC3339)}, now, time.Duration(testControllerPolicy(t).RuntimeSecurityRefreshSeconds)*time.Second) {
 		t.Fatal("runtime-security status must refresh at the bounded interval")
 	}
-	if runtimeSecurityRefreshDue(map[string]interface{}{"phase": "Unavailable"}, now) {
+	if runtimeSecurityRefreshDue(map[string]interface{}{"phase": "Unavailable"}, now, time.Duration(testControllerPolicy(t).RuntimeSecurityRefreshSeconds)*time.Second) {
 		t.Fatal("immutable leases without security inputs must not patch unchanged unavailable status")
 	}
 }

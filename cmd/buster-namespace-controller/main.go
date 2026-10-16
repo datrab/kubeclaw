@@ -26,7 +26,6 @@ const (
 	serviceAccountTokenPath     = "/var/run/secrets/kubernetes.io/serviceaccount/token"
 	serviceAccountCAPath        = "/var/run/secrets/kubernetes.io/serviceaccount/ca.crt"
 	leasePlural                 = "busternamespaceleases"
-	runtimeSecurityRefreshAfter = 5 * time.Second
 )
 
 var errNamespaceOwnershipMismatch = errors.New("namespace ownership does not match lease")
@@ -362,7 +361,7 @@ func (c *controller) reconcileReadyLease(ctx context.Context, item *lease, names
 		exposure[key] = value
 	}
 	runtimeSecurity := objectValue(item.Status["runtimeSecurity"])
-	if runtimeSecurityRefreshDue(runtimeSecurity, time.Now().UTC()) {
+	if runtimeSecurityRefreshDue(runtimeSecurity, time.Now().UTC(), time.Duration(c.policy.RuntimeSecurityRefreshSeconds)*time.Second) {
 		var err error
 		runtimeSecurity, err = c.runtimeSecurityStatus(ctx, item, namespaceName)
 		if err != nil {
@@ -392,7 +391,7 @@ func (c *controller) reconcileReadyLease(ctx context.Context, item *lease, names
 	return c.patchLeaseStatus(ctx, item, next)
 }
 
-func runtimeSecurityRefreshDue(snapshot map[string]interface{}, now time.Time) bool {
+func runtimeSecurityRefreshDue(snapshot map[string]interface{}, now time.Time, refreshAfter time.Duration) bool {
 	phase := stringValue(snapshot["phase"])
 	if phase == "Unavailable" {
 		return false
@@ -404,7 +403,7 @@ func runtimeSecurityRefreshDue(snapshot map[string]interface{}, now time.Time) b
 	if err != nil || observedAt.After(now.Add(5*time.Second)) {
 		return true
 	}
-	return now.Sub(observedAt) >= runtimeSecurityRefreshAfter
+	return now.Sub(observedAt) >= refreshAfter
 }
 
 func runtimeSecurityStatusEqual(left interface{}, right map[string]interface{}) bool {
