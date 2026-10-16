@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-16T13:20:20.198723+00:00",
+  "updatedAt": "2026-10-16T14:07:48.944659+00:00",
   "revision": "4b1a92a6b6cf9d1e66928ce924a3620f3dba2751",
   "phase": "CONFIG_EXTERNALIZATION",
   "status": "CONFIG_CONTROLLER_OPS_AND_AGENT_OBSERVER_VERIFIED_REMAINING_MATRIX_AND_NATIVE_OPEN",
@@ -272,7 +272,7 @@
     }
   ],
   "blocker": "Exact isolated Linux Docker/UID1000/writable cgroup/native acceptance host still unavailable. Also full original-source replay test needs sufficiently large genuinely root-trusted writable filesystem parent: /dev64MiB ENOSPC; /opt/root/run/var underlying disk EROFS; writable workspace/OpenClaw mounts have non-root or group-writable ancestry. No trust/UID/kernel spoof or skipped acceptance. Continue other authorized code.",
-  "nextAction": "Use approved field/case joins to finish remaining actual values. WorkerCore runtime input/node/depth/log/retention targets are explicitly pipeline-component.v3 in approved bodies, while live owner is v2: implement a supported retained-original receiving bridge without activating denied v10 candidate; no inferred protocol reclassification. Full native acceptance requires an isolated supported environment.",
+  "nextAction": "Continue defined WorkerCore C3 v3 receiving/original binding bridge and exact matrix reconciliation; do not invent missing author definitions or promote denied v10. Native full acceptance needs isolated Linux Docker/UID1000/delegated writable cgroup environment (requested from Raven); not a blanket source-audit blocker.",
   "automation": {
     "jobId": "391f197a-13c5-4925-a477-fa292dd9afcb",
     "enabled": true,
@@ -22730,5 +22730,45 @@
     "review": "Codex complete-source clean; no reviewer shell/native test proof",
     "noDiscriminatorReader": "original dynamic behavior retained",
     "nativeAcceptance": false
+  },
+  "closeoutCheckpoint20261016": {
+    "at": "2026-10-16T14:07:48.944659+00:00",
+    "sourceCommit": "ff1359c1af930b91da44809fbeda7050d9a56b8a",
+    "remoteVerified": true,
+    "completedSourceCheckpoints": {
+      "controller": "5d08f9b1b605aaaaf4d5c6fc65d98f97ad1285f1",
+      "opsRuntime": "d2d8fa5611d4d9473de0d0e314bfc09be5ebb8d0",
+      "opsDeployment": "4aa52f105",
+      "agentObserver": "ff1359c1af930b91da44809fbeda7050d9a56b8a"
+    },
+    "checks": {
+      "controllerGoPassEvents": 131,
+      "controllerAndCentralDelivery": "6/6",
+      "opsMcp": "19/19",
+      "opsSupervisor": "2/2",
+      "opsDeploymentNew": "2/2",
+      "originalDeploymentRenderRegression": "8/8",
+      "observerPackage": "exit0; build/type/config/actual writer/remediation",
+      "observerHelmReceiver": "1/1",
+      "independentSourceGroupsClean": 4,
+      "prismAndBusterProjectionCheck": "pass"
+    },
+    "nativeEnvironmentObservation": {
+      "uid": 0,
+      "cgroupMount": "ro,nosuid,nodev,noexec",
+      "dockerExecutable": false,
+      "dockerSocket": false,
+      "pairedNodes": 0
+    },
+    "taskComplete": false,
+    "remaining": [
+      "WorkerCore defined v3 receiving/immutable-original bridge into actual named callers, without denied v10 candidate promotion",
+      "remaining original matrix/source reconciliation, not a new invented global setting count",
+      "full native/original-reader independent acceptance"
+    ],
+    "requestedUserInput": "isolated supported Linux test system/Node and access route; no secrets in channel",
+    "retainedUnrelatedWipPreserved": true,
+    "deployment": false,
+    "mainMerge": false
   }
 }

@@ -1,0 +1,40 @@
+{
+  "at": "2026-10-16T14:07:48.944659+00:00",
+  "sourceCommit": "ff1359c1af930b91da44809fbeda7050d9a56b8a",
+  "remoteVerified": true,
+  "completedSourceCheckpoints": {
+    "controller": "5d08f9b1b605aaaaf4d5c6fc65d98f97ad1285f1",
+    "opsRuntime": "d2d8fa5611d4d9473de0d0e314bfc09be5ebb8d0",
+    "opsDeployment": "4aa52f105",
+    "agentObserver": "ff1359c1af930b91da44809fbeda7050d9a56b8a"
+  },
+  "checks": {
+    "controllerGoPassEvents": 131,
+    "controllerAndCentralDelivery": "6/6",
+    "opsMcp": "19/19",
+    "opsSupervisor": "2/2",
+    "opsDeploymentNew": "2/2",
+    "originalDeploymentRenderRegression": "8/8",
+    "observerPackage": "exit0; build/type/config/actual writer/remediation",
+    "observerHelmReceiver": "1/1",
+    "independentSourceGroupsClean": 4,
+    "prismAndBusterProjectionCheck": "pass"
+  },
+  "nativeEnvironmentObservation": {
+    "uid": 0,
+    "cgroupMount": "ro,nosuid,nodev,noexec",
+    "dockerExecutable": false,
+    "dockerSocket": false,
+    "pairedNodes": 0
+  },
+  "taskComplete": false,
+  "remaining": [
+    "WorkerCore defined v3 receiving/immutable-original bridge into actual named callers, without denied v10 candidate promotion",
+    "remaining original matrix/source reconciliation, not a new invented global setting count",
+    "full native/original-reader independent acceptance"
+  ],
+  "requestedUserInput": "isolated supported Linux test system/Node and access route; no secrets in channel",
+  "retainedUnrelatedWipPreserved": true,
+  "deployment": false,
+  "mainMerge": false
+}

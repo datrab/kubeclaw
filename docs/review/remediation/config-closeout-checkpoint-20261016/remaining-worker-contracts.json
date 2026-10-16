@@ -1,0 +1,829 @@
+{
+  "qualification": "Approved source contracts exist; not missing definitions and not reclassified as protocol to claim completion. A live versioned receiving/original binding bridge is still implementation work. Denied v10 activation is not authorized.",
+  "liveOwnerVersion": "pipeline-component.v2",
+  "targetOwnerVersion": "pipeline-component.v3",
+  "requiredTargetSections": [
+    "localRuntime",
+    "runtime",
+    "scaffoldPublication"
+  ],
+  "rows": [
+    {
+      "id": "CMP-WCORE-DRAIN-POLL-MS",
+      "disposition": "active-required",
+      "author": "config/components/worker-core.config.json#/profiles/<explicitSelectedProfile>/settings/runtime/drain_poll_ms",
+      "schema": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-15/schemas/C3/worker-core.schema.json",
+        "sha256": "22c665a659ae8af436b642ef8959e3f2ca6aebcefd1e9858ff718386dbd65630",
+        "pointer": "/properties/profiles/additionalProperties/properties/settings/properties/runtime/properties/drain_poll_ms",
+        "exactBody": {
+          "type": "integer",
+          "minimum": 10,
+          "maximum": 20
+        }
+      },
+      "binding": {
+        "current": "existing construction/input capture, no CONFIG hotreload",
+        "targetClass": "captured instance/module policy, retained record/run closure where related",
+        "targetReason": "Explicit original/history binding and domain/capacity/role relationships in docs/review/evidence/config-acceptance/components/core-adjustability-current.md"
+      },
+      "recovery": "Never change captured claim/deadline/envelope/kernel identity or clear accepted replay/journal records. Drain cadence is distinct from existing pollIntervalMs; 10ms not Linux ABI."
+    },
+    {
+      "id": "CMP-WCORE-INPUT-BYTES",
+      "disposition": "active-required",
+      "author": "config/components/worker-core.config.json#/profiles/<explicitSelectedProfile>/settings/runtime/input_bytes",
+      "schema": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-15/schemas/C3/worker-core.schema.json",
+        "sha256": "22c665a659ae8af436b642ef8959e3f2ca6aebcefd1e9858ff718386dbd65630",
+        "pointer": "/properties/profiles/additionalProperties/properties/settings/properties/runtime/properties/input_bytes",
+        "exactBody": {
+          "type": "integer",
+          "minimum": 12582912,
+          "maximum": 16777216
+        }
+      },
+      "binding": {
+        "current": "existing construction/input capture, no CONFIG hotreload",
+        "targetClass": "captured instance/module policy, retained record/run closure where related",
+        "targetReason": "Explicit original/history binding and domain/capacity/role relationships in docs/review/evidence/config-acceptance/components/core-adjustability-current.md"
+      },
+      "recovery": "Never change captured claim/deadline/envelope/kernel identity or clear accepted replay/journal records. Resource ceiling for complete encoded input, not schema byte identity."
+    },
+    {
+      "id": "CMP-WCORE-JOURNAL-DIAGNOSTIC-UNITS",
+      "disposition": "active-required",
+      "author": "config/components/worker-core.config.json#/profiles/<explicitSelectedProfile>/settings/runtime/journal_diagnostic_units",
+      "schema": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-15/schemas/C3/worker-core.schema.json",
+        "sha256": "22c665a659ae8af436b642ef8959e3f2ca6aebcefd1e9858ff718386dbd65630",
+        "pointer": "/properties/profiles/additionalProperties/properties/settings/properties/runtime/properties/journal_diagnostic_units",
+        "exactBody": {
+          "type": "integer",
+          "minimum": 2048,
+          "maximum": 4096
+        }
+      },
+      "binding": {
+        "current": "existing construction/input capture, no CONFIG hotreload",
+        "targetClass": "captured instance/module policy, retained record/run closure where related",
+        "targetReason": "Explicit original/history binding and domain/capacity/role relationships in docs/review/evidence/config-acceptance/components/core-adjustability-current.md"
+      },
+      "recovery": "Never change captured claim/deadline/envelope/kernel identity or clear accepted replay/journal records. Persisted process diagnostic storage policy; lower generation cannot invalidate retained history."
+    },
+    {
+      "id": "CMP-WCORE-JOURNAL-RECORD-BYTES",
+      "disposition": "active-required",
+      "author": "config/components/worker-core.config.json#/profiles/<explicitSelectedProfile>/settings/runtime/journal_record_bytes",
+      "schema": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-15/schemas/C3/worker-core.schema.json",
+        "sha256": "22c665a659ae8af436b642ef8959e3f2ca6aebcefd1e9858ff718386dbd65630",
+        "pointer": "/properties/profiles/additionalProperties/properties/settings/properties/runtime/properties/journal_record_bytes",
+        "exactBody": {
+          "type": "integer",
+          "minimum": 32768,
+          "maximum": 65536
+        }
+      },
+      "binding": {
+        "current": "existing construction/input capture, no CONFIG hotreload",
+        "targetClass": "captured instance/module policy, retained record/run closure where related",
+        "targetReason": "Explicit original/history binding and domain/capacity/role relationships in docs/review/evidence/config-acceptance/components/core-adjustability-current.md"
+      },
+      "recovery": "Never change captured claim/deadline/envelope/kernel identity or clear accepted replay/journal records. Record quota not schema const. reservationBytes +=65536 is coupled capacity alias, not second author; historical admitted terminal reservation retained."
+    },
+    {
+      "id": "CMP-WCORE-JSON-DEPTH",
+      "disposition": "active-required",
+      "author": "config/components/worker-core.config.json#/profiles/<explicitSelectedProfile>/settings/runtime/json_depth",
+      "schema": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-15/schemas/C3/worker-core.schema.json",
+        "sha256": "22c665a659ae8af436b642ef8959e3f2ca6aebcefd1e9858ff718386dbd65630",
+        "pointer": "/properties/profiles/additionalProperties/properties/settings/properties/runtime/properties/json_depth",
+        "exactBody": {
+          "type": "integer",
+          "minimum": 48,
+          "maximum": 64
+        }
+      },
+      "binding": {
+        "current": "existing construction/input capture, no CONFIG hotreload",
+        "targetClass": "captured instance/module policy, retained record/run closure where related",
+        "targetReason": "Explicit original/history binding and domain/capacity/role relationships in docs/review/evidence/config-acceptance/components/core-adjustability-current.md"
+      },
+      "recovery": "Never change captured claim/deadline/envelope/kernel identity or clear accepted replay/journal records. Bounded traversal policy; complete wire structure remains valid below limit."
+    },
+    {
+      "id": "CMP-WCORE-JSON-NODES",
+      "disposition": "active-required",
+      "author": "config/components/worker-core.config.json#/profiles/<explicitSelectedProfile>/settings/runtime/json_nodes",
+      "schema": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-15/schemas/C3/worker-core.schema.json",
+        "sha256": "22c665a659ae8af436b642ef8959e3f2ca6aebcefd1e9858ff718386dbd65630",
+        "pointer": "/properties/profiles/additionalProperties/properties/settings/properties/runtime/properties/json_nodes",
+        "exactBody": {
+          "type": "integer",
+          "minimum": 75000,
+          "maximum": 100000
+        }
+      },
+      "binding": {
+        "current": "existing construction/input capture, no CONFIG hotreload",
+        "targetClass": "captured instance/module policy, retained record/run closure where related",
+        "targetReason": "Explicit original/history binding and domain/capacity/role relationships in docs/review/evidence/config-acceptance/components/core-adjustability-current.md"
+      },
+      "recovery": "Never change captured claim/deadline/envelope/kernel identity or clear accepted replay/journal records. Resource traversal work budget shared across input/result; cycles/prototypes independent invariants."
+    },
+    {
+      "id": "CMP-WCORE-LOCK-STRIPES",
+      "disposition": "active-required",
+      "author": "config/components/worker-core.config.json#/profiles/<explicitSelectedProfile>/settings/runtime/journalLockHexDigits",
+      "schema": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-15/schemas/C3/worker-core.schema.json",
+        "sha256": "22c665a659ae8af436b642ef8959e3f2ca6aebcefd1e9858ff718386dbd65630",
+        "pointer": "/properties/profiles/additionalProperties/properties/settings/properties/runtime/properties/journalLockHexDigits",
+        "exactBody": {
+          "type": "integer",
+          "enum": [
+            1,
+            2
+          ]
+        }
+      },
+      "binding": {
+        "current": "fixed suffix width for every native journal admission lock",
+        "targetClass": "S/R routing-root policy",
+        "targetReason": "Explicit original/history binding and domain/capacity/role relationships in docs/review/evidence/config-acceptance/components/core-adjustability-current.md"
+      },
+      "recovery": "Never change captured claim/deadline/envelope/kernel identity or clear accepted replay/journal records. Digest-derived routing gives same claim same fence across processes; bounds rejected request lock metadata. If changed, versioned concurrency/recovery migration required."
+    },
+    {
+      "id": "CMP-WCORE-LOG-PARTS",
+      "disposition": "active-required",
+      "author": "config/components/worker-core.config.json#/profiles/<explicitSelectedProfile>/settings/runtime/log_parts",
+      "schema": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-15/schemas/C3/worker-core.schema.json",
+        "sha256": "22c665a659ae8af436b642ef8959e3f2ca6aebcefd1e9858ff718386dbd65630",
+        "pointer": "/properties/profiles/additionalProperties/properties/settings/properties/runtime/properties/log_parts",
+        "exactBody": {
+          "type": "integer",
+          "minimum": 7500,
+          "maximum": 10000
+        }
+      },
+      "binding": {
+        "current": "existing construction/input capture, no CONFIG hotreload",
+        "targetClass": "captured instance/module policy, retained record/run closure where related",
+        "targetReason": "Explicit original/history binding and domain/capacity/role relationships in docs/review/evidence/config-acceptance/components/core-adjustability-current.md"
+      },
+      "recovery": "Never change captured claim/deadline/envelope/kernel identity or clear accepted replay/journal records. Distinct callback/chunk count independent of logBytes; final system terminator emitted separately."
+    },
+    {
+      "id": "CMP-WCORE-NODE-IDENTITY-FILE-BYTES",
+      "disposition": "active-required",
+      "author": "config/components/worker-core.config.json#/profiles/<explicitSelectedProfile>/settings/runtime/node_identity_file_bytes",
+      "schema": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-15/schemas/C3/worker-core.schema.json",
+        "sha256": "22c665a659ae8af436b642ef8959e3f2ca6aebcefd1e9858ff718386dbd65630",
+        "pointer": "/properties/profiles/additionalProperties/properties/settings/properties/runtime/properties/node_identity_file_bytes",
+        "exactBody": {
+          "type": "integer",
+          "minimum": 64,
+          "maximum": 128
+        }
+      },
+      "binding": {
+        "current": "existing construction/input capture, no CONFIG hotreload",
+        "targetClass": "captured instance/module policy, retained record/run closure where related",
+        "targetReason": "Explicit original/history binding and domain/capacity/role relationships in docs/review/evidence/config-acceptance/components/core-adjustability-current.md"
+      },
+      "recovery": "Never change captured claim/deadline/envelope/kernel identity or clear accepted replay/journal records. Bounded host identity input; UUID format remains protocol."
+    },
+    {
+      "id": "CMP-WCORE-OWNERSHIP-DIAGNOSTIC-UNITS",
+      "disposition": "active-required",
+      "author": "config/components/worker-core.config.json#/profiles/<explicitSelectedProfile>/settings/runtime/ownership_diagnostic_units",
+      "schema": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-15/schemas/C3/worker-core.schema.json",
+        "sha256": "22c665a659ae8af436b642ef8959e3f2ca6aebcefd1e9858ff718386dbd65630",
+        "pointer": "/properties/profiles/additionalProperties/properties/settings/properties/runtime/properties/ownership_diagnostic_units",
+        "exactBody": {
+          "type": "integer",
+          "minimum": 2048,
+          "maximum": 4096
+        }
+      },
+      "binding": {
+        "current": "existing construction/input capture, no CONFIG hotreload",
+        "targetClass": "captured instance/module policy, retained record/run closure where related",
+        "targetReason": "Explicit original/history binding and domain/capacity/role relationships in docs/review/evidence/config-acceptance/components/core-adjustability-current.md"
+      },
+      "recovery": "Never change captured claim/deadline/envelope/kernel identity or clear accepted replay/journal records. Clipping and persisted validation must share author/version semantics; independent native-worker-ownership 4096 literal is competing definition."
+    },
+    {
+      "id": "CMP-WCORE-POOL-FILE-BYTES",
+      "disposition": "active-required",
+      "author": "config/components/worker-core.config.json#/profiles/<explicitSelectedProfile>/settings/runtime/pool_file_bytes",
+      "schema": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-15/schemas/C3/worker-core.schema.json",
+        "sha256": "22c665a659ae8af436b642ef8959e3f2ca6aebcefd1e9858ff718386dbd65630",
+        "pointer": "/properties/profiles/additionalProperties/properties/settings/properties/runtime/properties/pool_file_bytes",
+        "exactBody": {
+          "type": "integer",
+          "minimum": 32768,
+          "maximum": 65536
+        }
+      },
+      "binding": {
+        "current": "existing construction/input capture, no CONFIG hotreload",
+        "targetClass": "captured instance/module policy, retained record/run closure where related",
+        "targetReason": "Explicit original/history binding and domain/capacity/role relationships in docs/review/evidence/config-acceptance/components/core-adjustability-current.md"
+      },
+      "recovery": "Never change captured claim/deadline/envelope/kernel identity or clear accepted replay/journal records. File input resource ceiling; root/no-follow/mode invariants fixed independently."
+    },
+    {
+      "id": "CMP-WCORE-RETAIN-LOGS",
+      "disposition": "active-required",
+      "author": "config/components/worker-core.config.json#/profiles/<explicitSelectedProfile>/settings/runtime/retain_logs",
+      "schema": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-15/schemas/C3/worker-core.schema.json",
+        "sha256": "22c665a659ae8af436b642ef8959e3f2ca6aebcefd1e9858ff718386dbd65630",
+        "pointer": "/properties/profiles/additionalProperties/properties/settings/properties/runtime/properties/retain_logs",
+        "exactBody": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "prism-native",
+            "prism-agent",
+            "buster-provider",
+            "buster-preparation",
+            "buster-historical-import",
+            "buster-source-cleanup"
+          ],
+          "properties": {
+            "prism-native": {
+              "type": "boolean"
+            },
+            "prism-agent": {
+              "type": "boolean"
+            },
+            "buster-provider": {
+              "type": "boolean"
+            },
+            "buster-preparation": {
+              "type": "boolean"
+            },
+            "buster-historical-import": {
+              "type": "boolean"
+            },
+            "buster-source-cleanup": {
+              "type": "boolean"
+            }
+          }
+        }
+      },
+      "binding": {
+        "current": "existing construction/input capture, no CONFIG hotreload",
+        "targetClass": "captured instance/module policy, retained record/run closure where related",
+        "targetReason": "Explicit original/history binding and domain/capacity/role relationships in docs/review/evidence/config-acceptance/components/core-adjustability-current.md"
+      },
+      "recovery": "Retain captured rolepolicy and original consumed logs/receipts; three owned Buster hosts explicitly false, no assumption that all callers omit retention."
+    },
+    {
+      "id": "CMP-WCORE-RUNTIME-IDENTITY-FILE-BYTES",
+      "disposition": "active-required",
+      "author": "config/components/worker-core.config.json#/profiles/<explicitSelectedProfile>/settings/runtime/runtime_identity_file_bytes",
+      "schema": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-15/schemas/C3/worker-core.schema.json",
+        "sha256": "22c665a659ae8af436b642ef8959e3f2ca6aebcefd1e9858ff718386dbd65630",
+        "pointer": "/properties/profiles/additionalProperties/properties/settings/properties/runtime/properties/runtime_identity_file_bytes",
+        "exactBody": {
+          "type": "integer",
+          "minimum": 2048,
+          "maximum": 4096
+        }
+      },
+      "binding": {
+        "current": "existing construction/input capture, no CONFIG hotreload",
+        "targetClass": "captured instance/module policy, retained record/run closure where related",
+        "targetReason": "Explicit original/history binding and domain/capacity/role relationships in docs/review/evidence/config-acceptance/components/core-adjustability-current.md"
+      },
+      "recovery": "Never change captured claim/deadline/envelope/kernel identity or clear accepted replay/journal records. Bounded host identity input; kernel boot/ns identity not operator author."
+    },
+    {
+      "id": "CMP-worker-core-localRuntime.cancellationTimeoutMs",
+      "disposition": "active-required",
+      "author": "config/components/worker-core.config.json#/profiles/<explicitSelectedProfile>/settings/localRuntime/cancellationTimeoutMs",
+      "schema": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-15/schemas/C1/worker-core.schema.json",
+        "sha256": "8bd4f48d6beadab9e3c011663dac18e3361f1d6eab0b3ffa3bd1bcb0af6eff3c",
+        "pointer": "/$defs/positiveTimerInteger",
+        "exactBody": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        }
+      },
+      "binding": {
+        "current": "S: fully validated startup snapshot; no durable next-module selector",
+        "targetClass": "R",
+        "targetReason": "Local runtime replay identity capacity and shutdown drain/cancellation apply to captured runtime lifetime; cannot reset active run replay/accepted identities.",
+        "allowedTransition": "R remains run-bound; S requires validated new service/supervisor generation with existing durable-state reconciliation; M selects before dispatch and persists immutable full closure, never reloads started module",
+        "eval": "Fixed generation always; no implemented Eval runner inferred."
+      },
+      "recovery": "LocalWorkerRuntime keeps replay identity set capped by replayLimit; stop drain timeout followed by cancellation timeout; new config must not clear accepted attempts."
+    },
+    {
+      "id": "CMP-worker-core-localRuntime.drainTimeoutMs",
+      "disposition": "active-required",
+      "author": "config/components/worker-core.config.json#/profiles/<explicitSelectedProfile>/settings/localRuntime/drainTimeoutMs",
+      "schema": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-15/schemas/C1/worker-core.schema.json",
+        "sha256": "8bd4f48d6beadab9e3c011663dac18e3361f1d6eab0b3ffa3bd1bcb0af6eff3c",
+        "pointer": "/$defs/positiveTimerInteger",
+        "exactBody": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        }
+      },
+      "binding": {
+        "current": "S: fully validated startup snapshot; no durable next-module selector",
+        "targetClass": "R",
+        "targetReason": "Local runtime replay identity capacity and shutdown drain/cancellation apply to captured runtime lifetime; cannot reset active run replay/accepted identities.",
+        "allowedTransition": "R remains run-bound; S requires validated new service/supervisor generation with existing durable-state reconciliation; M selects before dispatch and persists immutable full closure, never reloads started module",
+        "eval": "Fixed generation always; no implemented Eval runner inferred."
+      },
+      "recovery": "LocalWorkerRuntime keeps replay identity set capped by replayLimit; stop drain timeout followed by cancellation timeout; new config must not clear accepted attempts."
+    },
+    {
+      "id": "CMP-worker-core-localRuntime.replayLimit",
+      "disposition": "active-required",
+      "author": "config/components/worker-core.config.json#/profiles/<explicitSelectedProfile>/settings/localRuntime/replayLimit",
+      "schema": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-15/schemas/C1/worker-core.schema.json",
+        "sha256": "8bd4f48d6beadab9e3c011663dac18e3361f1d6eab0b3ffa3bd1bcb0af6eff3c",
+        "pointer": "/properties/profiles/additionalProperties/properties/settings/properties/localRuntime/properties/replayLimit",
+        "exactBody": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000000
+        }
+      },
+      "binding": {
+        "current": "S: fully validated startup snapshot; no durable next-module selector",
+        "targetClass": "R",
+        "targetReason": "Local runtime replay identity capacity and shutdown drain/cancellation apply to captured runtime lifetime; cannot reset active run replay/accepted identities.",
+        "allowedTransition": "R remains run-bound; S requires validated new service/supervisor generation with existing durable-state reconciliation; M selects before dispatch and persists immutable full closure, never reloads started module",
+        "eval": "Fixed generation always; no implemented Eval runner inferred."
+      },
+      "recovery": "LocalWorkerRuntime keeps replay identity set capped by replayLimit; stop drain timeout followed by cancellation timeout; new config must not clear accepted attempts."
+    },
+    {
+      "id": "CMP-worker-core-owner",
+      "disposition": "protocol-envelope-domain",
+      "author": null,
+      "schema": null,
+      "binding": {
+        "current": "S: fully validated startup snapshot; no durable next-module selector",
+        "targetClass": "R",
+        "targetReason": "Version/owner identity is stable contract, not adjustable module setting.",
+        "allowedTransition": "R remains run-bound; S requires validated new service/supervisor generation with existing durable-state reconciliation; M selects before dispatch and persists immutable full closure, never reloads started module",
+        "eval": "Fixed generation always; no implemented Eval runner inferred."
+      },
+      "recovery": "Identity prevents wrong-owner/unversioned policy acceptance; does not reset state."
+    },
+    {
+      "id": "CMP-worker-core-schemaVersion",
+      "disposition": "protocol-envelope-domain",
+      "author": null,
+      "schema": null,
+      "binding": {
+        "current": "S: fully validated startup snapshot; no durable next-module selector",
+        "targetClass": "R",
+        "targetReason": "Version/owner identity is stable contract, not adjustable module setting.",
+        "allowedTransition": "R remains run-bound; S requires validated new service/supervisor generation with existing durable-state reconciliation; M selects before dispatch and persists immutable full closure, never reloads started module",
+        "eval": "Fixed generation always; no implemented Eval runner inferred."
+      },
+      "recovery": "Identity prevents wrong-owner/unversioned policy acceptance; does not reset state."
+    },
+    {
+      "id": "CMP7-CORE-SCAFFOLD-MAXIMUM-MEMBER-BYTES",
+      "disposition": "active-required",
+      "author": "config/components/worker-core.config.json#/profiles/<explicitSelectedProfile>/settings/scaffoldPublication/maximumMemberBytes",
+      "schema": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-15/schemas/C3/worker-core.schema.json",
+        "sha256": "22c665a659ae8af436b642ef8959e3f2ca6aebcefd1e9858ff718386dbd65630",
+        "pointer": "/properties/profiles/additionalProperties/properties/settings/properties/scaffoldPublication/properties/maximumMemberBytes",
+        "exactBody": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 67108864
+        }
+      },
+      "binding": "OriginalCoremodule/scaffoldapply or Busterpreparation originalowner/modulecapture beforeallocation/read/publish; no latestmissinghistory/default. Existingpublishedpair originalgeneration immutable; originalacceptedprep envelope capturessamefield. Onlynewmodule permits B.",
+      "recovery": "C2/C3 Corestrictfield/decoder/injection and C1Busterwholeowner newfield/schema/generatedhostclosure; C5immutableoriginalpolicyrefs. Crossownerref mustconcord existingauthorbeforeapproval; no implementationperformed."
+    },
+    {
+      "id": "CMP7-CORE-SCAFFOLD-MAXIMUM-POINTER-BYTES",
+      "disposition": "active-required",
+      "author": "config/components/worker-core.config.json#/profiles/<explicitSelectedProfile>/settings/scaffoldPublication/maximumPointerBytes",
+      "schema": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-15/schemas/C3/worker-core.schema.json",
+        "sha256": "22c665a659ae8af436b642ef8959e3f2ca6aebcefd1e9858ff718386dbd65630",
+        "pointer": "/properties/profiles/additionalProperties/properties/settings/properties/scaffoldPublication/properties/maximumPointerBytes",
+        "exactBody": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4096
+        }
+      },
+      "binding": "OriginalCoremodule/scaffoldapply or Busterpreparation originalowner/modulecapture beforeallocation/read/publish; no latestmissinghistory/default. Existingpublishedpair originalgeneration immutable; originalacceptedprep envelope capturessamefield. Onlynewmodule permits B.",
+      "recovery": "C2/C3 Corestrictfield/decoder/injection and C1Busterwholeowner newfield/schema/generatedhostclosure; C5immutableoriginalpolicyrefs. Crossownerref mustconcord existingauthorbeforeapproval; no implementationperformed."
+    },
+    {
+      "id": "CMP-WCORE-CGROUP2-MAGIC",
+      "disposition": "exact-protocol-domain-definition",
+      "author": null,
+      "schema": null,
+      "binding": {
+        "current": "existing construction/input capture, no CONFIG hotreload",
+        "targetClass": "R",
+        "targetReason": "Linux cgroup2 ABI; mismatch WORKER_NATIVE_CGROUP_REQUIRED, not operator policy."
+      },
+      "recovery": "Never change captured claim/deadline/envelope/kernel identity or clear accepted replay/journal records. Linux cgroup2 ABI; mismatch WORKER_NATIVE_CGROUP_REQUIRED, not operator policy."
+    },
+    {
+      "id": "CMP-WCORE-CHILD-LIMIT-INHERITANCE",
+      "disposition": "actual-owner-open-obligation",
+      "author": null,
+      "schema": null,
+      "binding": {
+        "current": "existing construction/input capture, no CONFIG hotreload",
+        "targetClass": "R",
+        "targetReason": "Current optional role callback resourceLimits inherits exact parent; explicit accepted binding decision needed; no hardcoded numeric replacement"
+      },
+      "recovery": "Never change captured claim/deadline/envelope/kernel identity or clear accepted replay/journal records. Current optional role callback resourceLimits inherits exact parent; explicit accepted binding decision needed; no hardcoded numeric replacement"
+    },
+    {
+      "id": "CMP-WCORE-CLOCK-NONCE",
+      "disposition": "exact-protocol-domain-definition",
+      "author": null,
+      "schema": null,
+      "binding": {
+        "current": "existing construction/input capture, no CONFIG hotreload",
+        "targetClass": "R",
+        "targetReason": "Runtime clock/nonce dependencies not operator fallbacks; actual role callers omit injection; random receipt nonce not identity author."
+      },
+      "recovery": "Never change captured claim/deadline/envelope/kernel identity or clear accepted replay/journal records. Runtime clock/nonce dependencies not operator fallbacks; actual role callers omit injection; random receipt nonce not identity author."
+    },
+    {
+      "id": "CMP-WCORE-CONTROL-HEADER",
+      "disposition": "exact-protocol-domain-definition",
+      "author": null,
+      "schema": null,
+      "binding": {
+        "current": "existing construction/input capture, no CONFIG hotreload",
+        "targetClass": "R",
+        "targetReason": "Framing uint32be length; maximumMessageBytes supported max0xffffffff. Role message/session quotas are generated binding."
+      },
+      "recovery": "Never change captured claim/deadline/envelope/kernel identity or clear accepted replay/journal records. Framing uint32be length; maximumMessageBytes supported max0xffffffff. Role message/session quotas are generated binding."
+    },
+    {
+      "id": "CMP-WCORE-DIAGNOSTIC-WIRE-UNITS",
+      "disposition": "exact-protocol-domain-definition",
+      "author": null,
+      "schema": null,
+      "binding": {
+        "current": "existing construction/input capture, no CONFIG hotreload",
+        "targetClass": "R",
+        "targetReason": "v1 $defs.text maxLength4096; summary/error/signal/receipt supported text domain; receiptNamespace validation WORKER_RECEIPT_NAMESPACE_INVALID."
+      },
+      "recovery": "Never change captured claim/deadline/envelope/kernel identity or clear accepted replay/journal records. v1 $defs.text maxLength4096; summary/error/signal/receipt supported text domain; receiptNamespace validation WORKER_RECEIPT_NAMESPACE_INVALID."
+    },
+    {
+      "id": "CMP-WCORE-HOST-CGROUPROOT",
+      "disposition": "actual-owner-join-not-allocated",
+      "author": null,
+      "schema": null,
+      "binding": {
+        "current": "existing construction/input capture, no CONFIG hotreload",
+        "targetClass": "S",
+        "targetReason": "producer fixed locator; root separately validated"
+      },
+      "recovery": "Never change captured claim/deadline/envelope/kernel identity or clear accepted replay/journal records. producer fixed locator; root separately validated"
+    },
+    {
+      "id": "CMP-WCORE-HOST-LIMITS-CPUPERIODMICROSECONDS",
+      "disposition": "actual-owner-join-not-allocated",
+      "author": null,
+      "schema": null,
+      "binding": {
+        "current": "existing construction/input capture, no CONFIG hotreload",
+        "targetClass": "S",
+        "targetReason": "producer fixed CFS period; adjustable cadence candidate belongs host author not WorkerCore"
+      },
+      "recovery": "Never change captured claim/deadline/envelope/kernel identity or clear accepted replay/journal records. producer fixed CFS period; adjustable cadence candidate belongs host author not WorkerCore"
+    },
+    {
+      "id": "CMP-WCORE-HOST-LIMITS-CPUQUOTAMICROSECONDS",
+      "disposition": "actual-owner-join-not-allocated",
+      "author": null,
+      "schema": null,
+      "binding": {
+        "current": "existing construction/input capture, no CONFIG hotreload",
+        "targetClass": "S",
+        "targetReason": "generated CFS CPU-rate projection"
+      },
+      "recovery": "Never change captured claim/deadline/envelope/kernel identity or clear accepted replay/journal records. generated CFS CPU-rate projection"
+    },
+    {
+      "id": "CMP-WCORE-HOST-LIMITS-MEMORYBYTES",
+      "disposition": "actual-owner-join-not-allocated",
+      "author": null,
+      "schema": null,
+      "binding": {
+        "current": "existing construction/input capture, no CONFIG hotreload",
+        "targetClass": "S",
+        "targetReason": "per-role host aggregate RAM"
+      },
+      "recovery": "Never change captured claim/deadline/envelope/kernel identity or clear accepted replay/journal records. per-role host aggregate RAM"
+    },
+    {
+      "id": "CMP-WCORE-HOST-LIMITS-TASKS",
+      "disposition": "actual-owner-join-not-allocated",
+      "author": null,
+      "schema": null,
+      "binding": {
+        "current": "existing construction/input capture, no CONFIG hotreload",
+        "targetClass": "S",
+        "targetReason": "per-role host aggregate Linux tasks"
+      },
+      "recovery": "Never change captured claim/deadline/envelope/kernel identity or clear accepted replay/journal records. per-role host aggregate Linux tasks"
+    },
+    {
+      "id": "CMP-WCORE-HOST-MAXIMUMACTIVESCOPES",
+      "disposition": "actual-owner-join-not-allocated",
+      "author": null,
+      "schema": null,
+      "binding": {
+        "current": "existing construction/input capture, no CONFIG hotreload",
+        "targetClass": "S",
+        "targetReason": "per-role host admission capacity"
+      },
+      "recovery": "Never change captured claim/deadline/envelope/kernel identity or clear accepted replay/journal records. per-role host admission capacity"
+    },
+    {
+      "id": "CMP-WCORE-HOST-NODEIDENTITYFILE",
+      "disposition": "actual-owner-join-not-allocated",
+      "author": null,
+      "schema": null,
+      "binding": {
+        "current": "existing construction/input capture, no CONFIG hotreload",
+        "targetClass": "S",
+        "targetReason": "producer fixed node-identity locator"
+      },
+      "recovery": "Never change captured claim/deadline/envelope/kernel identity or clear accepted replay/journal records. producer fixed node-identity locator"
+    },
+    {
+      "id": "CMP-WCORE-HOST-NODENAME",
+      "disposition": "actual-owner-join-not-allocated",
+      "author": null,
+      "schema": null,
+      "binding": {
+        "current": "existing construction/input capture, no CONFIG hotreload",
+        "targetClass": "S",
+        "targetReason": "node operator host author"
+      },
+      "recovery": "Never change captured claim/deadline/envelope/kernel identity or clear accepted replay/journal records. node operator host author"
+    },
+    {
+      "id": "CMP-WCORE-HOST-OWNERSHIPROOT",
+      "disposition": "actual-owner-join-not-allocated",
+      "author": null,
+      "schema": null,
+      "binding": {
+        "current": "existing construction/input capture, no CONFIG hotreload",
+        "targetClass": "S",
+        "targetReason": "producer fixed durable ownership locator; cannot move during recovery"
+      },
+      "recovery": "Never change captured claim/deadline/envelope/kernel identity or clear accepted replay/journal records. producer fixed durable ownership locator; cannot move during recovery"
+    },
+    {
+      "id": "CMP-WCORE-HOST-POLICYDIGEST",
+      "disposition": "actual-owner-join-not-allocated",
+      "author": null,
+      "schema": null,
+      "binding": {
+        "current": "existing construction/input capture, no CONFIG hotreload",
+        "targetClass": "S",
+        "targetReason": "sha256 closure of host policy"
+      },
+      "recovery": "Never change captured claim/deadline/envelope/kernel identity or clear accepted replay/journal records. sha256 closure of host policy"
+    },
+    {
+      "id": "CMP-WCORE-HOST-ROLE",
+      "disposition": "actual-owner-join-not-allocated",
+      "author": null,
+      "schema": null,
+      "binding": {
+        "current": "existing construction/input capture, no CONFIG hotreload",
+        "targetClass": "S",
+        "targetReason": "selected verified role"
+      },
+      "recovery": "Never change captured claim/deadline/envelope/kernel identity or clear accepted replay/journal records. selected verified role"
+    },
+    {
+      "id": "CMP-WCORE-HOST-RUNTIMEIDENTITYFILE",
+      "disposition": "actual-owner-join-not-allocated",
+      "author": null,
+      "schema": null,
+      "binding": {
+        "current": "existing construction/input capture, no CONFIG hotreload",
+        "targetClass": "S",
+        "targetReason": "producer fixed runtime-namespace locator"
+      },
+      "recovery": "Never change captured claim/deadline/envelope/kernel identity or clear accepted replay/journal records. producer fixed runtime-namespace locator"
+    },
+    {
+      "id": "CMP-WCORE-HOST-SCHEMAVERSION",
+      "disposition": "actual-owner-join-not-allocated",
+      "author": null,
+      "schema": null,
+      "binding": {
+        "current": "existing construction/input capture, no CONFIG hotreload",
+        "targetClass": "S",
+        "targetReason": "generated version"
+      },
+      "recovery": "Never change captured claim/deadline/envelope/kernel identity or clear accepted replay/journal records. generated version"
+    },
+    {
+      "id": "CMP-WCORE-JOURNAL-PROTOCOL",
+      "disposition": "exact-protocol-domain-definition",
+      "author": null,
+      "schema": null,
+      "binding": {
+        "current": "existing construction/input capture, no CONFIG hotreload",
+        "targetClass": "R",
+        "targetReason": "Exact state validation/digest/binding checks; accepted input/result pointers remain bound through replay."
+      },
+      "recovery": "Never change captured claim/deadline/envelope/kernel identity or clear accepted replay/journal records. Exact state validation/digest/binding checks; accepted input/result pointers remain bound through replay."
+    },
+    {
+      "id": "CMP-WCORE-JS-TIMER-MAX",
+      "disposition": "exact-protocol-domain-definition",
+      "author": null,
+      "schema": null,
+      "binding": {
+        "current": "existing construction/input capture, no CONFIG hotreload",
+        "targetClass": "R",
+        "targetReason": "Signed32-bit finite timer domain; long claims rearmed in chunks without resetting absolute deadline."
+      },
+      "recovery": "Never change captured claim/deadline/envelope/kernel identity or clear accepted replay/journal records. Signed32-bit finite timer domain; long claims rearmed in chunks without resetting absolute deadline."
+    },
+    {
+      "id": "CMP-WCORE-KERNEL-COUNTERS",
+      "disposition": "exact-protocol-domain-definition",
+      "author": null,
+      "schema": null,
+      "binding": {
+        "current": "existing construction/input capture, no CONFIG hotreload",
+        "targetClass": "R",
+        "targetReason": "Exact kernel ABI keys; missing/overflow/ambiguity fails WORKER_NATIVE_COUNTER_* not0; populated only0/1."
+      },
+      "recovery": "Never change captured claim/deadline/envelope/kernel identity or clear accepted replay/journal records. Exact kernel ABI keys; missing/overflow/ambiguity fails WORKER_NATIVE_COUNTER_* not0; populated only0/1."
+    },
+    {
+      "id": "CMP-WCORE-KERNEL-ISOLATION",
+      "disposition": "exact-protocol-domain-definition",
+      "author": null,
+      "schema": null,
+      "binding": {
+        "current": "existing construction/input capture, no CONFIG hotreload",
+        "targetClass": "R",
+        "targetReason": "No-swap/group-OOM preserve existing owned tree safety/memory budgeting; not operator relaxation; D18 redesign later W."
+      },
+      "recovery": "Never change captured claim/deadline/envelope/kernel identity or clear accepted replay/journal records. No-swap/group-OOM preserve existing owned tree safety/memory budgeting; not operator relaxation; D18 redesign later W."
+    },
+    {
+      "id": "CMP-WCORE-LAUNCH-NONSETUID",
+      "disposition": "exact-protocol-domain-definition",
+      "author": null,
+      "schema": null,
+      "binding": {
+        "current": "existing construction/input capture, no CONFIG hotreload",
+        "targetClass": "R",
+        "targetReason": "WORKER_NATIVE_LAUNCHER_NOT_TRUSTED/path invalid: immutable executable and non-setuid trust invariant."
+      },
+      "recovery": "Never change captured claim/deadline/envelope/kernel identity or clear accepted replay/journal records. WORKER_NATIVE_LAUNCHER_NOT_TRUSTED/path invalid: immutable executable and non-setuid trust invariant."
+    },
+    {
+      "id": "CMP-WCORE-LAUNCH-ROOT-AUTHORITY",
+      "disposition": "exact-protocol-domain-definition",
+      "author": null,
+      "schema": null,
+      "binding": {
+        "current": "existing construction/input capture, no CONFIG hotreload",
+        "targetClass": "R",
+        "targetReason": "Narrow native supervisor privileges; WORKER_NATIVE_SUPERVISOR_AUTHORITY_REQUIRED; cannot operator relax trust."
+      },
+      "recovery": "Never change captured claim/deadline/envelope/kernel identity or clear accepted replay/journal records. Narrow native supervisor privileges; WORKER_NATIVE_SUPERVISOR_AUTHORITY_REQUIRED; cannot operator relax trust."
+    },
+    {
+      "id": "CMP-WCORE-LOCAL-CAPACITY-WIRE-MAX",
+      "disposition": "exact-protocol-domain-definition",
+      "author": null,
+      "schema": null,
+      "binding": {
+        "current": "existing construction/input capture, no CONFIG hotreload",
+        "targetClass": "R",
+        "targetReason": "workerCapacity schema maximum4096; supplied capacity derives runner maximumConcurrency; WORKER_LOCAL_CAPACITY_INVALID before registration."
+      },
+      "recovery": "Never change captured claim/deadline/envelope/kernel identity or clear accepted replay/journal records. workerCapacity schema maximum4096; supplied capacity derives runner maximumConcurrency; WORKER_LOCAL_CAPACITY_INVALID before registration."
+    },
+    {
+      "id": "CMP-WCORE-LOG-PART-WIRE-UNITS",
+      "disposition": "exact-protocol-domain-definition",
+      "author": null,
+      "schema": null,
+      "binding": {
+        "current": "existing construction/input capture, no CONFIG hotreload",
+        "targetClass": "R",
+        "targetReason": "workerLogPart.text maxLength65536; chunk adjusts dangling high surrogate; exact supported wirepart size."
+      },
+      "recovery": "Never change captured claim/deadline/envelope/kernel identity or clear accepted replay/journal records. workerLogPart.text maxLength65536; chunk adjusts dangling high surrogate; exact supported wirepart size."
+    },
+    {
+      "id": "CMP-WCORE-LOG-WIRE-BYTES",
+      "disposition": "exact-protocol-domain-definition",
+      "author": null,
+      "schema": null,
+      "binding": {
+        "current": "existing construction/input capture, no CONFIG hotreload",
+        "targetClass": "R",
+        "targetReason": "workerAttemptLimits.logBytes maximum16777216 in v1 schema; rejects WORKER_LOG_LIMIT_INVALID; authored logBytes may be lower. Supported domain, not replacement setting."
+      },
+      "recovery": "Never change captured claim/deadline/envelope/kernel identity or clear accepted replay/journal records. workerAttemptLimits.logBytes maximum16777216 in v1 schema; rejects WORKER_LOG_LIMIT_INVALID; authored logBytes may be lower. Supported domain, not replacement setting."
+    },
+    {
+      "id": "CMP-WCORE-OWNERSHIP-ID-DOMAIN",
+      "disposition": "exact-protocol-domain-definition",
+      "author": null,
+      "schema": null,
+      "binding": {
+        "current": "existing construction/input capture, no CONFIG hotreload",
+        "targetClass": "R",
+        "targetReason": "Persisted ownership identity grammar/width domain; versioned recovery rejects identity truncation/invalid fields. Changing domain requires explicit version migration."
+      },
+      "recovery": "Never change captured claim/deadline/envelope/kernel identity or clear accepted replay/journal records. Persisted ownership identity grammar/width domain; versioned recovery rejects identity truncation/invalid fields. Changing domain requires explicit version migration."
+    },
+    {
+      "id": "CMP-WCORE-OWNERSHIP-PROTOCOL",
+      "disposition": "exact-protocol-domain-definition",
+      "author": null,
+      "schema": null,
+      "binding": {
+        "current": "existing construction/input capture, no CONFIG hotreload",
+        "targetClass": "R",
+        "targetReason": "Explicit old schemas upgrade to legacy-leaf topology, never fabricate final observation; CAS/phase/binding rewrites constrained."
+      },
+      "recovery": "Never change captured claim/deadline/envelope/kernel identity or clear accepted replay/journal records. Explicit old schemas upgrade to legacy-leaf topology, never fabricate final observation; CAS/phase/binding rewrites constrained."
+    },
+    {
+      "id": "CMP-WCORE-PRIVACY-MODES",
+      "disposition": "exact-protocol-domain-definition",
+      "author": null,
+      "schema": null,
+      "binding": {
+        "current": "existing construction/input capture, no CONFIG hotreload",
+        "targetClass": "R",
+        "targetReason": "Private durable output/journal; nonprivate journal fails WORKER_NATIVE_JOURNAL_NOT_PRIVATE."
+      },
+      "recovery": "Never change captured claim/deadline/envelope/kernel identity or clear accepted replay/journal records. Private durable output/journal; nonprivate journal fails WORKER_NATIVE_JOURNAL_NOT_PRIVATE."
+    },
+    {
+      "id": "CMP-WCORE-SUPERVISOR-PID",
+      "disposition": "actual-owner-open-obligation",
+      "author": null,
+      "schema": null,
+      "binding": {
+        "current": "existing construction/input capture, no CONFIG hotreload",
+        "targetClass": "R",
+        "targetReason": "Actual process PID cannot be ambient operator ENV author"
+      },
+      "recovery": "Never change captured claim/deadline/envelope/kernel identity or clear accepted replay/journal records. Actual process PID cannot be ambient operator ENV author"
+    },
+    {
+      "id": "CMP-WCORE-UTF8-PROTOCOL",
+      "disposition": "exact-protocol-domain-definition",
+      "author": null,
+      "schema": null,
+      "binding": {
+        "current": "existing construction/input capture, no CONFIG hotreload",
+        "targetClass": "R",
+        "targetReason": "WORKER_LOG_UTF8_INVALID on invalid/incomplete stream; independent per stream decoding; no configurable suppression."
+      },
+      "recovery": "Never change captured claim/deadline/envelope/kernel identity or clear accepted replay/journal records. WORKER_LOG_UTF8_INVALID on invalid/incomplete stream; independent per stream decoding; no configurable suppression."
+    }
+  ]
+}
