@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io"
 	"net/http"
 	"os"
@@ -15,6 +16,8 @@ import (
 // Captured once at startup from the deployment owner. The locator is transport,
 // not another author; absent, partial and ambiguous policies never get defaults.
 type controllerPolicy struct {
+	RuntimeSecurityMaximumFindings        int64 `json:"runtimeSecurityMaximumFindings"`
+	RuntimeSecurityMaximumSerializedBytes int64 `json:"runtimeSecurityMaximumSerializedBytes"`
 	NamespaceDeletionTimeoutSeconds       int64 `json:"namespaceDeletionTimeoutSeconds"`
 	RuntimeSecurityRefreshSeconds         int64 `json:"runtimeSecurityRefreshSeconds"`
 	HTTPClientTimeoutSeconds              int64 `json:"httpClientTimeoutSeconds"`
@@ -84,6 +87,13 @@ func decodeControllerPolicy(raw []byte) (controllerPolicy, error) {
 	}
 	token, err = decoder.Token()
 	if err != nil || token != json.Delim('}') || len(seen) != len(fields) || decoder.Decode(new(interface{})) != io.EOF {
+		return controllerPolicy{}, invalid
+	}
+	// Findings are persisted in the existing CRD (maxItems=4096). The byte
+	// budget must always retain the fail-closed overflow record even at max int.
+	overflow := securityFinding("runtime:findings:overflow", "critical", fmt.Sprintf("Runtime security omitted %d findings after the bounded evidence limit.", int(^uint(0)>>1)), "Namespace")
+	minimumBytes := int64(serializedFindingBytes([]interface{}{overflow}))
+	if policy.RuntimeSecurityMaximumFindings > 4096 || policy.RuntimeSecurityMaximumSerializedBytes < minimumBytes {
 		return controllerPolicy{}, invalid
 	}
 	return policy, nil

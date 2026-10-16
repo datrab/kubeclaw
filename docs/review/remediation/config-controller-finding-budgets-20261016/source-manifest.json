@@ -1,0 +1,9 @@
+{
+  "charts/kubeclaw/values.yaml": "d7b0469bb6540441088db99dfee9243a7185e2402f7c8375fe8833f5590eea27",
+  "cmd/buster-namespace-controller/controller-policy.go": "fb1d4ce4bab2db7a85a96c665d49b8bc531927503b25fd0c61cb49de872a710d",
+  "cmd/buster-namespace-controller/controller-policy_test.go": "6557ae84b9e223c364fe1247efea186cbfd9dc0c864fd34968dc7f0be0bb4ef0",
+  "cmd/buster-namespace-controller/main.go": "6e1c6cf121a7745d9265fca006685ca38eb587e3d54ac9d4018f38c389699313",
+  "cmd/buster-namespace-controller/main_test.go": "d7d5877105fd0aef4c9b46e741f7c8c7ef438bf2b074b0b8ce8d53c2fa3f29af",
+  "cmd/buster-namespace-controller/testdata/controller-policy.json": "fd5b98090c9eaf4594f0d86d97dac2f9785de21a122975a66b535e5bdd14ab00",
+  "tests/verification/deployment/buster-central-delivery.test.mjs": "d855d4c10ca7e7e7e5a160bfe50ee4d7c120e8c524ec192884b654e5ac68ee8f"
+}

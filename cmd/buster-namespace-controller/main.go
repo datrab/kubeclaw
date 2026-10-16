@@ -420,14 +420,14 @@ func securityFinding(id string, severity string, message string, resource string
 	return map[string]interface{}{"id": id, "severity": severity, "message": message, "resource": resource}
 }
 
-func boundedRuntimeSecurityFindings(findings []interface{}) ([]interface{}, int, int) {
+func boundedRuntimeSecurityFindings(findings []interface{}, policy controllerPolicy) ([]interface{}, int, int) {
 	total := len(findings)
 	ordered := append([]interface{}{}, findings...)
 	sort.SliceStable(ordered, func(i, j int) bool {
 		return stringValue(securityObject(ordered[i])["id"]) < stringValue(securityObject(ordered[j])["id"])
 	})
-	const maximumFindings = 4096
-	const maximumSerializedBytes = 512 * 1024
+	maximumFindings := int(policy.RuntimeSecurityMaximumFindings)
+	maximumSerializedBytes := int(policy.RuntimeSecurityMaximumSerializedBytes)
 	bounded := make([]interface{}, 0, min(total, maximumFindings))
 	sizes := make([]int, 0, min(total, maximumFindings))
 	serializedBytes := 2
@@ -577,7 +577,7 @@ func (c *controller) runtimeSecurityStatus(ctx context.Context, item *lease, nam
 		return nil, err
 	}
 	findings, podCount, serviceCount := inspectRuntimeSecurityState(state, immutableImage, expected)
-	findings, totalFindingCount, omittedFindingCount := boundedRuntimeSecurityFindings(findings)
+	findings, totalFindingCount, omittedFindingCount := boundedRuntimeSecurityFindings(findings, c.policy)
 	resultDigest := runtimeSecurityResultDigest(findings, totalFindingCount, omittedFindingCount, podCount, serviceCount)
 	return map[string]interface{}{"phase": "Observed", "observedAt": time.Now().UTC().Format(time.RFC3339),
 		"manifestDigest": manifestDigest, "immutableImage": immutableImage, "findings": findings,

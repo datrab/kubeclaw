@@ -182,6 +182,17 @@ func TestControllerActualDeliveredPolicy(t *testing.T) {
 			t.Fatal("no refresh at selected boundary")
 		}
 	}
+	for key, actual := range map[string]int64{"CONTROLLER_TEST_FINDINGS": policy.RuntimeSecurityMaximumFindings, "CONTROLLER_TEST_FINDING_BYTES": policy.RuntimeSecurityMaximumSerializedBytes} {
+		if selected := os.Getenv(key); selected != "" {
+			expected, err := strconv.ParseInt(selected, 10, 64)
+			if err != nil || actual != expected {
+				t.Fatal(key, actual, selected)
+			}
+		}
+	}
+	if os.Getenv("CONTROLLER_TEST_FINDINGS") != "" {
+		checkSelectedFindingBounds(t, policy)
+	}
 	if selected := os.Getenv("CONTROLLER_TEST_DELETION_TIMEOUT_SECONDS"); selected != "" {
 		expected, err := strconv.ParseInt(selected, 10, 64)
 		if err != nil || policy.NamespaceDeletionTimeoutSeconds != expected {
@@ -386,5 +397,61 @@ func TestControllerDeletionTimeoutCaptureAndActualPolling(t *testing.T) {
 	}
 	if _, err := loadControllerPolicy(file); err == nil {
 		t.Fatal("missing owner accepted")
+	}
+}
+
+// Exercise the production collector's bounding operation with independently
+// selected count and byte budgets, preserving sorted IDs and critical overflow.
+func checkSelectedFindingBounds(t *testing.T, p controllerPolicy) {
+	t.Helper()
+	findings := make([]interface{}, int(p.RuntimeSecurityMaximumFindings)+5)
+	for i := range findings {
+		findings[i] = securityFinding(strconv.Itoa(i), "high", strings.Repeat("x", 300), "Pod/test")
+	}
+	bounded, total, omitted := boundedRuntimeSecurityFindings(findings, p)
+	if len(bounded) > int(p.RuntimeSecurityMaximumFindings) || serializedFindingBytes(bounded) > int(p.RuntimeSecurityMaximumSerializedBytes) || omitted != total-len(bounded)+1 || stringValue(securityObject(bounded[len(bounded)-1])["id"]) != "runtime:findings:overflow" {
+		t.Fatal(len(bounded), total, omitted)
+	}
+}
+func TestControllerFindingBudgetsCapture(t *testing.T) {
+	p := testControllerPolicy(t)
+	if p.RuntimeSecurityMaximumFindings != 4096 || p.RuntimeSecurityMaximumSerializedBytes != 524288 {
+		t.Fatal("original budgets changed")
+	}
+	file := filepath.Join(t.TempDir(), "policy.json")
+	capture := func(count, bytes int64) controllerPolicy {
+		t.Helper()
+		p.RuntimeSecurityMaximumFindings = count
+		p.RuntimeSecurityMaximumSerializedBytes = bytes
+		raw, _ := json.Marshal(p)
+		if err := os.WriteFile(file, raw, 0600); err != nil {
+			t.Fatal(err)
+		}
+		selected, err := loadControllerPolicy(file)
+		if err != nil {
+			t.Fatal(err)
+		}
+		return selected
+	}
+	a := capture(2, 524288)
+	b := capture(4, 524288)
+	c := capture(4, 700)
+	if err := os.Remove(file); err != nil {
+		t.Fatal(err)
+	}
+	findings := []interface{}{securityFinding("a", "high", strings.Repeat("x", 200), "Pod/a"), securityFinding("b", "high", strings.Repeat("x", 200), "Pod/b"), securityFinding("c", "high", strings.Repeat("x", 200), "Pod/c")}
+	aa, _, ao := boundedRuntimeSecurityFindings(findings, a)
+	bb, _, bo := boundedRuntimeSecurityFindings(findings, b)
+	cc, _, co := boundedRuntimeSecurityFindings(findings, c)
+	if len(aa) != 2 || ao != 2 || len(bb) != 3 || bo != 0 || co == 0 || serializedFindingBytes(cc) > 700 {
+		t.Fatal(aa, bb, cc, ao, bo, co)
+	}
+	for _, bad := range []struct{ count, bytes int64 }{{4097, 524288}, {1, 1}} {
+		p.RuntimeSecurityMaximumFindings = bad.count
+		p.RuntimeSecurityMaximumSerializedBytes = bad.bytes
+		raw, _ := json.Marshal(p)
+		if _, err := decodeControllerPolicy(raw); err == nil {
+			t.Fatal("unrepresentable budget accepted", bad)
+		}
 	}
 }

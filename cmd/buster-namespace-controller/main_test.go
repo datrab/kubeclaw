@@ -808,7 +808,7 @@ func TestRuntimeSecurityFindingsFitTheCRD(t *testing.T) {
 	for index := range findings {
 		findings[index] = securityFinding(fmt.Sprintf("runtime:role:%05d", index), "high", "unsafe", "Role/test")
 	}
-	bounded, total, omitted := boundedRuntimeSecurityFindings(findings)
+	bounded, total, omitted := boundedRuntimeSecurityFindings(findings, testControllerPolicy(t))
 	if len(bounded) > 4096 || total != 4100 || omitted != total-(len(bounded)-1) {
 		t.Fatalf("unexpected finding bounds: len=%d total=%d omitted=%d", len(bounded), total, omitted)
 	}
@@ -820,7 +820,7 @@ func TestRuntimeSecurityFindingsFitTheCRD(t *testing.T) {
 	for index := range large {
 		large[index] = securityFinding(fmt.Sprintf("runtime:large:%05d", index), "high", strings.Repeat("x", 4096), "Pod/test")
 	}
-	byteBounded, _, byteOmitted := boundedRuntimeSecurityFindings(large)
+	byteBounded, _, byteOmitted := boundedRuntimeSecurityFindings(large, testControllerPolicy(t))
 	if serializedFindingBytes(byteBounded) > 512*1024 || byteOmitted == 0 || stringValue(securityObject(byteBounded[len(byteBounded)-1])["id"]) != "runtime:findings:overflow" {
 		t.Fatalf("serialized finding budget did not fail closed: bytes=%d omitted=%d", serializedFindingBytes(byteBounded), byteOmitted)
 	}
