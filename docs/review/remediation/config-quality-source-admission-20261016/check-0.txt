@@ -1,0 +1,36 @@
+✔ v2 separates task values, deeply freezes original policy and retains v1 exactly (24.492285ms)
+✔ coverage: equal task-policy override and partial/unknown selected processing reject (1.125329ms)
+✔ size: equal task-policy override and partial/unknown selected processing reject (0.874423ms)
+✔ binding mismatches cannot pass even with a syntactically valid v2 envelope (1.705304ms)
+✔ duplicate rule IDs reject instead of acquiring a second budget author (0.690348ms)
+✔ real resolver uses selected retry and evidence while retaining immutable manifest support (29.636987ms)
+✔ size mandatory evidence and no-limit blocking admission are enforced before execution (2.232878ms)
+✔ retained original A never refills from B/current owner; changed registry fails (0.861212ms)
+✔ loader rejects original binding before snapshot or process effects (0.810651ms)
+✔ real coverage A/B consume captured policy, not legacy task values or invented evidence (7.663838ms)
+✔ real size v2 omits inactive nulls, retains baseline on pass/fail and enforces A/B (7.215596ms)
+✔ actual child IPC preserves and freezes original v2 across initialize and execute (36.164306ms)
+✔ restored v2 size plan, invocation and direct runner boundary cannot drop mandatory error evidence (14.747451ms)
+✔ coverage direct v2 incomplete processing rejects before artifact access (0.567995ms)
+✔ size direct v2 incomplete processing rejects before artifact access (0.492493ms)
+✔ coverage onPass log eligibility is mandatory in selection, overrides and restored plans (3.526491ms)
+✔ coverage onFail log eligibility is mandatory in selection, overrides and restored plans (2.205207ms)
+✔ coverage onError log eligibility is mandatory in selection, overrides and restored plans (1.981701ms)
+✔ size onPass log eligibility is mandatory in selection, overrides and restored plans (2.743471ms)
+✔ size onFail log eligibility is mandatory in selection, overrides and restored plans (3.49275ms)
+✔ size onError log eligibility is mandatory in selection, overrides and restored plans (2.079554ms)
+✔ restored advisory-only Size policy cannot become blocking before repository/attempt effects (1.800617ms)
+✔ coverage: explicit selected map cannot fall back to legacy task policy when original selection is missing (3.379008ms)
+✔ size: explicit selected map cannot fall back to legacy task policy when original selection is missing (3.652135ms)
+✔ coverage: selected v2 cannot execute before original sealed inputStore admission (1.697544ms)
+✔ size: selected v2 cannot execute before original sealed inputStore admission (1.600332ms)
+✔ coverage: original v1 preparation still reaches its own unchanged attempt boundary (0.988935ms)
+✔ size: original v1 preparation still reaches its own unchanged attempt boundary (0.75572ms)
+ℹ tests 28
+ℹ suites 0
+ℹ pass 28
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1322.848483

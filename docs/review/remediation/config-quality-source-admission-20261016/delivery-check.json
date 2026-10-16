@@ -1,0 +1,21 @@
+{
+  "command": [
+    "node",
+    "scripts/build-runtime-role-bundle.mjs",
+    "buster",
+    "/home/node/.openclaw/workspace/tmp/config-quality-source-admission-buster-20261016-9bd266a82",
+    "9bd266a82688d36f73f8ccf05c4349aa19463fbf",
+    "pipeline-image-projection.v1",
+    "2026-10-16T18:56:46.655553+00:00"
+  ],
+  "exitCode": 0,
+  "sourceCommit": "9bd266a82688d36f73f8ccf05c4349aa19463fbf",
+  "bundle": "/home/node/.openclaw/workspace/tmp/config-quality-source-admission-buster-20261016-9bd266a82",
+  "sourceBytesEqual": {
+    "budget-source-admission.ts": "sha256:31873ebff341cac33297c742149c1d6292b3b7d586a043b86c9803f73ec8a6a0",
+    "runner-attempt-preparation.ts": "sha256:412688d2e90e692572560e4402845e458a3665b20edf38b475689c4fef15f390",
+    "provider-loader.ts": "sha256:9a27540d27b52fed8f5377480cdedd89383a21af20f7cebb0e70c4becaf049bc",
+    "provider-process-session.ts": "sha256:ee803cc73bf36271c0bf808ca081f144d01635856f563d87c850d2398a19abcb"
+  },
+  "actualImportExitCode": 0
+}

@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2026-10-16T18:47:07.320714+00:00",
+  "updatedAt": "2026-10-16T18:57:52.255613+00:00",
   "revision": "4b1a92a6b6cf9d1e66928ce924a3620f3dba2751",
   "phase": "CONFIG_EXTERNALIZATION",
-  "status": "SELECTED_QUALITY_NO_LEGACY_FALLBACK_SOURCE_VERIFIED_BOOT_INPUTSTORE_INDEPENDENT_OPEN",
+  "status": "QB_R02_MISSING_ORIGINAL_INPUTSTORE_EXECUTION_DENIED_NOT_IMPLEMENTED",
   "implementedPhases": [],
   "implementationAccepted": false,
   "scopeUnchanged": "FULL C1-C6; 2409 fields, 6845 cases, 50 requirements",
@@ -272,7 +272,7 @@
     }
   ],
   "blocker": "Exact isolated Linux Docker/UID1000/writable cgroup/native acceptance host still unavailable. Also full original-source replay test needs sufficiently large genuinely root-trusted writable filesystem parent: /dev64MiB ENOSPC; /opt/root/run/var underlying disk EROFS; writable workspace/OpenClaw mounts have non-root or group-writable ancestry. No trust/UID/kernel spoof or skipped acceptance. Continue other authorized code.",
-  "nextAction": "Fresh independent complete-source generation/service-map/resolver review on repaired runtime; authenticated productive sole-root boot and actual Nova selection receiving without v10 promotion; QB-R02 genuine original producer/result/source and existing inputStore sealed snapshot/publication fence. Full2409/6845/50 and required independent/native/archive gates OPEN.",
+  "nextAction": "Implement genuine original producer/result/source and existing inputStore-owned sealed receiver with accounting/publication fence before permitting selected Quality execution; coordinated authenticated sole-root boot/Nova receiving without v10 promotion. Diagnose original whole-plan-runner50s timeout before repeating. Independent and full2409/6845/50 C0-C6/native/archive gates OPEN.",
   "automation": {
     "jobId": "391f197a-13c5-4925-a477-fa292dd9afcb",
     "enabled": true,
@@ -23185,5 +23185,53 @@
       "QB-R02 genuine original producer/build/source/inputStore sealed snapshot and publication fence",
       "full C0-C6 original semantic/history/native/archive acceptance"
     ]
+  },
+  "qualitySourceAdmission20261016": {
+    "at": "2026-10-16T18:57:52.255613+00:00",
+    "sourceCommit": "9bd266a82688d36f73f8ccf05c4349aa19463fbf",
+    "sourceRemoteVerified": true,
+    "status": "QB_R02_MISSING_ORIGINAL_INPUTSTORE_EXECUTION_DENIED_NOT_IMPLEMENTED",
+    "evidence": "docs/review/remediation/config-quality-source-admission-20261016",
+    "implemented": "Required QB-R02 missing-association activation fence at actual runner preparation, registered provider loader and direct process-session constructor. Selected Size/Coverage v2 rejects BUDGET_SOURCE_RECEIPT_REQUIRED before attempt directories, package snapshot, artifact pathname lookup or child spawn. No opt-out, fake receipt author or new store. Legacy v1 and non-Quality paths unchanged.",
+    "checks": {
+      "qualityV2": {
+        "passed": 28,
+        "total": 28,
+        "failed": 0,
+        "skipped": 0
+      },
+      "legacyActualProcessAndOwnership": {
+        "passed": 34,
+        "total": 34,
+        "failed": 0,
+        "skipped": 0
+      },
+      "strictSourceTypecheck": true,
+      "busterActualRoleBuildBytesAndImport": true,
+      "originalPlanRunner": "NOT VERIFIED: bounded real original command timed out at50s (exit124); no leftover test/provider process observed; not counted as passed"
+    },
+    "initialFailuresRetained": [
+      "red.txt: both Quality nodes reached ATTEMPT_EFFECT instead of rejecting missing source receipts",
+      "legacy-provider-boundaries.txt: raw preexisting session fixtures omit configuration; fixed null-safe detection without changing their fixtures; final34/34 pass"
+    ],
+    "independentReview": "OPEN; native spawn tool absent; recorded same-surface reviewer EROFS unchanged, not retried; no new reviewer output",
+    "productiveRootSuppliesSelection": false,
+    "sealedInputStoreImplemented": false,
+    "activationAllowed": false,
+    "originalCasesNewlyAccepted": 0,
+    "fullC0C6Complete": false,
+    "requiredRoster": {
+      "fields": 2409,
+      "cases": 6845,
+      "requirements": 50,
+      "allSemanticObligationsAccepted": false
+    },
+    "remaining": [
+      "Authenticated sole-root productive boot and actual Nova plan receiving without denied-v10 promotion",
+      "QB-R02 genuine producer/result/source association plus existing inputStore-owned reservation, sealed snapshot, original accounting, source/baseline association and publication fence; this fence must remain until that actual receiver exists",
+      "Independent complete-source Quality generation/registry/resolver/Buster review",
+      "Diagnose original plan-runner timeout before repeating same full command; preserve all original native/history/archive/C0-C6 gates"
+    ],
+    "externalInfrastructure": "Unchanged: owner Raven; isolated Linux Docker/UID1000/delegated writable cgroup and sufficiently large genuinely root-trusted writable archive filesystem required; resume on supplied suitable host."
   }
 }

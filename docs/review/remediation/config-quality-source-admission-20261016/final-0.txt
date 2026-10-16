@@ -1,0 +1,43 @@
+✔ real child preserves detached invoke, concurrent replies, instance state and import logs (52.767249ms)
+✔ real child settles outstanding RPCs and ignores late replies; early reply=false (36.97234ms)
+✔ real child settles outstanding RPCs and ignores late replies; early reply=true (39.037704ms)
+✔ real child rejects an unawaited RPC and exits with failure (39.817145ms)
+✔ real child rejects invalid observation before provider import: undefined (36.098847ms)
+✔ real child rejects invalid observation before provider import: null (34.650198ms)
+✔ real child rejects invalid observation before provider import: {} (36.242681ms)
+✔ real child rejects invalid observation before provider import: [] (37.824292ms)
+✔ real child rejects invalid observation before provider import: {"resourceSampleIntervalMs":0} (36.135017ms)
+✔ real child rejects invalid observation before provider import: {"resourceSampleIntervalMs":1.5} (36.544778ms)
+✔ real child rejects invalid observation before provider import: {"resourceSampleIntervalMs":"10"} (34.744611ms)
+✔ real child rejects invalid observation before provider import: {"resourceSampleIntervalMs":2147483648} (35.764897ms)
+✔ real child rejects invalid observation before provider import: {"resourceSampleIntervalMs":10,"extra":1} (34.632838ms)
+✔ real child uses authored sample interval 10 (279.993148ms)
+✔ real child uses authored sample interval 40 (281.627452ms)
+✔ real child reuses an identical sampling policy and rejects a changed policy (39.27163ms)
+✔ child rejects invalid cleanup authority {"kind":"cleanup"} (36.098886ms)
+✔ child rejects invalid cleanup authority {"kind":"cleanup","schemaVersion":"provider-cleanup.v1","disposition":"passed"} (36.647151ms)
+✔ child rejects invalid cleanup authority {"kind":"cleanup","schemaVersion":"provider-cleanup.v0","disposition":"completed-fixture"} (36.198679ms)
+✔ signal failure still drains capability settlement after actual child close (125.225758ms)
+✔ actual close with nonsettling capability reports bounded drain failure (1043.128397ms)
+✔ withheld close notification retains termination bound without entering capability drain (1037.791365ms)
+✔ constructor observation error is retained for later initialize (10.385305ms)
+▶ aborted initialization rejects and a distinct healthy session completes real cleanup
+  ✔ already aborted context (10.621311ms)
+  ✔ healthy positive control (36.896928ms)
+✔ aborted initialization rejects and a distinct healthy session completes real cleanup (48.134815ms)
+✔ real session termination bound 100 with delayed actual-close delivery (257.77202ms)
+✔ real session termination bound 500 with delayed actual-close delivery (255.678604ms)
+✔ actual session IPC consumes pending-capability count 1 (41.13821ms)
+✔ actual session IPC consumes pending-capability count 2 (141.845888ms)
+✔ actual session IPC consumes capability drain 10 (118.382556ms)
+✔ actual session IPC consumes capability drain 500 (120.458861ms)
+✔ initialized idle session retains actual protocol overflow at 512 bytes (152.778608ms)
+✔ initialized idle session retains actual protocol overflow at 4096 bytes (49.691616ms)
+ℹ tests 34
+ℹ suites 0
+ℹ pass 34
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5165.59751
