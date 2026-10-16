@@ -1,0 +1,71 @@
+[
+  {
+    "command": [
+      "node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/contracts/runner-completion-source.test.mjs",
+      "tests/verification/contracts/runner-original-producer-inputs.test.mjs",
+      "tests/verification/reliability/quality-provider-v2.test.mts"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 2.17,
+    "log": "docs/review/remediation/config-quality-completion-source-20261016/check-0.txt"
+  },
+  {
+    "command": [
+      "./node_modules/.bin/tsc",
+      "--noEmit",
+      "--module",
+      "NodeNext",
+      "--moduleResolution",
+      "NodeNext",
+      "--target",
+      "ES2024",
+      "--lib",
+      "ESNext,DOM,DOM.Iterable",
+      "--strict",
+      "--types",
+      "node",
+      "--skipLibCheck",
+      "--allowImportingTsExtensions",
+      "--esModuleInterop",
+      "skills/buster/engine/test-gates/runner-completion.ts"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 1.94,
+    "log": "docs/review/remediation/config-quality-completion-source-20261016/check-1.txt"
+  },
+  {
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 0.07,
+    "log": "docs/review/remediation/config-quality-completion-source-20261016/check-2.txt"
+  },
+  {
+    "command": [
+      "node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/contracts/buster-completion-policy.test.mjs",
+      "tests/verification/contracts/buster-default-store-policy.test.mjs"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 8.67,
+    "log": "docs/review/remediation/config-quality-completion-source-20261016/check-3.txt"
+  },
+  {
+    "command": [
+      "node",
+      "tests/verification/contracts/check-pipeline-test-plan-runner.mts"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 98.91,
+    "log": "docs/review/remediation/config-quality-completion-source-20261016/original-runner.txt",
+    "recovery": "durable result after90-second first execution-surface timeout; original command unchanged"
+  }
+]
